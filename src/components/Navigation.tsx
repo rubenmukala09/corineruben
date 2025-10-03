@@ -16,12 +16,12 @@ const Navigation = () => {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-primary text-primary-foreground shadow-lg">
+    <nav className="sticky top-0 z-50 glass-effect border-b border-border/50 shadow-medium backdrop-blur-lg">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 hover:opacity-90 transition-opacity">
-            <div className="w-10 h-10 bg-accent rounded flex items-center justify-center">
+          <Link to="/" className="flex items-center space-x-2 hover:scale-105 transition-transform duration-300">
+            <div className="w-10 h-10 bg-gradient-to-br from-accent to-[hsl(38,92%,50%)] rounded-lg flex items-center justify-center shadow-glow-gold">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -35,7 +35,7 @@ const Navigation = () => {
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
             </div>
-            <span className="text-xl font-bold hidden sm:inline">InVision Network</span>
+            <span className="text-xl font-bold hidden sm:inline bg-gradient-to-r from-primary to-[hsl(215,50%,38%)] bg-clip-text text-transparent">InVision Network</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -44,7 +44,7 @@ const Navigation = () => {
               <Link
                 key={link.name}
                 to={link.href}
-                className="text-primary-foreground/90 hover:text-primary-foreground transition-colors font-medium"
+                className="text-foreground font-semibold transition-all duration-300 relative after:absolute after:bottom-0 after:left-1/2 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-accent after:to-[hsl(38,92%,50%)] after:-translate-x-1/2 after:transition-all hover:after:w-4/5 hover:text-accent"
               >
                 {link.name}
               </Link>
