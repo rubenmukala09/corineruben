@@ -51,6 +51,14 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --navy-700: 215 50% 38%;
     --navy-500: 218 45% 51%;
     
+    /* Orange variants - Primary vibrant accent */
+    --orange-600: 32 95% 48%;
+    --orange-500: 38 92% 50%;
+    --orange-400: 43 96% 56%;
+    --orange-300: 41 96% 90%;
+    --orange-100: 41 100% 98%;
+    
+    /* Legacy gold names for compatibility */
     --gold-600: 32 95% 48%;
     --gold-500: 38 92% 50%;
     --gold-400: 41 96% 65%;

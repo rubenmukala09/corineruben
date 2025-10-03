@@ -83,15 +83,15 @@ const ThreePathsForward = () => {
                   </div>
                 )}
 
-                {/* Icon Container - blue gradient */}
+                {/* Icon Container - orange gradient */}
                 <div className="relative w-[100px] h-[100px] rounded-3xl mb-7
-                  bg-gradient-to-br from-[hsl(217,91%,60%)] to-[hsl(221,83%,53%)]
-                  shadow-[0_8px_24px_rgba(59,130,246,0.35)]
+                  bg-gradient-to-br from-[hsl(32,95%,48%)] to-[hsl(25,95%,43%)]
+                  shadow-[0_8px_24px_rgba(245,158,11,0.4)]
                   flex items-center justify-center
-                  transition-all duration-400 hover:scale-110 hover:rotate-[-5deg]
-                  hover:shadow-[0_12px_32px_rgba(59,130,246,0.45)]
+                  transition-all duration-400 hover:scale-115 hover:rotate-[-5deg]
+                  hover:shadow-[0_12px_32px_rgba(245,158,11,0.6)]
                   after:absolute after:inset-[-8px] after:rounded-[28px]
-                  after:border-2 after:border-[hsl(217,91%,60%)]/30
+                  after:border-2 after:border-[hsl(32,95%,48%)]/40
                   after:animate-pulse-ring
                 ">
                   <Icon className="w-14 h-14 text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.15)]" />
