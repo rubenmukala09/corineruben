@@ -6,8 +6,11 @@ import eldersHero4 from '@/assets/elders-hero-4.jpg';
 import eldersHero5 from '@/assets/elders-hero-5.jpg';
 import eldersHero6 from '@/assets/elders-hero-6.jpg';
 import eldersHero7 from '@/assets/elders-hero-7.jpg';
+import eldersHero8 from '@/assets/elders-hero-8.jpg';
+import eldersHero9 from '@/assets/elders-hero-9.jpg';
+import eldersHero10 from '@/assets/elders-hero-10.jpg';
 
-const images = [eldersHero1, eldersHero2, eldersHero3, eldersHero4, eldersHero5, eldersHero6, eldersHero7];
+const images = [eldersHero1, eldersHero2, eldersHero3, eldersHero4, eldersHero5, eldersHero6, eldersHero7, eldersHero8, eldersHero9, eldersHero10];
 
 interface TransitioningBackgroundProps {
   interval?: number; // milliseconds between transitions
@@ -15,7 +18,7 @@ interface TransitioningBackgroundProps {
   opacity?: number; // opacity level (0-1), default 1
 }
 
-const TransitioningBackground = ({ interval = 5000, className = '', opacity = 1 }: TransitioningBackgroundProps) => {
+const TransitioningBackground = ({ interval = 10000, className = '', opacity = 1 }: TransitioningBackgroundProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [nextIndex, setNextIndex] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(false);
