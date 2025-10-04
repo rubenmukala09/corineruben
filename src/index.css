@@ -118,6 +118,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
 
   body {
     @apply bg-background text-foreground antialiased;
+    font-family: 'Outfit', sans-serif;
     font-size: 18px;
     line-height: 1.7;
   }
