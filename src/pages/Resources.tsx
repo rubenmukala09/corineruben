@@ -210,7 +210,7 @@ const Resources = () => {
             <Button asChild variant="gold" size="xl">
               <Link to="/contact">CONTACT US</Link>
             </Button>
-            <Button asChild variant="outline" size="xl">
+            <Button asChild variant="outlineLight" size="xl">
               <Link to="/training">BOOK TRAINING</Link>
             </Button>
           </div>
