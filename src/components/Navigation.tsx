@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Phone, Globe } from "lucide-react";
+import { Menu, X, Phone, Globe, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -53,10 +59,24 @@ const Navigation = () => {
 
           {/* Right Side - Language & Phone & CTA */}
           <div className="flex items-center gap-4">
-            <div className="hidden md:flex items-center gap-2 text-sm text-muted-foreground" aria-label="Available languages">
-              <Globe className="w-4 h-4" aria-hidden="true" />
-              <span>EN | FR | ES</span>
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="hidden md:flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2 py-1" aria-label="Select language">
+                <Globe className="w-4 h-4" aria-hidden="true" />
+                <span className="font-medium">EN</span>
+                <ChevronDown className="w-3 h-3" aria-hidden="true" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="bg-card border-border z-50">
+                <DropdownMenuItem className="cursor-pointer hover:bg-muted focus:bg-muted">
+                  <span className="font-medium">🇺🇸 English</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer hover:bg-muted focus:bg-muted">
+                  <span className="font-medium">🇫🇷 Français</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer hover:bg-muted focus:bg-muted">
+                  <span className="font-medium">🇪🇸 Español</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <a
               href="tel:9375551234"
               className="hidden md:flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2 py-1"

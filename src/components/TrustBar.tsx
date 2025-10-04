@@ -6,7 +6,6 @@ const TrustBar = () => {
     { icon: Star, text: "4.9/5 Star Rating" },
     { icon: Award, text: "Cybersecurity Expert-Founded" },
     { icon: Lock, text: "Privacy-First" },
-    { icon: Globe, text: "EN • FR • ES" },
   ];
 
   return (
