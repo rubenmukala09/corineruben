@@ -20,22 +20,33 @@ const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-transform duration-300">
-            <div className="w-12 h-12 bg-gradient-to-br from-[hsl(230,70%,45%)] via-[hsl(200,70%,50%)] to-[hsl(180,70%,50%)] rounded-2xl flex items-center justify-center shadow-glow-purple relative animate-heartbeat overflow-hidden">
-              {/* Radiating wave */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary to-accent opacity-10 animate-pulse-wave" />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="w-7 h-7 text-white relative z-10"
-              >
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-              </svg>
+          <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-transform duration-300 group">
+            <div className="relative w-12 h-12">
+              {/* Glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[hsl(230,70%,45%)] to-[hsl(180,70%,50%)] rounded-2xl blur-md opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
+              
+              {/* Main container */}
+              <div className="relative w-12 h-12 bg-gradient-to-br from-[hsl(230,70%,45%)] via-[hsl(200,70%,50%)] to-[hsl(180,70%,50%)] rounded-2xl flex items-center justify-center shadow-lg animate-heartbeat overflow-hidden border border-white/20">
+                {/* Inner shine effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-transparent rounded-2xl" />
+                
+                {/* Radiating wave */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white via-white to-transparent opacity-10 animate-pulse-wave" />
+                
+                {/* Shield icon */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="w-7 h-7 text-white relative z-10 drop-shadow-lg group-hover:scale-110 transition-transform duration-300"
+                >
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+              </div>
             </div>
             <span className="text-xl font-bold gradient-text-primary leading-none">InVision Network</span>
           </Link>
