@@ -23,7 +23,7 @@ const Navigation = () => {
           <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-transform duration-300">
             <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center shadow-glow-purple relative animate-heartbeat">
               {/* Radiating wave */}
-              <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary to-accent opacity-60 animate-pulse-wave" />
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary to-accent opacity-30 animate-pulse-wave" />
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
