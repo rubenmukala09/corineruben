@@ -395,4 +395,58 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
       radial-gradient(at 80% 70%, rgba(20, 184, 166, 0.05) 0%, transparent 50%);
     background-blend-mode: normal, screen, screen;
   }
+
+  /* Heartbeat Animation */
+  @keyframes heartbeat {
+    0%, 100% {
+      transform: scale(1);
+    }
+    10% {
+      transform: scale(1.1);
+    }
+    20% {
+      transform: scale(1);
+    }
+    30% {
+      transform: scale(1.15);
+    }
+    40% {
+      transform: scale(1);
+    }
+  }
+
+  .animate-heartbeat {
+    animation: heartbeat 2s ease-in-out infinite;
+  }
+
+  /* Pulse Wave Animations */
+  @keyframes pulse-wave {
+    0% {
+      transform: scale(1);
+      opacity: 0.75;
+    }
+    100% {
+      transform: scale(2.5);
+      opacity: 0;
+    }
+  }
+
+  @keyframes pulse-wave-delayed {
+    0% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(3);
+      opacity: 0;
+    }
+  }
+
+  .animate-pulse-wave {
+    animation: pulse-wave 2s ease-out infinite;
+  }
+
+  .animate-pulse-wave-delayed {
+    animation: pulse-wave-delayed 2s ease-out 0.5s infinite;
+  }
 }
