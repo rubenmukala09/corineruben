@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
-import TransitioningBackground from "@/components/TransitioningBackground";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Heart, Lock, BookOpen, Users2, Shield, DollarSign, Award, MapPin } from "lucide-react";
@@ -249,9 +248,8 @@ const About = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="relative py-24 overflow-hidden">
-        <TransitioningBackground opacity={0.2} />
-        <div className="container mx-auto px-4 text-center relative z-10">
+      <section className="py-24 bg-gradient-to-r from-primary to-accent">
+        <div className="container mx-auto px-4 text-center">
           <h2 className="text-white mb-8">Want to Join Our Mission?</h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button asChild variant="gold" size="xl">

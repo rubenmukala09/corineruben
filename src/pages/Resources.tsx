@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
-import TransitioningBackground from "@/components/TransitioningBackground";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -203,10 +202,9 @@ const Resources = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="relative py-20 overflow-hidden">
-        <TransitioningBackground opacity={0.2} />
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="text-white mb-8">Still Have Questions?</h2>
+      <section className="py-20 bg-gradient-to-r from-primary to-accent">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-accent-foreground mb-8">Still Have Questions?</h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild variant="gold" size="xl">
               <Link to="/contact">CONTACT US</Link>

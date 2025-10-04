@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
-import TransitioningBackground from "@/components/TransitioningBackground";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -219,22 +218,6 @@ const Contact = () => {
           </div>
         </div>
       </div>
-
-      {/* Final CTA with Nature Background */}
-      <section className="relative py-20 overflow-hidden">
-        <TransitioningBackground opacity={0.2} />
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="text-white mb-8">Ready to Get Started?</h2>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild variant="gold" size="xl">
-              <Link to="/training">BOOK TRAINING</Link>
-            </Button>
-            <Button asChild variant="outlineLight" size="xl">
-              <Link to="/scam-shield">START SCAM SHIELD</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
 
       <Footer />
     </div>
