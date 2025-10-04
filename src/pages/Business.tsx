@@ -32,7 +32,7 @@ const Business = () => {
       {/* Use Cases */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
-          <h2 className="text-center mb-12">AI Solutions for Your Business</h2>
+          <h2 className="text-center mb-12">AI for Business & Web Design</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card className="p-8 hover:shadow-medium transition-shadow">
               <div className="flex items-start gap-4">
@@ -191,6 +191,181 @@ const Business = () => {
               </Button>
             </Card>
           </div>
+        </div>
+      </section>
+
+      {/* Web Design Services */}
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <div className="inline-block px-6 py-2 bg-primary/10 rounded-full text-sm font-bold text-primary mb-4 uppercase tracking-wider">
+              Web Design
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Professional Website Design</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Custom websites that convert visitors into customers—built for security, speed, and success
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+            {/* Landing Page */}
+            <Card className="p-8 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1">
+              <h3 className="text-2xl font-bold mb-4">Landing Page</h3>
+              <p className="text-muted-foreground mb-6">Single-page website for campaigns or simple business presence</p>
+              <p className="text-4xl font-bold text-accent mb-6">$1,500</p>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>1-page custom design</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Mobile responsive</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Contact form</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>SSL certificate</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Basic SEO setup</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>1 month free hosting</span>
+                </li>
+              </ul>
+              <Button asChild variant="default" className="w-full">
+                <Link to="/contact">GET STARTED</Link>
+              </Button>
+            </Card>
+
+            {/* Business Website - Featured */}
+            <Card className="p-8 border-2 border-primary relative rounded-2xl shadow-[0_8px_30px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)] transition-all">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-4 py-1 rounded-full text-sm font-bold shadow-[0_4px_12px_rgba(139,92,246,0.3)]">
+                MOST POPULAR
+              </div>
+              <h3 className="text-2xl font-bold mb-4">Business Website</h3>
+              <p className="text-muted-foreground mb-6">5-10 page professional website with custom features</p>
+              <p className="text-4xl font-bold text-accent mb-6">$4,500</p>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>5-10 custom pages</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Full mobile responsive</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Contact & booking forms</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Advanced SEO optimization</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>SSL & security setup</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>3 months free hosting</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Google Analytics integration</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>2 rounds of revisions</span>
+                </li>
+              </ul>
+              <Button asChild variant="default" className="w-full">
+                <Link to="/contact">GET STARTED</Link>
+              </Button>
+            </Card>
+
+            {/* E-Commerce Website */}
+            <Card className="p-8 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1">
+              <h3 className="text-2xl font-bold mb-4">E-Commerce Website</h3>
+              <p className="text-muted-foreground mb-6">Full online store with payment processing</p>
+              <p className="text-4xl font-bold text-accent mb-6">$8,500+</p>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Custom e-commerce design</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Product catalog (up to 50 items)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Secure payment gateway</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Inventory management</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>SSL & PCI compliance</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Shopping cart & checkout</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Email automation setup</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>6 months free hosting</span>
+                </li>
+              </ul>
+              <Button asChild variant="default" className="w-full">
+                <Link to="/contact">GET STARTED</Link>
+              </Button>
+            </Card>
+          </div>
+
+          {/* Website Add-Ons */}
+          <Card className="max-w-5xl mx-auto p-10 bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20 rounded-2xl">
+            <h3 className="text-2xl font-bold text-center mb-8">Website Add-Ons & Services</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div>
+                <div className="font-bold text-primary mb-2">Logo Design</div>
+                <div className="text-sm text-muted-foreground">Starting at $500</div>
+              </div>
+              <div>
+                <div className="font-bold text-primary mb-2">Content Writing</div>
+                <div className="text-sm text-muted-foreground">$150/page</div>
+              </div>
+              <div>
+                <div className="font-bold text-primary mb-2">Business Email Setup</div>
+                <div className="text-sm text-muted-foreground">$200 one-time</div>
+              </div>
+              <div>
+                <div className="font-bold text-primary mb-2">Monthly Maintenance</div>
+                <div className="text-sm text-muted-foreground">$99-299/month</div>
+              </div>
+              <div>
+                <div className="font-bold text-primary mb-2">AI Chatbot Integration</div>
+                <div className="text-sm text-muted-foreground">$1,200</div>
+              </div>
+              <div>
+                <div className="font-bold text-primary mb-2">Domain & Hosting Setup</div>
+                <div className="text-sm text-muted-foreground">Included free</div>
+              </div>
+            </div>
+          </Card>
         </div>
       </section>
 
