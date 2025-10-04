@@ -194,8 +194,183 @@ const Business = () => {
         </div>
       </section>
 
-      {/* Why InVision */}
+      {/* AI Services Insurance */}
       <section className="py-20 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <div className="inline-block px-6 py-2 bg-primary/10 rounded-full text-sm font-bold text-primary mb-4 uppercase tracking-wider">
+              Protection & Maintenance
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">AI Services Insurance</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Protect your AI investment with ongoing maintenance, updates, and support—regardless of where you purchased your agent.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+            {/* Basic Care */}
+            <Card className="p-8 rounded-2xl border-border/50 hover:shadow-medium transition-all hover:-translate-y-1">
+              <h3 className="text-2xl font-bold mb-4">Basic Care</h3>
+              <p className="text-4xl font-bold gradient-text-primary mb-2">
+                $149<span className="text-lg text-muted-foreground">/month</span>
+              </p>
+              <ul className="space-y-3 mb-8 mt-6">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Monthly health checks</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Security patch updates</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Performance monitoring</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Email support (48hr response)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Basic bug fixes</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Quarterly reports</span>
+                </li>
+              </ul>
+              <Button asChild variant="default" className="w-full">
+                <Link to="/contact">GET BASIC CARE</Link>
+              </Button>
+            </Card>
+
+            {/* Standard Care - Featured */}
+            <Card className="p-8 border-2 border-primary relative rounded-2xl shadow-[0_8px_30px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)] transition-all">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-4 py-1 rounded-full text-sm font-bold shadow-[0_4px_12px_rgba(139,92,246,0.3)]">
+                MOST POPULAR
+              </div>
+              <h3 className="text-2xl font-bold mb-4">Standard Care</h3>
+              <p className="text-4xl font-bold gradient-text-primary mb-2">
+                $399<span className="text-lg text-muted-foreground">/month</span>
+              </p>
+              <ul className="space-y-3 mb-8 mt-6">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Everything in Basic Care</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Weekly health checks</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Priority bug fixes (24hr response)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Knowledge base updates</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Minor feature adjustments</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Phone + email support</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Up to 4 hours repair/month</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Integration compatibility checks</span>
+                </li>
+              </ul>
+              <Button asChild variant="default" className="w-full">
+                <Link to="/contact">GET STANDARD CARE</Link>
+              </Button>
+            </Card>
+
+            {/* Premium Care */}
+            <Card className="p-8 rounded-2xl border-border/50 hover:shadow-medium transition-all hover:-translate-y-1">
+              <h3 className="text-2xl font-bold mb-4">Premium Care</h3>
+              <p className="text-4xl font-bold gradient-text-primary mb-2">
+                $799<span className="text-lg text-muted-foreground">/month</span>
+              </p>
+              <ul className="space-y-3 mb-8 mt-6">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Everything in Standard Care</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>24/7 monitoring & alerts</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Critical issue response (4hr SLA)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Custom modifications included</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Up to 12 hours repair/month</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Dedicated support engineer</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Quarterly optimization reviews</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Compliance & security audits</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Vendor liaison services</span>
+                </li>
+              </ul>
+              <Button asChild variant="default" className="w-full">
+                <Link to="/contact">GET PREMIUM CARE</Link>
+              </Button>
+            </Card>
+          </div>
+
+          {/* Additional Info Box */}
+          <Card className="max-w-5xl mx-auto p-10 bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20 rounded-2xl">
+            <h3 className="text-2xl font-bold text-center mb-4">
+              We Support AI Agents From Any Vendor
+            </h3>
+            <p className="text-center text-muted-foreground mb-8 text-lg">
+              Whether you purchased your AI agent from another company or built it yourself, our insurance plans keep it running smoothly. We provide vendor-agnostic maintenance, troubleshooting, and optimization.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+              <div className="text-center">
+                <div className="text-2xl font-bold gradient-text-primary mb-2">No Contracts</div>
+                <div className="text-sm text-muted-foreground">Cancel anytime</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold gradient-text-primary mb-2">Any Platform</div>
+                <div className="text-sm text-muted-foreground">We support all major AI systems</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold gradient-text-primary mb-2">Fast Response</div>
+                <div className="text-sm text-muted-foreground">24-48hr standard turnaround</div>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </section>
+
+      {/* Why InVision */}
+      <section className="py-20 bg-muted">
         <div className="container mx-auto px-4">
           <h2 className="text-center mb-12">Why InVision for Your AI</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
