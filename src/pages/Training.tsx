@@ -65,90 +65,90 @@ const Training = () => {
       {/* Pricing Table */}
       <section className="py-20 bg-muted">
         <div className="container mx-auto px-4">
-          <h2 className="text-center mb-12">Training Programs & Pricing</h2>
+          <h2 className="text-center mb-16">Training Programs & Pricing</h2>
           <div className="overflow-x-auto">
             <div className="min-w-[900px]">
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-4 gap-6">
                 {/* Header Row */}
-                <div className="bg-card p-6 rounded-t-lg font-bold">Program Features</div>
-                <div className="bg-card p-6 rounded-t-lg text-center">
-                  <h3 className="text-xl font-bold mb-2">Single Small Group</h3>
-                  <p className="text-sm text-muted-foreground">15-25 participants</p>
+                <div className="bg-card p-8 rounded-t-2xl font-bold text-lg shadow-soft border border-border">Program Features</div>
+                <div className="bg-card p-8 rounded-t-2xl text-center shadow-soft border border-border">
+                  <h3 className="text-2xl font-bold mb-2 text-foreground">Single Small Group</h3>
+                  <p className="text-base text-muted-foreground font-medium">15-25 participants</p>
                 </div>
-                <div className="bg-accent/10 p-6 rounded-t-lg text-center border-2 border-accent relative">
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-accent-foreground px-4 py-1 rounded-full text-xs font-bold">
+                <div className="bg-gradient-to-br from-accent/10 via-accent/5 to-accent/10 p-8 rounded-t-2xl text-center border-4 border-accent relative shadow-strong">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-accent to-accent/80 text-accent-foreground px-6 py-2 rounded-full text-sm font-bold shadow-medium">
                     MOST POPULAR
                   </div>
-                  <h3 className="text-xl font-bold mb-2">Family Small Group</h3>
-                  <p className="text-sm text-muted-foreground">8-12 participants</p>
+                  <h3 className="text-2xl font-bold mb-2 text-foreground">Family Small Group</h3>
+                  <p className="text-base text-muted-foreground font-medium">8-12 participants</p>
                 </div>
-                <div className="bg-card p-6 rounded-t-lg text-center">
-                  <h3 className="text-xl font-bold mb-2">Priority Private</h3>
-                  <p className="text-sm text-muted-foreground">1-3 people</p>
+                <div className="bg-card p-8 rounded-t-2xl text-center shadow-soft border border-border">
+                  <h3 className="text-2xl font-bold mb-2 text-foreground">Priority Private</h3>
+                  <p className="text-base text-muted-foreground font-medium">1-3 people</p>
                 </div>
 
                 {/* Format */}
-                <div className="bg-card p-4 font-medium">Format</div>
-                <div className="bg-card p-4 text-center">Zoom, 60-90 min</div>
-                <div className="bg-accent/5 p-4 text-center border-x-2 border-accent">Zoom, limited seats</div>
-                <div className="bg-card p-4 text-center">Zoom or In-Person</div>
+                <div className="bg-card p-6 font-bold text-base border-x border-border shadow-soft">Format</div>
+                <div className="bg-card p-6 text-center text-base border-x border-border shadow-soft">Zoom, 60-90 min</div>
+                <div className="bg-gradient-to-br from-accent/5 to-accent/10 p-6 text-center text-base border-x-4 border-accent shadow-strong font-medium">Zoom, limited seats</div>
+                <div className="bg-card p-6 text-center text-base border-x border-border shadow-soft">Zoom or In-Person</div>
 
                 {/* Ideal For */}
-                <div className="bg-card p-4 font-medium">Ideal For</div>
-                <div className="bg-card p-4 text-center text-sm">Individual learner</div>
-                <div className="bg-accent/5 p-4 text-center text-sm border-x-2 border-accent">Couples & families</div>
-                <div className="bg-card p-4 text-center text-sm">High-risk / urgent needs</div>
+                <div className="bg-card p-6 font-bold text-base border-x border-border shadow-soft">Ideal For</div>
+                <div className="bg-card p-6 text-center border-x border-border shadow-soft">Individual learner</div>
+                <div className="bg-gradient-to-br from-accent/5 to-accent/10 p-6 text-center border-x-4 border-accent shadow-strong font-medium">Couples & families</div>
+                <div className="bg-card p-6 text-center border-x border-border shadow-soft">High-risk / urgent needs</div>
 
                 {/* Group Size */}
-                <div className="bg-card p-4 font-medium">Group Size</div>
-                <div className="bg-card p-4 text-center">15-25 participants</div>
-                <div className="bg-accent/5 p-4 text-center border-x-2 border-accent">8-12 participants</div>
-                <div className="bg-card p-4 text-center">Private (1-3 people)</div>
+                <div className="bg-card p-6 font-bold text-base border-x border-border shadow-soft">Group Size</div>
+                <div className="bg-card p-6 text-center border-x border-border shadow-soft">15-25 participants</div>
+                <div className="bg-gradient-to-br from-accent/5 to-accent/10 p-6 text-center border-x-4 border-accent shadow-strong font-medium">8-12 participants</div>
+                <div className="bg-card p-6 text-center border-x border-border shadow-soft">Private (1-3 people)</div>
 
                 {/* Languages */}
-                <div className="bg-card p-4 font-medium">Languages</div>
-                <div className="bg-card p-4 text-center">EN / FR / ES</div>
-                <div className="bg-accent/5 p-4 text-center border-x-2 border-accent">EN / FR / ES</div>
-                <div className="bg-card p-4 text-center">EN / FR / ES</div>
+                <div className="bg-card p-6 font-bold text-base border-x border-border shadow-soft">Languages</div>
+                <div className="bg-card p-6 text-center border-x border-border shadow-soft">EN / FR / ES</div>
+                <div className="bg-gradient-to-br from-accent/5 to-accent/10 p-6 text-center border-x-4 border-accent shadow-strong font-medium">EN / FR / ES</div>
+                <div className="bg-card p-6 text-center border-x border-border shadow-soft">EN / FR / ES</div>
 
                 {/* Price */}
-                <div className="bg-card p-4 font-medium rounded-b-lg">Price</div>
-                <div className="bg-card p-4 text-center rounded-b-lg">
-                  <p className="text-2xl font-bold text-accent">$149</p>
-                  <p className="text-sm text-muted-foreground">per person</p>
+                <div className="bg-card p-6 font-bold text-base rounded-b-2xl border border-border shadow-soft">Price</div>
+                <div className="bg-card p-6 text-center rounded-b-2xl border border-border shadow-soft">
+                  <p className="text-4xl font-extrabold gradient-text-teal mb-2">$149</p>
+                  <p className="text-sm text-muted-foreground font-medium">per person</p>
                 </div>
-                <div className="bg-accent/5 p-4 text-center rounded-b-lg border-x-2 border-b-2 border-accent">
-                  <p className="text-2xl font-bold text-accent">$299</p>
-                  <p className="text-sm text-muted-foreground">per session</p>
-                  <p className="text-xs font-semibold text-success mt-1">Spouse FREE</p>
+                <div className="bg-gradient-to-br from-accent/10 via-accent/5 to-accent/10 p-6 text-center rounded-b-2xl border-x-4 border-b-4 border-accent shadow-strong">
+                  <p className="text-5xl font-extrabold gradient-text-teal mb-2">$299</p>
+                  <p className="text-sm text-muted-foreground font-semibold">per session</p>
+                  <p className="text-sm font-bold text-success mt-2 bg-success/10 px-3 py-1 rounded-full inline-block">Spouse FREE</p>
                 </div>
-                <div className="bg-card p-4 text-center rounded-b-lg">
-                  <p className="text-2xl font-bold text-accent">$399</p>
-                  <p className="text-sm text-muted-foreground">Zoom</p>
+                <div className="bg-card p-6 text-center rounded-b-2xl border border-border shadow-soft">
+                  <p className="text-4xl font-extrabold gradient-text-teal mb-2">$399</p>
+                  <p className="text-sm text-muted-foreground font-medium">Zoom</p>
                   <p className="text-xs text-muted-foreground mt-1">In-Person: Custom Quote</p>
                 </div>
 
                 {/* CTA Buttons */}
                 <div></div>
                 <div className="p-4">
-                  <Button asChild variant="default" className="w-full">
+                  <Button asChild variant="default" size="lg" className="w-full font-bold">
                     <Link to="/contact">BOOK NOW</Link>
                   </Button>
                 </div>
                 <div className="p-4">
-                  <Button asChild variant="default" className="w-full">
+                  <Button asChild variant="default" size="lg" className="w-full font-bold shadow-medium hover:shadow-strong">
                     <Link to="/contact">BOOK NOW</Link>
                   </Button>
                 </div>
                 <div className="p-4">
-                  <Button asChild variant="default" className="w-full">
+                  <Button asChild variant="default" size="lg" className="w-full font-bold">
                     <Link to="/contact">SCHEDULE PRIVATE</Link>
                   </Button>
                 </div>
               </div>
             </div>
           </div>
-          <p className="text-center text-muted-foreground mt-6 italic">
+          <p className="text-center text-muted-foreground mt-8 italic text-base">
             We do NOT record classes to protect your privacy. No login required to attend. Certificate of completion provided.
           </p>
         </div>
