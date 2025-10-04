@@ -203,9 +203,10 @@ const Resources = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="py-20 bg-gradient-to-r from-primary to-accent">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-accent-foreground mb-8">Still Have Questions?</h2>
+      <section className="relative py-20 overflow-hidden">
+        <TransitioningBackground opacity={0.5} />
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h2 className="text-white mb-8">Still Have Questions?</h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild variant="gold" size="xl">
               <Link to="/contact">CONTACT US</Link>
@@ -215,11 +216,6 @@ const Resources = () => {
             </Button>
           </div>
         </div>
-      </section>
-
-      {/* Nature Background Section */}
-      <section className="relative h-64 overflow-hidden">
-        <TransitioningBackground opacity={0.25} />
       </section>
 
       <Footer />

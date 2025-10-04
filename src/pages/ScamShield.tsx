@@ -4,7 +4,6 @@ import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import TrustBar from "@/components/TrustBar";
 import TestimonialCard from "@/components/TestimonialCard";
-import CTASection from "@/components/CTASection";
 import TransitioningBackground from "@/components/TransitioningBackground";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -297,18 +296,17 @@ const ScamShield = () => {
       </section>
 
       {/* Final CTA */}
-      <CTASection headline="Get Protection Starting Today" variant="gold">
-        <Button asChild variant="gold" size="xl">
-          <Link to="/contact">START SCAM SHIELD - $49/MONTH</Link>
-        </Button>
-        <p className="text-accent-foreground text-sm mt-4">
-          🔒 Cancel anytime • 7-day money-back guarantee • No setup fees
-        </p>
-      </CTASection>
-
-      {/* Nature Background Section */}
-      <section className="relative h-64 overflow-hidden">
-        <TransitioningBackground opacity={0.25} />
+      <section className="relative py-20 overflow-hidden">
+        <TransitioningBackground opacity={0.5} />
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h2 className="text-white mb-8">Get Protection Starting Today</h2>
+          <Button asChild variant="gold" size="xl">
+            <Link to="/contact">START SCAM SHIELD - $49/MONTH</Link>
+          </Button>
+          <p className="text-white text-sm mt-4">
+            🔒 Cancel anytime • 7-day money-back guarantee • No setup fees
+          </p>
+        </div>
       </section>
 
       <Footer />

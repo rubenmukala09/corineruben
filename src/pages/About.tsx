@@ -249,8 +249,9 @@ const About = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="py-24 bg-gradient-to-r from-primary to-accent">
-        <div className="container mx-auto px-4 text-center">
+      <section className="relative py-24 overflow-hidden">
+        <TransitioningBackground opacity={0.5} />
+        <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="text-white mb-8">Want to Join Our Mission?</h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button asChild variant="gold" size="xl">
@@ -267,11 +268,6 @@ const About = () => {
             Questions? Call <a href="tel:9375551234" className="underline hover:text-white font-semibold">(937) 555-1234</a>
           </p>
         </div>
-      </section>
-
-      {/* Nature Background Section */}
-      <section className="relative h-64 overflow-hidden">
-        <TransitioningBackground opacity={0.25} />
       </section>
 
       <Footer />

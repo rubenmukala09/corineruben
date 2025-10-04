@@ -4,7 +4,6 @@ import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import TrustBar from "@/components/TrustBar";
 import TestimonialCard from "@/components/TestimonialCard";
-import CTASection from "@/components/CTASection";
 import TransitioningBackground from "@/components/TransitioningBackground";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -700,16 +699,15 @@ const Business = () => {
       </section>
 
       {/* Final CTA */}
-      <CTASection headline="Ready to Deploy AI Safely?" variant="gold">
-        <Button asChild variant="gold" size="xl">
-          <Link to="/contact">SCHEDULE FREE DISCOVERY CALL</Link>
-        </Button>
-        <p className="text-accent-foreground text-sm mt-4">15-minute call to discuss your needs—no sales pressure.</p>
-      </CTASection>
-
-      {/* Nature Background Section */}
-      <section className="relative h-64 overflow-hidden">
-        <TransitioningBackground opacity={0.25} />
+      <section className="relative py-20 overflow-hidden">
+        <TransitioningBackground opacity={0.5} />
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h2 className="text-white mb-8">Ready to Deploy AI Safely?</h2>
+          <Button asChild variant="gold" size="xl">
+            <Link to="/contact">SCHEDULE FREE DISCOVERY CALL</Link>
+          </Button>
+          <p className="text-white text-sm mt-4">15-minute call to discuss your needs—no sales pressure.</p>
+        </div>
       </section>
 
       <Footer />

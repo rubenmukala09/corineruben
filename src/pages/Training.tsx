@@ -4,7 +4,6 @@ import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import TrustBar from "@/components/TrustBar";
 import TestimonialCard from "@/components/TestimonialCard";
-import CTASection from "@/components/CTASection";
 import TransitioningBackground from "@/components/TransitioningBackground";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -278,18 +277,19 @@ const Training = () => {
       </section>
 
       {/* Final CTA */}
-      <CTASection headline="Ready to Learn?" variant="gold">
-        <Button asChild variant="gold" size="xl">
-          <Link to="/contact">BOOK TRAINING NOW</Link>
-        </Button>
-        <Button asChild variant="outline" size="xl">
-          <Link to="/resources">DOWNLOAD FREE SECURITY CHECKLIST</Link>
-        </Button>
-      </CTASection>
-
-      {/* Nature Background Section */}
-      <section className="relative h-64 overflow-hidden">
-        <TransitioningBackground opacity={0.25} />
+      <section className="relative py-20 overflow-hidden">
+        <TransitioningBackground opacity={0.5} />
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h2 className="text-white mb-8">Ready to Learn?</h2>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button asChild variant="gold" size="xl">
+              <Link to="/contact">BOOK TRAINING NOW</Link>
+            </Button>
+            <Button asChild variant="outlineLight" size="xl">
+              <Link to="/resources">DOWNLOAD FREE SECURITY CHECKLIST</Link>
+            </Button>
+          </div>
+        </div>
       </section>
 
       <Footer />

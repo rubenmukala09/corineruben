@@ -4,8 +4,8 @@ import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import TrustBar from "@/components/TrustBar";
 import TestimonialCard from "@/components/TestimonialCard";
-import CTASection from "@/components/CTASection";
 import ThreePathsForward from "@/components/ThreePathsForward";
+import TransitioningBackground from "@/components/TransitioningBackground";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Heart, FileText, MessageSquare, Users, StopCircle, Search, Phone, DollarSign, FileCheck, Shield, CheckCircle } from "lucide-react";
@@ -297,17 +297,24 @@ const Index = () => {
       </section>
 
       {/* Final CTA */}
-      <CTASection headline="Ready to Protect Your Family?" variant="gold">
-        <Button asChild variant="gold" size="xl">
-          <Link to="/training">BOOK TRAINING</Link>
-        </Button>
-        <Button asChild variant="outlineLight" size="xl">
-          <Link to="/scam-shield">START SCAM SHIELD</Link>
-        </Button>
-        <Button asChild variant="outlineLight" size="xl">
-          <Link to="/resources">GET FREE SECURITY CHECKLIST</Link>
-        </Button>
-      </CTASection>
+      {/* Final CTA */}
+      <section className="relative py-20 overflow-hidden">
+        <TransitioningBackground opacity={0.5} />
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h2 className="text-white mb-8">Ready to Protect Your Family?</h2>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button asChild variant="gold" size="xl">
+              <Link to="/training">BOOK TRAINING</Link>
+            </Button>
+            <Button asChild variant="outlineLight" size="xl">
+              <Link to="/scam-shield">START SCAM SHIELD</Link>
+            </Button>
+            <Button asChild variant="outlineLight" size="xl">
+              <Link to="/resources">GET FREE SECURITY CHECKLIST</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </div>
