@@ -60,19 +60,19 @@ const Navigation = () => {
           {/* Right Side - Language & Phone & CTA */}
           <div className="flex items-center gap-4">
             <DropdownMenu>
-              <DropdownMenuTrigger className="hidden md:flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2 py-1" aria-label="Select language">
-                <Globe className="w-4 h-4" aria-hidden="true" />
+              <DropdownMenuTrigger className="hidden md:flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2 py-1" aria-label="Select language">
+                <Globe className="w-3 h-3" aria-hidden="true" />
                 <span className="font-medium">EN</span>
-                <ChevronDown className="w-3 h-3" aria-hidden="true" />
+                <ChevronDown className="w-2.5 h-2.5" aria-hidden="true" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-card border-border z-50">
-                <DropdownMenuItem className="cursor-pointer hover:bg-muted focus:bg-muted">
+              <DropdownMenuContent align="end" className="bg-card border-border z-50 min-w-[120px]">
+                <DropdownMenuItem className="cursor-pointer hover:bg-muted focus:bg-muted text-xs py-1.5">
                   <span className="font-medium">🇺🇸 English</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer hover:bg-muted focus:bg-muted">
+                <DropdownMenuItem className="cursor-pointer hover:bg-muted focus:bg-muted text-xs py-1.5">
                   <span className="font-medium">🇫🇷 Français</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer hover:bg-muted focus:bg-muted">
+                <DropdownMenuItem className="cursor-pointer hover:bg-muted focus:bg-muted text-xs py-1.5">
                   <span className="font-medium">🇪🇸 Español</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
