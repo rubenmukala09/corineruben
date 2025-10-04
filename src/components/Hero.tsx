@@ -22,7 +22,7 @@ const Hero = ({ backgroundImage, headline, subheadline, children, className, ove
       {/* Animated Gradient Overlay */}
       {overlay && (
         <div 
-          className="absolute inset-0 bg-gradient-hero-primary opacity-90"
+          className="absolute inset-0 bg-gradient-hero-primary opacity-50"
           style={{ backgroundSize: '400% 400%', animation: 'gradient-shift 15s ease infinite' }}
         />
       )}
