@@ -45,10 +45,10 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-center mb-12">Why Families Trust InVision Network</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Card className="p-6 hover:shadow-medium transition-shadow">
+            <Card className="p-6 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center">
-                  <Heart className="w-8 h-8 text-accent" />
+                <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center">
+                  <Heart className="w-8 h-8 text-primary" />
                 </div>
               </div>
               <h3 className="text-xl mb-3 text-center">Privacy-First Protocols</h3>
@@ -57,10 +57,10 @@ const Index = () => {
               </p>
             </Card>
 
-            <Card className="p-6 hover:shadow-medium transition-shadow">
+            <Card className="p-6 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center">
-                  <MessageSquare className="w-8 h-8 text-accent" />
+                <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center">
+                  <MessageSquare className="w-8 h-8 text-primary" />
                 </div>
               </div>
               <h3 className="text-xl mb-3 text-center">Plain-English Teaching</h3>
@@ -69,10 +69,10 @@ const Index = () => {
               </p>
             </Card>
 
-            <Card className="p-6 hover:shadow-medium transition-shadow">
+            <Card className="p-6 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center">
-                  <FileText className="w-8 h-8 text-accent" />
+                <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center">
+                  <FileText className="w-8 h-8 text-primary" />
                 </div>
               </div>
               <h3 className="text-xl mb-3 text-center">Emergency-Ready Scripts</h3>
@@ -81,10 +81,10 @@ const Index = () => {
               </p>
             </Card>
 
-            <Card className="p-6 hover:shadow-medium transition-shadow">
+            <Card className="p-6 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center">
-                  <Users className="w-8 h-8 text-accent" />
+                <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center">
+                  <Users className="w-8 h-8 text-primary" />
                 </div>
               </div>
               <h3 className="text-xl mb-3 text-center">Senior-Friendly Design</h3>
@@ -117,10 +117,10 @@ const Index = () => {
               { icon: FileCheck, title: "DOCUMENT & REPORT", desc: "Write down details: time, caller info, what they said. Report to FTC, your bank, and local police if needed." },
               { icon: Shield, title: "FORWARD TO INVISION (MEMBERS)", desc: "Scam Shield members: Send us the suspicious item for professional analysis." },
             ].map((step, index) => (
-              <Card key={index} className="p-6 hover:shadow-medium transition-shadow">
+              <Card key={index} className="p-6 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
-                    <step.icon className="w-6 h-6 text-accent" />
+                  <div className="w-12 h-12 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <step.icon className="w-6 h-6 text-primary" />
                   </div>
                   <div>
                     <h3 className="text-xl font-bold mb-2">
@@ -140,12 +140,12 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-center mb-12">What Makes Us Different from Free Resources</h2>
           <div className="max-w-5xl mx-auto overflow-x-auto">
-            <table className="w-full bg-card rounded-lg shadow-medium">
+            <table className="w-full bg-card rounded-2xl shadow-medium border border-border/50">
               <thead>
                 <tr className="border-b border-border">
                   <th className="p-4 text-left font-bold">What You Need</th>
                   <th className="p-4 text-left font-bold">Free Resources</th>
-                  <th className="p-4 text-left font-bold bg-accent/10">InVision Network</th>
+                  <th className="p-4 text-left font-bold bg-gradient-to-br from-primary/5 to-accent/5">InVision Network</th>
                 </tr>
               </thead>
               <tbody>
@@ -158,16 +158,16 @@ const Index = () => {
                   { need: "Family Plans", free: "Generic", invision: "Spouse included FREE in some plans" },
                   { need: "Certificate", free: "None", invision: "Digital certificate proving you're trained" },
                 ].map((row, index) => (
-                  <tr key={index} className="border-b border-border last:border-0">
-                    <td className="p-4 font-medium">{row.need}</td>
-                    <td className="p-4 text-muted-foreground">{row.free}</td>
-                    <td className="p-4 bg-accent/5">
-                      <div className="flex items-start gap-2">
-                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                        <span>{row.invision}</span>
-                      </div>
-                    </td>
-                  </tr>
+                <tr key={index} className="border-b border-border last:border-0 hover:bg-muted/30 transition-colors">
+                  <td className="p-4 font-medium">{row.need}</td>
+                  <td className="p-4 text-muted-foreground">{row.free}</td>
+                  <td className="p-4 bg-gradient-to-br from-primary/5 to-accent/5">
+                    <div className="flex items-start gap-2">
+                      <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                      <span>{row.invision}</span>
+                    </div>
+                  </td>
+                </tr>
                 ))}
               </tbody>
             </table>
@@ -228,14 +228,14 @@ const Index = () => {
                 a: "Perfect! Our training assumes zero technical knowledge. If you can use email, you're ready.",
               },
             ].map((faq, index) => (
-              <Card key={index} className="p-6">
+              <Card key={index} className="p-6 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1 border-border/50">
                 <h3 className="text-xl font-bold mb-2">{faq.q}</h3>
                 <p className="text-muted-foreground">{faq.a}</p>
               </Card>
             ))}
           </div>
           <div className="text-center mt-8">
-            <Link to="/resources#faq" className="text-accent hover:text-accent/80 font-semibold text-lg">
+            <Link to="/resources#faq" className="text-primary hover:text-primary/80 font-semibold text-lg inline-flex items-center gap-2 hover:gap-3 transition-all">
               VIEW ALL FAQ →
             </Link>
           </div>

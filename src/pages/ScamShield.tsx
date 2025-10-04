@@ -23,7 +23,7 @@ const ScamShield = () => {
         headline="Not Sure If It's a Scam? Ask the Experts."
         subheadline="Forward suspicious emails, texts, links, voice messages, and QR codes. Get a professional risk assessment before you act."
       >
-        <Button asChild variant="gold" size="xl">
+        <Button asChild variant="default" size="xl">
           <Link to="/contact">START SCAM SHIELD</Link>
         </Button>
       </Hero>
@@ -35,10 +35,10 @@ const ScamShield = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-center mb-12">How Scam Shield Works</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <Card className="p-8 text-center hover:shadow-medium transition-shadow">
+            <Card className="p-8 text-center hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex justify-center mb-6">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center">
-                  <Upload className="w-8 h-8 text-accent" />
+                <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center">
+                  <Upload className="w-8 h-8 text-primary" />
                 </div>
               </div>
               <h3 className="text-2xl font-bold mb-4">1. Forward Suspicious Item</h3>
@@ -47,10 +47,10 @@ const ScamShield = () => {
               </p>
             </Card>
 
-            <Card className="p-8 text-center hover:shadow-medium transition-shadow">
+            <Card className="p-8 text-center hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex justify-center mb-6">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center">
-                  <UserCheck className="w-8 h-8 text-accent" />
+                <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center">
+                  <UserCheck className="w-8 h-8 text-primary" />
                 </div>
               </div>
               <h3 className="text-2xl font-bold mb-4">2. Expert Analysis</h3>
@@ -59,10 +59,10 @@ const ScamShield = () => {
               </p>
             </Card>
 
-            <Card className="p-8 text-center hover:shadow-medium transition-shadow">
+            <Card className="p-8 text-center hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex justify-center mb-6">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center">
-                  <Shield className="w-8 h-8 text-accent" />
+                <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center">
+                  <Shield className="w-8 h-8 text-primary" />
                 </div>
               </div>
               <h3 className="text-2xl font-bold mb-4">3. Get Clear Verdict</h3>
@@ -79,9 +79,9 @@ const ScamShield = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-center mb-12">Membership Plans</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <Card className="p-8">
+            <Card className="p-8 rounded-2xl shadow-soft hover:shadow-medium transition-all hover:-translate-y-1 border-border/50">
               <h3 className="text-2xl font-bold mb-4">Standard Plan</h3>
-              <p className="text-4xl font-bold text-accent mb-6">
+              <p className="text-4xl font-bold gradient-text-primary mb-6">
                 $49<span className="text-lg text-muted-foreground">/month</span>
               </p>
               <ul className="space-y-3 mb-8">
@@ -110,45 +110,17 @@ const ScamShield = () => {
                   <span>Monthly security tips</span>
                 </li>
               </ul>
-              <Button asChild className="w-full">
+              <Button asChild variant="default" className="w-full">
                 <Link to="/contact">START STANDARD</Link>
               </Button>
             </Card>
 
-            <Card className="p-8 border-2 border-accent relative">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-accent-foreground px-4 py-1 rounded-full text-sm font-bold">
+            <Card className="p-8 border-2 border-accent relative rounded-2xl shadow-[0_8px_30px_rgba(20,184,166,0.15)] hover:shadow-[0_12px_40px_rgba(20,184,166,0.2)] transition-all">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-accent to-[hsl(180,70%,55%)] text-accent-foreground px-4 py-1 rounded-full text-sm font-bold shadow-[0_4px_12px_rgba(20,184,166,0.3)]">
                 MOST POPULAR
               </div>
               <h3 className="text-2xl font-bold mb-4">Premium Plan</h3>
-              <p className="text-4xl font-bold text-accent mb-6">
-                $99<span className="text-lg text-muted-foreground">/month</span>
-              </p>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Up to 30 submissions per month</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>≤ 24 hour response time</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Everything + audio/voice notes, videos</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Detailed analysis + source tracking</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Email + Phone support</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Monthly tips + Quarterly threat briefing call</span>
-                </li>
-              </ul>
+...
               <Button asChild variant="gold" className="w-full">
                 <Link to="/contact">START PREMIUM</Link>
               </Button>
@@ -173,10 +145,10 @@ const ScamShield = () => {
               { icon: ImageIcon, title: "Images & Screenshots", desc: "AI-generated faces, fake documents, manipulated photos" },
               { icon: MessageSquare, title: "Text Messages", desc: "'Package delivery,' 'account locked,' 'prize winner' texts" },
             ].map((item, index) => (
-              <Card key={index} className="p-6 hover:shadow-medium transition-shadow">
+              <Card key={index} className="p-6 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
-                    <item.icon className="w-6 h-6 text-accent" />
+                  <div className="w-12 h-12 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <item.icon className="w-6 h-6 text-primary" />
                   </div>
                   <div>
                     <h3 className="text-xl font-bold mb-2">{item.title}</h3>
@@ -297,7 +269,7 @@ const ScamShield = () => {
 
       {/* Final CTA */}
       <CTASection headline="Get Protection Starting Today" variant="gold">
-        <Button asChild variant="default" size="xl">
+        <Button asChild variant="gold" size="xl">
           <Link to="/contact">START SCAM SHIELD - $49/MONTH</Link>
         </Button>
         <p className="text-accent-foreground text-sm mt-4">

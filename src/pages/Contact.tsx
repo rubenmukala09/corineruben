@@ -123,10 +123,10 @@ const Contact = () => {
               <h2 className="mb-8">Other Ways to Reach Us</h2>
 
               <div className="space-y-6">
-                <Card className="p-6 hover:shadow-medium transition-shadow">
+                <Card className="p-6 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Phone className="w-6 h-6 text-accent" />
+                    <div className="w-12 h-12 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Phone className="w-6 h-6 text-primary" />
                     </div>
                     <div>
                       <h3 className="text-xl font-bold mb-2">Phone</h3>
@@ -145,10 +145,10 @@ const Contact = () => {
                   </div>
                 </Card>
 
-                <Card className="p-6 hover:shadow-medium transition-shadow">
+                <Card className="p-6 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Mail className="w-6 h-6 text-accent" />
+                    <div className="w-12 h-12 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Mail className="w-6 h-6 text-primary" />
                     </div>
                     <div>
                       <h3 className="text-xl font-bold mb-2">Email</h3>
@@ -182,10 +182,10 @@ const Contact = () => {
                   </div>
                 </Card>
 
-                <Card className="p-6 hover:shadow-medium transition-shadow">
+                <Card className="p-6 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
-                      <MapPin className="w-6 h-6 text-accent" />
+                    <div className="w-12 h-12 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
+                      <MapPin className="w-6 h-6 text-primary" />
                     </div>
                     <div>
                       <h3 className="text-xl font-bold mb-2">Office</h3>
@@ -200,10 +200,10 @@ const Contact = () => {
                   </div>
                 </Card>
 
-                <Card className="p-6 bg-accent/10 hover:shadow-medium transition-shadow">
+                <Card className="p-6 bg-gradient-to-br from-primary/5 to-accent/5 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-primary/30">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center flex-shrink-0">
-                      <MessageSquare className="w-6 h-6 text-accent-foreground" />
+                    <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center flex-shrink-0">
+                      <MessageSquare className="w-6 h-6 text-white" />
                     </div>
                     <div>
                       <h3 className="text-xl font-bold mb-2">Live Chat</h3>

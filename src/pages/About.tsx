@@ -56,10 +56,10 @@ const About = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-center mb-12">Our Values</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <Card className="p-8 hover:shadow-medium transition-shadow">
+            <Card className="p-8 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex items-start gap-4">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Heart className="w-8 h-8 text-accent" />
+                <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Heart className="w-8 h-8 text-primary" />
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold mb-3">Respect Over Fear</h3>
@@ -70,10 +70,10 @@ const About = () => {
               </div>
             </Card>
 
-            <Card className="p-8 hover:shadow-medium transition-shadow">
+            <Card className="p-8 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex items-start gap-4">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Lock className="w-8 h-8 text-accent" />
+                <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Lock className="w-8 h-8 text-primary" />
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold mb-3">Privacy is Sacred</h3>
@@ -84,10 +84,10 @@ const About = () => {
               </div>
             </Card>
 
-            <Card className="p-8 hover:shadow-medium transition-shadow">
+            <Card className="p-8 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex items-start gap-4">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
-                  <BookOpen className="w-8 h-8 text-accent" />
+                <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <BookOpen className="w-8 h-8 text-primary" />
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold mb-3">Plain English, Always</h3>
@@ -98,10 +98,10 @@ const About = () => {
               </div>
             </Card>
 
-            <Card className="p-8 hover:shadow-medium transition-shadow">
+            <Card className="p-8 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex items-start gap-4">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Users2 className="w-8 h-8 text-accent" />
+                <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Users2 className="w-8 h-8 text-primary" />
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold mb-3">Community First</h3>
@@ -120,35 +120,43 @@ const About = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-center mb-12">Our Community Impact</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Card className="p-8 text-center hover:shadow-medium transition-shadow">
+            <Card className="p-8 text-center hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex justify-center mb-4">
-                <Shield className="w-12 h-12 text-accent" />
+                <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center">
+                  <Shield className="w-6 h-6 text-white" />
+                </div>
               </div>
-              <p className="text-4xl font-bold text-accent mb-2">500+</p>
+              <p className="text-4xl font-bold gradient-text-primary mb-2">500+</p>
               <p className="text-muted-foreground">Families Trained</p>
             </Card>
 
-            <Card className="p-8 text-center hover:shadow-medium transition-shadow">
+            <Card className="p-8 text-center hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex justify-center mb-4">
-                <DollarSign className="w-12 h-12 text-accent" />
+                <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center">
+                  <DollarSign className="w-6 h-6 text-white" />
+                </div>
               </div>
-              <p className="text-4xl font-bold text-accent mb-2">$2M+</p>
+              <p className="text-4xl font-bold gradient-text-primary mb-2">$2M+</p>
               <p className="text-muted-foreground">in Fraud Prevented</p>
             </Card>
 
-            <Card className="p-8 text-center hover:shadow-medium transition-shadow">
+            <Card className="p-8 text-center hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex justify-center mb-4">
-                <Award className="w-12 h-12 text-accent" />
+                <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center">
+                  <Award className="w-6 h-6 text-white" />
+                </div>
               </div>
-              <p className="text-4xl font-bold text-accent mb-2">50+</p>
+              <p className="text-4xl font-bold gradient-text-primary mb-2">50+</p>
               <p className="text-muted-foreground">Free Sessions for Veterans</p>
             </Card>
 
-            <Card className="p-8 text-center hover:shadow-medium transition-shadow">
+            <Card className="p-8 text-center hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex justify-center mb-4">
-                <Heart className="w-12 h-12 text-accent" />
+                <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center">
+                  <Heart className="w-6 h-6 text-white" />
+                </div>
               </div>
-              <p className="text-4xl font-bold text-accent mb-2">30+</p>
+              <p className="text-4xl font-bold gradient-text-primary mb-2">30+</p>
               <p className="text-muted-foreground">Cancer Patient Scholarships</p>
             </Card>
           </div>

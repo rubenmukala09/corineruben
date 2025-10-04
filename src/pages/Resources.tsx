@@ -95,7 +95,7 @@ const Resources = () => {
       <Navigation />
 
       {/* Hero */}
-      <section className="bg-primary text-primary-foreground py-20">
+      <section className="bg-gradient-hero-primary text-primary-foreground py-20">
         <div className="container mx-auto px-4 text-center">
           <h1 className="mb-6">Free Resources & Tools</h1>
           <p className="text-xl md:text-2xl max-w-3xl mx-auto">
@@ -110,10 +110,10 @@ const Resources = () => {
           <h2 className="text-center mb-12">Free Downloadable Guides</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {guides.map((guide, index) => (
-              <Card key={index} className="p-6 hover:shadow-medium transition-shadow">
+              <Card key={index} className="p-6 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl">
                 <div className="flex justify-center mb-4">
-                  <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center">
-                    <guide.icon className="w-8 h-8 text-accent" />
+                  <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center">
+                    <guide.icon className="w-8 h-8 text-primary" />
                   </div>
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-center">{guide.title}</h3>
@@ -139,13 +139,15 @@ const Resources = () => {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
             {products.map((product, index) => (
-              <Card key={index} className="p-6 hover:shadow-medium transition-shadow flex flex-col">
+              <Card key={index} className="p-6 hover:shadow-medium transition-all hover:-translate-y-1 flex flex-col rounded-2xl">
                 <div className="flex justify-center mb-4">
-                  <ShoppingCart className="w-12 h-12 text-accent" />
+                  <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center">
+                    <ShoppingCart className="w-6 h-6 text-white" />
+                  </div>
                 </div>
                 <h3 className="font-bold mb-2 text-center flex-grow">{product.name}</h3>
-                <p className="text-2xl font-bold text-accent text-center mb-4">{product.price}</p>
-                <Button asChild className="w-full">
+                <p className="text-2xl font-bold gradient-text-primary text-center mb-4">{product.price}</p>
+                <Button asChild variant="default" className="w-full">
                   <Link to="/contact">BUY NOW</Link>
                 </Button>
               </Card>
@@ -160,11 +162,11 @@ const Resources = () => {
           <h2 className="text-center mb-12">Recent Articles</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {blogArticles.map((article, index) => (
-              <Card key={index} className="overflow-hidden hover:shadow-medium transition-shadow">
+              <Card key={index} className="overflow-hidden hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl">
                 <img src={article.image} alt={article.title} className="w-full h-48 object-cover" />
                 <div className="p-6">
                   <h3 className="text-xl font-bold mb-4">{article.title}</h3>
-                  <Link to="/contact" className="text-accent hover:text-accent/80 font-semibold">
+                  <Link to="/contact" className="text-primary hover:text-primary/80 font-semibold">
                     READ MORE →
                   </Link>
                 </div>
@@ -186,8 +188,8 @@ const Resources = () => {
           <div className="max-w-4xl mx-auto">
             <Accordion type="single" collapsible className="space-y-4">
               {faqs.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`} className="bg-card rounded-lg px-6">
-                  <AccordionTrigger className="text-lg font-bold hover:text-accent">
+                <AccordionItem key={index} value={`item-${index}`} className="bg-card rounded-2xl px-6 border border-border hover:border-primary/50 transition-all shadow-soft hover:shadow-medium">
+                  <AccordionTrigger className="text-lg font-bold hover:text-primary">
                     {faq.q}
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground text-base leading-relaxed">
@@ -201,11 +203,11 @@ const Resources = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="py-20 bg-accent">
+      <section className="py-20 bg-gradient-to-r from-primary to-accent">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-accent-foreground mb-8">Still Have Questions?</h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild variant="default" size="xl">
+            <Button asChild variant="gold" size="xl">
               <Link to="/contact">CONTACT US</Link>
             </Button>
             <Button asChild variant="outline" size="xl">

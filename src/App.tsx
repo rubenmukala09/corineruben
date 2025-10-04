@@ -7,7 +7,6 @@ import Index from "./pages/Index";
 import Training from "./pages/Training";
 import ScamShield from "./pages/ScamShield";
 import Business from "./pages/Business";
-import ChurchPartnerships from "./pages/ChurchPartnerships";
 import About from "./pages/About";
 import Resources from "./pages/Resources";
 import Contact from "./pages/Contact";
@@ -26,7 +25,6 @@ const App = () => (
           <Route path="/training" element={<Training />} />
           <Route path="/scam-shield" element={<ScamShield />} />
           <Route path="/business" element={<Business />} />
-          <Route path="/church-partnerships" element={<ChurchPartnerships />} />
           <Route path="/about" element={<About />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/contact" element={<Contact />} />
