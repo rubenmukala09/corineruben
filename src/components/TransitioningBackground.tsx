@@ -2,8 +2,12 @@ import { useState, useEffect } from 'react';
 import eldersHero1 from '@/assets/elders-hero-1.jpg';
 import eldersHero2 from '@/assets/elders-hero-2.jpg';
 import eldersHero3 from '@/assets/elders-hero-3.jpg';
+import eldersHero4 from '@/assets/elders-hero-4.jpg';
+import eldersHero5 from '@/assets/elders-hero-5.jpg';
+import eldersHero6 from '@/assets/elders-hero-6.jpg';
+import eldersHero7 from '@/assets/elders-hero-7.jpg';
 
-const images = [eldersHero1, eldersHero2, eldersHero3];
+const images = [eldersHero1, eldersHero2, eldersHero3, eldersHero4, eldersHero5, eldersHero6, eldersHero7];
 
 interface TransitioningBackgroundProps {
   interval?: number; // milliseconds between transitions
