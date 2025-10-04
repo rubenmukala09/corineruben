@@ -39,12 +39,12 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex flex-1 items-center justify-center space-x-8">
+          <div className="hidden lg:flex flex-1 items-center justify-center space-x-8" role="navigation" aria-label="Main navigation">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.href}
-                className="text-foreground/80 hover:text-foreground font-bold transition-colors duration-200 text-base whitespace-nowrap"
+                className="text-foreground/80 hover:text-foreground font-bold transition-colors duration-200 text-base whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2 py-1"
               >
                 {link.name}
               </Link>
@@ -52,20 +52,21 @@ const Navigation = () => {
           </div>
 
           {/* Right Side - Language & Phone & CTA */}
-          <div className="flex items-center space-x-4">
-            <div className="hidden md:flex items-center space-x-2 text-sm text-muted-foreground">
-              <Globe className="w-4 h-4" />
+          <div className="flex items-center gap-4">
+            <div className="hidden md:flex items-center gap-2 text-sm text-muted-foreground" aria-label="Available languages">
+              <Globe className="w-4 h-4" aria-hidden="true" />
               <span>EN | FR | ES</span>
             </div>
             <a
               href="tel:9375551234"
-              className="hidden md:flex items-center space-x-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="hidden md:flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2 py-1"
+              aria-label="Call us at 937-555-1234"
             >
-              <Phone className="w-4 h-4" />
+              <Phone className="w-4 h-4" aria-hidden="true" />
               <span className="font-medium">(937) 555-1234</span>
             </a>
             <Button asChild variant="default" size="sm" className="hidden md:inline-flex font-semibold">
-              <Link to="/training">BOOK TRAINING</Link>
+              <Link to="/training" aria-label="Book a training session">BOOK TRAINING</Link>
             </Button>
 
             {/* Mobile menu button */}
@@ -81,29 +82,30 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-border">
-            <div className="flex flex-col space-y-3">
+          <div className="lg:hidden py-4 border-t border-border" role="navigation" aria-label="Mobile navigation">
+            <div className="flex flex-col gap-3">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   to={link.href}
-                  className="text-foreground/80 hover:text-foreground py-2 transition-colors font-bold text-base"
+                  className="text-foreground/80 hover:text-foreground py-2 transition-colors font-bold text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {link.name}
                 </Link>
               ))}
-              <div className="pt-2 border-t border-border">
-                <Button asChild variant="default" className="w-full mb-2">
-                  <Link to="/training" onClick={() => setMobileMenuOpen(false)}>
+              <div className="pt-2 border-t border-border flex flex-col gap-3">
+                <Button asChild variant="default" className="w-full">
+                  <Link to="/training" onClick={() => setMobileMenuOpen(false)} aria-label="Book a training session">
                     BOOK TRAINING
                   </Link>
                 </Button>
                 <a
                   href="tel:9375551234"
-                  className="flex items-center justify-center space-x-2 text-foreground py-2"
+                  className="flex items-center justify-center gap-2 text-foreground py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md"
+                  aria-label="Call us at 937-555-1234"
                 >
-                  <Phone className="w-4 h-4" />
+                  <Phone className="w-4 h-4" aria-hidden="true" />
                   <span className="font-medium">(937) 555-1234</span>
                 </a>
               </div>

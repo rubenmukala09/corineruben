@@ -3,6 +3,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import TrustBar from "@/components/TrustBar";
+import TrustBadges from "@/components/TrustBadges";
 import TestimonialCard from "@/components/TestimonialCard";
 import CTASection from "@/components/CTASection";
 import ThreePathsForward from "@/components/ThreePathsForward";
@@ -28,21 +29,24 @@ const Index = () => {
         useTransitioningBackground={true}
         headline="Protect Your Family from AI-Powered Scams"
         subheadline="Simple, respectful training for adults 40+ and families. Learn to spot deepfakes, phishing, and AI fraud—no tech degree required."
+        showScrollIndicator={true}
       >
-        <div className="flex flex-col sm:flex-row gap-4">
-          <Button asChild variant="default" size="xl">
-            <Link to="/training">BOOK TRAINING</Link>
+        <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center sm:justify-start">
+          <Button asChild variant="default" size="xl" className="w-full sm:w-auto">
+            <Link to="/training" aria-label="Book a training session">BOOK TRAINING</Link>
           </Button>
-          <Button asChild variant="outlineLight" size="xl">
-            <Link to="/scam-shield">START SCAM SHIELD</Link>
+          <Button asChild variant="outlineLight" size="xl" className="w-full sm:w-auto">
+            <Link to="/scam-shield" aria-label="Start using Scam Shield service">START SCAM SHIELD</Link>
           </Button>
-          <Button asChild variant="outlineLight" size="xl">
-            <Link to="/contact">TALK TO AN EXPERT</Link>
+          <Button asChild variant="outlineLight" size="xl" className="w-full sm:w-auto">
+            <Link to="/contact" aria-label="Contact an expert for consultation">TALK TO AN EXPERT</Link>
           </Button>
         </div>
       </Hero>
 
       <TrustBar />
+
+      <TrustBadges />
 
       {/* Why Families Trust InVision Network */}
       <section className="py-20 bg-background relative overflow-hidden">
@@ -300,14 +304,14 @@ const Index = () => {
 
       {/* Final CTA */}
       <CTASection headline="Ready to Protect Your Family?" variant="gold">
-        <Button asChild variant="gold" size="xl">
-          <Link to="/training">BOOK TRAINING</Link>
+        <Button asChild variant="gold" size="xl" className="w-full sm:w-auto">
+          <Link to="/training" aria-label="Book a training session">BOOK TRAINING</Link>
         </Button>
-        <Button asChild variant="outlineLight" size="xl">
-          <Link to="/scam-shield">START SCAM SHIELD</Link>
+        <Button asChild variant="outlineLight" size="xl" className="w-full sm:w-auto">
+          <Link to="/scam-shield" aria-label="Start using Scam Shield service">START SCAM SHIELD</Link>
         </Button>
-        <Button asChild variant="outlineLight" size="xl">
-          <Link to="/resources">GET FREE SECURITY CHECKLIST</Link>
+        <Button asChild variant="outlineLight" size="xl" className="w-full sm:w-auto">
+          <Link to="/resources" aria-label="Download free security checklist">GET FREE SECURITY CHECKLIST</Link>
         </Button>
       </CTASection>
 

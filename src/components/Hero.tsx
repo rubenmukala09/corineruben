@@ -1,6 +1,7 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import TransitioningBackground from "./TransitioningBackground";
+import ScrollIndicator from "./ScrollIndicator";
 
 interface HeroProps {
   backgroundImage?: string;
@@ -10,20 +11,37 @@ interface HeroProps {
   children?: ReactNode;
   className?: string;
   overlay?: boolean;
+  showScrollIndicator?: boolean;
 }
 
-const Hero = ({ backgroundImage, useTransitioningBackground = false, headline, subheadline, children, className, overlay = true }: HeroProps) => {
+const Hero = ({ backgroundImage, useTransitioningBackground = false, headline, subheadline, children, className, overlay = true, showScrollIndicator = false }: HeroProps) => {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className={cn("relative min-h-[90vh] flex items-center overflow-hidden", className)}>
       {/* Background */}
-      {useTransitioningBackground ? (
-        <TransitioningBackground />
-      ) : (
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${backgroundImage})` }}
-        />
-      )}
+      <div 
+        className="absolute inset-0"
+        style={{ transform: `translateY(${scrollY * 0.5}px)` }}
+      >
+        {useTransitioningBackground ? (
+          <TransitioningBackground />
+        ) : (
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${backgroundImage})` }}
+          />
+        )}
+      </div>
       
       {/* Animated Gradient Overlay */}
       {overlay && (
@@ -43,7 +61,7 @@ const Hero = ({ backgroundImage, useTransitioningBackground = false, headline, s
       {/* Content */}
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl">
-          <h1 className="text-white mb-6 animate-fade-in-up [text-shadow:0_4px_20px_rgba(139,92,246,0.4)]">
+          <h1 className="text-white mb-6 animate-fade-in-up [text-shadow:0_4px_20px_rgba(139,92,246,0.4)] leading-tight">
             {headline}
           </h1>
           {subheadline && (
@@ -54,6 +72,9 @@ const Hero = ({ backgroundImage, useTransitioningBackground = false, headline, s
           {children && <div className="animate-fade-in-up stagger-2">{children}</div>}
         </div>
       </div>
+      
+      {/* Scroll Indicator */}
+      {showScrollIndicator && <ScrollIndicator />}
     </div>
   );
 };

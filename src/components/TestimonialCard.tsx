@@ -33,6 +33,8 @@ const TestimonialCard = ({ name, age, location, quote, image, rating = 5 }: Test
             src={image}
             alt={`${name}'s testimonial`}
             className="w-16 h-16 rounded-full object-cover ring-4 ring-accent/20 group-hover:ring-accent/40 group-hover:scale-110 transition-all duration-500"
+            loading="lazy"
+            decoding="async"
           />
           <div>
             <h4 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors duration-300">
