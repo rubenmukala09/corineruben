@@ -102,6 +102,7 @@ const Resources = () => {
         backgroundImage={heroImage}
         headline="Free Resources & Tools"
         subheadline="Downloadable guides, security tools, and answers to your questions—everything you need to stay safe."
+        showScrollIndicator={true}
       />
 
       {/* Free Guides */}

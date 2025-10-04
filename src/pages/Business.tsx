@@ -22,6 +22,7 @@ const Business = () => {
         backgroundImage={heroImage}
         headline="AI That Actually Works for Your Business"
         subheadline="Custom AI receptionists, follow-up systems, and automation—built secure, trained properly, and guaranteed to save you time. Starting at $5,000."
+        showScrollIndicator={true}
       >
         <Button asChild variant="default" size="xl">
           <Link to="/contact">SCHEDULE FREE DISCOVERY CALL</Link>

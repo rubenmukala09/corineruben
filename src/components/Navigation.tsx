@@ -21,7 +21,7 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-transform duration-300">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center shadow-glow-purple relative animate-heartbeat">
+            <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center shadow-glow-purple relative">
               {/* Radiating waves */}
               <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary to-accent opacity-5 animate-pulse-wave" />
               <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary to-accent opacity-0 animate-pulse-wave-delayed" />

@@ -28,6 +28,7 @@ const Contact = () => {
         backgroundImage={heroImage}
         headline="Let's Talk. We're Here to Help."
         subheadline="Whether you have questions, need training, or want to protect your family—we're ready to assist you."
+        showScrollIndicator={true}
       />
 
       <section className="relative py-20">

@@ -23,6 +23,7 @@ const ScamShield = () => {
         backgroundImage={heroImage}
         headline="Not Sure If It's a Scam? Ask the Experts."
         subheadline="Forward suspicious emails, texts, links, voice messages, and QR codes. Get a professional risk assessment before you act."
+        showScrollIndicator={true}
       >
         <Button asChild variant="default" size="xl">
           <Link to="/contact">START SCAM SHIELD</Link>

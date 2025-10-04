@@ -17,6 +17,7 @@ const About = () => {
         backgroundImage={heroImage}
         headline="Founded by Families, For Families"
         subheadline="After watching loved ones nearly lose thousands to AI-powered scams, we built InVision Network—the protection system we wish existed."
+        showScrollIndicator={true}
       />
 
       {/* Our Story */}

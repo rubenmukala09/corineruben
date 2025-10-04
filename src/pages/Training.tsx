@@ -22,6 +22,7 @@ const Training = () => {
         backgroundImage={heroImage}
         headline="Learn to Outsmart AI Scammers—No Tech Skills Required"
         subheadline="Master deepfake detection, phishing defense, and emergency protocols in plain English. Walk away with ready-to-use scripts and lifetime confidence."
+        showScrollIndicator={true}
       >
         <Button asChild variant="default" size="xl">
           <Link to="/contact">BOOK TRAINING NOW</Link>
