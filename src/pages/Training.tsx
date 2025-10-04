@@ -22,7 +22,7 @@ const Training = () => {
         headline="Learn to Outsmart AI Scammers—No Tech Skills Required"
         subheadline="Master deepfake detection, phishing defense, and emergency protocols in plain English. Walk away with ready-to-use scripts and lifetime confidence."
       >
-        <Button asChild variant="gold" size="xl">
+        <Button asChild variant="default" size="xl">
           <Link to="/contact">BOOK TRAINING NOW</Link>
         </Button>
       </Hero>
@@ -131,17 +131,17 @@ const Training = () => {
                 {/* CTA Buttons */}
                 <div></div>
                 <div className="p-4">
-                  <Button asChild className="w-full">
+                  <Button asChild variant="default" className="w-full">
                     <Link to="/contact">BOOK NOW</Link>
                   </Button>
                 </div>
                 <div className="p-4">
-                  <Button asChild variant="gold" className="w-full">
+                  <Button asChild variant="default" className="w-full">
                     <Link to="/contact">BOOK NOW</Link>
                   </Button>
                 </div>
                 <div className="p-4">
-                  <Button asChild className="w-full">
+                  <Button asChild variant="default" className="w-full">
                     <Link to="/contact">SCHEDULE PRIVATE</Link>
                   </Button>
                 </div>
@@ -242,7 +242,7 @@ const Training = () => {
 
       {/* Final CTA */}
       <CTASection headline="Ready to Learn?" variant="gold">
-        <Button asChild variant="default" size="xl">
+        <Button asChild variant="gold" size="xl">
           <Link to="/contact">BOOK TRAINING NOW</Link>
         </Button>
         <Button asChild variant="outline" size="xl">

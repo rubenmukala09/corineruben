@@ -12,8 +12,8 @@ interface CTASectionProps {
 const CTASection = ({ headline, description, children, className, variant = "gold" }: CTASectionProps) => {
   const bgClass = {
     default: "bg-muted",
-    gold: "bg-accent",
-    navy: "bg-primary",
+    gold: "bg-gradient-to-r from-primary to-accent",
+    navy: "bg-gradient-hero-primary",
   }[variant];
 
   const textClass = {

@@ -22,7 +22,7 @@ const Hero = ({ backgroundImage, headline, subheadline, children, className, ove
       {/* Animated Gradient Overlay */}
       {overlay && (
         <div 
-          className="absolute inset-0 bg-gradient-to-br from-primary via-[hsl(215,50%,38%)] to-[hsl(218,45%,51%)] opacity-85"
+          className="absolute inset-0 bg-gradient-hero-primary opacity-90"
           style={{ backgroundSize: '400% 400%', animation: 'gradient-shift 15s ease infinite' }}
         />
       )}
@@ -37,7 +37,7 @@ const Hero = ({ backgroundImage, headline, subheadline, children, className, ove
       {/* Content */}
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl">
-          <h1 className="text-white mb-6 animate-fade-in-up [text-shadow:0_4px_20px_rgba(252,211,77,0.3)]">
+          <h1 className="text-white mb-6 animate-fade-in-up [text-shadow:0_4px_20px_rgba(139,92,246,0.4)]">
             {headline}
           </h1>
           {subheadline && (

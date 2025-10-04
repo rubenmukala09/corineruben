@@ -5,9 +5,9 @@ interface BlobBackgroundProps {
 
 const BlobBackground = ({ variant = 'gold', position = 'top-right' }: BlobBackgroundProps) => {
   const gradientColor = {
-    gold: 'from-[hsl(32,95%,48%)] to-[hsl(38,92%,50%)]',
-    teal: 'from-[hsl(173,80%,31%)] to-[hsl(173,58%,39%)]',
-    purple: 'from-[hsl(250,70%,60%)] to-[hsl(250,60%,70%)]',
+    gold: 'from-[hsl(260,70%,35%)] to-[hsl(260,60%,50%)]',
+    teal: 'from-[hsl(180,80%,40%)] to-[hsl(180,75%,50%)]',
+    purple: 'from-[hsl(260,70%,35%)] to-[hsl(260,60%,50%)]',
   }[variant];
 
   const positionClasses = {

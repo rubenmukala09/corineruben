@@ -22,7 +22,7 @@ const Business = () => {
         headline="AI That Actually Works for Your Business"
         subheadline="Custom AI receptionists, follow-up systems, and automation—built secure, trained properly, and guaranteed to save you time. Starting at $5,000."
       >
-        <Button asChild variant="gold" size="xl">
+        <Button asChild variant="default" size="xl">
           <Link to="/contact">SCHEDULE FREE DISCOVERY CALL</Link>
         </Button>
       </Hero>
@@ -124,69 +124,21 @@ const Business = () => {
                   <span>Security baseline audit</span>
                 </li>
               </ul>
-              <Button asChild className="w-full">
+              <Button asChild variant="default" className="w-full">
                 <Link to="/contact">GET STARTED</Link>
               </Button>
             </Card>
 
             <Card className="p-8">
-              <h3 className="text-2xl font-bold mb-4">Follow-Up & Reminder System</h3>
-              <p className="text-muted-foreground mb-6">Automated email/SMS campaigns, lead nurturing</p>
-              <p className="text-4xl font-bold text-accent mb-6">$10,000</p>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Consent flows</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Custom templates</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Metrics dashboard</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>CRM sync</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>30-day stabilization</span>
-                </li>
-              </ul>
-              <Button asChild className="w-full">
+...
+              <Button asChild variant="default" className="w-full">
                 <Link to="/contact">GET STARTED</Link>
               </Button>
             </Card>
 
             <Card className="p-8 border-2 border-accent">
-              <h3 className="text-2xl font-bold mb-4">Custom Automation Suite</h3>
-              <p className="text-muted-foreground mb-6">Multi-system operations, complex workflows</p>
-              <p className="text-4xl font-bold text-accent mb-6">$15,000+</p>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Full discovery & design</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Build, train, deploy</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Security audit</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Team training</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>90-day support</span>
-                </li>
-              </ul>
-              <Button asChild variant="gold" className="w-full">
+...
+              <Button asChild variant="default" className="w-full">
                 <Link to="/contact">GET STARTED</Link>
               </Button>
             </Card>
@@ -350,7 +302,7 @@ const Business = () => {
 
       {/* Final CTA */}
       <CTASection headline="Ready to Deploy AI Safely?" variant="gold">
-        <Button asChild variant="default" size="xl">
+        <Button asChild variant="gold" size="xl">
           <Link to="/contact">SCHEDULE FREE DISCOVERY CALL</Link>
         </Button>
         <p className="text-accent-foreground text-sm mt-4">15-minute call to discuss your needs—no sales pressure.</p>

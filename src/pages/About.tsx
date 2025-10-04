@@ -240,11 +240,11 @@ const About = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="py-20 bg-accent">
+      <section className="py-20 bg-gradient-to-r from-primary to-accent">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-accent-foreground mb-8">Want to Join Our Mission?</h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button asChild variant="default" size="xl">
+            <Button asChild variant="gold" size="xl">
               <Link to="/training">BOOK TRAINING</Link>
             </Button>
             <Button asChild variant="outline" size="xl">

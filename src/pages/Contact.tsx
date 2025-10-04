@@ -20,7 +20,7 @@ const Contact = () => {
       <Navigation />
 
       {/* Hero */}
-      <section className="bg-primary text-primary-foreground py-20">
+      <section className="bg-gradient-hero-primary text-primary-foreground py-20">
         <div className="container mx-auto px-4 text-center">
           <h1 className="mb-6">Let's Talk. We're Here to Help.</h1>
           <p className="text-xl md:text-2xl max-w-3xl mx-auto">
@@ -110,7 +110,7 @@ const Contact = () => {
                   </label>
                 </div>
 
-                <Button type="submit" variant="gold" size="lg" className="w-full">
+                <Button type="submit" variant="default" size="lg" className="w-full">
                   SEND MESSAGE
                 </Button>
               </form>

@@ -7,7 +7,7 @@ const WaveDivider = ({ variant = 'bottom', color = 'primary' }: WaveDividerProps
   const gradientId = `wave-gradient-${variant}-${color}`;
   
   const gradientColors = color === 'primary' 
-    ? { start: '#1e3a5f', mid: '#2d5a7b', end: '#4a5f88' }
+    ? { start: 'hsl(260, 70%, 25%)', mid: 'hsl(260, 65%, 35%)', end: 'hsl(260, 60%, 45%)' }
     : { start: '#f9fafb', mid: '#ffffff', end: '#f9fafb' };
   
   return (

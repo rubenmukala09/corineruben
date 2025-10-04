@@ -9,13 +9,13 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-soft hover:shadow-medium hover:-translate-y-0.5",
-        gold: "bg-gradient-to-r from-accent via-[hsl(38,92%,50%)] to-[hsl(41,96%,65%)] bg-[length:200%_100%] text-accent-foreground hover:bg-right shadow-soft hover:shadow-glow-gold hover:-translate-y-0.5 before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/40 before:to-transparent before:-translate-x-full hover:before:translate-x-full before:transition-transform before:duration-500",
-        outline: "border-2 border-primary text-primary bg-transparent hover:bg-primary hover:text-primary-foreground hover:shadow-medium hover:-translate-y-0.5 before:absolute before:inset-0 before:bg-gradient-to-r before:from-primary before:to-[hsl(215,50%,38%)] before:-z-10 before:translate-x-[-100%] hover:before:translate-x-0 before:transition-transform before:duration-300",
-        outlineGold: "border-2 border-accent text-accent bg-transparent hover:bg-accent hover:text-accent-foreground hover:shadow-glow-gold hover:-translate-y-0.5",
+        default: "bg-gradient-to-r from-primary to-[hsl(260,60%,50%)] text-primary-foreground hover:from-[hsl(260,65%,40%)] hover:to-[hsl(260,55%,55%)] shadow-soft hover:shadow-glow-purple hover:-translate-y-0.5 before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:-translate-x-full hover:before:translate-x-full before:transition-transform before:duration-500",
+        gold: "bg-gradient-to-r from-accent to-[hsl(180,70%,55%)] text-accent-foreground hover:from-[hsl(180,75%,50%)] hover:to-[hsl(180,65%,60%)] shadow-soft hover:shadow-glow-teal hover:-translate-y-0.5 before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:-translate-x-full hover:before:translate-x-full before:transition-transform before:duration-500",
+        outline: "border-2 border-primary text-primary bg-transparent hover:bg-primary hover:text-primary-foreground hover:shadow-medium hover:-translate-y-0.5 before:absolute before:inset-0 before:bg-gradient-to-r before:from-primary before:to-accent before:-z-10 before:translate-x-[-100%] hover:before:translate-x-0 before:transition-transform before:duration-300",
+        outlineGold: "border-2 border-accent text-accent bg-transparent hover:bg-accent hover:text-accent-foreground hover:shadow-glow-teal hover:-translate-y-0.5",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-soft hover:shadow-medium",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 hover:shadow-soft",
-        ghost: "hover:bg-accent/10 hover:text-accent relative after:absolute after:bottom-0 after:left-1/2 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-accent after:to-[hsl(38,92%,50%)] after:-translate-x-1/2 after:transition-all hover:after:w-full",
+        ghost: "hover:bg-primary/10 hover:text-primary relative after:absolute after:bottom-0 after:left-1/2 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-primary after:to-accent after:-translate-x-1/2 after:transition-all hover:after:w-full",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {

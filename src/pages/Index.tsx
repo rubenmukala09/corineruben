@@ -26,13 +26,13 @@ const Index = () => {
         subheadline="Simple, respectful training for adults 40+ and families. Learn to spot deepfakes, phishing, and AI fraud—no tech degree required."
       >
         <div className="flex flex-col sm:flex-row gap-4">
-          <Button asChild variant="gold" size="xl">
+          <Button asChild variant="default" size="xl">
             <Link to="/training">BOOK TRAINING</Link>
           </Button>
-          <Button asChild variant="outlineGold" size="xl">
+          <Button asChild variant="outline" size="xl">
             <Link to="/scam-shield">START SCAM SHIELD</Link>
           </Button>
-          <Button asChild variant="outlineGold" size="xl">
+          <Button asChild variant="outline" size="xl">
             <Link to="/contact">TALK TO AN EXPERT</Link>
           </Button>
         </div>
@@ -244,7 +244,7 @@ const Index = () => {
 
       {/* Final CTA */}
       <CTASection headline="Ready to Protect Your Family?" variant="gold">
-        <Button asChild variant="default" size="xl">
+        <Button asChild variant="gold" size="xl">
           <Link to="/training">BOOK TRAINING</Link>
         </Button>
         <Button asChild variant="outline" size="xl">
