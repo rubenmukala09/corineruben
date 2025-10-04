@@ -8,7 +8,7 @@ import CTASection from "@/components/CTASection";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Upload, UserCheck, Shield, Mail, Link as LinkIcon, QrCode, Mic, Image as ImageIcon, MessageSquare, CheckCircle, AlertTriangle } from "lucide-react";
-import heroImage from "@/assets/hero-homepage.jpg";
+import heroImage from "@/assets/hero-scamshield-new.jpg";
 import testimonial4 from "@/assets/testimonial-4.jpg";
 import testimonial1 from "@/assets/testimonial-1.jpg";
 import testimonial2 from "@/assets/testimonial-2.jpg";
