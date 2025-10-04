@@ -21,18 +21,18 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-transform duration-300">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center shadow-glow-purple relative animate-heartbeat">
+            <div className="w-12 h-12 bg-gradient-to-br from-[hsl(230,70%,45%)] via-[hsl(200,70%,50%)] to-[hsl(180,70%,50%)] rounded-2xl flex items-center justify-center shadow-glow-purple relative animate-heartbeat overflow-hidden">
               {/* Radiating wave */}
-              <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary to-accent opacity-30 animate-pulse-wave" />
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary to-accent opacity-10 animate-pulse-wave" />
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="2"
+                strokeWidth="2.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="w-6 h-6 text-primary-foreground relative z-10"
+                className="w-7 h-7 text-white relative z-10"
               >
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
