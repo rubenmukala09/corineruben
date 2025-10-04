@@ -39,12 +39,12 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex flex-1 items-center justify-center space-x-8">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.href}
-                className="text-foreground/80 hover:text-foreground font-bold transition-colors duration-200 text-base"
+                className="text-foreground/80 hover:text-foreground font-bold transition-colors duration-200 text-base whitespace-nowrap"
               >
                 {link.name}
               </Link>
