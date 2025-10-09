@@ -61,11 +61,11 @@ const Hero = ({ backgroundImage, useTransitioningBackground = false, headline, s
       {/* Content */}
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl">
-          <h1 className="text-white mb-6 animate-fade-in-up [text-shadow:0_4px_20px_rgba(139,92,246,0.4)] leading-tight">
+          <h1 className="text-white mb-6 animate-fade-in-up [text-shadow:0_4px_20px_rgba(139,92,246,0.4)] leading-tight transition-opacity duration-500">
             {headline}
           </h1>
           {subheadline && (
-            <p className="text-white/90 text-xl md:text-2xl mb-8 leading-relaxed animate-fade-in-up stagger-1">
+            <p className="text-white/90 text-xl md:text-2xl mb-8 leading-relaxed animate-fade-in-up stagger-1 transition-opacity duration-500">
               {subheadline}
             </p>
           )}

@@ -3,7 +3,6 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import TrustBar from "@/components/TrustBar";
-
 import TestimonialCard from "@/components/TestimonialCard";
 import CTASection from "@/components/CTASection";
 import ThreePathsForward from "@/components/ThreePathsForward";
@@ -11,6 +10,7 @@ import FlowingWaves from "@/components/FlowingWaves";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Heart, FileText, MessageSquare, Users, StopCircle, Search, Phone, DollarSign, FileCheck, Shield, CheckCircle } from "lucide-react";
+import { useRotatingText } from "@/hooks/useRotatingText";
 import heroImage from "@/assets/hero-homepage.jpg";
 import testimonial1 from "@/assets/testimonial-1.jpg";
 import testimonial2 from "@/assets/testimonial-2.jpg";
@@ -19,7 +19,31 @@ import testimonial5 from "@/assets/testimonial-5.jpg";
 import testimonial6 from "@/assets/testimonial-6.jpg";
 import testimonial7 from "@/assets/testimonial-7.jpg";
 
+const heroMessages = [
+  {
+    headline: "Protect Your Family from AI-Powered Scams",
+    subheadline: "Simple, respectful training for adults 40+ and families. Learn to spot deepfakes, phishing, and AI fraud—no tech degree required."
+  },
+  {
+    headline: "Stop Scammers Before They Strike",
+    subheadline: "Master the 60-Second Pause Protocol. Real-world training that empowers you to recognize voice clones, fake videos, and urgent scams."
+  },
+  {
+    headline: "Your Family's Digital Safety Starts Here",
+    subheadline: "Expert-led cybersecurity training designed for seniors and families. Gain confidence navigating the digital world safely."
+  },
+  {
+    headline: "Don't Let AI Scammers Win",
+    subheadline: "Join 500+ families who've learned to identify deepfakes, phishing emails, and emergency impersonation scams. Professional protection made simple."
+  },
+  {
+    headline: "Peace of Mind in the Digital Age",
+    subheadline: "Privacy-first training that respects your intelligence. Learn practical skills to protect your money, identity, and loved ones from modern fraud."
+  }
+];
+
 const Index = () => {
+  const { currentText, isVisible } = useRotatingText(heroMessages, 20000);
   return (
     <div className="min-h-screen">
       <Navigation />
@@ -27,9 +51,10 @@ const Index = () => {
       {/* Hero Section */}
       <Hero
         useTransitioningBackground={true}
-        headline="Protect Your Family from AI-Powered Scams"
-        subheadline="Simple, respectful training for adults 40+ and families. Learn to spot deepfakes, phishing, and AI fraud—no tech degree required."
+        headline={currentText.headline}
+        subheadline={currentText.subheadline}
         showScrollIndicator={true}
+        className={isVisible ? "animate-fade-in" : "animate-fade-out"}
       >
         <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center sm:justify-start">
           <Button asChild variant="default" size="xl" className="w-full sm:w-auto">
