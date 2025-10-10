@@ -54,9 +54,77 @@ const About = () => {
         </div>
       </section>
 
-      {/* Our Values */}
+      {/* Team Section */}
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="mb-4">Meet the Team Behind</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Our Core Values
+            </p>
+          </div>
+          <p className="text-center text-lg text-muted-foreground max-w-4xl mx-auto mb-16">
+            At InVision Network, we believe in empowering families through education, innovation, and authentic relationships. Our team brings diverse expertise together to transform how people approach digital safety and protection against AI-powered fraud.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto mb-16">
+            <Card className="p-8 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
+              <div className="flex flex-col items-center text-center gap-4">
+                <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
+                  <Heart className="w-10 h-10 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-3">Authentic Leadership</h3>
+                  <p className="text-muted-foreground text-sm">
+                    We lead by example, with transparency and integrity in everything we do.
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="p-8 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
+              <div className="flex flex-col items-center text-center gap-4">
+                <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
+                  <BookOpen className="w-10 h-10 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-3">Continuous Growth</h3>
+                  <p className="text-muted-foreground text-sm">
+                    We believe in constant learning and evolution to stay ahead of industry changes.
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="p-8 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
+              <div className="flex flex-col items-center text-center gap-4">
+                <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
+                  <Users2 className="w-10 h-10 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-3">Client Success</h3>
+                  <p className="text-muted-foreground text-sm">
+                    Your success is our success. We're committed to measurable results for our clients.
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="p-8 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
+              <div className="flex flex-col items-center text-center gap-4">
+                <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
+                  <Shield className="w-10 h-10 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-3">Innovation</h3>
+                  <p className="text-muted-foreground text-sm">
+                    We continuously explore new strategies and technologies to drive better outcomes.
+                  </p>
+                </div>
+              </div>
+            </Card>
+          </div>
+
           <h2 className="text-center mb-16">Our Values</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             <Card className="p-8 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">

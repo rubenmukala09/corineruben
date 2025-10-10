@@ -16,6 +16,9 @@ import SignUp from "./pages/SignUp";
 import PasswordReset from "./pages/PasswordReset";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
+import CookieConsent from "./components/CookieConsent";
+import HelpDialog from "./components/HelpDialog";
+import AnalyticsConsent from "./components/AnalyticsConsent";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +44,9 @@ const App = () => (
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <CookieConsent />
+          <HelpDialog />
+          <AnalyticsConsent />
         </BrowserRouter>
       </TooltipProvider>
     </AuthProvider>
