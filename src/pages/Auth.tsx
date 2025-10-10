@@ -1,14 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Shield, Eye, EyeOff, Mail, Lock, ArrowRight, Sparkles, Zap, User, Phone, Calendar as CalendarIcon, MapPin, Globe } from 'lucide-react';
-import { format } from 'date-fns';
+import { Shield, Eye, EyeOff, Mail, Lock, ArrowRight, Sparkles, Zap, User, Phone, CalendarIcon, MapPin, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { cn } from '@/lib/utils';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import AIPartnersCarousel from '@/components/AIPartnersCarousel';
@@ -35,10 +31,10 @@ const Auth = () => {
     phone: '',
     password: '',
     confirmPassword: '',
+    dateOfBirth: '',
     city: '',
     country: '',
   });
-  const [dateOfBirth, setDateOfBirth] = useState<Date>();
   const [showSignupPassword, setShowSignupPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
@@ -81,15 +77,6 @@ const Auth = () => {
 
   const handleSignupSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!dateOfBirth) {
-      toast({
-        title: "Date of birth required",
-        description: "Please select your date of birth.",
-        variant: "destructive",
-      });
-      return;
-    }
     
     if (signupData.password !== signupData.confirmPassword) {
       toast({
@@ -383,36 +370,20 @@ const Auth = () => {
 
               <div className="space-y-2">
                 <Label htmlFor="dateOfBirth" className="text-sm font-semibold">Date of Birth *</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "w-full h-12 justify-start text-left font-normal border-2 hover:border-primary transition-all rounded-xl",
-                        !dateOfBirth && "text-muted-foreground"
-                      )}
-                      disabled={isLoading}
-                    >
-                      <CalendarIcon className="mr-3 h-4 w-4 text-muted-foreground" />
-                      {dateOfBirth ? format(dateOfBirth, "MM/dd/yyyy") : <span>mm/dd/yyyy</span>}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={dateOfBirth}
-                      onSelect={setDateOfBirth}
-                      disabled={(date) =>
-                        date > new Date() || date < new Date("1900-01-01")
-                      }
-                      initialFocus
-                      captionLayout="dropdown-buttons"
-                      fromYear={1900}
-                      toYear={new Date().getFullYear()}
-                      className={cn("p-3 pointer-events-auto")}
-                    />
-                  </PopoverContent>
-                </Popover>
+                <div className="relative">
+                  <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input
+                    id="dateOfBirth"
+                    name="dateOfBirth"
+                    type="text"
+                    placeholder="mm/dd/yyyy"
+                    value={signupData.dateOfBirth}
+                    onChange={handleSignupChange}
+                    required
+                    disabled={isLoading}
+                    className="pl-10 h-12 border-2 rounded-xl"
+                  />
+                </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
