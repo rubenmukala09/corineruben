@@ -423,29 +423,29 @@ const Auth = () => {
                 </div>
               </div>
 
-              <div className="space-y-2 pt-2">
-                <div className="flex items-start space-x-2">
+              <div className="space-y-3 pt-2">
+                <div className="flex items-start space-x-3">
                   <Checkbox 
                     id="terms" 
                     checked={acceptedTerms}
                     onCheckedChange={(checked) => setAcceptedTerms(checked as boolean)}
-                    className="mt-0.5 h-4 w-4"
+                    className="mt-1"
                   />
-                  <label htmlFor="terms" className="text-xs cursor-pointer leading-tight">
+                  <label htmlFor="terms" className="text-sm cursor-pointer leading-tight">
                     I accept the{' '}
                     <Link to="/terms" className="text-primary hover:underline font-semibold">
                       Terms of Service
                     </Link>
                   </label>
                 </div>
-                <div className="flex items-start space-x-2">
+                <div className="flex items-start space-x-3">
                   <Checkbox 
                     id="privacy" 
                     checked={acceptedPrivacy}
                     onCheckedChange={(checked) => setAcceptedPrivacy(checked as boolean)}
-                    className="mt-0.5 h-4 w-4"
+                    className="mt-1"
                   />
-                  <label htmlFor="privacy" className="text-xs cursor-pointer leading-tight">
+                  <label htmlFor="privacy" className="text-sm cursor-pointer leading-tight">
                     I accept the{' '}
                     <Link to="/privacy" className="text-primary hover:underline font-semibold">
                       Privacy Policy
