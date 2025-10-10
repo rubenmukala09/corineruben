@@ -137,6 +137,35 @@ export type Database = {
         }
         Relationships: []
       }
+      zoom_class_enrollments: {
+        Row: {
+          class_id: string
+          enrolled_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          class_id: string
+          enrolled_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          class_id?: string
+          enrolled_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "zoom_class_enrollments_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "zoom_classes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       zoom_classes: {
         Row: {
           created_at: string | null
