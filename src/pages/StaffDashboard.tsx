@@ -5,34 +5,14 @@ import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { LogOut, Building2, Users, TrendingUp, Calendar, Ticket, FileText, GraduationCap, Briefcase } from "lucide-react";
-
-interface CRMStats {
-  companies: number;
-  contacts: number;
-  deals: number;
-  events: number;
-  tickets: number;
-  bookings: number;
-  courses: number;
-  invoices: number;
-}
+import { LogOut, AlertCircle } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const StaffDashboard = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { user, signOut } = useAuth();
   const [loading, setLoading] = useState(true);
-  const [stats, setStats] = useState<CRMStats>({
-    companies: 0,
-    contacts: 0,
-    deals: 0,
-    events: 0,
-    tickets: 0,
-    bookings: 0,
-    courses: 0,
-    invoices: 0,
-  });
 
   useEffect(() => {
     checkAuth();
@@ -44,12 +24,12 @@ const StaffDashboard = () => {
       return;
     }
 
-    // Check if user has staff or admin role
+    // Check if user has admin role (staff role doesn't exist yet in types)
     const { data: roleData } = await supabase
       .from("user_roles")
       .select("role")
       .eq("user_id", user.id)
-      .in("role", ["admin", "staff"])
+      .eq("role", "admin")
       .maybeSingle();
 
     if (!roleData) {
@@ -62,50 +42,7 @@ const StaffDashboard = () => {
       return;
     }
     
-    await loadStats();
     setLoading(false);
-  };
-
-  const loadStats = async () => {
-    try {
-      const [
-        companiesRes,
-        contactsRes,
-        dealsRes,
-        eventsRes,
-        ticketsRes,
-        bookingsRes,
-        coursesRes,
-        invoicesRes,
-      ] = await Promise.all([
-        supabase.from("companies").select("*", { count: "exact", head: true }),
-        supabase.from("contacts").select("*", { count: "exact", head: true }),
-        supabase.from("deals").select("*", { count: "exact", head: true }),
-        supabase.from("events").select("*", { count: "exact", head: true }),
-        supabase.from("tickets").select("*", { count: "exact", head: true }),
-        supabase.from("bookings").select("*", { count: "exact", head: true }),
-        supabase.from("courses").select("*", { count: "exact", head: true }),
-        supabase.from("invoices").select("*", { count: "exact", head: true }),
-      ]);
-
-      setStats({
-        companies: companiesRes.count || 0,
-        contacts: contactsRes.count || 0,
-        deals: dealsRes.count || 0,
-        events: eventsRes.count || 0,
-        tickets: ticketsRes.count || 0,
-        bookings: bookingsRes.count || 0,
-        courses: coursesRes.count || 0,
-        invoices: invoicesRes.count || 0,
-      });
-    } catch (error) {
-      console.error("Error loading stats:", error);
-      toast({
-        title: "Error",
-        description: "Failed to load dashboard statistics",
-        variant: "destructive",
-      });
-    }
   };
 
   const handleLogout = async () => {
@@ -134,124 +71,70 @@ const StaffDashboard = () => {
       </nav>
 
       <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold mb-2">Welcome to the CRM Dashboard</h2>
-          <p className="text-muted-foreground">Manage your business relationships and operations</p>
-        </div>
+        <Alert className="mb-6">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>CRM Database Setup Required</AlertTitle>
+          <AlertDescription>
+            The CRM database tables need to be created. A migration has been prepared that will create:
+            <ul className="list-disc list-inside mt-2 space-y-1">
+              <li>Companies - Manage company information and relationships</li>
+              <li>Contacts - Track leads, customers, and partners</li>
+              <li>Deals - Monitor sales pipeline and opportunities</li>
+              <li>Events - Schedule meetings, calls, and activities</li>
+              <li>Services - Define your service offerings</li>
+              <li>Bookings - Manage service appointments</li>
+              <li>Courses - Create and manage training courses</li>
+              <li>Enrollments - Track student progress</li>
+              <li>Tickets - Support ticket management</li>
+              <li>Invoices - Financial tracking and billing</li>
+            </ul>
+            <p className="mt-4 font-medium">
+              Please scroll up in the chat to find and approve the database migration.
+            </p>
+          </AlertDescription>
+        </Alert>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
+        <div className="grid gap-6">
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Companies</CardTitle>
-              <Building2 className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.companies}</div>
-              <p className="text-xs text-muted-foreground mt-1">Active companies</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Contacts</CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.contacts}</div>
-              <p className="text-xs text-muted-foreground mt-1">Total contacts</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Active Deals</CardTitle>
-              <TrendingUp className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.deals}</div>
-              <p className="text-xs text-muted-foreground mt-1">In pipeline</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Open Tickets</CardTitle>
-              <Ticket className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.tickets}</div>
-              <p className="text-xs text-muted-foreground mt-1">Support requests</p>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
             <CardHeader>
-              <Calendar className="h-8 w-8 mb-2 text-primary" />
-              <CardTitle>Events & Activities</CardTitle>
-              <CardDescription>Manage meetings and tasks</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-2xl font-bold">{stats.events}</p>
-              <p className="text-sm text-muted-foreground">Scheduled events</p>
-            </CardContent>
-          </Card>
-
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader>
-              <Briefcase className="h-8 w-8 mb-2 text-primary" />
-              <CardTitle>Bookings</CardTitle>
-              <CardDescription>Service appointments</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-2xl font-bold">{stats.bookings}</p>
-              <p className="text-sm text-muted-foreground">Active bookings</p>
-            </CardContent>
-          </Card>
-
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader>
-              <GraduationCap className="h-8 w-8 mb-2 text-primary" />
-              <CardTitle>Courses</CardTitle>
-              <CardDescription>Training programs</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-2xl font-bold">{stats.courses}</p>
-              <p className="text-sm text-muted-foreground">Available courses</p>
-            </CardContent>
-          </Card>
-
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader>
-              <FileText className="h-8 w-8 mb-2 text-primary" />
-              <CardTitle>Invoices</CardTitle>
-              <CardDescription>Financial documents</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-2xl font-bold">{stats.invoices}</p>
-              <p className="text-sm text-muted-foreground">Total invoices</p>
-            </CardContent>
-          </Card>
-
-          <Card className="md:col-span-2">
-            <CardHeader>
-              <CardTitle>Quick Actions</CardTitle>
-              <CardDescription>Common CRM tasks</CardDescription>
+              <CardTitle>What happens after migration?</CardTitle>
+              <CardDescription>Once you approve the migration, the system will:</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
-              <Button className="w-full justify-start" variant="outline">
-                <Users className="mr-2 h-4 w-4" />
-                Add New Contact
-              </Button>
-              <Button className="w-full justify-start" variant="outline">
-                <Building2 className="mr-2 h-4 w-4" />
-                Create Company
-              </Button>
-              <Button className="w-full justify-start" variant="outline">
-                <TrendingUp className="mr-2 h-4 w-4" />
-                New Deal
-              </Button>
+              <p>✓ Create all CRM database tables with proper relationships</p>
+              <p>✓ Set up Row Level Security (RLS) policies for data protection</p>
+              <p>✓ Add the 'staff' user role for team management</p>
+              <p>✓ Generate TypeScript types for type-safe development</p>
+              <p>✓ Enable this dashboard to display and manage all CRM data</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>How to approve the migration</CardTitle>
+              <CardDescription>Follow these steps to activate the CRM system:</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div className="flex items-start gap-3">
+                <div className="rounded-full bg-primary text-primary-foreground w-6 h-6 flex items-center justify-center text-sm font-medium flex-shrink-0">1</div>
+                <p>Scroll up in the chat window on the left side of the screen</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="rounded-full bg-primary text-primary-foreground w-6 h-6 flex items-center justify-center text-sm font-medium flex-shrink-0">2</div>
+                <p>Look for a message showing the database migration SQL code</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="rounded-full bg-primary text-primary-foreground w-6 h-6 flex items-center justify-center text-sm font-medium flex-shrink-0">3</div>
+                <p>Click the <strong>"Approve"</strong> button to execute the migration</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="rounded-full bg-primary text-primary-foreground w-6 h-6 flex items-center justify-center text-sm font-medium flex-shrink-0">4</div>
+                <p>Wait for the migration to complete (usually takes a few seconds)</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="rounded-full bg-primary text-primary-foreground w-6 h-6 flex items-center justify-center text-sm font-medium flex-shrink-0">5</div>
+                <p>Refresh this page to see your fully functional CRM dashboard!</p>
+              </div>
             </CardContent>
           </Card>
         </div>
