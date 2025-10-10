@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,10 +10,18 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { useAuth } from "@/hooks/useAuth";
 
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileBusinessOpen, setMobileBusinessOpen] = useState(false);
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/");
+  };
 
   const navLinks = [
     { name: "Team", href: "/team" },
@@ -107,9 +115,15 @@ const Navigation = () => {
               <Phone className="w-4 h-4" aria-hidden="true" />
               <span className="font-medium">(937) 555-1234</span>
             </a>
-            <Button asChild variant="outline" size="sm" className="hidden md:inline-flex font-semibold">
-              <Link to="/auth" aria-label="Login to admin panel">LOGIN</Link>
-            </Button>
+            {user ? (
+              <Button onClick={handleLogout} variant="outline" size="sm" className="hidden md:inline-flex font-semibold">
+                LOGOUT
+              </Button>
+            ) : (
+              <Button asChild variant="outline" size="sm" className="hidden md:inline-flex font-semibold">
+                <Link to="/auth" aria-label="Login to admin panel">LOGIN</Link>
+              </Button>
+            )}
             <Button asChild variant="default" size="sm" className="hidden md:inline-flex font-semibold">
               <Link to="/training" aria-label="Book a training session">BOOK TRAINING</Link>
             </Button>
@@ -167,6 +181,17 @@ const Navigation = () => {
               ))}
 
               <div className="pt-2 border-t border-border flex flex-col gap-3">
+                {user ? (
+                  <Button onClick={handleLogout} variant="outline" className="w-full">
+                    LOGOUT
+                  </Button>
+                ) : (
+                  <Button asChild variant="outline" className="w-full">
+                    <Link to="/auth" onClick={() => setMobileMenuOpen(false)} aria-label="Login to admin panel">
+                      LOGIN
+                    </Link>
+                  </Button>
+                )}
                 <Button asChild variant="default" className="w-full">
                   <Link to="/training" onClick={() => setMobileMenuOpen(false)} aria-label="Book a training session">
                     BOOK TRAINING
