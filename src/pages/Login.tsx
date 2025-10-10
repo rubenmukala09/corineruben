@@ -22,7 +22,7 @@ const Login = () => {
 
   useEffect(() => {
     if (user) {
-      navigate('/staff');
+      navigate('/');
     }
   }, [user, navigate]);
 
@@ -43,7 +43,7 @@ const Login = () => {
       if (rememberMe) {
         localStorage.setItem('rememberMe', 'true');
       }
-      navigate('/staff');
+      navigate('/');
     } catch (error) {
       // Error already handled in useAuth
     } finally {
