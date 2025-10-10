@@ -13,6 +13,7 @@ import Resources from "./pages/Resources";
 import Contact from "./pages/Contact";
 import Team from "./pages/Team";
 import Partners from "./pages/Partners";
+import Careers from "./pages/Careers";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import PasswordReset from "./pages/PasswordReset";
@@ -41,6 +42,7 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/team" element={<Team />} />
             <Route path="/partners" element={<Partners />} />
+            <Route path="/careers" element={<Careers />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/password-reset" element={<PasswordReset />} />

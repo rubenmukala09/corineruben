@@ -7,6 +7,9 @@ import TestimonialCard from "@/components/TestimonialCard";
 import CTASection from "@/components/CTASection";
 import ThreePathsForward from "@/components/ThreePathsForward";
 import FlowingWaves from "@/components/FlowingWaves";
+import NewsletterSubscribe from "@/components/NewsletterSubscribe";
+import VideoTestimonials from "@/components/VideoTestimonials";
+import EducationalVideos from "@/components/EducationalVideos";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Heart, FileText, MessageSquare, Users, StopCircle, Search, Phone, DollarSign, FileCheck, Shield, CheckCircle, ExternalLink } from "lucide-react";
@@ -284,6 +287,21 @@ const Index = () => {
                 image={testimonial7}
               />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Educational Videos */}
+      <EducationalVideos />
+
+      {/* Video Testimonials */}
+      <VideoTestimonials />
+
+      {/* Newsletter Subscribe */}
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="max-w-xl mx-auto">
+            <NewsletterSubscribe />
           </div>
         </div>
       </section>

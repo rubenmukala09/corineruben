@@ -31,7 +31,7 @@ const TransitioningBackground = ({ interval = 10000, className = '', opacity = 1
         setCurrentIndex(nextIndex);
         setNextIndex((nextIndex + 1) % images.length);
         setIsTransitioning(false);
-      }, 2000); // Smooth 2-second transition
+      }, 3000); // Extended smooth 3-second transition for even smoother effect
     }, interval);
 
     return () => clearInterval(timer);
@@ -41,19 +41,21 @@ const TransitioningBackground = ({ interval = 10000, className = '', opacity = 1
     <div className={`absolute inset-0 overflow-hidden ${className}`}>
       {/* Current Image */}
       <div
-        className="absolute inset-0 bg-cover bg-center transition-opacity duration-[2000ms] ease-in-out"
+        className="absolute inset-0 bg-cover bg-center transition-all duration-[3000ms] ease-in-out"
         style={{
           backgroundImage: `url(${images[currentIndex]})`,
           opacity: isTransitioning ? 0 : opacity,
+          transform: isTransitioning ? 'scale(1.05)' : 'scale(1)',
         }}
       />
       
       {/* Next Image (for smooth transition) */}
       <div
-        className="absolute inset-0 bg-cover bg-center transition-opacity duration-[2000ms] ease-in-out"
+        className="absolute inset-0 bg-cover bg-center transition-all duration-[3000ms] ease-in-out"
         style={{
           backgroundImage: `url(${images[nextIndex]})`,
           opacity: isTransitioning ? opacity : 0,
+          transform: isTransitioning ? 'scale(1)' : 'scale(1.05)',
         }}
       />
       
