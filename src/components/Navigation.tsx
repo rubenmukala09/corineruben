@@ -108,7 +108,7 @@ const Navigation = () => {
               <span className="font-medium">(937) 555-1234</span>
             </a>
             <Button asChild variant="outline" size="sm" className="hidden md:inline-flex font-semibold">
-              <Link to="/login" aria-label="Login to admin panel">LOGIN</Link>
+              <Link to="/auth" aria-label="Login to admin panel">LOGIN</Link>
             </Button>
             <Button asChild variant="default" size="sm" className="hidden md:inline-flex font-semibold">
               <Link to="/training" aria-label="Book a training session">BOOK TRAINING</Link>

@@ -14,9 +14,7 @@ import Contact from "./pages/Contact";
 import Team from "./pages/Team";
 import Partners from "./pages/Partners";
 import Careers from "./pages/Careers";
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
-import EnhancedSignUp from "./pages/EnhancedSignUp";
+import Auth from "./pages/Auth";
 import PasswordReset from "./pages/PasswordReset";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
@@ -44,8 +42,9 @@ const App = () => (
             <Route path="/team" element={<Team />} />
             <Route path="/partners" element={<Partners />} />
             <Route path="/careers" element={<Careers />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<EnhancedSignUp />} />
+            <Route path="/login" element={<Auth />} />
+            <Route path="/signup" element={<Auth />} />
+            <Route path="/auth" element={<Auth />} />
             <Route path="/password-reset" element={<PasswordReset />} />
             <Route path="/admin" element={<AdminDashboard />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
