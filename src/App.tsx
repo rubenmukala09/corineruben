@@ -22,6 +22,12 @@ import AdminDashboard from "./pages/AdminDashboard";
 import StaffDashboard from "./pages/StaffDashboard";
 import WorkerDashboard from "./pages/WorkerDashboard";
 import NotFound from "./pages/NotFound";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
+import Refund from "./pages/Refund";
+import Disclaimer from "./pages/Disclaimer";
+import Partnerships from "./pages/Partnerships";
+import Donate from "./pages/Donate";
 import CookieConsent from "./components/CookieConsent";
 import HelpDialog from "./components/HelpDialog";
 import AnalyticsConsent from "./components/AnalyticsConsent";
@@ -53,6 +59,13 @@ const App = () => (
             <Route path="/staff" element={<StaffDashboard />} />
             <Route path="/worker" element={<WorkerDashboardNew />} />
             <Route path="/enhanced-auth" element={<EnhancedAuth />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/refund" element={<Refund />} />
+            <Route path="/disclaimer" element={<Disclaimer />} />
+            <Route path="/partnerships" element={<Partnerships />} />
+            <Route path="/partners" element={<Partnerships />} />
+            <Route path="/donate" element={<Donate />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
