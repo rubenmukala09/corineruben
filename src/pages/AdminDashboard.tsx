@@ -18,6 +18,7 @@ import {
   LogOut
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { ClientsTab } from '@/components/admin/ClientsTab';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -207,17 +208,7 @@ export default function AdminDashboard() {
           </TabsContent>
 
           <TabsContent value="clients">
-            <Card>
-              <CardHeader>
-                <CardTitle>Client Management</CardTitle>
-                <CardDescription>Manage client requests and communications</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground text-center py-8">
-                  Client management interface coming soon
-                </p>
-              </CardContent>
-            </Card>
+            <ClientsTab />
           </TabsContent>
 
           <TabsContent value="workers">
