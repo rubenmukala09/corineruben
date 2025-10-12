@@ -556,6 +556,45 @@ export type Database = {
           },
         ]
       }
+      donations: {
+        Row: {
+          amount: number
+          created_at: string
+          donation_type: string
+          donor_name: string
+          email: string
+          id: string
+          message: string | null
+          payment_status: string
+          stripe_payment_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          donation_type?: string
+          donor_name: string
+          email: string
+          id?: string
+          message?: string | null
+          payment_status?: string
+          stripe_payment_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          donation_type?: string
+          donor_name?: string
+          email?: string
+          id?: string
+          message?: string | null
+          payment_status?: string
+          stripe_payment_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       enrollments: {
         Row: {
           completed_at: string | null
@@ -771,6 +810,45 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      job_applications: {
+        Row: {
+          cover_letter: string
+          created_at: string
+          email: string
+          id: string
+          name: string
+          phone: string
+          position: string
+          resume_url: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          cover_letter: string
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          phone: string
+          position: string
+          resume_url?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          cover_letter?: string
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          phone?: string
+          position?: string
+          resume_url?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       jobs: {
         Row: {

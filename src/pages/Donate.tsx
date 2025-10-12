@@ -8,10 +8,12 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import { Heart, Users, Shield, CheckCircle, DollarSign } from "lucide-react";
 
 const Donate = () => {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     donorName: "",
     email: "",
@@ -20,19 +22,46 @@ const Donate = () => {
     donationType: "one-time"
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Thank You!",
-      description: "Your donation request has been received. We'll contact you shortly with payment details.",
-    });
-    setFormData({
-      donorName: "",
-      email: "",
-      amount: "",
-      message: "",
-      donationType: "one-time"
-    });
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase
+        .from("donations")
+        .insert([{
+          donor_name: formData.donorName,
+          email: formData.email,
+          amount: parseFloat(formData.amount),
+          message: formData.message || null,
+          donation_type: formData.donationType,
+          payment_status: "pending"
+        }]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Thank You!",
+        description: "Your donation request has been received. We'll contact you shortly with payment details.",
+      });
+      
+      setFormData({
+        donorName: "",
+        email: "",
+        amount: "",
+        message: "",
+        donationType: "one-time"
+      });
+    } catch (error) {
+      console.error("Error submitting donation:", error);
+      toast({
+        title: "Error",
+        description: "Failed to submit donation request. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -242,8 +271,8 @@ const Donate = () => {
                   </p>
                 </div>
 
-                <Button type="submit" size="lg" className="w-full">
-                  Proceed to Payment
+                <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
+                  {isSubmitting ? "Processing..." : "Proceed to Payment"}
                 </Button>
               </form>
             </Card>

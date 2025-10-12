@@ -10,7 +10,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { 
+import { supabase } from "@/integrations/supabase/client";
+import {
   Briefcase, 
   Heart, 
   Users, 
@@ -76,12 +77,25 @@ const Careers = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate submission (replace with actual backend integration)
-    setTimeout(() => {
+    try {
+      const { error } = await supabase
+        .from("job_applications")
+        .insert([{
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          position: formData.position,
+          cover_letter: formData.coverLetter,
+          resume_url: formData.resume?.name || null // Note: File upload to storage needs separate implementation
+        }]);
+
+      if (error) throw error;
+
       toast({
         title: "Application Submitted!",
         description: "We'll review your application and get back to you soon.",
       });
+      
       setFormData({
         name: "",
         email: "",
@@ -90,8 +104,16 @@ const Careers = () => {
         resume: null,
         coverLetter: ""
       });
+    } catch (error) {
+      console.error("Error submitting application:", error);
+      toast({
+        title: "Error",
+        description: "Failed to submit application. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 2000);
+    }
   };
 
   return (

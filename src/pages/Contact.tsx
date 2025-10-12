@@ -13,11 +13,43 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card } from "@/components/ui/card";
 import { Phone, Mail, MapPin, Clock, MessageSquare } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+import { useState } from "react";
 
 const Contact = () => {
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Thank you! We'll get back to you within 24 hours.");
+    setIsSubmitting(true);
+
+    const formData = new FormData(e.target as HTMLFormElement);
+    const data = {
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      phone: formData.get("phone") as string || null,
+      inquiry_type: formData.get("interest") as string,
+      message: formData.get("message") as string,
+      metadata: {
+        language: formData.get("language") as string
+      }
+    };
+
+    try {
+      const { error } = await supabase
+        .from("website_inquiries")
+        .insert([data]);
+
+      if (error) throw error;
+
+      toast.success("Thank you! We'll get back to you within 24 hours.");
+      (e.target as HTMLFormElement).reset();
+    } catch (error) {
+      console.error("Error submitting contact form:", error);
+      toast.error("Failed to submit form. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -45,28 +77,28 @@ const Contact = () => {
                   <label htmlFor="name" className="block text-sm font-semibold mb-2">
                     Full Name *
                   </label>
-                  <Input id="name" required placeholder="Your full name" />
+                  <Input id="name" name="name" required placeholder="Your full name" />
                 </div>
 
                 <div>
                   <label htmlFor="email" className="block text-sm font-semibold mb-2">
                     Email Address *
                   </label>
-                  <Input id="email" type="email" required placeholder="your@email.com" />
+                  <Input id="email" name="email" type="email" required placeholder="your@email.com" />
                 </div>
 
                 <div>
                   <label htmlFor="phone" className="block text-sm font-semibold mb-2">
                     Phone Number (Optional)
                   </label>
-                  <Input id="phone" type="tel" placeholder="(937) 555-1234" />
+                  <Input id="phone" name="phone" type="tel" placeholder="(937) 555-1234" />
                 </div>
 
                 <div>
                   <label htmlFor="interest" className="block text-sm font-semibold mb-2">
                     I'm Interested In: *
                   </label>
-                  <Select required>
+                  <Select name="interest" required>
                     <SelectTrigger>
                       <SelectValue placeholder="Select an option" />
                     </SelectTrigger>
@@ -89,7 +121,7 @@ const Contact = () => {
                   <label htmlFor="language" className="block text-sm font-semibold mb-2">
                     Preferred Language:
                   </label>
-                  <Select defaultValue="english">
+                  <Select name="language" defaultValue="english">
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -105,7 +137,7 @@ const Contact = () => {
                   <label htmlFor="message" className="block text-sm font-semibold mb-2">
                     Message *
                   </label>
-                  <Textarea id="message" required rows={6} placeholder="Tell us how we can help you..." />
+                  <Textarea id="message" name="message" required rows={6} placeholder="Tell us how we can help you..." />
                 </div>
 
                 <div className="flex items-start gap-3">
@@ -116,8 +148,8 @@ const Contact = () => {
                   </label>
                 </div>
 
-                <Button type="submit" variant="default" size="lg" className="w-full">
-                  SEND MESSAGE
+                <Button type="submit" variant="default" size="lg" className="w-full" disabled={isSubmitting}>
+                  {isSubmitting ? "SENDING..." : "SEND MESSAGE"}
                 </Button>
               </form>
             </Card>
