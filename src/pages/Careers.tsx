@@ -11,6 +11,7 @@ import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
 import {
   Briefcase, 
   Heart, 
@@ -20,6 +21,14 @@ import {
   Upload,
   Loader2 
 } from "lucide-react";
+
+const jobApplicationSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
+  email: z.string().trim().email("Invalid email address").max(255, "Email must be less than 255 characters"),
+  phone: z.string().trim().regex(/^\+?[1-9]\d{0,14}$/, "Invalid phone number format").max(20, "Phone number is invalid"),
+  position: z.string().trim().min(1, "Position is required").max(100, "Position must be less than 100 characters"),
+  coverLetter: z.string().trim().min(50, "Cover letter must be at least 50 characters").max(5000, "Cover letter must be less than 5000 characters")
+});
 
 const openPositions = [
   {
@@ -78,14 +87,23 @@ const Careers = () => {
     setIsSubmitting(true);
 
     try {
+      // Validate input
+      const validated = jobApplicationSchema.parse({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        position: formData.position,
+        coverLetter: formData.coverLetter
+      });
+
       const { error } = await supabase
         .from("job_applications")
         .insert([{
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          position: formData.position,
-          cover_letter: formData.coverLetter,
+          name: validated.name,
+          email: validated.email,
+          phone: validated.phone,
+          position: validated.position,
+          cover_letter: validated.coverLetter,
           resume_url: formData.resume?.name || null // Note: File upload to storage needs separate implementation
         }]);
 
@@ -105,12 +123,20 @@ const Careers = () => {
         coverLetter: ""
       });
     } catch (error) {
-      console.error("Error submitting application:", error);
-      toast({
-        title: "Error",
-        description: "Failed to submit application. Please try again.",
-        variant: "destructive",
-      });
+      if (error instanceof z.ZodError) {
+        toast({
+          title: "Validation Error",
+          description: error.errors[0].message,
+          variant: "destructive",
+        });
+      } else {
+        console.error("Error submitting application:", error);
+        toast({
+          title: "Error",
+          description: "Failed to submit application. Please try again.",
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }

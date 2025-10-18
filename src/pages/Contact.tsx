@@ -15,6 +15,16 @@ import { Phone, Mail, MapPin, Clock, MessageSquare } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
+import { z } from "zod";
+
+const contactSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
+  email: z.string().trim().email("Invalid email address").max(255, "Email must be less than 255 characters"),
+  phone: z.string().trim().regex(/^\+?[1-9]\d{0,14}$/, "Invalid phone number format").max(20).optional().or(z.literal("")),
+  inquiry_type: z.string().min(1, "Please select an inquiry type"),
+  message: z.string().trim().min(10, "Message must be at least 10 characters").max(2000, "Message must be less than 2000 characters"),
+  language: z.string().min(1)
+});
 
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -24,18 +34,30 @@ const Contact = () => {
     setIsSubmitting(true);
 
     const formData = new FormData(e.target as HTMLFormElement);
-    const data = {
+    const rawData = {
       name: formData.get("name") as string,
       email: formData.get("email") as string,
-      phone: formData.get("phone") as string || null,
+      phone: formData.get("phone") as string || "",
       inquiry_type: formData.get("interest") as string,
       message: formData.get("message") as string,
-      metadata: {
-        language: formData.get("language") as string
-      }
+      language: formData.get("language") as string
     };
 
     try {
+      // Validate input
+      const validated = contactSchema.parse(rawData);
+      
+      const data = {
+        name: validated.name,
+        email: validated.email,
+        phone: validated.phone || null,
+        inquiry_type: validated.inquiry_type,
+        message: validated.message,
+        metadata: {
+          language: validated.language
+        }
+      };
+
       const { error } = await supabase
         .from("website_inquiries")
         .insert([data]);
@@ -45,8 +67,12 @@ const Contact = () => {
       toast.success("Thank you! We'll get back to you within 24 hours.");
       (e.target as HTMLFormElement).reset();
     } catch (error) {
-      console.error("Error submitting contact form:", error);
-      toast.error("Failed to submit form. Please try again.");
+      if (error instanceof z.ZodError) {
+        toast.error(error.errors[0].message);
+      } else {
+        console.error("Error submitting contact form:", error);
+        toast.error("Failed to submit form. Please try again.");
+      }
     } finally {
       setIsSubmitting(false);
     }

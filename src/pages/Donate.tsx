@@ -9,7 +9,19 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
 import { Heart, Users, Shield, CheckCircle, DollarSign } from "lucide-react";
+
+const donationSchema = z.object({
+  donorName: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
+  email: z.string().trim().email("Invalid email address").max(255, "Email must be less than 255 characters"),
+  amount: z.string().trim().min(1, "Amount is required").refine((val) => {
+    const num = parseFloat(val);
+    return !isNaN(num) && num >= 1 && num <= 1000000;
+  }, "Amount must be between $1 and $1,000,000"),
+  message: z.string().trim().max(1000, "Message must be less than 1000 characters").optional().or(z.literal("")),
+  donationType: z.enum(["one-time", "monthly"])
+});
 
 const Donate = () => {
   const { toast } = useToast();
@@ -27,14 +39,17 @@ const Donate = () => {
     setIsSubmitting(true);
 
     try {
+      // Validate input
+      const validated = donationSchema.parse(formData);
+      
       const { error } = await supabase
         .from("donations")
         .insert([{
-          donor_name: formData.donorName,
-          email: formData.email,
-          amount: parseFloat(formData.amount),
-          message: formData.message || null,
-          donation_type: formData.donationType,
+          donor_name: validated.donorName,
+          email: validated.email,
+          amount: parseFloat(validated.amount),
+          message: validated.message || null,
+          donation_type: validated.donationType,
           payment_status: "pending"
         }]);
 
@@ -53,12 +68,20 @@ const Donate = () => {
         donationType: "one-time"
       });
     } catch (error) {
-      console.error("Error submitting donation:", error);
-      toast({
-        title: "Error",
-        description: "Failed to submit donation request. Please try again.",
-        variant: "destructive",
-      });
+      if (error instanceof z.ZodError) {
+        toast({
+          title: "Validation Error",
+          description: error.errors[0].message,
+          variant: "destructive",
+        });
+      } else {
+        console.error("Error submitting donation:", error);
+        toast({
+          title: "Error",
+          description: "Failed to submit donation request. Please try again.",
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }
