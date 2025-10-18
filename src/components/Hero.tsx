@@ -1,11 +1,14 @@
 import { ReactNode, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import TransitioningBackground from "./TransitioningBackground";
 import ScrollIndicator from "./ScrollIndicator";
+import { getHeroConfig } from "@/data/heroImages";
 
 interface HeroProps {
   backgroundImage?: string;
   useTransitioningBackground?: boolean;
+  useRouteBasedImages?: boolean;
   headline: string;
   subheadline?: string;
   children?: ReactNode;
@@ -14,8 +17,20 @@ interface HeroProps {
   showScrollIndicator?: boolean;
 }
 
-const Hero = ({ backgroundImage, useTransitioningBackground = false, headline, subheadline, children, className, overlay = true, showScrollIndicator = false }: HeroProps) => {
+const Hero = ({ 
+  backgroundImage, 
+  useTransitioningBackground = false, 
+  useRouteBasedImages = false,
+  headline, 
+  subheadline, 
+  children, 
+  className, 
+  overlay = true, 
+  showScrollIndicator = false 
+}: HeroProps) => {
   const [scrollY, setScrollY] = useState(0);
+  const location = useLocation();
+  const heroConfig = useRouteBasedImages ? getHeroConfig(location.pathname) : null;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,7 +48,12 @@ const Hero = ({ backgroundImage, useTransitioningBackground = false, headline, s
         className="absolute inset-0"
         style={{ transform: `translateY(${scrollY * 0.5}px)` }}
       >
-        {useTransitioningBackground ? (
+        {useRouteBasedImages && heroConfig ? (
+          <TransitioningBackground 
+            images={heroConfig.images}
+            interval={heroConfig.interval}
+          />
+        ) : useTransitioningBackground ? (
           <TransitioningBackground />
         ) : (
           <div
