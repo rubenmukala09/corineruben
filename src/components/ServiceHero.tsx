@@ -27,9 +27,12 @@ const ServiceHero = ({
   isVisible = true
 }: ServiceHeroProps) => {
   const [scrollY, setScrollY] = useState(0);
+  const [currentImage, setCurrentImage] = useState("");
+  const [nextImage, setNextImage] = useState("");
+  const [showNext, setShowNext] = useState(false);
   
   // Get service-specific image or use elders images for homepage
-  const getServiceImage = () => {
+  const getServiceImage = (index: number) => {
     const serviceRoutes: Record<string, string> = {
       'training': '/training',
       'business': '/business',
@@ -45,11 +48,33 @@ const ServiceHero = ({
     
     // For homepage, use the index to cycle through multiple images
     if (route === '/' && config.images.length > 1) {
-      return config.images[imageIndex % config.images.length];
+      return config.images[index % config.images.length];
     }
     
     return config.images[0];
   };
+
+  // Initialize images
+  useEffect(() => {
+    setCurrentImage(getServiceImage(imageIndex));
+  }, []);
+
+  // Handle image transitions
+  useEffect(() => {
+    const newImage = getServiceImage(imageIndex);
+    if (newImage !== currentImage) {
+      setNextImage(newImage);
+      setShowNext(true);
+      
+      // After fade-in completes, swap images
+      const timer = setTimeout(() => {
+        setCurrentImage(newImage);
+        setShowNext(false);
+      }, 1000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [imageIndex]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,23 +85,29 @@ const ServiceHero = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const currentImage = getServiceImage();
-
   return (
     <div className={cn("relative min-h-[80vh] flex items-center overflow-hidden", className)}>
-      {/* Background with smooth transition */}
+      {/* Background with smooth crossfade */}
       <div 
-        className="absolute inset-0 transition-opacity duration-700"
+        className="absolute inset-0"
         style={{ 
-          transform: `translateY(${scrollY * 0.5}px)`,
-          opacity: isVisible ? 1 : 0.7
+          transform: `translateY(${scrollY * 0.5}px)`
         }}
       >
+        {/* Current Image */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-1000 ease-in-out"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out"
           style={{ 
             backgroundImage: `url(${currentImage})`,
-            transform: isVisible ? 'scale(1)' : 'scale(1.05)'
+            opacity: showNext ? 0 : 1
+          }}
+        />
+        {/* Next Image (crossfades in) */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out"
+          style={{ 
+            backgroundImage: `url(${nextImage})`,
+            opacity: showNext ? 1 : 0
           }}
         />
       </div>
@@ -84,11 +115,10 @@ const ServiceHero = ({
       {/* Animated Gradient Overlay */}
       {overlay && (
         <div 
-          className="absolute inset-0 bg-gradient-hero-primary opacity-40 transition-opacity duration-700"
+          className="absolute inset-0 bg-gradient-hero-primary opacity-40"
           style={{ 
             backgroundSize: '400% 400%', 
-            animation: 'gradient-shift 15s ease infinite',
-            opacity: isVisible ? 0.4 : 0.5
+            animation: 'gradient-shift 15s ease infinite'
           }}
         />
       )}

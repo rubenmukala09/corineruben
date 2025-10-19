@@ -17,6 +17,11 @@ import eldersHero7 from "@/assets/elders-hero-7.jpg";
 import eldersHero8 from "@/assets/elders-hero-8.jpg";
 import eldersHero9 from "@/assets/elders-hero-9.jpg";
 import eldersHero10 from "@/assets/elders-hero-10.jpg";
+import eldersHero11 from "@/assets/elders-hero-11.jpg";
+import eldersHero12 from "@/assets/elders-hero-12.jpg";
+import eldersHero13 from "@/assets/elders-hero-13.jpg";
+import eldersHero14 from "@/assets/elders-hero-14.jpg";
+import eldersHero15 from "@/assets/elders-hero-15.jpg";
 
 export interface HeroImageConfig {
   type: string;
@@ -38,8 +43,13 @@ export const heroImages: Record<string, HeroImageConfig> = {
       eldersHero8,
       eldersHero9,
       eldersHero10,
+      eldersHero11,
+      eldersHero12,
+      eldersHero13,
+      eldersHero14,
+      eldersHero15,
     ],
-    interval: 5000,
+    interval: 8000,
   },
   '/about': {
     type: 'about',

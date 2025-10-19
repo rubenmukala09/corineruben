@@ -17,7 +17,7 @@ export const useServiceRotation = (messages: ServiceMessage[], interval: number 
       setTimeout(() => {
         setCurrentIndex((prev) => (prev + 1) % messages.length);
         setIsVisible(true);
-      }, 600); // Wait for fade out before changing
+      }, 500); // Smooth fade transition
     }, interval);
 
     return () => clearInterval(rotateInterval);
