@@ -61,18 +61,18 @@ const ServiceHero = ({
     setCurrentImage(getServiceImage(imageIndex));
   }, []);
 
-  // Handle image transitions
+  // Handle image transitions with improved timing
   useEffect(() => {
     const newImage = getServiceImage(imageIndex);
     if (newImage !== currentImage) {
       setNextImage(newImage);
       setShowNext(true);
       
-      // After fade-in completes, swap images
+      // Wait for crossfade to complete, then swap
       const timer = setTimeout(() => {
         setCurrentImage(newImage);
         setShowNext(false);
-      }, 1000);
+      }, 1500); // Longer delay to ensure smooth transition
       
       return () => clearTimeout(timer);
     }
@@ -98,20 +98,22 @@ const ServiceHero = ({
       >
         {/* Current Image */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[1500ms] ease-in-out"
           style={{ 
             backgroundImage: `url(${currentImage})`,
             opacity: showNext ? 0 : 1,
-            willChange: 'opacity, transform'
+            transform: 'translateZ(0)',
+            willChange: 'opacity'
           }}
         />
         {/* Next Image (crossfades in) */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[1500ms] ease-in-out"
           style={{ 
             backgroundImage: `url(${nextImage})`,
             opacity: showNext ? 1 : 0,
-            willChange: 'opacity, transform'
+            transform: 'translateZ(0)',
+            willChange: 'opacity'
           }}
         />
       </div>
