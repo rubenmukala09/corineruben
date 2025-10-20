@@ -63,7 +63,7 @@ const heroMessages = [
 ];
 
 const Index = () => {
-  const { currentMessage, currentIndex, isVisible } = useServiceRotation(heroMessages, 8000);
+  const { currentMessage, currentIndex, isVisible } = useServiceRotation(heroMessages, 5000);
   return (
     <div className="min-h-screen">
       <Navigation />

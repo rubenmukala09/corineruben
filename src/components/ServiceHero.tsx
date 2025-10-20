@@ -42,15 +42,17 @@ const ServiceHero = ({
       'about': '/about',
       'default': '/'
     };
-    
-    const route = serviceRoutes[serviceType] || '/';
+
+    // On the homepage, always rotate through the homepage image set
+    const isHome = typeof window !== 'undefined' && window.location?.pathname === '/';
+    const route = isHome ? '/' : (serviceRoutes[serviceType] || '/');
     const config = getHeroConfig(route);
-    
+
     // For homepage, use the index to cycle through multiple images
     if (route === '/' && config.images.length > 1) {
       return config.images[index % config.images.length];
     }
-    
+
     return config.images[0];
   };
 
@@ -99,7 +101,8 @@ const ServiceHero = ({
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out"
           style={{ 
             backgroundImage: `url(${currentImage})`,
-            opacity: showNext ? 0 : 1
+            opacity: showNext ? 0 : 1,
+            willChange: 'opacity, transform'
           }}
         />
         {/* Next Image (crossfades in) */}
@@ -107,7 +110,8 @@ const ServiceHero = ({
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out"
           style={{ 
             backgroundImage: `url(${nextImage})`,
-            opacity: showNext ? 1 : 0
+            opacity: showNext ? 1 : 0,
+            willChange: 'opacity, transform'
           }}
         />
       </div>
