@@ -2,7 +2,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import ScrollIndicator from "./ScrollIndicator";
-import { getHeroConfig } from "@/data/heroImages";
+import { getHeroImages } from "@/data/heroImages";
 
 interface ServiceHeroProps {
   children?: ReactNode;
@@ -26,47 +26,47 @@ const ServiceHero = ({
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   
-  const config = getHeroConfig(location.pathname);
-  const currentSlide = config.slides[currentSlideIndex];
+  const heroImages = getHeroImages(location.pathname);
+  const currentSlide = heroImages[currentSlideIndex];
 
   // Preload all images
   useEffect(() => {
-    const imagePromises = config.slides.map(slide => {
+    const imagePromises = heroImages.map(slide => {
       return new Promise((resolve, reject) => {
         const img = new Image();
         img.onload = resolve;
         img.onerror = reject;
-        img.src = slide.image;
+        img.src = slide.url;
       });
     });
     
     Promise.all(imagePromises).then(() => {
-      setCurrentImage(config.slides[0].image);
+      setCurrentImage(heroImages[0].url);
       setImagesLoaded(true);
     });
   }, [location.pathname]);
 
   // Auto-rotate slides
   useEffect(() => {
-    if (!imagesLoaded || config.slides.length <= 1) return;
+    if (!imagesLoaded || heroImages.length <= 1) return;
     
     const interval = setInterval(() => {
       setIsVisible(false);
       
       setTimeout(() => {
-        setCurrentSlideIndex((prev) => (prev + 1) % config.slides.length);
+        setCurrentSlideIndex((prev) => (prev + 1) % heroImages.length);
         setIsVisible(true);
       }, 500);
-    }, config.interval || 5000);
+    }, 5000);
 
     return () => clearInterval(interval);
-  }, [imagesLoaded, config.slides.length, config.interval]);
+  }, [imagesLoaded, heroImages.length]);
 
   // Handle image transitions
   useEffect(() => {
     if (!imagesLoaded) return;
     
-    const newImage = config.slides[currentSlideIndex].image;
+    const newImage = heroImages[currentSlideIndex].url;
     if (newImage !== currentImage) {
       setNextImage(newImage);
       setShowNext(true);

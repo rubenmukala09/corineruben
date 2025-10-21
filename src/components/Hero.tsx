@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import TransitioningBackground from "./TransitioningBackground";
 import ScrollIndicator from "./ScrollIndicator";
-import { getHeroConfig } from "@/data/heroImages";
+import { getHeroImages } from "@/data/heroImages";
 
 interface HeroProps {
   backgroundImage?: string;
@@ -30,7 +30,7 @@ const Hero = ({
 }: HeroProps) => {
   const [scrollY, setScrollY] = useState(0);
   const location = useLocation();
-  const heroConfig = useRouteBasedImages ? getHeroConfig(location.pathname) : null;
+  const heroImages = getHeroImages(location.pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,10 +48,10 @@ const Hero = ({
         className="absolute inset-0"
         style={{ transform: `translateY(${scrollY * 0.5}px)` }}
       >
-      {useRouteBasedImages && heroConfig ? (
+      {useRouteBasedImages && heroImages.length > 0 ? (
           <TransitioningBackground 
-            images={heroConfig.slides.map(slide => slide.image)}
-            interval={heroConfig.interval}
+            images={heroImages.map(img => img.url)}
+            interval={5000}
           />
         ) : useTransitioningBackground ? (
           <TransitioningBackground />
