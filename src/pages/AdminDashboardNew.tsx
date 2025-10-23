@@ -20,6 +20,10 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useUserRole } from "@/hooks/useUserRole";
+import { ClientsTab } from "@/components/admin/ClientsTab";
+import { PartnersTab } from "@/components/admin/PartnersTab";
+import { OrdersTab } from "@/components/admin/OrdersTab";
+import { RevenueAnalytics } from "@/components/admin/RevenueAnalytics";
 
 const AdminDashboardNew = () => {
   const [activeTab, setActiveTab] = useState("overview");
@@ -188,11 +192,12 @@ const AdminDashboardNew = () => {
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="bg-card/50 p-1 rounded-2xl shadow-subtle">
             <TabsTrigger value="overview" className="rounded-xl">Overview</TabsTrigger>
+            <TabsTrigger value="partners" className="rounded-xl">Partners</TabsTrigger>
+            <TabsTrigger value="orders" className="rounded-xl">Orders</TabsTrigger>
+            <TabsTrigger value="revenue" className="rounded-xl">Revenue</TabsTrigger>
             <TabsTrigger value="clients" className="rounded-xl">Clients</TabsTrigger>
             <TabsTrigger value="workers" className="rounded-xl">Workers</TabsTrigger>
-            <TabsTrigger value="schedule" className="rounded-xl">Schedule</TabsTrigger>
-            <TabsTrigger value="messages" className="rounded-xl">Messages</TabsTrigger>
-            <TabsTrigger value="reports" className="rounded-xl">Reports</TabsTrigger>
+            <TabsTrigger value="settings" className="rounded-xl">Settings</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
@@ -250,13 +255,46 @@ const AdminDashboardNew = () => {
             </Card>
           </TabsContent>
 
+          <TabsContent value="partners">
+            <Card className="rounded-2xl shadow-subtle">
+              <CardHeader>
+                <CardTitle>Partner Management</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <PartnersTab />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="orders">
+            <Card className="rounded-2xl shadow-subtle">
+              <CardHeader>
+                <CardTitle>Order Management</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <OrdersTab />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="revenue">
+            <Card className="rounded-2xl shadow-subtle">
+              <CardHeader>
+                <CardTitle>Revenue Analytics</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <RevenueAnalytics />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           <TabsContent value="clients">
             <Card className="rounded-2xl shadow-subtle">
               <CardHeader>
                 <CardTitle>Clients Management</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">Clients management interface coming soon...</p>
+                <ClientsTab />
               </CardContent>
             </Card>
           </TabsContent>
@@ -272,35 +310,41 @@ const AdminDashboardNew = () => {
             </Card>
           </TabsContent>
 
-          <TabsContent value="schedule">
+          <TabsContent value="settings">
             <Card className="rounded-2xl shadow-subtle">
               <CardHeader>
-                <CardTitle>Schedule & Calendar</CardTitle>
+                <CardTitle>Settings & Configuration</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">Schedule management interface coming soon...</p>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="messages">
-            <Card className="rounded-2xl shadow-subtle">
-              <CardHeader>
-                <CardTitle>Messages</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Messaging interface coming soon...</p>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="reports">
-            <Card className="rounded-2xl shadow-subtle">
-              <CardHeader>
-                <CardTitle>Reports & Analytics</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Reports interface coming soon...</p>
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold mb-2">System Settings</h3>
+                    <p className="text-sm text-muted-foreground">Configure system-wide settings and preferences</p>
+                  </div>
+                  <div className="grid gap-4">
+                    <div className="flex items-center justify-between p-4 border rounded-lg">
+                      <div>
+                        <p className="font-medium">Default Commission Rate</p>
+                        <p className="text-sm text-muted-foreground">Set default commission for new partners</p>
+                      </div>
+                      <Button variant="outline" size="sm">Configure</Button>
+                    </div>
+                    <div className="flex items-center justify-between p-4 border rounded-lg">
+                      <div>
+                        <p className="font-medium">Email Notifications</p>
+                        <p className="text-sm text-muted-foreground">Manage email notification settings</p>
+                      </div>
+                      <Button variant="outline" size="sm">Configure</Button>
+                    </div>
+                    <div className="flex items-center justify-between p-4 border rounded-lg">
+                      <div>
+                        <p className="font-medium">Payment Methods</p>
+                        <p className="text-sm text-muted-foreground">Configure available payment methods</p>
+                      </div>
+                      <Button variant="outline" size="sm">Configure</Button>
+                    </div>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
