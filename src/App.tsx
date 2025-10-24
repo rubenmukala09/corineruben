@@ -6,7 +6,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import Index from "./pages/Index";
 import Training from "./pages/Training";
-import ScamShield from "./pages/ScamShield";
 import Business from "./pages/Business";
 import About from "./pages/About";
 import Resources from "./pages/Resources";
@@ -46,7 +45,6 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/training" element={<Training />} />
-            <Route path="/scam-shield" element={<ScamShield />} />
             <Route path="/business" element={<Business />} />
             <Route path="/about" element={<About />} />
             <Route path="/resources" element={<Resources />} />

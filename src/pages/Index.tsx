@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Suspense, lazy, useState, useEffect } from "react";
+import React, { Suspense, lazy, useState, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
@@ -154,7 +154,7 @@ const Index = () => {
               size="xl"
               className="w-full sm:w-auto text-lg font-semibold min-h-[60px] hover:scale-105 transition-transform focus:ring-4 focus:ring-primary/50"
             >
-              <Link to="/scam-shield" aria-label="Start using Scam Shield service for real-time protection">
+              <Link to="/training" aria-label="Start using Scam Shield service for real-time protection">
                 START SCAM SHIELD
               </Link>
             </Button>
