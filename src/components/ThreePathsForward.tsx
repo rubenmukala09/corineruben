@@ -1,135 +1,96 @@
 import { BookOpen, Shield, Briefcase } from "lucide-react";
 import { Button } from "./ui/button";
-import { Card } from "./ui/card";
 import { Link } from "react-router-dom";
-
-const paths = [
-  {
-    id: 1,
-    title: "Learn & Train",
-    description: "Live Zoom classes & in-person training. Spot deepfakes, verify identities, handle urgent calls with confidence.",
-    pricing: "Starting at $149",
-    icon: BookOpen,
-    link: "/training",
-    cta: "Book Training"
-  },
-  {
-    id: 2,
-    title: "Family Scam Shield",
-    description: "Forward suspicious emails, texts, links, QR codes. Get expert analysis within 24-48 hours.",
-    pricing: "Starting at $49/month",
-    icon: Shield,
-    featured: true,
-    link: "/scam-shield",
-    cta: "Start Scam Shield"
-  },
-  {
-    id: 3,
-    title: "AI for Business",
-    description: "Custom AI receptionists, automation, and pre-purchase vetting. Don't waste $5k+ on wrong tools.",
-    pricing: "Starting at $5,000",
-    icon: Briefcase,
-    link: "/business",
-    cta: "Talk to an Expert"
-  }
-];
 
 const ThreePathsForward = () => {
   return (
-    <section className="py-12 relative overflow-hidden bg-gradient-to-br from-[hsl(250,20%,96%)] via-white to-[hsl(180,50%,98%)]">
-      {/* Background blobs */}
-      <div className="absolute top-[-100px] left-[-100px] w-[400px] h-[400px] rounded-full bg-gradient-to-br from-primary to-accent opacity-10 blur-[80px] animate-blob-morph" />
-      <div className="absolute bottom-[-80px] right-[-80px] w-[350px] h-[350px] rounded-full bg-gradient-to-br from-accent to-[hsl(180,75%,50%)] opacity-10 blur-[80px] animate-float-slow" style={{ animationDelay: '5s', animationDirection: 'reverse' }} />
+    <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden bg-gradient-to-br from-[hsl(250,60%,45%)] via-[hsl(250,50%,35%)] to-[hsl(250,70%,25%)]">
+      {/* Background overlay */}
+      <div className="absolute inset-0 bg-black/30" />
+      
+      {/* Background image effect */}
+      <div className="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNnoiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9nPjwvc3ZnPg==')] animate-[float-slow_20s_ease-in-out_infinite]" />
       
       <div className="container mx-auto px-4 relative z-10">
-        {/* Section Header */}
-        <div className="text-center mb-10 animate-fade-in-up">
-          <h2 className="text-5xl font-extrabold mb-3 gradient-text-primary">
-            Three Paths Forward
+        {/* Hero Content */}
+        <div className="text-center max-w-4xl mx-auto mb-12 animate-fade-in-up">
+          <h2 className="text-4xl md:text-6xl font-extrabold mb-6 text-white leading-tight">
+            AI That Works for Your Business, Not Against It
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Choose the protection and empowerment that fits your needs—from personal AI security training to business automation solutions.
+          <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed mb-10">
+            Custom AI receptionists, smart automation, and secure systems designed for small businesses. Professional implementation starting at $5,000.
           </p>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+            <Button
+              asChild
+              variant="default"
+              size="lg"
+              className="min-w-[200px] text-base font-bold uppercase tracking-wide bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all"
+            >
+              <Link to="/training">
+                BOOK TRAINING
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="min-w-[200px] text-base font-bold uppercase tracking-wide bg-white/10 text-white border-2 border-white/30 hover:bg-white/20 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all"
+            >
+              <Link to="/training">
+                START SCAM SHIELD
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="min-w-[200px] text-base font-bold uppercase tracking-wide bg-white/10 text-white border-2 border-white/30 hover:bg-white/20 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all"
+            >
+              <Link to="/business">
+                TALK TO AN EXPERT
+              </Link>
+            </Button>
+          </div>
         </div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {paths.map((path, index) => {
-            const Icon = path.icon;
-            return (
-              <Card
-                key={path.id}
-                className={`
-                  relative p-8 flex flex-col items-center text-center
-                  transition-all duration-600 ease-out rounded-3xl
-                  bg-white
-                  ${path.featured 
-                    ? 'border-[3px] border-primary shadow-[0_8px_30px_rgba(139,92,246,0.2)]' 
-                    : 'border-2 border-border shadow-soft'}
-                  hover:-translate-y-4 hover:scale-[1.02] ${path.featured ? 'hover:shadow-[0_16px_50px_rgba(139,92,246,0.3)]' : 'hover:shadow-medium'}
-                  hover:border-primary hover:rotate-1
-                  animate-fade-in-up
-                  before:absolute before:top-0 before:left-0 before:w-full before:h-1 before:rounded-t-3xl
-                  before:bg-gradient-to-r before:from-primary before:via-accent before:to-primary
-                  before:scale-x-0 before:origin-left before:transition-transform before:duration-500
-                  hover:before:scale-x-100
-                  after:absolute after:inset-0 after:rounded-3xl after:opacity-0
-                  after:bg-gradient-to-br after:from-primary/5 after:to-accent/5
-                  hover:after:opacity-100 after:transition-opacity after:duration-500
-                `}
-                style={{ animationDelay: `${index * 150}ms` }}
-              >
-                {/* Featured Badge */}
-                {path.featured && (
-                  <div className="absolute -top-[18px] left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-white px-7 py-2.5 rounded-full text-[13px] font-extrabold tracking-[1.5px] shadow-[0_6px_20px_rgba(139,92,246,0.4)] animate-[badge-float_3s_ease-in-out_infinite]">
-                    MOST POPULAR
-                  </div>
-                )}
+        {/* Trust Bar */}
+        <div className="max-w-5xl mx-auto">
+          <div className="bg-gradient-to-r from-[hsl(250,70%,55%)] via-[hsl(200,70%,50%)] to-[hsl(180,70%,50%)] rounded-2xl p-6 shadow-2xl backdrop-blur-sm border border-white/20">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+              <div className="flex flex-col items-center gap-2">
+                <Shield className="w-8 h-8 text-white" />
+                <span className="text-white font-bold text-sm md:text-base">500+ Families Protected</span>
+              </div>
+              <div className="flex flex-col items-center gap-2">
+                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+                <span className="text-white font-bold text-sm md:text-base">4.9/5 Star Rating</span>
+              </div>
+              <div className="flex flex-col items-center gap-2">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+                <span className="text-white font-bold text-sm md:text-base">Cybersecurity Expert-Founded</span>
+              </div>
+              <div className="flex flex-col items-center gap-2">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                <span className="text-white font-bold text-sm md:text-base">Privacy-First</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-                {/* Icon Container - purple/teal gradient */}
-                <div className="relative w-[80px] h-[80px] rounded-3xl mb-5
-                  bg-gradient-to-br from-primary to-accent
-                  shadow-[0_8px_24px_rgba(139,92,246,0.4)]
-                  flex items-center justify-center
-                  transition-all duration-600 ease-out hover:scale-[1.2] hover:rotate-[-10deg]
-                  hover:shadow-[0_12px_35px_rgba(139,92,246,0.6)]
-                  after:absolute after:inset-[-8px] after:rounded-[28px]
-                  after:border-2 after:border-primary/40
-                  after:animate-[pulse-ring_3s_ease-out_infinite]
-                ">
-                  <Icon className="w-10 h-10 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.2)] transition-transform duration-500" />
-                </div>
-
-                {/* Content */}
-                <h3 className="text-2xl font-extrabold mb-3 text-foreground tracking-tight transition-colors duration-300 group-hover:text-primary">
-                  {path.title}
-                </h3>
-                <p className="text-base text-muted-foreground mb-5 flex-grow leading-relaxed">
-                  {path.description}
-                </p>
-
-                {/* Pricing */}
-                <div className="text-lg font-extrabold gradient-text-primary mb-4 px-5 py-2 rounded-xl 
-                  bg-primary/10
-                  border border-primary/20
-                  transition-all duration-500
-                  hover:bg-primary/15 hover:scale-105">
-                  {path.pricing}
-                </div>
-
-                {/* CTA Button */}
-                <Button
-                  asChild
-                  variant={path.featured ? "default" : "outline"}
-                  className="w-full text-base font-bold uppercase tracking-wide"
-                >
-                  <Link to={path.link}>
-                    {path.cta}
-                  </Link>
-                </Button>
-              </Card>
-            );
-          })}
+        {/* Scroll indicator */}
+        <div className="flex justify-center mt-12 animate-bounce">
+          <div className="text-white/60 text-sm uppercase tracking-wider">
+            SCROLL
+          </div>
         </div>
       </div>
     </section>
