@@ -481,7 +481,7 @@ const Index = () => {
             >
               What Our Clients Say
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <ErrorBoundary>
                 <div className="animate-fade-in-up" style={{ animationDelay: "0ms" }}>
                   <TestimonialCard
