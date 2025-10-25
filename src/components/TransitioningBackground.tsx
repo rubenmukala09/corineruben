@@ -46,7 +46,8 @@ const TransitioningBackground = ({ images = defaultImages, interval = 10000, cla
         style={{
           backgroundImage: `url(${images[currentIndex]})`,
           opacity: isTransitioning ? 0 : opacity,
-          transform: isTransitioning ? 'scale(1.08)' : 'scale(1)',
+          transform: isTransitioning ? 'scale(1.1)' : 'scale(1.05)',
+          filter: 'brightness(1.1) contrast(1.15) saturate(1.3)',
           transition: 'opacity 4000ms cubic-bezier(0.4, 0, 0.2, 1), transform 4000ms cubic-bezier(0.4, 0, 0.2, 1)',
           willChange: 'opacity, transform',
         }}
@@ -58,14 +59,16 @@ const TransitioningBackground = ({ images = defaultImages, interval = 10000, cla
         style={{
           backgroundImage: `url(${images[nextIndex]})`,
           opacity: isTransitioning ? opacity : 0,
-          transform: isTransitioning ? 'scale(1)' : 'scale(1.08)',
+          transform: isTransitioning ? 'scale(1.05)' : 'scale(1.1)',
+          filter: 'brightness(1.1) contrast(1.15) saturate(1.3)',
           transition: 'opacity 4000ms cubic-bezier(0.4, 0, 0.2, 1), transform 4000ms cubic-bezier(0.4, 0, 0.2, 1)',
           willChange: 'opacity, transform',
         }}
       />
       
-      {/* Overlay for better text readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/50" style={{ opacity }} />
+      {/* Enhanced Multi-layer Overlay for depth and readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/85 to-background/75" style={{ opacity }} />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/30" style={{ opacity }} />
     </div>
   );
 };

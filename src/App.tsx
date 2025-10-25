@@ -9,7 +9,6 @@ import Training from "./pages/Training";
 import Business from "./pages/Business";
 import About from "./pages/About";
 import Resources from "./pages/Resources";
-import Contact from "./pages/Contact";
 import Team from "./pages/Team";
 import Auth from "./pages/Auth";
 import EnhancedAuth from "./pages/EnhancedAuth";
@@ -46,8 +45,8 @@ const App = () => (
             <Route path="/training" element={<Training />} />
             <Route path="/business" element={<Business />} />
             <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<About />} />
             <Route path="/resources" element={<Resources />} />
-            <Route path="/contact" element={<Contact />} />
             <Route path="/team" element={<Team />} />
             <Route path="/login" element={<Auth />} />
             <Route path="/signup" element={<Auth />} />
