@@ -206,6 +206,23 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   }
   
   /* Floating Orb Animations */
+  /* Fade-in animation for images */
+  @keyframes fadeInImage {
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  img {
+    animation: fadeInImage 0.8s ease-out forwards;
+  }
+
+  /* Keep existing animations */
   @keyframes float {
     0%, 100% { transform: translateY(0px) translateX(0px); }
     50% { transform: translateY(-30px) translateX(20px); }

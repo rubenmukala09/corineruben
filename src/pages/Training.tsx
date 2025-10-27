@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Suspense, lazy } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
@@ -7,19 +8,32 @@ import TestimonialCard from "@/components/TestimonialCard";
 import CTASection from "@/components/CTASection";
 import FlowingWaves from "@/components/FlowingWaves";
 import AIPartnersCarousel from "@/components/AIPartnersCarousel";
+import ImageCarousel from "@/components/ImageCarousel";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { CheckCircle, FileText, Award, MessageSquare, Users, Home, Upload, UserCheck, Shield, Mail, Link as LinkIcon, QrCode, Mic, Image as ImageIcon, AlertTriangle } from "lucide-react";
-import heroImage from "@/assets/hero-training.jpg";
 import testimonial4 from "@/assets/testimonial-4.jpg";
 import testimonial10 from "@/assets/testimonial-10.jpg";
 import testimonial11 from "@/assets/testimonial-11.jpg";
 import testimonial12 from "@/assets/testimonial-12.jpg";
 import testimonial13 from "@/assets/testimonial-13.jpg";
 
+const WaveBackground = lazy(() => import("@/components/WaveBackground"));
+
+const learningImages = [
+  "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&h=600&fit=crop",
+  "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop",
+  "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&h=600&fit=crop",
+  "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&h=600&fit=crop"
+];
+
 const Training = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
+      <Suspense fallback={null}>
+        <WaveBackground />
+      </Suspense>
+      
       <Navigation />
 
       <Hero
@@ -34,6 +48,16 @@ const Training = () => {
       </Hero>
 
       <TrustBar />
+
+      {/* Learning Images Slider */}
+      <section className="py-10 bg-background relative">
+        <div className="container mx-auto px-4 relative z-10">
+          <ImageCarousel 
+            images={learningImages} 
+            className="h-[400px] md:h-500px] max-w-6xl mx-auto mb-12 shadow-strong" 
+          />
+        </div>
+      </section>
 
       {/* What You'll Master */}
       <section className="py-10 bg-background relative">

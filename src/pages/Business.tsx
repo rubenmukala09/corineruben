@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Suspense, lazy } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
@@ -7,16 +8,29 @@ import TestimonialCard from "@/components/TestimonialCard";
 import CTASection from "@/components/CTASection";
 import FlowingWaves from "@/components/FlowingWaves";
 import AIPartnersCarousel from "@/components/AIPartnersCarousel";
+import ImageCarousel from "@/components/ImageCarousel";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield } from "lucide-react";
-import heroImage from "@/assets/hero-business-new.jpg";
 import testimonial8 from "@/assets/testimonial-8.jpg";
 import testimonial9 from "@/assets/testimonial-9.jpg";
 
+const WaveBackground = lazy(() => import("@/components/WaveBackground"));
+
+const officeImages = [
+  "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop",
+  "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop",
+  "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&h=600&fit=crop",
+  "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&h=600&fit=crop"
+];
+
 const Business = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
+      <Suspense fallback={null}>
+        <WaveBackground />
+      </Suspense>
+      
       <Navigation />
 
       <Hero
@@ -31,6 +45,16 @@ const Business = () => {
       </Hero>
 
       <TrustBar />
+
+      {/* Office Images Slider */}
+      <section className="py-10 bg-background relative">
+        <div className="container mx-auto px-4 relative z-10">
+          <ImageCarousel 
+            images={officeImages} 
+            className="h-[400px] md:h-[500px] max-w-6xl mx-auto mb-12 shadow-strong" 
+          />
+        </div>
+      </section>
 
       {/* Use Cases */}
       <section className="py-10 bg-background relative">

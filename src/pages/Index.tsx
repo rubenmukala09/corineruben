@@ -31,8 +31,8 @@ import ServiceHero from "@/components/ServiceHero";
 
 // Lazy load heavy components for better performance
 const VideoTestimonials = lazy(() => import("@/components/VideoTestimonials"));
-const EducationalVideos = lazy(() => import("@/components/EducationalVideos"));
 const AIPartnersCarousel = lazy(() => import("@/components/AIPartnersCarousel"));
+const WaveBackground = lazy(() => import("@/components/WaveBackground"));
 
 // Lazy load images with fallback
 const LazyImage = ({ src, alt, className = "" }: { src: string; alt: string; className?: string }) => {
@@ -119,7 +119,14 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
+      {/* Wave Background */}
+      <ErrorBoundary>
+        <Suspense fallback={null}>
+          <WaveBackground />
+        </Suspense>
+      </ErrorBoundary>
+      
       {/* Skip to main content link for accessibility */}
       <a
         href="#main-content"
@@ -614,12 +621,61 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Educational Videos - Lazy Loaded */}
-        <ErrorBoundary>
-          <Suspense fallback={<LoadingFallback />}>
-            <EducationalVideos />
-          </Suspense>
-        </ErrorBoundary>
+        {/* Security Books & Resources Shop */}
+        <section className="py-16 bg-background relative overflow-hidden">
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl lg:text-5xl mb-4 font-bold">Security Books & Guides</h2>
+              <p className="text-xl text-muted-foreground">Professional resources to keep you and your family safe</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              <Card className="p-8 hover:shadow-strong transition-all duration-300 hover:-translate-y-2">
+                <div className="mb-6">
+                  <div className="w-full h-48 bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg flex items-center justify-center mb-4">
+                    <FileText className="w-16 h-16 text-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-2">Ultimate Scam Defense Guide</h3>
+                  <p className="text-muted-foreground mb-4">Complete handbook on AI scams, deepfakes, and protection strategies</p>
+                  <p className="text-3xl font-bold text-accent mb-4">$24.99</p>
+                </div>
+                <Button asChild variant="default" className="w-full" size="lg">
+                  <Link to="/">BUY NOW</Link>
+                </Button>
+              </Card>
+
+              <Card className="p-8 hover:shadow-strong transition-all duration-300 hover:-translate-y-2 border-2 border-primary">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-bold">
+                  BESTSELLER
+                </div>
+                <div className="mb-6">
+                  <div className="w-full h-48 bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg flex items-center justify-center mb-4">
+                    <Shield className="w-16 h-16 text-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-2">Senior Safety Toolkit</h3>
+                  <p className="text-muted-foreground mb-4">Scripts, checklists, and emergency contacts for seniors</p>
+                  <p className="text-3xl font-bold text-accent mb-4">$19.99</p>
+                </div>
+                <Button asChild variant="default" className="w-full" size="lg">
+                  <Link to="/">BUY NOW</Link>
+                </Button>
+              </Card>
+
+              <Card className="p-8 hover:shadow-strong transition-all duration-300 hover:-translate-y-2">
+                <div className="mb-6">
+                  <div className="w-full h-48 bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg flex items-center justify-center mb-4">
+                    <Users className="w-16 h-16 text-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-2">Family Protection Plan</h3>
+                  <p className="text-muted-foreground mb-4">Comprehensive family security strategy workbook</p>
+                  <p className="text-3xl font-bold text-accent mb-4">$29.99</p>
+                </div>
+                <Button asChild variant="default" className="w-full" size="lg">
+                  <Link to="/">BUY NOW</Link>
+                </Button>
+              </Card>
+            </div>
+          </div>
+        </section>
 
         {/* AI Partners Carousel - Lazy Loaded */}
         <ErrorBoundary>

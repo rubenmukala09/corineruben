@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useState, Suspense, lazy } from 'react';
 import { Linkedin, Mail, Briefcase, Heart, Users, TrendingUp, CheckCircle, Upload, Loader2 } from 'lucide-react';
+
+const WaveBackground = lazy(() => import("@/components/WaveBackground"));
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -248,7 +250,11 @@ const Team = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
+        <Suspense fallback={null}>
+          <WaveBackground />
+        </Suspense>
+        
         <Navigation />
         
         {/* Hero Section */}
@@ -262,18 +268,20 @@ const Team = () => {
         {/* Team Grid */}
         <section className="pb-24 px-4">
           <div className="container mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 scale-75 origin-top">
               {teamMembers.map((member, index) => (
                 <article 
                   key={index}
-                  className="group bg-card rounded-xl p-4 shadow-subtle hover:shadow-strong transition-all duration-300 hover:-translate-y-1"
+                  className="group bg-card rounded-xl p-4 shadow-subtle hover:shadow-strong transition-all duration-300 hover:-translate-y-1 animate-fade-in-up"
+                  style={{ animationDelay: `${index * 50}ms` }}
                   itemScope
                   itemType="https://schema.org/Person"
                 >
                   <img 
                     src={member.image} 
                     alt={`${member.name} - ${member.title}`}
-                    className="w-full aspect-square object-cover rounded-xl mb-3"
+                    className="w-full aspect-square object-cover rounded-xl mb-3 opacity-0 animate-fade-in-up"
+                    style={{ animationDelay: `${index * 50 + 100}ms`, animationFillMode: 'forwards' }}
                     itemProp="image"
                     loading="lazy"
                   />
@@ -319,8 +327,45 @@ const Team = () => {
           </div>
         </section>
 
-        {/* Why Work With Us */}
+        {/* Open Positions */}
         <section className="py-16 bg-muted">
+          <div className="container mx-auto px-4">
+            <h2 className="text-center mb-12">Open Positions</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+              {openPositions.map((position, index) => (
+                <Card key={index} className="p-6 hover:shadow-lg transition-all duration-300">
+                  <div className="flex items-start gap-3 mb-4">
+                    <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Briefcase className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold mb-1">{position.title}</h3>
+                      <div className="flex flex-wrap gap-2 text-sm text-muted-foreground">
+                        <span>{position.type}</span>
+                        <span>•</span>
+                        <span>{position.location}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-muted-foreground mb-4">{position.description}</p>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => {
+                      setFormData(prev => ({ ...prev, position: position.title }));
+                      document.getElementById('application-form')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                  >
+                    Apply Now
+                  </Button>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Why Work With Us */}
+        <section className="py-16 bg-background">
           <div className="container mx-auto px-4">
             <h2 className="text-center mb-12 animate-fade-in-up">Why Work With InVision Network</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
@@ -363,43 +408,6 @@ const Team = () => {
                   Remote options and flexible schedules to fit your lifestyle
                 </p>
               </Card>
-            </div>
-          </div>
-        </section>
-
-        {/* Open Positions */}
-        <section className="py-16 bg-background">
-          <div className="container mx-auto px-4">
-            <h2 className="text-center mb-12">Open Positions</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-              {openPositions.map((position, index) => (
-                <Card key={index} className="p-6 hover:shadow-lg transition-all duration-300">
-                  <div className="flex items-start gap-3 mb-4">
-                    <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Briefcase className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold mb-1">{position.title}</h3>
-                      <div className="flex flex-wrap gap-2 text-sm text-muted-foreground">
-                        <span>{position.type}</span>
-                        <span>•</span>
-                        <span>{position.location}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <p className="text-muted-foreground mb-4">{position.description}</p>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => {
-                      setFormData(prev => ({ ...prev, position: position.title }));
-                      document.getElementById('application-form')?.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                  >
-                    Apply Now
-                  </Button>
-                </Card>
-              ))}
             </div>
           </div>
         </section>
