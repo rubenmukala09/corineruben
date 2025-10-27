@@ -36,12 +36,14 @@ const paths = [
 
 const ThreePathsForward = () => {
   return (
-    <section className="py-16 bg-gradient-to-b from-muted to-background relative overflow-hidden">
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-1/3 left-10 w-80 h-80 bg-primary/30 rounded-full blur-3xl animate-pulse" style={{ animationDuration: "7s" }} />
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-accent/30 rounded-full blur-3xl animate-pulse" style={{ animationDuration: "5s" }} />
+    <section className="py-20 bg-gradient-to-b from-background via-muted/30 to-background relative overflow-hidden">
+      {/* Decorative Background Elements */}
+      <div className="absolute inset-0 pointer-events-none opacity-50">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
       </div>
-      <div className="container mx-auto px-4 relative z-10 scale-75 origin-top max-w-[133%]">
+      
+      <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16 animate-fade-in">
           <div className="inline-block mb-4">

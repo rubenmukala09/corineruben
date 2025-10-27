@@ -170,7 +170,7 @@ const Index = () => {
             <h2 id="trust-heading" className="text-4xl lg:text-5xl text-center mb-12 animate-fade-in-up font-bold">
               Why Families Trust Secure Senior Safeguard
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 scale-75 origin-top mx-auto max-w-[133%]">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <ErrorBoundary>
                 <Card
                   className="p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm focus-within:ring-4 focus-within:ring-primary/50"
@@ -179,9 +179,9 @@ const Index = () => {
                   aria-label="Privacy-First Protocols feature"
                 >
                   <div className="flex justify-center mb-6">
-                    <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+                    <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
                       <Heart
-                        className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-500"
+                        className="w-10 h-10 text-primary group-hover:scale-110 transition-transform duration-500"
                         aria-hidden="true"
                       />
                     </div>
@@ -204,9 +204,9 @@ const Index = () => {
                   aria-label="Plain-English Teaching feature"
                 >
                   <div className="flex justify-center mb-6">
-                    <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+                    <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
                       <MessageSquare
-                        className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-500"
+                        className="w-10 h-10 text-primary group-hover:scale-110 transition-transform duration-500"
                         aria-hidden="true"
                       />
                     </div>
@@ -229,9 +229,9 @@ const Index = () => {
                   aria-label="Emergency-Ready Scripts feature"
                 >
                   <div className="flex justify-center mb-6">
-                    <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+                    <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
                       <FileText
-                        className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-500"
+                        className="w-10 h-10 text-primary group-hover:scale-110 transition-transform duration-500"
                         aria-hidden="true"
                       />
                     </div>
@@ -254,9 +254,9 @@ const Index = () => {
                   aria-label="Senior-Friendly Design feature"
                 >
                   <div className="flex justify-center mb-6">
-                    <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+                    <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
                       <Users
-                        className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-500"
+                        className="w-10 h-10 text-primary group-hover:scale-110 transition-transform duration-500"
                         aria-hidden="true"
                       />
                     </div>
@@ -481,7 +481,7 @@ const Index = () => {
             >
               What Our Clients Say
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 scale-75 origin-top mx-auto max-w-[133%]">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <ErrorBoundary>
                 <div className="animate-fade-in-up" style={{ animationDelay: "0ms" }}>
                   <TestimonialCard
@@ -614,6 +614,12 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Educational Videos - Lazy Loaded */}
+        <ErrorBoundary>
+          <Suspense fallback={<LoadingFallback />}>
+            <EducationalVideos />
+          </Suspense>
+        </ErrorBoundary>
 
         {/* AI Partners Carousel - Lazy Loaded */}
         <ErrorBoundary>

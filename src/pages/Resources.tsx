@@ -105,14 +105,11 @@ const Resources = () => {
         showScrollIndicator={true}
       />
 
-      {/* Books for Sale */}
+      {/* Free Guides */}
       <section className="py-10 bg-background relative">
         <FlowingWaves variant="full" opacity={0.12} />
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mb-4">Security Books & Guides</h2>
-          <p className="text-center text-muted-foreground mb-12 text-lg max-w-3xl mx-auto">
-            Comprehensive security knowledge at your fingertips. All proceeds support our mission to protect families.
-          </p>
+          <h2 className="text-center mb-12">Free Downloadable Guides</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {guides.map((guide, index) => (
               <Card key={index} className="p-6 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl">
@@ -123,42 +120,14 @@ const Resources = () => {
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-center">{guide.title}</h3>
                 <p className="text-muted-foreground text-center mb-4">{guide.desc}</p>
-                <p className="text-2xl font-bold gradient-text-primary text-center mb-4">$24.99</p>
-                <Button asChild className="w-full" variant="default">
+                <Button asChild className="w-full" variant="outline">
                   <Link to="/contact">
-                    <ShoppingCart className="w-4 h-4 mr-2" />
-                    BUY NOW
+                    <Download className="w-4 h-4 mr-2" />
+                    DOWNLOAD FREE
                   </Link>
                 </Button>
               </Card>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Company Details Section */}
-      <section className="py-10 bg-muted">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="mb-6">About InVision Network</h2>
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Founded in 2023, InVision Network is dedicated to protecting families and businesses from AI-powered scams and digital fraud. 
-              Our team of cybersecurity experts and educators has helped thousands of individuals recognize and defend against sophisticated threats.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-              <div>
-                <p className="text-4xl font-bold text-primary mb-2">5,000+</p>
-                <p className="text-muted-foreground">Families Protected</p>
-              </div>
-              <div>
-                <p className="text-4xl font-bold text-primary mb-2">95%</p>
-                <p className="text-muted-foreground">Client Satisfaction</p>
-              </div>
-              <div>
-                <p className="text-4xl font-bold text-primary mb-2">24/7</p>
-                <p className="text-muted-foreground">Support Available</p>
-              </div>
-            </div>
           </div>
         </div>
       </section>

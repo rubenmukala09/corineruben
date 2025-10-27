@@ -101,7 +101,7 @@ const Business = () => {
       <section className="py-10 bg-muted">
         <div className="container mx-auto px-4">
           <h2 className="text-center mb-12">Package Pricing</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 scale-75 origin-top mx-auto max-w-[133%]">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <Card className="p-8">
               <h3 className="text-2xl font-bold mb-4">Receptionist / Intake Agent</h3>
               <p className="text-muted-foreground mb-6">Answer calls/chats, route inquiries, book appointments</p>

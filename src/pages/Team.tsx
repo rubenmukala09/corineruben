@@ -262,7 +262,7 @@ const Team = () => {
         {/* Team Grid */}
         <section className="pb-24 px-4">
           <div className="container mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 scale-75 origin-top mx-auto max-w-[133%]">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {teamMembers.map((member, index) => (
                 <article 
                   key={index}
