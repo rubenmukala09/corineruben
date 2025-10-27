@@ -62,47 +62,68 @@ const NewsletterSubscribe = () => {
     }
   };
 
-  return (
-    <section className="py-16 bg-gradient-to-r from-primary/5 to-accent/5">
-      <div className="container mx-auto px-4">
-        <Card className="max-w-3xl mx-auto p-8 shadow-medium">
-          <div className="flex items-center justify-center mb-6">
-            <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center">
-              <Mail className="w-8 h-8 text-primary" />
-            </div>
+  if (isSubscribed) {
+    return (
+      <Card className="p-6 bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
+        <div className="flex items-center gap-3 text-primary">
+          <Check className="w-6 h-6" />
+          <div>
+            <h3 className="font-bold text-lg">You're Subscribed!</h3>
+            <p className="text-sm text-muted-foreground">Check your email for updates</p>
           </div>
-          <h2 className="text-3xl font-bold text-center mb-4">Stay Protected with Weekly Tips</h2>
-          <p className="text-center text-muted-foreground mb-8 text-lg">
-            Get free scam alerts, security tips, and AI safety updates delivered to your inbox. Unsubscribe anytime.
-          </p>
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
-            <Input
-              type="email"
-              placeholder="your@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 h-12 text-base"
-              required
-            />
-            <Button 
-              type="submit" 
-              disabled={isSubmitting}
-              size="default"
-              className="h-12 px-6"
-            >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Subscribing...
-                </>
-              ) : (
-                "Subscribe"
-              )}
-            </Button>
-          </form>
-        </Card>
+        </div>
+      </Card>
+    );
+  }
+
+  return (
+    <Card className="p-6 bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20 hover:shadow-lg transition-shadow duration-300">
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+          <Mail className="w-6 h-6 text-primary" />
+        </div>
+        <div>
+          <h3 className="font-bold text-lg">Stay Protected</h3>
+          <p className="text-sm text-muted-foreground">Get monthly AI safety tips</p>
+        </div>
       </div>
-    </section>
+
+      <form onSubmit={handleSubmit} className="space-y-3">
+        <Input
+          type="text"
+          placeholder="Your Name (optional)"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="w-full"
+        />
+        <Input
+          type="email"
+          placeholder="Your Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          className="w-full"
+        />
+        <Button 
+          type="submit" 
+          className="w-full" 
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? (
+            <>
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              Subscribing...
+            </>
+          ) : (
+            "Subscribe for Free"
+          )}
+        </Button>
+      </form>
+
+      <p className="text-xs text-muted-foreground mt-3 text-center">
+        We respect your privacy. Unsubscribe anytime.
+      </p>
+    </Card>
   );
 };
 

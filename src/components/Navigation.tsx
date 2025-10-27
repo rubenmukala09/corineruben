@@ -31,17 +31,9 @@ const Navigation = () => {
   ];
 
   const mainLinks = [
-    { name: "AI Business", href: "/business", scrollToTop: true },
+    { name: "AI Business", href: "/business" },
     { name: "Learn & Train", href: "/training" },
   ];
-
-  const handleLinkClick = (href: string, scrollToTop?: boolean) => {
-    if (scrollToTop) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-    navigate(href);
-    setMobileMenuOpen(false);
-  };
 
   return (
     <nav className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border shadow-sm">
@@ -76,12 +68,12 @@ const Navigation = () => {
                   {/* Main Links */}
                   {mainLinks.map((link) => (
                     <NavigationMenuItem key={link.name}>
-                      <button
-                        onClick={() => handleLinkClick(link.href, link.scrollToTop)}
-                        className="text-foreground/80 hover:text-foreground font-bold transition-colors duration-200 text-base whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2 py-1 bg-transparent border-0 cursor-pointer"
+                      <Link
+                        to={link.href}
+                        className="text-foreground/80 hover:text-foreground font-bold transition-colors duration-200 text-base whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2 py-1"
                       >
                         {link.name}
-                      </button>
+                      </Link>
                     </NavigationMenuItem>
                   ))}
 
@@ -162,13 +154,14 @@ const Navigation = () => {
                 <>
                   {/* Main Links */}
                   {mainLinks.map((link) => (
-                    <button
+                    <Link
                       key={link.name}
-                      onClick={() => handleLinkClick(link.href, link.scrollToTop)}
-                      className="text-foreground/80 hover:text-foreground py-2 transition-colors font-bold text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2 bg-transparent border-0 cursor-pointer text-left w-full"
+                      to={link.href}
+                      className="text-foreground/80 hover:text-foreground py-2 transition-colors font-bold text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2"
+                      onClick={() => setMobileMenuOpen(false)}
                     >
                       {link.name}
-                    </button>
+                    </Link>
                   ))}
 
                   {/* Regular Links */}

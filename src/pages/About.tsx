@@ -396,10 +396,10 @@ const About = () => {
             </p>
           </div>
 
-          {/* Contact Form - Centered */}
-          <div className="max-w-3xl mx-auto mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
+            {/* Contact Form */}
             <Card className="p-8 shadow-medium hover:shadow-strong transition-shadow">
-              <h3 className="text-2xl font-bold mb-6 text-center">Send Us a Message</h3>
+              <h3 className="text-2xl font-bold mb-6">Send Us a Message</h3>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-semibold mb-2">
@@ -477,10 +477,8 @@ const About = () => {
               </form>
             </Card>
 
-          </div>
-
-          {/* Contact Info Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto mt-16">
+            {/* Contact Info */}
+            <div className="space-y-6">
               <Card className="p-8 hover:shadow-medium transition-all">
                 <div className="flex items-start gap-4">
                   <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
@@ -551,6 +549,7 @@ const About = () => {
                   </div>
                 </div>
               </Card>
+            </div>
           </div>
         </div>
       </section>

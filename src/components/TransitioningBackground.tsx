@@ -19,7 +19,7 @@ interface TransitioningBackgroundProps {
   opacity?: number; // opacity level (0-1), default 1
 }
 
-const TransitioningBackground = ({ images = defaultImages, interval = 10000, className = '', opacity = 0.5 }: TransitioningBackgroundProps) => {
+const TransitioningBackground = ({ images = defaultImages, interval = 10000, className = '', opacity = 0.3 }: TransitioningBackgroundProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [nextIndex, setNextIndex] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(false);

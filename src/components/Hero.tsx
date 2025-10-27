@@ -55,13 +55,13 @@ const Hero = ({
             opacity={0.3}
           />
         ) : useTransitioningBackground ? (
-          <TransitioningBackground opacity={0.5} />
+          <TransitioningBackground opacity={0.3} />
         ) : (
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{ 
               backgroundImage: `url(${backgroundImage})`,
-              opacity: 0.5
+              opacity: 0.3
             }}
           />
         )}
