@@ -6,9 +6,26 @@ import CTASection from "@/components/CTASection";
 import FlowingWaves from "@/components/FlowingWaves";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { CheckCircle, Users, Video, Home, Building2, Clock, Globe, Award, FileText } from "lucide-react";
+import {
+  CheckCircle,
+  Mail,
+  Upload,
+  Phone,
+  Search,
+  Shield,
+  Users,
+  Clock,
+  Award,
+  Lock,
+  FileText,
+  MessageSquare,
+  Link as LinkIcon,
+  QrCode,
+  FileCheck,
+  Image as ImageIcon,
+} from "lucide-react";
 
-const Training = () => {
+const ScamShield = () => {
   return (
     <div className="min-h-screen">
       <Navigation />
@@ -16,20 +33,26 @@ const Training = () => {
       {/* Hero Section */}
       <Hero
         useTransitioningBackground={true}
-        headline="Master AI Scam Defense in One Session"
-        subheadline="Live classes taught by cybersecurity experts. Walk away with scripts, strategies, and lifetime confidence."
+        headline="Your Personal Cybersecurity Team - On Demand"
+        subheadline="Forward suspicious emails, texts, calls, or links. Get expert analysis within 24 hours."
         showScrollIndicator={true}
       >
+        <div className="mb-6 inline-block">
+          <div className="bg-accent text-accent-foreground px-6 py-3 rounded-full font-bold text-lg mb-4">
+            14-DAY FREE TRIAL
+          </div>
+          <p className="text-white/90 text-xl">No Credit Card Required</p>
+        </div>
         <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center sm:justify-start">
           <Button asChild variant="default" size="xl" className="w-full sm:w-auto">
-            <Link to="#schedule" aria-label="View training schedule">
-              View Training Schedule
+            <Link to="#pricing" aria-label="Start your free trial">
+              Start Your Free Trial
             </Link>
           </Button>
         </div>
       </Hero>
 
-      {/* What You'll Learn Section */}
+      {/* How ScamShield Works Section */}
       <section className="py-16 bg-background relative overflow-hidden">
         <FlowingWaves variant="full" opacity={0.12} />
         <div className="absolute inset-0 opacity-30">
@@ -43,39 +66,66 @@ const Training = () => {
           />
         </div>
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mb-10 animate-fade-in-up">What You'll Master</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              "Identify deepfake voices and videos",
-              "Spot AI-generated phishing emails",
-              "Verify urgent caller identities",
-              "Scan QR codes safely",
-              "Recognize romance scams",
-              "Protect your banking information",
-              "Set up family safe-word systems",
-              "Execute the 60-Second Pause Protocol™",
-            ].map((skill, index) => (
-              <Card
-                key={index}
-                className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0 mt-1">
-                    <CheckCircle className="w-6 h-6 text-primary group-hover:scale-110 transition-transform duration-300" />
+          <h2 className="text-center mb-10 animate-fade-in-up">Simple Protection in 4 Steps</h2>
+
+          <div className="max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                {
+                  icon: MessageSquare,
+                  step: "STEP 1",
+                  title: "You Receive Something Suspicious",
+                  desc: "Strange text, urgent email, odd call, suspicious link",
+                },
+                {
+                  icon: Upload,
+                  step: "STEP 2",
+                  title: "Forward It to Our Team",
+                  desc: "Email, text, upload screenshot, or call our hotline",
+                  subtext: "Response time: 24 hours (Premium: 4 hours)",
+                },
+                {
+                  icon: Search,
+                  step: "STEP 3",
+                  title: "Expert Analysis",
+                  desc: "Our team examines: Message content, sender verification, link destination, voice/audio analysis, AI-generated detection",
+                },
+                {
+                  icon: FileCheck,
+                  step: "STEP 4",
+                  title: "Get Clear Guidance",
+                  desc: "Risk level (Safe/Caution/Danger/CRITICAL), detailed explanation, recommended actions, emergency scripts if needed",
+                },
+              ].map((step, index) => (
+                <Card
+                  key={index}
+                  className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <div className="flex justify-center mb-4">
+                    <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+                      <step.icon className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-500" />
+                    </div>
                   </div>
-                  <p className="text-foreground font-medium group-hover:text-primary transition-colors duration-300">
-                    {skill}
-                  </p>
-                </div>
-              </Card>
-            ))}
+                  <div className="text-center mb-2">
+                    <span className="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full">
+                      {step.step}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-bold mb-3 text-center group-hover:text-primary transition-colors duration-300">
+                    {step.title}
+                  </h3>
+                  <p className="text-muted-foreground text-center text-sm">{step.desc}</p>
+                  {step.subtext && <p className="text-accent text-center text-xs mt-2 font-semibold">{step.subtext}</p>}
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Training Options Section */}
-      <section className="py-16 bg-muted relative overflow-hidden">
+      {/* Pricing Section */}
+      <section id="pricing" className="py-16 bg-muted relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div
             className="absolute top-1/4 right-20 w-64 h-64 bg-accent/30 rounded-full blur-3xl animate-pulse"
@@ -83,58 +133,58 @@ const Training = () => {
           />
         </div>
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mb-10 animate-fade-in-up">Choose Your Training Package</h2>
+          <h2 className="text-center mb-10 animate-fade-in-up">Choose Your Protection Level</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Standard Group Class */}
+            {/* Starter Plan */}
             <Card
               className="p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-2xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50"
               style={{ animationDelay: "0ms" }}
             >
               <div className="flex justify-center mb-6">
                 <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
-                  <Users className="w-10 h-10 text-primary" />
+                  <Shield className="w-10 h-10 text-primary" />
                 </div>
               </div>
-              <h3 className="text-2xl font-bold mb-2 text-center">Standard Group Class</h3>
+              <h3 className="text-2xl font-bold mb-2 text-center">Starter Plan</h3>
               <div className="text-center mb-6">
-                <span className="text-4xl font-bold text-primary">$89</span>
-                <span className="text-muted-foreground">/person</span>
+                <span className="text-4xl font-bold text-primary">$39</span>
+                <span className="text-muted-foreground">/month</span>
               </div>
-              <div className="space-y-2 mb-6">
-                <p className="text-muted-foreground text-center">60-90 minutes | Zoom</p>
-                <p className="text-muted-foreground text-center">15-25 participants</p>
-              </div>
+              <p className="text-center text-sm text-muted-foreground mb-6">Perfect for: Individuals</p>
 
               <div className="space-y-3 mb-8">
                 {[
-                  "Core anti-scam playbook (PDF)",
-                  "Emergency response scripts",
-                  "Live Q&A session",
-                  "Digital certificate",
-                  "Post-class action plan",
-                  "7-day email support",
+                  "Unlimited threat submissions",
+                  "24-hour expert analysis",
+                  "Email & text support",
+                  "Risk assessment reports",
+                  "Monthly scam trend updates",
+                  "Access to Scam Alert Map",
+                  "Educational resources",
+                  "60-day money-back guarantee",
                 ].map((feature, index) => (
                   <div key={index} className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground">{feature}</span>
+                    <span className="text-foreground text-sm">{feature}</span>
                   </div>
                 ))}
               </div>
 
               <div className="mb-6 p-3 bg-primary/10 rounded-lg">
                 <div className="flex items-center gap-2 justify-center">
-                  <Globe className="w-5 h-5 text-primary" />
-                  <span className="text-sm font-medium">English, Français, Español</span>
+                  <Mail className="w-5 h-5 text-primary" />
+                  <Upload className="w-5 h-5 text-primary" />
+                  <span className="text-xs font-medium">Email, Upload</span>
                 </div>
               </div>
 
               <Button asChild variant="default" size="lg" className="w-full">
-                <Link to="#schedule">BOOK NOW</Link>
+                <Link to="/contact">START FREE TRIAL</Link>
               </Button>
             </Card>
 
-            {/* Family Small Group - MOST POPULAR */}
+            {/* Family Plan - MOST POPULAR */}
             <Card
               className="p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-2xl border-primary border-2 animate-fade-in-up bg-gradient-to-br from-card to-card/50 relative"
               style={{ animationDelay: "100ms" }}
@@ -149,98 +199,110 @@ const Training = () => {
                   <Users className="w-10 h-10 text-primary" />
                 </div>
               </div>
-              <h3 className="text-2xl font-bold mb-2 text-center">Family Small Group</h3>
+              <h3 className="text-2xl font-bold mb-2 text-center">Family Plan</h3>
               <div className="text-center mb-6">
-                <span className="text-4xl font-bold text-primary">$249</span>
-                <span className="text-muted-foreground">/session</span>
+                <span className="text-4xl font-bold text-primary">$79</span>
+                <span className="text-muted-foreground">/month</span>
               </div>
-              <div className="space-y-2 mb-6">
-                <p className="text-muted-foreground text-center">90 minutes | Zoom</p>
-                <p className="text-muted-foreground text-center">8-12 participants</p>
-              </div>
+              <p className="text-center text-sm text-muted-foreground mb-6">Perfect for: Families & couples</p>
 
               <div className="space-y-3 mb-8">
-                <p className="font-semibold text-center mb-3">Everything in Standard PLUS:</p>
+                <p className="font-semibold text-center mb-3">Everything in Starter PLUS:</p>
                 {[
-                  "Spouse included FREE",
-                  "Real-world scenario practice",
-                  "Family safe-word setup",
-                  "30-day priority email support",
-                  "Certificates for all attendees",
-                  "One free reschedule (14 days notice)",
+                  "Protect up to 5 family members",
+                  "12-hour priority response",
+                  "Phone support included",
+                  "Family Safety Vault (secure storage)",
+                  "Shared safe-word system",
+                  "Call verification assistance",
+                  "Quarterly family safety briefings",
+                  "Training discounts (20% off)",
                 ].map((feature, index) => (
                   <div key={index} className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground">{feature}</span>
+                    <span className="text-foreground text-sm">{feature}</span>
                   </div>
                 ))}
               </div>
 
               <div className="mb-6 p-3 bg-primary/10 rounded-lg">
                 <div className="flex items-center gap-2 justify-center">
-                  <Globe className="w-5 h-5 text-primary" />
-                  <span className="text-sm font-medium">English, Français, Español</span>
+                  <Mail className="w-4 h-4 text-primary" />
+                  <Upload className="w-4 h-4 text-primary" />
+                  <Phone className="w-4 h-4 text-primary" />
+                  <MessageSquare className="w-4 h-4 text-primary" />
+                  <span className="text-xs font-medium">All Methods</span>
                 </div>
               </div>
 
               <Button asChild variant="default" size="lg" className="w-full">
-                <Link to="#schedule">BOOK NOW</Link>
+                <Link to="/contact">START FREE TRIAL</Link>
               </Button>
             </Card>
 
-            {/* Priority Private */}
+            {/* Premium Plan */}
             <Card
               className="p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-2xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50"
               style={{ animationDelay: "200ms" }}
             >
               <div className="flex justify-center mb-6">
                 <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
-                  <Video className="w-10 h-10 text-primary" />
+                  <Award className="w-10 h-10 text-primary" />
                 </div>
               </div>
-              <h3 className="text-2xl font-bold mb-2 text-center">Priority Private</h3>
+              <h3 className="text-2xl font-bold mb-2 text-center">Premium Plan</h3>
               <div className="text-center mb-6">
-                <span className="text-4xl font-bold text-primary">$399</span>
-                <span className="text-muted-foreground">/session</span>
+                <span className="text-4xl font-bold text-primary">$129</span>
+                <span className="text-muted-foreground">/month</span>
               </div>
-              <div className="space-y-2 mb-6">
-                <p className="text-muted-foreground text-center">60-90 minutes | Zoom</p>
-                <p className="text-muted-foreground text-center">Private (1-3 people)</p>
-              </div>
+              <p className="text-center text-sm text-muted-foreground mb-6">
+                Perfect for: High-risk individuals, business owners
+              </p>
 
               <div className="space-y-3 mb-8">
                 <p className="font-semibold text-center mb-3">Everything in Family PLUS:</p>
                 {[
-                  "Private scheduling flexibility",
-                  "Tailored to your specific concerns",
-                  "Spouse + 1 adult child included",
-                  "90-day follow-up support",
-                  "Easy reschedule (24hr notice)",
-                  "Recording provided",
+                  "4-hour emergency response",
+                  "AI deepfake voice detection",
+                  '"Call Me Now" verification service',
+                  "Dedicated security advisor",
+                  "24/7 emergency hotline",
+                  "Proactive monitoring alerts",
+                  "Monthly 1-on-1 check-ins",
+                  "Custom threat briefings",
                 ].map((feature, index) => (
                   <div key={index} className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground">{feature}</span>
+                    <span className="text-foreground text-sm">{feature}</span>
                   </div>
                 ))}
               </div>
 
               <div className="mb-6 p-3 bg-primary/10 rounded-lg">
-                <div className="flex items-center gap-2 justify-center">
-                  <Globe className="w-5 h-5 text-primary" />
-                  <span className="text-sm font-medium">English, Français, Español</span>
+                <div className="flex flex-col items-center gap-2">
+                  <div className="flex items-center gap-2">
+                    <Mail className="w-4 h-4 text-primary" />
+                    <Upload className="w-4 h-4 text-primary" />
+                    <Phone className="w-4 h-4 text-primary" />
+                    <MessageSquare className="w-4 h-4 text-primary" />
+                  </div>
+                  <span className="text-xs font-medium">+ Emergency Hotline</span>
                 </div>
               </div>
 
               <Button asChild variant="default" size="lg" className="w-full">
-                <Link to="#schedule">SCHEDULE CONSULTATION</Link>
+                <Link to="/contact">START FREE TRIAL</Link>
               </Button>
             </Card>
+          </div>
+
+          <div className="text-center mt-8 animate-fade-in-up" style={{ animationDelay: "300ms" }}>
+            <p className="text-muted-foreground">All plans include 14-day free trial. Cancel anytime. No contracts.</p>
           </div>
         </div>
       </section>
 
-      {/* In-Home Training Section */}
+      {/* What We Analyze Section */}
       <section className="py-16 bg-background relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div
@@ -249,53 +311,39 @@ const Training = () => {
           />
         </div>
         <div className="container mx-auto px-4 relative z-10">
-          <Card className="max-w-4xl mx-auto p-8 hover:shadow-strong transition-all duration-500 rounded-2xl border-accent border-2 animate-fade-in-up bg-gradient-to-br from-card to-card/50">
-            <div className="flex flex-col md:flex-row gap-8 items-center">
-              <div className="flex-shrink-0">
-                <div className="w-24 h-24 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
-                  <Home className="w-12 h-12 text-primary" />
-                </div>
-              </div>
-              <div className="flex-grow">
-                <h3 className="text-3xl font-bold mb-4">White-Glove In-Home Training</h3>
-                <div className="mb-4">
-                  <span className="text-4xl font-bold text-primary">$599</span>
-                  <span className="text-muted-foreground ml-2">| 2-hour session</span>
-                </div>
-                <p className="text-muted-foreground mb-4">Availability: Dayton Metro Area</p>
+          <h2 className="text-center mb-10 animate-fade-in-up">We Analyze All Types of Threats</h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
-                  {[
-                    "Everything from Priority Private training",
-                    "Certified trainer comes to your home",
-                    "Hands-on device security setup",
-                    "Set up 2FA, password manager",
-                    "Configure privacy settings",
-                    "Family Safety Vault setup",
-                    "Printed emergency response guide",
-                    "60-day follow-up support",
-                  ].map((feature, index) => (
-                    <div key={index} className="flex items-start gap-3">
-                      <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                      <span className="text-foreground">{feature}</span>
-                    </div>
-                  ))}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+            {[
+              { icon: Mail, title: "Phishing Emails" },
+              { icon: MessageSquare, title: "SMS Scams" },
+              { icon: Phone, title: "Voice Calls" },
+              { icon: FileText, title: "Voice Messages" },
+              { icon: LinkIcon, title: "Suspicious Links" },
+              { icon: QrCode, title: "QR Codes" },
+              { icon: FileCheck, title: "Documents" },
+              { icon: ImageIcon, title: "Social Media" },
+            ].map((threat, index) => (
+              <Card
+                key={index}
+                className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-all duration-300 mb-3">
+                    <threat.icon className="w-7 h-7 text-primary" />
+                  </div>
+                  <h3 className="text-sm font-semibold group-hover:text-primary transition-colors duration-300">
+                    {threat.title}
+                  </h3>
                 </div>
-
-                <p className="text-sm text-muted-foreground mb-6 italic">
-                  Perfect for: Seniors who prefer in-person help, families caring for elderly parents
-                </p>
-
-                <Button asChild variant="default" size="lg">
-                  <Link to="/contact">REQUEST IN-HOME VISIT</Link>
-                </Button>
-              </div>
-            </div>
-          </Card>
+              </Card>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Corporate Training Section */}
+      {/* Family Safety Vault Section */}
       <section className="py-16 bg-muted relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div
@@ -304,27 +352,24 @@ const Training = () => {
           />
         </div>
         <div className="container mx-auto px-4 relative z-10">
-          <Card className="max-w-4xl mx-auto p-8 hover:shadow-strong transition-all duration-500 rounded-2xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50">
+          <Card className="max-w-4xl mx-auto p-8 hover:shadow-strong transition-all duration-500 rounded-2xl border-accent border-2 animate-fade-in-up bg-gradient-to-br from-card to-card/50">
             <div className="text-center">
               <div className="flex justify-center mb-6">
                 <div className="w-24 h-24 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
-                  <Building2 className="w-12 h-12 text-primary" />
+                  <Lock className="w-12 h-12 text-primary" />
                 </div>
               </div>
-              <h3 className="text-3xl font-bold mb-4">Training for Organizations</h3>
-              <p className="text-lg text-muted-foreground mb-8">
-                We provide customized training for senior living facilities, churches, community centers, healthcare
-                systems, and corporations.
-              </p>
+              <h3 className="text-3xl font-bold mb-4">Secure Your Family's Most Important Information</h3>
+              <p className="text-xl text-muted-foreground mb-8">Included FREE with Family & Premium Plans</p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 text-left max-w-2xl mx-auto">
                 {[
-                  "Customized curriculum",
-                  "20+ participants",
-                  "Multiple session options",
-                  "Printed materials",
-                  "Staff training included",
-                  "Ongoing consultation",
+                  "Family safe words",
+                  "Trusted caller list",
+                  "Emergency contacts",
+                  "Important documents (encrypted)",
+                  "Account recovery info",
+                  "Travel itineraries",
                 ].map((feature, index) => (
                   <div key={index} className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
@@ -333,20 +378,20 @@ const Training = () => {
                 ))}
               </div>
 
-              <div className="mb-6">
-                <span className="text-3xl font-bold text-primary">Starting at $1,999</span>
-              </div>
+              <p className="text-sm text-muted-foreground mb-6">
+                Security: Bank-grade encryption, multi-factor auth, access sharing
+              </p>
 
               <Button asChild variant="default" size="lg">
-                <Link to="/contact">REQUEST ENTERPRISE QUOTE</Link>
+                <Link to="/contact">EXPLORE SAFETY VAULT</Link>
               </Button>
             </div>
           </Card>
         </div>
       </section>
 
-      {/* Upcoming Schedule Section */}
-      <section id="schedule" className="py-16 bg-background relative overflow-hidden">
+      {/* Real Examples Section */}
+      <section className="py-16 bg-background relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div
             className="absolute bottom-20 left-1/4 w-72 h-72 bg-primary/25 rounded-full blur-3xl animate-pulse"
@@ -354,117 +399,82 @@ const Training = () => {
           />
         </div>
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mb-10 animate-fade-in-up">Upcoming Training Sessions</h2>
+          <h2 className="text-center mb-10 animate-fade-in-up">Scams We've Caught for Our Members</h2>
 
-          <div className="max-w-5xl mx-auto space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
             {[
               {
-                date: "Dec 15",
-                time: "2:00 PM ET",
-                type: "Standard Group",
-                lang: "English",
-                spots: "8 spots left",
-                urgent: true,
+                badge: "Grandparent Scam",
+                received: '"Hi grandma, I\'m in jail and need bail money NOW"',
+                analysis: "Voice analysis showed AI generation. Number traced to known scam.",
+                saved: "$8,000",
               },
               {
-                date: "Dec 18",
-                time: "6:00 PM ET",
-                type: "Family Small",
-                lang: "English",
-                spots: "5 spots left",
-                urgent: true,
+                badge: "Bank Phishing",
+                received: "Email that looked exactly like Chase Bank",
+                analysis: "Domain was chase-secure-verify.com (fake). Classic phishing.",
+                saved: "Entire savings",
               },
               {
-                date: "Dec 20",
-                time: "10:00 AM ET",
-                type: "Standard Group",
-                lang: "Français",
-                spots: "12 spots left",
-                urgent: false,
+                badge: "Tech Support Scam",
+                received: "Microsoft called saying computer was hacked",
+                analysis: "Microsoft never cold-calls. Verified fake tech support operation.",
+                saved: "$2,500",
               },
               {
-                date: "Jan 5",
-                time: "3:00 PM ET",
-                type: "Family Small",
-                lang: "Español",
-                spots: "10 spots left",
-                urgent: false,
+                badge: "Romance Scam",
+                received: "Online love interest requested emergency funds",
+                analysis: "Photos were stolen. Profile matched known scammer patterns.",
+                saved: "$15,000",
               },
-              {
-                date: "Jan 8",
-                time: "7:00 PM ET",
-                type: "Standard Group",
-                lang: "English",
-                spots: "18 spots left",
-                urgent: false,
-              },
-              {
-                date: "Jan 12",
-                time: "1:00 PM ET",
-                type: "Priority Private",
-                lang: "English",
-                spots: "Available",
-                urgent: false,
-              },
-            ].map((session, index) => (
+            ].map((example, index) => (
               <Card
                 key={index}
-                className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-[1.01] rounded-2xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50"
-                style={{ animationDelay: `${index * 50}ms` }}
+                className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-2xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                  <div className="flex items-center gap-4 flex-grow">
-                    <div className="flex-shrink-0">
-                      <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
-                        <Clock className="w-8 h-8 text-primary" />
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold">
-                        {session.date} | {session.time}
-                      </h3>
-                      <div className="flex flex-wrap gap-2 mt-2">
-                        <span className="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full">
-                          {session.type}
-                        </span>
-                        <span className="text-sm bg-accent/10 text-accent px-3 py-1 rounded-full">{session.lang}</span>
-                        <span
-                          className={`text-sm px-3 py-1 rounded-full ${session.urgent ? "bg-red-500/10 text-red-500 font-bold" : "bg-muted text-muted-foreground"}`}
-                        >
-                          {session.spots}
-                        </span>
-                      </div>
-                    </div>
+                <div className="mb-4">
+                  <span className="text-sm font-bold bg-accent text-accent-foreground px-3 py-1 rounded-full">
+                    {example.badge}
+                  </span>
+                </div>
+                <div className="space-y-3">
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground mb-1">WHAT THEY RECEIVED:</p>
+                    <p className="text-foreground text-sm italic">{example.received}</p>
                   </div>
-                  <div className="flex-shrink-0">
-                    <Button asChild variant="default">
-                      <Link to="/contact">BOOK</Link>
-                    </Button>
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground mb-1">OUR ANALYSIS:</p>
+                    <p className="text-foreground text-sm">{example.analysis}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground mb-1">MONEY SAVED:</p>
+                    <p className="text-2xl font-bold text-primary">{example.saved}</p>
                   </div>
                 </div>
               </Card>
             ))}
           </div>
-
-          <div className="text-center mt-8 animate-fade-in-up" style={{ animationDelay: "300ms" }}>
-            <Button asChild variant="outline" size="lg">
-              <Link to="/contact">VIEW FULL SCHEDULE</Link>
-            </Button>
-          </div>
         </div>
       </section>
 
       {/* Final CTA */}
-      <CTASection headline="Ready to Protect Your Family?" variant="gold">
+      <CTASection headline="Sleep Better Tonight" variant="gold">
+        <p className="text-xl text-white/90 mb-8">Join 500+ families who trust ScamShield</p>
         <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center">
           <Button asChild variant="gold" size="xl" className="w-full sm:w-auto">
-            <Link to="#schedule" aria-label="Book your training">
-              BOOK YOUR TRAINING
+            <Link to="#pricing" aria-label="Start free trial">
+              START FREE TRIAL
+            </Link>
+          </Button>
+          <Button asChild variant="secondary" size="xl" className="w-full sm:w-auto">
+            <Link to="/training" aria-label="Compare plans">
+              COMPARE PLANS
             </Link>
           </Button>
           <Button asChild variant="outlineLight" size="xl" className="w-full sm:w-auto">
-            <Link to="/contact" aria-label="Ask a question">
-              ASK A QUESTION
+            <Link to="/contact" aria-label="Talk to expert">
+              TALK TO EXPERT
             </Link>
           </Button>
         </div>
@@ -475,4 +485,4 @@ const Training = () => {
   );
 };
 
-export default Training;
+export default ScamShield;
