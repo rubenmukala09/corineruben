@@ -36,29 +36,36 @@ const EnhancedAuth = () => {
           return;
         }
 
-        const { data, error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            emailRedirectTo: `${window.location.origin}/`,
+        // Call secure Edge Function for admin signup
+        const { data, error } = await supabase.functions.invoke('worker-signup', {
+          body: {
+            email,
+            password,
+            workerId: '',
+            roleType: 'admin',
           },
         });
 
         if (error) throw error;
 
-        if (data.user) {
-          // Create admin role for new user
-          const { error: roleError } = await supabase
-            .from("user_roles")
-            .insert({ user_id: data.user.id, role: "admin" });
-
-          if (roleError) console.error("Role creation error:", roleError);
-
-          toast({
-            title: "Success!",
-            description: "Account created successfully. Please check your email to verify.",
-          });
+        if (!data?.success) {
+          throw new Error(data?.error || 'Signup failed');
         }
+
+        toast({
+          title: "Success!",
+          description: "Admin account created successfully. Signing you in...",
+        });
+
+        // Now sign in the user
+        const { error: signInError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (signInError) throw signInError;
+
+        navigate("/admin");
       } else {
         // Sign in
         if (roleType === "worker") {

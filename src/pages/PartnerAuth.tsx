@@ -96,53 +96,43 @@ const PartnerAuth = () => {
     setLoading(true);
 
     try {
-      const { data, error } = await supabase.auth.signUp({
-        email: signupEmail,
-        password: signupPassword,
-        options: {
-          emailRedirectTo: `${window.location.origin}/partner/dashboard`,
+      // Call secure Edge Function for partner signup with validation
+      const { data, error } = await supabase.functions.invoke('partner-signup', {
+        body: {
+          email: signupEmail,
+          password: signupPassword,
+          partnerType,
+          businessName,
+          businessEmail,
+          businessPhone,
+          description,
         },
       });
 
       if (error) throw error;
 
-      if (data.user) {
-        // Create partner profile
-        const { error: partnerError } = await supabase
-          .from('partners')
-          .insert({
-            user_id: data.user.id,
-            partner_type: partnerType,
-            business_name: businessName,
-            business_email: businessEmail,
-            business_phone: businessPhone,
-            description,
-            status: 'pending',
-          });
-
-        if (partnerError) throw partnerError;
-
-        // Assign partner role
-        const { error: roleError } = await supabase
-          .from('user_roles')
-          .insert({
-            user_id: data.user.id,
-            role: 'partner',
-          });
-
-        if (roleError) throw roleError;
-
-        toast({
-          title: 'Success!',
-          description: 'Your partner account has been created. Please wait for approval.',
-        });
-
-        navigate('/partner/dashboard');
+      if (!data?.success) {
+        throw new Error(data?.error || 'Signup failed');
       }
+
+      toast({
+        title: 'Success!',
+        description: 'Your partner account has been created. Please sign in to continue.',
+      });
+
+      // Now sign in the user
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: signupEmail,
+        password: signupPassword,
+      });
+
+      if (signInError) throw signInError;
+
+      navigate('/partner/dashboard');
     } catch (error: any) {
       toast({
         title: 'Error',
-        description: error.message,
+        description: error.message || 'Sign up failed',
         variant: 'destructive',
       });
     } finally {

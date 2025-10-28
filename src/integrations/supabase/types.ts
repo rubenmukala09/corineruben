@@ -2152,22 +2152,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      generate_order_number: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      generate_payout_number: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      generate_request_number: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      generate_worker_id: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
+      generate_order_number: { Args: never; Returns: string }
+      generate_payout_number: { Args: never; Returns: string }
+      generate_request_number: { Args: never; Returns: string }
+      generate_worker_id: { Args: never; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
