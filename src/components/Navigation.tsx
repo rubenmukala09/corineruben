@@ -40,7 +40,14 @@ const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-transform duration-300">
+          <Link 
+            to="/" 
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="flex items-center gap-3 hover:scale-105 transition-transform duration-300 cursor-pointer"
+          >
             <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center shadow-glow-purple relative">
               <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary to-accent opacity-5 animate-pulse-wave" />
               <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary to-accent opacity-0 animate-pulse-wave-delayed" />

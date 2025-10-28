@@ -106,16 +106,17 @@ const NewsletterSubscribe = () => {
         />
         <Button 
           type="submit" 
-          className="w-full" 
+          className="w-full px-5 py-2 text-sm" 
+          size="sm"
           disabled={isSubmitting}
         >
           {isSubmitting ? (
             <>
-              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              <Loader2 className="w-3 h-3 mr-2 animate-spin" />
               Subscribing...
             </>
           ) : (
-            "Subscribe for Free"
+            "Subscribe"
           )}
         </Button>
       </form>
