@@ -100,16 +100,16 @@ const Resources = () => {
       {/* Hero */}
       <Hero
         backgroundImage={heroImage}
-        headline="Free Resources & Tools"
-        subheadline="Downloadable guides, security tools, and answers to your questions—everything you need to stay safe."
+        headline="Resources & Tools"
+        subheadline="Guides, security products, and answers to your questions."
       />
 
-      {/* Free Guides */}
-      <section className="py-20 bg-background relative">
+      {/* Guides */}
+      <section className="py-16 bg-background relative">
         <FlowingWaves variant="full" opacity={0.12} />
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mb-12">Free Downloadable Guides</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <h2 className="text-center mb-10">Downloadable Guides</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {guides.map((guide, index) => (
               <Card key={index} className="p-6 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl">
                 <div className="flex justify-center mb-4">
@@ -122,7 +122,7 @@ const Resources = () => {
                 <Button asChild className="w-full" variant="outline">
                   <Link to="/contact">
                     <Download className="w-4 h-4 mr-2" />
-                    DOWNLOAD FREE
+                    PURCHASE
                   </Link>
                 </Button>
               </Card>
@@ -132,11 +132,11 @@ const Resources = () => {
       </section>
 
       {/* Security Tools Shop */}
-      <section className="py-20 bg-muted">
+      <section className="py-16 bg-muted">
         <div className="container mx-auto px-4">
-          <h2 className="text-center mb-4">Security Tools Shop</h2>
-          <p className="text-center text-muted-foreground mb-12 text-lg">
-            All profits fund free training for seniors in need.
+          <h2 className="text-center mb-3">Security Tools Shop</h2>
+          <p className="text-center text-muted-foreground mb-10">
+            Profits support training for seniors in need.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
             {products.map((product, index) => (
@@ -158,9 +158,9 @@ const Resources = () => {
       </section>
 
       {/* Blog */}
-      <section className="py-20 bg-background">
+      <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
-          <h2 className="text-center mb-12">Recent Articles</h2>
+          <h2 className="text-center mb-10">Recent Articles</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {blogArticles.map((article, index) => (
               <Card key={index} className="overflow-hidden hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl">
@@ -183,9 +183,9 @@ const Resources = () => {
       </section>
 
       {/* FAQ */}
-      <section className="py-20 bg-muted" id="faq">
+      <section className="py-16 bg-muted" id="faq">
         <div className="container mx-auto px-4">
-          <h2 className="text-center mb-12">Frequently Asked Questions</h2>
+          <h2 className="text-center mb-10">Frequently Asked Questions</h2>
           <div className="max-w-4xl mx-auto">
             <Accordion type="single" collapsible className="space-y-4">
               {faqs.map((faq, index) => (
@@ -204,9 +204,9 @@ const Resources = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="py-20 bg-gradient-to-r from-primary to-accent">
+      <section className="py-16 bg-gradient-to-r from-primary to-accent">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-accent-foreground mb-8">Still Have Questions?</h2>
+          <h2 className="text-accent-foreground mb-6">Questions?</h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild variant="gold" size="xl">
               <Link to="/contact">CONTACT US</Link>

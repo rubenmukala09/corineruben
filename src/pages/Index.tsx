@@ -36,7 +36,7 @@ const Index = () => {
             <Link to="/training" aria-label="Learn to spot scams">Learn to Spot Scams</Link>
           </Button>
           <Button asChild variant="outlineLight" size="xl" className="w-full sm:w-auto">
-            <Link to="/scam-shield" aria-label="Get ScamShield Protection">Get ScamShield Protection</Link>
+            <Link to="/training" aria-label="Get ScamShield Protection">Get ScamShield Protection</Link>
           </Button>
           <Button asChild variant="outlineLight" size="xl" className="w-full sm:w-auto">
             <Link to="/business" aria-label="AI for Business">AI for Business</Link>
@@ -48,25 +48,25 @@ const Index = () => {
 
       <TrustBadges />
 
-      {/* Why Families Trust InVision Network */}
-      <section className="py-20 bg-background relative overflow-hidden">
+      {/* Why Families Trust Us */}
+      <section className="py-16 bg-background relative overflow-hidden">
         <FlowingWaves variant="full" opacity={0.12} />
         <div className="absolute inset-0 opacity-30">
           <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '6s' }} />
         </div>
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mb-12 animate-fade-in-up">Why Families Trust InVision Network</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <h2 className="text-center mb-10 animate-fade-in-up">Why Families Trust Us</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm" style={{ animationDelay: '0ms' }}>
               <div className="flex justify-center mb-4">
                 <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
                   <Heart className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-500" />
                 </div>
               </div>
-              <h3 className="text-xl mb-3 text-center group-hover:text-primary transition-colors duration-300">Privacy-First Protocols</h3>
+              <h3 className="text-xl mb-3 text-center group-hover:text-primary transition-colors duration-300">Privacy-First</h3>
               <p className="text-muted-foreground text-center">
-                We NEVER ask for passwords, bank info, or Social Security numbers. Your data stays 100% private. No recording, no data selling.
+                We NEVER ask for passwords, bank info, or Social Security numbers. Your data stays private.
               </p>
             </Card>
 
@@ -76,9 +76,9 @@ const Index = () => {
                   <MessageSquare className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-500" />
                 </div>
               </div>
-              <h3 className="text-xl mb-3 text-center group-hover:text-primary transition-colors duration-300">Plain-English Teaching</h3>
+              <h3 className="text-xl mb-3 text-center group-hover:text-primary transition-colors duration-300">Plain-English</h3>
               <p className="text-muted-foreground text-center">
-                No jargon, no condescension. Real-world examples, step-by-step guidance. If you can use email, you can master our training.
+                No jargon. Real-world examples, step-by-step guidance. If you can use email, you can master this.
               </p>
             </Card>
 
@@ -88,9 +88,9 @@ const Index = () => {
                   <FileText className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-500" />
                 </div>
               </div>
-              <h3 className="text-xl mb-3 text-center group-hover:text-primary transition-colors duration-300">Emergency-Ready Scripts</h3>
+              <h3 className="text-xl mb-3 text-center group-hover:text-primary transition-colors duration-300">Emergency Scripts</h3>
               <p className="text-muted-foreground text-center">
-                Walk away with word-for-word scripts for bank fraud, IRS scams, and family emergency cons. The 60-Second Pause Protocol™ that works.
+                Word-for-word scripts for bank fraud, IRS scams, and family emergency cons. The 60-Second Pause Protocol™.
               </p>
             </Card>
 
@@ -100,9 +100,9 @@ const Index = () => {
                   <Users className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-500" />
                 </div>
               </div>
-              <h3 className="text-xl mb-3 text-center group-hover:text-primary transition-colors duration-300">Senior-Friendly Design</h3>
+              <h3 className="text-xl mb-3 text-center group-hover:text-primary transition-colors duration-300">Senior-Friendly</h3>
               <p className="text-muted-foreground text-center">
-                Large text, clear buttons, patient instructors. Designed WITH seniors, not just FOR them. Ages 40-90 welcome.
+                Large text, clear buttons, patient instructors. Designed WITH seniors. Ages 40-90 welcome.
               </p>
             </Card>
           </div>
@@ -113,12 +113,12 @@ const Index = () => {
       <ThreePathsForward />
 
       {/* The 60-Second Pause Protocol */}
-      <section className="py-20 bg-background relative overflow-hidden">
+      <section className="py-16 bg-background relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-1/4 right-20 w-64 h-64 bg-accent/30 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '5s' }} />
         </div>
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-12 animate-fade-in-up">
+          <div className="text-center mb-10 animate-fade-in-up">
             <h2 className="mb-4">The 60-Second Pause Protocol™</h2>
             <p className="text-xl text-muted-foreground">Stop Scams Before They Start</p>
           </div>
@@ -152,12 +152,12 @@ const Index = () => {
       </section>
 
       {/* Comparison Table */}
-      <section className="py-20 bg-muted relative overflow-hidden">
+      <section className="py-16 bg-muted relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div className="absolute bottom-1/3 left-10 w-80 h-80 bg-primary/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '7s' }} />
         </div>
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mb-12 animate-fade-in-up">What Makes Us Different from Free Resources</h2>
+          <h2 className="text-center mb-10 animate-fade-in-up">What Makes Us Different</h2>
           <div className="max-w-5xl mx-auto overflow-x-auto animate-fade-in-up" style={{ animationDelay: '200ms' }}>
             <table className="w-full bg-card rounded-2xl shadow-strong border border-border/50 hover:shadow-2xl transition-shadow duration-500">
               <thead>
@@ -200,14 +200,14 @@ const Index = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-background relative overflow-hidden">
+      <section className="py-16 bg-background relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-20 right-1/4 w-96 h-96 bg-accent/25 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '8s' }} />
           <div className="absolute bottom-20 left-1/4 w-72 h-72 bg-primary/25 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '6s' }} />
         </div>
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mb-12 animate-fade-in-up">What Our Clients Say</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <h2 className="text-center mb-10 animate-fade-in-up">Client Testimonials</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="animate-fade-in-up" style={{ animationDelay: '0ms' }}>
               <TestimonialCard
                 name="Mary Thompson"

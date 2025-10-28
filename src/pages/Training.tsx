@@ -20,21 +20,26 @@ const Training = () => {
 
       <Hero
         backgroundImage={heroImage}
-        headline="Master AI Scam Defense in One Session"
-        subheadline="Live Zoom classes taught by cybersecurity experts. Walk away with scripts, strategies, and lifetime confidence."
+        headline="Master AI Scam Defense & Get 24/7 Protection"
+        subheadline="Live training plus expert threat analysis. Learn to spot scams and get ongoing protection for your family."
       >
-        <Button asChild variant="default" size="xl">
-          <Link to="/contact">VIEW TRAINING SCHEDULE</Link>
-        </Button>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Button asChild variant="default" size="xl">
+            <Link to="/contact">VIEW TRAINING SCHEDULE</Link>
+          </Button>
+          <Button asChild variant="outlineLight" size="xl">
+            <Link to="/contact">GET SCAMSHIELD PROTECTION</Link>
+          </Button>
+        </div>
       </Hero>
 
       <TrustBar />
 
       {/* What You'll Master */}
-      <section className="py-20 bg-background relative">
+      <section className="py-16 bg-background relative">
         <FlowingWaves variant="full" opacity={0.12} />
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mb-12">What You'll Master</h2>
+          <h2 className="text-center mb-10">What You'll Master</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             <div className="space-y-4">
               {[
@@ -65,9 +70,9 @@ const Training = () => {
       </section>
 
       {/* Pricing Table */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-16 bg-muted/30">
         <div className="container mx-auto px-4">
-          <h2 className="text-center mb-16">Training Programs & Pricing</h2>
+          <h2 className="text-center mb-12">Training Programs & Pricing</h2>
           
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -187,13 +192,121 @@ const Training = () => {
             </div>
           </div>
 
-          <p className="text-center text-muted-foreground mt-12 text-sm max-w-3xl mx-auto">
-            We do not record classes to protect your privacy. No login required to attend. Certificate of completion provided.
+          <p className="text-center text-muted-foreground mt-10 text-sm max-w-3xl mx-auto">
+            We do not record classes to protect your privacy. No login required. Certificate provided.
           </p>
         </div>
       </section>
+
+      {/* ScamShield Protection Plans */}
+      <section className="py-16 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-10">
+            <h2 className="mb-3">ScamShield Protection Plans</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Not sure if something is a scam? Forward it to our experts for analysis within 24 hours.
+            </p>
+            <div className="inline-block px-4 py-2 bg-accent/20 rounded-full text-sm font-bold text-accent mt-4">
+              14-Day Trial • No Credit Card Required
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <Card className="p-6 rounded-2xl">
+              <h3 className="text-2xl font-bold mb-3">Starter Plan</h3>
+              <p className="text-4xl font-bold gradient-text-primary mb-4">
+                $39<span className="text-lg text-muted-foreground">/month</span>
+              </p>
+              <p className="text-muted-foreground mb-4">For individuals</p>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span className="text-sm">Unlimited submissions</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span className="text-sm">24-hour analysis</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span className="text-sm">Email support</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span className="text-sm">Monthly scam updates</span>
+                </li>
+              </ul>
+              <Button asChild variant="default" className="w-full">
+                <Link to="/contact">START TRIAL</Link>
+              </Button>
+            </Card>
+
+            <Card className="p-6 border-2 border-accent relative rounded-2xl shadow-medium">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-white px-4 py-1 rounded-full text-xs font-bold">
+                MOST POPULAR
+              </div>
+              <h3 className="text-2xl font-bold mb-3">Family Plan</h3>
+              <p className="text-4xl font-bold gradient-text-primary mb-4">
+                $79<span className="text-lg text-muted-foreground">/month</span>
+              </p>
+              <p className="text-muted-foreground mb-4">For families (up to 5)</p>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span className="text-sm">12-hour priority response</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span className="text-sm">Phone support</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span className="text-sm">Family Safety Vault</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span className="text-sm">20% training discount</span>
+                </li>
+              </ul>
+              <Button asChild variant="default" className="w-full">
+                <Link to="/contact">START TRIAL</Link>
+              </Button>
+            </Card>
+
+            <Card className="p-6 rounded-2xl">
+              <h3 className="text-2xl font-bold mb-3">Premium Plan</h3>
+              <p className="text-4xl font-bold gradient-text-primary mb-4">
+                $129<span className="text-lg text-muted-foreground">/month</span>
+              </p>
+              <p className="text-muted-foreground mb-4">For high-risk situations</p>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span className="text-sm">4-hour emergency response</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span className="text-sm">AI deepfake detection</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span className="text-sm">24/7 emergency hotline</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span className="text-sm">Dedicated advisor</span>
+                </li>
+              </ul>
+              <Button asChild variant="default" className="w-full">
+                <Link to="/contact">START TRIAL</Link>
+              </Button>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* In-Person Training */}
-      <section className="py-20 bg-background">
+      <section className="py-16 bg-muted">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <Card className="p-8 bg-gradient-to-br from-primary/5 to-primary/10 border-border">
@@ -235,9 +348,9 @@ const Training = () => {
       </section>
 
       {/* What's Included */}
-      <section className="py-20 bg-muted">
+      <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
-          <h2 className="text-center mb-12">What's Included in Every Training</h2>
+          <h2 className="text-center mb-10">Included in Every Training</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
             {[
               { icon: FileText, title: "Scam-Proof Playbook", desc: "Downloadable PDF with all scripts, checklists, and emergency protocols" },
@@ -258,9 +371,9 @@ const Training = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-background">
+      <section className="py-16 bg-muted">
         <div className="container mx-auto px-4">
-          <h2 className="text-center mb-12">What Our Students Say</h2>
+          <h2 className="text-center mb-10">Student Testimonials</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <TestimonialCard
               name="Dorothy & Frank M."
@@ -283,10 +396,10 @@ const Training = () => {
       {/* Final CTA */}
       <CTASection headline="Ready to Learn?" variant="gold">
         <Button asChild variant="gold" size="xl">
-          <Link to="/contact">BOOK TRAINING NOW</Link>
+          <Link to="/contact">BOOK TRAINING</Link>
         </Button>
         <Button asChild variant="outline" size="xl">
-          <Link to="/resources">DOWNLOAD FREE SECURITY CHECKLIST</Link>
+          <Link to="/resources">VIEW RESOURCES</Link>
         </Button>
       </CTASection>
 
