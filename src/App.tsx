@@ -10,6 +10,14 @@ import About from "./pages/About";
 import Resources from "./pages/Resources";
 import Contact from "./pages/Contact";
 import Careers from "./pages/Careers";
+import Auth from "./pages/Auth";
+import Portal from "./pages/Portal";
+import AdminDashboard from "./pages/portal/AdminDashboard";
+import AnalystDashboard from "./pages/portal/AnalystDashboard";
+import TrainerDashboard from "./pages/portal/TrainerDashboard";
+import DeveloperDashboard from "./pages/portal/DeveloperDashboard";
+import StaffDashboard from "./pages/portal/StaffDashboard";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +36,13 @@ const App = () => (
           <Route path="/resources" element={<Resources />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/careers" element={<Careers />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/portal" element={<ProtectedRoute><Portal /></ProtectedRoute>} />
+          <Route path="/portal/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/portal/analyst" element={<ProtectedRoute><AnalystDashboard /></ProtectedRoute>} />
+          <Route path="/portal/trainer" element={<ProtectedRoute><TrainerDashboard /></ProtectedRoute>} />
+          <Route path="/portal/developer" element={<ProtectedRoute><DeveloperDashboard /></ProtectedRoute>} />
+          <Route path="/portal/staff" element={<ProtectedRoute><StaffDashboard /></ProtectedRoute>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
