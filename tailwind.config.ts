@@ -15,7 +15,7 @@ export default {
     extend: {
       fontFamily: {
         outfit: ['Outfit', 'sans-serif'],
-        sans: ['Inter', 'Outfit', 'sans-serif'],
+        sans: ['Outfit', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -128,20 +128,18 @@ export default {
         "shimmer": "shimmer 2s infinite linear",
       },
       backgroundImage: {
-        "gradient-hero-primary": "linear-gradient(135deg, hsl(265 85% 35%) 0%, hsl(265 85% 50%) 50%, hsl(265 85% 58%) 100%)",
-        "gradient-hero-cyan": "linear-gradient(135deg, hsl(185 85% 40%) 0%, hsl(185 85% 50%) 50%, hsl(185 80% 60%) 100%)",
-        "gradient-hero-dual": "linear-gradient(135deg, hsl(265 85% 50%) 0%, hsl(205 85% 50%) 50%, hsl(185 85% 50%) 100%)",
-        "gradient-card": "linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(260 15% 97%) 100%)",
-        "gradient-mesh": "linear-gradient(135deg, hsl(260 15% 97%) 0%, hsl(0 0% 100%) 100%)",
-        "gradient-vibrant": "linear-gradient(135deg, hsl(265 85% 58%) 0%, hsl(185 85% 50%) 100%)",
+        "gradient-hero-primary": "linear-gradient(135deg, hsl(260 70% 25%) 0%, hsl(260 65% 35%) 50%, hsl(260 60% 50%) 100%)",
+        "gradient-hero-teal": "linear-gradient(135deg, hsl(180 80% 40%) 0%, hsl(180 75% 45%) 50%, hsl(180 70% 55%) 100%)",
+        "gradient-hero-cyan": "linear-gradient(135deg, hsl(190 85% 45%) 0%, hsl(190 80% 50%) 50%, hsl(190 75% 60%) 100%)",
+        "gradient-card": "linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(250 20% 96%) 100%)",
+        "gradient-mesh": "linear-gradient(135deg, hsl(250 20% 96%) 0%, hsl(0 0% 100%) 100%)",
       },
       boxShadow: {
-        soft: "0 4px 12px -2px rgba(109, 40, 217, 0.08)",
-        medium: "0 12px 24px -4px rgba(109, 40, 217, 0.12)",
-        strong: "0 24px 48px -8px rgba(109, 40, 217, 0.16)",
-        "glow-purple": "0 0 40px rgba(139, 92, 246, 0.4)",
-        "glow-cyan": "0 0 40px rgba(20, 184, 166, 0.4)",
-        "xl": "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+        soft: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+        medium: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+        strong: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+        "glow-purple": "0 0 20px rgba(109, 40, 217, 0.3)",
+        "glow-teal": "0 0 20px rgba(20, 184, 166, 0.3)",
       },
       backdropBlur: {
         xs: "2px",
