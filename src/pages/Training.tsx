@@ -24,7 +24,7 @@ const Training = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen page-transition">
       <Navigation />
 
       <Hero
@@ -33,11 +33,11 @@ const Training = () => {
         subheadline="Master AI scam defense with expert classes + get 24/7 protection monitoring. Complete training and round-the-clock security for Ohio families. Available in English, Français, and Español."
         showScrollIndicator={true}
       >
-        <div className="flex flex-col sm:flex-row gap-4">
-          <Button asChild variant="gold" size="xl">
+        <div className="flex flex-col sm:flex-row gap-6 justify-center">
+          <Button asChild variant="gold" size="xl" className="shadow-glow-gold">
             <Link to="/contact">BOOK TRAINING</Link>
           </Button>
-          <Button asChild variant="teal" size="xl">
+          <Button asChild variant="teal" size="xl" className="shadow-glow-accent">
             <Link to="/contact">GET 24/7 PROTECTION</Link>
           </Button>
         </div>
@@ -46,36 +46,46 @@ const Training = () => {
       <TrustBar />
 
       {/* 24/7 Protection Features */}
-      <section className="py-16 bg-background">
+      <section className="py-20 bg-gradient-mesh">
         <div className="container mx-auto px-4">
-          <h2 className="text-center mb-4">24/7 Protection Monitoring</h2>
-          <p className="text-center text-xl text-muted-foreground mb-12 max-w-3xl mx-auto">
-            Round-the-clock security monitoring and expert support included with your training
-          </p>
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="gradient-text-primary">24/7 Protection Monitoring</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Round-the-clock security monitoring and expert support included with your training
+            </p>
+          </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-            <Card className="p-6 text-center hover:shadow-strong transition-all hover:-translate-y-1">
-              <Shield className="w-12 h-12 text-primary mx-auto mb-4" />
-              <h3 className="text-xl mb-3 font-bold">24/7 Monitoring</h3>
-              <p className="text-muted-foreground">Always watching for threats</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+            <Card className="p-8 text-center hover:shadow-strong transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.02] bg-card/80 backdrop-blur-sm border-2 border-border/50 hover:border-primary/30 group">
+              <div className="mb-6 inline-block p-4 rounded-2xl bg-primary/10 group-hover:bg-primary/20 transition-all duration-300">
+                <Shield className="w-12 h-12 text-primary transition-transform duration-300 group-hover:scale-110" />
+              </div>
+              <h3 className="text-xl mb-3 font-bold text-foreground">24/7 Monitoring</h3>
+              <p className="text-muted-foreground leading-relaxed">Always watching for threats</p>
             </Card>
             
-            <Card className="p-6 text-center hover:shadow-strong transition-all hover:-translate-y-1">
-              <Phone className="w-12 h-12 text-accent mx-auto mb-4" />
-              <h3 className="text-xl mb-3 font-bold">Expert Hotline</h3>
-              <p className="text-muted-foreground">Call anytime for help</p>
+            <Card className="p-8 text-center hover:shadow-strong transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.02] bg-card/80 backdrop-blur-sm border-2 border-border/50 hover:border-accent/30 group">
+              <div className="mb-6 inline-block p-4 rounded-2xl bg-accent/10 group-hover:bg-accent/20 transition-all duration-300">
+                <Phone className="w-12 h-12 text-accent transition-transform duration-300 group-hover:scale-110" />
+              </div>
+              <h3 className="text-xl mb-3 font-bold text-foreground">Expert Hotline</h3>
+              <p className="text-muted-foreground leading-relaxed">Call anytime for help</p>
             </Card>
             
-            <Card className="p-6 text-center hover:shadow-strong transition-all hover:-translate-y-1">
-              <Clock className="w-12 h-12 text-secondary mx-auto mb-4" />
-              <h3 className="text-xl mb-3 font-bold">Real-Time Alerts</h3>
-              <p className="text-muted-foreground">Instant scam notifications</p>
+            <Card className="p-8 text-center hover:shadow-strong transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.02] bg-card/80 backdrop-blur-sm border-2 border-border/50 hover:border-secondary/30 group">
+              <div className="mb-6 inline-block p-4 rounded-2xl bg-secondary/10 group-hover:bg-secondary/20 transition-all duration-300">
+                <Clock className="w-12 h-12 text-secondary transition-transform duration-300 group-hover:scale-110" />
+              </div>
+              <h3 className="text-xl mb-3 font-bold text-foreground">Real-Time Alerts</h3>
+              <p className="text-muted-foreground leading-relaxed">Instant scam notifications</p>
             </Card>
             
-            <Card className="p-6 text-center hover:shadow-strong transition-all hover:-translate-y-1">
-              <CheckCircle className="w-12 h-12 text-success mx-auto mb-4" />
-              <h3 className="text-xl mb-3 font-bold">Verified Safe</h3>
-              <p className="text-muted-foreground">Check if contacts are legitimate</p>
+            <Card className="p-8 text-center hover:shadow-strong transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-[1.02] bg-card/80 backdrop-blur-sm border-2 border-border/50 hover:border-success/30 group">
+              <div className="mb-6 inline-block p-4 rounded-2xl bg-success/10 group-hover:bg-success/20 transition-all duration-300">
+                <CheckCircle className="w-12 h-12 text-success transition-transform duration-300 group-hover:scale-110" />
+              </div>
+              <h3 className="text-xl mb-3 font-bold text-foreground">Verified Safe</h3>
+              <p className="text-muted-foreground leading-relaxed">Check if contacts are legitimate</p>
             </Card>
           </div>
         </div>

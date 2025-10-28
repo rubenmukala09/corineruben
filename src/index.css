@@ -137,11 +137,13 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     font-size: 18px;
     line-height: 1.7;
     zoom: 0.9;
+    scroll-behavior: smooth;
   }
   
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold;
-    line-height: 1.2;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
   }
   
   h1 {
@@ -160,11 +162,19 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   button, a {
     min-height: 44px;
     min-width: 44px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   /* Focus indicators for accessibility */
   *:focus-visible {
     @apply outline-none ring-2 ring-accent ring-offset-2;
+    transition: all 0.2s ease;
+  }
+  
+  /* Smooth transform for all interactive elements */
+  button, a, [role="button"] {
+    transform-origin: center;
+    will-change: transform;
   }
 }
 
@@ -175,10 +185,17 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     background: linear-gradient(135deg, 
       rgba(255, 255, 255, 0.1), 
       rgba(255, 255, 255, 0.05));
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    box-shadow: 0 8px 32px 0 rgba(109, 40, 217, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .glass-effect:hover {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 12px 48px 0 rgba(109, 40, 217, 0.15);
   }
   
   /* Gradient Text */
@@ -428,15 +445,17 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   
   /* Smooth Page Transitions - 1.5s fade */
   .page-transition {
-    animation: pageTransitionFade 1500ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: pageTransitionFade 1000ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
   
   @keyframes pageTransitionFade {
     from {
       opacity: 0;
+      transform: translateY(10px);
     }
     to {
       opacity: 1;
+      transform: translateY(0);
     }
   }
   
@@ -465,11 +484,20 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   
   /* Apply to dialogs and modals */
   [data-state="open"] {
-    animation: modalFadeIn 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    animation: modalFadeIn 250ms cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   [data-state="closed"] {
     animation: modalFadeOut 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Smooth card hover effects */
+  .smooth-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .smooth-card:hover {
+    transform: translateY(-8px) scale(1.02);
   }
   
   /* Gradient Mesh Background */

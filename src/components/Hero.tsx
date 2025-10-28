@@ -42,11 +42,11 @@ const Hero = ({
   }, []);
 
   return (
-    <div className={cn("relative min-h-[80vh] flex items-center overflow-hidden", className)}>
+    <div className={cn("relative min-h-[85vh] flex items-center overflow-hidden", className)}>
       {/* Background */}
       <div 
-        className="absolute inset-0"
-        style={{ transform: `translateY(${scrollY * 0.5}px)` }}
+        className="absolute inset-0 transition-transform duration-100 ease-out"
+        style={{ transform: `translateY(${scrollY * 0.4}px)` }}
       >
       {useRouteBasedImages && heroImages.length > 0 ? (
           <TransitioningBackground 
@@ -83,17 +83,17 @@ const Hero = ({
       </div>
       
       {/* Content */}
-      <div className="container mx-auto px-4 relative z-10 py-16">
-        <div className="max-w-3xl">
-          <h1 className="text-white mb-4 animate-fade-in-up [text-shadow:0_4px_20px_rgba(139,92,246,0.4)] leading-tight transition-opacity duration-500">
+      <div className="container mx-auto px-6 relative z-10 py-20">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-white mb-6 animate-fade-in-up [text-shadow:0_4px_24px_rgba(139,92,246,0.5)] leading-tight transition-all duration-700">
             {headline}
           </h1>
           {subheadline && (
-            <p className="text-white/90 text-xl md:text-2xl mb-6 leading-relaxed animate-fade-in-up stagger-1 transition-opacity duration-500">
+            <p className="text-white/95 text-xl md:text-2xl mb-10 leading-relaxed animate-fade-in-up stagger-1 transition-all duration-700 max-w-3xl mx-auto">
               {subheadline}
             </p>
           )}
-          {children && <div className="animate-fade-in-up stagger-2">{children}</div>}
+          {children && <div className="animate-fade-in-up stagger-2 transition-all duration-700">{children}</div>}
         </div>
       </div>
       

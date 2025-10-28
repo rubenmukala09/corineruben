@@ -26,8 +26,9 @@ const PageTransition = ({ children }: PageTransitionProps) => {
       className="page-transition"
       style={{
         opacity: isVisible ? 1 : 0,
-        transition: 'opacity 1500ms cubic-bezier(0.4, 0, 0.2, 1)',
-        willChange: 'opacity',
+        transform: isVisible ? 'translateY(0)' : 'translateY(10px)',
+        transition: 'opacity 800ms cubic-bezier(0.4, 0, 0.2, 1), transform 800ms cubic-bezier(0.4, 0, 0.2, 1)',
+        willChange: 'opacity, transform',
       }}
     >
       {children}
