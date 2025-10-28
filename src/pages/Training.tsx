@@ -9,7 +9,7 @@ import FlowingWaves from "@/components/FlowingWaves";
 import AIPartnersCarousel from "@/components/AIPartnersCarousel";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { CheckCircle, FileText, Award, MessageSquare, Users, Home, Upload, UserCheck, Shield, Mail, Link as LinkIcon, QrCode, Mic, Image as ImageIcon, AlertTriangle } from "lucide-react";
+import { CheckCircle, FileText, Award, MessageSquare, Users, Home, Upload, UserCheck, Shield, Mail, Link as LinkIcon, QrCode, Mic, Image as ImageIcon, AlertTriangle, Phone, Clock } from "lucide-react";
 import heroImage from "@/assets/hero-training.jpg";
 import testimonial4 from "@/assets/testimonial-4.jpg";
 import testimonial10 from "@/assets/testimonial-10.jpg";
@@ -24,16 +24,57 @@ const Training = () => {
 
       <Hero
         useRouteBasedImages={true}
-        headline="Master AI Scam Defense in One Session"
-        subheadline="Live Zoom classes taught by cybersecurity experts. Walk away with scripts, strategies, and lifetime confidence. Available in English, Français, and Español."
+        headline="Learn & Train + ScamShield Protection"
+        subheadline="Expert training classes + 24/7 scam monitoring. Master AI defense skills and get round-the-clock protection for Ohio families. Available in English, Français, and Español."
         showScrollIndicator={true}
       >
-        <Button asChild variant="default" size="xl">
-          <Link to="/contact">BOOK TRAINING NOW</Link>
-        </Button>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Button asChild variant="gold" size="xl">
+            <Link to="/contact">BOOK TRAINING NOW</Link>
+          </Button>
+          <Button asChild variant="teal" size="xl">
+            <Link to="/contact">GET SCAMSHIELD</Link>
+          </Button>
+        </div>
       </Hero>
 
       <TrustBar />
+
+      {/* ScamShield 24/7 Protection Features */}
+      <section className="py-16 bg-background">
+        <div className="container mx-auto px-4">
+          <h2 className="text-center mb-4">ScamShield 24/7 Protection</h2>
+          <p className="text-center text-xl text-muted-foreground mb-12 max-w-3xl mx-auto">
+            Round-the-clock security monitoring and expert support for Ohio families
+          </p>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            <Card className="p-6 text-center hover:shadow-strong transition-all hover:-translate-y-1">
+              <Shield className="w-12 h-12 text-primary mx-auto mb-4" />
+              <h3 className="text-xl mb-3 font-bold">24/7 Monitoring</h3>
+              <p className="text-muted-foreground">Always watching for threats</p>
+            </Card>
+            
+            <Card className="p-6 text-center hover:shadow-strong transition-all hover:-translate-y-1">
+              <Phone className="w-12 h-12 text-accent mx-auto mb-4" />
+              <h3 className="text-xl mb-3 font-bold">Expert Hotline</h3>
+              <p className="text-muted-foreground">Call anytime for help</p>
+            </Card>
+            
+            <Card className="p-6 text-center hover:shadow-strong transition-all hover:-translate-y-1">
+              <Clock className="w-12 h-12 text-secondary mx-auto mb-4" />
+              <h3 className="text-xl mb-3 font-bold">Real-Time Alerts</h3>
+              <p className="text-muted-foreground">Instant scam notifications</p>
+            </Card>
+            
+            <Card className="p-6 text-center hover:shadow-strong transition-all hover:-translate-y-1">
+              <CheckCircle className="w-12 h-12 text-success mx-auto mb-4" />
+              <h3 className="text-xl mb-3 font-bold">Verified Safe</h3>
+              <p className="text-muted-foreground">Check if contacts are legitimate</p>
+            </Card>
+          </div>
+        </div>
+      </section>
 
       {/* What You'll Master */}
       <section className="py-4 bg-background relative">

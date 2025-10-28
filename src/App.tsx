@@ -7,7 +7,6 @@ import { AuthProvider } from "@/hooks/useAuth";
 import Index from "./pages/Index";
 import Training from "./pages/Training";
 import Business from "./pages/Business";
-import ScamShield from "./pages/ScamShield";
 import About from "./pages/About";
 import Resources from "./pages/Resources";
 import Team from "./pages/Team";
@@ -46,7 +45,7 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/training" element={<Training />} />
-              <Route path="/scamshield" element={<ScamShield />} />
+              <Route path="/scamshield" element={<Training />} />
               <Route path="/business" element={<Business />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<About />} />
