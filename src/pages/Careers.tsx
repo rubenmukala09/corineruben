@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import CTASection from "@/components/CTASection";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { ApplicationForm } from "@/components/ApplicationForm";
 import {
   Shield,
   Users,
@@ -331,7 +332,7 @@ const Careers = () => {
                         </div>
                       </div>
                       <Button asChild>
-                        <Link to="/contact">Apply Now</Link>
+                        <a href="#apply">Apply Now</a>
                       </Button>
                     </div>
 
@@ -369,52 +370,53 @@ const Careers = () => {
         </div>
       </section>
 
-      {/* Application Process */}
-      <section className="py-16 bg-background">
+      {/* Application Form */}
+      <section id="apply" className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-center mb-12">How to Apply</h2>
-            <div className="grid md:grid-cols-3 gap-8 mb-12">
-              <div className="text-center">
-                <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
-                  1
-                </div>
-                <h3 className="font-semibold mb-2">Submit Application</h3>
-                <p className="text-sm text-muted-foreground">
-                  Click "Apply Now" on your desired position and complete the contact form with your information
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
-                  2
-                </div>
-                <h3 className="font-semibold mb-2">Initial Interview</h3>
-                <p className="text-sm text-muted-foreground">
-                  We'll review your application and reach out to schedule a phone or video interview
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
-                  3
-                </div>
-                <h3 className="font-semibold mb-2">Join the Team</h3>
-                <p className="text-sm text-muted-foreground">
-                  If it's a good fit, we'll extend an offer and get you started with onboarding
-                </p>
-              </div>
+            <div className="text-center mb-12">
+              <h2 className="mb-4">Apply Now</h2>
+              <p className="text-xl text-muted-foreground">
+                Complete the application form below to join our team
+              </p>
             </div>
 
-            <Card className="p-8 bg-primary/5 border-primary/20">
-              <div className="text-center">
-                <h3 className="text-xl font-semibold mb-4">Don't See Your Role?</h3>
-                <p className="text-muted-foreground mb-6">
-                  We're always looking for talented individuals. Send us your resume and let us know how you'd like to contribute.
-                </p>
-                <Button asChild size="lg">
-                  <Link to="/contact">Send General Application</Link>
-                </Button>
+            <ApplicationForm 
+              positions={positions.map(p => p.title)}
+            />
+
+            <div className="mt-12">
+              <h3 className="text-xl font-semibold mb-6 text-center">Application Process</h3>
+              <div className="grid md:grid-cols-3 gap-8">
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                    1
+                  </div>
+                  <h4 className="font-semibold mb-2">Submit Application</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Complete the form above with your information and resume
+                  </p>
+                </div>
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                    2
+                  </div>
+                  <h4 className="font-semibold mb-2">Initial Interview</h4>
+                  <p className="text-sm text-muted-foreground">
+                    We'll review and schedule a phone or video interview
+                  </p>
+                </div>
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                    3
+                  </div>
+                  <h4 className="font-semibold mb-2">Join the Team</h4>
+                  <p className="text-sm text-muted-foreground">
+                    If it's a fit, we'll extend an offer and start onboarding
+                  </p>
+                </div>
               </div>
-            </Card>
+            </div>
           </div>
         </div>
       </section>
