@@ -11,6 +11,7 @@ const Navigation = () => {
     { name: "AI for Business", href: "/business" },
     { name: "Resources", href: "/resources" },
     { name: "About", href: "/about" },
+    { name: "Careers", href: "/careers" },
     { name: "Contact", href: "/contact" },
   ];
 

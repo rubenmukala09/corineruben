@@ -37,12 +37,6 @@ const LearnAndTrain = () => {
         subheadline="Expert cybersecurity training and 24/7 scam protection services to keep you and your loved ones safe."
         showScrollIndicator={true}
       >
-        <div className="mb-6 inline-block">
-          <div className="bg-accent text-accent-foreground px-6 py-3 rounded-full font-bold text-lg mb-4">
-            14-DAY FREE TRIAL
-          </div>
-          <p className="text-white/90 text-xl">No Credit Card Required</p>
-        </div>
         <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center sm:justify-start">
           <Button asChild variant="default" size="xl" className="w-full sm:w-auto">
             <Link to="#training" aria-label="Explore training options">
@@ -407,7 +401,7 @@ const LearnAndTrain = () => {
           </div>
 
           <div className="text-center mt-8 animate-fade-in-up" style={{ animationDelay: "300ms" }}>
-            <p className="text-muted-foreground">All plans include 14-day free trial. Cancel anytime. No contracts.</p>
+            <p className="text-muted-foreground">Flexible plans with no long-term contracts. Cancel anytime.</p>
           </div>
         </div>
       </section>
