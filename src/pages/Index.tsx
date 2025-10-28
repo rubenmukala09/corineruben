@@ -154,7 +154,7 @@ const Index = () => {
         <TrustBar />
 
         {/* Why Families Trust Section with improved readability */}
-        <section className="py-16 bg-background relative overflow-hidden" aria-labelledby="trust-heading">
+        <section className="py-6 bg-background relative overflow-hidden" aria-labelledby="trust-heading">
           <FlowingWaves variant="full" opacity={0.12} aria-hidden="true" />
           <div className="absolute inset-0 opacity-30" aria-hidden="true">
             <div
@@ -167,13 +167,13 @@ const Index = () => {
             />
           </div>
           <div className="container mx-auto px-4 relative z-10">
-            <h2 id="trust-heading" className="text-4xl lg:text-5xl text-center mb-12 animate-fade-in-up font-bold">
+            <h2 id="trust-heading" className="text-4xl lg:text-5xl text-center mb-6 animate-fade-in-up font-bold">
               Why Families Trust Secure Senior Safeguard
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <ErrorBoundary>
                 <Card
-                  className="p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm focus-within:ring-4 focus-within:ring-primary/50"
+                  className="p-4 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm focus-within:ring-4 focus-within:ring-primary/50"
                   style={{ animationDelay: "0ms" }}
                   role="article"
                   aria-label="Privacy-First Protocols feature"
@@ -280,7 +280,7 @@ const Index = () => {
         </ErrorBoundary>
 
         {/* The 60-Second Pause Protocol with improved visibility */}
-        <section className="py-16 bg-background relative overflow-hidden" aria-labelledby="protocol-heading">
+        <section className="py-6 bg-background relative overflow-hidden" aria-labelledby="protocol-heading">
           <div className="absolute inset-0 opacity-20" aria-hidden="true">
             <div
               className="absolute top-1/4 right-20 w-64 h-64 bg-accent/30 rounded-full blur-3xl animate-pulse"
@@ -288,14 +288,14 @@ const Index = () => {
             />
           </div>
           <div className="container mx-auto px-4 relative z-10">
-            <div className="text-center mb-12 animate-fade-in-up">
-              <h2 id="protocol-heading" className="text-4xl lg:text-5xl mb-4 font-bold">
+            <div className="text-center mb-6 animate-fade-in-up">
+              <h2 id="protocol-heading" className="text-4xl lg:text-5xl mb-2 font-bold">
                 The 60-Second Pause Protocol™
               </h2>
               <p className="text-2xl text-muted-foreground font-medium">Stop Scams Before They Start</p>
             </div>
 
-            <div className="max-w-4xl mx-auto space-y-6">
+            <div className="max-w-4xl mx-auto space-y-3">
               {[
                 {
                   icon: StopCircle,
@@ -324,7 +324,7 @@ const Index = () => {
               ].map((item, index) => (
                 <Card
                   key={index}
-                  className="p-8 border-2 hover:border-primary transition-all duration-300 hover:shadow-strong hover:-translate-y-1 focus-within:ring-4 focus-within:ring-primary/50"
+                  className="p-4 border-2 hover:border-primary transition-all duration-300 hover:shadow-strong hover:-translate-y-1 focus-within:ring-4 focus-within:ring-primary/50"
                   role="article"
                   aria-label={`Step ${item.step}: ${item.title}`}
                 >
@@ -362,9 +362,9 @@ const Index = () => {
         </section>
 
         {/* Comparison Table with improved contrast */}
-        <section className="py-16 bg-muted relative overflow-hidden" aria-labelledby="comparison-heading">
+        <section className="py-6 bg-muted relative overflow-hidden" aria-labelledby="comparison-heading">
           <div className="container mx-auto px-4 relative z-10">
-            <h2 id="comparison-heading" className="text-4xl lg:text-5xl text-center mb-12 animate-fade-in-up font-bold">
+            <h2 id="comparison-heading" className="text-4xl lg:text-5xl text-center mb-6 animate-fade-in-up font-bold">
               Why Choose Secure Senior Safeguard?
             </h2>
             <div className="overflow-x-auto rounded-xl shadow-strong animate-fade-in-up">

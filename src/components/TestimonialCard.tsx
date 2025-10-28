@@ -11,7 +11,7 @@ interface TestimonialCardProps {
 
 const TestimonialCard = ({ name, age, location, quote, image, rating = 5 }: TestimonialCardProps) => {
   return (
-    <div className="bg-gradient-card rounded-xl p-4 shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1 relative overflow-hidden border-none group">
+    <div className="bg-gradient-card rounded-xl p-2 shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1 relative overflow-hidden border-none group">
       {/* Smaller gradient quote mark background */}
       <div className="absolute -top-2 left-3 text-[60px] font-bold gradient-text-primary opacity-10 leading-none pointer-events-none select-none">
         "

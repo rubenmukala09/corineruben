@@ -33,12 +33,12 @@ const Business = () => {
       <TrustBar />
 
       {/* Use Cases */}
-      <section className="py-10 bg-background relative">
+      <section className="py-4 bg-background relative">
         <FlowingWaves variant="full" opacity={0.12} />
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mb-12">AI for Business & Web Design</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Card className="p-8 hover:shadow-medium transition-shadow">
+          <h2 className="text-center mb-6">AI for Business & Web Design</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Card className="p-4 hover:shadow-medium transition-shadow">
               <div className="flex items-start gap-4">
                 <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
                   <Phone className="w-8 h-8 text-accent" />
@@ -98,11 +98,11 @@ const Business = () => {
       </section>
 
       {/* Package Pricing */}
-      <section className="py-10 bg-muted">
+      <section className="py-4 bg-muted">
         <div className="container mx-auto px-4">
-          <h2 className="text-center mb-12">Package Pricing</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <Card className="p-8">
+          <h2 className="text-center mb-6">Package Pricing</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <Card className="p-4">
               <h3 className="text-2xl font-bold mb-4">Receptionist / Intake Agent</h3>
               <p className="text-muted-foreground mb-6">Answer calls/chats, route inquiries, book appointments</p>
               <p className="text-4xl font-bold text-accent mb-6">$5,000</p>
@@ -199,9 +199,9 @@ const Business = () => {
       </section>
 
       {/* Web Design Services */}
-      <section className="py-10 bg-background">
+      <section className="py-4 bg-background">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
+          <div className="text-center mb-6">
             <div className="inline-block px-6 py-2 bg-primary/10 rounded-full text-sm font-bold text-primary mb-4 uppercase tracking-wider">
               Web Design
             </div>
@@ -211,7 +211,7 @@ const Business = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-8">
             {/* Landing Page */}
             <Card className="p-8 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1">
               <h3 className="text-2xl font-bold mb-4">Landing Page</h3>

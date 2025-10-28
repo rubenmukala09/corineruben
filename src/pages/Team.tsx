@@ -260,13 +260,13 @@ const Team = () => {
         />
 
         {/* Team Grid */}
-        <section className="pb-24 px-4">
+        <section className="pb-8 px-4">
           <div className="container mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
               {teamMembers.map((member, index) => (
                 <article 
                   key={index}
-                  className="group bg-card rounded-xl p-4 shadow-subtle hover:shadow-strong transition-all duration-300 hover:-translate-y-1"
+                  className="group bg-card rounded-xl p-2 shadow-subtle hover:shadow-strong transition-all duration-300 hover:-translate-y-1"
                   itemScope
                   itemType="https://schema.org/Person"
                 >
@@ -320,11 +320,11 @@ const Team = () => {
         </section>
 
         {/* Why Work With Us */}
-        <section className="py-16 bg-muted">
+        <section className="py-6 bg-muted">
           <div className="container mx-auto px-4">
-            <h2 className="text-center mb-12 animate-fade-in-up">Why Work With InVision Network</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-              <Card className="p-6 text-center hover:shadow-lg transition-all duration-300">
+            <h2 className="text-center mb-6 animate-fade-in-up">Why Work With InVision Network</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
+              <Card className="p-3 text-center hover:shadow-lg transition-all duration-300">
                 <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Heart className="w-8 h-8 text-primary" />
                 </div>
@@ -368,10 +368,10 @@ const Team = () => {
         </section>
 
         {/* Open Positions */}
-        <section className="py-16 bg-background">
+        <section className="py-6 bg-background">
           <div className="container mx-auto px-4">
-            <h2 className="text-center mb-12">Open Positions</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            <h2 className="text-center mb-6">Open Positions</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-5xl mx-auto">
               {openPositions.map((position, index) => (
                 <Card key={index} className="p-6 hover:shadow-lg transition-all duration-300">
                   <div className="flex items-start gap-3 mb-4">

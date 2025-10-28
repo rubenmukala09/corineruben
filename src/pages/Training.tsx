@@ -36,11 +36,11 @@ const Training = () => {
       <TrustBar />
 
       {/* What You'll Master */}
-      <section className="py-10 bg-background relative">
+      <section className="py-4 bg-background relative">
         <FlowingWaves variant="full" opacity={0.12} />
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mb-12">What You'll Master</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+          <h2 className="text-center mb-6">What You'll Master</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center max-w-6xl mx-auto">
             <div className="space-y-4">
               {[
                 "Identity Verification & Callback Drills",
@@ -70,14 +70,14 @@ const Training = () => {
       </section>
 
       {/* Pricing Table */}
-      <section className="py-10 bg-muted/30">
+      <section className="py-4 bg-muted/30">
         <div className="container mx-auto px-4">
-          <h2 className="text-center mb-16">Training Programs & Pricing</h2>
+          <h2 className="text-center mb-8">Training Programs & Pricing</h2>
           
           <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
               {/* Program Features Column */}
-              <Card className="bg-card/50 border-border/50 rounded-xl p-6">
+              <Card className="bg-card/50 border-border/50 rounded-xl p-3">
                 <h3 className="text-xl font-bold mb-8">Program Features</h3>
                 <div className="space-y-8">
                   <div className="py-4">

@@ -88,11 +88,11 @@ const About = () => {
       />
 
       {/* Our Story */}
-      <section className="py-24 bg-background relative">
+      <section className="py-6 bg-background relative">
         <FlowingWaves variant="full" opacity={0.12} />
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-center mb-12">Our Story</h2>
+            <h2 className="text-center mb-6">Our Story</h2>
             <div className="space-y-6 text-lg leading-relaxed text-muted-foreground">
               <p>
                 InVision Network was born from a close call. When our founder's mother nearly wired $10,000 to a scammer using a
@@ -110,7 +110,7 @@ const About = () => {
       </section>
 
       {/* Our Mission */}
-      <section className="py-24 bg-muted">
+      <section className="py-6 bg-muted">
         <div className="container mx-auto px-4">
           <Card className="max-w-4xl mx-auto p-12 bg-gradient-to-br from-primary/5 to-accent/5 border-2 border-primary/10 shadow-medium">
             <blockquote className="text-2xl md:text-3xl font-bold text-center leading-relaxed text-foreground">
@@ -122,7 +122,7 @@ const About = () => {
       </section>
 
       {/* Team Section */}
-      <section className="py-24 bg-background">
+      <section className="py-6 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="mb-4">Meet the Team Behind</h2>
@@ -134,8 +134,8 @@ const About = () => {
             At InVision Network, we believe in empowering families through education, innovation, and authentic relationships. Our team brings diverse expertise together to transform how people approach digital safety and protection against AI-powered fraud.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto mb-16">
-            <Card className="p-8 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto mb-8">
+            <Card className="p-4 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex flex-col items-center text-center gap-4">
                 <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
                   <Heart className="w-10 h-10 text-primary" />
@@ -192,8 +192,8 @@ const About = () => {
             </Card>
           </div>
 
-          <h2 className="text-center mb-16">Our Values</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <h2 className="text-center mb-8">Our Values</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto">
             <Card className="p-8 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex items-start gap-4">
                 <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
@@ -254,11 +254,11 @@ const About = () => {
       </section>
 
       {/* Our Impact */}
-      <section className="py-24 bg-muted">
+      <section className="py-6 bg-muted">
         <div className="container mx-auto px-4">
-          <h2 className="text-center mb-16">Our Community Impact</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Card className="p-8 text-center hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
+          <h2 className="text-center mb-8">Our Community Impact</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Card className="p-4 text-center hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex justify-center mb-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center">
                   <Shield className="w-6 h-6 text-white" />
