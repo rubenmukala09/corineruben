@@ -24,14 +24,14 @@ const TrustBar = () => {
           </div>
           
           {/* Main content */}
-          <div className="relative bg-gradient-to-r from-primary to-accent rounded-3xl py-6 px-4 sm:px-8 shadow-[0_12px_40px_rgba(139,92,246,0.4)] backdrop-blur-sm border border-accent/30 group-hover/trust:shadow-[0_20px_60px_rgba(139,92,246,0.6)] group-hover/trust:scale-[1.02] transition-all duration-500">
-            <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-4 md:gap-6 lg:gap-8">
+          <div className="relative bg-gradient-to-r from-primary to-accent rounded-3xl py-5 px-6 sm:px-10 shadow-[0_12px_40px_rgba(139,92,246,0.4)] backdrop-blur-sm border border-accent/30 group-hover/trust:shadow-[0_20px_60px_rgba(139,92,246,0.6)] group-hover/trust:scale-[1.02] transition-all duration-500">
+            <div className="flex justify-center items-center gap-2 sm:gap-3 md:gap-5 lg:gap-8">
             {trustIndicators.map((item, index) => (
-              <div key={index} className="flex items-center gap-2 sm:gap-3 group animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }} role="listitem">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-white/30 backdrop-blur-sm flex items-center justify-center group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 group-hover:bg-white/40" aria-hidden="true">
-                  <item.icon className="w-4 h-4 sm:w-5 sm:h-5 text-white drop-shadow-md group-hover:scale-110 transition-transform duration-300" />
+              <div key={index} className="flex items-center gap-1.5 sm:gap-2 group animate-fade-in-up flex-shrink-0" style={{ animationDelay: `${index * 100}ms` }} role="listitem">
+                <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-white/30 backdrop-blur-sm flex items-center justify-center group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 group-hover:bg-white/40" aria-hidden="true">
+                  <item.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white drop-shadow-md group-hover:scale-110 transition-transform duration-300" />
                 </div>
-                <span className="text-xs sm:text-sm font-bold text-white whitespace-nowrap drop-shadow-sm group-hover:scale-105 transition-transform duration-300">{item.text}</span>
+                <span className="text-[10px] sm:text-xs md:text-sm font-bold text-white whitespace-nowrap drop-shadow-sm group-hover:scale-105 transition-transform duration-300">{item.text}</span>
               </div>
             ))}
             </div>

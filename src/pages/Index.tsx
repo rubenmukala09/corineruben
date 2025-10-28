@@ -40,8 +40,6 @@ const Index = () => {
 
       <TrustBar />
 
-      <TrustBadges />
-
       {/* Why Families Trust Us */}
       <section className="py-16 bg-background relative overflow-hidden">
         <FlowingWaves variant="full" opacity={0.12} />
