@@ -1,25 +1,28 @@
 import { Card } from "@/components/ui/card";
 import { Play } from "lucide-react";
+import videoTestimonial1 from "@/assets/video-testimonial-1.jpg";
+import videoTestimonial2 from "@/assets/video-testimonial-2.jpg";
+import videoTestimonial3 from "@/assets/video-testimonial-3.jpg";
 
 const videoTestimonials = [
   {
     id: "1",
     title: "Mary's Story: Saved from $8,000 Scam",
-    thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+    thumbnail: videoTestimonial1,
     duration: "2:45",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
   },
   {
     id: "2",
     title: "Robert & Linda: Family Training Success",
-    thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+    thumbnail: videoTestimonial2,
     duration: "3:12",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
   },
   {
     id: "3",
     title: "How We Caught a Deepfake Call",
-    thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+    thumbnail: videoTestimonial3,
     duration: "4:20",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
   },

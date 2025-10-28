@@ -31,7 +31,6 @@ import ServiceHero from "@/components/ServiceHero";
 
 // Lazy load heavy components for better performance
 const VideoTestimonials = lazy(() => import("@/components/VideoTestimonials"));
-const EducationalVideos = lazy(() => import("@/components/EducationalVideos"));
 const AIPartnersCarousel = lazy(() => import("@/components/AIPartnersCarousel"));
 
 // Lazy load images with fallback
@@ -614,12 +613,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Educational Videos - Lazy Loaded */}
-        <ErrorBoundary>
-          <Suspense fallback={<LoadingFallback />}>
-            <EducationalVideos />
-          </Suspense>
-        </ErrorBoundary>
 
         {/* AI Partners Carousel - Lazy Loaded */}
         <ErrorBoundary>

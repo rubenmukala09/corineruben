@@ -7,6 +7,7 @@ import TestimonialCard from "@/components/TestimonialCard";
 import CTASection from "@/components/CTASection";
 import FlowingWaves from "@/components/FlowingWaves";
 import AIPartnersCarousel from "@/components/AIPartnersCarousel";
+import BusinessImageCarousel from "@/components/BusinessImageCarousel";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield } from "lucide-react";
@@ -250,8 +251,8 @@ const Business = () => {
 
             {/* Business Website - Featured */}
             <Card className="p-8 border-2 border-primary relative rounded-2xl shadow-[0_8px_30px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)] transition-all">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-4 py-1 rounded-full text-sm font-bold shadow-[0_4px_12px_rgba(139,92,246,0.3)]">
-                MOST POPULAR
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-8 py-3 rounded-full text-lg font-extrabold shadow-[0_8px_20px_rgba(139,92,246,0.5)] ring-4 ring-primary/20 scale-110">
+                MOST AFFORDABLE
               </div>
               <h3 className="text-2xl font-bold mb-4">Business Website</h3>
               <p className="text-muted-foreground mb-6">5-10 page professional website with custom features</p>
@@ -595,12 +596,10 @@ const Business = () => {
               </div>
             </div>
 
-            <div className="flex items-center">
-              <img
-                src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=600&fit=crop"
-                alt="Business professional reviewing AI dashboard"
-                className="rounded-lg shadow-large"
-              />
+            <div className="flex items-center justify-center">
+              <div className="w-full max-w-2xl h-[400px]">
+                <BusinessImageCarousel />
+              </div>
             </div>
           </div>
         </div>
