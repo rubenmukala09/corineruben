@@ -132,35 +132,15 @@ const Index = () => {
       <main id="main-content" tabIndex={-1}>
         {/* Hero Section with improved accessibility */}
         <HeroHome>
-          <div className="flex flex-col sm:flex-row gap-6 flex-wrap justify-center items-center max-w-4xl mx-auto">
+          <div className="flex justify-center">
             <Button
               asChild
               variant="gold"
               size="xl"
-              className="w-full sm:w-auto text-lg font-bold min-h-[60px] px-10"
+              className="text-lg font-bold min-h-[60px] px-12 shadow-glow-gold"
             >
-              <Link to="/training" aria-label="Learn to spot scams with expert training">
-                Learn to Spot Scams
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant="teal"
-              size="xl"
-              className="w-full sm:w-auto text-lg font-bold min-h-[60px] px-10"
-            >
-              <Link to="/contact" aria-label="Get ScamShield 24/7 protection">
-                Get ScamShield Protection
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant="outlineLight"
-              size="xl"
-              className="w-full sm:w-auto text-lg font-bold min-h-[60px] px-10"
-            >
-              <Link to="/business" aria-label="Explore AI solutions for business">
-                AI for Business
+              <Link to="/training" aria-label="Start Your ScamShield Training">
+                START YOUR TRAINING
               </Link>
             </Button>
           </div>

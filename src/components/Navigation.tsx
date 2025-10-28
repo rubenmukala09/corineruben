@@ -32,17 +32,18 @@ const Navigation = () => {
     { name: "Contact", href: "/contact" },
   ];
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <nav className="sticky top-0 z-50 bg-background/98 backdrop-blur-md border-b border-border shadow-md transition-shadow duration-300">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link 
             to="/" 
-            onClick={(e) => {
-              e.preventDefault();
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
+            onClick={scrollToTop}
             className="flex items-center gap-3 hover:scale-105 transition-transform duration-300 cursor-pointer"
           >
             <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center shadow-glow-navy relative">
@@ -77,6 +78,7 @@ const Navigation = () => {
                     <NavigationMenuItem key={link.name}>
                       <Link
                         to={link.href}
+                        onClick={scrollToTop}
                         className="text-foreground/80 hover:text-primary font-semibold transition-colors duration-200 text-base whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-3 py-2"
                       >
                         {link.name}
@@ -153,7 +155,10 @@ const Navigation = () => {
                       key={link.name}
                       to={link.href}
                       className="text-foreground/80 hover:text-foreground py-2 transition-colors font-bold text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2"
-                      onClick={() => setMobileMenuOpen(false)}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        scrollToTop();
+                      }}
                     >
                       {link.name}
                     </Link>

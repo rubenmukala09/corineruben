@@ -11,16 +11,16 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --background: 0 0% 100%;
     --foreground: 260 50% 20%;
     
-    /* Deep Purple - Primary brand color (Trust, security, professionalism) */
-    --primary: 260 70% 35%;
+    /* Vibrant Purple - Primary brand color (Trust, security, professionalism) */
+    --primary: 260 75% 45%;
     --primary-foreground: 0 0% 100%;
     
     /* Warm Gold - Secondary/CTA color (Premium, attention, warmth) */
     --secondary: 38 92% 50%;
     --secondary-foreground: 260 50% 20%;
     
-    /* Teal - Accent color (Modern, tech-forward, calm) - Reduced */
-    --accent: 260 50% 60%;
+    /* Light Purple - Accent color (Modern, tech-forward, calm) */
+    --accent: 260 60% 65%;
     --accent-foreground: 0 0% 100%;
     
     /* Success Green - Safety, verification - Reduced */
@@ -50,12 +50,12 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   /* Shadows */
   --shadow-subtle: 0 2px 8px -2px hsl(var(--foreground) / 0.05);
   --shadow-strong: 0 8px 24px -4px hsl(var(--foreground) / 0.1);
-  --shadow-glow-navy: 0 0 20px hsl(var(--primary) / 0.3);
-  --shadow-glow-gold: 0 0 20px hsl(var(--secondary) / 0.3);
+  --shadow-glow-navy: 0 0 24px hsl(var(--primary) / 0.4);
+  --shadow-glow-gold: 0 0 24px hsl(var(--secondary) / 0.4);
   
-  /* Gradients */
-  --gradient-primary: linear-gradient(135deg, hsl(260 70% 35%), hsl(260 50% 60%));
-  --gradient-hero: linear-gradient(135deg, hsl(260 70% 25%) 0%, hsl(260 65% 35%) 50%, hsl(260 50% 60%) 100%);
+  /* Gradients - Vibrant Purple Theme */
+  --gradient-primary: linear-gradient(135deg, hsl(260 75% 45%), hsl(260 60% 60%));
+  --gradient-hero: linear-gradient(135deg, hsl(260 80% 35%) 0%, hsl(260 75% 50%) 50%, hsl(260 60% 65%) 100%);
   
   /* Animations */
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -77,13 +77,13 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --teal-300: 260 25% 75%;
     --teal-100: 260 15% 98%;
     
-    /* Premium Shadows */
+    /* Premium Shadows - Enhanced for Vibrant Theme */
     --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     --shadow-strong: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    --shadow-glow-purple: 0 0 20px rgba(109, 40, 217, 0.3);
-    --shadow-glow-gold: 0 0 20px rgba(245, 158, 11, 0.3);
-    --shadow-glow-accent: 0 0 20px rgba(147, 112, 219, 0.2);
+    --shadow-glow-purple: 0 0 30px rgba(138, 43, 226, 0.5);
+    --shadow-glow-gold: 0 0 30px rgba(245, 158, 11, 0.5);
+    --shadow-glow-accent: 0 0 24px rgba(147, 112, 219, 0.4);
     
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -102,19 +102,19 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --card-foreground: 0 0% 100%;
     --popover: 260 65% 18%;
     --popover-foreground: 0 0% 100%;
-    --primary: 260 65% 45%;
+    --primary: 260 70% 50%;
     --primary-foreground: 0 0% 100%;
     --secondary: 38 92% 50%;
     --secondary-foreground: 260 50% 20%;
     --muted: 260 50% 22%;
     --muted-foreground: 260 20% 70%;
-    --accent: 260 50% 60%;
+    --accent: 260 60% 65%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 78% 45%;
     --destructive-foreground: 0 0% 100%;
     --border: 260 50% 25%;
     --input: 260 50% 25%;
-    --ring: 260 65% 45%;
+    --ring: 260 70% 50%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -133,7 +133,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Inter', 'Poppins', sans-serif;
     font-size: 18px;
     line-height: 1.7;
     zoom: 0.9;
@@ -198,16 +198,16 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     box-shadow: 0 12px 48px 0 rgba(109, 40, 217, 0.15);
   }
   
-  /* Gradient Text */
+  /* Gradient Text - Vibrant Purple */
   .gradient-text-purple {
-    background: linear-gradient(135deg, hsl(260, 70%, 35%), hsl(260, 65%, 45%));
+    background: linear-gradient(135deg, hsl(260, 75%, 45%), hsl(260, 65%, 60%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   
   .gradient-text-primary {
-    background: linear-gradient(135deg, hsl(260, 70%, 35%), hsl(260, 50%, 60%));
+    background: linear-gradient(135deg, hsl(260, 75%, 45%), hsl(260, 60%, 65%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -220,17 +220,17 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     background-clip: text;
   }
   
-  /* Gradient Backgrounds */
+  /* Gradient Backgrounds - Vibrant Purple */
   .gradient-hero-primary {
-    background: linear-gradient(135deg, hsl(260, 70%, 25%) 0%, hsl(260, 65%, 35%) 50%, hsl(260, 50%, 60%) 100%);
+    background: linear-gradient(135deg, hsl(260, 80%, 35%) 0%, hsl(260, 75%, 50%) 50%, hsl(260, 60%, 65%) 100%);
   }
   
   .gradient-hero-purple {
-    background: linear-gradient(135deg, hsl(260, 75%, 20%) 0%, hsl(260, 70%, 35%) 100%);
+    background: linear-gradient(135deg, hsl(260, 85%, 30%) 0%, hsl(260, 75%, 45%) 100%);
   }
   
   .gradient-hero-teal {
-    background: linear-gradient(135deg, hsl(260, 55%, 45%) 0%, hsl(260, 50%, 50%) 50%, hsl(260, 45%, 60%) 100%);
+    background: linear-gradient(135deg, hsl(260, 70%, 45%) 0%, hsl(260, 65%, 55%) 50%, hsl(260, 60%, 65%) 100%);
   }
   
   .gradient-card {

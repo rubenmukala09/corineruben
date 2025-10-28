@@ -199,8 +199,8 @@ const About = () => {
             At InVision Network, we believe in empowering families through education, innovation, and authentic relationships. Our team brings diverse expertise together to transform how people approach digital safety and protection against AI-powered fraud.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto mb-8">
-            <Card className="p-4 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-12">
+            <Card className="p-6 hover:shadow-medium transition-all duration-300 hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex flex-col items-center text-center gap-4">
                 <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
                   <Heart className="w-10 h-10 text-primary" />
@@ -214,7 +214,7 @@ const About = () => {
               </div>
             </Card>
 
-            <Card className="p-8 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
+            <Card className="p-6 hover:shadow-medium transition-all duration-300 hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex flex-col items-center text-center gap-4">
                 <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
                   <BookOpen className="w-10 h-10 text-primary" />
@@ -228,7 +228,7 @@ const About = () => {
               </div>
             </Card>
 
-            <Card className="p-8 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
+            <Card className="p-6 hover:shadow-medium transition-all duration-300 hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex flex-col items-center text-center gap-4">
                 <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
                   <Users2 className="w-10 h-10 text-primary" />
@@ -242,7 +242,7 @@ const About = () => {
               </div>
             </Card>
 
-            <Card className="p-8 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
+            <Card className="p-6 hover:shadow-medium transition-all duration-300 hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex flex-col items-center text-center gap-4">
                 <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
                   <Shield className="w-10 h-10 text-primary" />
@@ -257,9 +257,9 @@ const About = () => {
             </Card>
           </div>
 
-          <h2 className="text-center mb-8">Our Values</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto">
-            <Card className="p-8 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
+          <h2 className="text-center mb-12">Our Values</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            <Card className="p-8 hover:shadow-medium transition-all duration-300 hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex items-start gap-4">
                 <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
                   <Heart className="w-8 h-8 text-primary" />
@@ -273,7 +273,7 @@ const About = () => {
               </div>
             </Card>
 
-            <Card className="p-8 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
+            <Card className="p-8 hover:shadow-medium transition-all duration-300 hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex items-start gap-4">
                 <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
                   <Lock className="w-8 h-8 text-primary" />
@@ -287,7 +287,7 @@ const About = () => {
               </div>
             </Card>
 
-            <Card className="p-8 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
+            <Card className="p-8 hover:shadow-medium transition-all duration-300 hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex items-start gap-4">
                 <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
                   <BookOpen className="w-8 h-8 text-primary" />
@@ -301,7 +301,7 @@ const About = () => {
               </div>
             </Card>
 
-            <Card className="p-8 hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
+            <Card className="p-8 hover:shadow-medium transition-all duration-300 hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex items-start gap-4">
                 <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
                   <Users2 className="w-8 h-8 text-primary" />

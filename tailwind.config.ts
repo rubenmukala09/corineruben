@@ -14,8 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        outfit: ['Outfit', 'sans-serif'],
-        sans: ['Outfit', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
+        sans: ['Inter', 'Poppins', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -128,9 +129,9 @@ export default {
         "shimmer": "shimmer 2s infinite linear",
       },
       backgroundImage: {
-        "gradient-hero-primary": "linear-gradient(135deg, hsl(260 70% 25%) 0%, hsl(260 65% 35%) 50%, hsl(260 50% 60%) 100%)",
-        "gradient-hero-teal": "linear-gradient(135deg, hsl(260 55% 45%) 0%, hsl(260 50% 50%) 50%, hsl(260 45% 60%) 100%)",
-        "gradient-hero-cyan": "linear-gradient(135deg, hsl(260 60% 40%) 0%, hsl(260 55% 45%) 50%, hsl(260 50% 55%) 100%)",
+        "gradient-hero-primary": "linear-gradient(135deg, hsl(260 80% 35%) 0%, hsl(260 75% 50%) 50%, hsl(260 60% 65%) 100%)",
+        "gradient-hero-teal": "linear-gradient(135deg, hsl(260 70% 45%) 0%, hsl(260 65% 55%) 50%, hsl(260 60% 65%) 100%)",
+        "gradient-hero-cyan": "linear-gradient(135deg, hsl(260 75% 40%) 0%, hsl(260 70% 50%) 50%, hsl(260 60% 60%) 100%)",
         "gradient-card": "linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(260 20% 96%) 100%)",
         "gradient-mesh": "linear-gradient(135deg, hsl(260 20% 96%) 0%, hsl(0 0% 100%) 100%)",
       },
@@ -138,8 +139,10 @@ export default {
         soft: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
         medium: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
         strong: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-        "glow-purple": "0 0 20px rgba(109, 40, 217, 0.3)",
-        "glow-teal": "0 0 20px rgba(20, 184, 166, 0.3)",
+        "glow-purple": "0 0 30px rgba(138, 43, 226, 0.5)",
+        "glow-teal": "0 0 24px rgba(147, 112, 219, 0.4)",
+        "glow-gold": "0 0 30px rgba(245, 158, 11, 0.5)",
+        "glow-accent": "0 0 24px rgba(147, 112, 219, 0.4)",
       },
       backdropBlur: {
         xs: "2px",

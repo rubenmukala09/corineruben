@@ -33,12 +33,9 @@ const Training = () => {
         subheadline="Master AI scam defense with expert classes + get 24/7 protection monitoring. Complete training and round-the-clock security for Ohio families. Available in English, Français, and Español."
         showScrollIndicator={true}
       >
-        <div className="flex flex-col sm:flex-row gap-6 justify-center">
-          <Button asChild variant="gold" size="xl" className="shadow-glow-gold">
-            <Link to="/contact">BOOK TRAINING</Link>
-          </Button>
-          <Button asChild variant="teal" size="xl" className="shadow-glow-accent">
-            <Link to="/contact">GET 24/7 PROTECTION</Link>
+        <div className="flex justify-center">
+          <Button asChild variant="gold" size="xl" className="shadow-glow-gold text-lg font-bold">
+            <Link to="/contact">BOOK YOUR TRAINING NOW</Link>
           </Button>
         </div>
       </Hero>
@@ -114,11 +111,11 @@ const Training = () => {
                 </div>
               ))}
             </div>
-            <div className="bg-muted/50 rounded-lg p-8">
+            <div className="bg-muted/50 rounded-lg p-8 transition-opacity duration-700 ease-in opacity-0 animate-fade-in-up stagger-2">
               <img
                 src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=600&fit=crop"
                 alt="Person confidently reviewing security documents"
-                className="rounded-lg shadow-medium"
+                className="rounded-lg shadow-medium transition-all duration-500 hover:scale-105"
               />
             </div>
           </div>

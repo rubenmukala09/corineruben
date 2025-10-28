@@ -52,25 +52,25 @@ const Hero = ({
           <TransitioningBackground 
             images={heroImages.map(img => img.url)}
             interval={5000}
-            opacity={0.3}
+            opacity={0.15}
           />
         ) : useTransitioningBackground ? (
-          <TransitioningBackground opacity={0.3} />
+          <TransitioningBackground opacity={0.15} />
         ) : (
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{ 
               backgroundImage: `url(${backgroundImage})`,
-              opacity: 0.3
+              opacity: 0.15
             }}
           />
         )}
       </div>
       
-      {/* Animated Gradient Overlay */}
+      {/* Animated Gradient Overlay - Vibrant Purple */}
       {overlay && (
         <div 
-          className="absolute inset-0 bg-gradient-hero-primary opacity-40"
+          className="absolute inset-0 bg-gradient-hero-primary opacity-50"
           style={{ backgroundSize: '400% 400%', animation: 'gradient-shift 15s ease infinite' }}
         />
       )}
