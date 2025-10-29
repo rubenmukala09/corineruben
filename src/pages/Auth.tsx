@@ -192,7 +192,7 @@ const Auth = () => {
         </div>
 
         {/* Right Side - Auth Form */}
-        <div className="w-full max-w-md mx-auto lg:mx-0 animate-scale-in" style={{ animationDelay: '0.1s' }}>
+        <div className="w-full max-w-lg mx-auto lg:mx-0 animate-scale-in" style={{ animationDelay: '0.1s' }}>
           {/* Mobile Logo */}
           <Link to="/" className="lg:hidden flex items-center justify-center gap-3 mb-8 group">
             <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center shadow-glow-purple group-hover:scale-110 transition-transform">
@@ -204,7 +204,7 @@ const Auth = () => {
             </div>
           </Link>
 
-          <Card className="p-8 lg:p-10 shadow-2xl border-2 bg-card/80 backdrop-blur-2xl hover:border-primary/50 transition-all duration-500 group">
+          <Card className="p-10 lg:p-12 shadow-2xl border-2 bg-card/80 backdrop-blur-2xl hover:border-primary/50 transition-all duration-500 group">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Header */}
               <div className="space-y-2">
@@ -465,8 +465,47 @@ const Auth = () => {
                 </div>
               </div>
             </div>
-            <div className="text-center mt-4 text-xs text-muted-foreground">
-              © 2025 InVision Network. All rights reserved.
+            
+            {/* Additional Footer Content */}
+            <div className="mt-6 pt-6 border-t border-border/30">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center sm:text-left">
+                <div>
+                  <h4 className="font-semibold text-foreground text-sm mb-2">Contact Us</h4>
+                  <a href="tel:9375550199" className="text-xs text-muted-foreground hover:text-foreground transition-colors block">
+                    (937) 555-0199
+                  </a>
+                  <a href="mailto:support@invisionnetwork.com" className="text-xs text-muted-foreground hover:text-foreground transition-colors block mt-1">
+                    support@invisionnetwork.com
+                  </a>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-foreground text-sm mb-2">Quick Links</h4>
+                  <Link to="/resources" className="text-xs text-muted-foreground hover:text-foreground transition-colors block">
+                    Resources
+                  </Link>
+                  <Link to="/about" className="text-xs text-muted-foreground hover:text-foreground transition-colors block mt-1">
+                    About Us
+                  </Link>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-foreground text-sm mb-2">Support</h4>
+                  <Link to="/contact" className="text-xs text-muted-foreground hover:text-foreground transition-colors block">
+                    Help Center
+                  </Link>
+                  <Link to="/training" className="text-xs text-muted-foreground hover:text-foreground transition-colors block mt-1">
+                    Training
+                  </Link>
+                </div>
+              </div>
+            </div>
+            
+            <div className="text-center mt-6 pt-4 border-t border-border/30">
+              <p className="text-xs text-muted-foreground">
+                © 2025 InVision Network. All rights reserved.
+              </p>
+              <p className="text-xs text-muted-foreground mt-2">
+                Protecting Ohio families from AI-powered digital threats
+              </p>
             </div>
           </div>
         </div>
