@@ -116,12 +116,19 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     @apply border-border;
   }
 
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Outfit', sans-serif;
     font-size: 18px;
     line-height: 1.7;
-    zoom: 1.0;
+    zoom: 0.90;
   }
   
   h1, h2, h3, h4, h5, h6 {
