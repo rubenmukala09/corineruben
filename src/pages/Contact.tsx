@@ -9,13 +9,71 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card } from "@/components/ui/card";
-import { Phone, Mail, MapPin, Clock, MessageSquare } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, MessageSquare, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+import { useState } from "react";
+import { z } from "zod";
+
+const contactSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
+  email: z.string().trim().email("Invalid email address").max(255, "Email must be less than 255 characters"),
+  phone: z.string().max(20, "Phone number must be less than 20 characters").optional(),
+  interest: z.string().min(1, "Please select your interest"),
+  message: z.string().trim().min(1, "Message is required").max(1000, "Message must be less than 1000 characters"),
+});
 
 const Contact = () => {
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    interest: "",
+    language: "english",
+    message: "",
+  });
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    toast.success("Thank you! We'll get back to you within 24 hours.");
+    setIsSubmitting(true);
+
+    try {
+      // Validate form data
+      const validatedData = contactSchema.parse(formData);
+
+      // Submit to Supabase
+      const { error } = await supabase.from("website_inquiries").insert({
+        inquiry_type: validatedData.interest,
+        name: validatedData.name,
+        email: validatedData.email,
+        phone: validatedData.phone || null,
+        message: validatedData.message,
+        metadata: { language: formData.language },
+      });
+
+      if (error) throw error;
+
+      toast.success("Thank you! We'll get back to you within 24 hours.");
+      
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        interest: "",
+        language: "english",
+        message: "",
+      });
+    } catch (error: any) {
+      if (error instanceof z.ZodError) {
+        toast.error(error.errors[0].message);
+      } else {
+        toast.error("Failed to send message. Please try again.");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -41,28 +99,55 @@ const Contact = () => {
                   <label htmlFor="name" className="block text-sm font-semibold mb-2">
                     Full Name *
                   </label>
-                  <Input id="name" required placeholder="Your full name" />
+                  <Input
+                    id="name"
+                    required
+                    placeholder="Your full name"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    disabled={isSubmitting}
+                  />
                 </div>
 
                 <div>
                   <label htmlFor="email" className="block text-sm font-semibold mb-2">
                     Email Address *
                   </label>
-                  <Input id="email" type="email" required placeholder="your@email.com" />
+                  <Input
+                    id="email"
+                    type="email"
+                    required
+                    placeholder="your@email.com"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    disabled={isSubmitting}
+                  />
                 </div>
 
                 <div>
                   <label htmlFor="phone" className="block text-sm font-semibold mb-2">
                     Phone Number (Optional)
                   </label>
-                  <Input id="phone" type="tel" placeholder="(937) 555-1234" />
+                  <Input
+                    id="phone"
+                    type="tel"
+                    placeholder="(937) 555-1234"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    disabled={isSubmitting}
+                  />
                 </div>
 
                 <div>
                   <label htmlFor="interest" className="block text-sm font-semibold mb-2">
                     I'm Interested In: *
                   </label>
-                  <Select required>
+                  <Select
+                    required
+                    value={formData.interest}
+                    onValueChange={(value) => setFormData({ ...formData, interest: value })}
+                    disabled={isSubmitting}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Select an option" />
                     </SelectTrigger>
@@ -81,7 +166,11 @@ const Contact = () => {
                   <label htmlFor="language" className="block text-sm font-semibold mb-2">
                     Preferred Language:
                   </label>
-                  <Select defaultValue="english">
+                  <Select
+                    value={formData.language}
+                    onValueChange={(value) => setFormData({ ...formData, language: value })}
+                    disabled={isSubmitting}
+                  >
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -97,19 +186,34 @@ const Contact = () => {
                   <label htmlFor="message" className="block text-sm font-semibold mb-2">
                     Message *
                   </label>
-                  <Textarea id="message" required rows={6} placeholder="Tell us how we can help you..." />
+                  <Textarea
+                    id="message"
+                    required
+                    rows={6}
+                    placeholder="Tell us how we can help you..."
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    disabled={isSubmitting}
+                  />
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Checkbox id="disclaimer" required />
+                  <Checkbox id="disclaimer" required disabled={isSubmitting} />
                   <label htmlFor="disclaimer" className="text-sm text-muted-foreground leading-relaxed">
                     I understand InVision provides educational services only and does not offer legal/financial/tax advice. In
                     emergencies, I will contact authorities and my bank directly.
                   </label>
                 </div>
 
-                <Button type="submit" variant="default" size="lg" className="w-full">
-                  SEND MESSAGE
+                <Button type="submit" variant="default" size="lg" className="w-full" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    "SEND MESSAGE"
+                  )}
                 </Button>
               </form>
             </Card>
