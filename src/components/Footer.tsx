@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 const Footer = () => {
   return (
     <footer className="bg-gradient-to-br from-[hsl(260,70%,25%)] to-[hsl(260,65%,35%)] text-primary-foreground">
-      <div className="container mx-auto px-4 py-12">
+      <div className="w-full px-6 py-12">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
           {/* Column 1: Quick Links */}

@@ -24,7 +24,7 @@ const CTASection = ({ headline, description, children, className, variant = "gol
 
   return (
     <section className={cn("py-16", bgClass, className)} role="region" aria-label="Call to action">
-      <div className="container mx-auto px-4 text-center">
+      <div className="w-full px-6 text-center">
         <h2 className={cn("mb-4", textClass)}>{headline}</h2>
         {description && <p className={cn("text-xl mb-8 max-w-2xl mx-auto leading-relaxed", textClass)}>{description}</p>}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center flex-wrap">{children}</div>

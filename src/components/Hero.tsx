@@ -59,7 +59,7 @@ const Hero = ({ backgroundImage, useTransitioningBackground = false, headline, s
       </div>
       
       {/* Content */}
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="w-full px-6 relative z-10">
         <div className="max-w-3xl">
           <h1 className="text-white mb-6 animate-fade-in-up [text-shadow:0_4px_20px_rgba(139,92,246,0.4)] leading-tight">
             {headline}

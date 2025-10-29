@@ -68,7 +68,7 @@ const Index = () => {
             style={{ animationDuration: "6s" }}
           />
         </div>
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="w-full px-6 relative z-10">
           <div className="text-center mb-10 animate-fade-in-up">
             <h2 className="mb-4">The Growing Threat of AI-Powered Scams</h2>
           </div>
@@ -145,7 +145,7 @@ const Index = () => {
           <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: "5s" }} />
         </div>
         
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="w-full px-6 relative z-10">
           <div className="text-center mb-16 animate-fade-in-up">
             <h2 className="mb-4">Our Services</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -289,7 +289,7 @@ const Index = () => {
             style={{ animationDuration: "6s" }}
           />
         </div>
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="w-full px-6 relative z-10">
           <h2 className="text-center mb-10 animate-fade-in-up">Why Families Trust InVision Network</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card
@@ -371,7 +371,7 @@ const Index = () => {
             style={{ animationDuration: "5s" }}
           />
         </div>
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="w-full px-6 relative z-10">
           <div className="text-center mb-10 animate-fade-in-up">
             <h2 className="mb-4">The 60-Second Pause Protocol™</h2>
             <p className="text-xl text-muted-foreground">Stop Scams Before They Start</p>
@@ -453,7 +453,7 @@ const Index = () => {
             style={{ animationDuration: "7s" }}
           />
         </div>
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="w-full px-6 relative z-10">
           <h2 className="text-center mb-10 animate-fade-in-up">What You'll Master in Our Training</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
@@ -577,7 +577,7 @@ const Index = () => {
             style={{ animationDuration: "7s" }}
           />
         </div>
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="w-full px-6 relative z-10">
           <h2 className="text-center mb-12 animate-fade-in-up">Frequently Asked Questions</h2>
           <div className="max-w-3xl mx-auto space-y-4">
             {[
