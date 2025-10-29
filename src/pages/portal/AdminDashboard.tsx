@@ -56,7 +56,7 @@ const AdminDashboard = () => {
 
     // Load user's tasks
     const { data: tasksData } = await supabase
-      .from("tasks")
+      .from("admin_tasks")
       .select("*")
       .eq("user_id", user.id)
       .order("due_date", { ascending: true })
@@ -66,7 +66,7 @@ const AdminDashboard = () => {
 
     // Load user's events
     const { data: eventsData } = await supabase
-      .from("events")
+      .from("admin_events")
       .select("*")
       .eq("user_id", user.id)
       .gte("start_time", new Date().toISOString())
