@@ -265,26 +265,26 @@ const Contact = () => {
                       <div className="space-y-1 text-sm">
                         <p>
                           <span className="font-semibold">General:</span>{" "}
-                          <a href="mailto:hello@invisionnetwork.com" className="text-accent hover:text-accent/80">
-                            hello@invisionnetwork.com
+                          <a href="mailto:hello@invisionnetwork.org" className="text-accent hover:text-accent/80">
+                            hello@invisionnetwork.org
                           </a>
                         </p>
                         <p>
                           <span className="font-semibold">Training:</span>{" "}
-                          <a href="mailto:training@invisionnetwork.com" className="text-accent hover:text-accent/80">
-                            training@invisionnetwork.com
+                          <a href="mailto:training@invisionnetwork.org" className="text-accent hover:text-accent/80">
+                            training@invisionnetwork.org
                           </a>
                         </p>
                         <p>
                           <span className="font-semibold">Business:</span>{" "}
-                          <a href="mailto:consulting@invisionnetwork.com" className="text-accent hover:text-accent/80">
-                            consulting@invisionnetwork.com
+                          <a href="mailto:consulting@invisionnetwork.org" className="text-accent hover:text-accent/80">
+                            consulting@invisionnetwork.org
                           </a>
                         </p>
                         <p>
                           <span className="font-semibold">Members:</span>{" "}
-                          <a href="mailto:support@invisionnetwork.com" className="text-accent hover:text-accent/80">
-                            support@invisionnetwork.com
+                          <a href="mailto:support@invisionnetwork.org" className="text-accent hover:text-accent/80">
+                            support@invisionnetwork.org
                           </a>
                         </p>
                       </div>
