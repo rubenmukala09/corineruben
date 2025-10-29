@@ -121,7 +121,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     font-family: 'Outfit', sans-serif;
     font-size: 18px;
     line-height: 1.7;
-    zoom: 0.9;
+    zoom: 0.75;
   }
   
   h1, h2, h3, h4, h5, h6 {
