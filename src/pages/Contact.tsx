@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 import { z } from "zod";
+import { contactHeroImage } from "@/assets/hero-images";
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
@@ -82,9 +83,17 @@ const Contact = () => {
 
       {/* Hero */}
       <Hero
-        headline="Let's Talk. We're Here to Help."
-        subheadline="Whether you have questions, need training, or want to protect your family—we're ready to assist you."
-      />
+        backgroundImage={contactHeroImage}
+        headline="We're Here to Help"
+        subheadline="24/7 support for your peace of mind. Contact us anytime."
+        fullHeight={true}
+      >
+        <Button asChild variant="default" size="xl" className="min-h-[56px] px-8 text-lg font-bold">
+          <Link to="#contact-form" aria-label="Get in touch with us">
+            Send a Message
+          </Link>
+        </Button>
+      </Hero>
 
       <section className="relative py-20">
         {/* Animated Background */}

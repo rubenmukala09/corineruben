@@ -116,12 +116,23 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     @apply border-border;
   }
 
-  html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    overflow-x: hidden;
-  }
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  zoom: 0.90;
+  min-height: 100vh;
+  padding-top: 80px; /* Account for fixed navbar */
+}
 
   body {
     @apply bg-background text-foreground antialiased;

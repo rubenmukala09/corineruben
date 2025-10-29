@@ -24,6 +24,7 @@ import {
   FileCheck,
   Image as ImageIcon,
 } from "lucide-react";
+import { trainingHeroImages } from "@/assets/hero-images";
 
 const LearnAndTrain = () => {
   return (
@@ -32,22 +33,23 @@ const LearnAndTrain = () => {
 
       {/* Hero Section */}
       <Hero
-        headline="Learn How to Recognize and Stop Scams"
-        subheadline="Professional training programs and 24/7 protection services designed for real-world safety"
+        useTransitioningBackground={true}
+        transitionImages={trainingHeroImages}
+        headline="Expert Training Programs"
+        subheadline="Empower yourself with the knowledge to recognize and stop scams"
         showScrollIndicator={true}
+        fullHeight={true}
       >
-        <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center sm:justify-start">
-          <Button asChild variant="default" size="xl" className="w-full sm:w-auto">
-            <Link to="#training" aria-label="Explore training options">
-              View Training Programs
-            </Link>
-          </Button>
-          <Button asChild variant="secondary" size="xl" className="w-full sm:w-auto">
-            <Link to="#scamshield" aria-label="View ScamShield protection">
-              Learn About ScamShield
-            </Link>
-          </Button>
-        </div>
+        <Button asChild variant="default" size="xl" className="min-h-[56px] px-8 text-lg font-bold">
+          <Link to="#training" aria-label="Explore training options">
+            View Training Programs
+          </Link>
+        </Button>
+        <Button asChild variant="outlineLight" size="xl" className="min-h-[56px] px-8 text-lg font-bold border-2 border-white hover:bg-white/10">
+          <Link to="#scamshield" aria-label="View ScamShield protection">
+            Learn About ScamShield
+          </Link>
+        </Button>
       </Hero>
 
       {/* Training Section */}

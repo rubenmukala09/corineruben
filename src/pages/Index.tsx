@@ -32,6 +32,7 @@ import testimonial3 from "@/assets/testimonial-3.jpg";
 import testimonial5 from "@/assets/testimonial-5.jpg";
 import testimonial6 from "@/assets/testimonial-6.jpg";
 import testimonial7 from "@/assets/testimonial-7.jpg";
+import { homepageHeroImages } from "@/assets/hero-images";
 
 const Index = () => {
   return (
@@ -40,17 +41,23 @@ const Index = () => {
 
       {/* Hero Section */}
       <Hero
+        useTransitioningBackground={true}
+        transitionImages={homepageHeroImages}
         headline="Protect Your Family from AI-Powered Scams"
         subheadline="Ohio's trusted source for scam prevention training and 24/7 protection services"
         showScrollIndicator={true}
+        fullHeight={true}
       >
-        <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center sm:justify-start">
-          <Button asChild variant="default" size="xl" className="w-full sm:w-auto">
-            <Link to="/training" aria-label="Learn to spot scams">
-              Get Protection Now
-            </Link>
-          </Button>
-        </div>
+        <Button asChild variant="default" size="xl" className="min-h-[56px] px-8 text-lg font-bold">
+          <Link to="/contact" aria-label="Get protection now">
+            Get Protection Now
+          </Link>
+        </Button>
+        <Button asChild variant="outlineLight" size="xl" className="min-h-[56px] px-8 text-lg font-bold border-2 border-white hover:bg-white/10">
+          <Link to="/training" aria-label="Learn more about our services">
+            Learn More
+          </Link>
+        </Button>
       </Hero>
 
       <TrustBar />

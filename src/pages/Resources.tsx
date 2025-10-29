@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Download, Shield, Wifi, KeyRound, Heart, FileText, ShoppingCart } from "lucide-react";
+import { resourcesHeroImage } from "@/assets/hero-images";
 
 const Resources = () => {
   const guides = [
@@ -98,9 +99,15 @@ const Resources = () => {
 
       {/* Hero */}
       <Hero
-        headline="Resources & Tools"
-        subheadline="Guides, security products, and answers to your questions."
-      />
+        backgroundImage={resourcesHeroImage}
+        headline="Knowledge is Your Best Defense"
+        subheadline="Free resources, guides, and tools to keep you safe from scams"
+        fullHeight={true}
+      >
+        <Button asChild variant="default" size="xl" className="min-h-[56px] px-8 text-lg font-bold">
+          <Link to="#guides">Browse Free Guides</Link>
+        </Button>
+      </Hero>
 
       {/* Guides */}
       <section className="py-16 bg-background relative">

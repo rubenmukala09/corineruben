@@ -6,6 +6,7 @@ import FlowingWaves from "@/components/FlowingWaves";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Heart, Lock, BookOpen, Users2, Shield, DollarSign, Award, MapPin } from "lucide-react";
+import { aboutHeroImage } from "@/assets/hero-images";
 
 const About = () => {
   return (
@@ -13,8 +14,10 @@ const About = () => {
       <Navigation />
 
       <Hero
-        headline="Your Partner in AI Safety and Security"
-        subheadline="Locally owned in Ohio, protecting families and businesses nationwide"
+        backgroundImage={aboutHeroImage}
+        headline="Dedicated to Protecting Ohio's Seniors"
+        subheadline="Experience, trust, and compassion in every service we provide"
+        fullHeight={true}
       />
 
       {/* Our Story */}

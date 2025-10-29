@@ -11,6 +11,7 @@ import { Card } from "@/components/ui/card";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield } from "lucide-react";
 import testimonial3 from "@/assets/testimonial-3.jpg";
 import testimonial4 from "@/assets/testimonial-4.jpg";
+import { businessHeroImages } from "@/assets/hero-images";
 
 const Business = () => {
   return (
@@ -18,20 +19,21 @@ const Business = () => {
       <Navigation />
 
       <Hero
+        useTransitioningBackground={true}
+        transitionImages={businessHeroImages}
         headline="Grow Your Business with Secure AI Solutions"
         subheadline="Custom AI automation, professional websites, and industry-leading AI Service Insurance"
+        fullHeight={true}
       >
-        <div className="flex flex-col sm:flex-row gap-4">
-          <Button asChild variant="default" size="xl">
-            <Link to="/contact">Build AI Automation</Link>
-          </Button>
-          <Button asChild variant="outlineLight" size="xl">
-            <Link to="/contact">Design My Website</Link>
-          </Button>
-          <Button asChild variant="outlineLight" size="xl">
-            <Link to="/contact">Get AI Insurance</Link>
-          </Button>
-        </div>
+        <Button asChild variant="default" size="xl" className="min-h-[56px] px-8 text-lg font-bold">
+          <Link to="/contact">Build AI Automation</Link>
+        </Button>
+        <Button asChild variant="outlineLight" size="xl" className="min-h-[56px] px-8 text-lg font-bold border-2 border-white hover:bg-white/10">
+          <Link to="/contact">Design My Website</Link>
+        </Button>
+        <Button asChild variant="outlineLight" size="xl" className="min-h-[56px] px-8 text-lg font-bold border-2 border-white hover:bg-white/10">
+          <Link to="/contact">Get AI Insurance</Link>
+        </Button>
       </Hero>
 
       <TrustBar />
