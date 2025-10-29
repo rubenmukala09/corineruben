@@ -113,9 +113,16 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="min-h-screen bg-background flex relative overflow-hidden">
+      {/* Animated Background Decorations */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+      </div>
+
       {/* Left Side - Decorative Image Panel */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden animate-fade-in">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary/80 to-accent/90 z-10" />
         <img 
           src={heroImage} 
@@ -186,27 +193,27 @@ const Auth = () => {
       </div>
 
       {/* Right Side - Auth Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
-        <div className="w-full max-w-md space-y-8">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 relative z-10">
+        <div className="w-full max-w-md space-y-8 animate-scale-in">
           {/* Mobile Logo */}
-          <div className="lg:hidden text-center">
-            <Link to="/" className="inline-flex items-center justify-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
+          <div className="lg:hidden text-center animate-fade-in">
+            <Link to="/" className="inline-flex items-center justify-center gap-3 mb-4 group">
+              <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center shadow-glow-purple group-hover:scale-110 transition-transform">
                 <Shield className="w-7 h-7 text-white" />
               </div>
             </Link>
-            <h1 className="text-2xl font-bold">InVision Network</h1>
+            <h1 className="text-2xl font-bold gradient-text-primary">InVision Network</h1>
             <p className="text-muted-foreground">Staff Portal</p>
           </div>
 
-          <Card className="p-8 shadow-xl border-2 animate-fade-in">
+          <Card className="p-8 shadow-xl border-2 bg-card/95 backdrop-blur-xl hover:shadow-2xl transition-all duration-300">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Header */}
-              <div className="text-center space-y-2">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <div className="text-center space-y-2 animate-fade-in">
+                <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-glow-purple animate-pulse-subtle">
                   <Lock className="w-8 h-8 text-white" />
                 </div>
-                <h2 className="text-3xl font-bold">
+                <h2 className="text-3xl font-bold gradient-text-primary">
                   {isLogin ? "Welcome Back" : "Join Our Team"}
                 </h2>
                 <p className="text-muted-foreground">
@@ -350,7 +357,7 @@ const Auth = () => {
               {/* Submit Button */}
               <Button 
                 type="submit" 
-                className="w-full h-12 text-lg font-semibold" 
+                className="w-full h-12 text-lg font-semibold bg-gradient-to-r from-primary to-accent hover:shadow-glow-purple transition-all duration-300" 
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -401,9 +408,9 @@ const Auth = () => {
           </Card>
 
           {/* Security Badge */}
-          <div className="text-center">
-            <div className="inline-flex items-center gap-2 text-sm text-muted-foreground">
-              <Shield className="w-4 h-4" />
+          <div className="text-center animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-card/80 backdrop-blur-sm rounded-full border border-border/50 text-sm text-muted-foreground hover:border-primary/50 transition-colors">
+              <Shield className="w-4 h-4 text-primary" />
               <span>Secured with enterprise-grade encryption</span>
             </div>
           </div>
