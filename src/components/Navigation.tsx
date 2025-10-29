@@ -68,7 +68,7 @@ const Navigation = () => {
               <Phone className="w-4 h-4" aria-hidden="true" />
               <span className="font-medium">(937) 555-0199</span>
             </a>
-            <Button asChild variant="default" size="sm" className="hidden md:inline-flex font-semibold">
+            <Button asChild variant="default" size="default" className="hidden md:inline-flex font-bold bg-gradient-to-r from-primary to-accent hover:shadow-glow-purple transition-all duration-300 animate-pulse-subtle">
               <Link to="/contact" aria-label="Get protected">GET PROTECTED</Link>
             </Button>
 
