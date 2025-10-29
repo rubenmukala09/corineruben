@@ -19,6 +19,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/services" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+                  Services
+                </Link>
+              </li>
+              <li>
                 <Link to="/training" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
                   Learn & Train
                 </Link>
@@ -105,12 +110,12 @@ const Footer = () => {
             <h3 className="font-bold text-lg mb-4">Legal</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/privacy" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+                <Link to="/privacy-policy" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to="/terms" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+                <Link to="/terms-of-service" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
                   Terms of Service
                 </Link>
               </li>
@@ -202,9 +207,9 @@ const Footer = () => {
             InVision Network provides educational services only. We are not legal, financial, tax, or licensed cybersecurity professionals. In case of active fraud, identity theft, or criminal activity, contact local law enforcement (911), your bank's fraud department immediately using official phone numbers, and report to FTC at IdentityTheft.gov. We never request passwords, 2FA codes, bank account information, or Social Security numbers.
           </p>
           <div className="text-center mt-4">
-            <Link to="/privacy" className="text-primary-foreground/60 text-xs hover:text-primary-foreground transition-colors mx-2">Privacy Policy</Link>
+            <Link to="/privacy-policy" className="text-primary-foreground/60 text-xs hover:text-primary-foreground transition-colors mx-2">Privacy Policy</Link>
             <span className="text-primary-foreground/40">|</span>
-            <Link to="/terms" className="text-primary-foreground/60 text-xs hover:text-primary-foreground transition-colors mx-2">Terms of Service</Link>
+            <Link to="/terms-of-service" className="text-primary-foreground/60 text-xs hover:text-primary-foreground transition-colors mx-2">Terms of Service</Link>
             <span className="text-primary-foreground/40">|</span>
             <Link to="/cookie-policy" className="text-primary-foreground/60 text-xs hover:text-primary-foreground transition-colors mx-2">Cookie Policy</Link>
           </div>

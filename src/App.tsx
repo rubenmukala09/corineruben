@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
+import Services from "./pages/Services";
 import Training from "./pages/Training";
 import Business from "./pages/Business";
 import About from "./pages/About";
@@ -17,6 +18,8 @@ import AnalystDashboard from "./pages/portal/AnalystDashboard";
 import TrainerDashboard from "./pages/portal/TrainerDashboard";
 import DeveloperDashboard from "./pages/portal/DeveloperDashboard";
 import StaffDashboard from "./pages/portal/StaffDashboard";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
@@ -30,6 +33,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/services" element={<Services />} />
           <Route path="/training" element={<Training />} />
           <Route path="/business" element={<Business />} />
           <Route path="/about" element={<About />} />
@@ -43,6 +47,8 @@ const App = () => (
           <Route path="/portal/trainer" element={<ProtectedRoute><TrainerDashboard /></ProtectedRoute>} />
           <Route path="/portal/developer" element={<ProtectedRoute><DeveloperDashboard /></ProtectedRoute>} />
           <Route path="/portal/staff" element={<ProtectedRoute><StaffDashboard /></ProtectedRoute>} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
