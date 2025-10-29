@@ -21,7 +21,7 @@ import {
   Home,
   Award,
 } from "lucide-react";
-import heroImage from "@/assets/hero-about.jpg";
+import heroImage from "@/assets/hero-careers-3d.jpg";
 
 const Careers = () => {
   const positions = [

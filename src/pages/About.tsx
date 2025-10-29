@@ -6,7 +6,7 @@ import FlowingWaves from "@/components/FlowingWaves";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Heart, Lock, BookOpen, Users2, Shield, DollarSign, Award, MapPin } from "lucide-react";
-import heroImage from "@/assets/hero-about-new.jpg";
+import heroImage from "@/assets/hero-about-3d.jpg";
 
 const About = () => {
   return (

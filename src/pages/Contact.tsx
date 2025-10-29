@@ -11,7 +11,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card } from "@/components/ui/card";
 import { Phone, Mail, MapPin, Clock, MessageSquare } from "lucide-react";
 import { toast } from "sonner";
-import heroImage from "@/assets/hero-contact.jpg";
+import heroImage from "@/assets/hero-contact-3d.jpg";
 
 const Contact = () => {
   const handleSubmit = (e: React.FormEvent) => {
