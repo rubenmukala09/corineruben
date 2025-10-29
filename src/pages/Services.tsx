@@ -31,13 +31,25 @@ const Services = () => {
       </Hero>
 
       {/* Service Categories */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-4">
-          <h2 className="text-center mb-16">Our Services</h2>
+      <section className="py-24 bg-background relative overflow-hidden">
+        {/* Animated Background Decorations */}
+        <div className="absolute inset-0 opacity-30 pointer-events-none">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: "4s" }} />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: "6s" }} />
+          <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: "5s" }} />
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-16 animate-fade-in-up">
+            <h2 className="mb-4">Our Services</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Comprehensive protection solutions designed for modern threats
+            </p>
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             {/* ScamShield Protection */}
-            <Card className="p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group">
+            <Card className="p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm" style={{ animationDelay: "0ms" }}>
               <div id="scamshield" className="flex justify-center mb-6">
                 <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
                   <Shield className="w-10 h-10 text-primary" />
@@ -75,7 +87,7 @@ const Services = () => {
             </Card>
 
             {/* Training Programs */}
-            <Card className="p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-primary border-2 group relative">
+            <Card className="p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-primary border-2 group relative animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm" style={{ animationDelay: "100ms" }}>
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                 <span className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-bold">
                   MOST POPULAR
@@ -118,7 +130,7 @@ const Services = () => {
             </Card>
 
             {/* Business Solutions */}
-            <Card className="p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group">
+            <Card className="p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm" style={{ animationDelay: "200ms" }}>
               <div id="business" className="flex justify-center mb-6">
                 <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
                   <Briefcase className="w-10 h-10 text-primary" />
@@ -159,54 +171,64 @@ const Services = () => {
       </section>
 
       {/* Why Choose InVision Network */}
-      <section className="py-24 bg-muted">
-        <div className="container mx-auto px-4">
-          <h2 className="text-center mb-16">Why Choose InVision Network?</h2>
+      <section className="py-24 bg-muted relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-10 right-20 w-64 h-64 bg-primary/30 rounded-full blur-3xl animate-pulse" style={{ animationDuration: "5s" }} />
+          <div className="absolute bottom-10 left-20 w-72 h-72 bg-accent/30 rounded-full blur-3xl animate-pulse" style={{ animationDuration: "7s" }} />
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-16 animate-fade-in-up">
+            <h2 className="mb-4">Why Choose InVision Network?</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Trusted protection backed by expertise and dedication
+            </p>
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Card className="p-6 text-center hover:shadow-medium transition-all hover:-translate-y-1">
+            <Card className="p-6 text-center hover:shadow-medium transition-all hover:-translate-y-1 animate-fade-in-up group" style={{ animationDelay: "0ms" }}>
               <div className="flex justify-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                   <Shield className="w-6 h-6 text-white" />
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-3">500+ Families Protected</h3>
+              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">500+ Families Protected</h3>
               <p className="text-muted-foreground text-sm">
                 Trusted by hundreds of Ohio families and businesses
               </p>
             </Card>
 
-            <Card className="p-6 text-center hover:shadow-medium transition-all hover:-translate-y-1">
+            <Card className="p-6 text-center hover:shadow-medium transition-all hover:-translate-y-1 animate-fade-in-up group" style={{ animationDelay: "100ms" }}>
               <div className="flex justify-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                   <GraduationCap className="w-6 h-6 text-white" />
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-3">Expert Team</h3>
+              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">Expert Team</h3>
               <p className="text-muted-foreground text-sm">
                 Certified cybersecurity professionals who care
               </p>
             </Card>
 
-            <Card className="p-6 text-center hover:shadow-medium transition-all hover:-translate-y-1">
+            <Card className="p-6 text-center hover:shadow-medium transition-all hover:-translate-y-1 animate-fade-in-up group" style={{ animationDelay: "200ms" }}>
               <div className="flex justify-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                   <CheckCircle className="w-6 h-6 text-white" />
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-3">Locally Owned</h3>
+              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">Locally Owned</h3>
               <p className="text-muted-foreground text-sm">
                 Based in Dayton, Ohio, serving nationwide
               </p>
             </Card>
 
-            <Card className="p-6 text-center hover:shadow-medium transition-all hover:-translate-y-1">
+            <Card className="p-6 text-center hover:shadow-medium transition-all hover:-translate-y-1 animate-fade-in-up group" style={{ animationDelay: "300ms" }}>
               <div className="flex justify-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                   <Briefcase className="w-6 h-6 text-white" />
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-3">Comprehensive Solutions</h3>
+              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">Comprehensive Solutions</h3>
               <p className="text-muted-foreground text-sm">
                 From protection to training to business growth
               </p>
