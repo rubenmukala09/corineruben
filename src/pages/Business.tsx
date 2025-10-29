@@ -9,7 +9,6 @@ import FlowingWaves from "@/components/FlowingWaves";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield } from "lucide-react";
-import heroImage from "@/assets/hero-business-3d.jpg";
 import testimonial3 from "@/assets/testimonial-3.jpg";
 import testimonial4 from "@/assets/testimonial-4.jpg";
 
@@ -19,7 +18,6 @@ const Business = () => {
       <Navigation />
 
       <Hero
-        backgroundImage={heroImage}
         headline="AI Solutions Built for Security, Performance & Growth"
         subheadline="From AI agents to professional websites to the world's first AI Service Insurance"
       >

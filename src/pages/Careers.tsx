@@ -21,7 +21,6 @@ import {
   Home,
   Award,
 } from "lucide-react";
-import heroImage from "@/assets/hero-careers-3d.jpg";
 
 const Careers = () => {
   const positions = [
@@ -199,7 +198,6 @@ const Careers = () => {
       <Hero
         headline="Join Our Team"
         subheadline="Help protect Ohio families and empower local businesses with technology"
-        backgroundImage={heroImage}
         showScrollIndicator
       >
         <div className="flex flex-col sm:flex-row gap-4">
