@@ -174,10 +174,10 @@ const Auth = () => {
                 <span className="text-sm font-medium text-foreground">Secure Portal Access</span>
               </div>
               <h2 className="text-5xl font-bold leading-tight">
-                Protecting <span className="gradient-text-primary">Ohio Families</span> from Digital Threats
+                Join Our <span className="gradient-text-primary">Network</span> of Protection
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Join our mission to keep communities safe from AI-powered scams with enterprise-grade security.
+                Access our secure portal for caregivers, professionals, and community members fighting digital threats together.
               </p>
             </div>
 
@@ -223,7 +223,7 @@ const Auth = () => {
             </div>
             <div className="text-left">
               <h1 className="text-xl font-bold gradient-text-primary">InVision Network</h1>
-              <p className="text-xs text-muted-foreground">Staff Portal</p>
+              <p className="text-xs text-muted-foreground">Secure Portal Access</p>
             </div>
           </Link>
 
@@ -453,9 +453,14 @@ const Auth = () => {
                     to={isLogin ? "/signup" : "/auth"}
                     className="text-primary font-semibold hover:underline transition-colors"
                   >
-                    {isLogin ? "Sign up free" : "Sign in"}
+                    {isLogin ? "Apply now" : "Sign in"}
                   </Link>
                 </p>
+                {isLogin && (
+                  <p className="text-xs text-muted-foreground mt-2">
+                    All applications require admin approval
+                  </p>
+                )}
               </div>
             </form>
           </Card>
@@ -489,8 +494,8 @@ const Auth = () => {
                   <a href="tel:9375550199" className="text-xs text-muted-foreground hover:text-foreground transition-colors block">
                     (937) 555-0199
                   </a>
-                  <a href="mailto:support@invisionnetwork.com" className="text-xs text-muted-foreground hover:text-foreground transition-colors block mt-1">
-                    support@invisionnetwork.com
+                  <a href="mailto:support@invisionnetwork.org" className="text-xs text-muted-foreground hover:text-foreground transition-colors block mt-1">
+                    support@invisionnetwork.org
                   </a>
                 </div>
                 <div>

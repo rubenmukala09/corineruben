@@ -30,8 +30,12 @@ const ApplicationPending = () => {
 
           <h1 className="text-3xl font-bold mb-4">Application Submitted Successfully!</h1>
           
-          <p className="text-lg text-muted-foreground mb-8">
+          <p className="text-lg text-muted-foreground mb-4">
             Thank you for applying to InVision Network. Your application has been received and is pending admin approval.
+          </p>
+          
+          <p className="text-sm text-primary font-semibold mb-8">
+            All applications require admin authorization before account activation
           </p>
 
           {/* Application Reference */}
@@ -87,8 +91,10 @@ const ApplicationPending = () => {
           <div className="mb-8 p-4 bg-muted/30 rounded-lg text-left">
             <p className="font-semibold mb-2">Important:</p>
             <ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside">
-              <li>You cannot login until your account is approved</li>
-              <li>Check your email regularly for updates</li>
+              <li>Anyone can apply for any role in our network</li>
+              <li>All applications are reviewed by our admin team for security and quality</li>
+              <li>You cannot login until your account is approved by an administrator</li>
+              <li>Check your email regularly for approval updates</li>
               <li>If you don't hear from us within 48 hours, please contact support</li>
             </ul>
           </div>

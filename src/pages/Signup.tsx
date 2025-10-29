@@ -356,9 +356,13 @@ const Signup = () => {
             </div>
             <div className="text-left">
               <h1 className="text-xl font-bold gradient-text-primary">InVision Network</h1>
-              <p className="text-xs text-muted-foreground">Create Account</p>
+              <p className="text-xs text-muted-foreground">Application Portal</p>
             </div>
           </Link>
+          <div className="mb-4">
+            <h2 className="text-2xl font-bold mb-2">Join Our Network</h2>
+            <p className="text-muted-foreground">All applications are reviewed and approved by our admin team</p>
+          </div>
           <Progress value={progress} className="h-2 mb-4" />
           <p className="text-sm text-muted-foreground">Step {step} of {totalSteps}</p>
         </div>
@@ -369,7 +373,8 @@ const Signup = () => {
             <div className="space-y-8">
               <div className="text-center">
                 <h2 className="text-3xl font-bold mb-3 gradient-text-primary">Select Your Role</h2>
-                <p className="text-muted-foreground text-lg">Choose the role that best describes you</p>
+                <p className="text-muted-foreground text-lg mb-2">Choose the role that best describes you</p>
+                <p className="text-sm text-primary font-semibold">✓ Anyone can apply • Admin approval required</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
