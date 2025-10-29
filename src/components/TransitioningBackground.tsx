@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import heroHomepagePeaceful from '@/assets/hero-homepage-peaceful.jpg';
-import heroHomepagePeaceful2 from '@/assets/hero-homepage-peaceful-2.jpg';
-import heroHomepagePeaceful3 from '@/assets/hero-homepage-peaceful-3.jpg';
+import eldersHero1 from '@/assets/elders-hero-3d-1.jpg';
+import eldersHero2 from '@/assets/elders-hero-3d-2.jpg';
+import eldersHero3 from '@/assets/elders-hero-3d-3.jpg';
+import eldersHero4 from '@/assets/elders-hero-3d-4.jpg';
+import heroHomepage from '@/assets/hero-homepage-3d.jpg';
 
-const defaultImages = [heroHomepagePeaceful, heroHomepagePeaceful2, heroHomepagePeaceful3];
+const defaultImages = [eldersHero1, eldersHero2, eldersHero3, eldersHero4, heroHomepage];
 
 interface TransitioningBackgroundProps {
   images?: string[];
