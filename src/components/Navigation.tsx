@@ -67,6 +67,9 @@ const Navigation = () => {
               <Phone className="w-4 h-4" aria-hidden="true" />
               <span className="font-medium">(937) 555-0199</span>
             </a>
+            <Button asChild variant="outline" size="default" className="hidden md:inline-flex font-bold">
+              <Link to="/portal" aria-label="Login to your account">Login</Link>
+            </Button>
             <Button asChild variant="default" size="default" className="hidden md:inline-flex font-bold bg-gradient-to-r from-primary to-accent hover:shadow-glow-purple transition-all duration-300 animate-pulse-subtle">
               <Link to="/contact" aria-label="Get protected">GET PROTECTED</Link>
             </Button>
@@ -97,6 +100,11 @@ const Navigation = () => {
                 </Link>
               ))}
               <div className="pt-2 border-t border-border flex flex-col gap-3">
+                <Button asChild variant="outline" className="w-full">
+                  <Link to="/portal" onClick={() => setMobileMenuOpen(false)} aria-label="Login to your account">
+                    Login
+                  </Link>
+                </Button>
                 <Button asChild variant="default" className="w-full">
                   <Link to="/contact" onClick={() => setMobileMenuOpen(false)} aria-label="Get protected">
                     GET PROTECTED
