@@ -230,17 +230,6 @@ const Signup = () => {
 
       if (profileError) throw profileError;
 
-      // Log signup activity
-      await supabase.from("user_activity_logs").insert({
-        user_id: authData.user.id,
-        activity_type: "signup",
-        metadata: { 
-          email: email,
-          role: selectedRole,
-          application_reference: appRef
-        }
-      });
-
       // Create role-specific profile
       if (selectedRole === "senior") {
         const { error } = await supabase.from("senior_client_profiles").insert({

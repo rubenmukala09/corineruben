@@ -1722,7 +1722,6 @@ export type Database = {
       profiles: {
         Row: {
           account_status: string | null
-          application_reference: string | null
           created_at: string | null
           department: string | null
           email: string | null
@@ -1738,7 +1737,6 @@ export type Database = {
         }
         Insert: {
           account_status?: string | null
-          application_reference?: string | null
           created_at?: string | null
           department?: string | null
           email?: string | null
@@ -1754,7 +1752,6 @@ export type Database = {
         }
         Update: {
           account_status?: string | null
-          application_reference?: string | null
           created_at?: string | null
           department?: string | null
           email?: string | null
@@ -2022,36 +2019,6 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
-      }
-      user_activity_logs: {
-        Row: {
-          activity_type: string
-          created_at: string
-          id: string
-          ip_address: string | null
-          metadata: Json | null
-          user_agent: string | null
-          user_id: string
-        }
-        Insert: {
-          activity_type: string
-          created_at?: string
-          id?: string
-          ip_address?: string | null
-          metadata?: Json | null
-          user_agent?: string | null
-          user_id: string
-        }
-        Update: {
-          activity_type?: string
-          created_at?: string
-          id?: string
-          ip_address?: string | null
-          metadata?: Json | null
-          user_agent?: string | null
-          user_id?: string
-        }
-        Relationships: []
       }
       user_roles: {
         Row: {

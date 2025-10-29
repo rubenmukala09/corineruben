@@ -6,28 +6,15 @@ import ScrollIndicator from "./ScrollIndicator";
 interface HeroProps {
   backgroundImage?: string;
   useTransitioningBackground?: boolean;
-  transitionImages?: string[];
   headline: string;
   subheadline?: string;
   children?: ReactNode;
   className?: string;
   overlay?: boolean;
   showScrollIndicator?: boolean;
-  fullHeight?: boolean;
 }
 
-const Hero = ({ 
-  backgroundImage, 
-  useTransitioningBackground = false, 
-  transitionImages,
-  headline, 
-  subheadline, 
-  children, 
-  className, 
-  overlay = true, 
-  showScrollIndicator = false,
-  fullHeight = true 
-}: HeroProps) => {
+const Hero = ({ backgroundImage, useTransitioningBackground = false, headline, subheadline, children, className, overlay = true, showScrollIndicator = false }: HeroProps) => {
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
@@ -40,56 +27,49 @@ const Hero = ({
   }, []);
 
   return (
-    <div className={cn(
-      "relative flex items-center justify-center overflow-hidden",
-      fullHeight ? "min-h-screen" : "min-h-[90vh]",
-      className
-    )}>
+    <div className={cn("relative min-h-[90vh] flex items-center overflow-hidden", className)}>
       {/* Background */}
       <div 
         className="absolute inset-0"
-        style={{ transform: `translateY(${scrollY * 0.3}px)` }}
+        style={{ transform: `translateY(${scrollY * 0.5}px)` }}
       >
         {useTransitioningBackground ? (
-          <TransitioningBackground images={transitionImages} />
-        ) : backgroundImage ? (
-          <>
-            <div
-              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-              style={{ backgroundImage: `url(${backgroundImage})` }}
-            />
-            {/* Dark overlay for static images */}
-            <div className="absolute inset-0 bg-black/40" />
-          </>
+          <TransitioningBackground />
         ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-primary via-accent to-primary" />
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${backgroundImage})` }}
+          />
         )}
       </div>
       
-      {/* Additional gradient overlay (optional) */}
-      {overlay && !useTransitioningBackground && (
+      {/* Animated Gradient Overlay */}
+      {overlay && (
         <div 
-          className="absolute inset-0 bg-gradient-hero-primary opacity-20"
+          className="absolute inset-0 bg-gradient-hero-primary opacity-40"
           style={{ backgroundSize: '400% 400%', animation: 'gradient-shift 15s ease infinite' }}
         />
       )}
       
-      {/* Content Container - Centered */}
-      <div className="w-full px-6 relative z-20 text-center">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-white text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 animate-fade-in-up [text-shadow:0_4px_20px_rgba(0,0,0,0.5)] leading-tight">
+      {/* Floating Particles */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="floating-orb" style={{ width: '150px', height: '150px', top: '20%', left: '10%', animationDelay: '0s' }} />
+        <div className="floating-orb" style={{ width: '100px', height: '100px', top: '60%', right: '15%', animationDelay: '4s' }} />
+        <div className="floating-orb" style={{ width: '120px', height: '120px', bottom: '25%', left: '40%', animationDelay: '8s' }} />
+      </div>
+      
+      {/* Content */}
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="max-w-3xl">
+          <h1 className="text-white mb-6 animate-fade-in-up [text-shadow:0_4px_20px_rgba(139,92,246,0.4)] leading-tight">
             {headline}
           </h1>
           {subheadline && (
-            <p className="text-white/95 text-lg md:text-xl lg:text-2xl mb-8 leading-relaxed animate-fade-in-up stagger-1 [text-shadow:0_2px_10px_rgba(0,0,0,0.4)] max-w-3xl mx-auto">
+            <p className="text-white/90 text-xl md:text-2xl mb-8 leading-relaxed animate-fade-in-up stagger-1">
               {subheadline}
             </p>
           )}
-          {children && (
-            <div className="animate-fade-in-up stagger-2 flex flex-col sm:flex-row gap-4 justify-center items-center">
-              {children}
-            </div>
-          )}
+          {children && <div className="animate-fade-in-up stagger-2">{children}</div>}
         </div>
       </div>
       

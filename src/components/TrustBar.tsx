@@ -9,8 +9,8 @@ const TrustBar = () => {
   ];
 
   return (
-    <div className="relative z-10 px-6 -mt-10" role="complementary" aria-label="Trust indicators">
-      <div className="w-full">
+    <div className="relative z-10 px-4 -mt-10" role="complementary" aria-label="Trust indicators">
+      <div className="container mx-auto">
         <div className="relative mx-auto max-w-5xl animate-fade-in-up group/trust">
           {/* Animated rolling light border */}
           <div className="absolute inset-0 rounded-3xl overflow-hidden">

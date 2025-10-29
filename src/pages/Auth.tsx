@@ -114,13 +114,6 @@ const Auth = () => {
             return;
           }
 
-          // Log successful login activity
-          await supabase.from("user_activity_logs").insert({
-            user_id: data.user.id,
-            activity_type: "login",
-            metadata: { email: data.user.email }
-          });
-
           toast({
             title: "Welcome back!",
             description: "You've successfully logged in.",

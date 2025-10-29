@@ -5,22 +5,15 @@ import eldersHero3 from '@/assets/elders-hero-3d-3.jpg';
 import eldersHero4 from '@/assets/elders-hero-3d-4.jpg';
 import heroHomepage from '@/assets/hero-homepage-3d.jpg';
 
-const defaultImages = [eldersHero1, eldersHero2, eldersHero3, eldersHero4, heroHomepage];
+const images = [eldersHero1, eldersHero2, eldersHero3, eldersHero4, heroHomepage];
 
 interface TransitioningBackgroundProps {
-  images?: string[];
-  interval?: number;
+  interval?: number; // milliseconds between transitions
   className?: string;
-  opacity?: number;
+  opacity?: number; // opacity level (0-1), default 1
 }
 
-const TransitioningBackground = ({ 
-  images, 
-  interval = 5000, 
-  className = '', 
-  opacity = 1 
-}: TransitioningBackgroundProps) => {
-  const backgroundImages = images || defaultImages;
+const TransitioningBackground = ({ interval = 8000, className = '', opacity = 1 }: TransitioningBackgroundProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [nextIndex, setNextIndex] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -31,37 +24,35 @@ const TransitioningBackground = ({
       
       setTimeout(() => {
         setCurrentIndex(nextIndex);
-        setNextIndex((nextIndex + 1) % backgroundImages.length);
+        setNextIndex((nextIndex + 1) % images.length);
         setIsTransitioning(false);
-      }, 1000); // 1-second transition
+      }, 1500); // Smooth 1.5-second transition
     }, interval);
 
     return () => clearInterval(timer);
-  }, [interval, nextIndex, backgroundImages.length]);
+  }, [interval, nextIndex]);
 
   return (
     <div className={`absolute inset-0 overflow-hidden ${className}`}>
-      {/* Current Image - with Ken Burns zoom effect */}
+      {/* Current Image */}
       <div
-        className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out"
+        className="absolute inset-0 bg-cover bg-center transition-opacity duration-[1500ms] ease-in-out"
         style={{
-          backgroundImage: `url(${backgroundImages[currentIndex]})`,
+          backgroundImage: `url(${images[currentIndex]})`,
           opacity: isTransitioning ? 0 : opacity,
-          transform: isTransitioning ? 'scale(1.05)' : 'scale(1)',
         }}
       />
       
       {/* Next Image (for smooth transition) */}
       <div
-        className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out"
+        className="absolute inset-0 bg-cover bg-center transition-opacity duration-[1500ms] ease-in-out"
         style={{
-          backgroundImage: `url(${backgroundImages[nextIndex]})`,
+          backgroundImage: `url(${images[nextIndex]})`,
           opacity: isTransitioning ? opacity : 0,
-          transform: isTransitioning ? 'scale(1.05)' : 'scale(1)',
         }}
       />
       
-      {/* Dark overlay for text readability */}
+      {/* Overlay for better text readability */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/50" style={{ opacity }} />
     </div>
   );

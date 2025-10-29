@@ -36,7 +36,7 @@ const TrustBadges = () => {
         <div className="absolute bottom-10 right-20 w-72 h-72 bg-accent/30 rounded-full blur-3xl" />
       </div>
       
-      <div className="w-full px-6 relative z-10">
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-2">Trusted & Certified</h2>
           <p className="text-muted-foreground">Your security and privacy are our top priorities</p>

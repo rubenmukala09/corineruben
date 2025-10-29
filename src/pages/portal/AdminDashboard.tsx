@@ -25,14 +25,11 @@ const AdminDashboard = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [tasks, setTasks] = useState<any[]>([]);
   const [events, setEvents] = useState<any[]>([]);
-  const [pendingUsers, setPendingUsers] = useState<any[]>([]);
-  const [recentActivity, setRecentActivity] = useState<any[]>([]);
   const [stats, setStats] = useState({
     totalStaff: 0,
     activeProjects: 0,
     pendingTasks: 0,
     upcomingEvents: 0,
-    pendingApprovals: 0,
   });
 
   useEffect(() => {
@@ -41,17 +38,6 @@ const AdminDashboard = () => {
 
   const handleSignOut = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      // Log logout activity before signing out
-      if (user) {
-        await supabase.from("user_activity_logs").insert({
-          user_id: user.id,
-          activity_type: "logout",
-          metadata: { email: user.email }
-        });
-      }
-
       await supabase.auth.signOut();
       toast({ title: "Signed out successfully" });
       navigate("/auth");
@@ -89,83 +75,19 @@ const AdminDashboard = () => {
 
     if (eventsData) setEvents(eventsData);
 
-    // Load pending user approvals
-    const { data: pendingData } = await supabase
-      .from("profiles")
-      .select("id, first_name, last_name, email, phone, account_status, application_reference, created_at")
-      .eq("account_status", "pending")
-      .order("created_at", { ascending: false })
-      .limit(10);
-
-    if (pendingData) setPendingUsers(pendingData);
-
-    // Load recent login activity
-    const { data: activityData } = await supabase
-      .from("user_activity_logs")
-      .select(`
-        *,
-        profiles:user_id (first_name, last_name, email)
-      `)
-      .eq("activity_type", "login")
-      .order("created_at", { ascending: false })
-      .limit(10);
-
-    if (activityData) setRecentActivity(activityData);
-
-    // Update stats
+    // TODO: Load actual stats from database
     setStats({
       totalStaff: 12,
       activeProjects: 8,
       pendingTasks: tasksData?.length || 0,
       upcomingEvents: eventsData?.length || 0,
-      pendingApprovals: pendingData?.length || 0,
     });
-  };
-
-  const handleApproveUser = async (userId: string) => {
-    try {
-      const { error } = await supabase
-        .from("profiles")
-        .update({ account_status: "approved" })
-        .eq("id", userId);
-
-      if (error) throw error;
-
-      toast({ title: "User approved successfully" });
-      loadDashboardData(); // Reload data
-    } catch (error: any) {
-      toast({
-        title: "Error approving user",
-        description: error.message,
-        variant: "destructive",
-      });
-    }
-  };
-
-  const handleRejectUser = async (userId: string) => {
-    try {
-      const { error } = await supabase
-        .from("profiles")
-        .update({ account_status: "rejected" })
-        .eq("id", userId);
-
-      if (error) throw error;
-
-      toast({ title: "User rejected" });
-      loadDashboardData(); // Reload data
-    } catch (error: any) {
-      toast({
-        title: "Error rejecting user",
-        description: error.message,
-        variant: "destructive",
-      });
-    }
   };
 
   const statCards = [
     { label: "Total Staff", value: stats.totalStaff, icon: Users, color: "text-blue-600" },
     { label: "Active Projects", value: stats.activeProjects, icon: TrendingUp, color: "text-green-600" },
-    { label: "Pending Approvals", value: stats.pendingApprovals, icon: Shield, color: "text-red-600" },
+    { label: "Pending Tasks", value: stats.pendingTasks, icon: CheckSquare, color: "text-amber-600" },
     { label: "Upcoming Events", value: stats.upcomingEvents, icon: CalendarIcon, color: "text-purple-600" },
   ];
 
@@ -216,83 +138,8 @@ const AdminDashboard = () => {
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Left Column - Pending Approvals, Activity & Tasks */}
+          {/* Left Column - Tasks & Events */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Pending User Approvals */}
-            <Card className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold flex items-center gap-2">
-                  <Shield className="w-5 h-5 text-red-600" />
-                  Pending User Approvals
-                  {pendingUsers.length > 0 && (
-                    <Badge variant="destructive">{pendingUsers.length}</Badge>
-                  )}
-                </h2>
-              </div>
-              <div className="space-y-3">
-                {pendingUsers.length === 0 ? (
-                  <p className="text-center text-muted-foreground py-8">No pending approvals</p>
-                ) : (
-                  pendingUsers.map((user) => (
-                    <div key={user.id} className="flex items-center justify-between p-4 bg-muted/50 rounded-lg border-l-4 border-red-500">
-                      <div className="flex-1">
-                        <p className="font-medium">{user.first_name} {user.last_name}</p>
-                        <p className="text-sm text-muted-foreground">{user.email}</p>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          Applied: {new Date(user.created_at).toLocaleDateString()} • Ref: {user.application_reference}
-                        </p>
-                      </div>
-                      <div className="flex gap-2">
-                        <Button 
-                          size="sm" 
-                          variant="default"
-                          onClick={() => handleApproveUser(user.id)}
-                        >
-                          Approve
-                        </Button>
-                        <Button 
-                          size="sm" 
-                          variant="destructive"
-                          onClick={() => handleRejectUser(user.id)}
-                        >
-                          Reject
-                        </Button>
-                      </div>
-                    </div>
-                  ))
-                )}
-              </div>
-            </Card>
-
-            {/* Recent Login Activity */}
-            <Card className="p-6">
-              <h2 className="text-xl font-bold mb-6">Recent Login Activity</h2>
-              <div className="space-y-3">
-                {recentActivity.length === 0 ? (
-                  <p className="text-center text-muted-foreground py-8">No recent activity</p>
-                ) : (
-                  recentActivity.map((activity) => (
-                    <div key={activity.id} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                          <Users className="w-4 h-4 text-primary" />
-                        </div>
-                        <div>
-                          <p className="font-medium text-sm">
-                            {activity.profiles?.first_name} {activity.profiles?.last_name}
-                          </p>
-                          <p className="text-xs text-muted-foreground">{activity.profiles?.email}</p>
-                        </div>
-                      </div>
-                      <p className="text-xs text-muted-foreground">
-                        {new Date(activity.created_at).toLocaleString()}
-                      </p>
-                    </div>
-                  ))
-                )}
-              </div>
-            </Card>
-
             {/* Tasks */}
             <Card className="p-6">
               <div className="flex items-center justify-between mb-6">

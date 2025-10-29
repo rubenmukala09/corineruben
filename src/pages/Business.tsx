@@ -11,7 +11,6 @@ import { Card } from "@/components/ui/card";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield } from "lucide-react";
 import testimonial3 from "@/assets/testimonial-3.jpg";
 import testimonial4 from "@/assets/testimonial-4.jpg";
-import { businessHeroImages } from "@/assets/hero-images";
 
 const Business = () => {
   return (
@@ -19,21 +18,20 @@ const Business = () => {
       <Navigation />
 
       <Hero
-        useTransitioningBackground={true}
-        transitionImages={businessHeroImages}
         headline="Grow Your Business with Secure AI Solutions"
         subheadline="Custom AI automation, professional websites, and industry-leading AI Service Insurance"
-        fullHeight={true}
       >
-        <Button asChild variant="default" size="xl" className="min-h-[56px] px-8 text-lg font-bold">
-          <Link to="/contact">Build AI Automation</Link>
-        </Button>
-        <Button asChild variant="outlineLight" size="xl" className="min-h-[56px] px-8 text-lg font-bold border-2 border-white hover:bg-white/10">
-          <Link to="/contact">Design My Website</Link>
-        </Button>
-        <Button asChild variant="outlineLight" size="xl" className="min-h-[56px] px-8 text-lg font-bold border-2 border-white hover:bg-white/10">
-          <Link to="/contact">Get AI Insurance</Link>
-        </Button>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Button asChild variant="default" size="xl">
+            <Link to="/contact">Build AI Automation</Link>
+          </Button>
+          <Button asChild variant="outlineLight" size="xl">
+            <Link to="/contact">Design My Website</Link>
+          </Button>
+          <Button asChild variant="outlineLight" size="xl">
+            <Link to="/contact">Get AI Insurance</Link>
+          </Button>
+        </div>
       </Hero>
 
       <TrustBar />
@@ -104,8 +102,8 @@ const Business = () => {
       </section>
 
       {/* Package Pricing */}
-      <section className="py-8 bg-muted">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="py-20 bg-muted">
+        <div className="container mx-auto px-4">
           <h2 className="text-center mb-12">AI Agents & Automation Pricing</h2>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <Card className="p-8">
@@ -216,8 +214,8 @@ const Business = () => {
       </section>
 
       {/* Web Design Services */}
-      <section className="py-8 bg-background">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <div className="inline-block px-6 py-2 bg-primary/10 rounded-full text-sm font-bold text-primary mb-4 uppercase tracking-wider">
               Web Design
@@ -391,8 +389,8 @@ const Business = () => {
       </section>
 
       {/* AI Services Insurance */}
-      <section className="py-8 bg-background">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <div className="inline-block px-6 py-2 bg-primary/10 rounded-full text-sm font-bold text-primary mb-4 uppercase tracking-wider">
               Protection & Maintenance
@@ -566,8 +564,8 @@ const Business = () => {
       </section>
 
       {/* Why InVision */}
-      <section className="py-8 bg-muted">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="py-20 bg-muted">
+        <div className="container mx-auto px-4">
           <h2 className="text-center mb-12">Why InVision for Your AI</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
             <div className="space-y-6">
@@ -624,8 +622,8 @@ const Business = () => {
       </section>
 
       {/* Pre-Purchase Consulting */}
-      <section className="py-8 bg-muted">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="py-20 bg-muted">
+        <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <Card className="p-8 bg-gradient-to-br from-accent/10 to-accent/5">
               <div className="flex items-start gap-6">
@@ -662,8 +660,8 @@ const Business = () => {
       </section>
 
       {/* AI Security Audit */}
-      <section className="py-8 bg-background">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <Card className="p-8 bg-gradient-to-br from-amber-100 to-amber-50 dark:from-amber-950 dark:to-amber-900">
               <div className="flex items-start gap-6">
@@ -699,8 +697,8 @@ const Business = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-8 bg-muted">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="py-20 bg-muted">
+        <div className="container mx-auto px-4">
           <h2 className="text-center mb-12">Business Testimonials</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <TestimonialCard

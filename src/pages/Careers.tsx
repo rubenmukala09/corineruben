@@ -21,7 +21,6 @@ import {
   Home,
   Award,
 } from "lucide-react";
-import { careersHeroImage } from "@/assets/hero-images";
 
 const Careers = () => {
   const positions = [
@@ -197,15 +196,15 @@ const Careers = () => {
       <Navigation />
 
       <Hero
-        backgroundImage={careersHeroImage}
-        headline="Join Our Mission"
-        subheadline="Make a difference in seniors' lives and help businesses grow safely"
-        showScrollIndicator={true}
-        fullHeight={true}
+        headline="Join Our Team"
+        subheadline="Help protect Ohio families and empower local businesses with technology"
+        showScrollIndicator
       >
-        <Button size="xl" asChild className="min-h-[56px] px-8 text-lg font-bold">
-          <a href="#positions">View Open Positions</a>
-        </Button>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Button size="lg" asChild>
+            <a href="#positions">View Open Positions</a>
+          </Button>
+        </div>
       </Hero>
 
       {/* Mission Section */}
