@@ -13,7 +13,6 @@ const Navigation = () => {
     { name: "About", href: "/about" },
     { name: "Careers", href: "/careers" },
     { name: "Contact", href: "/contact" },
-    { name: "Login", href: "/auth" },
   ];
 
   return (
@@ -68,9 +67,6 @@ const Navigation = () => {
               <Phone className="w-4 h-4" aria-hidden="true" />
               <span className="font-medium">(937) 555-0199</span>
             </a>
-            <Button asChild variant="outline" size="default" className="hidden md:inline-flex font-bold">
-              <Link to="/auth" aria-label="Login">LOGIN</Link>
-            </Button>
             <Button asChild variant="default" size="default" className="hidden md:inline-flex font-bold bg-gradient-to-r from-primary to-accent hover:shadow-glow-purple transition-all duration-300 animate-pulse-subtle">
               <Link to="/contact" aria-label="Get protected">GET PROTECTED</Link>
             </Button>
