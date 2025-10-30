@@ -176,6 +176,39 @@ export type Database = {
           },
         ]
       }
+      analyst_profiles: {
+        Row: {
+          created_at: string
+          department: string | null
+          education_level: string | null
+          id: string
+          linkedin_url: string | null
+          specialization: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          department?: string | null
+          education_level?: string | null
+          id?: string
+          linkedin_url?: string | null
+          specialization?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          department?: string | null
+          education_level?: string | null
+          id?: string
+          linkedin_url?: string | null
+          specialization?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       appointments: {
         Row: {
           actual_end: string | null
@@ -342,6 +375,78 @@ export type Database = {
           purchase_date?: string | null
           status?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      caregiver_profiles: {
+        Row: {
+          availability_afternoons: boolean | null
+          availability_evenings: boolean | null
+          availability_mornings: boolean | null
+          availability_nights: boolean | null
+          availability_weekends: boolean | null
+          available_hours_per_week: number | null
+          background_check_consent: boolean | null
+          background_check_status: string | null
+          certification_number: string | null
+          certification_type: string | null
+          created_at: string
+          id: string
+          reference1_email: string | null
+          reference1_name: string | null
+          reference1_phone: string | null
+          reference2_email: string | null
+          reference2_name: string | null
+          reference2_phone: string | null
+          updated_at: string
+          user_id: string
+          years_experience: number | null
+        }
+        Insert: {
+          availability_afternoons?: boolean | null
+          availability_evenings?: boolean | null
+          availability_mornings?: boolean | null
+          availability_nights?: boolean | null
+          availability_weekends?: boolean | null
+          available_hours_per_week?: number | null
+          background_check_consent?: boolean | null
+          background_check_status?: string | null
+          certification_number?: string | null
+          certification_type?: string | null
+          created_at?: string
+          id?: string
+          reference1_email?: string | null
+          reference1_name?: string | null
+          reference1_phone?: string | null
+          reference2_email?: string | null
+          reference2_name?: string | null
+          reference2_phone?: string | null
+          updated_at?: string
+          user_id: string
+          years_experience?: number | null
+        }
+        Update: {
+          availability_afternoons?: boolean | null
+          availability_evenings?: boolean | null
+          availability_mornings?: boolean | null
+          availability_nights?: boolean | null
+          availability_weekends?: boolean | null
+          available_hours_per_week?: number | null
+          background_check_consent?: boolean | null
+          background_check_status?: string | null
+          certification_number?: string | null
+          certification_type?: string | null
+          created_at?: string
+          id?: string
+          reference1_email?: string | null
+          reference1_name?: string | null
+          reference1_phone?: string | null
+          reference2_email?: string | null
+          reference2_name?: string | null
+          reference2_phone?: string | null
+          updated_at?: string
+          user_id?: string
+          years_experience?: number | null
         }
         Relationships: []
       }
@@ -741,6 +846,39 @@ export type Database = {
           },
         ]
       }
+      developer_profiles: {
+        Row: {
+          created_at: string
+          developer_role: string | null
+          github_portfolio_url: string | null
+          id: string
+          tech_stack: string[] | null
+          updated_at: string
+          user_id: string
+          years_experience: number | null
+        }
+        Insert: {
+          created_at?: string
+          developer_role?: string | null
+          github_portfolio_url?: string | null
+          id?: string
+          tech_stack?: string[] | null
+          updated_at?: string
+          user_id: string
+          years_experience?: number | null
+        }
+        Update: {
+          created_at?: string
+          developer_role?: string | null
+          github_portfolio_url?: string | null
+          id?: string
+          tech_stack?: string[] | null
+          updated_at?: string
+          user_id?: string
+          years_experience?: number | null
+        }
+        Relationships: []
+      }
       donations: {
         Row: {
           amount: number
@@ -884,6 +1022,45 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      healthcare_professional_profiles: {
+        Row: {
+          created_at: string
+          dea_number: string | null
+          hospital_affiliation: string | null
+          id: string
+          license_number: string | null
+          license_type: string | null
+          medical_specialty: string | null
+          updated_at: string
+          user_id: string
+          years_in_practice: number | null
+        }
+        Insert: {
+          created_at?: string
+          dea_number?: string | null
+          hospital_affiliation?: string | null
+          id?: string
+          license_number?: string | null
+          license_type?: string | null
+          medical_specialty?: string | null
+          updated_at?: string
+          user_id: string
+          years_in_practice?: number | null
+        }
+        Update: {
+          created_at?: string
+          dea_number?: string | null
+          hospital_affiliation?: string | null
+          id?: string
+          license_number?: string | null
+          license_type?: string | null
+          medical_specialty?: string | null
+          updated_at?: string
+          user_id?: string
+          years_in_practice?: number | null
+        }
+        Relationships: []
       }
       internal_messages: {
         Row: {
@@ -1812,6 +1989,42 @@ export type Database = {
         }
         Relationships: []
       }
+      senior_client_profiles: {
+        Row: {
+          created_at: string
+          emergency_contact_name: string | null
+          emergency_contact_phone: string | null
+          id: string
+          medical_conditions: string | null
+          preferred_language: string | null
+          relationship: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          id?: string
+          medical_conditions?: string | null
+          preferred_language?: string | null
+          relationship?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          id?: string
+          medical_conditions?: string | null
+          preferred_language?: string | null
+          relationship?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       service_catalog: {
         Row: {
           active: boolean | null
@@ -1944,6 +2157,42 @@ export type Database = {
         }
         Relationships: []
       }
+      tasks: {
+        Row: {
+          created_at: string
+          description: string | null
+          due_date: string | null
+          id: string
+          priority: string | null
+          status: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          priority?: string | null
+          status?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          priority?: string | null
+          status?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       tickets: {
         Row: {
           assigned_to: string | null
@@ -2037,6 +2286,39 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      trainer_profiles: {
+        Row: {
+          available_training_dates: string | null
+          certifications: string[] | null
+          created_at: string
+          id: string
+          training_specialization: string | null
+          updated_at: string
+          user_id: string
+          years_training_experience: number | null
+        }
+        Insert: {
+          available_training_dates?: string | null
+          certifications?: string[] | null
+          created_at?: string
+          id?: string
+          training_specialization?: string | null
+          updated_at?: string
+          user_id: string
+          years_training_experience?: number | null
+        }
+        Update: {
+          available_training_dates?: string | null
+          certifications?: string[] | null
+          created_at?: string
+          id?: string
+          training_specialization?: string | null
+          updated_at?: string
+          user_id?: string
+          years_training_experience?: number | null
+        }
+        Relationships: []
       }
       user_activity_logs: {
         Row: {
