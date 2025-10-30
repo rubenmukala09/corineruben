@@ -16,6 +16,7 @@ interface HeroProps {
 
 const Hero = ({ backgroundImage, useTransitioningBackground = false, headline, subheadline, children, className, overlay = true, showScrollIndicator = false }: HeroProps) => {
   const [scrollY, setScrollY] = useState(0);
+  const [showDisclaimer, setShowDisclaimer] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,6 +25,14 @@ const Hero = ({ backgroundImage, useTransitioningBackground = false, headline, s
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowDisclaimer(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -74,14 +83,16 @@ const Hero = ({ backgroundImage, useTransitioningBackground = false, headline, s
       </div>
       
       {/* Privacy Disclaimer */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 max-w-2xl w-full px-4">
-        <div className="glass-effect px-6 py-3 rounded-xl border border-white/20 shadow-elegant">
-          <p className="text-white/90 text-sm text-center font-medium leading-relaxed">
-            <span className="inline-block mr-2">🔒</span>
-            AI-generated imagery used throughout. Your privacy matters—we never use customer photos without explicit consent.
-          </p>
+      {showDisclaimer && (
+        <div className="absolute top-24 right-6 z-20 max-w-sm animate-fade-in">
+          <div className="glass-effect px-5 py-3 rounded-xl border border-white/20 shadow-elegant backdrop-blur-md">
+            <p className="text-white text-sm font-medium leading-relaxed">
+              <span className="inline-block mr-2 opacity-80">🔒</span>
+              Visual assets are AI-generated to safeguard client confidentiality and uphold our unwavering commitment to privacy.
+            </p>
+          </div>
         </div>
-      </div>
+      )}
       
       {/* Scroll Indicator */}
       {showScrollIndicator && <ScrollIndicator />}
