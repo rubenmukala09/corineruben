@@ -58,6 +58,8 @@ const ChartContainer = React.forwardRef<
 });
 ChartContainer.displayName = "Chart";
 
+// SECURITY NOTE: config parameter must NEVER contain user-provided data
+// This component uses dangerouslySetInnerHTML for performance with static theme data
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries(config).filter(([_, config]) => config.theme || config.color);
 
