@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
+import TrustBar from "@/components/TrustBar";
 import CTASection from "@/components/CTASection";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -207,6 +208,8 @@ const Careers = () => {
           </Button>
         </div>
       </Hero>
+
+      <TrustBar />
 
       {/* Mission Section */}
       <section className="py-16 bg-background">

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
+import TrustBar from "@/components/TrustBar";
 import FlowingWaves from "@/components/FlowingWaves";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -17,6 +18,8 @@ const About = () => {
         headline="Your Partner in AI Safety and Security"
         subheadline="Locally owned in Ohio, protecting families and businesses nationwide"
       />
+
+      <TrustBar />
 
       {/* Our Story */}
       <section className="py-24 bg-background relative">

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
+import TrustBar from "@/components/TrustBar";
 import FlowingWaves from "@/components/FlowingWaves";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -102,6 +103,8 @@ const Resources = () => {
         headline="Resources & Tools"
         subheadline="Guides, security products, and answers to your questions."
       />
+
+      <TrustBar />
 
       {/* Guides */}
       <section className="py-16 bg-background relative">

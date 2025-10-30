@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
+import TrustBar from "@/components/TrustBar";
 import FlowingWaves from "@/components/FlowingWaves";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -88,6 +89,8 @@ const Contact = () => {
         headline="Let's Talk. We're Here to Help."
         subheadline="Whether you have questions, need training, or want to protect your family—we're ready to assist you."
       />
+
+      <TrustBar />
 
       <section className="relative py-20">
         {/* Animated Background */}

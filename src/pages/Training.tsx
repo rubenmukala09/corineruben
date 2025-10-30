@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
+import TrustBar from "@/components/TrustBar";
 import CTASection from "@/components/CTASection";
 import FlowingWaves from "@/components/FlowingWaves";
 import { Button } from "@/components/ui/button";
@@ -50,6 +51,8 @@ const LearnAndTrain = () => {
           </Button>
         </div>
       </Hero>
+
+      <TrustBar />
 
       {/* Training Section */}
       <section id="training" className="py-16 bg-background relative overflow-hidden">
