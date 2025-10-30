@@ -254,8 +254,15 @@ const SafetyVault = () => {
               ))}
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild variant="default" size="lg" className="flex-1">
-                <Link to="/training#pricing">View ScamShield Plans</Link>
+              <Button 
+                onClick={() => {
+                  window.location.href = '/training#pricing';
+                }}
+                variant="default" 
+                size="lg" 
+                className="flex-1"
+              >
+                View ScamShield Plans
               </Button>
               <Button asChild variant="outline" size="lg" className="flex-1">
                 <Link to="/contact">Contact Us</Link>

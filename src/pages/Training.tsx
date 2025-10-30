@@ -9,6 +9,8 @@ import CTASection from "@/components/CTASection";
 import FlowingWaves from "@/components/FlowingWaves";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 import {
   CheckCircle,
   Mail,
@@ -30,12 +32,29 @@ import {
 
 const LearnAndTrain = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [isYearly, setIsYearly] = useState(false);
   const [selectedService, setSelectedService] = useState<{
     type: 'training' | 'scamshield';
     name: string;
     tier?: string;
     price?: number;
   } | null>(null);
+
+  const getPlanPrice = (monthlyPrice: number) => {
+    if (isYearly) {
+      const yearlyPrice = monthlyPrice * 12 * 0.95; // 5% discount
+      return {
+        display: `$${Math.round(yearlyPrice)}`,
+        period: '/year',
+        savings: `Save 5% ($${Math.round(monthlyPrice * 12 - yearlyPrice)}/year)`
+      };
+    }
+    return {
+      display: `$${monthlyPrice}`,
+      period: '/month',
+      savings: ''
+    };
+  };
 
   return (
     <div className="min-h-screen">
@@ -297,11 +316,26 @@ const LearnAndTrain = () => {
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-center mb-4 animate-fade-in-up">Choose Your Protection Level</h2>
-          <p className="text-center text-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
-            Subscribe monthly or save 5% with yearly plans. All plans include veteran discounts.
+          <p className="text-center text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
+            Subscribe monthly or save 5% with yearly plans. All plans can be cancelled anytime.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Payment Period Toggle */}
+          <div className="flex items-center justify-center gap-4 mb-10">
+            <Label htmlFor="payment-toggle" className={`text-lg font-semibold ${!isYearly ? 'text-primary' : 'text-muted-foreground'}`}>
+              Monthly
+            </Label>
+            <Switch
+              id="payment-toggle"
+              checked={isYearly}
+              onCheckedChange={setIsYearly}
+            />
+            <Label htmlFor="payment-toggle" className={`text-lg font-semibold ${isYearly ? 'text-primary' : 'text-muted-foreground'}`}>
+              Yearly <span className="text-sm text-success">(Save 5%)</span>
+            </Label>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Starter Plan */}
             <Card
               className="p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-2xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50"
@@ -314,12 +348,14 @@ const LearnAndTrain = () => {
               </div>
               <h3 className="text-2xl font-bold mb-2 text-center">Starter Plan</h3>
               <div className="text-center mb-2">
-                <span className="text-4xl font-bold text-primary">$39</span>
-                <span className="text-muted-foreground">/month</span>
+                <span className="text-4xl font-bold text-primary">{getPlanPrice(39).display}</span>
+                <span className="text-muted-foreground">{getPlanPrice(39).period}</span>
               </div>
-              <div className="text-center mb-6">
-                <p className="text-sm text-muted-foreground">or $444/year (save 5%)</p>
-              </div>
+              {isYearly && (
+                <div className="text-center mb-2">
+                  <p className="text-sm text-success font-semibold">{getPlanPrice(39).savings}</p>
+                </div>
+              )}
               <p className="text-center text-sm text-muted-foreground mb-6">Perfect for: Individuals</p>
 
               <div className="space-y-3 mb-8">
@@ -353,8 +389,8 @@ const LearnAndTrain = () => {
                   setSelectedService({
                     type: 'scamshield',
                     name: 'ScamShield Protection',
-                    tier: 'Starter Plan',
-                    price: 39
+                    tier: `Starter Plan - ${isYearly ? 'Yearly' : 'Monthly'}`,
+                    price: isYearly ? Math.round(39 * 12 * 0.95) : 39
                   });
                   setModalOpen(true);
                 }}
@@ -383,12 +419,14 @@ const LearnAndTrain = () => {
               </div>
               <h3 className="text-2xl font-bold mb-2 text-center">Family Plan</h3>
               <div className="text-center mb-2">
-                <span className="text-4xl font-bold text-primary">$79</span>
-                <span className="text-muted-foreground">/month</span>
+                <span className="text-4xl font-bold text-primary">{getPlanPrice(79).display}</span>
+                <span className="text-muted-foreground">{getPlanPrice(79).period}</span>
               </div>
-              <div className="text-center mb-6">
-                <p className="text-sm text-muted-foreground">or $900/year (save 5%)</p>
-              </div>
+              {isYearly && (
+                <div className="text-center mb-2">
+                  <p className="text-sm text-success font-semibold">{getPlanPrice(79).savings}</p>
+                </div>
+              )}
               <p className="text-center text-sm text-muted-foreground mb-6">Perfect for: Families & couples</p>
 
               <div className="space-y-3 mb-8">
@@ -425,8 +463,8 @@ const LearnAndTrain = () => {
                   setSelectedService({
                     type: 'scamshield',
                     name: 'ScamShield Protection',
-                    tier: 'Family Plan',
-                    price: 79
+                    tier: `Family Plan - ${isYearly ? 'Yearly' : 'Monthly'}`,
+                    price: isYearly ? Math.round(79 * 12 * 0.95) : 79
                   });
                   setModalOpen(true);
                 }}
@@ -450,14 +488,16 @@ const LearnAndTrain = () => {
               </div>
               <h3 className="text-2xl font-bold mb-2 text-center">Premium Plan</h3>
               <div className="text-center mb-2">
-                <span className="text-4xl font-bold text-primary">$129</span>
-                <span className="text-muted-foreground">/month</span>
+                <span className="text-4xl font-bold text-primary">{getPlanPrice(129).display}</span>
+                <span className="text-muted-foreground">{getPlanPrice(129).period}</span>
               </div>
-              <div className="text-center mb-6">
-                <p className="text-sm text-muted-foreground">or $1,470/year (save 5%)</p>
-              </div>
+              {isYearly && (
+                <div className="text-center mb-2">
+                  <p className="text-sm text-success font-semibold">{getPlanPrice(129).savings}</p>
+                </div>
+              )}
               <p className="text-center text-sm text-muted-foreground mb-6">
-                Perfect for: High-risk individuals, business owners
+                Perfect for: High-risk individuals
               </p>
 
               <div className="space-y-3 mb-8">
@@ -496,8 +536,8 @@ const LearnAndTrain = () => {
                   setSelectedService({
                     type: 'scamshield',
                     name: 'ScamShield Protection',
-                    tier: 'Premium Plan',
-                    price: 129
+                    tier: `Premium Plan - ${isYearly ? 'Yearly' : 'Monthly'}`,
+                    price: isYearly ? Math.round(129 * 12 * 0.95) : 129
                   });
                   setModalOpen(true);
                 }}
@@ -508,10 +548,72 @@ const LearnAndTrain = () => {
                 Get Started
               </Button>
             </Card>
+
+            {/* Customized Plan for Businesses */}
+            <Card
+              className="p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-2xl border-accent/50 animate-fade-in-up bg-gradient-to-br from-card to-accent/5"
+              style={{ animationDelay: "300ms" }}
+            >
+              <div className="flex justify-center mb-6">
+                <div className="w-20 h-20 bg-gradient-to-br from-accent/20 to-primary/20 rounded-full flex items-center justify-center">
+                  <Users className="w-10 h-10 text-accent" />
+                </div>
+              </div>
+              <h3 className="text-2xl font-bold mb-2 text-center">Customized Plan</h3>
+              <div className="text-center mb-2">
+                <span className="text-4xl font-bold text-accent">From $229</span>
+                <span className="text-muted-foreground">/month</span>
+              </div>
+              <p className="text-center text-sm text-muted-foreground mb-6">
+                Perfect for: Businesses & organizations
+              </p>
+
+              <div className="space-y-3 mb-8">
+                <p className="font-semibold text-center mb-3">Custom tailored protection:</p>
+                {[
+                  "Unlimited team members",
+                  "Priority 2-hour response",
+                  "Dedicated account manager",
+                  "Custom training sessions",
+                  "Advanced threat monitoring",
+                  "Company-wide security protocols",
+                  "Quarterly security audits",
+                  "White-label reporting",
+                ].map((feature, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground text-sm">{feature}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mb-6 p-3 bg-accent/10 rounded-lg">
+                <div className="text-center">
+                  <p className="text-xs font-medium">Customizable based on business size and needs</p>
+                </div>
+              </div>
+
+              <Button 
+                onClick={() => {
+                  setSelectedService({
+                    type: 'scamshield',
+                    name: 'ScamShield Protection',
+                    tier: 'Customized Business Plan',
+                    price: 229
+                  });
+                  setModalOpen(true);
+                }}
+                variant="default" 
+                size="lg" 
+                className="w-full"
+              >
+                Request Quote
+              </Button>
+            </Card>
           </div>
 
-          <div className="text-center mt-8 animate-fade-in-up" style={{ animationDelay: "300ms" }}>
-            <p className="text-muted-foreground">Flexible plans with no long-term contracts. Cancel anytime.</p>
+          <div className="text-center mt-8 animate-fade-in-up" style={{ animationDelay: "400ms" }}>
+            <p className="text-muted-foreground">All plans can be cancelled anytime. No long-term contracts required.</p>
           </div>
         </div>
       </section>
@@ -615,7 +717,7 @@ const LearnAndTrain = () => {
         <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-center mb-10 animate-fade-in-up">Scams We've Caught for Our Members</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto mb-12">
             {[
               {
                 badge: "Grandparent Scam",
@@ -644,30 +746,45 @@ const LearnAndTrain = () => {
             ].map((example, index) => (
               <Card
                 key={index}
-                className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-2xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50"
+                className="p-4 hover:shadow-strong transition-all duration-500 hover:-translate-y-1 rounded-xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="mb-4">
-                  <span className="text-sm font-bold bg-accent text-accent-foreground px-3 py-1 rounded-full">
+                <div className="mb-3">
+                  <span className="text-xs font-bold bg-accent text-accent-foreground px-2 py-1 rounded-full">
                     {example.badge}
                   </span>
                 </div>
-                <div className="space-y-3">
+                <div className="space-y-2">
                   <div>
                     <p className="text-xs font-semibold text-muted-foreground mb-1">WHAT THEY RECEIVED:</p>
-                    <p className="text-foreground text-sm italic">{example.received}</p>
+                    <p className="text-foreground text-xs italic line-clamp-2">{example.received}</p>
                   </div>
                   <div>
                     <p className="text-xs font-semibold text-muted-foreground mb-1">OUR ANALYSIS:</p>
-                    <p className="text-foreground text-sm">{example.analysis}</p>
+                    <p className="text-foreground text-xs line-clamp-2">{example.analysis}</p>
                   </div>
                   <div>
-                    <p className="text-xs font-semibold text-muted-foreground mb-1">MONEY SAVED:</p>
-                    <p className="text-2xl font-bold text-primary">{example.saved}</p>
+                    <p className="text-xs font-semibold text-muted-foreground mb-1">SAVED:</p>
+                    <p className="text-lg font-bold text-primary">{example.saved}</p>
                   </div>
                 </div>
               </Card>
             ))}
+          </div>
+
+          {/* Video Testimonials Section */}
+          <div className="mt-12">
+            <h3 className="text-2xl font-bold text-center mb-8">Video Testimonials</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              {[1, 2, 3].map((i) => (
+                <Card key={i} className="p-4 text-center hover:shadow-medium transition-all">
+                  <div className="aspect-video bg-muted/50 rounded-lg mb-3 flex items-center justify-center">
+                    <p className="text-sm text-muted-foreground">Video Testimonial {i}</p>
+                  </div>
+                  <p className="text-xs text-muted-foreground">Coming soon - Member success story</p>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -686,13 +803,8 @@ const LearnAndTrain = () => {
           >
             Get Started
           </Button>
-          <Button asChild variant="secondary" size="xl" className="w-full sm:w-auto">
-            <Link to="/training" aria-label="Compare plans">
-              COMPARE PLANS
-            </Link>
-          </Button>
           <Button asChild variant="outlineLight" size="xl" className="w-full sm:w-auto">
-            <Link to="/contact" aria-label="Talk to expert">
+            <Link to="/contact">
               TALK TO EXPERT
             </Link>
           </Button>
