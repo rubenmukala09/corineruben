@@ -70,23 +70,23 @@ const TransitioningBackground = ({ interval = 5000, className = '', opacity = 1 
     <div className={`absolute inset-0 overflow-hidden ${className}`}>
       {/* Layer A */}
       <div
-        className="absolute inset-0 bg-cover bg-center pointer-events-none transition-opacity duration-[2000ms] ease-in-out"
+        className="absolute inset-0 bg-cover bg-center pointer-events-none transition-opacity duration-[2500ms] ease-in-out"
         style={{
           backgroundImage: `url(${images[indexA]})`,
           opacity: showA ? opacity : 0,
           willChange: 'opacity',
-          transform: 'translateZ(0)', // Force GPU acceleration
+          transform: 'translateZ(0)',
         }}
       />
 
       {/* Layer B */}
       <div
-        className="absolute inset-0 bg-cover bg-center pointer-events-none transition-opacity duration-[2000ms] ease-in-out"
+        className="absolute inset-0 bg-cover bg-center pointer-events-none transition-opacity duration-[2500ms] ease-in-out"
         style={{
           backgroundImage: `url(${images[indexB]})`,
           opacity: showA ? 0 : opacity,
           willChange: 'opacity',
-          transform: 'translateZ(0)', // Force GPU acceleration
+          transform: 'translateZ(0)',
         }}
       />
 

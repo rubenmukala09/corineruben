@@ -12,9 +12,10 @@ interface HeroProps {
   className?: string;
   overlay?: boolean;
   showScrollIndicator?: boolean;
+  showPrivacyDisclaimer?: boolean;
 }
 
-const Hero = ({ backgroundImage, useTransitioningBackground = false, headline, subheadline, children, className, overlay = true, showScrollIndicator = false }: HeroProps) => {
+const Hero = ({ backgroundImage, useTransitioningBackground = false, headline, subheadline, children, className, overlay = true, showScrollIndicator = false, showPrivacyDisclaimer = false }: HeroProps) => {
   const [scrollY, setScrollY] = useState(0);
   const [showDisclaimer, setShowDisclaimer] = useState(true);
 
@@ -44,12 +45,12 @@ const Hero = ({ backgroundImage, useTransitioningBackground = false, headline, s
       >
         {useTransitioningBackground ? (
           <TransitioningBackground />
-        ) : (
+        ) : backgroundImage ? (
           <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000"
             style={{ backgroundImage: `url(${backgroundImage})` }}
           />
-        )}
+        ) : null}
       </div>
       
       {/* Animated Gradient Overlay */}
@@ -82,13 +83,13 @@ const Hero = ({ backgroundImage, useTransitioningBackground = false, headline, s
         </div>
       </div>
       
-      {/* Privacy Disclaimer */}
-      {showDisclaimer && (
+      {/* Privacy Disclaimer - Homepage Only */}
+      {showPrivacyDisclaimer && showDisclaimer && (
         <div className="absolute top-24 right-6 z-20 max-w-sm animate-fade-in">
-          <div className="glass-effect px-5 py-3 rounded-xl border border-white/20 shadow-elegant backdrop-blur-md">
+          <div className="glass-effect px-5 py-3.5 rounded-xl border border-white/20 shadow-elegant backdrop-blur-md">
             <p className="text-white text-sm font-medium leading-relaxed">
-              <span className="inline-block mr-2 opacity-80">🔒</span>
-              We do not use client or customer photos for advertising. Privacy is our primary feature—all visuals are AI-generated.
+              <span className="inline-block mr-2 opacity-90">🔒</span>
+              Safeguarding your privacy: We never utilize client photographs in our marketing materials. All imagery is exclusively AI-generated to protect confidentiality.
             </p>
           </div>
         </div>

@@ -45,6 +45,7 @@ const Index = () => {
         headline="Protect Your Family from AI-Powered Scams"
         subheadline="Ohio's trusted source for scam prevention training and 24/7 protection services"
         showScrollIndicator={true}
+        showPrivacyDisclaimer={true}
       >
         <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center sm:justify-start">
           <Button asChild variant="default" size="xl" className="w-full sm:w-auto">
