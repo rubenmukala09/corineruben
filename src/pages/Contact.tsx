@@ -304,7 +304,9 @@ const Contact = () => {
                     <div>
                       <h3 className="text-xl font-bold mb-2">Office</h3>
                       <p className="text-muted-foreground">
-                        Dayton, Ohio 45402
+                        850 Euclid Ave Ste 819 #4685
+                        <br />
+                        Cleveland, OH 44114
                         <br />
                         Serving Ohio & Nationwide
                       </p>

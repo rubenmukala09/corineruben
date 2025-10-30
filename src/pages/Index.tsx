@@ -323,7 +323,7 @@ const Index = () => {
                 Ohio Based & Trusted
               </h3>
               <p className="text-muted-foreground text-center">
-                Locally owned and operated in Dayton, serving families across Ohio.
+                Locally owned and operated in Cleveland, serving families across Ohio.
               </p>
             </Card>
 

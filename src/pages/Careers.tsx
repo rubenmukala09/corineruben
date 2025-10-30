@@ -29,7 +29,7 @@ const Careers = () => {
       title: "Threat Analyst",
       department: "ScamShield Protection",
       type: "Full-Time",
-      location: "Dayton, OH / Remote",
+      location: "Cleveland, OH / Remote",
       icon: Shield,
       description: "Analyze suspicious emails, texts, calls, and documents to protect our clients from scams and fraud.",
       responsibilities: [
@@ -51,7 +51,7 @@ const Careers = () => {
       title: "Trainer / Instructor",
       department: "Education & Training",
       type: "Part-Time / Contract",
-      location: "Dayton, OH / Remote",
+      location: "Cleveland, OH / Remote",
       icon: GraduationCap,
       description: "Deliver engaging cybersecurity training sessions to individuals, families, and groups.",
       responsibilities: [
@@ -73,7 +73,7 @@ const Careers = () => {
       title: "AI Developer",
       department: "Business Solutions",
       type: "Full-Time",
-      location: "Dayton, OH / Hybrid",
+      location: "Cleveland, OH / Hybrid",
       icon: Code,
       description: "Build custom AI agents and automation solutions for business clients.",
       responsibilities: [
@@ -117,7 +117,7 @@ const Careers = () => {
       title: "Customer Support Specialist",
       department: "Client Services",
       type: "Full-Time",
-      location: "Dayton, OH / Remote",
+      location: "Cleveland, OH / Remote",
       icon: Headphones,
       description: "Provide exceptional support to clients across all InVision Network services.",
       responsibilities: [
@@ -139,7 +139,7 @@ const Careers = () => {
       title: "Sales Consultant",
       department: "Business Development",
       type: "Full-Time",
-      location: "Dayton, OH / Hybrid",
+      location: "Cleveland, OH / Hybrid",
       icon: TrendingUp,
       description: "Connect businesses with AI solutions and help families protect themselves from scams.",
       responsibilities: [

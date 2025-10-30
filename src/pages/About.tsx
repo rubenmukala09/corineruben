@@ -202,15 +202,16 @@ const About = () => {
                     <MapPin className="w-8 h-8 text-accent" />
                     <h3 className="text-2xl font-bold">Headquarters</h3>
                   </div>
-                  <p className="text-xl mb-4">Dayton, Ohio</p>
-                  <p className="text-muted-foreground mb-4">Local Service Areas:</p>
+                  <p className="text-xl mb-4">850 Euclid Ave Ste 819 #4685</p>
+                  <p className="text-xl mb-4">Cleveland, OH 44114</p>
+                  <p className="text-muted-foreground mb-4">Service Areas:</p>
                   <ul className="space-y-2 text-muted-foreground">
-                    <li>• Dayton</li>
-                    <li>• Kettering</li>
-                    <li>• Centerville</li>
-                    <li>• Springboro</li>
-                    <li>• Beavercreek</li>
-                    <li>• Huber Heights</li>
+                    <li>• Cleveland Metro</li>
+                    <li>• Akron</li>
+                    <li>• Canton</li>
+                    <li>• Youngstown</li>
+                    <li>• Columbus</li>
+                    <li>• Nationwide Service Available</li>
                   </ul>
                 </div>
 
