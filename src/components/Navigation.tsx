@@ -46,7 +46,7 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex flex-1 items-center justify-center space-x-8" role="navigation" aria-label="Main navigation">
+          <div className="hidden lg:flex flex-1 items-center justify-start space-x-8 ml-8" role="navigation" aria-label="Main navigation">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
