@@ -21,7 +21,6 @@ import {
   Home,
   Award,
 } from "lucide-react";
-import heroCareers from "@/assets/hero-careers-new.jpg";
 
 const Careers = () => {
   const positions = [
@@ -197,7 +196,7 @@ const Careers = () => {
       <Navigation />
 
       <Hero
-        backgroundImage={heroCareers}
+        useTransitioningBackground={true}
         headline="Join Our Team"
         subheadline="Help protect Ohio families and empower local businesses with technology"
         showScrollIndicator

@@ -1,11 +1,31 @@
 import { useState, useEffect } from 'react';
-import eldersHero1 from '@/assets/elders-hero-3d-1.jpg';
-import eldersHero2 from '@/assets/elders-hero-3d-2.jpg';
-import eldersHero3 from '@/assets/elders-hero-3d-3.jpg';
-import eldersHero4 from '@/assets/elders-hero-3d-4.jpg';
-import heroHomepage from '@/assets/hero-homepage-3d.jpg';
+import eldersHero1 from '@/assets/elders-hero-1.jpg';
+import eldersHero2 from '@/assets/elders-hero-2.jpg';
+import eldersHero3 from '@/assets/elders-hero-3.jpg';
+import eldersHero4 from '@/assets/elders-hero-4.jpg';
+import eldersHero5 from '@/assets/elders-hero-5.jpg';
+import eldersHero6 from '@/assets/elders-hero-6.jpg';
+import eldersHero7 from '@/assets/elders-hero-7.jpg';
+import eldersHero8 from '@/assets/elders-hero-8.jpg';
+import heroHomepage from '@/assets/hero-homepage.jpg';
+import heroAbout from '@/assets/hero-about-new.jpg';
+import heroTraining from '@/assets/hero-training.jpg';
+import heroBusiness from '@/assets/hero-business-new.jpg';
 
-const images = [eldersHero1, eldersHero2, eldersHero3, eldersHero4, heroHomepage];
+const images = [
+  eldersHero1, 
+  eldersHero2, 
+  eldersHero3, 
+  eldersHero4, 
+  eldersHero5,
+  eldersHero6,
+  eldersHero7,
+  eldersHero8,
+  heroHomepage,
+  heroAbout,
+  heroTraining,
+  heroBusiness
+];
 
 interface TransitioningBackgroundProps {
   interval?: number; // milliseconds between transitions
@@ -13,7 +33,7 @@ interface TransitioningBackgroundProps {
   opacity?: number; // opacity level (0-1), default 1
 }
 
-const TransitioningBackground = ({ interval = 8000, className = '', opacity = 1 }: TransitioningBackgroundProps) => {
+const TransitioningBackground = ({ interval = 5000, className = '', opacity = 1 }: TransitioningBackgroundProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [nextIndex, setNextIndex] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(false);

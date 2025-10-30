@@ -24,7 +24,6 @@ import {
   FileCheck,
   Image as ImageIcon,
 } from "lucide-react";
-import heroTraining from "@/assets/hero-training-new.jpg";
 
 const LearnAndTrain = () => {
   return (
@@ -33,7 +32,7 @@ const LearnAndTrain = () => {
 
       {/* Hero Section */}
       <Hero
-        backgroundImage={heroTraining}
+        useTransitioningBackground={true}
         headline="Learn How to Recognize and Stop Scams"
         subheadline="Professional training programs and 24/7 protection services designed for real-world safety"
         showScrollIndicator={true}
