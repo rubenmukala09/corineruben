@@ -79,7 +79,7 @@ const Business = () => {
                 <div>
                   <h3 className="text-2xl font-bold mb-3">Customer Support Bot</h3>
                   <p className="text-muted-foreground">
-                    Handle common questions instantly on website, text, or WhatsApp. Free up your team for complex issues.
+                    Handle common questions instantly on website, text, or WhatsApp. Focus your team on complex issues.
                   </p>
                 </div>
               </div>
@@ -278,7 +278,7 @@ const Business = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>1 month free hosting</span>
+                  <span>1 month hosting included</span>
                 </li>
               </ul>
               <Button asChild variant="default" className="w-full">
@@ -317,7 +317,7 @@ const Business = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>3 months free hosting</span>
+                  <span>3 months hosting included</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
@@ -369,7 +369,7 @@ const Business = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>6 months free hosting</span>
+                  <span>6 months hosting included</span>
                 </li>
               </ul>
               <Button asChild variant="default" className="w-full">
@@ -404,7 +404,7 @@ const Business = () => {
               </div>
               <div>
                 <div className="font-bold text-primary mb-2">Domain & Hosting Setup</div>
-                <div className="text-sm text-muted-foreground">Included free</div>
+                <div className="text-sm text-muted-foreground">Included</div>
               </div>
             </div>
           </Card>
@@ -743,7 +743,7 @@ const Business = () => {
       {/* Final CTA */}
       <CTASection headline="Ready to Deploy AI Safely?" variant="gold">
         <Button asChild variant="gold" size="xl">
-          <Link to="/contact">SCHEDULE FREE DISCOVERY CALL</Link>
+          <Link to="/contact">SCHEDULE DISCOVERY CALL</Link>
         </Button>
         <p className="text-accent-foreground text-sm mt-4">15-minute call to discuss your needs—no sales pressure.</p>
       </CTASection>

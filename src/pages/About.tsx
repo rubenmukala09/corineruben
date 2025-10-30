@@ -146,7 +146,7 @@ const About = () => {
                 </div>
               </div>
               <p className="text-4xl font-bold gradient-text-primary mb-2">50+</p>
-              <p className="text-muted-foreground">Free Sessions for Veterans</p>
+              <p className="text-muted-foreground">Sessions for Veterans</p>
             </Card>
 
             <Card className="p-8 text-center hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">

@@ -57,7 +57,7 @@ const Resources = () => {
     },
     {
       q: "Can family members join my training?",
-      a: "Yes! Our Family Small Group plan includes your spouse FREE. Priority Private sessions can include up to 3 people.",
+      a: "Yes! Our Family Small Group plan includes your spouse. Priority Private sessions can include up to 3 people.",
     },
     {
       q: "Do you record Zoom sessions?",
@@ -65,7 +65,7 @@ const Resources = () => {
     },
     {
       q: "What are your rescheduling terms?",
-      a: "Single Small Group: Not available. Family Small Group: One free reschedule (14 days notice). Priority Private: Easy reschedule (24hr notice).",
+      a: "Single Small Group: Not available. Family Small Group: One reschedule (14 days notice). Priority Private: Easy reschedule (24hr notice).",
     },
     {
       q: "Do you provide certificates?",

@@ -100,7 +100,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/resources#scripts" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                  Emergency Scripts (Free)
+                  Emergency Scripts
                 </Link>
               </li>
               <li>

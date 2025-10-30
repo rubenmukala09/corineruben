@@ -440,7 +440,7 @@ const Index = () => {
 
           <div className="text-center mt-10 animate-fade-in-up" style={{ animationDelay: "700ms" }}>
             <Button asChild variant="default" size="xl">
-              <Link to="/resources">Download Free Protection Guide</Link>
+              <Link to="/resources">Download Protection Guide</Link>
             </Button>
           </div>
         </div>
@@ -713,13 +713,13 @@ const Index = () => {
         <p className="text-xl text-white/90 mb-8">Join 500+ Ohio families who sleep better knowing they're protected from AI scams.</p>
         <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center">
           <Button asChild variant="gold" size="xl" className="w-full sm:w-auto">
-            <Link to="/training" aria-label="Book free training call">
-              Schedule Free Consultation
+            <Link to="/training" aria-label="Book training call">
+              Schedule Consultation
             </Link>
           </Button>
           <Button asChild variant="secondary" size="xl" className="w-full sm:w-auto">
             <Link to="/training" aria-label="Start 14-day Shield trial">
-              Start 14-Day Free Trial
+              Start 14-Day Trial
             </Link>
           </Button>
           <Button asChild variant="outlineLight" size="xl" className="w-full sm:w-auto">

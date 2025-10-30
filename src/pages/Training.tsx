@@ -309,7 +309,7 @@ const LearnAndTrain = () => {
               </div>
 
               <Button asChild variant="default" size="lg" className="w-full">
-                <Link to="/contact">START FREE TRIAL</Link>
+                <Link to="/contact">START TRIAL</Link>
               </Button>
             </Card>
 
@@ -365,7 +365,7 @@ const LearnAndTrain = () => {
               </div>
 
               <Button asChild variant="default" size="lg" className="w-full">
-                <Link to="/contact">START FREE TRIAL</Link>
+                <Link to="/contact">START TRIAL</Link>
               </Button>
             </Card>
 
@@ -420,7 +420,7 @@ const LearnAndTrain = () => {
               </div>
 
               <Button asChild variant="default" size="lg" className="w-full">
-                <Link to="/contact">START FREE TRIAL</Link>
+                <Link to="/contact">START TRIAL</Link>
               </Button>
             </Card>
           </div>
@@ -489,7 +489,7 @@ const LearnAndTrain = () => {
                 </div>
               </div>
               <h3 className="text-3xl font-bold mb-4">Secure Your Family's Most Important Information</h3>
-              <p className="text-xl text-muted-foreground mb-8">Included FREE with Family & Premium Plans</p>
+              <p className="text-xl text-muted-foreground mb-8">Included with Family & Premium Plans</p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 text-left max-w-2xl mx-auto">
                 {[
@@ -592,8 +592,8 @@ const LearnAndTrain = () => {
         <p className="text-xl text-white/90 mb-8">Join 500+ families who trust ScamShield</p>
         <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center">
           <Button asChild variant="gold" size="xl" className="w-full sm:w-auto">
-            <Link to="#pricing" aria-label="Start free trial">
-              START FREE TRIAL
+            <Link to="#pricing" aria-label="Start trial">
+              START TRIAL
             </Link>
           </Button>
           <Button asChild variant="secondary" size="xl" className="w-full sm:w-auto">
