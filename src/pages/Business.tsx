@@ -9,6 +9,8 @@ import CTASection from "@/components/CTASection";
 import FlowingWaves from "@/components/FlowingWaves";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 import { BookingModal } from "@/components/BookingModal";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield } from "lucide-react";
 import testimonial3 from "@/assets/testimonial-3.jpg";
@@ -16,6 +18,7 @@ import testimonial4 from "@/assets/testimonial-4.jpg";
 
 const Business = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [isYearly, setIsYearly] = useState(false);
   const [selectedService, setSelectedService] = useState<{
     type: 'business' | 'website';
     name: string;
@@ -28,6 +31,22 @@ const Business = () => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const getInsurancePrice = (monthlyPrice: number) => {
+    if (isYearly) {
+      const yearlyPrice = monthlyPrice * 12 * 0.9; // 10% discount
+      return {
+        display: `$${Math.round(yearlyPrice).toLocaleString()}`,
+        period: '/year',
+        savings: `Save 10% ($${Math.round(monthlyPrice * 12 - yearlyPrice).toLocaleString()}/year)`
+      };
+    }
+    return {
+      display: `$${monthlyPrice}`,
+      period: '/month',
+      savings: ''
+    };
   };
 
   return (
@@ -522,16 +541,34 @@ const Business = () => {
             </p>
           </div>
 
+          {/* Payment Period Toggle */}
+          <div className="flex items-center justify-center gap-4 mb-10">
+            <Label htmlFor="insurance-toggle" className={`text-lg font-semibold ${!isYearly ? 'text-primary' : 'text-muted-foreground'}`}>
+              Monthly
+            </Label>
+            <Switch
+              id="insurance-toggle"
+              checked={isYearly}
+              onCheckedChange={setIsYearly}
+            />
+            <Label htmlFor="insurance-toggle" className={`text-lg font-semibold ${isYearly ? 'text-primary' : 'text-muted-foreground'}`}>
+              Yearly <span className="text-sm text-success">(Save 10%)</span>
+            </Label>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12">
             {/* Basic Care */}
             <Card className="p-6 rounded-2xl border-border/50 hover:shadow-medium transition-all hover:-translate-y-1">
               <h3 className="text-xl font-bold mb-3">Basic Care</h3>
               <p className="text-3xl font-bold gradient-text-primary mb-2">
-                $149<span className="text-base text-muted-foreground">/month</span>
+                {getInsurancePrice(199).display}<span className="text-base text-muted-foreground">{getInsurancePrice(199).period}</span>
               </p>
-              <p className="text-sm text-success mb-4">
-                $1,696/year (save 5%)
-              </p>
+              {isYearly && (
+                <p className="text-sm text-success mb-4">
+                  {getInsurancePrice(199).savings}
+                </p>
+              )}
+              {!isYearly && <div className="h-6 mb-4" />}
               <ul className="space-y-2 mb-6 text-sm">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
@@ -563,8 +600,8 @@ const Business = () => {
                   setSelectedService({
                     type: 'business',
                     name: 'AI Services Insurance',
-                    tier: 'Basic Care - Monthly: $149 or Yearly: $1,696 (save 5%)',
-                    price: 149
+                    tier: `Basic Care - ${isYearly ? 'Yearly' : 'Monthly'}`,
+                    price: isYearly ? Math.round(199 * 12 * 0.9) : 199
                   });
                   setModalOpen(true);
                 }}
@@ -582,11 +619,14 @@ const Business = () => {
               </div>
               <h3 className="text-xl font-bold mb-3">Standard Care</h3>
               <p className="text-3xl font-bold gradient-text-primary mb-2">
-                $399<span className="text-base text-muted-foreground">/month</span>
+                {getInsurancePrice(399).display}<span className="text-base text-muted-foreground">{getInsurancePrice(399).period}</span>
               </p>
-              <p className="text-sm text-success mb-4">
-                $4,544/year (save 5%)
-              </p>
+              {isYearly && (
+                <p className="text-sm text-success mb-4">
+                  {getInsurancePrice(399).savings}
+                </p>
+              )}
+              {!isYearly && <div className="h-6 mb-4" />}
               <ul className="space-y-2 mb-6 text-sm">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
@@ -622,8 +662,8 @@ const Business = () => {
                   setSelectedService({
                     type: 'business',
                     name: 'AI Services Insurance',
-                    tier: 'Standard Care - Monthly: $399 or Yearly: $4,544 (save 5%)',
-                    price: 399
+                    tier: `Standard Care - ${isYearly ? 'Yearly' : 'Monthly'}`,
+                    price: isYearly ? Math.round(399 * 12 * 0.9) : 399
                   });
                   setModalOpen(true);
                 }}
@@ -638,11 +678,14 @@ const Business = () => {
             <Card className="p-6 rounded-2xl border-border/50 hover:shadow-medium transition-all hover:-translate-y-1">
               <h3 className="text-xl font-bold mb-3">Premium Care</h3>
               <p className="text-3xl font-bold gradient-text-primary mb-2">
-                $799<span className="text-base text-muted-foreground">/month</span>
+                {getInsurancePrice(799).display}<span className="text-base text-muted-foreground">{getInsurancePrice(799).period}</span>
               </p>
-              <p className="text-sm text-success mb-4">
-                $9,104/year (save 5%)
-              </p>
+              {isYearly && (
+                <p className="text-sm text-success mb-4">
+                  {getInsurancePrice(799).savings}
+                </p>
+              )}
+              {!isYearly && <div className="h-6 mb-4" />}
               <ul className="space-y-2 mb-6 text-sm">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
@@ -678,8 +721,8 @@ const Business = () => {
                   setSelectedService({
                     type: 'business',
                     name: 'AI Services Insurance',
-                    tier: 'Premium Care - Monthly: $799 or Yearly: $9,104 (save 5%)',
-                    price: 799
+                    tier: `Premium Care - ${isYearly ? 'Yearly' : 'Monthly'}`,
+                    price: isYearly ? Math.round(799 * 12 * 0.9) : 799
                   });
                   setModalOpen(true);
                 }}

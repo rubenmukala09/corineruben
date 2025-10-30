@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { BookOpen, Shield, Briefcase } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
-import { BookingModal } from "./BookingModal";
+import { useNavigate } from "react-router-dom";
 
 interface PathConfig {
   id: number;
@@ -51,20 +50,20 @@ const paths: PathConfig[] = [
 ];
 
 const ThreePathsForward = () => {
-  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState<{
-    type: 'training' | 'scamshield' | 'business';
-    name: string;
-    basePrice: number;
-  } | null>(null);
+  const navigate = useNavigate();
 
-  const handleBookingClick = (path: PathConfig) => {
-    setSelectedService({
-      type: path.serviceType as 'training' | 'scamshield' | 'business',
-      name: path.title,
-      basePrice: path.basePrice,
-    });
-    setIsBookingModalOpen(true);
+  const handlePathClick = (path: PathConfig) => {
+    switch (path.serviceType) {
+      case 'training':
+        navigate('/training#training');
+        break;
+      case 'scamshield':
+        navigate('/training#pricing');
+        break;
+      case 'business':
+        navigate('/business');
+        break;
+    }
   };
 
   return (
@@ -151,7 +150,7 @@ const ThreePathsForward = () => {
 
                 {/* CTA Button */}
                 <Button
-                  onClick={() => handleBookingClick(path)}
+                  onClick={() => handlePathClick(path)}
                   variant={path.featured ? "default" : "outline"}
                   className="w-full text-base font-bold uppercase tracking-wide"
                 >
@@ -162,20 +161,6 @@ const ThreePathsForward = () => {
           })}
         </div>
       </div>
-
-      {/* Booking Modal */}
-      {selectedService && (
-        <BookingModal
-          open={isBookingModalOpen}
-          onOpenChange={(open) => {
-            setIsBookingModalOpen(open);
-            if (!open) setSelectedService(null);
-          }}
-          serviceType={selectedService.type}
-          serviceName={selectedService.name}
-          basePrice={selectedService.basePrice}
-        />
-      )}
     </section>
   );
 };
