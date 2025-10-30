@@ -74,10 +74,13 @@ const Hero = ({ backgroundImage, useTransitioningBackground = false, headline, s
       </div>
       
       {/* Privacy Disclaimer */}
-      <div className="absolute bottom-4 right-4 z-20 max-w-xs">
-        <p className="text-white/70 text-xs bg-black/30 backdrop-blur-sm px-3 py-2 rounded-lg border border-white/10">
-          We use AI-generated images to illustrate our vision. Privacy is our priority—we don't use customer photos.
-        </p>
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 max-w-2xl w-full px-4">
+        <div className="glass-effect px-6 py-3 rounded-xl border border-white/20 shadow-elegant">
+          <p className="text-white/90 text-sm text-center font-medium leading-relaxed">
+            <span className="inline-block mr-2">🔒</span>
+            AI-generated imagery used throughout. Your privacy matters—we never use customer photos without explicit consent.
+          </p>
+        </div>
       </div>
       
       {/* Scroll Indicator */}
