@@ -52,16 +52,20 @@ const paths: PathConfig[] = [
 ];
 
 const ThreePathsForward = () => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedPath, setSelectedPath] = useState<PathConfig | null>(null);
-
-  const handleOpenModal = (path: PathConfig) => {
-    setSelectedPath(path);
-    setModalOpen(true);
+  const getPathLink = (serviceType: string) => {
+    switch(serviceType) {
+      case 'training':
+        return '/training';
+      case 'scamshield':
+        return '/training#pricing';
+      case 'business':
+        return '/business';
+      default:
+        return '/training';
+    }
   };
 
   return (
-    <>
     <section className="py-20 relative overflow-hidden bg-gradient-to-br from-[hsl(250,20%,96%)] via-white to-[hsl(180,50%,98%)]">
       {/* Background blobs */}
       <div className="absolute top-[-100px] left-[-100px] w-[400px] h-[400px] rounded-full bg-gradient-to-br from-primary to-accent opacity-10 blur-[80px] animate-blob-morph" />
@@ -145,31 +149,20 @@ const ThreePathsForward = () => {
 
                 {/* CTA Button */}
                 <Button
-                  onClick={() => handleOpenModal(path)}
+                  asChild
                   variant={path.featured ? "default" : "outline"}
                   className="w-full text-base font-bold uppercase tracking-wide"
                 >
-                  {path.cta}
+                  <Link to={getPathLink(path.serviceType)}>
+                    {path.cta}
+                  </Link>
                 </Button>
               </Card>
             );
           })}
         </div>
       </div>
-      
-      {/* Booking Modal */}
-      {selectedPath && (
-        <BookingModal
-          open={modalOpen}
-          onOpenChange={setModalOpen}
-          serviceType={selectedPath.serviceType}
-          serviceName={selectedPath.title}
-          basePrice={selectedPath.basePrice}
-          veteranDiscountPercent={10}
-        />
-      )}
     </section>
-    </>
   );
 };
 
