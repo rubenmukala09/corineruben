@@ -2,10 +2,13 @@ import { Link } from "react-router-dom";
 import { Facebook, Linkedin, Youtube, Instagram, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import TrustedTechLogos from "./TrustedTechLogos";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-br from-[hsl(260,70%,25%)] to-[hsl(260,65%,35%)] text-primary-foreground relative overflow-hidden">
+    <>
+      <TrustedTechLogos />
+      <footer className="bg-gradient-to-br from-[hsl(260,70%,25%)] to-[hsl(260,65%,35%)] text-primary-foreground relative overflow-hidden">
       {/* Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-10 right-20 w-64 h-64 bg-accent/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '6s' }} />
@@ -246,6 +249,7 @@ const Footer = () => {
         </div>
       </div>
     </footer>
+    </>
   );
 };
 

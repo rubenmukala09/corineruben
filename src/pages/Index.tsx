@@ -42,8 +42,7 @@ const Index = () => {
       {/* Hero Section */}
       <Hero
         useTransitioningBackground={true}
-        headline="Protect Your Family from AI-Powered Scams"
-        subheadline="Ohio's trusted source for scam prevention training and 24/7 protection services"
+        useTransitioningText={true}
         showScrollIndicator={true}
         showPrivacyDisclaimer={true}
       >

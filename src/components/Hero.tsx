@@ -1,12 +1,14 @@
 import { ReactNode, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import TransitioningBackground from "./TransitioningBackground";
+import TransitioningHeroText from "./TransitioningHeroText";
 import ScrollIndicator from "./ScrollIndicator";
 
 interface HeroProps {
   backgroundImage?: string;
   useTransitioningBackground?: boolean;
-  headline: string;
+  useTransitioningText?: boolean;
+  headline?: string;
   subheadline?: string;
   children?: ReactNode;
   className?: string;
@@ -15,7 +17,7 @@ interface HeroProps {
   showPrivacyDisclaimer?: boolean;
 }
 
-const Hero = ({ backgroundImage, useTransitioningBackground = false, headline, subheadline, children, className, overlay = true, showScrollIndicator = false, showPrivacyDisclaimer = false }: HeroProps) => {
+const Hero = ({ backgroundImage, useTransitioningBackground = false, useTransitioningText = false, headline, subheadline, children, className, overlay = true, showScrollIndicator = false, showPrivacyDisclaimer = false }: HeroProps) => {
   const [scrollY, setScrollY] = useState(0);
   const [showDisclaimer, setShowDisclaimer] = useState(true);
 
@@ -71,13 +73,21 @@ const Hero = ({ backgroundImage, useTransitioningBackground = false, headline, s
       {/* Content */}
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl">
-          <h1 className="text-white mb-6 animate-fade-in-up [text-shadow:0_4px_20px_rgba(139,92,246,0.4)] leading-tight">
-            {headline}
-          </h1>
-          {subheadline && (
-            <p className="text-white/90 text-xl md:text-2xl mb-8 leading-relaxed animate-fade-in-up stagger-1">
-              {subheadline}
-            </p>
+          {useTransitioningText ? (
+            <TransitioningHeroText />
+          ) : (
+            <>
+              {headline && (
+                <h1 className="text-white mb-6 animate-fade-in-up [text-shadow:0_4px_20px_rgba(139,92,246,0.4)] leading-tight">
+                  {headline}
+                </h1>
+              )}
+              {subheadline && (
+                <p className="text-white/90 text-xl md:text-2xl mb-8 leading-relaxed animate-fade-in-up stagger-1">
+                  {subheadline}
+                </p>
+              )}
+            </>
           )}
           {children && <div className="animate-fade-in-up stagger-2">{children}</div>}
         </div>
