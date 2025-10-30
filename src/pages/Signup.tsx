@@ -367,6 +367,7 @@ const Signup = () => {
           data: {
             first_name: firstName,
             last_name: lastName,
+            username: email, // Use email as username for trigger
           },
         },
       });
@@ -384,11 +385,10 @@ const Signup = () => {
       }
       if (!authData.user) throw new Error("ACCOUNT_CREATION_FAILED");
 
-      // Create profile
+      // Update profile (trigger creates basic profile)
       const { error: profileError } = await supabase
         .from("profiles")
-        .insert({
-          id: authData.user.id,
+        .update({
           first_name: firstName,
           last_name: lastName,
           phone,
@@ -399,7 +399,8 @@ const Signup = () => {
           address_zip: addressZip,
           account_status: "pending",
           application_reference: appRef,
-        });
+        })
+        .eq('id', authData.user.id);
 
       if (profileError) throw profileError;
 
