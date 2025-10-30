@@ -1,12 +1,10 @@
-import Navigation from "@/components/Navigation";
+import Layout from "@/components/Layout";
 import Footer from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 
 const PrivacyPolicy = () => {
   return (
-    <div className="min-h-screen">
-      <Navigation />
-
+    <Layout>
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
@@ -178,7 +176,7 @@ const PrivacyPolicy = () => {
       </section>
 
       <Footer />
-    </div>
+    </Layout>
   );
 };
 

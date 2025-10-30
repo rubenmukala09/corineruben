@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
-import Navigation from "@/components/Navigation";
+import Layout from "@/components/Layout";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
-import TrustBar from "@/components/TrustBar";
 import TestimonialCard from "@/components/TestimonialCard";
 import CTASection from "@/components/CTASection";
 import ThreePathsForward from "@/components/ThreePathsForward";
@@ -35,9 +34,7 @@ import testimonial7 from "@/assets/testimonial-7.jpg";
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
-      <Navigation />
-
+    <Layout>
       {/* Hero Section */}
       <Hero
         headline="Protect Your Family from AI-Powered Scams"
@@ -52,8 +49,6 @@ const Index = () => {
           </Button>
         </div>
       </Hero>
-
-      <TrustBar />
 
       {/* The Growing Threat Section */}
       <section className="py-16 bg-muted relative overflow-hidden">
@@ -643,7 +638,7 @@ const Index = () => {
       </CTASection>
 
       <Footer />
-    </div>
+    </Layout>
   );
 };
 

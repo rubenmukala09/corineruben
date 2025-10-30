@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Navigation from "@/components/Navigation";
+import Layout from "@/components/Layout";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import FlowingWaves from "@/components/FlowingWaves";
@@ -9,8 +9,7 @@ import { Heart, Lock, BookOpen, Users2, Shield, DollarSign, Award, MapPin } from
 
 const About = () => {
   return (
-    <div className="min-h-screen">
-      <Navigation />
+    <Layout>
 
       <Hero
         headline="Your Partner in AI Safety and Security"
@@ -258,7 +257,7 @@ const About = () => {
       </section>
 
       <Footer />
-    </div>
+    </Layout>
   );
 };
 

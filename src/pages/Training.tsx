@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Navigation from "@/components/Navigation";
+import Layout from "@/components/Layout";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import CTASection from "@/components/CTASection";
@@ -27,8 +27,7 @@ import {
 
 const LearnAndTrain = () => {
   return (
-    <div className="min-h-screen">
-      <Navigation />
+    <Layout>
 
       {/* Hero Section */}
       <Hero
@@ -584,7 +583,7 @@ const LearnAndTrain = () => {
       </CTASection>
 
       <Footer />
-    </div>
+    </Layout>
   );
 };
 

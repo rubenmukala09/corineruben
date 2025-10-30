@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
-import Navigation from "@/components/Navigation";
+import Layout from "@/components/Layout";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
-import TrustBar from "@/components/TrustBar";
 import TestimonialCard from "@/components/TestimonialCard";
 import CTASection from "@/components/CTASection";
 import FlowingWaves from "@/components/FlowingWaves";
@@ -14,9 +13,7 @@ import testimonial4 from "@/assets/testimonial-4.jpg";
 
 const Business = () => {
   return (
-    <div className="min-h-screen">
-      <Navigation />
-
+    <Layout>
       <Hero
         headline="Grow Your Business with Secure AI Solutions"
         subheadline="Custom AI automation, professional websites, and industry-leading AI Service Insurance"
@@ -33,8 +30,6 @@ const Business = () => {
           </Button>
         </div>
       </Hero>
-
-      <TrustBar />
 
       {/* Use Cases */}
       <section className="py-20 bg-background relative">
@@ -726,7 +721,7 @@ const Business = () => {
       </CTASection>
 
       <Footer />
-    </div>
+    </Layout>
   );
 };
 
