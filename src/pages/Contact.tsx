@@ -354,7 +354,7 @@ const Contact = () => {
                 Active duty, veterans, reservists, and first responders receive special recognition with our standing discount program.
               </p>
               <div className="bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-xl p-6 text-center mb-6">
-                <div className="text-4xl font-bold mb-2">15% OFF</div>
+                <div className="text-4xl font-bold mb-2">10% OFF</div>
                 <p className="text-sm">Verify status at checkout</p>
               </div>
               <Button variant="default" size="lg" className="w-full" asChild>
