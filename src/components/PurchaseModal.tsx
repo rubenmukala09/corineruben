@@ -10,25 +10,25 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Upload, X } from "lucide-react";
 
-interface BookingModalProps {
+interface PurchaseModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  serviceType: 'training' | 'scamshield' | 'business' | 'website' | 'guide' | 'product';
-  serviceName: string;
-  serviceTier?: string;
-  basePrice?: number;
+  itemType: 'guide' | 'product';
+  itemName: string;
+  suggestedPrice?: number;
+  isPWYW?: boolean; // Pay What You Want
   veteranDiscountPercent?: number;
 }
 
-export const BookingModal = ({
+export const PurchaseModal = ({
   open,
   onOpenChange,
-  serviceType,
-  serviceName,
-  serviceTier,
-  basePrice = 0,
-  veteranDiscountPercent = 10,
-}: BookingModalProps) => {
+  itemType,
+  itemName,
+  suggestedPrice = 0,
+  isPWYW = false,
+  veteranDiscountPercent = 3,
+}: PurchaseModalProps) => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isVeteran, setIsVeteran] = useState(false);
@@ -41,18 +41,23 @@ export const BookingModal = ({
     fullName: "",
     email: "",
     phone: "",
+    customerPrice: suggestedPrice.toString(),
+    quantity: "1",
     message: "",
-    preferredDates: "",
   });
 
-  const discountAmount = isVeteran && basePrice > 0 
-    ? (basePrice * veteranDiscountPercent) / 100 
+  const customerPrice = parseFloat(formData.customerPrice) || 0;
+  const quantity = parseInt(formData.quantity) || 1;
+  const subtotal = customerPrice * quantity;
+  const discountAmount = isVeteran && subtotal > 0 
+    ? (subtotal * veteranDiscountPercent) / 100 
     : 0;
-  const finalPrice = basePrice - discountAmount;
+  const finalPrice = subtotal - discountAmount;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Validate file size (5MB max)
       if (file.size > 5 * 1024 * 1024) {
         toast({
           title: "File too large",
@@ -95,6 +100,16 @@ export const BookingModal = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (isPWYW && customerPrice < 1) {
+      toast({
+        title: "Invalid Amount",
+        description: "Please enter an amount of at least $1",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -106,11 +121,10 @@ export const BookingModal = ({
         veteranDocUrl = await uploadVeteranDoc(user.id);
       }
       
-      const { error } = await supabase.from("booking_requests").insert({
+      const { error } = await supabase.from("purchase_requests").insert({
         user_id: user?.id || null,
-        service_type: serviceType,
-        service_name: serviceName,
-        service_tier: serviceTier,
+        item_type: itemType,
+        item_name: itemName,
         full_name: formData.fullName,
         email: formData.email,
         phone: formData.phone,
@@ -118,18 +132,21 @@ export const BookingModal = ({
         veteran_type: isVeteran ? veteranType : null,
         veteran_id_last4: isVeteran ? veteranIdLast4 : null,
         veteran_document_url: veteranDocUrl,
-        base_price: basePrice,
+        suggested_price: suggestedPrice,
+        customer_price: customerPrice,
         discount_amount: discountAmount,
         final_price: finalPrice,
+        quantity: quantity,
         message: formData.message,
-        preferred_dates: formData.preferredDates,
+        payment_status: 'pending',
+        status: 'pending',
       });
 
       if (error) throw error;
 
       toast({
-        title: "Request Submitted!",
-        description: "We'll contact you within 24 hours to confirm your booking.",
+        title: "Purchase Request Submitted!",
+        description: "We'll send payment instructions to your email within 24 hours.",
       });
 
       // Reset form
@@ -137,8 +154,9 @@ export const BookingModal = ({
         fullName: "",
         email: "",
         phone: "",
+        customerPrice: suggestedPrice.toString(),
+        quantity: "1",
         message: "",
-        preferredDates: "",
       });
       setIsVeteran(false);
       setVeteranType("");
@@ -146,7 +164,7 @@ export const BookingModal = ({
       setVeteranDocFile(null);
       onOpenChange(false);
     } catch (error) {
-      console.error("Error submitting booking:", error);
+      console.error("Error submitting purchase:", error);
       toast({
         title: "Submission Failed",
         description: "Please try again or contact us directly.",
@@ -161,33 +179,82 @@ export const BookingModal = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl">Book {serviceName}</DialogTitle>
+          <DialogTitle className="text-2xl">{isPWYW ? "Name Your Price" : "Purchase"} - {itemName}</DialogTitle>
           <DialogDescription>
-            {serviceTier && <span className="block mb-2 font-semibold text-primary">{serviceTier}</span>}
-            Fill out the form below and we'll contact you within 24 hours to confirm your booking.
+            {isPWYW 
+              ? "Choose what you'd like to pay. All proceeds support scam prevention education."
+              : "Complete your purchase information below."
+            }
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Pricing Display */}
-          {basePrice > 0 && (
-            <div className="bg-muted p-4 rounded-lg space-y-2">
-              <div className="flex justify-between text-sm">
-                <span>Base Price:</span>
-                <span className="font-semibold">${basePrice.toFixed(2)}</span>
-              </div>
-              {isVeteran && (
-                <div className="flex justify-between text-sm text-success">
-                  <span>Veteran Discount ({veteranDiscountPercent}%):</span>
-                  <span className="font-semibold">-${discountAmount.toFixed(2)}</span>
+          {/* Pricing */}
+          <div className="bg-muted p-4 rounded-lg space-y-3">
+            {isPWYW ? (
+              <div>
+                <Label htmlFor="customerPrice">Your Price (minimum $1) *</Label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
+                  <Input
+                    id="customerPrice"
+                    type="number"
+                    min="1"
+                    step="0.01"
+                    required
+                    value={formData.customerPrice}
+                    onChange={(e) => setFormData({ ...formData, customerPrice: e.target.value })}
+                    className="pl-8"
+                    placeholder="10.00"
+                  />
                 </div>
-              )}
-              <div className="flex justify-between text-lg font-bold border-t border-border pt-2">
-                <span>Total:</span>
-                <span className="text-primary">${finalPrice.toFixed(2)}</span>
+                {suggestedPrice > 0 && (
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Suggested: ${suggestedPrice.toFixed(2)}
+                  </p>
+                )}
               </div>
+            ) : (
+              <div className="flex justify-between text-sm">
+                <span>Price per item:</span>
+                <span className="font-semibold">${customerPrice.toFixed(2)}</span>
+              </div>
+            )}
+
+            {itemType === 'product' && (
+              <div>
+                <Label htmlFor="quantity">Quantity *</Label>
+                <Input
+                  id="quantity"
+                  type="number"
+                  min="1"
+                  max="10"
+                  required
+                  value={formData.quantity}
+                  onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
+                />
+              </div>
+            )}
+
+            {quantity > 1 && (
+              <div className="flex justify-between text-sm">
+                <span>Subtotal ({quantity} items):</span>
+                <span className="font-semibold">${subtotal.toFixed(2)}</span>
+              </div>
+            )}
+
+            {isVeteran && (
+              <div className="flex justify-between text-sm text-success">
+                <span>Veteran Discount ({veteranDiscountPercent}%):</span>
+                <span className="font-semibold">-${discountAmount.toFixed(2)}</span>
+              </div>
+            )}
+
+            <div className="flex justify-between text-lg font-bold border-t border-border pt-2">
+              <span>Total:</span>
+              <span className="text-primary">${finalPrice.toFixed(2)}</span>
             </div>
-          )}
+          </div>
 
           {/* Contact Information */}
           <div className="space-y-4">
@@ -212,6 +279,9 @@ export const BookingModal = ({
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 placeholder="john@example.com"
               />
+              <p className="text-xs text-muted-foreground mt-1">
+                Payment instructions will be sent here
+              </p>
             </div>
 
             <div>
@@ -225,27 +295,14 @@ export const BookingModal = ({
               />
             </div>
 
-            {(serviceType === 'training' || serviceType === 'scamshield') && (
-              <div>
-                <Label htmlFor="preferredDates">Preferred Dates/Times</Label>
-                <Textarea
-                  id="preferredDates"
-                  value={formData.preferredDates}
-                  onChange={(e) => setFormData({ ...formData, preferredDates: e.target.value })}
-                  placeholder="Let us know your availability..."
-                  rows={2}
-                />
-              </div>
-            )}
-
             <div>
-              <Label htmlFor="message">Additional Information</Label>
+              <Label htmlFor="message">Message (Optional)</Label>
               <Textarea
                 id="message"
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                placeholder="Any special requirements or questions..."
-                rows={3}
+                placeholder="Any special instructions or questions..."
+                rows={2}
               />
             </div>
           </div>
@@ -258,7 +315,7 @@ export const BookingModal = ({
                   🇺🇸 Veteran or First Responder?
                 </Label>
                 <p className="text-sm text-muted-foreground mt-1">
-                  Receive {veteranDiscountPercent}% discount on all services
+                  Receive {veteranDiscountPercent}% discount
                 </p>
               </div>
               <Switch
@@ -303,20 +360,33 @@ export const BookingModal = ({
                     {veteranDocFile ? (
                       <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
                         <span className="text-sm flex-1 truncate">{veteranDocFile.name}</span>
-                        <Button type="button" variant="ghost" size="sm" onClick={() => setVeteranDocFile(null)}>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setVeteranDocFile(null)}
+                        >
                           <X className="w-4 h-4" />
                         </Button>
                       </div>
                     ) : (
                       <label className="flex flex-col items-center gap-2 p-4 border-2 border-dashed border-border rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
                         <Upload className="w-6 h-6 text-muted-foreground" />
-                        <span className="text-sm text-muted-foreground">DD-214, ID, or badge (PDF/JPG/PNG, Max 5MB)</span>
-                        <input id="veteranDoc" type="file" accept=".pdf,.jpg,.jpeg,.png,.webp" onChange={handleFileChange} className="hidden" />
+                        <span className="text-sm text-muted-foreground">
+                          Click to upload DD-214, ID card, or badge (PDF, JPG, PNG - Max 5MB)
+                        </span>
+                        <input
+                          id="veteranDoc"
+                          type="file"
+                          accept=".pdf,.jpg,.jpeg,.png,.webp"
+                          onChange={handleFileChange}
+                          className="hidden"
+                        />
                       </label>
                     )}
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Speeds up verification. We may request if not provided.
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Uploading verification speeds up processing. We may request documentation if not provided.
                   </p>
                 </div>
               </div>
@@ -330,7 +400,7 @@ export const BookingModal = ({
               variant="outline"
               onClick={() => onOpenChange(false)}
               className="flex-1"
-              disabled={isSubmitting}
+              disabled={isSubmitting || isUploadingDoc}
             >
               Cancel
             </Button>
@@ -341,10 +411,14 @@ export const BookingModal = ({
                   {isUploadingDoc ? "Uploading..." : "Submitting..."}
                 </>
               ) : (
-                "Submit Request"
+                "Submit Purchase"
               )}
             </Button>
           </div>
+
+          <p className="text-xs text-center text-muted-foreground">
+            After submission, you'll receive payment instructions via email. No payment is processed until you approve.
+          </p>
         </form>
       </DialogContent>
     </Dialog>

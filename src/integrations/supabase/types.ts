@@ -2037,6 +2037,96 @@ export type Database = {
         }
         Relationships: []
       }
+      purchase_requests: {
+        Row: {
+          admin_notes: string | null
+          completed_at: string | null
+          created_at: string
+          customer_price: number
+          discount_amount: number | null
+          email: string
+          final_price: number
+          full_name: string
+          id: string
+          is_veteran: boolean | null
+          item_name: string
+          item_type: string
+          message: string | null
+          metadata: Json | null
+          payment_method: string | null
+          payment_status: string
+          phone: string | null
+          quantity: number | null
+          request_number: string
+          status: string
+          stripe_payment_intent_id: string | null
+          suggested_price: number | null
+          updated_at: string
+          user_id: string | null
+          veteran_document_url: string | null
+          veteran_id_last4: string | null
+          veteran_type: string | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          completed_at?: string | null
+          created_at?: string
+          customer_price: number
+          discount_amount?: number | null
+          email: string
+          final_price: number
+          full_name: string
+          id?: string
+          is_veteran?: boolean | null
+          item_name: string
+          item_type: string
+          message?: string | null
+          metadata?: Json | null
+          payment_method?: string | null
+          payment_status?: string
+          phone?: string | null
+          quantity?: number | null
+          request_number?: string
+          status?: string
+          stripe_payment_intent_id?: string | null
+          suggested_price?: number | null
+          updated_at?: string
+          user_id?: string | null
+          veteran_document_url?: string | null
+          veteran_id_last4?: string | null
+          veteran_type?: string | null
+        }
+        Update: {
+          admin_notes?: string | null
+          completed_at?: string | null
+          created_at?: string
+          customer_price?: number
+          discount_amount?: number | null
+          email?: string
+          final_price?: number
+          full_name?: string
+          id?: string
+          is_veteran?: boolean | null
+          item_name?: string
+          item_type?: string
+          message?: string | null
+          metadata?: Json | null
+          payment_method?: string | null
+          payment_status?: string
+          phone?: string | null
+          quantity?: number | null
+          request_number?: string
+          status?: string
+          stripe_payment_intent_id?: string | null
+          suggested_price?: number | null
+          updated_at?: string
+          user_id?: string | null
+          veteran_document_url?: string | null
+          veteran_id_last4?: string | null
+          veteran_type?: string | null
+        }
+        Relationships: []
+      }
       reports_snapshots: {
         Row: {
           created_at: string

@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { BookingRequestsTable } from "@/components/admin/BookingRequestsTable";
+import { PurchaseRequestsTable } from "@/components/admin/PurchaseRequestsTable";
 import { useToast } from "@/hooks/use-toast";
 import {
   ArrowLeft,
@@ -17,6 +20,8 @@ import {
   Code,
   Headphones,
   LogOut,
+  ShoppingCart,
+  BookOpen,
 } from "lucide-react";
 
 const AdminDashboard = () => {
@@ -139,6 +144,28 @@ const AdminDashboard = () => {
             );
           })}
         </div>
+
+        {/* Booking & Purchase Requests */}
+        <Card className="p-6 mb-8">
+          <Tabs defaultValue="bookings" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-6">
+              <TabsTrigger value="bookings" className="gap-2">
+                <BookOpen className="w-4 h-4" />
+                Service Bookings
+              </TabsTrigger>
+              <TabsTrigger value="purchases" className="gap-2">
+                <ShoppingCart className="w-4 h-4" />
+                Purchases
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="bookings">
+              <BookingRequestsTable />
+            </TabsContent>
+            <TabsContent value="purchases">
+              <PurchaseRequestsTable />
+            </TabsContent>
+          </Tabs>
+        </Card>
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Left Column - Tasks & Events */}

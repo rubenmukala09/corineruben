@@ -7,7 +7,7 @@ import TrustBar from "@/components/TrustBar";
 import FlowingWaves from "@/components/FlowingWaves";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { BookingModal } from "@/components/BookingModal";
+import { PurchaseModal } from "@/components/PurchaseModal";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Download, Shield, Wifi, KeyRound, Heart, FileText, ShoppingCart } from "lucide-react";
 
@@ -276,12 +276,13 @@ const Resources = () => {
       <Footer />
       
       {selectedItem && (
-        <BookingModal
+        <PurchaseModal
           open={modalOpen}
           onOpenChange={setModalOpen}
-          serviceType={selectedItem.type}
-          serviceName={selectedItem.name}
-          basePrice={selectedItem.price}
+          itemType={selectedItem.type}
+          itemName={selectedItem.name}
+          suggestedPrice={selectedItem.type === 'guide' ? 15 : selectedItem.price}
+          isPWYW={selectedItem.type === 'guide'}
           veteranDiscountPercent={selectedItem.type === 'product' ? 3 : 10}
         />
       )}
