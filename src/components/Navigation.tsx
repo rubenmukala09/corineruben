@@ -46,7 +46,7 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex flex-1 items-center justify-center space-x-8 ml-12" role="navigation" aria-label="Main navigation">
+          <div className="hidden lg:flex flex-1 items-center justify-center space-x-8" role="navigation" aria-label="Main navigation">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
@@ -60,7 +60,7 @@ const Navigation = () => {
           </div>
 
           {/* Right Side - Phone & CTA */}
-          <div className="flex items-center gap-4 ml-8">
+          <div className="flex items-center gap-4">
             <a
               href="tel:9375550199"
               className="hidden md:flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2 py-1"
