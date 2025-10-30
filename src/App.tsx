@@ -51,7 +51,7 @@ const App = () => {
         <AIChatProvider>
           <BrowserRouter>
             <ScrollToTop />
-          <Layout>
+            <Layout>
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/training" element={<Training />} />
