@@ -7,6 +7,10 @@ import FlowingWaves from "@/components/FlowingWaves";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Heart, Lock, BookOpen, Users2, Shield, DollarSign, Award, MapPin } from "lucide-react";
+import teamMember1 from "@/assets/team-member-1.jpg";
+import teamMember2 from "@/assets/team-member-2.jpg";
+import teamMember3 from "@/assets/team-member-3.jpg";
+import teamMember4 from "@/assets/team-member-4.jpg";
 
 const About = () => {
   return (
@@ -33,6 +37,9 @@ const About = () => {
               </p>
               <p>
                 That moment changed everything. We realized that traditional fraud prevention methods weren't enough to combat these new AI-powered threats. So we created InVision Network - a comprehensive solution that combines expert training, real-time threat analysis, and innovative AI business solutions, all built on a foundation of security and trust.
+              </p>
+              <p>
+                <strong>Giving Back to Our Community:</strong> At InVision Network, we believe in supporting those who've served and protected us. We proudly offer special support programs for veterans, active duty military, first responders, and individuals battling cancer. Through discounted services, free training sessions, and scholarship programs, we're committed to protecting and empowering those who've given so much to our communities.
               </p>
             </div>
           </div>
@@ -163,8 +170,59 @@ const About = () => {
         </div>
       </section>
 
-      {/* Certifications & Partnerships */}
+      {/* Meet Our Team */}
       <section className="py-24 bg-background">
+        <div className="container mx-auto px-4">
+          <h2 className="text-center mb-4">Meet Our Team</h2>
+          <p className="text-center text-xl text-muted-foreground mb-16 max-w-3xl mx-auto">
+            Dedicated professionals committed to protecting families and empowering businesses
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            {[
+              {
+                name: "Sarah Chen",
+                role: "Lead Threat Analyst",
+                image: teamMember1,
+                description: "Former FBI cybercrime specialist with 10+ years protecting families from digital threats"
+              },
+              {
+                name: "Marcus Williams",
+                role: "Senior Training Instructor",
+                image: teamMember2,
+                description: "Certified educator specializing in making complex security concepts accessible to all ages"
+              },
+              {
+                name: "Priya Patel",
+                role: "AI Solutions Developer",
+                image: teamMember3,
+                description: "Expert in building secure, ethical AI systems that serve businesses and protect privacy"
+              },
+              {
+                name: "Jordan Taylor",
+                role: "Client Success Manager",
+                image: teamMember4,
+                description: "Dedicated to ensuring every client feels supported and protected throughout their journey"
+              }
+            ].map((member, index) => (
+              <Card key={index} className="p-6 hover:shadow-strong transition-all hover:-translate-y-2 rounded-2xl border-border/50 text-center group">
+                <div className="mb-4 overflow-hidden rounded-xl">
+                  <img 
+                    src={member.image} 
+                    alt={member.name}
+                    className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                </div>
+                <h3 className="text-xl font-bold mb-1">{member.name}</h3>
+                <p className="text-primary font-semibold mb-3">{member.role}</p>
+                <p className="text-sm text-muted-foreground">{member.description}</p>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Certifications & Partnerships */}
+      <section className="py-24 bg-muted">
         <div className="container mx-auto px-4">
           <h2 className="text-center mb-16">Our Certifications & Partnerships</h2>
           <div className="flex flex-wrap justify-center items-center gap-8">
@@ -191,7 +249,7 @@ const About = () => {
       </section>
 
       {/* Service Areas */}
-      <section className="py-24 bg-muted">
+      <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
           <h2 className="text-center mb-16">Service Areas</h2>
           <div className="max-w-4xl mx-auto">

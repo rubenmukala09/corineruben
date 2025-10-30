@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import {
   Select,
   SelectContent,
@@ -16,6 +17,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Upload, CheckCircle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ACCEPTED_FILE_TYPES = [
@@ -79,6 +81,9 @@ export const ApplicationForm = ({ positions }: ApplicationFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [resumeFile, setResumeFile] = useState<File | null>(null);
+  const [isVeteran, setIsVeteran] = useState(false);
+  const [veteranDocFile, setVeteranDocFile] = useState<File | null>(null);
+  const [isUploadingDoc, setIsUploadingDoc] = useState(false);
   const { toast } = useToast();
 
   const {
@@ -126,6 +131,74 @@ export const ApplicationForm = ({ positions }: ApplicationFormProps) => {
     setResumeFile(file);
   };
 
+  const handleVeteranDocChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    
+    if (!file) {
+      return;
+    }
+
+    // Validate file type (accept images and PDFs)
+    const validTypes = [
+      "application/pdf",
+      "image/jpeg",
+      "image/jpg",
+      "image/png",
+      "image/webp"
+    ];
+
+    if (!validTypes.includes(file.type)) {
+      toast({
+        title: "Invalid file type",
+        description: "Please upload a PDF or image (JPG, PNG)",
+        variant: "destructive",
+      });
+      e.target.value = "";
+      return;
+    }
+
+    // Validate file size
+    if (file.size > MAX_FILE_SIZE) {
+      toast({
+        title: "File too large",
+        description: "File must be less than 5MB",
+        variant: "destructive",
+      });
+      e.target.value = "";
+      return;
+    }
+
+    setVeteranDocFile(file);
+  };
+
+  const uploadVeteranDoc = async (): Promise<string | null> => {
+    if (!veteranDocFile) return null;
+
+    setIsUploadingDoc(true);
+    try {
+      const fileExt = veteranDocFile.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+      const filePath = `application-docs/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('veteran-docs')
+        .upload(filePath, veteranDocFile);
+
+      if (uploadError) throw uploadError;
+
+      return filePath;
+    } catch (error: any) {
+      toast({
+        title: "Upload failed",
+        description: "Failed to upload veteran document",
+        variant: "destructive",
+      });
+      return null;
+    } finally {
+      setIsUploadingDoc(false);
+    }
+  };
+
   const onSubmit = async (data: ApplicationFormData) => {
     if (!resumeFile) {
       toast({
@@ -136,9 +209,27 @@ export const ApplicationForm = ({ positions }: ApplicationFormProps) => {
       return;
     }
 
+    if (isVeteran && !veteranDocFile) {
+      toast({
+        title: "Verification required",
+        description: "Please upload veteran verification document (DD-214, VA ID, etc.)",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
+      // Upload veteran document if applicable
+      let veteranDocPath = null;
+      if (isVeteran && veteranDocFile) {
+        veteranDocPath = await uploadVeteranDoc();
+        if (!veteranDocPath) {
+          throw new Error("Failed to upload veteran document");
+        }
+      }
+
       // Encode data for WhatsApp message
       const message = `New Job Application:
 
@@ -148,6 +239,7 @@ Phone: ${encodeURIComponent(data.phone)}
 Position: ${encodeURIComponent(data.position)}
 LinkedIn: ${encodeURIComponent(data.linkedIn || "Not provided")}
 Availability: ${encodeURIComponent(data.availability)}
+Veteran Status: ${isVeteran ? "Yes (Verification uploaded)" : "No"}
 
 Cover Letter:
 ${encodeURIComponent(data.coverLetter)}
@@ -167,6 +259,8 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
       // Reset form
       reset();
       setResumeFile(null);
+      setIsVeteran(false);
+      setVeteranDocFile(null);
       
       // Reset submitted state after 5 seconds
       setTimeout(() => {
@@ -373,6 +467,54 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
           </p>
         </div>
 
+        {/* Veteran Status */}
+        <div className="space-y-4 p-6 border-2 border-primary/20 rounded-lg bg-primary/5">
+          <div className="flex items-center justify-between">
+            <div className="space-y-1">
+              <Label htmlFor="veteran-status" className="text-base font-semibold">
+                Veteran/First Responder Status
+              </Label>
+              <p className="text-sm text-muted-foreground">
+                We prioritize veterans and first responders. Receive 10% priority consideration.
+              </p>
+            </div>
+            <Switch
+              id="veteran-status"
+              checked={isVeteran}
+              onCheckedChange={setIsVeteran}
+              disabled={isSubmitting}
+            />
+          </div>
+
+          {isVeteran && (
+            <div className="space-y-2 pt-4 border-t border-primary/20">
+              <Label htmlFor="veteran-doc" className="text-sm font-semibold">
+                Verification Document <span className="text-destructive">*</span>
+              </Label>
+              <p className="text-xs text-muted-foreground mb-2">
+                Please upload DD-214, VA ID, military ID, or first responder badge/ID
+              </p>
+              <Input
+                id="veteran-doc"
+                type="file"
+                accept=".pdf,.jpg,.jpeg,.png,.webp"
+                onChange={handleVeteranDocChange}
+                className="cursor-pointer"
+                disabled={isSubmitting || isUploadingDoc}
+              />
+              {veteranDocFile && (
+                <div className="flex items-center gap-2 text-sm text-success mt-2">
+                  <CheckCircle className="w-4 h-4" />
+                  {veteranDocFile.name}
+                </div>
+              )}
+              <p className="text-xs text-muted-foreground">
+                PDF or image file, max 5MB. Your information is confidential.
+              </p>
+            </div>
+          )}
+        </div>
+
         {/* Submit Button */}
         <div className="flex justify-end gap-4">
           <Button
@@ -381,16 +523,18 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
             onClick={() => {
               reset();
               setResumeFile(null);
+              setIsVeteran(false);
+              setVeteranDocFile(null);
             }}
             disabled={isSubmitting}
           >
             Clear Form
           </Button>
-          <Button type="submit" disabled={isSubmitting} size="lg">
-            {isSubmitting ? (
+          <Button type="submit" disabled={isSubmitting || isUploadingDoc} size="lg">
+            {isSubmitting || isUploadingDoc ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Submitting...
+                {isUploadingDoc ? "Uploading..." : "Submitting..."}
               </>
             ) : (
               <>

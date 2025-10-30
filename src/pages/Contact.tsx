@@ -10,12 +10,16 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card } from "@/components/ui/card";
-import { Phone, Mail, MapPin, Clock, MessageSquare, Loader2, Shield, CheckCircle, Users, Zap } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Phone, Mail, MapPin, Clock, MessageSquare, Loader2, Shield, CheckCircle, Users, Zap, CalendarIcon } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 import { z } from "zod";
 import { useAIChat } from "@/contexts/AIChatContext";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
@@ -28,6 +32,7 @@ const contactSchema = z.object({
 const Contact = () => {
   const { openChat } = useAIChat();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date>();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -35,6 +40,7 @@ const Contact = () => {
     interest: "",
     language: "english",
     message: "",
+    preferredDate: "",
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -50,7 +56,10 @@ const Contact = () => {
         email: validatedData.email,
         phone: validatedData.phone || null,
         message: validatedData.message,
-        metadata: { language: formData.language },
+        metadata: { 
+          language: formData.language,
+          preferredDate: selectedDate ? format(selectedDate, "PPP") : null
+        },
       });
 
       if (error) throw error;
@@ -64,7 +73,9 @@ const Contact = () => {
         interest: "",
         language: "english",
         message: "",
+        preferredDate: "",
       });
+      setSelectedDate(undefined);
     } catch (error: any) {
       if (error instanceof z.ZodError) {
         toast.error(error.errors[0].message);
@@ -251,6 +262,39 @@ const Contact = () => {
                         <SelectItem value="spanish">Español 🇪🇸</SelectItem>
                       </SelectContent>
                     </Select>
+                  </div>
+
+                  <div>
+                    <label htmlFor="preferredDate" className="block text-sm font-semibold mb-2">
+                      Preferred Call/Meeting Date (Optional)
+                    </label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-full h-12 justify-start text-left font-normal",
+                            !selectedDate && "text-muted-foreground"
+                          )}
+                          disabled={isSubmitting}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {selectedDate ? format(selectedDate, "PPP") : "Pick a date"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={selectedDate}
+                          onSelect={setSelectedDate}
+                          disabled={(date) => date < new Date()}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Help us schedule a call or meeting at your convenience
+                    </p>
                   </div>
 
                   <div>

@@ -211,25 +211,9 @@ const Careers = () => {
 
       <TrustBar />
 
-      {/* Mission Section */}
-      <section className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="mb-6">Our Mission</h2>
-            <p className="text-xl text-muted-foreground mb-8">
-              At InVision Network, we're on a mission to protect vulnerable populations from AI-powered scams
-              while helping local businesses harness the power of artificial intelligence for good.
-            </p>
-            <p className="text-lg text-muted-foreground">
-              We're a team of cybersecurity experts, educators, developers, and designers who believe
-              technology should empower and protect people—not deceive them.
-            </p>
-          </div>
-        </div>
-      </section>
 
       {/* Culture Section */}
-      <section id="culture" className="py-16 bg-muted">
+      <section id="culture" className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <h2 className="text-center mb-12">Why Work at InVision Network?</h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -273,7 +257,7 @@ const Careers = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-16 bg-background">
+      <section className="py-16 bg-muted">
         <div className="container mx-auto px-4">
           <h2 className="text-center mb-12">Benefits & Perks</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
@@ -297,7 +281,7 @@ const Careers = () => {
       </section>
 
       {/* Open Positions */}
-      <section id="positions" className="py-12 bg-muted">
+      <section id="positions" className="py-12 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
             <h2 className="mb-3 text-3xl">Open Positions</h2>
@@ -371,7 +355,7 @@ const Careers = () => {
       </section>
 
       {/* Application Form */}
-      <section id="apply" className="py-16 bg-background">
+      <section id="apply" className="py-16 bg-muted">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
