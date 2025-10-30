@@ -8,6 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BookingRequestsTable } from "@/components/admin/BookingRequestsTable";
 import { PurchaseRequestsTable } from "@/components/admin/PurchaseRequestsTable";
+import { InquiriesTable } from "@/components/admin/InquiriesTable";
+import { JobApplicationsTable } from "@/components/admin/JobApplicationsTable";
 import { useToast } from "@/hooks/use-toast";
 import {
   ArrowLeft,
@@ -22,6 +24,8 @@ import {
   LogOut,
   ShoppingCart,
   BookOpen,
+  MessageSquare,
+  Briefcase,
 } from "lucide-react";
 
 const AdminDashboard = () => {
@@ -148,14 +152,22 @@ const AdminDashboard = () => {
         {/* Booking & Purchase Requests */}
         <Card className="p-6 mb-8">
           <Tabs defaultValue="bookings" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-6">
+            <TabsList className="grid w-full grid-cols-4 mb-6">
               <TabsTrigger value="bookings" className="gap-2">
                 <BookOpen className="w-4 h-4" />
-                Service Bookings
+                Bookings
               </TabsTrigger>
               <TabsTrigger value="purchases" className="gap-2">
                 <ShoppingCart className="w-4 h-4" />
                 Purchases
+              </TabsTrigger>
+              <TabsTrigger value="inquiries" className="gap-2">
+                <MessageSquare className="w-4 h-4" />
+                Inquiries
+              </TabsTrigger>
+              <TabsTrigger value="applications" className="gap-2">
+                <Briefcase className="w-4 h-4" />
+                Applications
               </TabsTrigger>
             </TabsList>
             <TabsContent value="bookings">
@@ -163,6 +175,12 @@ const AdminDashboard = () => {
             </TabsContent>
             <TabsContent value="purchases">
               <PurchaseRequestsTable />
+            </TabsContent>
+            <TabsContent value="inquiries">
+              <InquiriesTable />
+            </TabsContent>
+            <TabsContent value="applications">
+              <JobApplicationsTable />
             </TabsContent>
           </Tabs>
         </Card>

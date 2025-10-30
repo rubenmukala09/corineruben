@@ -20,6 +20,7 @@ import { z } from "zod";
 import { useAIChat } from "@/contexts/AIChatContext";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import customerSupport from "@/assets/customer-support.jpg";
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),

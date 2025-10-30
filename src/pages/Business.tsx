@@ -15,6 +15,8 @@ import { BookingModal } from "@/components/BookingModal";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield } from "lucide-react";
 import testimonial3 from "@/assets/testimonial-3.jpg";
 import testimonial4 from "@/assets/testimonial-4.jpg";
+import businessCollaboration from "@/assets/business-collaboration.jpg";
+import teamCollaboration from "@/assets/team-collaboration.jpg";
 
 const Business = () => {
   const [modalOpen, setModalOpen] = useState(false);

@@ -1310,40 +1310,49 @@ export type Database = {
       }
       job_applications: {
         Row: {
+          availability: string | null
           cover_letter: string
           created_at: string
           email: string
           id: string
+          is_veteran: boolean | null
           name: string
           phone: string
           position: string
           resume_url: string | null
           status: string
           updated_at: string
+          veteran_document_url: string | null
         }
         Insert: {
+          availability?: string | null
           cover_letter: string
           created_at?: string
           email: string
           id?: string
+          is_veteran?: boolean | null
           name: string
           phone: string
           position: string
           resume_url?: string | null
           status?: string
           updated_at?: string
+          veteran_document_url?: string | null
         }
         Update: {
+          availability?: string | null
           cover_letter?: string
           created_at?: string
           email?: string
           id?: string
+          is_veteran?: boolean | null
           name?: string
           phone?: string
           position?: string
           resume_url?: string | null
           status?: string
           updated_at?: string
+          veteran_document_url?: string | null
         }
         Relationships: []
       }
@@ -2546,6 +2555,7 @@ export type Database = {
           phone: string | null
           preferred_time: string | null
           processed_at: string | null
+          status: string | null
           subject: string | null
         }
         Insert: {
@@ -2560,6 +2570,7 @@ export type Database = {
           phone?: string | null
           preferred_time?: string | null
           processed_at?: string | null
+          status?: string | null
           subject?: string | null
         }
         Update: {
@@ -2574,6 +2585,7 @@ export type Database = {
           phone?: string | null
           preferred_time?: string | null
           processed_at?: string | null
+          status?: string | null
           subject?: string | null
         }
         Relationships: []

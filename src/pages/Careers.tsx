@@ -22,6 +22,8 @@ import {
   Home,
   Award,
 } from "lucide-react";
+import teamCollaboration from "@/assets/team-collaboration.jpg";
+import customerSupport from "@/assets/customer-support.jpg";
 
 const Careers = () => {
   const positions = [
@@ -216,42 +218,52 @@ const Careers = () => {
       <section id="culture" className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <h2 className="text-center mb-12">Why Work at InVision Network?</h2>
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <Card className="p-6 text-center">
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Heart className="w-8 h-8 text-primary" />
+          <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto items-center">
+            <div className="space-y-6">
+              <Card className="p-6 text-center">
+                <div className="flex justify-center mb-4">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                    <Heart className="w-8 h-8 text-primary" />
+                  </div>
                 </div>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Meaningful Work</h3>
-              <p className="text-muted-foreground">
-                Every day, you'll help protect real people from real threats and empower businesses to grow.
-              </p>
-            </Card>
+                <h3 className="text-xl font-semibold mb-3">Meaningful Work</h3>
+                <p className="text-muted-foreground">
+                  Every day, you'll help protect real people from real threats and empower businesses to grow.
+                </p>
+              </Card>
 
-            <Card className="p-6 text-center">
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Users className="w-8 h-8 text-primary" />
+              <Card className="p-6 text-center">
+                <div className="flex justify-center mb-4">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                    <Users className="w-8 h-8 text-primary" />
+                  </div>
                 </div>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Collaborative Team</h3>
-              <p className="text-muted-foreground">
-                Work alongside talented, passionate professionals who support each other's growth.
-              </p>
-            </Card>
+                <h3 className="text-xl font-semibold mb-3">Collaborative Team</h3>
+                <p className="text-muted-foreground">
+                  Work alongside talented, passionate professionals who support each other's growth.
+                </p>
+              </Card>
 
-            <Card className="p-6 text-center">
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Award className="w-8 h-8 text-primary" />
+              <Card className="p-6 text-center">
+                <div className="flex justify-center mb-4">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                    <Award className="w-8 h-8 text-primary" />
+                  </div>
                 </div>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Growth Opportunities</h3>
-              <p className="text-muted-foreground">
-                We invest in our team's development with training, mentorship, and advancement paths.
-              </p>
-            </Card>
+                <h3 className="text-xl font-semibold mb-3">Growth Opportunities</h3>
+                <p className="text-muted-foreground">
+                  We invest in our team's development with training, mentorship, and advancement paths.
+                </p>
+              </Card>
+            </div>
+
+            <div>
+              <img
+                src={teamCollaboration}
+                alt="Team collaboration at InVision Network"
+                className="rounded-lg shadow-large w-full h-auto object-cover"
+              />
+            </div>
           </div>
         </div>
       </section>
