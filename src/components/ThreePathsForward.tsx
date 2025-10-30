@@ -20,7 +20,7 @@ const paths = [
     pricing: "Starting at $49/month",
     icon: Shield,
     featured: true,
-    link: "/scam-shield",
+    link: "/training",
     cta: "Start Scam Shield"
   },
   {
