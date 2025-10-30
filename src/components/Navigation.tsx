@@ -24,7 +24,7 @@ const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-transform duration-300 group" onClick={scrollToTop}>
+          <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-transform duration-300 group flex-shrink-0" onClick={scrollToTop}>
             <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center shadow-glow-purple relative group-hover:shadow-glow-teal transition-all duration-300">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
