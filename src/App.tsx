@@ -30,6 +30,7 @@ import NotFound from "./pages/NotFound";
 import { AIChat } from "./components/AIChat";
 import { AIChatProvider } from "./contexts/AIChatContext";
 import Layout from "./components/Layout";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ const App = () => {
         <Sonner />
         <AIChatProvider>
           <BrowserRouter>
+            <ScrollToTop />
           <Layout>
             <Routes>
               <Route path="/" element={<Index />} />
