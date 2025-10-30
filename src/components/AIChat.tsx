@@ -117,11 +117,19 @@ export const AIChat = () => {
     } catch (error) {
       console.error("Chat error:", error);
       setIsLoading(false);
+    if (error instanceof Error && error.message.includes("Too many requests")) {
+      toast({
+        title: "Rate limit exceeded",
+        description: "Please wait a moment before sending another message.",
+        variant: "destructive",
+      });
+    } else {
       toast({
         title: "Error",
         description: error instanceof Error ? error.message : "Failed to send message",
         variant: "destructive",
       });
+    }
     }
   };
 

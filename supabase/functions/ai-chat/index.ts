@@ -5,12 +5,82 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Simple in-memory rate limiter
+interface RateLimitEntry {
+  count: number;
+  resetAt: number;
+}
+
+const rateLimitMap = new Map<string, RateLimitEntry>();
+const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 10; // 10 requests per minute
+
+// Cleanup old entries every 5 minutes
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, entry] of rateLimitMap.entries()) {
+    if (entry.resetAt < now) {
+      rateLimitMap.delete(key);
+    }
+  }
+}, 300000);
+
+function checkRateLimit(identifier: string): { allowed: boolean; remaining: number; resetAt: number } {
+  const now = Date.now();
+  const entry = rateLimitMap.get(identifier);
+
+  if (!entry || entry.resetAt < now) {
+    // Create new entry or reset expired one
+    const resetAt = now + RATE_LIMIT_WINDOW_MS;
+    rateLimitMap.set(identifier, { count: 1, resetAt });
+    return { allowed: true, remaining: MAX_REQUESTS_PER_WINDOW - 1, resetAt };
+  }
+
+  if (entry.count >= MAX_REQUESTS_PER_WINDOW) {
+    return { allowed: false, remaining: 0, resetAt: entry.resetAt };
+  }
+
+  entry.count++;
+  return { allowed: true, remaining: MAX_REQUESTS_PER_WINDOW - entry.count, resetAt: entry.resetAt };
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
+    // Rate limiting check
+    const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0] || 
+                     req.headers.get("x-real-ip") || 
+                     "unknown";
+    
+    const rateCheck = checkRateLimit(clientIp);
+    
+    if (!rateCheck.allowed) {
+      const retryAfter = Math.ceil((rateCheck.resetAt - Date.now()) / 1000);
+      console.log(`Rate limit exceeded for IP: ${clientIp}`);
+      return new Response(
+        JSON.stringify({ 
+          error: "Too many requests. Please try again in a moment.",
+          retryAfter: retryAfter
+        }),
+        {
+          status: 429,
+          headers: { 
+            ...corsHeaders, 
+            "Content-Type": "application/json",
+            "Retry-After": retryAfter.toString(),
+            "X-RateLimit-Limit": MAX_REQUESTS_PER_WINDOW.toString(),
+            "X-RateLimit-Remaining": "0",
+            "X-RateLimit-Reset": new Date(rateCheck.resetAt).toISOString()
+          },
+        }
+      );
+    }
+
+    console.log(`Request from IP: ${clientIp}, remaining: ${rateCheck.remaining}`);
+
     const { messages, type = "chat" } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
@@ -90,6 +160,9 @@ serve(async (req) => {
         "Content-Type": "text/event-stream",
         "Cache-Control": "no-cache",
         "Connection": "keep-alive",
+        "X-RateLimit-Limit": MAX_REQUESTS_PER_WINDOW.toString(),
+        "X-RateLimit-Remaining": rateCheck.remaining.toString(),
+        "X-RateLimit-Reset": new Date(rateCheck.resetAt).toISOString()
       },
     });
   } catch (error) {
