@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { format } from "date-fns";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,9 +7,12 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Upload, X } from "lucide-react";
+import { Loader2, Upload, X, Calendar as CalendarIcon, CheckCircle } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface BookingModalProps {
   open: boolean;
@@ -36,6 +40,7 @@ export const BookingModal = ({
   const [veteranIdLast4, setVeteranIdLast4] = useState("");
   const [veteranDocFile, setVeteranDocFile] = useState<File | null>(null);
   const [isUploadingDoc, setIsUploadingDoc] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date>();
   
   const [formData, setFormData] = useState({
     fullName: "",
@@ -122,7 +127,9 @@ export const BookingModal = ({
         discount_amount: discountAmount,
         final_price: finalPrice,
         message: formData.message,
-        preferred_dates: formData.preferredDates,
+        preferred_dates: selectedDate 
+          ? `Primary: ${format(selectedDate, "PPP")}${formData.preferredDates ? `\nAlternatives: ${formData.preferredDates}` : ''}`
+          : formData.preferredDates,
       });
 
       if (error) throw error;
@@ -144,6 +151,7 @@ export const BookingModal = ({
       setVeteranType("");
       setVeteranIdLast4("");
       setVeteranDocFile(null);
+      setSelectedDate(undefined);
       onOpenChange(false);
     } catch (error) {
       console.error("Error submitting booking:", error);
@@ -225,14 +233,48 @@ export const BookingModal = ({
               />
             </div>
 
+            {(serviceType === 'training' || serviceType === 'scamshield' || serviceType === 'business' || serviceType === 'website') && (
+              <div>
+                <Label htmlFor="preferredDate">Select Preferred Date *</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      id="preferredDate"
+                      variant={"outline"}
+                      className={cn(
+                        "w-full justify-start text-left font-normal",
+                        !selectedDate && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {selectedDate ? format(selectedDate, "PPP") : <span>Pick a date</span>}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={selectedDate}
+                      onSelect={setSelectedDate}
+                      disabled={(date) => date < new Date()}
+                      initialFocus
+                      className={cn("p-3 pointer-events-auto")}
+                    />
+                  </PopoverContent>
+                </Popover>
+                <p className="text-xs text-muted-foreground mt-1">
+                  We'll confirm availability and schedule accordingly
+                </p>
+              </div>
+            )}
+
             {(serviceType === 'training' || serviceType === 'scamshield') && (
               <div>
-                <Label htmlFor="preferredDates">Preferred Dates/Times</Label>
+                <Label htmlFor="preferredDates">Additional Preferred Dates/Times</Label>
                 <Textarea
                   id="preferredDates"
                   value={formData.preferredDates}
                   onChange={(e) => setFormData({ ...formData, preferredDates: e.target.value })}
-                  placeholder="Let us know your availability..."
+                  placeholder="Any alternative dates or specific time preferences..."
                   rows={2}
                 />
               </div>
@@ -298,25 +340,27 @@ export const BookingModal = ({
                 </div>
 
                 <div>
-                  <Label htmlFor="veteranDoc">Upload Verification (Optional)</Label>
+                  <Label htmlFor="veteranDoc">Upload Verification (Required for Discount) *</Label>
                   <div className="mt-2">
                     {veteranDocFile ? (
-                      <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
+                      <div className="flex items-center gap-2 p-3 bg-muted rounded-lg border border-success">
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
                         <span className="text-sm flex-1 truncate">{veteranDocFile.name}</span>
                         <Button type="button" variant="ghost" size="sm" onClick={() => setVeteranDocFile(null)}>
                           <X className="w-4 h-4" />
                         </Button>
                       </div>
                     ) : (
-                      <label className="flex flex-col items-center gap-2 p-4 border-2 border-dashed border-border rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
-                        <Upload className="w-6 h-6 text-muted-foreground" />
-                        <span className="text-sm text-muted-foreground">DD-214, ID, or badge (PDF/JPG/PNG, Max 5MB)</span>
-                        <input id="veteranDoc" type="file" accept=".pdf,.jpg,.jpeg,.png,.webp" onChange={handleFileChange} className="hidden" />
+                      <label className="flex flex-col items-center gap-2 p-4 border-2 border-dashed border-primary/50 rounded-lg cursor-pointer hover:bg-primary/5 transition-colors">
+                        <Upload className="w-6 h-6 text-primary" />
+                        <span className="text-sm font-semibold text-primary">Upload DD-214, Military ID, or First Responder Badge</span>
+                        <span className="text-xs text-muted-foreground">PDF, JPG, PNG (Max 5MB)</span>
+                        <input id="veteranDoc" type="file" accept=".pdf,.jpg,.jpeg,.png,.webp" onChange={handleFileChange} className="hidden" required={isVeteran} />
                       </label>
                     )}
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Speeds up verification. We may request if not provided.
+                  <p className="text-xs text-muted-foreground mt-2 bg-primary/5 p-2 rounded">
+                    <strong>Required for discount:</strong> Your verification document is required to receive the {veteranDiscountPercent}% discount. Documents are securely stored and only used for verification purposes.
                   </p>
                 </div>
               </div>

@@ -505,10 +505,6 @@ const Index = () => {
           <div className="max-w-3xl mx-auto space-y-4">
             {[
               {
-                q: "How is InVision different from free services like AARP?",
-                a: "While free services like AARP provide excellent educational resources, InVision offers personalized threat analysis. We examine YOUR specific suspicious messages within 24 hours and provide actionable guidance. Think of us as your personal cybersecurity team on retainer.",
-              },
-              {
                 q: "What types of scams can ScamShield detect?",
                 a: "We analyze all types: phishing emails, SMS scams, voice calls, QR codes, social media messages, investment schemes, romance scams, and more. Our specialty is AI-powered threats like deepfakes and voice cloning.",
               },
@@ -516,6 +512,11 @@ const Index = () => {
                 q: "What if I'm not tech-savvy?",
                 a: "That's exactly who we serve! Our services are designed for people of all technical skill levels. If you can forward an email or take a screenshot, you can use our services.",
               },
+              // Hidden but kept for future reference
+              // {
+              //   q: "How is InVision different from free services like AARP?",
+              //   a: "While free services like AARP provide excellent educational resources, InVision offers personalized threat analysis. We examine YOUR specific suspicious messages within 24 hours and provide actionable guidance. Think of us as your personal cybersecurity team on retainer.",
+              // },
             ].map((faq, index) => (
               <Card
                 key={index}
