@@ -29,7 +29,7 @@ const paths = [
     description: "Custom AI receptionists, automation, and pre-purchase vetting. Don't waste $5k+ on wrong tools.",
     pricing: "Starting at $5,000",
     icon: Briefcase,
-    link: "/business",
+    link: "/contact",
     cta: "Talk to an Expert"
   }
 ];
