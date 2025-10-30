@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -8,11 +9,20 @@ import CTASection from "@/components/CTASection";
 import FlowingWaves from "@/components/FlowingWaves";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { BookingModal } from "@/components/BookingModal";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield } from "lucide-react";
 import testimonial3 from "@/assets/testimonial-3.jpg";
 import testimonial4 from "@/assets/testimonial-4.jpg";
 
 const Business = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<{
+    type: 'business' | 'website';
+    name: string;
+    tier?: string;
+    price?: number;
+  } | null>(null);
+
   return (
     <div className="min-h-screen">
       <Navigation />
@@ -160,8 +170,19 @@ const Business = () => {
                   <span>Security audit & 90-day support</span>
                 </li>
               </ul>
-              <Button asChild variant="default" className="w-full">
-                <Link to="/contact">GET STARTED</Link>
+              <Button 
+                onClick={() => {
+                  setSelectedService({
+                    type: 'business',
+                    name: 'AI Receptionist & Intake Agent',
+                    price: 9500
+                  });
+                  setModalOpen(true);
+                }}
+                variant="default" 
+                className="w-full"
+              >
+                GET STARTED
               </Button>
             </Card>
 
@@ -196,8 +217,19 @@ const Business = () => {
                   <span>60-day optimization</span>
                 </li>
               </ul>
-              <Button asChild variant="default" className="w-full">
-                <Link to="/contact">GET STARTED</Link>
+              <Button 
+                onClick={() => {
+                  setSelectedService({
+                    type: 'business',
+                    name: 'Follow-Up Automation System',
+                    price: 12500
+                  });
+                  setModalOpen(true);
+                }}
+                variant="default" 
+                className="w-full"
+              >
+                GET STARTED
               </Button>
             </Card>
 
@@ -228,8 +260,19 @@ const Business = () => {
                   <span>90-day support</span>
                 </li>
               </ul>
-              <Button asChild variant="default" className="w-full">
-                <Link to="/contact">GET STARTED</Link>
+              <Button 
+                onClick={() => {
+                  setSelectedService({
+                    type: 'business',
+                    name: 'Custom Automation Suite',
+                    price: 25000
+                  });
+                  setModalOpen(true);
+                }}
+                variant="default" 
+                className="w-full"
+              >
+                GET STARTED
               </Button>
             </Card>
           </div>
@@ -281,8 +324,20 @@ const Business = () => {
                   <span>1 month hosting included</span>
                 </li>
               </ul>
-              <Button asChild variant="default" className="w-full">
-                <Link to="/contact">GET STARTED</Link>
+              <Button 
+                onClick={() => {
+                  setSelectedService({
+                    type: 'website',
+                    name: 'Professional Website Design',
+                    tier: 'Landing Page',
+                    price: 1500
+                  });
+                  setModalOpen(true);
+                }}
+                variant="default" 
+                className="w-full"
+              >
+                GET STARTED
               </Button>
             </Card>
 
@@ -328,8 +383,20 @@ const Business = () => {
                   <span>2 rounds of revisions</span>
                 </li>
               </ul>
-              <Button asChild variant="default" className="w-full">
-                <Link to="/contact">GET STARTED</Link>
+              <Button 
+                onClick={() => {
+                  setSelectedService({
+                    type: 'website',
+                    name: 'Professional Website Design',
+                    tier: 'Business Website',
+                    price: 4500
+                  });
+                  setModalOpen(true);
+                }}
+                variant="default" 
+                className="w-full"
+              >
+                GET STARTED
               </Button>
             </Card>
 
@@ -372,8 +439,20 @@ const Business = () => {
                   <span>6 months hosting included</span>
                 </li>
               </ul>
-              <Button asChild variant="default" className="w-full">
-                <Link to="/contact">GET STARTED</Link>
+              <Button 
+                onClick={() => {
+                  setSelectedService({
+                    type: 'website',
+                    name: 'Professional Website Design',
+                    tier: 'E-Commerce Website',
+                    price: 8500
+                  });
+                  setModalOpen(true);
+                }}
+                variant="default" 
+                className="w-full"
+              >
+                GET STARTED
               </Button>
             </Card>
           </div>
@@ -749,6 +828,18 @@ const Business = () => {
       </CTASection>
 
       <Footer />
+      
+      {selectedService && (
+        <BookingModal
+          open={modalOpen}
+          onOpenChange={setModalOpen}
+          serviceType={selectedService.type}
+          serviceName={selectedService.name}
+          serviceTier={selectedService.tier}
+          basePrice={selectedService.price}
+          veteranDiscountPercent={10}
+        />
+      )}
     </div>
   );
 };

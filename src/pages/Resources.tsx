@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -6,10 +7,18 @@ import TrustBar from "@/components/TrustBar";
 import FlowingWaves from "@/components/FlowingWaves";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { BookingModal } from "@/components/BookingModal";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Download, Shield, Wifi, KeyRound, Heart, FileText, ShoppingCart } from "lucide-react";
 
 const Resources = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<{
+    type: 'guide' | 'product';
+    name: string;
+    price?: number;
+  } | null>(null);
+
   const guides = [
     { icon: Shield, title: "Scam-Proof Playbook", desc: "Complete emergency scripts & protocols" },
     { icon: Heart, title: "Caregivers' Security Guide", desc: "Protect vulnerable loved ones from scams" },
@@ -124,11 +133,19 @@ const Resources = () => {
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-center">{guide.title}</h3>
                 <p className="text-muted-foreground text-center mb-4">{guide.desc}</p>
-                <Button asChild className="w-full" variant="outline">
-                  <Link to="/contact">
-                    <Download className="w-4 h-4 mr-2" />
-                    PURCHASE
-                  </Link>
+                <Button 
+                  onClick={() => {
+                    setSelectedItem({
+                      type: 'guide',
+                      name: guide.title
+                    });
+                    setModalOpen(true);
+                  }}
+                  className="w-full" 
+                  variant="outline"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  PURCHASE
                 </Button>
               </Card>
             ))}
@@ -175,8 +192,19 @@ const Resources = () => {
                 </div>
                 <h3 className="font-bold mb-2 text-center flex-grow">{product.name}</h3>
                 <p className="text-2xl font-bold gradient-text-primary text-center mb-4">{product.price}</p>
-                <Button asChild variant="default" className="w-full">
-                  <Link to="/contact">BUY NOW</Link>
+                <Button 
+                  onClick={() => {
+                    setSelectedItem({
+                      type: 'product',
+                      name: product.name,
+                      price: parseFloat(product.price.replace('$', ''))
+                    });
+                    setModalOpen(true);
+                  }}
+                  variant="default" 
+                  className="w-full"
+                >
+                  BUY NOW
                 </Button>
               </Card>
             ))}
@@ -246,6 +274,17 @@ const Resources = () => {
       </section>
 
       <Footer />
+      
+      {selectedItem && (
+        <BookingModal
+          open={modalOpen}
+          onOpenChange={setModalOpen}
+          serviceType={selectedItem.type}
+          serviceName={selectedItem.name}
+          basePrice={selectedItem.price}
+          veteranDiscountPercent={selectedItem.type === 'product' ? 3 : 10}
+        />
+      )}
     </div>
   );
 };

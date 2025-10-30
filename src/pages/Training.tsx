@@ -331,8 +331,21 @@ const LearnAndTrain = () => {
                 </div>
               </div>
 
-              <Button asChild variant="default" size="lg" className="w-full">
-                <Link to="/contact">START TRIAL</Link>
+              <Button 
+                onClick={() => {
+                  setSelectedService({
+                    type: 'scamshield',
+                    name: 'ScamShield Protection',
+                    tier: 'Starter Plan',
+                    price: 39
+                  });
+                  setModalOpen(true);
+                }}
+                variant="default" 
+                size="lg" 
+                className="w-full"
+              >
+                START TRIAL
               </Button>
             </Card>
 
@@ -387,8 +400,21 @@ const LearnAndTrain = () => {
                 </div>
               </div>
 
-              <Button asChild variant="default" size="lg" className="w-full">
-                <Link to="/contact">START TRIAL</Link>
+              <Button 
+                onClick={() => {
+                  setSelectedService({
+                    type: 'scamshield',
+                    name: 'ScamShield Protection',
+                    tier: 'Family Plan',
+                    price: 79
+                  });
+                  setModalOpen(true);
+                }}
+                variant="default" 
+                size="lg" 
+                className="w-full"
+              >
+                START TRIAL
               </Button>
             </Card>
 
@@ -442,8 +468,21 @@ const LearnAndTrain = () => {
                 </div>
               </div>
 
-              <Button asChild variant="default" size="lg" className="w-full">
-                <Link to="/contact">START TRIAL</Link>
+              <Button 
+                onClick={() => {
+                  setSelectedService({
+                    type: 'scamshield',
+                    name: 'ScamShield Protection',
+                    tier: 'Premium Plan',
+                    price: 129
+                  });
+                  setModalOpen(true);
+                }}
+                variant="default" 
+                size="lg" 
+                className="w-full"
+              >
+                START TRIAL
               </Button>
             </Card>
           </div>
@@ -535,7 +574,7 @@ const LearnAndTrain = () => {
               </p>
 
               <Button asChild variant="default" size="lg">
-                <Link to="/contact">EXPLORE SAFETY VAULT</Link>
+                <Link to="/safety-vault">EXPLORE SAFETY VAULT</Link>
               </Button>
             </div>
           </Card>
