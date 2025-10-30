@@ -331,6 +331,96 @@ const Contact = () => {
         </div>
       </section>
 
+      {/* Making a Difference Section */}
+      <section className="relative py-20 bg-gradient-to-br from-primary/5 via-background to-accent/5">
+        <FlowingWaves variant="full" opacity={0.08} />
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-12">
+            <h2 className="mb-4">Making a Difference Together</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Your enrollment powers safety education and community support programs nationwide.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {/* Veterans & First Responders */}
+            <Card className="p-8 hover:shadow-xl transition-all hover:-translate-y-2 border-2 border-primary/20">
+              <div className="text-center mb-6">
+                <div className="text-4xl mb-2">🇺🇸</div>
+                <h3 className="text-2xl font-bold mb-2">Thank you for your service</h3>
+                <div className="text-lg font-semibold text-primary mb-4">🎖️ Veterans & First Responders</div>
+              </div>
+              <p className="text-muted-foreground mb-6 leading-relaxed">
+                Active duty, veterans, reservists, and first responders receive special recognition with our standing discount program.
+              </p>
+              <div className="bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-xl p-6 text-center mb-6">
+                <div className="text-4xl font-bold mb-2">15% OFF</div>
+                <p className="text-sm">Verify status at checkout</p>
+              </div>
+              <Button variant="default" size="lg" className="w-full" asChild>
+                <Link to="/signup">Claim Discount</Link>
+              </Button>
+            </Card>
+
+            {/* Support Children with Cancer */}
+            <Card className="p-8 hover:shadow-xl transition-all hover:-translate-y-2 border-2 border-accent/20">
+              <div className="text-center mb-6">
+                <div className="text-4xl mb-2">❤️</div>
+                <h3 className="text-2xl font-bold mb-4">Support Children with Cancer</h3>
+              </div>
+              <p className="text-muted-foreground mb-6 leading-relaxed">
+                Sponsor training seats for caregivers and provide specialized scam‑prevention resources during hospital stays.
+              </p>
+              <div className="space-y-4 mb-6">
+                <Button variant="outline" size="lg" className="w-full" asChild>
+                  <a href="mailto:support@invisionnetwork.org?subject=Refer%20a%20Family">Refer a Family</a>
+                </Button>
+                <Button variant="outline" size="lg" className="w-full" asChild>
+                  <a href="mailto:consulting@invisionnetwork.org?subject=Partnership%20Inquiry">Partner with Us</a>
+                </Button>
+              </div>
+            </Card>
+
+            {/* Donate & Sponsor */}
+            <Card className="p-8 hover:shadow-xl transition-all hover:-translate-y-2 border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-accent/5">
+              <div className="text-center mb-6">
+                <div className="text-4xl mb-2">🎁</div>
+                <h3 className="text-2xl font-bold mb-4">Donate & Sponsor</h3>
+              </div>
+              <p className="text-muted-foreground mb-6 leading-relaxed">
+                100% of donations fund scholarships, caregiver training programs, and community safety workshops.
+              </p>
+              <div className="space-y-4">
+                <div className="flex items-start gap-3 p-4 bg-background rounded-lg border">
+                  <div className="text-2xl">💺</div>
+                  <div className="flex-1">
+                    <div className="font-semibold mb-1">Sponsor a Seat</div>
+                    <div className="text-sm text-muted-foreground">$100 = one complete class</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 p-4 bg-background rounded-lg border">
+                  <div className="text-2xl">🤝</div>
+                  <div className="flex-1">
+                    <div className="font-semibold mb-1">Monthly Ally</div>
+                    <div className="text-sm text-muted-foreground">$25/mo sustains outreach</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 p-4 bg-background rounded-lg border">
+                  <div className="text-2xl">🏢</div>
+                  <div className="flex-1">
+                    <div className="font-semibold mb-1">Corporate Partner</div>
+                    <div className="text-sm text-muted-foreground">Bulk training programs</div>
+                  </div>
+                </div>
+              </div>
+              <Button variant="default" size="lg" className="w-full mt-6" asChild>
+                <a href="mailto:hello@invisionnetwork.org?subject=Donation%20Inquiry">Get Started</a>
+              </Button>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
