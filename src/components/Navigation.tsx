@@ -20,12 +20,12 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border shadow-sm">
+    <nav className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border shadow-soft">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-transform duration-300" onClick={scrollToTop}>
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center shadow-glow-purple relative">
+          <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-transform duration-300 group" onClick={scrollToTop}>
+            <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center shadow-glow-purple relative group-hover:shadow-glow-teal transition-all duration-300">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -34,13 +34,13 @@ const Navigation = () => {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="w-6 h-6 text-primary-foreground relative z-10"
+                className="w-6 h-6 text-primary-foreground relative z-10 group-hover:scale-110 transition-transform duration-300"
               >
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
             </div>
             <div className="flex flex-col leading-tight">
-              <span className="text-xl font-bold gradient-text-primary">InVision Network</span>
+              <span className="text-xl font-bold gradient-text-primary group-hover:scale-105 transition-transform duration-300">InVision Network</span>
               <span className="text-[10px] text-muted-foreground hidden lg:block">AI Scam Protection & Business Solutions</span>
             </div>
           </Link>

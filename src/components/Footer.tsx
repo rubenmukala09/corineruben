@@ -5,8 +5,14 @@ import { Input } from "@/components/ui/input";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-br from-[hsl(260,70%,25%)] to-[hsl(260,65%,35%)] text-primary-foreground">
-      <div className="container mx-auto px-4 py-12">
+    <footer className="bg-gradient-to-br from-[hsl(260,70%,25%)] to-[hsl(260,65%,35%)] text-primary-foreground relative overflow-hidden">
+      {/* Decorative Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-10 right-20 w-64 h-64 bg-accent/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '6s' }} />
+        <div className="absolute bottom-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '8s' }} />
+      </div>
+      
+      <div className="container mx-auto px-4 py-12 relative z-10">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
           {/* Column 1: Quick Links */}
@@ -171,37 +177,37 @@ const Footer = () => {
         {/* Social Media */}
         <div className="flex justify-center space-x-6 mb-8">
           <a 
-            href="https://facebook.com" 
+            href="https://facebook.com/invisionnetwork" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-primary-foreground/80 hover:text-accent transition-colors transform hover:scale-110 duration-200" 
+            className="text-primary-foreground/80 hover:text-accent transition-all transform hover:scale-125 hover:rotate-6 duration-300 p-2 hover:bg-accent/10 rounded-full" 
             aria-label="Follow us on Facebook"
           >
             <Facebook className="w-6 h-6" />
           </a>
           <a 
-            href="https://linkedin.com" 
+            href="https://linkedin.com/company/invisionnetwork" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-primary-foreground/80 hover:text-accent transition-colors transform hover:scale-110 duration-200" 
+            className="text-primary-foreground/80 hover:text-accent transition-all transform hover:scale-125 hover:rotate-6 duration-300 p-2 hover:bg-accent/10 rounded-full" 
             aria-label="Connect with us on LinkedIn"
           >
             <Linkedin className="w-6 h-6" />
           </a>
           <a 
-            href="https://youtube.com" 
+            href="https://youtube.com/@invisionnetwork" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-primary-foreground/80 hover:text-accent transition-colors transform hover:scale-110 duration-200" 
+            className="text-primary-foreground/80 hover:text-accent transition-all transform hover:scale-125 hover:rotate-6 duration-300 p-2 hover:bg-accent/10 rounded-full" 
             aria-label="Subscribe to our YouTube channel"
           >
             <Youtube className="w-6 h-6" />
           </a>
           <a 
-            href="https://instagram.com" 
+            href="https://instagram.com/invisionnetwork" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-primary-foreground/80 hover:text-accent transition-colors transform hover:scale-110 duration-200" 
+            className="text-primary-foreground/80 hover:text-accent transition-all transform hover:scale-125 hover:rotate-6 duration-300 p-2 hover:bg-accent/10 rounded-full" 
             aria-label="Follow us on Instagram"
           >
             <Instagram className="w-6 h-6" />
