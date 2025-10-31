@@ -77,8 +77,10 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
+     --sidebar-ring: 217.2 91.2% 59.8%;
+     /* Global site scale for desktop browsers */
+     --site-scale: 0.45;
+   }
 
   .dark {
     --background: 260 70% 15%;
@@ -130,6 +132,8 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     overflow-x: hidden;
     width: 100%;
     position: relative;
+    /* Desktop zoom scaling */
+    zoom: var(--site-scale);
   }
   
   @media (min-width: 768px) {
@@ -142,6 +146,14 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     @apply min-h-screen;
     overflow-x: hidden;
     width: 100%;
+  }
+  
+  /* Fallback for browsers that don't support zoom */
+  @supports not (zoom: 1) {
+    body {
+      transform: scale(var(--site-scale));
+      transform-origin: top left;
+    }
   }
   
   /* Prevent image flicker on load */
