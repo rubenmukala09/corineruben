@@ -82,25 +82,29 @@ const TransitioningBackground = ({ interval = 5000, className = '', opacity = 1 
 
   return (
     <div className={`absolute inset-0 overflow-hidden ${className}`}>
-      {/* Layer A */}
+      {/* Layer A - Smooth crossfade with longer duration */}
       <div
-        className="absolute inset-0 bg-cover bg-center pointer-events-none transition-opacity duration-[1500ms] ease-in-out"
+        className="absolute inset-0 bg-cover bg-center pointer-events-none"
         style={{
           backgroundImage: `url(${images[imageA]})`,
           opacity: isReady && activeLayer === 'A' ? opacity : (isReady ? 0 : opacity),
+          transition: 'opacity 1000ms ease-in-out',
           willChange: 'opacity',
           transform: 'translateZ(0)',
+          backfaceVisibility: 'hidden',
         }}
       />
 
-      {/* Layer B */}
+      {/* Layer B - Smooth crossfade with longer duration */}
       <div
-        className="absolute inset-0 bg-cover bg-center pointer-events-none transition-opacity duration-[1500ms] ease-in-out"
+        className="absolute inset-0 bg-cover bg-center pointer-events-none"
         style={{
           backgroundImage: `url(${images[imageB]})`,
           opacity: isReady && activeLayer === 'B' ? opacity : 0,
+          transition: 'opacity 1000ms ease-in-out',
           willChange: 'opacity',
           transform: 'translateZ(0)',
+          backfaceVisibility: 'hidden',
         }}
       />
 

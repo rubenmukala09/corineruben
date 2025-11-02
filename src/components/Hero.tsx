@@ -86,20 +86,20 @@ const Hero = ({ backgroundImage, useTransitioningBackground = false, useTransiti
         </div>
       </div>
       
-      {/* Privacy Disclaimer - Homepage Only */}
+      {/* Scroll Indicator */}
+      {showScrollIndicator && <ScrollIndicator />}
+      
+      {/* Privacy Disclaimer - Bottom of viewport */}
       {showPrivacyDisclaimer && showDisclaimer && (
-        <div className="absolute top-20 md:top-24 right-4 left-4 md:left-auto md:right-6 z-20 md:max-w-sm animate-fade-in">
-          <div className="glass-effect px-4 md:px-5 py-3 md:py-3.5 rounded-xl border border-white/20 shadow-elegant backdrop-blur-md">
-            <p className="text-white text-xs md:text-sm font-medium leading-relaxed">
-              <span className="inline-block mr-2 opacity-90">🔒</span>
-              Safeguarding your privacy: We never utilize client photographs in our marketing materials. All imagery is exclusively AI-generated to protect confidentiality.
+        <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-20 animate-fade-in px-4 max-w-2xl w-full"
+             style={{ animationDelay: '1s' }}>
+          <div className="bg-black/80 backdrop-blur-md px-6 py-3 rounded-lg border border-white/10 shadow-xl">
+            <p className="text-white text-xs text-center font-medium leading-relaxed">
+              Some images on this site may be AI-generated
             </p>
           </div>
         </div>
       )}
-      
-      {/* Scroll Indicator */}
-      {showScrollIndicator && <ScrollIndicator />}
     </div>
   );
 };

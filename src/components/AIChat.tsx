@@ -16,7 +16,9 @@ import {
   Languages, 
   Heart,
   Loader2,
-  X
+  X,
+  Mic,
+  MicOff
 } from "lucide-react";
 import loraAvatar from "@/assets/lora-avatar.png";
 
@@ -33,7 +35,10 @@ export const AIChat = () => {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState<AIMode>("chat");
+  const [isRecording, setIsRecording] = useState(false);
+  const [isTalking, setIsTalking] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const recognitionRef = useRef<any>(null);
   const { toast } = useToast();
 
   const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-chat`;
@@ -43,6 +48,35 @@ export const AIChat = () => {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages]);
+
+  // Initialize speech recognition
+  useEffect(() => {
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
+      recognitionRef.current = new SpeechRecognition();
+      recognitionRef.current.continuous = false;
+      recognitionRef.current.interimResults = false;
+      
+      recognitionRef.current.onresult = (event: any) => {
+        const transcript = event.results[0][0].transcript;
+        setInput(transcript);
+        setIsRecording(false);
+      };
+      
+      recognitionRef.current.onerror = () => {
+        setIsRecording(false);
+        toast({
+          title: "Voice recognition error",
+          description: "Could not process voice input. Please try again.",
+          variant: "destructive",
+        });
+      };
+      
+      recognitionRef.current.onend = () => {
+        setIsRecording(false);
+      };
+    }
+  }, [toast]);
 
   const streamChat = async (userMessage: string) => {
     try {
@@ -141,7 +175,28 @@ export const AIChat = () => {
 
     const userMessage = input.trim();
     setInput("");
+    setIsTalking(true);
     await streamChat(userMessage);
+    setTimeout(() => setIsTalking(false), 2000);
+  };
+
+  const toggleVoiceRecording = () => {
+    if (!recognitionRef.current) {
+      toast({
+        title: "Voice not supported",
+        description: "Your browser doesn't support voice recognition.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (isRecording) {
+      recognitionRef.current.stop();
+      setIsRecording(false);
+    } else {
+      recognitionRef.current.start();
+      setIsRecording(true);
+    }
   };
 
   const getModeIcon = () => {
@@ -169,7 +224,9 @@ export const AIChat = () => {
       <Button
         onClick={openChat}
         variant="ghost"
-        className="fixed bottom-6 right-6 h-16 w-16 rounded-full shadow-lg z-50 p-0 overflow-hidden bg-transparent"
+        className="fixed bottom-6 right-6 h-20 w-20 rounded-full shadow-2xl z-50 p-0 overflow-hidden 
+                   bg-gradient-to-br from-primary to-accent hover:scale-110 transition-all duration-300
+                   animate-gentle-pulse"
         size="icon"
       >
         <Avatar className="h-full w-full">
@@ -181,22 +238,28 @@ export const AIChat = () => {
   }
 
   return (
-    <Card className="fixed bottom-6 right-6 w-full max-w-[400px] h-[600px] shadow-2xl z-50 flex flex-col mx-4 sm:mx-0">
-      <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-primary/5 to-accent/5">
+    <Card className="fixed bottom-6 right-6 w-[90vw] sm:w-full sm:max-w-[400px] h-[600px] max-h-[80vh] 
+                     shadow-2xl z-50 flex flex-col mx-4 sm:mx-0 animate-slide-up">
+      <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-primary/10 to-accent/10">
         <div className="flex items-center gap-3">
-          <Avatar className="h-10 w-10 border-2 border-primary/20">
+          <Avatar className={`h-10 w-10 border-2 border-primary/20 transition-all duration-300 ${
+            isTalking ? 'animate-talking-pulse scale-110' : 'animate-gentle-pulse'
+          }`}>
             <AvatarImage src={loraAvatar} alt="Lora AI Assistant" className="object-cover" />
             <AvatarFallback>LA</AvatarFallback>
           </Avatar>
           <div>
             <h3 className="font-semibold text-base">Lora</h3>
-            <p className="text-xs text-muted-foreground">AI Assistant</p>
+            <p className="text-xs text-muted-foreground">
+              {isTalking ? "Thinking..." : "AI Assistant"}
+            </p>
           </div>
         </div>
         <Button
           variant="ghost"
           size="icon"
           onClick={closeChat}
+          className="hover:bg-destructive/10 hover:text-destructive transition-colors"
         >
           <X className="h-4 w-4" />
         </Button>
@@ -236,20 +299,22 @@ export const AIChat = () => {
                     key={idx}
                     className={`flex gap-2 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                   >
-                    {msg.role === "assistant" && (
+                     {msg.role === "assistant" && (
                       <Avatar className="h-8 w-8 flex-shrink-0">
                         <AvatarImage src={loraAvatar} alt="Lora" className="object-cover" />
                         <AvatarFallback>LA</AvatarFallback>
                       </Avatar>
                     )}
                     <div
-                      className={`max-w-[80%] rounded-lg p-3 ${
+                      className={`max-w-[80%] rounded-xl p-3 animate-fade-in ${
                         msg.role === "user"
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-muted"
+                          ? "bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-md"
+                          : "bg-muted/80 backdrop-blur-sm"
                       }`}
                     >
-                      <p className="text-sm whitespace-pre-wrap break-words">{msg.content}</p>
+                      <p className="text-sm whitespace-pre-wrap break-words overflow-wrap-anywhere">
+                        {msg.content}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -257,26 +322,47 @@ export const AIChat = () => {
             )}
           </ScrollArea>
 
-          <form onSubmit={handleSubmit} className="p-4 border-t">
+          <form onSubmit={handleSubmit} className="p-4 border-t bg-gradient-to-t from-background to-transparent">
             <div className="flex gap-2">
-              <Textarea
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder={getModePlaceholder()}
-                className="min-h-[60px] resize-none"
-                disabled={isLoading}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    handleSubmit(e);
-                  }
-                }}
-              />
+              <div className="relative flex-1">
+                <Textarea
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder={getModePlaceholder()}
+                  className="min-h-[60px] resize-none pr-12 rounded-xl"
+                  disabled={isLoading || isRecording}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      handleSubmit(e);
+                    }
+                  }}
+                />
+                <Button
+                  type="button"
+                  size="icon"
+                  variant="ghost"
+                  onClick={toggleVoiceRecording}
+                  disabled={isLoading}
+                  className={`absolute right-2 top-2 h-10 w-10 rounded-full transition-all duration-300 ${
+                    isRecording 
+                      ? 'bg-destructive text-destructive-foreground animate-pulse' 
+                      : 'hover:bg-primary/10 hover:text-primary'
+                  }`}
+                >
+                  {isRecording ? (
+                    <MicOff className="h-4 w-4" />
+                  ) : (
+                    <Mic className="h-4 w-4" />
+                  )}
+                </Button>
+              </div>
               <Button
                 type="submit"
                 size="icon"
                 disabled={isLoading || !input.trim()}
-                className="h-[60px] w-[60px]"
+                className="h-[60px] w-[60px] rounded-xl bg-gradient-to-br from-primary to-accent 
+                           hover:shadow-glow-purple hover:scale-105 transition-all duration-300"
               >
                 {isLoading ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -285,7 +371,7 @@ export const AIChat = () => {
                 )}
               </Button>
             </div>
-            <p className="text-xs text-muted-foreground mt-2">
+            <p className="text-xs text-muted-foreground mt-2 text-center">
               Powered by Lovable AI
             </p>
           </form>

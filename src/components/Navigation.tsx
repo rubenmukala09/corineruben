@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SearchBar } from "@/components/SearchBar";
 
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -46,20 +47,23 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex flex-1 items-center justify-start space-x-8 ml-8" role="navigation" aria-label="Main navigation">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.href}
-                onClick={scrollToTop}
-                className="text-foreground/80 hover:text-foreground font-bold transition-colors duration-200 text-lg whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2 py-1"
-              >
-                {link.name}
-              </Link>
-            ))}
+          <div className="hidden lg:flex flex-1 items-center justify-between ml-8" role="navigation" aria-label="Main navigation">
+            <div className="flex items-center space-x-8">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  onClick={scrollToTop}
+                  className="text-foreground/80 hover:text-foreground font-bold transition-colors duration-200 text-lg whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2 py-1"
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </div>
+            <SearchBar />
           </div>
 
-          {/* Right Side - Phone & CTA */}
+          {/* Right Side - Phone & Login */}
           <div className="flex items-center gap-4">
             <a
               href="tel:9375550199"
@@ -69,11 +73,13 @@ const Navigation = () => {
               <Phone className="w-4 h-4" aria-hidden="true" />
               <span className="font-medium">(937) 555-0199</span>
             </a>
-            <Button asChild variant="outline" size="default" className="hidden md:inline-flex font-bold">
+            <Button 
+              asChild 
+              className="hidden md:inline-flex font-bold bg-primary hover:bg-primary/90 text-primary-foreground
+                         rounded-full px-8 hover:-translate-y-0.5 hover:shadow-glow-purple 
+                         transition-all duration-300 ripple-effect"
+            >
               <Link to="/portal" aria-label="Login to your account">Login</Link>
-            </Button>
-            <Button asChild variant="default" size="default" className="hidden md:inline-flex font-bold bg-gradient-to-r from-primary to-accent hover:shadow-glow-purple transition-all duration-300">
-              <Link to="/contact" aria-label="Get protected">GET PROTECTED</Link>
             </Button>
 
             {/* Mobile menu button */}
@@ -105,14 +111,13 @@ const Navigation = () => {
                 </Link>
               ))}
               <div className="pt-2 border-t border-border flex flex-col gap-3">
-                <Button asChild variant="outline" className="w-full">
+                <SearchBar />
+                <Button 
+                  asChild 
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-full"
+                >
                   <Link to="/portal" onClick={() => setMobileMenuOpen(false)} aria-label="Login to your account">
                     Login
-                  </Link>
-                </Button>
-                <Button asChild variant="default" className="w-full">
-                  <Link to="/contact" onClick={() => setMobileMenuOpen(false)} aria-label="Get protected">
-                    GET PROTECTED
                   </Link>
                 </Button>
                 <a
