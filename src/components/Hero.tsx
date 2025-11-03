@@ -3,6 +3,8 @@ import { cn } from "@/lib/utils";
 import TransitioningBackground from "./TransitioningBackground";
 import TransitioningHeroText from "./TransitioningHeroText";
 import ScrollIndicator from "./ScrollIndicator";
+import { ParticleBackground } from "./ParticleBackground";
+import { FloatingShapes } from "./FloatingShapes";
 
 interface HeroProps {
   backgroundImage?: string;
@@ -40,7 +42,7 @@ const Hero = ({ backgroundImage, useTransitioningBackground = false, useTransiti
 
   return (
     <div className={cn("relative min-h-[80vh] md:min-h-[90vh] flex items-center overflow-hidden", className)}>
-      {/* Background */}
+      {/* Background with Parallax */}
       <div 
         className="absolute inset-0"
         style={{ transform: `translateY(${scrollY * 0.5}px)` }}
@@ -55,9 +57,14 @@ const Hero = ({ backgroundImage, useTransitioningBackground = false, useTransiti
         ) : null}
       </div>
       
+      {/* Particle Network Background */}
+      <ParticleBackground />
       
-      {/* Floating Particles */}
-      <div className="absolute inset-0 pointer-events-none hidden md:block">
+      {/* Floating Abstract Shapes */}
+      <FloatingShapes />
+      
+      {/* Floating Particles (existing) */}
+      <div className="absolute inset-0 pointer-events-none hidden md:block" style={{ zIndex: 1 }}>
         <div className="floating-orb" style={{ width: '150px', height: '150px', top: '20%', left: '10%', animationDelay: '0s' }} />
         <div className="floating-orb" style={{ width: '100px', height: '100px', top: '60%', right: '15%', animationDelay: '4s' }} />
         <div className="floating-orb" style={{ width: '120px', height: '120px', bottom: '25%', left: '40%', animationDelay: '8s' }} />

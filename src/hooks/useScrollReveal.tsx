@@ -20,12 +20,19 @@ export const useScrollReveal = (options: UseScrollRevealOptions = {}) => {
     const element = ref.current;
     if (!element) return;
 
+    // Add will-change for performance
+    element.style.willChange = 'transform, opacity';
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
           if (triggerOnce) {
             observer.unobserve(element);
+            // Remove will-change after animation
+            setTimeout(() => {
+              element.style.willChange = 'auto';
+            }, 500);
           }
         } else if (!triggerOnce) {
           setIsVisible(false);
@@ -38,6 +45,7 @@ export const useScrollReveal = (options: UseScrollRevealOptions = {}) => {
 
     return () => {
       observer.disconnect();
+      element.style.willChange = 'auto';
     };
   }, [threshold, rootMargin, triggerOnce]);
 
