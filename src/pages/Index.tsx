@@ -8,6 +8,7 @@ import CTASection from "@/components/CTASection";
 import ThreePathsForward from "@/components/ThreePathsForward";
 import FlowingWaves from "@/components/FlowingWaves";
 import MakingADifference from "@/components/MakingADifference";
+import { FAQButton } from "@/components/FAQButton";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -570,6 +571,8 @@ const Index = () => {
       </CTASection>
 
       <Footer />
+      
+      <FAQButton />
     </div>
   );
 };

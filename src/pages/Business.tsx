@@ -7,10 +7,13 @@ import TrustBar from "@/components/TrustBar";
 import TestimonialCard from "@/components/TestimonialCard";
 import CTASection from "@/components/CTASection";
 import FlowingWaves from "@/components/FlowingWaves";
+import { EnterpriseContactForm } from "@/components/EnterpriseContactForm";
+import { FAQButton } from "@/components/FAQButton";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { BookingModal } from "@/components/BookingModal";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield } from "lucide-react";
 import testimonial3 from "@/assets/testimonial-3.jpg";
@@ -20,6 +23,8 @@ import teamCollaboration from "@/assets/team-collaboration.jpg";
 
 const Business = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [enterpriseDialogOpen, setEnterpriseDialogOpen] = useState(false);
+  const [enterpriseServiceType, setEnterpriseServiceType] = useState("");
   const [isYearly, setIsYearly] = useState(false);
   const [selectedService, setSelectedService] = useState<{
     type: 'business' | 'website';
@@ -27,6 +32,11 @@ const Business = () => {
     tier?: string;
     price?: number;
   } | null>(null);
+
+  const openEnterpriseDialog = (serviceType: string) => {
+    setEnterpriseServiceType(serviceType);
+    setEnterpriseDialogOpen(true);
+  };
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -227,11 +237,16 @@ const Business = () => {
               </Button>
             </Card>
 
-            <Card className="p-8">
-              <h3 className="text-2xl font-bold mb-4">Follow-Up Automation System</h3>
-              <p className="text-muted-foreground mb-6">Automated email/SMS campaigns, lead nurturing</p>
-              <p className="text-4xl font-bold text-accent mb-6">$12,500</p>
-              <p className="text-sm text-muted-foreground mb-4">Perfect for: E-commerce, real estate, coaching, B2B</p>
+            {/* Follow-Up Automation - MOST POPULAR */}
+            <div className="relative">
+              <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
+                MOST POPULAR
+              </div>
+              <Card className="p-8 shadow-[0_8px_30px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)] transition-all border-2 border-primary">
+                <h3 className="text-2xl font-bold mb-4 mt-2">Follow-Up Automation System</h3>
+                <p className="text-muted-foreground mb-6">Automated email/SMS campaigns, lead nurturing</p>
+                <p className="text-4xl font-bold text-accent mb-6">$12,500</p>
+                <p className="text-sm text-muted-foreground mb-4">Perfect for: E-commerce, real estate, coaching, B2B</p>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
@@ -273,6 +288,7 @@ const Business = () => {
                 GET STARTED
               </Button>
             </Card>
+            </div>
 
             <Card className="p-8 border-2 border-accent">
               <h3 className="text-2xl font-bold mb-4">Custom Automation Suite</h3>
@@ -316,6 +332,51 @@ const Business = () => {
                 GET STARTED
               </Button>
             </Card>
+
+            {/* Enterprise AI Automation */}
+            <Card className="p-8 bg-gradient-to-br from-card to-primary/5 hover:shadow-medium transition-all hover:-translate-y-1">
+              <div className="flex items-center gap-2 mb-3">
+                <Shield className="w-6 h-6 text-primary" />
+                <span className="text-xs font-bold text-primary uppercase tracking-wider">Enterprise</span>
+              </div>
+              <h3 className="text-2xl font-bold mb-4">Enterprise AI Automation</h3>
+              <p className="text-muted-foreground mb-6">Complete custom solution for large organizations</p>
+              <p className="text-4xl font-bold text-accent mb-6">Custom Quote</p>
+              <p className="text-sm text-muted-foreground mb-4">Perfect for: Fortune 500, Government, Large enterprises</p>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Full enterprise assessment</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Multi-department integration</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Dedicated success manager</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>24/7 priority support</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Compliance & security audit</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Unlimited customization</span>
+                </li>
+              </ul>
+              <Button 
+                onClick={() => openEnterpriseDialog("AI Automation")}
+                variant="default" 
+                className="w-full"
+              >
+                REQUEST CONSULTATION
+              </Button>
+            </Card>
           </div>
         </div>
       </section>
@@ -333,7 +394,7 @@ const Business = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-16">
             {/* Landing Page */}
             <Card className="p-8 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1">
               <h3 className="text-2xl font-bold mb-4">Landing Page</h3>
@@ -496,6 +557,54 @@ const Business = () => {
                 className="w-full"
               >
                 GET STARTED
+              </Button>
+            </Card>
+
+            {/* Enterprise Website Design */}
+            <Card className="p-8 rounded-2xl bg-gradient-to-br from-card to-primary/5 hover:shadow-medium transition-all hover:-translate-y-1">
+              <div className="flex items-center gap-2 mb-3">
+                <Shield className="w-6 h-6 text-primary" />
+                <span className="text-xs font-bold text-primary uppercase tracking-wider">Enterprise</span>
+              </div>
+              <h3 className="text-2xl font-bold mb-4">Enterprise Website</h3>
+              <p className="text-muted-foreground mb-6">Complete digital transformation for large organizations</p>
+              <p className="text-4xl font-bold text-accent mb-6">Custom Quote</p>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Unlimited pages & features</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Multi-site architecture</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Advanced integrations</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Dedicated project manager</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Full compliance & accessibility</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>12 months premium hosting</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                  <span>Ongoing maintenance & support</span>
+                </li>
+              </ul>
+              <Button 
+                onClick={() => openEnterpriseDialog("Website Design")}
+                variant="default" 
+                className="w-full"
+              >
+                REQUEST CONSULTATION
               </Button>
             </Card>
           </div>
@@ -997,9 +1106,33 @@ const Business = () => {
               image={testimonial3}
             />
             <TestimonialCard
+              name="Rachel Thompson"
+              location="Thompson Real Estate, Cleveland"
+              quote="The website they built gets 3x more leads than our old one. The SEO work is paying off big time."
+              image={testimonial4}
+            />
+            <TestimonialCard
+              name="David Park"
+              location="Park's Auto Body, Toledo"
+              quote="Best investment we made. The AI follow-up system books appointments while we sleep. 40% increase in revenue."
+              image={testimonial3}
+            />
+            <TestimonialCard
               name="Linda Rodriguez"
-              location="Rodriguez Dental, Toledo"
-              quote="AI Services Insurance gives us peace of mind. Our chatbot stays up-to-date and secure without any effort from us."
+              location="Rodriguez Consulting, Akron"
+              quote="Their AI Service Insurance gave us the confidence to implement automation across all departments. Game changer."
+              image={testimonial4}
+            />
+            <TestimonialCard
+              name="Michael Zhang"
+              location="Zhang Tech Solutions, Cincinnati"
+              quote="We went from manual data entry to full automation in 8 weeks. Their team understood our complex workflow perfectly."
+              image={testimonial3}
+            />
+            <TestimonialCard
+              name="Angela Brooks"
+              location="Brooks Financial, Columbus"
+              quote="The security audit uncovered 3 critical vulnerabilities we didn't know existed. Saved us from a potential disaster."
               image={testimonial4}
             />
           </div>
@@ -1030,6 +1163,21 @@ const Business = () => {
       </CTASection>
 
       <Footer />
+      
+      <FAQButton />
+
+      {/* Enterprise Contact Dialog */}
+      <Dialog open={enterpriseDialogOpen} onOpenChange={setEnterpriseDialogOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="sr-only">Enterprise Contact Form</DialogTitle>
+          </DialogHeader>
+          <EnterpriseContactForm 
+            serviceType={enterpriseServiceType}
+            onClose={() => setEnterpriseDialogOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
       
       {selectedService && (
         <BookingModal
