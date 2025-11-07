@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const location = useLocation();
 
   const navLinks = [
     { name: "AI for Business", href: "/business" },
@@ -21,12 +20,12 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-card/95 backdrop-blur-md shadow-soft">
+    <nav className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border shadow-soft">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between py-3">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 hover:scale-105 transition-transform duration-300 group flex-shrink-0 no-underline" onClick={scrollToTop}>
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center shadow-glow-purple relative group-hover:shadow-glow-teal transition-all duration-300">
+          <Link to="/" className="flex items-center gap-2 md:gap-3 hover:scale-105 transition-transform duration-300 group flex-shrink-0" onClick={scrollToTop}>
+            <div className="w-9 h-9 md:w-10 md:h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center shadow-glow-purple relative group-hover:shadow-glow-teal transition-all duration-300">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -35,37 +34,31 @@ const Navigation = () => {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="w-5 h-5 text-primary-foreground relative z-10 group-hover:scale-110 transition-transform duration-300"
+                className="w-5 h-5 md:w-6 md:h-6 text-primary-foreground relative z-10 group-hover:scale-110 transition-transform duration-300"
               >
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
             </div>
             <div className="flex flex-col leading-tight">
-              <span className="text-base font-bold gradient-text-primary group-hover:scale-105 transition-transform duration-300">InVision Network</span>
-              <span className="text-[10px] text-muted-foreground hidden lg:block">AI Scam Protection & Business Solutions</span>
+              <span className="text-base md:text-xl font-bold gradient-text-primary group-hover:scale-105 transition-transform duration-300">InVision Network</span>
+              <span className="text-[9px] md:text-[10px] text-muted-foreground hidden lg:block">AI Scam Protection & Business Solutions</span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex flex-1 items-center justify-center ml-8" role="navigation" aria-label="Main navigation">
             <div className="flex items-center space-x-8">
-              {navLinks.map((link) => {
-                const isActive = location.pathname === link.href;
-                return (
-                  <Link
-                    key={link.name}
-                    to={link.href}
-                    onClick={scrollToTop}
-                    className={`relative text-base font-bold whitespace-nowrap transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2.5 py-1.5 no-underline hover:no-underline ${
-                      isActive 
-                        ? 'text-foreground bg-primary/10 shadow-[0_0_20px_rgba(139,92,246,0.3)]' 
-                        : 'text-foreground/70 hover:text-foreground hover:bg-primary/5'
-                    }`}
-                  >
-                    {link.name}
-                  </Link>
-                );
-              })}
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  onClick={scrollToTop}
+                  className="relative text-foreground/80 hover:text-foreground font-bold transition-all duration-300 text-lg whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2 py-1 group"
+                >
+                  {link.name}
+                  <span className="absolute inset-0 rounded-full bg-primary/5 scale-0 group-hover:scale-100 transition-transform duration-300 -z-10" />
+                </Link>
+              ))}
             </div>
           </div>
 
@@ -82,7 +75,7 @@ const Navigation = () => {
             <Button 
               asChild 
               className="hidden md:inline-flex font-bold bg-primary hover:bg-primary/90 text-primary-foreground
-                         rounded-full px-6 py-2 hover:-translate-y-0.5 hover:shadow-glow-purple 
+                         rounded-full px-8 hover:-translate-y-0.5 hover:shadow-glow-purple 
                          transition-all duration-300 ripple-effect"
             >
               <Link to="/portal" aria-label="Login to your account">Login</Link>
