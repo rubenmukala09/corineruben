@@ -8,7 +8,7 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Upload, X } from "lucide-react";
+import { Loader2, Upload, X, Shield } from "lucide-react";
 
 interface PurchaseModalProps {
   open: boolean;
@@ -177,25 +177,39 @@ export const PurchaseModal = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl border border-border/50 bg-gradient-to-b from-card to-card/80 shadow-2xl">
-        <DialogHeader>
-          <DialogTitle className="text-2xl">{isPWYW ? "Name Your Price" : "Purchase"} - {itemName}</DialogTitle>
-          <DialogDescription>
-            {isPWYW 
-              ? "Choose what you'd like to pay. All proceeds support scam prevention education."
-              : "Complete your purchase information below."
-            }
-          </DialogDescription>
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto rounded-3xl border-2 border-primary/20 bg-gradient-to-br from-card via-card to-primary/5 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] backdrop-blur-sm">
+        <DialogHeader className="border-b border-border/50 pb-6">
+          <div className="flex items-start gap-4">
+            <div className="p-3 rounded-2xl bg-gradient-to-br from-primary to-accent shadow-lg">
+              <Loader2 className="w-7 h-7 text-primary-foreground" />
+            </div>
+            <div className="flex-1">
+              <DialogTitle className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-2">
+                {isPWYW ? "Name Your Price" : "Secure Checkout"}
+              </DialogTitle>
+              <DialogDescription className="text-base">
+                {isPWYW 
+                  ? "Choose what you'd like to pay. All proceeds support scam prevention education."
+                  : `Complete your purchase for ${itemName}`
+                }
+              </DialogDescription>
+            </div>
+          </div>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Pricing */}
-          <div className="bg-muted p-4 rounded-lg space-y-3">
+        <form onSubmit={handleSubmit} className="space-y-7 pt-4">
+          {/* Pricing Section */}
+          <div className="bg-gradient-to-br from-primary/5 to-accent/5 p-6 rounded-2xl border border-primary/20 shadow-inner space-y-4">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+              <span className="text-xs font-bold text-primary uppercase tracking-wider">Order Summary</span>
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+            </div>
             {isPWYW ? (
               <div>
-                <Label htmlFor="customerPrice">Your Price (minimum $1) *</Label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
+                <Label htmlFor="customerPrice" className="text-base font-semibold">Your Price (minimum $1) *</Label>
+                <div className="relative mt-2">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground text-lg font-bold">$</span>
                   <Input
                     id="customerPrice"
                     type="number"
@@ -204,26 +218,27 @@ export const PurchaseModal = ({
                     required
                     value={formData.customerPrice}
                     onChange={(e) => setFormData({ ...formData, customerPrice: e.target.value })}
-                    className="pl-8"
+                    className="pl-10 h-14 text-2xl font-bold rounded-xl border-2"
                     placeholder="10.00"
                   />
                 </div>
                 {suggestedPrice > 0 && (
-                  <p className="text-sm text-muted-foreground mt-1">
+                  <p className="text-sm text-muted-foreground mt-2 flex items-center gap-2">
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary/50" />
                     Suggested: ${suggestedPrice.toFixed(2)}
                   </p>
                 )}
               </div>
             ) : (
-              <div className="flex justify-between text-sm">
-                <span>Price per item:</span>
-                <span className="font-semibold">${customerPrice.toFixed(2)}</span>
+              <div className="flex justify-between items-center text-base bg-card/50 p-4 rounded-xl">
+                <span className="text-muted-foreground">Price per item:</span>
+                <span className="font-bold text-xl">${customerPrice.toFixed(2)}</span>
               </div>
             )}
 
             {itemType === 'product' && (
-              <div>
-                <Label htmlFor="quantity">Quantity *</Label>
+              <div className="bg-card/50 p-4 rounded-xl">
+                <Label htmlFor="quantity" className="text-base font-semibold">Quantity *</Label>
                 <Input
                   id="quantity"
                   type="number"
@@ -232,45 +247,52 @@ export const PurchaseModal = ({
                   required
                   value={formData.quantity}
                   onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
+                  className="mt-2 h-12 text-lg rounded-xl border-2"
                 />
               </div>
             )}
 
             {quantity > 1 && (
-              <div className="flex justify-between text-sm">
-                <span>Subtotal ({quantity} items):</span>
-                <span className="font-semibold">${subtotal.toFixed(2)}</span>
+              <div className="flex justify-between items-center text-base bg-card/30 p-3 rounded-xl">
+                <span className="text-muted-foreground">Subtotal ({quantity} items):</span>
+                <span className="font-bold text-lg">${subtotal.toFixed(2)}</span>
               </div>
             )}
 
             {isVeteran && (
-              <div className="flex justify-between text-sm text-success">
-                <span>Veteran Discount ({veteranDiscountPercent}%):</span>
-                <span className="font-semibold">-${discountAmount.toFixed(2)}</span>
+              <div className="flex justify-between items-center bg-success/10 text-success p-3 rounded-xl">
+                <span className="font-semibold">🇺🇸 Veteran Discount ({veteranDiscountPercent}%):</span>
+                <span className="font-bold text-lg">-${discountAmount.toFixed(2)}</span>
               </div>
             )}
 
-            <div className="flex justify-between text-lg font-bold border-t border-border pt-2">
-              <span>Total:</span>
-              <span className="text-primary">${finalPrice.toFixed(2)}</span>
+            <div className="flex justify-between items-center bg-gradient-to-r from-primary/10 to-accent/10 p-5 rounded-xl border-2 border-primary/30 shadow-lg mt-4">
+              <span className="text-xl font-bold">Total Amount:</span>
+              <span className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">${finalPrice.toFixed(2)}</span>
             </div>
           </div>
 
           {/* Contact Information */}
-          <div className="space-y-4">
+          <div className="bg-card/50 p-6 rounded-2xl border border-border/50 space-y-5">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+              <span className="text-xs font-bold text-primary uppercase tracking-wider">Contact Details</span>
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+            </div>
             <div>
-              <Label htmlFor="fullName">Full Name *</Label>
+              <Label htmlFor="fullName" className="text-base font-semibold">Full Name *</Label>
               <Input
                 id="fullName"
                 required
                 value={formData.fullName}
                 onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                 placeholder="John Doe"
+                className="mt-2 h-12 rounded-xl"
               />
             </div>
 
             <div>
-              <Label htmlFor="email">Email *</Label>
+              <Label htmlFor="email" className="text-base font-semibold">Email *</Label>
               <Input
                 id="email"
                 type="email"
@@ -278,44 +300,49 @@ export const PurchaseModal = ({
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 placeholder="john@example.com"
+                className="mt-2 h-12 rounded-xl"
               />
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-xs text-muted-foreground mt-2 flex items-center gap-2">
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary/50" />
                 Payment instructions will be sent here
               </p>
             </div>
 
             <div>
-              <Label htmlFor="phone">Phone</Label>
+              <Label htmlFor="phone" className="text-base font-semibold">Phone</Label>
               <Input
                 id="phone"
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 placeholder="(555) 123-4567"
+                className="mt-2 h-12 rounded-xl"
               />
             </div>
 
             <div>
-              <Label htmlFor="message">Message (Optional)</Label>
+              <Label htmlFor="message" className="text-base font-semibold">Message (Optional)</Label>
               <Textarea
                 id="message"
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 placeholder="Any special instructions or questions..."
-                rows={2}
+                rows={3}
+                className="mt-2 rounded-xl"
               />
             </div>
           </div>
 
           {/* Veteran Status */}
-          <div className="border border-primary/20 rounded-lg p-4 space-y-4 bg-primary/5">
+          <div className="border-2 border-primary/30 rounded-2xl p-6 space-y-5 bg-gradient-to-br from-primary/10 to-accent/10 shadow-inner">
             <div className="flex items-center justify-between">
               <div>
-                <Label htmlFor="veteran-toggle" className="text-base font-semibold">
-                  🇺🇸 Veteran or First Responder?
+                <Label htmlFor="veteran-toggle" className="text-lg font-bold flex items-center gap-2">
+                  <span className="text-2xl">🇺🇸</span>
+                  Veteran or First Responder?
                 </Label>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Receive {veteranDiscountPercent}% discount
+                <p className="text-sm text-muted-foreground mt-2 ml-8">
+                  Receive <span className="font-bold text-success">{veteranDiscountPercent}%</span> discount on your purchase
                 </p>
               </div>
               <Switch
@@ -326,11 +353,11 @@ export const PurchaseModal = ({
             </div>
 
             {isVeteran && (
-              <div className="space-y-4 pt-2">
+              <div className="space-y-5 pt-4 bg-card/50 p-5 rounded-xl border border-border/50">
                 <div>
-                  <Label htmlFor="veteranType">Service Type *</Label>
+                  <Label htmlFor="veteranType" className="text-base font-semibold">Service Type *</Label>
                   <Select value={veteranType} onValueChange={setVeteranType} required={isVeteran}>
-                    <SelectTrigger>
+                    <SelectTrigger className="mt-2 h-12 rounded-xl">
                       <SelectValue placeholder="Select your service type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -343,7 +370,7 @@ export const PurchaseModal = ({
                 </div>
 
                 <div>
-                  <Label htmlFor="veteranId">Last 4 Digits of ID/Badge Number *</Label>
+                  <Label htmlFor="veteranId" className="text-base font-semibold">Last 4 Digits of ID/Badge Number *</Label>
                   <Input
                     id="veteranId"
                     maxLength={4}
@@ -351,30 +378,42 @@ export const PurchaseModal = ({
                     value={veteranIdLast4}
                     onChange={(e) => setVeteranIdLast4(e.target.value.replace(/\D/g, ''))}
                     placeholder="1234"
+                    className="mt-2 h-12 rounded-xl"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="veteranDoc">Upload Verification (Optional)</Label>
+                  <Label htmlFor="veteranDoc" className="text-base font-semibold">Upload Verification (Optional)</Label>
                   <div className="mt-2">
                     {veteranDocFile ? (
-                      <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
-                        <span className="text-sm flex-1 truncate">{veteranDocFile.name}</span>
+                      <div className="flex items-center gap-3 p-4 bg-success/10 border border-success/30 rounded-xl">
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-success mb-1">File uploaded</p>
+                          <p className="text-xs text-muted-foreground truncate">{veteranDocFile.name}</p>
+                        </div>
                         <Button
                           type="button"
                           variant="ghost"
                           size="sm"
                           onClick={() => setVeteranDocFile(null)}
+                          className="hover:bg-destructive/20"
                         >
-                          <X className="w-4 h-4" />
+                          <X className="w-5 h-5" />
                         </Button>
                       </div>
                     ) : (
-                      <label className="flex flex-col items-center gap-2 p-4 border-2 border-dashed border-border rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
-                        <Upload className="w-6 h-6 text-muted-foreground" />
-                        <span className="text-sm text-muted-foreground">
-                          Click to upload DD-214, ID card, or badge (PDF, JPG, PNG - Max 5MB)
-                        </span>
+                      <label className="flex flex-col items-center gap-3 p-6 border-2 border-dashed border-primary/30 rounded-xl cursor-pointer hover:bg-primary/5 hover:border-primary/50 transition-all">
+                        <div className="p-3 rounded-full bg-primary/10">
+                          <Upload className="w-7 h-7 text-primary" />
+                        </div>
+                        <div className="text-center">
+                          <p className="text-sm font-semibold text-foreground mb-1">
+                            Click to upload verification
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            DD-214, ID card, or badge (PDF, JPG, PNG - Max 5MB)
+                          </p>
+                        </div>
                         <input
                           id="veteranDoc"
                           type="file"
@@ -385,8 +424,9 @@ export const PurchaseModal = ({
                       </label>
                     )}
                   </div>
-                  <p className="text-xs text-muted-foreground mt-2">
-                    Uploading verification speeds up processing. We may request documentation if not provided.
+                  <p className="text-xs text-muted-foreground mt-3 flex items-start gap-2">
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary/50 mt-1.5" />
+                    <span>Uploading verification speeds up processing. We may request documentation if not provided.</span>
                   </p>
                 </div>
               </div>
@@ -394,31 +434,38 @@ export const PurchaseModal = ({
           </div>
 
           {/* Submit Button */}
-          <div className="flex gap-3">
+          <div className="flex gap-4 pt-4 border-t border-border/50">
             <Button
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="flex-1"
+              className="flex-1 h-14 text-base rounded-xl border-2"
               disabled={isSubmitting || isUploadingDoc}
             >
               Cancel
             </Button>
-            <Button type="submit" className="flex-1" disabled={isSubmitting || isUploadingDoc}>
+            <Button 
+              type="submit" 
+              className="flex-1 h-14 text-base font-bold rounded-xl bg-gradient-to-r from-primary to-accent hover:shadow-lg transition-all" 
+              disabled={isSubmitting || isUploadingDoc}
+            >
               {isSubmitting || isUploadingDoc ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {isUploadingDoc ? "Uploading..." : "Submitting..."}
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  {isUploadingDoc ? "Uploading..." : "Processing..."}
                 </>
               ) : (
-                "Submit Purchase"
+                "Complete Purchase"
               )}
             </Button>
           </div>
 
-          <p className="text-xs text-center text-muted-foreground">
-            After submission, you'll receive payment instructions via email. No payment is processed until you approve.
-          </p>
+          <div className="bg-primary/5 p-4 rounded-xl border border-primary/20">
+            <p className="text-xs text-center text-muted-foreground flex items-center justify-center gap-2">
+              <Shield className="w-4 h-4 text-primary" />
+              <span>After submission, you'll receive payment instructions via email. No payment is processed until you approve.</span>
+            </p>
+          </div>
         </form>
       </DialogContent>
     </Dialog>

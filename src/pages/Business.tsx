@@ -618,11 +618,12 @@ const Business = () => {
             </Card>
 
             {/* Standard Care - Featured */}
-            <Card className="p-6 border-2 border-primary relative rounded-2xl shadow-[0_8px_30px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)] transition-all">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-3 py-1 rounded-full text-xs font-bold shadow-[0_4px_12px_rgba(139,92,246,0.3)]">
+            <div className="relative">
+              <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
                 MOST POPULAR
               </div>
-              <h3 className="text-xl font-bold mb-3">Standard Care</h3>
+            <Card className="p-6 border-2 border-primary rounded-2xl shadow-[0_8px_30px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)] transition-all">
+              <h3 className="text-xl font-bold mb-3 mt-2">Standard Care</h3>
               <p className="text-3xl font-bold gradient-text-primary mb-2">
                 {getInsurancePrice(399).display}<span className="text-base text-muted-foreground">{getInsurancePrice(399).period}</span>
               </p>
@@ -678,6 +679,7 @@ const Business = () => {
                 GET STANDARD CARE
               </Button>
             </Card>
+            </div>
 
             {/* Premium Care */}
             <Card className="p-6 rounded-2xl border-border/50 hover:shadow-medium transition-all hover:-translate-y-1">

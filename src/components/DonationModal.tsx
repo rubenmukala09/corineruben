@@ -108,15 +108,24 @@ export const DonationModal = ({ open, onOpenChange, type = 'general' }: Donation
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl border border-border/50 bg-gradient-to-b from-card to-card/80 shadow-2xl">
-        <DialogHeader>
-          <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 rounded-lg bg-primary/10">{getIcon()}</div>
-            <DialogTitle className="text-2xl">{getTitle()}</DialogTitle>
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto rounded-3xl border-2 border-primary/20 bg-gradient-to-br from-card via-card to-primary/5 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] backdrop-blur-sm">
+        <DialogHeader className="border-b border-border/50 pb-6">
+          <div className="flex items-start gap-4">
+            <div className="p-3 rounded-2xl bg-gradient-to-br from-primary to-accent shadow-lg">
+              {getIcon()}
+            </div>
+            <div className="flex-1">
+              <DialogTitle className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-2">
+                {getTitle()}
+              </DialogTitle>
+              <p className="text-base text-muted-foreground">
+                Support scam prevention education and community safety programs
+              </p>
+            </div>
           </div>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-7 pt-4">
           {/* Donation Type Selection */}
           {type !== 'monthly' && (
             <div className="space-y-3">
@@ -135,8 +144,13 @@ export const DonationModal = ({ open, onOpenChange, type = 'general' }: Donation
           )}
 
           {/* Amount Selection */}
-          <div className="space-y-3">
-            <Label>Amount</Label>
+          <div className="bg-gradient-to-br from-primary/5 to-accent/5 p-6 rounded-2xl border border-primary/20 shadow-inner space-y-4">
+            <div className="flex items-center gap-2">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+              <span className="text-xs font-bold text-primary uppercase tracking-wider">Donation Amount</span>
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+            </div>
+            <Label className="text-base font-semibold">Select or Enter Amount</Label>
             {type === 'sponsor' && (
               <p className="text-sm text-muted-foreground">$100 sponsors one complete training class</p>
             )}
@@ -189,8 +203,12 @@ export const DonationModal = ({ open, onOpenChange, type = 'general' }: Donation
           </div>
 
           {/* Contact Information */}
-          <Card className="p-4 space-y-4">
-            <h3 className="font-semibold">Contact Information</h3>
+          <Card className="p-6 rounded-2xl border border-border/50 bg-card/50 space-y-5">
+            <div className="flex items-center gap-2">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+              <span className="text-xs font-bold text-primary uppercase tracking-wider">Your Information</span>
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+            </div>
             <div className="space-y-3">
               <div>
                 <Label htmlFor="donor_name">Full Name *</Label>
@@ -286,18 +304,27 @@ export const DonationModal = ({ open, onOpenChange, type = 'general' }: Donation
             </div>
           )}
 
-          <div className="bg-primary/5 p-4 rounded-lg">
-            <p className="text-sm text-muted-foreground">
-              100% of your donation supports community safety programs, scholarships, and caregiver training initiatives.
+          <div className="bg-gradient-to-r from-primary/10 to-accent/10 p-5 rounded-xl border border-primary/20">
+            <p className="text-sm text-center font-medium">
+              💚 100% of your donation supports community safety programs, scholarships, and caregiver training initiatives.
             </p>
           </div>
 
-          <div className="flex gap-3">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="flex-1">
+          <div className="flex gap-4 pt-4 border-t border-border/50">
+            <Button 
+              type="button" 
+              variant="outline" 
+              onClick={() => onOpenChange(false)} 
+              className="flex-1 h-14 text-base rounded-xl border-2"
+            >
               Cancel
             </Button>
-            <Button type="submit" disabled={loading || !selectedAmount} className="flex-1">
-              {loading ? "Processing..." : "Submit Donation"}
+            <Button 
+              type="submit" 
+              disabled={loading || !selectedAmount} 
+              className="flex-1 h-14 text-base font-bold rounded-xl bg-gradient-to-r from-primary to-accent hover:shadow-lg transition-all"
+            >
+              {loading ? "Processing..." : "Complete Donation"}
             </Button>
           </div>
         </form>
