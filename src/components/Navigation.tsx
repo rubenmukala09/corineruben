@@ -47,13 +47,13 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex flex-1 items-center justify-center ml-8" role="navigation" aria-label="Main navigation">
-            <div className="flex items-center space-x-6 xl:space-x-8">
+            <div className="flex items-center space-x-4 xl:space-x-6">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   to={link.href}
                   onClick={scrollToTop}
-                  className="relative text-foreground/80 hover:text-foreground font-bold transition-all duration-300 text-base xl:text-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-3 py-2 group no-underline hover:bg-primary/5 hover:scale-105"
+                  className="relative text-foreground/80 hover:text-foreground font-bold transition-all duration-300 text-sm xl:text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2 py-2 group no-underline hover:bg-primary/5 hover:scale-105 whitespace-nowrap"
                 >
                   <span className="relative">
                     {link.name}
@@ -65,18 +65,18 @@ const Navigation = () => {
           </div>
 
           {/* Right Side - Phone & Login */}
-          <div className="flex items-center gap-3 xl:gap-4">
+          <div className="flex items-center gap-2 xl:gap-3">
             <a
               href="tel:9375550199"
-              className="hidden md:flex items-center gap-2 text-sm xl:text-base text-foreground/80 hover:text-foreground font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-3 py-2 no-underline hover:bg-primary/5 hover:scale-105 group"
+              className="hidden md:flex items-center gap-2 text-xs xl:text-sm text-foreground/80 hover:text-foreground font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2 py-2 no-underline hover:bg-primary/5 hover:scale-105 group whitespace-nowrap"
               aria-label="Call us at 937-555-0199"
             >
-              <Phone className="w-4 h-4 xl:w-5 xl:h-5 transition-transform group-hover:scale-110" aria-hidden="true" />
+              <Phone className="w-4 h-4 transition-transform group-hover:scale-110" aria-hidden="true" />
               <span>(937) 555-0199</span>
             </a>
             <Button 
               asChild 
-              className="hidden md:inline-flex font-bold bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground rounded-full px-6 xl:px-8 py-3 text-sm xl:text-base hover:-translate-y-0.5 hover:shadow-glow-purple transition-all duration-300 hover:scale-105"
+              className="hidden md:inline-flex font-bold bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground rounded-full px-4 xl:px-6 py-2 text-xs xl:text-sm hover:-translate-y-0.5 hover:shadow-glow-purple transition-all duration-300 hover:scale-105 whitespace-nowrap"
             >
               <Link to="/portal" aria-label="Login to your account">Login</Link>
             </Button>

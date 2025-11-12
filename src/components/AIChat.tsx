@@ -7,8 +7,10 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { useAIChat } from "@/contexts/AIChatContext";
+import { supabase } from "@/integrations/supabase/client";
 import { 
   MessageSquare, 
   Send, 
@@ -19,8 +21,14 @@ import {
   Loader2,
   X,
   Mic,
-  MicOff
+  MicOff,
+  Volume2,
+  VolumeX,
+  Phone,
+  Mail,
+  ExternalLink
 } from "lucide-react";
+import { Link } from "react-router-dom";
 import loraAvatar from "@/assets/lora-avatar.png";
 
 interface Message {
@@ -38,9 +46,11 @@ export const AIChat = () => {
   const [mode, setMode] = useState<AIMode>("chat");
   const [isRecording, setIsRecording] = useState(false);
   const [isTalking, setIsTalking] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<any>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const { toast } = useToast();
 
   const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-chat`;
@@ -101,6 +111,7 @@ export const AIChat = () => {
       const newMessages = [...messages, { role: "user" as const, content: userMessage }];
       setMessages(newMessages);
       setIsLoading(true);
+      setIsTalking(true);
 
       const response = await fetch(CHAT_URL, {
         method: "POST",
@@ -167,10 +178,17 @@ export const AIChat = () => {
         }
       }
 
+      // Generate speech for the complete response
+      if (assistantMessage && !isSpeaking) {
+        await speakText(assistantMessage);
+      }
+
       setIsLoading(false);
+      setIsTalking(false);
     } catch (error) {
       console.error("Chat error:", error);
       setIsLoading(false);
+      setIsTalking(false);
     if (error instanceof Error && error.message.includes("Too many requests")) {
       toast({
         title: "Rate limit exceeded",
@@ -187,15 +205,65 @@ export const AIChat = () => {
     }
   };
 
+  const speakText = async (text: string) => {
+    try {
+      setIsSpeaking(true);
+      
+      const { data, error } = await supabase.functions.invoke('text-to-speech', {
+        body: { text, voice: 'nova' }
+      });
+
+      if (error) throw error;
+
+      if (data?.audioContent) {
+        // Stop any currently playing audio
+        if (audioRef.current) {
+          audioRef.current.pause();
+          audioRef.current.currentTime = 0;
+        }
+
+        // Create audio element and play
+        const audio = new Audio(`data:audio/mp3;base64,${data.audioContent}`);
+        audioRef.current = audio;
+        
+        audio.onended = () => setIsSpeaking(false);
+        audio.onerror = () => {
+          setIsSpeaking(false);
+          toast({
+            title: "Audio Error",
+            description: "Failed to play audio response",
+            variant: "destructive",
+          });
+        };
+        
+        await audio.play();
+      }
+    } catch (error) {
+      console.error("TTS error:", error);
+      setIsSpeaking(false);
+      toast({
+        title: "Voice Error",
+        description: "Failed to generate voice response",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const stopSpeaking = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      setIsSpeaking(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
     const userMessage = input.trim();
     setInput("");
-    setIsTalking(true);
     await streamChat(userMessage);
-    setTimeout(() => setIsTalking(false), 2000);
   };
 
   const toggleVoiceRecording = () => {
@@ -261,7 +329,7 @@ export const AIChat = () => {
       <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-primary/10 to-accent/10">
         <div className="flex items-center gap-3">
           <Avatar className={`h-10 w-10 border-2 border-primary/20 transition-all duration-300 ${
-            isTalking ? 'animate-talking-pulse scale-110' : 'animate-gentle-pulse'
+            isTalking || isSpeaking ? 'animate-talking-pulse scale-110' : 'animate-gentle-pulse'
           }`}>
             <AvatarImage src={loraAvatar} alt="Lora AI Assistant" className="object-cover" />
             <AvatarFallback>LA</AvatarFallback>
@@ -269,18 +337,29 @@ export const AIChat = () => {
           <div>
             <h3 className="font-semibold text-base">Lora</h3>
             <p className="text-xs text-muted-foreground">
-              {isTalking ? "Thinking..." : "AI Assistant"}
+              {isTalking ? "Thinking..." : isSpeaking ? "Speaking..." : "AI Assistant"}
             </p>
           </div>
         </div>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={closeChat}
-          className="hover:bg-destructive/10 hover:text-destructive transition-colors"
-        >
-          <X className="h-4 w-4" />
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={isSpeaking ? stopSpeaking : undefined}
+            disabled={!isSpeaking}
+            className={`transition-colors ${isSpeaking ? 'text-primary hover:text-primary/80' : 'text-muted-foreground'}`}
+          >
+            {isSpeaking ? <Volume2 className="h-4 w-4 animate-pulse" /> : <VolumeX className="h-4 w-4" />}
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={closeChat}
+            className="hover:bg-destructive/10 hover:text-destructive transition-colors"
+          >
+            <X className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
 
       <Tabs value={mode} onValueChange={(v) => setMode(v as AIMode)} className="flex-1 flex flex-col">
@@ -340,14 +419,19 @@ export const AIChat = () => {
                   ))}
                   {isLoading && (
                     <div className="flex gap-2 justify-start animate-fade-in">
-                      <Avatar className="h-8 w-8 flex-shrink-0">
+                      <Avatar className="h-8 w-8 flex-shrink-0 animate-gentle-pulse">
                         <AvatarImage src={loraAvatar} alt="Lora" className="object-cover" />
                         <AvatarFallback>LA</AvatarFallback>
                       </Avatar>
-                      <div className="max-w-[80%] rounded-xl p-3 bg-muted/80 backdrop-blur-sm space-y-2">
-                        <Skeleton className="h-4 w-48 bg-muted-foreground/20" />
-                        <Skeleton className="h-4 w-36 bg-muted-foreground/20" />
-                        <Skeleton className="h-4 w-40 bg-muted-foreground/20" />
+                      <div className="max-w-[80%] rounded-xl p-4 bg-muted/80 backdrop-blur-sm">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm text-muted-foreground font-medium">Lora is typing</span>
+                          <div className="flex gap-1">
+                            <span className="w-2 h-2 bg-primary rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+                            <span className="w-2 h-2 bg-primary rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+                            <span className="w-2 h-2 bg-primary rounded-full animate-bounce"></span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -356,6 +440,37 @@ export const AIChat = () => {
               )}
             </div>
           </ScrollArea>
+
+          {/* Quick Actions */}
+          <div className="px-4 py-2 border-t bg-muted/30">
+            <div className="flex items-center justify-between gap-2">
+              <a
+                href="tel:9375550199"
+                className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors group"
+              >
+                <Phone className="w-3 h-3 group-hover:scale-110 transition-transform" />
+                <span>Call Us</span>
+              </a>
+              <Separator orientation="vertical" className="h-4" />
+              <Link
+                to="/contact"
+                className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors group"
+                onClick={closeChat}
+              >
+                <Mail className="w-3 h-3 group-hover:scale-110 transition-transform" />
+                <span>Contact</span>
+              </Link>
+              <Separator orientation="vertical" className="h-4" />
+              <Link
+                to="/business"
+                className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors group"
+                onClick={closeChat}
+              >
+                <ExternalLink className="w-3 h-3 group-hover:scale-110 transition-transform" />
+                <span>Services</span>
+              </Link>
+            </div>
+          </div>
 
           <form onSubmit={handleSubmit} className="p-4 border-t bg-gradient-to-t from-background/50 to-transparent backdrop-blur-sm">
             <div className="flex gap-2">
