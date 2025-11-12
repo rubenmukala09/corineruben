@@ -38,15 +38,14 @@ export const AIChat = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [isTalking, setIsTalking] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<any>(null);
   const { toast } = useToast();
 
   const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-chat`;
 
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   // Initialize speech recognition
@@ -285,51 +284,55 @@ export const AIChat = () => {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value={mode} className="flex-1 flex flex-col m-0">
-          <ScrollArea className="flex-1 p-4" ref={scrollRef}>
-            {messages.length === 0 ? (
-              <div className="text-center text-muted-foreground py-8">
-                <div className="mb-2">{getModeIcon()}</div>
-                <p className="text-sm">Start a conversation with our AI assistant</p>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {messages.map((msg, idx) => (
-                   <div
-                    key={idx}
-                    className={`flex gap-2 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-                  >
-                     {msg.role === "assistant" && (
-                      <Avatar className="h-8 w-8 flex-shrink-0">
-                        <AvatarImage src={loraAvatar} alt="Lora" className="object-cover" />
-                        <AvatarFallback>LA</AvatarFallback>
-                      </Avatar>
-                    )}
+        <TabsContent value={mode} className="flex-1 flex flex-col m-0 overflow-hidden">
+          <ScrollArea className="flex-1 px-4">
+            <div className="py-4">
+              {messages.length === 0 ? (
+                <div className="text-center text-muted-foreground py-8">
+                  <div className="mb-2 flex justify-center">{getModeIcon()}</div>
+                  <p className="text-sm">Start a conversation with our AI assistant</p>
+                  <p className="text-xs mt-2 text-muted-foreground/70">I can help with scam protection, training, and business solutions</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {messages.map((msg, idx) => (
                     <div
-                      className={`max-w-[80%] rounded-xl p-3 animate-fade-in ${
-                        msg.role === "user"
-                          ? "bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-md"
-                          : "bg-muted/80 backdrop-blur-sm"
-                      }`}
+                      key={idx}
+                      className={`flex gap-2 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                     >
-                      <p className="text-sm whitespace-pre-wrap break-words overflow-wrap-anywhere">
-                        {msg.content}
-                      </p>
+                      {msg.role === "assistant" && (
+                        <Avatar className="h-8 w-8 flex-shrink-0">
+                          <AvatarImage src={loraAvatar} alt="Lora" className="object-cover" />
+                          <AvatarFallback>LA</AvatarFallback>
+                        </Avatar>
+                      )}
+                      <div
+                        className={`max-w-[80%] rounded-xl p-3 animate-fade-in ${
+                          msg.role === "user"
+                            ? "bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-md"
+                            : "bg-muted/80 backdrop-blur-sm"
+                        }`}
+                      >
+                        <p className="text-sm whitespace-pre-wrap break-words">
+                          {msg.content}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            )}
+                  ))}
+                  <div ref={messagesEndRef} />
+                </div>
+              )}
+            </div>
           </ScrollArea>
 
-          <form onSubmit={handleSubmit} className="p-4 border-t bg-gradient-to-t from-background to-transparent">
+          <form onSubmit={handleSubmit} className="p-4 border-t bg-gradient-to-t from-background/50 to-transparent backdrop-blur-sm">
             <div className="flex gap-2">
               <div className="relative flex-1">
                 <Textarea
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder={getModePlaceholder()}
-                  className="min-h-[60px] resize-none pr-12 rounded-xl"
+                  className="min-h-[70px] max-h-[140px] resize-none pr-12 rounded-xl border-2 focus:border-primary/50 transition-all"
                   disabled={isLoading || isRecording}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && !e.shiftKey) {
