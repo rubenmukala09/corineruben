@@ -7,7 +7,6 @@ import eldersHero5 from '@/assets/elders-hero-5.jpg';
 import eldersHero6 from '@/assets/elders-hero-6.jpg';
 import eldersHero7 from '@/assets/elders-hero-7.jpg';
 import eldersHero8 from '@/assets/elders-hero-8.jpg';
-import heroHomepage from '@/assets/hero-homepage.jpg';
 import heroAbout from '@/assets/hero-about-new.jpg';
 import heroTraining from '@/assets/hero-training.jpg';
 import heroBusiness from '@/assets/hero-business-new.jpg';
@@ -21,7 +20,6 @@ const images = [
   eldersHero6,
   eldersHero7,
   eldersHero8,
-  heroHomepage,
   heroAbout,
   heroTraining,
   heroBusiness

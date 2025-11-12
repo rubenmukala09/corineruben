@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { Shield } from "lucide-react";
 import TransitioningBackground from "./TransitioningBackground";
 import TransitioningHeroText from "./TransitioningHeroText";
 import ScrollIndicator from "./ScrollIndicator";
@@ -146,11 +147,20 @@ const Hero = ({ backgroundImage, useTransitioningBackground = false, useTransiti
       {/* Scroll Indicator */}
       {showScrollIndicator && <ScrollIndicator />}
       
-      {/* AI Disclaimer - Small badge at bottom-left of hero image */}
+      {/* AI Disclaimer - Professional privacy badge */}
       {showPrivacyDisclaimer && showDisclaimer && (
         <div className="absolute bottom-6 left-6 z-10 animate-fade-in" style={{ animationDelay: '1s' }}>
-          <div className="bg-black/70 backdrop-blur-sm text-white/90 text-[10px] px-3 py-1.5 rounded-md">
-            AI-generated imagery
+          <div className="bg-black/80 backdrop-blur-md text-white/95 text-xs px-4 py-2 rounded-lg border border-white/10 shadow-lg max-w-xs">
+            <div className="flex items-start gap-2">
+              <Shield className="w-4 h-4 mt-0.5 flex-shrink-0 text-primary" />
+              <div>
+                <p className="font-semibold mb-0.5">Privacy-First Design</p>
+                <p className="text-[10px] text-white/80 leading-relaxed">
+                  These AI-generated images illustrate our services while protecting your privacy. 
+                  We never use personal photos or information for any purpose.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       )}
