@@ -174,33 +174,37 @@ const Business = () => {
               </Card>
             </ScrollReveal>
 
-            <Card className="p-8 hover:shadow-medium transition-shadow">
-              <div className="flex items-start gap-4">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
-                  <MessageSquare className="w-8 h-8 text-accent" />
+            <ScrollReveal animation="fade-up" delay={300}>
+              <Card className="p-8 hover:shadow-medium transition-shadow">
+                <div className="flex items-start gap-4">
+                  <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <MessageSquare className="w-8 h-8 text-accent" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold mb-3">Customer Support Bot</h3>
+                    <p className="text-muted-foreground">
+                      Handle common questions instantly on website, text, or WhatsApp. Focus your team on complex issues.
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-2xl font-bold mb-3">Customer Support Bot</h3>
-                  <p className="text-muted-foreground">
-                    Handle common questions instantly on website, text, or WhatsApp. Focus your team on complex issues.
-                  </p>
-                </div>
-              </div>
-            </Card>
+              </Card>
+            </ScrollReveal>
 
-            <Card className="p-8 hover:shadow-medium transition-shadow">
-              <div className="flex items-start gap-4">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Calendar className="w-8 h-8 text-accent" />
+            <ScrollReveal animation="fade-up" delay={450}>
+              <Card className="p-8 hover:shadow-medium transition-shadow">
+                <div className="flex items-start gap-4">
+                  <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Calendar className="w-8 h-8 text-accent" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold mb-3">Intake & Scheduling</h3>
+                    <p className="text-muted-foreground">
+                      Collect client info, qualify leads, book meetings automatically. Eliminate back-and-forth emails.
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-2xl font-bold mb-3">Intake & Scheduling</h3>
-                  <p className="text-muted-foreground">
-                    Collect client info, qualify leads, book meetings automatically. Eliminate back-and-forth emails.
-                  </p>
-                </div>
-              </div>
-            </Card>
+              </Card>
+            </ScrollReveal>
           </div>
         </div>
       </section>
