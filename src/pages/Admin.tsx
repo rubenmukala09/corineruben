@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AdminSidebar } from "@/components/AdminSidebar";
 import { AdminTopBar } from "@/components/AdminTopBar";
 import { DashboardStats } from "@/components/admin/DashboardStats";
+import { RevenueChart } from "@/components/admin/RevenueChart";
 import { Card } from "@/components/ui/card";
 
 export default function Admin() {
@@ -29,9 +30,10 @@ export default function Admin() {
           </div>
 
           {/* Dashboard Stats Cards */}
-          <div className="mb-8">
-            <DashboardStats />
-          </div>
+          <DashboardStats />
+
+          {/* Revenue Overview Chart */}
+          <RevenueChart />
 
           {/* Additional Content Area */}
           <Card className="p-6">
