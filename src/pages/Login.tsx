@@ -81,7 +81,7 @@ const Login = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-teal-500 to-purple-600 animate-gradient-shift" />
       
       {/* Login Card */}
-      <Card className="w-full max-w-[450px] p-8 bg-white rounded-2xl shadow-2xl relative z-10 animate-fade-in">
+      <Card className="w-full max-w-[450px] p-8 bg-white rounded-2xl shadow-2xl relative z-10 animate-[slide-up_0.6s_ease-out]">
         {/* Logo */}
         <div className="flex justify-center mb-6">
           <div className="w-20 h-20 bg-gradient-to-br from-purple-600 to-teal-500 rounded-full flex items-center justify-center shadow-lg">
@@ -97,43 +97,61 @@ const Login = () => {
 
         {/* Login Form */}
         <form onSubmit={handleLogin} className="space-y-5">
-          <div className="space-y-2">
-            <label htmlFor="email" className="text-sm font-semibold text-foreground">
+          <div className="space-y-2 relative">
+            <label 
+              htmlFor="email" 
+              className={`absolute left-3 transition-all duration-300 pointer-events-none ${
+                email 
+                  ? 'top-0 text-xs text-purple-600 bg-white px-1 -translate-y-1/2' 
+                  : 'top-6 text-sm text-muted-foreground -translate-y-1/2'
+              }`}
+            >
               Email
             </label>
             <Input
               id="email"
               type="email"
-              placeholder="john@example.com"
+              placeholder=" "
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={isLoading}
               required
-              className="h-12 border-2"
+              className="h-12 border-2 transition-all duration-300 focus:border-purple-600 focus:shadow-[0_0_15px_rgba(168,85,247,0.3)]"
             />
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="password" className="text-sm font-semibold text-foreground">
+          <div className="space-y-2 relative">
+            <label 
+              htmlFor="password" 
+              className={`absolute left-3 transition-all duration-300 pointer-events-none ${
+                password 
+                  ? 'top-0 text-xs text-purple-600 bg-white px-1 -translate-y-1/2' 
+                  : 'top-6 text-sm text-muted-foreground -translate-y-1/2'
+              }`}
+            >
               Password
             </label>
             <div className="relative">
               <Input
                 id="password"
                 type={showPassword ? "text" : "password"}
-                placeholder="Enter your password"
+                placeholder=" "
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={isLoading}
                 required
-                className="h-12 border-2 pr-12"
+                className="h-12 border-2 pr-12 transition-all duration-300 focus:border-purple-600 focus:shadow-[0_0_15px_rgba(168,85,247,0.3)]"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-all duration-300"
               >
-                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                {showPassword ? (
+                  <EyeOff className="w-5 h-5 transition-transform duration-300" />
+                ) : (
+                  <Eye className="w-5 h-5 transition-transform duration-300" />
+                )}
               </button>
             </div>
           </div>
@@ -161,9 +179,19 @@ const Login = () => {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full h-12 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold text-base"
+            className="w-full h-12 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold text-base transition-all duration-300 hover:-translate-y-1 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isLoading ? "Signing in..." : "Sign In to Portal"}
+            {isLoading ? (
+              <span className="flex items-center justify-center">
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Signing in...
+              </span>
+            ) : (
+              "Sign In to Portal"
+            )}
           </Button>
         </form>
 
