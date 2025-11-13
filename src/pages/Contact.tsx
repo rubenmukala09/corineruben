@@ -24,7 +24,13 @@ import customerSupport from "@/assets/customer-support.jpg";
 import heroContact from "@/assets/hero-contact-new.jpg";
 
 const contactSchema = z.object({
-  name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
+  name: z.string()
+    .trim()
+    .min(1, "Name is required")
+    .max(100, "Name must be less than 100 characters")
+    .refine((val) => val.split(' ').filter(word => word.length > 0).length >= 2, {
+      message: "Please enter your full name (first and last name)"
+    }),
   email: z.string().trim().email("Invalid email address").max(255, "Email must be less than 255 characters"),
   phone: z.string().max(20, "Phone number must be less than 20 characters").optional(),
   interest: z.string().min(1, "Please select your interest"),
@@ -53,6 +59,26 @@ const Contact = () => {
       setFormData(prev => ({ ...prev, interest: "scam-shield" }));
     }
   }, [searchParams]);
+
+  // Format phone number as user types
+  const formatPhoneNumber = (value: string) => {
+    // Remove all non-numeric characters
+    const phoneNumber = value.replace(/\D/g, '');
+    
+    // Format as (XXX) XXX-XXXX
+    if (phoneNumber.length <= 3) {
+      return phoneNumber;
+    } else if (phoneNumber.length <= 6) {
+      return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
+    } else {
+      return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, 10)}`;
+    }
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhoneNumber(e.target.value);
+    setFormData({ ...formData, phone: formatted });
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -218,15 +244,16 @@ const Contact = () => {
 
                     <div className="space-y-2">
                       <label htmlFor="phone" className="block text-sm font-bold text-foreground">
-                        Phone Number (Optional)
+                        Phone Number
                       </label>
                       <Input
                         id="phone"
                         type="tel"
                         placeholder="(937) 555-1234"
                         value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        onChange={handlePhoneChange}
                         disabled={isSubmitting}
+                        maxLength={14}
                         className="h-14 text-base border-2 focus:border-primary/50 rounded-xl"
                       />
                     </div>
@@ -234,7 +261,7 @@ const Contact = () => {
 
                   <div className="space-y-2">
                     <label htmlFor="interest" className="block text-sm font-bold text-foreground">
-                      I'm Interested In: *
+                      I'm Interested In *
                     </label>
                     <Select
                       required
@@ -246,13 +273,14 @@ const Contact = () => {
                         <SelectValue placeholder="Select an option" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="scam-shield">ScamShield Protection</SelectItem>
-                        <SelectItem value="training">Training Program</SelectItem>
-                        <SelectItem value="business">AI Agent Development</SelectItem>
-                        <SelectItem value="website">Website Design</SelectItem>
-                        <SelectItem value="insurance">AI Insurance</SelectItem>
-                        <SelectItem value="partnership">Partnership Opportunities</SelectItem>
-                        <SelectItem value="donation">Donation or Sponsorship</SelectItem>
+                        <SelectItem value="training" disabled>Select an option</SelectItem>
+                        <SelectItem value="scam-protection-training">Scam Protection Training</SelectItem>
+                        <SelectItem value="family-training">Family Training Session</SelectItem>
+                        <SelectItem value="business-ai">Business AI Solutions</SelectItem>
+                        <SelectItem value="ai-receptionist">AI Receptionist</SelectItem>
+                        <SelectItem value="website-design">Website Design</SelectItem>
+                        <SelectItem value="ai-insurance">AI Insurance</SelectItem>
+                        <SelectItem value="security-products">Physical Security Products</SelectItem>
                         <SelectItem value="general">General Inquiry</SelectItem>
                       </SelectContent>
                     </Select>
