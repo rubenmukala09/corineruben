@@ -68,10 +68,13 @@ const Navigation = () => {
           <div className="flex items-center gap-2 xl:gap-3">
             <a
               href="tel:9375550199"
-              className="hidden md:flex items-center gap-2 text-xs xl:text-sm text-foreground/80 hover:text-foreground font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2 py-2 no-underline hover:bg-primary/5 hover:scale-105 group whitespace-nowrap"
+              className="hidden md:flex items-center gap-2 text-xs xl:text-sm text-foreground/80 font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2 py-2 no-underline whitespace-nowrap"
+              style={{ transition: "color 0.3s ease" }}
+              onMouseEnter={(e) => e.currentTarget.style.color = "#14B8A6"}
+              onMouseLeave={(e) => e.currentTarget.style.color = ""}
               aria-label="Call us at 937-555-0199"
             >
-              <Phone className="w-4 h-4 transition-transform group-hover:scale-110" aria-hidden="true" />
+              <span className="text-base">📞</span>
               <span>(937) 555-0199</span>
             </a>
             <Button 
@@ -121,9 +124,12 @@ const Navigation = () => {
                 <a
                   href="tel:9375550199"
                   className="flex items-center justify-center gap-2 text-foreground py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md"
+                  style={{ transition: "color 0.3s ease" }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = "#14B8A6"}
+                  onMouseLeave={(e) => e.currentTarget.style.color = ""}
                   aria-label="Call us at 937-555-0199"
                 >
-                  <Phone className="w-4 h-4" aria-hidden="true" />
+                  <span className="text-base">📞</span>
                   <span className="font-medium">(937) 555-0199</span>
                 </a>
               </div>
