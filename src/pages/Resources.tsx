@@ -359,12 +359,12 @@ const Resources = () => {
               
               return (
                 <ScrollReveal key={index} threshold={0.3}>
-                  <Card className={`overflow-hidden hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl ${animationClass}`}>
-                    <div className="relative">
+                  <Card className={`group overflow-hidden rounded-2xl transition-all duration-[400ms] ease-in-out hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:-translate-y-2 ${animationClass}`}>
+                    <div className="relative overflow-hidden">
                       <img 
                         src={article.image} 
                         alt={article.title} 
-                        className="w-full h-[200px] object-cover" 
+                        className="w-full h-[200px] object-cover transition-transform duration-[400ms] ease-in-out group-hover:scale-108" 
                         loading="lazy" 
                       />
                       <div className="absolute top-3 left-3 bg-primary/90 text-white px-3 py-1 rounded-md text-sm font-semibold">
@@ -378,9 +378,10 @@ const Resources = () => {
                       </p>
                       <Link 
                         to="/articles" 
-                        className="text-[#14B8A6] hover:text-[#14B8A6]/80 font-semibold inline-flex items-center gap-1 transition-colors"
+                        className="text-[#14B8A6] hover:text-[#0F9A8A] font-semibold inline-flex items-center gap-1 transition-all duration-[400ms] ease-in-out group"
                       >
-                        READ MORE →
+                        <span>READ MORE</span>
+                        <span className="transition-transform duration-[400ms] ease-in-out group-hover:translate-x-[5px]">→</span>
                       </Link>
                     </div>
                   </Card>

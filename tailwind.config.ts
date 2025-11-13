@@ -144,6 +144,9 @@ export default {
       backdropBlur: {
         xs: "2px",
       },
+      scale: {
+        "108": "1.08",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
