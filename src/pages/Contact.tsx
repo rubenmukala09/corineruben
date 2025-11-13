@@ -681,7 +681,7 @@ const Contact = () => {
               </div>
 
               <div className="space-y-4">
-                <Card className="p-6 hover:shadow-strong transition-all hover:-translate-y-1 rounded-2xl border-primary/30 bg-gradient-to-br from-primary/5 to-accent/5 cursor-pointer" onClick={openChat}>
+                <Card className="p-6 hover:shadow-strong transition-all hover:-translate-y-1 rounded-2xl border-primary/30 bg-gradient-to-br from-primary/5 to-accent/5">
                   <div className="flex items-start gap-4">
                     <div className="w-14 h-14 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center flex-shrink-0 shadow-lg">
                       <MessageSquare className="w-7 h-7 text-white" />
@@ -689,7 +689,16 @@ const Contact = () => {
                     <div className="flex-1">
                       <h3 className="text-xl font-bold mb-2">Live Chat</h3>
                       <p className="text-muted-foreground mb-3">Instant responses during business hours</p>
-                      <Button variant="default" size="sm">Start Chat Now</Button>
+                      <Button 
+                        onClick={openChat}
+                        className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 animate-[pulse_2s_ease-in-out_infinite]"
+                      >
+                        <span className="mr-2">💬</span>
+                        Start Chat Now
+                      </Button>
+                      <p className="text-xs text-muted-foreground mt-2">
+                        Chat available Monday-Friday 9am-6pm ET
+                      </p>
                     </div>
                   </div>
                 </Card>
