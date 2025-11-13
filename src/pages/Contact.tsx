@@ -65,6 +65,9 @@ const Contact = () => {
     message: "",
   });
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [showForm, setShowForm] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [shakeForm, setShakeForm] = useState(false);
 
   // Pre-select service based on query parameter
   useEffect(() => {
@@ -159,6 +162,7 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitSuccess(false);
+    setErrorMessage("");
 
     try {
       const validatedData = contactSchema.parse(formData);
@@ -179,46 +183,57 @@ const Contact = () => {
 
       // Show success state
       setSubmitSuccess(true);
+      setShowForm(false);
       
       // Trigger confetti
       confetti({
-        particleCount: 100,
+        particleCount: 150,
         spread: 70,
-        origin: { y: 0.6 }
+        origin: { y: 0.6 },
+        colors: ['#a855f7', '#8b5cf6', '#7c3aed', '#6d28d9']
       });
 
       toast.success("Thank you! We'll get back to you within 24 hours.");
-      
-      // Reset form after a delay
-      setTimeout(() => {
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          interest: "",
-          language: "english",
-          message: "",
-        });
-        setSelectedDate(undefined);
-        setTouched({
-          name: false,
-          email: false,
-          phone: false,
-          message: false,
-        });
-        setSubmitSuccess(false);
-      }, 2000);
     } catch (error: any) {
+      // Show error banner
+      setErrorMessage("Something went wrong. Please try again.");
+      setShakeForm(true);
+      
+      // Remove shake animation after it completes
+      setTimeout(() => setShakeForm(false), 500);
+      
+      // Auto-dismiss error after 5 seconds
+      setTimeout(() => setErrorMessage(""), 5000);
+
       if (error instanceof z.ZodError) {
         toast.error(error.errors[0].message);
       } else {
         toast.error("Failed to send message. Please try again.");
       }
     } finally {
-      setTimeout(() => {
-        setIsSubmitting(false);
-      }, submitSuccess ? 2000 : 0);
+      setIsSubmitting(false);
     }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      interest: "",
+      language: "english",
+      message: "",
+    });
+    setSelectedDate(undefined);
+    setTouched({
+      name: false,
+      email: false,
+      phone: false,
+      message: false,
+    });
+    setSubmitSuccess(false);
+    setShowForm(true);
+    setErrorMessage("");
   };
 
   // Check if form is valid
@@ -317,8 +332,30 @@ const Contact = () => {
             <div className="animate-fade-in-up">
               <h2 className="mb-4">Send Us a Message</h2>
               <p className="text-muted-foreground mb-8">Fill out the form below and we'll get back to you within 24 hours.</p>
-              <Card className="p-10 shadow-2xl border-2 border-border/50 bg-gradient-to-b from-card to-card/80 backdrop-blur-xl rounded-3xl">
-                <form onSubmit={handleSubmit} className="space-y-7">
+              
+              {/* Error Banner */}
+              {errorMessage && (
+                <div className="mb-6 bg-red-500 text-white p-4 rounded-xl flex items-start gap-3 animate-fade-in shadow-lg">
+                  <span className="text-2xl">⚠️</span>
+                  <div className="flex-1">
+                    <p className="font-semibold">{errorMessage}</p>
+                  </div>
+                  <button
+                    onClick={() => setErrorMessage("")}
+                    className="text-white hover:text-white/80 transition-colors"
+                    aria-label="Close error message"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+              )}
+
+              {showForm ? (
+                <Card className={cn(
+                  "p-10 shadow-2xl border-2 border-border/50 bg-gradient-to-b from-card to-card/80 backdrop-blur-xl rounded-3xl transition-all",
+                  shakeForm && "animate-[shake_0.5s_ease-in-out]"
+                )}>
+                  <form onSubmit={handleSubmit} className="space-y-7">
                   <div className="space-y-2">
                     <label htmlFor="name" className="block text-sm font-bold text-foreground">
                       Full Name *
@@ -611,6 +648,27 @@ const Contact = () => {
                   </Button>
                 </form>
               </Card>
+              ) : (
+                <Card className="p-10 shadow-2xl border-2 border-border/50 bg-gradient-to-b from-card to-card/80 backdrop-blur-xl rounded-3xl text-center animate-fade-in">
+                  <div className="flex flex-col items-center gap-6">
+                    <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center">
+                      <Check className="w-20 h-20 text-green-500" />
+                    </div>
+                    <div>
+                      <h3 className="text-3xl font-bold mb-2">Thank You!</h3>
+                      <p className="text-muted-foreground text-lg">
+                        We'll contact you within 24 hours.
+                      </p>
+                    </div>
+                    <Button
+                      onClick={resetForm}
+                      className="mt-4 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 hover:scale-[1.02] transition-all"
+                    >
+                      Send Another Message
+                    </Button>
+                  </div>
+                </Card>
+              )}
             </div>
 
             {/* Contact Info */}
