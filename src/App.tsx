@@ -18,7 +18,6 @@ import { performanceMonitor } from "./utils/performanceMonitor";
 import ScrollProgressBar from "./components/ScrollProgressBar";
 import { NavigationProgress } from "./components/NavigationProgress";
 import { ScrollToTop } from "./components/ScrollToTop";
-import { useSmoothAnchorScroll } from "./hooks/useSmoothAnchorScroll";
 
 // Lazy load all pages for code splitting
 const Index = lazy(() => {
@@ -392,12 +391,38 @@ function AnimatedRoutes() {
 
 function App() {
   // Add smooth scroll behavior for anchor links
-  useSmoothAnchorScroll();
-  
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
+    
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const anchor = target.closest('a[href^="#"]');
+      
+      if (anchor && anchor instanceof HTMLAnchorElement) {
+        const href = anchor.getAttribute("href");
+        if (href && href.startsWith("#")) {
+          e.preventDefault();
+          const element = document.querySelector(href);
+          
+          if (element) {
+            const headerOffset = 80;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth"
+            });
+          }
+        }
+      }
+    };
+
+    document.addEventListener("click", handleAnchorClick);
+    
     return () => {
       document.documentElement.style.scrollBehavior = "auto";
+      document.removeEventListener("click", handleAnchorClick);
     };
   }, []);
 
