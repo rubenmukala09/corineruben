@@ -145,6 +145,14 @@ const ArticlesAdmin = lazy(() => {
   });
 });
 
+const ArticleEditor = lazy(() => {
+  performanceMonitor.startTracking('ArticleEditor');
+  return import("./pages/admin/ArticleEditor").then(module => {
+    performanceMonitor.endTracking('ArticleEditor');
+    return module;
+  });
+});
+
 const Portal = lazy(() => {
   performanceMonitor.startTracking('Portal');
   return import("./pages/Portal").then(module => {
@@ -341,6 +349,8 @@ function AnimatedRoutes() {
         <Route path="/admin" element={<PageTransition><AdminRoute><Admin /></AdminRoute></PageTransition>} />
         <Route path="/admin/content/testimonials" element={<PageTransition><AdminRoute><TestimonialsAdmin /></AdminRoute></PageTransition>} />
         <Route path="/admin/content/articles" element={<PageTransition><AdminRoute><ArticlesAdmin /></AdminRoute></PageTransition>} />
+        <Route path="/admin/content/articles/new" element={<PageTransition><AdminRoute><ArticleEditor /></AdminRoute></PageTransition>} />
+        <Route path="/admin/content/articles/:id" element={<PageTransition><AdminRoute><ArticleEditor /></AdminRoute></PageTransition>} />
         <Route path="/portal" element={<PageTransition><ProtectedRoute><Portal /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/admin" element={<PageTransition><ProtectedRoute><AdminDashboard /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/analyst" element={<PageTransition><ProtectedRoute><AnalystDashboard /></ProtectedRoute></PageTransition>} />
