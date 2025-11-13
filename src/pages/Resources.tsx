@@ -23,12 +23,12 @@ function Resources() {
   const [activeProductImages, setActiveProductImages] = useState<{ [key: string]: number }>({});
 
   const guides = [
-    { icon: Shield, title: "Scam-Proof Playbook", desc: "Complete emergency scripts & protocols", price: 29, slug: "scam-proof-playbook" },
-    { icon: Heart, title: "Caregivers' Security Guide", desc: "Protect vulnerable loved ones from scams", price: 24, slug: "caregivers-security-guide" },
-    { icon: Wifi, title: "Home Wi-Fi Safety", desc: "Secure your network in 15 minutes", price: 19, slug: "home-wifi-safety" },
-    { icon: KeyRound, title: "Password Creation Notebook Template", desc: "Offline password storage system", price: 15, slug: "password-creation-notebook" },
-    { icon: FileText, title: "Grandparent-Text 101", desc: "Spot fake 'emergency' family texts", price: 12, slug: "grandparent-text-101" },
-    { icon: Shield, title: "60-Second Pause Protocol Poster", desc: "Print and post on your fridge", price: 9, slug: "pause-protocol-poster" },
+    { icon: Shield, title: "Scam-Proof Playbook", desc: "Complete emergency scripts & protocols", price: 29, slug: "scam-proof-playbook", gradient: "from-accent/20 to-primary/20" },
+    { icon: Heart, title: "Caregivers' Security Guide", desc: "Protect vulnerable loved ones from scams", price: 24, slug: "caregivers-security-guide", gradient: "from-rose-500/20 to-pink-500/20" },
+    { icon: Wifi, title: "Home Wi-Fi Safety", desc: "Secure your network in 15 minutes", price: 19, slug: "home-wifi-safety", gradient: "from-blue-500/20 to-cyan-500/20" },
+    { icon: KeyRound, title: "Password Creation Notebook Template", desc: "Offline password storage system", price: 15, slug: "password-creation-notebook", gradient: "from-purple-500/20 to-violet-500/20" },
+    { icon: FileText, title: "Grandparent-Text 101", desc: "Spot fake 'emergency' family texts", price: 12, slug: "grandparent-text-101", gradient: "from-emerald-500/20 to-teal-500/20" },
+    { icon: Shield, title: "60-Second Pause Protocol Poster", desc: "Print and post on your fridge", price: 9, slug: "pause-protocol-poster", gradient: "from-amber-500/20 to-orange-500/20" },
   ];
 
   const products = [
@@ -168,152 +168,269 @@ function Resources() {
       <TrustBar />
 
       {/* Guides */}
-      <section className="py-16 bg-background relative">
-        <FlowingWaves variant="full" opacity={0.12} />
+      <section className="py-20 bg-gradient-to-b from-background via-muted/30 to-background relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary)/0.05),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,hsl(var(--accent)/0.05),transparent_50%)]" />
+        
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mb-3">Professional Security Guides & Books</h2>
-          <p className="text-center text-muted-foreground mb-10">
-            Expert-written resources to protect yourself and your loved ones
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <ScrollReveal animation="fade-up">
+            <div className="text-center mb-16">
+              <div className="inline-block mb-4">
+                <span className="px-4 py-2 bg-gradient-to-r from-primary/10 to-accent/10 rounded-full text-sm font-semibold text-primary border border-primary/20">
+                  Expert Resources
+                </span>
+              </div>
+              <h2 className="mb-4 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+                Professional Security Guides & Books
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Expert-written resources to protect yourself and your loved ones
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {guides.map((guide, index) => (
-              <Card 
-                key={index} 
-                className="p-6 transition-all duration-[400ms] ease-in-out hover:-translate-y-1.5 hover:shadow-[0_15px_35px_rgba(0,0,0,0.12)] hover:border-[#14B8A6] hover:border-2 rounded-2xl group"
-              >
-                <div className="flex justify-center mb-4 overflow-hidden rounded-full">
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center transition-transform duration-[400ms] ease-in-out group-hover:scale-105">
-                    <guide.icon className="w-8 h-8 text-primary" />
+              <ScrollReveal key={index} animation="fade-up" delay={index * 100}>
+                <Card className={`group relative overflow-hidden h-full flex flex-col bg-gradient-to-br ${guide.gradient} border-border/50 hover:border-primary/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl`}>
+                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  
+                  <div className="p-8 flex flex-col h-full relative z-10">
+                    <div className="flex justify-center mb-6">
+                      <div className="relative">
+                        <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full group-hover:blur-2xl transition-all duration-500" />
+                        <div className="relative w-20 h-20 bg-gradient-to-br from-primary/90 to-accent/90 rounded-2xl flex items-center justify-center transform group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 shadow-lg">
+                          <guide.icon className="w-10 h-10 text-primary-foreground" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <h3 className="text-2xl font-bold mb-3 text-center group-hover:text-primary transition-colors duration-300">
+                      {guide.title}
+                    </h3>
+                    <p className="text-muted-foreground text-center mb-6 flex-grow leading-relaxed">
+                      {guide.desc}
+                    </p>
+
+                    <div className="mt-auto space-y-4">
+                      <div className="flex items-center justify-center gap-2 text-2xl font-bold text-primary">
+                        <span className="text-sm text-muted-foreground">from</span>
+                        ${guide.price}
+                      </div>
+                      
+                      {guide.slug && guide.price ? (
+                        <Button 
+                          asChild
+                          className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 group/btn"
+                          size="lg"
+                        >
+                          <Link to={`/contact?service=purchase&item=${guide.slug}&price=${guide.price}`}>
+                            <Download className="w-5 h-5 mr-2 transition-transform duration-300 group-hover/btn:translate-y-1" />
+                            Get This Guide
+                          </Link>
+                        </Button>
+                      ) : (
+                        <Button 
+                          onClick={() => {
+                            setSelectedItem({
+                              type: 'guide',
+                              name: guide.title
+                            });
+                            setModalOpen(true);
+                          }}
+                          className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90"
+                          size="lg"
+                        >
+                          <Download className="w-5 h-5 mr-2" />
+                          Get This Guide
+                        </Button>
+                      )}
+                    </div>
                   </div>
-                </div>
-                <h3 className="text-xl font-bold mb-3 text-center">{guide.title}</h3>
-                <p className="text-muted-foreground text-center mb-4">{guide.desc}</p>
-                {guide.slug && guide.price ? (
-                  <Button 
-                    asChild
-                    className="w-full group/btn transition-all duration-300 hover:brightness-90" 
-                    variant="outline"
-                  >
-                    <Link to={`/contact?service=purchase&item=${guide.slug}&price=${guide.price}`}>
-                      <Download className="w-4 h-4 mr-2 transition-transform duration-300 group-hover/btn:animate-[bounce-down_0.6s_ease-in-out_infinite]" />
-                      PURCHASE
-                    </Link>
-                  </Button>
-                ) : (
-                  <Button 
-                    onClick={() => {
-                      setSelectedItem({
-                        type: 'guide',
-                        name: guide.title
-                      });
-                      setModalOpen(true);
-                    }}
-                    className="w-full" 
-                    variant="outline"
-                  >
-                    <Download className="w-4 h-4 mr-2" />
-                    PURCHASE
-                  </Button>
-                )}
-              </Card>
+                </Card>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* Veterans Discount Banner */}
-      <section className="py-8 bg-gradient-to-r from-primary/10 to-accent/10">
-        <div className="container mx-auto px-4">
-          <Card className="p-6 bg-card/50 backdrop-blur-sm border-primary/20 max-w-3xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
-              <div className="flex-shrink-0">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-2xl">
-                  🇺🇸
+      <section className="py-16 bg-gradient-to-br from-primary/10 via-accent/5 to-primary/10 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,hsl(var(--primary)/0.03)_50%,transparent_75%)] bg-[length:250px_250px] animate-[slide_20s_linear_infinite]" />
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <ScrollReveal animation="scale-in">
+            <Card className="p-8 md:p-10 glass-effect border-2 border-primary/30 max-w-4xl mx-auto shadow-2xl overflow-hidden group hover:border-primary/50 transition-all duration-500">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-700" />
+              
+              <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left relative z-10">
+                <div className="flex-shrink-0">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary to-accent blur-xl rounded-full animate-pulse" />
+                    <div className="relative w-24 h-24 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center text-4xl shadow-xl transform group-hover:rotate-12 transition-transform duration-500">
+                      🇺🇸
+                    </div>
+                  </div>
                 </div>
+                
+                <div className="flex-1">
+                  <div className="inline-block mb-2">
+                    <span className="px-3 py-1 bg-primary/10 rounded-full text-xs font-semibold text-primary">
+                      Special Offer
+                    </span>
+                  </div>
+                  <h3 className="text-3xl font-bold mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                    Veterans & First Responders
+                  </h3>
+                  <p className="text-muted-foreground text-base leading-relaxed">
+                    Active duty, veterans, reservists, and first responders receive <span className="font-bold text-primary">10% OFF</span> all resources and products
+                  </p>
+                </div>
+                
+                <Button 
+                  variant="default" 
+                  size="lg"
+                  asChild
+                  className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 px-8"
+                >
+                  <Link to="/contact">Claim Discount</Link>
+                </Button>
               </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-bold mb-1">Veterans & First Responders</h3>
-                <p className="text-muted-foreground text-sm">Active duty, veterans, reservists, and first responders receive 10% OFF all resources and products</p>
-              </div>
-              <Button variant="default" asChild>
-                <Link to="/contact">Claim Discount</Link>
-              </Button>
-            </div>
-          </Card>
+            </Card>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* Security Tools Shop */}
-      <section className="py-16 bg-muted">
-        <div className="container mx-auto px-4">
-          <h2 className="text-center mb-3">Security Tools Shop</h2>
-          <p className="text-center text-muted-foreground mb-10">
-            Profits support training for seniors in need.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
+      <section className="py-20 bg-gradient-to-b from-background to-muted/50 relative">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--accent)/0.03),transparent_70%)]" />
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <ScrollReveal animation="fade-up">
+            <div className="text-center mb-16">
+              <div className="inline-block mb-4">
+                <span className="px-4 py-2 bg-gradient-to-r from-accent/10 to-primary/10 rounded-full text-sm font-semibold text-accent border border-accent/20">
+                  <ShoppingCart className="w-4 h-4 inline mr-2" />
+                  Security Tools
+                </span>
+              </div>
+              <h2 className="mb-4 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+                Security Tools Shop
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-3">
+                Profits support training for seniors in need.
+              </p>
+              <p className="text-sm text-accent font-semibold">
+                ✨ Free shipping on orders over $25
+              </p>
+            </div>
+          </ScrollReveal>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 max-w-7xl mx-auto">
             {products.map((product, index) => {
               const isBundle = product.slug === "complete-security-kit-bundle";
               const currentImageIndex = activeProductImages[product.slug] || 0;
               return (
-                <Card 
-                  key={index} 
-                  className={`p-6 hover:shadow-medium transition-all hover:-translate-y-1 flex flex-col rounded-2xl relative ${
-                    isBundle ? 'border-2 border-accent shadow-[0_0_20px_rgba(20,184,166,0.3)]' : ''
-                  }`}
-                >
-                  {isBundle && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-accent to-primary text-white px-4 py-1 rounded-full text-xs font-bold shadow-md z-10">
-                      BEST VALUE
-                    </div>
-                  )}
-                  
-                  {/* Image Gallery */}
-                  <div className="mb-4">
-                    <div className="relative overflow-hidden rounded-xl group/image aspect-[4/3] mb-2">
-                      <img 
-                        src={product.images[currentImageIndex]} 
-                        alt={product.name}
-                        className="w-full h-full object-cover transition-all duration-500 group-hover/image:scale-115"
-                      />
-                      <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-300">
-                        <span className="text-white font-semibold text-sm">Quick View</span>
-                      </div>
-                    </div>
-                    
-                    {/* Thumbnail Dots */}
-                    {product.images.length > 1 && (
-                      <div className="flex justify-center gap-2">
-                        {product.images.map((_, imgIndex) => (
-                          <button
-                            key={imgIndex}
-                            onClick={() => setActiveProductImages(prev => ({ ...prev, [product.slug]: imgIndex }))}
-                            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                              currentImageIndex === imgIndex 
-                                ? 'bg-primary w-6' 
-                                : 'bg-muted-foreground/30 hover:bg-muted-foreground/60'
-                            }`}
-                            aria-label={`View image ${imgIndex + 1}`}
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  <h3 className="font-bold mb-2 text-center flex-grow">{product.name}</h3>
-                  <p className={`font-bold gradient-text-primary text-center mb-4 ${isBundle ? 'text-3xl' : 'text-2xl'}`}>
-                    ${product.price.toFixed(2)}
-                  </p>
-                  <Button 
-                    asChild
-                    variant="default" 
-                    className={`w-full group ${isBundle ? 'h-12 text-base shadow-[0_0_15px_rgba(20,184,166,0.4)] hover:shadow-[0_0_25px_rgba(20,184,166,0.6)]' : ''}`}
+                <ScrollReveal key={index} animation="fade-up" delay={index * 80}>
+                  <Card 
+                    className={`group relative overflow-hidden h-full flex flex-col bg-card hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 ${
+                      isBundle ? 'border-2 border-accent ring-2 ring-accent/20' : 'border-border/50 hover:border-primary/50'
+                    }`}
                   >
-                    <Link to={`/contact?service=purchase&item=${product.slug}&price=${product.price}`}>
-                      <span className="mr-2 transition-transform duration-300 group-hover:animate-[bounce_0.5s_ease-in-out_infinite]">🛒</span>
-                      BUY NOW
-                    </Link>
-                  </Button>
-                </Card>
+                    {isBundle && (
+                      <>
+                        <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-primary/10 pointer-events-none" />
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-accent via-primary to-accent text-primary-foreground px-5 py-1.5 rounded-full text-xs font-bold shadow-lg z-20 animate-pulse">
+                          ⭐ BEST VALUE
+                        </div>
+                      </>
+                    )}
+                    
+                    <div className="p-6 flex flex-col h-full relative z-10">
+                      {/* Image Gallery */}
+                      <div className="mb-5">
+                        <div className="relative overflow-hidden rounded-xl group/image aspect-[4/3] mb-3 ring-1 ring-border/50">
+                          <img 
+                            src={product.images[currentImageIndex]} 
+                            alt={product.name}
+                            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity duration-300">
+                            <div className="absolute bottom-4 left-4 text-white font-semibold text-sm flex items-center gap-2">
+                              <ShoppingCart className="w-4 h-4" />
+                              Quick View
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Thumbnail Dots */}
+                        {product.images.length > 1 && (
+                          <div className="flex justify-center gap-2">
+                            {product.images.map((_, imgIndex) => (
+                              <button
+                                key={imgIndex}
+                                onClick={() => setActiveProductImages(prev => ({ ...prev, [product.slug]: imgIndex }))}
+                                className={`h-2 rounded-full transition-all duration-300 ${
+                                  currentImageIndex === imgIndex 
+                                    ? 'bg-primary w-8' 
+                                    : 'bg-muted-foreground/20 hover:bg-muted-foreground/40 w-2'
+                                }`}
+                                aria-label={`View image ${imgIndex + 1}`}
+                              />
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                      
+                      <h3 className="text-lg font-bold mb-4 text-center min-h-[3rem] flex items-center justify-center leading-tight group-hover:text-primary transition-colors duration-300">
+                        {product.name}
+                      </h3>
+                      
+                      <div className="mt-auto space-y-4">
+                        <div className="text-center">
+                          <p className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                            ${product.price}
+                          </p>
+                          {isBundle && (
+                            <p className="text-xs text-muted-foreground mt-1">Save 25%</p>
+                          )}
+                        </div>
+                        
+                        {product.slug && product.price ? (
+                          <Button 
+                            asChild
+                            className={`w-full transition-all duration-300 shadow-lg hover:shadow-xl ${
+                              isBundle 
+                                ? 'bg-gradient-to-r from-accent to-primary hover:from-accent/90 hover:to-primary/90 text-primary-foreground' 
+                                : 'bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground'
+                            }`}
+                            size="lg"
+                          >
+                            <Link to={`/contact?service=purchase&item=${product.slug}&price=${product.price}`}>
+                              <ShoppingCart className="w-4 h-4 mr-2" />
+                              {isBundle ? 'Get Bundle' : 'Add to Cart'}
+                            </Link>
+                          </Button>
+                        ) : (
+                          <Button 
+                            onClick={() => {
+                              setSelectedItem({
+                                type: 'product',
+                                name: product.name,
+                                price: product.price
+                              });
+                              setModalOpen(true);
+                            }}
+                            className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90"
+                            size="lg"
+                          >
+                            <ShoppingCart className="w-4 h-4 mr-2" />
+                            Add to Cart
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </Card>
+                </ScrollReveal>
               );
             })}
           </div>
@@ -321,84 +438,117 @@ function Resources() {
       </section>
 
       {/* Blog */}
-      <section className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <h2 className="text-center mb-10">Recent Articles</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {blogArticles.map((article, index) => {
-              const animations = ['fade-in-bottom-left', 'fade-in-bottom', 'fade-in-bottom-right'];
-              const delays = [0, 150, 300];
-              const animationClass = `animate-[${animations[index]}_0.6s_ease-out_${delays[index]}ms_both]`;
-              
-              return (
-                <ScrollReveal key={index} threshold={0.3}>
-                  <Card className={`group overflow-hidden rounded-2xl transition-all duration-[400ms] ease-in-out hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:-translate-y-2 ${animationClass}`}>
-                    <div className="relative overflow-hidden">
-                      <img 
-                        src={article.image} 
-                        alt={article.title} 
-                        className="w-full h-[200px] object-cover transition-transform duration-[400ms] ease-in-out group-hover:scale-108" 
-                        loading="lazy" 
-                      />
-                      <div className="absolute top-3 left-3 bg-primary/90 text-white px-3 py-1 rounded-md text-sm font-semibold">
-                        {article.date}
-                      </div>
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold mb-3 leading-tight">{article.title}</h3>
-                      <p className="text-muted-foreground text-sm mb-4 line-clamp-2 leading-relaxed">
-                        {article.excerpt}
-                      </p>
-                      <Link 
-                        to="/articles" 
-                        className="text-[#14B8A6] hover:text-[#0F9A8A] font-semibold inline-flex items-center gap-1 transition-all duration-[400ms] ease-in-out group"
-                      >
-                        <span>READ MORE</span>
-                        <span className="transition-transform duration-[400ms] ease-in-out group-hover:translate-x-[5px]">→</span>
-                      </Link>
-                    </div>
-                  </Card>
-                </ScrollReveal>
-              );
-            })}
-          </div>
-          <div className="flex justify-center mt-12">
-            <Link to="/blog">
-              <Button 
-                variant="outline" 
-                className="group relative overflow-hidden border-2 border-primary px-8 py-3.5 text-base font-semibold transition-all duration-300 ease-in-out hover:scale-105 hover:bg-primary hover:text-white hover:shadow-medium"
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  VIEW ALL ARTICLES
-                  <span className="inline-block transition-all duration-300 ease-in-out opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0">
-                    →
-                  </span>
+      <section className="py-20 bg-gradient-to-b from-muted/50 to-background relative">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,hsl(var(--primary)/0.03),transparent_60%)]" />
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <ScrollReveal animation="fade-up">
+            <div className="text-center mb-16">
+              <div className="inline-block mb-4">
+                <span className="px-4 py-2 bg-gradient-to-r from-primary/10 to-accent/10 rounded-full text-sm font-semibold text-primary border border-primary/20">
+                  <FileText className="w-4 h-4 inline mr-2" />
+                  Latest Insights
                 </span>
-              </Button>
-            </Link>
+              </div>
+              <h2 className="mb-4 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+                Recent Articles
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Stay informed with expert tips and insights
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {blogArticles.map((article, index) => (
+              <ScrollReveal key={index} animation="fade-up" delay={index * 100}>
+                <Card className="group overflow-hidden rounded-2xl transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 border-border/50 hover:border-primary/50 bg-card h-full flex flex-col">
+                  <div className="relative overflow-hidden">
+                    <img 
+                      src={article.image} 
+                      alt={article.title} 
+                      className="w-full h-[240px] object-cover transition-transform duration-700 group-hover:scale-110" 
+                      loading="lazy" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute top-4 left-4 bg-gradient-to-r from-primary/95 to-accent/95 text-primary-foreground px-4 py-1.5 rounded-full text-sm font-bold shadow-lg backdrop-blur-sm">
+                      {article.date}
+                    </div>
+                  </div>
+                  <div className="p-6 flex flex-col flex-grow">
+                    <h3 className="text-xl font-bold mb-3 leading-tight group-hover:text-primary transition-colors duration-300 line-clamp-2">
+                      {article.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm mb-6 line-clamp-3 leading-relaxed flex-grow">
+                      {article.excerpt}
+                    </p>
+                    <Link 
+                      to="/articles" 
+                      className="inline-flex items-center gap-2 text-primary hover:text-accent font-semibold text-sm transition-all duration-300 group/link mt-auto"
+                    >
+                      Read Full Article
+                      <span className="transition-transform duration-300 group-hover/link:translate-x-1">→</span>
+                    </Link>
+                  </div>
+                </Card>
+              </ScrollReveal>
+            ))}
           </div>
+
+          <ScrollReveal animation="fade-up" delay={400}>
+            <div className="text-center mt-12">
+              <Button 
+                asChild 
+                size="lg"
+                className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 px-8"
+              >
+                <Link to="/articles">
+                  View All Articles
+                  <span className="ml-2">→</span>
+                </Link>
+              </Button>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="py-16 bg-muted" id="faq">
-        <div className="container mx-auto px-4">
-          <h2 className="text-center mb-10">Frequently Asked Questions</h2>
+      <section className="py-20 bg-gradient-to-b from-background to-muted/30 relative" id="faq">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(var(--primary)/0.03),transparent_60%)]" />
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <ScrollReveal animation="fade-up">
+            <div className="text-center mb-16">
+              <div className="inline-block mb-4">
+                <span className="px-4 py-2 bg-gradient-to-r from-primary/10 to-accent/10 rounded-full text-sm font-semibold text-primary border border-primary/20">
+                  Got Questions?
+                </span>
+              </div>
+              <h2 className="mb-4 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Find answers to common questions about our resources and services
+              </p>
+            </div>
+          </ScrollReveal>
+
           <div className="max-w-4xl mx-auto">
             <Accordion type="single" collapsible className="space-y-4">
               {faqs.map((faq, index) => (
-                <AccordionItem 
-                  key={index} 
-                  value={`item-${index}`} 
-                  className="bg-card rounded-2xl px-6 border border-border hover:border-primary/50 transition-all duration-300 shadow-soft hover:shadow-medium data-[state=open]:border-l-4 data-[state=open]:border-l-[#14B8A6]"
-                >
-                  <AccordionTrigger className="text-lg font-bold hover:text-primary hover:no-underline">
-                    {faq.q}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground text-base leading-relaxed">
-                    {faq.a}
-                  </AccordionContent>
-                </AccordionItem>
+                <ScrollReveal key={index} animation="fade-up" delay={index * 50}>
+                  <AccordionItem 
+                    value={`item-${index}`} 
+                    className="bg-card/80 backdrop-blur-sm rounded-2xl px-8 py-2 border-2 border-border/50 hover:border-primary/50 transition-all duration-300 shadow-lg hover:shadow-xl data-[state=open]:border-primary data-[state=open]:shadow-2xl data-[state=open]:bg-gradient-to-r data-[state=open]:from-card data-[state=open]:to-primary/5"
+                  >
+                    <AccordionTrigger className="text-lg font-bold hover:text-primary hover:no-underline py-6 [&[data-state=open]]:text-primary">
+                      {faq.q}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-muted-foreground text-base leading-relaxed pb-6">
+                      {faq.a}
+                    </AccordionContent>
+                  </AccordionItem>
+                </ScrollReveal>
               ))}
             </Accordion>
           </div>
@@ -406,17 +556,37 @@ function Resources() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-16 bg-gradient-to-r from-primary to-accent">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-accent-foreground mb-6">Questions?</h2>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild variant="gold" size="xl">
-              <Link to="/contact">CONTACT US</Link>
-            </Button>
-            <Button asChild variant="outlineLight" size="xl">
-              <Link to="/training">BOOK TRAINING</Link>
-            </Button>
-          </div>
+      <section className="py-20 bg-gradient-to-br from-primary via-accent to-primary relative overflow-hidden">
+        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.05)_50%,transparent_75%)] bg-[length:250px_250px] animate-[slide_20s_linear_infinite]" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-accent/30 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/30 rounded-full blur-3xl" />
+        
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <ScrollReveal animation="scale-in">
+            <h2 className="text-primary-foreground mb-4 text-4xl md:text-5xl">
+              Still Have Questions?
+            </h2>
+            <p className="text-primary-foreground/90 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
+              Our team is here to help you find the perfect security solutions
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <Button 
+                asChild 
+                size="lg"
+                className="bg-background text-foreground hover:bg-background/90 shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 px-10 py-6 text-lg"
+              >
+                <Link to="/contact">Contact Us</Link>
+              </Button>
+              <Button 
+                asChild 
+                size="lg"
+                variant="outline"
+                className="border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 px-10 py-6 text-lg"
+              >
+                <Link to="/training">Book Training</Link>
+              </Button>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
