@@ -44,6 +44,11 @@ interface ArticlePublishingSidebarProps {
   article: ArticleData;
   onChange: (article: ArticleData) => void;
   onSave: () => void;
+  publishingChecklist?: Array<{
+    id: string;
+    label: string;
+    completed: boolean;
+  }>;
 }
 
 const AVAILABLE_CATEGORIES = [
@@ -63,6 +68,7 @@ export function ArticlePublishingSidebar({
   article,
   onChange,
   onSave,
+  publishingChecklist = [],
 }: ArticlePublishingSidebarProps) {
   const [sectionsOpen, setSectionsOpen] = useState({
     status: true,
@@ -236,6 +242,41 @@ export function ArticlePublishingSidebar({
 
   return (
     <div className="sticky top-4 space-y-4 bg-[#F9FAFB] border-l border-[#E5E7EB] p-6 h-[calc(100vh-2rem)] overflow-y-auto">
+      {/* Publishing Checklist */}
+      {publishingChecklist.length > 0 && (
+        <Card className="border-2 border-primary/20">
+          <CardHeader>
+            <CardTitle className="text-base flex items-center gap-2">
+              Publishing Checklist
+              <Badge variant={publishingChecklist.every(c => c.completed) ? "default" : "secondary"}>
+                {publishingChecklist.filter(c => c.completed).length}/{publishingChecklist.length}
+              </Badge>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            {publishingChecklist.map((check) => (
+              <div key={check.id} className="flex items-center gap-2">
+                <div
+                  className={cn(
+                    "w-4 h-4 rounded-sm flex items-center justify-center text-xs transition-colors",
+                    check.completed ? "bg-green-500 text-white" : "bg-muted border border-border"
+                  )}
+                >
+                  {check.completed && "✓"}
+                </div>
+                <span
+                  className={cn(
+                    "text-sm",
+                    check.completed ? "text-foreground" : "text-muted-foreground"
+                  )}
+                >
+                  {check.label}
+                </span>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      )}
       {/* Status & Visibility */}
       <Card>
         <CardHeader 
