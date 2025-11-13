@@ -24,7 +24,7 @@ interface Profile {
   position: string;
 }
 
-function Portal() {
+const Portal = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [roles, setRoles] = useState<UserRole[]>([]);
   const [loading, setLoading] = useState(true);

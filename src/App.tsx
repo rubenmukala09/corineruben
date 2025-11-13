@@ -1,336 +1,56 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense, useEffect } from "react";
-import { AnimatePresence } from "framer-motion";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AIChat } from "./components/AIChat";
 import { AIChatProvider } from "./contexts/AIChatContext";
-import { ErrorBoundary } from "./components/ErrorBoundary";
-import { PerformanceDashboard } from "./components/PerformanceDashboard";
-import { RouteTracker } from "./components/RouteTracker";
-import { BreadcrumbNav } from "./components/BreadcrumbNav";
-import { PageTransition } from "./components/PageTransition";
 import { Skeleton } from "@/components/ui/skeleton";
-import { performanceMonitor } from "./utils/performanceMonitor";
 
 // Lazy load all pages for code splitting
-const Index = lazy(() => {
-  performanceMonitor.startTracking('Index');
-  return import("./pages/Index").then(module => {
-    performanceMonitor.endTracking('Index');
-    return module;
-  });
-});
+const Index = lazy(() => import("./pages/Index"));
+const Training = lazy(() => import("./pages/Training"));
+const Business = lazy(() => import("./pages/Business"));
+const About = lazy(() => import("./pages/About"));
+const Resources = lazy(() => import("./pages/Resources"));
+const SafetyVault = lazy(() => import("./pages/SafetyVault"));
+const Articles = lazy(() => import("./pages/Articles"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Careers = lazy(() => import("./pages/Careers"));
+const Auth = lazy(() => import("./pages/Auth"));
+const Login = lazy(() => import("./pages/Login"));
+const Signup = lazy(() => import("./pages/Signup"));
+const ApplicationPending = lazy(() => import("./pages/ApplicationPending"));
+const Portal = lazy(() => import("./pages/Portal"));
+const AdminDashboard = lazy(() => import("./pages/portal/AdminDashboard"));
+const AnalystDashboard = lazy(() => import("./pages/portal/AnalystDashboard"));
+const TrainerDashboard = lazy(() => import("./pages/portal/TrainerDashboard"));
+const DeveloperDashboard = lazy(() => import("./pages/portal/DeveloperDashboard"));
+const StaffDashboard = lazy(() => import("./pages/portal/StaffDashboard"));
+const SeniorDashboard = lazy(() => import("./pages/portal/SeniorDashboard"));
+const CaregiverDashboard = lazy(() => import("./pages/portal/CaregiverDashboard"));
+const HealthcareDashboard = lazy(() => import("./pages/portal/HealthcareDashboard"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const TermsOfService = lazy(() => import("./pages/TermsOfService"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
-const Training = lazy(() => {
-  performanceMonitor.startTracking('Training');
-  return import("./pages/Training").then(module => {
-    performanceMonitor.endTracking('Training');
-    return module;
-  });
-});
-
-const Business = lazy(() => {
-  performanceMonitor.startTracking('Business');
-  return import("./pages/Business").then(module => {
-    performanceMonitor.endTracking('Business');
-    return module;
-  });
-});
-
-const About = lazy(() => {
-  performanceMonitor.startTracking('About');
-  return import("./pages/About").then(module => {
-    performanceMonitor.endTracking('About');
-    return module;
-  });
-});
-
-const Resources = lazy(() => {
-  performanceMonitor.startTracking('Resources');
-  return import("./pages/Resources").then(module => {
-    performanceMonitor.endTracking('Resources');
-    return module;
-  });
-});
-
-const SafetyVault = lazy(() => {
-  performanceMonitor.startTracking('SafetyVault');
-  return import("./pages/SafetyVault").then(module => {
-    performanceMonitor.endTracking('SafetyVault');
-    return module;
-  });
-});
-
-const Articles = lazy(() => {
-  performanceMonitor.startTracking('Articles');
-  return import("./pages/Articles").then(module => {
-    performanceMonitor.endTracking('Articles');
-    return module;
-  });
-});
-
-const Contact = lazy(() => {
-  performanceMonitor.startTracking('Contact');
-  return import("./pages/Contact").then(module => {
-    performanceMonitor.endTracking('Contact');
-    return module;
-  });
-});
-
-const Careers = lazy(() => {
-  performanceMonitor.startTracking('Careers');
-  return import("./pages/Careers").then(module => {
-    performanceMonitor.endTracking('Careers');
-    return module;
-  });
-});
-
-const Auth = lazy(() => {
-  performanceMonitor.startTracking('Auth');
-  return import("./pages/Auth").then(module => {
-    performanceMonitor.endTracking('Auth');
-    return module;
-  });
-});
-
-const Login = lazy(() => {
-  performanceMonitor.startTracking('Login');
-  return import("./pages/Login").then(module => {
-    performanceMonitor.endTracking('Login');
-    return module;
-  });
-});
-
-const Signup = lazy(() => {
-  performanceMonitor.startTracking('Signup');
-  return import("./pages/Signup").then(module => {
-    performanceMonitor.endTracking('Signup');
-    return module;
-  });
-});
-
-const ApplicationPending = lazy(() => {
-  performanceMonitor.startTracking('ApplicationPending');
-  return import("./pages/ApplicationPending").then(module => {
-    performanceMonitor.endTracking('ApplicationPending');
-    return module;
-  });
-});
-
-const Portal = lazy(() => {
-  performanceMonitor.startTracking('Portal');
-  return import("./pages/Portal").then(module => {
-    performanceMonitor.endTracking('Portal');
-    return module;
-  });
-});
-
-const AdminDashboard = lazy(() => {
-  performanceMonitor.startTracking('AdminDashboard');
-  return import("./pages/portal/AdminDashboard").then(module => {
-    performanceMonitor.endTracking('AdminDashboard');
-    return module;
-  });
-});
-
-const AnalystDashboard = lazy(() => {
-  performanceMonitor.startTracking('AnalystDashboard');
-  return import("./pages/portal/AnalystDashboard").then(module => {
-    performanceMonitor.endTracking('AnalystDashboard');
-    return module;
-  });
-});
-
-const TrainerDashboard = lazy(() => {
-  performanceMonitor.startTracking('TrainerDashboard');
-  return import("./pages/portal/TrainerDashboard").then(module => {
-    performanceMonitor.endTracking('TrainerDashboard');
-    return module;
-  });
-});
-
-const DeveloperDashboard = lazy(() => {
-  performanceMonitor.startTracking('DeveloperDashboard');
-  return import("./pages/portal/DeveloperDashboard").then(module => {
-    performanceMonitor.endTracking('DeveloperDashboard');
-    return module;
-  });
-});
-
-const StaffDashboard = lazy(() => {
-  performanceMonitor.startTracking('StaffDashboard');
-  return import("./pages/portal/StaffDashboard").then(module => {
-    performanceMonitor.endTracking('StaffDashboard');
-    return module;
-  });
-});
-
-const SeniorDashboard = lazy(() => {
-  performanceMonitor.startTracking('SeniorDashboard');
-  return import("./pages/portal/SeniorDashboard").then(module => {
-    performanceMonitor.endTracking('SeniorDashboard');
-    return module;
-  });
-});
-
-const CaregiverDashboard = lazy(() => {
-  performanceMonitor.startTracking('CaregiverDashboard');
-  return import("./pages/portal/CaregiverDashboard").then(module => {
-    performanceMonitor.endTracking('CaregiverDashboard');
-    return module;
-  });
-});
-
-const HealthcareDashboard = lazy(() => {
-  performanceMonitor.startTracking('HealthcareDashboard');
-  return import("./pages/portal/HealthcareDashboard").then(module => {
-    performanceMonitor.endTracking('HealthcareDashboard');
-    return module;
-  });
-});
-
-const PrivacyPolicy = lazy(() => {
-  performanceMonitor.startTracking('PrivacyPolicy');
-  return import("./pages/PrivacyPolicy").then(module => {
-    performanceMonitor.endTracking('PrivacyPolicy');
-    return module;
-  });
-});
-
-const TermsOfService = lazy(() => {
-  performanceMonitor.startTracking('TermsOfService');
-  return import("./pages/TermsOfService").then(module => {
-    performanceMonitor.endTracking('TermsOfService');
-    return module;
-  });
-});
-
-const NotFound = lazy(() => {
-  performanceMonitor.startTracking('NotFound');
-  return import("./pages/NotFound").then(module => {
-    performanceMonitor.endTracking('NotFound');
-    return module;
-  });
-});
-
-// Loading fallback component with enhanced skeleton
+// Loading fallback component
 const PageLoader = () => (
   <div className="min-h-screen bg-background">
-    {/* Navigation skeleton */}
-    <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
-          <Skeleton className="h-10 w-48" />
-          <div className="hidden md:flex gap-6">
-            <Skeleton className="h-6 w-20" />
-            <Skeleton className="h-6 w-24" />
-            <Skeleton className="h-6 w-20" />
-            <Skeleton className="h-6 w-16" />
-          </div>
-          <Skeleton className="h-10 w-24" />
-        </div>
-      </div>
-    </div>
-    
-    {/* Hero section skeleton */}
-    <div className="relative">
-      <Skeleton className="h-[500px] w-full" />
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="text-center space-y-4 px-4">
-          <Skeleton className="h-12 w-96 mx-auto" />
-          <Skeleton className="h-6 w-64 mx-auto" />
-          <div className="flex gap-4 justify-center mt-8">
-            <Skeleton className="h-12 w-40" />
-            <Skeleton className="h-12 w-40" />
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    {/* Content sections skeleton */}
-    <div className="container mx-auto px-4 py-16 space-y-16">
-      <div className="space-y-4">
-        <Skeleton className="h-10 w-64 mx-auto" />
-        <Skeleton className="h-6 w-96 mx-auto" />
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="space-y-4">
-            <Skeleton className="h-48 w-full rounded-2xl" />
-            <Skeleton className="h-6 w-3/4" />
-            <Skeleton className="h-4 w-full" />
-            <Skeleton className="h-4 w-5/6" />
-          </div>
-        ))}
-      </div>
-      
-      <div className="space-y-4">
-        <Skeleton className="h-32 w-full rounded-2xl" />
-        <Skeleton className="h-32 w-full rounded-2xl" />
-      </div>
-    </div>
-    
-    {/* Footer skeleton */}
-    <div className="bg-muted py-8 mt-16">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="space-y-3">
-              <Skeleton className="h-6 w-32" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-5/6" />
-              <Skeleton className="h-4 w-4/6" />
-            </div>
-          ))}
-        </div>
-      </div>
+    <Skeleton className="h-20 w-full" />
+    <div className="container mx-auto px-4 py-8 space-y-4">
+      <Skeleton className="h-96 w-full" />
+      <Skeleton className="h-32 w-full" />
+      <Skeleton className="h-32 w-full" />
     </div>
   </div>
 );
 
 const queryClient = new QueryClient();
 
-function AnimatedRoutes() {
-  const location = useLocation();
-
-  return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageTransition><Index /></PageTransition>} />
-        <Route path="/training" element={<PageTransition><Training /></PageTransition>} />
-        <Route path="/business" element={<PageTransition><Business /></PageTransition>} />
-        <Route path="/about" element={<PageTransition><About /></PageTransition>} />
-        <Route path="/resources" element={<PageTransition><Resources /></PageTransition>} />
-        <Route path="/safety-vault" element={<PageTransition><SafetyVault /></PageTransition>} />
-        <Route path="/articles" element={<PageTransition><Articles /></PageTransition>} />
-        <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
-        <Route path="/careers" element={<PageTransition><Careers /></PageTransition>} />
-        <Route path="/auth" element={<PageTransition><Auth /></PageTransition>} />
-        <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
-        <Route path="/signup" element={<PageTransition><Signup /></PageTransition>} />
-        <Route path="/application-pending" element={<PageTransition><ApplicationPending /></PageTransition>} />
-        <Route path="/portal" element={<PageTransition><ProtectedRoute><Portal /></ProtectedRoute></PageTransition>} />
-        <Route path="/portal/admin" element={<PageTransition><ProtectedRoute><AdminDashboard /></ProtectedRoute></PageTransition>} />
-        <Route path="/portal/analyst" element={<PageTransition><ProtectedRoute><AnalystDashboard /></ProtectedRoute></PageTransition>} />
-        <Route path="/portal/trainer" element={<PageTransition><ProtectedRoute><TrainerDashboard /></ProtectedRoute></PageTransition>} />
-        <Route path="/portal/developer" element={<PageTransition><ProtectedRoute><DeveloperDashboard /></ProtectedRoute></PageTransition>} />
-        <Route path="/portal/staff" element={<PageTransition><ProtectedRoute><StaffDashboard /></ProtectedRoute></PageTransition>} />
-        <Route path="/portal/senior" element={<PageTransition><ProtectedRoute><SeniorDashboard /></ProtectedRoute></PageTransition>} />
-        <Route path="/portal/caregiver" element={<PageTransition><ProtectedRoute><CaregiverDashboard /></ProtectedRoute></PageTransition>} />
-        <Route path="/portal/healthcare" element={<PageTransition><ProtectedRoute><HealthcareDashboard /></ProtectedRoute></PageTransition>} />
-        <Route path="/privacy-policy" element={<PageTransition><PrivacyPolicy /></PageTransition>} />
-        <Route path="/terms-of-service" element={<PageTransition><TermsOfService /></PageTransition>} />
-        <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
-      </Routes>
-    </AnimatePresence>
-  );
-}
-
-function App() {
+const App = () => {
   // Add smooth scroll behavior for anchor links
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
@@ -341,23 +61,46 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Toaster />
-      <Sonner />
-      <AIChatProvider>
-        <BrowserRouter>
-          <RouteTracker />
-          <ErrorBoundary>
-            <BreadcrumbNav />
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <AIChatProvider>
+          <BrowserRouter>
             <Suspense fallback={<PageLoader />}>
-              <AnimatedRoutes />
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/training" element={<Training />} />
+                <Route path="/business" element={<Business />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/resources" element={<Resources />} />
+                <Route path="/safety-vault" element={<SafetyVault />} />
+                <Route path="/articles" element={<Articles />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/careers" element={<Careers />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/application-pending" element={<ApplicationPending />} />
+                <Route path="/portal" element={<ProtectedRoute><Portal /></ProtectedRoute>} />
+                <Route path="/portal/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+                <Route path="/portal/analyst" element={<ProtectedRoute><AnalystDashboard /></ProtectedRoute>} />
+                <Route path="/portal/trainer" element={<ProtectedRoute><TrainerDashboard /></ProtectedRoute>} />
+                <Route path="/portal/developer" element={<ProtectedRoute><DeveloperDashboard /></ProtectedRoute>} />
+                <Route path="/portal/staff" element={<ProtectedRoute><StaffDashboard /></ProtectedRoute>} />
+                <Route path="/portal/senior" element={<ProtectedRoute><SeniorDashboard /></ProtectedRoute>} />
+                <Route path="/portal/caregiver" element={<ProtectedRoute><CaregiverDashboard /></ProtectedRoute>} />
+                <Route path="/portal/healthcare" element={<ProtectedRoute><HealthcareDashboard /></ProtectedRoute>} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/terms-of-service" element={<TermsOfService />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
             </Suspense>
-          </ErrorBoundary>
-          <AIChat />
-          <PerformanceDashboard />
-        </BrowserRouter>
-      </AIChatProvider>
+            <AIChat />
+          </BrowserRouter>
+        </AIChatProvider>
+      </TooltipProvider>
     </QueryClientProvider>
   );
-}
+};
 
 export default App;

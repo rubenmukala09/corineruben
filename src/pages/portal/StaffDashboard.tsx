@@ -15,7 +15,7 @@ import {
   LogOut,
 } from "lucide-react";
 
-function StaffDashboard() {
+const StaffDashboard = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [date, setDate] = useState<Date | undefined>(new Date());

@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Shield, Clock, Mail, CheckCircle2, Home } from "lucide-react";
 
-function ApplicationPending() {
+const ApplicationPending = () => {
   const [searchParams] = useSearchParams();
   const applicationRef = searchParams.get("ref") || "N/A";
 

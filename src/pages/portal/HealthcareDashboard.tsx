@@ -15,7 +15,7 @@ import {
   Activity,
 } from "lucide-react";
 
-function HealthcareDashboard() {
+const HealthcareDashboard = () => {
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();

@@ -12,7 +12,7 @@ import heroAbout from "@/assets/hero-about-professional.jpg";
 import { supabase } from "@/integrations/supabase/client";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 
-function About() {
+const About = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [showAdminBanner, setShowAdminBanner] = useState(true);

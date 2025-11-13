@@ -15,7 +15,7 @@ import {
   LogOut,
 } from "lucide-react";
 
-function DeveloperDashboard() {
+const DeveloperDashboard = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [date, setDate] = useState<Date | undefined>(new Date());

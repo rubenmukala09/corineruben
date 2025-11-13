@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import confetti from "canvas-confetti";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -46,14 +45,11 @@ const passwordSchema = z.string()
 const emailSchema = z.string().email("Invalid email address");
 const phoneSchema = z.string().regex(/^\d{3}-\d{3}-\d{4}$/, "Phone must be in format XXX-XXX-XXXX");
 
-function Signup() {
+const Signup = () => {
   const [step, setStep] = useState(1);
   const [selectedRole, setSelectedRole] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isFlipping, setIsFlipping] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [successEmail, setSuccessEmail] = useState("");
-  const [successCompany, setSuccessCompany] = useState("");
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -230,46 +226,6 @@ function Signup() {
   const checkBusinessPasswordsMatch = (confirmValue: string) => {
     setPasswordsMatch(businessPassword && confirmValue && businessPassword === confirmValue);
   };
-  
-  // Trigger confetti animation
-  const triggerConfetti = () => {
-    const count = 200;
-    const defaults = {
-      origin: { y: 0.7 }
-    };
-
-    function fire(particleRatio: number, opts: any) {
-      confetti({
-        ...defaults,
-        ...opts,
-        particleCount: Math.floor(count * particleRatio),
-        spread: 90,
-        startVelocity: 55,
-      });
-    }
-
-    fire(0.25, { spread: 26, startVelocity: 55 });
-    fire(0.2, { spread: 60 });
-    fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-    fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-    fire(0.1, { spread: 120, startVelocity: 45 });
-  };
-  
-  // Auto-redirect after success
-  useEffect(() => {
-    if (showSuccess && selectedRole === "senior") {
-      const timer = setTimeout(() => {
-        navigate("/auth", { 
-          state: { 
-            message: "Please verify your email before logging in",
-            email: successEmail 
-          } 
-        });
-      }, 5000);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [showSuccess, selectedRole, navigate, successEmail]);
 
   // Real-time password validation
   const validatePassword = (value: string) => {
@@ -755,15 +711,6 @@ function Signup() {
       // Sign out user immediately (they can't login until approved)
       await supabase.auth.signOut();
 
-      // For business accounts, show success screen
-      if (selectedRole === "senior") {
-        setSuccessEmail(signupEmail);
-        setSuccessCompany(companyName);
-        setShowSuccess(true);
-        triggerConfetti();
-        return; // Don't navigate immediately
-      }
-
       toast({
         title: "🎉 Application Submitted!",
         description: `Your application (${appRef}) has been submitted for admin review. Check your email for updates!`,
@@ -813,42 +760,6 @@ function Signup() {
     } finally {
       setIsLoading(false);
     }
-  };
-  
-  const handleResendVerification = async () => {
-    try {
-      const { error } = await supabase.auth.resend({
-        type: 'signup',
-        email: successEmail,
-      });
-      
-      if (error) throw error;
-      
-      toast({
-        title: "✓ Email Sent",
-        description: "Verification email has been resent to " + successEmail,
-      });
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: "Failed to resend verification email. Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
-  
-  const handleGoToEmail = () => {
-    const emailDomain = successEmail.split('@')[1];
-    const emailProviders: { [key: string]: string } = {
-      'gmail.com': 'https://mail.google.com',
-      'yahoo.com': 'https://mail.yahoo.com',
-      'outlook.com': 'https://outlook.live.com',
-      'hotmail.com': 'https://outlook.live.com',
-      'icloud.com': 'https://www.icloud.com/mail',
-    };
-    
-    const url = emailProviders[emailDomain] || 'https://mail.google.com';
-    window.open(url, '_blank');
   };
 
   return (
@@ -901,79 +812,11 @@ function Signup() {
               from { transform: translateX(-30px); opacity: 0; }
               to { transform: translateX(0); opacity: 1; }
             }
-            @keyframes checkmarkScale {
-              0% { transform: scale(0); opacity: 0; }
-              50% { transform: scale(1.2); }
-              100% { transform: scale(1); opacity: 1; }
-            }
             .slide-out-left { animation: slideOutLeft 0.3s ease forwards; }
             .slide-in-right { animation: slideInRight 0.3s ease forwards; }
             .slide-out-right { animation: slideOutRight 0.3s ease forwards; }
             .slide-in-left { animation: slideInLeft 0.3s ease forwards; }
-            .checkmark-animate { animation: checkmarkScale 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
           `}</style>
-          
-          {/* Success Screen for Business Accounts */}
-          {showSuccess && selectedRole === "senior" ? (
-            <div className="text-center py-8 space-y-6">
-              {/* Animated Checkmark */}
-              <div className="flex justify-center">
-                <div className="checkmark-animate w-24 h-24 bg-green-500 rounded-full flex items-center justify-center">
-                  <CheckCircle2 className="w-16 h-16 text-white" strokeWidth={3} />
-                </div>
-              </div>
-
-              {/* Success Message */}
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold text-green-600">Account Created!</h2>
-                <p className="text-lg text-muted-foreground">Check your email for verification link</p>
-              </div>
-
-              {/* Account Details */}
-              <div className="max-w-md mx-auto p-6 bg-muted/30 rounded-lg border border-border space-y-3">
-                <div className="text-left space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-semibold text-muted-foreground">Email sent to:</span>
-                    <span className="text-sm font-mono">{successEmail}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-semibold text-muted-foreground">Company:</span>
-                    <span className="text-sm font-semibold">{successCompany}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-semibold text-muted-foreground">Account type:</span>
-                    <span className="text-sm font-semibold">Business</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto pt-4">
-                <Button 
-                  onClick={handleGoToEmail}
-                  className="h-12 px-6 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800"
-                >
-                  Go to Email
-                </Button>
-                <Button 
-                  onClick={handleResendVerification}
-                  variant="outline"
-                  className="h-12 px-6"
-                >
-                  Resend Verification Email
-                </Button>
-              </div>
-
-              {/* Auto-redirect Message */}
-              <div className="pt-4">
-                <p className="text-sm text-muted-foreground">
-                  Redirecting to login in 5 seconds...
-                </p>
-              </div>
-            </div>
-          ) : (
-            <>
-              {/* Regular Form Content */}
           {/* Step 1: Role Selection */}
           {step === 1 && (
             <div className="space-y-8">
@@ -1918,8 +1761,6 @@ function Signup() {
               )}
             </div>
           </div>
-            </>
-          )}
         </Card>
 
         {/* Footer */}

@@ -34,7 +34,7 @@ import heroBusinessProfessional from "@/assets/hero-business-professional.jpg";
 import { useImagePreload } from "@/hooks/useImagePreload";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 
-function Index() {
+const Index = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   
@@ -249,7 +249,7 @@ function Index() {
                 Ohio Based & Trusted
               </h3>
               <p className="text-muted-foreground text-center">
-                Serving Dayton, Kettering & Greater Miami Valley, Ohio
+                Locally owned and operated in Cleveland, serving families across Ohio.
               </p>
             </Card>
 

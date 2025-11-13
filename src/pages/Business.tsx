@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
@@ -15,12 +15,15 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { BookingModal } from "@/components/BookingModal";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
-import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield } from "lucide-react";
+import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield, Loader2 } from "lucide-react";
+import testimonial3 from "@/assets/testimonial-3.jpg";
+import testimonial4 from "@/assets/testimonial-4.jpg";
 import businessCollaboration from "@/assets/business-collaboration.jpg";
 import teamCollaboration from "@/assets/team-collaboration.jpg";
 import heroBusiness from "@/assets/hero-business-professional.jpg";
 
-function Business() {
+const Business = () => {
+  const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [isYearly, setIsYearly] = useState(false);
   const [selectedService, setSelectedService] = useState<{
@@ -31,6 +34,7 @@ function Business() {
   } | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isNavigating, setIsNavigating] = useState(false);
 
   // Counter animations for pricing cards
   const price1Counter = useCounterAnimation({ end: 9500, duration: 1500, prefix: '$' });
@@ -249,13 +253,21 @@ function Business() {
                 </p>
 ...
                 <Button 
-                  asChild
+                  onClick={() => {
+                    setIsNavigating(true);
+                    setTimeout(() => {
+                      navigate('/contact?service=ai-receptionist&plan=9500');
+                    }, 300);
+                  }}
                   variant="default" 
                   className="w-full transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] hover:scale-[1.02]"
+                  disabled={isNavigating}
                 >
-                  <Link to="/contact?service=ai-receptionist&plan=9500">
-                    GET STARTED
-                  </Link>
+                  {isNavigating ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    'GET STARTED'
+                  )}
                 </Button>
               </Card>
             </ScrollReveal>
@@ -269,13 +281,21 @@ function Business() {
                 </p>
 ...
                 <Button 
-                  asChild
+                  onClick={() => {
+                    setIsNavigating(true);
+                    setTimeout(() => {
+                      navigate('/contact?service=automation&plan=12500');
+                    }, 300);
+                  }}
                   variant="default" 
                   className="w-full transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] hover:scale-[1.02]"
+                  disabled={isNavigating}
                 >
-                  <Link to="/contact?service=automation&plan=12500">
-                    GET STARTED
-                  </Link>
+                  {isNavigating ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    'GET STARTED'
+                  )}
                 </Button>
               </Card>
             </ScrollReveal>
@@ -289,13 +309,21 @@ function Business() {
                 </p>
 ...
                 <Button 
-                  asChild
+                  onClick={() => {
+                    setIsNavigating(true);
+                    setTimeout(() => {
+                      navigate('/contact?service=custom&plan=25000');
+                    }, 300);
+                  }}
                   variant="default" 
                   className="w-full transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] hover:scale-[1.02]"
+                  disabled={isNavigating}
                 >
-                  <Link to="/contact?service=custom&plan=25000">
-                    GET STARTED
-                  </Link>
+                  {isNavigating ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    'GET STARTED'
+                  )}
                 </Button>
               </Card>
             </ScrollReveal>
@@ -1028,6 +1056,6 @@ function Business() {
       )}
     </div>
   );
-}
+};
 
 export default Business;
