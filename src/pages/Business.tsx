@@ -22,7 +22,7 @@ import businessCollaboration from "@/assets/business-collaboration.jpg";
 import teamCollaboration from "@/assets/team-collaboration.jpg";
 import heroBusiness from "@/assets/hero-business-professional.jpg";
 
-const Business = () => {
+function Business() {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [isYearly, setIsYearly] = useState(false);
@@ -1056,6 +1056,6 @@ const Business = () => {
       )}
     </div>
   );
-};
+}
 
 export default Business;
