@@ -29,7 +29,9 @@ import {
   GraduationCap,
   Code,
   XCircle,
-  AlertCircle
+  AlertCircle,
+  Eye,
+  EyeOff
 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { z } from "zod";
@@ -103,6 +105,20 @@ const Signup = () => {
   const [serviceOther, setServiceOther] = useState(false);
   const [serviceOtherText, setServiceOtherText] = useState("");
   const [referralSource, setReferralSource] = useState("");
+  
+  // Business password fields
+  const [businessPassword, setBusinessPassword] = useState("");
+  const [businessConfirmPassword, setBusinessConfirmPassword] = useState("");
+  const [showBusinessPassword, setShowBusinessPassword] = useState(false);
+  const [showBusinessConfirmPassword, setShowBusinessConfirmPassword] = useState(false);
+  const [emailOptIn, setEmailOptIn] = useState(false);
+  
+  // Password validation states for business
+  const [passwordHasLength, setPasswordHasLength] = useState(false);
+  const [passwordHasUppercase, setPasswordHasUppercase] = useState(false);
+  const [passwordHasNumber, setPasswordHasNumber] = useState(false);
+  const [passwordHasSpecial, setPasswordHasSpecial] = useState(false);
+  const [passwordsMatch, setPasswordsMatch] = useState(false);
 
   // Caregiver fields
   const [certificationNumber, setCertificationNumber] = useState("");
@@ -196,6 +212,19 @@ const Signup = () => {
     if (cleaned.length <= 3) return cleaned;
     if (cleaned.length <= 6) return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3)}`;
     return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}-${cleaned.slice(6, 10)}`;
+  };
+  
+  // Real-time business password validation
+  const validateBusinessPassword = (value: string) => {
+    setPasswordHasLength(value.length >= 8);
+    setPasswordHasUppercase(/[A-Z]/.test(value));
+    setPasswordHasNumber(/[0-9]/.test(value));
+    setPasswordHasSpecial(/[^A-Za-z0-9]/.test(value));
+  };
+  
+  // Check if business passwords match
+  const checkBusinessPasswordsMatch = (confirmValue: string) => {
+    setPasswordsMatch(businessPassword && confirmValue && businessPassword === confirmValue);
   };
 
   // Real-time password validation
@@ -418,6 +447,43 @@ const Signup = () => {
     }
     return true;
   };
+  
+  const validateStep5 = () => {
+    if (selectedRole === "senior") {
+      // Validate password requirements
+      if (!passwordHasLength || !passwordHasUppercase || !passwordHasNumber || !passwordHasSpecial) {
+        toast({ 
+          title: "🔒 Password Requirements Not Met", 
+          description: "Please ensure your password meets all requirements", 
+          variant: "destructive" 
+        });
+        return false;
+      }
+      
+      // Validate passwords match
+      if (!passwordsMatch || businessPassword !== businessConfirmPassword) {
+        toast({ 
+          title: "🔒 Passwords Don't Match", 
+          description: "Please make sure both passwords are identical", 
+          variant: "destructive" 
+        });
+        return false;
+      }
+      
+      // Validate terms agreement
+      if (!agreeTerms || !agreePrivacy) {
+        toast({ 
+          title: "⚠️ Agreement Required", 
+          description: "Please agree to Terms of Service and Privacy Policy", 
+          variant: "destructive" 
+        });
+        return false;
+      }
+      
+      return true;
+    }
+    return true;
+  };
 
   const handleNext = () => {
     if (step === 1 && !selectedRole) {
@@ -431,6 +497,7 @@ const Signup = () => {
     if (step === 2 && !validateStep2()) return;
     if (step === 3 && !validateStep3()) return;
     if (step === 4 && !validateStep4()) return;
+    if (step === 5 && !validateStep5()) return;
     
     // Success notification for completing a step
     if (step < totalSteps - 1) {
@@ -507,16 +574,22 @@ const Signup = () => {
       // Generate application reference
       const appRef = `APP-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
 
+      // Determine which email and password to use based on role
+      const signupEmail = selectedRole === "senior" ? businessEmail : email;
+      const signupPassword = selectedRole === "senior" ? businessPassword : password;
+      const userFirstName = selectedRole === "senior" ? fullName.split(' ')[0] : firstName;
+      const userLastName = selectedRole === "senior" ? fullName.split(' ').slice(1).join(' ') : lastName;
+
       // Create user account
       const { data: authData, error: authError } = await supabase.auth.signUp({
-        email,
-        password,
+        email: signupEmail,
+        password: signupPassword,
         options: {
           emailRedirectTo: `${window.location.origin}/portal`,
           data: {
-            first_name: firstName,
-            last_name: lastName,
-            username: email, // Use email as username for trigger
+            first_name: userFirstName,
+            last_name: userLastName,
+            username: signupEmail, // Use email as username for trigger
           },
         },
       });
@@ -538,15 +611,15 @@ const Signup = () => {
       const { error: profileError } = await supabase
         .from("profiles")
         .update({
-          username: email,
-          first_name: firstName,
-          last_name: lastName,
-          phone,
-          date_of_birth: dateOfBirth,
-          address_street: addressStreet,
-          address_city: addressCity,
-          address_state: addressState,
-          address_zip: addressZip,
+          username: signupEmail,
+          first_name: userFirstName,
+          last_name: userLastName,
+          phone: selectedRole === "senior" ? businessPhone : phone,
+          date_of_birth: selectedRole === "senior" ? null : dateOfBirth,
+          address_street: selectedRole === "senior" ? businessAddress : addressStreet,
+          address_city: selectedRole === "senior" ? null : addressCity,
+          address_state: selectedRole === "senior" ? null : addressState,
+          address_zip: selectedRole === "senior" ? null : addressZip,
           account_status: "pending",
           application_reference: appRef,
         })
@@ -556,13 +629,22 @@ const Signup = () => {
 
       // Create role-specific profile
       if (selectedRole === "senior") {
+        // For business accounts, store company and service information
+        const selectedServices = [];
+        if (serviceAIReceptionist) selectedServices.push("AI Receptionist");
+        if (serviceWebsite) selectedServices.push("Website Design");
+        if (serviceInsurance) selectedServices.push("AI Insurance");
+        if (serviceCybersecurity) selectedServices.push("Cybersecurity Training");
+        if (servicePhysicalSecurity) selectedServices.push("Physical Security Products");
+        if (serviceOther) selectedServices.push(`Other: ${serviceOtherText}`);
+        
         const { error } = await supabase.from("senior_client_profiles").insert({
           user_id: authData.user.id,
-          relationship,
-          emergency_contact_name: emergencyContactName,
-          emergency_contact_phone: emergencyContactPhone,
-          medical_conditions: medicalConditions,
-          preferred_language: preferredLanguage,
+          relationship: companySize, // Store company size in relationship field
+          emergency_contact_name: companyName,
+          emergency_contact_phone: jobTitle,
+          medical_conditions: `Industry: ${industry} | Services: ${selectedServices.join(', ')} | Referral: ${referralSource} | Email opt-in: ${emailOptIn}`,
+          preferred_language: "English",
         });
         if (error) throw error;
       } else if (selectedRole === "caregiver") {
@@ -1198,6 +1280,121 @@ const Signup = () => {
             </div>
           )}
 
+          {/* Step 5: Create Password (Business only) */}
+          {step === 5 && selectedRole === "senior" && (
+            <div className="space-y-6 form-content">
+              <div>
+                <h2 className="text-2xl font-bold mb-2">Secure Your Account</h2>
+                <p className="text-muted-foreground">Create a strong password to protect your account</p>
+              </div>
+
+              {/* Create Password */}
+              <div className="space-y-2">
+                <Label htmlFor="businessPassword">Create Password *</Label>
+                <div className="relative">
+                  <Input 
+                    id="businessPassword" 
+                    type={showBusinessPassword ? "text" : "password"}
+                    value={businessPassword} 
+                    onChange={(e) => {
+                      setBusinessPassword(e.target.value);
+                      validateBusinessPassword(e.target.value);
+                      if (businessConfirmPassword) {
+                        checkBusinessPasswordsMatch(businessConfirmPassword);
+                      }
+                    }}
+                    className="h-12 pr-10"
+                    required 
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowBusinessPassword(!showBusinessPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {showBusinessPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
+                </div>
+
+                {/* Password Requirements */}
+                <div className="space-y-2 mt-3">
+                  <div className={`flex items-center gap-2 text-sm ${passwordHasLength ? 'text-green-600' : 'text-muted-foreground'}`}>
+                    {passwordHasLength ? <CheckCircle2 className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
+                    <span>At least 8 characters</span>
+                  </div>
+                  <div className={`flex items-center gap-2 text-sm ${passwordHasUppercase ? 'text-green-600' : 'text-muted-foreground'}`}>
+                    {passwordHasUppercase ? <CheckCircle2 className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
+                    <span>One uppercase letter</span>
+                  </div>
+                  <div className={`flex items-center gap-2 text-sm ${passwordHasNumber ? 'text-green-600' : 'text-muted-foreground'}`}>
+                    {passwordHasNumber ? <CheckCircle2 className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
+                    <span>One number</span>
+                  </div>
+                  <div className={`flex items-center gap-2 text-sm ${passwordHasSpecial ? 'text-green-600' : 'text-muted-foreground'}`}>
+                    {passwordHasSpecial ? <CheckCircle2 className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
+                    <span>One special character</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Confirm Password */}
+              <div className="space-y-2">
+                <Label htmlFor="businessConfirmPassword">Confirm Password *</Label>
+                <div className="relative">
+                  <Input 
+                    id="businessConfirmPassword" 
+                    type={showBusinessConfirmPassword ? "text" : "password"}
+                    value={businessConfirmPassword} 
+                    onChange={(e) => {
+                      setBusinessConfirmPassword(e.target.value);
+                      checkBusinessPasswordsMatch(e.target.value);
+                    }}
+                    className={`h-12 pr-10 ${passwordsMatch ? 'border-green-500' : businessConfirmPassword ? 'border-red-500' : ''}`}
+                    required 
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowBusinessConfirmPassword(!showBusinessConfirmPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {showBusinessConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
+                </div>
+                {businessConfirmPassword && (
+                  <div className={`flex items-center gap-2 text-sm ${passwordsMatch ? 'text-green-600' : 'text-red-600'}`}>
+                    {passwordsMatch ? <CheckCircle2 className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
+                    <span>{passwordsMatch ? 'Passwords match' : 'Passwords do not match'}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Terms Agreement */}
+              <div className="space-y-4 pt-4 border-t">
+                <div className="flex items-start space-x-3">
+                  <Checkbox 
+                    id="agreeTermsBusiness" 
+                    checked={agreeTerms} 
+                    onCheckedChange={(checked) => setAgreeTerms(checked as boolean)} 
+                    required 
+                  />
+                  <Label htmlFor="agreeTermsBusiness" className="text-sm cursor-pointer leading-tight">
+                    I agree to the <Link to="/terms-of-service" className="text-primary hover:underline font-semibold">Terms of Service</Link> and <Link to="/privacy-policy" className="text-primary hover:underline font-semibold">Privacy Policy</Link> *
+                  </Label>
+                </div>
+
+                <div className="flex items-start space-x-3">
+                  <Checkbox 
+                    id="emailOptIn" 
+                    checked={emailOptIn} 
+                    onCheckedChange={(checked) => setEmailOptIn(checked as boolean)} 
+                  />
+                  <Label htmlFor="emailOptIn" className="text-sm cursor-pointer leading-tight">
+                    Send me AI safety tips and company updates
+                  </Label>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Step 3: Role-Specific Fields */}
           {step === 3 && (
             <div className="space-y-6">
@@ -1555,10 +1752,10 @@ const Signup = () => {
                   {isLoading ? (
                     <>
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Submitting...
+                      {selectedRole === "senior" ? "Creating Account..." : "Submitting..."}
                     </>
                   ) : (
-                    "Submit Application"
+                    selectedRole === "senior" ? "Create Account" : "Submit Application"
                   )}
                 </Button>
               )}
