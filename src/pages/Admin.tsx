@@ -5,6 +5,7 @@ import { DashboardStats } from "@/components/admin/DashboardStats";
 import { RevenueChart } from "@/components/admin/RevenueChart";
 import { RecentActivity } from "@/components/admin/RecentActivity";
 import { QuickActions } from "@/components/admin/QuickActions";
+import { UpcomingTasks } from "@/components/admin/UpcomingTasks";
 import { Card } from "@/components/ui/card";
 
 export default function Admin() {
@@ -46,6 +47,9 @@ export default function Admin() {
 
           {/* Quick Actions */}
           <QuickActions />
+
+          {/* Upcoming Tasks */}
+          <UpcomingTasks />
 
           {/* Additional Content Area */}
           <Card className="p-6">
