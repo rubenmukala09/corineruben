@@ -40,8 +40,9 @@ export const BreadcrumbNav = () => {
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((x) => x);
 
-  // Don't show breadcrumbs on home page
-  if (location.pathname === "/") {
+  // Only show breadcrumbs on admin routes
+  if (!location.pathname.startsWith("/admin") && 
+      !location.pathname.startsWith("/portal")) {
     return null;
   }
 
