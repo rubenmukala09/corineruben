@@ -21,7 +21,7 @@ const About = () => {
       <Hero
         backgroundImage={heroAbout}
         headline="Your Partner in AI Safety and Security"
-        subheadline="Locally owned in Ohio, protecting families and businesses nationwide"
+        subheadline="Based in Dayton-Kettering, serving families across Ohio and nationwide"
         showScrollIndicator={true}
       />
 
