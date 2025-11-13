@@ -53,7 +53,7 @@ const TrustBar = () => {
   }, [isVisible]);
 
   const trustIndicators = [
-    { icon: Shield, text: `${familiesCount}+ Families Protected`, useCounter: true },
+    { icon: Shield, text: "500+ Families Protected", useCounter: true, count: familiesCount },
     { icon: MapPin, text: "Ohio Based & Trusted" },
     { icon: Award, text: "Expert Cybersecurity Team" },
     { icon: Globe, text: "Available in English • Français • Español" },
@@ -95,14 +95,14 @@ const TrustBar = () => {
                   onMouseLeave={() => setHoveredIndex(null)}
                   role="listitem"
                 >
-                  <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-xl bg-white/25 backdrop-blur-sm flex items-center justify-center group-hover/badge:scale-110 group-hover/badge:rotate-6 group-hover/badge:bg-white/35 group-hover/badge:shadow-[0_8px_20px_rgba(255,255,255,0.3)] transition-all duration-300 animate-icon-pulse" 
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-xl bg-white/25 backdrop-blur-sm flex items-center justify-center flex-shrink-0 group-hover/badge:scale-110 group-hover/badge:rotate-6 group-hover/badge:bg-white/35 group-hover/badge:shadow-[0_8px_20px_rgba(255,255,255,0.3)] transition-all duration-300 animate-icon-pulse" 
                     style={{ animationDelay: `${index * 200 + 500}ms` }}
                     aria-hidden="true"
                   >
                     <item.icon className="w-4 h-4 sm:w-5 sm:h-5 text-white drop-shadow-lg group-hover/badge:scale-110 transition-transform duration-300" />
                   </div>
-                  <span className="text-xs md:text-sm lg:text-base font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] group-hover/badge:scale-105 transition-transform duration-300">
-                    {item.text}
+                  <span className="text-xs md:text-sm lg:text-base font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] group-hover/badge:scale-105 transition-transform duration-300 min-w-[160px] sm:min-w-[180px] md:min-w-[200px]">
+                    {item.useCounter ? `${item.count}+ Families Protected` : item.text}
                   </span>
                 </div>
               ))}
@@ -126,8 +126,8 @@ const TrustBar = () => {
                   >
                     <item.icon className="w-5 h-5 text-white drop-shadow-lg" />
                   </div>
-                  <span className="text-sm font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] flex-1">
-                    {item.text}
+                  <span className="text-sm font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] flex-1 min-w-[180px]">
+                    {item.useCounter ? `${item.count}+ Families Protected` : item.text}
                   </span>
                 </div>
               ))}
