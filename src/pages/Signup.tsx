@@ -81,6 +81,12 @@ const Signup = () => {
   const [medicalConditions, setMedicalConditions] = useState("");
   const [preferredLanguage, setPreferredLanguage] = useState("English");
 
+  // Business fields
+  const [companyName, setCompanyName] = useState("");
+  const [industry, setIndustry] = useState("");
+  const [companySize, setCompanySize] = useState("");
+  const [website, setWebsite] = useState("");
+
   // Caregiver fields
   const [certificationNumber, setCertificationNumber] = useState("");
   const [certificationType, setCertificationType] = useState("");
@@ -130,7 +136,7 @@ const Signup = () => {
   const [agreePrivacy, setAgreePrivacy] = useState(false);
   const [agreeBackgroundCheck, setAgreeBackgroundCheck] = useState(false);
 
-  const totalSteps = 4;
+  const totalSteps = selectedRole === "senior" ? 5 : 4;
   const progress = (step / totalSteps) * 100;
 
   // Real-time email validation
@@ -205,6 +211,20 @@ const Signup = () => {
   };
 
   const validateStep2 = () => {
+    // For business accounts, validate company info first
+    if (selectedRole === "senior") {
+      if (!companyName || !industry || !companySize) {
+        toast({ 
+          title: "📝 Missing Information", 
+          description: "Please fill in all required company fields", 
+          variant: "destructive" 
+        });
+        return false;
+      }
+      return true;
+    }
+    
+    // For staff accounts, validate basic info
     try {
       emailSchema.parse(email);
       phoneSchema.parse(phone);
@@ -714,8 +734,123 @@ const Signup = () => {
             </div>
           )}
 
-          {/* Step 2: Basic Information */}
-          {step === 2 && (
+          {/* Progress Indicator for Business Signup */}
+          {selectedRole === "senior" && step > 1 && (
+            <div className="mb-8">
+              <div className="flex items-center justify-between max-w-2xl mx-auto">
+                {[
+                  { num: 2, label: "Company Info" },
+                  { num: 3, label: "Contact" },
+                  { num: 4, label: "Services" },
+                  { num: 5, label: "Password" }
+                ].map((s, idx) => (
+                  <div key={s.num} className="flex items-center flex-1">
+                    <div className="flex flex-col items-center">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all ${
+                        step >= s.num 
+                          ? 'bg-purple-600 text-white' 
+                          : 'bg-gray-200 text-gray-400'
+                      }`}>
+                        {step > s.num ? <CheckCircle2 className="w-5 h-5" /> : s.num - 1}
+                      </div>
+                      <span className={`text-xs mt-2 font-medium ${
+                        step >= s.num ? 'text-purple-600' : 'text-gray-400'
+                      }`}>
+                        {s.label}
+                      </span>
+                    </div>
+                    {idx < 3 && (
+                      <div className={`flex-1 h-1 mx-2 transition-all ${
+                        step > s.num ? 'bg-purple-600' : 'bg-gray-200'
+                      }`} />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Step 2: Company Information (Business only) */}
+          {step === 2 && selectedRole === "senior" && (
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-2xl font-bold mb-2">Company Information</h2>
+                <p className="text-muted-foreground">Tell us about your business</p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="companyName">Company Name *</Label>
+                <Input 
+                  id="companyName" 
+                  value={companyName} 
+                  onChange={(e) => setCompanyName(e.target.value)} 
+                  placeholder="Your Company LLC"
+                  required 
+                  className="h-12"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="industry">Industry *</Label>
+                <Select value={industry} onValueChange={setIndustry} required>
+                  <SelectTrigger id="industry" className="h-12">
+                    <SelectValue placeholder="Select industry" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="healthcare">Healthcare</SelectItem>
+                    <SelectItem value="legal">Legal</SelectItem>
+                    <SelectItem value="real-estate">Real Estate</SelectItem>
+                    <SelectItem value="retail">Retail</SelectItem>
+                    <SelectItem value="hospitality">Hospitality</SelectItem>
+                    <SelectItem value="professional-services">Professional Services</SelectItem>
+                    <SelectItem value="technology">Technology</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-3">
+                <Label>Company Size *</Label>
+                <RadioGroup value={companySize} onValueChange={setCompanySize} required>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="1-10" id="size1" />
+                    <Label htmlFor="size1" className="font-normal cursor-pointer">1-10 employees</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="11-50" id="size2" />
+                    <Label htmlFor="size2" className="font-normal cursor-pointer">11-50 employees</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="51-200" id="size3" />
+                    <Label htmlFor="size3" className="font-normal cursor-pointer">51-200 employees</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="201-500" id="size4" />
+                    <Label htmlFor="size4" className="font-normal cursor-pointer">201-500 employees</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="500+" id="size5" />
+                    <Label htmlFor="size5" className="font-normal cursor-pointer">500+ employees</Label>
+                  </div>
+                </RadioGroup>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="website">Website (Optional)</Label>
+                <Input 
+                  id="website" 
+                  type="url"
+                  value={website} 
+                  onChange={(e) => setWebsite(e.target.value)} 
+                  placeholder="https://yourcompany.com"
+                  className="h-12"
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Step 3: Contact Information (moved from step 2 for business) */}
+          {step === 3 && selectedRole === "senior" && (
             <div className="space-y-6">
               <div>
                 <h2 className="text-2xl font-bold mb-2">Basic Information</h2>
@@ -1206,19 +1341,24 @@ const Signup = () => {
           {/* Navigation Buttons */}
           <div className="flex justify-between mt-8 pt-6 border-t">
             {step > 1 && (
-              <Button type="button" variant="outline" onClick={handleBack} disabled={isLoading}>
+              <Button type="button" variant="outline" onClick={handleBack} disabled={isLoading} className="h-12 px-6">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back
               </Button>
             )}
             <div className="ml-auto">
               {step < totalSteps ? (
-                <Button type="button" onClick={handleNext} disabled={isLoading}>
-                  Next
+                <Button 
+                  type="button" 
+                  onClick={handleNext} 
+                  disabled={isLoading}
+                  className="h-12 px-8 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold"
+                >
+                  Next Step
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               ) : (
-                <Button type="button" onClick={handleSubmit} disabled={isLoading} className="bg-gradient-to-r from-primary to-accent">
+                <Button type="button" onClick={handleSubmit} disabled={isLoading} className="h-12 px-8 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800">
                   {isLoading ? (
                     <>
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />
