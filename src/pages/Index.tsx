@@ -8,6 +8,7 @@ import CTASection from "@/components/CTASection";
 import ThreePathsForward from "@/components/ThreePathsForward";
 import FlowingWaves from "@/components/FlowingWaves";
 import MakingADifference from "@/components/MakingADifference";
+import { TestimonialForm } from "@/components/TestimonialForm";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -400,10 +401,7 @@ const Index = () => {
 
           {/* Text Testimonials - Empty State */}
           <div className="py-5">
-            <div className="border-2 border-dashed border-primary rounded-2xl p-12 text-center">
-              <div className="text-5xl mb-4">📝</div>
-              <p className="text-muted-foreground" style={{ fontSize: "16px" }}>Real testimonials coming soon</p>
-            </div>
+            <TestimonialForm />
           </div>
         </div>
       </section>

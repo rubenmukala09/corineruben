@@ -2367,6 +2367,51 @@ export type Database = {
         }
         Relationships: []
       }
+      testimonials: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          created_at: string
+          email: string
+          id: string
+          location: string
+          name: string
+          rating: number
+          status: Database["public"]["Enums"]["testimonial_status"]
+          story: string
+          submitted_at: string
+          updated_at: string
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          location: string
+          name: string
+          rating: number
+          status?: Database["public"]["Enums"]["testimonial_status"]
+          story: string
+          submitted_at?: string
+          updated_at?: string
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          location?: string
+          name?: string
+          rating?: number
+          status?: Database["public"]["Enums"]["testimonial_status"]
+          story?: string
+          submitted_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       tickets: {
         Row: {
           assigned_to: string | null
@@ -2851,6 +2896,7 @@ export type Database = {
         | "maintenance"
         | "other"
       service_type: "consultation" | "workshop" | "training" | "support"
+      testimonial_status: "pending" | "approved" | "rejected"
       ticket_priority: "low" | "medium" | "high" | "urgent"
       ticket_status: "open" | "in_progress" | "resolved" | "closed"
       time_off_status: "pending" | "approved" | "denied"
@@ -3044,6 +3090,7 @@ export const Constants = {
         "other",
       ],
       service_type: ["consultation", "workshop", "training", "support"],
+      testimonial_status: ["pending", "approved", "rejected"],
       ticket_priority: ["low", "medium", "high", "urgent"],
       ticket_status: ["open", "in_progress", "resolved", "closed"],
       time_off_status: ["pending", "approved", "denied"],
