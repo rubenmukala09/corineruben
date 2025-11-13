@@ -182,18 +182,6 @@ const About = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             {[
               {
-                name: "Sarah Chen",
-                role: "Lead Threat Analyst",
-                image: teamMember1,
-                description: "Former FBI cybercrime specialist with 10+ years protecting families from digital threats"
-              },
-              {
-                name: "Marcus Williams",
-                role: "Senior Training Instructor",
-                image: teamMember2,
-                description: "Certified educator specializing in making complex security concepts accessible to all ages"
-              },
-              {
                 name: "Priya Patel",
                 role: "AI Solutions Developer",
                 image: teamMember3,
