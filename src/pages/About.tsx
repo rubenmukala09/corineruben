@@ -255,17 +255,43 @@ const About = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-center mb-16">Service Areas</h2>
           <div className="max-w-4xl mx-auto">
-            <Card className="p-12 text-center">
-              <div className="space-y-4">
-                <div className="flex items-center justify-center gap-2 text-lg text-gray-700">
+            <Card className="p-12">
+              <div className="text-center mb-8">
+                <div className="flex items-center justify-center gap-2 text-lg text-gray-700 mb-2">
                   <MapPin className="w-5 h-5" />
-                  <span>Serving Dayton, Kettering & Greater Miami Valley</span>
-                </div>
-                <div className="flex items-center justify-center gap-2 text-lg text-gray-700">
-                  <MapPin className="w-5 h-5" />
-                  <span>Nationwide training available via Zoom</span>
+                  <span className="font-semibold">Primary Service Areas</span>
                 </div>
               </div>
+              <ul className="space-y-3 max-w-md mx-auto">
+                <li className="flex items-center gap-2 text-gray-700 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+                  <span>•</span>
+                  <span>Dayton Metro</span>
+                </li>
+                <li className="flex items-center gap-2 text-gray-700 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+                  <span>•</span>
+                  <span>Kettering</span>
+                </li>
+                <li className="flex items-center gap-2 text-gray-700 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+                  <span>•</span>
+                  <span>Beavercreek</span>
+                </li>
+                <li className="flex items-center gap-2 text-gray-700 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+                  <span>•</span>
+                  <span>Centerville</span>
+                </li>
+                <li className="flex items-center gap-2 text-gray-700 animate-fade-in" style={{ animationDelay: '0.5s' }}>
+                  <span>•</span>
+                  <span>Springfield</span>
+                </li>
+                <li className="flex items-center gap-2 text-gray-700 animate-fade-in" style={{ animationDelay: '0.6s' }}>
+                  <span>•</span>
+                  <span>Columbus</span>
+                </li>
+                <li className="flex items-center gap-2 text-gray-700 font-semibold animate-fade-in" style={{ animationDelay: '0.7s' }}>
+                  <span>•</span>
+                  <span>Nationwide Service Available</span>
+                </li>
+              </ul>
             </Card>
           </div>
         </div>
