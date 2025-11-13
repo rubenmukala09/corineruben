@@ -86,6 +86,13 @@ const Signup = () => {
   const [industry, setIndustry] = useState("");
   const [companySize, setCompanySize] = useState("");
   const [website, setWebsite] = useState("");
+  
+  // Business contact information fields
+  const [fullName, setFullName] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
+  const [businessEmail, setBusinessEmail] = useState("");
+  const [businessPhone, setBusinessPhone] = useState("");
+  const [businessAddress, setBusinessAddress] = useState("");
 
   // Caregiver fields
   const [certificationNumber, setCertificationNumber] = useState("");
@@ -171,6 +178,14 @@ const Signup = () => {
       setPhoneValid(false);
       setPhoneError("Format: XXX-XXX-XXXX");
     }
+  };
+
+  // Auto-format phone number to (XXX) XXX-XXXX
+  const formatPhoneNumber = (value: string) => {
+    const cleaned = value.replace(/\D/g, '');
+    if (cleaned.length <= 3) return cleaned;
+    if (cleaned.length <= 6) return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3)}`;
+    return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}-${cleaned.slice(6, 10)}`;
   };
 
   // Real-time password validation
@@ -269,14 +284,40 @@ const Signup = () => {
 
   const validateStep3 = () => {
     if (selectedRole === "senior") {
-      if (!relationship || !specialization) {
+      // Validate contact information
+      if (!fullName || !jobTitle || !businessEmail) {
         toast({ 
           title: "⚠️ Missing Information", 
-          description: "Please select organization type and industry", 
+          description: "Please fill in all required contact fields", 
           variant: "destructive" 
         });
         return false;
       }
+      
+      // Validate email format
+      try {
+        emailSchema.parse(businessEmail);
+      } catch (error) {
+        toast({ 
+          title: "📧 Invalid Email", 
+          description: "Please enter a valid email address", 
+          variant: "destructive" 
+        });
+        return false;
+      }
+      
+      // Validate phone format
+      const phoneDigits = businessPhone.replace(/\D/g, '');
+      if (phoneDigits.length !== 10) {
+        toast({ 
+          title: "📞 Invalid Phone", 
+          description: "Please enter a valid 10-digit phone number", 
+          variant: "destructive" 
+        });
+        return false;
+      }
+      
+      return true;
     } else if (selectedRole === "caregiver") {
       if (!certificationNumber || !certificationType || !yearsExperience || !availableHours ||
           !reference1Name || !reference1Phone || !reference1Email ||
@@ -348,7 +389,19 @@ const Signup = () => {
       });
     }
     
-    setStep(step + 1);
+    // Smooth transition
+    const formCard = document.querySelector('.form-content');
+    if (formCard) {
+      formCard.classList.add('slide-out-left');
+      setTimeout(() => {
+        setStep(step + 1);
+        formCard.classList.remove('slide-out-left');
+        formCard.classList.add('slide-in-right');
+        setTimeout(() => formCard.classList.remove('slide-in-right'), 300);
+      }, 300);
+    } else {
+      setStep(step + 1);
+    }
   };
 
   const handleRoleSelect = (role: string) => {
@@ -362,7 +415,21 @@ const Signup = () => {
     }, 800);
   };
 
-  const handleBack = () => setStep(step - 1);
+  const handleBack = () => {
+    // Smooth transition
+    const formCard = document.querySelector('.form-content');
+    if (formCard) {
+      formCard.classList.add('slide-out-right');
+      setTimeout(() => {
+        setStep(step - 1);
+        formCard.classList.remove('slide-out-right');
+        formCard.classList.add('slide-in-left');
+        setTimeout(() => formCard.classList.remove('slide-in-left'), 300);
+      }, 300);
+    } else {
+      setStep(step - 1);
+    }
+  };
 
   const handleSubmit = async () => {
     if (!agreeTerms || !agreePrivacy) {
@@ -595,6 +662,28 @@ const Signup = () => {
         </div>
 
         <Card className="p-8 lg:p-10 shadow-2xl border-2 bg-card/80 backdrop-blur-2xl">
+          <style>{`
+            @keyframes slideOutLeft {
+              from { transform: translateX(0); opacity: 1; }
+              to { transform: translateX(-30px); opacity: 0; }
+            }
+            @keyframes slideInRight {
+              from { transform: translateX(30px); opacity: 0; }
+              to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOutRight {
+              from { transform: translateX(0); opacity: 1; }
+              to { transform: translateX(30px); opacity: 0; }
+            }
+            @keyframes slideInLeft {
+              from { transform: translateX(-30px); opacity: 0; }
+              to { transform: translateX(0); opacity: 1; }
+            }
+            .slide-out-left { animation: slideOutLeft 0.3s ease forwards; }
+            .slide-in-right { animation: slideInRight 0.3s ease forwards; }
+            .slide-out-right { animation: slideOutRight 0.3s ease forwards; }
+            .slide-in-left { animation: slideInLeft 0.3s ease forwards; }
+          `}</style>
           {/* Step 1: Role Selection */}
           {step === 1 && (
             <div className="space-y-8">
@@ -849,37 +938,51 @@ const Signup = () => {
             </div>
           )}
 
-          {/* Step 3: Contact Information (moved from step 2 for business) */}
+          {/* Step 3: Contact Information (Business only) */}
           {step === 3 && selectedRole === "senior" && (
-            <div className="space-y-6">
+            <div className="space-y-6 form-content">
               <div>
-                <h2 className="text-2xl font-bold mb-2">Basic Information</h2>
-                <p className="text-muted-foreground">Tell us about yourself</p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="firstName">First Name *</Label>
-                  <Input id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="lastName">Last Name *</Label>
-                  <Input id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
-                </div>
+                <h2 className="text-2xl font-bold mb-2">Contact Information</h2>
+                <p className="text-muted-foreground">Tell us about the primary contact</p>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email">Email Address *</Label>
+                <Label htmlFor="fullName">Full Name *</Label>
+                <Input 
+                  id="fullName" 
+                  value={fullName} 
+                  onChange={(e) => setFullName(e.target.value)} 
+                  placeholder="John Smith"
+                  required 
+                  className="h-12"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="jobTitle">Job Title *</Label>
+                <Input 
+                  id="jobTitle" 
+                  value={jobTitle} 
+                  onChange={(e) => setJobTitle(e.target.value)} 
+                  placeholder="CEO / Manager / etc."
+                  required 
+                  className="h-12"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="businessEmail">Business Email *</Label>
                 <div className="relative">
                   <Input 
-                    id="email" 
+                    id="businessEmail" 
                     type="email" 
-                    value={email} 
+                    value={businessEmail} 
                     onChange={(e) => {
-                      setEmail(e.target.value);
+                      setBusinessEmail(e.target.value);
                       validateEmail(e.target.value);
                     }}
-                    className={`pr-10 ${emailValid === true ? 'border-green-500' : emailValid === false ? 'border-red-500' : ''}`}
+                    placeholder="john@company.com"
+                    className={`h-12 pr-10 ${emailValid === true ? 'border-green-500' : emailValid === false ? 'border-red-500' : ''}`}
                     required 
                   />
                   {emailValid === true && (
@@ -895,112 +998,36 @@ const Signup = () => {
                     {emailError}
                   </p>
                 )}
+                <p className="text-xs text-muted-foreground">This will be used for login</p>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="phone">Phone Number * (XXX-XXX-XXXX)</Label>
-                <div className="relative">
-                  <Input 
-                    id="phone" 
-                    value={phone} 
-                    onChange={(e) => {
-                      setPhone(e.target.value);
-                      validatePhone(e.target.value);
-                    }}
-                    placeholder="555-555-5555"
-                    className={`pr-10 ${phoneValid === true ? 'border-green-500' : phoneValid === false ? 'border-red-500' : ''}`}
-                    required 
-                  />
-                  {phoneValid === true && (
-                    <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-green-500" />
-                  )}
-                  {phoneValid === false && (
-                    <XCircle className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-red-500" />
-                  )}
-                </div>
-                {phoneError && (
-                  <p className="text-xs text-red-500 flex items-center gap-1">
-                    <AlertCircle className="w-3 h-3" />
-                    {phoneError}
-                  </p>
-                )}
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="password">Password *</Label>
-                  <div className="relative">
-                    <Input 
-                      id="password" 
-                      type="password" 
-                      value={password} 
-                      onChange={(e) => {
-                        setPassword(e.target.value);
-                        validatePassword(e.target.value);
-                        if (confirmPassword) validatePasswordMatch(confirmPassword);
-                      }}
-                      className={`pr-10 ${passwordValid === true ? 'border-green-500' : passwordValid === false ? 'border-red-500' : ''}`}
-                      required 
-                    />
-                    {passwordValid === true && (
-                      <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-green-500" />
-                    )}
-                    {passwordValid === false && (
-                      <XCircle className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-red-500" />
-                    )}
-                  </div>
-                  {passwordError ? (
-                    <p className="text-xs text-red-500 flex items-center gap-1">
-                      <AlertCircle className="w-3 h-3" />
-                      {passwordError}
-                    </p>
-                  ) : (
-                    <p className="text-xs text-muted-foreground">Min 8 chars, 1 uppercase, 1 number, 1 special character</p>
-                  )}
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">Confirm Password *</Label>
-                  <div className="relative">
-                    <Input 
-                      id="confirmPassword" 
-                      type="password" 
-                      value={confirmPassword} 
-                      onChange={(e) => {
-                        setConfirmPassword(e.target.value);
-                        validatePasswordMatch(e.target.value);
-                      }}
-                      className={`pr-10 ${passwordMatch === true ? 'border-green-500' : passwordMatch === false ? 'border-red-500' : ''}`}
-                      required 
-                    />
-                    {passwordMatch === true && (
-                      <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-green-500" />
-                    )}
-                    {passwordMatch === false && (
-                      <XCircle className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-red-500" />
-                    )}
-                  </div>
-                  {passwordMatchError && (
-                    <p className="text-xs text-red-500 flex items-center gap-1">
-                      <AlertCircle className="w-3 h-3" />
-                      {passwordMatchError}
-                    </p>
-                  )}
-                </div>
+                <Label htmlFor="businessPhone">Phone Number *</Label>
+                <Input 
+                  id="businessPhone" 
+                  value={businessPhone} 
+                  onChange={(e) => {
+                    const formatted = formatPhoneNumber(e.target.value);
+                    setBusinessPhone(formatted);
+                  }}
+                  placeholder="(937) 555-1234"
+                  className="h-12"
+                  required 
+                  maxLength={14}
+                />
+                <p className="text-xs text-muted-foreground">Auto-formatted as you type</p>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="dateOfBirth">Date of Birth *</Label>
-                <Input id="dateOfBirth" type="date" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} required />
-              </div>
-
-              <div className="space-y-4">
-                <Label>Address *</Label>
-                <Input placeholder="Street Address" value={addressStreet} onChange={(e) => setAddressStreet(e.target.value)} required />
-                <div className="grid grid-cols-2 gap-4">
-                  <Input placeholder="City" value={addressCity} onChange={(e) => setAddressCity(e.target.value)} required />
-                  <Input placeholder="State" value={addressState} onChange={(e) => setAddressState(e.target.value)} required />
-                </div>
-                <Input placeholder="ZIP Code" value={addressZip} onChange={(e) => setAddressZip(e.target.value)} required />
+                <Label htmlFor="businessAddress">Business Address (Optional)</Label>
+                <Textarea 
+                  id="businessAddress" 
+                  value={businessAddress} 
+                  onChange={(e) => setBusinessAddress(e.target.value)} 
+                  placeholder="Street, City, State, ZIP"
+                  rows={3}
+                  className="resize-none"
+                />
               </div>
             </div>
           )}
