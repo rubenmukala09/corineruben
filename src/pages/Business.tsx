@@ -19,9 +19,9 @@ import businessCollaboration from "@/assets/business-collaboration.jpg";
 import teamCollaboration from "@/assets/team-collaboration.jpg";
 import heroBusiness from "@/assets/hero-business-professional.jpg";
 
-import heroBusinessTeam from "@/assets/hero-business-team.jpg";
-import heroBusinessModern from "@/assets/hero-business-modern.jpg";
-import heroBusinessMeeting from "@/assets/hero-business-meeting.jpg";
+import heroBusinessCollab1 from "@/assets/hero-business-collab-1.jpg";
+import heroBusinessCollab2 from "@/assets/hero-business-collab-2.jpg";
+import heroBusinessCollab3 from "@/assets/hero-business-collab-3.jpg";
 
 const Business = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -34,9 +34,9 @@ const Business = () => {
   } | null>(null);
   
   const businessHeroImages = [
-    heroBusinessTeam,
-    heroBusinessModern,
-    heroBusinessMeeting,
+    heroBusinessCollab1,
+    heroBusinessCollab2,
+    heroBusinessCollab3,
   ];
 
   const scrollToSection = (id: string) => {

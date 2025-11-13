@@ -33,18 +33,16 @@ import testimonial3 from "@/assets/testimonial-3.jpg";
 import testimonial5 from "@/assets/testimonial-5.jpg";
 import testimonial6 from "@/assets/testimonial-6.jpg";
 import testimonial7 from "@/assets/testimonial-7.jpg";
-import heroFamilyPark from "@/assets/hero-family-park.jpg";
-import heroFamilyMarket from "@/assets/hero-family-market.jpg";
-import heroFamilyCommunity from "@/assets/hero-family-community.jpg";
-import heroFamilyGathering from "@/assets/hero-family-gathering.jpg";
+import heroGrandparentsDiverse1 from "@/assets/hero-grandparents-diverse-1.jpg";
+import heroGrandparentsDiverse2 from "@/assets/hero-grandparents-diverse-2.jpg";
+import heroGrandparentsDiverse3 from "@/assets/hero-grandparents-diverse-3.jpg";
 import { useImagePreload } from "@/hooks/useImagePreload";
 
 const Index = () => {
   const heroImages = [
-    heroFamilyPark,
-    heroFamilyMarket,
-    heroFamilyCommunity,
-    heroFamilyGathering,
+    heroGrandparentsDiverse1,
+    heroGrandparentsDiverse2,
+    heroGrandparentsDiverse3,
   ];
 
   return (

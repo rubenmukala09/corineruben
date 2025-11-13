@@ -32,9 +32,9 @@ import {
 import trainingSession from "@/assets/training-session.jpg";
 import heroTraining from "@/assets/hero-training-new.jpg";
 
-import heroTrainingWorkshop from "@/assets/hero-training-workshop.jpg";
-import heroTrainingLearning from "@/assets/hero-training-learning.jpg";
-import heroTrainingHandsOn from "@/assets/hero-training-hands-on.jpg";
+import heroLearningFamilies1 from "@/assets/hero-learning-families-1.jpg";
+import heroLearningFamilies2 from "@/assets/hero-learning-families-2.jpg";
+import heroLearningFamilies3 from "@/assets/hero-learning-families-3.jpg";
 
 const LearnAndTrain = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -47,9 +47,9 @@ const LearnAndTrain = () => {
   } | null>(null);
   
   const trainingHeroImages = [
-    heroTrainingWorkshop,
-    heroTrainingLearning,
-    heroTrainingHandsOn,
+    heroLearningFamilies1,
+    heroLearningFamilies2,
+    heroLearningFamilies3,
   ];
 
   const getPlanPrice = (monthlyPrice: number) => {

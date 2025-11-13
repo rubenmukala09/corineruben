@@ -22,63 +22,36 @@ const TransitioningHeroBackground = ({
     if (!imagesPreloaded || images.length <= 1) return;
 
     const interval = setInterval(() => {
+      // Switch to next image
+      const next = (currentIndex + 1) % images.length;
+      setNextIndex(next);
       setIsTransitioning(true);
       
-      // After fade out completes, switch images
+      // After crossfade completes, update current index
       setTimeout(() => {
-        setCurrentIndex(nextIndex);
-        setNextIndex((nextIndex + 1) % images.length);
+        setCurrentIndex(next);
         setIsTransitioning(false);
-      }, 1000); // 1 second fade duration
+      }, 1500); // 1.5 second smooth crossfade
       
     }, transitionDuration * 1000);
 
     return () => clearInterval(interval);
-  }, [imagesPreloaded, images.length, nextIndex, transitionDuration]);
+  }, [imagesPreloaded, images.length, currentIndex, transitionDuration]);
 
   return (
     <div className="absolute inset-0">
-      {/* First Image - display immediately, even before full preload */}
-      <div
-        className={cn(
-          "absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000",
-          imagesPreloaded ? "" : "opacity-100"
-        )}
-        style={{
-          backgroundImage: `url(${images[0]})`,
-          opacity: currentIndex === 0 && !isTransitioning ? 1 : 0,
-        }}
-      />
-      
-      {/* Other Images - only render after preload */}
-      {imagesPreloaded && (
-        <>
-          {images.slice(1).map((image, idx) => {
-            const imageIndex = idx + 1;
-            return (
-              <div
-                key={imageIndex}
-                className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000"
-                style={{
-                  backgroundImage: `url(${image})`,
-                  opacity: currentIndex === imageIndex && !isTransitioning ? 1 : 0,
-                }}
-              />
-            );
-          })}
-          
-          {/* Next Image for crossfade effect */}
-          {nextIndex !== 0 && (
-            <div
-              className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000"
-              style={{
-                backgroundImage: `url(${images[nextIndex]})`,
-                opacity: isTransitioning ? 1 : 0,
-              }}
-            />
-          )}
-        </>
-      )}
+      {/* All images stack on top of each other */}
+      {images.map((image, idx) => (
+        <div
+          key={idx}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[1500ms] ease-in-out"
+          style={{
+            backgroundImage: `url(${image})`,
+            opacity: currentIndex === idx ? 1 : (isTransitioning && nextIndex === idx ? 1 : 0),
+            zIndex: currentIndex === idx ? 2 : (nextIndex === idx ? 1 : 0),
+          }}
+        />
+      ))}
     </div>
   );
 };
