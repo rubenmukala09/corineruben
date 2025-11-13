@@ -626,19 +626,13 @@ const Business = () => {
                 </li>
               </ul>
               <Button 
-                onClick={() => {
-                  setSelectedService({
-                    type: 'business',
-                    name: 'AI Services Insurance',
-                    tier: `Basic Care - ${isYearly ? 'Yearly' : 'Monthly'}`,
-                    price: isYearly ? Math.round(199 * 12 * 0.9) : 199
-                  });
-                  setModalOpen(true);
-                }}
+                asChild
                 variant="default" 
-                className="w-full"
+                className="w-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)]"
               >
-                GET BASIC CARE
+                <Link to="/contact?service=ai-insurance&plan=basic&price=199">
+                  GET BASIC CARE
+                </Link>
               </Button>
             </Card>
 
@@ -689,19 +683,13 @@ const Business = () => {
                 </li>
               </ul>
               <Button 
-                onClick={() => {
-                  setSelectedService({
-                    type: 'business',
-                    name: 'AI Services Insurance',
-                    tier: `Standard Care - ${isYearly ? 'Yearly' : 'Monthly'}`,
-                    price: isYearly ? Math.round(399 * 12 * 0.9) : 399
-                  });
-                  setModalOpen(true);
-                }}
+                asChild
                 variant="default" 
-                className="w-full"
+                className="w-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)]"
               >
-                GET STANDARD CARE
+                <Link to="/contact?service=ai-insurance&plan=standard&price=399">
+                  GET STANDARD CARE
+                </Link>
               </Button>
             </Card>
             </div>
