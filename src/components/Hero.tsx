@@ -18,20 +18,10 @@ interface HeroProps {
 }
 
 const Hero = ({ backgroundImage, headline, subheadline, children, className, overlay = false, showScrollIndicator = false, showPrivacyDisclaimer = false }: HeroProps) => {
-  const [scrollY, setScrollY] = useState(0);
   const [showDisclaimer, setShowDisclaimer] = useState(true);
   
   // Preload background image
   const imagePreloaded = useImagePreload(backgroundImage ? [backgroundImage] : []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -43,14 +33,8 @@ const Hero = ({ backgroundImage, headline, subheadline, children, className, ove
 
   return (
     <div className={cn("relative min-h-[80vh] md:min-h-[90vh] flex items-center overflow-hidden", className)}>
-      {/* Background with Parallax - disabled on mobile for performance */}
-      <div 
-        className="absolute inset-0"
-        style={{ 
-          transform: window.innerWidth > 768 ? `translateY(${scrollY * 0.3}px)` : 'none',
-          willChange: 'transform'
-        }}
-      >
+      {/* Static Background - no parallax for performance */}
+      <div className="absolute inset-0">
         {backgroundImage && (
           <div
             className={cn(
