@@ -72,6 +72,8 @@ export function ArticlePublishingSidebar({
     tags: true,
     excerpt: true,
     seo: false,
+    socialPreview: false,
+    advanced: false,
   });
 
   const [tagInput, setTagInput] = useState("");
@@ -148,6 +150,88 @@ export function ArticlePublishingSidebar({
     if ((length >= 45 && length < 50) || (length > 60 && length <= 70)) return "Okay";
     if (length < 45) return "Too short";
     return "Too long";
+  };
+
+  // Calculate word count
+  const wordCount = useMemo(() => {
+    if (!article.content) return 0;
+    return article.content.split(/\s+/).filter(word => word.length > 0).length;
+  }, [article.content]);
+
+  // Calculate SEO score
+  const seoChecklist = useMemo(() => {
+    const checks = [
+      {
+        id: "title-keyword",
+        label: "Title contains keyword",
+        completed: article.focusKeyword && article.title.toLowerCase().includes(article.focusKeyword.toLowerCase()),
+        tip: "Include your focus keyword in the article title for better SEO.",
+        weight: 15
+      },
+      {
+        id: "url-keyword",
+        label: "URL contains keyword",
+        completed: article.focusKeyword && article.slug.toLowerCase().includes(article.focusKeyword.toLowerCase()),
+        tip: "Add your focus keyword to the URL slug for improved search rankings.",
+        weight: 15
+      },
+      {
+        id: "word-count",
+        label: "Content is over 300 words",
+        completed: wordCount >= 300,
+        tip: "Write at least 300 words. Longer content tends to rank better in search engines.",
+        weight: 20
+      },
+      {
+        id: "meta-description",
+        label: "Meta description added",
+        completed: !!(article.seoDescription && article.seoDescription.length >= 120),
+        tip: "Write a compelling meta description (120-160 characters) to improve click-through rates.",
+        weight: 15
+      },
+      {
+        id: "featured-image",
+        label: "Featured image set",
+        completed: !!article.featuredImage,
+        tip: "Add a featured image to make your article more shareable and visually appealing.",
+        weight: 15
+      },
+      {
+        id: "keyword-density",
+        label: "Good keyword density",
+        completed: keywordDensity >= 0.5 && keywordDensity <= 2.5,
+        tip: "Aim for 0.5-2.5% keyword density. Too much can be seen as keyword stuffing.",
+        weight: 10
+      },
+      {
+        id: "seo-title",
+        label: "SEO title optimized",
+        completed: (article.seoTitle || article.title || "").length >= 50 && (article.seoTitle || article.title || "").length <= 60,
+        tip: "Keep your SEO title between 50-60 characters for optimal display in search results.",
+        weight: 10
+      }
+    ];
+    return checks;
+  }, [article, wordCount, keywordDensity]);
+
+  const seoScore = useMemo(() => {
+    const totalWeight = seoChecklist.reduce((sum, check) => sum + check.weight, 0);
+    const earnedWeight = seoChecklist.filter(check => check.completed).reduce((sum, check) => sum + check.weight, 0);
+    return Math.round((earnedWeight / totalWeight) * 100);
+  }, [seoChecklist]);
+
+  const getSeoScoreColor = (score: number) => {
+    if (score >= 80) return "text-green-600 bg-green-50 border-green-200";
+    if (score >= 60) return "text-yellow-600 bg-yellow-50 border-yellow-200";
+    if (score >= 40) return "text-orange-600 bg-orange-50 border-orange-200";
+    return "text-red-600 bg-red-50 border-red-200";
+  };
+
+  const getSeoScoreLabel = (score: number) => {
+    if (score >= 80) return "Great!";
+    if (score >= 60) return "Good";
+    if (score >= 40) return "Okay";
+    return "Needs Work";
   };
 
   return (
@@ -536,6 +620,44 @@ export function ArticlePublishingSidebar({
         </CardHeader>
         {sectionsOpen.seo && (
           <CardContent className="space-y-5">
+            {/* SEO Score */}
+            <div className={cn("border-2 rounded-lg p-4 text-center transition-colors", getSeoScoreColor(seoScore))}>
+              <div className="text-4xl font-bold mb-1">{seoScore}</div>
+              <div className="text-sm font-medium">{getSeoScoreLabel(seoScore)}</div>
+              <div className="text-xs mt-1">SEO Score</div>
+            </div>
+
+            {/* SEO Checklist */}
+            <div className="space-y-2">
+              <Label className="text-sm font-semibold">SEO Checklist</Label>
+              {seoChecklist.map((check) => (
+                <Popover key={check.id}>
+                  <PopoverTrigger asChild>
+                    <div className="flex items-center gap-2 p-2 rounded hover:bg-muted/50 cursor-pointer transition-colors">
+                      <div className={cn(
+                        "w-4 h-4 rounded-sm flex items-center justify-center text-xs",
+                        check.completed ? "bg-green-500 text-white" : "bg-muted"
+                      )}>
+                        {check.completed && "✓"}
+                      </div>
+                      <span className={cn(
+                        "text-sm flex-1",
+                        check.completed ? "text-foreground" : "text-muted-foreground"
+                      )}>
+                        {check.label}
+                      </span>
+                    </div>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-80" side="left">
+                    <div className="space-y-2">
+                      <h4 className="font-semibold text-sm">{check.label}</h4>
+                      <p className="text-sm text-muted-foreground">{check.tip}</p>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              ))}
+            </div>
+
             {/* Focus Keyword */}
             <div className="space-y-2">
               <Label htmlFor="focus-keyword">Focus Keyword</Label>
@@ -631,6 +753,178 @@ export function ArticlePublishingSidebar({
                   {article.seoDescription || article.excerpt || "Your article description will appear here. Write a compelling meta description to improve click-through rates from search results."}
                 </div>
               </div>
+            </div>
+          </CardContent>
+        )}
+      </Card>
+
+      {/* Social Sharing Preview */}
+      <Card>
+        <CardHeader 
+          className="cursor-pointer hover:bg-muted/50 transition-colors"
+          onClick={() => toggleSection("socialPreview")}
+        >
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-base">Social Sharing Preview</CardTitle>
+            {sectionsOpen.socialPreview ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+          </div>
+        </CardHeader>
+        {sectionsOpen.socialPreview && (
+          <CardContent className="space-y-4">
+            {/* Facebook Preview */}
+            <div className="space-y-2">
+              <Label className="text-xs font-semibold text-muted-foreground">FACEBOOK</Label>
+              <div className="border rounded-lg overflow-hidden bg-white">
+                {article.featuredImage && (
+                  <img 
+                    src={article.featuredImage} 
+                    alt="Preview" 
+                    className="w-full h-40 object-cover"
+                  />
+                )}
+                <div className="p-3 space-y-1 bg-gray-50">
+                  <div className="text-xs text-gray-500 uppercase">invisionnetwork.org</div>
+                  <div className="font-semibold text-sm line-clamp-1">
+                    {article.seoTitle || article.title || "Your Article Title"}
+                  </div>
+                  <div className="text-xs text-gray-600 line-clamp-2">
+                    {article.seoDescription || article.excerpt || "Your description here"}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Twitter Preview */}
+            <div className="space-y-2">
+              <Label className="text-xs font-semibold text-muted-foreground">TWITTER (X)</Label>
+              <div className="border rounded-2xl overflow-hidden bg-white">
+                {article.featuredImage && (
+                  <img 
+                    src={article.featuredImage} 
+                    alt="Preview" 
+                    className="w-full h-48 object-cover"
+                  />
+                )}
+                <div className="p-3 space-y-1">
+                  <div className="font-semibold text-sm line-clamp-2">
+                    {article.seoTitle || article.title || "Your Article Title"}
+                  </div>
+                  <div className="text-xs text-gray-600 line-clamp-1">
+                    {article.seoDescription || article.excerpt || "Your description"}
+                  </div>
+                  <div className="text-xs text-gray-500 mt-1">invisionnetwork.org</div>
+                </div>
+              </div>
+            </div>
+
+            {/* LinkedIn Preview */}
+            <div className="space-y-2">
+              <Label className="text-xs font-semibold text-muted-foreground">LINKEDIN</Label>
+              <div className="border rounded overflow-hidden bg-white">
+                {article.featuredImage && (
+                  <img 
+                    src={article.featuredImage} 
+                    alt="Preview" 
+                    className="w-full h-32 object-cover"
+                  />
+                )}
+                <div className="p-3 space-y-1 bg-white">
+                  <div className="font-semibold text-sm line-clamp-1">
+                    {article.seoTitle || article.title || "Your Article Title"}
+                  </div>
+                  <div className="text-xs text-gray-500">invisionnetwork.org</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <p className="text-xs text-muted-foreground">
+                Previews use Open Graph tags from your SEO settings
+              </p>
+            </div>
+          </CardContent>
+        )}
+      </Card>
+
+      {/* Advanced Options */}
+      <Card>
+        <CardHeader 
+          className="cursor-pointer hover:bg-muted/50 transition-colors"
+          onClick={() => toggleSection("advanced")}
+        >
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-base">Advanced Options</CardTitle>
+            {sectionsOpen.advanced ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+          </div>
+        </CardHeader>
+        {sectionsOpen.advanced && (
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="canonical-url">Canonical URL</Label>
+              <Input
+                id="canonical-url"
+                placeholder="https://..."
+                className="text-sm"
+              />
+              <p className="text-xs text-muted-foreground">
+                Specify the original source if this is republished content
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="robots-meta">Robots Meta Tag</Label>
+              <Select defaultValue="index-follow">
+                <SelectTrigger id="robots-meta">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="index-follow">Index, Follow (default)</SelectItem>
+                  <SelectItem value="noindex-follow">No Index, Follow</SelectItem>
+                  <SelectItem value="index-nofollow">Index, No Follow</SelectItem>
+                  <SelectItem value="noindex-nofollow">No Index, No Follow</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="schema-type">Schema.org Type</Label>
+              <Select defaultValue="article">
+                <SelectTrigger id="schema-type">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="article">Article</SelectItem>
+                  <SelectItem value="blog-posting">Blog Posting</SelectItem>
+                  <SelectItem value="news-article">News Article</SelectItem>
+                  <SelectItem value="how-to">How To</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="custom-css">Custom CSS</Label>
+              <Textarea
+                id="custom-css"
+                placeholder=".custom-class { color: red; }"
+                className="font-mono text-xs resize-none"
+                rows={3}
+              />
+              <p className="text-xs text-muted-foreground">
+                Add custom styles for this article only
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="custom-js">Custom JavaScript</Label>
+              <Textarea
+                id="custom-js"
+                placeholder="console.log('Hello');"
+                className="font-mono text-xs resize-none"
+                rows={3}
+              />
+              <p className="text-xs text-muted-foreground">
+                Add custom scripts for this article only
+              </p>
             </div>
           </CardContent>
         )}
