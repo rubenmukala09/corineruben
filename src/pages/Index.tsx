@@ -249,7 +249,7 @@ function Index() {
                 Ohio Based & Trusted
               </h3>
               <p className="text-muted-foreground text-center">
-                Locally owned and operated in Cleveland, serving families across Ohio.
+                Serving Dayton, Kettering & Greater Miami Valley, Ohio
               </p>
             </Card>
 

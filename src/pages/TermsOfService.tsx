@@ -220,7 +220,7 @@ function TermsOfService() {
                     <p className="text-foreground font-semibold mb-2">InVision Network</p>
                     <p className="text-muted-foreground">Email: <a href="mailto:legal@invisionnetwork.com" className="text-primary hover:underline">legal@invisionnetwork.com</a></p>
                     <p className="text-muted-foreground">Phone: <a href="tel:9375550199" className="text-primary hover:underline">(937) 555-0199</a></p>
-                    <p className="text-muted-foreground">Address: 850 Euclid Ave Ste 819 #4685, Cleveland, OH 44114</p>
+                    <p className="text-muted-foreground">Serving Dayton, Kettering & Greater Miami Valley, Ohio</p>
                   </div>
                 </section>
 

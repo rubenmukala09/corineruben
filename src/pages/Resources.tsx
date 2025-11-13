@@ -144,7 +144,7 @@ function Resources() {
     },
     {
       q: "Do you travel for in-person training?",
-      a: "Yes! We serve Cleveland metro locally and offer nationwide in-person training. InVision covers all trainer travel costs.",
+      a: "Yes! We serve Dayton-Kettering metro locally and offer nationwide in-person training. InVision covers all trainer travel costs.",
     },
     {
       q: "How do military/veteran discounts work?",
