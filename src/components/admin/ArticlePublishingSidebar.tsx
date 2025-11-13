@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -15,7 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Calendar as CalendarIcon, Upload, X, ChevronDown, ChevronUp, Lock, Globe, Eye } from "lucide-react";
+import { Calendar as CalendarIcon, Upload, X, ChevronDown, ChevronUp, Lock, Globe, Eye, Search, Edit } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
@@ -34,6 +34,7 @@ interface ArticleData {
   author: string;
   tags: string[];
   scheduledDate?: string;
+  focusKeyword?: string;
   seoTitle?: string;
   seoDescription?: string;
   seoKeywords?: string[];
@@ -108,6 +109,45 @@ export function ArticlePublishingSidebar({
       ? currentCategories.filter(c => c !== categoryId)
       : [...currentCategories, categoryId];
     handleChange("categories", newCategories);
+  };
+
+  // Calculate keyword density
+  const keywordDensity = useMemo(() => {
+    if (!article.focusKeyword || !article.content) return 0;
+    
+    const keyword = article.focusKeyword.toLowerCase();
+    const content = article.content.toLowerCase();
+    const words = content.split(/\s+/).length;
+    
+    if (words === 0) return 0;
+    
+    const matches = (content.match(new RegExp(keyword, "g")) || []).length;
+    return (matches / words) * 100;
+  }, [article.focusKeyword, article.content]);
+
+  const getKeywordDensityColor = (density: number) => {
+    if (density >= 1 && density <= 2) return "text-green-600";
+    if ((density >= 0.5 && density < 1) || (density > 2 && density <= 3)) return "text-yellow-600";
+    return "text-red-600";
+  };
+
+  const getKeywordDensityStatus = (density: number) => {
+    if (density >= 1 && density <= 2) return "Good";
+    if ((density >= 0.5 && density < 1) || (density > 2 && density <= 3)) return "Okay";
+    return "Improve";
+  };
+
+  const getSeoTitleColor = (length: number) => {
+    if (length >= 50 && length <= 60) return "text-green-600";
+    if ((length >= 45 && length < 50) || (length > 60 && length <= 70)) return "text-yellow-600";
+    return "text-red-600";
+  };
+
+  const getSeoTitleStatus = (length: number) => {
+    if (length >= 50 && length <= 60) return "Good";
+    if ((length >= 45 && length < 50) || (length > 60 && length <= 70)) return "Okay";
+    if (length < 45) return "Too short";
+    return "Too long";
   };
 
   return (
@@ -487,58 +527,112 @@ export function ArticlePublishingSidebar({
           onClick={() => toggleSection("seo")}
         >
           <div className="flex items-center justify-between">
-            <CardTitle className="text-base">SEO</CardTitle>
+            <CardTitle className="text-base flex items-center gap-2">
+              <Search className="h-4 w-4" />
+              Search Engine Optimization
+            </CardTitle>
             {sectionsOpen.seo ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
           </div>
         </CardHeader>
         {sectionsOpen.seo && (
-          <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="seo-title">SEO Title</Label>
-            <Input
-              id="seo-title"
-              value={article.seoTitle || ""}
-              onChange={(e) => handleChange("seoTitle", e.target.value)}
-              placeholder="Custom title for search engines"
-              maxLength={60}
-            />
-            <p className="text-xs text-muted-foreground">
-              {(article.seoTitle || "").length}/60 characters
-            </p>
-          </div>
+          <CardContent className="space-y-5">
+            {/* Focus Keyword */}
+            <div className="space-y-2">
+              <Label htmlFor="focus-keyword">Focus Keyword</Label>
+              <Input
+                id="focus-keyword"
+                value={article.focusKeyword || ""}
+                onChange={(e) => handleChange("focusKeyword", e.target.value)}
+                placeholder="AI scam protection"
+              />
+              <p className="text-xs text-muted-foreground">Main keyword for this article</p>
+              
+              {article.focusKeyword && article.content && (
+                <div className={cn("text-xs font-medium", getKeywordDensityColor(keywordDensity))}>
+                  Keyword density: {keywordDensity.toFixed(2)}% - {getKeywordDensityStatus(keywordDensity)}
+                </div>
+              )}
+            </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="seo-description">SEO Description</Label>
-            <Textarea
-              id="seo-description"
-              value={article.seoDescription || ""}
-              onChange={(e) => handleChange("seoDescription", e.target.value)}
-              placeholder="Meta description for search engines"
-              className="resize-none"
-              rows={3}
-              maxLength={160}
-            />
-            <p className="text-xs text-muted-foreground">
-              {(article.seoDescription || "").length}/160 characters
-            </p>
-          </div>
+            {/* SEO Title */}
+            <div className="space-y-2">
+              <Label htmlFor="seo-title">SEO Title</Label>
+              <Input
+                id="seo-title"
+                value={article.seoTitle || article.title || ""}
+                onChange={(e) => handleChange("seoTitle", e.target.value)}
+                placeholder="Custom title for search engines"
+                maxLength={70}
+              />
+              <div className="flex justify-between items-center">
+                <p className="text-xs text-muted-foreground">
+                  {(article.seoTitle || article.title || "").length < 45 && "Too short"}
+                  {(article.seoTitle || article.title || "").length >= 45 && (article.seoTitle || article.title || "").length <= 50 && "Good length"}
+                  {(article.seoTitle || article.title || "").length > 50 && (article.seoTitle || article.title || "").length <= 60 && "Optimal"}
+                  {(article.seoTitle || article.title || "").length > 60 && "Consider shortening"}
+                </p>
+                <p className={cn("text-xs font-medium", getSeoTitleColor((article.seoTitle || article.title || "").length))}>
+                  {(article.seoTitle || article.title || "").length}/60
+                </p>
+              </div>
+            </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="seo-keywords">SEO Keywords</Label>
-            <Input
-              id="seo-keywords"
-              value={article.seoKeywords?.join(", ") || ""}
-              onChange={(e) =>
-                handleChange(
-                  "seoKeywords",
-                  e.target.value.split(",").map((k) => k.trim())
-                )
-              }
-              placeholder="keyword1, keyword2, keyword3"
-            />
-            <p className="text-xs text-muted-foreground">Separate with commas</p>
-          </div>
-        </CardContent>
+            {/* Meta Description */}
+            <div className="space-y-2">
+              <Label htmlFor="seo-description">Meta Description</Label>
+              <Textarea
+                id="seo-description"
+                value={article.seoDescription || ""}
+                onChange={(e) => handleChange("seoDescription", e.target.value)}
+                placeholder="Describe your article..."
+                className="resize-none"
+                rows={3}
+                maxLength={160}
+              />
+              <div className="flex justify-between items-center">
+                <p className="text-xs text-muted-foreground">
+                  Used in search results
+                </p>
+                <p className="text-xs font-medium">
+                  {(article.seoDescription || "").length}/160
+                </p>
+              </div>
+            </div>
+
+            {/* URL Slug */}
+            <div className="space-y-2">
+              <Label>URL Slug</Label>
+              <div className="flex gap-2">
+                <Input
+                  value={article.slug}
+                  readOnly
+                  className="bg-muted"
+                />
+                <Button variant="outline" size="icon">
+                  <Edit className="h-4 w-4" />
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground break-all">
+                invisionnetwork.org/blog/{article.slug || "your-article-slug"}
+              </p>
+            </div>
+
+            {/* Google Preview */}
+            <div className="space-y-2">
+              <Label className="text-xs font-semibold text-muted-foreground">GOOGLE PREVIEW</Label>
+              <div className="border rounded-lg p-4 bg-white space-y-1">
+                <div className="text-xs text-green-700">
+                  invisionnetwork.org › blog › {article.slug || "article"}
+                </div>
+                <div className="text-lg text-blue-600 hover:underline cursor-pointer line-clamp-1">
+                  {article.seoTitle || article.title || "Your Article Title"}
+                </div>
+                <div className="text-sm text-gray-600 line-clamp-2">
+                  {article.seoDescription || article.excerpt || "Your article description will appear here. Write a compelling meta description to improve click-through rates from search results."}
+                </div>
+              </div>
+            </div>
+          </CardContent>
         )}
       </Card>
     </div>

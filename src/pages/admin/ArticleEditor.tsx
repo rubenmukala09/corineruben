@@ -34,6 +34,7 @@ interface ArticleData {
   author: string;
   tags: string[];
   scheduledDate?: string;
+  focusKeyword?: string;
   seoTitle?: string;
   seoDescription?: string;
   seoKeywords?: string[];
