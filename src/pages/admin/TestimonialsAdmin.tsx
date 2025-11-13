@@ -5,6 +5,7 @@ import { useToast } from "@/hooks/use-toast";
 import { AdminSidebar } from "@/components/AdminSidebar";
 import { AdminTopBar } from "@/components/AdminTopBar";
 import { BreadcrumbNav } from "@/components/BreadcrumbNav";
+import { AddTestimonialModal } from "@/components/admin/AddTestimonialModal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -75,6 +76,7 @@ export default function TestimonialsAdmin() {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [testimonialToDelete, setTestimonialToDelete] = useState<string | null>(null);
+  const [addModalOpen, setAddModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const { toast } = useToast();
@@ -315,7 +317,7 @@ export default function TestimonialsAdmin() {
             <BreadcrumbNav />
             <div className="flex items-center justify-between mt-4">
               <h1 className="text-3xl font-bold text-foreground">Testimonials</h1>
-              <Button onClick={() => navigate("/admin/content/testimonials/new")}>
+              <Button onClick={() => setAddModalOpen(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 Add New Testimonial
               </Button>
@@ -419,7 +421,7 @@ export default function TestimonialsAdmin() {
               <p className="text-muted-foreground mb-6">
                 Add your first testimonial to showcase customer feedback
               </p>
-              <Button onClick={() => navigate("/admin/content/testimonials/new")}>
+              <Button onClick={() => setAddModalOpen(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 Add Testimonial
               </Button>
@@ -615,6 +617,13 @@ export default function TestimonialsAdmin() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Add Testimonial Modal */}
+      <AddTestimonialModal
+        open={addModalOpen}
+        onOpenChange={setAddModalOpen}
+        onSuccess={fetchTestimonials}
+      />
     </div>
   );
 }
