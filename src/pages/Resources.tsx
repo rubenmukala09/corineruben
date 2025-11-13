@@ -389,10 +389,20 @@ const Resources = () => {
               );
             })}
           </div>
-          <div className="text-center mt-8">
-            <Button asChild variant="outline" size="lg">
-              <Link to="/articles">VIEW ALL ARTICLES</Link>
-            </Button>
+          <div className="flex justify-center mt-12">
+            <Link to="/blog">
+              <Button 
+                variant="outline" 
+                className="group relative overflow-hidden border-2 border-primary px-8 py-3.5 text-base font-semibold transition-all duration-300 ease-in-out hover:scale-105 hover:bg-primary hover:text-white hover:shadow-medium"
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  VIEW ALL ARTICLES
+                  <span className="inline-block transition-all duration-300 ease-in-out opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0">
+                    →
+                  </span>
+                </span>
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
