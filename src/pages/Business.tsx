@@ -244,157 +244,89 @@ const Business = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-center mb-12">AI Agents & Automation Pricing</h2>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <Card className="p-8">
-              <h3 className="text-2xl font-bold mb-4">AI Receptionist & Intake Agent</h3>
-              <p className="text-muted-foreground mb-6">Answer calls/chats 24/7, book appointments</p>
-              <p ref={price1Counter.ref} className="text-4xl font-bold text-accent mb-6">
-                {price1Counter.displayValue}
-              </p>
-              <p className="text-sm text-muted-foreground mb-4">Perfect for: Medical practices, law firms, salons</p>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Answers calls 24/7 in natural language</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Books appointments automatically</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Qualifies leads using your criteria</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>CRM integration</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>30-day optimization period</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Security audit & 90-day support</span>
-                </li>
-              </ul>
-              <Button 
-                onClick={() => {
-                  setIsNavigating(true);
-                  setTimeout(() => {
-                    navigate('/contact?service=ai-receptionist&plan=9500');
-                  }, 300);
-                }}
-                variant="default" 
-                className="w-full transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] hover:scale-[1.02]"
-                disabled={isNavigating}
-              >
-                {isNavigating ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  'GET STARTED'
-                )}
-              </Button>
-            </Card>
+            <ScrollReveal animation="slide-left" delay={0}>
+              <Card className="p-8">
+                <h3 className="text-2xl font-bold mb-4">AI Receptionist & Intake Agent</h3>
+                <p className="text-muted-foreground mb-6">Answer calls/chats 24/7, book appointments</p>
+                <p ref={price1Counter.ref} className="text-4xl font-bold text-accent mb-6">
+                  {price1Counter.displayValue}
+                </p>
+...
+                <Button 
+                  onClick={() => {
+                    setIsNavigating(true);
+                    setTimeout(() => {
+                      navigate('/contact?service=ai-receptionist&plan=9500');
+                    }, 300);
+                  }}
+                  variant="default" 
+                  className="w-full transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] hover:scale-[1.02]"
+                  disabled={isNavigating}
+                >
+                  {isNavigating ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    'GET STARTED'
+                  )}
+                </Button>
+              </Card>
+            </ScrollReveal>
 
-            <Card className="p-8">
-              <h3 className="text-2xl font-bold mb-4">Follow-Up Automation System</h3>
-              <p className="text-muted-foreground mb-6">Automated email/SMS campaigns, lead nurturing</p>
-              <p ref={price2Counter.ref} className="text-4xl font-bold text-accent mb-6">
-                {price2Counter.displayValue}
-              </p>
-              <p className="text-sm text-muted-foreground mb-4">Perfect for: E-commerce, real estate, coaching, B2B</p>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Automated email sequences</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>SMS reminder campaigns</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Lead nurturing workflows</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Performance analytics dashboard</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>CRM synchronization</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>60-day optimization</span>
-                </li>
-              </ul>
-              <Button 
-                onClick={() => {
-                  setIsNavigating(true);
-                  setTimeout(() => {
-                    navigate('/contact?service=automation&plan=12500');
-                  }, 300);
-                }}
-                variant="default" 
-                className="w-full transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] hover:scale-[1.02]"
-                disabled={isNavigating}
-              >
-                {isNavigating ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  'GET STARTED'
-                )}
-              </Button>
-            </Card>
+            <ScrollReveal animation="scale-in" delay={200}>
+              <Card className="p-8">
+                <h3 className="text-2xl font-bold mb-4">Follow-Up Automation System</h3>
+                <p className="text-muted-foreground mb-6">Automated email/SMS campaigns, lead nurturing</p>
+                <p ref={price2Counter.ref} className="text-4xl font-bold text-accent mb-6">
+                  {price2Counter.displayValue}
+                </p>
+...
+                <Button 
+                  onClick={() => {
+                    setIsNavigating(true);
+                    setTimeout(() => {
+                      navigate('/contact?service=automation&plan=12500');
+                    }, 300);
+                  }}
+                  variant="default" 
+                  className="w-full transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] hover:scale-[1.02]"
+                  disabled={isNavigating}
+                >
+                  {isNavigating ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    'GET STARTED'
+                  )}
+                </Button>
+              </Card>
+            </ScrollReveal>
 
-            <Card className="p-8 border-2 border-accent">
-              <h3 className="text-2xl font-bold mb-4">Custom Automation Suite</h3>
-              <p className="text-muted-foreground mb-6">Multi-system operations</p>
-              <p ref={price3Counter.ref} className="text-4xl font-bold text-accent mb-6">
-                {price3Counter.displayValue}
-              </p>
-              <p className="text-sm text-muted-foreground mb-4">Perfect for: Growing businesses, enterprises</p>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Full discovery & design</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Build, train, deploy</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Security audit</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Team training</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>90-day support</span>
-                </li>
-              </ul>
-              <Button 
-                onClick={() => {
-                  setIsNavigating(true);
-                  setTimeout(() => {
-                    navigate('/contact?service=custom&plan=25000');
-                  }, 300);
-                }}
-                variant="default" 
-                className="w-full transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] hover:scale-[1.02]"
-                disabled={isNavigating}
-              >
-                {isNavigating ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  'GET STARTED'
-                )}
-              </Button>
-            </Card>
+            <ScrollReveal animation="slide-right" delay={400}>
+              <Card className="p-8 border-2 border-accent">
+                <h3 className="text-2xl font-bold mb-4">Custom Automation Suite</h3>
+                <p className="text-muted-foreground mb-6">Multi-system operations</p>
+                <p ref={price3Counter.ref} className="text-4xl font-bold text-accent mb-6">
+                  {price3Counter.displayValue}
+                </p>
+...
+                <Button 
+                  onClick={() => {
+                    setIsNavigating(true);
+                    setTimeout(() => {
+                      navigate('/contact?service=custom&plan=25000');
+                    }, 300);
+                  }}
+                  variant="default" 
+                  className="w-full transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] hover:scale-[1.02]"
+                  disabled={isNavigating}
+                >
+                  {isNavigating ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    'GET STARTED'
+                  )}
+                </Button>
+              </Card>
+            </ScrollReveal>
           </div>
         </div>
       </section>
