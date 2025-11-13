@@ -726,25 +726,41 @@ const Contact = () => {
                       <div className="space-y-2 text-sm">
                         <div className="flex items-center gap-2">
                           <span className="font-semibold w-20">General:</span>
-                          <a href="mailto:hello@invisionnetwork.org" className="text-accent hover:text-accent/80">
+                          <a 
+                            href="mailto:hello@invisionnetwork.org?subject=Inquiry%20from%20Website" 
+                            className="text-foreground hover:text-teal-500 transition-all duration-300 hover:underline flex items-center gap-1 group"
+                          >
+                            <span className="group-hover:animate-bounce">✉️</span>
                             hello@invisionnetwork.org
                           </a>
                         </div>
                         <div className="flex items-center gap-2">
                           <span className="font-semibold w-20">Training:</span>
-                          <a href="mailto:training@invisionnetwork.org" className="text-accent hover:text-accent/80">
+                          <a 
+                            href="mailto:training@invisionnetwork.org?subject=Training%20Inquiry" 
+                            className="text-foreground hover:text-teal-500 transition-all duration-300 hover:underline flex items-center gap-1 group"
+                          >
+                            <span className="group-hover:animate-bounce">✉️</span>
                             training@invisionnetwork.org
                           </a>
                         </div>
                         <div className="flex items-center gap-2">
                           <span className="font-semibold w-20">Business:</span>
-                          <a href="mailto:consulting@invisionnetwork.org" className="text-accent hover:text-accent/80">
+                          <a 
+                            href="mailto:consulting@invisionnetwork.org?subject=Business%20Consulting%20Inquiry" 
+                            className="text-foreground hover:text-teal-500 transition-all duration-300 hover:underline flex items-center gap-1 group"
+                          >
+                            <span className="group-hover:animate-bounce">✉️</span>
                             consulting@invisionnetwork.org
                           </a>
                         </div>
                         <div className="flex items-center gap-2">
                           <span className="font-semibold w-20">Members:</span>
-                          <a href="mailto:support@invisionnetwork.org" className="text-accent hover:text-accent/80">
+                          <a 
+                            href="mailto:support@invisionnetwork.org?subject=Member%20Support%20Request" 
+                            className="text-foreground hover:text-teal-500 transition-all duration-300 hover:underline flex items-center gap-1 group"
+                          >
+                            <span className="group-hover:animate-bounce">✉️</span>
                             support@invisionnetwork.org
                           </a>
                         </div>
