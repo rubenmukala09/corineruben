@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { AdminSidebar } from "@/components/AdminSidebar";
 import { AdminTopBar } from "@/components/AdminTopBar";
 import { BreadcrumbNav } from "@/components/BreadcrumbNav";
@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Switch } from "@/components/ui/switch";
+import { AddTeamMemberModal } from "@/components/admin/AddTeamMemberModal";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -63,6 +64,7 @@ export default function TeamAdmin() {
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [memberToDelete, setMemberToDelete] = useState<TeamMember | null>(null);
+  const [addModalOpen, setAddModalOpen] = useState(false);
 
   // Only keep Ruben Nkulu - the founder
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([
@@ -82,6 +84,10 @@ export default function TeamAdmin() {
       isFounder: true,
     },
   ]);
+
+  const handleAddMember = (member: TeamMember) => {
+    setTeamMembers((prev) => [...prev, member]);
+  };
 
   const filteredMembers = teamMembers.filter(
     (member) =>
@@ -159,7 +165,7 @@ export default function TeamAdmin() {
                 <h1 className="text-3xl font-bold mb-2">Team Members</h1>
                 <BreadcrumbNav />
               </div>
-              <Button size="lg" className="gap-2">
+              <Button size="lg" className="gap-2" onClick={() => setAddModalOpen(true)}>
                 <Plus className="h-5 w-5" />
                 Add Team Member
               </Button>
@@ -248,7 +254,7 @@ export default function TeamAdmin() {
                     <p className="text-sm mb-4">
                       Add your first team member to showcase your expert staff
                     </p>
-                    <Button size="lg" className="gap-2">
+                    <Button size="lg" className="gap-2" onClick={() => setAddModalOpen(true)}>
                       <Plus className="h-5 w-5" />
                       Add Team Member
                     </Button>
@@ -449,6 +455,14 @@ export default function TeamAdmin() {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
+
+        {/* Add Team Member Modal */}
+        <AddTeamMemberModal
+          isOpen={addModalOpen}
+          onClose={() => setAddModalOpen(false)}
+          onAdd={handleAddMember}
+          nextOrderNumber={teamMembers.length + 1}
+        />
       </main>
     </div>
   );
