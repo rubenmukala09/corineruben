@@ -8,8 +8,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
 import { ArticlePublishingSidebar } from "@/components/admin/ArticlePublishingSidebar";
+import { PublishConfirmationModal } from "@/components/admin/PublishConfirmationModal";
 import {
   Save,
   Eye,
@@ -17,6 +19,7 @@ import {
   Lock,
   Unlock,
   Clock,
+  AlertCircle,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -66,6 +69,26 @@ export default function ArticleEditor() {
   const [wordCount, setWordCount] = useState(0);
   const [charCount, setCharCount] = useState(0);
   const [readingTime, setReadingTime] = useState(0);
+  const [showPublishModal, setShowPublishModal] = useState(false);
+
+  // Validation for required fields
+  const requiredFieldsComplete = () => {
+    return !!(
+      article.title &&
+      article.content &&
+      article.categories.length > 0 &&
+      article.author
+    );
+  };
+
+  const getMissingFields = () => {
+    const missing: string[] = [];
+    if (!article.title) missing.push("Title");
+    if (!article.content) missing.push("Content");
+    if (article.categories.length === 0) missing.push("Category");
+    if (!article.author) missing.push("Author");
+    return missing;
+  };
 
   // Generate slug from title
   const generateSlug = (text: string) => {
@@ -165,36 +188,62 @@ export default function ArticleEditor() {
   };
 
   const handlePublish = async () => {
-    if (!title || !content) {
+    if (!requiredFieldsComplete()) {
       toast({
         title: "Cannot Publish",
-        description: "Title and content are required",
+        description: `Please complete these required fields: ${getMissingFields().join(", ")}`,
         variant: "destructive",
       });
       return;
     }
 
+    setShowPublishModal(true);
+  };
+
+  const confirmPublish = async () => {
     try {
       setSaving(true);
       // Implement publish logic here
       await handleSave(true);
 
       toast({
-        title: "Article Published!",
-        description: "Your article is now live",
+        title: article.status === "published" ? "Article Updated!" : "Article Published!",
+        description:
+          article.status === "scheduled"
+            ? "Your article has been scheduled"
+            : "Your article is now live",
       });
 
+      setShowPublishModal(false);
       navigate("/admin/content/articles");
     } catch (error) {
       console.error("Publish error:", error);
+      toast({
+        title: "Publish Failed",
+        description: "Failed to publish article. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setSaving(false);
     }
   };
 
-  const handlePreview = () => {
+  const handlePreview = async () => {
+    // Auto-save before preview
+    await handleSave(true);
+
+    // Store article data in localStorage for preview
+    const previewData = {
+      ...article,
+      title: article.title,
+      content: article.content,
+      readingTime: Math.ceil(wordCount / 200), // Average reading speed
+    };
+
+    localStorage.setItem("article-preview", JSON.stringify(previewData));
+
     // Open preview in new tab
-    window.open(`/articles/preview?title=${encodeURIComponent(title)}`, "_blank");
+    window.open("/admin/articles/preview", "_blank");
   };
 
   const getTimeSinceLastSave = () => {
@@ -258,14 +307,41 @@ export default function ArticleEditor() {
                 Save Draft
               </Button>
 
-              <Button variant="outline" onClick={handlePreview}>
+              <Button variant="outline" onClick={handlePreview} disabled={!article.title || !article.content}>
                 <Eye className="h-4 w-4 mr-2" />
                 Preview
               </Button>
 
-              <Button onClick={handlePublish} disabled={saving}>
-                Publish
-              </Button>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div>
+                      <Button
+                        onClick={handlePublish}
+                        disabled={!requiredFieldsComplete() || saving}
+                        className="relative"
+                      >
+                        {article.status === "published" ? "Update" : "Publish"}
+                      </Button>
+                    </div>
+                  </TooltipTrigger>
+                  {!requiredFieldsComplete() && (
+                    <TooltipContent side="bottom" className="max-w-xs">
+                      <div className="space-y-1">
+                        <p className="font-semibold flex items-center gap-2">
+                          <AlertCircle className="h-4 w-4" />
+                          Complete required fields:
+                        </p>
+                        <ul className="text-sm list-disc list-inside">
+                          {getMissingFields().map((field) => (
+                            <li key={field}>{field}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </TooltipContent>
+                  )}
+                </Tooltip>
+              </TooltipProvider>
             </div>
           </div>
         </div>
@@ -357,11 +433,19 @@ export default function ArticleEditor() {
             <ArticlePublishingSidebar
               article={article}
               onChange={setArticle}
-              onSave={handleSave}
+              onSave={() => handleSave(false)}
             />
           </div>
         </div>
       </main>
+
+      {/* Publish Confirmation Modal */}
+      <PublishConfirmationModal
+        isOpen={showPublishModal}
+        onClose={() => setShowPublishModal(false)}
+        onConfirm={confirmPublish}
+        article={article}
+      />
     </div>
   );
 }
