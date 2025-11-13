@@ -346,202 +346,183 @@ const Business = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
             {/* Landing Page */}
-            <Card className="p-8 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1">
-              <h3 className="text-2xl font-bold mb-4">Landing Page</h3>
-              <p className="text-muted-foreground mb-6">Single-page website for campaigns or simple business presence</p>
-              <p className="text-4xl font-bold text-accent mb-6">$1,500</p>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>1-page custom design</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Mobile responsive</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Contact form</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>SSL certificate</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Basic SEO setup</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>1 month hosting included</span>
-                </li>
-              </ul>
-              <Button 
-                asChild
-                variant="default" 
-                className="w-full ripple-container relative overflow-hidden transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)]"
-                onClick={(e) => {
-                  // Create ripple effect
-                  const button = e.currentTarget;
-                  const ripple = document.createElement('span');
-                  const rect = button.getBoundingClientRect();
-                  const size = Math.max(rect.width, rect.height);
-                  const x = e.clientX - rect.left - size / 2;
-                  const y = e.clientY - rect.top - size / 2;
-                  
-                  ripple.className = 'ripple';
-                  ripple.style.width = ripple.style.height = `${size}px`;
-                  ripple.style.left = `${x}px`;
-                  ripple.style.top = `${y}px`;
-                  
-                  button.appendChild(ripple);
-                  setTimeout(() => ripple.remove(), 600);
-                }}
-              >
-                <Link to="/contact?service=landing-page&price=1500">
-                  GET STARTED
-                </Link>
-              </Button>
-            </Card>
+            <ScrollReveal animation="fade-up" delay={0} threshold={0.2}>
+              <Card className="p-8 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1">
+                <h3 className="text-2xl font-bold mb-4">Landing Page</h3>
+                <p className="text-muted-foreground mb-6">Single-page website for campaigns or simple business presence</p>
+                <p className="text-4xl font-bold text-accent mb-6">$1,500</p>
+...
+                <Button 
+                  asChild
+                  variant="default" 
+                  className="w-full ripple-container relative overflow-hidden transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)]"
+                  onClick={(e) => {
+                    // Create ripple effect
+                    const button = e.currentTarget;
+                    const ripple = document.createElement('span');
+                    const rect = button.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.className = 'ripple';
+                    ripple.style.width = ripple.style.height = `${size}px`;
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    
+                    button.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                  }}
+                >
+                  <Link to="/contact?service=landing-page&price=1500">
+                    GET STARTED
+                  </Link>
+                </Button>
+              </Card>
+            </ScrollReveal>
 
             {/* Business Website - Featured */}
-            <div className="relative">
-              <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
-                MOST POPULAR
+            <ScrollReveal animation="fade-up" delay={150} threshold={0.2}>
+              <div className="relative">
+                <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
+                  MOST POPULAR
+                </div>
+                <Card className="p-8 rounded-2xl shadow-[0_8px_30px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)] transition-all border-2 border-primary">
+                  <h3 className="text-2xl font-bold mb-4 mt-2">Business Website</h3>
+                <p className="text-muted-foreground mb-6">5-10 page professional website with custom features</p>
+                <p className="text-4xl font-bold text-accent mb-6">$4,500</p>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span>5-10 custom pages</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span>Full mobile responsive</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span>Contact & booking forms</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span>Advanced SEO optimization</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span>SSL & security setup</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span>3 months hosting included</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span>Google Analytics integration</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span>2 rounds of revisions</span>
+                  </li>
+                </ul>
+                <Button 
+                  asChild
+                  variant="default" 
+                  className="w-full ripple-container pulse-glow relative overflow-hidden transition-all duration-300 hover:bg-primary/90 px-7 py-3.5"
+                  onClick={(e) => {
+                    // Create ripple effect
+                    const button = e.currentTarget;
+                    const ripple = document.createElement('span');
+                    const rect = button.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.className = 'ripple';
+                    ripple.style.width = ripple.style.height = `${size}px`;
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    
+                    button.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                  }}
+                >
+                  <Link to="/contact?service=business-website&price=4500">
+                    GET STARTED
+                  </Link>
+                </Button>
+              </Card>
               </div>
-              <Card className="p-8 rounded-2xl shadow-[0_8px_30px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)] transition-all border-2 border-primary">
-                <h3 className="text-2xl font-bold mb-4 mt-2">Business Website</h3>
-              <p className="text-muted-foreground mb-6">5-10 page professional website with custom features</p>
-              <p className="text-4xl font-bold text-accent mb-6">$4,500</p>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>5-10 custom pages</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Full mobile responsive</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Contact & booking forms</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Advanced SEO optimization</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>SSL & security setup</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>3 months hosting included</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Google Analytics integration</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>2 rounds of revisions</span>
-                </li>
-              </ul>
-              <Button 
-                asChild
-                variant="default" 
-                className="w-full ripple-container pulse-glow relative overflow-hidden transition-all duration-300 hover:bg-primary/90 px-7 py-3.5"
-                onClick={(e) => {
-                  // Create ripple effect
-                  const button = e.currentTarget;
-                  const ripple = document.createElement('span');
-                  const rect = button.getBoundingClientRect();
-                  const size = Math.max(rect.width, rect.height);
-                  const x = e.clientX - rect.left - size / 2;
-                  const y = e.clientY - rect.top - size / 2;
-                  
-                  ripple.className = 'ripple';
-                  ripple.style.width = ripple.style.height = `${size}px`;
-                  ripple.style.left = `${x}px`;
-                  ripple.style.top = `${y}px`;
-                  
-                  button.appendChild(ripple);
-                  setTimeout(() => ripple.remove(), 600);
-                }}
-              >
-                <Link to="/contact?service=business-website&price=4500">
-                  GET STARTED
-                </Link>
-              </Button>
-            </Card>
-            </div>
+            </ScrollReveal>
 
             {/* E-Commerce Website */}
-            <Card className="p-8 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1">
-              <h3 className="text-2xl font-bold mb-4">E-Commerce Website</h3>
-              <p className="text-muted-foreground mb-6">Full online store with payment processing</p>
-              <p className="text-4xl font-bold text-accent mb-6">$8,500+</p>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Custom e-commerce design</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Product catalog (up to 50 items)</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Secure payment gateway</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Inventory management</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>SSL & PCI compliance</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Shopping cart & checkout</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>Email automation setup</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                  <span>6 months hosting included</span>
-                </li>
-              </ul>
-              <Button 
-                asChild
-                variant="default" 
-                className="w-full ripple-container relative overflow-hidden transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)]"
-                onClick={(e) => {
-                  // Create ripple effect
-                  const button = e.currentTarget;
-                  const ripple = document.createElement('span');
-                  const rect = button.getBoundingClientRect();
-                  const size = Math.max(rect.width, rect.height);
-                  const x = e.clientX - rect.left - size / 2;
-                  const y = e.clientY - rect.top - size / 2;
-                  
-                  ripple.className = 'ripple';
-                  ripple.style.width = ripple.style.height = `${size}px`;
-                  ripple.style.left = `${x}px`;
-                  ripple.style.top = `${y}px`;
-                  
-                  button.appendChild(ripple);
-                  setTimeout(() => ripple.remove(), 600);
-                }}
-              >
-                <Link to="/contact?service=ecommerce&price=8500">
-                  GET STARTED
-                </Link>
-              </Button>
-            </Card>
+            <ScrollReveal animation="fade-up" delay={300} threshold={0.2}>
+              <Card className="p-8 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1">
+                <h3 className="text-2xl font-bold mb-4">E-Commerce Website</h3>
+                <p className="text-muted-foreground mb-6">Full online store with payment processing</p>
+                <p className="text-4xl font-bold text-accent mb-6">$8,500+</p>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span>Custom e-commerce design</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span>Product catalog (up to 50 items)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span>Secure payment gateway</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span>Inventory management</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span>SSL & PCI compliance</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span>Shopping cart & checkout</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span>Email automation setup</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span>6 months hosting included</span>
+                  </li>
+                </ul>
+                <Button 
+                  asChild
+                  variant="default" 
+                  className="w-full ripple-container relative overflow-hidden transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)]"
+                  onClick={(e) => {
+                    // Create ripple effect
+                    const button = e.currentTarget;
+                    const ripple = document.createElement('span');
+                    const rect = button.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.className = 'ripple';
+                    ripple.style.width = ripple.style.height = `${size}px`;
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    
+                    button.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                  }}
+                >
+                  <Link to="/contact?service=ecommerce&price=8500">
+                    GET STARTED
+                  </Link>
+                </Button>
+              </Card>
+            </ScrollReveal>
           </div>
 
           {/* Website Add-Ons */}
