@@ -818,28 +818,35 @@ const Contact = () => {
       </section>
 
       {/* Response Time Guarantee */}
-      <section className="py-12 bg-gradient-to-r from-primary/10 to-accent/10">
+      <section className="py-16 bg-gradient-to-r from-primary/5 to-accent/5">
         <div className="container mx-auto px-4">
-          <Card className="p-8 bg-card/50 backdrop-blur-sm border-primary/20 max-w-3xl mx-auto text-center">
-            <h3 className="text-2xl font-bold mb-4">Our Response Time Guarantee</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-              <div>
-                <div className="text-3xl font-bold text-primary mb-2">5 min</div>
-                <p className="text-sm text-muted-foreground">Average Live Chat Response</p>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-primary mb-2">24 hrs</div>
-                <p className="text-sm text-muted-foreground">Email & Form Responses</p>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-primary mb-2">Same Day</div>
-                <p className="text-sm text-muted-foreground">Phone Call Returns</p>
-              </div>
-            </div>
-            <p className="text-muted-foreground">
-              Your safety is our priority. We're committed to responding quickly and providing the guidance you need.
-            </p>
-          </Card>
+          <div className="text-center mb-12">
+            <h2 className="mb-4">Our Response Time Guarantee</h2>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <Card className="p-8 text-center bg-card/50 backdrop-blur-sm border-2 border-border/50 rounded-xl hover:shadow-strong transition-all hover:-translate-y-2">
+              <div className="text-5xl mb-4">💬</div>
+              <div className="text-4xl font-bold text-primary mb-2">5 min</div>
+              <p className="text-muted-foreground">Average Live Chat Response</p>
+            </Card>
+
+            <Card className="p-8 text-center bg-card/50 backdrop-blur-sm border-2 border-border/50 rounded-xl hover:shadow-strong transition-all hover:-translate-y-2">
+              <div className="text-5xl mb-4">✉️</div>
+              <div className="text-4xl font-bold text-primary mb-2">24 hrs</div>
+              <p className="text-muted-foreground">Email & Form Responses</p>
+            </Card>
+
+            <Card className="p-8 text-center bg-card/50 backdrop-blur-sm border-2 border-border/50 rounded-xl hover:shadow-strong transition-all hover:-translate-y-2">
+              <div className="text-5xl mb-4">📞</div>
+              <div className="text-4xl font-bold text-primary mb-2">Same Day</div>
+              <p className="text-muted-foreground">Phone Call Returns</p>
+            </Card>
+          </div>
+
+          <p className="text-center text-muted-foreground mt-12 max-w-3xl mx-auto text-lg">
+            Your safety is our priority. We're committed to responding quickly and providing the guidance you need.
+          </p>
         </div>
       </section>
 
