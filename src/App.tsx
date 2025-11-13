@@ -1,6 +1,5 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense, useEffect } from "react";
@@ -10,7 +9,6 @@ import { AIChatProvider } from "./contexts/AIChatContext";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { PerformanceDashboard } from "./components/PerformanceDashboard";
 import { RouteTracker } from "./components/RouteTracker";
-import { ProviderHealthCheck } from "./components/ProviderHealthCheck";
 import { Skeleton } from "@/components/ui/skeleton";
 import { performanceMonitor } from "./utils/performanceMonitor";
 
@@ -240,15 +238,13 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ProviderHealthCheck providerName="TooltipProvider">
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <AIChatProvider>
-            <BrowserRouter>
-              <RouteTracker />
-              <ErrorBoundary>
-                <Suspense fallback={<PageLoader />}>
+      <Toaster />
+      <Sonner />
+      <AIChatProvider>
+        <BrowserRouter>
+          <RouteTracker />
+          <ErrorBoundary>
+            <Suspense fallback={<PageLoader />}>
                   <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/training" element={<Training />} />
@@ -282,8 +278,6 @@ function App() {
             <PerformanceDashboard />
           </BrowserRouter>
         </AIChatProvider>
-      </TooltipProvider>
-      </ProviderHealthCheck>
     </QueryClientProvider>
   );
 }
