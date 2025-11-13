@@ -384,7 +384,7 @@ const LearnAndTrain = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Starter Plan */}
             <Card
-              className="p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-2xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50"
+              className="p-8 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-strong hover:brightness-110 rounded-2xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50"
               style={{ animationDelay: "0ms" }}
             >
               <div className="flex justify-center mb-6">
@@ -432,19 +432,22 @@ const LearnAndTrain = () => {
 
               <Button 
                 onClick={() => {
-                  setSelectedService({
-                    type: 'scamshield',
-                    name: 'ScamShield Protection',
-                    tier: `Starter Plan - ${isYearly ? 'Yearly' : 'Monthly'}`,
-                    price: isYearly ? Math.round(39 * 12 * 0.95) : 39
-                  });
-                  setModalOpen(true);
+                  setLoadingButton('starter');
+                  navigate(`/contact?service=protection&plan=starter&price=${isYearly ? Math.round(39 * 12 * 0.95) : 39}`);
                 }}
+                disabled={loadingButton === 'starter'}
                 variant="default" 
                 size="lg" 
                 className="w-full"
               >
-                Get Started
+                {loadingButton === 'starter' ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                    Loading...
+                  </>
+                ) : (
+                  'Get Started'
+                )}
               </Button>
             </Card>
 
@@ -454,7 +457,7 @@ const LearnAndTrain = () => {
                 MOST POPULAR
               </div>
               <Card
-                className="p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-2xl border-primary border-2 animate-fade-in-up bg-gradient-to-br from-card to-card/50"
+                className="p-8 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[0_20px_40px_rgba(109,40,217,0.2)] hover:brightness-110 rounded-2xl border-primary border-2 animate-fade-in-up bg-gradient-to-br from-card to-card/50"
                 style={{ animationDelay: "100ms" }}
               >
                 <div className="flex justify-center mb-6">
@@ -505,19 +508,22 @@ const LearnAndTrain = () => {
 
               <Button 
                 onClick={() => {
-                  setSelectedService({
-                    type: 'scamshield',
-                    name: 'ScamShield Protection',
-                    tier: `Family Plan - ${isYearly ? 'Yearly' : 'Monthly'}`,
-                    price: isYearly ? Math.round(79 * 12 * 0.95) : 79
-                  });
-                  setModalOpen(true);
+                  setLoadingButton('family');
+                  navigate(`/contact?service=protection&plan=family&price=${isYearly ? Math.round(79 * 12 * 0.95) : 79}`);
                 }}
+                disabled={loadingButton === 'family'}
                 variant="default" 
                 size="lg" 
                 className="w-full"
               >
-                Get Started
+                {loadingButton === 'family' ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                    Loading...
+                  </>
+                ) : (
+                  'Get Started'
+                )}
               </Button>
             </Card>
             </div>
