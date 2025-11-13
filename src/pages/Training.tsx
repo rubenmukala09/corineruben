@@ -585,19 +585,22 @@ const LearnAndTrain = () => {
 
               <Button 
                 onClick={() => {
-                  setSelectedService({
-                    type: 'scamshield',
-                    name: 'ScamShield Protection',
-                    tier: `Premium Plan - ${isYearly ? 'Yearly' : 'Monthly'}`,
-                    price: isYearly ? Math.round(129 * 12 * 0.95) : 129
-                  });
-                  setModalOpen(true);
+                  setLoadingButton('premium');
+                  navigate(`/contact?service=protection&plan=premium&price=${isYearly ? Math.round(129 * 12 * 0.95) : 129}`);
                 }}
+                disabled={loadingButton === 'premium'}
                 variant="default" 
                 size="lg" 
                 className="w-full"
               >
-                Get Started
+                {loadingButton === 'premium' ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                    Loading...
+                  </>
+                ) : (
+                  'Get Started'
+                )}
               </Button>
             </Card>
 
@@ -647,19 +650,22 @@ const LearnAndTrain = () => {
 
               <Button 
                 onClick={() => {
-                  setSelectedService({
-                    type: 'scamshield',
-                    name: 'ScamShield Protection',
-                    tier: 'Customized Business Plan',
-                    price: 229
-                  });
-                  setModalOpen(true);
+                  setLoadingButton('customized');
+                  navigate('/contact?subject=Custom Protection Plan');
                 }}
-                variant="default" 
+                disabled={loadingButton === 'customized'}
+                variant="outline" 
                 size="lg" 
-                className="w-full"
+                className="w-full text-primary border-primary hover:bg-primary hover:text-white transition-all duration-300"
               >
-                Request Quote
+                {loadingButton === 'customized' ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                    Loading...
+                  </>
+                ) : (
+                  'Request Quote'
+                )}
               </Button>
             </Card>
           </div>
