@@ -137,6 +137,14 @@ const TestimonialsAdmin = lazy(() => {
   });
 });
 
+const ArticlesAdmin = lazy(() => {
+  performanceMonitor.startTracking('ArticlesAdmin');
+  return import("./pages/admin/ArticlesAdmin").then(module => {
+    performanceMonitor.endTracking('ArticlesAdmin');
+    return module;
+  });
+});
+
 const Portal = lazy(() => {
   performanceMonitor.startTracking('Portal');
   return import("./pages/Portal").then(module => {
@@ -332,6 +340,7 @@ function AnimatedRoutes() {
         <Route path="/application-pending" element={<PageTransition><ApplicationPending /></PageTransition>} />
         <Route path="/admin" element={<PageTransition><AdminRoute><Admin /></AdminRoute></PageTransition>} />
         <Route path="/admin/content/testimonials" element={<PageTransition><AdminRoute><TestimonialsAdmin /></AdminRoute></PageTransition>} />
+        <Route path="/admin/content/articles" element={<PageTransition><AdminRoute><ArticlesAdmin /></AdminRoute></PageTransition>} />
         <Route path="/portal" element={<PageTransition><ProtectedRoute><Portal /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/admin" element={<PageTransition><ProtectedRoute><AdminDashboard /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/analyst" element={<PageTransition><ProtectedRoute><AnalystDashboard /></ProtectedRoute></PageTransition>} />

@@ -31,6 +31,7 @@ const routeNameMap: Record<string, string> = {
   "/admin": "Dashboard",
   "/admin/content": "Content",
   "/admin/content/testimonials": "Testimonials",
+  "/admin/content/articles": "Articles",
 };
 
 export const BreadcrumbNav = () => {
