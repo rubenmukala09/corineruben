@@ -20,6 +20,7 @@ import { z } from "zod";
 import { useAIChat } from "@/contexts/AIChatContext";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import confetti from "canvas-confetti";
 import customerSupport from "@/assets/customer-support.jpg";
 import heroContact from "@/assets/hero-contact-new.jpg";
 
@@ -63,6 +64,7 @@ const Contact = () => {
     phone: "",
     message: "",
   });
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   // Pre-select service based on query parameter
   useEffect(() => {
@@ -156,6 +158,7 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitSuccess(false);
 
     try {
       const validatedData = contactSchema.parse(formData);
@@ -174,17 +177,37 @@ const Contact = () => {
 
       if (error) throw error;
 
+      // Show success state
+      setSubmitSuccess(true);
+      
+      // Trigger confetti
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+
       toast.success("Thank you! We'll get back to you within 24 hours.");
       
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        interest: "",
-        language: "english",
-        message: "",
-      });
-      setSelectedDate(undefined);
+      // Reset form after a delay
+      setTimeout(() => {
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          interest: "",
+          language: "english",
+          message: "",
+        });
+        setSelectedDate(undefined);
+        setTouched({
+          name: false,
+          email: false,
+          phone: false,
+          message: false,
+        });
+        setSubmitSuccess(false);
+      }, 2000);
     } catch (error: any) {
       if (error instanceof z.ZodError) {
         toast.error(error.errors[0].message);
@@ -192,8 +215,22 @@ const Contact = () => {
         toast.error("Failed to send message. Please try again.");
       }
     } finally {
-      setIsSubmitting(false);
+      setTimeout(() => {
+        setIsSubmitting(false);
+      }, submitSuccess ? 2000 : 0);
     }
+  };
+
+  // Check if form is valid
+  const isFormValid = () => {
+    return (
+      formData.name.trim() &&
+      formData.name.split(' ').filter(word => word.length > 0).length >= 2 &&
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) &&
+      formData.interest &&
+      formData.message.trim().length >= 10 &&
+      (!formData.phone || formData.phone.replace(/\D/g, '').length >= 10)
+    );
   };
 
   return (
@@ -548,21 +585,28 @@ const Contact = () => {
 
                   <Button 
                     type="submit" 
-                    variant="default" 
-                    size="lg" 
-                    className="w-full h-16 text-lg font-bold bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 shadow-xl rounded-xl" 
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || !isFormValid() || submitSuccess}
+                    className={cn(
+                      "w-full md:w-auto md:px-8 h-16 text-base font-semibold rounded-lg transition-all duration-300",
+                      submitSuccess 
+                        ? "bg-green-500 hover:bg-green-500" 
+                        : !isFormValid() || isSubmitting
+                        ? "bg-gray-400 cursor-not-allowed hover:bg-gray-400"
+                        : "bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 hover:scale-[1.02] hover:shadow-2xl"
+                    )}
                   >
-                    {isSubmitting ? (
+                    {submitSuccess ? (
+                      <>
+                        <Check className="mr-2 h-5 w-5" />
+                        Sent! ✓
+                      </>
+                    ) : isSubmitting ? (
                       <>
                         <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                        Sending Message...
+                        Sending...
                       </>
                     ) : (
-                      <>
-                        <Mail className="mr-2 h-5 w-5" />
-                        Send Message
-                      </>
+                      "Send Message"
                     )}
                   </Button>
                 </form>
