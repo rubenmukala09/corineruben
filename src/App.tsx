@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-route
 import { lazy, Suspense, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import { AdminRoute } from "./components/AdminRoute";
 import { AIChat } from "./components/AIChat";
 import { AIChatProvider } from "./contexts/AIChatContext";
 import { ErrorBoundary } from "./components/ErrorBoundary";
@@ -116,6 +117,14 @@ const ApplicationPending = lazy(() => {
   performanceMonitor.startTracking('ApplicationPending');
   return import("./pages/ApplicationPending").then(module => {
     performanceMonitor.endTracking('ApplicationPending');
+    return module;
+  });
+});
+
+const Admin = lazy(() => {
+  performanceMonitor.startTracking('Admin');
+  return import("./pages/Admin").then(module => {
+    performanceMonitor.endTracking('Admin');
     return module;
   });
 });
@@ -313,6 +322,7 @@ function AnimatedRoutes() {
         <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
         <Route path="/signup" element={<PageTransition><Signup /></PageTransition>} />
         <Route path="/application-pending" element={<PageTransition><ApplicationPending /></PageTransition>} />
+        <Route path="/admin" element={<PageTransition><AdminRoute><Admin /></AdminRoute></PageTransition>} />
         <Route path="/portal" element={<PageTransition><ProtectedRoute><Portal /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/admin" element={<PageTransition><ProtectedRoute><AdminDashboard /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/analyst" element={<PageTransition><ProtectedRoute><AnalystDashboard /></ProtectedRoute></PageTransition>} />
