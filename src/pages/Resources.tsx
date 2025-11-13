@@ -95,14 +95,20 @@ const Resources = () => {
     {
       title: "How to Spot a Deepfake Voice Call in 5 Seconds",
       image: "https://images.unsplash.com/photo-1589254065878-42c9da997008?w=800&h=400&fit=crop",
+      excerpt: "Learn the telltale signs of AI-generated voice scams and protect yourself from sophisticated fraud attempts targeting families.",
+      date: "Jan 15, 2025"
     },
     {
       title: "The New QR Code Scam Targeting Seniors",
       image: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=800&h=400&fit=crop",
+      excerpt: "Scammers are using fake QR codes to steal personal information. Here's what to watch out for and how to stay safe.",
+      date: "Jan 10, 2025"
     },
     {
       title: "What to Do If You Think You've Been Scammed",
       image: "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=800&h=400&fit=crop",
+      excerpt: "Step-by-step guide to reporting fraud, protecting your accounts, and recovering from a scam incident.",
+      date: "Jan 5, 2025"
     },
   ];
 
@@ -347,10 +353,26 @@ const Resources = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {blogArticles.map((article, index) => (
               <Card key={index} className="overflow-hidden hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl">
-                <img src={article.image} alt={article.title} className="w-full h-48 object-cover" loading="lazy" />
+                <div className="relative">
+                  <img 
+                    src={article.image} 
+                    alt={article.title} 
+                    className="w-full h-[200px] object-cover" 
+                    loading="lazy" 
+                  />
+                  <div className="absolute top-3 left-3 bg-primary/90 text-white px-3 py-1 rounded-md text-sm font-semibold">
+                    {article.date}
+                  </div>
+                </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold mb-4">{article.title}</h3>
-                  <Link to="/articles" className="text-primary hover:text-primary/80 font-semibold">
+                  <h3 className="text-xl font-bold mb-3 leading-tight">{article.title}</h3>
+                  <p className="text-muted-foreground text-sm mb-4 line-clamp-2 leading-relaxed">
+                    {article.excerpt}
+                  </p>
+                  <Link 
+                    to="/articles" 
+                    className="text-[#14B8A6] hover:text-[#14B8A6]/80 font-semibold inline-flex items-center gap-1 transition-colors"
+                  >
                     READ MORE →
                   </Link>
                 </div>
