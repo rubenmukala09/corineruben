@@ -51,7 +51,7 @@ const PageLoader = () => (
 
 const queryClient = new QueryClient();
 
-const App = () => {
+function App() {
   // Add smooth scroll behavior for anchor links
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
@@ -104,6 +104,6 @@ const App = () => {
       </TooltipProvider>
     </QueryClientProvider>
   );
-};
+}
 
 export default App;
