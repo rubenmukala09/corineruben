@@ -6,7 +6,6 @@ import TrustBar from "@/components/TrustBar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Lock, FileText, Users, Shield, CheckCircle, FileCheck, MessageSquare, Globe } from "lucide-react";
-import heroContact from "@/assets/hero-contact-new.jpg";
 
 const SafetyVault = () => {
   return (
@@ -14,7 +13,7 @@ const SafetyVault = () => {
       <Navigation />
 
       <Hero
-        backgroundImage={heroContact}
+        useTransitioningBackground={true}
         headline="Family Safety Vault"
         subheadline="Document verification, authentication, and encryption services—we don't store your data, we protect it"
       >

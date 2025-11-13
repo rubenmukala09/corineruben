@@ -47,7 +47,6 @@ const Signup = () => {
   const [step, setStep] = useState(1);
   const [selectedRole, setSelectedRole] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isFlipping, setIsFlipping] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -80,29 +79,6 @@ const Signup = () => {
   const [emergencyContactPhone, setEmergencyContactPhone] = useState("");
   const [medicalConditions, setMedicalConditions] = useState("");
   const [preferredLanguage, setPreferredLanguage] = useState("English");
-
-  // Business fields
-  const [companyName, setCompanyName] = useState("");
-  const [industry, setIndustry] = useState("");
-  const [companySize, setCompanySize] = useState("");
-  const [website, setWebsite] = useState("");
-  
-  // Business contact information fields
-  const [fullName, setFullName] = useState("");
-  const [jobTitle, setJobTitle] = useState("");
-  const [businessEmail, setBusinessEmail] = useState("");
-  const [businessPhone, setBusinessPhone] = useState("");
-  const [businessAddress, setBusinessAddress] = useState("");
-  
-  // Business service interests
-  const [serviceAIReceptionist, setServiceAIReceptionist] = useState(false);
-  const [serviceWebsite, setServiceWebsite] = useState(false);
-  const [serviceInsurance, setServiceInsurance] = useState(false);
-  const [serviceCybersecurity, setServiceCybersecurity] = useState(false);
-  const [servicePhysicalSecurity, setServicePhysicalSecurity] = useState(false);
-  const [serviceOther, setServiceOther] = useState(false);
-  const [serviceOtherText, setServiceOtherText] = useState("");
-  const [referralSource, setReferralSource] = useState("");
 
   // Caregiver fields
   const [certificationNumber, setCertificationNumber] = useState("");
@@ -153,7 +129,7 @@ const Signup = () => {
   const [agreePrivacy, setAgreePrivacy] = useState(false);
   const [agreeBackgroundCheck, setAgreeBackgroundCheck] = useState(false);
 
-  const totalSteps = selectedRole === "senior" ? 5 : 4;
+  const totalSteps = 4;
   const progress = (step / totalSteps) * 100;
 
   // Real-time email validation
@@ -188,14 +164,6 @@ const Signup = () => {
       setPhoneValid(false);
       setPhoneError("Format: XXX-XXX-XXXX");
     }
-  };
-
-  // Auto-format phone number to (XXX) XXX-XXXX
-  const formatPhoneNumber = (value: string) => {
-    const cleaned = value.replace(/\D/g, '');
-    if (cleaned.length <= 3) return cleaned;
-    if (cleaned.length <= 6) return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3)}`;
-    return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}-${cleaned.slice(6, 10)}`;
   };
 
   // Real-time password validation
@@ -236,20 +204,6 @@ const Signup = () => {
   };
 
   const validateStep2 = () => {
-    // For business accounts, validate company info first
-    if (selectedRole === "senior") {
-      if (!companyName || !industry || !companySize) {
-        toast({ 
-          title: "📝 Missing Information", 
-          description: "Please fill in all required company fields", 
-          variant: "destructive" 
-        });
-        return false;
-      }
-      return true;
-    }
-    
-    // For staff accounts, validate basic info
     try {
       emailSchema.parse(email);
       phoneSchema.parse(phone);
@@ -294,40 +248,14 @@ const Signup = () => {
 
   const validateStep3 = () => {
     if (selectedRole === "senior") {
-      // Validate contact information
-      if (!fullName || !jobTitle || !businessEmail) {
+      if (!relationship || !specialization) {
         toast({ 
           title: "⚠️ Missing Information", 
-          description: "Please fill in all required contact fields", 
+          description: "Please select organization type and industry", 
           variant: "destructive" 
         });
         return false;
       }
-      
-      // Validate email format
-      try {
-        emailSchema.parse(businessEmail);
-      } catch (error) {
-        toast({ 
-          title: "📧 Invalid Email", 
-          description: "Please enter a valid email address", 
-          variant: "destructive" 
-        });
-        return false;
-      }
-      
-      // Validate phone format
-      const phoneDigits = businessPhone.replace(/\D/g, '');
-      if (phoneDigits.length !== 10) {
-        toast({ 
-          title: "📞 Invalid Phone", 
-          description: "Please enter a valid 10-digit phone number", 
-          variant: "destructive" 
-        });
-        return false;
-      }
-      
-      return true;
     } else if (selectedRole === "caregiver") {
       if (!certificationNumber || !certificationType || !yearsExperience || !availableHours ||
           !reference1Name || !reference1Phone || !reference1Email ||
@@ -379,46 +307,6 @@ const Signup = () => {
     return true;
   };
 
-  const validateStep4 = () => {
-    if (selectedRole === "senior") {
-      // Validate at least one service is selected
-      const hasService = serviceAIReceptionist || serviceWebsite || serviceInsurance || 
-                        serviceCybersecurity || servicePhysicalSecurity || serviceOther;
-      
-      if (!hasService) {
-        toast({ 
-          title: "⚠️ No Service Selected", 
-          description: "Please select at least one service you're interested in", 
-          variant: "destructive" 
-        });
-        return false;
-      }
-      
-      // If "Other" is checked, require text input
-      if (serviceOther && !serviceOtherText.trim()) {
-        toast({ 
-          title: "⚠️ Missing Details", 
-          description: "Please describe the other service you're interested in", 
-          variant: "destructive" 
-        });
-        return false;
-      }
-      
-      // Validate referral source
-      if (!referralSource) {
-        toast({ 
-          title: "⚠️ Missing Information", 
-          description: "Please tell us how you heard about us", 
-          variant: "destructive" 
-        });
-        return false;
-      }
-      
-      return true;
-    }
-    return true;
-  };
-
   const handleNext = () => {
     if (step === 1 && !selectedRole) {
       toast({ 
@@ -430,7 +318,6 @@ const Signup = () => {
     }
     if (step === 2 && !validateStep2()) return;
     if (step === 3 && !validateStep3()) return;
-    if (step === 4 && !validateStep4()) return;
     
     // Success notification for completing a step
     if (step < totalSteps - 1) {
@@ -440,47 +327,10 @@ const Signup = () => {
       });
     }
     
-    // Smooth transition
-    const formCard = document.querySelector('.form-content');
-    if (formCard) {
-      formCard.classList.add('slide-out-left');
-      setTimeout(() => {
-        setStep(step + 1);
-        formCard.classList.remove('slide-out-left');
-        formCard.classList.add('slide-in-right');
-        setTimeout(() => formCard.classList.remove('slide-in-right'), 300);
-      }, 300);
-    } else {
-      setStep(step + 1);
-    }
+    setStep(step + 1);
   };
 
-  const handleRoleSelect = (role: string) => {
-    setSelectedRole(role);
-    setIsFlipping(true);
-    
-    // Flip animation then proceed
-    setTimeout(() => {
-      setStep(2);
-      setIsFlipping(false);
-    }, 800);
-  };
-
-  const handleBack = () => {
-    // Smooth transition
-    const formCard = document.querySelector('.form-content');
-    if (formCard) {
-      formCard.classList.add('slide-out-right');
-      setTimeout(() => {
-        setStep(step - 1);
-        formCard.classList.remove('slide-out-right');
-        formCard.classList.add('slide-in-left');
-        setTimeout(() => formCard.classList.remove('slide-in-left'), 300);
-      }, 300);
-    } else {
-      setStep(step - 1);
-    }
-  };
+  const handleBack = () => setStep(step - 1);
 
   const handleSubmit = async () => {
     if (!agreeTerms || !agreePrivacy) {
@@ -713,327 +563,149 @@ const Signup = () => {
         </div>
 
         <Card className="p-8 lg:p-10 shadow-2xl border-2 bg-card/80 backdrop-blur-2xl">
-          <style>{`
-            @keyframes slideOutLeft {
-              from { transform: translateX(0); opacity: 1; }
-              to { transform: translateX(-30px); opacity: 0; }
-            }
-            @keyframes slideInRight {
-              from { transform: translateX(30px); opacity: 0; }
-              to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes slideOutRight {
-              from { transform: translateX(0); opacity: 1; }
-              to { transform: translateX(30px); opacity: 0; }
-            }
-            @keyframes slideInLeft {
-              from { transform: translateX(-30px); opacity: 0; }
-              to { transform: translateX(0); opacity: 1; }
-            }
-            .slide-out-left { animation: slideOutLeft 0.3s ease forwards; }
-            .slide-in-right { animation: slideInRight 0.3s ease forwards; }
-            .slide-out-right { animation: slideOutRight 0.3s ease forwards; }
-            .slide-in-left { animation: slideInLeft 0.3s ease forwards; }
-          `}</style>
           {/* Step 1: Role Selection */}
           {step === 1 && (
             <div className="space-y-8">
               <div className="text-center">
-                <h2 className="text-3xl font-bold mb-3 gradient-text-primary">Choose Account Type</h2>
-                <p className="text-muted-foreground text-lg">Select the option that best describes you</p>
+                <h2 className="text-3xl font-bold mb-3 gradient-text-primary">Select Your Role</h2>
+                <p className="text-muted-foreground text-lg">Choose the role that best describes you</p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Business Account Card */}
-                <div 
-                  className="relative h-[400px] cursor-pointer"
-                  style={{ perspective: '1000px' }}
-                  onClick={() => handleRoleSelect("senior")}
-                >
-                  <div 
-                    className={`relative w-full h-full transition-all duration-600 ${
-                      isFlipping && selectedRole === "senior" ? '[transform:rotateY(180deg)]' : ''
-                    }`}
-                    style={{ 
-                      transformStyle: 'preserve-3d',
-                      transition: 'transform 0.6s'
-                    }}
-                  >
-                    {/* Front of card */}
-                    <Card
-                      className={`absolute w-full h-full p-10 border-2 border-border transition-all duration-300 hover:scale-105 hover:shadow-[0_20px_50px_rgba(168,85,247,0.5)] hover:border-purple-600 hover:border-2 group`}
-                      style={{ backfaceVisibility: 'hidden' }}
-                    >
-                      {/* Icon */}
-                      <div className="flex justify-center mb-6">
-                        <div className="text-7xl group-hover:animate-bounce transition-all">💼</div>
-                      </div>
-
-                      {/* Content */}
-                      <div className="text-center space-y-3">
-                        <h3 className="text-2xl font-bold">Business Account</h3>
-                        <p className="text-muted-foreground">
-                          Get AI solutions, websites, or insurance for your business
-                        </p>
-                      </div>
-
-                      {/* Button */}
-                      <Button
-                        type="button"
-                        className="w-full mt-6 h-12 text-base font-semibold bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 transition-all"
-                      >
-                        Create Business Account
-                      </Button>
-
-                      {/* Glow effect */}
-                      <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity bg-purple-600/10 -z-10" />
-                    </Card>
-
-                    {/* Back of card */}
-                    <Card
-                      className="absolute w-full h-full p-10 border-2 border-purple-600 bg-gradient-to-br from-purple-500/20 to-purple-600/20 flex items-center justify-center"
-                      style={{ 
-                        backfaceVisibility: 'hidden',
-                        transform: 'rotateY(180deg)'
-                      }}
-                    >
-                      <div className="text-center">
-                        <Loader2 className="w-12 h-12 text-purple-600 animate-spin mx-auto mb-4" />
-                        <p className="text-lg font-semibold text-purple-600">Loading...</p>
-                      </div>
-                    </Card>
+              {/* Veterans Discount Banner */}
+              <Card className="p-4 bg-gradient-to-r from-primary/10 to-accent/10 border-primary/20">
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="flex-shrink-0 text-2xl">🇺🇸</div>
+                  <div className="flex-1">
+                    <p className="font-semibold">Veterans & First Responders: 10% OFF</p>
+                    <p className="text-xs text-muted-foreground">Active duty, veterans, reservists, and first responders receive automatic discount at checkout</p>
                   </div>
                 </div>
+              </Card>
 
-                {/* Staff/Partner Account Card */}
-                <div 
-                  className="relative h-[400px] cursor-pointer"
-                  style={{ perspective: '1000px' }}
-                  onClick={() => handleRoleSelect("staff")}
-                >
-                  <div 
-                    className={`relative w-full h-full transition-all duration-600 ${
-                      isFlipping && selectedRole === "staff" ? '[transform:rotateY(180deg)]' : ''
-                    }`}
-                    style={{ 
-                      transformStyle: 'preserve-3d',
-                      transition: 'transform 0.6s'
-                    }}
-                  >
-                    {/* Front of card */}
-                    <Card
-                      className={`absolute w-full h-full p-10 border-2 border-border transition-all duration-300 hover:scale-105 hover:shadow-[0_20px_50px_rgba(20,184,166,0.5)] hover:border-teal-600 hover:border-2 group`}
-                      style={{ backfaceVisibility: 'hidden' }}
-                    >
-                      {/* Icon */}
-                      <div className="flex justify-center mb-6">
-                        <div className="text-7xl group-hover:animate-bounce transition-all">👤</div>
-                      </div>
-
-                      {/* Content */}
-                      <div className="text-center space-y-3">
-                        <h3 className="text-2xl font-bold">Staff Access</h3>
-                        <p className="text-muted-foreground">
-                          Request access to InVision Network internal systems
-                        </p>
-                      </div>
-
-                      {/* Button */}
-                      <Button
-                        type="button"
-                        className="w-full mt-6 h-12 text-base font-semibold bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 transition-all"
-                      >
-                        Request Staff Access
-                      </Button>
-
-                      {/* Note */}
-                      <p className="text-xs text-muted-foreground text-center mt-3 italic">
-                        Requires admin approval
-                      </p>
-
-                      {/* Glow effect */}
-                      <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity bg-teal-600/10 -z-10" />
-                    </Card>
-
-                    {/* Back of card */}
-                    <Card
-                      className="absolute w-full h-full p-10 border-2 border-teal-600 bg-gradient-to-br from-teal-500/20 to-teal-600/20 flex items-center justify-center"
-                      style={{ 
-                        backfaceVisibility: 'hidden',
-                        transform: 'rotateY(180deg)'
-                      }}
-                    >
-                      <div className="text-center">
-                        <Loader2 className="w-12 h-12 text-teal-600 animate-spin mx-auto mb-4" />
-                        <p className="text-lg font-semibold text-teal-600">Loading...</p>
-                      </div>
-                    </Card>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Progress Indicator for Business Signup */}
-          {selectedRole === "senior" && step > 1 && (
-            <div className="mb-8">
-              <div className="flex items-center justify-between max-w-2xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
-                  { num: 2, label: "Company Info" },
-                  { num: 3, label: "Contact" },
-                  { num: 4, label: "Services" },
-                  { num: 5, label: "Password" }
-                ].map((s, idx) => (
-                  <div key={s.num} className="flex items-center flex-1">
-                    <div className="flex flex-col items-center">
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all ${
-                        step >= s.num 
-                          ? 'bg-purple-600 text-white' 
-                          : 'bg-gray-200 text-gray-400'
+                  { 
+                    value: "senior", 
+                    label: "Client/Customer", 
+                    desc: "Individual or organization seeking AI protection services",
+                    icon: Users,
+                    gradient: "from-blue-500/20 to-cyan-500/20",
+                    iconBg: "from-blue-500 to-cyan-500"
+                  },
+                  { 
+                    value: "caregiver", 
+                    label: "Support Specialist", 
+                    desc: "Technical support and customer service professional",
+                    icon: Heart,
+                    gradient: "from-pink-500/20 to-rose-500/20",
+                    iconBg: "from-pink-500 to-rose-500"
+                  },
+                  { 
+                    value: "healthcare", 
+                    label: "Security Specialist", 
+                    desc: "Cybersecurity and AI safety professional",
+                    icon: Shield,
+                    gradient: "from-green-500/20 to-emerald-500/20",
+                    iconBg: "from-green-500 to-emerald-500"
+                  },
+                  { 
+                    value: "analyst", 
+                    label: "Data Analyst", 
+                    desc: "AI/ML specialist and quality assurance analyst",
+                    icon: BarChart3,
+                    gradient: "from-purple-500/20 to-violet-500/20",
+                    iconBg: "from-purple-500 to-violet-500"
+                  },
+                  { 
+                    value: "trainer", 
+                    label: "Trainer", 
+                    desc: "AI security and cybersecurity training specialist",
+                    icon: GraduationCap,
+                    gradient: "from-orange-500/20 to-amber-500/20",
+                    iconBg: "from-orange-500 to-amber-500"
+                  },
+                  { 
+                    value: "developer", 
+                    label: "Developer/IT", 
+                    desc: "Software developer or IT professional",
+                    icon: Code,
+                    gradient: "from-indigo-500/20 to-blue-500/20",
+                    iconBg: "from-indigo-500 to-blue-500"
+                  },
+                ].map((role) => {
+                  const Icon = role.icon;
+                  const isSelected = selectedRole === role.value;
+                  
+                  return (
+                    <Card
+                      key={role.value}
+                      className={`relative p-6 cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group ${
+                        isSelected 
+                          ? 'border-2 border-primary shadow-glow-purple bg-gradient-to-br ' + role.gradient
+                          : 'border hover:border-primary/50'
+                      }`}
+                      onClick={() => setSelectedRole(role.value)}
+                    >
+                      {/* Selection Indicator */}
+                      <div className={`absolute top-3 right-3 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
+                        isSelected 
+                          ? 'border-primary bg-primary' 
+                          : 'border-muted-foreground/30 bg-transparent'
                       }`}>
-                        {step > s.num ? <CheckCircle2 className="w-5 h-5" /> : s.num - 1}
+                        {isSelected && <CheckCircle2 className="w-4 h-4 text-white" />}
                       </div>
-                      <span className={`text-xs mt-2 font-medium ${
-                        step >= s.num ? 'text-purple-600' : 'text-gray-400'
-                      }`}>
-                        {s.label}
-                      </span>
-                    </div>
-                    {idx < 3 && (
-                      <div className={`flex-1 h-1 mx-2 transition-all ${
-                        step > s.num ? 'bg-purple-600' : 'bg-gray-200'
-                      }`} />
-                    )}
-                  </div>
-                ))}
+
+                      {/* Icon */}
+                      <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${role.iconBg} mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
+                        <Icon className="w-7 h-7 text-white" />
+                      </div>
+
+                      {/* Content */}
+                      <div>
+                        <h3 className="text-xl font-bold mb-2">{role.label}</h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{role.desc}</p>
+                      </div>
+
+                      {/* Hover Effect */}
+                      <div className={`absolute inset-0 rounded-lg bg-gradient-to-br ${role.gradient} opacity-0 group-hover:opacity-100 transition-opacity -z-10`} />
+                    </Card>
+                  );
+                })}
               </div>
             </div>
           )}
 
-          {/* Step 2: Company Information (Business only) */}
-          {step === 2 && selectedRole === "senior" && (
+          {/* Step 2: Basic Information */}
+          {step === 2 && (
             <div className="space-y-6">
               <div>
-                <h2 className="text-2xl font-bold mb-2">Company Information</h2>
-                <p className="text-muted-foreground">Tell us about your business</p>
+                <h2 className="text-2xl font-bold mb-2">Basic Information</h2>
+                <p className="text-muted-foreground">Tell us about yourself</p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="firstName">First Name *</Label>
+                  <Input id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="lastName">Last Name *</Label>
+                  <Input id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
+                </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="companyName">Company Name *</Label>
-                <Input 
-                  id="companyName" 
-                  value={companyName} 
-                  onChange={(e) => setCompanyName(e.target.value)} 
-                  placeholder="Your Company LLC"
-                  required 
-                  className="h-12"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="industry">Industry *</Label>
-                <Select value={industry} onValueChange={setIndustry} required>
-                  <SelectTrigger id="industry" className="h-12">
-                    <SelectValue placeholder="Select industry" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="healthcare">Healthcare</SelectItem>
-                    <SelectItem value="legal">Legal</SelectItem>
-                    <SelectItem value="real-estate">Real Estate</SelectItem>
-                    <SelectItem value="retail">Retail</SelectItem>
-                    <SelectItem value="hospitality">Hospitality</SelectItem>
-                    <SelectItem value="professional-services">Professional Services</SelectItem>
-                    <SelectItem value="technology">Technology</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-3">
-                <Label>Company Size *</Label>
-                <RadioGroup value={companySize} onValueChange={setCompanySize} required>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="1-10" id="size1" />
-                    <Label htmlFor="size1" className="font-normal cursor-pointer">1-10 employees</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="11-50" id="size2" />
-                    <Label htmlFor="size2" className="font-normal cursor-pointer">11-50 employees</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="51-200" id="size3" />
-                    <Label htmlFor="size3" className="font-normal cursor-pointer">51-200 employees</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="201-500" id="size4" />
-                    <Label htmlFor="size4" className="font-normal cursor-pointer">201-500 employees</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="500+" id="size5" />
-                    <Label htmlFor="size5" className="font-normal cursor-pointer">500+ employees</Label>
-                  </div>
-                </RadioGroup>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="website">Website (Optional)</Label>
-                <Input 
-                  id="website" 
-                  type="url"
-                  value={website} 
-                  onChange={(e) => setWebsite(e.target.value)} 
-                  placeholder="https://yourcompany.com"
-                  className="h-12"
-                />
-              </div>
-            </div>
-          )}
-
-          {/* Step 3: Contact Information (Business only) */}
-          {step === 3 && selectedRole === "senior" && (
-            <div className="space-y-6 form-content">
-              <div>
-                <h2 className="text-2xl font-bold mb-2">Contact Information</h2>
-                <p className="text-muted-foreground">Tell us about the primary contact</p>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="fullName">Full Name *</Label>
-                <Input 
-                  id="fullName" 
-                  value={fullName} 
-                  onChange={(e) => setFullName(e.target.value)} 
-                  placeholder="John Smith"
-                  required 
-                  className="h-12"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="jobTitle">Job Title *</Label>
-                <Input 
-                  id="jobTitle" 
-                  value={jobTitle} 
-                  onChange={(e) => setJobTitle(e.target.value)} 
-                  placeholder="CEO / Manager / etc."
-                  required 
-                  className="h-12"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="businessEmail">Business Email *</Label>
+                <Label htmlFor="email">Email Address *</Label>
                 <div className="relative">
                   <Input 
-                    id="businessEmail" 
+                    id="email" 
                     type="email" 
-                    value={businessEmail} 
+                    value={email} 
                     onChange={(e) => {
-                      setBusinessEmail(e.target.value);
+                      setEmail(e.target.value);
                       validateEmail(e.target.value);
                     }}
-                    placeholder="john@company.com"
-                    className={`h-12 pr-10 ${emailValid === true ? 'border-green-500' : emailValid === false ? 'border-red-500' : ''}`}
+                    className={`pr-10 ${emailValid === true ? 'border-green-500' : emailValid === false ? 'border-red-500' : ''}`}
                     required 
                   />
                   {emailValid === true && (
@@ -1049,151 +721,112 @@ const Signup = () => {
                     {emailError}
                   </p>
                 )}
-                <p className="text-xs text-muted-foreground">This will be used for login</p>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="businessPhone">Phone Number *</Label>
-                <Input 
-                  id="businessPhone" 
-                  value={businessPhone} 
-                  onChange={(e) => {
-                    const formatted = formatPhoneNumber(e.target.value);
-                    setBusinessPhone(formatted);
-                  }}
-                  placeholder="(937) 555-1234"
-                  className="h-12"
-                  required 
-                  maxLength={14}
-                />
-                <p className="text-xs text-muted-foreground">Auto-formatted as you type</p>
+                <Label htmlFor="phone">Phone Number * (XXX-XXX-XXXX)</Label>
+                <div className="relative">
+                  <Input 
+                    id="phone" 
+                    value={phone} 
+                    onChange={(e) => {
+                      setPhone(e.target.value);
+                      validatePhone(e.target.value);
+                    }}
+                    placeholder="555-555-5555"
+                    className={`pr-10 ${phoneValid === true ? 'border-green-500' : phoneValid === false ? 'border-red-500' : ''}`}
+                    required 
+                  />
+                  {phoneValid === true && (
+                    <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-green-500" />
+                  )}
+                  {phoneValid === false && (
+                    <XCircle className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-red-500" />
+                  )}
+                </div>
+                {phoneError && (
+                  <p className="text-xs text-red-500 flex items-center gap-1">
+                    <AlertCircle className="w-3 h-3" />
+                    {phoneError}
+                  </p>
+                )}
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="businessAddress">Business Address (Optional)</Label>
-                <Textarea 
-                  id="businessAddress" 
-                  value={businessAddress} 
-                  onChange={(e) => setBusinessAddress(e.target.value)} 
-                  placeholder="Street, City, State, ZIP"
-                  rows={3}
-                  className="resize-none"
-                />
-              </div>
-            </div>
-          )}
-
-          {/* Step 4: Service Interest (Business only) */}
-          {step === 4 && selectedRole === "senior" && (
-            <div className="space-y-6 form-content">
-              <div>
-                <h2 className="text-2xl font-bold mb-2">What services are you interested in?</h2>
-                <p className="text-muted-foreground">Select all that apply</p>
-              </div>
-
-              <div className="space-y-4">
-                <div className="flex items-start space-x-3">
-                  <Checkbox 
-                    id="serviceAIReceptionist" 
-                    checked={serviceAIReceptionist} 
-                    onCheckedChange={(checked) => setServiceAIReceptionist(checked as boolean)} 
-                  />
-                  <Label htmlFor="serviceAIReceptionist" className="text-base cursor-pointer leading-tight">
-                    <span className="font-semibold">AI Receptionist</span>
-                    <span className="text-muted-foreground ml-2">($149/month)</span>
-                  </Label>
-                </div>
-
-                <div className="flex items-start space-x-3">
-                  <Checkbox 
-                    id="serviceWebsite" 
-                    checked={serviceWebsite} 
-                    onCheckedChange={(checked) => setServiceWebsite(checked as boolean)} 
-                  />
-                  <Label htmlFor="serviceWebsite" className="text-base cursor-pointer leading-tight">
-                    <span className="font-semibold">Website Design</span>
-                    <span className="text-muted-foreground ml-2">(from $1,500)</span>
-                  </Label>
-                </div>
-
-                <div className="flex items-start space-x-3">
-                  <Checkbox 
-                    id="serviceInsurance" 
-                    checked={serviceInsurance} 
-                    onCheckedChange={(checked) => setServiceInsurance(checked as boolean)} 
-                  />
-                  <Label htmlFor="serviceInsurance" className="text-base cursor-pointer leading-tight">
-                    <span className="font-semibold">AI Insurance</span>
-                    <span className="text-muted-foreground ml-2">($199-799/month)</span>
-                  </Label>
-                </div>
-
-                <div className="flex items-start space-x-3">
-                  <Checkbox 
-                    id="serviceCybersecurity" 
-                    checked={serviceCybersecurity} 
-                    onCheckedChange={(checked) => setServiceCybersecurity(checked as boolean)} 
-                  />
-                  <Label htmlFor="serviceCybersecurity" className="text-base cursor-pointer leading-tight">
-                    <span className="font-semibold">Cybersecurity Training</span>
-                    <span className="text-muted-foreground ml-2">($79-399/session)</span>
-                  </Label>
-                </div>
-
-                <div className="flex items-start space-x-3">
-                  <Checkbox 
-                    id="servicePhysicalSecurity" 
-                    checked={servicePhysicalSecurity} 
-                    onCheckedChange={(checked) => setServicePhysicalSecurity(checked as boolean)} 
-                  />
-                  <Label htmlFor="servicePhysicalSecurity" className="text-base cursor-pointer leading-tight">
-                    <span className="font-semibold">Physical Security Products</span>
-                  </Label>
-                </div>
-
+              <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <div className="flex items-start space-x-3">
-                    <Checkbox 
-                      id="serviceOther" 
-                      checked={serviceOther} 
-                      onCheckedChange={(checked) => setServiceOther(checked as boolean)} 
-                    />
-                    <Label htmlFor="serviceOther" className="text-base cursor-pointer leading-tight font-semibold">
-                      Other:
-                    </Label>
-                  </div>
-                  {serviceOther && (
+                  <Label htmlFor="password">Password *</Label>
+                  <div className="relative">
                     <Input 
-                      placeholder="Please describe the service you're interested in"
-                      value={serviceOtherText}
-                      onChange={(e) => setServiceOtherText(e.target.value)}
-                      className="ml-8"
+                      id="password" 
+                      type="password" 
+                      value={password} 
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                        validatePassword(e.target.value);
+                        if (confirmPassword) validatePasswordMatch(confirmPassword);
+                      }}
+                      className={`pr-10 ${passwordValid === true ? 'border-green-500' : passwordValid === false ? 'border-red-500' : ''}`}
+                      required 
                     />
+                    {passwordValid === true && (
+                      <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-green-500" />
+                    )}
+                    {passwordValid === false && (
+                      <XCircle className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-red-500" />
+                    )}
+                  </div>
+                  {passwordError ? (
+                    <p className="text-xs text-red-500 flex items-center gap-1">
+                      <AlertCircle className="w-3 h-3" />
+                      {passwordError}
+                    </p>
+                  ) : (
+                    <p className="text-xs text-muted-foreground">Min 8 chars, 1 uppercase, 1 number, 1 special character</p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="confirmPassword">Confirm Password *</Label>
+                  <div className="relative">
+                    <Input 
+                      id="confirmPassword" 
+                      type="password" 
+                      value={confirmPassword} 
+                      onChange={(e) => {
+                        setConfirmPassword(e.target.value);
+                        validatePasswordMatch(e.target.value);
+                      }}
+                      className={`pr-10 ${passwordMatch === true ? 'border-green-500' : passwordMatch === false ? 'border-red-500' : ''}`}
+                      required 
+                    />
+                    {passwordMatch === true && (
+                      <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-green-500" />
+                    )}
+                    {passwordMatch === false && (
+                      <XCircle className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-red-500" />
+                    )}
+                  </div>
+                  {passwordMatchError && (
+                    <p className="text-xs text-red-500 flex items-center gap-1">
+                      <AlertCircle className="w-3 h-3" />
+                      {passwordMatchError}
+                    </p>
                   )}
                 </div>
               </div>
 
-              <div className="space-y-2 pt-4 border-t">
-                <Label htmlFor="referralSource">How did you hear about us? *</Label>
-                <Select value={referralSource} onValueChange={setReferralSource} required>
-                  <SelectTrigger id="referralSource" className="h-12">
-                    <SelectValue placeholder="Select an option" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="google">Google Search</SelectItem>
-                    <SelectItem value="social-media">Social Media</SelectItem>
-                    <SelectItem value="referral">Referral</SelectItem>
-                    <SelectItem value="advertisement">Advertisement</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
+              <div className="space-y-2">
+                <Label htmlFor="dateOfBirth">Date of Birth *</Label>
+                <Input id="dateOfBirth" type="date" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} required />
               </div>
 
-              <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
-                <p className="text-sm text-muted-foreground flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
-                  <span><strong>No payment required now.</strong> We'll contact you with a custom quote based on your selections.</span>
-                </p>
+              <div className="space-y-4">
+                <Label>Address *</Label>
+                <Input placeholder="Street Address" value={addressStreet} onChange={(e) => setAddressStreet(e.target.value)} required />
+                <div className="grid grid-cols-2 gap-4">
+                  <Input placeholder="City" value={addressCity} onChange={(e) => setAddressCity(e.target.value)} required />
+                  <Input placeholder="State" value={addressState} onChange={(e) => setAddressState(e.target.value)} required />
+                </div>
+                <Input placeholder="ZIP Code" value={addressZip} onChange={(e) => setAddressZip(e.target.value)} required />
               </div>
             </div>
           )}
@@ -1534,24 +1167,19 @@ const Signup = () => {
           {/* Navigation Buttons */}
           <div className="flex justify-between mt-8 pt-6 border-t">
             {step > 1 && (
-              <Button type="button" variant="outline" onClick={handleBack} disabled={isLoading} className="h-12 px-6">
+              <Button type="button" variant="outline" onClick={handleBack} disabled={isLoading}>
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back
               </Button>
             )}
             <div className="ml-auto">
               {step < totalSteps ? (
-                <Button 
-                  type="button" 
-                  onClick={handleNext} 
-                  disabled={isLoading}
-                  className="h-12 px-8 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold"
-                >
-                  Next Step
+                <Button type="button" onClick={handleNext} disabled={isLoading}>
+                  Next
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               ) : (
-                <Button type="button" onClick={handleSubmit} disabled={isLoading} className="h-12 px-8 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800">
+                <Button type="button" onClick={handleSubmit} disabled={isLoading} className="bg-gradient-to-r from-primary to-accent">
                   {isLoading ? (
                     <>
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />

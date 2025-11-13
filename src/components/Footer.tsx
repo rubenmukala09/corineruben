@@ -44,7 +44,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/business" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                  AI&BUSINESS
+                  AI for Business
                 </Link>
               </li>
               <li>

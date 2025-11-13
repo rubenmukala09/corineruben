@@ -8,7 +8,6 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
-import heroResources from "@/assets/hero-resources-new.jpg";
 
 interface Article {
   id: number;
@@ -561,7 +560,7 @@ const Articles = () => {
       <Navigation />
 
       <Hero
-        backgroundImage={heroResources}
+        useTransitioningBackground={true}
         headline="Scam Prevention Articles & News"
         subheadline="Stay informed about the latest scam threats and protection strategies"
       />

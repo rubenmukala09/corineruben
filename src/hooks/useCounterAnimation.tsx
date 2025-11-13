@@ -52,10 +52,7 @@ export const useCounterAnimation = ({
       const progress = Math.min(elapsed / duration, 1);
       const easedProgress = easeOutQuad(progress);
       
-      // Use decimal precision for small numbers (like 3.4)
-      const currentCount = end < 10 
-        ? Math.round((start + range * easedProgress) * 10) / 10
-        : Math.floor(start + range * easedProgress);
+      const currentCount = Math.floor(start + range * easedProgress);
       setCount(currentCount);
 
       if (progress < 1) {

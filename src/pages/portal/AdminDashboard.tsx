@@ -10,7 +10,6 @@ import { BookingRequestsTable } from "@/components/admin/BookingRequestsTable";
 import { PurchaseRequestsTable } from "@/components/admin/PurchaseRequestsTable";
 import { InquiriesTable } from "@/components/admin/InquiriesTable";
 import { JobApplicationsTable } from "@/components/admin/JobApplicationsTable";
-import { TestimonialsTable } from "@/components/admin/TestimonialsTable";
 import { useToast } from "@/hooks/use-toast";
 import {
   ArrowLeft,
@@ -27,7 +26,6 @@ import {
   BookOpen,
   MessageSquare,
   Briefcase,
-  Star,
 } from "lucide-react";
 
 const AdminDashboard = () => {
@@ -154,7 +152,7 @@ const AdminDashboard = () => {
         {/* Booking & Purchase Requests */}
         <Card className="p-6 mb-8">
           <Tabs defaultValue="bookings" className="w-full">
-            <TabsList className="grid w-full grid-cols-5 mb-6">
+            <TabsList className="grid w-full grid-cols-4 mb-6">
               <TabsTrigger value="bookings" className="gap-2">
                 <BookOpen className="w-4 h-4" />
                 Bookings
@@ -171,10 +169,6 @@ const AdminDashboard = () => {
                 <Briefcase className="w-4 h-4" />
                 Applications
               </TabsTrigger>
-              <TabsTrigger value="testimonials" className="gap-2">
-                <Star className="w-4 h-4" />
-                Testimonials
-              </TabsTrigger>
             </TabsList>
             <TabsContent value="bookings">
               <BookingRequestsTable />
@@ -187,9 +181,6 @@ const AdminDashboard = () => {
             </TabsContent>
             <TabsContent value="applications">
               <JobApplicationsTable />
-            </TabsContent>
-            <TabsContent value="testimonials">
-              <TestimonialsTable />
             </TabsContent>
           </Tabs>
         </Card>

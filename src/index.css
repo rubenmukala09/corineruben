@@ -349,49 +349,16 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   }
   
   /* Scroll Reveal Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fade-in-bottom-left {
-  from {
-    opacity: 0;
-    transform: translate(-30px, 30px);
-  }
-  to {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-}
-
-@keyframes fade-in-bottom {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fade-in-bottom-right {
-  from {
-    opacity: 0;
-    transform: translate(30px, 30px);
-  }
-  to {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-}
   
   @keyframes slideInLeft {
     from {
@@ -470,7 +437,91 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     background-blend-mode: normal, screen, screen;
   }
 
-  /* Lora avatar animations */
+  /* Modern scroll reveal animations */
+  .scroll-reveal-fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .scroll-reveal-fade-in {
+    opacity: 0;
+    transition: opacity 0.8s ease-out;
+  }
+
+  .scroll-reveal-slide-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .scroll-reveal-slide-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .scroll-reveal-scale-in {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .scroll-reveal-visible {
+    opacity: 1;
+    transform: translateY(0) translateX(0) scale(1);
+  }
+
+  /* Button ripple effect */
+  @keyframes ripple {
+    0% {
+      transform: scale(0);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+
+  .ripple-effect {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ripple-effect:active::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    animation: ripple 0.6s ease-out;
+  }
+
+  /* Smooth image transitions - NO BLINKING */
+  img, .image-container {
+    opacity: 1;
+    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+    will-change: opacity, transform;
+    backface-visibility: hidden;
+  }
+
+  @keyframes smoothFadeIn {
+    from { 
+      opacity: 0; 
+      transform: translateY(20px); 
+    }
+    to { 
+      opacity: 1; 
+      transform: translateY(0); 
+    }
+  }
+
+  /* Laura avatar animations */
   @keyframes gentle-pulse {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.05); }
@@ -483,6 +534,17 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     75% { transform: scale(1.1); }
   }
 
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   .animate-gentle-pulse {
     animation: gentle-pulse 2s ease-in-out infinite;
   }
@@ -491,16 +553,111 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     animation: talking-pulse 0.3s ease-in-out infinite;
   }
 
-  /* Text wrapping */
+  .animate-slide-up {
+    animation: slide-up 0.3s ease-out;
+  }
+
+  /* Enhanced button animations */
+  button, .button {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  button:hover, .button:hover {
+    transform: translateY(-2px);
+  }
+
+  button:active, .button:active {
+    transform: translateY(0);
+  }
+
+  /* Card hover effects */
+  .card-hover {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-hover:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Smooth anchor scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Better text wrapping for chat and all content */
   .overflow-wrap-anywhere {
     overflow-wrap: anywhere;
     word-wrap: anywhere;
     word-break: break-word;
   }
 
+  /* Ensure all text content wraps properly */
   p, span, li, div {
     overflow-wrap: break-word;
     word-wrap: break-word;
+  }
+
+  /* Prevent text overflow in cards */
+  .card-content {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Gradient Text Animation */
+  .gradient-text {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-glow)) 50%, hsl(var(--primary)) 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-shift 4s ease infinite;
+    text-shadow: 0 2px 10px rgba(124, 58, 237, 0.3);
+  }
+
+  .gradient-text:hover {
+    animation-duration: 2s;
+  }
+
+  /* Glass Morphism */
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-dark {
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Image Parallax Container */
+  .parallax-image {
+    perspective: 1000px;
+    overflow: hidden;
+  }
+
+  .parallax-image img {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  .parallax-image:hover img {
+    transform: scale(1.05);
+  }
+
+  /* Loading Animation */
+  .skeleton {
+    animation: skeleton-loading 1.5s ease-in-out infinite;
+    background: linear-gradient(90deg, 
+      hsl(var(--muted)) 25%, 
+      hsl(var(--muted-foreground) / 0.1) 50%, 
+      hsl(var(--muted)) 75%
+    );
+    background-size: 200% 100%;
   }
 }
 
@@ -514,12 +671,85 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   }
 }
 
-/* Scroll reveal animations */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(30px, -30px) rotate(120deg);
+  }
+  66% {
+    transform: translate(-20px, 20px) rotate(240deg);
+  }
+}
+
+@keyframes float-medium {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(-25px, 25px) rotate(-120deg);
+  }
+  66% {
+    transform: translate(25px, -20px) rotate(-240deg);
+  }
+}
+
+@keyframes float-fast {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(20px, -20px) scale(1.1);
+  }
+}
+
+@keyframes smooth-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scroll reveal animations with improved timing */
 .scroll-reveal-fade-up {
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), 
-              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(30px) scale(0.95);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, opacity;
 }
 
@@ -531,35 +761,9 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   will-change: transform, opacity;
 }
 
-/* 3D Flip animation for value cards */
-@keyframes flip-in {
-  0% {
-    opacity: 0;
-    transform: rotateY(-90deg);
-  }
-  100% {
-    opacity: 1;
-    transform: rotateY(0);
-  }
-}
-
-/* Bounce down animation for download icon */
-@keyframes bounce-down {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(4px);
-  }
-}
-
-.value-card {
-  transform-style: preserve-3d;
-}
-
 .scroll-reveal-slide-left {
   opacity: 0;
-  transform: translateX(-50px);
+  transform: translateX(-30px) scale(0.95);
   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
               transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, opacity;
@@ -567,7 +771,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
 
 .scroll-reveal-slide-right {
   opacity: 0;
-  transform: translateX(50px);
+  transform: translateX(30px) scale(0.95);
   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
               transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, opacity;
@@ -576,14 +780,40 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
 .scroll-reveal-scale-in {
   opacity: 0;
   transform: scale(0.9);
-  transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), 
-              transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, opacity;
 }
 
 .scroll-reveal-visible {
   opacity: 1;
   transform: translateY(0) translateX(0) scale(1);
+}
+
+/* Ripple effect for buttons */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+  animation: ripple 0.6s ease-out;
+}
+
+/* Floating animations for shapes */
+.animate-float-slow {
+  animation: float-slow 25s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float-medium 20s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: float-fast 15s ease-in-out infinite;
+}
+
+.animate-smooth-bounce {
+  animation: smooth-bounce 2s ease-in-out infinite;
 }
 
 /* Prefers reduced motion - accessibility */
@@ -598,253 +828,64 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   }
 }
 
-/* Ripple effect for buttons */
-@keyframes ripple {
+/* Page load animation */
+body {
+  animation: page-fade-in 0.5s ease-out;
+}
+
+/* Trust badge animations */
+@keyframes trust-badge-in {
   0% {
-    transform: scale(0);
-    opacity: 0.6;
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
   }
   100% {
-    transform: scale(4);
-    opacity: 0;
-  }
-}
-
-.ripple-container {
-  position: relative;
-  overflow: hidden;
-}
-
-.ripple {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.6);
-  pointer-events: none;
-  animation: ripple 0.6s ease-out;
-}
-
-/* Pulsing glow animation for featured buttons */
-@keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(20, 184, 166, 0.4), 0 0 40px rgba(20, 184, 166, 0.2);
-  }
-  50% {
-    box-shadow: 0 0 30px rgba(20, 184, 166, 0.6), 0 0 60px rgba(20, 184, 166, 0.3);
-  }
-}
-
-.pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-/* Pulse opacity animation */
-@keyframes pulse {
-  0%, 100% {
-    opacity: 0.8;
-  }
-  50% {
     opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
-/* Price flip animation */
-@keyframes price-flip {
-  0% {
-    transform: rotateX(0deg);
-    opacity: 1;
-  }
-  50% {
-    transform: rotateX(90deg);
-    opacity: 0;
-  }
-  51% {
-    transform: rotateX(-90deg);
-  }
-  100% {
-    transform: rotateX(0deg);
-    opacity: 1;
-  }
-}
-
-.price-flip {
-  animation: price-flip 0.5s ease-in-out;
-}
-
-/* Fade in animation for savings text */
-@keyframes fade-in-savings {
-  from {
-    opacity: 0;
-    transform: translateY(-5px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.fade-in-savings {
-  animation: fade-in-savings 0.5s ease-out;
-}
-
-/* Step icon pop animation with bounce */
-@keyframes step-icon-pop {
-  0% {
-    transform: scale(0);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.2);
-  }
-  75% {
-    transform: scale(0.9);
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-/* Steps connecting line draw animation */
-@keyframes draw-line {
-  from {
-    stroke-dashoffset: 1000;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-/* Clock rotation animation */
-@keyframes clock-rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/* Icon bounce animation */
-@keyframes icon-bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  25% {
-    transform: translateY(-10px);
-  }
-  50% {
-    transform: translateY(0);
-  }
-  75% {
-    transform: translateY(-5px);
-  }
-}
-
-/* Shield pulse animation */
-@keyframes shield-pulse {
+@keyframes icon-pulse {
   0%, 100% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.4);
-  }
-  50% {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px 10px rgba(20, 184, 166, 0.1);
-  }
-}
-
-/* Lock shake animation */
-@keyframes lock-shake {
-  0%, 100% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(-10deg);
-  }
-  75% {
-    transform: rotate(10deg);
-  }
-}
-
-/* Dollar sign scale animation */
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-}
-
-@keyframes gradient-shift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.animate-gradient-shift {
-  background-size: 200% 200%;
-  animation: gradient-shift 10s ease infinite;
-}
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
-  20%, 40%, 60%, 80% { transform: translateX(10px); }
-}
-
-@keyframes dollar-scale {
-  0% {
-    transform: scale(1);
-  }
-  10% {
-    transform: scale(1.3);
-  }
-  20% {
-    transform: scale(1);
-  }
-  30% {
-    transform: scale(1.2);
-  }
-  40%, 100% {
-    transform: scale(1);
-  }
-}
-
-/* Gentle rotate animation for icons */
-@keyframes gentle-rotate {
-  0%, 100% {
-    transform: rotate(-5deg);
-  }
-  50% {
-    transform: rotate(5deg);
-  }
-}
-
-.gentle-rotate {
-  animation: gentle-rotate 3s ease-in-out infinite;
-}
-
-/* Checkmark pop-in animation */
-@keyframes checkmark-pop {
-  0% {
-    transform: scale(0);
-    opacity: 0;
   }
   50% {
     transform: scale(1.1);
   }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
 }
 
-.checkmark-pop {
-  animation: checkmark-pop 0.4s ease-out forwards;
+.animate-trust-badge-in {
+  animation: trust-badge-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-icon-pulse {
+  animation: icon-pulse 2s ease-in-out 1;
+}
+
+/* Micro-interactions */
+input:focus, textarea:focus {
+  transform: scale(1.01);
+  transition: transform 0.2s ease;
+}
+
+a:not(.no-underline) {
+  position: relative;
+}
+
+a:not(.no-underline)::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: hsl(var(--primary));
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+a:not(.no-underline):hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }

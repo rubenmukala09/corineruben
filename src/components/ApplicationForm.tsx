@@ -18,7 +18,6 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Upload, CheckCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { cn } from "@/lib/utils";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ACCEPTED_FILE_TYPES = [
@@ -296,28 +295,21 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
   }
 
   return (
-    <Card className="p-10 shadow-2xl border-2 border-border/50 bg-gradient-to-b from-card to-card/80 backdrop-blur-xl rounded-3xl">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+    <Card className="p-8">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Personal Information */}
         <div>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
-            <h3 className="text-xl font-bold text-foreground">Personal Information</h3>
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
-          </div>
-          <div className="grid md:grid-cols-2 gap-6">
+          <h3 className="text-xl font-semibold mb-4">Personal Information</h3>
+          <div className="grid md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="firstName" className="text-sm font-bold">
+              <Label htmlFor="firstName">
                 First Name <span className="text-destructive">*</span>
               </Label>
               <Input
                 id="firstName"
                 {...register("firstName")}
                 placeholder="John"
-                className={cn(
-                  "h-14 text-base border-2 rounded-xl",
-                  errors.firstName ? "border-destructive" : ""
-                )}
+                className={errors.firstName ? "border-destructive" : ""}
               />
               {errors.firstName && (
                 <p className="text-sm text-destructive">{errors.firstName.message}</p>
@@ -325,17 +317,14 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="lastName" className="text-sm font-bold">
+              <Label htmlFor="lastName">
                 Last Name <span className="text-destructive">*</span>
               </Label>
               <Input
                 id="lastName"
                 {...register("lastName")}
                 placeholder="Doe"
-                className={cn(
-                  "h-14 text-base border-2 rounded-xl",
-                  errors.lastName ? "border-destructive" : ""
-                )}
+                className={errors.lastName ? "border-destructive" : ""}
               />
               {errors.lastName && (
                 <p className="text-sm text-destructive">{errors.lastName.message}</p>
@@ -346,14 +335,10 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
 
         {/* Contact Information */}
         <div>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
-            <h3 className="text-xl font-bold text-foreground">Contact Information</h3>
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
-          </div>
-          <div className="grid md:grid-cols-2 gap-6">
+          <h3 className="text-xl font-semibold mb-4">Contact Information</h3>
+          <div className="grid md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-sm font-bold">
+              <Label htmlFor="email">
                 Email <span className="text-destructive">*</span>
               </Label>
               <Input
@@ -361,10 +346,7 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
                 type="email"
                 {...register("email")}
                 placeholder="john.doe@example.com"
-                className={cn(
-                  "h-14 text-base border-2 rounded-xl",
-                  errors.email ? "border-destructive" : ""
-                )}
+                className={errors.email ? "border-destructive" : ""}
               />
               {errors.email && (
                 <p className="text-sm text-destructive">{errors.email.message}</p>
@@ -372,7 +354,7 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="phone" className="text-sm font-bold">
+              <Label htmlFor="phone">
                 Phone <span className="text-destructive">*</span>
               </Label>
               <Input
@@ -380,10 +362,7 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
                 type="tel"
                 {...register("phone")}
                 placeholder="(937) 555-0199"
-                className={cn(
-                  "h-14 text-base border-2 rounded-xl",
-                  errors.phone ? "border-destructive" : ""
-                )}
+                className={errors.phone ? "border-destructive" : ""}
               />
               {errors.phone && (
                 <p className="text-sm text-destructive">{errors.phone.message}</p>
@@ -391,16 +370,13 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
             </div>
           </div>
 
-          <div className="space-y-2 mt-6">
-            <Label htmlFor="linkedIn" className="text-sm font-bold">LinkedIn Profile (Optional)</Label>
+          <div className="space-y-2 mt-4">
+            <Label htmlFor="linkedIn">LinkedIn Profile (Optional)</Label>
             <Input
               id="linkedIn"
               {...register("linkedIn")}
               placeholder="https://linkedin.com/in/yourprofile"
-              className={cn(
-                "h-14 text-base border-2 rounded-xl",
-                errors.linkedIn ? "border-destructive" : ""
-              )}
+              className={errors.linkedIn ? "border-destructive" : ""}
             />
             {errors.linkedIn && (
               <p className="text-sm text-destructive">{errors.linkedIn.message}</p>
@@ -410,14 +386,11 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
 
         {/* Position */}
         <div className="space-y-2">
-          <Label htmlFor="position" className="text-sm font-bold">
+          <Label htmlFor="position">
             Position Applying For <span className="text-destructive">*</span>
           </Label>
           <Select onValueChange={(value) => setValue("position", value)}>
-            <SelectTrigger className={cn(
-              "h-14 text-base border-2 rounded-xl",
-              errors.position ? "border-destructive" : ""
-            )}>
+            <SelectTrigger className={errors.position ? "border-destructive" : ""}>
               <SelectValue placeholder="Select a position" />
             </SelectTrigger>
             <SelectContent className="bg-popover border-border z-50">
@@ -435,58 +408,39 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
 
         {/* Resume Upload */}
         <div className="space-y-2">
-          <Label htmlFor="resume" className="text-sm font-bold">
+          <Label htmlFor="resume">
             Resume <span className="text-destructive">*</span>
           </Label>
-          {resumeFile ? (
-            <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-green-500/10 to-green-500/5 rounded-xl border-2 border-green-500/30">
-              <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
-                <CheckCircle className="w-6 h-6 text-green-600 dark:text-green-400" />
+          <div className="flex items-center gap-4">
+            <Input
+              id="resume"
+              type="file"
+              accept=".pdf,.doc,.docx"
+              onChange={handleFileChange}
+              className="cursor-pointer"
+            />
+            {resumeFile && (
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <CheckCircle className="w-4 h-4 text-primary" />
+                {resumeFile.name}
               </div>
-              <span className="text-sm font-medium flex-1 truncate">{resumeFile.name}</span>
-              <Button 
-                type="button" 
-                variant="ghost" 
-                size="sm" 
-                onClick={() => setResumeFile(null)}
-                className="hover:bg-destructive/10"
-              >
-                Remove
-              </Button>
-            </div>
-          ) : (
-            <label className="flex flex-col items-center gap-3 p-6 border-2 border-dashed border-primary/50 rounded-xl cursor-pointer hover:bg-primary/5 hover:border-primary transition-all group">
-              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Upload className="w-7 h-7 text-primary" />
-              </div>
-              <div className="text-center">
-                <span className="text-base font-bold text-primary block">Upload Resume</span>
-                <span className="text-sm text-muted-foreground block mt-1">PDF or Word document (Max 5MB)</span>
-              </div>
-              <Input
-                id="resume"
-                type="file"
-                accept=".pdf,.doc,.docx"
-                onChange={handleFileChange}
-                className="hidden"
-              />
-            </label>
-          )}
+            )}
+          </div>
+          <p className="text-xs text-muted-foreground">
+            PDF or Word document, max 5MB
+          </p>
         </div>
 
         {/* Availability */}
         <div className="space-y-2">
-          <Label htmlFor="availability" className="text-sm font-bold">
+          <Label htmlFor="availability">
             Availability <span className="text-destructive">*</span>
           </Label>
           <Input
             id="availability"
             {...register("availability")}
             placeholder="e.g., Immediate, 2 weeks notice, Part-time only"
-            className={cn(
-              "h-14 text-base border-2 rounded-xl",
-              errors.availability ? "border-destructive" : ""
-            )}
+            className={errors.availability ? "border-destructive" : ""}
           />
           {errors.availability && (
             <p className="text-sm text-destructive">{errors.availability.message}</p>
@@ -495,7 +449,7 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
 
         {/* Cover Letter */}
         <div className="space-y-2">
-          <Label htmlFor="coverLetter" className="text-sm font-bold">
+          <Label htmlFor="coverLetter">
             Cover Letter <span className="text-destructive">*</span>
           </Label>
           <Textarea
@@ -503,99 +457,66 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
             {...register("coverLetter")}
             placeholder="Tell us why you're interested in this position and what makes you a great fit..."
             rows={8}
-            className={cn(
-              "text-base border-2 rounded-xl resize-none",
-              errors.coverLetter ? "border-destructive" : ""
-            )}
+            className={errors.coverLetter ? "border-destructive" : ""}
           />
           {errors.coverLetter && (
             <p className="text-sm text-destructive">{errors.coverLetter.message}</p>
           )}
-          <p className="text-xs text-muted-foreground bg-muted/50 p-2 rounded-lg">
+          <p className="text-xs text-muted-foreground">
             Minimum 100 characters, maximum 2000 characters
           </p>
         </div>
 
         {/* Veteran Status */}
-        <div className="relative overflow-hidden rounded-2xl border-2 border-primary/30 bg-gradient-to-br from-primary/5 via-accent/5 to-primary/10 p-6 space-y-6 shadow-lg">
-          <div className="absolute -top-10 -right-10 w-40 h-40 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full blur-3xl" />
-          <div className="relative">
-            <div className="flex items-center justify-between gap-4">
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-2xl">🇺🇸</span>
-                  <Label htmlFor="veteran-status" className="text-lg font-bold text-foreground">
-                    Veteran/First Responder Status
-                  </Label>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  We prioritize veterans and first responders. Receive 10% priority consideration.
-                </p>
-              </div>
-              <Switch
-                id="veteran-status"
-                checked={isVeteran}
-                onCheckedChange={setIsVeteran}
-                disabled={isSubmitting}
-                className="data-[state=checked]:bg-primary"
-              />
+        <div className="space-y-4 p-6 border-2 border-primary/20 rounded-lg bg-primary/5">
+          <div className="flex items-center justify-between">
+            <div className="space-y-1">
+              <Label htmlFor="veteran-status" className="text-base font-semibold">
+                Veteran/First Responder Status
+              </Label>
+              <p className="text-sm text-muted-foreground">
+                We prioritize veterans and first responders. Receive 10% priority consideration.
+              </p>
             </div>
-
-            {isVeteran && (
-              <div className="space-y-4 pt-6 border-t-2 border-primary/20 mt-6">
-                <div className="space-y-2">
-                  <Label htmlFor="veteran-doc" className="text-sm font-bold">
-                    Verification Document <span className="text-destructive">*</span>
-                  </Label>
-                  {veteranDocFile ? (
-                    <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-green-500/10 to-green-500/5 rounded-xl border-2 border-green-500/30">
-                      <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
-                        <CheckCircle className="w-6 h-6 text-green-600 dark:text-green-400" />
-                      </div>
-                      <span className="text-sm font-medium flex-1 truncate">{veteranDocFile.name}</span>
-                      <Button 
-                        type="button" 
-                        variant="ghost" 
-                        size="sm" 
-                        onClick={() => setVeteranDocFile(null)}
-                        className="hover:bg-destructive/10"
-                      >
-                        Remove
-                      </Button>
-                    </div>
-                  ) : (
-                    <label className="flex flex-col items-center gap-3 p-6 border-2 border-dashed border-primary/50 rounded-xl cursor-pointer hover:bg-primary/5 hover:border-primary transition-all group">
-                      <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <Upload className="w-7 h-7 text-primary" />
-                      </div>
-                      <div className="text-center">
-                        <span className="text-base font-bold text-primary block">Upload Verification</span>
-                        <span className="text-sm text-muted-foreground block mt-1">DD-214, VA ID, military ID, or first responder badge</span>
-                        <span className="text-xs text-muted-foreground block mt-1">PDF, JPG, PNG (Max 5MB)</span>
-                      </div>
-                      <Input
-                        id="veteran-doc"
-                        type="file"
-                        accept=".pdf,.jpg,.jpeg,.png,.webp"
-                        onChange={handleVeteranDocChange}
-                        className="hidden"
-                        disabled={isSubmitting || isUploadingDoc}
-                      />
-                    </label>
-                  )}
-                  <div className="bg-blue-500/10 border border-blue-500/20 p-3 rounded-xl mt-2">
-                    <p className="text-xs text-blue-600 dark:text-blue-400">
-                      <strong className="font-bold">Priority Consideration:</strong> Upload verification for 10% priority consideration. Documents are confidential and used only for verification.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
+            <Switch
+              id="veteran-status"
+              checked={isVeteran}
+              onCheckedChange={setIsVeteran}
+              disabled={isSubmitting}
+            />
           </div>
+
+          {isVeteran && (
+            <div className="space-y-2 pt-4 border-t border-primary/20">
+              <Label htmlFor="veteran-doc" className="text-sm font-semibold">
+                Verification Document <span className="text-destructive">*</span>
+              </Label>
+              <p className="text-xs text-muted-foreground mb-2">
+                Please upload DD-214, VA ID, military ID, or first responder badge/ID
+              </p>
+              <Input
+                id="veteran-doc"
+                type="file"
+                accept=".pdf,.jpg,.jpeg,.png,.webp"
+                onChange={handleVeteranDocChange}
+                className="cursor-pointer"
+                disabled={isSubmitting || isUploadingDoc}
+              />
+              {veteranDocFile && (
+                <div className="flex items-center gap-2 text-sm text-success mt-2">
+                  <CheckCircle className="w-4 h-4" />
+                  {veteranDocFile.name}
+                </div>
+              )}
+              <p className="text-xs text-muted-foreground">
+                PDF or image file, max 5MB. Your information is confidential.
+              </p>
+            </div>
+          )}
         </div>
 
-        {/* Submit Buttons */}
-        <div className="flex gap-4 pt-4">
+        {/* Submit Button */}
+        <div className="flex justify-end gap-4">
           <Button
             type="button"
             variant="outline"
@@ -606,23 +527,18 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
               setVeteranDocFile(null);
             }}
             disabled={isSubmitting}
-            className="flex-1 h-14 text-base font-semibold border-2"
           >
             Clear Form
           </Button>
-          <Button 
-            type="submit" 
-            disabled={isSubmitting || isUploadingDoc} 
-            className="flex-1 h-14 text-base font-semibold bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 shadow-lg"
-          >
+          <Button type="submit" disabled={isSubmitting || isUploadingDoc} size="lg">
             {isSubmitting || isUploadingDoc ? (
               <>
-                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 {isUploadingDoc ? "Uploading..." : "Submitting..."}
               </>
             ) : (
               <>
-                <CheckCircle className="mr-2 h-5 w-5" />
+                <Upload className="mr-2 h-4 w-4" />
                 Submit Application
               </>
             )}

@@ -167,117 +167,86 @@ export const BookingModal = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto rounded-3xl border border-border/50 bg-gradient-to-b from-card to-card/80 shadow-2xl backdrop-blur-xl">
-        <DialogHeader className="space-y-4 border-b border-border/50 pb-6">
-          <div className="flex items-start gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary via-primary to-accent flex items-center justify-center flex-shrink-0 shadow-lg">
-              <CalendarIcon className="w-7 h-7 text-white" />
-            </div>
-            <div className="flex-1">
-              <DialogTitle className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Book {serviceName}
-              </DialogTitle>
-              <DialogDescription className="text-base mt-2">
-                {serviceTier && (
-                  <span className="inline-block px-3 py-1 bg-gradient-to-r from-primary/20 to-accent/20 text-primary font-bold rounded-full text-sm mb-2">
-                    {serviceTier}
-                  </span>
-                )}
-                <span className="block text-muted-foreground">
-                  Complete the form below and we'll contact you within 24 hours to confirm your booking.
-                </span>
-              </DialogDescription>
-            </div>
-          </div>
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="text-2xl">Book {serviceName}</DialogTitle>
+          <DialogDescription>
+            {serviceTier && <span className="block mb-2 font-semibold text-primary">{serviceTier}</span>}
+            Fill out the form below and we'll contact you within 24 hours to confirm your booking.
+          </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-8 pt-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           {/* Pricing Display */}
           {basePrice > 0 && (
-            <div className="relative overflow-hidden rounded-2xl border-2 border-primary/30 bg-gradient-to-br from-primary/10 via-accent/5 to-primary/5 p-6 shadow-lg">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-3xl" />
-              <div className="relative space-y-3">
-                <div className="flex justify-between items-center text-base">
-                  <span className="font-medium text-muted-foreground">Base Price</span>
-                  <span className="font-bold text-foreground text-xl">${basePrice.toFixed(2)}</span>
+            <div className="bg-muted p-4 rounded-lg space-y-2">
+              <div className="flex justify-between text-sm">
+                <span>Base Price:</span>
+                <span className="font-semibold">${basePrice.toFixed(2)}</span>
+              </div>
+              {isVeteran && (
+                <div className="flex justify-between text-sm text-success">
+                  <span>Veteran Discount ({veteranDiscountPercent}%):</span>
+                  <span className="font-semibold">-${discountAmount.toFixed(2)}</span>
                 </div>
-                {isVeteran && (
-                  <div className="flex justify-between items-center text-base bg-green-500/10 -mx-6 px-6 py-2">
-                    <span className="font-medium text-green-600 dark:text-green-400">Veteran Discount ({veteranDiscountPercent}%)</span>
-                    <span className="font-bold text-green-600 dark:text-green-400 text-xl">-${discountAmount.toFixed(2)}</span>
-                  </div>
-                )}
-                <div className="flex justify-between items-center text-xl font-bold border-t-2 border-primary/30 pt-3">
-                  <span className="text-foreground">Total Amount</span>
-                  <span className="text-3xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                    ${finalPrice.toFixed(2)}
-                  </span>
-                </div>
+              )}
+              <div className="flex justify-between text-lg font-bold border-t border-border pt-2">
+                <span>Total:</span>
+                <span className="text-primary">${finalPrice.toFixed(2)}</span>
               </div>
             </div>
           )}
 
-          {/* Contact Information Section */}
-          <div className="space-y-5">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
-              <h3 className="text-lg font-bold text-foreground">Contact Details</h3>
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
+          {/* Contact Information */}
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="fullName">Full Name *</Label>
+              <Input
+                id="fullName"
+                required
+                value={formData.fullName}
+                onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                placeholder="John Doe"
+              />
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div className="space-y-2">
-                <Label htmlFor="fullName" className="text-sm font-semibold">Full Name *</Label>
-                <Input
-                  id="fullName"
-                  required
-                  value={formData.fullName}
-                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  placeholder="John Doe"
-                  className="h-12 text-base border-2 focus:border-primary/50"
-                />
-              </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm font-semibold">Email Address *</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  placeholder="john@example.com"
-                  className="h-12 text-base border-2 focus:border-primary/50"
-                />
-              </div>
+            <div>
+              <Label htmlFor="email">Email *</Label>
+              <Input
+                id="email"
+                type="email"
+                required
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                placeholder="john@example.com"
+              />
+            </div>
 
-              <div className="space-y-2 md:col-span-2">
-                <Label htmlFor="phone" className="text-sm font-semibold">Phone Number</Label>
-                <Input
-                  id="phone"
-                  type="tel"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  placeholder="(555) 123-4567"
-                  className="h-12 text-base border-2 focus:border-primary/50"
-                />
-              </div>
+            <div>
+              <Label htmlFor="phone">Phone</Label>
+              <Input
+                id="phone"
+                type="tel"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                placeholder="(555) 123-4567"
+              />
             </div>
 
             {(serviceType === 'training' || serviceType === 'scamshield' || serviceType === 'business' || serviceType === 'website') && (
-              <div className="space-y-2">
-                <Label htmlFor="preferredDate" className="text-sm font-semibold">Preferred Date *</Label>
+              <div>
+                <Label htmlFor="preferredDate">Select Preferred Date *</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
                       id="preferredDate"
-                      variant="outline"
+                      variant={"outline"}
                       className={cn(
-                        "w-full h-12 justify-start text-left font-normal border-2 text-base",
+                        "w-full justify-start text-left font-normal",
                         !selectedDate && "text-muted-foreground"
                       )}
                     >
-                      <CalendarIcon className="mr-2 h-5 w-5" />
+                      <CalendarIcon className="mr-2 h-4 w-4" />
                       {selectedDate ? format(selectedDate, "PPP") : <span>Pick a date</span>}
                     </Button>
                   </PopoverTrigger>
@@ -292,163 +261,131 @@ export const BookingModal = ({
                     />
                   </PopoverContent>
                 </Popover>
-                <p className="text-xs text-muted-foreground mt-1 bg-muted/50 p-2 rounded-lg">
+                <p className="text-xs text-muted-foreground mt-1">
                   We'll confirm availability and schedule accordingly
                 </p>
               </div>
             )}
 
             {(serviceType === 'training' || serviceType === 'scamshield') && (
-              <div className="space-y-2">
-                <Label htmlFor="preferredDates" className="text-sm font-semibold">Alternative Dates/Times</Label>
+              <div>
+                <Label htmlFor="preferredDates">Additional Preferred Dates/Times</Label>
                 <Textarea
                   id="preferredDates"
                   value={formData.preferredDates}
                   onChange={(e) => setFormData({ ...formData, preferredDates: e.target.value })}
                   placeholder="Any alternative dates or specific time preferences..."
                   rows={2}
-                  className="text-base border-2 focus:border-primary/50"
                 />
               </div>
             )}
 
-            <div className="space-y-2">
-              <Label htmlFor="message" className="text-sm font-semibold">Additional Information</Label>
+            <div>
+              <Label htmlFor="message">Additional Information</Label>
               <Textarea
                 id="message"
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 placeholder="Any special requirements or questions..."
                 rows={3}
-                className="text-base border-2 focus:border-primary/50"
               />
             </div>
           </div>
 
-          {/* Veteran Status Section */}
-          <div className="relative overflow-hidden rounded-2xl border-2 border-primary/30 bg-gradient-to-br from-primary/5 via-accent/5 to-primary/10 p-6 space-y-6 shadow-lg">
-            <div className="absolute -top-10 -right-10 w-40 h-40 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full blur-3xl" />
-            <div className="relative">
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-2xl">🇺🇸</span>
-                    <Label htmlFor="veteran-toggle" className="text-lg font-bold text-foreground">
-                      Veteran or First Responder?
-                    </Label>
+          {/* Veteran Status */}
+          <div className="border border-primary/20 rounded-lg p-4 space-y-4 bg-primary/5">
+            <div className="flex items-center justify-between">
+              <div>
+                <Label htmlFor="veteran-toggle" className="text-base font-semibold">
+                  🇺🇸 Veteran or First Responder?
+                </Label>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Receive {veteranDiscountPercent}% discount on all services
+                </p>
+              </div>
+              <Switch
+                id="veteran-toggle"
+                checked={isVeteran}
+                onCheckedChange={setIsVeteran}
+              />
+            </div>
+
+            {isVeteran && (
+              <div className="space-y-4 pt-2">
+                <div>
+                  <Label htmlFor="veteranType">Service Type *</Label>
+                  <Select value={veteranType} onValueChange={setVeteranType} required={isVeteran}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select your service type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="active_duty">Active Duty Military</SelectItem>
+                      <SelectItem value="veteran">Veteran</SelectItem>
+                      <SelectItem value="reservist">Reservist/National Guard</SelectItem>
+                      <SelectItem value="first_responder">First Responder</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="veteranId">Last 4 Digits of ID/Badge Number *</Label>
+                  <Input
+                    id="veteranId"
+                    maxLength={4}
+                    required={isVeteran}
+                    value={veteranIdLast4}
+                    onChange={(e) => setVeteranIdLast4(e.target.value.replace(/\D/g, ''))}
+                    placeholder="1234"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="veteranDoc">Upload Verification (Required for Discount) *</Label>
+                  <div className="mt-2">
+                    {veteranDocFile ? (
+                      <div className="flex items-center gap-2 p-3 bg-muted rounded-lg border border-success">
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
+                        <span className="text-sm flex-1 truncate">{veteranDocFile.name}</span>
+                        <Button type="button" variant="ghost" size="sm" onClick={() => setVeteranDocFile(null)}>
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ) : (
+                      <label className="flex flex-col items-center gap-2 p-4 border-2 border-dashed border-primary/50 rounded-lg cursor-pointer hover:bg-primary/5 transition-colors">
+                        <Upload className="w-6 h-6 text-primary" />
+                        <span className="text-sm font-semibold text-primary">Upload DD-214, Military ID, or First Responder Badge</span>
+                        <span className="text-xs text-muted-foreground">PDF, JPG, PNG (Max 5MB)</span>
+                        <input id="veteranDoc" type="file" accept=".pdf,.jpg,.jpeg,.png,.webp" onChange={handleFileChange} className="hidden" required={isVeteran} />
+                      </label>
+                    )}
                   </div>
-                  <p className="text-sm text-muted-foreground">
-                    Receive {veteranDiscountPercent}% discount on all services
+                  <p className="text-xs text-muted-foreground mt-2 bg-primary/5 p-2 rounded">
+                    <strong>Required for discount:</strong> Your verification document is required to receive the {veteranDiscountPercent}% discount. Documents are securely stored and only used for verification purposes.
                   </p>
                 </div>
-                <Switch
-                  id="veteran-toggle"
-                  checked={isVeteran}
-                  onCheckedChange={setIsVeteran}
-                  className="data-[state=checked]:bg-primary"
-                />
               </div>
-
-              {isVeteran && (
-                <div className="space-y-5 pt-6 border-t-2 border-primary/20 mt-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="veteranType" className="text-sm font-semibold">Service Type *</Label>
-                    <Select value={veteranType} onValueChange={setVeteranType} required={isVeteran}>
-                      <SelectTrigger className="h-12 text-base border-2">
-                        <SelectValue placeholder="Select your service type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="active_duty">Active Duty Military</SelectItem>
-                        <SelectItem value="veteran">Veteran</SelectItem>
-                        <SelectItem value="reservist">Reservist/National Guard</SelectItem>
-                        <SelectItem value="first_responder">First Responder</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="veteranId" className="text-sm font-semibold">Last 4 Digits of ID/Badge Number *</Label>
-                    <Input
-                      id="veteranId"
-                      maxLength={4}
-                      required={isVeteran}
-                      value={veteranIdLast4}
-                      onChange={(e) => setVeteranIdLast4(e.target.value.replace(/\D/g, ''))}
-                      placeholder="1234"
-                      className="h-12 text-base border-2 focus:border-primary/50"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="veteranDoc" className="text-sm font-semibold">Verification Document *</Label>
-                    <div className="mt-2">
-                      {veteranDocFile ? (
-                        <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-green-500/10 to-green-500/5 rounded-xl border-2 border-green-500/30">
-                          <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
-                            <CheckCircle className="w-6 h-6 text-green-600 dark:text-green-400" />
-                          </div>
-                          <span className="text-sm font-medium flex-1 truncate">{veteranDocFile.name}</span>
-                          <Button 
-                            type="button" 
-                            variant="ghost" 
-                            size="sm" 
-                            onClick={() => setVeteranDocFile(null)}
-                            className="hover:bg-destructive/10"
-                          >
-                            <X className="w-4 h-4" />
-                          </Button>
-                        </div>
-                      ) : (
-                        <label className="flex flex-col items-center gap-3 p-6 border-2 border-dashed border-primary/50 rounded-xl cursor-pointer hover:bg-primary/5 hover:border-primary transition-all group">
-                          <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <Upload className="w-7 h-7 text-primary" />
-                          </div>
-                          <div className="text-center">
-                            <span className="text-base font-bold text-primary block">Upload Verification</span>
-                            <span className="text-sm text-muted-foreground block mt-1">DD-214, Military ID, or First Responder Badge</span>
-                            <span className="text-xs text-muted-foreground block mt-1">PDF, JPG, PNG (Max 5MB)</span>
-                          </div>
-                          <input id="veteranDoc" type="file" accept=".pdf,.jpg,.jpeg,.png,.webp" onChange={handleFileChange} className="hidden" required={isVeteran} />
-                        </label>
-                      )}
-                    </div>
-                    <div className="bg-blue-500/10 border border-blue-500/20 p-3 rounded-xl mt-2">
-                      <p className="text-xs text-blue-600 dark:text-blue-400">
-                        <strong className="font-bold">Discount Requirement:</strong> Upload verification to receive your {veteranDiscountPercent}% discount. All documents are securely stored and used only for verification.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
+            )}
           </div>
 
-          {/* Submit Buttons */}
-          <div className="flex gap-4 pt-4">
+          {/* Submit Button */}
+          <div className="flex gap-3">
             <Button
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="flex-1 h-14 text-base font-semibold border-2"
+              className="flex-1"
               disabled={isSubmitting}
             >
               Cancel
             </Button>
-            <Button 
-              type="submit" 
-              className="flex-1 h-14 text-base font-semibold bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 shadow-lg" 
-              disabled={isSubmitting || isUploadingDoc}
-            >
+            <Button type="submit" className="flex-1" disabled={isSubmitting || isUploadingDoc}>
               {isSubmitting || isUploadingDoc ? (
                 <>
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   {isUploadingDoc ? "Uploading..." : "Submitting..."}
                 </>
               ) : (
-                <>
-                  <CheckCircle className="mr-2 h-5 w-5" />
-                  Submit Booking Request
-                </>
+                "Submit Request"
               )}
             </Button>
           </div>

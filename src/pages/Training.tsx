@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { BookingModal } from "@/components/BookingModal";
@@ -11,9 +11,6 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { ScrollReveal } from "@/components/ScrollReveal";
-import { useCounterAnimation } from "@/hooks/useCounterAnimation";
-import { supabase } from "@/integrations/supabase/client";
 import {
   CheckCircle,
   Mail,
@@ -22,7 +19,7 @@ import {
   Search,
   Shield,
   Users,
-  Clock as ClockIcon,
+  Clock,
   Award,
   Lock,
   FileText,
@@ -31,210 +28,18 @@ import {
   QrCode,
   FileCheck,
   Image as ImageIcon,
-  Loader2,
-  Video,
 } from "lucide-react";
 import trainingSession from "@/assets/training-session.jpg";
-import heroTraining from "@/assets/hero-training-new.jpg";
-
-const ResponseTimeCallout = () => {
-  const { count: standardCount, ref: standardRef } = useCounterAnimation({ 
-    end: 24, 
-    start: 48, 
-    duration: 1500 
-  });
-  
-  const { count: premiumCount, ref: premiumRef } = useCounterAnimation({ 
-    end: 4, 
-    start: 24, 
-    duration: 1500 
-  });
-
-  return (
-    <div 
-      ref={standardRef as any}
-      className="mt-4 p-4 bg-gradient-to-r from-[#14B8A6] to-[#0F9A8A] rounded-lg text-white"
-    >
-      <div className="flex items-center gap-3">
-        <span 
-          className="text-2xl animate-[clock-rotate_1s_ease-in-out_0.5s]"
-          style={{ display: 'inline-block' }}
-        >
-          ⏱️
-        </span>
-        <div className="flex-1 text-sm font-semibold">
-          <div>
-            Response time: <span className="text-lg font-bold" ref={premiumRef as any}>{Math.round(standardCount)}</span> hours
-          </div>
-          <div className="text-white/90 text-xs mt-1">
-            Premium: <span className="text-base font-bold">{Math.round(premiumCount)}</span> hours
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const ScamExampleCard = ({ example, index }: { example: any; index: number }) => {
-  const savedAmount = example.saved.replace(/[^0-9]/g, '');
-  const isNumeric = savedAmount !== '';
-  
-  const { count, ref } = useCounterAnimation({ 
-    end: isNumeric ? parseInt(savedAmount) : 0, 
-    duration: 2000 
-  });
-
-  const getBadgeColor = (badge: string) => {
-    const colors: Record<string, string> = {
-      "Grandparent Scam": "bg-red-500/20 text-red-700 border border-red-500/30",
-      "Bank Phishing": "bg-blue-500/20 text-blue-700 border border-blue-500/30",
-      "Tech Support Scam": "bg-orange-500/20 text-orange-700 border border-orange-500/30",
-      "Romance Scam": "bg-pink-500/20 text-pink-700 border border-pink-500/30",
-    };
-    return colors[badge] || "bg-accent/20 text-accent-foreground border border-accent/30";
-  };
-
-  return (
-    <ScrollReveal animation="scale-in" delay={index * 100} threshold={0.2}>
-      <Card
-        className="p-4 hover:shadow-strong transition-all duration-500 hover:-translate-y-1 rounded-xl border-border/50 bg-gradient-to-br from-card to-card/50"
-      >
-        <div className="mb-3">
-          <span className={`text-xs font-bold px-2 py-1 rounded-full ${getBadgeColor(example.badge)}`}>
-            {example.badge}
-          </span>
-        </div>
-        <div className="space-y-2">
-          <div>
-            <p className="text-xs font-semibold text-muted-foreground mb-1">WHAT THEY RECEIVED:</p>
-            <p className="text-foreground text-xs italic line-clamp-2">{example.received}</p>
-          </div>
-          <div>
-            <p className="text-xs font-semibold text-muted-foreground mb-1">OUR ANALYSIS:</p>
-            <p className="text-foreground text-xs line-clamp-2">{example.analysis}</p>
-          </div>
-          <div ref={ref as any}>
-            <p className="text-xs font-semibold text-muted-foreground mb-1">SAVED:</p>
-            {isNumeric ? (
-              <p className="text-lg font-bold text-success">
-                <span className="inline-block animate-[dollar-scale_2s_ease-out]">$</span>
-                {Math.round(count).toLocaleString()}
-              </p>
-            ) : (
-              <p className="text-lg font-bold text-success">{example.saved}</p>
-            )}
-          </div>
-        </div>
-      </Card>
-    </ScrollReveal>
-  );
-};
-
-const TrainingCard = ({ plan, index, loadingButton, setLoadingButton, navigate }: any) => {
-  const { count, ref } = useCounterAnimation({ end: plan.priceNum, duration: 1000 });
-  
-  return (
-    <ScrollReveal 
-      animation="scale-in" 
-      delay={index * 150}
-      threshold={0.2}
-    >
-      <div className={`relative ${plan.popular ? 'scale-105' : ''}`}>
-        {plan.popular && (
-          <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-[#14B8A6] text-white px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 animate-[pulse_2s_ease-in-out_infinite]">
-            MOST POPULAR
-          </div>
-        )}
-        <Card
-          className={`p-8 transition-all duration-500 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 ${
-            plan.popular 
-              ? "border-[#14B8A6] border-[3px] shadow-[0_10px_30px_rgba(20,184,166,0.15)] hover:shadow-[0_20px_40px_rgba(20,184,166,0.25)]" 
-              : "border-border/50 hover:shadow-strong"
-          }`}
-        >
-          <h3 className="text-2xl font-bold mb-2 text-center">{plan.name}</h3>
-          <div className="text-center mb-2" ref={ref}>
-            <span className="text-4xl font-bold text-primary">${Math.round(count)}</span>
-            <span className="text-muted-foreground">/session</span>
-          </div>
-          <p className="text-center text-sm text-muted-foreground mb-2">{plan.duration}</p>
-          <p className="text-center text-sm text-accent font-semibold mb-6">{plan.size}</p>
-
-          <div className="space-y-3 mb-8">
-            {plan.features.map((feature: string, idx: number) => (
-              <div key={idx} className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                <span className="text-foreground text-sm">{feature}</span>
-              </div>
-            ))}
-          </div>
-
-          <Button 
-            onClick={() => {
-              setLoadingButton(plan.type);
-              navigate(`/contact?service=training&type=${plan.type}&price=${plan.priceNum}`);
-            }}
-            disabled={loadingButton === plan.type}
-            variant={plan.popular ? "default" : "outline"} 
-            size="lg" 
-            className={`w-full ${plan.popular ? 'bg-[#14B8A6] hover:bg-[#0F9A8A] text-white' : ''}`}
-          >
-            {loadingButton === plan.type ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                Loading...
-              </>
-            ) : (
-              'Book Session'
-            )}
-          </Button>
-        </Card>
-      </div>
-    </ScrollReveal>
-  );
-};
 
 const LearnAndTrain = () => {
-  const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [isYearly, setIsYearly] = useState(false);
-  const [loadingButton, setLoadingButton] = useState<string | null>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [selectedService, setSelectedService] = useState<{
     type: 'training' | 'scamshield';
     name: string;
     tier?: string;
     price?: number;
   } | null>(null);
-
-  useEffect(() => {
-    checkAdminStatus();
-  }, []);
-
-  const checkAdminStatus = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        setIsAdmin(false);
-        return;
-      }
-
-      const { data: roles, error } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", user.id);
-
-      if (error) {
-        console.error("Error checking admin status:", error);
-        setIsAdmin(false);
-      } else {
-        setIsAdmin(roles && roles.length > 0);
-      }
-    } catch (error) {
-      console.error("Error in checkAdminStatus:", error);
-      setIsAdmin(false);
-    }
-  };
 
   const getPlanPrice = (monthlyPrice: number) => {
     if (isYearly) {
@@ -258,7 +63,7 @@ const LearnAndTrain = () => {
 
       {/* Hero Section */}
       <Hero
-        backgroundImage={heroTraining}
+        useTransitioningBackground={true}
         headline="Learn How to Recognize and Stop Scams"
         subheadline="Professional training programs and 24/7 protection services designed for real-world safety"
         showScrollIndicator={true}
@@ -302,9 +107,7 @@ const LearnAndTrain = () => {
             {[
               {
                 name: "Standard Group",
-                type: "standard",
                 price: "$79",
-                priceNum: 79,
                 duration: "90 minutes",
                 size: "Up to 25 participants",
                 features: [
@@ -317,9 +120,7 @@ const LearnAndTrain = () => {
               },
               {
                 name: "Family Small Group",
-                type: "family",
                 price: "$149",
-                priceNum: 149,
                 duration: "90 minutes",
                 size: "Up to 12 participants",
                 popular: true,
@@ -334,9 +135,7 @@ const LearnAndTrain = () => {
               },
               {
                 name: "Priority Private",
-                type: "private",
                 price: "$399",
-                priceNum: 399,
                 duration: "120 minutes",
                 size: "1-5 participants",
                 features: [
@@ -349,14 +148,53 @@ const LearnAndTrain = () => {
                 ],
               },
             ].map((plan, index) => (
-              <TrainingCard 
-                key={index}
-                plan={plan}
-                index={index}
-                loadingButton={loadingButton}
-                setLoadingButton={setLoadingButton}
-                navigate={navigate}
-              />
+              <div key={index} className="relative">
+                {plan.popular && (
+                  <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
+                    MOST POPULAR
+                  </div>
+                )}
+                <Card
+                  className={`p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 rounded-2xl animate-fade-in-up bg-gradient-to-br from-card to-card/50 ${
+                    plan.popular ? "border-primary border-2" : "border-border/50"
+                  }`}
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <h3 className="text-2xl font-bold mb-2 text-center">{plan.name}</h3>
+                <div className="text-center mb-2">
+                  <span className="text-4xl font-bold text-primary">{plan.price}</span>
+                  <span className="text-muted-foreground">/session</span>
+                </div>
+                <p className="text-center text-sm text-muted-foreground mb-2">{plan.duration}</p>
+                <p className="text-center text-sm text-accent font-semibold mb-6">{plan.size}</p>
+
+                <div className="space-y-3 mb-8">
+                  {plan.features.map((feature, idx) => (
+                    <div key={idx} className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                      <span className="text-foreground text-sm">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <Button 
+                  onClick={() => {
+                    setSelectedService({
+                      type: 'training',
+                      name: plan.name,
+                      tier: plan.name,
+                      price: parseFloat(plan.price.replace('$', ''))
+                    });
+                    setModalOpen(true);
+                  }}
+                  variant={plan.popular ? "default" : "outline"} 
+                  size="lg" 
+                  className="w-full"
+                >
+                  Book Session
+                </Button>
+              </Card>
+              </div>
             ))}
           </div>
         </div>
@@ -389,28 +227,7 @@ const LearnAndTrain = () => {
         <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-center mb-10 animate-fade-in-up">Simple Protection in 4 Steps</h2>
 
-          <div className="max-w-5xl mx-auto relative">
-            {/* SVG Connecting Line */}
-            <svg 
-              className="absolute top-24 left-0 w-full h-2 hidden lg:block pointer-events-none z-0" 
-              style={{ top: '80px' }}
-            >
-              <path
-                id="steps-path"
-                d="M 12% 0 L 38% 0 L 62% 0 L 88% 0"
-                stroke="hsl(var(--primary))"
-                strokeWidth="2"
-                strokeDasharray="8 8"
-                fill="none"
-                className="steps-connecting-line"
-                style={{
-                  strokeDashoffset: 1000,
-                  animation: 'draw-line 2s ease-out forwards',
-                  animationDelay: '0.5s'
-                }}
-              />
-            </svg>
-
+          <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
                 {
@@ -424,7 +241,7 @@ const LearnAndTrain = () => {
                   step: "STEP 2",
                   title: "Forward It to Our Team",
                   desc: "Email, text, upload screenshot, or call our hotline",
-                  hasResponseTime: true,
+                  subtext: "Response time: 24 hours (Premium: 4 hours)",
                 },
                 {
                   icon: Search,
@@ -439,34 +256,27 @@ const LearnAndTrain = () => {
                   desc: "Risk level (Safe/Caution/Danger/CRITICAL), detailed explanation, recommended actions, emergency scripts if needed",
                 },
               ].map((step, index) => (
-                <ScrollReveal key={index} animation="scale-in" delay={index * 200} threshold={0.3}>
-                  <Card
-                    className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
-                  >
-                    <div className="flex justify-center mb-4">
-                      <div 
-                        className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500"
-                        style={{
-                          animation: `step-icon-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards`,
-                          animationDelay: `${0.5 + index * 0.2}s`,
-                          transform: 'scale(0)'
-                        }}
-                      >
-                        <step.icon className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-500" />
-                      </div>
+                <Card
+                  key={index}
+                  className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <div className="flex justify-center mb-4">
+                    <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+                      <step.icon className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-500" />
                     </div>
-                    <div className="text-center mb-2">
-                      <span className="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full">
-                        {step.step}
-                      </span>
-                    </div>
-                    <h3 className="text-lg font-bold mb-3 text-center group-hover:text-primary transition-colors duration-300">
-                      {step.title}
-                    </h3>
-                    <p className="text-muted-foreground text-center text-sm">{step.desc}</p>
-                    {step.hasResponseTime && <ResponseTimeCallout />}
-                  </Card>
-                </ScrollReveal>
+                  </div>
+                  <div className="text-center mb-2">
+                    <span className="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full">
+                      {step.step}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-bold mb-3 text-center group-hover:text-primary transition-colors duration-300">
+                    {step.title}
+                  </h3>
+                  <p className="text-muted-foreground text-center text-sm">{step.desc}</p>
+                  {step.subtext && <p className="text-accent text-center text-xs mt-2 font-semibold">{step.subtext}</p>}
+                </Card>
               ))}
             </div>
           </div>
@@ -537,7 +347,7 @@ const LearnAndTrain = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Starter Plan */}
             <Card
-              className="p-8 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-strong hover:brightness-110 rounded-2xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50"
+              className="p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-2xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50"
               style={{ animationDelay: "0ms" }}
             >
               <div className="flex justify-center mb-6">
@@ -547,11 +357,11 @@ const LearnAndTrain = () => {
               </div>
               <h3 className="text-2xl font-bold mb-2 text-center">Starter Plan</h3>
               <div className="text-center mb-2">
-                <span key={isYearly ? 'yearly-39' : 'monthly-39'} className="text-4xl font-bold text-primary price-flip inline-block">{getPlanPrice(39).display}</span>
+                <span className="text-4xl font-bold text-primary">{getPlanPrice(39).display}</span>
                 <span className="text-muted-foreground">{getPlanPrice(39).period}</span>
               </div>
               {isYearly && (
-                <div className="text-center mb-2 fade-in-savings">
+                <div className="text-center mb-2">
                   <p className="text-sm text-success font-semibold">{getPlanPrice(39).savings}</p>
                 </div>
               )}
@@ -585,22 +395,19 @@ const LearnAndTrain = () => {
 
               <Button 
                 onClick={() => {
-                  setLoadingButton('starter');
-                  navigate(`/contact?service=protection&plan=starter&price=${isYearly ? Math.round(39 * 12 * 0.95) : 39}`);
+                  setSelectedService({
+                    type: 'scamshield',
+                    name: 'ScamShield Protection',
+                    tier: `Starter Plan - ${isYearly ? 'Yearly' : 'Monthly'}`,
+                    price: isYearly ? Math.round(39 * 12 * 0.95) : 39
+                  });
+                  setModalOpen(true);
                 }}
-                disabled={loadingButton === 'starter'}
                 variant="default" 
                 size="lg" 
                 className="w-full"
               >
-                {loadingButton === 'starter' ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                    Loading...
-                  </>
-                ) : (
-                  'Get Started'
-                )}
+                Get Started
               </Button>
             </Card>
 
@@ -610,7 +417,7 @@ const LearnAndTrain = () => {
                 MOST POPULAR
               </div>
               <Card
-                className="p-8 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[0_20px_40px_rgba(109,40,217,0.2)] hover:brightness-110 rounded-2xl border-primary border-2 animate-fade-in-up bg-gradient-to-br from-card to-card/50"
+                className="p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-2xl border-primary border-2 animate-fade-in-up bg-gradient-to-br from-card to-card/50"
                 style={{ animationDelay: "100ms" }}
               >
                 <div className="flex justify-center mb-6">
@@ -620,11 +427,11 @@ const LearnAndTrain = () => {
               </div>
               <h3 className="text-2xl font-bold mb-2 text-center">Family Plan</h3>
               <div className="text-center mb-2">
-                <span key={isYearly ? 'yearly-79' : 'monthly-79'} className="text-4xl font-bold text-primary price-flip inline-block">{getPlanPrice(79).display}</span>
+                <span className="text-4xl font-bold text-primary">{getPlanPrice(79).display}</span>
                 <span className="text-muted-foreground">{getPlanPrice(79).period}</span>
               </div>
               {isYearly && (
-                <div className="text-center mb-2 fade-in-savings">
+                <div className="text-center mb-2">
                   <p className="text-sm text-success font-semibold">{getPlanPrice(79).savings}</p>
                 </div>
               )}
@@ -661,22 +468,19 @@ const LearnAndTrain = () => {
 
               <Button 
                 onClick={() => {
-                  setLoadingButton('family');
-                  navigate(`/contact?service=protection&plan=family&price=${isYearly ? Math.round(79 * 12 * 0.95) : 79}`);
+                  setSelectedService({
+                    type: 'scamshield',
+                    name: 'ScamShield Protection',
+                    tier: `Family Plan - ${isYearly ? 'Yearly' : 'Monthly'}`,
+                    price: isYearly ? Math.round(79 * 12 * 0.95) : 79
+                  });
+                  setModalOpen(true);
                 }}
-                disabled={loadingButton === 'family'}
                 variant="default" 
                 size="lg" 
                 className="w-full"
               >
-                {loadingButton === 'family' ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                    Loading...
-                  </>
-                ) : (
-                  'Get Started'
-                )}
+                Get Started
               </Button>
             </Card>
             </div>
@@ -693,11 +497,11 @@ const LearnAndTrain = () => {
               </div>
               <h3 className="text-2xl font-bold mb-2 text-center">Premium Plan</h3>
               <div className="text-center mb-2">
-                <span key={isYearly ? 'yearly-129' : 'monthly-129'} className="text-4xl font-bold text-primary price-flip inline-block">{getPlanPrice(129).display}</span>
+                <span className="text-4xl font-bold text-primary">{getPlanPrice(129).display}</span>
                 <span className="text-muted-foreground">{getPlanPrice(129).period}</span>
               </div>
               {isYearly && (
-                <div className="text-center mb-2 fade-in-savings">
+                <div className="text-center mb-2">
                   <p className="text-sm text-success font-semibold">{getPlanPrice(129).savings}</p>
                 </div>
               )}
@@ -738,22 +542,19 @@ const LearnAndTrain = () => {
 
               <Button 
                 onClick={() => {
-                  setLoadingButton('premium');
-                  navigate(`/contact?service=protection&plan=premium&price=${isYearly ? Math.round(129 * 12 * 0.95) : 129}`);
+                  setSelectedService({
+                    type: 'scamshield',
+                    name: 'ScamShield Protection',
+                    tier: `Premium Plan - ${isYearly ? 'Yearly' : 'Monthly'}`,
+                    price: isYearly ? Math.round(129 * 12 * 0.95) : 129
+                  });
+                  setModalOpen(true);
                 }}
-                disabled={loadingButton === 'premium'}
                 variant="default" 
                 size="lg" 
                 className="w-full"
               >
-                {loadingButton === 'premium' ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                    Loading...
-                  </>
-                ) : (
-                  'Get Started'
-                )}
+                Get Started
               </Button>
             </Card>
 
@@ -803,22 +604,19 @@ const LearnAndTrain = () => {
 
               <Button 
                 onClick={() => {
-                  setLoadingButton('customized');
-                  navigate('/contact?subject=Custom Protection Plan');
+                  setSelectedService({
+                    type: 'scamshield',
+                    name: 'ScamShield Protection',
+                    tier: 'Customized Business Plan',
+                    price: 229
+                  });
+                  setModalOpen(true);
                 }}
-                disabled={loadingButton === 'customized'}
-                variant="outline" 
+                variant="default" 
                 size="lg" 
-                className="w-full text-primary border-primary hover:bg-primary hover:text-white transition-all duration-300"
+                className="w-full"
               >
-                {loadingButton === 'customized' ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                    Loading...
-                  </>
-                ) : (
-                  'Request Quote'
-                )}
+                Request Quote
               </Button>
             </Card>
           </div>
@@ -851,20 +649,20 @@ const LearnAndTrain = () => {
               { icon: FileCheck, title: "Documents" },
               { icon: ImageIcon, title: "Social Media" },
             ].map((threat, index) => (
-              <ScrollReveal key={index} animation="scale-in" delay={index * 50} threshold={0.2}>
-                <Card
-                  className="p-6 transition-all duration-500 rounded-2xl border-border/50 hover:border-[#14B8A6] hover:border-2 group bg-gradient-to-br from-card to-card/50 backdrop-blur-sm hover:bg-gradient-to-br hover:from-card/90 hover:to-card/60 hover:shadow-strong"
-                >
-                  <div className="flex flex-col items-center text-center">
-                    <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center transition-all duration-300 mb-3 group-hover:animate-[icon-bounce_0.6s_ease-in-out]">
-                      <threat.icon className="w-7 h-7 text-primary" />
-                    </div>
-                    <h3 className="text-sm font-semibold group-hover:text-primary transition-colors duration-300">
-                      {threat.title}
-                    </h3>
+              <Card
+                key={index}
+                className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-all duration-300 mb-3">
+                    <threat.icon className="w-7 h-7 text-primary" />
                   </div>
-                </Card>
-              </ScrollReveal>
+                  <h3 className="text-sm font-semibold group-hover:text-primary transition-colors duration-300">
+                    {threat.title}
+                  </h3>
+                </div>
+              </Card>
             ))}
           </div>
         </div>
@@ -872,21 +670,17 @@ const LearnAndTrain = () => {
 
       {/* Family Safety Vault Section */}
       <section className="py-16 bg-muted relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20 animate-gradient-shift">
+        <div className="absolute inset-0 opacity-20">
           <div
             className="absolute top-20 right-1/4 w-96 h-96 bg-accent/25 rounded-full blur-3xl animate-pulse"
             style={{ animationDuration: "8s" }}
-          />
-          <div
-            className="absolute bottom-20 left-1/4 w-96 h-96 bg-primary/25 rounded-full blur-3xl animate-pulse"
-            style={{ animationDuration: "10s" }}
           />
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <Card className="max-w-4xl mx-auto p-8 hover:shadow-strong transition-all duration-500 rounded-2xl border-accent border-2 animate-fade-in-up bg-gradient-to-br from-card to-card/50">
             <div className="text-center">
               <div className="flex justify-center mb-6">
-                <div className="w-24 h-24 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center animate-[shield-pulse_3s_ease-in-out_infinite]">
+                <div className="w-24 h-24 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
                   <Lock className="w-12 h-12 text-primary" />
                 </div>
               </div>
@@ -913,15 +707,8 @@ const LearnAndTrain = () => {
                 Security: Bank-grade encryption, multi-factor auth, access sharing
               </p>
 
-              <Button 
-                asChild 
-                className="bg-[#14B8A6] hover:bg-[#0F9A8A] text-white group" 
-                size="lg"
-              >
-                <Link to="/vault" className="flex items-center gap-2">
-                  <span className="text-xl group-hover:animate-[lock-shake_0.5s_ease-in-out]">🔒</span>
-                  EXPLORE SAFETY VAULT
-                </Link>
+              <Button asChild variant="default" size="lg">
+                <Link to="/safety-vault">EXPLORE SAFETY VAULT</Link>
               </Button>
             </div>
           </Card>
@@ -966,33 +753,48 @@ const LearnAndTrain = () => {
                 saved: "$15,000",
               },
             ].map((example, index) => (
-              <ScamExampleCard key={index} example={example} index={index} />
+              <Card
+                key={index}
+                className="p-4 hover:shadow-strong transition-all duration-500 hover:-translate-y-1 rounded-xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <div className="mb-3">
+                  <span className="text-xs font-bold bg-accent text-accent-foreground px-2 py-1 rounded-full">
+                    {example.badge}
+                  </span>
+                </div>
+                <div className="space-y-2">
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground mb-1">WHAT THEY RECEIVED:</p>
+                    <p className="text-foreground text-xs italic line-clamp-2">{example.received}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground mb-1">OUR ANALYSIS:</p>
+                    <p className="text-foreground text-xs line-clamp-2">{example.analysis}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground mb-1">SAVED:</p>
+                    <p className="text-lg font-bold text-primary">{example.saved}</p>
+                  </div>
+                </div>
+              </Card>
             ))}
           </div>
 
           {/* Video Testimonials Section */}
-          {isAdmin && (
-            <div className="mt-12">
-              <h3 className="text-2xl font-bold text-center mb-8">Video Testimonials</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                {[1, 2, 3].map((i) => (
-                  <Card 
-                    key={i} 
-                    className="p-6 text-center border-2 border-dashed border-primary/30 hover:border-primary/50 hover:shadow-medium transition-all bg-gradient-to-br from-card to-card/50"
-                  >
-                    <div className="aspect-video bg-muted/30 rounded-lg mb-4 flex flex-col items-center justify-center gap-3">
-                      <Video className="w-12 h-12 text-primary/50" />
-                      <p className="text-sm font-semibold text-muted-foreground">Upload Member Success Stories</p>
-                    </div>
-                    <Button variant="default" size="sm" className="w-full">
-                      <Upload className="w-4 h-4 mr-2" />
-                      Add Video
-                    </Button>
-                  </Card>
-                ))}
-              </div>
+          <div className="mt-12">
+            <h3 className="text-2xl font-bold text-center mb-8">Video Testimonials</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              {[1, 2, 3].map((i) => (
+                <Card key={i} className="p-4 text-center hover:shadow-medium transition-all">
+                  <div className="aspect-video bg-muted/50 rounded-lg mb-3 flex items-center justify-center">
+                    <p className="text-sm text-muted-foreground">Video Testimonial {i}</p>
+                  </div>
+                  <p className="text-xs text-muted-foreground">Coming soon - Member success story</p>
+                </Card>
+              ))}
             </div>
-          )}
+          </div>
         </div>
       </section>
 
