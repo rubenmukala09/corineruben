@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { PrefetchLink } from "@/components/PrefetchLink";
 
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -49,7 +50,7 @@ const Navigation = () => {
           <div className="hidden lg:flex flex-1 items-center justify-center ml-8" role="navigation" aria-label="Main navigation">
             <div className="flex items-center space-x-4 xl:space-x-6">
               {navLinks.map((link) => (
-                <Link
+                <PrefetchLink
                   key={link.name}
                   to={link.href}
                   onClick={scrollToTop}
@@ -59,7 +60,7 @@ const Navigation = () => {
                     {link.name}
                     <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent transition-all duration-300 group-hover:w-full"></span>
                   </span>
-                </Link>
+                </PrefetchLink>
               ))}
             </div>
           </div>
