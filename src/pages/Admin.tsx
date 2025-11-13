@@ -4,6 +4,7 @@ import { AdminTopBar } from "@/components/AdminTopBar";
 import { DashboardStats } from "@/components/admin/DashboardStats";
 import { RevenueChart } from "@/components/admin/RevenueChart";
 import { RecentActivity } from "@/components/admin/RecentActivity";
+import { QuickActions } from "@/components/admin/QuickActions";
 import { Card } from "@/components/ui/card";
 
 export default function Admin() {
@@ -42,6 +43,9 @@ export default function Admin() {
               <RecentActivity />
             </div>
           </div>
+
+          {/* Quick Actions */}
+          <QuickActions />
 
           {/* Additional Content Area */}
           <Card className="p-6">
