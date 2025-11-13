@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -13,6 +13,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
+import { supabase } from "@/integrations/supabase/client";
 import {
   CheckCircle,
   Mail,
@@ -31,6 +32,7 @@ import {
   FileCheck,
   Image as ImageIcon,
   Loader2,
+  Video,
 } from "lucide-react";
 import trainingSession from "@/assets/training-session.jpg";
 import heroTraining from "@/assets/hero-training-new.jpg";
@@ -197,12 +199,42 @@ const LearnAndTrain = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [isYearly, setIsYearly] = useState(false);
   const [loadingButton, setLoadingButton] = useState<string | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [selectedService, setSelectedService] = useState<{
     type: 'training' | 'scamshield';
     name: string;
     tier?: string;
     price?: number;
   } | null>(null);
+
+  useEffect(() => {
+    checkAdminStatus();
+  }, []);
+
+  const checkAdminStatus = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        setIsAdmin(false);
+        return;
+      }
+
+      const { data: roles, error } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", user.id);
+
+      if (error) {
+        console.error("Error checking admin status:", error);
+        setIsAdmin(false);
+      } else {
+        setIsAdmin(roles && roles.length > 0);
+      }
+    } catch (error) {
+      console.error("Error in checkAdminStatus:", error);
+      setIsAdmin(false);
+    }
+  };
 
   const getPlanPrice = (monthlyPrice: number) => {
     if (isYearly) {
@@ -939,19 +971,28 @@ const LearnAndTrain = () => {
           </div>
 
           {/* Video Testimonials Section */}
-          <div className="mt-12">
-            <h3 className="text-2xl font-bold text-center mb-8">Video Testimonials</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-              {[1, 2, 3].map((i) => (
-                <Card key={i} className="p-4 text-center hover:shadow-medium transition-all">
-                  <div className="aspect-video bg-muted/50 rounded-lg mb-3 flex items-center justify-center">
-                    <p className="text-sm text-muted-foreground">Video Testimonial {i}</p>
-                  </div>
-                  <p className="text-xs text-muted-foreground">Coming soon - Member success story</p>
-                </Card>
-              ))}
+          {isAdmin && (
+            <div className="mt-12">
+              <h3 className="text-2xl font-bold text-center mb-8">Video Testimonials</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                {[1, 2, 3].map((i) => (
+                  <Card 
+                    key={i} 
+                    className="p-6 text-center border-2 border-dashed border-primary/30 hover:border-primary/50 hover:shadow-medium transition-all bg-gradient-to-br from-card to-card/50"
+                  >
+                    <div className="aspect-video bg-muted/30 rounded-lg mb-4 flex flex-col items-center justify-center gap-3">
+                      <Video className="w-12 h-12 text-primary/50" />
+                      <p className="text-sm font-semibold text-muted-foreground">Upload Member Success Stories</p>
+                    </div>
+                    <Button variant="default" size="sm" className="w-full">
+                      <Upload className="w-4 h-4 mr-2" />
+                      Add Video
+                    </Button>
+                  </Card>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 
