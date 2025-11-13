@@ -91,11 +91,15 @@ const menuItems: MenuItem[] = [
   },
 ];
 
-export const AdminSidebar = () => {
-  const [collapsed, setCollapsed] = useState(false);
+interface AdminSidebarProps {
+  isOpen: boolean;
+}
+
+export const AdminSidebar = ({ isOpen }: AdminSidebarProps) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<string[]>([]);
   const location = useLocation();
+  const collapsed = !isOpen;
 
   const toggleMenu = (title: string) => {
     setOpenMenus((prev) =>
@@ -108,31 +112,9 @@ export const AdminSidebar = () => {
     children?.some((child) => location.pathname === child.href);
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full">
-      {/* Logo/Header */}
-      <div className="h-16 flex items-center justify-between px-4 border-b border-white/10">
-        {!collapsed && (
-          <span className="text-white font-semibold text-lg">Admin Panel</span>
-        )}
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setCollapsed(!collapsed)}
-          className="text-white hover:bg-white/10 md:flex hidden"
-        >
-          <Menu className="h-5 w-5" />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setMobileOpen(false)}
-          className="text-white hover:bg-white/10 md:hidden"
-        >
-          <X className="h-5 w-5" />
-        </Button>
-      </div>
-
+    <div className="flex flex-col h-full pt-16">
       {/* Menu Items */}
+
       <nav className="flex-1 overflow-y-auto py-4">
         {menuItems.map((item) => {
           const Icon = item.icon;
@@ -237,16 +219,6 @@ export const AdminSidebar = () => {
 
   return (
     <>
-      {/* Mobile Toggle Button */}
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={() => setMobileOpen(true)}
-        className="fixed top-4 left-4 z-50 md:hidden bg-[#1F1B2E] text-white hover:bg-[#2A2540]"
-      >
-        <Menu className="h-5 w-5" />
-      </Button>
-
       {/* Mobile Overlay */}
       {mobileOpen && (
         <div

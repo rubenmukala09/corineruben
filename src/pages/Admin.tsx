@@ -1,51 +1,30 @@
+import { useState } from "react";
 import { AdminSidebar } from "@/components/AdminSidebar";
-import { Button } from "@/components/ui/button";
+import { AdminTopBar } from "@/components/AdminTopBar";
 import { Card } from "@/components/ui/card";
-import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-import { LogOut } from "lucide-react";
 
 export default function Admin() {
-  const navigate = useNavigate();
-  const { toast } = useToast();
-
-  const handleSignOut = async () => {
-    try {
-      await supabase.auth.signOut();
-      toast({
-        title: "Signed Out",
-        description: "You've been successfully logged out.",
-      });
-      navigate("/auth");
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
-      });
-    }
-  };
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
     <div className="flex min-h-screen bg-background">
-      <AdminSidebar />
+      <AdminSidebar isOpen={sidebarOpen} />
+      
+      {/* Top Bar */}
+      <AdminTopBar 
+        sidebarOpen={sidebarOpen} 
+        toggleSidebar={() => setSidebarOpen(!sidebarOpen)} 
+      />
       
       {/* Main Content */}
-      <main className="flex-1 md:ml-[260px] transition-all duration-300">
+      <main className={`flex-1 transition-all duration-300 pt-16 ${sidebarOpen ? 'md:ml-[260px]' : 'md:ml-[70px]'}`}>
         <div className="p-8">
           {/* Header */}
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-              <p className="text-muted-foreground mt-1">
-                Welcome to the admin panel
-              </p>
-            </div>
-            <Button onClick={handleSignOut} variant="outline" size="sm">
-              <LogOut className="w-4 h-4 mr-2" />
-              Sign Out
-            </Button>
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
+            <p className="text-muted-foreground mt-1">
+              Welcome to the admin panel
+            </p>
           </div>
 
           {/* Dashboard Content */}
