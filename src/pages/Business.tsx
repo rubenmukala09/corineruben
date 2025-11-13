@@ -8,6 +8,7 @@ import TrustBar from "@/components/TrustBar";
 import TestimonialCard from "@/components/TestimonialCard";
 import CTASection from "@/components/CTASection";
 import FlowingWaves from "@/components/FlowingWaves";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
@@ -141,33 +142,37 @@ const Business = () => {
         <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-center mb-12">What We Build</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Card className="p-8 hover:shadow-medium transition-shadow">
-              <div className="flex items-start gap-4">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-8 h-8 text-accent" />
+            <ScrollReveal animation="fade-up" delay={0}>
+              <Card className="p-8 hover:shadow-medium transition-shadow">
+                <div className="flex items-start gap-4">
+                  <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-8 h-8 text-accent" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold mb-3">AI Receptionist</h3>
+                    <p className="text-muted-foreground">
+                      Answer calls 24/7, route to right person, book appointments, answer FAQs. Never miss a lead again.
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-2xl font-bold mb-3">AI Receptionist</h3>
-                  <p className="text-muted-foreground">
-                    Answer calls 24/7, route to right person, book appointments, answer FAQs. Never miss a lead again.
-                  </p>
-                </div>
-              </div>
-            </Card>
+              </Card>
+            </ScrollReveal>
 
-            <Card className="p-8 hover:shadow-medium transition-shadow">
-              <div className="flex items-start gap-4">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-8 h-8 text-accent" />
+            <ScrollReveal animation="fade-up" delay={150}>
+              <Card className="p-8 hover:shadow-medium transition-shadow">
+                <div className="flex items-start gap-4">
+                  <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Mail className="w-8 h-8 text-accent" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold mb-3">Follow-Up Automation</h3>
+                    <p className="text-muted-foreground">
+                      Nurture leads, send reminders, follow up after appointments. Turn cold leads into customers.
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-2xl font-bold mb-3">Follow-Up Automation</h3>
-                  <p className="text-muted-foreground">
-                    Nurture leads, send reminders, follow up after appointments. Turn cold leads into customers.
-                  </p>
-                </div>
-              </div>
-            </Card>
+              </Card>
+            </ScrollReveal>
 
             <Card className="p-8 hover:shadow-medium transition-shadow">
               <div className="flex items-start gap-4">
