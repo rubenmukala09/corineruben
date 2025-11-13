@@ -65,6 +65,8 @@ export default function TeamAdmin() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [memberToDelete, setMemberToDelete] = useState<TeamMember | null>(null);
   const [addModalOpen, setAddModalOpen] = useState(false);
+  const [editingMember, setEditingMember] = useState<TeamMember | null>(null);
+  const [highlightedMemberId, setHighlightedMemberId] = useState<string | null>(null);
 
   // Only keep Ruben Nkulu - the founder
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([
@@ -87,6 +89,24 @@ export default function TeamAdmin() {
 
   const handleAddMember = (member: TeamMember) => {
     setTeamMembers((prev) => [...prev, member]);
+    setHighlightedMemberId(member.id);
+    setTimeout(() => setHighlightedMemberId(null), 2000);
+  };
+
+  const handleUpdateMember = (updatedMember: TeamMember) => {
+    setTeamMembers((prev) =>
+      prev.map((m) => (m.id === updatedMember.id ? updatedMember : m))
+    );
+  };
+
+  const handleEditClick = (member: TeamMember) => {
+    setEditingMember(member);
+    setAddModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setAddModalOpen(false);
+    setEditingMember(null);
   };
 
   const filteredMembers = teamMembers.filter(
@@ -275,7 +295,10 @@ export default function TeamAdmin() {
                   value={member}
                   className="cursor-move"
                 >
-                  <Card className="hover:shadow-xl transition-all hover:-translate-y-1 h-full group">
+                  <Card className={cn(
+                    "hover:shadow-xl transition-all hover:-translate-y-1 h-full group",
+                    highlightedMemberId === member.id && "animate-pulse ring-2 ring-primary"
+                  )}>
                     <CardContent className="p-6 flex flex-col items-center text-center relative">
                       {/* Drag Handle */}
                       <div className="absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -323,12 +346,7 @@ export default function TeamAdmin() {
                         <Button
                           variant="outline"
                           className="flex-1"
-                          onClick={() => {
-                            toast({
-                              title: "Edit Member",
-                              description: "Edit modal coming soon",
-                            });
-                          }}
+                          onClick={() => handleEditClick(member)}
                         >
                           <Edit className="h-4 w-4 mr-2" />
                           Edit
@@ -407,12 +425,7 @@ export default function TeamAdmin() {
                           <Button
                             variant="ghost"
                             size="icon"
-                            onClick={() => {
-                              toast({
-                                title: "Edit Member",
-                                description: "Edit modal coming soon",
-                              });
-                            }}
+                            onClick={() => handleEditClick(member)}
                           >
                             <Edit className="h-4 w-4" />
                           </Button>
@@ -459,9 +472,11 @@ export default function TeamAdmin() {
         {/* Add Team Member Modal */}
         <AddTeamMemberModal
           isOpen={addModalOpen}
-          onClose={() => setAddModalOpen(false)}
+          onClose={handleModalClose}
           onAdd={handleAddMember}
+          onUpdate={handleUpdateMember}
           nextOrderNumber={teamMembers.length + 1}
+          editMember={editingMember}
         />
       </main>
     </div>

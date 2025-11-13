@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -33,17 +33,26 @@ interface AddTeamMemberModalProps {
   isOpen: boolean;
   onClose: () => void;
   onAdd: (member: any) => void;
+  onUpdate?: (member: any) => void;
   nextOrderNumber: number;
+  editMember?: any;
 }
 
 export function AddTeamMemberModal({
   isOpen,
   onClose,
   onAdd,
+  onUpdate,
   nextOrderNumber,
+  editMember,
 }: AddTeamMemberModalProps) {
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const isEditMode = !!editMember;
+  const isFounder = editMember?.isFounder;
 
   const [formData, setFormData] = useState({
     name: "",
@@ -61,6 +70,26 @@ export function AddTeamMemberModal({
   const [photo, setPhoto] = useState<string | null>(null);
   const [photoZoom, setPhotoZoom] = useState(1);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // Load edit data when modal opens
+  useEffect(() => {
+    if (editMember && isOpen) {
+      setFormData({
+        name: editMember.name || "",
+        title: editMember.role || "",
+        bio: editMember.bio || "",
+        linkedin: editMember.linkedin || "",
+        email: editMember.email || "",
+        phone: editMember.phone || "",
+        displayOnAbout: editMember.showOnAbout ?? true,
+        displayEmail: editMember.displayEmail ?? false,
+        displayPhone: editMember.displayPhone ?? false,
+        displayOrder: editMember.displayOrder || nextOrderNumber,
+      });
+      setPhoto(editMember.avatar || null);
+      setPhotoZoom(1);
+    }
+  }, [editMember, isOpen, nextOrderNumber]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -135,7 +164,7 @@ export function AddTeamMemberModal({
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!validateForm()) {
       toast({
         title: "Validation Error",
@@ -145,8 +174,23 @@ export function AddTeamMemberModal({
       return;
     }
 
-    const newMember = {
-      id: Math.random().toString(36).substring(7),
+    // Founder validation
+    if (isFounder && formData.displayOrder !== 1) {
+      toast({
+        title: "Invalid Order",
+        description: "The founder must have display order 1",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSaving(true);
+
+    // Simulate upload delay
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    const memberData = {
+      id: editMember?.id || Math.random().toString(36).substring(7),
       name: formData.name,
       role: formData.title,
       bio: formData.bio,
@@ -158,19 +202,31 @@ export function AddTeamMemberModal({
       showOnAbout: formData.displayOnAbout,
       displayEmail: formData.displayEmail,
       displayPhone: formData.displayPhone,
-      status: "active",
-      department: "Team",
-      location: "",
-      joinDate: new Date().toISOString(),
+      status: editMember?.status || "active",
+      department: editMember?.department || "Team",
+      location: editMember?.location || "",
+      joinDate: editMember?.joinDate || new Date().toISOString(),
+      isFounder: editMember?.isFounder || false,
     };
 
-    onAdd(newMember);
-    handleClose();
+    if (isEditMode && onUpdate) {
+      onUpdate(memberData);
+    } else {
+      onAdd(memberData);
+    }
 
-    toast({
-      title: "Team Member Added",
-      description: `${formData.name} has been added to the team`,
-    });
+    setIsSaving(false);
+    setShowSuccess(true);
+
+    // Show success animation then close
+    setTimeout(() => {
+      setShowSuccess(false);
+      handleClose();
+      toast({
+        title: isEditMode ? "Team Member Updated" : "Team Member Added",
+        description: `${formData.name} has been ${isEditMode ? "updated" : "added to the team"}`,
+      });
+    }, 1000);
   };
 
   const handleClose = () => {
@@ -196,9 +252,26 @@ export function AddTeamMemberModal({
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
         <DialogHeader>
-          <DialogTitle className="text-2xl">Add Team Member</DialogTitle>
+          <DialogTitle className="text-2xl flex items-center gap-2">
+            {isEditMode ? "Edit Team Member" : "Add Team Member"}
+            {isFounder && (
+              <Badge variant="secondary" className="bg-primary/10 text-primary">
+                Founder
+              </Badge>
+            )}
+          </DialogTitle>
           <DialogDescription>
-            Add a new member to your team and control their visibility on the About page
+            {isFounder ? (
+              <span className="text-muted-foreground">
+                This is the founder profile. Display order must remain 1.
+              </span>
+            ) : (
+              <span>
+                {isEditMode
+                  ? "Update team member information and visibility settings"
+                  : "Add a new member to your team and control their visibility on the About page"}
+              </span>
+            )}
           </DialogDescription>
         </DialogHeader>
 
@@ -353,7 +426,14 @@ export function AddTeamMemberModal({
                       <Italic className="h-3 w-3" />
                     </Button>
                   </div>
-                  <p className="text-xs text-muted-foreground">
+                  <p
+                    className={cn(
+                      "text-xs",
+                      formData.bio.length > 450
+                        ? "text-destructive font-semibold"
+                        : "text-muted-foreground"
+                    )}
+                  >
                     {formData.bio.length}/500
                   </p>
                 </div>
@@ -472,10 +552,17 @@ export function AddTeamMemberModal({
                       displayOrder: parseInt(e.target.value) || 1,
                     }))
                   }
+                  disabled={isFounder}
                 />
-                <p className="text-xs text-muted-foreground">
-                  Lower numbers appear first
-                </p>
+                {isFounder ? (
+                  <p className="text-xs text-muted-foreground">
+                    Founder must always be first
+                  </p>
+                ) : (
+                  <p className="text-xs text-muted-foreground">
+                    Lower numbers appear first
+                  </p>
+                )}
               </div>
             </div>
 
@@ -567,10 +654,26 @@ export function AddTeamMemberModal({
 
         {/* Footer Actions */}
         <div className="flex justify-end gap-3 px-6 py-4 border-t">
-          <Button variant="outline" onClick={handleClose}>
+          <Button variant="outline" onClick={handleClose} disabled={isSaving}>
             Cancel
           </Button>
-          <Button onClick={handleSubmit}>Add Team Member</Button>
+          <Button onClick={handleSubmit} disabled={isSaving} className="min-w-[160px]">
+            {showSuccess ? (
+              <span className="flex items-center gap-2">
+                <span className="animate-scale-in">✓</span>
+                Saved!
+              </span>
+            ) : isSaving ? (
+              <span className="flex items-center gap-2">
+                <span className="h-4 w-4 border-2 border-background border-t-transparent rounded-full animate-spin" />
+                Saving...
+              </span>
+            ) : isEditMode ? (
+              "Save Changes"
+            ) : (
+              "Add Team Member"
+            )}
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
