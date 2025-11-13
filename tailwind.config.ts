@@ -122,7 +122,7 @@ export default {
         "fade-in": "fade-in 0.5s ease-out",
         "slide-up": "slide-up 0.5s ease-out",
         "scale-in": "scale-in 0.3s ease-out",
-        "gradient-shift": "gradient-shift 15s ease infinite",
+        "gradient-shift": "gradient-shift 10s ease infinite",
         "float": "float 15s ease-in-out infinite",
         "blob-morph": "blob-morph 20s ease-in-out infinite",
         "shimmer": "shimmer 2s infinite linear",

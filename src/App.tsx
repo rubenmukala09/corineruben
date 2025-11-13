@@ -20,6 +20,7 @@ const Articles = lazy(() => import("./pages/Articles"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Careers = lazy(() => import("./pages/Careers"));
 const Auth = lazy(() => import("./pages/Auth"));
+const Login = lazy(() => import("./pages/Login"));
 const Signup = lazy(() => import("./pages/Signup"));
 const ApplicationPending = lazy(() => import("./pages/ApplicationPending"));
 const Portal = lazy(() => import("./pages/Portal"));
@@ -77,6 +78,7 @@ const App = () => {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/careers" element={<Careers />} />
                 <Route path="/auth" element={<Auth />} />
+                <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/application-pending" element={<ApplicationPending />} />
                 <Route path="/portal" element={<ProtectedRoute><Portal /></ProtectedRoute>} />
