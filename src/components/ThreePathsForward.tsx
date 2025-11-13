@@ -1,7 +1,7 @@
 import { BookOpen, Shield, Briefcase } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface PathConfig {
   id: number;
@@ -11,7 +11,7 @@ interface PathConfig {
   icon: typeof BookOpen;
   featured?: boolean;
   cta: string;
-  serviceType: 'training' | 'scamshield' | 'business';
+  link: string;
   basePrice: number;
 }
 
@@ -23,7 +23,7 @@ const paths: PathConfig[] = [
     pricing: "Starting at $79",
     icon: BookOpen,
     cta: "Book Training",
-    serviceType: 'training',
+    link: '/training#book',
     basePrice: 79,
   },
   {
@@ -34,7 +34,7 @@ const paths: PathConfig[] = [
     icon: Shield,
     featured: true,
     cta: "Get Protection",
-    serviceType: 'scamshield',
+    link: '/training#scamshield',
     basePrice: 39,
   },
   {
@@ -44,28 +44,12 @@ const paths: PathConfig[] = [
     pricing: "Custom Pricing",
     icon: Briefcase,
     cta: "Talk to an Expert",
-    serviceType: 'business',
+    link: '/contact?service=business',
     basePrice: 5000,
   }
 ];
 
 const ThreePathsForward = () => {
-  const navigate = useNavigate();
-
-  const handlePathClick = (path: PathConfig) => {
-    switch (path.serviceType) {
-      case 'training':
-        navigate('/training#training');
-        break;
-      case 'scamshield':
-        navigate('/training#pricing');
-        break;
-      case 'business':
-        navigate('/business');
-        break;
-    }
-  };
-
   return (
     <section className="py-20 relative overflow-hidden bg-gradient-to-br from-[hsl(250,20%,96%)] via-white to-[hsl(180,50%,98%)]">
       {/* Background blobs */}
@@ -144,11 +128,13 @@ const ThreePathsForward = () => {
 
                 {/* CTA Button */}
                 <Button
-                  onClick={() => handlePathClick(path)}
+                  asChild
                   variant={path.featured ? "default" : "outline"}
-                  className="w-full text-base font-bold uppercase tracking-wide"
+                  className="w-full text-base font-bold uppercase tracking-wide transition-transform duration-300 ease-out hover:-translate-y-[2px] hover:shadow-lg active:translate-y-[1px]"
                 >
-                  {path.cta}
+                  <Link to={path.link}>
+                    {path.cta}
+                  </Link>
                 </Button>
               </Card>
               </div>
