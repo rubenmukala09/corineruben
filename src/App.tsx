@@ -10,6 +10,7 @@ import { AIChatProvider } from "./contexts/AIChatContext";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { PerformanceDashboard } from "./components/PerformanceDashboard";
 import { RouteTracker } from "./components/RouteTracker";
+import { ProviderHealthCheck } from "./components/ProviderHealthCheck";
 import { Skeleton } from "@/components/ui/skeleton";
 import { performanceMonitor } from "./utils/performanceMonitor";
 
@@ -239,15 +240,16 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <AIChatProvider>
-          <BrowserRouter>
-            <RouteTracker />
-            <ErrorBoundary>
-              <Suspense fallback={<PageLoader />}>
-                <Routes>
+      <ProviderHealthCheck providerName="TooltipProvider">
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <AIChatProvider>
+            <BrowserRouter>
+              <RouteTracker />
+              <ErrorBoundary>
+                <Suspense fallback={<PageLoader />}>
+                  <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/training" element={<Training />} />
                 <Route path="/business" element={<Business />} />
@@ -281,6 +283,7 @@ function App() {
           </BrowserRouter>
         </AIChatProvider>
       </TooltipProvider>
+      </ProviderHealthCheck>
     </QueryClientProvider>
   );
 }
