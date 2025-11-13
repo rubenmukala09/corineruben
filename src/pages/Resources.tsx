@@ -221,7 +221,7 @@ const Resources = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {blogArticles.map((article, index) => (
               <Card key={index} className="overflow-hidden hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl">
-                <img src={article.image} alt={article.title} className="w-full h-48 object-cover" />
+                <img src={article.image} alt={article.title} className="w-full h-48 object-cover" loading="lazy" />
                 <div className="p-6">
                   <h3 className="text-xl font-bold mb-4">{article.title}</h3>
                   <Link to="/articles" className="text-primary hover:text-primary/80 font-semibold">

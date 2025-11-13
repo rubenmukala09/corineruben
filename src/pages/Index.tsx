@@ -34,8 +34,12 @@ import testimonial5 from "@/assets/testimonial-5.jpg";
 import testimonial6 from "@/assets/testimonial-6.jpg";
 import testimonial7 from "@/assets/testimonial-7.jpg";
 import heroBusinessProfessional from "@/assets/hero-business-professional.jpg";
+import { useImagePreload } from "@/hooks/useImagePreload";
 
 const Index = () => {
+  // Preload hero image
+  useImagePreload([heroBusinessProfessional]);
+
   return (
     <div className="min-h-screen">
       <Navigation />
@@ -405,7 +409,7 @@ const Index = () => {
             <div className="animate-fade-in-up" style={{ animationDelay: "0ms" }}>
               <Card className="p-4 h-full hover:shadow-medium transition-all hover:-translate-y-1">
                 <div className="flex items-center gap-3 mb-3">
-                  <img src={testimonial1} alt="Margaret R." className="w-12 h-12 rounded-full object-cover" />
+                  <img src={testimonial1} alt="Margaret R." className="w-12 h-12 rounded-full object-cover" loading="lazy" />
                   <div>
                     <p className="font-bold text-sm">Margaret R., 68</p>
                     <p className="text-xs text-muted-foreground">Columbus, OH</p>
@@ -419,7 +423,7 @@ const Index = () => {
             <div className="animate-fade-in-up" style={{ animationDelay: "100ms" }}>
               <Card className="p-4 h-full hover:shadow-medium transition-all hover:-translate-y-1">
                 <div className="flex items-center gap-3 mb-3">
-                  <img src={testimonial3} alt="James K." className="w-12 h-12 rounded-full object-cover" />
+                  <img src={testimonial3} alt="James K." className="w-12 h-12 rounded-full object-cover" loading="lazy" />
                   <div>
                     <p className="font-bold text-sm">James K.</p>
                     <p className="text-xs text-muted-foreground">Cleveland, OH</p>
@@ -433,7 +437,7 @@ const Index = () => {
             <div className="animate-fade-in-up" style={{ animationDelay: "200ms" }}>
               <Card className="p-4 h-full hover:shadow-medium transition-all hover:-translate-y-1">
                 <div className="flex items-center gap-3 mb-3">
-                  <img src={testimonial5} alt="Patricia L." className="w-12 h-12 rounded-full object-cover" />
+                  <img src={testimonial5} alt="Patricia L." className="w-12 h-12 rounded-full object-cover" loading="lazy" />
                   <div>
                     <p className="font-bold text-sm">Patricia L., 71</p>
                     <p className="text-xs text-muted-foreground">Dayton, OH</p>
@@ -447,7 +451,7 @@ const Index = () => {
             <div className="animate-fade-in-up" style={{ animationDelay: "300ms" }}>
               <Card className="p-4 h-full hover:shadow-medium transition-all hover:-translate-y-1">
                 <div className="flex items-center gap-3 mb-3">
-                  <img src={testimonial2} alt="Robert & Linda K." className="w-12 h-12 rounded-full object-cover" />
+                  <img src={testimonial2} alt="Robert & Linda K." className="w-12 h-12 rounded-full object-cover" loading="lazy" />
                   <div>
                     <p className="font-bold text-sm">Robert & Linda K.</p>
                     <p className="text-xs text-muted-foreground">Dayton, OH</p>
@@ -461,7 +465,7 @@ const Index = () => {
             <div className="animate-fade-in-up" style={{ animationDelay: "400ms" }}>
               <Card className="p-4 h-full hover:shadow-medium transition-all hover:-translate-y-1">
                 <div className="flex items-center gap-3 mb-3">
-                  <img src={testimonial6} alt="William Chen" className="w-12 h-12 rounded-full object-cover" />
+                  <img src={testimonial6} alt="William Chen" className="w-12 h-12 rounded-full object-cover" loading="lazy" />
                   <div>
                     <p className="font-bold text-sm">William Chen, 78</p>
                     <p className="text-xs text-muted-foreground">Akron, OH</p>
@@ -475,7 +479,7 @@ const Index = () => {
             <div className="animate-fade-in-up" style={{ animationDelay: "500ms" }}>
               <Card className="p-4 h-full hover:shadow-medium transition-all hover:-translate-y-1">
                 <div className="flex items-center gap-3 mb-3">
-                  <img src={testimonial7} alt="Jennifer Wallace" className="w-12 h-12 rounded-full object-cover" />
+                  <img src={testimonial7} alt="Jennifer Wallace" className="w-12 h-12 rounded-full object-cover" loading="lazy" />
                   <div>
                     <p className="font-bold text-sm">Jennifer Wallace, 58</p>
                     <p className="text-xs text-muted-foreground">Cleveland, OH</p>

@@ -4,6 +4,7 @@ import { Shield } from "lucide-react";
 import ScrollIndicator from "./ScrollIndicator";
 import { ParticleBackground } from "./ParticleBackground";
 import { FloatingShapes } from "./FloatingShapes";
+import { useImagePreload } from "@/hooks/useImagePreload";
 
 interface HeroProps {
   backgroundImage?: string;
@@ -19,6 +20,9 @@ interface HeroProps {
 const Hero = ({ backgroundImage, headline, subheadline, children, className, overlay = false, showScrollIndicator = false, showPrivacyDisclaimer = false }: HeroProps) => {
   const [scrollY, setScrollY] = useState(0);
   const [showDisclaimer, setShowDisclaimer] = useState(true);
+  
+  // Preload background image
+  const imagePreloaded = useImagePreload(backgroundImage ? [backgroundImage] : []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,7 +53,10 @@ const Hero = ({ backgroundImage, headline, subheadline, children, className, ove
       >
         {backgroundImage && (
           <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            className={cn(
+              "absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-300",
+              imagePreloaded ? "opacity-100" : "opacity-0"
+            )}
             style={{ backgroundImage: `url(${backgroundImage})` }}
           />
         )}
