@@ -12,11 +12,9 @@ export const NavigationProgress = () => {
     setIsVisible(true);
     setProgress(0);
 
-    // Fast start: 0 to 70% in 0.3s
-    const fastTimer = setTimeout(() => setProgress(70), 50);
-    
-    // Slow middle: 70 to 90% in 0.5s
-    const slowTimer = setTimeout(() => setProgress(90), 350);
+    // Premium timing: fast start, smooth middle, instant complete
+    const fastTimer = setTimeout(() => setProgress(75), 100);
+    const slowTimer = setTimeout(() => setProgress(92), 300);
 
     // Complete and hide
     const completeTimer = setTimeout(() => {
@@ -26,8 +24,8 @@ export const NavigationProgress = () => {
       setTimeout(() => {
         setIsVisible(false);
         setProgress(0);
-      }, 200);
-    }, 500);
+      }, 250);
+    }, 450);
 
     return () => {
       clearTimeout(fastTimer);
@@ -40,22 +38,56 @@ export const NavigationProgress = () => {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          className="fixed top-0 left-0 right-0 h-[3px] z-[9999] overflow-hidden"
+          className="fixed top-0 left-0 right-0 h-[2px] z-[9999] overflow-hidden bg-background/5 backdrop-blur-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: 0.15 }}
         >
+          {/* Background gradient glow */}
           <motion.div
-            className="h-full bg-gradient-to-r from-[#6D28D9] to-[#14B8A6]"
+            className="absolute inset-0 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
+          
+          {/* Main progress bar with enhanced gradient */}
+          <motion.div
+            className="relative h-full bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_100%]"
             style={{
-              boxShadow: "0 2px 4px rgba(109, 40, 217, 0.3)",
+              boxShadow: "0 0 20px hsl(var(--primary) / 0.5), 0 0 40px hsl(var(--accent) / 0.3)",
             }}
-            initial={{ width: "0%" }}
-            animate={{ width: `${progress}%` }}
+            initial={{ width: "0%", backgroundPosition: "0% 50%" }}
+            animate={{ 
+              width: `${progress}%`,
+              backgroundPosition: "100% 50%"
+            }}
             transition={{
-              duration: progress < 70 ? 0.3 : progress < 90 ? 0.5 : 0.1,
-              ease: progress < 70 ? "easeOut" : "linear",
+              width: {
+                duration: progress < 75 ? 0.25 : progress < 92 ? 0.3 : 0.15,
+                ease: [0.25, 0.1, 0.25, 1],
+              },
+              backgroundPosition: {
+                duration: 0.8,
+                repeat: Infinity,
+                ease: "linear"
+              }
+            }}
+          />
+          
+          {/* Shimmer effect overlay */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+            initial={{ x: "-100%" }}
+            animate={{ x: "200%" }}
+            transition={{
+              duration: 1.2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            style={{
+              width: "50%",
             }}
           />
         </motion.div>

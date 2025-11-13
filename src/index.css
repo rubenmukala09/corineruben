@@ -703,6 +703,33 @@ a[role="button"]:active {
   }
 }
 
+/* Premium page transition animations */
+@keyframes page-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes page-exit {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-24px) scale(0.98);
+    filter: blur(10px);
+  }
+}
+
 .loading-fade-out {
   animation: fade-out 0.2s ease-out forwards;
 }
