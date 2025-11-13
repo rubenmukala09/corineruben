@@ -627,7 +627,7 @@ function Articles() {
                     ) : (
                       <>
                         Read Full Article
-                        <ArrowRight className="ml-2 w-4 h-4" />
+                        <ArrowRight className="ml-2 w-4 h-4 arrow-icon" />
                       </>
                     )}
                   </Button>
@@ -650,7 +650,7 @@ function Articles() {
                 <Button asChild variant="default" size="lg">
                   <Link to="/training#scamshield">
                     Learn About ScamShield
-                    <ArrowRight className="ml-2 w-4 h-4" />
+                    <ArrowRight className="ml-2 w-4 h-4 arrow-icon" />
                   </Link>
                 </Button>
                 <Button asChild variant="outline" size="lg">

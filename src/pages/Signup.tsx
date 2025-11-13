@@ -1902,7 +1902,7 @@ function Signup() {
                   className="h-12 px-8 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold"
                 >
                   Next Step
-                  <ArrowRight className="w-4 h-4 ml-2" />
+                  <ArrowRight className="w-4 h-4 ml-2 arrow-icon" />
                 </Button>
               ) : (
                 <Button type="button" onClick={handleSubmit} disabled={isLoading} className="h-12 px-8 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800">

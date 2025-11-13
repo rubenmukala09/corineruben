@@ -11,7 +11,7 @@ interface TestimonialCardProps {
 
 const TestimonialCard = ({ name, age, location, quote, image, rating = 5 }: TestimonialCardProps) => {
   return (
-    <div className="bg-gradient-card rounded-2xl p-8 shadow-soft hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 relative overflow-hidden border-none group">
+    <div className="bg-gradient-card rounded-2xl p-8 shadow-soft relative overflow-hidden border-none group card-enhanced">
       {/* Large gradient quote mark background */}
       <div className="absolute -top-4 left-6 text-[120px] font-bold gradient-text-primary opacity-10 leading-none pointer-events-none select-none group-hover:opacity-20 transition-opacity duration-500">
         "
@@ -32,7 +32,7 @@ const TestimonialCard = ({ name, age, location, quote, image, rating = 5 }: Test
           <img
             src={image}
             alt={`${name}'s testimonial`}
-            className="w-16 h-16 rounded-full object-cover ring-4 ring-accent/20 group-hover:ring-accent/40 group-hover:scale-110 transition-all duration-500"
+            className="w-16 h-16 rounded-full object-cover ring-4 ring-accent/20 group-hover:ring-accent/40 transition-all duration-500"
             loading="lazy"
             decoding="async"
           />
