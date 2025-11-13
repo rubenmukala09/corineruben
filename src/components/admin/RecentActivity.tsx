@@ -22,6 +22,7 @@ export function RecentActivity() {
   const [activities, setActivities] = useState<Activity[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [newActivityIds, setNewActivityIds] = useState<Set<string>>(new Set());
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -149,15 +150,23 @@ export function RecentActivity() {
       setActivities(sortedActivities);
 
       if (silent) {
-        // Show a subtle notification for new activities
-        const newCount = sortedActivities.filter(
+        // Show a subtle notification for new activities and highlight them
+        const newActivities = sortedActivities.filter(
           (activity) => !activities.find((a) => a.id === activity.id)
-        ).length;
+        );
         
-        if (newCount > 0) {
+        if (newActivities.length > 0) {
+          const newIds = new Set(newActivities.map(a => a.id));
+          setNewActivityIds(newIds);
+          
+          // Remove highlight after 3 seconds
+          setTimeout(() => {
+            setNewActivityIds(new Set());
+          }, 3000);
+          
           toast({
             title: "New Activity",
-            description: `${newCount} new ${newCount === 1 ? 'activity' : 'activities'}`,
+            description: `${newActivities.length} new ${newActivities.length === 1 ? 'activity' : 'activities'}`,
           });
         }
       }
@@ -215,61 +224,78 @@ export function RecentActivity() {
         </div>
 
         {/* Activity Feed */}
-        <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+        <div className="max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
           {loading ? (
-            // Loading skeleton
-            [...Array(5)].map((_, i) => (
-              <div key={i} className="flex items-start gap-3 animate-pulse">
-                <div className="w-10 h-10 rounded-full bg-muted" />
-                <div className="flex-1">
-                  <div className="h-4 bg-muted rounded w-3/4 mb-2" />
-                  <div className="h-3 bg-muted rounded w-1/4" />
+            // Loading skeleton with shimmer
+            <div className="space-y-0">
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="flex items-start gap-3 py-3 border-b border-border">
+                  <div className="w-10 h-10 rounded-full bg-muted shimmer" />
+                  <div className="flex-1 space-y-2">
+                    <div className="h-4 bg-muted rounded w-3/4 shimmer" />
+                    <div className="h-3 bg-muted rounded w-1/4 shimmer" />
+                  </div>
                 </div>
-              </div>
-            ))
-          ) : activities.length > 0 ? (
-            <AnimatePresence>
-              {activities.map((activity, index) => (
-                <motion.div
-                  key={activity.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
-                  onClick={() => handleActivityClick(activity)}
-                  className={`flex items-start gap-3 p-3 rounded-lg transition-all duration-200 ${
-                    activity.link
-                      ? "cursor-pointer hover:bg-muted/50"
-                      : ""
-                  }`}
-                >
-                  {/* Icon */}
-                  <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${activity.iconBg}`}
-                  >
-                    <span className="text-lg">{activity.icon}</span>
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground truncate">
-                      {activity.description}
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {formatDistanceToNow(activity.timestamp, { addSuffix: true })}
-                    </p>
-                  </div>
-
-                  {/* Link indicator */}
-                  {activity.link && (
-                    <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  )}
-                </motion.div>
               ))}
+            </div>
+          ) : activities.length > 0 ? (
+            <AnimatePresence mode="popLayout">
+              {activities.map((activity, index) => {
+                const isNew = newActivityIds.has(activity.id);
+                return (
+                  <motion.div
+                    key={activity.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ 
+                      opacity: 1, 
+                      x: 0,
+                      backgroundColor: isNew ? "hsl(var(--accent) / 0.2)" : "transparent"
+                    }}
+                    exit={{ opacity: 0, x: 20 }}
+                    transition={{ 
+                      duration: 0.3, 
+                      delay: index * 0.05,
+                      backgroundColor: { duration: 3, ease: "easeOut" }
+                    }}
+                    onClick={() => handleActivityClick(activity)}
+                    className={`flex items-start gap-3 py-3 px-3 border-b border-border transition-all duration-200 ${
+                      activity.link ? "cursor-pointer hover:bg-muted/50" : ""
+                    }`}
+                  >
+                    {/* Icon */}
+                    <div
+                      className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${activity.iconBg}`}
+                    >
+                      <span className="text-lg">{activity.icon}</span>
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-foreground truncate">
+                        {activity.description}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {formatDistanceToNow(activity.timestamp, { addSuffix: true })}
+                      </p>
+                    </div>
+
+                    {/* Link indicator */}
+                    {activity.link && (
+                      <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    )}
+                  </motion.div>
+                );
+              })}
             </AnimatePresence>
           ) : (
-            <div className="text-center py-8 text-muted-foreground">
-              No recent activity
+            <div className="text-center py-12">
+              <div className="text-5xl mb-3">📊</div>
+              <p className="text-sm font-medium text-muted-foreground mb-1">
+                No recent activity
+              </p>
+              <p className="text-sm text-muted-foreground">
+                All caught up! 🎉
+              </p>
             </div>
           )}
         </div>
@@ -289,6 +315,26 @@ export function RecentActivity() {
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
           background: hsl(var(--muted-foreground) / 0.5);
+        }
+        
+        .shimmer {
+          background: linear-gradient(
+            90deg,
+            hsl(var(--muted)) 0%,
+            hsl(var(--muted-foreground) / 0.1) 50%,
+            hsl(var(--muted)) 100%
+          );
+          background-size: 200% 100%;
+          animation: shimmer 1.5s infinite;
+        }
+        
+        @keyframes shimmer {
+          0% {
+            background-position: -200% 0;
+          }
+          100% {
+            background-position: 200% 0;
+          }
         }
       `}</style>
     </motion.div>
