@@ -12,6 +12,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
 import { ArticlePublishingSidebar } from "@/components/admin/ArticlePublishingSidebar";
 import { PublishConfirmationModal } from "@/components/admin/PublishConfirmationModal";
+import { PublishSuccessModal } from "@/components/admin/PublishSuccessModal";
 import {
   Save,
   Eye,
@@ -20,6 +21,7 @@ import {
   Unlock,
   Clock,
   AlertCircle,
+  Loader2,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -70,6 +72,10 @@ export default function ArticleEditor() {
   const [charCount, setCharCount] = useState(0);
   const [readingTime, setReadingTime] = useState(0);
   const [showPublishModal, setShowPublishModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [publishing, setPublishing] = useState(false);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [articleId, setArticleId] = useState<string | null>(id || null);
 
   // Validation for required fields
   const requiredFieldsComplete = () => {
@@ -81,6 +87,18 @@ export default function ArticleEditor() {
     );
   };
 
+  const getPublishingChecklist = () => {
+    const checks = [
+      { id: "title", label: "Title entered", completed: !!article.title },
+      { id: "content", label: "Content added (min 300 words)", completed: wordCount >= 300 },
+      { id: "image", label: "Featured image set", completed: !!article.featuredImage },
+      { id: "category", label: "Category selected", completed: article.categories.length > 0 },
+      { id: "excerpt", label: "Excerpt added", completed: !!article.excerpt },
+      { id: "seo", label: "SEO title and description", completed: !!(article.seoTitle && article.seoDescription) },
+    ];
+    return checks;
+  };
+
   const getMissingFields = () => {
     const missing: string[] = [];
     if (!article.title) missing.push("Title");
@@ -90,7 +108,52 @@ export default function ArticleEditor() {
     return missing;
   };
 
-  // Generate slug from title
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Cmd/Ctrl + S: Save draft
+      if ((e.metaKey || e.ctrlKey) && e.key === "s") {
+        e.preventDefault();
+        handleSave(false);
+      }
+      // Cmd/Ctrl + P: Preview
+      if ((e.metaKey || e.ctrlKey) && e.key === "p") {
+        e.preventDefault();
+        handlePreview();
+      }
+      // Cmd/Ctrl + Shift + P: Publish
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === "P") {
+        e.preventDefault();
+        if (requiredFieldsComplete()) {
+          handlePublish();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [article, wordCount]);
+
+  // Exit warning for unsaved changes
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (hasUnsavedChanges) {
+        e.preventDefault();
+        e.returnValue = "You have unsaved changes. Are you sure you want to leave?";
+        return e.returnValue;
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [hasUnsavedChanges]);
+
+  // Track changes
+  useEffect(() => {
+    if (title || content) {
+      setHasUnsavedChanges(true);
+    }
+  }, [title, content, article]);
   const generateSlug = (text: string) => {
     return text
       .toLowerCase()
@@ -168,6 +231,7 @@ export default function ArticleEditor() {
       await new Promise((resolve) => setTimeout(resolve, 500));
 
       setLastSaved(new Date());
+      setHasUnsavedChanges(false);
 
       if (!silent) {
         toast({
@@ -202,20 +266,39 @@ export default function ArticleEditor() {
 
   const confirmPublish = async () => {
     try {
-      setSaving(true);
-      // Implement publish logic here
-      await handleSave(true);
+      setPublishing(true);
+      setShowPublishModal(false);
+
+      // Simulate upload images and save
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      // Update article status
+      const updatedArticle = {
+        ...article,
+        status: "published" as const,
+        scheduledDate: new Date().toISOString(),
+      };
+      setArticle(updatedArticle);
+
+      // Generate article ID if new
+      if (!articleId) {
+        const newId = Math.random().toString(36).substring(7);
+        setArticleId(newId);
+        // Update URL
+        navigate(`/admin/content/articles/${newId}`, { replace: true });
+      }
+
+      setHasUnsavedChanges(false);
+      setPublishing(false);
+      setShowSuccessModal(true);
 
       toast({
-        title: article.status === "published" ? "Article Updated!" : "Article Published!",
+        title: articleId ? "Article Updated!" : "Article Published!",
         description:
           article.status === "scheduled"
             ? "Your article has been scheduled"
             : "Your article is now live",
       });
-
-      setShowPublishModal(false);
-      navigate("/admin/content/articles");
     } catch (error) {
       console.error("Publish error:", error);
       toast({
@@ -223,8 +306,7 @@ export default function ArticleEditor() {
         description: "Failed to publish article. Please try again.",
         variant: "destructive",
       });
-    } finally {
-      setSaving(false);
+      setPublishing(false);
     }
   };
 
@@ -318,10 +400,19 @@ export default function ArticleEditor() {
                     <div>
                       <Button
                         onClick={handlePublish}
-                        disabled={!requiredFieldsComplete() || saving}
-                        className="relative"
+                        disabled={!requiredFieldsComplete() || saving || publishing}
+                        className="relative min-w-[120px]"
                       >
-                        {article.status === "published" ? "Update" : "Publish"}
+                        {publishing ? (
+                          <>
+                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                            Publishing...
+                          </>
+                        ) : articleId && article.status === "published" ? (
+                          "Update"
+                        ) : (
+                          "Publish"
+                        )}
                       </Button>
                     </div>
                   </TooltipTrigger>
@@ -344,6 +435,13 @@ export default function ArticleEditor() {
               </TooltipProvider>
             </div>
           </div>
+
+          {/* Keyboard Shortcuts Hint */}
+          {articleId && article.status === "published" && (
+            <div className="text-xs text-muted-foreground">
+              Last updated: {getTimeSinceLastSave() || "Just now"}
+            </div>
+          )}
         </div>
 
         {/* Two Column Layout */}
@@ -434,6 +532,7 @@ export default function ArticleEditor() {
               article={article}
               onChange={setArticle}
               onSave={() => handleSave(false)}
+              publishingChecklist={getPublishingChecklist()}
             />
           </div>
         </div>
@@ -445,6 +544,24 @@ export default function ArticleEditor() {
         onClose={() => setShowPublishModal(false)}
         onConfirm={confirmPublish}
         article={article}
+      />
+
+      {/* Success Modal */}
+      <PublishSuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        articleUrl={`https://invisionnetwork.org/articles/${articleId}`}
+        articleTitle={article.title}
+        onViewArticle={() => {
+          window.open(`/articles/${articleId}`, "_blank");
+        }}
+        onEditArticle={() => {
+          setShowSuccessModal(false);
+        }}
+        onCreateAnother={() => {
+          navigate("/admin/content/articles/new");
+          setShowSuccessModal(false);
+        }}
       />
     </div>
   );
