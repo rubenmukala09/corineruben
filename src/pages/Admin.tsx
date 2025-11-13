@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AdminSidebar } from "@/components/AdminSidebar";
 import { AdminTopBar } from "@/components/AdminTopBar";
+import { DashboardStats } from "@/components/admin/DashboardStats";
 import { Card } from "@/components/ui/card";
 
 export default function Admin() {
@@ -27,28 +28,9 @@ export default function Admin() {
             </p>
           </div>
 
-          {/* Dashboard Content */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <Card className="p-6">
-              <div className="text-sm text-muted-foreground mb-2">Total Users</div>
-              <div className="text-3xl font-bold">1,234</div>
-              <div className="text-sm text-success mt-2">+12% from last month</div>
-            </Card>
-            <Card className="p-6">
-              <div className="text-sm text-muted-foreground mb-2">Revenue</div>
-              <div className="text-3xl font-bold">$12,345</div>
-              <div className="text-sm text-success mt-2">+8% from last month</div>
-            </Card>
-            <Card className="p-6">
-              <div className="text-sm text-muted-foreground mb-2">Active Orders</div>
-              <div className="text-3xl font-bold">89</div>
-              <div className="text-sm text-muted-foreground mt-2">Pending: 23</div>
-            </Card>
-            <Card className="p-6">
-              <div className="text-sm text-muted-foreground mb-2">Satisfaction</div>
-              <div className="text-3xl font-bold">98%</div>
-              <div className="text-sm text-success mt-2">+2% from last month</div>
-            </Card>
+          {/* Dashboard Stats Cards */}
+          <div className="mb-8">
+            <DashboardStats />
           </div>
 
           {/* Additional Content Area */}
