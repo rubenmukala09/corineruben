@@ -724,6 +724,22 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   }
 }
 
+/* Icon bounce animation */
+@keyframes icon-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-10px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-5px);
+  }
+}
+
 /* Gentle rotate animation for icons */
 @keyframes gentle-rotate {
   0%, 100% {

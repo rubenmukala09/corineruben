@@ -764,20 +764,20 @@ const LearnAndTrain = () => {
               { icon: FileCheck, title: "Documents" },
               { icon: ImageIcon, title: "Social Media" },
             ].map((threat, index) => (
-              <Card
-                key={index}
-                className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                <div className="flex flex-col items-center text-center">
-                  <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-all duration-300 mb-3">
-                    <threat.icon className="w-7 h-7 text-primary" />
+              <ScrollReveal key={index} animation="scale-in" delay={index * 50} threshold={0.2}>
+                <Card
+                  className="p-6 transition-all duration-500 rounded-2xl border-border/50 hover:border-[#14B8A6] hover:border-2 group bg-gradient-to-br from-card to-card/50 backdrop-blur-sm hover:bg-gradient-to-br hover:from-card/90 hover:to-card/60 hover:shadow-strong"
+                >
+                  <div className="flex flex-col items-center text-center">
+                    <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center transition-all duration-300 mb-3 group-hover:animate-[icon-bounce_0.6s_ease-in-out]">
+                      <threat.icon className="w-7 h-7 text-primary" />
+                    </div>
+                    <h3 className="text-sm font-semibold group-hover:text-primary transition-colors duration-300">
+                      {threat.title}
+                    </h3>
                   </div>
-                  <h3 className="text-sm font-semibold group-hover:text-primary transition-colors duration-300">
-                    {threat.title}
-                  </h3>
-                </div>
-              </Card>
+                </Card>
+              </ScrollReveal>
             ))}
           </div>
         </div>
