@@ -686,6 +686,34 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   animation: fade-in-savings 0.5s ease-out;
 }
 
+/* Step icon pop animation with bounce */
+@keyframes step-icon-pop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  75% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Steps connecting line draw animation */
+@keyframes draw-line {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 /* Gentle rotate animation for icons */
 @keyframes gentle-rotate {
   0%, 100% {

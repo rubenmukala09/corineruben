@@ -264,7 +264,28 @@ const LearnAndTrain = () => {
         <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-center mb-10 animate-fade-in-up">Simple Protection in 4 Steps</h2>
 
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-5xl mx-auto relative">
+            {/* SVG Connecting Line */}
+            <svg 
+              className="absolute top-24 left-0 w-full h-2 hidden lg:block pointer-events-none z-0" 
+              style={{ top: '80px' }}
+            >
+              <path
+                id="steps-path"
+                d="M 12% 0 L 38% 0 L 62% 0 L 88% 0"
+                stroke="hsl(var(--primary))"
+                strokeWidth="2"
+                strokeDasharray="8 8"
+                fill="none"
+                className="steps-connecting-line"
+                style={{
+                  strokeDashoffset: 1000,
+                  animation: 'draw-line 2s ease-out forwards',
+                  animationDelay: '0.5s'
+                }}
+              />
+            </svg>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
                 {
@@ -293,27 +314,34 @@ const LearnAndTrain = () => {
                   desc: "Risk level (Safe/Caution/Danger/CRITICAL), detailed explanation, recommended actions, emergency scripts if needed",
                 },
               ].map((step, index) => (
-                <Card
-                  key={index}
-                  className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div className="flex justify-center mb-4">
-                    <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-                      <step.icon className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-500" />
+                <ScrollReveal key={index} animation="scale-in" delay={index * 200} threshold={0.3}>
+                  <Card
+                    className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
+                  >
+                    <div className="flex justify-center mb-4">
+                      <div 
+                        className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500"
+                        style={{
+                          animation: `step-icon-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards`,
+                          animationDelay: `${0.5 + index * 0.2}s`,
+                          transform: 'scale(0)'
+                        }}
+                      >
+                        <step.icon className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-500" />
+                      </div>
                     </div>
-                  </div>
-                  <div className="text-center mb-2">
-                    <span className="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full">
-                      {step.step}
-                    </span>
-                  </div>
-                  <h3 className="text-lg font-bold mb-3 text-center group-hover:text-primary transition-colors duration-300">
-                    {step.title}
-                  </h3>
-                  <p className="text-muted-foreground text-center text-sm">{step.desc}</p>
-                  {step.subtext && <p className="text-accent text-center text-xs mt-2 font-semibold">{step.subtext}</p>}
-                </Card>
+                    <div className="text-center mb-2">
+                      <span className="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full">
+                        {step.step}
+                      </span>
+                    </div>
+                    <h3 className="text-lg font-bold mb-3 text-center group-hover:text-primary transition-colors duration-300">
+                      {step.title}
+                    </h3>
+                    <p className="text-muted-foreground text-center text-sm">{step.desc}</p>
+                    {step.subtext && <p className="text-accent text-center text-xs mt-2 font-semibold">{step.subtext}</p>}
+                  </Card>
+                </ScrollReveal>
               ))}
             </div>
           </div>
