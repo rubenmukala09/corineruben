@@ -21,9 +21,9 @@ const Resources = () => {
   } | null>(null);
 
   const guides = [
-    { icon: Shield, title: "Scam-Proof Playbook", desc: "Complete emergency scripts & protocols" },
-    { icon: Heart, title: "Caregivers' Security Guide", desc: "Protect vulnerable loved ones from scams" },
-    { icon: Wifi, title: "Home Wi-Fi Safety", desc: "Secure your network in 15 minutes" },
+    { icon: Shield, title: "Scam-Proof Playbook", desc: "Complete emergency scripts & protocols", price: 29, slug: "scam-proof-playbook" },
+    { icon: Heart, title: "Caregivers' Security Guide", desc: "Protect vulnerable loved ones from scams", price: 24, slug: "caregivers-security-guide" },
+    { icon: Wifi, title: "Home Wi-Fi Safety", desc: "Secure your network in 15 minutes", price: 19, slug: "home-wifi-safety" },
     { icon: KeyRound, title: "Password Creation Notebook Template", desc: "Offline password storage system" },
     { icon: FileText, title: "Grandparent-Text 101", desc: "Spot fake 'emergency' family texts" },
     { icon: Shield, title: "60-Second Pause Protocol Poster", desc: "Print and post on your fridge" },
@@ -135,20 +135,33 @@ const Resources = () => {
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-center">{guide.title}</h3>
                 <p className="text-muted-foreground text-center mb-4">{guide.desc}</p>
-                <Button 
-                  onClick={() => {
-                    setSelectedItem({
-                      type: 'guide',
-                      name: guide.title
-                    });
-                    setModalOpen(true);
-                  }}
-                  className="w-full" 
-                  variant="outline"
-                >
-                  <Download className="w-4 h-4 mr-2" />
-                  PURCHASE
-                </Button>
+                {guide.slug && guide.price ? (
+                  <Button 
+                    asChild
+                    className="w-full group transition-all duration-300 hover:brightness-90" 
+                    variant="outline"
+                  >
+                    <Link to={`/contact?service=purchase&item=${guide.slug}&price=${guide.price}`}>
+                      <Download className="w-4 h-4 mr-2 transition-transform duration-300 group-hover:animate-[bounce-down_0.6s_ease-in-out_infinite]" />
+                      PURCHASE
+                    </Link>
+                  </Button>
+                ) : (
+                  <Button 
+                    onClick={() => {
+                      setSelectedItem({
+                        type: 'guide',
+                        name: guide.title
+                      });
+                      setModalOpen(true);
+                    }}
+                    className="w-full" 
+                    variant="outline"
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    PURCHASE
+                  </Button>
+                )}
               </Card>
             ))}
           </div>
