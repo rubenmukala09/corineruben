@@ -580,6 +580,7 @@ const Business = () => {
               id="insurance-toggle"
               checked={isYearly}
               onCheckedChange={setIsYearly}
+              className="transition-all duration-300"
             />
             <Label htmlFor="insurance-toggle" className={`text-lg font-semibold ${isYearly ? 'text-primary' : 'text-muted-foreground'}`}>
               Yearly <span className="text-sm text-success">(Save 10%)</span>
@@ -590,11 +591,11 @@ const Business = () => {
             {/* Basic Care */}
             <Card className="p-6 rounded-2xl border-border/50 hover:shadow-medium transition-all hover:-translate-y-1">
               <h3 className="text-xl font-bold mb-3">Basic Care</h3>
-              <p className="text-3xl font-bold gradient-text-primary mb-2">
+              <p key={isYearly ? 'yearly-199' : 'monthly-199'} className="text-3xl font-bold gradient-text-primary mb-2 price-flip">
                 {getInsurancePrice(199).display}<span className="text-base text-muted-foreground">{getInsurancePrice(199).period}</span>
               </p>
               {isYearly && (
-                <p className="text-sm text-success mb-4">
+                <p className="text-sm text-success mb-4 animate-fade-in">
                   {getInsurancePrice(199).savings}
                 </p>
               )}
@@ -643,11 +644,11 @@ const Business = () => {
               </div>
             <Card className="p-6 border-2 border-primary rounded-2xl shadow-[0_8px_30px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)] transition-all">
               <h3 className="text-xl font-bold mb-3 mt-2">Standard Care</h3>
-              <p className="text-3xl font-bold gradient-text-primary mb-2">
+              <p key={isYearly ? 'yearly-399' : 'monthly-399'} className="text-3xl font-bold gradient-text-primary mb-2 price-flip">
                 {getInsurancePrice(399).display}<span className="text-base text-muted-foreground">{getInsurancePrice(399).period}</span>
               </p>
               {isYearly && (
-                <p className="text-sm text-success mb-4">
+                <p className="text-sm text-success mb-4 animate-fade-in">
                   {getInsurancePrice(399).savings}
                 </p>
               )}
@@ -697,11 +698,11 @@ const Business = () => {
             {/* Premium Care */}
             <Card className="p-6 rounded-2xl border-border/50 hover:shadow-medium transition-all hover:-translate-y-1">
               <h3 className="text-xl font-bold mb-3">Premium Care</h3>
-              <p className="text-3xl font-bold gradient-text-primary mb-2">
+              <p key={isYearly ? 'yearly-799' : 'monthly-799'} className="text-3xl font-bold gradient-text-primary mb-2 price-flip">
                 {getInsurancePrice(799).display}<span className="text-base text-muted-foreground">{getInsurancePrice(799).period}</span>
               </p>
               {isYearly && (
-                <p className="text-sm text-success mb-4">
+                <p className="text-sm text-success mb-4 animate-fade-in">
                   {getInsurancePrice(799).savings}
                 </p>
               )}

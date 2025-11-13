@@ -577,3 +577,26 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
 .pulse-glow {
   animation: pulse-glow 2s ease-in-out infinite;
 }
+
+/* Price flip animation */
+@keyframes price-flip {
+  0% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: rotateX(90deg);
+    opacity: 0;
+  }
+  51% {
+    transform: rotateX(-90deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+.price-flip {
+  animation: price-flip 0.5s ease-in-out;
+}
