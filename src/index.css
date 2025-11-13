@@ -631,6 +631,84 @@ a[role="button"]:active {
   transition: transform 0.1s ease-out !important;
 }
 
+/* Form Input Animations */
+.form-input {
+  border: 1px solid hsl(var(--border));
+  transition: all 0.3s ease-out;
+}
+
+.form-input:focus {
+  border: 2px solid hsl(var(--primary));
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
+  outline: none;
+}
+
+/* Input validation states */
+.form-input.error,
+.form-input[aria-invalid="true"] {
+  border: 2px solid hsl(var(--destructive));
+  box-shadow: 0 0 0 3px hsl(var(--destructive) / 0.1);
+  animation: shake 0.4s ease-out;
+}
+
+.form-input.success {
+  border: 2px solid hsl(142, 76%, 36%);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* Shake animation for validation errors */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+/* Floating label animation */
+.floating-label-container {
+  position: relative;
+}
+
+.floating-label {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  transition: all 0.3s ease-out;
+  pointer-events: none;
+  color: hsl(var(--muted-foreground));
+  background: transparent;
+  padding: 0 4px;
+  font-size: 14px;
+}
+
+.floating-input:focus ~ .floating-label,
+.floating-input:not(:placeholder-shown) ~ .floating-label,
+.floating-input.has-value ~ .floating-label {
+  top: -8px;
+  left: 8px;
+  font-size: 12px;
+  color: hsl(var(--primary));
+  background: hsl(var(--background));
+}
+
+/* Character counter */
+.character-counter {
+  font-size: 12px;
+  text-align: right;
+  margin-top: 4px;
+  transition: color 0.3s ease-out;
+  color: hsl(var(--muted-foreground));
+}
+
+.character-counter.warning {
+  color: hsl(45, 93%, 47%);
+}
+
+.character-counter.danger {
+  color: hsl(var(--destructive));
+  font-weight: 600;
+}
+
 /* Pulsing glow animation for featured buttons */
 @keyframes pulse-glow {
   0%, 100% {
