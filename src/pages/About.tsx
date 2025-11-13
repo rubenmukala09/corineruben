@@ -7,10 +7,6 @@ import FlowingWaves from "@/components/FlowingWaves";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Heart, Lock, BookOpen, Users2, Shield, DollarSign, Award, MapPin } from "lucide-react";
-import teamMember1 from "@/assets/team-member-1.jpg";
-import teamMember2 from "@/assets/team-member-2.jpg";
-import teamMember3 from "@/assets/team-member-3.jpg";
-import teamMember4 from "@/assets/team-member-4.jpg";
 import heroAbout from "@/assets/hero-about-professional.jpg";
 
 const About = () => {
@@ -179,35 +175,7 @@ const About = () => {
           <p className="text-center text-xl text-muted-foreground mb-16 max-w-3xl mx-auto">
             Dedicated professionals committed to protecting families and empowering businesses
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-            {[
-              {
-                name: "Priya Patel",
-                role: "AI Solutions Developer",
-                image: teamMember3,
-                description: "Expert in building secure, ethical AI systems that serve businesses and protect privacy"
-              },
-              {
-                name: "Jordan Taylor",
-                role: "Client Success Manager",
-                image: teamMember4,
-                description: "Dedicated to ensuring every client feels supported and protected throughout their journey"
-              }
-            ].map((member, index) => (
-              <Card key={index} className="p-6 hover:shadow-strong transition-all hover:-translate-y-2 rounded-2xl border-border/50 text-center group">
-                <div className="mb-4 overflow-hidden rounded-xl">
-                  <img 
-                    src={member.image} 
-                    alt={member.name}
-                    className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-                <h3 className="text-xl font-bold mb-1">{member.name}</h3>
-                <p className="text-primary font-semibold mb-3">{member.role}</p>
-                <p className="text-sm text-muted-foreground">{member.description}</p>
-              </Card>
-            ))}
-          </div>
+          {/* Team members will be added here */}
         </div>
       </section>
 
