@@ -7,13 +7,21 @@ import TrustBar from "@/components/TrustBar";
 import FlowingWaves from "@/components/FlowingWaves";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Heart, Lock, BookOpen, Users2, Shield, DollarSign, Award, MapPin } from "lucide-react";
+import { Heart, Lock, BookOpen, Users2, Shield, DollarSign, Award, MapPin, X } from "lucide-react";
 import heroAbout from "@/assets/hero-about-professional.jpg";
 import { supabase } from "@/integrations/supabase/client";
+import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 
 const About = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [showAdminBanner, setShowAdminBanner] = useState(true);
+
+  // Counter animations for stats
+  const familiesTrained = useCounterAnimation({ end: 500, suffix: '+', duration: 2000 });
+  const fraudPrevented = useCounterAnimation({ end: 2, prefix: '$', suffix: 'M+', duration: 2000 });
+  const veteranSessions = useCounterAnimation({ end: 50, suffix: '+', duration: 2000 });
+  const cancerScholarships = useCounterAnimation({ end: 30, suffix: '+', duration: 2000 });
 
   useEffect(() => {
     checkAdminStatus();
@@ -166,6 +174,28 @@ const About = () => {
       <section className="py-24 bg-muted">
         <div className="container mx-auto px-4">
           <h2 className="text-center mb-16">Our Community Impact</h2>
+          
+          {/* Admin Banner */}
+          {!isLoading && isAdmin && showAdminBanner && (
+            <div className="max-w-4xl mx-auto mb-8 animate-fade-in">
+              <div className="bg-[#FEF3C7] border border-[#FDE68A] rounded-lg p-4 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">⚠️</span>
+                  <p className="text-sm text-gray-800 font-medium">
+                    Verify these numbers are accurate or update via Dashboard
+                  </p>
+                </div>
+                <button
+                  onClick={() => setShowAdminBanner(false)}
+                  className="text-gray-600 hover:text-gray-900 transition-colors"
+                  aria-label="Close banner"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <Card className="p-8 text-center hover:shadow-medium transition-all hover:-translate-y-1 rounded-2xl border-border/50">
               <div className="flex justify-center mb-4">
@@ -173,7 +203,9 @@ const About = () => {
                   <Shield className="w-6 h-6 text-white" />
                 </div>
               </div>
-              <p className="text-4xl font-bold gradient-text-primary mb-2">500+</p>
+              <p ref={familiesTrained.ref} className="text-4xl font-bold gradient-text-primary mb-2">
+                {familiesTrained.displayValue}
+              </p>
               <p className="text-muted-foreground">Families Trained</p>
             </Card>
 
@@ -183,7 +215,9 @@ const About = () => {
                   <DollarSign className="w-6 h-6 text-white" />
                 </div>
               </div>
-              <p className="text-4xl font-bold gradient-text-primary mb-2">$2M+</p>
+              <p ref={fraudPrevented.ref} className="text-4xl font-bold gradient-text-primary mb-2">
+                {fraudPrevented.displayValue}
+              </p>
               <p className="text-muted-foreground">in Fraud Prevented</p>
             </Card>
 
@@ -193,7 +227,9 @@ const About = () => {
                   <Award className="w-6 h-6 text-white" />
                 </div>
               </div>
-              <p className="text-4xl font-bold gradient-text-primary mb-2">50+</p>
+              <p ref={veteranSessions.ref} className="text-4xl font-bold gradient-text-primary mb-2">
+                {veteranSessions.displayValue}
+              </p>
               <p className="text-muted-foreground">Sessions for Veterans</p>
             </Card>
 
@@ -203,7 +239,9 @@ const About = () => {
                   <Heart className="w-6 h-6 text-white" />
                 </div>
               </div>
-              <p className="text-4xl font-bold gradient-text-primary mb-2">30+</p>
+              <p ref={cancerScholarships.ref} className="text-4xl font-bold gradient-text-primary mb-2">
+                {cancerScholarships.displayValue}
+              </p>
               <p className="text-muted-foreground">Cancer Patient Scholarships</p>
             </Card>
           </div>
