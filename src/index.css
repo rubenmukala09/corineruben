@@ -600,3 +600,17 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
 .price-flip {
   animation: price-flip 0.5s ease-in-out;
 }
+
+/* Gentle rotate animation for icons */
+@keyframes gentle-rotate {
+  0%, 100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+.gentle-rotate {
+  animation: gentle-rotate 3s ease-in-out infinite;
+}

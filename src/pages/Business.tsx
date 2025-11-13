@@ -887,9 +887,9 @@ const Business = () => {
       <section className="py-20 bg-muted">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <Card className="p-8 bg-gradient-to-br from-accent/10 to-accent/5">
+            <Card className="p-8 bg-gradient-to-br from-accent/10 to-accent/5 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_20px_40px_rgba(20,184,166,0.2)] hover:border-accent/50">
               <div className="flex items-start gap-6">
-                <Search className="w-16 h-16 text-accent flex-shrink-0" />
+                <Search className="w-16 h-16 text-accent flex-shrink-0 gentle-rotate" />
                 <div>
                   <h3 className="text-3xl font-bold mb-4">Thinking of Buying an AI Tool?</h3>
                   <p className="text-xl mb-6">Don't waste $5,000+ on the wrong solution.</p>
@@ -921,6 +921,7 @@ const Business = () => {
                       setModalOpen(true);
                     }}
                     variant="default"
+                    className="transition-all duration-300 hover:bg-primary/90 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(109,40,217,0.25)]"
                   >
                     REQUEST VETTING
                   </Button>
