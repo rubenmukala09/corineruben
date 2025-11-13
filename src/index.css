@@ -849,6 +849,44 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   animation: checkmark-pop 0.4s ease-out forwards;
 }
 
+/* Page transition animations */
+.page-transition {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+@keyframes fadeInPageTransition {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stagger animations for sections */
+.section-1 { 
+  animation: fadeInPageTransition 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: 0s;
+  opacity: 0;
+}
+.section-2 { 
+  animation: fadeInPageTransition 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: 0.1s;
+  opacity: 0;
+}
+.section-3 { 
+  animation: fadeInPageTransition 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: 0.15s;
+  opacity: 0;
+}
+.section-4 { 
+  animation: fadeInPageTransition 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
 /* Premium scroll & transition effects */
 @keyframes fadeIn {
   from {

@@ -10,9 +10,9 @@ export const PageTransition = ({ children }: PageTransitionProps) => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
+      exit={{ opacity: 0, y: -10 }}
       transition={{
-        duration: 0.3,
+        duration: 0.5,
         ease: [0.4, 0, 0.2, 1],
       }}
     >
