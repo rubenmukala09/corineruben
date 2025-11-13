@@ -414,8 +414,12 @@ const Resources = () => {
           <div className="max-w-4xl mx-auto">
             <Accordion type="single" collapsible className="space-y-4">
               {faqs.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`} className="bg-card rounded-2xl px-6 border border-border hover:border-primary/50 transition-all shadow-soft hover:shadow-medium">
-                  <AccordionTrigger className="text-lg font-bold hover:text-primary">
+                <AccordionItem 
+                  key={index} 
+                  value={`item-${index}`} 
+                  className="bg-card rounded-2xl px-6 border border-border hover:border-primary/50 transition-all duration-300 shadow-soft hover:shadow-medium data-[state=open]:border-l-4 data-[state=open]:border-l-[#14B8A6]"
+                >
+                  <AccordionTrigger className="text-lg font-bold hover:text-primary hover:no-underline">
                     {faq.q}
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground text-base leading-relaxed">
