@@ -23,12 +23,54 @@ function Resources() {
   const [activeProductImages, setActiveProductImages] = useState<{ [key: string]: number }>({});
 
   const guides = [
-    { icon: Shield, title: "Scam-Proof Playbook", desc: "Complete emergency scripts & protocols", price: 29, slug: "scam-proof-playbook", gradient: "from-accent/20 to-primary/20" },
-    { icon: Heart, title: "Caregivers' Security Guide", desc: "Protect vulnerable loved ones from scams", price: 24, slug: "caregivers-security-guide", gradient: "from-rose-500/20 to-pink-500/20" },
-    { icon: Wifi, title: "Home Wi-Fi Safety", desc: "Secure your network in 15 minutes", price: 19, slug: "home-wifi-safety", gradient: "from-blue-500/20 to-cyan-500/20" },
-    { icon: KeyRound, title: "Password Creation Notebook Template", desc: "Offline password storage system", price: 15, slug: "password-creation-notebook", gradient: "from-purple-500/20 to-violet-500/20" },
-    { icon: FileText, title: "Grandparent-Text 101", desc: "Spot fake 'emergency' family texts", price: 12, slug: "grandparent-text-101", gradient: "from-emerald-500/20 to-teal-500/20" },
-    { icon: Shield, title: "60-Second Pause Protocol Poster", desc: "Print and post on your fridge", price: 9, slug: "pause-protocol-poster", gradient: "from-amber-500/20 to-orange-500/20" },
+    { 
+      icon: Shield, 
+      title: "The Scam-Proof Playbook", 
+      desc: "Word-for-word scripts to shut down any scammer. What to say when your 'grandson' calls from jail, when the 'IRS' threatens arrest, or when 'Microsoft' needs remote access.", 
+      price: 29, 
+      slug: "scam-proof-playbook", 
+      gradient: "from-accent/20 to-primary/20" 
+    },
+    { 
+      icon: Heart, 
+      title: "The Caregiver's Security Shield", 
+      desc: "Protect the ones you love who can't protect themselves. Everything you need to safeguard aging parents, relatives with cognitive decline, or vulnerable loved ones.", 
+      price: 24, 
+      slug: "caregivers-security-guide", 
+      gradient: "from-rose-500/20 to-pink-500/20" 
+    },
+    { 
+      icon: Wifi, 
+      title: "15-Minute Home Wi-Fi Lockdown", 
+      desc: "Your home network is your front door. Lock it down in 15 minutes with step-by-step instructions anyone can follow. No tech degree required.", 
+      price: 19, 
+      slug: "home-wifi-safety", 
+      gradient: "from-blue-500/20 to-cyan-500/20" 
+    },
+    { 
+      icon: KeyRound, 
+      title: "The Offline Password Vault", 
+      desc: "Digital password managers confuse you? This beautiful hardcover notebook is your offline fortress. Organized, secure, and hack-proof.", 
+      price: 15, 
+      slug: "password-creation-notebook", 
+      gradient: "from-purple-500/20 to-violet-500/20" 
+    },
+    { 
+      icon: FileText, 
+      title: "Emergency Family Text Protocol", 
+      desc: "Scammers are texting 'grandparents' pretending to be in jail, hurt, or stranded. Learn the 5-question test that exposes fakes every time.", 
+      price: 12, 
+      slug: "grandparent-text-101", 
+      gradient: "from-emerald-500/20 to-teal-500/20" 
+    },
+    { 
+      icon: Shield, 
+      title: "The 60-Second Pause Poster", 
+      desc: "Beautiful fridge magnet poster with the ONE rule that stops 90% of scams: 'Stop. Breathe. Call someone you trust.' Free with any purchase.", 
+      price: 9, 
+      slug: "pause-protocol-poster", 
+      gradient: "from-amber-500/20 to-orange-500/20" 
+    },
   ];
 
   const products = [
@@ -83,22 +125,22 @@ function Resources() {
 
   const blogArticles = [
     {
-      title: "How to Spot a Deepfake Voice Call in 5 Seconds",
+      title: "The Phone Call That Cost My Grandmother $15,000",
       image: "https://images.unsplash.com/photo-1589254065878-42c9da997008?w=800&h=400&fit=crop",
-      excerpt: "Learn the telltale signs of AI-generated voice scams and protect yourself from sophisticated fraud attempts targeting families.",
-      date: "Jan 15, 2025"
+      excerpt: "This is the true story of how scammers targeted my family—and why I dedicated my life to stopping them. Warning signs we missed, lessons we learned.",
+      date: "Nov 15, 2024"
     },
     {
-      title: "The New QR Code Scam Targeting Seniors",
+      title: "5 Words That Stop 90% of Scammers Instantly",
       image: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=800&h=400&fit=crop",
-      excerpt: "Scammers are using fake QR codes to steal personal information. Here's what to watch out for and how to stay safe.",
-      date: "Jan 10, 2025"
+      excerpt: "You don't need tech knowledge. You don't need to be suspicious of everyone. You just need to say these 5 words when something feels off.",
+      date: "Oct 28, 2024"
     },
     {
-      title: "What to Do If You Think You've Been Scammed",
+      title: "Why 'Tech Support' Scams Work on Smart People",
       image: "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=800&h=400&fit=crop",
-      excerpt: "Step-by-step guide to reporting fraud, protecting your accounts, and recovering from a scam incident.",
-      date: "Jan 5, 2025"
+      excerpt: "It's not about intelligence. It's about psychology. Here's how scammers manipulate fear, urgency, and authority—and how to recognize it.",
+      date: "Oct 12, 2024"
     },
   ];
 
@@ -160,12 +202,86 @@ function Resources() {
       {/* Hero */}
       <Hero
         backgroundImage={heroResources}
-        headline="Resources & Tools"
-        subheadline="Guides, security products, and answers to your questions."
+        headline="Protect What Matters Most"
+        subheadline="From our family to yours—expert resources built with love, backed by experience, and designed to keep you safe in the digital age."
         showScrollIndicator={true}
       />
 
       <TrustBar />
+
+      {/* Founder Mission Section */}
+      <section className="py-20 bg-background relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.05),transparent_70%)]" />
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <ScrollReveal animation="fade-up">
+            <div className="max-w-5xl mx-auto">
+              <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-700" />
+                  <img 
+                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&h=800&fit=crop" 
+                    alt="Ruben NM - Founder"
+                    className="relative rounded-3xl shadow-2xl w-full h-[500px] object-cover ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all duration-500"
+                  />
+                  <div className="absolute -bottom-6 -right-6 bg-gradient-to-br from-primary to-accent text-primary-foreground p-6 rounded-2xl shadow-2xl">
+                    <p className="text-3xl font-bold">20+</p>
+                    <p className="text-sm">Years Experience</p>
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="inline-block">
+                    <span className="px-4 py-2 bg-gradient-to-r from-primary/10 to-accent/10 rounded-full text-sm font-semibold text-primary border border-primary/20">
+                      Our Story
+                    </span>
+                  </div>
+                  
+                  <h2 className="text-4xl md:text-5xl font-bold leading-tight">
+                    Founded on a <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Personal Mission</span>
+                  </h2>
+                  
+                  <div className="space-y-4 text-muted-foreground leading-relaxed text-lg">
+                    <p className="text-foreground font-semibold text-xl">
+                      "I started this because I watched my grandmother lose $15,000 to a phone scam. She was brilliant, independent, and strong—but the scammers knew exactly what to say."
+                    </p>
+                    
+                    <p>
+                      <span className="font-bold text-foreground">Ruben NM</span> isn't just our founder—he's a son, grandson, and tech professional who saw his family hurt by digital predators. After spending 20+ years in cybersecurity, he realized that complex security guides weren't reaching the people who needed them most.
+                    </p>
+                    
+                    <p>
+                      Every resource here is designed with <span className="font-semibold text-foreground">real people</span> in mind—your parents, your grandparents, your neighbors. No jargon. No confusion. Just clear, actionable protection that works.
+                    </p>
+
+                    <div className="pt-4 border-t border-border">
+                      <p className="italic text-base">
+                        "This isn't just business. It's personal. Every person we protect, every scam we stop, every senior who stays safe—that's why we exist."
+                      </p>
+                      <p className="font-bold text-foreground mt-2">— Ruben NM, Founder & CEO</p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-4 pt-4">
+                    <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full">
+                      <Shield className="w-5 h-5 text-primary" />
+                      <span className="font-semibold">Veteran-Led</span>
+                    </div>
+                    <div className="flex items-center gap-2 px-4 py-2 bg-accent/10 rounded-full">
+                      <Heart className="w-5 h-5 text-accent" />
+                      <span className="font-semibold">Mission-Driven</span>
+                    </div>
+                    <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full">
+                      <Shield className="w-5 h-5 text-primary" />
+                      <span className="font-semibold">Family-First</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
 
       {/* Guides */}
       <section className="py-20 bg-gradient-to-b from-background via-muted/30 to-background relative overflow-hidden">
@@ -181,10 +297,10 @@ function Resources() {
                 </span>
               </div>
               <h2 className="mb-4 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                Professional Security Guides & Books
+                Security Resources That Actually Work
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Expert-written resources to protect yourself and your loved ones
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+                No fluff. No tech jargon. Just clear, proven strategies written by someone who's been protecting families for 20+ years. Every guide is tested on real people—including our own grandparents.
               </p>
             </div>
           </ScrollReveal>
@@ -205,10 +321,10 @@ function Resources() {
                       </div>
                     </div>
 
-                    <h3 className="text-2xl font-bold mb-3 text-center group-hover:text-primary transition-colors duration-300">
+                    <h3 className="text-2xl font-bold mb-4 text-center group-hover:text-primary transition-colors duration-300">
                       {guide.title}
                     </h3>
-                    <p className="text-muted-foreground text-center mb-6 flex-grow leading-relaxed">
+                    <p className="text-muted-foreground text-center mb-6 flex-grow leading-relaxed text-sm">
                       {guide.desc}
                     </p>
 
@@ -280,10 +396,10 @@ function Resources() {
                     </span>
                   </div>
                   <h3 className="text-3xl font-bold mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                    Veterans & First Responders
+                    Honoring Those Who Serve
                   </h3>
                   <p className="text-muted-foreground text-base leading-relaxed">
-                    Active duty, veterans, reservists, and first responders receive <span className="font-bold text-primary">10% OFF</span> all resources and products
+                    Veterans, active military, and first responders protected us. Now we protect you. <span className="font-bold text-primary">10% OFF forever</span>—because service matters.
                   </p>
                 </div>
                 
@@ -315,13 +431,13 @@ function Resources() {
                 </span>
               </div>
               <h2 className="mb-4 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                Security Tools Shop
+                Physical Protection Tools
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-3">
-                Profits support training for seniors in need.
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-3">
+                Simple, affordable tools that add layers of security. <span className="font-semibold text-foreground">100% of profits</span> fund free training for seniors who can't afford it.
               </p>
               <p className="text-sm text-accent font-semibold">
-                ✨ Free shipping on orders over $25
+                ✨ Free shipping over $25 • 30-day money-back guarantee
               </p>
             </div>
           </ScrollReveal>
@@ -451,10 +567,10 @@ function Resources() {
                 </span>
               </div>
               <h2 className="mb-4 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                Recent Articles
+                Real Stories, Real Protection
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Stay informed with expert tips and insights
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+                Learn from actual scams, real attacks, and proven defenses. Written in plain English by someone who's seen it all—and stopped it all.
               </p>
             </div>
           </ScrollReveal>
@@ -525,10 +641,10 @@ function Resources() {
                 </span>
               </div>
               <h2 className="mb-4 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                Frequently Asked Questions
+                Your Questions, Answered
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Find answers to common questions about our resources and services
+                We've spent hundreds of hours answering questions from seniors, families, and caregivers. Here are the most common ones.
               </p>
             </div>
           </ScrollReveal>
@@ -564,10 +680,10 @@ function Resources() {
         <div className="container mx-auto px-4 text-center relative z-10">
           <ScrollReveal animation="scale-in">
             <h2 className="text-primary-foreground mb-4 text-4xl md:text-5xl">
-              Still Have Questions?
+              We're Here for You
             </h2>
-            <p className="text-primary-foreground/90 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
-              Our team is here to help you find the perfect security solutions
+            <p className="text-primary-foreground/90 text-lg md:text-xl mb-10 max-w-3xl mx-auto">
+              This isn't a faceless company. It's a small team that genuinely cares about protecting your family. We answer every email, every call, every question—because that's what family does.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <Button 
