@@ -7,6 +7,14 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { ArrowLeft } from "lucide-react";
 
+const ROLE_REDIRECTS: Record<string, string> = {
+  'ruben@invisionnetwork.org': '/admin',
+  'hello@invisionnetwork.org': '/admin/clients',
+  'training@invisionnetwork.org': '/admin/articles',
+  'consulting@invisionnetwork.org': '/admin/business-clients',
+  'support@invisionnetwork.org': '/admin'
+};
+
 interface VerificationCodeModalProps {
   open: boolean;
   onClose: () => void;
@@ -109,8 +117,12 @@ export function VerificationCodeModal({ open, onClose, email, rememberMe }: Veri
         return;
       }
 
+      // Redirect based on user role
+      const normalizedEmail = email.toLowerCase().trim();
+      const redirectPath = ROLE_REDIRECTS[normalizedEmail] || '/admin';
+      
       toast.success("Verification successful! Redirecting...");
-      navigate("/admin");
+      navigate(redirectPath);
       onClose();
     } catch (error: any) {
       console.error("Verification error:", error);

@@ -28,14 +28,17 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { useUserRole } from "@/hooks/useUserRole";
 
 interface MenuItem {
   title: string;
   icon: React.ElementType;
   href?: string;
+  permission?: string;
   children?: {
     title: string;
     href: string;
+    permission?: string;
   }[];
 }
 
@@ -51,7 +54,7 @@ const menuItems: MenuItem[] = [
     children: [
       { title: "Pages", href: "/admin/content/pages" },
       { title: "Testimonials", href: "/admin/content/testimonials" },
-      { title: "Articles", href: "/admin/content/articles" },
+      { title: "Articles", href: "/admin/content/articles", permission: "view_training" },
       { title: "Team", href: "/admin/content/team" },
     ],
   },
@@ -59,14 +62,15 @@ const menuItems: MenuItem[] = [
     title: "Clients",
     icon: Users,
     children: [
-      { title: "Businesses", href: "/admin/clients/businesses" },
-      { title: "Individuals", href: "/admin/clients/individuals" },
-      { title: "Messages", href: "/admin/clients/messages" },
+      { title: "Businesses", href: "/admin/clients/businesses", permission: "view_business_clients" },
+      { title: "Individuals", href: "/admin/clients/individuals", permission: "view_individual_clients" },
+      { title: "Messages", href: "/admin/clients/messages", permission: "view_messages" },
     ],
   },
   {
     title: "E-Commerce",
     icon: ShoppingCart,
+    permission: "view_products",
     children: [
       { title: "Products", href: "/admin/ecommerce/products" },
       { title: "Orders", href: "/admin/ecommerce/orders" },
@@ -76,6 +80,7 @@ const menuItems: MenuItem[] = [
   {
     title: "Communications",
     icon: Mail,
+    permission: "view_messages",
     children: [
       { title: "Inbox", href: "/admin/communications/inbox" },
       { title: "Newsletter", href: "/admin/communications/newsletter" },
@@ -110,6 +115,19 @@ export const AdminSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: Ad
   const [openMenus, setOpenMenus] = useState<string[]>([]);
   const location = useLocation();
   const collapsed = !isOpen;
+  const { hasPermission, isAdmin } = useUserRole();
+
+  const canAccessItem = (permission?: string) => {
+    if (!permission) return true;
+    if (isAdmin()) return true;
+    return hasPermission(permission);
+  };
+
+  const filteredMenuItems = menuItems.filter(item => canAccessItem(item.permission))
+    .map(item => ({
+      ...item,
+      children: item.children?.filter(child => canAccessItem(child.permission))
+    }));
 
   const toggleMenu = (title: string) => {
     setOpenMenus((prev) =>
@@ -125,7 +143,7 @@ export const AdminSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: Ad
     <div className="flex flex-col h-full pt-16">
       {/* Menu Items */}
       <nav className="flex-1 overflow-y-auto py-4">
-        {menuItems.map((item) => {
+        {filteredMenuItems.map((item) => {
           const Icon = item.icon;
           const hasChildren = !!item.children;
           const isMenuOpen = openMenus.includes(item.title);

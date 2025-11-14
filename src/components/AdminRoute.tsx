@@ -1,83 +1,84 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { User } from "@supabase/supabase-js";
-import { Loader2 } from "lucide-react";
+import { useUserRole } from "@/hooks/useUserRole";
+import { Loader2, ShieldAlert } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface AdminRouteProps {
   children: React.ReactNode;
+  requiredPermission?: string;
 }
 
-export function AdminRoute({ children }: AdminRouteProps) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
-  const [loading, setLoading] = useState(true);
+export const AdminRoute = ({ children, requiredPermission }: AdminRouteProps) => {
+  const { user, roleConfig, loading, hasPermission, isAdmin } = useUserRole();
+  const [permissionDenied, setPermissionDenied] = useState(false);
 
   useEffect(() => {
-    checkAdminStatus();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        if (session?.user) {
-          checkAdminStatus();
-        } else {
-          setUser(null);
-          setIsAdmin(false);
-          setLoading(false);
-        }
-      }
-    );
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const checkAdminStatus = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      setUser(user);
-
-      if (user) {
-        // Check if user has admin role
-        const { data, error } = await supabase
-          .from("user_roles")
-          .select("role")
-          .eq("user_id", user.id)
-          .eq("role", "admin")
-          .single();
-
-        if (error) {
-          console.error("Error checking admin role:", error);
-          setIsAdmin(false);
-        } else {
-          setIsAdmin(!!data);
-        }
-      }
-    } catch (error) {
-      console.error("Error checking admin status:", error);
-      setIsAdmin(false);
-    } finally {
-      setLoading(false);
+    if (!loading && user && roleConfig && requiredPermission) {
+      const allowed = isAdmin() || hasPermission(requiredPermission);
+      setPermissionDenied(!allowed);
     }
-  };
+  }, [loading, user, roleConfig, requiredPermission, hasPermission, isAdmin]);
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="h-8 w-8 animate-spin mx-auto text-primary" />
-          <p className="mt-4 text-muted-foreground">Verifying admin access...</p>
+          <p className="mt-4 text-muted-foreground">Loading...</p>
         </div>
       </div>
     );
   }
 
   if (!user) {
-    return <Navigate to="/auth" replace />;
+    return <Navigate to="/login" replace />;
   }
 
-  if (!isAdmin) {
-    return <Navigate to="/portal" replace />;
+  if (!roleConfig) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <Card className="max-w-md w-full">
+          <CardContent className="pt-6">
+            <div className="flex flex-col items-center text-center space-y-4">
+              <ShieldAlert className="h-12 w-12 text-destructive" />
+              <h2 className="text-xl font-semibold">Access Denied</h2>
+              <p className="text-muted-foreground">
+                Your account does not have permission to access the admin portal.
+                Please contact the administrator if you believe this is an error.
+              </p>
+              <Button onClick={() => window.location.href = '/'} variant="outline">
+                Return to Homepage
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (permissionDenied && requiredPermission) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <Card className="max-w-md w-full">
+          <CardContent className="pt-6">
+            <div className="flex flex-col items-center text-center space-y-4">
+              <ShieldAlert className="h-12 w-12 text-yellow-500" />
+              <h2 className="text-xl font-semibold">Permission Required</h2>
+              <p className="text-muted-foreground">
+                You do not have permission to access this page.
+                Your role: <strong>{roleConfig.displayName}</strong>
+              </p>
+              <Button onClick={() => window.history.back()} variant="outline">
+                Go Back
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
   }
 
   return <>{children}</>;
-}
+};
