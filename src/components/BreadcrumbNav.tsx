@@ -40,9 +40,13 @@ export const BreadcrumbNav = () => {
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((x) => x);
 
-  // Only show breadcrumbs on admin routes
-  if (!location.pathname.startsWith("/admin") && 
-      !location.pathname.startsWith("/portal")) {
+  // Hide breadcrumbs on auth pages and public routes
+  const hiddenRoutes = ["/auth", "/login", "/signup", "/reset-password", "/setup"];
+  const isHiddenRoute = hiddenRoutes.some(route => location.pathname === route);
+  const isPublicRoute = !location.pathname.startsWith("/admin") && 
+                        !location.pathname.startsWith("/portal");
+  
+  if (isHiddenRoute || isPublicRoute) {
     return null;
   }
 

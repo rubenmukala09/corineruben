@@ -129,6 +129,14 @@ const Signup = lazy(() => {
   });
 });
 
+const Setup = lazy(() => {
+  performanceMonitor.startTracking('Setup');
+  return import("./pages/Setup").then(module => {
+    performanceMonitor.endTracking('Setup');
+    return module;
+  });
+});
+
 const ApplicationPending = lazy(() => {
   performanceMonitor.startTracking('ApplicationPending');
   return import("./pages/ApplicationPending").then(module => {
@@ -481,6 +489,7 @@ function AnimatedRoutes() {
         <Route path="/auth" element={<PageTransition><Auth /></PageTransition>} />
         <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
         <Route path="/signup" element={<PageTransition><Signup /></PageTransition>} />
+        <Route path="/setup" element={<PageTransition><Setup /></PageTransition>} />
         <Route path="/application-pending" element={<PageTransition><ApplicationPending /></PageTransition>} />
         <Route path="/admin" element={<PageTransition><AdminRoute><Admin /></AdminRoute></PageTransition>} />
         <Route path="/admin/content/testimonials" element={<PageTransition><AdminRoute><TestimonialsAdmin /></AdminRoute></PageTransition>} />
