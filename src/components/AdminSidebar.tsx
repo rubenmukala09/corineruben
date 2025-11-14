@@ -114,7 +114,6 @@ export const AdminSidebar = ({ isOpen }: AdminSidebarProps) => {
   const SidebarContent = () => (
     <div className="flex flex-col h-full pt-16">
       {/* Menu Items */}
-
       <nav className="flex-1 overflow-y-auto py-4">
         {menuItems.map((item) => {
           const Icon = item.icon;
@@ -128,9 +127,9 @@ export const AdminSidebar = ({ isOpen }: AdminSidebarProps) => {
                 key={item.title}
                 to={item.href!}
                 className={cn(
-                  "flex items-center gap-3 px-4 py-3 mx-2 rounded-lg transition-all duration-300 ease-out",
-                  "hover:bg-[#2A2540] group relative",
-                  isActive(item.href!) && "bg-[#2A2540]"
+                  "flex items-center gap-3 px-4 py-3 mx-2 rounded-lg transition-all duration-300 ease-out relative",
+                  "hover:bg-[#2A2540]",
+                  isActive(item.href!) && "bg-[#2A2540] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-[#14B8A6] before:rounded-r"
                 )}
                 onClick={() => setMobileOpen(false)}
               >
