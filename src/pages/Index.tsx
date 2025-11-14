@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { ScrollRevealSection } from "@/components/ScrollRevealSection";
+import { SEO, PAGE_SEO } from "@/components/SEO";
 import {
   Heart,
   Shield,
@@ -85,7 +86,9 @@ function Index() {
 
   return (
     <div className="min-h-screen">
+      <SEO {...PAGE_SEO.home} />
       <Navigation />
+      <main id="main-content">
 
       {/* Hero Section */}
       <Hero
@@ -593,6 +596,7 @@ function Index() {
       </CTASection>
 
       <Footer />
+      </main>
     </div>
   );
 };

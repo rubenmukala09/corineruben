@@ -19,6 +19,10 @@ import ScrollProgressBar from "./components/ScrollProgressBar";
 import { NavigationProgress } from "./components/NavigationProgress";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { useSmoothAnchorScroll } from "./hooks/useSmoothAnchorScroll";
+import { CookieConsent } from "./components/CookieConsent";
+import { SkipToContent } from "./components/SkipToContent";
+import { useAnalytics } from "./hooks/useAnalytics";
+import { Breadcrumb } from "./components/Breadcrumb";
 
 // Lazy load all pages for code splitting
 const Index = lazy(() => {
@@ -476,6 +480,7 @@ function AnimatedRoutes() {
 function App() {
   // Add smooth scroll behavior for anchor links
   useSmoothAnchorScroll();
+  useAnalytics();
   
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
@@ -490,17 +495,19 @@ function App() {
       <Sonner />
       <AIChatProvider>
         <BrowserRouter>
+          <SkipToContent />
           <NavigationProgress />
           <ScrollToTop />
           <ScrollProgressBar />
           <RouteTracker />
           <ErrorBoundary>
-            <BreadcrumbNav />
+            <Breadcrumb />
             <Suspense fallback={<PageLoader />}>
               <AnimatedRoutes />
             </Suspense>
           </ErrorBoundary>
           <AIChat />
+          <CookieConsent />
           <PerformanceDashboard />
         </BrowserRouter>
       </AIChatProvider>
