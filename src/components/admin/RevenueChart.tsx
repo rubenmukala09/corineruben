@@ -169,25 +169,25 @@ export function RevenueChart() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.4 }}
     >
-      <Card className="p-6 mt-8 rounded-xl shadow-sm">
+      <Card className="p-4 sm:p-6 mt-4 sm:mt-8 rounded-xl shadow-sm">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-foreground">Revenue Overview</h2>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-foreground">Revenue Overview</h2>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto">
             {/* Time Frame Tabs */}
-            <div className="flex gap-2">
+            <div className="flex gap-1 sm:gap-2 flex-1 sm:flex-initial">
               {[
-                { value: "6months" as TimeFrame, label: "6 Months" },
-                { value: "12months" as TimeFrame, label: "12 Months" },
-                { value: "alltime" as TimeFrame, label: "All Time" },
+                { value: "6months" as TimeFrame, label: "6M" },
+                { value: "12months" as TimeFrame, label: "12M" },
+                { value: "alltime" as TimeFrame, label: "All" },
               ].map((tab) => (
                 <Button
                   key={tab.value}
                   variant={timeFrame === tab.value ? "default" : "ghost"}
                   size="sm"
                   onClick={() => setTimeFrame(tab.value)}
-                  className={`transition-all duration-300 ${
+                  className={`transition-all duration-300 flex-1 sm:flex-initial text-xs sm:text-sm ${
                     timeFrame === tab.value
                       ? "bg-primary text-primary-foreground"
                       : "text-muted-foreground hover:text-foreground"
@@ -203,11 +203,11 @@ export function RevenueChart() {
               variant="outline"
               size="icon"
               onClick={exportChart}
-              className="relative group"
+              className="relative group flex-shrink-0"
               title="Download Chart"
             >
               <Download className="h-4 w-4" />
-              <span className="absolute -top-8 right-0 bg-popover text-popover-foreground text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+              <span className="absolute -top-8 right-0 bg-popover text-popover-foreground text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap hidden sm:block">
                 Download Chart
               </span>
             </Button>
@@ -216,7 +216,7 @@ export function RevenueChart() {
 
         {/* Chart */}
         {loading ? (
-          <div className="h-80 flex items-center justify-center">
+          <div className="h-64 sm:h-80 admin-chart flex items-center justify-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
           </div>
         ) : chartData.length > 0 ? (
@@ -224,7 +224,7 @@ export function RevenueChart() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="h-80"
+            className="h-64 sm:h-80 admin-chart"
           >
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart
@@ -245,14 +245,18 @@ export function RevenueChart() {
                 <XAxis
                   dataKey="month"
                   stroke="hsl(var(--muted-foreground))"
-                  fontSize={12}
+                  fontSize={10}
                   tickLine={false}
+                  angle={-45}
+                  textAnchor="end"
+                  height={60}
                 />
                 <YAxis
                   stroke="hsl(var(--muted-foreground))"
-                  fontSize={12}
+                  fontSize={10}
                   tickLine={false}
                   tickFormatter={(value) => `$${(value / 1000).toFixed(0)}K`}
+                  width={45}
                 />
                 <Tooltip content={<CustomTooltip />} />
                 <Area
@@ -291,7 +295,7 @@ export function RevenueChart() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-6 pt-6 border-t border-border grid grid-cols-1 md:grid-cols-3 gap-4"
+            className="mt-6 pt-6 border-t border-border grid grid-cols-1 sm:grid-cols-3 gap-4"
           >
             <div>
               <p className="text-sm text-muted-foreground mb-1">Total Revenue</p>

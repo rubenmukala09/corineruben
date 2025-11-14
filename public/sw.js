@@ -1,9 +1,11 @@
-const CACHE_NAME = 'invision-network-v2';
+const CACHE_NAME = 'invision-network-v3';
+const IMAGE_CACHE = 'invision-images-v1';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/favicon.ico',
   '/robots.txt',
+  '/manifest.json',
 ];
 
 // Install event - cache static assets
@@ -22,7 +24,7 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames
-          .filter((name) => name !== CACHE_NAME)
+          .filter((name) => name !== CACHE_NAME && name !== IMAGE_CACHE)
           .map((name) => caches.delete(name))
       );
     })
@@ -47,6 +49,47 @@ self.addEventListener('fetch', (event) => {
     url.pathname.includes('vite') ||
     url.searchParams.has('t')
   ) {
+    return;
+  }
+
+  // Images: cache-first with long expiry
+  if (request.destination === 'image' || /\.(jpg|jpeg|png|gif|webp|svg|ico)$/i.test(url.pathname)) {
+    event.respondWith(
+      caches.match(request).then((cached) => {
+        if (cached) {
+          return cached;
+        }
+        return fetch(request).then((response) => {
+          // Only cache successful responses
+          if (response.ok) {
+            const responseClone = response.clone();
+            caches.open(IMAGE_CACHE).then((cache) => {
+              cache.put(request, responseClone);
+            });
+          }
+          return response;
+        }).catch(() => {
+          // Return empty image on failure
+          return new Response('', { status: 404, statusText: 'Image not found' });
+        });
+      })
+    );
+    return;
+  }
+
+  // Fonts and CSS: cache-first
+  if (request.destination === 'font' || request.destination === 'style' || /\.(woff2?|ttf|otf|eot|css)$/i.test(url.pathname)) {
+    event.respondWith(
+      caches.match(request).then((cached) => {
+        return cached || fetch(request).then((response) => {
+          const responseClone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, responseClone);
+          });
+          return response;
+        });
+      })
+    );
     return;
   }
 

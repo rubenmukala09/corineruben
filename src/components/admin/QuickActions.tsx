@@ -127,7 +127,7 @@ export function QuickActions() {
       </div>
 
       {/* Button Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 quick-actions-grid">
         {actions.map((action, index) => {
           const Icon = action.icon;
           const ripple = ripples[action.id];
@@ -139,11 +139,11 @@ export function QuickActions() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.6 + index * 0.05 }}
               onClick={(e) => handleClick(action, e)}
-              className={`relative overflow-hidden h-[120px] ${action.background} rounded-xl border-2 border-transparent 
+              className={`relative overflow-hidden min-h-[100px] sm:h-[120px] ${action.background} rounded-xl border-2 border-transparent 
                 transition-all duration-300 ease-out
-                hover:-translate-y-1 hover:shadow-lg hover:${action.hoverBorder}
+                md:hover:-translate-y-1 md:hover:shadow-lg md:hover:${action.hoverBorder}
                 active:scale-[0.98]
-                flex flex-col items-center justify-center p-5
+                flex flex-col items-center justify-center p-4 sm:p-5
                 cursor-pointer group`}
             >
               {/* Badge for unread messages */}
@@ -160,12 +160,12 @@ export function QuickActions() {
 
               {/* Icon */}
               <Icon 
-                className={`w-8 h-8 mb-2 ${action.iconColor} transition-transform duration-300 
-                  group-hover:scale-110`} 
+                className={`w-7 h-7 sm:w-8 sm:h-8 mb-2 ${action.iconColor} transition-transform duration-300 
+                  md:group-hover:scale-110`} 
               />
               
               {/* Text */}
-              <span className="text-base font-semibold text-gray-700 text-center">
+              <span className="text-sm sm:text-base font-semibold text-gray-700 text-center px-2">
                 {action.text}
               </span>
 

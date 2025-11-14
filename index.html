@@ -10,11 +10,23 @@
     <meta name="description" content="Protect your family from AI-powered scams. Expert training, deepfake detection, and 24/7 scam analysis. Trusted by 500+ families. Based in Dayton, OH. EN/FR/ES.">
     <meta name="author" content="InVision Network" />
     <meta name="keywords" content="AI scam protection, deepfake detection, senior scam training, family cybersecurity, phishing defense, Dayton Ohio">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
+    <!-- Performance Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://avoafweoebstkgjnbadv.supabase.co">
+    
     <!-- Preload critical hero image for fastest initial paint -->
     <link rel="preload" as="image" href="/src/assets/hero-business-professional.jpg" fetchpriority="high" />
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" as="style" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    </noscript>
     
-    
+    <!-- Open Graph Tags -->
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/UpYpYr7MTVdr1jgHmL94ALNUlk93/social-images/social-1761862743436-shield_purpleb.png">
 
@@ -93,6 +105,23 @@
 
   <body>
     <div id="root"></div>
+    
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('SW registered:', registration);
+            })
+            .catch(error => {
+              console.log('SW registration failed:', error);
+            });
+        });
+      }
+    </script>
+
+    <!-- Performance Monitoring -->
     <script>
       (async () => {
         try {
