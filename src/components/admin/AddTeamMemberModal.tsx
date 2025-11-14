@@ -70,6 +70,7 @@ export function AddTeamMemberModal({
   const [photo, setPhoto] = useState<string | null>(null);
   const [photoZoom, setPhotoZoom] = useState(1);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isDragging, setIsDragging] = useState(false);
 
   // Load edit data when modal opens
   useEffect(() => {
@@ -94,7 +95,10 @@ export function AddTeamMemberModal({
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    processFile(file);
+  };
 
+  const processFile = (file: File) => {
     // Validate file size (2MB max)
     if (file.size > 2 * 1024 * 1024) {
       toast({
@@ -118,8 +122,29 @@ export function AddTeamMemberModal({
     const reader = new FileReader();
     reader.onload = (e) => {
       setPhoto(e.target?.result as string);
+      setPhotoZoom(1);
     };
     reader.readAsDataURL(file);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      processFile(file);
+    }
   };
 
   const handlePhoneChange = (value: string) => {
@@ -283,8 +308,24 @@ export function AddTeamMemberModal({
               <div className="space-y-3">
                 <Label>Profile Photo</Label>
                 <div className="flex flex-col items-center gap-4">
-                  <div className="relative">
-                    <Avatar className="h-[200px] w-[200px] border-4 border-background ring-2 ring-border">
+                  {/* Upload Area */}
+                  <div
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                    onClick={() => !photo && fileInputRef.current?.click()}
+                    className={cn(
+                      "relative cursor-pointer transition-all duration-300",
+                      isDragging && "scale-105"
+                    )}
+                  >
+                    <Avatar className={cn(
+                      "h-[200px] w-[200px] border-4 transition-all",
+                      photo 
+                        ? "border-background ring-2 ring-border" 
+                        : "border-dashed border-muted-foreground/50 hover:border-primary",
+                      isDragging && "border-primary border-solid ring-4 ring-primary/20"
+                    )}>
                       {photo ? (
                         <AvatarImage
                           src={photo}
@@ -292,8 +333,17 @@ export function AddTeamMemberModal({
                           className="transition-transform"
                         />
                       ) : (
-                        <AvatarFallback className="bg-muted">
-                          <Camera className="h-16 w-16 text-muted-foreground" />
+                        <AvatarFallback className={cn(
+                          "bg-muted transition-colors",
+                          isDragging && "bg-primary/10"
+                        )}>
+                          <div className="flex flex-col items-center gap-2 text-center">
+                            <Camera className="h-16 w-16 text-muted-foreground" />
+                            <div className="text-xs text-muted-foreground px-4">
+                              <p className="font-medium">Drag & drop</p>
+                              <p>or click to upload</p>
+                            </div>
+                          </div>
                         </AvatarFallback>
                       )}
                     </Avatar>
@@ -303,7 +353,7 @@ export function AddTeamMemberModal({
                     <>
                       {/* Zoom Slider */}
                       <div className="w-full space-y-2">
-                        <Label className="text-xs">Zoom</Label>
+                        <Label className="text-xs">Zoom & Position</Label>
                         <Slider
                           value={[photoZoom]}
                           onValueChange={(value) => setPhotoZoom(value[0])}
@@ -314,37 +364,45 @@ export function AddTeamMemberModal({
                         />
                       </div>
 
-                      {/* Photo Actions */}
-                      <div className="flex gap-2">
+                      {/* Action Buttons */}
+                      <div className="flex gap-2 w-full">
                         <Button
+                          type="button"
                           variant="outline"
                           size="sm"
                           onClick={() => fileInputRef.current?.click()}
+                          className="flex-1"
                         >
+                          <Upload className="h-4 w-4 mr-2" />
                           Change Photo
                         </Button>
                         <Button
+                          type="button"
                           variant="outline"
                           size="sm"
                           onClick={() => {
                             setPhoto(null);
                             setPhotoZoom(1);
                           }}
+                          className="flex-1"
                         >
-                          <X className="h-4 w-4 mr-1" />
+                          <X className="h-4 w-4 mr-2" />
                           Remove
                         </Button>
                       </div>
+                      <p className="text-xs text-muted-foreground text-center">
+                        Drag the image to reposition • Adjust zoom slider
+                      </p>
                     </>
                   ) : (
-                    <Button
-                      variant="outline"
-                      className="w-full"
-                      onClick={() => fileInputRef.current?.click()}
-                    >
-                      <Upload className="h-4 w-4 mr-2" />
-                      Upload Photo
-                    </Button>
+                    <div className="text-center space-y-2 w-full">
+                      <p className="text-sm font-medium text-muted-foreground">
+                        Size: 200×200px (circular)
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Accepts JPG or PNG • Max 2MB
+                      </p>
+                    </div>
                   )}
 
                   <input
@@ -354,9 +412,6 @@ export function AddTeamMemberModal({
                     onChange={handleFileChange}
                     className="hidden"
                   />
-                  <p className="text-xs text-muted-foreground text-center">
-                    JPG or PNG, max 2MB
-                  </p>
                 </div>
               </div>
 
