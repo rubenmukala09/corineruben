@@ -197,6 +197,22 @@ const IndividualClients = lazy(() => {
   });
 });
 
+const ProductsList = lazy(() => {
+  performanceMonitor.startTracking('ProductsList');
+  return import("./pages/admin/ProductsList").then(module => {
+    performanceMonitor.endTracking('ProductsList');
+    return module;
+  });
+});
+
+const ProductEditor = lazy(() => {
+  performanceMonitor.startTracking('ProductEditor');
+  return import("./pages/admin/ProductEditor").then(module => {
+    performanceMonitor.endTracking('ProductEditor');
+    return module;
+  });
+});
+
 const Portal = lazy(() => {
   performanceMonitor.startTracking('Portal');
   return import("./pages/Portal").then(module => {
@@ -401,6 +417,9 @@ function AnimatedRoutes() {
         <Route path="/admin/clients/businesses/:id" element={<PageTransition><AdminRoute><BusinessClientDetail /></AdminRoute></PageTransition>} />
         <Route path="/admin/clients/individuals" element={<PageTransition><AdminRoute><IndividualClients /></AdminRoute></PageTransition>} />
         <Route path="/admin/clients/individuals/:id" element={<PageTransition><AdminRoute><BusinessClientDetail /></AdminRoute></PageTransition>} />
+        <Route path="/admin/ecommerce/products" element={<PageTransition><AdminRoute><ProductsList /></AdminRoute></PageTransition>} />
+        <Route path="/admin/ecommerce/products/new" element={<PageTransition><AdminRoute><ProductEditor /></AdminRoute></PageTransition>} />
+        <Route path="/admin/ecommerce/products/:id" element={<PageTransition><AdminRoute><ProductEditor /></AdminRoute></PageTransition>} />
         <Route path="/portal" element={<PageTransition><ProtectedRoute><Portal /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/admin" element={<PageTransition><ProtectedRoute><AdminDashboard /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/analyst" element={<PageTransition><ProtectedRoute><AnalystDashboard /></ProtectedRoute></PageTransition>} />
