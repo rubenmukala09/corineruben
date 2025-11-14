@@ -8,7 +8,7 @@ interface AdminRouteProps {
   children: React.ReactNode;
 }
 
-export const AdminRoute = ({ children }: AdminRouteProps) => {
+export function AdminRoute({ children }: AdminRouteProps) {
   const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
@@ -80,4 +80,4 @@ export const AdminRoute = ({ children }: AdminRouteProps) => {
   }
 
   return <>{children}</>;
-};
+}
