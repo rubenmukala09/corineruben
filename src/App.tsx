@@ -229,6 +229,14 @@ const OrderDetail = lazy(() => {
   });
 });
 
+const InventoryManagement = lazy(() => {
+  performanceMonitor.startTracking('InventoryManagement');
+  return import("./pages/admin/InventoryManagement").then(module => {
+    performanceMonitor.endTracking('InventoryManagement');
+    return module;
+  });
+});
+
 const Portal = lazy(() => {
   performanceMonitor.startTracking('Portal');
   return import("./pages/Portal").then(module => {
@@ -438,6 +446,7 @@ function AnimatedRoutes() {
         <Route path="/admin/ecommerce/products/:id" element={<PageTransition><AdminRoute><ProductEditor /></AdminRoute></PageTransition>} />
         <Route path="/admin/ecommerce/orders" element={<PageTransition><AdminRoute><OrdersList /></AdminRoute></PageTransition>} />
         <Route path="/admin/ecommerce/orders/:id" element={<PageTransition><AdminRoute><OrderDetail /></AdminRoute></PageTransition>} />
+        <Route path="/admin/ecommerce/inventory" element={<PageTransition><AdminRoute><InventoryManagement /></AdminRoute></PageTransition>} />
         <Route path="/portal" element={<PageTransition><ProtectedRoute><Portal /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/admin" element={<PageTransition><ProtectedRoute><AdminDashboard /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/analyst" element={<PageTransition><ProtectedRoute><AnalystDashboard /></ProtectedRoute></PageTransition>} />
