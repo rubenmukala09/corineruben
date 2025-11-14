@@ -86,6 +86,30 @@
 
   <body>
     <div id="root"></div>
+    <script>
+      (async () => {
+        try {
+          if (!sessionStorage.getItem('sw-cleaned-once')) {
+            if ('serviceWorker' in navigator) {
+              const regs = await navigator.serviceWorker.getRegistrations();
+              if (regs.length) {
+                await Promise.all(regs.map(r => r.unregister()));
+              }
+            }
+            if ('caches' in window) {
+              const keys = await caches.keys();
+              if (keys.length) {
+                await Promise.all(keys.map(k => caches.delete(k)));
+              }
+            }
+            sessionStorage.setItem('sw-cleaned-once', '1');
+            location.reload();
+          }
+        } catch (e) {
+          // no-op
+        }
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
