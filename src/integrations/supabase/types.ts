@@ -303,6 +303,42 @@ export type Database = {
           },
         ]
       }
+      auth_audit_logs: {
+        Row: {
+          created_at: string | null
+          email: string | null
+          event_type: string
+          id: string
+          ip_address: string | null
+          metadata: Json | null
+          reason: string | null
+          success: boolean | null
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email?: string | null
+          event_type: string
+          id?: string
+          ip_address?: string | null
+          metadata?: Json | null
+          reason?: string | null
+          success?: boolean | null
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string | null
+          event_type?: string
+          id?: string
+          ip_address?: string | null
+          metadata?: Json | null
+          reason?: string | null
+          success?: boolean | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       booking_requests: {
         Row: {
           admin_notes: string | null
@@ -1769,6 +1805,33 @@ export type Database = {
         }
         Relationships: []
       }
+      password_reset_tokens: {
+        Row: {
+          created_at: string | null
+          email: string
+          expires_at: string
+          id: string
+          token: string
+          used: boolean | null
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          expires_at: string
+          id?: string
+          token: string
+          used?: boolean | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          expires_at?: string
+          id?: string
+          token?: string
+          used?: boolean | null
+        }
+        Relationships: []
+      }
       product_categories: {
         Row: {
           created_at: string
@@ -1992,10 +2055,14 @@ export type Database = {
           date_of_birth: string | null
           department: string | null
           email: string | null
+          failed_login_attempts: number | null
           first_name: string | null
           hire_date: string | null
           id: string
+          last_login_at: string | null
+          last_login_ip: string | null
           last_name: string | null
+          locked_until: string | null
           phone: string | null
           position: string | null
           profile_photo_url: string | null
@@ -2013,10 +2080,14 @@ export type Database = {
           date_of_birth?: string | null
           department?: string | null
           email?: string | null
+          failed_login_attempts?: number | null
           first_name?: string | null
           hire_date?: string | null
           id: string
+          last_login_at?: string | null
+          last_login_ip?: string | null
           last_name?: string | null
+          locked_until?: string | null
           phone?: string | null
           position?: string | null
           profile_photo_url?: string | null
@@ -2034,10 +2105,14 @@ export type Database = {
           date_of_birth?: string | null
           department?: string | null
           email?: string | null
+          failed_login_attempts?: number | null
           first_name?: string | null
           hire_date?: string | null
           id?: string
+          last_login_at?: string | null
+          last_login_ip?: string | null
           last_name?: string | null
+          locked_until?: string | null
           phone?: string | null
           position?: string | null
           profile_photo_url?: string | null
@@ -2584,6 +2659,36 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      verification_codes: {
+        Row: {
+          attempts: number | null
+          code: string
+          created_at: string | null
+          email: string
+          expires_at: string
+          id: string
+          used: boolean | null
+        }
+        Insert: {
+          attempts?: number | null
+          code: string
+          created_at?: string | null
+          email: string
+          expires_at: string
+          id?: string
+          used?: boolean | null
+        }
+        Update: {
+          attempts?: number | null
+          code?: string
+          created_at?: string | null
+          email?: string
+          expires_at?: string
+          id?: string
+          used?: boolean | null
         }
         Relationships: []
       }
