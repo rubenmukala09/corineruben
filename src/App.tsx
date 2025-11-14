@@ -113,6 +113,14 @@ const Login = lazy(() => {
   });
 });
 
+const ResetPassword = lazy(() => {
+  performanceMonitor.startTracking('ResetPassword');
+  return import("./pages/ResetPassword").then(module => {
+    performanceMonitor.endTracking('ResetPassword');
+    return module;
+  });
+});
+
 const Signup = lazy(() => {
   performanceMonitor.startTracking('Signup');
   return import("./pages/Signup").then(module => {
@@ -495,6 +503,7 @@ function AnimatedRoutes() {
         <Route path="/admin/testing/checklist" element={<PageTransition><AdminRoute><TestingChecklist /></AdminRoute></PageTransition>} />
         <Route path="/admin/settings/*" element={<PageTransition><AdminRoute><Settings /></AdminRoute></PageTransition>} />
         <Route path="/maintenance" element={<PageTransition><Maintenance /></PageTransition>} />
+        <Route path="/reset-password" element={<PageTransition><ResetPassword /></PageTransition>} />
         <Route path="/portal" element={<PageTransition><ProtectedRoute><Portal /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/admin" element={<PageTransition><ProtectedRoute><AdminDashboard /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/analyst" element={<PageTransition><ProtectedRoute><AnalystDashboard /></ProtectedRoute></PageTransition>} />

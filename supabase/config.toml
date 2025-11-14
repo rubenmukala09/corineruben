@@ -2,3 +2,12 @@ project_id = "avoafweoebstkgjnbadv"
 
 [functions.ai-chat]
 verify_jwt = false
+
+[functions.send-verification-code]
+verify_jwt = false
+
+[functions.verify-code]
+verify_jwt = false
+
+[functions.send-password-reset]
+verify_jwt = false
