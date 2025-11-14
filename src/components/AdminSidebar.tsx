@@ -93,10 +93,11 @@ const menuItems: MenuItem[] = [
 
 interface AdminSidebarProps {
   isOpen: boolean;
+  onMobileClose?: () => void;
+  isMobileOpen?: boolean;
 }
 
-export const AdminSidebar = ({ isOpen }: AdminSidebarProps) => {
-  const [mobileOpen, setMobileOpen] = useState(false);
+export const AdminSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: AdminSidebarProps) => {
   const [openMenus, setOpenMenus] = useState<string[]>([]);
   const location = useLocation();
   const collapsed = !isOpen;
@@ -131,7 +132,7 @@ export const AdminSidebar = ({ isOpen }: AdminSidebarProps) => {
                   "hover:bg-[#2A2540]",
                   isActive(item.href!) && "bg-[#2A2540] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-[#14B8A6] before:rounded-r"
                 )}
-                onClick={() => setMobileOpen(false)}
+                onClick={onMobileClose}
               >
                 {isActive(item.href!) && (
                   <div className="absolute left-0 top-0 bottom-0 w-1 bg-teal-500 rounded-r-full" />
@@ -197,7 +198,7 @@ export const AdminSidebar = ({ isOpen }: AdminSidebarProps) => {
                         "hover:bg-[#2A2540] relative",
                         isActive(child.href) && "bg-[#2A2540]"
                       )}
-                      onClick={() => setMobileOpen(false)}
+                      onClick={onMobileClose}
                     >
                       {isActive(child.href) && (
                         <div className="absolute left-0 top-0 bottom-0 w-1 bg-teal-500 rounded-r-full" />
@@ -218,18 +219,10 @@ export const AdminSidebar = ({ isOpen }: AdminSidebarProps) => {
 
   return (
     <>
-      {/* Mobile Overlay */}
-      {mobileOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
-          onClick={() => setMobileOpen(false)}
-        />
-      )}
-
       {/* Desktop Sidebar */}
       <aside
         className={cn(
-          "hidden md:block fixed left-0 top-0 h-screen bg-[#1F1B2E] transition-all duration-300 ease-out z-30",
+          "fixed left-0 top-0 h-screen bg-[#1A1626] text-white transition-all duration-300 ease-out z-30 border-r border-white/5 shadow-2xl hidden md:block",
           collapsed ? "w-[70px]" : "w-[260px]"
         )}
       >
@@ -237,14 +230,35 @@ export const AdminSidebar = ({ isOpen }: AdminSidebarProps) => {
       </aside>
 
       {/* Mobile Sidebar */}
-      <aside
-        className={cn(
-          "md:hidden fixed left-0 top-0 h-screen bg-[#1F1B2E] transition-transform duration-300 ease-out z-50 w-[260px]",
-          mobileOpen ? "translate-x-0" : "-translate-x-full"
-        )}
-      >
-        <SidebarContent />
-      </aside>
+      {isMobileOpen && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/60 z-40 md:hidden animate-fade-in backdrop-blur-sm"
+            onClick={onMobileClose}
+          />
+          
+          {/* Mobile Sidebar - Slides in from left */}
+          <aside
+            className={cn(
+              "fixed left-0 top-0 h-screen w-[280px] bg-[#1A1626] text-white z-50 md:hidden",
+              "transform transition-transform duration-300 ease-out shadow-2xl",
+              isMobileOpen ? "translate-x-0" : "-translate-x-full"
+            )}
+          >
+            {/* Close button inside sidebar */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute top-4 right-4 z-10 text-white hover:bg-[#2A2540] rounded-full"
+              onClick={onMobileClose}
+            >
+              <X size={20} />
+            </Button>
+            <SidebarContent />
+          </aside>
+        </>
+      )}
     </>
   );
 };

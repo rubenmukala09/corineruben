@@ -756,6 +756,60 @@ a[role="button"]:active {
     min-height: 44px;
     min-width: 44px;
   }
+
+  /* Stack admin dashboard stats */
+  .admin-stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Mobile table cards */
+  .desktop-table {
+    display: none;
+  }
+
+  .mobile-cards {
+    display: block;
+  }
+
+  /* Reduce chart height on mobile */
+  .admin-chart {
+    height: 250px !important;
+  }
+
+  /* Stack quick actions */
+  .quick-actions-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Full width modals on mobile */
+  .mobile-modal {
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
+    border-radius: 0;
+  }
+}
+
+/* Hide elements on mobile */
+@media (max-width: 768px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+/* Show elements only on mobile */
+@media (min-width: 769px) {
+  .show-mobile {
+    display: none !important;
+  }
+
+  .mobile-cards {
+    display: none;
+  }
+
+  .desktop-table {
+    display: table;
+  }
 }
 
 /* Shake animation for validation errors */
