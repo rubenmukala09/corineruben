@@ -10,6 +10,9 @@ import { Mail, Phone, Settings, Calendar, Wrench, CreditCard, MessageSquare, Key
 import { ClientOverviewTab } from "@/components/admin/clients/ClientOverviewTab";
 import { ClientServicesTab } from "@/components/admin/clients/ClientServicesTab";
 import { ClientBillingTab } from "@/components/admin/clients/ClientBillingTab";
+import { ClientMessagesTab } from "@/components/admin/clients/ClientMessagesTab";
+import { ClientPortalAccessTab } from "@/components/admin/clients/ClientPortalAccessTab";
+import { ClientNotesTab } from "@/components/admin/clients/ClientNotesTab";
 
 const mockClient = {
   id: 1,
@@ -111,39 +114,15 @@ export default function BusinessClientDetail() {
         </TabsContent>
 
         <TabsContent value="messages" className="mt-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Messages & Support Tickets</CardTitle>
-              <CardDescription>Communication history with this client</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">Messages tab coming soon...</p>
-            </CardContent>
-          </Card>
+          <ClientMessagesTab clientId={mockClient.id} />
         </TabsContent>
 
         <TabsContent value="portal" className="mt-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Portal Access</CardTitle>
-              <CardDescription>Client portal login and permissions</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">Portal access tab coming soon...</p>
-            </CardContent>
-          </Card>
+          <ClientPortalAccessTab clientId={mockClient.id} />
         </TabsContent>
 
         <TabsContent value="notes" className="mt-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Internal Notes</CardTitle>
-              <CardDescription>Private notes about this client (not visible to client)</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">Notes tab coming soon...</p>
-            </CardContent>
-          </Card>
+          <ClientNotesTab clientId={mockClient.id} />
         </TabsContent>
       </Tabs>
     </div>
