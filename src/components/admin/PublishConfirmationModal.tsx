@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -8,12 +9,13 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import { CheckCircle, AlertCircle, Calendar, Globe } from "lucide-react";
 
 interface PublishConfirmationModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm: (options?: { sendNewsletter?: boolean; shareOnSocial?: boolean }) => void;
   article: {
     title: string;
     status: "draft" | "scheduled" | "published";
@@ -22,6 +24,7 @@ interface PublishConfirmationModalProps {
     categories: string[];
     tags: string[];
   };
+  seoScore?: number;
 }
 
 export function PublishConfirmationModal({
@@ -29,9 +32,12 @@ export function PublishConfirmationModal({
   onClose,
   onConfirm,
   article,
+  seoScore = 0,
 }: PublishConfirmationModalProps) {
   const isScheduled = article.status === "scheduled";
   const isUpdate = article.status === "published";
+  const [sendNewsletter, setSendNewsletter] = useState(false);
+  const [shareOnSocial, setShareOnSocial] = useState(false);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -164,13 +170,65 @@ export function PublishConfirmationModal({
               </div>
             </div>
           )}
+
+          {/* SEO Score */}
+          {seoScore > 0 && (
+            <div className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-purple-50 border rounded-lg">
+              <div>
+                <p className="text-sm font-medium text-foreground">SEO Score</p>
+                <p className="text-xs text-muted-foreground">Your article's optimization</p>
+              </div>
+              <div className={`text-3xl font-bold ${
+                seoScore >= 80 ? 'text-green-600' : 
+                seoScore >= 60 ? 'text-yellow-600' : 
+                seoScore >= 40 ? 'text-orange-600' : 
+                'text-red-600'
+              }`}>
+                {seoScore}
+                <span className="text-sm text-muted-foreground">/100</span>
+                {seoScore >= 80 && <span className="ml-2 text-base">✓</span>}
+              </div>
+            </div>
+          )}
+
+          {/* Newsletter and Social Checkboxes */}
+          {!isUpdate && (
+            <div className="space-y-3 border-t pt-4">
+              <div className="flex items-center space-x-3">
+                <Checkbox 
+                  id="newsletter" 
+                  checked={sendNewsletter}
+                  onCheckedChange={(checked) => setSendNewsletter(checked as boolean)}
+                />
+                <label
+                  htmlFor="newsletter"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                >
+                  Send to newsletter subscribers
+                </label>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Checkbox 
+                  id="social" 
+                  checked={shareOnSocial}
+                  onCheckedChange={(checked) => setShareOnSocial(checked as boolean)}
+                />
+                <label
+                  htmlFor="social"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                >
+                  Share on social media
+                </label>
+              </div>
+            </div>
+          )}
         </div>
 
         <DialogFooter className="gap-2 sm:gap-0">
           <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
-          <Button onClick={onConfirm}>
+          <Button onClick={() => onConfirm({ sendNewsletter, shareOnSocial })}>
             {isUpdate ? "Update" : isScheduled ? "Schedule" : "Publish Now"}
           </Button>
         </DialogFooter>

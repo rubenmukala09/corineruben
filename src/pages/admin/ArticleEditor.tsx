@@ -99,6 +99,21 @@ export default function ArticleEditor() {
     return checks;
   };
 
+  const getSEOScore = () => {
+    const checks = [
+      { completed: !!article.title, weight: 15 },
+      { completed: wordCount >= 300, weight: 20 },
+      { completed: !!article.focusKeyword, weight: 15 },
+      { completed: !!article.seoTitle && article.seoTitle.length >= 50 && article.seoTitle.length <= 60, weight: 10 },
+      { completed: !!article.seoDescription && article.seoDescription.length >= 120 && article.seoDescription.length <= 160, weight: 15 },
+      { completed: !!article.featuredImage, weight: 15 },
+      { completed: article.focusKeyword && content ? (content.toLowerCase().split(article.focusKeyword.toLowerCase()).length - 1) / content.split(/\s+/).length * 100 >= 0.5 && (content.toLowerCase().split(article.focusKeyword.toLowerCase()).length - 1) / content.split(/\s+/).length * 100 <= 2.5 : false, weight: 10 },
+    ];
+    const totalWeight = checks.reduce((sum, check) => sum + check.weight, 0);
+    const earnedWeight = checks.filter(check => check.completed).reduce((sum, check) => sum + check.weight, 0);
+    return Math.round((earnedWeight / totalWeight) * 100);
+  };
+
   const getMissingFields = () => {
     const missing: string[] = [];
     if (!article.title) missing.push("Title");
@@ -264,7 +279,7 @@ export default function ArticleEditor() {
     setShowPublishModal(true);
   };
 
-  const confirmPublish = async () => {
+  const confirmPublish = async (options?: { sendNewsletter?: boolean; shareOnSocial?: boolean }) => {
     try {
       setPublishing(true);
       setShowPublishModal(false);
@@ -291,6 +306,14 @@ export default function ArticleEditor() {
       setHasUnsavedChanges(false);
       setPublishing(false);
       setShowSuccessModal(true);
+
+      // Log the newsletter and social options (in real app, would trigger actions)
+      if (options?.sendNewsletter) {
+        console.log("Sending to newsletter subscribers...");
+      }
+      if (options?.shareOnSocial) {
+        console.log("Sharing on social media...");
+      }
 
       toast({
         title: articleId ? "Article Updated!" : "Article Published!",
@@ -544,6 +567,7 @@ export default function ArticleEditor() {
         onClose={() => setShowPublishModal(false)}
         onConfirm={confirmPublish}
         article={article}
+        seoScore={getSEOScore()}
       />
 
       {/* Success Modal */}
