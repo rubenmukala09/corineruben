@@ -24,6 +24,7 @@ import {
   Send,
   Globe,
   CreditCard,
+  CheckCircle2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -87,6 +88,14 @@ const menuItems: MenuItem[] = [
       { title: "Site Settings", href: "/admin/settings/site" },
       { title: "Users", href: "/admin/settings/users" },
       { title: "Billing", href: "/admin/settings/billing" },
+    ],
+  },
+  {
+    title: "Testing",
+    icon: CheckCircle2,
+    children: [
+      { title: "System Health", href: "/admin/testing" },
+      { title: "Launch Checklist", href: "/admin/testing/checklist" },
     ],
   },
 ];

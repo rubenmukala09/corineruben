@@ -10,6 +10,34 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     scroll-behavior: smooth;
   }
 
+  /* Prevent FOUC */
+  body:not(.loaded) {
+    opacity: 0;
+  }
+
+  body.loaded {
+    opacity: 1;
+    transition: opacity 0.3s ease-out;
+  }
+
+  /* Instant button feedback */
+  button.active-press,
+  a.active-press {
+    transform: scale(0.95);
+    transition: transform 0.1s ease-out;
+  }
+
+  /* Smooth GPU-accelerated animations */
+  .smooth-animation {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+  }
+
+  /* Remove will-change after animation */
+  .smooth-animation:not(:hover):not(:focus) {
+    will-change: auto;
+  }
+
   :root {
     /* Base colors */
     --background: 0 0% 100%;

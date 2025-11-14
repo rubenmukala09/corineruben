@@ -2,6 +2,12 @@ import './dev-refresh-guard';
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
+import { initPerformanceOptimizations } from "./utils/performanceOptimization";
+
+// Initialize performance optimizations
+if (typeof window !== 'undefined') {
+  initPerformanceOptimizations();
+}
 
 // Register service worker only in production
 if ('serviceWorker' in navigator) {
