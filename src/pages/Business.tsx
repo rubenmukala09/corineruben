@@ -239,19 +239,19 @@ function Business() {
       <section id="automation-pricing" className="py-20 bg-muted">
         <div className="container mx-auto px-4">
           <h2 className="text-center mb-12">AI Agents & Automation Pricing</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             <ScrollReveal animation="slide-left" delay={0}>
-              <Card className="p-8">
-                <h3 className="text-2xl font-bold mb-4">AI Receptionist & Intake Agent</h3>
-                <p className="text-muted-foreground mb-6">Answer calls/chats 24/7, book appointments</p>
-                <p ref={price1Counter.ref} className="text-4xl font-bold text-accent mb-6">
+              <Card className="p-6 md:p-8 active:scale-98">
+                <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">AI Receptionist & Intake Agent</h3>
+                <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">Answer calls/chats 24/7, book appointments</p>
+                <p ref={price1Counter.ref} className="text-3xl md:text-4xl font-bold text-accent mb-4 md:mb-6">
                   {price1Counter.displayValue}
                 </p>
 ...
                 <Button 
                   asChild
                   variant="default" 
-                  className="w-full transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] hover:scale-[1.02]"
+                  className="w-full transition-all duration-300 md:hover:bg-primary/90 md:hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] md:hover:scale-[1.02] active:scale-95 h-11 md:h-10"
                 >
                   <Link to="/contact?service=ai-receptionist&plan=9500">
                     GET STARTED
@@ -261,17 +261,17 @@ function Business() {
             </ScrollReveal>
 
             <ScrollReveal animation="scale-in" delay={200}>
-              <Card className="p-8">
-                <h3 className="text-2xl font-bold mb-4">Follow-Up Automation System</h3>
-                <p className="text-muted-foreground mb-6">Automated email/SMS campaigns, lead nurturing</p>
-                <p ref={price2Counter.ref} className="text-4xl font-bold text-accent mb-6">
+              <Card className="p-6 md:p-8 active:scale-98">
+                <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">Follow-Up Automation System</h3>
+                <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">Automated email/SMS campaigns, lead nurturing</p>
+                <p ref={price2Counter.ref} className="text-3xl md:text-4xl font-bold text-accent mb-4 md:mb-6">
                   {price2Counter.displayValue}
                 </p>
 ...
                 <Button 
                   asChild
                   variant="default" 
-                  className="w-full transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] hover:scale-[1.02]"
+                  className="w-full transition-all duration-300 md:hover:bg-primary/90 md:hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] md:hover:scale-[1.02] active:scale-95 h-11 md:h-10"
                 >
                   <Link to="/contact?service=automation&plan=12500">
                     GET STARTED
@@ -281,17 +281,17 @@ function Business() {
             </ScrollReveal>
 
             <ScrollReveal animation="slide-right" delay={400}>
-              <Card className="p-8 border-2 border-accent">
-                <h3 className="text-2xl font-bold mb-4">Custom Automation Suite</h3>
-                <p className="text-muted-foreground mb-6">Multi-system operations</p>
-                <p ref={price3Counter.ref} className="text-4xl font-bold text-accent mb-6">
+              <Card className="p-6 md:p-8 border-2 border-accent active:scale-98">
+                <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">Custom Automation Suite</h3>
+                <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">Multi-system operations</p>
+                <p ref={price3Counter.ref} className="text-3xl md:text-4xl font-bold text-accent mb-4 md:mb-6">
                   {price3Counter.displayValue}
                 </p>
 ...
                 <Button 
                   asChild
                   variant="default" 
-                  className="w-full transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] hover:scale-[1.02]"
+                  className="w-full transition-all duration-300 md:hover:bg-primary/90 md:hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] md:hover:scale-[1.02] active:scale-95 h-11 md:h-10"
                 >
                   <Link to="/contact?service=custom&plan=25000">
                     GET STARTED

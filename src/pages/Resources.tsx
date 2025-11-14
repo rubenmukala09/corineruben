@@ -231,31 +231,31 @@ function Resources() {
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {guides.map((guide, index) => (
               <ScrollReveal key={index} animation="fade-up" delay={index * 100}>
-                <Card className={`group relative overflow-hidden h-full flex flex-col bg-gradient-to-br ${guide.gradient} border-border/50 hover:border-primary/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl`}>
+                <Card className={`group relative overflow-hidden h-full flex flex-col bg-gradient-to-br ${guide.gradient} border-border/50 hover:border-primary/50 transition-all duration-500 md:hover:-translate-y-2 md:hover:shadow-2xl active:scale-98`}>
                   <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
-                  <div className="p-8 flex flex-col h-full relative z-10">
-                    <div className="flex justify-center mb-6">
+                  <div className="p-6 md:p-8 flex flex-col h-full relative z-10">
+                    <div className="flex justify-center mb-4 md:mb-6">
                       <div className="relative">
-                        <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full group-hover:blur-2xl transition-all duration-500" />
-                        <div className="relative w-20 h-20 bg-gradient-to-br from-primary/90 to-accent/90 rounded-2xl flex items-center justify-center transform group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 shadow-lg">
-                          <guide.icon className="w-10 h-10 text-primary-foreground" />
+                        <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full md:group-hover:blur-2xl transition-all duration-500" />
+                        <div className="relative w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-primary/90 to-accent/90 rounded-2xl flex items-center justify-center md:transform md:group-hover:rotate-6 md:group-hover:scale-110 transition-all duration-500 shadow-lg">
+                          <guide.icon className="w-8 h-8 md:w-10 md:h-10 text-primary-foreground" />
                         </div>
                       </div>
                     </div>
 
-                    <h3 className="text-2xl font-bold mb-4 text-center group-hover:text-primary transition-colors duration-300">
+                    <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 text-center md:group-hover:text-primary transition-colors duration-300">
                       {guide.title}
                     </h3>
-                    <p className="text-muted-foreground text-center mb-6 flex-grow leading-relaxed text-sm">
+                    <p className="text-sm md:text-sm text-muted-foreground text-center mb-4 md:mb-6 flex-grow leading-relaxed">
                       {guide.desc}
                     </p>
 
-                    <div className="mt-auto space-y-4">
-                      <div className="flex items-center justify-center gap-2 text-2xl font-bold text-primary">
+                    <div className="mt-auto space-y-3 md:space-y-4">
+                      <div className="flex items-center justify-center gap-2 text-xl md:text-2xl font-bold text-primary">
                         <span className="text-sm text-muted-foreground">from</span>
                         ${guide.price}
                       </div>
@@ -263,7 +263,7 @@ function Resources() {
                       {guide.slug && guide.price ? (
                         <Button 
                           asChild
-                          className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 group/btn"
+                          className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground shadow-lg md:hover:shadow-xl transition-all duration-300 group/btn h-11 md:h-10"
                           size="lg"
                         >
                           <Link to={`/contact?service=purchase&item=${guide.slug}&price=${guide.price}`}>

@@ -110,57 +110,57 @@ function About() {
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
           <h2 className="text-center mb-16">Our Values</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto" style={{ perspective: '1000px' }}>
-            <Card className="p-8 rounded-2xl border-border/50 value-card opacity-0 animate-[flip-in_0.7s_ease-out_0s_forwards] group hover:-translate-y-1.5 hover:shadow-strong transition-all duration-300">
-              <div className="flex items-start gap-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:animate-[bounce_0.5s_ease-in-out]">
-                  <Heart className="w-8 h-8 text-primary" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto" style={{ perspective: '1000px' }}>
+            <Card className="p-6 md:p-8 rounded-2xl border-border/50 value-card opacity-0 animate-[flip-in_0.7s_ease-out_0s_forwards] group md:hover:-translate-y-1.5 md:hover:shadow-strong transition-all duration-300 active:scale-98">
+              <div className="flex items-start gap-3 md:gap-4">
+                <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-300 md:group-hover:animate-[bounce_0.5s_ease-in-out]">
+                  <Heart className="w-7 h-7 md:w-8 md:h-8 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold mb-3">Respect Over Fear</h3>
-                  <p className="text-muted-foreground">
+                  <h3 className="text-xl md:text-2xl font-bold mb-2 md:mb-3">Respect Over Fear</h3>
+                  <p className="text-sm md:text-base text-muted-foreground">
                     We don't patronize. We don't use scare tactics. We educate with clarity and dignity.
                   </p>
                 </div>
               </div>
             </Card>
 
-            <Card className="p-8 rounded-2xl border-border/50 value-card opacity-0 animate-[flip-in_0.7s_ease-out_0.15s_forwards] group hover:-translate-y-1.5 hover:shadow-strong transition-all duration-300">
-              <div className="flex items-start gap-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:animate-[bounce_0.5s_ease-in-out]">
-                  <Lock className="w-8 h-8 text-primary" />
+            <Card className="p-6 md:p-8 rounded-2xl border-border/50 value-card opacity-0 animate-[flip-in_0.7s_ease-out_0.15s_forwards] group md:hover:-translate-y-1.5 md:hover:shadow-strong transition-all duration-300 active:scale-98">
+              <div className="flex items-start gap-3 md:gap-4">
+                <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-300 md:group-hover:animate-[bounce_0.5s_ease-in-out]">
+                  <Lock className="w-7 h-7 md:w-8 md:h-8 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold mb-3">Privacy is Sacred</h3>
-                  <p className="text-muted-foreground">
+                  <h3 className="text-xl md:text-2xl font-bold mb-2 md:mb-3">Privacy is Sacred</h3>
+                  <p className="text-sm md:text-base text-muted-foreground">
                     We will NEVER ask for passwords, bank info, or Social Security numbers. Period.
                   </p>
                 </div>
               </div>
             </Card>
 
-            <Card className="p-8 rounded-2xl border-border/50 value-card opacity-0 animate-[flip-in_0.7s_ease-out_0.3s_forwards] group hover:-translate-y-1.5 hover:shadow-strong transition-all duration-300">
-              <div className="flex items-start gap-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:animate-[bounce_0.5s_ease-in-out]">
-                  <BookOpen className="w-8 h-8 text-primary" />
+            <Card className="p-6 md:p-8 rounded-2xl border-border/50 value-card opacity-0 animate-[flip-in_0.7s_ease-out_0.3s_forwards] group md:hover:-translate-y-1.5 md:hover:shadow-strong transition-all duration-300 active:scale-98">
+              <div className="flex items-start gap-3 md:gap-4">
+                <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-300 md:group-hover:animate-[bounce_0.5s_ease-in-out]">
+                  <BookOpen className="w-7 h-7 md:w-8 md:h-8 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold mb-3">Plain English, Always</h3>
-                  <p className="text-muted-foreground">
+                  <h3 className="text-xl md:text-2xl font-bold mb-2 md:mb-3">Plain English, Always</h3>
+                  <p className="text-sm md:text-base text-muted-foreground">
                     No jargon. No tech-speak. Just clear, actionable guidance anyone can follow.
                   </p>
                 </div>
               </div>
             </Card>
 
-            <Card className="p-8 rounded-2xl border-border/50 value-card opacity-0 animate-[flip-in_0.7s_ease-out_0.45s_forwards] group hover:-translate-y-1.5 hover:shadow-strong transition-all duration-300">
-              <div className="flex items-start gap-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:animate-[bounce_0.5s_ease-in-out]">
-                  <Users2 className="w-8 h-8 text-primary" />
+            <Card className="p-6 md:p-8 rounded-2xl border-border/50 value-card opacity-0 animate-[flip-in_0.7s_ease-out_0.45s_forwards] group md:hover:-translate-y-1.5 md:hover:shadow-strong transition-all duration-300 active:scale-98">
+              <div className="flex items-start gap-3 md:gap-4">
+                <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-300 md:group-hover:animate-[bounce_0.5s_ease-in-out]">
+                  <Users2 className="w-7 h-7 md:w-8 md:h-8 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold mb-3">INTEGRITY</h3>
-                  <p className="text-muted-foreground">
+                  <h3 className="text-xl md:text-2xl font-bold mb-2 md:mb-3">INTEGRITY</h3>
+                  <p className="text-sm md:text-base text-muted-foreground">
                     Transparent, honest, ethical
                   </p>
                 </div>

@@ -15,9 +15,9 @@ const Footer = () => {
         <div className="absolute bottom-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '8s' }} />
       </div>
       
-      <div className="container mx-auto px-4 py-12 relative z-10">
+      <div className="container mx-auto px-4 py-8 md:py-12 relative z-10">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8 mb-8">
           {/* Column 1: Quick Links */}
           <div>
             <h3 className="font-bold text-lg mb-4">Quick Links</h3>
@@ -142,7 +142,7 @@ const Footer = () => {
           </div>
 
           {/* Column 5: Community */}
-          <div>
+          <div className="sm:col-span-2 lg:col-span-1">
             <h3 className="font-bold text-lg mb-4">Community</h3>
             <ul className="space-y-2">
               <li className="text-primary-foreground/80">20% Military Discount</li>
@@ -162,64 +162,64 @@ const Footer = () => {
         </div>
 
         {/* Newsletter Signup */}
-        <div className="bg-primary-foreground/10 rounded-lg p-6 mb-8">
-          <h3 className="font-bold text-xl mb-2">Monthly AI Safety Tips</h3>
-          <p className="text-primary-foreground/80 mb-4 text-base">Stay informed about the latest scams and protection strategies.</p>
+        <div className="bg-primary-foreground/10 rounded-lg p-4 md:p-6 mb-6 md:mb-8">
+          <h3 className="font-bold text-lg md:text-xl mb-2">Monthly AI Safety Tips</h3>
+          <p className="text-primary-foreground/80 mb-4 text-sm md:text-base">Stay informed about the latest scams and protection strategies.</p>
           <form className="flex flex-col sm:flex-row gap-3">
             <Input
               type="email"
               placeholder="Your email address"
-              className="bg-primary-foreground/20 border-primary-foreground/30 text-primary-foreground placeholder:text-primary-foreground/50"
+              className="bg-primary-foreground/20 border-primary-foreground/30 text-primary-foreground placeholder:text-primary-foreground/50 h-11 md:h-10"
             />
-            <Button variant="default" className="bg-accent hover:bg-accent/90" type="submit">
+            <Button variant="default" className="bg-accent hover:bg-accent/90 h-11 md:h-10 whitespace-nowrap" type="submit">
               SUBSCRIBE
             </Button>
           </form>
         </div>
 
         {/* Social Media */}
-        <div className="flex justify-center space-x-6 mb-8">
+        <div className="flex justify-center gap-4 md:gap-6 mb-6 md:mb-8">
           <a 
             href="https://facebook.com/invisionnetwork" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-primary-foreground/80 hover:text-accent transition-all transform hover:scale-125 hover:rotate-6 duration-300 p-2 hover:bg-accent/10 rounded-full" 
+            className="text-primary-foreground/80 hover:text-accent transition-all md:transform md:hover:scale-125 md:hover:rotate-6 duration-300 p-2 hover:bg-accent/10 rounded-full active:scale-95" 
             aria-label="Follow us on Facebook"
           >
-            <Facebook className="w-6 h-6" />
+            <Facebook className="w-6 h-6 md:w-6 md:h-6" />
           </a>
           <a 
             href="https://linkedin.com/company/invisionnetwork" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-primary-foreground/80 hover:text-accent transition-all transform hover:scale-125 hover:rotate-6 duration-300 p-2 hover:bg-accent/10 rounded-full" 
+            className="text-primary-foreground/80 hover:text-accent transition-all md:transform md:hover:scale-125 md:hover:rotate-6 duration-300 p-2 hover:bg-accent/10 rounded-full active:scale-95" 
             aria-label="Connect with us on LinkedIn"
           >
-            <Linkedin className="w-6 h-6" />
+            <Linkedin className="w-6 h-6 md:w-6 md:h-6" />
           </a>
           <a 
             href="https://youtube.com/@invisionnetwork" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-primary-foreground/80 hover:text-accent transition-all transform hover:scale-125 hover:rotate-6 duration-300 p-2 hover:bg-accent/10 rounded-full" 
+            className="text-primary-foreground/80 hover:text-accent transition-all md:transform md:hover:scale-125 md:hover:rotate-6 duration-300 p-2 hover:bg-accent/10 rounded-full active:scale-95" 
             aria-label="Subscribe to our YouTube channel"
           >
-            <Youtube className="w-6 h-6" />
+            <Youtube className="w-6 h-6 md:w-6 md:h-6" />
           </a>
           <a 
             href="https://instagram.com/invisionnetwork" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-primary-foreground/80 hover:text-accent transition-all transform hover:scale-125 hover:rotate-6 duration-300 p-2 hover:bg-accent/10 rounded-full" 
+            className="text-primary-foreground/80 hover:text-accent transition-all md:transform md:hover:scale-125 md:hover:rotate-6 duration-300 p-2 hover:bg-accent/10 rounded-full active:scale-95" 
             aria-label="Follow us on Instagram"
           >
-            <Instagram className="w-6 h-6" />
+            <Instagram className="w-6 h-6 md:w-6 md:h-6" />
           </a>
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-primary-foreground/20 pt-8 pb-4">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="border-t border-primary-foreground/20 pt-6 md:pt-8 pb-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-4">
             <p className="text-primary-foreground/80 text-sm text-center md:text-left">
               © {new Date().getFullYear()} InVision Network. All rights reserved.
             </p>

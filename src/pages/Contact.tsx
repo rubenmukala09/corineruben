@@ -282,7 +282,7 @@ function Contact() {
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <h2 className="text-center mb-12">How We Can Help You Today</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-6">
             {[
               {
                 icon: Shield,
@@ -305,14 +305,14 @@ function Contact() {
                 desc: "Questions about our services, pricing, or partnerships"
               }
             ].map((item, index) => (
-              <Card key={index} className="p-6 text-center hover:shadow-strong transition-all hover:-translate-y-2">
-                <div className="flex justify-center mb-4">
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
-                    <item.icon className="w-8 h-8 text-primary" />
+              <Card key={index} className="p-4 md:p-6 text-center md:hover:shadow-strong transition-all md:hover:-translate-y-2 active:scale-98">
+                <div className="flex justify-center mb-3 md:mb-4">
+                  <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
+                    <item.icon className="w-7 h-7 md:w-8 md:h-8 text-primary" />
                   </div>
                 </div>
-                <h3 className="font-bold mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">{item.desc}</p>
+                <h3 className="font-bold mb-2 text-base md:text-lg">{item.title}</h3>
+                <p className="text-xs md:text-sm text-muted-foreground">{item.desc}</p>
               </Card>
             ))}
           </div>
