@@ -137,11 +137,11 @@ export function DashboardStats() {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 admin-stats-grid">
         {[...Array(4)].map((_, i) => (
           <div
             key={i}
-            className="h-48 rounded-xl bg-muted/50 animate-pulse"
+            className="h-40 sm:h-48 rounded-xl bg-muted/50 animate-shimmer"
           />
         ))}
       </div>
@@ -149,7 +149,7 @@ export function DashboardStats() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 admin-stats-grid">
       <DashboardStatCard
         icon={Users}
         iconBgColor="bg-gradient-to-br from-accent/80 to-accent"
