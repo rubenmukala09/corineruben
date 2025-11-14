@@ -230,7 +230,74 @@ export default function BusinessClients() {
         </div>
       ) : (
         <>
-          <div className="border rounded-lg overflow-hidden">
+          {/* Mobile Card View */}
+          <div className="space-y-4 mobile-cards">
+            {filteredClients.map((client) => {
+              const isSelected = selectedClients.includes(client.id);
+              return (
+                <div
+                  key={client.id}
+                  className="bg-card border border-border rounded-lg p-4 active:scale-[0.98] transition-transform"
+                  onClick={() => navigate(`/admin/clients/businesses/${client.id}`)}
+                >
+                  <div className="flex items-start gap-3 mb-4 pb-4 border-b border-border">
+                    <div className="flex-shrink-0" onClick={(e) => e.stopPropagation()}>
+                      <Checkbox 
+                        checked={isSelected}
+                        onCheckedChange={() => toggleClientSelection(client.id)}
+                      />
+                    </div>
+                    <Avatar className="h-12 w-12 rounded-md flex-shrink-0">
+                      <AvatarImage src={client.logo} />
+                      <AvatarFallback className="rounded-md bg-primary/10 text-primary">
+                        {client.companyName.substring(0, 2).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between gap-2 mb-1">
+                        <h3 className="font-semibold text-base truncate">{client.companyName}</h3>
+                        {getStatusBadge(client.status)}
+                      </div>
+                      <p className="text-sm text-muted-foreground">{client.contactName}</p>
+                      <p className="text-xs text-muted-foreground">{client.contactEmail}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <div>
+                      <div className="text-xs text-muted-foreground mb-1 font-medium">Services</div>
+                      {getServiceBadges(client.services)}
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <div className="text-xs text-muted-foreground mb-1 font-medium">MRR</div>
+                        <div className="text-lg font-bold">${client.mrr}</div>
+                      </div>
+                      <div>
+                        <div className="text-xs text-muted-foreground mb-1 font-medium">Join Date</div>
+                        <div className="text-sm">{client.joinDate}</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-2 mt-4 pt-4 border-t border-border" onClick={(e) => e.stopPropagation()}>
+                    <Button variant="outline" size="sm" className="flex-1">
+                      <Eye className="mr-2 h-4 w-4" />
+                      View
+                    </Button>
+                    <Button variant="outline" size="sm" className="flex-1">
+                      <Mail className="mr-2 h-4 w-4" />
+                      Email
+                    </Button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Desktop Table View */}
+          <div className="border rounded-lg overflow-hidden desktop-table">
             <Table>
               <TableHeader>
                 <TableRow>

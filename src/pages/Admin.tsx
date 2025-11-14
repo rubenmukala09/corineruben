@@ -10,20 +10,32 @@ import { Card } from "@/components/ui/card";
 
 export default function Admin() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <AdminSidebar isOpen={sidebarOpen} />
+    <div className="flex min-h-screen bg-background w-full">
+      <AdminSidebar 
+        isOpen={sidebarOpen} 
+        isMobileOpen={mobileSidebarOpen}
+        onMobileClose={() => setMobileSidebarOpen(false)}
+      />
       
       {/* Top Bar */}
       <AdminTopBar 
         sidebarOpen={sidebarOpen} 
-        toggleSidebar={() => setSidebarOpen(!sidebarOpen)} 
+        toggleSidebar={() => {
+          // On mobile, toggle mobile sidebar
+          if (window.innerWidth < 768) {
+            setMobileSidebarOpen(!mobileSidebarOpen);
+          } else {
+            setSidebarOpen(!sidebarOpen);
+          }
+        }} 
       />
       
       {/* Main Content */}
-      <main className={`flex-1 transition-all duration-300 pt-16 ${sidebarOpen ? 'md:ml-[260px]' : 'md:ml-[70px]'}`}>
-        <div className="p-8">
+      <main className={`flex-1 transition-all duration-300 pt-16 w-full ${sidebarOpen ? 'md:ml-[260px]' : 'md:ml-[70px]'}`}>
+        <div className="p-4 sm:p-6 md:p-8">
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
@@ -36,7 +48,7 @@ export default function Admin() {
           <DashboardStats />
 
           {/* Revenue Overview Chart & Recent Activity */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
             <div className="lg:col-span-2">
               <RevenueChart />
             </div>
