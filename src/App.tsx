@@ -9,6 +9,7 @@ import { AdminRoute } from "./components/AdminRoute";
 import { AIChat } from "./components/AIChat";
 import { AIChatProvider } from "./contexts/AIChatContext";
 import { CartProvider } from "./contexts/CartContext";
+import { SubscriptionProvider } from "./contexts/SubscriptionContext";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { PerformanceDashboard } from "./components/PerformanceDashboard";
 import { RouteTracker } from "./components/RouteTracker";
@@ -370,6 +371,8 @@ const NotFound = lazy(() => {
   });
 });
 
+const Subscriptions = lazy(() => import("./pages/admin/SubscriptionsRoute"));
+
 const SystemHealthDashboard = lazy(() => {
   performanceMonitor.startTracking('SystemHealthDashboard');
   return import("./pages/admin/SystemHealthDashboard").then(module => {
@@ -512,6 +515,7 @@ function AnimatedRoutes() {
         <Route path="/admin/testing" element={<PageTransition><AdminRoute><SystemHealthDashboard /></AdminRoute></PageTransition>} />
         <Route path="/admin/testing/checklist" element={<PageTransition><AdminRoute><TestingChecklist /></AdminRoute></PageTransition>} />
         <Route path="/admin/settings/*" element={<PageTransition><AdminRoute><Settings /></AdminRoute></PageTransition>} />
+        <Route path="/admin/subscriptions" element={<PageTransition><AdminRoute><Subscriptions /></AdminRoute></PageTransition>} />
         <Route path="/maintenance" element={<PageTransition><Maintenance /></PageTransition>} />
         <Route path="/reset-password" element={<PageTransition><ResetPassword /></PageTransition>} />
         <Route path="/portal" element={<PageTransition><ProtectedRoute><Portal /></ProtectedRoute></PageTransition>} />
@@ -547,27 +551,29 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Toaster />
       <Sonner />
-      <CartProvider>
-        <AIChatProvider>
-          <BrowserRouter>
-            <SkipToContent />
-            <NavigationProgress />
-            <ScrollToTop />
-            <ScrollProgressBar />
-            <RouteTracker />
-            <AnalyticsTracker />
-            <ErrorBoundary>
-              <Breadcrumb />
-              <Suspense fallback={<PageLoader />}>
-                <AnimatedRoutes />
-              </Suspense>
-            </ErrorBoundary>
-            <AIChat />
-            <CookieConsent />
-            <PerformanceDashboard />
-          </BrowserRouter>
-        </AIChatProvider>
-      </CartProvider>
+      <SubscriptionProvider>
+        <CartProvider>
+          <AIChatProvider>
+            <BrowserRouter>
+              <SkipToContent />
+              <NavigationProgress />
+              <ScrollToTop />
+              <ScrollProgressBar />
+              <RouteTracker />
+              <AnalyticsTracker />
+              <ErrorBoundary>
+                <Breadcrumb />
+                <Suspense fallback={<PageLoader />}>
+                  <AnimatedRoutes />
+                </Suspense>
+              </ErrorBoundary>
+              <AIChat />
+              <CookieConsent />
+              <PerformanceDashboard />
+            </BrowserRouter>
+          </AIChatProvider>
+        </CartProvider>
+      </SubscriptionProvider>
     </QueryClientProvider>
   );
 }
