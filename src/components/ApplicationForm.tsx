@@ -222,6 +222,19 @@ export const ApplicationForm = ({ positions }: ApplicationFormProps) => {
     setIsSubmitting(true);
 
     try {
+      // Upload resume to storage first
+      const fileExt = resumeFile.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+      const resumePath = `resumes/${fileName}`;
+
+      const { error: resumeUploadError } = await supabase.storage
+        .from('veteran-docs')
+        .upload(resumePath, resumeFile);
+
+      if (resumeUploadError) {
+        throw new Error("Failed to upload resume");
+      }
+
       // Upload veteran document if applicable
       let veteranDocPath = null;
       if (isVeteran && veteranDocFile) {
@@ -230,6 +243,33 @@ export const ApplicationForm = ({ positions }: ApplicationFormProps) => {
           throw new Error("Failed to upload veteran document");
         }
       }
+
+      // Save application to database
+      const { data: application, error: dbError } = await supabase
+        .from('job_applications')
+        .insert({
+          first_name: data.firstName,
+          last_name: data.lastName,
+          email: data.email,
+          phone: data.phone,
+          position: data.position,
+          cover_letter: data.coverLetter,
+          linkedin_url: data.linkedIn || null,
+          availability: data.availability,
+          resume_url: resumePath,
+          is_veteran: isVeteran,
+          veteran_doc_url: veteranDocPath,
+          status: 'pending'
+        })
+        .select()
+        .single();
+
+      if (dbError) {
+        console.error('Database error:', dbError);
+        throw new Error("Failed to save application");
+      }
+
+      console.log('Application saved:', application.id);
 
       // Encode data for WhatsApp message
       const message = `New Job Application:

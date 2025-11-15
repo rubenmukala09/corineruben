@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 
 const resendApiKey = Deno.env.get("RESEND_API_KEY")!;
 
@@ -28,6 +29,34 @@ const handler = async (req: Request): Promise<Response> => {
     const { name, email, phone, interest, message, language, preferredDate }: ContactEmailRequest = await req.json();
 
     console.log("Sending contact form email:", { name, email, interest });
+
+    // Create Supabase client
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+    // Save to database first
+    const { data: inquiry, error: dbError } = await supabase
+      .from('website_inquiries')
+      .insert({
+        name,
+        email,
+        phone: phone || null,
+        inquiry_type: interest,
+        subject: interest,
+        message,
+        metadata: { language, preferredDate },
+        status: 'new'
+      })
+      .select()
+      .single();
+
+    if (dbError) {
+      console.error('Database insertion error:', dbError);
+      // Continue with email even if DB fails
+    } else {
+      console.log('Inquiry saved to database:', inquiry.id);
+    }
 
     // Send email to admin
     const adminEmailResponse = await fetch("https://api.resend.com/emails", {
