@@ -32,25 +32,16 @@ interface HeroProps {
 }
 
 const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, children, className, overlay = false, showScrollIndicator = false, showPrivacyDisclaimer = false, showProtectionBadge = false, badgeText, showTrustIndicators = false }: HeroProps) => {
-  const [showDisclaimer, setShowDisclaimer] = useState(true);
   const { ref, y, opacity } = useParallax({ speed: 0.5 });
   
   // Preload background image(s)
   const singleImagePreloaded = useImagePreload(backgroundImage ? [backgroundImage] : []);
   const useCarousel = backgroundImages && backgroundImages.length > 0;
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowDisclaimer(false);
-    }, 10000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <div 
       ref={ref}
-      className={cn("relative min-h-[400px] md:min-h-[500px] flex items-center overflow-hidden hero-mobile", className)}
+      className={cn("relative min-h-[600px] md:min-h-[700px] lg:min-h-[800px] flex items-center overflow-hidden hero-mobile", className)}
     >
       {/* Background with Parallax */}
       <motion.div 
@@ -139,36 +130,6 @@ const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, childr
       {/* Scroll Indicator */}
       {showScrollIndicator && <ScrollIndicator />}
       
-      {/* Privacy trust badge - compact and subtle */}
-      {showPrivacyDisclaimer && showDisclaimer && (
-        <div className="absolute bottom-4 left-4 z-10 group max-w-xs">
-          <div className="relative bg-gradient-to-br from-primary/80 to-accent/80 backdrop-blur-xl text-white px-3 py-2 rounded-lg border border-white/10 shadow-2xl drop-shadow-lg transition-all duration-300 hover:scale-105">
-            <div className="flex items-start gap-2">
-              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-white/15 flex items-center justify-center backdrop-blur-sm">
-                <Shield className="w-3 h-3 text-white" />
-              </div>
-              <div className="flex-1">
-                <p className="font-semibold text-xs mb-0.5 flex items-center gap-1.5">
-                  Privacy-Protected
-                  <Badge variant="secondary" className="text-[8px] px-1.5 py-0 bg-white/15">
-                    Safe
-                  </Badge>
-                </p>
-                <p className="text-[10px] text-white/85 leading-snug">
-                  AI-generated imagery. Zero personal data.
-                </p>
-              </div>
-              <button
-                onClick={() => setShowDisclaimer(false)}
-                className="text-white/60 hover:text-white transition-colors flex-shrink-0 text-xs"
-                aria-label="Dismiss privacy notice"
-              >
-                ✕
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

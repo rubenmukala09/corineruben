@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Search, ThumbsUp, ThumbsDown, Phone, MessageCircle, ChevronDown, Mail, TrendingUp, Copy, Check, Zap, Brain, Cloud, Database, Lock, Globe, Cpu, Shield } from "lucide-react";
+import { Search, ThumbsUp, ThumbsDown, Phone, MessageCircle, ChevronDown, Mail, TrendingUp, Copy, Check, Zap, Brain, Cloud, Database, Lock, Globe, Cpu, Shield, HelpCircle, Lightbulb, DollarSign, MessageSquare } from "lucide-react";
 import { ScrollRevealSection } from "@/components/ScrollRevealSection";
 import { CategoryTabs } from "@/components/CategoryTabs";
 import { FloatingHelpButton } from "@/components/FloatingHelpButton";
