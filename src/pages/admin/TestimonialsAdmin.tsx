@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { AdminSidebar } from "@/components/AdminSidebar";
 import { AdminTopBar } from "@/components/AdminTopBar";
+import { VideoTestimonialUpload } from "@/components/admin/VideoTestimonialUpload";
 
 import { AddTestimonialModal } from "@/components/admin/AddTestimonialModal";
 import { Button } from "@/components/ui/button";
@@ -49,6 +50,7 @@ import {
   X,
   Download,
   Check,
+  Video,
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
@@ -77,6 +79,7 @@ export default function TestimonialsAdmin() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [testimonialToDelete, setTestimonialToDelete] = useState<string | null>(null);
   const [addModalOpen, setAddModalOpen] = useState(false);
+  const [videoUploadOpen, setVideoUploadOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const { toast } = useToast();
@@ -420,10 +423,16 @@ export default function TestimonialsAdmin() {
               <p className="text-muted-foreground mb-6">
                 Add your first testimonial to showcase customer feedback
               </p>
+            <div className="flex gap-2">
+              <Button variant="outline" onClick={() => setVideoUploadOpen(true)}>
+                <Video className="h-4 w-4 mr-2" />
+                Upload Video
+              </Button>
               <Button onClick={() => setAddModalOpen(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 Add Testimonial
               </Button>
+            </div>
             </div>
           ) : (
             <>
@@ -621,6 +630,13 @@ export default function TestimonialsAdmin() {
       <AddTestimonialModal
         open={addModalOpen}
         onOpenChange={setAddModalOpen}
+        onSuccess={fetchTestimonials}
+      />
+      
+      {/* Video Upload Modal */}
+      <VideoTestimonialUpload
+        open={videoUploadOpen}
+        onOpenChange={setVideoUploadOpen}
         onSuccess={fetchTestimonials}
       />
     </div>

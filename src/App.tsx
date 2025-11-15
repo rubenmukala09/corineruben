@@ -13,6 +13,7 @@ import { SubscriptionProvider } from "./contexts/SubscriptionContext";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { RouteTracker } from "./components/RouteTracker";
 import { DraggablePerformanceMonitor } from "./components/DraggablePerformanceMonitor";
+import { useAnalyticsTracking } from "./hooks/useAnalyticsTracking";
 
 import { PageTransition } from "./components/PageTransition";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -199,6 +200,14 @@ const EmailCampaigns = lazy(() => {
   performanceMonitor.startTracking('EmailCampaigns');
   return import("./pages/admin/EmailCampaigns").then(module => {
     performanceMonitor.endTracking('EmailCampaigns');
+    return module;
+  });
+});
+
+const Analytics = lazy(() => {
+  performanceMonitor.startTracking('Analytics');
+  return import("./pages/admin/Analytics").then(module => {
+    performanceMonitor.endTracking('Analytics');
     return module;
   });
 });
@@ -511,6 +520,7 @@ function AnimatedRoutes() {
         <Route path="/admin/articles/preview" element={<PageTransition><AdminRoute><ArticlePreview /></AdminRoute></PageTransition>} />
         <Route path="/admin/content/team" element={<PageTransition><AdminRoute><TeamAdmin /></AdminRoute></PageTransition>} />
         <Route path="/admin/email-campaigns" element={<PageTransition><AdminRoute><EmailCampaigns /></AdminRoute></PageTransition>} />
+        <Route path="/admin/analytics" element={<PageTransition><AdminRoute><Analytics /></AdminRoute></PageTransition>} />
         <Route path="/admin/clients/businesses" element={<PageTransition><AdminRoute><BusinessClients /></AdminRoute></PageTransition>} />
         <Route path="/admin/clients/businesses/:id" element={<PageTransition><AdminRoute><BusinessClientDetail /></AdminRoute></PageTransition>} />
         <Route path="/admin/clients/individuals" element={<PageTransition><AdminRoute><IndividualClients /></AdminRoute></PageTransition>} />

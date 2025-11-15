@@ -209,6 +209,51 @@ export type Database = {
         }
         Relationships: []
       }
+      analytics_events: {
+        Row: {
+          created_at: string | null
+          event_category: string | null
+          event_data: Json | null
+          event_name: string
+          id: string
+          ip_address: string | null
+          page_title: string | null
+          page_url: string | null
+          referrer: string | null
+          session_id: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          event_category?: string | null
+          event_data?: Json | null
+          event_name: string
+          id?: string
+          ip_address?: string | null
+          page_title?: string | null
+          page_url?: string | null
+          referrer?: string | null
+          session_id?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          event_category?: string | null
+          event_data?: Json | null
+          event_name?: string
+          id?: string
+          ip_address?: string | null
+          page_title?: string | null
+          page_url?: string | null
+          referrer?: string | null
+          session_id?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       appointments: {
         Row: {
           actual_end: string | null
@@ -488,6 +533,50 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      campaign_recipients: {
+        Row: {
+          campaign_id: string | null
+          clicked_at: string | null
+          created_at: string | null
+          id: string
+          opened_at: string | null
+          recipient_email: string
+          recipient_name: string | null
+          sent_at: string | null
+          status: string | null
+        }
+        Insert: {
+          campaign_id?: string | null
+          clicked_at?: string | null
+          created_at?: string | null
+          id?: string
+          opened_at?: string | null
+          recipient_email: string
+          recipient_name?: string | null
+          sent_at?: string | null
+          status?: string | null
+        }
+        Update: {
+          campaign_id?: string | null
+          clicked_at?: string | null
+          created_at?: string | null
+          id?: string
+          opened_at?: string | null
+          recipient_email?: string
+          recipient_name?: string | null
+          sent_at?: string | null
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_recipients_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "email_campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       caregiver_profiles: {
         Row: {
@@ -858,6 +947,36 @@ export type Database = {
           },
         ]
       }
+      conversion_events: {
+        Row: {
+          conversion_type: string
+          conversion_value: number | null
+          created_at: string | null
+          id: string
+          metadata: Json | null
+          session_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          conversion_type: string
+          conversion_value?: number | null
+          created_at?: string | null
+          id?: string
+          metadata?: Json | null
+          session_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          conversion_type?: string
+          conversion_value?: number | null
+          created_at?: string | null
+          id?: string
+          metadata?: Json | null
+          session_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       courses: {
         Row: {
           active: boolean
@@ -1029,6 +1148,167 @@ export type Database = {
         }
         Relationships: []
       }
+      email_campaigns: {
+        Row: {
+          click_rate: number | null
+          created_at: string | null
+          id: string
+          last_sent_at: string | null
+          name: string
+          open_rate: number | null
+          schedule_config: Json | null
+          schedule_type: string
+          sent_count: number | null
+          status: string | null
+          subject: string
+          target_audience: string
+          template_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          click_rate?: number | null
+          created_at?: string | null
+          id?: string
+          last_sent_at?: string | null
+          name: string
+          open_rate?: number | null
+          schedule_config?: Json | null
+          schedule_type: string
+          sent_count?: number | null
+          status?: string | null
+          subject: string
+          target_audience: string
+          template_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          click_rate?: number | null
+          created_at?: string | null
+          id?: string
+          last_sent_at?: string | null
+          name?: string
+          open_rate?: number | null
+          schedule_config?: Json | null
+          schedule_type?: string
+          sent_count?: number | null
+          status?: string | null
+          subject?: string
+          target_audience?: string
+          template_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_campaigns_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "email_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      email_delivery_logs: {
+        Row: {
+          bounced: boolean | null
+          campaign_id: string | null
+          clicked_at: string | null
+          complained: boolean | null
+          created_at: string | null
+          delivered_at: string | null
+          error_details: Json | null
+          id: string
+          opened_at: string | null
+          provider_message_id: string | null
+          recipient_email: string
+          scheduled_email_id: string | null
+          status: string
+        }
+        Insert: {
+          bounced?: boolean | null
+          campaign_id?: string | null
+          clicked_at?: string | null
+          complained?: boolean | null
+          created_at?: string | null
+          delivered_at?: string | null
+          error_details?: Json | null
+          id?: string
+          opened_at?: string | null
+          provider_message_id?: string | null
+          recipient_email: string
+          scheduled_email_id?: string | null
+          status: string
+        }
+        Update: {
+          bounced?: boolean | null
+          campaign_id?: string | null
+          clicked_at?: string | null
+          complained?: boolean | null
+          created_at?: string | null
+          delivered_at?: string | null
+          error_details?: Json | null
+          id?: string
+          opened_at?: string | null
+          provider_message_id?: string | null
+          recipient_email?: string
+          scheduled_email_id?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_delivery_logs_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "email_campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_delivery_logs_scheduled_email_id_fkey"
+            columns: ["scheduled_email_id"]
+            isOneToOne: false
+            referencedRelation: "scheduled_emails"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      email_templates: {
+        Row: {
+          category: string | null
+          created_at: string | null
+          html_body: string
+          id: string
+          is_active: boolean | null
+          name: string
+          subject: string
+          template_variables: Json | null
+          text_body: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string | null
+          html_body: string
+          id?: string
+          is_active?: boolean | null
+          name: string
+          subject: string
+          template_variables?: Json | null
+          text_body?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string | null
+          html_body?: string
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          subject?: string
+          template_variables?: Json | null
+          text_body?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       enrollments: {
         Row: {
           completed_at: string | null
@@ -1133,6 +1413,33 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      funnel_steps: {
+        Row: {
+          completed: boolean | null
+          created_at: string | null
+          id: string
+          session_id: string
+          step_name: string
+          step_order: number
+        }
+        Insert: {
+          completed?: boolean | null
+          created_at?: string | null
+          id?: string
+          session_id: string
+          step_name: string
+          step_order: number
+        }
+        Update: {
+          completed?: boolean | null
+          created_at?: string | null
+          id?: string
+          session_id?: string
+          step_name?: string
+          step_order?: number
+        }
+        Relationships: []
       }
       healthcare_professional_profiles: {
         Row: {
@@ -1580,6 +1887,42 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      page_views: {
+        Row: {
+          created_at: string | null
+          duration_seconds: number | null
+          id: string
+          page_title: string | null
+          page_url: string
+          referrer: string | null
+          scroll_depth: number | null
+          session_id: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          duration_seconds?: number | null
+          id?: string
+          page_title?: string | null
+          page_url: string
+          referrer?: string | null
+          scroll_depth?: number | null
+          session_id: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          duration_seconds?: number | null
+          id?: string
+          page_title?: string | null
+          page_url?: string
+          referrer?: string | null
+          scroll_depth?: number | null
+          session_id?: string
+          user_id?: string | null
+        }
+        Relationships: []
       }
       partner_commissions: {
         Row: {
@@ -2259,6 +2602,69 @@ export type Database = {
         }
         Relationships: []
       }
+      scheduled_emails: {
+        Row: {
+          campaign_id: string | null
+          created_at: string | null
+          error_message: string | null
+          id: string
+          max_retries: number | null
+          recipient_email: string
+          recipient_name: string | null
+          retry_count: number | null
+          scheduled_for: string
+          sent_at: string | null
+          status: string | null
+          template_data: Json | null
+          template_id: string | null
+        }
+        Insert: {
+          campaign_id?: string | null
+          created_at?: string | null
+          error_message?: string | null
+          id?: string
+          max_retries?: number | null
+          recipient_email: string
+          recipient_name?: string | null
+          retry_count?: number | null
+          scheduled_for: string
+          sent_at?: string | null
+          status?: string | null
+          template_data?: Json | null
+          template_id?: string | null
+        }
+        Update: {
+          campaign_id?: string | null
+          created_at?: string | null
+          error_message?: string | null
+          id?: string
+          max_retries?: number | null
+          recipient_email?: string
+          recipient_name?: string | null
+          retry_count?: number | null
+          scheduled_for?: string
+          sent_at?: string | null
+          status?: string | null
+          template_data?: Json | null
+          template_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scheduled_emails_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "email_campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "scheduled_emails_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "email_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       senior_client_profiles: {
         Row: {
           created_at: string
@@ -2463,15 +2869,76 @@ export type Database = {
         }
         Relationships: []
       }
+      testimonial_media: {
+        Row: {
+          created_at: string | null
+          duration_seconds: number | null
+          file_size_bytes: number | null
+          file_url: string
+          height: number | null
+          id: string
+          media_type: string
+          mime_type: string | null
+          processing_status: string | null
+          testimonial_id: string | null
+          thumbnail_url: string | null
+          updated_at: string | null
+          width: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          duration_seconds?: number | null
+          file_size_bytes?: number | null
+          file_url: string
+          height?: number | null
+          id?: string
+          media_type: string
+          mime_type?: string | null
+          processing_status?: string | null
+          testimonial_id?: string | null
+          thumbnail_url?: string | null
+          updated_at?: string | null
+          width?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          duration_seconds?: number | null
+          file_size_bytes?: number | null
+          file_url?: string
+          height?: number | null
+          id?: string
+          media_type?: string
+          mime_type?: string | null
+          processing_status?: string | null
+          testimonial_id?: string | null
+          thumbnail_url?: string | null
+          updated_at?: string | null
+          width?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "testimonial_media_testimonial_id_fkey"
+            columns: ["testimonial_id"]
+            isOneToOne: false
+            referencedRelation: "testimonials"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       testimonials: {
         Row: {
           approved_at: string | null
           approved_by: string | null
           created_at: string
+          display_order: number | null
           email: string
+          featured: boolean | null
+          has_image: boolean | null
+          has_video: boolean | null
           id: string
           location: string
           name: string
+          primary_media_url: string | null
           rating: number
           status: Database["public"]["Enums"]["testimonial_status"]
           story: string
@@ -2482,10 +2949,15 @@ export type Database = {
           approved_at?: string | null
           approved_by?: string | null
           created_at?: string
+          display_order?: number | null
           email: string
+          featured?: boolean | null
+          has_image?: boolean | null
+          has_video?: boolean | null
           id?: string
           location: string
           name: string
+          primary_media_url?: string | null
           rating: number
           status?: Database["public"]["Enums"]["testimonial_status"]
           story: string
@@ -2496,10 +2968,15 @@ export type Database = {
           approved_at?: string | null
           approved_by?: string | null
           created_at?: string
+          display_order?: number | null
           email?: string
+          featured?: boolean | null
+          has_image?: boolean | null
+          has_video?: boolean | null
           id?: string
           location?: string
           name?: string
+          primary_media_url?: string | null
           rating?: number
           status?: Database["public"]["Enums"]["testimonial_status"]
           story?: string
@@ -2602,6 +3079,39 @@ export type Database = {
           },
         ]
       }
+      traffic_sources: {
+        Row: {
+          campaign: string | null
+          content: string | null
+          created_at: string | null
+          id: string
+          medium: string | null
+          session_id: string
+          source: string | null
+          term: string | null
+        }
+        Insert: {
+          campaign?: string | null
+          content?: string | null
+          created_at?: string | null
+          id?: string
+          medium?: string | null
+          session_id: string
+          source?: string | null
+          term?: string | null
+        }
+        Update: {
+          campaign?: string | null
+          content?: string | null
+          created_at?: string | null
+          id?: string
+          medium?: string | null
+          session_id?: string
+          source?: string | null
+          term?: string | null
+        }
+        Relationships: []
+      }
       trainer_profiles: {
         Row: {
           available_training_dates: string | null
@@ -2680,6 +3190,69 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      user_sessions: {
+        Row: {
+          bounce: boolean | null
+          browser: string | null
+          city: string | null
+          country: string | null
+          device_type: string | null
+          duration_seconds: number | null
+          ended_at: string | null
+          exit_page: string | null
+          id: string
+          ip_address: string | null
+          landing_page: string | null
+          os: string | null
+          page_views_count: number | null
+          referrer: string | null
+          session_id: string
+          started_at: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          bounce?: boolean | null
+          browser?: string | null
+          city?: string | null
+          country?: string | null
+          device_type?: string | null
+          duration_seconds?: number | null
+          ended_at?: string | null
+          exit_page?: string | null
+          id?: string
+          ip_address?: string | null
+          landing_page?: string | null
+          os?: string | null
+          page_views_count?: number | null
+          referrer?: string | null
+          session_id: string
+          started_at?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          bounce?: boolean | null
+          browser?: string | null
+          city?: string | null
+          country?: string | null
+          device_type?: string | null
+          duration_seconds?: number | null
+          ended_at?: string | null
+          exit_page?: string | null
+          id?: string
+          ip_address?: string | null
+          landing_page?: string | null
+          os?: string | null
+          page_views_count?: number | null
+          referrer?: string | null
+          session_id?: string
+          started_at?: string | null
+          user_agent?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
