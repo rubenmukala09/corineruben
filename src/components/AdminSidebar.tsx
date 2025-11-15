@@ -1,3 +1,4 @@
+import * as React from "react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -113,6 +114,18 @@ interface AdminSidebarProps {
 
 export const AdminSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: AdminSidebarProps) => {
   const [openMenus, setOpenMenus] = useState<string[]>([]);
+
+  // Lock body scroll when mobile sidebar is open
+  React.useEffect(() => {
+    if (isMobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileOpen]);
   const location = useLocation();
   const collapsed = !isOpen;
   const { hasPermission, isAdmin } = useUserRole();

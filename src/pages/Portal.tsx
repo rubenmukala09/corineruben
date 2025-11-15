@@ -196,28 +196,28 @@ function Portal() {
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/5">
       {/* Header */}
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
-                <Shield className="w-6 h-6 text-white" />
+        <div className="container-responsive py-3 sm:py-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+            <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center flex-shrink-0">
+                <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
-              <div>
-                <h1 className="text-xl font-bold">InVision Network Portal</h1>
-                <p className="text-sm text-muted-foreground">
+              <div className="min-w-0">
+                <h1 className="text-lg sm:text-xl font-bold truncate">InVision Network Portal</h1>
+                <p className="text-xs sm:text-sm text-muted-foreground truncate">
                   Welcome back, {profile?.first_name || "User"}
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <Button asChild variant="ghost" size="sm">
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              <Button asChild variant="ghost" size="sm" className="flex-1 sm:flex-none touch-target">
                 <Link to="/">
                   <Home className="w-4 h-4 mr-2" />
                   Home
                 </Link>
               </Button>
-              <Button variant="outline" size="sm" onClick={handleSignOut}>
+              <Button variant="outline" size="sm" onClick={handleSignOut} className="flex-1 sm:flex-none touch-target">
                 <LogOut className="w-4 h-4 mr-2" />
                 Sign Out
               </Button>
@@ -227,28 +227,28 @@ function Portal() {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-12">
+      <main className="container-responsive py-8 sm:py-12">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Select Your Dashboard</h2>
-            <p className="text-lg text-muted-foreground">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">Select Your Dashboard</h2>
+            <p className="text-base sm:text-lg text-muted-foreground">
               Choose the workspace you want to access
             </p>
           </div>
 
           {availableRoles.length === 0 ? (
-            <Card className="p-12 text-center">
-              <Shield className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
-              <h3 className="text-xl font-semibold mb-2">No Role Assigned</h3>
-              <p className="text-muted-foreground mb-6">
+            <Card className="p-8 sm:p-12 text-center">
+              <Shield className="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-muted-foreground mb-4" />
+              <h3 className="text-lg sm:text-xl font-semibold mb-2">No Role Assigned</h3>
+              <p className="text-sm sm:text-base text-muted-foreground mb-6">
                 Please contact your administrator to assign you a role.
               </p>
-              <Button asChild>
+              <Button asChild className="touch-target">
                 <Link to="/">Return to Home</Link>
               </Button>
             </Card>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {availableRoles.map((card) => {
                 const Icon = card.icon;
                 return (

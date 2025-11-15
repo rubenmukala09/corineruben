@@ -13,7 +13,7 @@ export default function Admin() {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-background w-full">
+    <div className="flex min-h-screen bg-background w-full overflow-x-hidden">
       <AdminSidebar 
         isOpen={sidebarOpen} 
         isMobileOpen={mobileSidebarOpen}
@@ -35,7 +35,7 @@ export default function Admin() {
       
       {/* Main Content */}
       <main className={`flex-1 transition-all duration-300 pt-16 w-full ${sidebarOpen ? 'md:ml-[260px]' : 'md:ml-[70px]'}`}>
-        <div className="p-4 sm:p-6 md:p-8">
+        <div className="p-4 sm:p-6 lg:p-8 max-w-[1600px] mx-auto">
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
@@ -48,7 +48,7 @@ export default function Admin() {
           <DashboardStats />
 
           {/* Revenue Overview Chart & Recent Activity */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
             <div className="lg:col-span-2">
               <RevenueChart />
             </div>

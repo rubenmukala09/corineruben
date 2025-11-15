@@ -1,3 +1,4 @@
+import * as React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, Phone } from "lucide-react";
@@ -8,6 +9,18 @@ import invisionLogo from "@/assets/invision-logo.png";
 
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Lock body scroll when mobile menu is open
+  React.useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
 
   const navLinks = [
     { name: "AI & Business", href: "/business" },
@@ -24,7 +37,18 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border shadow-soft">
+    <>
+      {/* Mobile backdrop overlay */}
+      {mobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
+      <nav className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border shadow-soft">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-16 md:h-20 lg:h-24">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20 lg:h-24">
           {/* Logo */}
@@ -91,13 +115,13 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden absolute top-full left-0 right-0 bg-card/98 backdrop-blur-xl border-b border-border shadow-2xl animate-slide-down z-50 max-h-[calc(100vh-4rem)] overflow-y-auto">
+          <div className="lg:hidden fixed top-16 md:top-20 lg:top-24 left-0 right-0 bottom-0 bg-card/98 backdrop-blur-xl border-t border-border shadow-2xl z-50 overflow-y-auto">
             <div className="container mx-auto px-4 py-6 space-y-2">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   to={link.href}
-                  className="block text-base md:text-lg text-foreground hover:text-primary transition-colors duration-300 font-medium px-4 py-3 rounded-xl hover:bg-primary/10 active:bg-primary/20 min-h-[48px] flex items-center"
+                  className="block text-base md:text-lg text-foreground hover:text-primary transition-colors duration-300 font-medium px-4 py-3 rounded-xl hover:bg-primary/10 active:bg-primary/20 active:scale-[0.98] touch-target"
                   onClick={() => {
                     setMobileMenuOpen(false);
                     scrollToTop();
@@ -112,7 +136,7 @@ const Navigation = () => {
                 {/* Mobile Login Button */}
                 <Button
                   asChild 
-                  className="w-full bg-gradient-to-r from-primary to-accent text-primary-foreground hover:shadow-glow-purple transition-all duration-300 h-12 text-base font-semibold"
+                  className="w-full bg-gradient-to-r from-primary to-accent text-primary-foreground hover:shadow-glow-purple transition-all duration-300 h-12 text-base font-semibold touch-target"
                 >
                   <Link to="/portal" onClick={() => setMobileMenuOpen(false)} aria-label="Login to your account">
                     Login
@@ -122,7 +146,7 @@ const Navigation = () => {
                 {/* Mobile Phone Link */}
                 <a
                   href="tel:9375550199"
-                  className="flex items-center justify-center gap-2 text-base text-foreground font-medium px-4 py-3 rounded-xl hover:bg-primary/10 transition-colors min-h-[48px]"
+                  className="flex items-center justify-center gap-2 text-base text-foreground font-medium px-4 py-3 rounded-xl hover:bg-primary/10 transition-colors touch-target"
                   onClick={() => setMobileMenuOpen(false)}
                   aria-label="Call us at 937-555-0199"
                 >
@@ -133,8 +157,8 @@ const Navigation = () => {
             </div>
           </div>
         )}
-      </div>
-    </nav>
+      </nav>
+    </>
   );
 };
 

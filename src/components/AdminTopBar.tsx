@@ -122,37 +122,40 @@ export function AdminTopBar({ sidebarOpen, toggleSidebar }: AdminTopBarProps) {
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 h-16 bg-background border-b border-border z-[100] shadow-sm">
-      <div className="flex items-center justify-between h-full px-4 md:px-6">
+    <div className="fixed top-0 left-0 right-0 h-16 bg-card/95 backdrop-blur-xl border-b border-border z-[100] shadow-sm">
+      <div className="flex items-center justify-between h-full px-2 sm:px-4">
         {/* Left Section: Hamburger + Logo */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4 min-w-0">
           <Button
             variant="ghost"
             size="icon"
             onClick={toggleSidebar}
-            className="text-muted-foreground hover:text-foreground transition-colors"
+            className="text-muted-foreground hover:text-foreground transition-colors h-10 w-10 flex-shrink-0"
           >
-            {sidebarOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
+            <Menu className="h-5 w-5" />
           </Button>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 min-w-0">
             <img 
               src={invisionLogo} 
               alt="InVision Network Logo" 
-              className="h-8 w-8"
+              className="h-7 w-7 sm:h-8 sm:w-8 flex-shrink-0"
             />
-            <span className="text-lg font-semibold text-foreground hidden sm:inline">
+            <span className="text-base sm:text-lg font-semibold text-foreground hidden sm:inline truncate">
               InVision Network
             </span>
           </div>
         </div>
 
-        {/* Center Section: Search Bar (hidden on mobile) */}
-        <div className="hidden md:flex flex-1 max-w-md mx-8">
+        {/* Center Section: Search Bar - Icon on mobile, full on desktop */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="md:hidden h-10 w-10"
+        >
+          <Search className="h-4 w-4" />
+        </Button>
+        <div className="hidden md:flex flex-1 max-w-md mx-4 lg:mx-8">
           <div className="relative w-full">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
@@ -164,18 +167,18 @@ export function AdminTopBar({ sidebarOpen, toggleSidebar }: AdminTopBarProps) {
         </div>
 
         {/* Right Section: Notifications + Profile */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-1 sm:gap-2">
           {/* Notifications */}
           <div className="relative" ref={notificationsRef}>
             <Button
               variant="ghost"
               size="icon"
-              className="relative text-muted-foreground hover:text-foreground transition-colors"
+              className="relative text-muted-foreground hover:text-foreground transition-colors h-10 w-10"
               onClick={() => setNotificationsOpen(!notificationsOpen)}
             >
-              <Bell className="h-5 w-5" />
+              <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
               {unreadCount > 0 && (
-                <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs bg-destructive text-destructive-foreground">
+                <Badge className="absolute -top-1 -right-1 h-4 w-4 sm:h-5 sm:w-5 flex items-center justify-center p-0 text-[10px] sm:text-xs bg-destructive text-destructive-foreground">
                   {unreadCount}
                 </Badge>
               )}
@@ -183,16 +186,16 @@ export function AdminTopBar({ sidebarOpen, toggleSidebar }: AdminTopBarProps) {
 
             {/* Notifications Dropdown */}
             {notificationsOpen && (
-              <div className="absolute right-0 top-full mt-2 w-80 bg-popover border border-border rounded-lg shadow-lg overflow-hidden animate-in fade-in-0 slide-in-from-top-2 duration-200">
-                <div className="p-4 border-b border-border">
+              <div className="absolute right-0 top-full mt-2 w-[calc(100vw-2rem)] sm:w-96 max-w-md bg-popover/95 backdrop-blur-xl border border-border rounded-lg shadow-2xl overflow-hidden animate-in fade-in-0 slide-in-from-top-2 duration-200 z-50">
+                <div className="p-3 sm:p-4 border-b border-border">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-semibold text-foreground">Notifications</h3>
+                    <h3 className="font-semibold text-foreground text-sm sm:text-base">Notifications</h3>
                     {unreadCount > 0 && (
                       <Button
                         variant="link"
                         size="sm"
                         onClick={handleMarkAllRead}
-                        className="text-xs text-accent hover:text-accent/80"
+                        className="text-xs text-accent hover:text-accent/80 h-8"
                       >
                         Mark all as read
                       </Button>
@@ -200,16 +203,16 @@ export function AdminTopBar({ sidebarOpen, toggleSidebar }: AdminTopBarProps) {
                   </div>
                 </div>
 
-                <div className="max-h-96 overflow-y-auto">
+                <div className="max-h-[60vh] sm:max-h-96 overflow-y-auto">
                   {notifications.map((notification) => (
                     <div
                       key={notification.id}
-                      className={`p-4 border-b border-border hover:bg-muted/50 transition-colors cursor-pointer ${
+                      className={`p-3 sm:p-4 border-b border-border hover:bg-muted/50 transition-colors cursor-pointer active:scale-[0.98] ${
                         !notification.read ? "bg-muted/30" : ""
                       }`}
                     >
-                      <div className="flex items-start gap-3">
-                        <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
+                      <div className="flex items-start gap-2 sm:gap-3">
+                        <div className={`flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full flex-shrink-0 ${
                           notification.type === "success" ? "bg-success/20 text-success" :
                           notification.type === "warning" ? "bg-yellow-500/20 text-yellow-600" :
                           notification.type === "error" ? "bg-destructive/20 text-destructive" :
@@ -251,26 +254,26 @@ export function AdminTopBar({ sidebarOpen, toggleSidebar }: AdminTopBarProps) {
           <div className="relative" ref={profileRef}>
             <Button
               variant="ghost"
-              className="flex items-center gap-2 hover:bg-muted transition-colors"
+              className="flex items-center gap-1 sm:gap-2 hover:bg-muted transition-colors h-10 px-2 sm:px-3"
               onClick={() => setProfileOpen(!profileOpen)}
             >
-              <Avatar className="h-8 w-8">
+              <Avatar className="h-7 w-7 sm:h-8 sm:w-8">
                 <AvatarImage src="" alt={adminName} />
-                <AvatarFallback className="bg-primary text-primary-foreground">
+                <AvatarFallback className="bg-primary text-primary-foreground text-xs sm:text-sm">
                   {getInitials(adminName)}
                 </AvatarFallback>
               </Avatar>
-              <span className="hidden md:inline-block text-sm font-medium text-foreground">
+              <span className="hidden lg:inline-block text-sm font-medium text-foreground max-w-[120px] truncate">
                 {adminName}
               </span>
-              <ChevronDown className="h-4 w-4 text-muted-foreground" />
+              <ChevronDown className="h-4 w-4 text-muted-foreground hidden lg:inline" />
             </Button>
 
             {/* Profile Dropdown Menu */}
             {profileOpen && (
-              <div className="absolute right-0 top-full mt-2 w-56 bg-popover border border-border rounded-lg shadow-lg overflow-hidden animate-in fade-in-0 slide-in-from-top-2 duration-200">
-                <div className="p-4 border-b border-border">
-                  <p className="font-medium text-foreground">{adminName}</p>
+              <div className="absolute right-0 top-full mt-2 w-56 bg-popover/95 backdrop-blur-xl border border-border rounded-lg shadow-2xl overflow-hidden animate-in fade-in-0 slide-in-from-top-2 duration-200 z-50">
+                <div className="p-3 sm:p-4 border-b border-border">
+                  <p className="font-medium text-foreground break-words text-sm sm:text-base">{adminName}</p>
                   <p className="text-xs text-muted-foreground truncate">{adminEmail}</p>
                   <p className="text-xs text-accent mt-1">Administrator</p>
                 </div>
@@ -281,30 +284,30 @@ export function AdminTopBar({ sidebarOpen, toggleSidebar }: AdminTopBarProps) {
                       setProfileOpen(false);
                       navigate("/admin/settings/account");
                     }}
-                    className="w-full px-4 py-2 text-sm text-foreground hover:bg-muted transition-colors flex items-center gap-2"
+                    className="w-full px-4 py-2.5 text-sm text-foreground hover:bg-muted transition-colors flex items-center gap-2 touch-target"
                   >
-                    <User className="h-4 w-4" />
-                    Account Settings
+                    <User className="h-4 w-4 flex-shrink-0" />
+                    <span>Account Settings</span>
                   </button>
                   <button
                     onClick={() => {
                       setProfileOpen(false);
                       navigate("/admin/settings/site");
                     }}
-                    className="w-full px-4 py-2 text-sm text-foreground hover:bg-muted transition-colors flex items-center gap-2"
+                    className="w-full px-4 py-2.5 text-sm text-foreground hover:bg-muted transition-colors flex items-center gap-2 touch-target"
                   >
-                    <Settings className="h-4 w-4" />
-                    Site Settings
+                    <Settings className="h-4 w-4 flex-shrink-0" />
+                    <span>Site Settings</span>
                   </button>
                 </div>
 
                 <div className="border-t border-border">
                   <button
                     onClick={handleSignOut}
-                    className="w-full px-4 py-2 text-sm text-destructive hover:bg-destructive/10 transition-colors flex items-center gap-2"
+                    className="w-full px-4 py-2.5 text-sm text-destructive hover:bg-destructive/10 transition-colors flex items-center gap-2 touch-target"
                   >
-                    <LogOut className="h-4 w-4" />
-                    Logout
+                    <LogOut className="h-4 w-4 flex-shrink-0" />
+                    <span>Logout</span>
                   </button>
                 </div>
               </div>
