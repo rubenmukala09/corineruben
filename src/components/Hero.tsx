@@ -7,9 +7,16 @@ import { FloatingShapes } from "./FloatingShapes";
 import { useImagePreload } from "@/hooks/useImagePreload";
 import { motion } from "framer-motion";
 import { useParallax } from "@/hooks/useParallax";
+import { HeroCarousel } from "./HeroCarousel";
+
+interface HeroImage {
+  src: string;
+  alt: string;
+}
 
 interface HeroProps {
   backgroundImage?: string;
+  backgroundImages?: HeroImage[];
   headline?: string;
   subheadline?: string;
   children?: ReactNode;
@@ -19,12 +26,13 @@ interface HeroProps {
   showPrivacyDisclaimer?: boolean;
 }
 
-const Hero = ({ backgroundImage, headline, subheadline, children, className, overlay = false, showScrollIndicator = false, showPrivacyDisclaimer = false }: HeroProps) => {
+const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, children, className, overlay = false, showScrollIndicator = false, showPrivacyDisclaimer = false }: HeroProps) => {
   const [showDisclaimer, setShowDisclaimer] = useState(true);
   const { ref, y, opacity } = useParallax({ speed: 0.5 });
   
-  // Preload background image
-  const imagePreloaded = useImagePreload(backgroundImage ? [backgroundImage] : []);
+  // Preload background image(s)
+  const singleImagePreloaded = useImagePreload(backgroundImage ? [backgroundImage] : []);
+  const useCarousel = backgroundImages && backgroundImages.length > 0;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -44,11 +52,13 @@ const Hero = ({ backgroundImage, headline, subheadline, children, className, ove
         className="absolute inset-0"
         style={{ y }}
       >
-        {backgroundImage && (
+        {useCarousel ? (
+          <HeroCarousel images={backgroundImages} />
+        ) : backgroundImage && (
           <motion.div
             className={cn(
               "absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-300",
-              imagePreloaded ? "opacity-100" : "opacity-0"
+              singleImagePreloaded ? "opacity-100" : "opacity-0"
             )}
             style={{ 
               backgroundImage: `url(${backgroundImage})`,
