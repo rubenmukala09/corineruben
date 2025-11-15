@@ -7,9 +7,7 @@ import invisionLogo from "@/assets/shield-logo.png";
 
 const Footer = () => {
   return (
-    <>
-      <TrustedTechLogos />
-      <footer className="bg-gradient-to-br from-[hsl(260,70%,25%)] to-[hsl(260,65%,35%)] text-primary-foreground relative overflow-hidden">
+    <footer className="bg-gradient-to-br from-[hsl(260,70%,25%)] to-[hsl(260,65%,35%)] text-primary-foreground relative overflow-hidden">
       {/* Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-10 right-20 w-64 h-64 bg-accent/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '6s' }} />
@@ -18,8 +16,27 @@ const Footer = () => {
       
       <div className="container mx-auto px-4 py-8 md:py-12 relative z-10">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-8">
-          {/* Column 1: Quick Links */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8 mb-8">
+          {/* Column 1: Community */}
+          <div>
+            <h3 className="font-bold text-lg mb-4">Community</h3>
+            <ul className="space-y-2">
+              <li className="text-sm text-primary-foreground/80">20% Military Discount</li>
+              <li className="text-sm text-primary-foreground/80">25% Cancer Patient Discount</li>
+              <li>
+                <Link to="/contact" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+                  Church Partnerships
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+                  Donate Training
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 2: Quick Links */}
           <div>
             <h3 className="font-bold text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2">
@@ -66,7 +83,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 2: Training */}
+          {/* Column 3: Training */}
           <div>
             <h3 className="font-bold text-lg mb-4">Training</h3>
             <ul className="space-y-2">
@@ -93,7 +110,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 3: Support */}
+          {/* Column 4: Support */}
           <div>
             <h3 className="font-bold text-lg mb-4">Support</h3>
             <ul className="space-y-2">
@@ -115,7 +132,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 4: Legal */}
+          {/* Column 5: Legal */}
           <div>
             <h3 className="font-bold text-lg mb-4">Legal</h3>
             <ul className="space-y-2">
@@ -142,28 +159,17 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 5: Community */}
-          <div className="sm:col-span-2 lg:col-span-1">
-            <h3 className="font-bold text-lg mb-4">Community</h3>
-            <ul className="space-y-2">
-              <li className="text-sm text-primary-foreground/80">20% Military Discount</li>
-              <li className="text-sm text-primary-foreground/80">25% Cancer Patient Discount</li>
-              <li>
-                <Link to="/contact" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                  Church Partnerships
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                  Donate Training
-                </Link>
-              </li>
-            </ul>
-          </div>
         </div>
 
-        {/* Newsletter Signup */}
-        <NewsletterSignup />
+        {/* Newsletter Signup - Compact, positioned under Community and Legal */}
+        <div className="lg:max-w-[40%] mb-6 md:mb-8">
+          <NewsletterSignup />
+        </div>
+
+        {/* Trusted Tech Logos - Below Newsletter */}
+        <div className="mb-6 md:mb-8">
+          <TrustedTechLogos />
+        </div>
 
         {/* Social Media */}
         <div className="flex justify-center gap-1 md:gap-2 mb-6 md:mb-8">
@@ -244,7 +250,6 @@ const Footer = () => {
         </div>
       </div>
     </footer>
-    </>
   );
 };
 
