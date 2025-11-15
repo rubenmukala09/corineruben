@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { User } from "@supabase/supabase-js";
 
-export type UserRole = 'admin' | 'secretary' | 'training_coordinator' | 'business_consultant' | 'support_specialist';
+export type UserRole = 'admin' | 'secretary' | 'training_coordinator' | 'business_consultant' | 'support_specialist' | 'staff' | 'moderator' | 'user';
 
 export interface RoleConfig {
   role: UserRole;
@@ -11,14 +11,14 @@ export interface RoleConfig {
   redirectTo: string;
 }
 
-const ROLE_MAPPINGS: Record<string, RoleConfig> = {
-  'ruben@invisionnetwork.org': {
+const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
+  'admin': {
     role: 'admin',
     displayName: 'Administrator',
     permissions: ['*'],
     redirectTo: '/admin'
   },
-  'hello@invisionnetwork.org': {
+  'secretary': {
     role: 'secretary',
     displayName: 'Office Manager',
     permissions: [
@@ -31,7 +31,7 @@ const ROLE_MAPPINGS: Record<string, RoleConfig> = {
     ],
     redirectTo: '/admin/clients'
   },
-  'training@invisionnetwork.org': {
+  'training_coordinator': {
     role: 'training_coordinator',
     displayName: 'Training Coordinator',
     permissions: [
@@ -44,7 +44,7 @@ const ROLE_MAPPINGS: Record<string, RoleConfig> = {
     ],
     redirectTo: '/admin/articles'
   },
-  'consulting@invisionnetwork.org': {
+  'business_consultant': {
     role: 'business_consultant',
     displayName: 'Business Consultant',
     permissions: [
@@ -56,7 +56,7 @@ const ROLE_MAPPINGS: Record<string, RoleConfig> = {
     ],
     redirectTo: '/admin/business-clients'
   },
-  'support@invisionnetwork.org': {
+  'support_specialist': {
     role: 'support_specialist',
     displayName: 'Support Specialist',
     permissions: [
@@ -67,6 +67,31 @@ const ROLE_MAPPINGS: Record<string, RoleConfig> = {
       'access_technical_docs'
     ],
     redirectTo: '/admin'
+  },
+  'staff': {
+    role: 'staff',
+    displayName: 'Staff Member',
+    permissions: [
+      'view_clients',
+      'view_messages',
+      'view_calendar'
+    ],
+    redirectTo: '/admin'
+  },
+  'moderator': {
+    role: 'moderator',
+    displayName: 'Moderator',
+    permissions: [
+      'view_clients',
+      'manage_content'
+    ],
+    redirectTo: '/admin'
+  },
+  'user': {
+    role: 'user',
+    displayName: 'User',
+    permissions: [],
+    redirectTo: '/portal'
   }
 };
 
@@ -78,9 +103,20 @@ export function useUserRole() {
   useEffect(() => {
     const fetchUserRole = async (currentUser: User) => {
       try {
-        const email = currentUser.email?.toLowerCase().trim();
-        if (email && ROLE_MAPPINGS[email]) {
-          setRoleConfig(ROLE_MAPPINGS[email]);
+        // Fetch user role from database
+        const { data: roleData, error } = await supabase
+          .from('user_roles')
+          .select('role')
+          .eq('user_id', currentUser.id)
+          .single();
+
+        if (error) {
+          console.error('Error fetching user role:', error);
+          setRoleConfig(null);
+        } else if (roleData) {
+          // Map database role to RoleConfig
+          const config = ROLE_CONFIGS[roleData.role as UserRole];
+          setRoleConfig(config || null);
         } else {
           setRoleConfig(null);
         }
