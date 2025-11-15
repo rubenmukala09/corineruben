@@ -310,7 +310,19 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
     }
+  }
+
+  /* GPU acceleration for smooth animations on login/auth pages */
+  .login-container,
+  .form-input,
+  .login-button,
+  button[type="button"],
+  a {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
   }
 }
 
@@ -1789,6 +1801,21 @@ video {
   * {
     word-wrap: break-word;
     overflow-wrap: break-word;
+  }
+}
+
+/* Very small phones (<375px) - 2FA code input 2x3 grid */
+@media (max-width: 374px) {
+  .xs-small\:grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr) !important;
+    max-width: 200px;
+    gap: 6px;
+  }
+  
+  .xs-small\:grid-cols-3 input {
+    min-width: 44px !important;
+    min-height: 44px !important;
+    font-size: 18px !important;
   }
 }
 

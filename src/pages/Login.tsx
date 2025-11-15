@@ -112,7 +112,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col overflow-x-hidden bg-background">
+    <div className="min-h-screen flex flex-col overflow-x-hidden overflow-y-auto bg-background">
       {/* Sticky Header */}
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border shadow-sm">
         <div className="flex justify-between items-center px-4 md:px-6 lg:px-8 py-3">
@@ -138,9 +138,9 @@ export default function Login() {
       </header>
 
       {/* Main Content - Split Screen */}
-      <div className="flex-1 flex flex-col lg:flex-row">
-        {/* Left: Security Graphic Section (hidden on mobile) */}
-        <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary via-primary to-accent relative overflow-hidden items-center justify-center p-12">
+      <div className="flex-1 flex flex-col md:flex-row lg:flex-row">
+        {/* Left: Security Graphic Section (hidden on mobile, 40% on tablet, 50% on desktop) */}
+        <div className="hidden md:flex md:w-2/5 lg:w-1/2 bg-gradient-to-br from-primary via-primary to-accent relative overflow-hidden items-center justify-center p-8 lg:p-12">
           {/* Decorative Background Elements */}
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-20 left-20 w-64 h-64 bg-white rounded-full blur-3xl animate-pulse" />
@@ -150,49 +150,50 @@ export default function Login() {
           {/* Main Content */}
           <div className="relative z-10 text-center max-w-lg">
             {/* Shield Icon */}
-            <div className="mb-8 flex justify-center">
+            <div className="mb-6 lg:mb-8 flex justify-center">
               <div className="relative">
                 <div className="absolute inset-0 bg-white/20 rounded-full blur-2xl animate-pulse" />
-                <div className="relative bg-white/10 backdrop-blur-md p-8 rounded-3xl border border-white/20 shadow-2xl">
-                  <Shield className="w-32 h-32 text-white" strokeWidth={1.5} />
+                <div className="relative bg-white/10 backdrop-blur-md p-6 lg:p-8 rounded-3xl border border-white/20 shadow-2xl">
+                  <Shield className="w-20 h-20 lg:w-32 lg:h-32 text-white" strokeWidth={1.5} />
                 </div>
               </div>
             </div>
 
-            {/* Heading */}
-            <h1 className="text-4xl xl:text-5xl font-bold text-white mb-4">
+            {/* Heading - responsive text */}
+            <h1 className="text-3xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-3 lg:mb-4">
               Secure Access Portal
             </h1>
-            <p className="text-lg text-white/90 mb-8">
+            <p className="text-base lg:text-lg text-white/90 mb-6 lg:mb-8">
               Your data is protected with enterprise-grade security
             </p>
 
-            {/* Trust Indicators */}
-            <div className="flex flex-col gap-4 text-white/80 text-sm">
-              <div className="flex items-center justify-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <Lock className="w-5 h-5" />
+            {/* Trust Indicators - smaller on tablet */}
+            <div className="flex flex-col gap-3 lg:gap-4 text-white/80 text-xs lg:text-sm">
+              <div className="flex items-center justify-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg p-3 lg:p-4 border border-white/20">
+                <Lock className="w-4 h-4 lg:w-5 lg:h-5" />
                 <span>256-bit SSL Encryption</span>
               </div>
-              <div className="flex items-center justify-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <Shield className="w-5 h-5" />
+              <div className="flex items-center justify-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg p-3 lg:p-4 border border-white/20">
+                <Shield className="w-4 h-4 lg:w-5 lg:h-5" />
                 <span>SOC 2 Compliant</span>
               </div>
-              <div className="flex items-center justify-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <Mail className="w-5 h-5" />
+              <div className="flex items-center justify-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg p-3 lg:p-4 border border-white/20">
+                <Mail className="w-4 h-4 lg:w-5 lg:h-5" />
                 <span>Two-Factor Authentication</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Right: Login Form Section */}
-        <div className="flex-1 flex items-center justify-center p-4 md:p-8 lg:p-12 bg-background">
+        {/* Right: Login Form Section (60% on tablet, 50% on desktop) */}
+        <div className="flex-1 md:w-3/5 lg:w-1/2 flex items-center justify-center p-4 md:p-8 lg:p-12 bg-background">
           <div className="w-full max-w-md">
-            {/* Mobile Shield Icon */}
-            <div className="lg:hidden mb-8 text-center">
-              <div className="inline-flex p-4 rounded-2xl bg-primary/10 border border-primary/20 mb-4">
-                <Shield className="w-16 h-16 text-primary" />
+            {/* Mobile Shield Header */}
+            <div className="md:hidden mb-6 text-center">
+              <div className="inline-flex p-3 rounded-xl bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/20 mb-3">
+                <Shield className="w-12 h-12 text-primary" />
               </div>
+              <p className="text-xs text-muted-foreground">Secured with 256-bit encryption</p>
             </div>
 
             {/* Form Header */}
@@ -220,7 +221,7 @@ export default function Login() {
                     placeholder="your@invisionnetwork.org"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10 h-12 text-base"
+                    className="pl-10 h-12 text-[16px] sm:text-base"
                     required
                     autoComplete="email"
                   />
@@ -240,15 +241,16 @@ export default function Login() {
                     placeholder="••••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10 pr-12 h-12 text-base"
+                    className="pl-10 pr-12 h-12 text-[16px] sm:text-base"
                     required
                     autoComplete="current-password"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors p-2 -m-2"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors p-3 -m-3 min-w-[44px] min-h-[44px] flex items-center justify-center"
                     tabIndex={-1}
+                    aria-label={showPassword ? "Hide password" : "Show password"}
                   >
                     {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                   </button>
@@ -261,7 +263,7 @@ export default function Login() {
                   id="remember"
                   checked={rememberMe}
                   onCheckedChange={(checked) => setRememberMe(checked as boolean)}
-                  className="w-5 h-5"
+                  className="w-5 h-5 sm:w-6 sm:h-6"
                 />
                 <Label 
                   htmlFor="remember" 
@@ -292,7 +294,7 @@ export default function Login() {
                 <button
                   type="button"
                   onClick={() => setShowForgotPassword(true)}
-                  className="text-sm text-primary hover:text-accent transition-colors inline-block py-2 px-1"
+                  className="text-sm text-primary hover:text-accent transition-colors inline-block py-3 px-2 min-h-[44px]"
                 >
                   Forgot password? → Reset via email
                 </button>
