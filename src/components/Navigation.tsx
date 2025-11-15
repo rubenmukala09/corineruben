@@ -126,8 +126,8 @@ const Navigation = () => {
 
       {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden fixed top-16 md:top-20 lg:top-24 left-0 right-0 bottom-0 bg-card/98 backdrop-blur-xl border-t border-border shadow-2xl z-50 overflow-y-auto">
-            <div className="container mx-auto px-4 py-6 space-y-2">
+          <div className="lg:hidden fixed inset-0 bg-card/98 backdrop-blur-xl border-t border-border shadow-2xl z-50 overflow-y-auto overscroll-contain pt-16 md:pt-20">
+            <div className="container mx-auto px-4 py-6 space-y-2 pb-safe">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}

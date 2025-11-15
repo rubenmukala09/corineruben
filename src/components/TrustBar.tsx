@@ -60,7 +60,7 @@ const TrustBar = () => {
   ];
 
   return (
-    <div ref={counterRef} className="relative z-10 px-4 -mt-10" role="complementary" aria-label="Trust indicators">
+    <div ref={counterRef} className="relative z-10 px-4 -mt-6 sm:-mt-8 md:-mt-10" role="complementary" aria-label="Trust indicators">
       <div className="container mx-auto">
         <div className="relative mx-auto max-w-7xl group/trust">
           {/* Glow effect */}
