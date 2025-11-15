@@ -7,11 +7,29 @@ import invisionLogo from "@/assets/shield-logo.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-br from-[hsl(260,70%,25%)] to-[hsl(260,65%,35%)] text-primary-foreground relative overflow-hidden">
-      {/* Decorative Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-10 right-20 w-64 h-64 bg-accent/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '6s' }} />
-        <div className="absolute bottom-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '8s' }} />
+    <footer className="bg-gradient-to-br from-[hsl(260,75%,20%)] via-[hsl(280,70%,25%)] to-[hsl(260,60%,30%)] text-primary-foreground relative overflow-hidden">
+      {/* Modern Geometric Background Pattern */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+        {/* Diagonal Lines Pattern */}
+        <div className="absolute inset-0" style={{
+          backgroundImage: `repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 35px,
+            rgba(255,255,255,0.03) 35px,
+            rgba(255,255,255,0.03) 70px
+          )`
+        }} />
+        
+        {/* Animated Gradient Orbs */}
+        <div className="absolute -top-20 -right-20 w-96 h-96 bg-gradient-to-br from-accent/30 to-primary/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '8s' }} />
+        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-gradient-to-tr from-primary/30 to-accent/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '10s' }} />
+        <div className="absolute -bottom-32 left-1/3 w-[500px] h-[500px] bg-gradient-to-tl from-accent/20 to-primary/30 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '12s' }} />
+        
+        {/* Floating Circles */}
+        <div className="absolute top-20 left-10 w-32 h-32 border-2 border-white/5 rounded-full" />
+        <div className="absolute bottom-40 right-32 w-48 h-48 border-2 border-white/5 rounded-full" />
+        <div className="absolute top-1/3 right-1/4 w-24 h-24 border-2 border-white/5 rounded-full" />
       </div>
       
       <div className="container mx-auto px-4 py-8 md:py-12 relative z-10">
@@ -172,28 +190,33 @@ const Footer = () => {
         </div>
 
         {/* CTA Buttons & Social Media */}
-        <div className="flex flex-col items-center gap-8 mb-8 md:mb-10">
-          {/* CTA Buttons */}
-          <div className="flex flex-wrap items-center justify-center gap-4">
+        <div className="flex flex-col items-center gap-10 mb-8 md:mb-12">
+          {/* CTA Buttons - Enhanced Design */}
+          <div className="flex flex-wrap items-center justify-center gap-6">
             <Button 
               asChild 
               size="lg"
-              className="bg-white text-primary hover:bg-white/90 font-semibold rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+              className="group relative bg-gradient-to-r from-white to-white/95 text-primary hover:from-white/95 hover:to-white font-bold rounded-2xl shadow-2xl hover:shadow-[0_20px_50px_rgba(255,255,255,0.3)] hover:scale-110 transition-all duration-500 px-8 py-6 text-base md:text-lg overflow-hidden"
             >
-              <Link to="/training">Start Learning</Link>
+              <Link to="/training">
+                <span className="relative z-10">Start Learning Today</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-accent/20 to-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </Link>
             </Button>
             <Button 
               asChild 
               size="lg"
-              variant="outline"
-              className="border-2 border-white text-white hover:bg-white hover:text-primary font-semibold rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+              className="group relative bg-transparent border-3 border-white text-white hover:bg-white hover:text-primary font-bold rounded-2xl shadow-2xl hover:shadow-[0_20px_50px_rgba(255,255,255,0.3)] hover:scale-110 transition-all duration-500 px-8 py-6 text-base md:text-lg overflow-hidden"
             >
-              <Link to="/contact">Get Protected</Link>
+              <Link to="/contact">
+                <span className="relative z-10">Get Protected Now</span>
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-0 bg-gradient-to-r from-white to-white transition-transform duration-500" />
+              </Link>
             </Button>
           </div>
 
-          {/* Social Media Links */}
-          <div className="flex items-center gap-6">
+          {/* Social Media Links - Premium Design */}
+          <div className="flex items-center gap-8">
             <a
               href="https://facebook.com/invisionnetwork"
               target="_blank"
@@ -201,9 +224,9 @@ const Footer = () => {
               className="group relative"
               aria-label="Visit our Facebook page"
             >
-              <div className="absolute inset-0 bg-white/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="relative p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 border border-white/20">
-                <Facebook className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-400/40 to-blue-600/40 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative p-4 rounded-2xl bg-white/15 hover:bg-gradient-to-br hover:from-blue-500/30 hover:to-blue-700/30 backdrop-blur-sm transition-all duration-500 border-2 border-white/30 hover:border-blue-400/50 hover:scale-125 hover:rotate-6">
+                <Facebook className="w-7 h-7 drop-shadow-lg" />
               </div>
             </a>
             <a
@@ -213,9 +236,9 @@ const Footer = () => {
               className="group relative"
               aria-label="Visit our LinkedIn page"
             >
-              <div className="absolute inset-0 bg-white/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="relative p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 border border-white/20">
-                <Linkedin className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/40 to-blue-700/40 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative p-4 rounded-2xl bg-white/15 hover:bg-gradient-to-br hover:from-blue-600/30 hover:to-blue-800/30 backdrop-blur-sm transition-all duration-500 border-2 border-white/30 hover:border-blue-500/50 hover:scale-125 hover:rotate-6">
+                <Linkedin className="w-7 h-7 drop-shadow-lg" />
               </div>
             </a>
             <a
@@ -225,9 +248,9 @@ const Footer = () => {
               className="group relative"
               aria-label="Visit our YouTube channel"
             >
-              <div className="absolute inset-0 bg-white/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="relative p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 border border-white/20">
-                <Youtube className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-br from-red-400/40 to-red-600/40 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative p-4 rounded-2xl bg-white/15 hover:bg-gradient-to-br hover:from-red-500/30 hover:to-red-700/30 backdrop-blur-sm transition-all duration-500 border-2 border-white/30 hover:border-red-400/50 hover:scale-125 hover:rotate-6">
+                <Youtube className="w-7 h-7 drop-shadow-lg" />
               </div>
             </a>
             <a
@@ -237,9 +260,9 @@ const Footer = () => {
               className="group relative"
               aria-label="Visit our Instagram page"
             >
-              <div className="absolute inset-0 bg-white/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="relative p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 border border-white/20">
-                <Instagram className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-br from-pink-400/40 via-purple-500/40 to-orange-500/40 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative p-4 rounded-2xl bg-white/15 hover:bg-gradient-to-br hover:from-pink-500/30 hover:via-purple-600/30 hover:to-orange-600/30 backdrop-blur-sm transition-all duration-500 border-2 border-white/30 hover:border-pink-400/50 hover:scale-125 hover:rotate-6">
+                <Instagram className="w-7 h-7 drop-shadow-lg" />
               </div>
             </a>
           </div>
