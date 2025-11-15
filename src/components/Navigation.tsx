@@ -78,20 +78,32 @@ const Navigation = () => {
           {/* Right Side - Phone & Login */}
           <div className="flex items-center gap-2 xl:gap-3">
             <ShoppingCart />
+            
+            {/* Modern Phone Card */}
             <a
               href="tel:9375550199"
-              className="hidden md:flex items-center gap-2 text-xs xl:text-sm text-foreground/80 font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2 py-2 no-underline whitespace-nowrap"
-              style={{ transition: "color 0.3s ease" }}
-              onMouseEnter={(e) => e.currentTarget.style.color = "#14B8A6"}
-              onMouseLeave={(e) => e.currentTarget.style.color = ""}
+              className="group hidden md:flex relative items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/5 to-accent/5 hover:from-primary/10 hover:to-accent/10 rounded-xl border border-primary/10 hover:border-primary/20 transition-all duration-300 no-underline overflow-hidden"
               aria-label="Call us at 937-555-0199"
             >
-              <span className="text-base">📞</span>
-              <span>(937) 555-0199</span>
+              {/* Gradient overlay on hover */}
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-accent/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              
+              {/* Modern phone icon with animation */}
+              <div className="relative z-10 bg-gradient-to-br from-primary to-accent p-2 rounded-lg group-hover:scale-110 transition-transform duration-300">
+                <Phone className="w-4 h-4 text-white" />
+              </div>
+              
+              {/* Phone number with gradient text */}
+              <span className="relative z-10 text-sm xl:text-base font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300">
+                (937) 555-0199
+              </span>
+              
+              {/* Shine effect */}
+              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
             </a>
             <Button 
               asChild 
-              className="hidden md:inline-flex font-bold bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground rounded-full px-4 xl:px-6 py-2 text-xs xl:text-sm hover:-translate-y-0.5 hover:shadow-glow-purple transition-all duration-300 hover:scale-105 whitespace-nowrap"
+              className="h-[44px] px-6 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-semibold rounded-xl shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
             >
               <Link to="/portal" aria-label="Login to your account">Login</Link>
             </Button>

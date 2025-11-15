@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { AnimatedAvatar } from "./AnimatedAvatar";
+import loraAvatar3D from "@/assets/lora-avatar-3d.png";
 
 interface Message {
   role: "user" | "assistant";
@@ -52,7 +53,13 @@ export const AIChat = () => {
   const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-chat`;
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ 
+        behavior: "smooth", 
+        block: "end",
+        inline: "nearest"
+      });
+    }
   }, [messages]);
 
   // Keyboard shortcuts
@@ -201,13 +208,21 @@ export const AIChat = () => {
     }
   };
 
-  const speakText = async (text: string) => {
+  const speakText = async (text: string, retryCount = 0): Promise<void> => {
+    const maxRetries = 3;
+    const timeout = 30000; // 30 seconds
+
     try {
       setIsSpeaking(true);
       
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), timeout);
+
       const { data, error } = await supabase.functions.invoke('text-to-speech', {
         body: { text, voice: 'nova' }
       });
+
+      clearTimeout(timeoutId);
 
       if (error) throw error;
 
@@ -236,12 +251,22 @@ export const AIChat = () => {
       }
     } catch (error) {
       console.error("TTS error:", error);
-      setIsSpeaking(false);
-      toast({
-        title: "Voice Error",
-        description: "Failed to generate voice response",
-        variant: "destructive",
-      });
+      
+      if (retryCount < maxRetries) {
+        console.log(`Retrying voice synthesis (attempt ${retryCount + 1}/${maxRetries})...`);
+        toast({
+          title: "Retrying...",
+          description: `Voice response failed, retrying (${retryCount + 1}/${maxRetries})`,
+        });
+        await speakText(text, retryCount + 1);
+      } else {
+        setIsSpeaking(false);
+        toast({
+          title: "Voice Response Failed",
+          description: "Could not generate voice response after multiple attempts. Please try again.",
+          variant: "destructive",
+        });
+      }
     }
   };
 
@@ -322,10 +347,10 @@ export const AIChat = () => {
       <div className="flex items-center justify-between p-5 border-b bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 backdrop-blur-sm">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <AnimatedAvatar 
-              isTalking={isTalking || isSpeaking}
-              isLoading={isLoading}
-              className="h-12 w-12"
+            <img 
+              src={loraAvatar3D} 
+              alt="Lora AI Assistant" 
+              className="h-12 w-12 rounded-full object-cover shadow-lg"
             />
             <div className={`absolute -bottom-1 -right-1 h-4 w-4 rounded-full border-2 border-background transition-all duration-300 ${
               isTalking || isSpeaking ? 'bg-primary animate-pulse' : 'bg-muted'

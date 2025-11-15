@@ -212,7 +212,7 @@ const Footer = () => {
               <img 
                 src={invisionLogo} 
                 alt="InVision Network Logo" 
-                className="h-6 w-6"
+                className="h-6 w-6 brightness-0 invert"
               />
               <p className="text-primary-foreground/80 text-sm">
                 © {new Date().getFullYear()} InVision Network. All rights reserved.

@@ -44,12 +44,12 @@ export function NewsletterSignup() {
   };
 
   return (
-    <div className="bg-primary-foreground/10 rounded-lg p-4 md:p-6 mb-6 md:mb-8">
-      <h3 className="font-bold text-lg md:text-xl mb-2">Monthly AI Safety Tips</h3>
-      <p className="text-primary-foreground/80 mb-4 text-sm md:text-base">
+    <div className="bg-primary-foreground/10 rounded-lg p-3 md:p-4 mb-4 md:mb-5">
+      <h3 className="font-semibold text-base md:text-lg mb-1.5">Monthly AI Safety Tips</h3>
+      <p className="text-primary-foreground/80 mb-3 text-xs md:text-sm leading-snug">
         Stay informed about the latest scams and protection strategies.
       </p>
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
         <Input
           type="email"
           placeholder="Your email address"
@@ -57,17 +57,17 @@ export function NewsletterSignup() {
           onChange={(e) => setEmail(e.target.value)}
           disabled={isSubmitting}
           required
-          className="bg-primary-foreground/20 border-primary-foreground/30 text-primary-foreground placeholder:text-primary-foreground/50 h-11 md:h-10"
+          className="bg-primary-foreground/20 border-primary-foreground/30 text-primary-foreground placeholder:text-primary-foreground/50 h-9 md:h-9 text-sm"
         />
         <Button 
           variant="default" 
-          className="bg-accent hover:bg-accent/90 h-11 md:h-10 whitespace-nowrap" 
+          className="bg-accent hover:bg-accent/90 h-9 md:h-9 whitespace-nowrap text-sm font-semibold px-6" 
           type="submit"
           disabled={isSubmitting}
         >
           {isSubmitting ? (
             <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
               Subscribing...
             </>
           ) : (
