@@ -9,6 +9,7 @@ const Footer = () => {
   return (
     <>
       <TrustedTechLogos />
+      <NewsletterSignup />
       <footer className="bg-gradient-to-br from-[hsl(260,70%,25%)] to-[hsl(260,65%,35%)] text-primary-foreground relative overflow-hidden">
       {/* Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -16,9 +17,9 @@ const Footer = () => {
         <div className="absolute bottom-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '8s' }} />
       </div>
       
-      <div className="container mx-auto px-4 py-8 md:py-12 relative z-10">
+      <div className="container mx-auto px-4 py-6 md:py-8 relative z-10">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6 mb-6">
           {/* Column 1: Quick Links */}
           <div>
             <h3 className="font-bold text-lg mb-4">Quick Links</h3>
@@ -162,11 +163,8 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Newsletter Signup */}
-        <NewsletterSignup />
-
         {/* Social Media */}
-        <div className="flex justify-center gap-2 md:gap-3 mb-6 md:mb-8">
+        <div className="flex justify-center gap-2 md:gap-3 mb-4 md:mb-6">
           <a 
             href="https://facebook.com/invisionnetwork" 
             target="_blank" 
@@ -206,7 +204,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-primary-foreground/20 pt-6 md:pt-8 pb-4">
+        <div className="border-t border-primary-foreground/20 pt-4 md:pt-6 pb-3">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-4">
             <div className="flex items-center gap-3 text-center md:text-left">
               <img 
@@ -231,10 +229,10 @@ const Footer = () => {
           </div>
 
           {/* Legal Disclaimer */}
-          <p className="text-primary-foreground/60 text-xs mt-6 max-w-4xl mx-auto text-center leading-relaxed">
+          <p className="text-primary-foreground/60 text-xs mt-4 max-w-4xl mx-auto text-center leading-relaxed">
             InVision Network provides educational services only. We are not legal, financial, tax, or licensed cybersecurity professionals. In case of active fraud, identity theft, or criminal activity, contact local law enforcement (911), your bank's fraud department immediately using official phone numbers, and report to FTC at IdentityTheft.gov. We never request passwords, 2FA codes, bank account information, or Social Security numbers.
           </p>
-          <div className="text-center mt-4">
+          <div className="text-center mt-3">
             <Link to="/privacy-policy" className="text-primary-foreground/60 text-xs hover:text-primary-foreground transition-colors mx-2">Privacy Policy</Link>
             <span className="text-primary-foreground/40">|</span>
             <Link to="/terms-of-service" className="text-primary-foreground/60 text-xs hover:text-primary-foreground transition-colors mx-2">Terms of Service</Link>

@@ -73,8 +73,8 @@ const TrustedTechLogos = () => {
         </div>
         
         {/* Floating logos - continuous right to left animation (seamless loop) */}
-        <div className="relative">
-          <div className="flex animate-scroll-left gap-8">
+        <div className="relative overflow-hidden">
+          <div className="flex animate-scroll-left gap-12">
             {/* First set of logos */}
             {logos.map((logo, index) => {
               const IconComponent = logo.icon;
