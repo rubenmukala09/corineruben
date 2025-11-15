@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Eye, EyeOff, Lock, Mail, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -116,11 +116,17 @@ export default function Login() {
       {/* Sticky Header */}
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border shadow-sm">
         <div className="flex justify-between items-center px-4 md:px-6 lg:px-8 py-3">
-          <img 
-            src={invisionLogo} 
-            alt="InVision Network" 
-            className="h-8 md:h-10 w-auto"
-          />
+          <Link to="/" className="flex items-center gap-2 md:gap-3 hover:scale-105 transition-transform duration-300 group flex-shrink-0 no-underline">
+            <img 
+              src={invisionLogo} 
+              alt="InVision Network Shield Logo" 
+              className="w-8 h-8 md:w-10 md:h-10 group-hover:scale-110 transition-transform duration-300"
+            />
+            <div className="flex flex-col leading-tight">
+              <span className="text-sm md:text-base lg:text-lg font-bold gradient-text-primary group-hover:scale-105 transition-transform duration-300">InVision Network</span>
+              <span className="text-[9px] md:text-[10px] text-muted-foreground hidden sm:block">AI Scam Protection & Business Solutions</span>
+            </div>
+          </Link>
           <Button 
             variant="outline" 
             onClick={() => navigate('/')}

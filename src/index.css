@@ -1715,11 +1715,8 @@ video {
 }
 
 .animate-scroll-left {
-  animation: scroll-left 30s linear infinite;
-}
-
-.animate-scroll-left:hover {
-  animation-play-state: paused;
+  animation: scroll-left 25s linear infinite;
+  will-change: transform;
 }
 
 /* Brightness utility for hero images */
