@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <footer className="relative">
       {/* CTA Section - "Want to Join Our Mission?" */}
-      <section className="relative bg-gradient-to-r from-[hsl(260,80%,30%)] via-[hsl(240,70%,45%)] to-[hsl(190,80%,50%)] text-white py-10 md:py-12 overflow-hidden">
+      <section className="relative bg-gradient-to-r from-[hsl(260,80%,30%)] via-[hsl(240,70%,45%)] to-[hsl(190,80%,50%)] text-white py-6 md:py-8 overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
           <div className="absolute top-10 left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '8s' }} />
@@ -18,16 +18,16 @@ const Footer = () => {
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
               Want to Join Our Mission?
             </h2>
             
             {/* CTA Buttons */}
-            <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4 mb-0">
+            <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3">
               <Button 
                 asChild 
                 size="lg"
-                className="bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-500 hover:to-cyan-600 text-white font-bold rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 px-8 py-6 text-base uppercase tracking-wide"
+                className="bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-500 hover:to-cyan-600 text-white font-bold rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 px-6 py-4 text-base uppercase tracking-wide"
               >
                 <Link to="/training">Book Training</Link>
               </Button>
@@ -35,7 +35,7 @@ const Footer = () => {
                 asChild 
                 size="lg"
                 variant="outline"
-                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary font-bold rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 px-8 py-6 text-base uppercase tracking-wide"
+                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary font-bold rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 px-6 py-4 text-base uppercase tracking-wide"
               >
                 <Link to="/business">Partner With Us</Link>
               </Button>
@@ -43,14 +43,14 @@ const Footer = () => {
                 asChild 
                 size="lg"
                 variant="outline"
-                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary font-bold rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 px-8 py-6 text-base uppercase tracking-wide"
+                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary font-bold rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 px-6 py-4 text-base uppercase tracking-wide"
               >
                 <Link to="/contact">Donate a Training Seat</Link>
               </Button>
             </div>
 
             {/* Phone Number */}
-            <div className="flex items-center justify-center gap-2 text-sm md:text-base">
+            <div className="flex items-center justify-center gap-2 text-sm md:text-base mt-4">
               <span>Questions? Call</span>
               <a 
                 href="tel:9375550199" 
@@ -92,12 +92,12 @@ const Footer = () => {
           <div className="absolute top-1/3 right-1/4 w-24 h-24 border-2 border-white/5 rounded-full" />
         </div>
 
-        <div className="container mx-auto px-4 py-8 md:py-10 relative z-10">
+        <div className="container mx-auto px-4 py-5 md:py-6 relative z-10">
           {/* Footer Navigation Columns */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 mb-6">
             {/* Quick Links */}
             <div>
-              <h3 className="font-bold text-lg mb-3">Quick Links</h3>
+              <h3 className="font-bold text-lg mb-2 text-cyan-300">Quick Links</h3>
               <ul className="space-y-1.5">
                 <li>
                   <Link to="/" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
@@ -144,7 +144,7 @@ const Footer = () => {
 
             {/* Training */}
             <div>
-              <h3 className="font-bold text-lg mb-3">Training</h3>
+              <h3 className="font-bold text-lg mb-2 text-cyan-300">Training</h3>
               <ul className="space-y-1.5">
                 <li>
                   <Link to="/training#zoom" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
@@ -171,7 +171,7 @@ const Footer = () => {
 
             {/* Support */}
             <div>
-              <h3 className="font-bold text-lg mb-3">Support</h3>
+              <h3 className="font-bold text-lg mb-2 text-cyan-300">Support</h3>
               <ul className="space-y-1.5">
                 <li>
                   <Link to="/faq" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
@@ -193,7 +193,7 @@ const Footer = () => {
 
             {/* Legal */}
             <div>
-              <h3 className="font-bold text-lg mb-3">Legal</h3>
+              <h3 className="font-bold text-lg mb-2 text-cyan-300">Legal</h3>
               <ul className="space-y-1.5">
                 <li>
                   <Link to="/privacy-policy" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
@@ -220,7 +220,7 @@ const Footer = () => {
 
             {/* Community */}
             <div>
-              <h3 className="font-bold text-lg mb-3">Community</h3>
+              <h3 className="font-bold text-lg mb-2 text-cyan-300">Community</h3>
               <ul className="space-y-1.5">
                 <li className="text-sm text-primary-foreground/80">20% Military Discount</li>
                 <li className="text-sm text-primary-foreground/80">25% Cancer Patient Discount</li>
@@ -239,15 +239,15 @@ const Footer = () => {
           </div>
 
           {/* Newsletter Signup Section */}
-          <div className="max-w-2xl mx-auto mb-8">
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-              <h3 className="text-xl md:text-2xl font-bold mb-2 text-center">
+          <div className="max-w-2xl mx-auto mb-6">
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
+              <h3 className="text-lg md:text-xl font-bold mb-1.5 text-center text-cyan-300">
                 Monthly AI Safety Tips
               </h3>
-              <p className="text-sm text-primary-foreground/80 mb-4 text-center">
+              <p className="text-sm text-primary-foreground/80 mb-3 text-center">
                 Stay informed about the latest scams and protection strategies.
               </p>
-              <form className="flex flex-col sm:flex-row gap-3">
+              <form className="flex flex-col sm:flex-row gap-2">
                 <Input
                   type="email"
                   placeholder="Your email address"
@@ -264,7 +264,7 @@ const Footer = () => {
           </div>
 
           {/* Social Media Icons */}
-          <div className="flex items-center justify-center gap-6 mb-6">
+          <div className="flex items-center justify-center gap-4 mb-4">
             <a
               href="https://facebook.com/invisionnetwork"
               target="_blank"
@@ -273,8 +273,8 @@ const Footer = () => {
               aria-label="Visit our Facebook page"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-blue-400/40 to-blue-600/40 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative p-3 rounded-xl bg-white/15 hover:bg-gradient-to-br hover:from-blue-500/30 hover:to-blue-700/30 backdrop-blur-sm transition-all duration-500 border border-white/30 hover:border-blue-400/50 hover:scale-110">
-                <Facebook className="w-6 h-6" />
+              <div className="relative p-2.5 rounded-xl bg-white/15 hover:bg-gradient-to-br hover:from-blue-500/30 hover:to-blue-700/30 backdrop-blur-sm transition-all duration-500 border border-white/30 hover:border-blue-400/50 hover:scale-110">
+                <Facebook className="w-5 h-5" />
               </div>
             </a>
             <a
@@ -285,8 +285,8 @@ const Footer = () => {
               aria-label="Visit our LinkedIn page"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/40 to-blue-700/40 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative p-3 rounded-xl bg-white/15 hover:bg-gradient-to-br hover:from-blue-600/30 hover:to-blue-800/30 backdrop-blur-sm transition-all duration-500 border border-white/30 hover:border-blue-500/50 hover:scale-110">
-                <Linkedin className="w-6 h-6" />
+              <div className="relative p-2.5 rounded-xl bg-white/15 hover:bg-gradient-to-br hover:from-blue-600/30 hover:to-blue-800/30 backdrop-blur-sm transition-all duration-500 border border-white/30 hover:border-blue-500/50 hover:scale-110">
+                <Linkedin className="w-5 h-5" />
               </div>
             </a>
             <a
@@ -297,8 +297,8 @@ const Footer = () => {
               aria-label="Visit our YouTube channel"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-red-400/40 to-red-600/40 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative p-3 rounded-xl bg-white/15 hover:bg-gradient-to-br hover:from-red-500/30 hover:to-red-700/30 backdrop-blur-sm transition-all duration-500 border border-white/30 hover:border-red-400/50 hover:scale-110">
-                <Youtube className="w-6 h-6" />
+              <div className="relative p-2.5 rounded-xl bg-white/15 hover:bg-gradient-to-br hover:from-red-500/30 hover:to-red-700/30 backdrop-blur-sm transition-all duration-500 border border-white/30 hover:border-red-400/50 hover:scale-110">
+                <Youtube className="w-5 h-5" />
               </div>
             </a>
             <a
@@ -309,15 +309,15 @@ const Footer = () => {
               aria-label="Visit our Instagram page"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-pink-400/40 via-purple-500/40 to-orange-500/40 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative p-3 rounded-xl bg-white/15 hover:bg-gradient-to-br hover:from-pink-500/30 hover:via-purple-600/30 hover:to-orange-600/30 backdrop-blur-sm transition-all duration-500 border border-white/30 hover:border-pink-400/50 hover:scale-110">
-                <Instagram className="w-6 h-6" />
+              <div className="relative p-2.5 rounded-xl bg-white/15 hover:bg-gradient-to-br hover:from-pink-500/30 hover:via-purple-600/30 hover:to-orange-600/30 backdrop-blur-sm transition-all duration-500 border border-white/30 hover:border-pink-400/50 hover:scale-110">
+                <Instagram className="w-5 h-5" />
               </div>
             </a>
           </div>
 
           {/* Bottom Bar - Copyright & Badges */}
-          <div className="border-t border-primary-foreground/20 pt-6">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-6">
+          <div className="border-t border-primary-foreground/20 pt-4">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
               <div className="flex items-center gap-3 text-center md:text-left">
                 <img 
                   src={invisionLogo} 
