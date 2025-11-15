@@ -164,17 +164,17 @@ function Careers() {
       <TrustBar />
       
       {/* Why InVision */}
-      <section className="section-spacing bg-gradient-to-b from-background to-muted/20">
+      <section className="py-10 bg-gradient-to-b from-background to-muted/20">
         <div className="container-padding">
-          <div className="text-center mb-12">
-            <Badge className="mb-4">Why InVision?</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Work That Matters</h2>
+          <div className="text-center mb-8">
+            <Badge className="mb-3">Why InVision?</Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-3">Work That Matters</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Join a team that's using AI to protect vulnerable families. Every line of code, every support call, every design decision makes the world safer.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {companyValues.map((value, index) => {
               const IconComponent = value.icon;
               return (
@@ -217,7 +217,7 @@ function Careers() {
           </Tabs>
 
           {/* Job Cards */}
-          <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-4 max-w-6xl mx-auto">
             {filteredJobs.map(job => (
               <Card key={job.id} className={`hover:shadow-xl transition-all ${job.featured ? 'border-primary' : ''}`}>
                 <CardHeader>

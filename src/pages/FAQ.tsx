@@ -417,11 +417,11 @@ export default function FAQ() {
         </section>
 
         {/* FAQ Accordion */}
-        <section className="py-12 sm:py-16">
+        <section className="py-8 sm:py-10">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               {filteredFAQs.length > 0 ? (
-                <Accordion type="single" collapsible className="space-y-4">
+                <Accordion type="single" collapsible className="space-y-2">
                   {filteredFAQs.map((faq) => (
                     <ScrollRevealSection key={faq.id}>
                       <Card className="overflow-hidden">

@@ -120,7 +120,7 @@ function Contact() {
       <div className="section-spacing bg-gradient-to-b from-background to-muted/20">
         <div className="container-padding">
           {/* Contact Methods Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             {contactMethods.map((method, index) => {
               const IconComponent = method.icon;
               return (
@@ -157,7 +157,7 @@ function Contact() {
           </div>
 
           {/* Main Contact Form Section */}
-          <div className="grid lg:grid-cols-5 gap-12 max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-5 gap-8 max-w-7xl mx-auto">
             {/* Contact Form - 60% */}
             <div className="lg:col-span-3">
               <Card className="shadow-2xl">
@@ -183,7 +183,7 @@ function Contact() {
                       <p className="text-muted-foreground">We'll respond within 4 hours</p>
                     </div>
                   ) : (
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    <form onSubmit={handleSubmit} className="space-y-4">
                       {/* Full Name */}
                       <div>
                         <Label htmlFor="fullName">Full Name *</Label>
