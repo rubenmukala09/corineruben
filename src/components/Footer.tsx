@@ -171,44 +171,78 @@ const Footer = () => {
           <TrustedTechLogos />
         </div>
 
-        {/* Social Media */}
-        <div className="flex justify-center gap-1 md:gap-2 mb-6 md:mb-8">
-          <a 
-            href="https://facebook.com/invisionnetwork" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-primary-foreground/80 hover:text-accent transition-all md:transform md:hover:scale-125 md:hover:rotate-6 duration-300 p-1 hover:bg-accent/10 rounded-full active:scale-95" 
-            aria-label="Follow us on Facebook"
-          >
-            <Facebook className="w-6 h-6 md:w-6 md:h-6" />
-          </a>
-          <a 
-            href="https://linkedin.com/company/invisionnetwork" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-primary-foreground/80 hover:text-accent transition-all md:transform md:hover:scale-125 md:hover:rotate-6 duration-300 p-1 hover:bg-accent/10 rounded-full active:scale-95" 
-            aria-label="Connect with us on LinkedIn"
-          >
-            <Linkedin className="w-6 h-6 md:w-6 md:h-6" />
-          </a>
-          <a 
-            href="https://youtube.com/@invisionnetwork" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-primary-foreground/80 hover:text-accent transition-all md:transform md:hover:scale-125 md:hover:rotate-6 duration-300 p-1 hover:bg-accent/10 rounded-full active:scale-95" 
-            aria-label="Subscribe to our YouTube channel"
-          >
-            <Youtube className="w-6 h-6 md:w-6 md:h-6" />
-          </a>
-          <a 
-            href="https://instagram.com/invisionnetwork" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-primary-foreground/80 hover:text-accent transition-all md:transform md:hover:scale-125 md:hover:rotate-6 duration-300 p-2 hover:bg-accent/10 rounded-full active:scale-95" 
-            aria-label="Follow us on Instagram"
-          >
-            <Instagram className="w-6 h-6 md:w-6 md:h-6" />
-          </a>
+        {/* CTA Buttons & Social Media */}
+        <div className="flex flex-col items-center gap-8 mb-8 md:mb-10">
+          {/* CTA Buttons */}
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Button 
+              asChild 
+              size="lg"
+              className="bg-white text-primary hover:bg-white/90 font-semibold rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+            >
+              <Link to="/training">Start Learning</Link>
+            </Button>
+            <Button 
+              asChild 
+              size="lg"
+              variant="outline"
+              className="border-2 border-white text-white hover:bg-white hover:text-primary font-semibold rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+            >
+              <Link to="/contact">Get Protected</Link>
+            </Button>
+          </div>
+
+          {/* Social Media Links */}
+          <div className="flex items-center gap-6">
+            <a
+              href="https://facebook.com/invisionnetwork"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative"
+              aria-label="Visit our Facebook page"
+            >
+              <div className="absolute inset-0 bg-white/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 border border-white/20">
+                <Facebook className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+              </div>
+            </a>
+            <a
+              href="https://linkedin.com/company/invision-network"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative"
+              aria-label="Visit our LinkedIn page"
+            >
+              <div className="absolute inset-0 bg-white/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 border border-white/20">
+                <Linkedin className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+              </div>
+            </a>
+            <a
+              href="https://youtube.com/invisionnetwork"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative"
+              aria-label="Visit our YouTube channel"
+            >
+              <div className="absolute inset-0 bg-white/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 border border-white/20">
+                <Youtube className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+              </div>
+            </a>
+            <a
+              href="https://instagram.com/invisionnetwork"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative"
+              aria-label="Visit our Instagram page"
+            >
+              <div className="absolute inset-0 bg-white/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 border border-white/20">
+                <Instagram className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+              </div>
+            </a>
+          </div>
         </div>
 
         {/* Bottom Bar */}

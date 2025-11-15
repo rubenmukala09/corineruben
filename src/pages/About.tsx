@@ -63,7 +63,7 @@ function About() {
     {
       year: "2023",
       title: "The Beginning",
-      description: "After Ruben and Corinne were victims of a sophisticated data breach and extortion attempt, InVision Network was born with a mission to protect families from the same trauma they experienced."
+      description: "After Ruben and Corine were victims of a sophisticated data breach and extortion attempt, InVision Network was born with a mission to protect families from the same trauma they experienced."
     },
     {
       year: "2024",
@@ -140,7 +140,7 @@ function About() {
                 </h2>
                 <div className="space-y-3 sm:space-y-4 md:space-y-6 text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed">
                   <p>
-                    When Ruben and Corinne fell victim to a sophisticated data breach, their worst fears came true. All their passwords, emails, and personal information were exposed. Then came the chilling demand: pay thousands of dollars, or their private data would be sold on the dark web.
+                    When Ruben and Corine fell victim to a sophisticated data breach, their worst fears came true. All their passwords, emails, and personal information were exposed. Then came the chilling demand: pay thousands of dollars, or their private data would be sold on the dark web.
                   </p>
                   <p>
                     This traumatic experience transformed them from victims into protectors. They realized that even tech-savvy professionals with 12+ years of cybersecurity experience can become targets. The attackers were sophisticated, relentless, and terrifying.
@@ -219,7 +219,7 @@ function About() {
                 </div>
                 <h3 className="text-2xl md:text-3xl font-bold mb-2">Ruben</h3>
                 <p className="text-base md:text-lg text-muted-foreground mb-4">
-                  Cybersecurity Analyst with 12 years of experience protecting organizations and families. After he and his wife Corinne fell victim to a sophisticated scam that exposed their passwords and emails—with criminals demanding payment to delete their data—Ruben embraced a deeper mission: making enterprise-level security accessible to everyone.
+                  Cybersecurity Analyst with 12 years of experience protecting organizations and families. After he and his wife Corine fell victim to a sophisticated scam that exposed their passwords and emails - with criminals demanding payment to delete their data - Ruben embraced a deeper mission: making enterprise-level security accessible to everyone.
                 </p>
                 <blockquote className="border-l-4 border-primary pl-4 italic text-sm md:text-base text-muted-foreground">
                   "Everyone deserves to feel safe online, regardless of their technical knowledge."
@@ -232,14 +232,14 @@ function About() {
                 <div className="relative mb-6">
               <img
                 src={founderCorine}
-                alt="Corinne - Co-Founder & COO"
+                alt="Corine - Co-Founder & COO"
                     className="w-full aspect-square object-cover rounded-xl mb-4"
                   />
                   <Badge className="absolute top-4 right-4 bg-primary">Co-Founder & COO</Badge>
                 </div>
                 <h3 className="text-2xl md:text-3xl font-bold mb-2">Corine</h3>
                 <p className="text-base md:text-lg text-muted-foreground mb-4">
-                  Registered Nurse with 3 years of clinical experience and a heart for community wellness. After experiencing identity theft alongside her husband, Corinne channeled her compassionate care approach into designing trauma-informed cybersecurity training that meets people where they are—especially seniors and vulnerable populations.
+                  Registered Nurse with 3 years of clinical experience and a heart for community wellness. After experiencing identity theft alongside her husband, Corine channeled her compassionate care approach into designing trauma-informed cybersecurity training that meets people where they are - especially seniors and vulnerable populations.
                 </p>
                 <blockquote className="border-l-4 border-primary pl-4 italic text-sm md:text-base text-muted-foreground">
                   "Technology should empower, not intimidate. We're here to bridge that gap."
