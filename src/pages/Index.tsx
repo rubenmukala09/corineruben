@@ -105,6 +105,8 @@ function Index() {
         subheadline="Serving Ohio's diverse communities with compassionate scam prevention training, 24/7 support, and personalized protection services for every family"
         showScrollIndicator={true}
         showPrivacyDisclaimer={true}
+        showProtectionBadge={true}
+        badgeText="500+ Families Protected"
         overlay={true}
       >
         <div className="flex flex-col sm:flex-row gap-3 md:gap-4 flex-wrap justify-center sm:justify-start">
@@ -124,7 +126,7 @@ function Index() {
       <TrustBar />
 
       {/* The Growing Threat Section */}
-      <section className="py-16 bg-muted relative overflow-hidden">
+      <section className="section-spacing bg-muted relative overflow-hidden">
         <FlowingWaves variant="full" opacity={0.12} />
         <div className="absolute inset-0 opacity-30">
           <div
@@ -455,7 +457,7 @@ function Index() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-16 bg-muted relative overflow-hidden">
+      <section className="section-spacing bg-muted relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div
             className="absolute top-20 right-1/4 w-96 h-96 bg-accent/25 rounded-full blur-3xl animate-pulse"

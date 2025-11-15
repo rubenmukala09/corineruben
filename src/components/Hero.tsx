@@ -4,6 +4,7 @@ import { Shield } from "lucide-react";
 import ScrollIndicator from "./ScrollIndicator";
 import { ParticleBackground } from "./ParticleBackground";
 import { FloatingShapes } from "./FloatingShapes";
+import { ProtectionBadge } from "./ProtectionBadge";
 import { useImagePreload } from "@/hooks/useImagePreload";
 import { motion } from "framer-motion";
 import { useParallax } from "@/hooks/useParallax";
@@ -24,9 +25,12 @@ interface HeroProps {
   overlay?: boolean;
   showScrollIndicator?: boolean;
   showPrivacyDisclaimer?: boolean;
+  showProtectionBadge?: boolean;
+  badgeText?: string;
+  showTrustIndicators?: boolean;
 }
 
-const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, children, className, overlay = false, showScrollIndicator = false, showPrivacyDisclaimer = false }: HeroProps) => {
+const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, children, className, overlay = false, showScrollIndicator = false, showPrivacyDisclaimer = false, showProtectionBadge = false, badgeText, showTrustIndicators = false }: HeroProps) => {
   const [showDisclaimer, setShowDisclaimer] = useState(true);
   const { ref, y, opacity } = useParallax({ speed: 0.5 });
   
@@ -45,7 +49,7 @@ const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, childr
   return (
     <div 
       ref={ref}
-      className={cn("relative min-h-[70vh] sm:min-h-[80vh] md:min-h-[90vh] flex items-center overflow-hidden", className)}
+      className={cn("relative min-h-[60vh] md:min-h-[70vh] flex items-center overflow-hidden hero-mobile", className)}
     >
       {/* Background with Parallax */}
       <motion.div 
@@ -81,6 +85,13 @@ const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, childr
       
       {/* Floating Abstract Shapes */}
       <FloatingShapes />
+      
+      {/* Protection Badge (if enabled) */}
+      {showProtectionBadge && (
+        <div className="absolute top-4 right-4 md:top-8 md:right-8 z-20">
+          <ProtectionBadge text={badgeText || "Family Protected"} size="md" />
+        </div>
+      )}
       
       {/* Floating Particles (existing) */}
       <div className="absolute inset-0 pointer-events-none hidden md:block" style={{ zIndex: 1 }}>

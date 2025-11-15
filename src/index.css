@@ -1660,3 +1660,47 @@ video {
   will-change: transform;
 }
 
+/* Spacing utility classes */
+.section-spacing {
+  @apply py-8 md:py-12 lg:py-16;
+}
+
+.section-spacing-tight {
+  @apply py-6 md:py-8 lg:py-10;
+}
+
+.section-spacing-loose {
+  @apply py-10 md:py-14 lg:py-20;
+}
+
+.container-padding {
+  @apply px-4 md:px-6 lg:px-8;
+}
+
+.heading-margin {
+  @apply mb-4 md:mb-6;
+}
+
+.card-gap {
+  @apply gap-4 md:gap-6;
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  .section-spacing {
+    @apply py-6;
+  }
+  
+  .hero-mobile {
+    min-height: 50vh !important;
+  }
+  
+  .card-mobile {
+    @apply p-4;
+  }
+  
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.25rem; }
+}
+
