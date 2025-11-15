@@ -16,6 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { supabase } from "@/integrations/supabase/client";
+import { trackButtonClick, trackConversion } from "@/utils/analyticsTracker";
 import {
   CheckCircle,
   Mail,
@@ -251,6 +252,7 @@ function LearnAndTrain() {
   };
 
   const handleSubscribe = (priceId: string, serviceName: string, planTier: string, amount: number) => {
+    trackButtonClick(`Subscribe ${planTier} Plan`, 'Training Page');
     setSelectedSubscription({ priceId, serviceName, planTier, amount });
     setSubscriptionDialogOpen(true);
   };
@@ -584,7 +586,10 @@ function LearnAndTrain() {
               </div>
 
               <Button 
-                onClick={() => handleSubscribe('price_1QhNpBE7M5RA9HBzOSnfZ67C', 'ScamShield', 'Starter', 3900)}
+                onClick={() => {
+                  trackButtonClick('Get Started - Starter Plan', 'Training Page');
+                  handleSubscribe('price_1QhNpBE7M5RA9HBzOSnfZ67C', 'ScamShield', 'Starter', 3900);
+                }}
                 variant="default" 
                 size="lg" 
                 className="w-full"
@@ -649,7 +654,10 @@ function LearnAndTrain() {
               </div>
 
               <Button 
-                onClick={() => handleSubscribe('price_1QhNpTE7M5RA9HBztEBr0e3z', 'ScamShield', 'Family', 7900)}
+                onClick={() => {
+                  trackButtonClick('Get Started - Family Plan', 'Training Page');
+                  handleSubscribe('price_1QhNpTE7M5RA9HBztEBr0e3z', 'ScamShield', 'Family', 7900);
+                }}
                 variant="default" 
                 size="lg" 
                 className="w-full"
@@ -715,7 +723,10 @@ function LearnAndTrain() {
               </div>
 
               <Button 
-                onClick={() => handleSubscribe('price_1QhNpoE7M5RA9HBzuvj62YQv', 'ScamShield', 'Premium', 12900)}
+                onClick={() => {
+                  trackButtonClick('Get Started - Premium Plan', 'Training Page');
+                  handleSubscribe('price_1QhNpoE7M5RA9HBzuvj62YQv', 'ScamShield', 'Premium', 12900);
+                }}
                 variant="default" 
                 size="lg" 
                 className="w-full"
@@ -774,7 +785,10 @@ function LearnAndTrain() {
                 size="lg" 
                 className="w-full text-primary border-primary hover:bg-primary hover:text-white transition-all duration-300"
               >
-                <Link to="/contact?subject=Custom Protection Plan">
+                <Link 
+                  to="/contact?subject=Custom Protection Plan"
+                  onClick={() => trackButtonClick('Request Quote - Custom Plan', 'Training Page')}
+                >
                   Request Quote
                 </Link>
               </Button>
