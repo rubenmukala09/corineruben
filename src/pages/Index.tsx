@@ -223,88 +223,88 @@ function Index() {
       <ThreePathsForward />
 
       {/* Why Families Trust Us */}
-      <section className="py-16 bg-background relative overflow-hidden">
+      <section className="py-12 md:py-16 bg-background relative overflow-hidden">
         <FlowingWaves variant="full" opacity={0.12} />
         <div className="absolute inset-0 opacity-30">
           <div
-            className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse"
+            className="absolute top-20 left-10 w-48 h-48 md:w-72 md:h-72 bg-primary/20 rounded-full blur-3xl animate-pulse"
             style={{ animationDuration: "4s" }}
           />
           <div
-            className="absolute bottom-20 right-10 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-pulse"
+            className="absolute bottom-20 right-10 w-64 h-64 md:w-96 md:h-96 bg-accent/20 rounded-full blur-3xl animate-pulse"
             style={{ animationDuration: "6s" }}
           />
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <ScrollRevealSection>
-            <h2 className="text-center mb-10">Why Families Trust InVision Network</h2>
+            <h2 className="text-center mb-8 md:mb-10 text-2xl sm:text-3xl md:text-4xl font-bold">Why Families Trust InVision Network</h2>
           </ScrollRevealSection>
           <ScrollRevealSection staggerChildren={true}>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             <Card
-              className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
+              className="p-4 sm:p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
               style={{ animationDelay: "0ms" }}
             >
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-                  <CheckCircle className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-500" />
+              <div className="flex justify-center mb-3 sm:mb-4">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+                  <CheckCircle className="w-6 h-6 sm:w-8 sm:h-8 text-primary group-hover:scale-110 transition-transform duration-500" />
                 </div>
               </div>
-              <h3 className="text-xl mb-3 text-center group-hover:text-primary transition-colors duration-300">
+              <h3 className="text-lg sm:text-xl mb-2 sm:mb-3 text-center group-hover:text-primary transition-colors duration-300">
                 500+ Families Protected
               </h3>
-              <p className="text-muted-foreground text-center">
+              <p className="text-sm sm:text-base text-muted-foreground text-center">
                 Trusted by hundreds of Ohio families to keep them safe from AI scams.
               </p>
             </Card>
 
             <Card
-              className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
+              className="p-4 sm:p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
               style={{ animationDelay: "100ms" }}
             >
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-                  <Heart className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-500" />
+              <div className="flex justify-center mb-3 sm:mb-4">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+                  <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-primary group-hover:scale-110 transition-transform duration-500" />
                 </div>
               </div>
-              <h3 className="text-xl mb-3 text-center group-hover:text-primary transition-colors duration-300">
+              <h3 className="text-lg sm:text-xl mb-2 sm:mb-3 text-center group-hover:text-primary transition-colors duration-300">
                 Ohio Based & Trusted
               </h3>
-              <p className="text-muted-foreground text-center">
+              <p className="text-sm sm:text-base text-muted-foreground text-center">
                 Serving Dayton, Kettering & Greater Miami Valley, Ohio
               </p>
             </Card>
 
             <Card
-              className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
+              className="p-4 sm:p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
               style={{ animationDelay: "200ms" }}
             >
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-                  <Shield className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-500" />
+              <div className="flex justify-center mb-3 sm:mb-4">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+                  <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-primary group-hover:scale-110 transition-transform duration-500" />
                 </div>
               </div>
-              <h3 className="text-xl mb-3 text-center group-hover:text-primary transition-colors duration-300">
+              <h3 className="text-lg sm:text-xl mb-2 sm:mb-3 text-center group-hover:text-primary transition-colors duration-300">
                 Expert Cybersecurity Team
               </h3>
-              <p className="text-muted-foreground text-center">
+              <p className="text-sm sm:text-base text-muted-foreground text-center">
                 Certified professionals who understand both technology and scam tactics.
               </p>
             </Card>
 
             <Card
-              className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
+              className="p-4 sm:p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
               style={{ animationDelay: "300ms" }}
             >
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-                  <MessageSquare className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-500" />
+              <div className="flex justify-center mb-3 sm:mb-4">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+                  <MessageSquare className="w-6 h-6 sm:w-8 sm:h-8 text-primary group-hover:scale-110 transition-transform duration-500" />
                 </div>
               </div>
-              <h3 className="text-xl mb-3 text-center group-hover:text-primary transition-colors duration-300">
+              <h3 className="text-lg sm:text-xl mb-2 sm:mb-3 text-center group-hover:text-primary transition-colors duration-300">
                 Multilingual Support
               </h3>
-              <p className="text-muted-foreground text-center">
+              <p className="text-sm sm:text-base text-muted-foreground text-center">
                 Available in English • Français • Español for your convenience.
               </p>
             </Card>
@@ -314,20 +314,20 @@ function Index() {
       </section>
 
       {/* The 60-Second Pause Protocol */}
-      <section className="py-16 bg-muted relative overflow-hidden">
+      <section className="py-12 md:py-16 bg-muted relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div
-            className="absolute top-1/4 right-20 w-64 h-64 bg-accent/30 rounded-full blur-3xl animate-pulse"
+            className="absolute top-1/4 right-10 sm:right-20 w-48 h-48 sm:w-64 sm:h-64 bg-accent/30 rounded-full blur-3xl animate-pulse"
             style={{ animationDuration: "5s" }}
           />
         </div>
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-10 animate-fade-in-up">
-            <h2 className="mb-4">The 60-Second Pause Protocol™</h2>
-            <p className="text-xl text-muted-foreground">Stop Scams Before They Start</p>
+          <div className="text-center mb-8 md:mb-10 animate-fade-in-up">
+            <h2 className="mb-3 sm:mb-4 text-2xl sm:text-3xl md:text-4xl font-bold">The 60-Second Pause Protocol™</h2>
+            <p className="text-lg sm:text-xl text-muted-foreground">Stop Scams Before They Start</p>
           </div>
 
-          <div className="max-w-4xl mx-auto space-y-6">
+          <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
             {[
               {
                 icon: StopCircle,
@@ -367,20 +367,20 @@ function Index() {
             ].map((step, index) => (
               <Card
                 key={index}
-                className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50"
+                className="p-4 sm:p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="flex items-start gap-4">
+                <div className="flex items-start gap-3 sm:gap-4">
                   <div className="flex-shrink-0">
-                    <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-                      <step.icon className="w-7 h-7 text-primary" />
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+                      <step.icon className="w-6 h-6 sm:w-7 sm:h-7 text-primary" />
                     </div>
                   </div>
-                  <div className="flex-grow">
-                    <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">
+                  <div className="flex-grow min-w-0">
+                    <h3 className="text-base sm:text-lg md:text-xl font-bold mb-1 sm:mb-2 group-hover:text-primary transition-colors duration-300">
                       {step.title}
                     </h3>
-                    <p className="text-muted-foreground">{step.desc}</p>
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">{step.desc}</p>
                   </div>
                 </div>
               </Card>

@@ -74,24 +74,24 @@ const ThreePathsForward = () => {
   };
 
   return (
-    <section className="py-20 relative overflow-hidden bg-gradient-to-br from-[hsl(250,20%,96%)] via-white to-[hsl(180,50%,98%)]">
+    <section className="py-12 md:py-16 lg:py-20 relative overflow-hidden bg-gradient-to-br from-[hsl(250,20%,96%)] via-white to-[hsl(180,50%,98%)]">
       {/* Background blobs */}
-      <div className="absolute top-[-100px] left-[-100px] w-[400px] h-[400px] rounded-full bg-gradient-to-br from-primary to-accent opacity-10 blur-[80px] animate-blob-morph" />
-      <div className="absolute bottom-[-80px] right-[-80px] w-[350px] h-[350px] rounded-full bg-gradient-to-br from-accent to-[hsl(180,75%,50%)] opacity-10 blur-[80px] animate-float-slow" style={{ animationDelay: '5s', animationDirection: 'reverse' }} />
+      <div className="absolute top-[-100px] left-[-100px] w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full bg-gradient-to-br from-primary to-accent opacity-10 blur-[80px] animate-blob-morph" />
+      <div className="absolute bottom-[-80px] right-[-80px] w-[250px] h-[250px] md:w-[350px] md:h-[350px] rounded-full bg-gradient-to-br from-accent to-[hsl(180,75%,50%)] opacity-10 blur-[80px] animate-float-slow" style={{ animationDelay: '5s', animationDirection: 'reverse' }} />
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16 animate-fade-in-up">
-          <h2 className="text-5xl font-extrabold mb-4 gradient-text-primary">
+        <div className="text-center mb-12 md:mb-16 animate-fade-in-up px-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 gradient-text-primary">
             Three Paths Forward
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
             Choose the protection and empowerment that fits your needs - from personal AI security training to business automation solutions.
           </p>
         </div>
 
-        {/* Cards Grid - With proper spacing for badges */}
-        <div ref={ref} className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10 pt-8">
+        {/* Cards Grid - Fully responsive with proper mobile stacking */}
+        <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10 pt-6 md:pt-8">
           {paths.map((path, index) => {
             const Icon = path.icon;
             return (
@@ -102,13 +102,13 @@ const ThreePathsForward = () => {
               >
                 {/* Featured Badge - Above the card */}
                 {path.featured && (
-                  <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-white px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
+                  <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-white px-4 sm:px-6 py-1.5 sm:py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
                     MOST POPULAR
                   </div>
                 )}
                 <Card
                   className={`
-                    relative p-12 flex flex-col items-center text-center overflow-visible
+                    relative p-6 sm:p-8 md:p-10 lg:p-12 flex flex-col items-center text-center overflow-visible
                     transition-all duration-600 ease-out rounded-3xl
                     bg-white
                     ${path.featured 
@@ -121,29 +121,29 @@ const ThreePathsForward = () => {
                 >
 
                 {/* Icon Container - purple/teal gradient */}
-                <div className="relative w-[100px] h-[100px] rounded-3xl mb-7
+                <div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-[100px] md:h-[100px] rounded-2xl sm:rounded-3xl mb-5 sm:mb-7
                   bg-gradient-to-br from-primary to-accent
                   shadow-[0_8px_24px_rgba(139,92,246,0.4)]
                   flex items-center justify-center
                   transition-all duration-600 ease-out hover:scale-[1.2] hover:rotate-[-10deg]
                   hover:shadow-[0_12px_35px_rgba(139,92,246,0.6)]
-                  after:absolute after:inset-[-8px] after:rounded-[28px]
+                  after:absolute after:inset-[-6px] sm:after:inset-[-8px] after:rounded-2xl sm:after:rounded-[28px]
                   after:border-2 after:border-primary/40
                   after:animate-[pulse-ring_3s_ease-out_infinite]
                 ">
-                  <Icon className="w-14 h-14 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.2)] transition-transform duration-500" />
+                  <Icon className="w-8 h-8 sm:w-10 sm:h-10 md:w-14 md:h-14 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.2)] transition-transform duration-500" />
                 </div>
 
                 {/* Content */}
-                <h3 className="text-[28px] font-extrabold mb-4 text-foreground tracking-tight transition-colors duration-300 group-hover:text-primary">
+                <h3 className="text-xl sm:text-2xl md:text-[28px] font-extrabold mb-3 sm:mb-4 text-foreground tracking-tight transition-colors duration-300 group-hover:text-primary">
                   {path.title}
                 </h3>
-                <p className="text-base text-muted-foreground mb-7 flex-grow leading-relaxed">
+                <p className="text-sm sm:text-base text-muted-foreground mb-5 sm:mb-7 flex-grow leading-relaxed">
                   {path.description}
                 </p>
 
                 {/* Pricing */}
-                <div className="text-xl font-extrabold gradient-text-primary mb-6 px-6 py-3 rounded-xl 
+                <div className="text-lg sm:text-xl font-extrabold gradient-text-primary mb-4 sm:mb-6 px-4 sm:px-6 py-2 sm:py-3 rounded-xl 
                   bg-primary/10
                   border border-primary/20
                   transition-all duration-500
@@ -155,7 +155,7 @@ const ThreePathsForward = () => {
                 <Button
                   asChild
                   variant={path.featured ? "default" : "outline"}
-                  className="w-full text-base font-bold uppercase tracking-wide transition-transform duration-300 ease-out hover:-translate-y-[2px] hover:shadow-lg active:translate-y-[1px]"
+                  className="w-full text-sm sm:text-base font-bold uppercase tracking-wide transition-transform duration-300 ease-out hover:-translate-y-[2px] hover:shadow-lg active:translate-y-[1px]"
                 >
                   <Link to={path.link}>
                     {path.cta}

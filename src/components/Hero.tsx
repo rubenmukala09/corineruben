@@ -39,9 +39,9 @@ const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, childr
   const useCarousel = backgroundImages && backgroundImages.length > 0;
 
   return (
-    <div 
+      <div 
       ref={ref}
-      className={cn("relative min-h-[450px] sm:min-h-[550px] md:min-h-[700px] lg:min-h-[800px] flex items-center overflow-hidden hero-mobile", className)}
+      className={cn("relative min-h-[400px] sm:min-h-[500px] md:min-h-[700px] lg:min-h-[800px] flex items-center overflow-hidden hero-mobile", className)}
     >
       {/* Background with Parallax */}
       <motion.div 
@@ -93,11 +93,11 @@ const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, childr
       </div>
       
       {/* Content with Stagger Animation */}
-      <div className="container mx-auto px-4 py-4 sm:py-6 md:py-8 md:px-6 lg:px-8 relative z-10">
+      <div className="container mx-auto px-4 py-6 sm:py-8 md:py-12 lg:py-16 relative z-10">
         <div className="max-w-3xl mx-auto md:mx-0">
           {headline && (
             <motion.h1 
-              className="text-white mb-4 md:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl [text-shadow:0_4px_20px_rgba(139,92,246,0.4)] leading-tight"
+              className="text-white mb-3 sm:mb-4 md:mb-6 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl [text-shadow:0_4px_20px_rgba(139,92,246,0.4)] leading-tight"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
@@ -107,7 +107,7 @@ const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, childr
           )}
           {subheadline && (
             <motion.p 
-              className="text-white/90 text-base sm:text-lg md:text-xl lg:text-2xl mb-6 md:mb-8 leading-relaxed"
+              className="text-white/90 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl mb-6 md:mb-8 leading-relaxed"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
@@ -126,6 +126,22 @@ const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, childr
           )}
         </div>
       </div>
+      {/* Privacy Disclaimer */}
+      {showPrivacyDisclaimer && (
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-20 w-full max-w-2xl px-4"
+        >
+          <div className="bg-black/40 backdrop-blur-md border border-white/20 rounded-xl p-3 sm:p-4 text-center">
+            <p className="text-white/90 text-xs sm:text-sm leading-relaxed">
+              <Shield className="inline w-3 h-3 sm:w-4 sm:h-4 mr-2 text-accent" />
+              Your privacy matters. We never sell your information.
+            </p>
+          </div>
+        </motion.div>
+      )}
       
       {/* Scroll Indicator */}
       {showScrollIndicator && <ScrollIndicator />}
