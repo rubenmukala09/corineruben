@@ -32,16 +32,24 @@ import {
   Bot,
   ArrowRight,
 } from "lucide-react";
-import heroBusinessProfessional from "@/assets/hero-business-professional.jpg";
-import { useImagePreload } from "@/hooks/useImagePreload";
+import heroDiverse1 from "@/assets/hero-diverse-1.jpg";
+import heroDiverse2 from "@/assets/hero-diverse-2.jpg";
+import heroDiverse3 from "@/assets/hero-diverse-3.jpg";
+import heroDiverse4 from "@/assets/hero-diverse-4.jpg";
+import heroDiverse5 from "@/assets/hero-diverse-5.jpg";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 
 function Index() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   
-  // Preload hero image
-  useImagePreload([heroBusinessProfessional]);
+  const heroImages = [
+    { src: heroDiverse1, alt: "Multi-generational African American family smiling together with technology" },
+    { src: heroDiverse2, alt: "Asian family spanning three generations using laptop together" },
+    { src: heroDiverse3, alt: "Hispanic/Latino family members embracing and smiling" },
+    { src: heroDiverse4, alt: "Diverse multi-ethnic community group representing unity and trust" },
+    { src: heroDiverse5, alt: "Middle Eastern/South Asian multi-generational family showing care" }
+  ];
 
   // Counter animations for statistics
   const stat1 = useCounterAnimation({ end: 3.4, duration: 2000, prefix: "$", suffix: "B" });
@@ -92,11 +100,12 @@ function Index() {
 
       {/* Hero Section */}
       <Hero
-        backgroundImage={heroBusinessProfessional}
-        headline="Protect Your Family from AI-Powered Scams"
-        subheadline="Ohio's trusted source for scam prevention training and 24/7 protection services"
+        backgroundImages={heroImages}
+        headline="Every Family Deserves Protection and Peace of Mind"
+        subheadline="Serving Ohio's diverse communities with compassionate scam prevention training, 24/7 support, and personalized protection services for every family"
         showScrollIndicator={true}
         showPrivacyDisclaimer={true}
+        overlay={true}
       >
         <div className="flex flex-col sm:flex-row gap-3 md:gap-4 flex-wrap justify-center sm:justify-start">
           <Button 
