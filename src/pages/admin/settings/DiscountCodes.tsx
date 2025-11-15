@@ -8,6 +8,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogDescription,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -26,9 +28,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
-import { Plus, Edit2, Percent, DollarSign, Tag } from "lucide-react";
+import { Plus, Edit2, Percent, DollarSign, Tag, Truck } from "lucide-react";
 
 interface DiscountCode {
   id: string;
@@ -49,6 +53,7 @@ export default function DiscountCodes() {
   const [codes, setCodes] = useState<DiscountCode[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
   const [editingCode, setEditingCode] = useState<DiscountCode | null>(null);
   
   const [newCode, setNewCode] = useState({
@@ -65,6 +70,28 @@ export default function DiscountCodes() {
     endDate: "",
   });
 
+  useEffect(() => {
+    fetchDiscountCodes();
+  }, []);
+
+  const fetchDiscountCodes = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('discount_codes')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setCodes(data || []);
+    } catch (error) {
+      console.error('Error fetching discount codes:', error);
+      toast.error('Failed to load discount codes');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const generateCode = () => {
     const randomCode =
       "CODE" +
@@ -72,9 +99,47 @@ export default function DiscountCodes() {
     setNewCode({ ...newCode, code: randomCode });
   };
 
-  const handleCreateCode = () => {
-    toast.success("Discount code created successfully!");
-    setIsCreating(false);
+  const handleCreateCode = async () => {
+    try {
+      if (!newCode.code || !newCode.value) {
+        toast.error("Please fill in all required fields");
+        return;
+      }
+
+      const { error } = await supabase.from('discount_codes').insert({
+        code: newCode.code,
+        type: newCode.type as 'percentage' | 'fixed',
+        value: parseFloat(newCode.value),
+        is_active: true,
+        valid_from: newCode.startDate || new Date().toISOString(),
+        valid_until: newCode.endDate || null,
+        max_uses: newCode.usageLimit === 'limited' ? parseInt(newCode.totalUses) : null,
+        current_uses: 0,
+        service_type: newCode.appliesTo === 'entire' ? null : newCode.appliesTo,
+      });
+
+      if (error) throw error;
+
+      toast.success("Discount code created successfully!");
+      setIsCreating(false);
+      setNewCode({
+        code: "",
+        type: "percentage",
+        value: "",
+        appliesTo: "entire",
+        minRequirement: "none",
+        minAmount: "",
+        usageLimit: "unlimited",
+        totalUses: "",
+        perCustomer: "",
+        startDate: "",
+        endDate: "",
+      });
+      fetchDiscountCodes();
+    } catch (error) {
+      console.error('Error creating discount code:', error);
+      toast.error('Failed to create discount code');
+    }
   };
 
   const getTypeIcon = (type: string) => {
@@ -89,6 +154,10 @@ export default function DiscountCodes() {
         return null;
     }
   };
+
+  if (loading) {
+    return <div className="p-6">Loading...</div>;
+  }
 
   return (
     <div className="space-y-6">
@@ -287,16 +356,16 @@ export default function DiscountCodes() {
                 <TableCell>
                   {code.type === "percentage" ? `${code.value}%` : `$${code.value}`}
                 </TableCell>
-                <TableCell>{code.uses}</TableCell>
+                <TableCell>{code.current_uses}{code.max_uses ? ` / ${code.max_uses}` : " / ∞"}</TableCell>
                 <TableCell>
                   <div className="text-sm">
-                    <div>{code.validFrom}</div>
-                    <div className="text-muted-foreground">{code.validTo}</div>
+                    <div>{new Date(code.valid_from).toLocaleDateString()}</div>
+                    <div className="text-muted-foreground">{code.valid_until ? new Date(code.valid_until).toLocaleDateString() : 'No end date'}</div>
                   </div>
                 </TableCell>
                 <TableCell>
-                  <Badge variant={code.status === "active" ? "default" : "secondary"}>
-                    {code.status}
+                  <Badge variant={code.is_active ? "default" : "secondary"}>
+                    {code.is_active ? "Active" : "Inactive"}
                   </Badge>
                 </TableCell>
                 <TableCell className="text-right">
@@ -311,6 +380,4 @@ export default function DiscountCodes() {
       </div>
     </div>
   );
-};
-
-export default DiscountCodes;
+}
