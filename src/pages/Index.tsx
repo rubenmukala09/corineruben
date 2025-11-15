@@ -10,11 +10,13 @@ import ThreePathsForward from "@/components/ThreePathsForward";
 import FlowingWaves from "@/components/FlowingWaves";
 import MakingADifference from "@/components/MakingADifference";
 import { TestimonialForm } from "@/components/TestimonialForm";
+import { VideoLightbox } from "@/components/VideoLightbox";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { ScrollRevealSection } from "@/components/ScrollRevealSection";
 import { SEO, PAGE_SEO } from "@/components/SEO";
+import { trackButtonClick } from "@/utils/analyticsTracker";
 import {
   Heart,
   Shield,
@@ -42,6 +44,8 @@ import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 function Index() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [videoTestimonials, setVideoTestimonials] = useState<any[]>([]);
+  const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string } | null>(null);
   
   const heroImages = [
     { src: heroDiverse1, alt: "Multi-generational African American family smiling together with technology" },
@@ -59,7 +63,28 @@ function Index() {
 
   useEffect(() => {
     checkAdminStatus();
+    fetchVideoTestimonials();
   }, []);
+
+  const fetchVideoTestimonials = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("testimonials")
+        .select(`
+          *,
+          testimonial_media (*)
+        `)
+        .eq("has_video", true)
+        .eq("featured", true)
+        .order("created_at", { ascending: false })
+        .limit(3);
+
+      if (error) throw error;
+      setVideoTestimonials(data || []);
+    } catch (error) {
+      console.error("Error fetching video testimonials:", error);
+    }
+  };
 
   const checkAdminStatus = async () => {
     try {
@@ -113,6 +138,7 @@ function Index() {
             variant="default" 
             size="xl" 
             className="w-full sm:w-auto text-sm md:text-base lg:text-lg px-6 md:px-8 py-3 md:py-4 min-h-[48px] transition-all duration-300 ease-out hover:scale-105 active:scale-98 hover:shadow-[0_10px_25px_rgba(109,40,217,0.3)]"
+            onClick={() => trackButtonClick("Get Protection Now", "Hero Section")}
           >
             <Link to="/contact?service=family-shield" aria-label="Get family protection plan">
               Get Protection Now
@@ -472,10 +498,33 @@ function Index() {
             Real stories from real people protected by InVision Network
           </p>
 
-          {/* Video Testimonials Section - Admin Only */}
-          {!isLoading && isAdmin && (
+          {/* Video Testimonials Section */}
+          {videoTestimonials.length > 0 && (
+            <div className="mb-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+              {videoTestimonials.map((testimonial) => {
+                const videoMedia = testimonial.testimonial_media?.find((m: any) => m.media_type === "video");
+                return (
+                  <TestimonialCard
+                    key={testimonial.id}
+                    name={testimonial.name}
+                    location={testimonial.location}
+                    quote={testimonial.story.substring(0, 150) + "..."}
+                    image={testimonial.primary_media_url || ""}
+                    rating={testimonial.rating}
+                    videoUrl={videoMedia?.media_url}
+                    onVideoClick={() => setSelectedVideo({
+                      src: videoMedia?.media_url,
+                      title: `${testimonial.name}'s Story`
+                    })}
+                  />
+                );
+              })}
+            </div>
+          )}
+
+          {/* Admin Only - Upload Prompt */}
+          {!isLoading && isAdmin && videoTestimonials.length === 0 && (
             <div className="mb-12">
-              <h3 className="text-2xl font-bold text-center mb-6">Video Testimonials</h3>
               <div 
                 className="w-full flex flex-col items-center justify-center text-center"
                 style={{
@@ -494,6 +543,7 @@ function Index() {
                   Upload customer video testimonials to showcase on your homepage
                 </p>
                 <Button 
+                  asChild
                   style={{ 
                     backgroundColor: "#6D28D9",
                     color: "white",
@@ -502,25 +552,20 @@ function Index() {
                   }}
                   className="hover:opacity-90"
                 >
-                  Upload First Video
+                  <Link to="/admin/testimonials">Upload First Video</Link>
                 </Button>
               </div>
             </div>
           )}
-
-          {/* Text Testimonials - Conditional Visibility */}
-          {!isLoading && isAdmin ? (
-            <div className="py-5">
-              <div className="border-2 border-dashed border-primary rounded-2xl p-12 text-center">
-                <div className="text-5xl mb-4">📝</div>
-                <p className="text-muted-foreground" style={{ fontSize: "16px" }}>Real testimonials coming soon</p>
-                <p className="text-[#666] italic mt-4" style={{ fontSize: "12px" }}>
-                  Add testimonials via Dashboard → Testimonials
-                </p>
-              </div>
-            </div>
-          ) : null}
         </div>
+
+        {/* Video Lightbox */}
+        <VideoLightbox
+          isOpen={selectedVideo !== null}
+          onClose={() => setSelectedVideo(null)}
+          videoSrc={selectedVideo?.src || ""}
+          title={selectedVideo?.title}
+        />
       </section>
 
       {/* FAQ Teaser */}

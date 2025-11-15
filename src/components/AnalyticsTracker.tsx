@@ -1,6 +1,6 @@
-import { useAnalytics } from "@/hooks/useAnalytics";
+import { useAnalyticsTracking } from "@/hooks/useAnalyticsTracking";
 
 export function AnalyticsTracker() {
-  useAnalytics();
+  useAnalyticsTracking();
   return null;
 }

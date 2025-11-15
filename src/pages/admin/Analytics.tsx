@@ -3,11 +3,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AdminTopBar } from "@/components/AdminTopBar";
 import { AdminSidebar } from "@/components/AdminSidebar";
-import { BarChart3, TrendingUp, Users, Eye, MousePointerClick, Clock, Download } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { BarChart3, TrendingUp, Users, Eye, MousePointerClick, Clock, Download, Activity } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { format, subDays } from "date-fns";
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 export default function Analytics() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -88,6 +90,26 @@ export default function Analytics() {
     .sort((a: any, b: any) => b.count - a.count)
     .slice(0, 10);
 
+  // Prepare chart data
+  const pageViewsByDay = pageViews?.reduce((acc: any, pv) => {
+    const day = format(new Date(pv.created_at), "MMM d");
+    acc[day] = (acc[day] || 0) + 1;
+    return acc;
+  }, {});
+
+  const chartData = Object.entries(pageViewsByDay || {})
+    .map(([date, views]) => ({ date, views }))
+    .slice(-14); // Last 14 days
+
+  const conversionsByType = conversions?.reduce((acc: any, conv) => {
+    const type = conv.conversion_type;
+    acc[type] = (acc[type] || 0) + 1;
+    return acc;
+  }, {});
+
+  const conversionChartData = Object.entries(conversionsByType || {})
+    .map(([type, count]) => ({ type, count }));
+
   return (
     <div className="min-h-screen bg-background">
       <AdminTopBar
@@ -103,7 +125,7 @@ export default function Analytics() {
         />
         
         <main className="flex-1 p-6 lg:ml-64">
-          <div className="mb-6 flex items-center justify-between">
+          <div className="mb-6 flex items-center justify-between flex-wrap gap-4">
             <div>
               <h1 className="text-3xl font-bold">Analytics Dashboard</h1>
               <p className="text-muted-foreground mt-2">
@@ -111,10 +133,17 @@ export default function Analytics() {
               </p>
             </div>
             <div className="flex gap-2">
-              <Button variant="outline" onClick={() => setDateRange(7)}>7 Days</Button>
-              <Button variant="outline" onClick={() => setDateRange(30)}>30 Days</Button>
-              <Button variant="outline" onClick={() => setDateRange(90)}>90 Days</Button>
-              <Button>
+              <Select value={dateRange.toString()} onValueChange={(v) => setDateRange(Number(v))}>
+                <SelectTrigger className="w-[140px]">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="7">Last 7 days</SelectItem>
+                  <SelectItem value="30">Last 30 days</SelectItem>
+                  <SelectItem value="90">Last 90 days</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button variant="outline">
                 <Download className="mr-2 h-4 w-4" />
                 Export
               </Button>
@@ -181,14 +210,76 @@ export default function Analytics() {
               <Card>
                 <CardHeader>
                   <CardTitle>Traffic Overview</CardTitle>
-                  <CardDescription>Website traffic trends over time</CardDescription>
+                  <CardDescription>Page views over the last {dateRange} days</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="h-[400px] flex items-center justify-center text-muted-foreground">
-                    Chart visualization would go here (Recharts integration)
-                  </div>
+                  {chartData.length > 0 ? (
+                    <ResponsiveContainer width="100%" height={300}>
+                      <LineChart data={chartData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="date" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Line type="monotone" dataKey="views" stroke="hsl(var(--primary))" strokeWidth={2} />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  ) : (
+                    <div className="flex items-center justify-center h-[300px] text-muted-foreground">
+                      <div className="text-center">
+                        <Activity className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                        <p>No traffic data yet</p>
+                        <p className="text-sm">Data will appear as users visit your site</p>
+                      </div>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Real-Time Activity</CardTitle>
+                    <CardDescription>Recent events</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2">
+                      {events?.slice(0, 5).map((event) => (
+                        <div key={event.id} className="flex items-center gap-2 text-sm">
+                          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                          <span className="text-muted-foreground">{event.event_name}</span>
+                          <span className="text-xs text-muted-foreground ml-auto">
+                            {format(new Date(event.created_at), "h:mm a")}
+                          </span>
+                        </div>
+                      ))}
+                      {(!events || events.length === 0) && (
+                        <p className="text-sm text-muted-foreground text-center py-4">No recent activity</p>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Top Pages Today</CardTitle>
+                    <CardDescription>Most visited pages</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2">
+                      {topPagesArray.slice(0, 5).map((page: any, index) => (
+                        <div key={index} className="flex items-center justify-between text-sm">
+                          <span className="text-muted-foreground truncate flex-1">{page.url}</span>
+                          <span className="font-medium ml-2">{page.count}</span>
+                        </div>
+                      ))}
+                      {topPagesArray.length === 0 && (
+                        <p className="text-sm text-muted-foreground text-center py-4">No page data yet</p>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             </TabsContent>
 
             <TabsContent value="pages" className="space-y-4">
@@ -247,13 +338,42 @@ export default function Analytics() {
             <TabsContent value="conversions" className="space-y-4">
               <Card>
                 <CardHeader>
-                  <CardTitle>Conversion Funnel</CardTitle>
-                  <CardDescription>Track user journey from visit to conversion</CardDescription>
+                  <CardTitle>Conversions by Type</CardTitle>
+                  <CardDescription>Breakdown of conversion events</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {conversionChartData.length > 0 ? (
+                    <ResponsiveContainer width="100%" height={300}>
+                      <BarChart data={conversionChartData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="type" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey="count" fill="hsl(var(--primary))" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  ) : (
+                    <div className="flex items-center justify-center h-[300px] text-muted-foreground">
+                      <div className="text-center">
+                        <TrendingUp className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                        <p>No conversions yet</p>
+                        <p className="text-sm">Conversions will appear as users complete actions</p>
+                      </div>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Recent Conversions</CardTitle>
+                  <CardDescription>Latest conversion events</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {conversions?.map((conversion) => (
-                      <div key={conversion.id} className="flex items-center justify-between">
+                    {conversions?.slice(0, 10).map((conversion) => (
+                      <div key={conversion.id} className="flex items-center justify-between border-b pb-3">
                         <div>
                           <p className="font-medium">{conversion.conversion_type}</p>
                           <p className="text-sm text-muted-foreground">
@@ -261,10 +381,13 @@ export default function Analytics() {
                           </p>
                         </div>
                         {conversion.conversion_value && (
-                          <span className="font-bold">${conversion.conversion_value}</span>
+                          <span className="font-bold text-green-600">${conversion.conversion_value}</span>
                         )}
                       </div>
                     ))}
+                    {(!conversions || conversions.length === 0) && (
+                      <p className="text-sm text-muted-foreground text-center py-8">No conversions yet</p>
+                    )}
                   </div>
                 </CardContent>
               </Card>

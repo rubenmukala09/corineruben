@@ -92,6 +92,11 @@ function Contact() {
 
       if (error) throw error;
 
+      // Track conversion
+      const { trackFormSubmit, trackConversion } = await import("@/utils/analyticsTracker");
+      trackFormSubmit("contact_form", { subject: formData.subject });
+      trackConversion("contact_inquiry");
+
       setIsSubmitted(true);
       toast.success("Message sent! We'll respond within 4 hours.");
       

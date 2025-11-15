@@ -1,4 +1,4 @@
-import { Star } from "lucide-react";
+import { Star, Play } from "lucide-react";
 
 interface TestimonialCardProps {
   name: string;
@@ -7,9 +7,11 @@ interface TestimonialCardProps {
   quote: string;
   image: string;
   rating?: number;
+  videoUrl?: string;
+  onVideoClick?: () => void;
 }
 
-const TestimonialCard = ({ name, age, location, quote, image, rating = 5 }: TestimonialCardProps) => {
+const TestimonialCard = ({ name, age, location, quote, image, rating = 5, videoUrl, onVideoClick }: TestimonialCardProps) => {
   return (
     <div className="bg-gradient-card rounded-2xl p-8 shadow-soft relative overflow-hidden border-none group card-enhanced">
       {/* Large gradient quote mark background */}
@@ -29,13 +31,24 @@ const TestimonialCard = ({ name, age, location, quote, image, rating = 5 }: Test
         <p className="text-foreground mb-6 text-lg leading-relaxed">"{quote}"</p>
         
         <div className="flex items-center gap-4 pt-4 border-t border-border/50">
-          <img
-            src={image}
-            alt={`${name}'s testimonial`}
-            className="w-16 h-16 rounded-full object-cover ring-4 ring-accent/20 group-hover:ring-accent/40 transition-all duration-500"
-            loading="lazy"
-            decoding="async"
-          />
+          <div className="relative">
+            <img
+              src={image}
+              alt={`${name}'s testimonial`}
+              className="w-16 h-16 rounded-full object-cover ring-4 ring-accent/20 group-hover:ring-accent/40 transition-all duration-500"
+              loading="lazy"
+              decoding="async"
+            />
+            {videoUrl && onVideoClick && (
+              <button
+                onClick={onVideoClick}
+                className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-full hover:bg-black/60 transition-all group/play"
+                aria-label="Play video testimonial"
+              >
+                <Play className="w-6 h-6 text-white group-hover/play:scale-110 transition-transform" fill="white" />
+              </button>
+            )}
+          </div>
           <div>
             <h4 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors duration-300">
               {name}

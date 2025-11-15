@@ -136,6 +136,11 @@ function Resources() {
   const handlePurchase = (type: 'guide' | 'product', name: string, price?: number) => {
     setSelectedItem({ type, name, price });
     setModalOpen(true);
+    
+    // Track product view
+    import("@/utils/analyticsTracker").then(({ trackButtonClick }) => {
+      trackButtonClick(`Purchase ${type}: ${name}`, "Resources Page");
+    });
   };
 
   return (
