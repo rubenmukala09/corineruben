@@ -414,6 +414,22 @@ const Maintenance = lazy(() => {
   });
 });
 
+const PaymentSuccess = lazy(() => {
+  performanceMonitor.startTracking('PaymentSuccess');
+  return import("./pages/PaymentSuccess").then(module => {
+    performanceMonitor.endTracking('PaymentSuccess');
+    return module;
+  });
+});
+
+const PaymentCanceled = lazy(() => {
+  performanceMonitor.startTracking('PaymentCanceled');
+  return import("./pages/PaymentCanceled").then(module => {
+    performanceMonitor.endTracking('PaymentCanceled');
+    return module;
+  });
+});
+
 // Loading fallback component with enhanced skeleton
 const PageLoader = () => (
   <div className="min-h-screen bg-background">
@@ -503,6 +519,8 @@ function AnimatedRoutes() {
         <Route path="/business" element={<PageTransition><Business /></PageTransition>} />
         <Route path="/about" element={<PageTransition><About /></PageTransition>} />
         <Route path="/resources" element={<PageTransition><Resources /></PageTransition>} />
+        <Route path="/payment-success" element={<PageTransition><PaymentSuccess /></PageTransition>} />
+        <Route path="/payment-canceled" element={<PageTransition><PaymentCanceled /></PageTransition>} />
         <Route path="/safety-vault" element={<PageTransition><SafetyVault /></PageTransition>} />
         <Route path="/articles" element={<PageTransition><Articles /></PageTransition>} />
         <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
