@@ -16,6 +16,7 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { TimelineVisualization } from "@/components/TimelineVisualization";
 import { InspirationalVerses } from "@/components/InspirationalVerses";
 import { OhioServiceMap } from "@/components/OhioServiceMap";
+import { trackButtonClick } from "@/utils/analyticsTracker";
 import heroAboutNew from "@/assets/hero-about-new.jpg";
 import founderRuben from "@/assets/founder-ruben.jpg";
 import founderCorine from "@/assets/founder-corine.jpg";
@@ -348,10 +349,20 @@ function About() {
           description="Whether you're looking for personal training, business solutions, or want to support our mission—we'd love to connect."
         >
           <Button asChild size="lg">
-            <Link to="/training">Start Training</Link>
+            <Link 
+              to="/training"
+              onClick={() => trackButtonClick('Start Training', 'About CTA')}
+            >
+              Start Training
+            </Link>
           </Button>
           <Button asChild size="lg" variant="outline">
-            <Link to="/business">Partner With Us</Link>
+            <Link 
+              to="/business"
+              onClick={() => trackButtonClick('Partner With Us', 'About CTA')}
+            >
+              Partner With Us
+            </Link>
           </Button>
         </CTASection>
       </div>
