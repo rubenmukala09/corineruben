@@ -22,6 +22,8 @@ import { Badge } from "@/components/ui/badge";
 import businessCollaboration from "@/assets/business-collaboration.jpg";
 import teamCollaboration from "@/assets/team-collaboration.jpg";
 import heroBusiness from "@/assets/business-diverse-1.jpg";
+import { VideoLightbox } from "@/components/VideoLightbox";
+import { SEO } from "@/components/SEO";
 
 function Business() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -41,6 +43,8 @@ function Business() {
   } | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [businessTestimonials, setBusinessTestimonials] = useState<any[]>([]);
+  const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string } | null>(null);
 
   // Counter animations for pricing cards
   const price1Counter = useCounterAnimation({ end: 9500, duration: 1500, prefix: '$' });
@@ -49,7 +53,23 @@ function Business() {
 
   useEffect(() => {
     checkAdminStatus();
+    fetchBusinessTestimonials();
   }, []);
+
+  const fetchBusinessTestimonials = async () => {
+    const { data } = await supabase
+      .from("testimonials")
+      .select(`
+        *,
+        testimonial_media (*)
+      `)
+      .eq("status", "approved")
+      .eq("has_video", true)
+      .order("created_at", { ascending: false })
+      .limit(4);
+    
+    setBusinessTestimonials(data || []);
+  };
 
   const checkAdminStatus = async () => {
     try {
@@ -1088,6 +1108,41 @@ function Business() {
         </div>
       </section>
 
+      {/* Business Success Stories */}
+      {businessTestimonials.length > 0 && (
+        <section className="py-20 bg-muted">
+          <div className="container mx-auto px-4">
+            <ScrollReveal>
+              <h2 className="text-center mb-4">Client Success Stories</h2>
+              <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+                See how businesses are leveraging InVision's AI solutions
+              </p>
+            </ScrollReveal>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {businessTestimonials.map((testimonial) => {
+                const videoMedia = testimonial.testimonial_media?.find((m: any) => m.media_type === "video");
+                return (
+                  <TestimonialCard
+                    key={testimonial.id}
+                    name={testimonial.name}
+                    location={testimonial.location}
+                    quote={testimonial.story.substring(0, 120) + "..."}
+                    image={videoMedia?.thumbnail_url || '/placeholder.svg'}
+                    rating={testimonial.rating}
+                    videoUrl={videoMedia?.file_url}
+                    onVideoClick={() => videoMedia && setSelectedVideo({
+                      src: videoMedia.file_url,
+                      title: `${testimonial.name}'s Success`
+                    })}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Final CTA */}
       <CTASection headline="Ready to Deploy AI Safely?" variant="gold">
         <Button asChild variant="gold" size="xl">
@@ -1102,6 +1157,15 @@ function Business() {
       </CTASection>
 
       <Footer />
+      
+      {selectedVideo && (
+        <VideoLightbox
+          isOpen={!!selectedVideo}
+          onClose={() => setSelectedVideo(null)}
+          videoSrc={selectedVideo.src}
+          title={selectedVideo.title}
+        />
+      )}
       
       {selectedService && (
         <BookingModal
