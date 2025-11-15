@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import invisionLogo from "@/assets/invision-logo.png";
 
 interface AdminTopBarProps {
   sidebarOpen: boolean;
@@ -138,8 +139,15 @@ export function AdminTopBar({ sidebarOpen, toggleSidebar }: AdminTopBarProps) {
             )}
           </Button>
 
-          <div className="text-lg font-semibold text-foreground">
-            InVision Network
+          <div className="flex items-center gap-2">
+            <img 
+              src={invisionLogo} 
+              alt="InVision Network Logo" 
+              className="h-8 w-8"
+            />
+            <span className="text-lg font-semibold text-foreground hidden sm:inline">
+              InVision Network
+            </span>
           </div>
         </div>
 

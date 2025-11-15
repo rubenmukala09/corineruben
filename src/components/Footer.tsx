@@ -3,6 +3,7 @@ import { Facebook, Linkedin, Youtube, Instagram, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import TrustedTechLogos from "./TrustedTechLogos";
+import invisionLogo from "@/assets/invision-logo.png";
 
 const Footer = () => {
   return (
@@ -220,9 +221,16 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-primary-foreground/20 pt-6 md:pt-8 pb-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-4">
-            <p className="text-primary-foreground/80 text-sm text-center md:text-left">
-              © {new Date().getFullYear()} InVision Network. All rights reserved.
-            </p>
+            <div className="flex items-center gap-3 text-center md:text-left">
+              <img 
+                src={invisionLogo} 
+                alt="InVision Network Logo" 
+                className="h-6 w-6"
+              />
+              <p className="text-primary-foreground/80 text-sm">
+                © {new Date().getFullYear()} InVision Network. All rights reserved.
+              </p>
+            </div>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2 text-xs">
                 <Shield className="w-4 h-4 text-accent" />

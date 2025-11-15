@@ -21,6 +21,7 @@ import {
   Sparkles
 } from "lucide-react";
 import { z } from "zod";
+import invisionLogo from "@/assets/invision-logo.png";
 
 const emailSchema = z.string().email("Invalid email address");
 const passwordSchema = z.string().min(6, "Password must be at least 6 characters");
@@ -234,9 +235,11 @@ function Auth() {
         <div className="w-full max-w-lg mx-auto lg:mx-0 animate-scale-in" style={{ animationDelay: '0.1s' }}>
           {/* Mobile Logo */}
           <Link to="/" className="lg:hidden flex items-center justify-center gap-3 mb-8 group">
-            <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center shadow-glow-purple group-hover:scale-110 transition-transform">
-              <Shield className="w-7 h-7 text-white" />
-            </div>
+            <img 
+              src={invisionLogo} 
+              alt="InVision Network Logo" 
+              className="w-12 h-12 group-hover:scale-110 transition-transform"
+            />
             <div className="text-left">
               <h1 className="text-xl font-bold gradient-text-primary">InVision Network</h1>
               <p className="text-xs text-muted-foreground">Secure Portal Access</p>
