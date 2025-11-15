@@ -18,7 +18,7 @@ import { InspirationalVerses } from "@/components/InspirationalVerses";
 import { OhioServiceMap } from "@/components/OhioServiceMap";
 import heroAboutNew from "@/assets/hero-about-new.jpg";
 import founderRuben from "@/assets/founder-ruben.jpg";
-import founderCorinne from "@/assets/founder-corinne.jpg";
+import founderCorine from "@/assets/founder-corine.jpg";
 import teamDiverse1 from "@/assets/team-diverse-1.jpg";
 import businessCollaboration from "@/assets/business-collaboration.jpg";
 import { SEO } from "@/components/SEO";
@@ -231,7 +231,7 @@ function About() {
               <Card className="p-6 md:p-8 hover:shadow-2xl transition-all duration-500 border-2 border-border/50 hover:border-primary/50">
                 <div className="relative mb-6">
               <img
-                src={founderCorinne}
+                src={founderCorine}
                 alt="Corinne - Co-Founder & COO"
                     className="w-full aspect-square object-cover rounded-xl mb-4"
                   />
