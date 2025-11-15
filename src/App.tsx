@@ -84,6 +84,14 @@ const Articles = lazy(() => {
   });
 });
 
+const Services = lazy(() => {
+  performanceMonitor.startTracking('Services');
+  return import("./pages/Services").then(module => {
+    performanceMonitor.endTracking('Services');
+    return module;
+  });
+});
+
 const Contact = lazy(() => {
   performanceMonitor.startTracking('Contact');
   return import("./pages/Contact").then(module => {
@@ -518,6 +526,7 @@ function AnimatedRoutes() {
         <Route path="/training" element={<PageTransition><Training /></PageTransition>} />
         <Route path="/business" element={<PageTransition><Business /></PageTransition>} />
         <Route path="/about" element={<PageTransition><About /></PageTransition>} />
+        <Route path="/services" element={<PageTransition><Services /></PageTransition>} />
         <Route path="/resources" element={<PageTransition><Resources /></PageTransition>} />
         <Route path="/payment-success" element={<PageTransition><PaymentSuccess /></PageTransition>} />
         <Route path="/payment-canceled" element={<PageTransition><PaymentCanceled /></PageTransition>} />
