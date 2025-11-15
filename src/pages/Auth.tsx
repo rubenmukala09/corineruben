@@ -173,13 +173,15 @@ function Auth() {
         {/* Left Side - Branding & Info */}
         <div className="hidden lg:flex flex-col gap-8 animate-scale-in">
           {/* Logo */}
-          <Link to="/" className="inline-flex items-center gap-3 group w-fit">
-            <div className="w-14 h-14 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-glow-purple group-hover:scale-110 transition-all duration-300">
-              <Shield className="w-8 h-8 text-white" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold gradient-text-primary">InVision Network</h1>
-              <p className="text-sm text-muted-foreground">AI Scam Protection</p>
+          <Link to="/" className="inline-flex items-center gap-3 group w-fit hover:scale-105 transition-transform duration-300">
+            <img 
+              src={invisionLogo} 
+              alt="InVision Network Shield Logo" 
+              className="w-12 h-12 md:w-14 md:h-14 group-hover:scale-110 transition-transform duration-300"
+            />
+            <div className="flex flex-col leading-tight">
+              <h1 className="text-xl md:text-2xl font-bold gradient-text-primary group-hover:scale-105 transition-transform duration-300">InVision Network</h1>
+              <p className="text-xs md:text-sm text-muted-foreground">AI Scam Protection & Business Solutions</p>
             </div>
           </Link>
 
@@ -234,15 +236,15 @@ function Auth() {
         {/* Right Side - Auth Form */}
         <div className="w-full max-w-lg mx-auto lg:mx-0 animate-scale-in" style={{ animationDelay: '0.1s' }}>
           {/* Mobile Logo */}
-          <Link to="/" className="lg:hidden flex items-center justify-center gap-3 mb-8 group">
+          <Link to="/" className="lg:hidden flex items-center gap-2 md:gap-3 hover:scale-105 transition-transform duration-300 group no-underline mb-8 justify-center">
             <img 
               src={invisionLogo} 
-              alt="InVision Network Logo" 
-              className="w-12 h-12 group-hover:scale-110 transition-transform"
+              alt="InVision Network Shield Logo" 
+              className="w-8 h-8 md:w-10 md:h-10 group-hover:scale-110 transition-transform duration-300"
             />
-            <div className="text-left">
-              <h1 className="text-xl font-bold gradient-text-primary">InVision Network</h1>
-              <p className="text-xs text-muted-foreground">Secure Portal Access</p>
+            <div className="flex flex-col leading-tight">
+              <span className="text-sm md:text-base lg:text-lg font-bold gradient-text-primary group-hover:scale-105 transition-transform duration-300">InVision Network</span>
+              <span className="text-[9px] md:text-[10px] text-muted-foreground">AI Scam Protection & Business Solutions</span>
             </div>
           </Link>
 

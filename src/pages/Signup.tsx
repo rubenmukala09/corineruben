@@ -36,6 +36,7 @@ import {
 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { z } from "zod";
+import invisionLogo from "@/assets/shield-logo.png";
 
 const passwordSchema = z.string()
   .min(8, "Password must be at least 8 characters")
@@ -866,13 +867,15 @@ function Signup() {
       <div className="relative z-10 w-full max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center gap-3 group mb-6">
-            <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center shadow-glow-purple">
-              <Shield className="w-7 h-7 text-white" />
-            </div>
-            <div className="text-left">
-              <h1 className="text-xl font-bold gradient-text-primary">InVision Network</h1>
-              <p className="text-xs text-muted-foreground">Application Portal</p>
+          <Link to="/" className="inline-flex items-center gap-2 md:gap-3 hover:scale-105 transition-transform duration-300 group mb-6 no-underline">
+            <img 
+              src={invisionLogo} 
+              alt="InVision Network Shield Logo" 
+              className="w-10 h-10 md:w-12 md:h-12 group-hover:scale-110 transition-transform duration-300"
+            />
+            <div className="flex flex-col leading-tight text-left">
+              <span className="text-lg md:text-xl font-bold gradient-text-primary group-hover:scale-105 transition-transform duration-300">InVision Network</span>
+              <span className="text-[10px] md:text-xs text-muted-foreground">AI Scam Protection & Business Solutions</span>
             </div>
           </Link>
           <div className="mb-4">

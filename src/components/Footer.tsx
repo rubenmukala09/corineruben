@@ -166,7 +166,7 @@ const Footer = () => {
         <NewsletterSignup />
 
         {/* Social Media */}
-        <div className="flex justify-center gap-4 md:gap-6 mb-6 md:mb-8">
+        <div className="flex justify-center gap-2 md:gap-3 mb-6 md:mb-8">
           <a 
             href="https://facebook.com/invisionnetwork" 
             target="_blank" 
