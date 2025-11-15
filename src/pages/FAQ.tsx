@@ -1,6 +1,8 @@
 import { useState, useMemo } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import Hero from "@/components/Hero";
+import TrustBar from "@/components/TrustBar";
 import { SEO } from "@/components/SEO";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -8,7 +10,6 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Search, ThumbsUp, ThumbsDown, Phone, MessageCircle, ChevronDown, Mail, TrendingUp, Copy, Check, Zap, Brain, Cloud, Database, Lock, Globe, Cpu, Shield, HelpCircle, Lightbulb, DollarSign, MessageSquare } from "lucide-react";
 import { ScrollRevealSection } from "@/components/ScrollRevealSection";
-import { CategoryTabs } from "@/components/CategoryTabs";
 import { FloatingHelpButton } from "@/components/FloatingHelpButton";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
@@ -372,57 +373,98 @@ export default function FAQ() {
         keywords="FAQ, questions, support, help, InVision Network"
       />
       <Navigation />
-      <main id="main-content">
-        {/* Header Section */}
-        <section className="bg-gradient-to-br from-primary/10 via-accent/5 to-background py-12 sm:py-16">
-          <div className="container mx-auto px-4">
-            <ScrollRevealSection>
-              <div className="max-w-3xl mx-auto text-center">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
-                  Frequently Asked Questions
-                </h1>
-                <p className="text-lg sm:text-xl text-muted-foreground mb-8">
-                  Find answers to common questions about our services
-                </p>
+      
+      <FloatingHelpButton />
 
-                {/* Search Bar */}
+      <main id="main-content">
+        {/* Hero Section */}
+        <Hero
+          backgroundImage={heroFaqModern}
+          headline="Frequently Asked Questions"
+          subheadline="Get instant answers to your questions about our AI scam protection services, training programs, and security solutions"
+          overlay={true}
+          showScrollIndicator={false}
+        />
+
+        <TrustBar />
+
+        {/* Search & Filter Section - Redesigned */}
+        <section className="py-10 bg-gradient-to-b from-muted/30 to-background">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              {/* Search Bar - Enhanced */}
+              <div className="relative mb-8">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl blur-xl opacity-50" />
                 <div className="relative">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
                   <Input
-                    type="search"
-                    placeholder="Search FAQs..."
+                    type="text"
+                    placeholder="Search for answers... (e.g., 'How to get started', 'Payment methods')"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-12 pr-4 h-12 text-lg"
-                    aria-label="Search frequently asked questions"
+                    className="pl-12 h-14 text-base rounded-xl border-2 border-border/50 focus:border-primary/50 bg-background/80 backdrop-blur-sm shadow-lg"
                   />
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery('')}
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      ✕
+                    </button>
+                  )}
                 </div>
-
-                {searchQuery && (
-                  <p className="mt-4 text-sm text-muted-foreground">
-                    Found {filteredFAQs.length} result{filteredFAQs.length !== 1 ? "s" : ""}
-                  </p>
-                )}
               </div>
-            </ScrollRevealSection>
+
+              {/* Results Count */}
+              {searchQuery && (
+                <div className="text-center mb-6">
+                  <Badge variant="secondary" className="text-sm">
+                    {filteredFAQs.length} {filteredFAQs.length === 1 ? 'result' : 'results'} found
+                  </Badge>
+                </div>
+              )}
+            </div>
           </div>
         </section>
 
-        {/* Category Tabs */}
-        <section className="sticky top-20 z-40 bg-background/95 backdrop-blur-md border-b border-border shadow-sm">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex gap-2 overflow-x-auto pb-2 hide-scrollbar">
-              {categories.map((category) => (
+        {/* Category Tabs - Redesigned */}
+        <section className="py-6 border-y border-border/40 bg-muted/20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4 text-center">
+                Filter by Category
+              </h3>
+              <div className="flex flex-wrap gap-3 justify-center">
                 <Button
-                  key={category}
-                  variant={activeCategory === category ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setActiveCategory(category)}
-                  className="whitespace-nowrap flex-shrink-0"
+                  variant={activeCategory === "All Questions" ? "default" : "outline"}
+                  size="lg"
+                  onClick={() => setActiveCategory("All Questions")}
+                  className="rounded-full shadow-sm hover:shadow-md transition-shadow"
                 >
-                  {category}
+                  <Shield className="w-4 h-4 mr-2" />
+                  All Questions
+                  <Badge variant="secondary" className="ml-2 bg-background/50">
+                    {faqs.length}
+                  </Badge>
                 </Button>
-              ))}
+                {categories.map((category) => {
+                  const count = faqs.filter(faq => faq.category === category).length;
+                  return (
+                    <Button
+                      key={category}
+                      variant={activeCategory === category ? "default" : "outline"}
+                      size="lg"
+                      onClick={() => setActiveCategory(category)}
+                      className="rounded-full shadow-sm hover:shadow-md transition-shadow"
+                    >
+                      {category}
+                      <Badge variant="secondary" className="ml-2 bg-background/50">
+                        {count}
+                      </Badge>
+                    </Button>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </section>
