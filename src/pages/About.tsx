@@ -67,22 +67,22 @@ function About() {
       description: "After Ruben and Corine were victims of a sophisticated data breach and extortion attempt, InVision Network was born with a mission to protect families from the same trauma they experienced."
     },
     {
-      year: "2024",
+      year: "Early 2024",
       title: "First 100 Families Protected",
       description: "Our training programs reached 100 families in the first 6 months, preventing an estimated $2M in potential fraud."
     },
     {
-      year: "2024",
+      year: "Late 2024",
       title: "Launched ScamShield AI",
       description: "Introduced AI-powered scam detection technology, helping seniors and vulnerable populations identify threats in real-time."
     },
     {
-      year: "2025",
+      year: "Early 2025",
       title: "Expanded to Business Services",
       description: "Launched corporate training programs to help businesses protect their employees and operations from social engineering attacks."
     },
     {
-      year: "2025",
+      year: "Present Day",
       title: "500+ Families Strong",
       description: "Today we've protected over 500 families across Ohio and helped prevent over $15M in potential fraud losses."
     }
