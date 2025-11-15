@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { BookingModal } from "@/components/BookingModal";
+import { SubscriptionDialog } from "@/components/SubscriptionDialog";
 import Hero from "@/components/Hero";
 import TrustBar from "@/components/TrustBar";
 import CTASection from "@/components/CTASection";
@@ -187,6 +188,13 @@ const TrainingCard = ({ plan, index }: { plan: any; index: number }) => {
 
 function LearnAndTrain() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [subscriptionDialogOpen, setSubscriptionDialogOpen] = useState(false);
+  const [selectedSubscription, setSelectedSubscription] = useState<{
+    priceId: string;
+    serviceName: string;
+    planTier: string;
+    amount: number;
+  } | null>(null);
   const [isYearly, setIsYearly] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [selectedService, setSelectedService] = useState<{
@@ -239,6 +247,11 @@ function LearnAndTrain() {
       period: '/month',
       savings: ''
     };
+  };
+
+  const handleSubscribe = (priceId: string, serviceName: string, planTier: string, amount: number) => {
+    setSelectedSubscription({ priceId, serviceName, planTier, amount });
+    setSubscriptionDialogOpen(true);
   };
 
   return (
@@ -570,14 +583,12 @@ function LearnAndTrain() {
               </div>
 
               <Button 
-                asChild
+                onClick={() => handleSubscribe('price_1QhNpBE7M5RA9HBzOSnfZ67C', 'ScamShield', 'Starter', 3900)}
                 variant="default" 
                 size="lg" 
                 className="w-full"
               >
-                <Link to={`/contact?service=protection&plan=starter&price=${isYearly ? Math.round(39 * 12 * 0.95) : 39}`}>
-                  Get Started
-                </Link>
+                Get Started
               </Button>
             </Card>
 
@@ -637,14 +648,12 @@ function LearnAndTrain() {
               </div>
 
               <Button 
-                asChild
+                onClick={() => handleSubscribe('price_1QhNpTE7M5RA9HBztEBr0e3z', 'ScamShield', 'Family', 7900)}
                 variant="default" 
                 size="lg" 
                 className="w-full"
               >
-                <Link to={`/contact?service=protection&plan=family&price=${isYearly ? Math.round(79 * 12 * 0.95) : 79}`}>
-                  Get Started
-                </Link>
+                Get Started
               </Button>
             </Card>
             </div>
@@ -705,14 +714,12 @@ function LearnAndTrain() {
               </div>
 
               <Button 
-                asChild
+                onClick={() => handleSubscribe('price_1QhNpoE7M5RA9HBzuvj62YQv', 'ScamShield', 'Premium', 12900)}
                 variant="default" 
                 size="lg" 
                 className="w-full"
               >
-                <Link to={`/contact?service=protection&plan=premium&price=${isYearly ? Math.round(129 * 12 * 0.95) : 129}`}>
-                  Get Started
-                </Link>
+                Get Started
               </Button>
             </Card>
 
@@ -979,6 +986,17 @@ function LearnAndTrain() {
           serviceTier={selectedService.tier}
           basePrice={selectedService.price}
           veteranDiscountPercent={10}
+        />
+      )}
+
+      {selectedSubscription && (
+        <SubscriptionDialog
+          open={subscriptionDialogOpen}
+          onOpenChange={setSubscriptionDialogOpen}
+          priceId={selectedSubscription.priceId}
+          serviceName={selectedSubscription.serviceName}
+          planTier={selectedSubscription.planTier}
+          amount={selectedSubscription.amount}
         />
       )}
     </div>

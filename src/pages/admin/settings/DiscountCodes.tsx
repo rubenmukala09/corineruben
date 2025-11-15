@@ -1,6 +1,23 @@
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -9,64 +26,31 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Switch } from "@/components/ui/switch";
-import { useState } from "react";
 import { toast } from "sonner";
-import { Plus, Percent, DollarSign, Truck } from "lucide-react";
+import { Plus, Edit2, Percent, DollarSign, Tag } from "lucide-react";
 
-const DiscountCodes = () => {
-  const [codes, setCodes] = useState([
-    {
-      id: "1",
-      code: "VETERAN10",
-      type: "percentage",
-      value: "10",
-      uses: "45/∞",
-      validFrom: "Always",
-      validTo: "Always",
-      status: "active",
-    },
-    {
-      id: "2",
-      code: "CANCER25",
-      type: "percentage",
-      value: "25",
-      uses: "12/∞",
-      validFrom: "Always",
-      validTo: "Always",
-      status: "active",
-    },
-    {
-      id: "3",
-      code: "CHURCHGROUP",
-      type: "percentage",
-      value: "15",
-      uses: "8/50",
-      validFrom: "2025-01-01",
-      validTo: "2025-12-31",
-      status: "active",
-    },
-  ]);
+interface DiscountCode {
+  id: string;
+  code: string;
+  type: 'percentage' | 'fixed';
+  value: number;
+  description: string | null;
+  is_active: boolean;
+  valid_from: string;
+  valid_until: string | null;
+  max_uses: number | null;
+  current_uses: number;
+  service_type: string | null;
+  created_at: string;
+}
 
-  const [isCreating, setIsCreating] = useState(false);
+export default function DiscountCodes() {
+  const [codes, setCodes] = useState<DiscountCode[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [editingCode, setEditingCode] = useState<DiscountCode | null>(null);
+  
   const [newCode, setNewCode] = useState({
     code: "",
     type: "percentage",
