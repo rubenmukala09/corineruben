@@ -125,9 +125,9 @@ function About() {
       <TrustBar />
 
       {/* Our Story */}
-      <section className="py-12 md:py-20 lg:py-32 bg-background">
+      <section className="py-10 md:py-14 bg-background">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-center">
             <ScrollReveal>
               <div>
                 <Badge className="mb-4 text-base md:text-lg px-4 md:px-6 py-2" variant="secondary">
@@ -167,14 +167,14 @@ function About() {
       </section>
 
       {/* Timeline */}
-      <section className="py-12 md:py-20 lg:py-32 bg-gradient-to-b from-secondary/20 to-background">
+      <section className="py-10 md:py-14 bg-gradient-to-b from-secondary/20 to-background">
         <div className="container mx-auto px-4">
           <ScrollReveal>
-            <div className="text-center mb-12 md:mb-20">
-              <Badge className="mb-4 text-base md:text-lg px-4 md:px-6 py-2" variant="secondary">
+            <div className="text-center mb-8">
+              <Badge className="mb-3 text-base md:text-lg px-4 md:px-6 py-2" variant="secondary">
                 Our Journey
               </Badge>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3">
                 Milestones That Matter
               </h2>
               <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -188,10 +188,10 @@ function About() {
       </section>
 
       {/* Founders */}
-      <section id="founders" className="py-12 md:py-20 lg:py-32 bg-background">
+      <section id="founders" className="py-10 md:py-14 bg-background">
         <div className="container mx-auto px-4">
           <ScrollReveal>
-            <div className="text-center mb-12 md:mb-16">
+            <div className="text-center mb-8">
               <Badge className="mb-4 text-base md:text-lg px-4 md:px-6 py-2" variant="secondary">
                 Meet Our Founders
               </Badge>
@@ -249,20 +249,20 @@ function About() {
       </section>
 
       {/* Values */}
-      <section className="py-12 md:py-20 lg:py-32 bg-gradient-to-b from-secondary/20 to-background">
+      <section className="py-10 md:py-14 bg-gradient-to-b from-secondary/20 to-background">
         <div className="container mx-auto px-4">
           <ScrollReveal>
-            <div className="text-center mb-12 md:mb-16">
-              <Badge className="mb-4 text-base md:text-lg px-4 md:px-6 py-2" variant="secondary">
+            <div className="text-center mb-8">
+              <Badge className="mb-3 text-base md:text-lg px-4 md:px-6 py-2" variant="secondary">
                 Our Values
               </Badge>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3">
                 What Drives Us Every Day
               </h2>
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {values.map((value, index) => {
               const Icon = value.icon;
               return (

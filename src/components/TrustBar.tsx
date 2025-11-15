@@ -78,9 +78,9 @@ const TrustBar = () => {
           </div>
           
           {/* Main content with gradient background */}
-          <div className="relative bg-gradient-to-r from-[hsl(260,70%,35%)] via-[hsl(220,70%,40%)] to-[hsl(180,80%,45%)] rounded-3xl py-5 px-4 sm:px-6 md:px-10 shadow-[0_12px_40px_rgba(139,92,246,0.5)] backdrop-blur-sm border border-white/20 group-hover/trust:shadow-[0_20px_60px_rgba(139,92,246,0.7)] transition-all duration-500">
+          <div className="relative bg-gradient-to-r from-[hsl(260,70%,35%)] via-[hsl(220,70%,40%)] to-[hsl(180,80%,45%)] rounded-3xl py-3 px-4 sm:px-5 md:px-8 shadow-[0_12px_40px_rgba(139,92,246,0.5)] backdrop-blur-sm border border-white/20 group-hover/trust:shadow-[0_20px_60px_rgba(139,92,246,0.7)] transition-all duration-500">
             {/* Desktop: Horizontal layout */}
-            <div className="hidden sm:flex justify-center items-center gap-3 md:gap-5 lg:gap-8">
+            <div className="hidden sm:flex justify-center items-center gap-2 md:gap-4 lg:gap-6">
               {trustIndicators.map((item, index) => (
                 <div 
                   key={index} 
