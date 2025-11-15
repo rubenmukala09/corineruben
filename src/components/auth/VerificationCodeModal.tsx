@@ -167,7 +167,7 @@ export function VerificationCodeModal({ open, onClose, email, rememberMe }: Veri
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md w-[calc(100vw-2rem)] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-2xl">
             <Shield className="w-6 h-6 text-primary" />
@@ -179,8 +179,16 @@ export function VerificationCodeModal({ open, onClose, email, rememberMe }: Veri
         </DialogHeader>
 
         <div className="space-y-6 py-4">
-          {/* Code Input Grid - Responsive */}
-          <div className="grid grid-cols-6 gap-2 sm:gap-3 max-w-sm mx-auto">
+          {/* Code Input Grid - Responsive with 2x3 grid for very small screens */}
+          <div className="grid grid-cols-6 xs-small:grid-cols-3 gap-2 sm:gap-3 max-w-sm mx-auto px-2">
+            <style>{`
+              @media (max-width: 374px) {
+                .xs-small\\:grid-cols-3 {
+                  grid-template-columns: repeat(3, 1fr);
+                  max-width: 200px;
+                }
+              }
+            `}</style>
             {code.map((digit, index) => (
               <input
                 key={index}
@@ -192,13 +200,14 @@ export function VerificationCodeModal({ open, onClose, email, rememberMe }: Veri
                 onChange={(e) => handleCodeChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}
                 className={cn(
-                  "w-full aspect-square text-center text-xl sm:text-2xl font-bold rounded-lg border-2 transition-all duration-200",
+                  "w-full aspect-square text-center text-lg sm:text-xl md:text-2xl font-bold rounded-lg border-2 transition-all duration-200",
                   "focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary",
                   "bg-background",
                   digit ? "border-primary bg-primary/5" : "border-input",
-                  "touch-manipulation" // Improve touch responsiveness
+                  "touch-manipulation min-h-[48px] min-w-[48px]"
                 )}
                 disabled={isVerifying}
+                aria-label={`Digit ${index + 1}`}
               />
             ))}
           </div>
@@ -220,7 +229,7 @@ export function VerificationCodeModal({ open, onClose, email, rememberMe }: Veri
               variant="outline"
               onClick={handleResend}
               disabled={!canResend || resendCountdown > 0}
-              className="min-h-[44px]"
+              className="min-h-[48px] px-6"
             >
               {resendCountdown > 0 ? (
                 `Resend in ${resendCountdown}s`
