@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Loader2, Tag } from "lucide-react";
+import { trackConversion } from "@/utils/analyticsTracker";
 
 interface SubscriptionDialogProps {
   open: boolean;
@@ -76,6 +77,7 @@ export const SubscriptionDialog = ({
       }
 
       if (data?.url) {
+        trackConversion(`subscription_${planTier.toLowerCase()}`, finalAmount / 100);
         window.open(data.url, '_blank');
         onOpenChange(false);
       }
