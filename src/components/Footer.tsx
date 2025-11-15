@@ -146,15 +146,15 @@ const Footer = () => {
           <div className="sm:col-span-2 lg:col-span-1">
             <h3 className="font-bold text-lg mb-4">Community</h3>
             <ul className="space-y-2">
-              <li className="text-primary-foreground/80">20% Military Discount</li>
-              <li className="text-primary-foreground/80">25% Cancer Patient Discount</li>
+              <li className="text-sm text-primary-foreground/80">20% Military Discount</li>
+              <li className="text-sm text-primary-foreground/80">25% Cancer Patient Discount</li>
               <li>
-                <Link to="/contact" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+                <Link to="/contact" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
                   Church Partnerships
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+                <Link to="/contact" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
                   Donate Training
                 </Link>
               </li>
@@ -166,12 +166,12 @@ const Footer = () => {
         <NewsletterSignup />
 
         {/* Social Media */}
-        <div className="flex justify-center gap-2 md:gap-3 mb-6 md:mb-8">
+        <div className="flex justify-center gap-1 md:gap-2 mb-6 md:mb-8">
           <a 
             href="https://facebook.com/invisionnetwork" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-primary-foreground/80 hover:text-accent transition-all md:transform md:hover:scale-125 md:hover:rotate-6 duration-300 p-2 hover:bg-accent/10 rounded-full active:scale-95" 
+            className="text-primary-foreground/80 hover:text-accent transition-all md:transform md:hover:scale-125 md:hover:rotate-6 duration-300 p-1 hover:bg-accent/10 rounded-full active:scale-95" 
             aria-label="Follow us on Facebook"
           >
             <Facebook className="w-6 h-6 md:w-6 md:h-6" />
@@ -180,7 +180,7 @@ const Footer = () => {
             href="https://linkedin.com/company/invisionnetwork" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-primary-foreground/80 hover:text-accent transition-all md:transform md:hover:scale-125 md:hover:rotate-6 duration-300 p-2 hover:bg-accent/10 rounded-full active:scale-95" 
+            className="text-primary-foreground/80 hover:text-accent transition-all md:transform md:hover:scale-125 md:hover:rotate-6 duration-300 p-1 hover:bg-accent/10 rounded-full active:scale-95" 
             aria-label="Connect with us on LinkedIn"
           >
             <Linkedin className="w-6 h-6 md:w-6 md:h-6" />
@@ -189,7 +189,7 @@ const Footer = () => {
             href="https://youtube.com/@invisionnetwork" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-primary-foreground/80 hover:text-accent transition-all md:transform md:hover:scale-125 md:hover:rotate-6 duration-300 p-2 hover:bg-accent/10 rounded-full active:scale-95" 
+            className="text-primary-foreground/80 hover:text-accent transition-all md:transform md:hover:scale-125 md:hover:rotate-6 duration-300 p-1 hover:bg-accent/10 rounded-full active:scale-95" 
             aria-label="Subscribe to our YouTube channel"
           >
             <Youtube className="w-6 h-6 md:w-6 md:h-6" />

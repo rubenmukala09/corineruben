@@ -94,7 +94,7 @@ export function DraggablePerformanceMonitor() {
   return (
     <Card
       ref={cardRef}
-      className="fixed z-40 bg-card/95 backdrop-blur-sm border-2 shadow-lg cursor-move select-none"
+      className="fixed z-[45] bg-card/95 backdrop-blur-sm border-2 shadow-lg cursor-move select-none"
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,
