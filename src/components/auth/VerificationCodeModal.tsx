@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { ArrowLeft } from "lucide-react";
+import { Shield } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const ROLE_REDIRECTS: Record<string, string> = {
   'ruben@invisionnetwork.org': '/admin',
@@ -169,74 +169,93 @@ export function VerificationCodeModal({ open, onClose, email, rememberMe }: Veri
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-center text-2xl">Enter Verification Code</DialogTitle>
+          <DialogTitle className="flex items-center gap-2 text-2xl">
+            <Shield className="w-6 h-6 text-primary" />
+            Two-Factor Authentication
+          </DialogTitle>
+          <DialogDescription className="text-base">
+            We sent a 6-digit code to <span className="font-semibold text-foreground">{email}</span>
+          </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-6">
-          <div className="text-center">
-            <p className="text-sm text-muted-foreground">
-              We sent a 6-digit code to:
-            </p>
-            <p className="text-sm font-medium mt-1">{maskedEmail}</p>
-            <p className="text-xs text-muted-foreground mt-1">(masked for security)</p>
-          </div>
-
-          {/* Code Input */}
-          <div className="flex justify-center gap-2">
+        <div className="space-y-6 py-4">
+          {/* Code Input Grid - Responsive */}
+          <div className="grid grid-cols-6 gap-2 sm:gap-3 max-w-sm mx-auto">
             {code.map((digit, index) => (
-              <Input
+              <input
                 key={index}
                 ref={(el) => (inputRefs.current[index] = el)}
                 type="text"
                 inputMode="numeric"
-                maxLength={6}
+                maxLength={1}
                 value={digit}
-                onChange={(e) => handleCodeChange(index, e.target.value.replace(/\D/g, ""))}
+                onChange={(e) => handleCodeChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}
-                className="w-12 h-12 text-center text-lg font-bold"
+                className={cn(
+                  "w-full aspect-square text-center text-xl sm:text-2xl font-bold rounded-lg border-2 transition-all duration-200",
+                  "focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary",
+                  "bg-background",
+                  digit ? "border-primary bg-primary/5" : "border-input",
+                  "touch-manipulation" // Improve touch responsiveness
+                )}
                 disabled={isVerifying}
               />
             ))}
           </div>
 
-          {/* Countdown */}
+          {/* Timer */}
           <div className="text-center">
             <p className="text-sm text-muted-foreground">
-              Code expires in: <span className="font-mono font-bold">{formatTime(countdown)}</span>
+              Code expires in: <span className="font-semibold text-foreground">{formatTime(countdown)}</span>
             </p>
+          </div>
+
+          {/* Resend Code */}
+          <div className="text-center">
+            <p className="text-sm text-muted-foreground mb-2">
+              Didn't receive the code?
+            </p>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleResend}
+              disabled={!canResend || resendCountdown > 0}
+              className="min-h-[44px]"
+            >
+              {resendCountdown > 0 ? (
+                `Resend in ${resendCountdown}s`
+              ) : (
+                "Resend Code"
+              )}
+            </Button>
           </div>
 
           {/* Verify Button */}
           <Button
             onClick={() => handleVerify()}
-            className="w-full"
             disabled={isVerifying || code.some(d => !d)}
+            className="w-full min-h-[52px] text-base font-semibold bg-gradient-to-r from-primary to-accent"
           >
-            {isVerifying ? "Verifying..." : "Verify & Sign In"}
+            {isVerifying ? (
+              <span className="flex items-center justify-center gap-2">
+                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                Verifying...
+              </span>
+            ) : (
+              "Verify Code"
+            )}
           </Button>
 
-          {/* Resend */}
+          {/* Back to Login */}
           <div className="text-center">
-            <p className="text-sm text-muted-foreground mb-2">Didn't receive code?</p>
-            <Button
-              variant="link"
-              onClick={handleResend}
-              disabled={!canResend}
-              className="text-sm"
+            <button
+              type="button"
+              onClick={onClose}
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1 py-2"
             >
-              {canResend ? "Resend Code" : `Resend Code (${resendCountdown}s)`}
-            </Button>
+              ← Back to Login
+            </button>
           </div>
-
-          {/* Back */}
-          <Button
-            variant="ghost"
-            onClick={onClose}
-            className="w-full"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to login
-          </Button>
         </div>
       </DialogContent>
     </Dialog>
