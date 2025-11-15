@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { SubscriptionStatus } from "@/components/SubscriptionStatus";
 import { useToast } from "@/hooks/use-toast";
 import {
   LogOut,
@@ -146,6 +147,9 @@ function SeniorDashboard() {
               </Button>
             </div>
           </Card>
+
+          {/* Subscriptions */}
+          <SubscriptionStatus />
 
           {/* Upcoming Appointments */}
           <Card className="p-6">

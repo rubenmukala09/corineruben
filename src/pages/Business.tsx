@@ -14,6 +14,7 @@ import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { BookingModal } from "@/components/BookingModal";
+import { SubscriptionDialog } from "@/components/SubscriptionDialog";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield } from "lucide-react";
 import businessCollaboration from "@/assets/business-collaboration.jpg";
@@ -22,6 +23,13 @@ import heroBusiness from "@/assets/hero-business-professional.jpg";
 
 function Business() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [subscriptionDialogOpen, setSubscriptionDialogOpen] = useState(false);
+  const [selectedSubscription, setSelectedSubscription] = useState<{
+    priceId: string;
+    serviceName: string;
+    planTier: string;
+    amount: number;
+  } | null>(null);
   const [isYearly, setIsYearly] = useState(false);
   const [selectedService, setSelectedService] = useState<{
     type: 'business' | 'website';
@@ -92,6 +100,11 @@ function Business() {
       period: '/month',
       savings: ''
     };
+  };
+
+  const handleSubscribe = (priceId: string, serviceName: string, planTier: string, amount: number) => {
+    setSelectedSubscription({ priceId, serviceName, planTier, amount });
+    setSubscriptionDialogOpen(true);
   };
 
   return (
@@ -599,13 +612,11 @@ function Business() {
                 </li>
               </ul>
               <Button 
-                asChild
+                onClick={() => handleSubscribe('price_1QhNnTE7M5RA9HBzMcIcKhEF', 'AI Service Insurance', 'Basic Care', 19900)}
                 variant="default" 
                 className="w-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)]"
               >
-                <Link to="/contact?service=ai-insurance&plan=basic&price=199">
-                  GET BASIC CARE
-                </Link>
+                GET BASIC CARE
               </Button>
             </Card>
 
@@ -656,13 +667,11 @@ function Business() {
                 </li>
               </ul>
               <Button 
-                asChild
+                onClick={() => handleSubscribe('price_1QhNnrE7M5RA9HBzbM4WDMIQ', 'AI Service Insurance', 'Standard Care', 39900)}
                 variant="default" 
                 className="w-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)]"
               >
-                <Link to="/contact?service=ai-insurance&plan=standard&price=399">
-                  GET STANDARD CARE
-                </Link>
+                GET STANDARD CARE
               </Button>
             </Card>
             </div>
@@ -710,13 +719,11 @@ function Business() {
                 </li>
               </ul>
               <Button 
-                asChild
+                onClick={() => handleSubscribe('price_1QhNoHE7M5RA9HBzQWdpJTEh', 'AI Service Insurance', 'Premium Care', 79900)}
                 variant="default" 
                 className="w-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)]"
               >
-                <Link to="/contact?service=ai-insurance&plan=premium&price=799">
-                  GET PREMIUM CARE
-                </Link>
+                GET PREMIUM CARE
               </Button>
             </Card>
 
@@ -1024,6 +1031,17 @@ function Business() {
           serviceTier={selectedService.tier}
           basePrice={selectedService.price}
           veteranDiscountPercent={10}
+        />
+      )}
+
+      {selectedSubscription && (
+        <SubscriptionDialog
+          open={subscriptionDialogOpen}
+          onOpenChange={setSubscriptionDialogOpen}
+          priceId={selectedSubscription.priceId}
+          serviceName={selectedSubscription.serviceName}
+          planTier={selectedSubscription.planTier}
+          amount={selectedSubscription.amount}
         />
       )}
     </div>
