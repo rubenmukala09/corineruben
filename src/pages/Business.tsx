@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { BookingModal } from "@/components/BookingModal";
 import { SubscriptionDialog } from "@/components/SubscriptionDialog";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
+import { trackButtonClick, trackConversion } from "@/utils/analyticsTracker";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import businessCollaboration from "@/assets/business-collaboration.jpg";
@@ -125,7 +126,10 @@ function Business() {
             size="xl"
             className="transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:brightness-110"
           >
-            <Link to="/contact?service=ai-automation">
+            <Link 
+              to="/contact?service=ai-automation"
+              onClick={() => trackButtonClick('Build AI Automation', 'Business Hero')}
+            >
               Build AI Automation
             </Link>
           </Button>
@@ -135,7 +139,10 @@ function Business() {
             size="xl"
             className="transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:brightness-110"
           >
-            <Link to="/contact?service=web-design">
+            <Link 
+              to="/contact?service=web-design"
+              onClick={() => trackButtonClick('Design My Website', 'Business Hero')}
+            >
               Design My Website
             </Link>
           </Button>
@@ -145,7 +152,10 @@ function Business() {
             size="xl"
             className="transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:brightness-110"
           >
-            <Link to="/contact?service=ai-insurance">
+            <Link 
+              to="/contact?service=ai-insurance"
+              onClick={() => trackButtonClick('Get AI Insurance', 'Business Hero')}
+            >
               Get AI Insurance
             </Link>
           </Button>
@@ -270,7 +280,13 @@ function Business() {
                   variant="default" 
                   className="w-full transition-all duration-300 md:hover:bg-primary/90 md:hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] md:hover:scale-[1.02] active:scale-95 h-11 md:h-10"
                 >
-                  <Link to="/contact?service=ai-receptionist&plan=9500">
+                  <Link 
+                    to="/contact?service=ai-receptionist&plan=9500"
+                    onClick={() => {
+                      trackButtonClick('Get Started - AI Receptionist', 'Business Pricing');
+                      trackConversion('business_ai_receptionist', 9500);
+                    }}
+                  >
                     GET STARTED
                   </Link>
                 </Button>
@@ -299,7 +315,13 @@ function Business() {
                     variant="default" 
                     className="w-full transition-all duration-300 md:hover:bg-primary/90 md:hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] md:hover:scale-[1.02] active:scale-95 h-11 md:h-10"
                   >
-                    <Link to="/contact?service=automation&plan=12500">
+                    <Link 
+                      to="/contact?service=automation&plan=12500"
+                      onClick={() => {
+                        trackButtonClick('Get Started - Full Automation', 'Business Pricing');
+                        trackConversion('business_full_automation', 12500);
+                      }}
+                    >
                       GET STARTED
                     </Link>
                   </Button>
@@ -320,7 +342,13 @@ function Business() {
                   variant="default" 
                   className="w-full transition-all duration-300 md:hover:bg-primary/90 md:hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] md:hover:scale-[1.02] active:scale-95 h-11 md:h-10"
                 >
-                  <Link to="/contact?service=custom&plan=25000">
+                  <Link 
+                    to="/contact?service=custom&plan=25000"
+                    onClick={() => {
+                      trackButtonClick('Get Started - Custom Solution', 'Business Pricing');
+                      trackConversion('business_custom_solution', 25000);
+                    }}
+                  >
                     GET STARTED
                   </Link>
                 </Button>
@@ -373,7 +401,13 @@ function Business() {
                     setTimeout(() => ripple.remove(), 600);
                   }}
                 >
-                  <Link to="/contact?service=landing-page&price=1500">
+                  <Link 
+                    to="/contact?service=landing-page&price=1500"
+                    onClick={() => {
+                      trackButtonClick('Get Started - Landing Page', 'Business Website');
+                      trackConversion('business_landing_page', 1500);
+                    }}
+                  >
                     GET STARTED
                   </Link>
                 </Button>
@@ -446,7 +480,13 @@ function Business() {
                     setTimeout(() => ripple.remove(), 600);
                   }}
                 >
-                  <Link to="/contact?service=business-website&price=4500">
+                  <Link 
+                    to="/contact?service=business-website&price=4500"
+                    onClick={() => {
+                      trackButtonClick('Get Started - Business Website', 'Business Website');
+                      trackConversion('business_website', 4500);
+                    }}
+                  >
                     GET STARTED
                   </Link>
                 </Button>
@@ -516,7 +556,13 @@ function Business() {
                     setTimeout(() => ripple.remove(), 600);
                   }}
                 >
-                  <Link to="/contact?service=ecommerce&price=8500">
+                  <Link 
+                    to="/contact?service=ecommerce&price=8500"
+                    onClick={() => {
+                      trackButtonClick('Get Started - E-Commerce', 'Business Website');
+                      trackConversion('business_ecommerce', 8500);
+                    }}
+                  >
                     GET STARTED
                   </Link>
                 </Button>
@@ -626,7 +672,11 @@ function Business() {
                 </li>
               </ul>
               <Button 
-                onClick={() => handleSubscribe('price_1QhNnTE7M5RA9HBzMcIcKhEF', 'AI Service Insurance', 'Basic Care', 19900)}
+                onClick={() => {
+                  trackButtonClick('Subscribe - Basic Care', 'Business Insurance');
+                  trackConversion('insurance_basic', 199);
+                  handleSubscribe('price_1QhNnTE7M5RA9HBzMcIcKhEF', 'AI Service Insurance', 'Basic Care', 19900);
+                }}
                 variant="default" 
                 className="w-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)]"
               >
@@ -681,7 +731,11 @@ function Business() {
                 </li>
               </ul>
               <Button 
-                onClick={() => handleSubscribe('price_1QhNnrE7M5RA9HBzbM4WDMIQ', 'AI Service Insurance', 'Standard Care', 39900)}
+                onClick={() => {
+                  trackButtonClick('Subscribe - Standard Care', 'Business Insurance');
+                  trackConversion('insurance_standard', 399);
+                  handleSubscribe('price_1QhNnrE7M5RA9HBzbM4WDMIQ', 'AI Service Insurance', 'Standard Care', 39900);
+                }}
                 variant="default" 
                 className="w-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)]"
               >
@@ -733,7 +787,11 @@ function Business() {
                 </li>
               </ul>
               <Button 
-                onClick={() => handleSubscribe('price_1QhNoHE7M5RA9HBzQWdpJTEh', 'AI Service Insurance', 'Premium Care', 79900)}
+                onClick={() => {
+                  trackButtonClick('Subscribe - Premium Care', 'Business Insurance');
+                  trackConversion('insurance_premium', 799);
+                  handleSubscribe('price_1QhNoHE7M5RA9HBzQWdpJTEh', 'AI Service Insurance', 'Premium Care', 79900);
+                }}
                 variant="default" 
                 className="w-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)]"
               >
@@ -914,6 +972,8 @@ function Business() {
                   <p className="text-sm text-muted-foreground mb-6">(Saves you thousands on bad purchases)</p>
                   <Button 
                     onClick={() => {
+                      trackButtonClick('Request AI Vetting', 'Business Consulting');
+                      trackConversion('consulting_vetting', 1799);
                       setSelectedService({
                         type: 'business',
                         name: 'Pre-Purchase AI Tool Vetting',
@@ -962,6 +1022,8 @@ function Business() {
                   <p className="text-sm text-muted-foreground mb-6">Deliverable: Security report + implementation roadmap</p>
                   <Button 
                     onClick={() => {
+                      trackButtonClick('Request Security Audit', 'Business Security');
+                      trackConversion('consulting_audit', 3499);
                       setSelectedService({
                         type: 'business',
                         name: 'AI Security Audit',
@@ -1029,7 +1091,12 @@ function Business() {
       {/* Final CTA */}
       <CTASection headline="Ready to Deploy AI Safely?" variant="gold">
         <Button asChild variant="gold" size="xl">
-          <Link to="/contact">SCHEDULE DISCOVERY CALL</Link>
+          <Link 
+            to="/contact"
+            onClick={() => trackButtonClick('Schedule Discovery Call', 'Business CTA')}
+          >
+            SCHEDULE DISCOVERY CALL
+          </Link>
         </Button>
         <p className="text-accent-foreground text-sm mt-4">15-minute call to discuss your needs - no sales pressure.</p>
       </CTASection>
