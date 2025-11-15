@@ -59,9 +59,12 @@ const ProductsList = () => {
 
   const filteredProducts = (products || []).filter((product) => {
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const isDigital = product.tags?.some((tag: string) => 
+      ['digital', 'guide', 'software', 'video', 'training', 'subscription'].includes(tag.toLowerCase())
+    );
     const matchesCategory = categoryFilter === "all" || 
-      (categoryFilter === "digital" && product.is_digital) ||
-      (categoryFilter === "physical" && !product.is_digital);
+      (categoryFilter === "digital" && isDigital) ||
+      (categoryFilter === "physical" && !isDigital);
     const matchesStatus = statusFilter === "all" || product.status === statusFilter;
     
     let matchesStock = true;

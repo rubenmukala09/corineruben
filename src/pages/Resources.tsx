@@ -40,9 +40,13 @@ function Resources() {
     },
   });
 
-  // Separate into digital and physical products
-  const digitalProducts = products?.filter(p => p.is_digital) || [];
-  const physicalProducts = products?.filter(p => !p.is_digital) || [];
+  // Separate into digital and physical products based on tags
+  const digitalProducts = products?.filter(p => 
+    p.tags?.some((tag: string) => ['digital', 'guide', 'software', 'video', 'training', 'subscription'].includes(tag.toLowerCase()))
+  ) || [];
+  const physicalProducts = products?.filter(p => 
+    p.tags?.some((tag: string) => ['physical', 'device', 'hardware', 'kit', 'equipment'].includes(tag.toLowerCase()))
+  ) || [];
 
   const handlePurchase = (type: 'guide' | 'product', name: string, price?: number) => {
     setSelectedItem({ type, name, price });
