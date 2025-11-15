@@ -349,7 +349,9 @@ function Resources() {
       <PurchaseModal
         open={modalOpen}
         onOpenChange={setModalOpen}
-        selectedItem={selectedItem}
+        itemType={selectedItem?.type || 'product'}
+        itemName={selectedItem?.name || ''}
+        suggestedPrice={selectedItem?.price}
       />
     </>
   );

@@ -26,10 +26,10 @@ function About() {
   const [isLoading, setIsLoading] = useState(true);
   const [showAdminBanner, setShowAdminBanner] = useState(true);
 
-  const stat1 = useCounterAnimation(500);
-  const stat2 = useCounterAnimation(89);
-  const stat3 = useCounterAnimation(15000);
-  const stat4 = useCounterAnimation(98);
+  const stat1 = useCounterAnimation({ end: 500 });
+  const stat2 = useCounterAnimation({ end: 89 });
+  const stat3 = useCounterAnimation({ end: 15000 });
+  const stat4 = useCounterAnimation({ end: 98 });
 
   useEffect(() => {
     checkAdminStatus();
@@ -298,33 +298,33 @@ function About() {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-12">
             <ScrollReveal delay={100}>
-              <div className="text-center">
+              <div className="text-center" ref={stat1.ref}>
                 <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
-                  <AnimatedCounter end={stat1} />+
+                  <AnimatedCounter end={stat1.count} />+
                 </div>
                 <div className="text-base md:text-lg opacity-90">Families Trained</div>
               </div>
             </ScrollReveal>
             <ScrollReveal delay={200}>
-              <div className="text-center">
+              <div className="text-center" ref={stat2.ref}>
                 <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
-                  <AnimatedCounter value={stat2} />%
+                  <AnimatedCounter end={stat2.count} />%
                 </div>
                 <div className="text-base md:text-lg opacity-90">Scams Prevented</div>
               </div>
             </ScrollReveal>
             <ScrollReveal delay={300}>
-              <div className="text-center">
+              <div className="text-center" ref={stat3.ref}>
                 <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
-                  $<AnimatedCounter value={stat3} />+
+                  $<AnimatedCounter end={stat3.count} />+
                 </div>
                 <div className="text-base md:text-lg opacity-90">Fraud Prevented</div>
               </div>
             </ScrollReveal>
             <ScrollReveal delay={400}>
-              <div className="text-center">
+              <div className="text-center" ref={stat4.ref}>
                 <div className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4">
-                  <AnimatedCounter value={stat4} />%
+                  <AnimatedCounter end={stat4.count} />%
                 </div>
                 <div className="text-base md:text-lg opacity-90">Satisfaction Rate</div>
               </div>
@@ -363,17 +363,16 @@ function About() {
       {/* CTA */}
       <div id="cta">
         <CTASection
-          title="Ready to Join Our Protected Community?"
+          headline="Ready to Join Our Protected Community?"
           description="Whether you're looking for personal training, business solutions, or want to support our mission—we'd love to connect."
-          primaryButton={{
-            label: "Start Training",
-            to: "/training"
-          }}
-          secondaryButton={{
-            label: "Partner With Us",
-            to: "/business"
-          }}
-        />
+        >
+          <Button asChild size="lg">
+            <Link to="/training">Start Training</Link>
+          </Button>
+          <Button asChild size="lg" variant="outline">
+            <Link to="/business">Partner With Us</Link>
+          </Button>
+        </CTASection>
       </div>
 
       <Footer />
