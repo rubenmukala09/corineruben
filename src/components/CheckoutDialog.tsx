@@ -78,6 +78,7 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
           currency: 'usd',
           customerInfo: formData,
           items: items.map(item => ({
+            productId: item.productId,
             name: item.name,
             quantity: item.quantity,
             price: item.price
@@ -88,7 +89,11 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
       if (error) throw error;
       if (!data.success) throw new Error(data.error || 'Payment failed');
 
-      toast.success('Payment successful! Check your email for receipt.');
+      const orderInfo = data.orderId && data.orderNumber 
+        ? `Order #${data.orderNumber} created successfully!` 
+        : 'Payment successful!';
+      
+      toast.success(orderInfo + ' Check your email for receipt.');
       clearCart();
       onSuccess();
     } catch (error) {

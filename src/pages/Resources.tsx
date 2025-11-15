@@ -1,28 +1,23 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { useCart } from "@/contexts/CartContext";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import TrustBar from "@/components/TrustBar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { PurchaseModal } from "@/components/PurchaseModal";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Download, Shield, Wifi, KeyRound, Heart, FileText, ShoppingCart, Star, TrendingUp, Loader2 } from "lucide-react";
+import { Download, Shield, ShoppingCart, Star, TrendingUp, Loader2 } from "lucide-react";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import heroResourcesMarketplace from "@/assets/hero-resources-marketplace.jpg";
 import { SEO } from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
 
 function Resources() {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<{
-    type: 'guide' | 'product';
-    name: string;
-    price?: number;
-  } | null>(null);
+  const { addItem } = useCart();
 
   // Fetch products from database
   const { data: products, isLoading, error } = useQuery({
@@ -48,13 +43,18 @@ function Resources() {
     p.tags?.some((tag: string) => ['physical', 'device', 'hardware', 'kit', 'equipment'].includes(tag.toLowerCase()))
   ) || [];
 
-  const handlePurchase = (type: 'guide' | 'product', name: string, price?: number) => {
-    setSelectedItem({ type, name, price });
-    setModalOpen(true);
+  const handleAddToCart = (product: any) => {
+    addItem({
+      id: `product-${product.id}`,
+      productId: product.id,
+      name: product.name,
+      price: product.sale_price || product.base_price,
+      image: product.images?.[0] || undefined
+    });
     
-    // Track product view
+    // Track product add to cart
     import("@/utils/analyticsTracker").then(({ trackButtonClick }) => {
-      trackButtonClick(`Purchase ${type}: ${name}`, "Resources Page");
+      trackButtonClick(`Add to Cart: ${product.name}`, "Resources Page");
     });
   };
 
@@ -185,7 +185,7 @@ function Resources() {
                       </div>
                       <Button 
                         size="lg"
-                        onClick={() => handlePurchase('guide', product.name, product.sale_price || product.base_price)}
+                        onClick={() => handleAddToCart(product)}
                         className="w-full sm:w-auto group-hover:scale-110 transition-transform duration-300 shadow-lg text-sm md:text-base"
                       >
                         <ShoppingCart className="w-4 h-4 mr-2" />
@@ -287,7 +287,7 @@ function Resources() {
                           )}
                         </div>
                         <Button 
-                          onClick={() => handlePurchase('product', product.name, product.sale_price || product.base_price)}
+                          onClick={() => handleAddToCart(product)}
                           className="w-full sm:w-auto group-hover:scale-110 transition-transform duration-300 text-sm md:text-base"
                         >
                           <ShoppingCart className="w-4 h-4 mr-2" />
@@ -329,14 +329,6 @@ function Resources() {
       </section>
 
       <Footer />
-
-      <PurchaseModal
-        open={modalOpen}
-        onOpenChange={setModalOpen}
-        itemType={selectedItem?.type || 'product'}
-        itemName={selectedItem?.name || ''}
-        suggestedPrice={selectedItem?.price}
-      />
     </>
   );
 }

@@ -1,5 +1,6 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import Stripe from 'https://esm.sh/stripe@14.21.0';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.2';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -11,6 +12,12 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const supabaseAdmin = createClient(
+    Deno.env.get('SUPABASE_URL') ?? '',
+    Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+    { auth: { persistSession: false } }
+  );
+
   try {
     const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '', {
       apiVersion: '2023-10-16',
@@ -18,7 +25,27 @@ serve(async (req) => {
 
     const { paymentMethodId, amount, currency, customerInfo, items } = await req.json();
 
-    console.log('Processing payment:', { amount, currency, items: items.length });
+    console.log('Processing payment:', { amount, currency, itemsCount: items.length });
+
+    // Get authenticated user (optional - for guest checkout support)
+    let userId = null;
+    const authHeader = req.headers.get('Authorization');
+    if (authHeader) {
+      const token = authHeader.replace('Bearer ', '');
+      const { data: userData } = await supabaseAdmin.auth.getUser(token);
+      userId = userData?.user?.id || null;
+    }
+
+    // Get default partner (store owner)
+    const { data: partners } = await supabaseAdmin
+      .from('partners')
+      .select('id')
+      .limit(1)
+      .single();
+
+    if (!partners) {
+      throw new Error('No partner found - store not configured');
+    }
 
     // Create payment intent
     const paymentIntent = await stripe.paymentIntents.create({
@@ -39,6 +66,112 @@ serve(async (req) => {
 
     console.log('Payment intent created:', paymentIntent.id);
 
+    // Generate order number
+    const orderNumber = `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+
+    // Calculate totals
+    const subtotal = amount / 100;
+    const taxAmount = 0;
+    const shippingAmount = 0;
+    const totalAmount = subtotal;
+
+    // Create order in database
+    const { data: order, error: orderError } = await supabaseAdmin
+      .from('partner_orders')
+      .insert({
+        order_number: orderNumber,
+        partner_id: partners.id,
+        customer_id: userId,
+        customer_email: customerInfo.email,
+        customer_name: customerInfo.name,
+        customer_phone: customerInfo.phone || null,
+        shipping_address: {
+          line1: customerInfo.address,
+          city: customerInfo.city,
+          state: customerInfo.state,
+          postal_code: customerInfo.zip
+        },
+        billing_address: {
+          line1: customerInfo.address,
+          city: customerInfo.city,
+          state: customerInfo.state,
+          postal_code: customerInfo.zip
+        },
+        status: 'pending',
+        payment_status: 'paid',
+        payment_method: 'card',
+        payment_transaction_id: paymentIntent.id,
+        subtotal,
+        tax_amount: taxAmount,
+        shipping_amount: shippingAmount,
+        discount_amount: 0,
+        total_amount: totalAmount,
+        metadata: {
+          stripe_payment_intent: paymentIntent.id,
+          items: items
+        }
+      })
+      .select()
+      .single();
+
+    if (orderError) {
+      console.error('Error creating order:', orderError);
+      throw new Error(`Failed to create order: ${orderError.message}`);
+    }
+
+    console.log('Order created:', order.id);
+
+    // Create order items and update inventory
+    for (const item of items) {
+      // Get product details
+      const { data: product } = await supabaseAdmin
+        .from('products')
+        .select('id, sku, stock_quantity')
+        .eq('id', item.productId)
+        .single();
+
+      if (product) {
+        // Create order item
+        const { error: itemError } = await supabaseAdmin
+          .from('order_items')
+          .insert({
+            order_id: order.id,
+            product_id: product.id,
+            product_name: item.name,
+            product_sku: product.sku || `SKU-${product.id.substring(0, 8)}`,
+            quantity: item.quantity,
+            unit_price: item.price,
+            subtotal: item.price * item.quantity,
+            tax_amount: 0,
+            discount_amount: 0,
+            total: item.price * item.quantity
+          });
+
+        if (itemError) {
+          console.error('Error creating order item:', itemError);
+        } else {
+          console.log(`Order item created for: ${item.name}`);
+        }
+
+        // Update product inventory (skip if digital product with 999 stock)
+        if (product.stock_quantity !== null && product.stock_quantity !== 999) {
+          const newQuantity = Math.max(0, product.stock_quantity - item.quantity);
+          const { error: updateError } = await supabaseAdmin
+            .from('products')
+            .update({ stock_quantity: newQuantity })
+            .eq('id', product.id);
+          
+          if (updateError) {
+            console.error('Error updating inventory:', updateError);
+          } else {
+            console.log(`Updated inventory for ${item.name}: ${product.stock_quantity} -> ${newQuantity}`);
+          }
+        }
+      } else {
+        console.error(`Product not found for productId: ${item.productId}`);
+      }
+    }
+
     // Send receipt email
     const resendApiKey = Deno.env.get('RESEND_API_KEY');
     if (resendApiKey) {
@@ -48,6 +181,9 @@ serve(async (req) => {
 
       const emailBody = `
 Thank you for your purchase from InVision Network!
+
+Order Number: ${orderNumber}
+Order ID: ${order.id}
 
 Order Details:
 ${itemsList}
@@ -79,7 +215,7 @@ InVision Network Team
         body: JSON.stringify({
           from: 'InVision Network <noreply@invisionnetwork.org>',
           to: [customerInfo.email],
-          subject: 'Order Confirmation - InVision Network',
+          subject: `Order Confirmation #${orderNumber} - InVision Network`,
           text: emailBody,
         }),
       });
@@ -88,7 +224,12 @@ InVision Network Team
     }
 
     return new Response(
-      JSON.stringify({ success: true, paymentIntentId: paymentIntent.id }),
+      JSON.stringify({ 
+        success: true, 
+        paymentIntentId: paymentIntent.id,
+        orderId: order.id,
+        orderNumber: orderNumber
+      }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
