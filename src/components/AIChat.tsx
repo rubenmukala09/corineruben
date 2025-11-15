@@ -18,8 +18,6 @@ import {
   X,
   Mic,
   MicOff,
-  Volume2,
-  VolumeX,
   Phone,
   Mail,
   ExternalLink
@@ -43,11 +41,9 @@ export const AIChat = () => {
   const [mode, setMode] = useState<AIMode>("chat");
   const [isRecording, setIsRecording] = useState(false);
   const [isTalking, setIsTalking] = useState(false);
-  const [isSpeaking, setIsSpeaking] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<any>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
   const { toast } = useToast();
 
   const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-chat`;
@@ -181,11 +177,6 @@ export const AIChat = () => {
         }
       }
 
-      // Generate speech for the complete response
-      if (assistantMessage && !isSpeaking) {
-        await speakText(assistantMessage);
-      }
-
       setIsLoading(false);
       setIsTalking(false);
     } catch (error) {
@@ -205,76 +196,6 @@ export const AIChat = () => {
         variant: "destructive",
       });
     }
-    }
-  };
-
-  const speakText = async (text: string, retryCount = 0): Promise<void> => {
-    const maxRetries = 3;
-    const timeout = 30000; // 30 seconds
-
-    try {
-      setIsSpeaking(true);
-      
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), timeout);
-
-      const { data, error } = await supabase.functions.invoke('text-to-speech', {
-        body: { text, voice: 'nova' }
-      });
-
-      clearTimeout(timeoutId);
-
-      if (error) throw error;
-
-      if (data?.audioContent) {
-        // Stop any currently playing audio
-        if (audioRef.current) {
-          audioRef.current.pause();
-          audioRef.current.currentTime = 0;
-        }
-
-        // Create audio element and play
-        const audio = new Audio(`data:audio/mp3;base64,${data.audioContent}`);
-        audioRef.current = audio;
-        
-        audio.onended = () => setIsSpeaking(false);
-        audio.onerror = () => {
-          setIsSpeaking(false);
-          toast({
-            title: "Audio Error",
-            description: "Failed to play audio response",
-            variant: "destructive",
-          });
-        };
-        
-        await audio.play();
-      }
-    } catch (error) {
-      console.error("TTS error:", error);
-      
-      if (retryCount < maxRetries) {
-        console.log(`Retrying voice synthesis (attempt ${retryCount + 1}/${maxRetries})...`);
-        toast({
-          title: "Retrying...",
-          description: `Voice response failed, retrying (${retryCount + 1}/${maxRetries})`,
-        });
-        await speakText(text, retryCount + 1);
-      } else {
-        setIsSpeaking(false);
-        toast({
-          title: "Voice Response Failed",
-          description: "Could not generate voice response after multiple attempts. Please try again.",
-          variant: "destructive",
-        });
-      }
-    }
-  };
-
-  const stopSpeaking = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-      setIsSpeaking(false);
     }
   };
 
@@ -382,10 +303,10 @@ export const AIChat = () => {
             <div className="absolute -bottom-2 left-1/2 -translate-x-1/2">
               <div className="flex items-center gap-2 bg-background/95 backdrop-blur-sm border border-primary/30 rounded-full px-3 py-1">
                 <div className={`w-2 h-2 rounded-full transition-all ${
-                  isTalking || isSpeaking ? 'bg-primary animate-pulse' : 'bg-green-500 animate-pulse'
+                  isTalking ? 'bg-primary animate-pulse' : 'bg-green-500 animate-pulse'
                 }`} />
                 <span className="text-xs font-medium">
-                  {isTalking ? "Thinking..." : isSpeaking ? "Speaking..." : "Online"}
+                  {isTalking ? "Thinking..." : "Online"}
                 </span>
               </div>
             </div>
@@ -413,15 +334,6 @@ export const AIChat = () => {
 
           {/* Close and voice controls */}
           <div className="flex items-center justify-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={isSpeaking ? stopSpeaking : undefined}
-              disabled={!isSpeaking}
-              className={`rounded-full transition-all ${isSpeaking ? 'text-primary hover:text-primary/80 bg-primary/10' : 'text-muted-foreground'}`}
-            >
-              {isSpeaking ? <Volume2 className="h-4 w-4 animate-pulse" /> : <VolumeX className="h-4 w-4" />}
-            </Button>
             <Button
               variant="ghost"
               size="icon"
@@ -484,7 +396,7 @@ export const AIChat = () => {
                             <AvatarImage src={loraAvatar3D} />
                             <AvatarFallback className="bg-gradient-to-br from-accent/20 to-purple-500/20">LA</AvatarFallback>
                           </Avatar>
-                          {(isTalking || isSpeaking) && idx === messages.length - 1 && (
+                          {isTalking && idx === messages.length - 1 && (
                             <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-background animate-pulse" />
                           )}
                         </div>
