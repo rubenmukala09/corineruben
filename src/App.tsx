@@ -195,6 +195,14 @@ const TeamAdmin = lazy(() => {
   });
 });
 
+const EmailCampaigns = lazy(() => {
+  performanceMonitor.startTracking('EmailCampaigns');
+  return import("./pages/admin/EmailCampaigns").then(module => {
+    performanceMonitor.endTracking('EmailCampaigns');
+    return module;
+  });
+});
+
 const BusinessClients = lazy(() => {
   performanceMonitor.startTracking('BusinessClients');
   return import("./pages/admin/BusinessClients").then(module => {
@@ -502,6 +510,7 @@ function AnimatedRoutes() {
         <Route path="/admin/content/articles/:id" element={<PageTransition><AdminRoute><ArticleEditor /></AdminRoute></PageTransition>} />
         <Route path="/admin/articles/preview" element={<PageTransition><AdminRoute><ArticlePreview /></AdminRoute></PageTransition>} />
         <Route path="/admin/content/team" element={<PageTransition><AdminRoute><TeamAdmin /></AdminRoute></PageTransition>} />
+        <Route path="/admin/email-campaigns" element={<PageTransition><AdminRoute><EmailCampaigns /></AdminRoute></PageTransition>} />
         <Route path="/admin/clients/businesses" element={<PageTransition><AdminRoute><BusinessClients /></AdminRoute></PageTransition>} />
         <Route path="/admin/clients/businesses/:id" element={<PageTransition><AdminRoute><BusinessClientDetail /></AdminRoute></PageTransition>} />
         <Route path="/admin/clients/individuals" element={<PageTransition><AdminRoute><IndividualClients /></AdminRoute></PageTransition>} />
