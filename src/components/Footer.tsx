@@ -8,61 +8,6 @@ import invisionLogo from "@/assets/shield-logo.png";
 const Footer = () => {
   return (
     <footer className="relative">
-      {/* CTA Section - "Want to Join Our Mission?" */}
-      <section className="relative bg-gradient-to-r from-[hsl(260,80%,30%)] via-[hsl(240,70%,45%)] to-[hsl(190,80%,50%)] text-white py-4 md:py-5 overflow-hidden">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
-          <div className="absolute top-10 left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '8s' }} />
-          <div className="absolute bottom-10 right-20 w-96 h-96 bg-cyan-300/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '10s' }} />
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold mb-3">
-              Want to Join Our Mission?
-            </h2>
-            
-            {/* CTA Buttons */}
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              <Button 
-                asChild 
-                size="lg"
-                className="bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-500 hover:to-cyan-600 text-white font-bold rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 px-5 py-3 text-sm uppercase tracking-wide"
-              >
-                <Link to="/training">Book Training</Link>
-              </Button>
-              <Button 
-                asChild 
-                size="lg"
-                variant="outline"
-                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary font-bold rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 px-5 py-3 text-sm uppercase tracking-wide"
-              >
-                <Link to="/business">Partner With Us</Link>
-              </Button>
-              <Button 
-                asChild 
-                size="lg"
-                variant="outline"
-                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary font-bold rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 px-5 py-3 text-sm uppercase tracking-wide"
-              >
-                <Link to="/contact">Donate a Training Seat</Link>
-              </Button>
-            </div>
-
-            {/* Phone Number */}
-            <div className="flex items-center justify-center gap-2 text-sm md:text-base mt-3">
-              <span>Questions? Call</span>
-              <a 
-                href="tel:9375550199" 
-                className="font-bold underline hover:text-cyan-300 transition-colors"
-              >
-                (937) 555-0199
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Trusted Tech Logos - Scrolling Section */}
       <TrustedTechLogos />
 
