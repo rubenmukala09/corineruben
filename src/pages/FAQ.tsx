@@ -98,7 +98,7 @@ const faqs: FAQ[] = [
     id: "bs-1",
     category: "Business Services",
     question: "What is an AI Receptionist?",
-    answer: "Our AI Receptionist answers calls 24/7, books appointments, transfers calls, and handles common questions—all while sounding completely natural. It never sleeps, never takes breaks, and costs less than hiring staff.",
+    answer: "Our AI Receptionist answers calls 24/7, books appointments, transfers calls, and handles common questions - all while sounding completely natural. It never sleeps, never takes breaks, and costs less than hiring staff.",
   },
   {
     id: "bs-2",

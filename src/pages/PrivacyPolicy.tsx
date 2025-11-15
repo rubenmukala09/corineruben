@@ -45,7 +45,7 @@ function PrivacyPolicy() {
                   <h3 className="text-xl font-semibold mb-3 mt-6">We collect information you provide directly:</h3>
                   <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4">
                     <li>Name, email, phone (contact forms, signup)</li>
-                    <li>Billing information (credit card via Stripe—we never store card details)</li>
+                    <li>Billing information (credit card via Stripe - we never store card details)</li>
                     <li>Communication preferences</li>
                     <li>Account credentials (encrypted)</li>
                     <li>Suspicious items you submit (for analysis)</li>

@@ -725,7 +725,7 @@ export default function ArticlesAdmin() {
                                   new Date(article.scheduledDate),
                                   "MMM d"
                                 )}`
-                              : "—"}
+                              : "-"}
                           </TableCell>
                           <TableCell>
                             <div className="flex items-center gap-1 text-sm text-muted-foreground">

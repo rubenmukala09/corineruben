@@ -18,7 +18,7 @@ import { InspirationalVerses } from "@/components/InspirationalVerses";
 import { OhioServiceMap } from "@/components/OhioServiceMap";
 import heroAboutNew from "@/assets/hero-about-new.jpg";
 import founderRuben from "@/assets/founder-ruben.jpg";
-import founderCorine from "@/assets/founder-corine.jpg";
+import founderCorinne from "@/assets/founder-corinne.jpg";
 import teamDiverse1 from "@/assets/team-diverse-1.jpg";
 import businessCollaboration from "@/assets/business-collaboration.jpg";
 import { SEO } from "@/components/SEO";
@@ -62,8 +62,8 @@ function About() {
   const timeline = [
     {
       year: "2023",
-      title: "Founded from Personal Experience",
-      description: "After Ruben's grandmother nearly fell victim to a sophisticated phone scam, InVision Network was born with a mission to protect families."
+      title: "The Beginning",
+      description: "After Ruben and Corinne were victims of a sophisticated data breach and extortion attempt, InVision Network was born with a mission to protect families from the same trauma they experienced."
     },
     {
       year: "2024",
@@ -136,17 +136,17 @@ function About() {
                   Our Story
                 </Badge>
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">
-                  It Started With a Phone Call
+                  It Started With a Breach
                 </h2>
                 <div className="space-y-4 md:space-y-6 text-base md:text-lg text-muted-foreground leading-relaxed">
                   <p>
-                    In 2023, Ruben's grandmother received a call from someone claiming to be her grandson—in jail, scared, and needing money immediately. The voice was convincing. The story was urgent. She was moments away from wiring thousands of dollars.
+                    When Ruben and Corinne fell victim to a sophisticated data breach, their worst fears came true. All their passwords, emails, and personal information were exposed. Then came the chilling demand: pay thousands of dollars, or their private data would be sold on the dark web.
                   </p>
                   <p>
-                    That near-miss sparked InVision Network. We realized that even smart, careful people can fall victim to increasingly sophisticated scams. The tools existed to protect against these threats, but they weren't reaching the people who needed them most.
+                    This traumatic experience transformed them from victims into protectors. They realized that even tech-savvy professionals with 12+ years of cybersecurity experience can become targets. The attackers were sophisticated, relentless, and terrifying.
                   </p>
                   <p>
-                    Today, we're a team of cybersecurity professionals, educators, and community advocates dedicated to one mission: ensuring that no family experiences the fear and financial devastation of falling victim to a scam.
+                    Today, InVision Network exists because of that painful lesson. We're a team of cybersecurity analysts, nurses, educators, and community advocates united by one mission: ensuring no family experiences the fear and financial devastation we endured.
                   </p>
                 </div>
               </div>
@@ -230,9 +230,9 @@ function About() {
             <ScrollReveal delay={200}>
               <Card className="p-6 md:p-8 hover:shadow-2xl transition-all duration-500 border-2 border-border/50 hover:border-primary/50">
                 <div className="relative mb-6">
-                  <img 
-                    src={founderCorine} 
-                    alt="Corine - Co-Founder & COO"
+              <img
+                src={founderCorinne}
+                alt="Corinne - Co-Founder & COO"
                     className="w-full aspect-square object-cover rounded-xl mb-4"
                   />
                   <Badge className="absolute top-4 right-4 bg-primary">Co-Founder & COO</Badge>

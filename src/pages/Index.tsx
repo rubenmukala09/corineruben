@@ -342,7 +342,7 @@ function Index() {
               {
                 icon: Phone,
                 title: "CALL BACK OFFICIAL NUMBER",
-                desc: "Use the number on your bank card, official website, or phone book—NEVER the number they give you.",
+                desc: "Use the number on your bank card, official website, or phone book - NEVER the number they give you.",
               },
               {
                 icon: Users,
@@ -352,7 +352,7 @@ function Index() {
               {
                 icon: DollarSign,
                 title: "DOUBLE-CHECK MONEY REQUESTS",
-                desc: "If anyone asks for money, gift cards, wire transfers—verify through a SECOND channel (text, in-person, trusted number).",
+                desc: "If anyone asks for money, gift cards, wire transfers - verify through a SECOND channel (text, in-person, trusted number).",
               },
               {
                 icon: FileCheck,

@@ -16,7 +16,7 @@ function SafetyVault() {
       <Hero
         backgroundImage={heroContact}
         headline="Family Safety Vault"
-        subheadline="Document verification, authentication, and encryption services—we don't store your data, we protect it"
+        subheadline="Document verification, authentication, and encryption services - we don't store your data, we protect it"
       >
         <div className="flex flex-col sm:flex-row gap-4 justify-center sm:justify-start">
           <Button asChild variant="default" size="xl">
@@ -36,7 +36,7 @@ function SafetyVault() {
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h2 className="mb-4">What is the Family Safety Vault?</h2>
             <p className="text-xl text-muted-foreground">
-              A specialized service for document verification, authentication, and encryption. We help you validate documents, identify red flags, and encrypt sensitive information—<strong>without storing your data</strong>.
+              A specialized service for document verification, authentication, and encryption. We help you validate documents, identify red flags, and encrypt sensitive information - <strong>without storing your data</strong>.
             </p>
           </div>
 
@@ -73,7 +73,7 @@ function SafetyVault() {
               </div>
               <h3 className="text-xl font-bold mb-3 text-center">No Data Storage</h3>
               <p className="text-muted-foreground text-center">
-                We analyze and verify—then delete. Your information stays with you, not in our systems.
+                We analyze and verify - then delete. Your information stays with you, not in our systems.
               </p>
             </Card>
           </div>

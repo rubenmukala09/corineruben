@@ -86,7 +86,7 @@ const ThreePathsForward = () => {
             Three Paths Forward
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Choose the protection and empowerment that fits your needs—from personal AI security training to business automation solutions.
+            Choose the protection and empowerment that fits your needs - from personal AI security training to business automation solutions.
           </p>
         </div>
 

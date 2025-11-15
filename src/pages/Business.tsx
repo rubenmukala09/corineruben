@@ -339,7 +339,7 @@ function Business() {
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Professional Website Design</h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Custom websites that convert visitors into customers—built for security, speed, and success
+              Custom websites that convert visitors into customers - built for security, speed, and success
             </p>
           </div>
 
@@ -566,7 +566,7 @@ function Business() {
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-4">AI Services Insurance</h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Protect your AI investment with ongoing maintenance, updates, and support—regardless of where you purchased your agent.
+              Protect your AI investment with ongoing maintenance, updates, and support - regardless of where you purchased your agent.
             </p>
           </div>
 
@@ -866,7 +866,7 @@ function Business() {
                   <div>
                     <h3 className="text-xl font-bold mb-2">Plain-English Handoff</h3>
                     <p className="text-muted-foreground">
-                      Your team gets documentation they can actually understand—no tech jargon required.
+                      Your team gets documentation they can actually understand - no tech jargon required.
                     </p>
                   </div>
                 </div>
@@ -1031,7 +1031,7 @@ function Business() {
         <Button asChild variant="gold" size="xl">
           <Link to="/contact">SCHEDULE DISCOVERY CALL</Link>
         </Button>
-        <p className="text-accent-foreground text-sm mt-4">15-minute call to discuss your needs—no sales pressure.</p>
+        <p className="text-accent-foreground text-sm mt-4">15-minute call to discuss your needs - no sales pressure.</p>
       </CTASection>
 
       <Footer />
