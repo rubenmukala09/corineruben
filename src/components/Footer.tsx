@@ -3,7 +3,7 @@ import { Facebook, Linkedin, Youtube, Instagram, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import TrustedTechLogos from "./TrustedTechLogos";
 import { NewsletterSignup } from "./NewsletterSignup";
-import invisionLogo from "@/assets/invision-logo.png";
+import invisionLogo from "@/assets/shield-logo.png";
 
 const Footer = () => {
   return (

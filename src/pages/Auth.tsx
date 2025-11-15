@@ -21,7 +21,7 @@ import {
   Sparkles
 } from "lucide-react";
 import { z } from "zod";
-import invisionLogo from "@/assets/invision-logo.png";
+import invisionLogo from "@/assets/shield-logo.png";
 
 const emailSchema = z.string().email("Invalid email address");
 const passwordSchema = z.string().min(6, "Password must be at least 6 characters");

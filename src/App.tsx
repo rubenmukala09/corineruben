@@ -13,7 +13,7 @@ import { SubscriptionProvider } from "./contexts/SubscriptionContext";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { PerformanceDashboard } from "./components/PerformanceDashboard";
 import { RouteTracker } from "./components/RouteTracker";
-import { BreadcrumbNav } from "./components/BreadcrumbNav";
+
 import { PageTransition } from "./components/PageTransition";
 import { Skeleton } from "@/components/ui/skeleton";
 import { performanceMonitor } from "./utils/performanceMonitor";
@@ -23,7 +23,7 @@ import { ScrollToTop } from "./components/ScrollToTop";
 import { useSmoothAnchorScroll } from "./hooks/useSmoothAnchorScroll";
 import { CookieConsent } from "./components/CookieConsent";
 import { SkipToContent } from "./components/SkipToContent";
-import { Breadcrumb } from "./components/Breadcrumb";
+
 import { AnalyticsTracker } from "./components/AnalyticsTracker";
 
 // Lazy load all pages for code splitting
@@ -562,7 +562,6 @@ function App() {
               <RouteTracker />
               <AnalyticsTracker />
               <ErrorBoundary>
-                <Breadcrumb />
                 <Suspense fallback={<PageLoader />}>
                   <AnimatedRoutes />
                 </Suspense>

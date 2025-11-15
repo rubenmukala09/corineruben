@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BreadcrumbNav } from "@/components/BreadcrumbNav";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -121,7 +121,6 @@ export default function IndividualClients() {
         <div>
           <h1 className="text-3xl font-bold">Individual Clients</h1>
           <p className="text-muted-foreground">Family Shield Protection Subscribers</p>
-          <BreadcrumbNav />
         </div>
         <Button onClick={() => navigate("/admin/clients/individuals/new")}>
           <Plus className="mr-2 h-4 w-4" />

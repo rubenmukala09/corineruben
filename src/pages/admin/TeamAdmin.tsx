@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { AdminSidebar } from "@/components/AdminSidebar";
 import { AdminTopBar } from "@/components/AdminTopBar";
-import { BreadcrumbNav } from "@/components/BreadcrumbNav";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -183,7 +183,6 @@ export default function TeamAdmin() {
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h1 className="text-3xl font-bold mb-2">Team Members</h1>
-                <BreadcrumbNav />
               </div>
               <Button size="lg" className="gap-2" onClick={() => setAddModalOpen(true)}>
                 <Plus className="h-5 w-5" />

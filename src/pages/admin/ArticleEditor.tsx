@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { AdminSidebar } from "@/components/AdminSidebar";
 import { AdminTopBar } from "@/components/AdminTopBar";
-import { BreadcrumbNav } from "@/components/BreadcrumbNav";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -377,7 +377,6 @@ export default function ArticleEditor() {
         {/* Top Action Bar */}
         <div className="sticky top-16 z-10 bg-background border-b px-8 py-4">
           <div className="flex items-center justify-between">
-            <BreadcrumbNav />
 
             <div className="flex items-center gap-4">
               {/* Auto-save Indicator */}

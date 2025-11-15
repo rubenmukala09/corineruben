@@ -11,6 +11,7 @@ import { z } from "zod";
 import { FloatingShapes } from "@/components/FloatingShapes";
 import { VerificationCodeModal } from "@/components/auth/VerificationCodeModal";
 import { ForgotPasswordModal } from "@/components/auth/ForgotPasswordModal";
+import invisionLogo from "@/assets/shield-logo.png";
 
 const ALLOWED_EMAILS = [
   'ruben@invisionnetwork.org',
@@ -117,13 +118,12 @@ export default function Login() {
       <div className="w-full max-w-md relative z-10">
         <div className="bg-white rounded-2xl shadow-2xl p-8 border border-purple-100">
           {/* Logo */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-600 to-purple-800 rounded-full mb-4">
-              <Shield className="w-8 h-8 text-white" />
-            </div>
-            <h1 className="text-3xl font-bold text-gray-900">InVision Network</h1>
-            <p className="text-gray-600 mt-2">Admin Portal Login</p>
-            <p className="text-sm text-gray-500 mt-1">Secure Access for Authorized Personnel Only</p>
+          <div className="flex items-center justify-center mb-8">
+            <img 
+              src={invisionLogo} 
+              alt="InVision Network" 
+              className="h-20 w-auto"
+            />
           </div>
 
           {/* Login Form */}

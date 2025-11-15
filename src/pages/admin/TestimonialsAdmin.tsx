@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { AdminSidebar } from "@/components/AdminSidebar";
 import { AdminTopBar } from "@/components/AdminTopBar";
-import { BreadcrumbNav } from "@/components/BreadcrumbNav";
+
 import { AddTestimonialModal } from "@/components/admin/AddTestimonialModal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -314,7 +314,6 @@ export default function TestimonialsAdmin() {
         <div className="p-8">
           {/* Header */}
           <div className="mb-6">
-            <BreadcrumbNav />
             <div className="flex items-center justify-between mt-4">
               <h1 className="text-3xl font-bold text-foreground">Testimonials</h1>
               <Button onClick={() => setAddModalOpen(true)}>

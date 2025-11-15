@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AlertTriangle, Package, TrendingDown, TrendingUp, Plus, Minus, Download, Upload, Search } from "lucide-react";
-import { BreadcrumbNav } from "@/components/BreadcrumbNav";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -120,7 +120,6 @@ const InventoryManagement = () => {
     <div className="min-h-screen bg-background">
       <div className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-6 py-4">
-          <BreadcrumbNav />
           <div className="mt-4 flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold">Inventory Management</h1>

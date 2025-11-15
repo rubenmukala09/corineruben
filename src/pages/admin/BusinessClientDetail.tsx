@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { BreadcrumbNav } from "@/components/BreadcrumbNav";
+
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -55,8 +55,6 @@ export default function BusinessClientDetail() {
 
   return (
     <div className="space-y-6">
-      <BreadcrumbNav />
-
       <div className="sticky top-0 z-10 bg-background border-b pb-6">
         <div className="flex items-start gap-6">
           <Avatar className="h-20 w-20 rounded-lg">

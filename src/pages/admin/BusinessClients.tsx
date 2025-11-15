@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BreadcrumbNav } from "@/components/BreadcrumbNav";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -134,7 +134,6 @@ export default function BusinessClients() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Business Clients</h1>
-          <BreadcrumbNav />
         </div>
         <Button onClick={() => navigate("/admin/clients/businesses/new")}>
           <Plus className="mr-2 h-4 w-4" />
