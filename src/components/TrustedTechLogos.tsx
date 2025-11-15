@@ -125,6 +125,31 @@ const TrustedTechLogos = () => {
                 </div>
               );
             })}
+            {/* Third set for extra smooth seamless loop */}
+            {logos.map((logo, index) => {
+              const IconComponent = logo.icon;
+              return (
+                <div
+                  key={`set3-${index}`}
+                  className="flex-shrink-0 flex flex-col items-center justify-center transition-all duration-300 hover:scale-110"
+                >
+                  {/* Icon floating in air - no background */}
+                  <div className={`mb-2 ${logo.color}`}>
+                    <IconComponent className="w-8 h-8" />
+                  </div>
+                  
+                  {/* Logo name */}
+                  <div className="text-xs font-semibold text-foreground/80 text-center whitespace-nowrap">
+                    {logo.name}
+                  </div>
+                  
+                  {/* Description */}
+                  <div className="text-[10px] text-muted-foreground text-center whitespace-nowrap">
+                    {logo.description}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
         
