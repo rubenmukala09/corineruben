@@ -39,6 +39,9 @@ import {
 } from "lucide-react";
 import trainingSession from "@/assets/training-session.jpg";
 import heroTraining from "@/assets/training-diverse-1.jpg";
+import TestimonialCard from "@/components/TestimonialCard";
+import { VideoLightbox } from "@/components/VideoLightbox";
+import { SEO } from "@/components/SEO";
 
 function ResponseTimeCallout() {
   const { count: standardCount, ref: standardRef } = useCounterAnimation({ 
@@ -205,10 +208,28 @@ function LearnAndTrain() {
     tier?: string;
     price?: number;
   } | null>(null);
+  const [trainingTestimonials, setTrainingTestimonials] = useState<any[]>([]);
+  const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string } | null>(null);
 
   useEffect(() => {
     checkAdminStatus();
+    fetchTrainingTestimonials();
   }, []);
+
+  const fetchTrainingTestimonials = async () => {
+    const { data } = await supabase
+      .from("testimonials")
+      .select(`
+        *,
+        testimonial_media (*)
+      `)
+      .eq("status", "approved")
+      .eq("has_video", true)
+      .order("created_at", { ascending: false })
+      .limit(3);
+    
+    setTrainingTestimonials(data || []);
+  };
 
   const checkAdminStatus = async () => {
     try {
@@ -968,6 +989,41 @@ function LearnAndTrain() {
         </div>
       </section>
 
+      {/* Training Success Stories */}
+      {trainingTestimonials.length > 0 && (
+        <section className="py-20 bg-muted">
+          <div className="container mx-auto px-4">
+            <ScrollReveal>
+              <h2 className="text-center mb-4">Training Success Stories</h2>
+              <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+                Hear from families who have completed our training programs
+              </p>
+            </ScrollReveal>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {trainingTestimonials.map((testimonial) => {
+                const videoMedia = testimonial.testimonial_media?.find((m: any) => m.media_type === "video");
+                return (
+                  <TestimonialCard
+                    key={testimonial.id}
+                    name={testimonial.name}
+                    location={testimonial.location}
+                    quote={testimonial.story}
+                    image={videoMedia?.thumbnail_url || '/placeholder.svg'}
+                    rating={testimonial.rating}
+                    videoUrl={videoMedia?.file_url}
+                    onVideoClick={() => videoMedia && setSelectedVideo({
+                      src: videoMedia.file_url,
+                      title: `${testimonial.name}'s Story`
+                    })}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Final CTA */}
       <CTASection headline="Sleep Better Tonight" variant="gold">
         <p className="text-xl text-white/90 mb-8">Join 500+ families who trust ScamShield</p>
@@ -991,6 +1047,15 @@ function LearnAndTrain() {
       </CTASection>
 
       <Footer />
+      
+      {selectedVideo && (
+        <VideoLightbox
+          isOpen={!!selectedVideo}
+          onClose={() => setSelectedVideo(null)}
+          videoSrc={selectedVideo.src}
+          title={selectedVideo.title}
+        />
+      )}
       
       {selectedService && (
         <BookingModal
