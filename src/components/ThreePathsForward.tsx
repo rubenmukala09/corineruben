@@ -108,15 +108,15 @@ const ThreePathsForward = () => {
                 )}
                 <Card
                   className={`
-                    relative p-6 sm:p-8 md:p-10 lg:p-12 flex flex-col items-center text-center overflow-visible
-                    transition-all duration-600 ease-out rounded-3xl
+                    relative p-6 sm:p-8 md:p-10 lg:p-12 flex flex-col items-center text-center overflow-hidden
+                    transition-all duration-700 ease-out rounded-3xl
                     bg-white
                     ${path.featured 
                       ? 'border-[3px] border-primary shadow-[0_8px_30px_rgba(139,92,246,0.2)]' 
                       : 'border-2 border-border shadow-soft'}
-                    hover:-translate-y-4 hover:scale-[1.02] ${path.featured ? 'hover:shadow-[0_16px_50px_rgba(139,92,246,0.3)]' : 'hover:shadow-medium'}
-                    hover:border-primary hover:rotate-1
-                    hover:after:opacity-100 after:transition-opacity after:duration-500
+                    md:hover:-translate-y-4 md:hover:scale-[1.02] ${path.featured ? 'md:hover:shadow-[0_16px_50px_rgba(139,92,246,0.3)]' : 'md:hover:shadow-medium'}
+                    md:hover:border-primary md:hover:rotate-1
+                    md:hover:after:opacity-100 after:transition-opacity after:duration-500
                   `}
                 >
 
