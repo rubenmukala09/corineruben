@@ -167,7 +167,8 @@ function Contact() {
     try {
       const validatedData = contactSchema.parse(formData);
 
-      const { error } = await supabase.from("website_inquiries").insert({
+      // Save to database
+      const { error: dbError } = await supabase.from("website_inquiries").insert({
         inquiry_type: validatedData.interest,
         name: validatedData.name,
         email: validatedData.email,
@@ -179,7 +180,25 @@ function Contact() {
         },
       });
 
-      if (error) throw error;
+      if (dbError) throw dbError;
+
+      // Send emails via edge function
+      const { error: emailError } = await supabase.functions.invoke('send-contact-email', {
+        body: {
+          name: validatedData.name,
+          email: validatedData.email,
+          phone: validatedData.phone,
+          interest: validatedData.interest,
+          message: validatedData.message,
+          language: formData.language,
+          preferredDate: selectedDate ? format(selectedDate, "PPP") : null
+        }
+      });
+
+      if (emailError) {
+        console.error("Email sending error:", emailError);
+        // Don't throw - form submission succeeded even if email fails
+      }
 
       // Show success state
       setSubmitSuccess(true);
@@ -196,7 +215,7 @@ function Contact() {
       toast.success("Thank you! We'll get back to you within 24 hours.");
     } catch (error: any) {
       // Show error banner
-      setErrorMessage("Something went wrong. Please try again.");
+      setErrorMessage("Something went wrong. Please try again or email us directly at hello@invisionnetwork.org");
       setShakeForm(true);
       
       // Remove shake animation after it completes

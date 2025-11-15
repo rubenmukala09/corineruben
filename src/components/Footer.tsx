@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { Facebook, Linkedin, Youtube, Instagram, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import TrustedTechLogos from "./TrustedTechLogos";
+import { NewsletterSignup } from "./NewsletterSignup";
 import invisionLogo from "@/assets/invision-logo.png";
 
 const Footer = () => {
@@ -163,20 +163,7 @@ const Footer = () => {
         </div>
 
         {/* Newsletter Signup */}
-        <div className="bg-primary-foreground/10 rounded-lg p-4 md:p-6 mb-6 md:mb-8">
-          <h3 className="font-bold text-lg md:text-xl mb-2">Monthly AI Safety Tips</h3>
-          <p className="text-primary-foreground/80 mb-4 text-sm md:text-base">Stay informed about the latest scams and protection strategies.</p>
-          <form className="flex flex-col sm:flex-row gap-3">
-            <Input
-              type="email"
-              placeholder="Your email address"
-              className="bg-primary-foreground/20 border-primary-foreground/30 text-primary-foreground placeholder:text-primary-foreground/50 h-11 md:h-10"
-            />
-            <Button variant="default" className="bg-accent hover:bg-accent/90 h-11 md:h-10 whitespace-nowrap" type="submit">
-              SUBSCRIBE
-            </Button>
-          </form>
-        </div>
+        <NewsletterSignup />
 
         {/* Social Media */}
         <div className="flex justify-center gap-4 md:gap-6 mb-6 md:mb-8">
