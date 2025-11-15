@@ -44,32 +44,26 @@ export function NewsletterSignup() {
   };
 
   return (
-    <div className="bg-primary-foreground/10 rounded-lg p-2 md:p-3 mb-3 md:mb-4">
-      <h3 className="font-semibold text-sm md:text-base mb-1">Monthly AI Safety Tips</h3>
-      <p className="text-primary-foreground/80 mb-2 text-[11px] md:text-xs leading-tight">
-        Stay informed about the latest scams and protection strategies.
-      </p>
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
+    <div className="fixed bottom-4 right-4 bg-primary-foreground/95 backdrop-blur-sm rounded-lg p-3 shadow-lg border border-primary-foreground/20 w-[280px] z-40">
+      <h3 className="font-semibold text-xs text-primary mb-1">Newsletter</h3>
+      <form onSubmit={handleSubmit} className="flex gap-1.5">
         <Input
           type="email"
-          placeholder="Your email address"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           disabled={isSubmitting}
           required
-          className="bg-primary-foreground/20 border-primary-foreground/30 text-primary-foreground placeholder:text-primary-foreground/50 h-8 md:h-8 text-xs"
+          className="bg-background/50 border-border/50 text-foreground placeholder:text-muted-foreground h-7 text-xs flex-1"
         />
         <Button 
           variant="default" 
-          className="bg-accent hover:bg-accent/90 h-8 md:h-8 whitespace-nowrap text-xs font-semibold px-4" 
+          className="bg-accent hover:bg-accent/90 h-7 whitespace-nowrap text-[10px] font-semibold px-3" 
           type="submit"
           disabled={isSubmitting}
         >
           {isSubmitting ? (
-            <>
-              <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
-              Subscribing...
-            </>
+            <Loader2 className="h-3 w-3 animate-spin" />
           ) : (
             "SUBSCRIBE"
           )}

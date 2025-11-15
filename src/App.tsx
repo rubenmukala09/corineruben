@@ -569,7 +569,6 @@ function App() {
               </ErrorBoundary>
               <AIChat />
               <CookieConsent />
-              <PerformanceDashboard />
               <DraggablePerformanceMonitor />
             </BrowserRouter>
           </AIChatProvider>
