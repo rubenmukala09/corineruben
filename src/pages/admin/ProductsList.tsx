@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, Grid3x3, List, Search, Download, Package, AlertTriangle, CheckCircle } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { Plus, Grid3x3, List, Search, Download, Package, AlertTriangle, CheckCircle, Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,54 +24,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
-
-// Mock data - replace with actual API calls
-const mockProducts = [
-  {
-    id: "1",
-    name: "USB Data Blocker 2-Pack",
-    category: "physical",
-    price: 12.99,
-    stock: 45,
-    status: "active",
-    sales: 127,
-    image: "/placeholder.svg",
-    dateAdded: "2025-01-15",
-  },
-  {
-    id: "2",
-    name: "Scam-Proof Playbook",
-    category: "digital",
-    price: 29.0,
-    stock: null,
-    status: "active",
-    sales: 89,
-    image: "/placeholder.svg",
-    dateAdded: "2025-01-10",
-  },
-  {
-    id: "3",
-    name: "Webcam Privacy Covers 3-pack",
-    category: "physical",
-    price: 8.99,
-    stock: 8,
-    status: "active",
-    sales: 203,
-    image: "/placeholder.svg",
-    dateAdded: "2025-01-08",
-  },
-  {
-    id: "4",
-    name: "Caregivers' Security Guide",
-    category: "digital",
-    price: 24.0,
-    stock: null,
-    status: "active",
-    sales: 56,
-    image: "/placeholder.svg",
-    dateAdded: "2025-01-05",
-  },
-];
+import { Skeleton } from "@/components/ui/skeleton";
+import { supabase } from "@/integrations/supabase/client";
 
 const ProductsList = () => {
   const navigate = useNavigate();
@@ -81,6 +36,20 @@ const ProductsList = () => {
   const [stockFilter, setStockFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
 
+  // Fetch products from database
+  const { data: products, isLoading, error } = useQuery({
+    queryKey: ['admin-products'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      return data || [];
+    },
+  });
+
   const getStockStatus = (stock: number | null) => {
     if (stock === null) return { label: "Digital", color: "bg-blue-500" };
     if (stock === 0) return { label: "Out of Stock", color: "bg-destructive" };
@@ -88,23 +57,25 @@ const ProductsList = () => {
     return { label: "In Stock", color: "bg-success" };
   };
 
-  const filteredProducts = mockProducts.filter((product) => {
+  const filteredProducts = (products || []).filter((product) => {
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = categoryFilter === "all" || product.category === categoryFilter;
+    const matchesCategory = categoryFilter === "all" || 
+      (categoryFilter === "digital" && product.is_digital) ||
+      (categoryFilter === "physical" && !product.is_digital);
     const matchesStatus = statusFilter === "all" || product.status === statusFilter;
     
     let matchesStock = true;
-    if (stockFilter === "in-stock") matchesStock = product.stock !== null && product.stock > 10;
-    if (stockFilter === "low") matchesStock = product.stock !== null && product.stock > 0 && product.stock <= 10;
-    if (stockFilter === "out") matchesStock = product.stock === 0;
+    if (stockFilter === "in-stock") matchesStock = product.stock_quantity !== null && product.stock_quantity > 10;
+    if (stockFilter === "low") matchesStock = product.stock_quantity !== null && product.stock_quantity > 0 && product.stock_quantity <= 10;
+    if (stockFilter === "out") matchesStock = product.stock_quantity === 0;
     
     return matchesSearch && matchesCategory && matchesStatus && matchesStock;
   });
 
-  const totalProducts = mockProducts.length;
-  const activeProducts = mockProducts.filter((p) => p.status === "active").length;
-  const lowStockProducts = mockProducts.filter((p) => p.stock !== null && p.stock <= 10 && p.stock > 0).length;
-  const totalValue = mockProducts.reduce((sum, p) => sum + (p.stock || 0) * p.price, 0);
+  const totalProducts = products?.length || 0;
+  const activeProducts = products?.filter((p) => p.status === "active").length || 0;
+  const lowStockProducts = products?.filter((p) => p.stock_quantity !== null && p.stock_quantity <= 10 && p.stock_quantity > 0).length || 0;
+  const totalValue = products?.reduce((sum, p) => sum + (p.stock_quantity || 0) * p.base_price, 0) || 0;
 
   return (
     <div className="min-h-screen bg-background">
