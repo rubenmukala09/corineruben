@@ -83,6 +83,7 @@ const menuItems: MenuItem[] = [
     icon: Mail,
     permission: "view_messages",
     children: [
+      { title: "Email Campaigns", href: "/admin/email-campaigns" },
       { title: "Inbox", href: "/admin/communications/inbox" },
       { title: "Newsletter", href: "/admin/communications/newsletter" },
     ],
