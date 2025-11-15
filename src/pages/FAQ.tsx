@@ -332,14 +332,14 @@ const categories = [
 
 export default function FAQ() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState("All Questions");
+  const [activeCategory, setActiveCategory] = useState("all");
   const [helpfulVotes, setHelpfulVotes] = useState<Record<string, boolean>>({});
 
   const filteredFAQs = useMemo(() => {
     let filtered = faqs;
 
     // Filter by category
-    if (activeCategory !== "All Questions") {
+    if (activeCategory !== "all") {
       filtered = filtered.filter((faq) => faq.category === activeCategory);
     }
 
@@ -435,18 +435,6 @@ export default function FAQ() {
                 Filter by Category
               </h3>
               <div className="flex flex-wrap gap-3 justify-center">
-                <Button
-                  variant={activeCategory === "All Questions" ? "default" : "outline"}
-                  size="lg"
-                  onClick={() => setActiveCategory("All Questions")}
-                  className="rounded-full shadow-sm hover:shadow-md transition-shadow"
-                >
-                  <Shield className="w-4 h-4 mr-2" />
-                  All Questions
-                  <Badge variant="secondary" className="ml-2 bg-background/50">
-                    {faqs.length}
-                  </Badge>
-                </Button>
                 {categories.map((category) => {
                   const count = faqs.filter(faq => faq.category === category).length;
                   return (
