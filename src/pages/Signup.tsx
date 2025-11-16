@@ -881,6 +881,17 @@ function Signup() {
           <div className="mb-4">
             <h2 className="text-2xl font-bold mb-2">Join Our Network</h2>
             <p className="text-muted-foreground">All applications are reviewed and approved by our admin team</p>
+            
+            {/* Staff Signup Banner */}
+            <div className="mt-4 p-3 rounded-lg bg-primary/10 border border-primary/20">
+              <p className="text-sm text-center">
+                <Shield className="inline h-4 w-4 mr-1" />
+                <strong>InVision Network Staff?</strong>{" "}
+                <Link to="/staff-signup" className="text-primary hover:underline font-semibold">
+                  Sign up here for immediate access
+                </Link>
+              </p>
+            </div>
           </div>
           <Progress value={progress} className="h-2 mb-4" />
           <p className="text-sm text-muted-foreground">Step {step} of {totalSteps}</p>
