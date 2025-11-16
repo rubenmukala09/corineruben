@@ -25,13 +25,12 @@ interface HeroProps {
   className?: string;
   overlay?: boolean;
   showScrollIndicator?: boolean;
-  showPrivacyDisclaimer?: boolean;
   showProtectionBadge?: boolean;
   badgeText?: string;
   showTrustIndicators?: boolean;
 }
 
-const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, children, className, overlay = false, showScrollIndicator = false, showPrivacyDisclaimer = false, showProtectionBadge = false, badgeText, showTrustIndicators = false }: HeroProps) => {
+const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, children, className, overlay = false, showScrollIndicator = false, showProtectionBadge = false, badgeText, showTrustIndicators = false }: HeroProps) => {
   const { ref, y, opacity } = useParallax({ speed: 0.5 });
   
   // Preload background image(s)
@@ -126,22 +125,6 @@ const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, childr
           )}
         </div>
       </div>
-      {/* Privacy Disclaimer */}
-      {showPrivacyDisclaimer && (
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-20 w-full max-w-2xl px-4"
-        >
-          <div className="bg-black/40 backdrop-blur-md border border-white/20 rounded-xl p-3 sm:p-4 text-center">
-            <p className="text-white/90 text-xs sm:text-sm leading-relaxed">
-              <Shield className="inline w-3 h-3 sm:w-4 sm:h-4 mr-2 text-accent" />
-              Your privacy matters. We never sell your information.
-            </p>
-          </div>
-        </motion.div>
-      )}
       
       {/* Scroll Indicator */}
       {showScrollIndicator && <ScrollIndicator />}

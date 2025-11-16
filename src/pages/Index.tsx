@@ -129,7 +129,6 @@ function Index() {
         headline="Every Family Deserves Protection and Peace of Mind"
         subheadline="Serving Ohio's diverse communities with compassionate scam prevention training, 24/7 support, and personalized protection services for every family"
         showScrollIndicator={true}
-        showPrivacyDisclaimer={true}
         overlay={true}
       >
         <div className="flex flex-col sm:flex-row gap-3 md:gap-4 flex-wrap justify-center sm:justify-start">
