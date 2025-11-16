@@ -18,6 +18,9 @@ import { InspirationalVerses } from "@/components/InspirationalVerses";
 import { OhioServiceMap } from "@/components/OhioServiceMap";
 import { trackButtonClick } from "@/utils/analyticsTracker";
 import heroAboutNew from "@/assets/hero-about-new.jpg";
+import heroAboutProfessional from "@/assets/hero-about-professional.jpg";
+import heroAbout3d from "@/assets/hero-about-3d.jpg";
+import heroAbout from "@/assets/hero-about.jpg";
 import founderRuben from "@/assets/founder-ruben.jpg";
 import founderCorine from "@/assets/founder-corine.jpg";
 import teamDiverse1 from "@/assets/team-diverse-1.jpg";
@@ -88,6 +91,13 @@ function About() {
     }
   ];
 
+  const aboutHeroImages = [
+    { src: heroAboutNew, alt: "InVision Network team members collaborating" },
+    { src: heroAboutProfessional, alt: "Professional business meeting showcasing teamwork" },
+    { src: heroAbout3d, alt: "Modern 3D representation of our mission" },
+    { src: heroAbout, alt: "Diverse community members we serve" }
+  ];
+
   const values = [
     {
       icon: Shield,
@@ -120,7 +130,7 @@ function About() {
       <Navigation />
       
       <Hero
-        backgroundImage={heroAboutNew}
+        backgroundImages={aboutHeroImages}
         headline="Protecting Families, One Story at a Time"
         subheadline="Founded from personal experience, driven by community impact"
       />

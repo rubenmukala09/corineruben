@@ -21,7 +21,10 @@ import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield } fro
 import { Badge } from "@/components/ui/badge";
 import businessCollaboration from "@/assets/business-collaboration.jpg";
 import teamCollaboration from "@/assets/team-collaboration.jpg";
-import heroBusiness from "@/assets/business-diverse-1.jpg";
+import businessDiverse1 from "@/assets/business-diverse-1.jpg";
+import heroBusinessNew from "@/assets/hero-business-new.jpg";
+import heroBusinessProfessional from "@/assets/hero-business-professional.jpg";
+import heroBusiness3d from "@/assets/hero-business-3d.jpg";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
 
@@ -129,12 +132,20 @@ function Business() {
     setSubscriptionDialogOpen(true);
   };
 
+  const businessHeroImages = [
+    { src: businessDiverse1, alt: "Diverse business team collaborating on AI solutions" },
+    { src: heroBusinessNew, alt: "Modern office workspace with technology" },
+    { src: heroBusinessProfessional, alt: "Professional business consultation meeting" },
+    { src: businessCollaboration, alt: "Team working together on digital transformation" },
+    { src: heroBusiness3d, alt: "3D visualization of business technology solutions" }
+  ];
+
   return (
     <div className="min-h-screen">
       <Navigation />
 
       <Hero
-        backgroundImage={heroBusiness}
+        backgroundImages={businessHeroImages}
         headline="Grow Your Business with Secure AI Solutions"
         subheadline="Custom AI automation, professional websites, and industry-leading AI Service Insurance"
         showScrollIndicator={true}

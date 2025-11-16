@@ -15,7 +15,10 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Phone, Mail, MessageCircle, MapPin, Clock, CheckCircle, Shield, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import heroContact from "@/assets/hero-contact-new.jpg";
+import heroContactNew from "@/assets/hero-contact-new.jpg";
+import heroContact3d from "@/assets/hero-contact-3d.jpg";
+import customerSupportDiverse from "@/assets/customer-support-diverse.jpg";
+import heroContactSplit from "@/assets/hero-contact-split.jpg";
 
 const contactMethods = [
   {
@@ -124,6 +127,13 @@ function Contact() {
   const messageLength = formData.message.length;
   const maxLength = 500;
 
+  const contactHeroImages = [
+    { src: heroContactNew, alt: "Reach out to our support team" },
+    { src: heroContact3d, alt: "Modern communication channels" },
+    { src: customerSupportDiverse, alt: "Our diverse customer support team ready to help" },
+    { src: heroContactSplit, alt: "Multiple ways to connect with us" }
+  ];
+
   return (
     <>
       <SEO 
@@ -132,7 +142,7 @@ function Contact() {
       />
       <Navigation />
       <Hero 
-        backgroundImage={heroContact} 
+        backgroundImages={contactHeroImages} 
         headline="Contact Us" 
         subheadline="We're here to help protect your family"
         showProtectionBadge

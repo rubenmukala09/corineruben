@@ -34,7 +34,11 @@ import {
   Target,
   BarChart,
 } from "lucide-react";
-import heroServices from "@/assets/hero-business-professional.jpg";
+import heroBusinessProfessional from "@/assets/hero-business-professional.jpg";
+import officeWorkspace from "@/assets/office-workspace.jpg";
+import businessCollaboration from "@/assets/business-collaboration.jpg";
+import teamMember1 from "@/assets/team-member-1.jpg";
+import heroBusinessNew from "@/assets/hero-business-new.jpg";
 
 const Services = () => {
   const [isMonthly, setIsMonthly] = useState(true);
@@ -212,6 +216,14 @@ const Services = () => {
     },
   ];
 
+  const servicesHeroImages = [
+    { src: heroBusinessProfessional, alt: "Professional services for your business" },
+    { src: officeWorkspace, alt: "Modern workspace solutions" },
+    { src: businessCollaboration, alt: "Collaborative service delivery" },
+    { src: teamMember1, alt: "Expert team member ready to assist" },
+    { src: heroBusinessNew, alt: "Innovative service offerings" }
+  ];
+
   return (
     <>
       <SEO
@@ -224,7 +236,7 @@ const Services = () => {
         <Navigation />
         
         <Hero
-          backgroundImage={heroServices}
+          backgroundImages={servicesHeroImages}
           headline="Comprehensive Protection for Everyone"
           subheadline="From individuals to enterprises, we provide tailored cybersecurity solutions that protect what matters most to you."
           showScrollIndicator
