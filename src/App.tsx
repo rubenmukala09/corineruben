@@ -140,6 +140,14 @@ const Signup = lazy(() => {
   });
 });
 
+const StaffSignup = lazy(() => {
+  performanceMonitor.startTracking('StaffSignup');
+  return import("./pages/StaffSignup").then(module => {
+    performanceMonitor.endTracking('StaffSignup');
+    return module;
+  });
+});
+
 const Setup = lazy(() => {
   performanceMonitor.startTracking('Setup');
   return import("./pages/Setup").then(module => {
@@ -537,6 +545,7 @@ function AnimatedRoutes() {
         <Route path="/auth" element={<PageTransition><Auth /></PageTransition>} />
         <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
         <Route path="/signup" element={<PageTransition><Signup /></PageTransition>} />
+        <Route path="/staff-signup" element={<PageTransition><StaffSignup /></PageTransition>} />
         <Route path="/setup" element={<PageTransition><Setup /></PageTransition>} />
         <Route path="/application-pending" element={<PageTransition><ApplicationPending /></PageTransition>} />
         <Route path="/admin" element={<PageTransition><AdminRoute><Admin /></AdminRoute></PageTransition>} />

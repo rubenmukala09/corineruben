@@ -19,6 +19,16 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
     const { email } = await req.json();
 
+    // Validate email domain
+    if (!email.toLowerCase().endsWith('@invisionnetwork.org')) {
+      return new Response(
+        JSON.stringify({ 
+          error: "Password reset is only available for InVision Network email addresses" 
+        }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const tokenArray = new Uint8Array(32);
     crypto.getRandomValues(tokenArray);
     const token = Array.from(tokenArray, byte => byte.toString(16).padStart(2, '0')).join('');

@@ -13,13 +13,8 @@ import { VerificationCodeModal } from "@/components/auth/VerificationCodeModal";
 import { ForgotPasswordModal } from "@/components/auth/ForgotPasswordModal";
 import invisionLogo from "@/assets/shield-logo.png";
 
-const ALLOWED_EMAILS = [
-  'ruben@invisionnetwork.org',
-  'hello@invisionnetwork.org',
-  'training@invisionnetwork.org',
-  'consulting@invisionnetwork.org',
-  'support@invisionnetwork.org'
-];
+// Email domain validation for InVision Network staff
+const INVISION_DOMAIN = "@invisionnetwork.org";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -61,10 +56,10 @@ export default function Login() {
 
       const normalizedEmail = email.toLowerCase().trim();
 
-      // Check whitelist
-      if (!ALLOWED_EMAILS.includes(normalizedEmail)) {
+      // Check if email is from InVision Network domain
+      if (!normalizedEmail.endsWith(INVISION_DOMAIN)) {
         toast.error("Access Denied", {
-          description: "This email address is not authorized to access the admin portal.",
+          description: "Only InVision Network email addresses can access this portal.",
         });
         setIsLoading(false);
         return;
@@ -298,6 +293,19 @@ export default function Login() {
                 >
                   Forgot password? → Reset via email
                 </button>
+              </div>
+
+              {/* Staff Signup Link */}
+              <div className="text-center pt-2 mt-2 border-t border-border/50">
+                <p className="text-sm text-muted-foreground">
+                  New staff member?{" "}
+                  <Link 
+                    to="/staff-signup" 
+                    className="text-primary hover:text-accent font-semibold transition-colors"
+                  >
+                    Create your account
+                  </Link>
+                </p>
               </div>
             </form>
 
