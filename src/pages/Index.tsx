@@ -34,11 +34,11 @@ import {
   Bot,
   ArrowRight,
 } from "lucide-react";
-import heroDiverse1 from "@/assets/hero-diverse-1.jpg";
-import heroDiverse2 from "@/assets/hero-diverse-2.jpg";
-import heroDiverse3 from "@/assets/hero-diverse-3.jpg";
-import heroDiverse4 from "@/assets/hero-diverse-4.jpg";
-import heroDiverse5 from "@/assets/hero-diverse-5.jpg";
+import heroHome1 from "@/assets/hero-home-1.jpg";
+import heroHome2 from "@/assets/hero-home-2.jpg";
+import heroHome3 from "@/assets/hero-home-3.jpg";
+import heroHome4 from "@/assets/hero-home-4.jpg";
+import heroHome5 from "@/assets/hero-home-5.jpg";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 
 function Index() {
@@ -48,11 +48,11 @@ function Index() {
   const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string } | null>(null);
   
   const heroImages = [
-    { src: heroDiverse1, alt: "Multi-generational African American family smiling together with technology" },
-    { src: heroDiverse2, alt: "Asian family spanning three generations using laptop together" },
-    { src: heroDiverse3, alt: "Hispanic/Latino family members embracing and smiling" },
-    { src: heroDiverse4, alt: "Diverse multi-ethnic community group representing unity and trust" },
-    { src: heroDiverse5, alt: "Middle Eastern/South Asian multi-generational family showing care" }
+    { src: heroHome1, alt: "Multi-generational African American family smiling together with laptop in warm living room" },
+    { src: heroHome2, alt: "Asian grandmother teaching granddaughter with tablet in cozy kitchen setting" },
+    { src: heroHome3, alt: "Hispanic/Latino family embracing on porch during golden hour sunset" },
+    { src: heroHome4, alt: "Diverse multi-ethnic neighbors gathered in community center with warm atmosphere" },
+    { src: heroHome5, alt: "Middle Eastern/South Asian family learning together with technology in home office" }
   ];
 
   // Counter animations for statistics

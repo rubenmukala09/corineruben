@@ -34,11 +34,11 @@ import {
   Target,
   BarChart,
 } from "lucide-react";
-import heroBusinessProfessional from "@/assets/hero-business-professional.jpg";
-import officeWorkspace from "@/assets/office-workspace.jpg";
-import businessCollaboration from "@/assets/business-collaboration.jpg";
-import teamMember1 from "@/assets/team-member-1.jpg";
-import heroBusinessNew from "@/assets/hero-business-new.jpg";
+import heroServices1 from "@/assets/hero-services-1.jpg";
+import heroServices2 from "@/assets/hero-services-2.jpg";
+import heroServices3 from "@/assets/hero-services-3.jpg";
+import heroServices4 from "@/assets/hero-services-4.jpg";
+import heroServices5 from "@/assets/hero-services-5.jpg";
 
 const Services = () => {
   const [isMonthly, setIsMonthly] = useState(true);
