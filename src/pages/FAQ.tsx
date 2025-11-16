@@ -20,6 +20,9 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import heroFaqModern from "@/assets/hero-faq-modern.jpg";
+import customerSupport from "@/assets/customer-support.jpg";
+import communityDiverse1 from "@/assets/community-diverse-1.jpg";
+import supportDiverse1 from "@/assets/support-diverse-1.jpg";
 
 interface FAQ {
   id: string;
@@ -354,6 +357,13 @@ export default function FAQ() {
     );
   };
 
+  const faqHeroImages = [
+    { src: heroFaqModern, alt: "Common questions and helpful answers" },
+    { src: customerSupport, alt: "Our team ready to answer your questions" },
+    { src: communityDiverse1, alt: "Community members finding answers" },
+    { src: supportDiverse1, alt: "Comprehensive support resources" }
+  ];
+
   return (
     <div className="min-h-screen">
       <SEO
@@ -368,7 +378,7 @@ export default function FAQ() {
       <main id="main-content">
         {/* Hero Section */}
         <Hero
-          backgroundImage={heroFaqModern}
+          backgroundImages={faqHeroImages}
           headline="Frequently Asked Questions"
           subheadline="Get instant answers to your questions about our AI scam protection services, training programs, and security solutions"
           overlay={true}

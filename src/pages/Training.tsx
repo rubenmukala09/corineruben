@@ -38,7 +38,10 @@ import {
   Video,
 } from "lucide-react";
 import trainingSession from "@/assets/training-session.jpg";
-import heroTraining from "@/assets/training-diverse-1.jpg";
+import trainingDiverse1 from "@/assets/training-diverse-1.jpg";
+import heroTrainingNew from "@/assets/hero-training-new.jpg";
+import trainingDiverse2 from "@/assets/training-diverse-2.jpg";
+import heroTraining3d from "@/assets/hero-training-3d.jpg";
 import TestimonialCard from "@/components/TestimonialCard";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
@@ -278,13 +281,21 @@ function LearnAndTrain() {
     setSubscriptionDialogOpen(true);
   };
 
+  const trainingHeroImages = [
+    { src: trainingDiverse1, alt: "Diverse participants in cybersecurity training" },
+    { src: heroTrainingNew, alt: "Modern training facilities and programs" },
+    { src: trainingDiverse2, alt: "Interactive learning environment" },
+    { src: trainingSession, alt: "Active training session in progress" },
+    { src: heroTraining3d, alt: "Virtual reality training experiences" }
+  ];
+
   return (
     <div className="min-h-screen">
       <Navigation />
 
       {/* Hero Section */}
       <Hero
-        backgroundImage={heroTraining}
+        backgroundImages={trainingHeroImages}
         headline="Learn How to Recognize and Stop Scams"
         subheadline="Professional training programs and 24/7 protection services designed for real-world safety"
         showScrollIndicator={true}

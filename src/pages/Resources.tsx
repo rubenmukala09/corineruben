@@ -13,6 +13,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Download, Shield, ShoppingCart, Star, TrendingUp, Loader2 } from "lucide-react";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import heroResourcesMarketplace from "@/assets/hero-resources-marketplace.jpg";
+import heroResourcesNew from "@/assets/hero-resources-new.jpg";
+import heroResources from "@/assets/hero-resources.jpg";
 import { SEO } from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -58,6 +60,12 @@ function Resources() {
     });
   };
 
+  const resourcesHeroImages = [
+    { src: heroResourcesMarketplace, alt: "Safety resources and training marketplace" },
+    { src: heroResourcesNew, alt: "Educational materials and guides" },
+    { src: heroResources, alt: "Community accessing helpful resources" }
+  ];
+
   return (
     <>
       <SEO 
@@ -67,7 +75,7 @@ function Resources() {
       <Navigation />
       
       <Hero
-        backgroundImage={heroResourcesMarketplace}
+        backgroundImages={resourcesHeroImages}
         headline="Your Digital Safety Arsenal"
         subheadline="Premium guides, tools, and products to protect what matters most"
       />
