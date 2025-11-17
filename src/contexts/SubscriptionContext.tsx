@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 interface Subscription {
   id: string;
@@ -36,6 +37,18 @@ export const SubscriptionProvider = ({ children }: { children: ReactNode }) => {
       
       if (error) {
         console.error('Error checking subscriptions:', error);
+        
+        // If authentication error (user deleted), sign out
+        const errorMessage = error.message || String(error);
+        if (errorMessage.includes('Authentication error') || 
+            errorMessage.includes('does not exist') ||
+            errorMessage.includes('not authenticated')) {
+          console.log('User no longer exists, signing out...');
+          toast.error('Your session is no longer valid. Please sign in again.');
+          await supabase.auth.signOut();
+          window.location.href = '/login';
+        }
+        
         setSubscriptions([]);
       } else if (data?.subscriptions) {
         setSubscriptions(data.subscriptions);

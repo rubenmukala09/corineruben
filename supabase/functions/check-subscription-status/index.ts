@@ -81,9 +81,15 @@ serve(async (req) => {
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     logStep("ERROR", { message: errorMessage });
+    
+    // Return 401 for authentication errors (including deleted users)
+    const isAuthError = errorMessage.includes("Authentication error") || 
+                       errorMessage.includes("not authenticated") ||
+                       errorMessage.includes("does not exist");
+    
     return new Response(JSON.stringify({ error: errorMessage, subscriptions: [] }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 500,
+      status: isAuthError ? 401 : 500,
     });
   }
 });
