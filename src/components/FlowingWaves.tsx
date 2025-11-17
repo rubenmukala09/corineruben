@@ -28,8 +28,8 @@ const FlowingWaves = ({ variant = 'full', opacity = 0.15 }: FlowingWavesProps) =
           />
           <defs>
             <linearGradient id="gradient-purple" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style={{ stopColor: 'hsl(260, 70%, 50%)', stopOpacity: 0.3 }} />
-              <stop offset="100%" style={{ stopColor: 'hsl(260, 60%, 60%)', stopOpacity: 0.1 }} />
+              <stop offset="0%" className="text-purple-500" style={{ stopColor: 'currentColor', stopOpacity: 0.3 }} />
+              <stop offset="100%" className="text-purple-500" style={{ stopColor: 'currentColor', stopOpacity: 0.1 }} />
             </linearGradient>
           </defs>
         </svg>
@@ -47,8 +47,8 @@ const FlowingWaves = ({ variant = 'full', opacity = 0.15 }: FlowingWavesProps) =
           />
           <defs>
             <linearGradient id="gradient-teal" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style={{ stopColor: 'hsl(180, 70%, 50%)', stopOpacity: 0.3 }} />
-              <stop offset="100%" style={{ stopColor: 'hsl(190, 60%, 60%)', stopOpacity: 0.1 }} />
+              <stop offset="0%" className="text-teal-500" style={{ stopColor: 'currentColor', stopOpacity: 0.3 }} />
+              <stop offset="100%" className="text-teal-400" style={{ stopColor: 'currentColor', stopOpacity: 0.1 }} />
             </linearGradient>
           </defs>
         </svg>
@@ -66,8 +66,8 @@ const FlowingWaves = ({ variant = 'full', opacity = 0.15 }: FlowingWavesProps) =
           />
           <defs>
             <linearGradient id="gradient-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style={{ stopColor: 'hsl(195, 75%, 55%)', stopOpacity: 0.25 }} />
-              <stop offset="100%" style={{ stopColor: 'hsl(185, 65%, 65%)', stopOpacity: 0.1 }} />
+              <stop offset="0%" className="text-cyan-500" style={{ stopColor: 'currentColor', stopOpacity: 0.25 }} />
+              <stop offset="100%" className="text-cyan-400" style={{ stopColor: 'currentColor', stopOpacity: 0.1 }} />
             </linearGradient>
           </defs>
         </svg>

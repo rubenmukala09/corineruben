@@ -7,8 +7,8 @@ const WaveDivider = ({ variant = 'bottom', color = 'primary' }: WaveDividerProps
   const gradientId = `wave-gradient-${variant}-${color}`;
   
   const gradientColors = color === 'primary' 
-    ? { start: 'hsl(260, 70%, 25%)', mid: 'hsl(260, 65%, 35%)', end: 'hsl(260, 60%, 45%)' }
-    : { start: '#f9fafb', mid: '#ffffff', end: '#f9fafb' };
+    ? { start: 'hsl(var(--purple-900))', mid: 'hsl(var(--purple-700))', end: 'hsl(var(--purple-500))' }
+    : { start: 'hsl(var(--secondary))', mid: 'hsl(var(--card))', end: 'hsl(var(--secondary))' };
   
   return (
     <div className={`wave-divider ${variant === 'top' ? 'rotate-180' : ''} w-full overflow-hidden leading-none relative ${variant === 'top' ? 'mb-[-1px]' : 'mt-[-1px]'}`}>

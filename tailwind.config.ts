@@ -65,6 +65,23 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        purple: {
+          900: "hsl(var(--purple-900))",
+          700: "hsl(var(--purple-700))",
+          500: "hsl(var(--purple-500))",
+        },
+        teal: {
+          600: "hsl(var(--teal-600))",
+          500: "hsl(var(--teal-500))",
+          400: "hsl(var(--teal-400))",
+          300: "hsl(var(--teal-300))",
+          100: "hsl(var(--teal-100))",
+        },
+        cyan: {
+          600: "hsl(var(--cyan-600))",
+          500: "hsl(var(--cyan-500))",
+          400: "hsl(var(--cyan-400))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

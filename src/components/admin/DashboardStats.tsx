@@ -198,8 +198,8 @@ export function DashboardStats() {
         value={data.pendingActions}
         subtitle="View all →"
         subtitleColor="warning"
-        gradientFrom="hsl(45, 100%, 95%)"
-        gradientTo="hsl(45, 100%, 90%)"
+        gradientFrom="hsl(var(--teal-100))"
+        gradientTo="hsl(var(--teal-300))"
         index={3}
         isPulsing={data.pendingActions > 0}
         link="/admin/pending"

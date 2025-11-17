@@ -12,7 +12,7 @@ const Footer = () => {
       <TrustedTechLogos />
 
       {/* Main Footer */}
-      <div className="bg-gradient-to-br from-[hsl(260,75%,20%)] via-[hsl(280,70%,25%)] to-[hsl(260,60%,30%)] text-primary-foreground relative overflow-hidden">
+      <div className="bg-gradient-to-br from-purple-900 via-purple-700 to-purple-500 text-primary-foreground relative overflow-hidden">
         {/* Modern Geometric Background Pattern */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
           {/* Diagonal Lines Pattern */}

@@ -74,10 +74,10 @@ const ThreePathsForward = () => {
   };
 
   return (
-    <section className="py-12 md:py-16 lg:py-20 relative overflow-hidden bg-gradient-to-br from-[hsl(250,20%,96%)] via-white to-[hsl(180,50%,98%)]">
+    <section className="py-12 md:py-16 lg:py-20 relative overflow-hidden bg-gradient-to-br from-secondary via-card to-teal-100">
       {/* Background blobs */}
       <div className="absolute top-[-100px] left-[-100px] w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full bg-gradient-to-br from-primary to-accent opacity-10 blur-[80px] animate-blob-morph" />
-      <div className="absolute bottom-[-80px] right-[-80px] w-[250px] h-[250px] md:w-[350px] md:h-[350px] rounded-full bg-gradient-to-br from-accent to-[hsl(180,75%,50%)] opacity-10 blur-[80px] animate-float-slow" style={{ animationDelay: '5s', animationDirection: 'reverse' }} />
+      <div className="absolute bottom-[-80px] right-[-80px] w-[250px] h-[250px] md:w-[350px] md:h-[350px] rounded-full bg-gradient-to-br from-accent to-teal-500 opacity-10 blur-[80px] animate-float-slow" style={{ animationDelay: '5s', animationDirection: 'reverse' }} />
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}

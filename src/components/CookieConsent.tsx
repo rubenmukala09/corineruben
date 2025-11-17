@@ -129,7 +129,7 @@ export function CookieConsent() {
                 personalized content. You can customize your preferences or accept all cookies.
               </p>
               <div className="flex flex-col sm:flex-row gap-2">
-                <Button onClick={acceptAll} size="sm">
+                <Button onClick={acceptAll} size="sm" variant="default">
                   Accept All
                 </Button>
                 <Button onClick={acceptEssential} variant="outline" size="sm">
@@ -137,7 +137,7 @@ export function CookieConsent() {
                 </Button>
                 <Button
                   onClick={() => setShowSettings(true)}
-                  variant="ghost"
+                  variant="secondary"
                   size="sm"
                   className="gap-2"
                 >
