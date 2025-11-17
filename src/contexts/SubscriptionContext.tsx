@@ -33,6 +33,18 @@ export const SubscriptionProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
 
+      // Extra safety: ensure the current token maps to a valid user before invoking function
+      const { data: userData, error: userError } = await supabase.auth.getUser();
+      if (userError || !userData?.user) {
+        console.warn('Invalid session token detected, signing out before calling edge function.');
+        toast.error('Your session expired. Please sign in again.');
+        await supabase.auth.signOut();
+        window.location.href = '/login';
+        setSubscriptions([]);
+        setLoading(false);
+        return;
+      }
+
       const { data, error } = await supabase.functions.invoke('check-subscription-status');
       
       if (error) {
