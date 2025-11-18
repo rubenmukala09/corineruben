@@ -40,7 +40,7 @@ const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, childr
   return (
       <div 
       ref={ref}
-      className={cn("relative min-h-[400px] sm:min-h-[500px] md:min-h-[700px] lg:min-h-[800px] flex items-center overflow-hidden hero-mobile", className)}
+      className={cn("relative min-h-[600px] sm:min-h-[700px] md:min-h-[850px] lg:min-h-[950px] xl:min-h-[1000px] flex items-center overflow-hidden hero-mobile", className)}
     >
       {/* Background with Parallax */}
       <motion.div 
