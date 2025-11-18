@@ -30,10 +30,12 @@ import {
   CheckCircle,
   AlertTriangle,
   TrendingUp,
+  TrendingDown,
   UserX,
   Bot,
   ArrowRight,
   Clock,
+  Target,
 } from "lucide-react";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { RotatingHeroText } from "@/components/RotatingHeroText";
@@ -238,7 +240,7 @@ function Index() {
             >
               <div className="flex justify-center mb-3 sm:mb-4">
                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center md:group-hover:scale-110 md:group-hover:rotate-12 transition-all duration-500">
-                  <DollarSign className="w-6 h-6 sm:w-8 sm:h-8 text-primary md:group-hover:scale-110 transition-transform duration-500" />
+                  <TrendingDown className="w-6 h-6 sm:w-8 sm:h-8 text-primary md:group-hover:scale-110 transition-transform duration-500" />
                 </div>
               </div>
               <h3 className={`text-3xl sm:text-4xl font-bold mb-2 text-center text-primary transition-all duration-300 ${stat1.count === 28.3 ? 'animate-pulse' : ''}`}>
@@ -270,7 +272,7 @@ function Index() {
             >
               <div className="flex justify-center mb-3 sm:mb-4">
                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center md:group-hover:scale-110 md:group-hover:rotate-12 transition-all duration-500">
-                  <Users className="w-6 h-6 sm:w-8 sm:h-8 text-primary md:group-hover:scale-110 transition-transform duration-500" />
+                  <Target className="w-6 h-6 sm:w-8 sm:h-8 text-primary md:group-hover:scale-110 transition-transform duration-500" />
                 </div>
               </div>
               <h3 className={`text-3xl sm:text-4xl font-bold mb-2 text-center text-primary transition-all duration-300 ${stat3.count === 3.4 ? 'animate-pulse' : ''}`}>

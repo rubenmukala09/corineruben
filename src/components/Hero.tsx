@@ -38,9 +38,9 @@ const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, childr
   const useCarousel = backgroundImages && backgroundImages.length > 0;
 
   return (
-      <div 
+    <div 
       ref={ref}
-      className={cn("relative min-h-[600px] sm:min-h-[700px] md:min-h-[850px] lg:min-h-[950px] xl:min-h-[1000px] flex items-center overflow-hidden hero-mobile bg-gradient-to-br from-primary/10 via-background to-accent/10", className)}
+      className={cn("relative min-h-[600px] sm:min-h-[700px] md:min-h-[850px] lg:min-h-[950px] xl:min-h-[1000px] flex items-center overflow-hidden hero-mobile bg-gradient-to-br from-[#1e3a8a] to-[#3b82f6]", className)}
     >
       {/* Background with Parallax */}
       <motion.div 

@@ -55,13 +55,19 @@ const TrustBar = () => {
   const trustIndicators = [
     { icon: Shield, text: "500+ Families Protected", useCounter: true, count: familiesCount },
     { icon: MapPin, text: "Based in Kettering, Ohio" },
-    { icon: Award, text: "Veteran Owned Business" },
+    { icon: Award, text: "Veteran Supportive Business" },
     { icon: Globe, text: "BBB A+ Rating • Supporting St. Jude" },
   ];
 
   return (
     <div ref={counterRef} className="relative z-10 px-4 -mt-10" role="complementary" aria-label="Trust indicators">
       <div className="container mx-auto">
+        {/* Section Heading */}
+        <div className="text-center mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+            Serving 500+ Families in Greater Dayton Since 2024
+          </h2>
+        </div>
         <div className="relative mx-auto max-w-7xl group/trust">
           {/* Glow effect */}
           <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-primary/20 to-accent/20 blur-xl opacity-50 group-hover/trust:opacity-75 transition-opacity duration-500" />
@@ -77,8 +83,8 @@ const TrustBar = () => {
             />
           </div>
           
-          {/* Main content with gradient background */}
-          <div className="relative bg-gradient-to-r from-primary via-cyan-600 to-accent rounded-3xl py-3 px-4 sm:px-5 md:px-8 shadow-glow-purple backdrop-blur-sm border border-white/20 group-hover/trust:shadow-[0_20px_60px_rgba(139,92,246,0.7)] transition-all duration-500">
+          {/* Main content with light gray background */}
+          <div className="relative bg-[#f9fafb] rounded-3xl py-3 px-4 sm:px-5 md:px-8 shadow-lg backdrop-blur-sm border-t-2 border-b-2 border-primary/30 group-hover/trust:shadow-xl transition-all duration-500">
             {/* Desktop: Horizontal layout */}
             <div className="hidden sm:flex justify-center items-center gap-2 md:gap-4 lg:gap-6">
               {trustIndicators.map((item, index) => (
@@ -95,13 +101,13 @@ const TrustBar = () => {
                   onMouseLeave={() => setHoveredIndex(null)}
                   role="listitem"
                 >
-                  <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-xl bg-white/25 backdrop-blur-sm flex items-center justify-center flex-shrink-0 group-hover/badge:scale-110 group-hover/badge:rotate-6 group-hover/badge:bg-white/35 group-hover/badge:shadow-[0_8px_20px_rgba(255,255,255,0.3)] transition-all duration-300 animate-icon-pulse" 
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-xl bg-primary/20 backdrop-blur-sm flex items-center justify-center flex-shrink-0 group-hover/badge:scale-110 group-hover/badge:rotate-6 group-hover/badge:bg-primary/30 group-hover/badge:shadow-[0_8px_20px_rgba(59,130,246,0.3)] transition-all duration-300 animate-icon-pulse" 
                     style={{ animationDelay: `${index * 200 + 500}ms` }}
                     aria-hidden="true"
                   >
-                    <item.icon className="w-4 h-4 sm:w-5 sm:h-5 text-white drop-shadow-lg group-hover/badge:scale-110 transition-transform duration-300" />
+                    <item.icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary drop-shadow-lg group-hover/badge:scale-110 transition-transform duration-300" />
                   </div>
-                  <span className="text-xs md:text-sm lg:text-base font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] group-hover/badge:scale-105 transition-transform duration-300 min-w-[160px] sm:min-w-[180px] md:min-w-[200px]">
+                  <span className="text-xs md:text-sm lg:text-base font-bold text-foreground drop-shadow-sm group-hover/badge:scale-105 transition-transform duration-300 min-w-[160px] sm:min-w-[180px] md:min-w-[200px]">
                     {item.useCounter ? `${item.count}+ Families Protected` : item.text}
                   </span>
                 </div>
@@ -120,13 +126,13 @@ const TrustBar = () => {
                   }}
                   role="listitem"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-white/25 backdrop-blur-sm flex items-center justify-center flex-shrink-0 group-active/badge:scale-110 group-active/badge:bg-white/35 transition-all duration-300 animate-icon-pulse" 
+                  <div className="w-10 h-10 rounded-xl bg-primary/20 backdrop-blur-sm flex items-center justify-center flex-shrink-0 group-active/badge:scale-110 group-active/badge:bg-primary/30 transition-all duration-300 animate-icon-pulse" 
                     style={{ animationDelay: `${index * 200 + 500}ms` }}
                     aria-hidden="true"
                   >
-                    <item.icon className="w-5 h-5 text-white drop-shadow-lg" />
+                    <item.icon className="w-5 h-5 text-primary drop-shadow-lg" />
                   </div>
-                  <span className="text-sm font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] flex-1">
+                  <span className="text-sm font-bold text-foreground drop-shadow-sm flex-1">
                     {item.useCounter ? `${item.count}+ Families Protected` : item.text}
                   </span>
                 </div>

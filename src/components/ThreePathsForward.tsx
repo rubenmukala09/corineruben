@@ -21,7 +21,7 @@ const paths: PathConfig[] = [
   {
     id: 1,
     title: "ScamShield Protection",
-    description: "Live analysis of suspicious messages. Monthly Ohio-specific scam alerts. Family account protection. 'Ask before you click' hotline.",
+    description: "• Live analysis of suspicious messages\n• Monthly Ohio-specific scam alerts\n• Family account protection\n• 'Ask before you click' hotline",
     pricing: "$39-129/month",
     icon: Shield,
     featured: true,
@@ -32,10 +32,10 @@ const paths: PathConfig[] = [
   {
     id: 2,
     title: "Learn & Train",
-    description: "In-person Dayton workshops. Online courses in 3 languages. Family training sessions. Corporate safety programs.",
+    description: "• In-person Dayton workshops\n• Online courses in 3 languages\n• Family training sessions\n• Corporate safety programs",
     pricing: "$89-599",
     icon: BookOpen,
-    badge: "Free for Veterans",
+    badge: "5% Veteran Discount",
     cta: "Start Learning",
     link: '/training#book',
     basePrice: 89,
@@ -43,7 +43,7 @@ const paths: PathConfig[] = [
   {
     id: 3,
     title: "AI for Business",
-    description: "AI Service Insurance. Customer protection systems. Compliance consulting. Custom AI solutions.",
+    description: "• AI Service Insurance\n• Customer protection systems\n• Compliance consulting\n• Custom AI solutions",
     pricing: "Custom Pricing",
     icon: Briefcase,
     badge: "Industry First!",
@@ -150,7 +150,7 @@ const ThreePathsForward = () => {
                 <h3 className="text-xl sm:text-2xl md:text-[28px] font-extrabold mb-3 sm:mb-4 text-foreground tracking-tight transition-colors duration-300 group-hover:text-primary">
                   {path.title}
                 </h3>
-                <p className="text-sm sm:text-base text-muted-foreground mb-5 sm:mb-7 flex-grow leading-relaxed">
+                <p className="text-sm sm:text-base text-muted-foreground mb-5 sm:mb-7 flex-grow leading-relaxed whitespace-pre-line">
                   {path.description}
                 </p>
 
