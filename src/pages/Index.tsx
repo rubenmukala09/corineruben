@@ -39,7 +39,12 @@ import heroHome2 from "@/assets/hero-home-2.jpg";
 import heroHome3 from "@/assets/hero-home-3.jpg";
 import heroHome4 from "@/assets/hero-home-4.jpg";
 import heroHome5 from "@/assets/hero-home-5.jpg";
+import heroBusinessAi1 from "@/assets/hero-business-ai-1.jpg";
+import heroTrainingSeniors1 from "@/assets/hero-training-seniors-1.jpg";
+import heroProtectionFamily1 from "@/assets/hero-protection-family-1.jpg";
+import heroAiSolutions1 from "@/assets/hero-ai-solutions-1.jpg";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
+import { RotatingHeroText } from "@/components/RotatingHeroText";
 
 function Index() {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -49,10 +54,37 @@ function Index() {
   
   const heroImages = [
     { src: heroHome1, alt: "Multi-generational African American family smiling together with laptop in warm living room" },
+    { src: heroBusinessAi1, alt: "Professional diverse business team collaborating with AI technology in modern office" },
+    { src: heroTrainingSeniors1, alt: "Elderly diverse people learning digital skills safely in modern community center" },
+    { src: heroProtectionFamily1, alt: "Diverse family using technology with cybersecurity protection shield hologram" },
     { src: heroHome2, alt: "Asian grandmother teaching granddaughter with tablet in cozy kitchen setting" },
+    { src: heroAiSolutions1, alt: "Business professionals using AI automation tools in bright modern office" },
     { src: heroHome3, alt: "Hispanic/Latino family embracing on porch during golden hour sunset" },
     { src: heroHome4, alt: "Diverse multi-ethnic neighbors gathered in community center with warm atmosphere" },
     { src: heroHome5, alt: "Middle Eastern/South Asian family learning together with technology in home office" }
+  ];
+
+  const rotatingMessages = [
+    {
+      headline: "Every Family Deserves Protection and Peace of Mind",
+      subheadline: "Serving Ohio's diverse communities with compassionate scam prevention training, 24/7 support, and personalized protection services"
+    },
+    {
+      headline: "AI-Powered Business Solutions That Drive Growth",
+      subheadline: "Custom AI automation, professional websites, and industry-leading AI Service Insurance for your business"
+    },
+    {
+      headline: "Professional Scam Prevention Training",
+      subheadline: "Learn how to recognize and stop sophisticated AI-powered scams with expert-led training programs"
+    },
+    {
+      headline: "24/7 Cybersecurity Protection for Families",
+      subheadline: "Real-time threat monitoring, instant scam verification, and dedicated family protection services"
+    },
+    {
+      headline: "Empowering Seniors with Digital Safety",
+      subheadline: "Specialized training and support helping seniors navigate the digital world safely and confidently"
+    }
   ];
 
   // Counter animations for statistics
@@ -126,12 +158,11 @@ function Index() {
       {/* Hero Section */}
       <Hero
         backgroundImages={heroImages}
-        headline="Every Family Deserves Protection and Peace of Mind"
-        subheadline="Serving Ohio's diverse communities with compassionate scam prevention training, 24/7 support, and personalized protection services for every family"
         showScrollIndicator={true}
         overlay={true}
       >
-        <div className="flex flex-col sm:flex-row gap-3 md:gap-4 flex-wrap justify-center sm:justify-start">
+        <RotatingHeroText messages={rotatingMessages} interval={6000} />
+        <div className="flex flex-col sm:flex-row gap-3 md:gap-4 flex-wrap justify-center sm:justify-start mt-6">
           <Button 
             asChild 
             variant="default" 
