@@ -62,12 +62,12 @@ const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, childr
           />
         )}
         
-        {/* Gradient Overlay - lighter for better image visibility */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent" />
+        {/* Gradient Overlay - stronger for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/35 to-black/45" />
         
-        {/* Additional overlay - reduced opacity */}
+        {/* Additional overlay */}
         {overlay && (
-          <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/15 to-black/25" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/30" />
         )}
       </motion.div>
       
