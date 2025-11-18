@@ -50,7 +50,7 @@ const MakingADifference = () => {
                 Verify status at checkout
               </p>
               <Button className="w-full" size="lg" asChild>
-                <a href="/contact">Claim Discount</a>
+                <Link to="/contact">Claim Discount</Link>
               </Button>
             </CardContent>
           </Card>

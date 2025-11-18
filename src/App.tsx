@@ -18,7 +18,7 @@ import { useAnalyticsTracking } from "./hooks/useAnalyticsTracking";
 import { PageTransition } from "./components/PageTransition";
 import { Skeleton } from "@/components/ui/skeleton";
 import { performanceMonitor } from "./utils/performanceMonitor";
-import ScrollProgressBar from "./components/ScrollProgressBar";
+
 import { NavigationProgress } from "./components/NavigationProgress";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { useSmoothAnchorScroll } from "./hooks/useSmoothAnchorScroll";
@@ -613,7 +613,7 @@ function App() {
               <SkipToContent />
               <NavigationProgress />
               <ScrollToTop />
-              <ScrollProgressBar />
+              
               <RouteTracker />
               <AnalyticsTracker />
               <ErrorBoundary>

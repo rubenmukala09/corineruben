@@ -554,10 +554,10 @@ export default function FAQ() {
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button size="lg" asChild className="gap-2">
-                    <a href="/contact">
+                    <Link to="/contact">
                       <MessageCircle className="w-5 h-5" />
                       Contact Support
-                    </a>
+                    </Link>
                   </Button>
                   <Button size="lg" variant="outline" asChild className="gap-2">
                     <a href="tel:9375550199">
