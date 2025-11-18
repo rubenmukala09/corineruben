@@ -64,7 +64,7 @@ const TrustBar = () => {
       <div className="container mx-auto">
         <div className="relative mx-auto max-w-7xl group/trust">
           {/* Colorful gradient card background with hover ombre effect */}
-          <div className="relative bg-gradient-to-r from-purple-600 via-blue-500 to-cyan-400 rounded-3xl py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-10 shadow-[0_8px_30px_rgb(139,92,246,0.25)] backdrop-blur-md border-2 border-white/60 transition-all duration-500 overflow-hidden" style={{ transform: 'translateZ(0)' }}>
+          <div className="relative rounded-[2rem] py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-10 backdrop-blur-lg border-2 border-white/70 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2),0_4px_20px_rgba(139,92,246,0.15),0_8px_40px_rgba(139,92,246,0.1),0_2px_8px_rgba(0,0,0,0.05)] transition-all duration-500 overflow-hidden" style={{ backgroundImage: 'linear-gradient(to right, rgb(147 51 234 / 0.95), rgb(59 130 246 / 0.95), rgb(34 211 238 / 0.95))', transform: 'translateZ(0)' }}>
             {/* Desktop: Horizontal layout */}
             <div className="hidden sm:flex justify-center items-center gap-2 md:gap-4 lg:gap-6 relative z-10">
               {trustIndicators.map((item, index) => (
@@ -82,7 +82,7 @@ const TrustBar = () => {
                 >
                   
                   <div 
-                    className="relative w-10 h-10 sm:w-11 sm:h-11 md:w-14 md:h-14 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover/badge:scale-110 group-hover/badge:rotate-3 transition-all duration-500 shadow-[0_4px_25px_rgba(139,92,246,0.4)] group-hover/badge:shadow-[0_8px_40px_rgba(139,92,246,0.7)] border border-white/40 group-hover/badge:border-white/60 overflow-hidden" 
+                    className="relative w-10 h-10 sm:w-11 sm:h-11 md:w-14 md:h-14 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover/badge:scale-110 group-hover/badge:rotate-3 transition-all duration-500 shadow-[inset_0_1px_2px_rgba(0,0,0,0.1),0_4px_25px_rgba(139,92,246,0.4)] group-hover/badge:shadow-[inset_0_1px_2px_rgba(0,0,0,0.1),0_8px_40px_rgba(139,92,246,0.7)] border-2 border-white/60 group-hover/badge:border-white/70 overflow-hidden"
                     style={{ 
                       animationDelay: `${index * 200 + 500}ms`,
                       backgroundImage: index === 0 ? 'linear-gradient(135deg, #3b82f6, #8b5cf6)' :
@@ -115,7 +115,7 @@ const TrustBar = () => {
                   }}
                   role="listitem"
                 >
-                  <div className="relative w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 group-active/badge:scale-110 transition-all duration-500 shadow-[0_4px_25px_rgba(139,92,246,0.4)] group-active/badge:shadow-[0_8px_40px_rgba(139,92,246,0.7)] border border-white/40 group-active/badge:border-white/60 overflow-hidden" 
+                  <div className="relative w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 group-active/badge:scale-110 transition-all duration-500 shadow-[inset_0_1px_2px_rgba(0,0,0,0.1),0_4px_25px_rgba(139,92,246,0.4)] group-active/badge:shadow-[inset_0_1px_2px_rgba(0,0,0,0.1),0_8px_40px_rgba(139,92,246,0.7)] border-2 border-white/60 group-active/badge:border-white/70 overflow-hidden" 
                     style={{ 
                       backgroundImage: index === 0 ? 'linear-gradient(135deg, #3b82f6, #8b5cf6)' :
                                        index === 1 ? 'linear-gradient(135deg, #10b981, #06b6d4)' :
