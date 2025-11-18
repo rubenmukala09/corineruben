@@ -34,15 +34,6 @@ import {
   Bot,
   ArrowRight,
 } from "lucide-react";
-import heroHome1 from "@/assets/hero-home-1.jpg";
-import heroHome2 from "@/assets/hero-home-2.jpg";
-import heroHome3 from "@/assets/hero-home-3.jpg";
-import heroHome4 from "@/assets/hero-home-4.jpg";
-import heroHome5 from "@/assets/hero-home-5.jpg";
-import heroBusinessAi1 from "@/assets/hero-business-ai-1.jpg";
-import heroTrainingSeniors1 from "@/assets/hero-training-seniors-1.jpg";
-import heroProtectionFamily1 from "@/assets/hero-protection-family-1.jpg";
-import heroAiSolutions1 from "@/assets/hero-ai-solutions-1.jpg";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { RotatingHeroText } from "@/components/RotatingHeroText";
 
@@ -51,18 +42,6 @@ function Index() {
   const [isLoading, setIsLoading] = useState(true);
   const [videoTestimonials, setVideoTestimonials] = useState<any[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string } | null>(null);
-  
-  const heroImages = [
-    { src: heroHome1, alt: "Multi-generational African American family smiling together with laptop in warm living room" },
-    { src: heroBusinessAi1, alt: "Professional diverse business team collaborating with AI technology in modern office" },
-    { src: heroTrainingSeniors1, alt: "Elderly diverse people learning digital skills safely in modern community center" },
-    { src: heroProtectionFamily1, alt: "Diverse family using technology with cybersecurity protection shield hologram" },
-    { src: heroHome2, alt: "Asian grandmother teaching granddaughter with tablet in cozy kitchen setting" },
-    { src: heroAiSolutions1, alt: "Business professionals using AI automation tools in bright modern office" },
-    { src: heroHome3, alt: "Hispanic/Latino family embracing on porch during golden hour sunset" },
-    { src: heroHome4, alt: "Diverse multi-ethnic neighbors gathered in community center with warm atmosphere" },
-    { src: heroHome5, alt: "Middle Eastern/South Asian family learning together with technology in home office" }
-  ];
 
   const rotatingMessages = [
     {
@@ -157,7 +136,6 @@ function Index() {
 
       {/* Hero Section */}
       <Hero
-        backgroundImages={heroImages}
         showScrollIndicator={true}
         overlay={true}
       >
