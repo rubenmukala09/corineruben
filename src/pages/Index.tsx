@@ -33,9 +33,11 @@ import {
   UserX,
   Bot,
   ArrowRight,
+  Clock,
 } from "lucide-react";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { RotatingHeroText } from "@/components/RotatingHeroText";
+import HeroValueCards from "@/components/HeroValueCards";
 
 // Placeholder imports for hero slideshow images
 // Replace these with your actual generated/sourced images
@@ -87,32 +89,16 @@ function Index() {
 
   const rotatingMessages = [
     {
-      headline: "Every Family Deserves Protection and Peace of Mind",
-      subheadline: "Serving Ohio's diverse communities with compassionate scam prevention training, 24/7 support, and personalized protection services"
-    },
-    {
-      headline: "AI-Powered Business Solutions That Drive Growth",
-      subheadline: "Custom AI automation, professional websites, and industry-leading AI Service Insurance for your business"
-    },
-    {
-      headline: "Professional Scam Prevention Training",
-      subheadline: "Learn how to recognize and stop sophisticated AI-powered scams with expert-led training programs"
-    },
-    {
-      headline: "24/7 Cybersecurity Protection for Families",
-      subheadline: "Real-time threat monitoring, instant scam verification, and dedicated family protection services"
-    },
-    {
-      headline: "Empowering Seniors with Digital Safety",
-      subheadline: "Specialized training and support helping seniors navigate the digital world safely and confidently"
+      headline: "Protecting Ohio Families from AI-Powered Scams",
+      subheadline: "Your parents didn't grow up with technology. Don't let scammers take advantage of that."
     }
   ];
 
   // Counter animations for statistics
-  const stat1 = useCounterAnimation({ end: 3.4, duration: 2000, prefix: "$", suffix: "B" });
-  const stat2 = useCounterAnimation({ end: 11, duration: 2000, suffix: "%" });
-  const stat3 = useCounterAnimation({ end: 50, duration: 2000, suffix: "%" });
-  const stat4 = useCounterAnimation({ end: 400, duration: 2000, suffix: "%" });
+  const stat1 = useCounterAnimation({ end: 28.3, duration: 2500, prefix: "$", suffix: "B" });
+  const stat2 = useCounterAnimation({ end: 87, duration: 2500, suffix: "%" });
+  const stat3 = useCounterAnimation({ end: 3.4, duration: 2500, suffix: "M" });
+  const stat4 = useCounterAnimation({ end: 14, duration: 2500, suffix: " sec" });
 
   useEffect(() => {
     checkAdminStatus();
@@ -183,16 +169,39 @@ function Index() {
         overlay={true}
       >
         <RotatingHeroText messages={rotatingMessages} interval={6000} />
+        <HeroValueCards />
         <div className="flex flex-col sm:flex-row gap-3 md:gap-4 flex-wrap justify-center sm:justify-start mt-6">
           <Button 
             asChild 
             variant="default" 
             size="xl" 
-            className="w-full sm:w-auto text-sm md:text-base lg:text-lg px-6 md:px-8 py-3 md:py-4 min-h-[48px] transition-all duration-300 ease-out hover:scale-105 active:scale-98 hover:shadow-[0_10px_25px_rgba(109,40,217,0.3)]"
-            onClick={() => trackButtonClick("Get Protection Now", "Hero Section")}
+            className="w-full sm:w-auto text-sm md:text-base px-6 md:px-8 py-3 md:py-4 min-h-[48px] transition-all duration-300 ease-out hover:scale-105 active:scale-98"
+            onClick={() => trackButtonClick("Check If This Is A Scam", "Hero Section")}
           >
-            <Link to="/contact?service=family-shield" aria-label="Get family protection plan">
-              Get Protection Now
+            <Link to="/contact?service=scam-check" aria-label="Check if this is a scam">
+              Check If This Is A Scam
+            </Link>
+          </Button>
+          <Button 
+            asChild 
+            variant="outline" 
+            size="xl" 
+            className="w-full sm:w-auto text-sm md:text-base px-6 md:px-8 py-3 md:py-4 min-h-[48px] bg-background/80 backdrop-blur-sm border-2 hover:bg-background"
+            onClick={() => trackButtonClick("Get Protected Today", "Hero Section")}
+          >
+            <Link to="/training#scamshield" aria-label="Get family protection plan">
+              Get Protected Today
+            </Link>
+          </Button>
+          <Button 
+            asChild 
+            variant="destructive" 
+            size="xl" 
+            className="w-full sm:w-auto text-sm md:text-base px-6 md:px-8 py-3 md:py-4 min-h-[48px] animate-pulse hover:animate-none"
+            onClick={() => trackButtonClick("Emergency Help", "Hero Section")}
+          >
+            <Link to="/contact?urgent=true" aria-label="Get emergency help now">
+              Emergency Help
             </Link>
           </Button>
         </div>
@@ -216,7 +225,7 @@ function Index() {
         <div className="container mx-auto px-4 relative z-10">
           <ScrollRevealSection>
             <div className="text-center mb-10">
-              <h2 className="mb-4">The Growing Threat of AI-Powered Scams</h2>
+              <h2 className="mb-4">Every 14 Seconds, Another Senior Falls Victim to AI Scams</h2>
             </div>
           </ScrollRevealSection>
 
@@ -232,10 +241,10 @@ function Index() {
                   <DollarSign className="w-6 h-6 sm:w-8 sm:h-8 text-primary md:group-hover:scale-110 transition-transform duration-500" />
                 </div>
               </div>
-              <h3 className={`text-3xl sm:text-4xl font-bold mb-2 text-center text-primary transition-all duration-300 ${stat1.count === 3.4 ? 'animate-pulse' : ''}`}>
+              <h3 className={`text-3xl sm:text-4xl font-bold mb-2 text-center text-primary transition-all duration-300 ${stat1.count === 28.3 ? 'animate-pulse' : ''}`}>
                 {stat1.displayValue}
               </h3>
-              <p className="text-muted-foreground text-center text-sm sm:text-base">Lost to elder fraud in 2023</p>
+              <p className="text-muted-foreground text-center text-sm sm:text-base">Lost by seniors to scams in 2023</p>
             </Card>
 
             <Card
@@ -245,13 +254,13 @@ function Index() {
             >
               <div className="flex justify-center mb-3 sm:mb-4">
                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center md:group-hover:scale-110 md:group-hover:rotate-12 transition-all duration-500">
-                  <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-primary md:group-hover:scale-110 transition-transform duration-500" />
+                  <UserX className="w-6 h-6 sm:w-8 sm:h-8 text-primary md:group-hover:scale-110 transition-transform duration-500" />
                 </div>
               </div>
-              <h3 className={`text-3xl sm:text-4xl font-bold mb-2 text-center text-primary transition-all duration-300 ${stat2.count === 11 ? 'animate-pulse' : ''}`}>
+              <h3 className={`text-3xl sm:text-4xl font-bold mb-2 text-center text-primary transition-all duration-300 ${stat2.count === 87 ? 'animate-pulse' : ''}`}>
                 {stat2.displayValue}
               </h3>
-              <p className="text-muted-foreground text-center text-sm sm:text-base">AI scams increased this year</p>
+              <p className="text-muted-foreground text-center text-sm sm:text-base">Of victims never report due to embarrassment</p>
             </Card>
 
             <Card
@@ -261,13 +270,13 @@ function Index() {
             >
               <div className="flex justify-center mb-3 sm:mb-4">
                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center md:group-hover:scale-110 md:group-hover:rotate-12 transition-all duration-500">
-                  <UserX className="w-6 h-6 sm:w-8 sm:h-8 text-primary md:group-hover:scale-110 transition-transform duration-500" />
+                  <Users className="w-6 h-6 sm:w-8 sm:h-8 text-primary md:group-hover:scale-110 transition-transform duration-500" />
                 </div>
               </div>
-              <h3 className={`text-3xl sm:text-4xl font-bold mb-2 text-center text-primary transition-all duration-300 ${stat3.count === 50 ? 'animate-pulse' : ''}`}>
+              <h3 className={`text-3xl sm:text-4xl font-bold mb-2 text-center text-primary transition-all duration-300 ${stat3.count === 3.4 ? 'animate-pulse' : ''}`}>
                 {stat3.displayValue}
               </h3>
-              <p className="text-muted-foreground text-center text-sm sm:text-base">Of fraud victims are seniors</p>
+              <p className="text-muted-foreground text-center text-sm sm:text-base">Seniors targeted last year alone</p>
             </Card>
 
             <Card
@@ -277,13 +286,13 @@ function Index() {
             >
               <div className="flex justify-center mb-3 sm:mb-4">
                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center md:group-hover:scale-110 md:group-hover:rotate-12 transition-all duration-500">
-                  <Bot className="w-6 h-6 sm:w-8 sm:h-8 text-primary md:group-hover:scale-110 transition-transform duration-500" />
+                  <Clock className="w-6 h-6 sm:w-8 sm:h-8 text-primary md:group-hover:scale-110 transition-transform duration-500" />
                 </div>
               </div>
-              <h3 className={`text-3xl sm:text-4xl font-bold mb-2 text-center text-primary transition-all duration-300 ${stat4.count === 400 ? 'animate-pulse' : ''}`}>
+              <h3 className={`text-3xl sm:text-4xl font-bold mb-2 text-center text-primary transition-all duration-300 ${stat4.count === 14 ? 'animate-pulse' : ''}`}>
                 {stat4.displayValue}
               </h3>
-              <p className="text-muted-foreground text-center text-sm sm:text-base">Rise in voice cloning scams</p>
+              <p className="text-muted-foreground text-center text-sm sm:text-base">Frequency of new scam victims</p>
             </Card>
           </div>
           </ScrollRevealSection>

@@ -54,9 +54,9 @@ const TrustBar = () => {
 
   const trustIndicators = [
     { icon: Shield, text: "500+ Families Protected", useCounter: true, count: familiesCount },
-    { icon: MapPin, text: "Ohio Based & Trusted" },
-    { icon: Award, text: "Expert Cybersecurity Team" },
-    { icon: Globe, text: "Available in English • Français • Español" },
+    { icon: MapPin, text: "Based in Kettering, Ohio" },
+    { icon: Award, text: "Veteran Owned Business" },
+    { icon: Globe, text: "BBB A+ Rating • Supporting St. Jude" },
   ];
 
   return (

@@ -11,6 +11,7 @@ interface PathConfig {
   pricing: string;
   icon: typeof BookOpen;
   featured?: boolean;
+  badge?: string;
   cta: string;
   link: string;
   basePrice: number;
@@ -19,32 +20,34 @@ interface PathConfig {
 const paths: PathConfig[] = [
   {
     id: 1,
-    title: "Learn & Train",
-    description: "Live Zoom classes & in-person training. Spot deepfakes, verify identities, handle urgent calls with confidence.",
-    pricing: "Starting at $79",
-    icon: BookOpen,
-    cta: "Book Training",
-    link: '/training#book',
-    basePrice: 79,
-  },
-  {
-    id: 2,
-    title: "Family Scam Shield",
-    description: "Forward suspicious emails, texts, links, QR codes. Get expert analysis within 24-48 hours.",
-    pricing: "Starting at $39/month",
+    title: "ScamShield Protection",
+    description: "Live analysis of suspicious messages. Monthly Ohio-specific scam alerts. Family account protection. 'Ask before you click' hotline.",
+    pricing: "$39-129/month",
     icon: Shield,
     featured: true,
-    cta: "Get Protection",
+    cta: "Protect My Family",
     link: '/training#scamshield',
     basePrice: 39,
   },
   {
+    id: 2,
+    title: "Learn & Train",
+    description: "In-person Dayton workshops. Online courses in 3 languages. Family training sessions. Corporate safety programs.",
+    pricing: "$89-599",
+    icon: BookOpen,
+    badge: "Free for Veterans",
+    cta: "Start Learning",
+    link: '/training#book',
+    basePrice: 89,
+  },
+  {
     id: 3,
-    title: "AI&BUSINESS",
-    description: "Custom AI receptionists, automation, and pre-purchase vetting. Don't waste $5k+ on wrong tools.",
+    title: "AI for Business",
+    description: "AI Service Insurance. Customer protection systems. Compliance consulting. Custom AI solutions.",
     pricing: "Custom Pricing",
     icon: Briefcase,
-    cta: "Talk to an Expert",
+    badge: "Industry First!",
+    cta: "Protect My Business",
     link: '/contact?service=business',
     basePrice: 5000,
   }
@@ -83,7 +86,7 @@ const ThreePathsForward = () => {
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16 animate-fade-in-up px-4">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 gradient-text-primary">
-            Three Paths Forward
+            Complete Protection for Every Family
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
             Choose the protection and empowerment that fits your needs - from personal AI security training to business automation solutions.
@@ -100,10 +103,19 @@ const ThreePathsForward = () => {
                 className={`relative ${getAnimationClass(index)}`}
                 style={{ transitionDelay: getAnimationDelay(index) }}
               >
-                {/* Featured Badge - Above the card */}
+                {/* Featured/Badge - Above the card */}
                 {path.featured && (
                   <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-white px-4 sm:px-6 py-1.5 sm:py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
                     MOST POPULAR
+                  </div>
+                )}
+                {path.badge && !path.featured && (
+                  <div className={`absolute -top-5 left-1/2 -translate-x-1/2 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 ${
+                    path.badge === "Free for Veterans" 
+                      ? "bg-destructive text-white" 
+                      : "bg-gradient-to-r from-cyan-500 to-accent text-white"
+                  }`}>
+                    {path.badge}
                   </div>
                 )}
                 <Card
