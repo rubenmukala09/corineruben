@@ -37,11 +37,53 @@ import {
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { RotatingHeroText } from "@/components/RotatingHeroText";
 
+// Placeholder imports for hero slideshow images
+// Replace these with your actual generated/sourced images
+import heroSlideshow1 from "@/assets/hero-home-1.jpg";
+import heroSlideshow2 from "@/assets/hero-home-2.jpg";
+import heroSlideshow3 from "@/assets/hero-home-3.jpg";
+import heroSlideshow4 from "@/assets/hero-home-4.jpg";
+import heroSlideshow5 from "@/assets/hero-home-5.jpg";
+import heroSlideshow6 from "@/assets/hero-business-1.jpg";
+import heroSlideshow7 from "@/assets/hero-training-1.jpg";
+
 function Index() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [videoTestimonials, setVideoTestimonials] = useState<any[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string } | null>(null);
+
+  // Hero slideshow images with descriptive alt text
+  const heroImages = [
+    { 
+      src: heroSlideshow1, 
+      alt: "Multigenerational family learning scam prevention together" 
+    },
+    { 
+      src: heroSlideshow2, 
+      alt: "Veteran protected from online scams" 
+    },
+    { 
+      src: heroSlideshow3, 
+      alt: "Diverse community workshop on cybersecurity" 
+    },
+    { 
+      src: heroSlideshow4, 
+      alt: "Grandfather and granddaughter using technology safely" 
+    },
+    { 
+      src: heroSlideshow5, 
+      alt: "Couple receiving emergency scam assistance" 
+    },
+    { 
+      src: heroSlideshow6, 
+      alt: "Veteran woman business owner with AI protection" 
+    },
+    { 
+      src: heroSlideshow7, 
+      alt: "Youth teaching seniors about online safety" 
+    }
+  ];
 
   const rotatingMessages = [
     {
@@ -136,6 +178,7 @@ function Index() {
 
       {/* Hero Section */}
       <Hero
+        backgroundImages={heroImages}
         showScrollIndicator={true}
         overlay={true}
       >
