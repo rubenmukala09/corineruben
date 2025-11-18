@@ -44,7 +44,7 @@ const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, childr
     >
       {/* Background with Parallax */}
       <motion.div 
-        className="absolute inset-0"
+        className="absolute inset-0 overflow-hidden"
         style={{ y }}
       >
         {useCarousel ? (
@@ -85,7 +85,7 @@ const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, childr
       )}
       
       {/* Floating Particles (existing) */}
-      <div className="absolute inset-0 pointer-events-none hidden md:block" style={{ zIndex: 1 }}>
+      <div className="absolute inset-0 pointer-events-none overflow-hidden hidden md:block" style={{ zIndex: 1 }}>
         <div className="floating-orb" style={{ width: '150px', height: '150px', top: '20%', left: '10%', animationDelay: '0s' }} />
         <div className="floating-orb" style={{ width: '100px', height: '100px', top: '60%', right: '15%', animationDelay: '4s' }} />
         <div className="floating-orb" style={{ width: '120px', height: '120px', bottom: '25%', left: '40%', animationDelay: '8s' }} />

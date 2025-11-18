@@ -21,8 +21,9 @@ export const ParticleBackground = () => {
     if (!ctx) return;
 
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const parent = canvas.parentElement;
+      canvas.width = parent?.clientWidth || window.innerWidth;
+      canvas.height = parent?.clientHeight || window.innerHeight;
     };
 
     resizeCanvas();
