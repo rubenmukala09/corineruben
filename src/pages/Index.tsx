@@ -171,7 +171,6 @@ function Index() {
         overlay={true}
       >
         <RotatingHeroText messages={rotatingMessages} interval={6000} />
-        <HeroValueCards />
         <div className="flex flex-col sm:flex-row gap-3 md:gap-4 flex-wrap justify-center sm:justify-start mt-6">
           <Button 
             asChild 
