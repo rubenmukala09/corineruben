@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -12,21 +11,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Star } from "lucide-react";
+import { testimonialFormSchema } from "@/utils/formValidation";
+import { z } from "zod";
 
-const testimonialSchema = z.object({
-  name: z.string().trim().min(2, "Name must be at least 2 characters").max(100, "Name must be less than 100 characters"),
-  email: z.string().trim().email("Invalid email address").max(255, "Email must be less than 255 characters"),
-  location: z.string().trim().min(2, "Location must be at least 2 characters").max(100, "Location must be less than 100 characters"),
-  rating: z.number().min(1, "Please select a rating").max(5, "Rating must be between 1-5"),
-  story: z.string().trim().min(20, "Story must be at least 20 characters").max(1000, "Story must be less than 1000 characters"),
-});
-
-type TestimonialFormData = z.infer<typeof testimonialSchema>;
+type TestimonialFormData = z.infer<typeof testimonialFormSchema>;
 
 export const TestimonialForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,7 +28,7 @@ export const TestimonialForm = () => {
   const { toast } = useToast();
 
   const form = useForm<TestimonialFormData>({
-    resolver: zodResolver(testimonialSchema),
+    resolver: zodResolver(testimonialFormSchema),
     defaultValues: {
       name: "",
       email: "",

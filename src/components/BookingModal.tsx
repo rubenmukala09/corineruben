@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -9,10 +11,13 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Upload, X, Calendar as CalendarIcon, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { bookingFormSchema, formatPhoneNumber } from "@/utils/formValidation";
+import { z } from "zod";
 
 interface BookingModalProps {
   open: boolean;
@@ -23,6 +28,8 @@ interface BookingModalProps {
   basePrice?: number;
   veteranDiscountPercent?: number;
 }
+
+type BookingFormData = z.infer<typeof bookingFormSchema>;
 
 export const BookingModal = ({
   open,
@@ -37,17 +44,22 @@ export const BookingModal = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isVeteran, setIsVeteran] = useState(false);
   const [veteranType, setVeteranType] = useState<string>("");
-  const [veteranIdLast4, setVeteranIdLast4] = useState("");
   const [veteranDocFile, setVeteranDocFile] = useState<File | null>(null);
   const [isUploadingDoc, setIsUploadingDoc] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>();
   
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    message: "",
-    preferredDates: "",
+  const form = useForm<BookingFormData>({
+    resolver: zodResolver(bookingFormSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      phone: "",
+      message: "",
+      preferredDates: "",
+      isVeteran: false,
+      veteranType: "",
+      veteranIdLast4: "",
+    },
   });
 
   const discountAmount = isVeteran && basePrice > 0 

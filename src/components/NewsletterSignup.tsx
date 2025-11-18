@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { newsletterSchema } from "@/utils/formValidation";
 
 export function NewsletterSignup({ compact = false }: { compact?: boolean }) {
   const [email, setEmail] = useState("");
@@ -12,10 +13,10 @@ export function NewsletterSignup({ compact = false }: { compact?: boolean }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      toast.error("Please enter a valid email address");
+    // Validate email using Zod
+    const validation = newsletterSchema.safeParse({ email: email.trim() });
+    if (!validation.success) {
+      toast.error(validation.error.errors[0]?.message || "Please enter a valid email address");
       return;
     }
 
@@ -23,7 +24,7 @@ export function NewsletterSignup({ compact = false }: { compact?: boolean }) {
 
     try {
       const { data, error } = await supabase.functions.invoke('newsletter-signup', {
-        body: { email }
+        body: { email: validation.data.email }
       });
 
       if (error) throw error;
@@ -34,10 +35,10 @@ export function NewsletterSignup({ compact = false }: { compact?: boolean }) {
         toast.success("✓ Subscribed! Check your email.");
       }
       
-      setEmail(""); // Clear input on success
+      setEmail("");
     } catch (error: any) {
       console.error("Newsletter signup error:", error);
-      toast.error("Error. Please try again.");
+      toast.error("Subscription failed. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

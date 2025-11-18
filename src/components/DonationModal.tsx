@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,15 +8,20 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card } from "@/components/ui/card";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Users, DollarSign, Building2 } from "lucide-react";
+import { donationFormSchema, formatPhoneNumber } from "@/utils/formValidation";
+import { z } from "zod";
 
 interface DonationModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   type?: 'sponsor' | 'monthly' | 'corporate' | 'general';
 }
+
+type DonationFormData = z.infer<typeof donationFormSchema>;
 
 export const DonationModal = ({ open, onOpenChange, type = 'general' }: DonationModalProps) => {
   const { toast } = useToast();
@@ -23,30 +30,47 @@ export const DonationModal = ({ open, onOpenChange, type = 'general' }: Donation
   const [selectedAmount, setSelectedAmount] = useState<number | null>(
     type === 'sponsor' ? 100 : type === 'monthly' ? 25 : null
   );
-  const [formData, setFormData] = useState({
-    donor_name: '',
-    email: '',
-    phone: '',
-    message: '',
-    sponsor_info: '',
-    recipient_info: '',
-    company_name: '',
+  
+  const form = useForm<DonationFormData>({
+    resolver: zodResolver(donationFormSchema),
+    defaultValues: {
+      donor_name: '',
+      email: '',
+      phone: '',
+      message: '',
+      amount: selectedAmount || 0,
+      sponsor_info: '',
+      recipient_info: '',
+      company_name: '',
+    },
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (data: DonationFormData) => {
+    if (!selectedAmount || selectedAmount < 5) {
+      toast({
+        title: "Invalid Amount",
+        description: "Please select or enter a donation amount of at least $5.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setLoading(true);
 
     try {
+      const formattedPhone = data.phone ? formatPhoneNumber(data.phone) : null;
+      
       const { error } = await supabase.from('donations').insert([
         {
-          donor_name: formData.donor_name,
-          email: formData.email,
-          amount: selectedAmount || 0,
+          donor_name: data.donor_name,
+          email: data.email,
+          amount: selectedAmount,
           donation_type: donationType,
-          message: `${formData.message}\n\nType: ${type}\n${
-            type === 'sponsor' ? `Sponsor: ${formData.sponsor_info}\nRecipient: ${formData.recipient_info}` : ''
-          }${type === 'corporate' ? `Company: ${formData.company_name}` : ''}`,
+          message: `${data.message || ''}\n\nType: ${type}\n${
+            type === 'sponsor' ? `Sponsor: ${data.sponsor_info}\nRecipient: ${data.recipient_info}` : ''
+          }${type === 'corporate' ? `Company: ${data.company_name}` : ''}${
+            formattedPhone ? `\nPhone: ${formattedPhone}` : ''
+          }`,
           payment_status: 'pending',
         },
       ]);
@@ -59,20 +83,12 @@ export const DonationModal = ({ open, onOpenChange, type = 'general' }: Donation
       });
 
       onOpenChange(false);
-      setFormData({
-        donor_name: '',
-        email: '',
-        phone: '',
-        message: '',
-        sponsor_info: '',
-        recipient_info: '',
-        company_name: '',
-      });
+      form.reset();
       setSelectedAmount(null);
     } catch (error: any) {
       toast({
-        title: "Error",
-        description: error.message,
+        title: "Submission Failed",
+        description: error.message || "Please check your information and try again.",
         variant: "destructive",
       });
     } finally {
