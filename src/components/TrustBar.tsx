@@ -60,32 +60,11 @@ const TrustBar = () => {
   ];
 
   return (
-    <div ref={counterRef} className="relative z-10 px-4 -mt-10 animate-float" style={{ willChange: 'transform' }} role="complementary" aria-label="Trust indicators">
+    <div ref={counterRef} className="relative z-10 px-4 -mt-10" role="complementary" aria-label="Trust indicators">
       <div className="container mx-auto">
         <div className="relative mx-auto max-w-7xl group/trust">
-          {/* Vibrant multi-layer glow effects */}
-          <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-blue-500/40 via-purple-500/40 to-pink-500/40 blur-3xl opacity-70 group-hover/trust:opacity-100 transition-opacity duration-700 animate-pulse-slow" />
-          <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-cyan-400/30 via-teal-400/30 to-emerald-400/30 blur-2xl opacity-60 group-hover/trust:opacity-90 transition-opacity duration-700" />
-          <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-orange-400/20 via-yellow-400/20 to-lime-400/20 blur-xl opacity-50 group-hover/trust:opacity-80 transition-opacity duration-700" />
-          
-          {/* Animated sparkle overlay */}
-          <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shine" />
-          </div>
-          
-          {/* Rainbow shimmer border effect with breathing animation */}
-          <div className="absolute inset-0 rounded-3xl overflow-hidden opacity-60 group-hover/trust:opacity-90 transition-opacity duration-500 animate-border-breathe">
-            <div 
-              className="absolute inset-[-3px] rounded-3xl"
-              style={{
-                background: 'conic-gradient(from 0deg, #3b82f6 0%, #8b5cf6 15%, #ec4899 30%, #f59e0b 45%, #10b981 60%, #06b6d4 75%, #3b82f6 90%, #3b82f6 100%)',
-                animation: 'spin 3s linear infinite',
-              }}
-            />
-          </div>
-          
           {/* Colorful gradient card background with hover ombre effect */}
-          <div className="relative bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 rounded-3xl py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-10 shadow-[0_8px_30px_rgb(139,92,246,0.25)] backdrop-blur-md border-2 border-white/60 group-hover/trust:shadow-[0_20px_60px_rgb(139,92,246,0.4)] group-hover/trust:border-purple-200/60 transition-all duration-500 overflow-hidden group-hover/trust:bg-gradient-to-r group-hover/trust:from-purple-600 group-hover/trust:via-blue-500 group-hover/trust:to-cyan-400" style={{ transform: 'translateZ(0)' }}>
+          <div className="relative bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 rounded-3xl py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-10 shadow-[0_8px_30px_rgb(139,92,246,0.25)] backdrop-blur-md border-2 border-white/60 transition-all duration-500 overflow-hidden" style={{ transform: 'translateZ(0)' }}>
             {/* Desktop: Horizontal layout */}
             <div className="hidden sm:flex justify-center items-center gap-2 md:gap-4 lg:gap-6 relative z-10">
               {trustIndicators.map((item, index) => (
@@ -101,10 +80,6 @@ const TrustBar = () => {
                   onMouseLeave={() => setHoveredIndex(null)}
                   role="listitem"
                 >
-                  {/* Ripple effect on hover */}
-                  {hoveredIndex === index && (
-                    <div className="absolute inset-0 -m-2 rounded-2xl bg-white/20 animate-ripple pointer-events-none" />
-                  )}
                   
                   <div 
                     className="relative w-10 h-10 sm:w-11 sm:h-11 md:w-14 md:h-14 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover/badge:scale-110 group-hover/badge:rotate-3 transition-all duration-500 shadow-[0_4px_25px_rgba(139,92,246,0.4)] group-hover/badge:shadow-[0_8px_40px_rgba(139,92,246,0.7)] border border-white/40 group-hover/badge:border-white/60 overflow-hidden" 
@@ -118,20 +93,9 @@ const TrustBar = () => {
                     }}
                     aria-hidden="true"
                   >
-                    {/* Enhanced pulsing glow */}
-                    <div className="absolute inset-0 opacity-0 group-hover/badge:opacity-100 transition-opacity duration-300 animate-pulse-glow" 
-                      style={{
-                        background: 
-                          index === 0 ? 'radial-gradient(circle, rgba(59,130,246,0.8) 0%, transparent 70%)' :
-                          index === 1 ? 'radial-gradient(circle, rgba(16,185,129,0.8) 0%, transparent 70%)' :
-                          index === 2 ? 'radial-gradient(circle, rgba(245,158,11,0.8) 0%, transparent 70%)' :
-                          'radial-gradient(circle, rgba(236,72,153,0.8) 0%, transparent 70%)',
-                        filter: 'blur(8px)'
-                      }}
-                    />
                     <item.icon className="relative w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white drop-shadow-[0_2px_12px_rgba(255,255,255,0.8)] group-hover/badge:scale-110 group-hover/badge:drop-shadow-[0_4px_16px_rgba(255,255,255,1)] transition-all duration-500 relative z-10" />
                   </div>
-                  <span className="text-xs md:text-sm lg:text-base font-bold text-foreground drop-shadow-sm group-hover/badge:scale-105 group-hover/trust:text-white transition-all duration-300 min-w-[160px] sm:min-w-[180px] md:min-w-[200px] group-hover/badge:drop-shadow-[0_0_8px_rgba(139,92,246,0.3)]">
+                  <span className="text-xs md:text-sm lg:text-base font-bold text-foreground drop-shadow-sm group-hover/badge:scale-105 transition-all duration-300 min-w-[160px] sm:min-w-[180px] md:min-w-[200px] group-hover/badge:drop-shadow-[0_0_8px_rgba(139,92,246,0.3)]">
                     {item.useCounter ? `${item.count}+ Families Protected` : item.text}
                   </span>
                 </div>
@@ -161,19 +125,9 @@ const TrustBar = () => {
                     }}
                     aria-hidden="true"
                   >
-                    <div className="absolute inset-0 opacity-0 group-active/badge:opacity-100 transition-opacity duration-300 animate-pulse-glow" 
-                      style={{
-                        background: 
-                          index === 0 ? 'radial-gradient(circle, rgba(59,130,246,0.8) 0%, transparent 70%)' :
-                          index === 1 ? 'radial-gradient(circle, rgba(16,185,129,0.8) 0%, transparent 70%)' :
-                          index === 2 ? 'radial-gradient(circle, rgba(245,158,11,0.8) 0%, transparent 70%)' :
-                          'radial-gradient(circle, rgba(236,72,153,0.8) 0%, transparent 70%)',
-                        filter: 'blur(8px)'
-                      }}
-                    />
                     <item.icon className="relative w-6 h-6 text-white drop-shadow-[0_2px_12px_rgba(255,255,255,0.8)] group-active/badge:scale-110 group-active/badge:drop-shadow-[0_4px_16px_rgba(255,255,255,1)] transition-all duration-500 z-10" />
                   </div>
-                  <span className="text-sm font-bold text-foreground drop-shadow-sm flex-1 group-hover/trust:text-white transition-all duration-300">
+                  <span className="text-sm font-bold text-foreground drop-shadow-sm flex-1 transition-all duration-300">
                     {item.useCounter ? `${item.count}+ Families Protected` : item.text}
                   </span>
                 </div>
