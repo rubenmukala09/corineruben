@@ -171,41 +171,6 @@ function Index() {
         overlay={true}
       >
         <RotatingHeroText messages={rotatingMessages} interval={6000} />
-        <div className="flex flex-col sm:flex-row gap-3 md:gap-4 flex-wrap justify-center sm:justify-start mt-6">
-          <Button 
-            asChild 
-            variant="default" 
-            size="xl" 
-            className="w-full sm:w-auto text-sm md:text-base px-6 md:px-8 py-3 md:py-4 min-h-[48px] transition-all duration-300 ease-out hover:scale-105 active:scale-98"
-            onClick={() => trackButtonClick("Check If This Is A Scam", "Hero Section")}
-          >
-            <Link to="/contact?service=scam-check" aria-label="Check if this is a scam">
-              Check If This Is A Scam
-            </Link>
-          </Button>
-          <Button 
-            asChild 
-            variant="outline" 
-            size="xl" 
-            className="w-full sm:w-auto text-sm md:text-base px-6 md:px-8 py-3 md:py-4 min-h-[48px] bg-background/80 backdrop-blur-sm border-2 hover:bg-background"
-            onClick={() => trackButtonClick("Get Protected Today", "Hero Section")}
-          >
-            <Link to="/training#scamshield" aria-label="Get family protection plan">
-              Get Protected Today
-            </Link>
-          </Button>
-          <Button 
-            asChild 
-            variant="destructive" 
-            size="xl" 
-            className="w-full sm:w-auto text-sm md:text-base px-6 md:px-8 py-3 md:py-4 min-h-[48px] animate-pulse hover:animate-none"
-            onClick={() => trackButtonClick("Emergency Help", "Hero Section")}
-          >
-            <Link to="/contact?urgent=true" aria-label="Get emergency help now">
-              Emergency Help
-            </Link>
-          </Button>
-        </div>
       </Hero>
 
       <TrustBar />

@@ -84,14 +84,8 @@ const TrustBar = () => {
             />
           </div>
           
-          {/* Colorful gradient card background with animated pattern */}
-          <div className="relative bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 rounded-3xl py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-10 shadow-[0_8px_30px_rgb(139,92,246,0.25)] backdrop-blur-md border-2 border-white/60 group-hover/trust:shadow-[0_20px_60px_rgb(139,92,246,0.4)] group-hover/trust:border-purple-200/60 transition-all duration-500 overflow-hidden" style={{ transform: 'translateZ(0)' }}>
-            {/* Animated background pattern */}
-            <div className="absolute inset-0 opacity-30">
-              <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-radial from-purple-400/40 to-transparent rounded-full animate-drift-1" />
-              <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-radial from-blue-400/40 to-transparent rounded-full animate-drift-2" />
-              <div className="absolute bottom-0 left-1/3 w-36 h-36 bg-gradient-radial from-pink-400/40 to-transparent rounded-full animate-drift-3" />
-            </div>
+          {/* Colorful gradient card background with hover ombre effect */}
+          <div className="relative bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 rounded-3xl py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-10 shadow-[0_8px_30px_rgb(139,92,246,0.25)] backdrop-blur-md border-2 border-white/60 group-hover/trust:shadow-[0_20px_60px_rgb(139,92,246,0.4)] group-hover/trust:border-purple-200/60 transition-all duration-500 overflow-hidden group-hover/trust:bg-gradient-to-r group-hover/trust:from-purple-600 group-hover/trust:via-blue-500 group-hover/trust:to-cyan-400" style={{ transform: 'translateZ(0)' }}>
             {/* Desktop: Horizontal layout */}
             <div className="hidden sm:flex justify-center items-center gap-2 md:gap-4 lg:gap-6 relative z-10">
               {trustIndicators.map((item, index) => (
@@ -137,7 +131,7 @@ const TrustBar = () => {
                     />
                     <item.icon className="relative w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white drop-shadow-[0_2px_12px_rgba(255,255,255,0.8)] group-hover/badge:scale-110 group-hover/badge:drop-shadow-[0_4px_16px_rgba(255,255,255,1)] transition-all duration-500 relative z-10" />
                   </div>
-                  <span className="text-xs md:text-sm lg:text-base font-bold text-foreground drop-shadow-sm group-hover/badge:scale-105 group-hover/badge:text-primary transition-all duration-300 min-w-[160px] sm:min-w-[180px] md:min-w-[200px] group-hover/badge:drop-shadow-[0_0_8px_rgba(139,92,246,0.3)]">
+                  <span className="text-xs md:text-sm lg:text-base font-bold text-foreground drop-shadow-sm group-hover/badge:scale-105 group-hover/trust:text-white transition-all duration-300 min-w-[160px] sm:min-w-[180px] md:min-w-[200px] group-hover/badge:drop-shadow-[0_0_8px_rgba(139,92,246,0.3)]">
                     {item.useCounter ? `${item.count}+ Families Protected` : item.text}
                   </span>
                 </div>
@@ -179,7 +173,7 @@ const TrustBar = () => {
                     />
                     <item.icon className="relative w-6 h-6 text-white drop-shadow-[0_2px_12px_rgba(255,255,255,0.8)] group-active/badge:scale-110 group-active/badge:drop-shadow-[0_4px_16px_rgba(255,255,255,1)] transition-all duration-500 z-10" />
                   </div>
-                  <span className="text-sm font-bold text-foreground drop-shadow-sm flex-1">
+                  <span className="text-sm font-bold text-foreground drop-shadow-sm flex-1 group-hover/trust:text-white transition-all duration-300">
                     {item.useCounter ? `${item.count}+ Families Protected` : item.text}
                   </span>
                 </div>
