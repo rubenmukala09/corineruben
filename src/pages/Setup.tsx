@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -273,7 +274,7 @@ export default function Setup() {
                 All accounts are ready. You can now:
               </p>
               <ul className="text-sm text-green-800 space-y-1 ml-6 list-disc">
-                <li>Go to <a href="/auth" className="font-semibold underline">/auth</a> to log in</li>
+                <li>Go to <Link to="/auth" className="font-semibold underline">/auth</Link> to log in</li>
                 <li>Use the email and password you just set</li>
                 <li>Complete 2FA verification (check email for code)</li>
                 <li>Access your role-specific dashboard</li>

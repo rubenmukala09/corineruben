@@ -111,25 +111,10 @@ export function VerificationCodeModal({ open, onClose, email, rememberMe }: Veri
         return;
       }
 
-      // Step 2: Sign in the user with OTP
-      const { error: authError } = await supabase.auth.signInWithOtp({
-        email: email,
-        options: {
-          shouldCreateUser: false,
-        },
-      });
-
-      if (authError) {
-        toast.error("Authentication failed. Please try logging in again.");
-        setIsVerifying(false);
-        return;
-      }
-
-      // Step 3: Wait for session to be established
+      // Step 2: Use existing password session; ensure it's present
       const { data: sessionData } = await supabase.auth.getSession();
-      
       if (!sessionData.session?.user) {
-        toast.error("Session creation failed. Please try logging in again.");
+        toast.error("Your session expired. Please log in again.");
         setIsVerifying(false);
         return;
       }

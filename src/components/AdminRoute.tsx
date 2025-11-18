@@ -33,7 +33,7 @@ export const AdminRoute = ({ children, requiredPermission }: AdminRouteProps) =>
   }
 
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/auth" replace />;
   }
 
   if (!roleConfig) {
