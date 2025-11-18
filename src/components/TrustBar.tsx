@@ -64,7 +64,7 @@ const TrustBar = () => {
       <div className="container mx-auto">
         <div className="relative mx-auto max-w-7xl group/trust">
           {/* Colorful gradient card background with hover ombre effect */}
-          <div className="relative bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 rounded-3xl py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-10 shadow-[0_8px_30px_rgb(139,92,246,0.25)] backdrop-blur-md border-2 border-white/60 transition-all duration-500 overflow-hidden" style={{ transform: 'translateZ(0)' }}>
+          <div className="relative bg-gradient-to-r from-purple-600 via-blue-500 to-cyan-400 rounded-3xl py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-10 shadow-[0_8px_30px_rgb(139,92,246,0.25)] backdrop-blur-md border-2 border-white/60 transition-all duration-500 overflow-hidden" style={{ transform: 'translateZ(0)' }}>
             {/* Desktop: Horizontal layout */}
             <div className="hidden sm:flex justify-center items-center gap-2 md:gap-4 lg:gap-6 relative z-10">
               {trustIndicators.map((item, index) => (
@@ -95,7 +95,7 @@ const TrustBar = () => {
                   >
                     <item.icon className="relative w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white drop-shadow-[0_2px_12px_rgba(255,255,255,0.8)] group-hover/badge:scale-110 group-hover/badge:drop-shadow-[0_4px_16px_rgba(255,255,255,1)] transition-all duration-500 relative z-10" />
                   </div>
-                  <span className="text-xs md:text-sm lg:text-base font-bold text-foreground drop-shadow-sm group-hover/badge:scale-105 transition-all duration-300 min-w-[160px] sm:min-w-[180px] md:min-w-[200px] group-hover/badge:drop-shadow-[0_0_8px_rgba(139,92,246,0.3)]">
+                  <span className="text-xs md:text-sm lg:text-base font-bold text-white drop-shadow-sm group-hover/badge:scale-105 transition-all duration-300 min-w-[160px] sm:min-w-[180px] md:min-w-[200px] group-hover/badge:drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
                     {item.useCounter ? `${item.count}+ Families Protected` : item.text}
                   </span>
                 </div>
@@ -127,7 +127,7 @@ const TrustBar = () => {
                   >
                     <item.icon className="relative w-6 h-6 text-white drop-shadow-[0_2px_12px_rgba(255,255,255,0.8)] group-active/badge:scale-110 group-active/badge:drop-shadow-[0_4px_16px_rgba(255,255,255,1)] transition-all duration-500 z-10" />
                   </div>
-                  <span className="text-sm font-bold text-foreground drop-shadow-sm flex-1 transition-all duration-300">
+                  <span className="text-sm font-bold text-white drop-shadow-sm flex-1 transition-all duration-300">
                     {item.useCounter ? `${item.count}+ Families Protected` : item.text}
                   </span>
                 </div>
