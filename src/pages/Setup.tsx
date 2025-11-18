@@ -100,7 +100,34 @@ export default function Setup() {
           }
         } else if (data.user) {
           statuses.push({ email, exists: false, created: true });
-          toast.success(`Created account for ${email}`);
+          
+          // Assign role to the new user based on email
+          const roleMap: Record<string, string> = {
+            'ruben@invisionnetwork.org': 'admin',
+            'hello@invisionnetwork.org': 'secretary',
+            'training@invisionnetwork.org': 'training_coordinator',
+            'consulting@invisionnetwork.org': 'business_consultant',
+            'support@invisionnetwork.org': 'support_specialist'
+          };
+          
+          const assignedRole = roleMap[email];
+          if (assignedRole) {
+            try {
+              const { error: roleError } = await supabase.rpc('assign_role_by_email', {
+                target_email: email,
+                target_role: assignedRole
+              });
+              
+              if (roleError) {
+                console.error(`Failed to assign role to ${email}:`, roleError);
+                toast.error(`Created account but failed to assign role for ${email}`);
+              } else {
+                toast.success(`Created account and assigned ${WHITELISTED_EMAILS.find(e => e.email === email)?.role} role to ${email}`);
+              }
+            } catch (roleError) {
+              console.error(`Error assigning role to ${email}:`, roleError);
+            }
+          }
         }
       }
 

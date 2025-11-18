@@ -118,6 +118,37 @@ function Auth() {
             title: "✨ Welcome back!",
             description: `Successfully signed in as ${email}`,
           });
+          
+          // Fetch user's roles and redirect accordingly
+          const { data: rolesData } = await supabase
+            .from("user_roles")
+            .select("role")
+            .eq("user_id", data.user.id);
+
+          if (rolesData && rolesData.length > 0) {
+            // If user has only one role, redirect directly to that dashboard
+            if (rolesData.length === 1) {
+              const userRole = rolesData[0].role;
+              const roleRedirects: Record<string, string> = {
+                'admin': '/portal/admin',
+                'secretary': '/admin/clients/businesses',
+                'training_coordinator': '/portal/trainer',
+                'business_consultant': '/admin/clients/businesses',
+                'support_specialist': '/portal/staff',
+                'staff': '/portal/staff',
+                'moderator': '/admin',
+                'user': '/portal'
+              };
+              const redirectPath = roleRedirects[userRole] || '/portal';
+              navigate(redirectPath);
+              return;
+            }
+            // If multiple roles, go to portal to choose
+            navigate("/portal");
+            return;
+          }
+
+          // No role assigned, go to portal
           navigate("/portal");
         }
       } else {

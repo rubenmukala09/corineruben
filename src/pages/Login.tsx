@@ -35,7 +35,29 @@ export default function Login() {
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        navigate("/admin");
+        // Get user's role and redirect accordingly
+        const { data: rolesData } = await supabase
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", session.user.id);
+
+        if (rolesData && rolesData.length > 0) {
+          const userRole = rolesData[0].role;
+          const roleRedirects: Record<string, string> = {
+            'admin': '/portal/admin',
+            'secretary': '/admin/clients/businesses',
+            'training_coordinator': '/portal/trainer',
+            'business_consultant': '/admin/clients/businesses',
+            'support_specialist': '/portal/staff',
+            'staff': '/portal/staff',
+            'moderator': '/admin',
+            'user': '/portal'
+          };
+          const redirectPath = roleRedirects[userRole] || '/portal';
+          navigate(redirectPath);
+        } else {
+          navigate("/portal");
+        }
       }
     };
     checkSession();

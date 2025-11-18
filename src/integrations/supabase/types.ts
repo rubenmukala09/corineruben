@@ -3529,6 +3529,21 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      assign_role_by_email: {
+        Args: {
+          target_email: string
+          target_role: Database["public"]["Enums"]["app_role"]
+        }
+        Returns: undefined
+      }
+      assign_user_role: {
+        Args: {
+          assigned_by_user_id?: string
+          target_role: Database["public"]["Enums"]["app_role"]
+          target_user_id: string
+        }
+        Returns: undefined
+      }
       generate_order_number: { Args: never; Returns: string }
       generate_payout_number: { Args: never; Returns: string }
       generate_request_number: { Args: never; Returns: string }

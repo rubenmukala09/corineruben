@@ -16,7 +16,7 @@ import {
   Stethoscope,
 } from "lucide-react";
 
-type UserRole = "admin" | "staff" | "analyst" | "trainer" | "developer" | "senior" | "caregiver" | "healthcare";
+type UserRole = "admin" | "secretary" | "training_coordinator" | "business_consultant" | "support_specialist" | "staff" | "moderator" | "senior" | "caregiver" | "healthcare";
 
 interface Profile {
   first_name: string;
@@ -116,58 +116,42 @@ function Portal() {
     {
       role: "admin" as UserRole,
       title: "Administrator Dashboard",
-      description: "Manage team, view all activities, system settings",
+      description: "Full system access, manage team, view all activities",
       icon: UserCog,
       path: "/portal/admin",
       color: "from-red-500 to-orange-500",
     },
     {
-      role: "senior" as UserRole,
-      title: "Senior/Family Portal",
-      description: "Manage care, appointments, ScamShield protection",
-      icon: Heart,
-      path: "/portal/senior",
+      role: "secretary" as UserRole,
+      title: "Office Manager Dashboard",
+      description: "Client management, messages, appointments",
+      icon: Users,
+      path: "/admin/clients/businesses",
       color: "from-blue-500 to-cyan-500",
     },
     {
-      role: "caregiver" as UserRole,
-      title: "Caregiver Portal",
-      description: "Schedule, clients, training, documentation",
-      icon: Heart,
-      path: "/portal/caregiver",
-      color: "from-pink-500 to-rose-500",
-    },
-    {
-      role: "healthcare" as UserRole,
-      title: "Healthcare Professional Portal",
-      description: "Patient care, medical records, consultations",
-      icon: Stethoscope,
-      path: "/portal/healthcare",
-      color: "from-green-500 to-emerald-500",
-    },
-    {
-      role: "analyst" as UserRole,
-      title: "Threat Analyst Dashboard",
-      description: "Review ScamShield cases, analyze threats",
-      icon: Shield,
-      path: "/portal/analyst",
-      color: "from-purple-500 to-violet-500",
-    },
-    {
-      role: "trainer" as UserRole,
-      title: "Trainer Dashboard",
-      description: "Manage training sessions, student progress",
+      role: "training_coordinator" as UserRole,
+      title: "Training Coordinator Dashboard",
+      description: "Manage training programs, ScamShield, individual clients",
       icon: GraduationCap,
       path: "/portal/trainer",
-      color: "from-orange-500 to-amber-500",
+      color: "from-teal-500 to-green-500",
     },
     {
-      role: "developer" as UserRole,
-      title: "Developer Dashboard",
-      description: "Manage AI projects, client implementations",
-      icon: Code,
-      path: "/portal/developer",
-      color: "from-indigo-500 to-blue-500",
+      role: "business_consultant" as UserRole,
+      title: "Business Consultant Dashboard",
+      description: "Business clients, services, AI solutions, proposals",
+      icon: Shield,
+      path: "/admin/clients/businesses",
+      color: "from-indigo-500 to-purple-500",
+    },
+    {
+      role: "support_specialist" as UserRole,
+      title: "Support Specialist Dashboard",
+      description: "Client support, tickets, view logs, technical docs",
+      icon: Users,
+      path: "/portal/staff",
+      color: "from-yellow-500 to-amber-500",
     },
     {
       role: "staff" as UserRole,
@@ -176,6 +160,30 @@ function Portal() {
       icon: Users,
       path: "/portal/staff",
       color: "from-amber-500 to-yellow-500",
+    },
+    {
+      role: "senior" as UserRole,
+      title: "Senior/Family Portal",
+      description: "Manage care, appointments, ScamShield protection",
+      icon: Heart,
+      path: "/portal/senior",
+      color: "from-pink-500 to-rose-500",
+    },
+    {
+      role: "caregiver" as UserRole,
+      title: "Caregiver Portal",
+      description: "Schedule, clients, training, documentation",
+      icon: Heart,
+      path: "/portal/caregiver",
+      color: "from-green-500 to-emerald-500",
+    },
+    {
+      role: "healthcare" as UserRole,
+      title: "Healthcare Professional Portal",
+      description: "Patient care, medical records, consultations",
+      icon: Stethoscope,
+      path: "/portal/healthcare",
+      color: "from-purple-500 to-fuchsia-500",
     },
   ];
 
