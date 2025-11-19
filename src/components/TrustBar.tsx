@@ -63,8 +63,8 @@ const TrustBar = () => {
     <div ref={counterRef} className="relative z-10 px-4 -mt-10" role="complementary" aria-label="Trust indicators">
       <div className="container mx-auto">
         <div className="relative mx-auto max-w-7xl group/trust">
-          {/* Colorful gradient card background with hover ombre effect */}
-          <div className="relative rounded-[2rem] py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-10 backdrop-blur-lg border-2 border-white/70 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2),0_4px_20px_rgba(139,92,246,0.15),0_8px_40px_rgba(139,92,246,0.1),0_2px_8px_rgba(0,0,0,0.05)] transition-all duration-500 overflow-hidden" style={{ backgroundImage: 'linear-gradient(to right, rgb(147 51 234 / 0.95), rgb(59 130 246 / 0.95), rgb(34 211 238 / 0.95))', transform: 'translateZ(0)' }}>
+          {/* Colorful gradient card background with edge effects */}
+          <div className="relative rounded-[2rem] py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-10 backdrop-blur-lg border-2 border-white/70 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2),0_4px_20px_rgba(139,92,246,0.15),0_8px_40px_rgba(139,92,246,0.1),0_2px_8px_rgba(0,0,0,0.05),inset_0_0_60px_rgba(255,255,255,0.08)] transition-all duration-500 overflow-hidden before:absolute before:inset-0 before:rounded-[2rem] before:shadow-[inset_20px_0_40px_-20px_rgba(0,0,0,0.3),inset_-20px_0_40px_-20px_rgba(0,0,0,0.3)] before:pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, hsl(270, 55%, 56%), hsl(214, 62%, 60%), hsl(188, 58%, 53%))', transform: 'translateZ(0)' }}>
             {/* Desktop: Horizontal layout */}
             <div className="hidden sm:flex justify-center items-center gap-2 md:gap-4 lg:gap-6 relative z-10">
               {trustIndicators.map((item, index) => (
