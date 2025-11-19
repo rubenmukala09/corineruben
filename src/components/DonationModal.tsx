@@ -141,7 +141,8 @@ export const DonationModal = ({ open, onOpenChange, type = 'general' }: Donation
           </div>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-7 pt-4">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-7 pt-4">
           {/* Donation Type Selection */}
           {type !== 'monthly' && (
             <div className="space-y-3">
@@ -226,34 +227,45 @@ export const DonationModal = ({ open, onOpenChange, type = 'general' }: Donation
               <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
             </div>
             <div className="space-y-3">
-              <div>
-                <Label htmlFor="donor_name">Full Name *</Label>
-                <Input
-                  id="donor_name"
-                  required
-                  value={formData.donor_name}
-                  onChange={(e) => setFormData({ ...formData, donor_name: e.target.value })}
-                />
-              </div>
-              <div>
-                <Label htmlFor="email">Email *</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                />
-              </div>
-              <div>
-                <Label htmlFor="phone">Phone</Label>
-                <Input
-                  id="phone"
-                  type="tel"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                />
-              </div>
+              <FormField
+                control={form.control}
+                name="donor_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Full Name *</FormLabel>
+                    <FormControl>
+                      <Input {...field} id="donor_name" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email *</FormLabel>
+                    <FormControl>
+                      <Input {...field} id="email" type="email" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone</FormLabel>
+                    <FormControl>
+                      <Input {...field} id="phone" type="tel" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
           </Card>
 
@@ -261,63 +273,99 @@ export const DonationModal = ({ open, onOpenChange, type = 'general' }: Donation
           {type === 'sponsor' && (
             <Card className="p-4 space-y-4">
               <h3 className="font-semibold">Sponsor & Recipient Information</h3>
-              <div>
-                <Label htmlFor="sponsor_info">Your Information (Optional)</Label>
-                <Textarea
-                  id="sponsor_info"
-                  placeholder="Name, organization, or message to be shared with recipient"
-                  value={formData.sponsor_info}
-                  onChange={(e) => setFormData({ ...formData, sponsor_info: e.target.value })}
-                />
-              </div>
-              <div>
-                <Label htmlFor="recipient_info">Recipient Information (If Known)</Label>
-                <Textarea
-                  id="recipient_info"
-                  placeholder="Name or organization of the person/group you're sponsoring"
-                  value={formData.recipient_info}
-                  onChange={(e) => setFormData({ ...formData, recipient_info: e.target.value })}
-                />
-              </div>
+              <FormField
+                control={form.control}
+                name="sponsor_info"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Your Information (Optional)</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        {...field}
+                        id="sponsor_info"
+                        placeholder="Name, organization, or message to be shared with recipient"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="recipient_info"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Recipient Information (If Known)</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        {...field}
+                        id="recipient_info"
+                        placeholder="Name or organization of the person/group you're sponsoring"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </Card>
           )}
 
           {type === 'corporate' && (
             <Card className="p-4 space-y-4">
               <h3 className="font-semibold">Company Information</h3>
-              <div>
-                <Label htmlFor="company_name">Company Name *</Label>
-                <Input
-                  id="company_name"
-                  required
-                  value={formData.company_name}
-                  onChange={(e) => setFormData({ ...formData, company_name: e.target.value })}
-                />
-              </div>
-              <div>
-                <Label htmlFor="message">Partnership Goals</Label>
-                <Textarea
-                  id="message"
-                  placeholder="Tell us about your company and how you'd like to partner with us"
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  rows={4}
-                />
-              </div>
+              <FormField
+                control={form.control}
+                name="company_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Company Name *</FormLabel>
+                    <FormControl>
+                      <Input {...field} id="company_name" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="message"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Partnership Goals</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        {...field}
+                        id="message"
+                        placeholder="Tell us about your company and how you'd like to partner with us"
+                        rows={4}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </Card>
           )}
 
           {type !== 'corporate' && (
-            <div>
-              <Label htmlFor="message">Message (Optional)</Label>
-              <Textarea
-                id="message"
-                placeholder="Share why you're supporting our mission"
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                rows={3}
-              />
-            </div>
+            <FormField
+              control={form.control}
+              name="message"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Message (Optional)</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      {...field}
+                      id="message"
+                      placeholder="Share why you're supporting our mission"
+                      rows={3}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           )}
 
           <div className="bg-gradient-to-r from-primary/10 to-accent/10 p-5 rounded-xl border border-primary/20">
@@ -343,7 +391,8 @@ export const DonationModal = ({ open, onOpenChange, type = 'general' }: Donation
               {loading ? "Processing..." : "Complete Donation"}
             </Button>
           </div>
-        </form>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );
