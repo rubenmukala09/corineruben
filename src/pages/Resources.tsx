@@ -12,11 +12,9 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Download, Shield, ShoppingCart, Star, TrendingUp, Loader2 } from "lucide-react";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import heroResourcesMarketplace from "@/assets/hero-resources-marketplace.jpg";
-import heroResourcesNew from "@/assets/hero-resources-new.jpg";
-import heroResources from "@/assets/hero-resources.jpg";
 import { SEO } from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
+import heroResourcesLibrary from "@/assets/hero-resources-library.jpg";
 
 function Resources() {
   const { addItem } = useCart();
@@ -61,9 +59,7 @@ function Resources() {
   };
 
   const resourcesHeroImages = [
-    { src: heroResourcesMarketplace, alt: "Safety resources and training marketplace" },
-    { src: heroResourcesNew, alt: "Educational materials and guides" },
-    { src: heroResources, alt: "Community accessing helpful resources" }
+    { src: heroResourcesLibrary, alt: "Comprehensive scam prevention resource library" }
   ];
 
   return (

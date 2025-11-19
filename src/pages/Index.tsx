@@ -41,15 +41,12 @@ import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { RotatingHeroText } from "@/components/RotatingHeroText";
 import HeroValueCards from "@/components/HeroValueCards";
 
-// Placeholder imports for hero slideshow images
-// Replace these with your actual generated/sourced images
-import heroSlideshow1 from "@/assets/hero-home-1.jpg";
-import heroSlideshow2 from "@/assets/hero-home-2.jpg";
-import heroSlideshow3 from "@/assets/hero-home-3.jpg";
-import heroSlideshow4 from "@/assets/hero-home-4.jpg";
-import heroSlideshow5 from "@/assets/hero-home-5.jpg";
-import heroSlideshow6 from "@/assets/hero-business-1.jpg";
-import heroSlideshow7 from "@/assets/hero-training-1.jpg";
+// New professional hero images
+import heroSlideshow1 from "@/assets/hero-home-diverse-community.jpg";
+import heroSlideshow2 from "@/assets/hero-home-veteran-family.jpg";
+import heroSlideshow3 from "@/assets/hero-home-helping-parents.jpg";
+import heroSlideshow4 from "@/assets/hero-home-church-workshop.jpg";
+import heroSlideshow5 from "@/assets/hero-home-st-jude-volunteers.jpg";
 
 function Index() {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -61,31 +58,23 @@ function Index() {
   const heroImages = [
     { 
       src: heroSlideshow1, 
-      alt: "Multigenerational family learning scam prevention together" 
+      alt: "Diverse elderly group learning digital safety in community center" 
     },
     { 
       src: heroSlideshow2, 
-      alt: "Veteran protected from online scams" 
+      alt: "Veteran grandfather protected from scams with family support" 
     },
     { 
       src: heroSlideshow3, 
-      alt: "Diverse community workshop on cybersecurity" 
+      alt: "Daughter teaching elderly parents about online safety" 
     },
     { 
       src: heroSlideshow4, 
-      alt: "Grandfather and granddaughter using technology safely" 
+      alt: "Community workshop on scam prevention at local church" 
     },
     { 
       src: heroSlideshow5, 
-      alt: "Couple receiving emergency scam assistance" 
-    },
-    { 
-      src: heroSlideshow6, 
-      alt: "Veteran woman business owner with AI protection" 
-    },
-    { 
-      src: heroSlideshow7, 
-      alt: "Youth teaching seniors about online safety" 
+      alt: "Volunteers teaching seniors digital safety, supporting St. Jude mission" 
     }
   ];
 

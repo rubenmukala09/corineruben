@@ -37,14 +37,10 @@ import {
   Loader2,
   Video,
 } from "lucide-react";
-import trainingSession from "@/assets/training-session.jpg";
-import trainingDiverse1 from "@/assets/training-diverse-1.jpg";
-import heroTrainingNew from "@/assets/hero-training-new.jpg";
-import trainingDiverse2 from "@/assets/training-diverse-2.jpg";
-import heroTraining3d from "@/assets/hero-training-3d.jpg";
 import TestimonialCard from "@/components/TestimonialCard";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
+import heroTrainingMultilingual from "@/assets/hero-training-multilingual.jpg";
 
 function ResponseTimeCallout() {
   const { count: standardCount, ref: standardRef } = useCounterAnimation({ 
@@ -282,11 +278,7 @@ function LearnAndTrain() {
   };
 
   const trainingHeroImages = [
-    { src: trainingDiverse1, alt: "Diverse participants in cybersecurity training" },
-    { src: heroTrainingNew, alt: "Modern training facilities and programs" },
-    { src: trainingDiverse2, alt: "Interactive learning environment" },
-    { src: trainingSession, alt: "Active training session in progress" },
-    { src: heroTraining3d, alt: "Virtual reality training experiences" }
+    { src: heroTrainingMultilingual, alt: "Multilingual scam prevention training for all ages" }
   ];
 
   return (
@@ -512,11 +504,9 @@ function LearnAndTrain() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center max-w-6xl mx-auto">
             <div className="order-2 md:order-1">
-              <img
-                src={trainingSession}
-                alt="Cybersecurity training session"
-                className="rounded-lg shadow-large w-full h-auto object-cover"
-              />
+              <div className="rounded-lg shadow-large w-full h-auto bg-gradient-to-br from-primary/20 to-accent/20 aspect-video flex items-center justify-center">
+                <span className="text-muted-foreground">Training Session Image</span>
+              </div>
             </div>
             <Card className="p-6 bg-card/50 backdrop-blur-sm border-primary/20 order-1 md:order-2">
               <div className="flex flex-col items-center gap-4 text-center md:text-left md:flex-row">
