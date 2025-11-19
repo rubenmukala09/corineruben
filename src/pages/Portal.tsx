@@ -32,13 +32,14 @@ function Portal() {
   const { toast } = useToast();
 
   useEffect(() => {
-    loadUserData();
-    
-    // Set timeout fallback to prevent infinite loading
     const timeout = setTimeout(() => {
-      console.error("Portal loading timeout - forcing loading state to false");
-      setLoading(false);
-    }, 10000);
+      if (loading) {
+        console.error("Portal loading timeout - forcing completion");
+        setLoading(false);
+      }
+    }, 5000);
+
+    loadUserData();
 
     return () => clearTimeout(timeout);
   }, []);
