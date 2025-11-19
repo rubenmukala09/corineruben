@@ -64,7 +64,7 @@ const TrustBar = () => {
       <div className="container mx-auto">
         <div className="relative mx-auto max-w-7xl group/trust">
           {/* Colorful gradient card background with edge fade effects */}
-          <div className="relative rounded-[2rem] py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-10 border-2 border-white/70 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2),0_0_60px_rgba(139,92,246,0.2),0_4px_20px_rgba(139,92,246,0.15),0_8px_40px_rgba(139,92,246,0.1),0_2px_8px_rgba(0,0,0,0.05)] transition-all duration-500 overflow-hidden" style={{ backgroundImage: 'linear-gradient(to right, rgb(147 51 234 / 0.75), rgb(59 130 246 / 0.75), rgb(34 211 238 / 0.75))', transform: 'translateZ(0)' }}>
+          <div className="relative rounded-[2rem] py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-10 border-2 border-white/70 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2),0_0_60px_rgba(139,92,246,0.2),0_4px_20px_rgba(139,92,246,0.15),0_8px_40px_rgba(139,92,246,0.1),0_2px_8px_rgba(0,0,0,0.05)] transition-all duration-500 overflow-hidden" style={{ backgroundImage: 'linear-gradient(to right, rgb(147 51 234 / 0.88), rgb(59 130 246 / 0.88), rgb(34 211 238 / 0.88))', transform: 'translateZ(0)' }}>
             {/* Left edge fade effect */}
             <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white/10 via-transparent to-transparent pointer-events-none z-20" />
             
