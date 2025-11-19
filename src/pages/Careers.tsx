@@ -10,10 +10,6 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Heart, Users, Zap, Target, MapPin, Clock, DollarSign, Briefcase, Star, TrendingUp, Shield, Globe } from "lucide-react";
 import { Link } from "react-router-dom";
-import heroCareersNew from "@/assets/hero-careers-new.jpg";
-import heroCareers3d from "@/assets/hero-careers-3d.jpg";
-import teamCollaboration from "@/assets/team-collaboration.jpg";
-import teamCulture1 from "@/assets/team-culture-1.jpg";
 
 const jobPositions = [
   {
@@ -150,13 +146,6 @@ function Careers() {
     ? jobPositions 
     : jobPositions.filter(job => job.department === selectedDepartment);
 
-  const careersHeroImages = [
-    { src: heroCareersNew, alt: "Join our growing team at InVision Network" },
-    { src: heroCareers3d, alt: "Modern workplace culture and opportunities" },
-    { src: teamCollaboration, alt: "Team members collaborating and innovating" },
-    { src: teamCulture1, alt: "Our inclusive and supportive work culture" }
-  ];
-
   return (
     <>
       <SEO 
@@ -165,11 +154,11 @@ function Careers() {
       />
       <Navigation />
       <Hero 
-        backgroundImages={careersHeroImages} 
         headline="Join Our Mission" 
         subheadline="Help us protect families from AI-powered scams"
         showProtectionBadge
         badgeText="We're Hiring"
+        className="bg-gradient-to-br from-accent via-primary to-primary-dark"
       />
       <TrustBar />
       

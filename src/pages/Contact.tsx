@@ -20,10 +20,6 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { contactFormSchema, formatPhoneNumber } from "@/utils/formValidation";
 import { z } from "zod";
-import heroContactNew from "@/assets/hero-contact-new.jpg";
-import heroContact3d from "@/assets/hero-contact-3d.jpg";
-import customerSupportDiverse from "@/assets/customer-support-diverse.jpg";
-import heroContactSplit from "@/assets/hero-contact-split.jpg";
 
 const contactMethods = [
   {
@@ -132,13 +128,6 @@ function Contact() {
   const messageLength = formData.message.length;
   const maxLength = 500;
 
-  const contactHeroImages = [
-    { src: heroContactNew, alt: "Reach out to our support team" },
-    { src: heroContact3d, alt: "Modern communication channels" },
-    { src: customerSupportDiverse, alt: "Our diverse customer support team ready to help" },
-    { src: heroContactSplit, alt: "Multiple ways to connect with us" }
-  ];
-
   return (
     <>
       <SEO 
@@ -147,11 +136,11 @@ function Contact() {
       />
       <Navigation />
       <Hero 
-        backgroundImages={contactHeroImages} 
         headline="Contact Us" 
         subheadline="We're here to help protect your family"
         showProtectionBadge
         badgeText="Response within 4 hours"
+        className="bg-gradient-to-br from-primary via-accent to-primary-dark"
       />
       <TrustBar />
       

@@ -8,9 +8,6 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
-import heroResourcesNew from "@/assets/hero-resources-new.jpg";
-import heroResources from "@/assets/hero-resources.jpg";
-import heroResourcesMarketplace from "@/assets/hero-resources-marketplace.jpg";
 
 interface Article {
   id: number;
@@ -558,20 +555,14 @@ function Articles() {
     setExpandedArticle(expandedArticle === id ? null : id);
   };
 
-  const articlesHeroImages = [
-    { src: heroResourcesNew, alt: "Educational resources and learning materials" },
-    { src: heroResources, alt: "Community members reading and learning together" },
-    { src: heroResourcesMarketplace, alt: "Digital marketplace for safety resources" }
-  ];
-
   return (
     <div className="min-h-screen">
       <Navigation />
 
       <Hero
-        backgroundImages={articlesHeroImages}
         headline="Scam Prevention Articles & News"
         subheadline="Stay informed about the latest scam threats and protection strategies"
+        className="bg-gradient-to-br from-primary via-accent to-primary-dark"
       />
 
       <TrustBar />

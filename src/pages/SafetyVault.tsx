@@ -6,29 +6,17 @@ import TrustBar from "@/components/TrustBar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Lock, FileText, Users, Shield, CheckCircle, FileCheck, MessageSquare, Globe } from "lucide-react";
-import heroContactNew from "@/assets/hero-contact-new.jpg";
-import heroScamshieldNew from "@/assets/hero-scamshield-new.jpg";
-import eldersHero1 from "@/assets/elders-hero-1.jpg";
-import eldersHero3d1 from "@/assets/elders-hero-3d-1.jpg";
-import teamDiverse1 from "@/assets/team-diverse-1.jpg";
 
 function SafetyVault() {
-  const safetyVaultHeroImages = [
-    { src: heroContactNew, alt: "Secure your family's information" },
-    { src: heroScamshieldNew, alt: "Advanced scam protection shield" },
-    { src: eldersHero1, alt: "Protecting seniors with digital security" },
-    { src: eldersHero3d1, alt: "Modern security visualization" },
-    { src: teamDiverse1, alt: "Our security team protecting your data" }
-  ];
 
   return (
     <div className="min-h-screen">
       <Navigation />
 
       <Hero
-        backgroundImages={safetyVaultHeroImages}
         headline="Family Safety Vault"
         subheadline="Document verification, authentication, and encryption services - we don't store your data, we protect it"
+        className="bg-gradient-to-br from-primary via-primary-dark to-accent"
       >
         <div className="flex flex-col sm:flex-row gap-4 justify-center sm:justify-start">
           <Button asChild variant="default" size="xl">

@@ -17,14 +17,6 @@ import { TimelineVisualization } from "@/components/TimelineVisualization";
 import { InspirationalVerses } from "@/components/InspirationalVerses";
 import { OhioServiceMap } from "@/components/OhioServiceMap";
 import { trackButtonClick } from "@/utils/analyticsTracker";
-import heroAboutNew from "@/assets/hero-about-new.jpg";
-import heroAboutProfessional from "@/assets/hero-about-professional.jpg";
-import heroAbout3d from "@/assets/hero-about-3d.jpg";
-import heroAbout from "@/assets/hero-about.jpg";
-import founderRuben from "@/assets/founder-ruben.jpg";
-import founderCorine from "@/assets/founder-corine.jpg";
-import teamDiverse1 from "@/assets/team-diverse-1.jpg";
-import businessCollaboration from "@/assets/business-collaboration.jpg";
 import { SEO } from "@/components/SEO";
 
 function About() {
@@ -91,13 +83,6 @@ function About() {
     }
   ];
 
-  const aboutHeroImages = [
-    { src: heroAboutNew, alt: "InVision Network team members collaborating" },
-    { src: heroAboutProfessional, alt: "Professional business meeting showcasing teamwork" },
-    { src: heroAbout3d, alt: "Modern 3D representation of our mission" },
-    { src: heroAbout, alt: "Diverse community members we serve" }
-  ];
-
   const values = [
     {
       icon: Shield,
@@ -130,9 +115,9 @@ function About() {
       <Navigation />
       
       <Hero
-        backgroundImages={aboutHeroImages}
         headline="Protecting Families, One Story at a Time"
         subheadline="Founded from personal experience, driven by community impact"
+        className="bg-gradient-to-br from-primary via-primary-dark to-accent"
       />
 
       <TrustBar />
@@ -164,11 +149,9 @@ function About() {
             </ScrollReveal>
             <ScrollReveal delay={200}>
               <div className="relative mt-8 md:mt-0">
-                <img 
-                  src={teamDiverse1} 
-                  alt="InVision Network team working together"
-                  className="rounded-2xl shadow-2xl w-full h-auto border-4 border-primary/20"
-                />
+                <div className="rounded-2xl shadow-2xl w-full aspect-video bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center border-4 border-primary/20">
+                  <span className="text-muted-foreground">Team Collaboration</span>
+                </div>
                 <div className="absolute -bottom-4 sm:-bottom-6 -right-4 sm:-right-6 bg-primary text-primary-foreground p-4 sm:p-6 md:p-8 rounded-xl shadow-xl">
                   <div className="text-3xl sm:text-4xl md:text-5xl font-bold mb-1 sm:mb-2">500+</div>
                   <div className="text-xs sm:text-sm md:text-base">Families Protected</div>
@@ -221,11 +204,9 @@ function About() {
             <ScrollReveal delay={100}>
               <Card className="p-6 md:p-8 hover:shadow-2xl transition-all duration-500 border-2 border-border/50 hover:border-primary/50">
                 <div className="relative mb-6">
-                  <img 
-                    src={founderRuben} 
-                    alt="Ruben - Co-Founder & CEO"
-                    className="w-full aspect-square object-cover rounded-xl mb-4"
-                  />
+                  <div className="w-full aspect-square bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl mb-4 flex items-center justify-center">
+                    <span className="text-muted-foreground">Ruben - CEO</span>
+                  </div>
                   <Badge className="absolute top-4 right-4 bg-primary">Co-Founder & CEO</Badge>
                 </div>
                 <h3 className="text-2xl md:text-3xl font-bold mb-2">Ruben</h3>
@@ -241,11 +222,9 @@ function About() {
             <ScrollReveal delay={200}>
               <Card className="p-6 md:p-8 hover:shadow-2xl transition-all duration-500 border-2 border-border/50 hover:border-primary/50">
                 <div className="relative mb-6">
-              <img
-                src={founderCorine}
-                alt="Corine - Co-Founder & COO"
-                    className="w-full aspect-square object-cover rounded-xl mb-4"
-                  />
+              <div className="w-full aspect-square bg-gradient-to-br from-accent/30 to-primary/30 rounded-xl mb-4 flex items-center justify-center">
+                <span className="text-muted-foreground">Corine - COO</span>
+              </div>
                   <Badge className="absolute top-4 right-4 bg-primary">Co-Founder & COO</Badge>
                 </div>
                 <h3 className="text-2xl md:text-3xl font-bold mb-2">Corine</h3>

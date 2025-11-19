@@ -34,11 +34,6 @@ import {
   Target,
   BarChart,
 } from "lucide-react";
-import heroServices1 from "@/assets/hero-services-1.jpg";
-import heroServices2 from "@/assets/hero-services-2.jpg";
-import heroServices3 from "@/assets/hero-services-3.jpg";
-import heroServices4 from "@/assets/hero-services-4.jpg";
-import heroServices5 from "@/assets/hero-services-5.jpg";
 
 const Services = () => {
   const [isMonthly, setIsMonthly] = useState(true);
@@ -216,14 +211,6 @@ const Services = () => {
     },
   ];
 
-  const servicesHeroImages = [
-    { src: heroServices1, alt: "Professional services for your business" },
-    { src: heroServices2, alt: "Modern workspace solutions" },
-    { src: heroServices3, alt: "Collaborative service delivery" },
-    { src: heroServices4, alt: "Expert team member ready to assist" },
-    { src: heroServices5, alt: "Innovative service offerings" }
-  ];
-
   return (
     <>
       <SEO
@@ -236,10 +223,10 @@ const Services = () => {
         <Navigation />
         
         <Hero
-          backgroundImages={servicesHeroImages}
           headline="Comprehensive Protection for Everyone"
           subheadline="From individuals to enterprises, we provide tailored cybersecurity solutions that protect what matters most to you."
           showScrollIndicator
+          className="bg-gradient-to-br from-primary via-primary-dark to-accent"
         >
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
             <Button
