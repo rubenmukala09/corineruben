@@ -82,6 +82,22 @@ function Index() {
     {
       headline: "Protecting Ohio Families from AI-Powered Scams",
       subheadline: "Your parents didn't grow up with technology. Don't let scammers take advantage of that."
+    },
+    {
+      headline: "Veteran Families Deserve Extra Protection",
+      subheadline: "15% discount for those who served. Because protecting our protectors is our mission."
+    },
+    {
+      headline: "Teach Your Parents Digital Safety",
+      subheadline: "Free family training sessions to keep your loved ones safe from online fraud."
+    },
+    {
+      headline: "Community-Powered Scam Prevention",
+      subheadline: "Join hundreds of Ohio families learning to outsmart scammers together."
+    },
+    {
+      headline: "Every Plan Supports St. Jude Children's Hospital",
+      subheadline: "Protect your family while helping fight childhood cancer. 10% of profits donated."
     }
   ];
 
@@ -159,7 +175,7 @@ function Index() {
         showScrollIndicator={true}
         overlay={true}
       >
-        <RotatingHeroText messages={rotatingMessages} interval={6000} />
+        <RotatingHeroText messages={rotatingMessages} interval={5000} />
       </Hero>
 
       <TrustBar />
