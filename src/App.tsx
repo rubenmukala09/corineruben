@@ -164,6 +164,54 @@ const ApplicationPending = lazy(() => {
   });
 });
 
+const Pending = lazy(() => {
+  performanceMonitor.startTracking('Pending');
+  return import("./pages/admin/Pending").then(module => {
+    performanceMonitor.endTracking('Pending');
+    return module;
+  });
+});
+
+const PagesManagement = lazy(() => {
+  performanceMonitor.startTracking('PagesManagement');
+  return import("./pages/admin/PagesManagement").then(module => {
+    performanceMonitor.endTracking('PagesManagement');
+    return module;
+  });
+});
+
+const ClientMessages = lazy(() => {
+  performanceMonitor.startTracking('ClientMessages');
+  return import("./pages/admin/ClientMessages").then(module => {
+    performanceMonitor.endTracking('ClientMessages');
+    return module;
+  });
+});
+
+const CommunicationsInbox = lazy(() => {
+  performanceMonitor.startTracking('CommunicationsInbox');
+  return import("./pages/admin/CommunicationsInbox").then(module => {
+    performanceMonitor.endTracking('CommunicationsInbox');
+    return module;
+  });
+});
+
+const NewsletterManagement = lazy(() => {
+  performanceMonitor.startTracking('NewsletterManagement');
+  return import("./pages/admin/NewsletterManagement").then(module => {
+    performanceMonitor.endTracking('NewsletterManagement');
+    return module;
+  });
+});
+
+const BillingSettings = lazy(() => {
+  performanceMonitor.startTracking('BillingSettings');
+  return import("./pages/admin/settings/BillingSettings").then(module => {
+    performanceMonitor.endTracking('BillingSettings');
+    return module;
+  });
+});
+
 const Admin = lazy(() => {
   performanceMonitor.startTracking('Admin');
   return import("./pages/Admin").then(module => {
@@ -555,6 +603,12 @@ function AnimatedRoutes() {
         <Route path="/admin/content/articles/:id" element={<PageTransition><AdminRoute><ArticleEditor /></AdminRoute></PageTransition>} />
         <Route path="/admin/articles/preview" element={<PageTransition><AdminRoute><ArticlePreview /></AdminRoute></PageTransition>} />
         <Route path="/admin/content/team" element={<PageTransition><AdminRoute><TeamAdmin /></AdminRoute></PageTransition>} />
+        <Route path="/admin/pending" element={<PageTransition><AdminRoute><Pending /></AdminRoute></PageTransition>} />
+        <Route path="/admin/content/pages" element={<PageTransition><AdminRoute><PagesManagement /></AdminRoute></PageTransition>} />
+        <Route path="/admin/clients/messages" element={<PageTransition><AdminRoute><ClientMessages /></AdminRoute></PageTransition>} />
+        <Route path="/admin/communications/inbox" element={<PageTransition><AdminRoute><CommunicationsInbox /></AdminRoute></PageTransition>} />
+        <Route path="/admin/communications/newsletter" element={<PageTransition><AdminRoute><NewsletterManagement /></AdminRoute></PageTransition>} />
+        <Route path="/admin/settings/billing" element={<PageTransition><AdminRoute><BillingSettings /></AdminRoute></PageTransition>} />
         <Route path="/admin/email-campaigns" element={<PageTransition><AdminRoute><EmailCampaigns /></AdminRoute></PageTransition>} />
         <Route path="/admin/analytics" element={<PageTransition><AdminRoute><Analytics /></AdminRoute></PageTransition>} />
         <Route path="/admin/clients/businesses" element={<PageTransition><AdminRoute><BusinessClients /></AdminRoute></PageTransition>} />

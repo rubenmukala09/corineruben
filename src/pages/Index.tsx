@@ -578,7 +578,7 @@ function Index() {
                   }}
                   className="hover:opacity-90"
                 >
-                  <Link to="/admin/testimonials">Upload First Video</Link>
+                  <Link to="/admin/content/testimonials">Upload First Video</Link>
                 </Button>
               </div>
             </div>
