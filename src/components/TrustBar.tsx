@@ -63,8 +63,8 @@ const TrustBar = () => {
     <div ref={counterRef} className="relative z-10 px-4 -mt-10" role="complementary" aria-label="Trust indicators">
       <div className="container mx-auto">
         <div className="relative mx-auto max-w-7xl group/trust">
-          {/* Colorful gradient card background with edge effects */}
-          <div className="relative rounded-[2rem] py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-10 backdrop-blur-lg border-2 border-white/70 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2),0_4px_20px_rgba(139,92,246,0.15),0_8px_40px_rgba(139,92,246,0.1),0_2px_8px_rgba(0,0,0,0.05),inset_0_0_60px_rgba(255,255,255,0.08)] transition-all duration-500 overflow-hidden before:absolute before:inset-0 before:rounded-[2rem] before:shadow-[inset_20px_0_40px_-20px_rgba(0,0,0,0.3),inset_-20px_0_40px_-20px_rgba(0,0,0,0.3)] before:pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, hsl(270, 55%, 56%), hsl(214, 62%, 60%), hsl(188, 58%, 53%))', transform: 'translateZ(0)' }}>
+          {/* Modern gradient card background with edge effects */}
+          <div className="relative rounded-[2rem] py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-10 backdrop-blur-lg border-2 border-white/80 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.25),0_6px_24px_rgba(16,185,129,0.2),0_12px_48px_rgba(16,185,129,0.12),0_2px_8px_rgba(0,0,0,0.06),inset_0_0_60px_rgba(255,255,255,0.1)] transition-all duration-500 overflow-hidden before:absolute before:inset-0 before:rounded-[2rem] before:shadow-[inset_20px_0_40px_-20px_rgba(0,0,0,0.3),inset_-20px_0_40px_-20px_rgba(0,0,0,0.3)] before:pointer-events-none" style={{ backgroundImage: 'linear-gradient(135deg, hsl(160, 65%, 48%), hsl(200, 70%, 50%), hsl(240, 65%, 55%))', transform: 'translateZ(0)' }}>
             {/* Desktop: Horizontal layout */}
             <div className="hidden sm:flex justify-center items-center gap-2 md:gap-4 lg:gap-6 relative z-10">
               {trustIndicators.map((item, index) => (
@@ -82,13 +82,13 @@ const TrustBar = () => {
                 >
                   
                   <div 
-                    className="relative w-10 h-10 sm:w-11 sm:h-11 md:w-14 md:h-14 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover/badge:scale-110 group-hover/badge:rotate-3 transition-all duration-500 shadow-[inset_0_1px_2px_rgba(0,0,0,0.1),0_4px_25px_rgba(139,92,246,0.4)] group-hover/badge:shadow-[inset_0_1px_2px_rgba(0,0,0,0.1),0_8px_40px_rgba(139,92,246,0.7)] border-2 border-white/60 group-hover/badge:border-white/70 overflow-hidden"
+                    className="relative w-10 h-10 sm:w-11 sm:h-11 md:w-14 md:h-14 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover/badge:scale-110 group-hover/badge:rotate-3 transition-all duration-500 shadow-[inset_0_1px_2px_rgba(0,0,0,0.1),0_4px_25px_rgba(16,185,129,0.4)] group-hover/badge:shadow-[inset_0_1px_2px_rgba(0,0,0,0.1),0_8px_40px_rgba(16,185,129,0.7)] border-2 border-white/70 group-hover/badge:border-white/90 overflow-hidden"
                     style={{ 
                       animationDelay: `${index * 200 + 500}ms`,
-                      backgroundImage: index === 0 ? 'linear-gradient(135deg, #3b82f6, #8b5cf6)' :
-                                       index === 1 ? 'linear-gradient(135deg, #10b981, #06b6d4)' :
-                                       index === 2 ? 'linear-gradient(135deg, #f59e0b, #ef4444)' :
-                                       'linear-gradient(135deg, #ec4899, #8b5cf6)',
+                      backgroundImage: index === 0 ? 'linear-gradient(135deg, hsl(160, 70%, 45%), hsl(180, 75%, 48%))' :
+                                       index === 1 ? 'linear-gradient(135deg, hsl(200, 75%, 50%), hsl(220, 70%, 55%))' :
+                                       index === 2 ? 'linear-gradient(135deg, hsl(240, 70%, 55%), hsl(260, 65%, 58%))' :
+                                       'linear-gradient(135deg, hsl(180, 65%, 48%), hsl(160, 70%, 45%))',
                       transform: 'translateZ(0)'
                     }}
                     aria-hidden="true"
@@ -115,12 +115,12 @@ const TrustBar = () => {
                   }}
                   role="listitem"
                 >
-                  <div className="relative w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 group-active/badge:scale-110 transition-all duration-500 shadow-[inset_0_1px_2px_rgba(0,0,0,0.1),0_4px_25px_rgba(139,92,246,0.4)] group-active/badge:shadow-[inset_0_1px_2px_rgba(0,0,0,0.1),0_8px_40px_rgba(139,92,246,0.7)] border-2 border-white/60 group-active/badge:border-white/70 overflow-hidden" 
+                  <div className="relative w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 group-active/badge:scale-110 transition-all duration-500 shadow-[inset_0_1px_2px_rgba(0,0,0,0.1),0_4px_25px_rgba(16,185,129,0.4)] group-active/badge:shadow-[inset_0_1px_2px_rgba(0,0,0,0.1),0_8px_40px_rgba(16,185,129,0.7)] border-2 border-white/70 group-active/badge:border-white/90 overflow-hidden" 
                     style={{ 
-                      backgroundImage: index === 0 ? 'linear-gradient(135deg, #3b82f6, #8b5cf6)' :
-                                       index === 1 ? 'linear-gradient(135deg, #10b981, #06b6d4)' :
-                                       index === 2 ? 'linear-gradient(135deg, #f59e0b, #ef4444)' :
-                                       'linear-gradient(135deg, #ec4899, #8b5cf6)',
+                      backgroundImage: index === 0 ? 'linear-gradient(135deg, hsl(160, 70%, 45%), hsl(180, 75%, 48%))' :
+                                       index === 1 ? 'linear-gradient(135deg, hsl(200, 75%, 50%), hsl(220, 70%, 55%))' :
+                                       index === 2 ? 'linear-gradient(135deg, hsl(240, 70%, 55%), hsl(260, 65%, 58%))' :
+                                       'linear-gradient(135deg, hsl(180, 65%, 48%), hsl(160, 70%, 45%))',
                       transform: 'translateZ(0)'
                     }}
                     aria-hidden="true"
