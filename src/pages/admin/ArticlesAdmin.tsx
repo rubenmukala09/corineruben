@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { AdminSidebar } from "@/components/AdminSidebar";
 import { AdminTopBar } from "@/components/AdminTopBar";
 
@@ -88,61 +90,47 @@ const categoryColors = {
   News: "bg-teal-100 text-teal-700",
 };
 
-// Mock data - replace with actual API calls
-const mockArticles: Article[] = [
-  {
-    id: "1",
-    title: "How to Protect Your Family from AI-Powered Scams in 2024",
-    content: "Learn the latest techniques scammers are using...",
-    author: { name: "Sarah Johnson", avatar: "" },
-    category: "AI Scams",
-    status: "published",
-    publishedDate: "2024-01-15",
-    featuredImage: "/api/placeholder/60/40",
-    views: 1247,
-    createdAt: "2024-01-15",
-  },
-  {
-    id: "2",
-    title: "Leveraging AI for Small Business Growth",
-    content: "Discover practical ways to use AI...",
-    author: { name: "Michael Chen", avatar: "" },
-    category: "Business AI",
-    status: "published",
-    publishedDate: "2024-01-10",
-    featuredImage: "/api/placeholder/60/40",
-    views: 892,
-    createdAt: "2024-01-10",
-  },
-  {
-    id: "3",
-    title: "Teaching Seniors About AI Safety",
-    content: "A comprehensive guide for caregivers...",
-    author: { name: "Emily Rodriguez", avatar: "" },
-    category: "Family Safety",
-    status: "draft",
-    featuredImage: "/api/placeholder/60/40",
-    views: 0,
-    createdAt: "2024-01-20",
-  },
-  {
-    id: "4",
-    title: "Latest AI Regulations You Need to Know",
-    content: "Breaking down new AI legislation...",
-    author: { name: "David Park", avatar: "" },
-    category: "News",
-    status: "scheduled",
-    scheduledDate: "2024-01-25",
-    featuredImage: "/api/placeholder/60/40",
-    views: 0,
-    createdAt: "2024-01-18",
-  },
-];
 
 export default function ArticlesAdmin() {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  // Fetch articles from database
+  const { data: articlesData, isLoading } = useQuery({
+    queryKey: ["articles"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("articles")
+        .select(`
+          *,
+          author:profiles(first_name, last_name, profile_photo_url)
+        `)
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+
+      return data.map(article => ({
+        id: article.id,
+        title: article.title,
+        content: article.content,
+        author: {
+          name: article.author ? `${article.author.first_name || ''} ${article.author.last_name || ''}`.trim() : 'Unknown',
+          avatar: article.author?.profile_photo_url
+        },
+        category: article.category as Article['category'],
+        status: article.status as Article['status'],
+        publishedDate: article.published_at,
+        scheduledDate: article.scheduled_for,
+        featuredImage: article.featured_image_url,
+        views: article.views || 0,
+        createdAt: article.created_at
+      }));
+    }
+  });
+
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [articles, setArticles] = useState<Article[]>(mockArticles);
-  const [filteredArticles, setFilteredArticles] = useState<Article[]>(mockArticles);
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
@@ -152,10 +140,15 @@ export default function ArticlesAdmin() {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [articleToDelete, setArticleToDelete] = useState<string | null>(null);
+
+  // Update local state when data changes
+  useEffect(() => {
+    if (articlesData) {
+      setArticles(articlesData);
+    }
+  }, [articlesData]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
-  const { toast } = useToast();
-  const navigate = useNavigate();
 
   useEffect(() => {
     applyFiltersAndSort();

@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { AlertTriangle, Package, TrendingDown, TrendingUp, Plus, Minus, Download, Upload, Search } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -34,51 +37,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-// Mock inventory data
-const mockInventory = [
-  {
-    id: "1",
-    name: "USB Data Blocker 2-Pack",
-    sku: "USB-BLOCK-02",
-    image: "/placeholder.svg",
-    currentStock: 5,
-    reserved: 2,
-    threshold: 10,
-    lastUpdated: "2025-01-15T10:00:00",
-  },
-  {
-    id: "2",
-    name: "Webcam Privacy Covers 3-pack",
-    sku: "CAM-COVER-03",
-    image: "/placeholder.svg",
-    currentStock: 8,
-    reserved: 1,
-    threshold: 10,
-    lastUpdated: "2025-01-14T15:30:00",
-  },
-  {
-    id: "3",
-    name: "RFID-Blocking Card Sleeves 5-pack",
-    sku: "RFID-SLEEVE-05",
-    image: "/placeholder.svg",
-    currentStock: 3,
-    reserved: 0,
-    threshold: 10,
-    lastUpdated: "2025-01-13T09:15:00",
-  },
-  {
-    id: "4",
-    name: "Password Notebook Hardcover",
-    sku: "PASS-BOOK-HC",
-    image: "/placeholder.svg",
-    currentStock: 45,
-    reserved: 5,
-    threshold: 10,
-    lastUpdated: "2025-01-15T14:20:00",
-  },
-];
 
 const InventoryManagement = () => {
+  const { toast } = useToast();
   const [adjustModalOpen, setAdjustModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [adjustmentType, setAdjustmentType] = useState("add");
@@ -86,6 +47,30 @@ const InventoryManagement = () => {
   const [adjustmentReason, setAdjustmentReason] = useState("");
   const [adjustmentNotes, setAdjustmentNotes] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+
+  // Fetch products with inventory data
+  const { data: inventory = [], isLoading } = useQuery({
+    queryKey: ["inventory"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .order("name");
+
+      if (error) throw error;
+
+      return data.map(product => ({
+        id: product.id,
+        name: product.name,
+        sku: product.sku,
+        image: product.image_url || "/placeholder.svg",
+        currentStock: product.stock_quantity || 0,
+        reserved: 0, // Calculate from inventory_movements if needed
+        threshold: product.low_stock_threshold || 10,
+        lastUpdated: product.updated_at
+      }));
+    }
+  });
 
   const getStockStatus = (available: number, threshold: number) => {
     if (available === 0) return { label: "Out of Stock", color: "destructive", icon: "✗" };
@@ -101,17 +86,45 @@ const InventoryManagement = () => {
     setAdjustmentNotes("");
   };
 
-  const quickAdjust = (product: any, amount: number) => {
-    console.log(`Quick adjust ${product.name} by ${amount}`);
-    // In real app, this would update the database
+  const quickAdjust = async (product: any, amount: number) => {
+    const newQuantity = product.currentStock + amount;
+    
+    const { error } = await supabase
+      .from("products")
+      .update({ stock_quantity: newQuantity })
+      .eq("id", product.id);
+
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to adjust stock",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Log the movement
+    await supabase.from("inventory_movements").insert({
+      product_id: product.id,
+      quantity: Math.abs(amount),
+      previous_quantity: product.currentStock,
+      new_quantity: newQuantity,
+      movement_type: amount > 0 ? "adjustment_add" : "adjustment_remove",
+      notes: "Quick adjustment"
+    });
+
+    toast({
+      title: "Stock Updated",
+      description: `${product.name} stock adjusted by ${amount}`
+    });
   };
 
-  const lowStockProducts = mockInventory.filter(
+  const lowStockProducts = inventory.filter(
     (item) => item.currentStock - item.reserved <= item.threshold && item.currentStock - item.reserved > 0
   );
-  const outOfStockProducts = mockInventory.filter((item) => item.currentStock - item.reserved === 0);
+  const outOfStockProducts = inventory.filter((item) => item.currentStock - item.reserved === 0);
 
-  const filteredInventory = mockInventory.filter((item) =>
+  const filteredInventory = inventory.filter((item) =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     item.sku.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -176,7 +189,7 @@ const InventoryManagement = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Total Products</p>
-                <p className="text-2xl font-bold">{mockInventory.length}</p>
+                <p className="text-2xl font-bold">{inventory.length}</p>
               </div>
               <Package className="h-8 w-8 text-primary" />
             </div>
@@ -186,7 +199,7 @@ const InventoryManagement = () => {
               <div>
                 <p className="text-sm text-muted-foreground">In Stock</p>
                 <p className="text-2xl font-bold text-success">
-                  {mockInventory.filter((i) => i.currentStock - i.reserved > i.threshold).length}
+                  {inventory.filter((i) => i.currentStock - i.reserved > i.threshold).length}
                 </p>
               </div>
               <TrendingUp className="h-8 w-8 text-success" />

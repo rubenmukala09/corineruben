@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Package, Printer, Eye, MoreVertical, Download, TrendingUp, DollarSign, ShoppingCart, AlertTriangle } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,48 +34,56 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-// Mock data
-const mockOrders = [
-  {
-    id: "1",
-    orderNumber: "ORD-2024-0001",
-    customer: { name: "John Smith", avatar: null, email: "john@example.com" },
-    items: 3,
-    total: 149.0,
-    paymentStatus: "paid",
-    fulfillmentStatus: "unfulfilled",
-    date: "2025-01-15T14:30:00",
-    itemImages: ["/placeholder.svg", "/placeholder.svg"],
-  },
-  {
-    id: "2",
-    orderNumber: "ORD-2024-0002",
-    customer: { name: "Sarah Johnson", avatar: null, email: "sarah@example.com" },
-    items: 2,
-    total: 79.98,
-    paymentStatus: "paid",
-    fulfillmentStatus: "fulfilled",
-    date: "2025-01-15T12:15:00",
-    itemImages: ["/placeholder.svg"],
-  },
-  {
-    id: "3",
-    orderNumber: "ORD-2024-0003",
-    customer: { name: "Mike Davis", avatar: null, email: "mike@example.com" },
-    items: 1,
-    total: 29.0,
-    paymentStatus: "pending",
-    fulfillmentStatus: "unfulfilled",
-    date: "2025-01-15T10:45:00",
-    itemImages: ["/placeholder.svg"],
-  },
-];
 
 const OrdersList = () => {
   const navigate = useNavigate();
   const [selectedOrders, setSelectedOrders] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState("all");
+
+  // Fetch orders from database
+  const { data: orders = [], isLoading } = useQuery({
+    queryKey: ["orders"],
+    queryFn: async () => {
+      const { data: ordersData, error: ordersError } = await supabase
+        .from("partner_orders")
+        .select(`
+          *,
+          customer:profiles(first_name, last_name, email)
+        `)
+        .order("created_at", { ascending: false });
+
+      if (ordersError) throw ordersError;
+
+      // Get item counts for each order
+      const ordersWithItems = await Promise.all(
+        ordersData.map(async (order) => {
+          const { count } = await supabase
+            .from("order_items")
+            .select("*", { count: "exact", head: true })
+            .eq("order_id", order.id);
+
+          return {
+            id: order.id,
+            orderNumber: order.order_number,
+            customer: {
+              name: order.customer ? `${order.customer.first_name || ''} ${order.customer.last_name || ''}`.trim() : 'Unknown',
+              avatar: null,
+              email: order.customer?.email || ''
+            },
+            items: count || 0,
+            total: order.total_amount,
+            paymentStatus: order.payment_status,
+            fulfillmentStatus: order.status,
+            date: order.created_at,
+            itemImages: ["/placeholder.svg"]
+          };
+        })
+      );
+
+      return ordersWithItems;
+    }
+  });
 
   const getPaymentStatusBadge = (status: string) => {
     const variants: Record<string, { variant: any; icon: string; label: string }> = {
@@ -105,7 +115,7 @@ const OrdersList = () => {
     );
   };
 
-  const filteredOrders = mockOrders.filter((order) => {
+  const filteredOrders = orders.filter((order) => {
     const matchesSearch = 
       order.orderNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
       order.customer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -119,10 +129,10 @@ const OrdersList = () => {
     return matchesSearch;
   });
 
-  const unfulfilledCount = mockOrders.filter((o) => o.fulfillmentStatus === "unfulfilled").length;
-  const todaysOrders = mockOrders.length;
-  const todaysRevenue = mockOrders.reduce((sum, o) => sum + o.total, 0);
-  const avgOrderValue = todaysRevenue / todaysOrders;
+  const unfulfilledCount = orders.filter((o) => o.fulfillmentStatus === "unfulfilled").length;
+  const todaysOrders = orders.length;
+  const todaysRevenue = orders.reduce((sum, o) => sum + o.total, 0);
+  const avgOrderValue = orders.length > 0 ? todaysRevenue / todaysOrders : 0;
 
   return (
     <div className="min-h-screen bg-background">
