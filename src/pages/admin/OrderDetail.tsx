@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Printer, Mail, Package, X, MapPin, CreditCard, Clock, CheckCircle, Truck } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -27,80 +30,111 @@ import {
 } from "@/components/ui/dialog";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
-// Mock order data
-const mockOrder = {
-  id: "1",
-  orderNumber: "ORD-2024-0001",
-  date: "2025-01-15T14:30:00",
-  paymentStatus: "paid",
-  fulfillmentStatus: "unfulfilled",
-  customer: {
-    name: "John Smith",
-    email: "john@example.com",
-    phone: "+1 (555) 123-4567",
-  },
-  shippingAddress: {
-    street: "123 Main Street",
-    city: "Dayton",
-    state: "OH",
-    zip: "45402",
-    country: "United States",
-  },
-  billingAddress: {
-    sameAsShipping: true,
-  },
-  items: [
-    {
-      id: "1",
-      name: "USB Data Blocker 2-Pack",
-      variant: null,
-      quantity: 2,
-      price: 12.99,
-      image: "/placeholder.svg",
-      type: "physical",
-      fulfilled: false,
-    },
-    {
-      id: "2",
-      name: "Scam-Proof Playbook",
-      variant: null,
-      quantity: 1,
-      price: 29.0,
-      image: "/placeholder.svg",
-      type: "digital",
-      downloads: 2,
-    },
-  ],
-  payment: {
-    method: "Visa ****4242",
-    transactionId: "ch_3abc123def456",
-    gateway: "Stripe",
-    amount: 149.0,
-  },
-  summary: {
-    subtotal: 119.97,
-    shipping: 8.99,
-    tax: 10.24,
-    discount: 10.0,
-    discountCode: "SAVE10",
-    total: 129.2,
-  },
-  timeline: [
-    { type: "created", description: "Order placed", timestamp: "2025-01-15T14:30:00", user: "Customer" },
-    { type: "paid", description: "Payment received", timestamp: "2025-01-15T14:31:00", user: "System" },
-  ],
-  notes: [
-    { id: "1", text: "Customer requested gift wrapping", timestamp: "2025-01-15T14:35:00", user: "Admin" },
-  ],
-};
 
 const OrderDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const { toast } = useToast();
   const [refundModalOpen, setRefundModalOpen] = useState(false);
   const [refundType, setRefundType] = useState("full");
   const [refundAmount, setRefundAmount] = useState("");
   const [note, setNote] = useState("");
+
+  // Fetch order details
+  const { data: order, isLoading, error } = useQuery({
+    queryKey: ["order", id],
+    queryFn: async () => {
+      const { data: orderData, error: orderError } = await supabase
+        .from("partner_orders")
+        .select(`
+          *,
+          customer:profiles(first_name, last_name, email, phone, address_street, address_city, address_state, address_zip)
+        `)
+        .eq("id", id)
+        .single();
+
+      if (orderError) throw orderError;
+
+      const { data: itemsData, error: itemsError } = await supabase
+        .from("order_items")
+        .select("*")
+        .eq("order_id", id);
+
+      if (itemsError) throw itemsError;
+
+      return {
+        id: orderData.id,
+        orderNumber: orderData.order_number,
+        date: orderData.created_at,
+        paymentStatus: orderData.payment_status,
+        fulfillmentStatus: orderData.status,
+        customer: {
+          name: orderData.customer ? `${orderData.customer.first_name || ''} ${orderData.customer.last_name || ''}`.trim() : 'Unknown',
+          email: orderData.customer?.email || '',
+          phone: orderData.customer?.phone || ''
+        },
+        shippingAddress: {
+          street: orderData.shipping_address?.street || orderData.customer?.address_street || '',
+          city: orderData.shipping_address?.city || orderData.customer?.address_city || '',
+          state: orderData.shipping_address?.state || orderData.customer?.address_state || '',
+          zip: orderData.shipping_address?.zip || orderData.customer?.address_zip || '',
+          country: 'United States'
+        },
+        billingAddress: { sameAsShipping: true },
+        items: itemsData.map(item => ({
+          id: item.id,
+          name: item.product_name,
+          variant: item.variant_name,
+          quantity: item.quantity,
+          price: item.unit_price,
+          image: "/placeholder.svg",
+          type: "physical",
+          fulfilled: false
+        })),
+        payment: {
+          method: orderData.payment_method || 'Card',
+          transactionId: orderData.stripe_payment_intent_id || 'N/A',
+          gateway: 'Stripe',
+          amount: orderData.total_amount
+        },
+        summary: {
+          subtotal: orderData.subtotal || 0,
+          shipping: orderData.shipping_cost || 0,
+          tax: orderData.tax_amount || 0,
+          discount: orderData.discount_amount || 0,
+          discountCode: orderData.discount_code || '',
+          total: orderData.total_amount
+        },
+        timeline: [
+          { type: "created", description: "Order placed", timestamp: orderData.created_at, user: "Customer" }
+        ],
+        notes: []
+      };
+    },
+    enabled: !!id
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading order...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !order) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <p className="text-destructive mb-4">Order not found</p>
+          <Button onClick={() => navigate("/admin/ecommerce/orders")}>Back to Orders</Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -113,9 +147,9 @@ const OrderDetail = () => {
                 <ArrowLeft className="h-5 w-5" />
               </Button>
               <div>
-                <h1 className="text-2xl font-bold">{mockOrder.orderNumber}</h1>
+                <h1 className="text-2xl font-bold">{order.orderNumber}</h1>
                 <p className="text-sm text-muted-foreground">
-                  {new Date(mockOrder.date).toLocaleString("en-US", {
+                  {new Date(order.date).toLocaleString("en-US", {
                     month: "long",
                     day: "numeric",
                     year: "numeric",
@@ -125,11 +159,11 @@ const OrderDetail = () => {
                 </p>
               </div>
               <div className="flex gap-2">
-                <Badge variant={mockOrder.paymentStatus === "paid" ? "success" : "outline"}>
-                  {mockOrder.paymentStatus}
+                <Badge variant={order.paymentStatus === "paid" ? "success" : "outline"}>
+                  {order.paymentStatus}
                 </Badge>
-                <Badge variant={mockOrder.fulfillmentStatus === "fulfilled" ? "success" : "outline"}>
-                  {mockOrder.fulfillmentStatus}
+                <Badge variant={order.fulfillmentStatus === "fulfilled" ? "success" : "outline"}>
+                  {order.fulfillmentStatus}
                 </Badge>
               </div>
             </div>
@@ -162,7 +196,7 @@ const OrderDetail = () => {
             <Card className="p-6">
               <h2 className="mb-4 text-xl font-semibold">Order Items</h2>
               <div className="space-y-4">
-                {mockOrder.items.map((item) => (
+                {order.items.map((item) => (
                   <div key={item.id} className="flex gap-4 rounded-lg border p-4">
                     <img src={item.image} alt={item.name} className="h-20 w-20 rounded object-cover" />
                     <div className="flex-1">
@@ -207,7 +241,6 @@ const OrderDetail = () => {
                           <Button variant="outline" size="sm">
                             Resend Download Link
                           </Button>
-                          <p className="mt-1 text-xs text-muted-foreground">Downloaded {item.downloads} times</p>
                         </div>
                       )}
                     </div>
@@ -220,15 +253,13 @@ const OrderDetail = () => {
             <Card className="p-6">
               <h2 className="mb-4 text-xl font-semibold">Order Timeline</h2>
               <div className="space-y-4">
-                {mockOrder.timeline.map((event, index) => (
+                {order.timeline.map((event, index) => (
                   <div key={index} className="flex gap-4">
                     <div className="flex flex-col items-center">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary">
-                        {event.type === "created" && <Package className="h-4 w-4 text-primary-foreground" />}
-                        {event.type === "paid" && <CheckCircle className="h-4 w-4 text-primary-foreground" />}
-                        {event.type === "shipped" && <Truck className="h-4 w-4 text-primary-foreground" />}
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
+                        <div className="h-2 w-2 rounded-full bg-primary" />
                       </div>
-                      {index < mockOrder.timeline.length - 1 && <div className="h-full w-0.5 bg-border" />}
+                      {index < order.timeline.length - 1 && <div className="h-full w-0.5 bg-border" />}
                     </div>
                     <div className="flex-1 pb-4">
                       <p className="font-medium">{event.description}</p>
@@ -245,7 +276,7 @@ const OrderDetail = () => {
             <Card className="p-6">
               <h2 className="mb-4 text-xl font-semibold">Internal Notes</h2>
               <div className="space-y-4">
-                {mockOrder.notes.map((note) => (
+                {order.notes.map((note) => (
                   <div key={note.id} className="rounded-lg border p-3">
                     <p className="text-sm">{note.text}</p>
                     <p className="mt-1 text-xs text-muted-foreground">
@@ -269,12 +300,12 @@ const OrderDetail = () => {
             <Card className="p-4">
               <h3 className="mb-3 font-semibold">Customer Information</h3>
               <div className="space-y-2">
-                <p className="font-medium">{mockOrder.customer.name}</p>
-                <a href={`mailto:${mockOrder.customer.email}`} className="block text-sm text-primary hover:underline">
-                  {mockOrder.customer.email}
+                <p className="font-medium">{order.customer.name}</p>
+                <a href={`mailto:${order.customer.email}`} className="block text-sm text-primary hover:underline">
+                  {order.customer.email}
                 </a>
-                <a href={`tel:${mockOrder.customer.phone}`} className="block text-sm text-primary hover:underline">
-                  {mockOrder.customer.phone}
+                <a href={`tel:${order.customer.phone}`} className="block text-sm text-primary hover:underline">
+                  {order.customer.phone}
                 </a>
                 <Button variant="outline" size="sm" className="mt-2 w-full">
                   View Customer Profile
@@ -289,12 +320,12 @@ const OrderDetail = () => {
                 <h3 className="font-semibold">Shipping Address</h3>
               </div>
               <div className="space-y-1 text-sm">
-                <p>{mockOrder.shippingAddress.street}</p>
+                <p>{order.shippingAddress.street}</p>
                 <p>
-                  {mockOrder.shippingAddress.city}, {mockOrder.shippingAddress.state}{" "}
-                  {mockOrder.shippingAddress.zip}
+                  {order.shippingAddress.city}, {order.shippingAddress.state}{" "}
+                  {order.shippingAddress.zip}
                 </p>
-                <p>{mockOrder.shippingAddress.country}</p>
+                <p>{order.shippingAddress.country}</p>
               </div>
               <div className="mt-3 flex gap-2">
                 <Button variant="outline" size="sm" className="flex-1">
@@ -309,7 +340,7 @@ const OrderDetail = () => {
             {/* Billing Address */}
             <Card className="p-4">
               <h3 className="mb-3 font-semibold">Billing Address</h3>
-              {mockOrder.billingAddress.sameAsShipping ? (
+              {order.billingAddress.sameAsShipping ? (
                 <p className="text-sm text-muted-foreground">Same as shipping address</p>
               ) : (
                 <div className="space-y-1 text-sm">{/* Billing address details */}</div>
@@ -325,15 +356,15 @@ const OrderDetail = () => {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Method:</span>
-                  <span className="font-medium">{mockOrder.payment.method}</span>
+                  <span className="font-medium">{order.payment.method}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Transaction ID:</span>
-                  <span className="text-xs">{mockOrder.payment.transactionId}</span>
+                  <span className="text-xs">{order.payment.transactionId}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Gateway:</span>
-                  <span>{mockOrder.payment.gateway}</span>
+                  <span>{order.payment.gateway}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Status:</span>
@@ -348,30 +379,30 @@ const OrderDetail = () => {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Subtotal:</span>
-                  <span>${mockOrder.summary.subtotal.toFixed(2)}</span>
+                  <span>${order.summary.subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Shipping:</span>
-                  <span>${mockOrder.summary.shipping.toFixed(2)}</span>
+                  <span>${order.summary.shipping.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Tax:</span>
-                  <span>${mockOrder.summary.tax.toFixed(2)}</span>
+                  <span>${order.summary.tax.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-success">
-                  <span>Discount ({mockOrder.summary.discountCode}):</span>
-                  <span>-${mockOrder.summary.discount.toFixed(2)}</span>
+                  <span>Discount ({order.summary.discountCode}):</span>
+                  <span>-${order.summary.discount.toFixed(2)}</span>
                 </div>
                 <Separator />
                 <div className="flex justify-between text-lg font-bold">
                   <span>Total:</span>
-                  <span>${mockOrder.summary.total.toFixed(2)}</span>
+                  <span>${order.summary.total.toFixed(2)}</span>
                 </div>
               </div>
             </Card>
 
             {/* Fulfillment */}
-            {mockOrder.fulfillmentStatus === "unfulfilled" && (
+            {order.fulfillmentStatus === "unfulfilled" && (
               <Card className="p-4">
                 <h3 className="mb-3 font-semibold">Fulfillment</h3>
                 <Button className="w-full">Mark All as Fulfilled</Button>
@@ -385,7 +416,7 @@ const OrderDetail = () => {
             )}
 
             {/* Refund */}
-            {mockOrder.paymentStatus === "paid" && (
+            {order.paymentStatus === "paid" && (
               <Card className="p-4">
                 <h3 className="mb-3 font-semibold">Refund</h3>
                 <Button variant="outline" className="w-full" onClick={() => setRefundModalOpen(true)}>
@@ -401,7 +432,7 @@ const OrderDetail = () => {
       <Dialog open={refundModalOpen} onOpenChange={setRefundModalOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Issue Refund for {mockOrder.orderNumber}</DialogTitle>
+            <DialogTitle>Issue Refund for {order.orderNumber}</DialogTitle>
             <DialogDescription>Process a refund for this order</DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
@@ -410,7 +441,7 @@ const OrderDetail = () => {
               <RadioGroup value={refundType} onValueChange={setRefundType}>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="full" id="full" />
-                  <Label htmlFor="full">Full Refund (${mockOrder.summary.total.toFixed(2)})</Label>
+                  <Label htmlFor="full">Full Refund (${order.summary.total.toFixed(2)})</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="partial" id="partial" />
