@@ -41,9 +41,7 @@ export const BookingModal = ({
   veteranDiscountPercent = 10,
 }: BookingModalProps) => {
   const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isVeteran, setIsVeteran] = useState(false);
-  const [veteranType, setVeteranType] = useState<string>("");
+  const [loading, setLoading] = useState(false);
   const [veteranDocFile, setVeteranDocFile] = useState<File | null>(null);
   const [isUploadingDoc, setIsUploadingDoc] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>();
@@ -51,16 +49,22 @@ export const BookingModal = ({
   const form = useForm<BookingFormData>({
     resolver: zodResolver(bookingFormSchema),
     defaultValues: {
-      fullName: "",
-      email: "",
-      phone: "",
-      message: "",
-      preferredDates: "",
-      isVeteran: false,
-      veteranType: "",
-      veteranIdLast4: "",
+      full_name: '',
+      email: '',
+      phone: '',
+      service_type: serviceType,
+      service_name: serviceName,
+      service_tier: serviceTier || '',
+      preferred_dates: '',
+      message: '',
+      is_veteran: false,
+      veteran_type: '',
+      veteran_id_last4: '',
     },
   });
+
+  const isVeteran = form.watch('is_veteran');
+  const veteranType = form.watch('veteran_type');
 
   const discountAmount = isVeteran && basePrice > 0 
     ? (basePrice * veteranDiscountPercent) / 100 
@@ -110,38 +114,38 @@ export const BookingModal = ({
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  const handleSubmit = async (data: BookingFormData) => {
+    setLoading(true);
 
     try {
       const { data: { user } } = await supabase.auth.getUser();
       
       // Upload veteran doc if provided
       let veteranDocUrl = null;
-      if (isVeteran && veteranDocFile && user) {
+      if (data.is_veteran && veteranDocFile && user) {
         veteranDocUrl = await uploadVeteranDoc(user.id);
       }
+
+      const formattedPhone = data.phone ? formatPhoneNumber(data.phone) : null;
       
       const { error } = await supabase.from("booking_requests").insert({
         user_id: user?.id || null,
         service_type: serviceType,
         service_name: serviceName,
         service_tier: serviceTier,
-        full_name: formData.fullName,
-        email: formData.email,
-        phone: formData.phone,
-        is_veteran: isVeteran,
-        veteran_type: isVeteran ? veteranType : null,
-        veteran_id_last4: isVeteran ? veteranIdLast4 : null,
-        veteran_document_url: veteranDocUrl,
+        full_name: data.full_name,
+        email: data.email,
+        phone: formattedPhone,
+        is_veteran: data.is_veteran,
+        veteran_type: data.is_veteran ? data.veteran_type : null,
+        veteran_id_last4: data.is_veteran ? data.veteran_id_last4 : null,
         base_price: basePrice,
         discount_amount: discountAmount,
         final_price: finalPrice,
-        message: formData.message,
+        message: data.message,
         preferred_dates: selectedDate 
-          ? `Primary: ${format(selectedDate, "PPP")}${formData.preferredDates ? `\nAlternatives: ${formData.preferredDates}` : ''}`
-          : formData.preferredDates,
+          ? `Primary: ${format(selectedDate, "PPP")}${data.preferred_dates ? `\nAlternatives: ${data.preferred_dates}` : ''}`
+          : data.preferred_dates,
       });
 
       if (error) throw error;
@@ -151,29 +155,18 @@ export const BookingModal = ({
         description: "We'll contact you within 24 hours to confirm your booking.",
       });
 
-      // Reset form
-      setFormData({
-        fullName: "",
-        email: "",
-        phone: "",
-        message: "",
-        preferredDates: "",
-      });
-      setIsVeteran(false);
-      setVeteranType("");
-      setVeteranIdLast4("");
+      form.reset();
       setVeteranDocFile(null);
       setSelectedDate(undefined);
       onOpenChange(false);
-    } catch (error) {
-      console.error("Error submitting booking:", error);
+    } catch (error: any) {
       toast({
         title: "Submission Failed",
-        description: "Please try again or contact us directly.",
+        description: error.message || "Please try again or contact us directly.",
         variant: "destructive",
       });
     } finally {
-      setIsSubmitting(false);
+      setLoading(false);
     }
   };
 
