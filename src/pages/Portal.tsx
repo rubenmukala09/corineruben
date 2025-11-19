@@ -33,64 +33,121 @@ function Portal() {
 
   useEffect(() => {
     loadUserData();
+    
+    // Set timeout fallback to prevent infinite loading
+    const timeout = setTimeout(() => {
+      console.error("Portal loading timeout - forcing loading state to false");
+      setLoading(false);
+    }, 10000);
+
+    return () => clearTimeout(timeout);
   }, []);
 
   const loadUserData = async () => {
+    console.log("Portal: Starting to load user data");
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      console.log("Portal: User loaded", user?.id);
+      
+      if (userError) {
+        console.error("Portal: Error getting user", userError);
+        navigate("/auth");
+        return;
+      }
+      
       if (!user) {
+        console.log("Portal: No user found, redirecting to auth");
         navigate("/auth");
         return;
       }
 
       // Load profile
-      const { data: profileData } = await supabase
+      console.log("Portal: Loading profile");
+      const { data: profileData, error: profileError } = await supabase
         .from("profiles")
         .select("*")
         .eq("id", user.id)
         .single();
 
-      if (profileData) {
+      if (profileError) {
+        console.error("Portal: Error loading profile", profileError);
+      } else if (profileData) {
+        console.log("Portal: Profile loaded", profileData);
         setProfile(profileData);
       }
 
       // Load roles from user_roles table
-      const { data: rolesData } = await supabase
+      console.log("Portal: Loading roles from user_roles table");
+      const { data: rolesData, error: rolesError } = await supabase
         .from("user_roles")
         .select("role")
         .eq("user_id", user.id);
 
+      if (rolesError) {
+        console.error("Portal: Error loading roles", rolesError);
+      }
+
       const userRoles: UserRole[] = rolesData?.map((r) => r.role as UserRole) || [];
+      console.log("Portal: Roles from user_roles table", userRoles);
 
       // Check for profile-specific roles
-      const { data: seniorProfile } = await supabase
-        .from("senior_client_profiles")
-        .select("id")
-        .eq("user_id", user.id)
-        .maybeSingle();
-      
-      if (seniorProfile) userRoles.push("senior");
+      console.log("Portal: Checking for profile-specific roles");
+      try {
+        const { data: seniorProfile } = await supabase
+          .from("senior_client_profiles")
+          .select("id")
+          .eq("user_id", user.id)
+          .maybeSingle();
+        
+        if (seniorProfile) {
+          console.log("Portal: Senior profile found");
+          userRoles.push("senior");
+        }
+      } catch (err) {
+        console.error("Portal: Error checking senior profile", err);
+      }
 
-      const { data: caregiverProfile } = await supabase
-        .from("caregiver_profiles")
-        .select("id")
-        .eq("user_id", user.id)
-        .maybeSingle();
-      
-      if (caregiverProfile) userRoles.push("caregiver");
+      try {
+        const { data: caregiverProfile } = await supabase
+          .from("caregiver_profiles")
+          .select("id")
+          .eq("user_id", user.id)
+          .maybeSingle();
+        
+        if (caregiverProfile) {
+          console.log("Portal: Caregiver profile found");
+          userRoles.push("caregiver");
+        }
+      } catch (err) {
+        console.error("Portal: Error checking caregiver profile", err);
+      }
 
-      const { data: healthcareProfile } = await supabase
-        .from("healthcare_professional_profiles")
-        .select("id")
-        .eq("user_id", user.id)
-        .maybeSingle();
-      
-      if (healthcareProfile) userRoles.push("healthcare");
+      try {
+        const { data: healthcareProfile } = await supabase
+          .from("healthcare_professional_profiles")
+          .select("id")
+          .eq("user_id", user.id)
+          .maybeSingle();
+        
+        if (healthcareProfile) {
+          console.log("Portal: Healthcare profile found");
+          userRoles.push("healthcare");
+        }
+      } catch (err) {
+        console.error("Portal: Error checking healthcare profile", err);
+      }
 
+      console.log("Portal: Final roles array", userRoles);
       setRoles(userRoles);
     } catch (error: any) {
-      console.error("Error loading user data:", error);
+      console.error("Portal: Critical error loading user data:", error);
+      toast({
+        title: "Error Loading Portal",
+        description: "Unable to load your portal data. Please try refreshing the page.",
+        variant: "destructive",
+      });
     } finally {
+      console.log("Portal: Setting loading to false");
       setLoading(false);
     }
   };
@@ -195,6 +252,9 @@ function Portal() {
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
           <p className="mt-4 text-muted-foreground">Loading portal...</p>
+          <p className="mt-2 text-xs text-muted-foreground">
+            This should only take a moment
+          </p>
         </div>
       </div>
     );
