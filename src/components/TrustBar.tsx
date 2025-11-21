@@ -1,4 +1,4 @@
-import { Shield, MapPin, Award, UserCheck, Star, TrendingUp, BadgeCheck, Clock } from "lucide-react";
+import { Shield, MapPin, Award, UserCheck, BadgeCheck } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
 const TrustBar = () => {
@@ -58,9 +58,6 @@ const TrustBar = () => {
     { icon: Award, text: "Veteran Supportive Business", float: true },
     { icon: UserCheck, text: "Expert Cybersecurity Team", shimmer: true },
     { icon: BadgeCheck, text: "Certified Security Experts", pulse: true },
-    { icon: Star, text: "4.9★ Average Rating", float: true },
-    { icon: TrendingUp, text: "98% Success Rate", shimmer: true },
-    { icon: Clock, text: "15+ Years Experience", pulse: true },
   ];
 
   return (
@@ -69,8 +66,8 @@ const TrustBar = () => {
         <div className="relative mx-auto max-w-7xl group/trust">
           {/* Enhanced gradient card matching website colors */}
           <div className="relative rounded-[2rem] py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-10 backdrop-blur-xl border-2 border-white/90 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.3),0_8px_32px_rgba(139,92,246,0.35),0_16px_64px_rgba(139,92,246,0.25),0_4px_12px_rgba(0,0,0,0.1),inset_0_0_80px_rgba(255,255,255,0.12)] transition-all duration-500 overflow-hidden before:absolute before:inset-0 before:rounded-[2rem] before:shadow-[inset_24px_0_48px_-20px_rgba(0,0,0,0.4),inset_-24px_0_48px_-20px_rgba(0,0,0,0.4)] before:pointer-events-none after:absolute after:inset-0 after:rounded-[2rem] after:bg-gradient-to-br after:from-white/10 after:via-transparent after:to-transparent after:pointer-events-none" style={{ backgroundImage: 'linear-gradient(135deg, hsl(270, 65%, 45%), hsl(260, 70%, 50%), hsl(190, 75%, 48%))', transform: 'translateZ(0)' }}>
-            {/* Desktop: Horizontal grid layout */}
-            <div className="hidden lg:grid grid-cols-4 gap-4 xl:gap-6 relative z-10">
+            {/* Desktop: Single row layout */}
+            <div className="hidden sm:flex justify-center items-center gap-3 md:gap-4 lg:gap-6 xl:gap-8 relative z-10">
               {trustIndicators.map((item, index) => (
                 <div 
                   key={index} 
@@ -103,48 +100,6 @@ const TrustBar = () => {
                     aria-hidden="true"
                   >
                     <item.icon className="relative w-6 h-6 md:w-7 md:h-7 text-white drop-shadow-[0_3px_16px_rgba(255,255,255,0.9)] group-hover/badge:scale-110 group-hover/badge:drop-shadow-[0_5px_20px_rgba(255,255,255,1)] transition-all duration-500 relative z-10 filter brightness-110" />
-                  </div>
-                  <span className="text-xs md:text-sm font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] group-hover/badge:scale-105 transition-all duration-300 group-hover/badge:drop-shadow-[0_2px_12px_rgba(255,255,255,0.5)] filter brightness-105">
-                    {item.useCounter ? `${item.count}+ Families Protected` : item.text}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            {/* Tablet: 2 columns */}
-            <div className="hidden sm:grid lg:hidden grid-cols-2 gap-3 md:gap-4 relative z-10">
-              {trustIndicators.map((item, index) => (
-                <div 
-                  key={index} 
-                  className={`flex items-center gap-2 group/badge flex-shrink-0 opacity-0 animate-trust-badge-in cursor-pointer relative ${item.float ? 'animate-float' : ''} ${item.pulse ? 'animate-pulse-glow' : ''}`}
-                  style={{ 
-                    animationDelay: `${index * 0.1}s`,
-                    animationFillMode: 'forwards',
-                    willChange: 'transform'
-                  }}
-                  onMouseEnter={() => setHoveredIndex(index)}
-                  onMouseLeave={() => setHoveredIndex(null)}
-                  role="listitem"
-                >
-                  {item.shimmer && (
-                    <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
-                      <div className="absolute inset-0 animate-shimmer-translate bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                    </div>
-                  )}
-                  
-                  <div 
-                    className="relative w-11 h-11 md:w-12 md:h-12 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover/badge:scale-110 group-hover/badge:rotate-3 transition-all duration-500 shadow-[inset_0_2px_4px_rgba(0,0,0,0.2),0_6px_32px_rgba(139,92,246,0.6),0_0_0_1px_rgba(255,255,255,0.2)] group-hover/badge:shadow-[inset_0_2px_4px_rgba(0,0,0,0.2),0_10px_48px_rgba(139,92,246,0.9),0_0_60px_rgba(139,92,246,0.4)] border-2 border-white/80 group-hover/badge:border-white overflow-hidden before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-br before:from-white/20 before:via-transparent before:to-transparent before:opacity-60"
-                    style={{ 
-                      animationDelay: `${index * 200 + 500}ms`,
-                      backgroundImage: index % 4 === 0 ? 'linear-gradient(135deg, hsl(270, 75%, 50%), hsl(260, 80%, 55%))' :
-                                       index % 4 === 1 ? 'linear-gradient(135deg, hsl(250, 70%, 52%), hsl(240, 75%, 55%))' :
-                                       index % 4 === 2 ? 'linear-gradient(135deg, hsl(190, 72%, 50%), hsl(180, 75%, 53%))' :
-                                       'linear-gradient(135deg, hsl(270, 80%, 48%), hsl(270, 75%, 55%))',
-                      transform: 'translateZ(0)'
-                    }}
-                    aria-hidden="true"
-                  >
-                    <item.icon className="relative w-5 h-5 md:w-6 md:h-6 text-white drop-shadow-[0_3px_16px_rgba(255,255,255,0.9)] group-hover/badge:scale-110 group-hover/badge:drop-shadow-[0_5px_20px_rgba(255,255,255,1)] transition-all duration-500 relative z-10 filter brightness-110" />
                   </div>
                   <span className="text-xs md:text-sm font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] group-hover/badge:scale-105 transition-all duration-300 group-hover/badge:drop-shadow-[0_2px_12px_rgba(255,255,255,0.5)] filter brightness-105">
                     {item.useCounter ? `${item.count}+ Families Protected` : item.text}
