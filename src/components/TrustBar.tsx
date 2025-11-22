@@ -67,7 +67,7 @@ const TrustBar = () => {
           {/* Enhanced gradient card matching website colors */}
           <div className="relative rounded-[2rem] py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-10 backdrop-blur-xl border-2 border-white/90 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.3),0_8px_32px_rgba(139,92,246,0.35),0_16px_64px_rgba(139,92,246,0.25),0_4px_12px_rgba(0,0,0,0.1),inset_0_0_80px_rgba(255,255,255,0.12)] transition-all duration-500 overflow-hidden before:absolute before:inset-0 before:rounded-[2rem] before:shadow-[inset_24px_0_48px_-20px_rgba(0,0,0,0.4),inset_-24px_0_48px_-20px_rgba(0,0,0,0.4)] before:pointer-events-none after:absolute after:inset-0 after:rounded-[2rem] after:bg-gradient-to-br after:from-white/10 after:via-transparent after:to-transparent after:pointer-events-none" style={{ backgroundImage: 'linear-gradient(135deg, hsl(270, 65%, 45%), hsl(260, 70%, 50%), hsl(190, 75%, 48%))', transform: 'translateZ(0)' }}>
             {/* Desktop: Single row layout */}
-            <div className="hidden sm:flex justify-center items-center gap-3 md:gap-4 lg:gap-6 xl:gap-8 relative z-10">
+            <div className="hidden sm:flex justify-center items-center gap-3 md:gap-4 lg:gap-5 xl:gap-6 relative z-10">
               {trustIndicators.map((item, index) => (
                 <div 
                   key={index} 
