@@ -5,7 +5,7 @@ export const ScrollToTop = () => {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    // If there's a hash (anchor link), scroll to it
+    // If there's a hash (anchor link), scroll to it smoothly
     if (hash) {
       setTimeout(() => {
         const element = document.querySelector(hash);
@@ -21,10 +21,10 @@ export const ScrollToTop = () => {
         }
       }, 100);
     } else {
-      // Scroll to top on route change
+      // Instant scroll to top on route change to prevent white flash
       window.scrollTo({
         top: 0,
-        behavior: "smooth"
+        behavior: "instant"
       });
     }
   }, [pathname, hash]);

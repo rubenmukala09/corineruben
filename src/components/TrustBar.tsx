@@ -69,13 +69,15 @@ const TrustBar = () => {
             {/* Desktop: Single row layout */}
             <div className="hidden sm:flex justify-center items-center gap-0.5 md:gap-1 lg:gap-1.5 xl:gap-1.5 relative z-10">
               {trustIndicators.map((item, index) => (
-                <div 
+                 <div 
                   key={index} 
                   className={`flex items-center gap-1 group/badge flex-shrink-0 opacity-0 animate-trust-badge-in cursor-pointer relative ${item.float ? 'animate-float' : ''} ${item.pulse ? 'animate-pulse-glow' : ''}`}
                   style={{ 
                     animationDelay: `${index * 0.12}s`,
                     animationFillMode: 'forwards',
-                    willChange: 'transform'
+                    willChange: isVisible ? 'transform' : 'auto',
+                    transform: 'translateZ(0)',
+                    backfaceVisibility: 'hidden'
                   }}
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}

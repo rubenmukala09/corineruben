@@ -64,7 +64,7 @@ export const HeroCarousel = ({
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <AnimatePresence mode="sync">
+      <AnimatePresence mode="wait" initial={false}>
         {images.map((image, index) => (
           index === currentIndex && (
             <motion.div
@@ -76,13 +76,15 @@ export const HeroCarousel = ({
               }}
               exit={{ opacity: 0 }}
               transition={{
-                opacity: { duration: transitionDuration, ease: "easeInOut" },
+                opacity: { duration: transitionDuration, ease: [0.4, 0, 0.2, 1] },
                 scale: { duration: interval / 1000, ease: "linear" }
               }}
               className="absolute inset-0 bg-cover bg-center bg-no-repeat"
               style={{
                 backgroundImage: `url(${image.src})`,
-                willChange: "opacity, transform"
+                willChange: "opacity, transform",
+                transform: 'translate3d(0, 0, 0)',
+                backfaceVisibility: 'hidden'
               }}
               role="img"
               aria-label={image.alt}

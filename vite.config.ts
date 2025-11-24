@@ -22,7 +22,7 @@ export default defineConfig(({ mode }) => ({
         optimizationLevel: 7,
       },
       mozjpeg: {
-        quality: 80,
+        quality: 85,
       },
       pngquant: {
         quality: [0.8, 0.9],
@@ -46,4 +46,33 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'animation': ['framer-motion'],
+          'ui-radix': [
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-dropdown-menu',
+            '@radix-ui/react-toast',
+            '@radix-ui/react-tabs'
+          ],
+          'query': ['@tanstack/react-query'],
+          'supabase': ['@supabase/supabase-js']
+        }
+      }
+    },
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: mode === 'production',
+        drop_debugger: true,
+        pure_funcs: mode === 'production' ? ['console.log', 'console.info'] : []
+      }
+    },
+    chunkSizeWarningLimit: 600,
+    cssCodeSplit: true,
+    sourcemap: mode === 'development'
+  }
 }));
