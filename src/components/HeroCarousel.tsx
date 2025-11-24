@@ -20,6 +20,7 @@ export const HeroCarousel = ({
   transitionDuration = 1.0 
 }: HeroCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [nextIndex, setNextIndex] = useState(1);
   const [isPaused, setIsPaused] = useState(false);
   
   // Preload all images
@@ -30,7 +31,11 @@ export const HeroCarousel = ({
     if (!imagesPreloaded || isPaused) return;
 
     const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
+      setCurrentIndex((prev) => {
+        const next = (prev + 1) % images.length;
+        setNextIndex((next + 1) % images.length);
+        return next;
+      });
     }, interval);
 
     return () => clearInterval(timer);
@@ -64,33 +69,40 @@ export const HeroCarousel = ({
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <AnimatePresence mode="wait" initial={false}>
-        {images.map((image, index) => (
-          index === currentIndex && (
-            <motion.div
-              key={`hero-image-${index}`}
-              initial={{ opacity: 0 }}
-              animate={{ 
-                opacity: 1,
-                scale: [1, 1.05, 1]
-              }}
-              exit={{ opacity: 0 }}
-              transition={{
-                opacity: { duration: transitionDuration, ease: [0.4, 0, 0.2, 1] },
-                scale: { duration: interval / 1000, ease: "linear" }
-              }}
-              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-              style={{
-                backgroundImage: `url(${image.src})`,
-                willChange: "opacity, transform",
-                transform: 'translate3d(0, 0, 0)',
-                backfaceVisibility: 'hidden'
-              }}
-              role="img"
-              aria-label={image.alt}
-            />
-          )
-        ))}
+      {/* Base layer - always visible current image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url(${images[currentIndex].src})`,
+          transform: 'translate3d(0, 0, 0)',
+          backfaceVisibility: 'hidden'
+        }}
+        role="img"
+        aria-label={images[currentIndex].alt}
+      />
+      
+      {/* Crossfade layer for seamless transitions */}
+      <AnimatePresence initial={false}>
+        <motion.div
+          key={`hero-crossfade-${currentIndex}`}
+          initial={{ opacity: 0 }}
+          animate={{ 
+            opacity: 1,
+            scale: [1, 1.05, 1]
+          }}
+          exit={{ opacity: 0 }}
+          transition={{
+            opacity: { duration: transitionDuration, ease: [0.4, 0, 0.2, 1] },
+            scale: { duration: interval / 1000, ease: "linear" }
+          }}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url(${images[currentIndex].src})`,
+            willChange: "opacity, transform",
+            transform: 'translate3d(0, 0, 0)',
+            backfaceVisibility: 'hidden'
+          }}
+        />
       </AnimatePresence>
 
       {/* Pause/Play Button */}
