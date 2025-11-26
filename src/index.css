@@ -6,13 +6,24 @@
 All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid animations. */
 
 @layer base {
-  /* Global GPU acceleration for smooth animations */
+  /* Global GPU acceleration for smooth animations and optimized scrolling */
   * {
-    scroll-behavior: smooth;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
+  }
+  
+  /* Professional smooth scrolling with hardware acceleration */
+  html {
+    scroll-behavior: auto; /* Override default, we use custom smooth scroll */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  body {
+    scroll-behavior: auto; /* Override default, we use custom smooth scroll */
+    -webkit-overflow-scrolling: touch; /* Momentum scrolling on iOS */
   }
 
   /* Prevent FOUC (Flash of Unstyled Content) */
