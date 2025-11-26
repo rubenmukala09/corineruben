@@ -65,13 +65,13 @@ export const HeroCarousel = ({
 
   return (
     <div 
-      className="absolute inset-0"
+      className="absolute inset-0 bg-background"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Base layer - always visible current image */}
+      {/* Solid background layer - always shows current image instantly */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-none"
         style={{
           backgroundImage: `url(${images[currentIndex].src})`,
           transform: 'translate3d(0, 0, 0)',
@@ -81,10 +81,10 @@ export const HeroCarousel = ({
         aria-label={images[currentIndex].alt}
       />
       
-      {/* Crossfade layer for seamless transitions */}
-      <AnimatePresence initial={false}>
+      {/* Smooth crossfade overlay */}
+      <AnimatePresence mode="sync">
         <motion.div
-          key={`hero-crossfade-${currentIndex}`}
+          key={currentIndex}
           initial={{ opacity: 0 }}
           animate={{ 
             opacity: 1,
@@ -95,10 +95,10 @@ export const HeroCarousel = ({
             opacity: { duration: transitionDuration, ease: [0.4, 0, 0.2, 1] },
             scale: { duration: interval / 1000, ease: "linear" }
           }}
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none"
           style={{
             backgroundImage: `url(${images[currentIndex].src})`,
-            willChange: "opacity, transform",
+            willChange: "opacity",
             transform: 'translate3d(0, 0, 0)',
             backfaceVisibility: 'hidden'
           }}
