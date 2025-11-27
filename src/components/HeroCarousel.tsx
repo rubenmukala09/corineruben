@@ -65,7 +65,7 @@ export const HeroCarousel = ({
 
   return (
     <div 
-      className="absolute inset-0 bg-background"
+      className="absolute inset-0 bg-background pointer-events-none"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -87,13 +87,11 @@ export const HeroCarousel = ({
           key={currentIndex}
           initial={{ opacity: 0 }}
           animate={{ 
-            opacity: 1,
-            scale: [1, 1.05, 1]
+            opacity: 1
           }}
           exit={{ opacity: 0 }}
           transition={{
-            opacity: { duration: transitionDuration, ease: [0.4, 0, 0.2, 1] },
-            scale: { duration: interval / 1000, ease: "linear" }
+            opacity: { duration: transitionDuration, ease: [0.4, 0, 0.2, 1] }
           }}
           className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none"
           style={{
@@ -108,7 +106,7 @@ export const HeroCarousel = ({
       {/* Pause/Play Button */}
       <button
         onClick={() => setIsPaused(!isPaused)}
-        className="absolute top-4 right-4 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 transition-all duration-200"
+        className="absolute top-4 right-4 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 transition-all duration-200 pointer-events-auto"
         aria-label={isPaused ? "Play slideshow" : "Pause slideshow"}
       >
         {isPaused ? <Play className="w-5 h-5 text-white" /> : <Pause className="w-5 h-5 text-white" />}
@@ -120,7 +118,7 @@ export const HeroCarousel = ({
       </div>
 
       {/* Progress Indicators */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10 pointer-events-auto">
         {images.map((_, index) => (
           <button
             key={`indicator-${index}`}
