@@ -7,11 +7,16 @@ export const easeInOutQuad = (t: number): number => {
   return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 };
 
+// More responsive easing for natural scrolling feel
+export const easeOutQuart = (t: number): number => {
+  return 1 - Math.pow(1 - t, 4);
+};
+
 // Custom smooth scroll with professional easing and hardware acceleration
 export const smoothScrollTo = (
   target: number, 
-  duration: number = 800,
-  easingFunction: (t: number) => number = easeInOutCubic
+  duration: number = 600,
+  easingFunction: (t: number) => number = easeOutQuart
 ): Promise<void> => {
   return new Promise((resolve) => {
     const start = window.pageYOffset;
@@ -48,7 +53,7 @@ export const smoothScrollTo = (
 export const smoothScrollToElement = (
   element: Element,
   offset: number = 80,
-  duration: number = 800
+  duration: number = 600
 ): Promise<void> => {
   const elementPosition = element.getBoundingClientRect().top;
   const offsetPosition = elementPosition + window.pageYOffset - offset;
