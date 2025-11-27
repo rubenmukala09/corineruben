@@ -6,12 +6,21 @@
 All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid animations. */
 
 @layer base {
-  /* Global GPU acceleration for smooth animations and optimized scrolling */
+  /* GPU acceleration for smooth animations and optimized scrolling */
   * {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
+  }
+  
+  /* Ensure animations don't block scroll */
+  [class*="animate-"],
+  [style*="animation"] {
+    pointer-events: none;
+  }
+  
+  [class*="animate-"] > *,
+  [style*="animation"] > * {
+    pointer-events: auto;
   }
   
   /* Professional smooth scrolling with hardware acceleration */
@@ -173,7 +182,9 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   html {
     scroll-behavior: smooth;
     overflow-x: hidden;
+    overflow-y: auto;
     width: 100%;
+    height: 100%;
     overscroll-behavior-y: none;
     touch-action: pan-y;
   }
@@ -294,10 +305,21 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     overscroll-behavior: none;
   }
   
-  /* High performance scrolling */
+  /* High performance scrolling - ensure nothing blocks scroll */
   #root {
     scroll-behavior: smooth;
-    will-change: scroll-position;
+    position: relative;
+    min-height: 100vh;
+    z-index: 1;
+  }
+  
+  /* Ensure fixed elements don't block scrolling */
+  .fixed {
+    pointer-events: none;
+  }
+  
+  .fixed > * {
+    pointer-events: auto;
   }
   
   #root {
