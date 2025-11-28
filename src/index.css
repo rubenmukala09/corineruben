@@ -272,8 +272,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   }
   
   #root {
-    @apply min-h-screen;
-    overflow-x: hidden;
+    min-height: 100vh;
     width: 100%;
     position: relative;
   }
