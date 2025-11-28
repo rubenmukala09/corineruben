@@ -4,25 +4,28 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-    <!-- Optimized font loading with preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <!-- Critical font weights preloaded -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <title>InVision Network - AI Scam Protection Training for Families &amp;amp;amp; Seniors</title>
     <meta name="description" content="Protect your family from AI-powered scams. Expert training, deepfake detection, and 24/7 scam analysis. Trusted by 500+ families. Based in Dayton, OH. EN/FR/ES.">
     <meta name="author" content="InVision Network" />
     <meta name="keywords" content="AI scam protection, deepfake detection, senior scam training, family cybersecurity, phishing defense, Dayton Ohio">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
-    <!-- Performance Hints - Critical Resources -->
+    <!-- Performance Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://avoafweoebstkgjnbadv.supabase.co">
     
-    <!-- Preload critical hero image for fastest LCP -->
-    <link rel="preload" as="image" href="/src/assets/hero-business-professional.jpg" fetchpriority="high" imagesrcset="/src/assets/hero-business-professional.jpg 1920w" imagesizes="100vw" />
+    <!-- Preload critical hero image for fastest initial paint -->
+    <link rel="preload" as="image" href="/src/assets/hero-business-professional.jpg" fetchpriority="high" />
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" as="style" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    </noscript>
     
     <!-- Open Graph Tags -->
     <meta property="og:type" content="website" />
@@ -41,23 +44,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="InVision" />
-
-    <!-- Critical CSS for instant paint and FOUC prevention -->
-    <style>
-      body:not(.loaded) {
-        opacity: 0;
-      }
-      body.loaded {
-        opacity: 1;
-        transition: opacity 0.15s ease-out;
-      }
-      * {
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0);
-      }
-    </style>
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">

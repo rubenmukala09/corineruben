@@ -1,7 +1,7 @@
 export const FloatingShapes = () => {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
-      <svg className="absolute w-full h-full pointer-events-none">
+      <svg className="absolute w-full h-full">
         <defs>
           <filter id="blur">
             <feGaussianBlur in="SourceGraphic" stdDeviation="25" />
@@ -17,7 +17,6 @@ export const FloatingShapes = () => {
           fill="rgba(124, 58, 237, 0.08)"
           filter="url(#blur)"
           className="animate-float-slow"
-          style={{ pointerEvents: 'none' }}
         />
         
         {/* Floating blob 2 */}
@@ -29,7 +28,6 @@ export const FloatingShapes = () => {
           fill="rgba(167, 139, 250, 0.08)"
           filter="url(#blur)"
           className="animate-float-medium"
-          style={{ pointerEvents: 'none' }}
         />
         
         {/* Floating blob 3 */}
@@ -41,7 +39,6 @@ export const FloatingShapes = () => {
           fill="rgba(124, 58, 237, 0.06)"
           filter="url(#blur)"
           className="animate-float-fast"
-          style={{ pointerEvents: 'none' }}
         />
         
         {/* Floating blob 4 */}
@@ -52,7 +49,7 @@ export const FloatingShapes = () => {
           fill="rgba(167, 139, 250, 0.07)"
           filter="url(#blur)"
           className="animate-float-slow"
-          style={{ animationDelay: '2s', pointerEvents: 'none' }}
+          style={{ animationDelay: '2s' }}
         />
       </svg>
     </div>

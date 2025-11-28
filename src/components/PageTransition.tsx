@@ -11,15 +11,7 @@ export const PageTransition = ({ children }: PageTransitionProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ 
-        duration: 0.2, 
-        ease: [0.4, 0, 0.2, 1],
-      }}
-      style={{
-        willChange: 'opacity',
-        transform: 'translateZ(0)',
-        backfaceVisibility: 'hidden'
-      }}
+      transition={{ duration: 0.15 }}
     >
       {children}
     </motion.div>

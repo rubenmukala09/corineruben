@@ -1,9 +1,7 @@
 import { useEffect } from "react";
-import { smoothScrollTo, smoothScrollToElement } from "@/utils/smoothScroll";
 
 export const useSmoothAnchorScroll = () => {
   useEffect(() => {
-    // Enhanced smooth scrolling for anchor links
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const anchor = target.closest('a[href^="#"]');
@@ -15,16 +13,20 @@ export const useSmoothAnchorScroll = () => {
           const element = document.querySelector(href);
           
           if (element) {
-            smoothScrollToElement(element, 80, 800);
+            const headerOffset = 80;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth"
+            });
           }
         }
       }
     };
 
     document.addEventListener("click", handleAnchorClick);
-    
-    return () => {
-      document.removeEventListener("click", handleAnchorClick);
-    };
+    return () => document.removeEventListener("click", handleAnchorClick);
   }, []);
 };

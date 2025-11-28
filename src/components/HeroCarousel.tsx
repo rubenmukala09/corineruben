@@ -20,7 +20,6 @@ export const HeroCarousel = ({
   transitionDuration = 1.0 
 }: HeroCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [nextIndex, setNextIndex] = useState(1);
   const [isPaused, setIsPaused] = useState(false);
   
   // Preload all images
@@ -31,11 +30,7 @@ export const HeroCarousel = ({
     if (!imagesPreloaded || isPaused) return;
 
     const timer = setInterval(() => {
-      setCurrentIndex((prev) => {
-        const next = (prev + 1) % images.length;
-        setNextIndex((next + 1) % images.length);
-        return next;
-      });
+      setCurrentIndex((prev) => (prev + 1) % images.length);
     }, interval);
 
     return () => clearInterval(timer);
@@ -65,48 +60,41 @@ export const HeroCarousel = ({
 
   return (
     <div 
-      className="absolute inset-0 bg-background pointer-events-none"
+      className="absolute inset-0"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Solid background layer - always shows current image instantly */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-none"
-        style={{
-          backgroundImage: `url(${images[currentIndex].src})`,
-          transform: 'translate3d(0, 0, 0)',
-          backfaceVisibility: 'hidden'
-        }}
-        role="img"
-        aria-label={images[currentIndex].alt}
-      />
-      
-      {/* Smooth crossfade overlay */}
       <AnimatePresence mode="sync">
-        <motion.div
-          key={currentIndex}
-          initial={{ opacity: 0 }}
-          animate={{ 
-            opacity: 1
-          }}
-          exit={{ opacity: 0 }}
-          transition={{
-            opacity: { duration: transitionDuration, ease: [0.4, 0, 0.2, 1] }
-          }}
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none"
-          style={{
-            backgroundImage: `url(${images[currentIndex].src})`,
-            willChange: "opacity",
-            transform: 'translate3d(0, 0, 0)',
-            backfaceVisibility: 'hidden'
-          }}
-        />
+        {images.map((image, index) => (
+          index === currentIndex && (
+            <motion.div
+              key={`hero-image-${index}`}
+              initial={{ opacity: 0 }}
+              animate={{ 
+                opacity: 1,
+                scale: [1, 1.05, 1]
+              }}
+              exit={{ opacity: 0 }}
+              transition={{
+                opacity: { duration: transitionDuration, ease: "easeInOut" },
+                scale: { duration: interval / 1000, ease: "linear" }
+              }}
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+              style={{
+                backgroundImage: `url(${image.src})`,
+                willChange: "opacity, transform"
+              }}
+              role="img"
+              aria-label={image.alt}
+            />
+          )
+        ))}
       </AnimatePresence>
 
       {/* Pause/Play Button */}
       <button
         onClick={() => setIsPaused(!isPaused)}
-        className="absolute top-4 right-4 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 transition-all duration-200 pointer-events-auto"
+        className="absolute top-4 right-4 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 transition-all duration-200"
         aria-label={isPaused ? "Play slideshow" : "Pause slideshow"}
       >
         {isPaused ? <Play className="w-5 h-5 text-white" /> : <Pause className="w-5 h-5 text-white" />}
@@ -118,7 +106,7 @@ export const HeroCarousel = ({
       </div>
 
       {/* Progress Indicators */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10 pointer-events-auto">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10">
         {images.map((_, index) => (
           <button
             key={`indicator-${index}`}

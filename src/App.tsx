@@ -663,7 +663,7 @@ function App() {
       <SubscriptionProvider>
         <CartProvider>
           <AIChatProvider>
-            <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+            <BrowserRouter>
               <SkipToContent />
               <NavigationProgress />
               <ScrollToTop />

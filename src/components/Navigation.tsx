@@ -38,15 +38,10 @@ const Navigation = () => {
 
   return (
     <>
-      {/* Mobile backdrop overlay with smooth transition */}
+      {/* Mobile backdrop overlay */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-200"
-          style={{ 
-            willChange: 'opacity',
-            transform: 'translateZ(0)',
-            backfaceVisibility: 'hidden'
-          }}
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
@@ -129,16 +124,9 @@ const Navigation = () => {
         </div>
       </div>
 
-      {/* Mobile Menu with GPU acceleration */}
+      {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div 
-            className="lg:hidden fixed top-16 md:top-20 lg:top-24 left-0 right-0 bottom-0 bg-card/98 backdrop-blur-xl border-t border-border shadow-2xl z-50 overflow-y-auto transition-transform duration-200"
-            style={{
-              willChange: 'transform',
-              transform: 'translateZ(0)',
-              backfaceVisibility: 'hidden'
-            }}
-          >
+          <div className="lg:hidden fixed top-16 md:top-20 lg:top-24 left-0 right-0 bottom-0 bg-card/98 backdrop-blur-xl border-t border-border shadow-2xl z-50 overflow-y-auto">
             <div className="container mx-auto px-4 py-6 space-y-2">
               {navLinks.map((link) => (
                 <Link

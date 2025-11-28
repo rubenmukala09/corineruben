@@ -41,32 +41,23 @@ const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, childr
     <div 
       ref={ref}
       className={cn("relative min-h-[600px] sm:min-h-[700px] md:min-h-[850px] lg:min-h-[950px] xl:min-h-[1000px] flex items-center overflow-hidden hero-mobile bg-gradient-to-br from-[#1e3a8a] to-[#3b82f6]", className)}
-      style={{ position: 'relative' }}
     >
-      {/* Background with Parallax - GPU accelerated */}
+      {/* Background with Parallax */}
       <motion.div 
         className="absolute inset-0 overflow-hidden"
-        style={{ 
-          y,
-          willChange: 'transform',
-          transform: 'translate3d(0, 0, 0)',
-          backfaceVisibility: 'hidden'
-        }}
+        style={{ y }}
       >
         {useCarousel ? (
           <HeroCarousel images={backgroundImages} />
         ) : backgroundImage && (
           <motion.div
             className={cn(
-              "absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-200 brightness-115",
+              "absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-300 brightness-115",
               singleImagePreloaded ? "opacity-100" : "opacity-0"
             )}
             style={{ 
               backgroundImage: `url(${backgroundImage})`,
-              opacity,
-              willChange: 'opacity',
-              transform: 'translate3d(0, 0, 0)',
-              backfaceVisibility: 'hidden'
+              opacity
             }}
           />
         )}
