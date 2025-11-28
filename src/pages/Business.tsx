@@ -61,12 +61,11 @@ function Business() {
 
   const fetchBusinessTestimonials = async () => {
     const { data } = await supabase
-      .from("testimonials")
+      .from("testimonials_public")
       .select(`
         *,
         testimonial_media (*)
       `)
-      .eq("status", "approved")
       .eq("has_video", true)
       .order("created_at", { ascending: false })
       .limit(4);

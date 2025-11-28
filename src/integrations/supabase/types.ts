@@ -2991,6 +2991,13 @@ export type Database = {
             referencedRelation: "testimonials"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "testimonial_media_testimonial_id_fkey"
+            columns: ["testimonial_id"]
+            isOneToOne: false
+            referencedRelation: "testimonials_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       testimonials: {
@@ -3594,7 +3601,60 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      testimonials_public: {
+        Row: {
+          approved_at: string | null
+          created_at: string | null
+          display_order: number | null
+          featured: boolean | null
+          has_image: boolean | null
+          has_video: boolean | null
+          id: string | null
+          location: string | null
+          name: string | null
+          primary_media_url: string | null
+          rating: number | null
+          status: Database["public"]["Enums"]["testimonial_status"] | null
+          story: string | null
+          submitted_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          approved_at?: string | null
+          created_at?: string | null
+          display_order?: number | null
+          featured?: boolean | null
+          has_image?: boolean | null
+          has_video?: boolean | null
+          id?: string | null
+          location?: string | null
+          name?: string | null
+          primary_media_url?: string | null
+          rating?: number | null
+          status?: Database["public"]["Enums"]["testimonial_status"] | null
+          story?: string | null
+          submitted_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          approved_at?: string | null
+          created_at?: string | null
+          display_order?: number | null
+          featured?: boolean | null
+          has_image?: boolean | null
+          has_video?: boolean | null
+          id?: string | null
+          location?: string | null
+          name?: string | null
+          primary_media_url?: string | null
+          rating?: number | null
+          status?: Database["public"]["Enums"]["testimonial_status"] | null
+          story?: string | null
+          submitted_at?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       assign_role_by_email: {
