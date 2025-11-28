@@ -51,7 +51,7 @@ const Navigation = () => {
         />
       )}
 
-      <nav className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border shadow-soft pointer-events-auto">
+      <nav className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border shadow-soft">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16 md:h-20 lg:h-24">
             {/* Logo */}

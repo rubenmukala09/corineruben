@@ -6,31 +6,7 @@
 All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid animations. */
 
 @layer base {
-  /* GPU acceleration for smooth animations and optimized scrolling */
-  * {
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
-  
-  /* Ensure animations don't block scroll */
-  [class*="animate-"],
-  [style*="animation"],
-  [class*="motion-"] {
-    pointer-events: none !important;
-  }
-  
-  [class*="animate-"] > *,
-  [style*="animation"] > *,
-  [class*="motion-"] > * {
-    pointer-events: auto !important;
-  }
-  
-  /* Force scrollable content areas */
-  [class*="container"],
-  [class*="content"],
-  [class*="section"] {
-    pointer-events: auto !important;
-  }
+  /* Optimize rendering - apply only to specific animated elements, not globally */
   
   /* Professional smooth scrolling with hardware acceleration */
   html {
@@ -146,10 +122,8 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --sidebar-primary-foreground: 0 0% 98%;
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
+     --sidebar-border: 220 13% 91%;
      --sidebar-ring: 217.2 91.2% 59.8%;
-     /* Global site scale for desktop browsers */
-     --site-scale: 0.78;
    }
 
   .dark {
@@ -189,14 +163,11 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   }
 
   html {
-    scroll-behavior: smooth !important;
-    overflow-x: hidden !important;
-    overflow-y: scroll !important;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    overflow-y: auto;
     width: 100%;
     height: 100%;
-    overscroll-behavior-y: auto;
-    touch-action: auto;
-    position: relative;
   }
   
   body {
@@ -204,15 +175,11 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     font-family: 'Outfit', sans-serif;
     font-size: 16px;
     line-height: 1.7;
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
+    overflow-x: hidden;
+    overflow-y: auto;
     width: 100%;
-    position: relative;
-    /* Desktop zoom scaling */
-    zoom: var(--site-scale);
-    overscroll-behavior-y: none;
+    min-height: 100vh;
     -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
   }
   
   @media (min-width: 768px) {
@@ -293,15 +260,26 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     background: hsl(var(--muted-foreground) / 0.5);
   }
   
-  /* Hide scrollbar globally while maintaining scroll functionality */
-  html, body {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
-  
+  /* Optional: Custom scrollbar styling (keep scrollbar visible for accessibility) */
   html::-webkit-scrollbar,
   body::-webkit-scrollbar {
-    display: none;  /* Chrome, Safari, Opera */
+    width: 12px;
+  }
+  
+  html::-webkit-scrollbar-track,
+  body::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+  
+  html::-webkit-scrollbar-thumb,
+  body::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.4);
+    border-radius: 6px;
+  }
+  
+  html::-webkit-scrollbar-thumb:hover,
+  body::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.6);
   }
   
   /* Optimize scroll performance - remove any resistance */
@@ -312,54 +290,13 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   /* Ensure smooth momentum scrolling on all touch devices */
   html, body, #root {
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior: none;
-  }
-  
-  /* High performance scrolling - ensure nothing blocks scroll */
-  #root {
-    scroll-behavior: smooth;
-    position: relative;
-    min-height: 100vh;
-    z-index: 1;
-    overflow-x: hidden;
-  }
-  
-  /* Ensure fixed and absolute elements don't block scrolling */
-  .fixed,
-  .absolute {
-    pointer-events: none !important;
-  }
-  
-  .fixed > *,
-  .absolute > *,
-  .fixed button,
-  .absolute button,
-  .fixed a,
-  .absolute a,
-  .fixed [role="button"],
-  .absolute [role="button"] {
-    pointer-events: auto !important;
-  }
-  
-  /* Ensure all page content allows scrolling */
-  main,
-  section,
-  article {
-    pointer-events: auto !important;
   }
   
   #root {
     @apply min-h-screen;
     overflow-x: hidden;
     width: 100%;
-  }
-  
-  /* Fallback for browsers that don't support zoom */
-  @supports not (zoom: 1) {
-    body {
-      transform: scale(var(--site-scale));
-      transform-origin: top left;
-    }
+    position: relative;
   }
   
   /* Prevent image flicker on load */
@@ -416,12 +353,10 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     }
   }
 
-  /* GPU acceleration for smooth animations on login/auth pages */
+  /* GPU acceleration for smooth animations - apply to specific interactive elements */
   .login-container,
   .form-input,
-  .login-button,
-  button[type="button"],
-  a {
+  .login-button {
     transform: translateZ(0);
     backface-visibility: hidden;
     -webkit-font-smoothing: antialiased;
@@ -487,7 +422,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     background: radial-gradient(circle, rgba(109, 40, 217, 0.3) 0%, rgba(109, 40, 217, 0) 70%);
     filter: blur(40px);
     animation: float 15s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    pointer-events: none;
+    pointer-events: none !important;
     will-change: transform;
     transform: translateZ(0);
     backface-visibility: hidden;

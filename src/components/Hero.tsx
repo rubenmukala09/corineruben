@@ -41,7 +41,7 @@ const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, childr
     <div 
       ref={ref}
       className={cn("relative min-h-[600px] sm:min-h-[700px] md:min-h-[850px] lg:min-h-[950px] xl:min-h-[1000px] flex items-center overflow-hidden hero-mobile bg-gradient-to-br from-[#1e3a8a] to-[#3b82f6]", className)}
-      style={{ position: 'relative', pointerEvents: 'auto' }}
+      style={{ position: 'relative' }}
     >
       {/* Background with Parallax - GPU accelerated */}
       <motion.div 
