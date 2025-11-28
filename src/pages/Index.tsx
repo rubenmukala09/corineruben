@@ -110,7 +110,7 @@ function Index() {
   const fetchVideoTestimonials = async () => {
     try {
       const { data, error } = await supabase
-        .from("testimonials")
+        .from("testimonials_public")
         .select(`
           *,
           testimonial_media (*)

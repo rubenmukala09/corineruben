@@ -51,9 +51,8 @@ const Services = () => {
   const fetchTestimonials = async () => {
     try {
       const { data, error } = await supabase
-        .from("testimonials")
+        .from("testimonials_public")
         .select("*")
-        .eq("status", "approved")
         .eq("featured", true)
         .order("created_at", { ascending: false })
         .limit(3);
