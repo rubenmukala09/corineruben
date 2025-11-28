@@ -164,8 +164,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
 
   html {
     scroll-behavior: smooth;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
     width: 100%;
     height: 100%;
   }
@@ -178,7 +177,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     overflow-x: hidden;
     overflow-y: auto;
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
     -webkit-overflow-scrolling: touch;
   }
   
@@ -260,27 +259,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     background: hsl(var(--muted-foreground) / 0.5);
   }
   
-  /* Optional: Custom scrollbar styling (keep scrollbar visible for accessibility) */
-  html::-webkit-scrollbar,
-  body::-webkit-scrollbar {
-    width: 12px;
-  }
-  
-  html::-webkit-scrollbar-track,
-  body::-webkit-scrollbar-track {
-    background: hsl(var(--muted));
-  }
-  
-  html::-webkit-scrollbar-thumb,
-  body::-webkit-scrollbar-thumb {
-    background: hsl(var(--muted-foreground) / 0.4);
-    border-radius: 6px;
-  }
-  
-  html::-webkit-scrollbar-thumb:hover,
-  body::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--muted-foreground) / 0.6);
-  }
+  /* Default scrollbar on body only */
   
   /* Optimize scroll performance - remove any resistance */
   * {
