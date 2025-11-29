@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useImagePreload } from "@/hooks/useImagePreload";
+import { useDeviceCapabilities } from "@/hooks/useDeviceCapabilities";
 import { Play, Pause } from "lucide-react";
 
 interface HeroImage {
@@ -21,9 +22,13 @@ export const HeroCarousel = ({
 }: HeroCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const { isLowEnd, prefersReducedMotion } = useDeviceCapabilities();
   
   // Preload all images
   const imagesPreloaded = useImagePreload(images.map(img => img.src));
+  
+  // Adjust transition duration for low-end devices
+  const adjustedTransitionDuration = isLowEnd ? transitionDuration * 0.6 : transitionDuration;
 
   useEffect(() => {
     // Don't start rotation until images are preloaded
@@ -72,17 +77,20 @@ export const HeroCarousel = ({
               initial={{ opacity: 0 }}
               animate={{ 
                 opacity: 1,
-                scale: [1, 1.05, 1]
+                // Disable scale animation on low-end devices
+                ...(!isLowEnd && !prefersReducedMotion && { scale: [1, 1.05, 1] })
               }}
               exit={{ opacity: 0 }}
               transition={{
-                opacity: { duration: transitionDuration, ease: "easeInOut" },
-                scale: { duration: interval / 1000, ease: "linear" }
+                opacity: { duration: adjustedTransitionDuration, ease: "easeInOut" },
+                ...(!isLowEnd && !prefersReducedMotion && { 
+                  scale: { duration: interval / 1000, ease: "linear" } 
+                })
               }}
               className="absolute inset-0 bg-cover bg-center bg-no-repeat"
               style={{
                 backgroundImage: `url(${image.src})`,
-                willChange: "opacity, transform"
+                willChange: isLowEnd ? "opacity" : "opacity, transform"
               }}
               role="img"
               aria-label={image.alt}

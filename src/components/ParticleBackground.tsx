@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useDeviceCapabilities } from '@/hooks/useDeviceCapabilities';
 
 interface Particle {
   x: number;
@@ -12,12 +13,17 @@ export const ParticleBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const animationFrameRef = useRef<number>();
+  const lastFrameTimeRef = useRef<number>(0);
+  const { isLowEnd, prefersReducedMotion } = useDeviceCapabilities();
 
   useEffect(() => {
+    // Disable on low-end devices or if user prefers reduced motion
+    if (prefersReducedMotion) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
     const resizeCanvas = () => {
@@ -29,8 +35,13 @@ export const ParticleBackground = () => {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Initialize particles
-    const particleCount = Math.floor((canvas.width * canvas.height) / 15000);
+    // Reduce particle count on low-end devices
+    const particleDensity = isLowEnd ? 25000 : 15000;
+    const particleCount = Math.min(
+      Math.floor((canvas.width * canvas.height) / particleDensity),
+      isLowEnd ? 30 : 60
+    );
+
     particlesRef.current = Array.from({ length: particleCount }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
@@ -39,13 +50,28 @@ export const ParticleBackground = () => {
       radius: Math.random() * 2 + 1,
     }));
 
-    const animate = () => {
+    // Target FPS: 60 for high-end, 30 for low-end
+    const targetFPS = isLowEnd ? 30 : 60;
+    const frameInterval = 1000 / targetFPS;
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - lastFrameTimeRef.current;
+
+      // Throttle to target FPS
+      if (elapsed < frameInterval) {
+        animationFrameRef.current = requestAnimationFrame(animate);
+        return;
+      }
+
+      lastFrameTimeRef.current = currentTime - (elapsed % frameInterval);
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw gradient overlay
+      // Draw gradient overlay (lighter on low-end)
       const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-      gradient.addColorStop(0, 'rgba(124, 58, 237, 0.05)');
-      gradient.addColorStop(1, 'rgba(167, 139, 250, 0.05)');
+      const opacity = isLowEnd ? 0.03 : 0.05;
+      gradient.addColorStop(0, `rgba(124, 58, 237, ${opacity})`);
+      gradient.addColorStop(1, `rgba(167, 139, 250, ${opacity})`);
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -64,17 +90,18 @@ export const ParticleBackground = () => {
         ctx.fillStyle = 'rgba(167, 139, 250, 0.2)';
         ctx.fill();
 
-        // Draw connections
+        // Draw connections (reduce connection distance on low-end)
+        const connectionDistance = isLowEnd ? 100 : 150;
         particlesRef.current.slice(i + 1).forEach((otherParticle) => {
           const dx = particle.x - otherParticle.x;
           const dy = particle.y - otherParticle.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 150) {
+          if (distance < connectionDistance) {
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(otherParticle.x, otherParticle.y);
-            ctx.strokeStyle = `rgba(167, 139, 250, ${0.15 * (1 - distance / 150)})`;
+            ctx.strokeStyle = `rgba(167, 139, 250, ${0.15 * (1 - distance / connectionDistance)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -84,7 +111,7 @@ export const ParticleBackground = () => {
       animationFrameRef.current = requestAnimationFrame(animate);
     };
 
-    animate();
+    animationFrameRef.current = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
@@ -92,7 +119,12 @@ export const ParticleBackground = () => {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, []);
+  }, [isLowEnd, prefersReducedMotion]);
+
+  // Don't render canvas if reduced motion is preferred
+  if (prefersReducedMotion) {
+    return null;
+  }
 
   return (
     <canvas

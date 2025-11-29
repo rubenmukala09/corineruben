@@ -1,4 +1,13 @@
+import { useDeviceCapabilities } from '@/hooks/useDeviceCapabilities';
+
 export const FloatingShapes = () => {
+  const { isLowEnd, prefersReducedMotion } = useDeviceCapabilities();
+
+  // Don't render on low-end devices or if reduced motion is preferred
+  if (isLowEnd || prefersReducedMotion) {
+    return null;
+  }
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
       <svg className="absolute w-full h-full">

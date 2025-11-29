@@ -1,0 +1,163 @@
+/* Mobile-specific form enhancements */
+@media (max-width: 768px) {
+  /* Ensure checkboxes and radio buttons are touch-friendly */
+  input[type="checkbox"],
+  input[type="radio"] {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Remove hover effects on mobile, use active instead */
+  .hover-scale:active {
+    transform: scale(0.95);
+  }
+
+  .hover-scale:hover {
+    transform: none;
+  }
+
+  /* Ensure all interactive elements have proper touch targets */
+  button, 
+  a[role="button"],
+  [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Stack admin dashboard stats */
+  .admin-stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Mobile table cards */
+  .desktop-table {
+    display: none;
+  }
+
+  .mobile-cards {
+    display: block;
+  }
+
+  /* Reduce chart height on mobile */
+  .admin-chart {
+    height: 250px !important;
+  }
+
+  /* Stack quick actions */
+  .quick-actions-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Full width modals on mobile */
+  .mobile-modal {
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
+    border-radius: 0;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .card-enhanced:hover {
+    transform: translateY(0);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-enhanced:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease-out;
+  }
+  
+  .card-enhanced:hover img {
+    transform: scale(1);
+  }
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  .section-spacing {
+    @apply py-6;
+  }
+  
+  .hero-mobile {
+    min-height: 50vh !important;
+  }
+  
+  .card-mobile {
+    @apply p-4;
+  }
+  
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.25rem; }
+}
+
+/* Mobile Typography Optimizations */
+@media (max-width: 640px) {
+  .hero-mobile h1 {
+    font-size: clamp(1.75rem, 5vw, 2.5rem) !important;
+    line-height: 1.2 !important;
+  }
+  
+  .hero-mobile h2 {
+    font-size: clamp(1.25rem, 4vw, 1.75rem) !important;
+  }
+  
+  .hero-mobile p {
+    font-size: clamp(0.875rem, 3vw, 1rem) !important;
+  }
+
+  /* Prevent horizontal overflow */
+  body {
+    overflow-x: hidden;
+  }
+  
+  .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Ensure images don't overflow */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Make cards more compact on mobile */
+  .card {
+    padding: 1rem !important;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 380px) {
+  .hero-mobile h1 {
+    font-size: 1.5rem !important;
+  }
+  
+  .hero-mobile h2 {
+    font-size: 1.125rem !important;
+  }
+  
+  /* Prevent text overflow */
+  * {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+}
+
+/* Very small phones (<375px) - 2FA code input 2x3 grid */
+@media (max-width: 374px) {
+  .xs-small\:grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr) !important;
+    max-width: 200px;
+    gap: 6px;
+  }
+  
+  .xs-small\:grid-cols-3 input {
+    min-width: 44px !important;
+    min-height: 44px !important;
+    font-size: 18px !important;
+  }
+}

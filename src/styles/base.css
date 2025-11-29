@@ -1,0 +1,318 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* InVision Network Design System - "Liquid Trust" Premium Visual Design
+All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid animations. */
+
+@layer base {
+  * {
+    scroll-behavior: smooth;
+  }
+
+  /* Prevent FOUC */
+  body:not(.loaded) {
+    opacity: 0;
+  }
+
+  body.loaded {
+    opacity: 1;
+    transition: opacity 0.3s ease-out;
+  }
+
+  /* Instant button feedback */
+  button.active-press,
+  a.active-press {
+    transform: scale(0.95);
+    transition: transform 0.1s ease-out;
+  }
+
+  /* Smooth GPU-accelerated animations */
+  .smooth-animation {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+  }
+
+  /* Remove will-change after animation */
+  .smooth-animation:not(:hover):not(:focus) {
+    will-change: auto;
+  }
+
+  :root {
+    /* Base colors */
+    --background: 0 0% 100%;
+    --foreground: 260 30% 15%;
+    
+    /* Deep Purple - Primary brand color (Trust, creativity, innovation) */
+    --primary: 260 70% 35%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Bright Teal - Accent color (Modern, fresh, dynamic) */
+    --accent: 180 80% 45%;
+    --accent-foreground: 0 0% 100%;
+    
+    /* Success Green - Safety, verification */
+    --success: 158 64% 52%;
+    --success-foreground: 0 0% 100%;
+    
+    /* Alert Red - Danger, urgency */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Neutral colors */
+    --card: 0 0% 100%;
+    --card-foreground: 260 30% 15%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 260 30% 15%;
+    
+    --secondary: 250 20% 96%;
+    --secondary-foreground: 260 70% 35%;
+    
+    --muted: 250 20% 96%;
+    --muted-foreground: 250 10% 47%;
+    
+    --border: 250 15% 91%;
+    --input: 250 15% 91%;
+    --ring: 260 70% 35%;
+    
+    --radius: 0.5rem;
+    
+    /* Extended Color Palette for Premium Design */
+    --purple-900: 260 70% 25%;
+    --purple-700: 260 65% 35%;
+    --purple-500: 260 60% 50%;
+    
+    /* Teal variants - Full intensity */
+    --teal-600: 180 80% 40%;
+    --teal-500: 180 75% 45%;
+    --teal-400: 180 70% 55%;
+    --teal-300: 180 60% 75%;
+    --teal-100: 180 50% 98%;
+    
+    /* Cyan variants for accents */
+    --cyan-600: 190 85% 45%;
+    --cyan-500: 190 80% 50%;
+    --cyan-400: 190 75% 60%;
+    
+    /* Premium Shadows */
+    --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-strong: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-glow-purple: 0 0 20px rgba(109, 40, 217, 0.3);
+    --shadow-glow-teal: 0 0 20px rgba(20, 184, 166, 0.3);
+    
+    /* Radial gradients for background orbs */
+    --gradient-radial: radial-gradient(circle, var(--tw-gradient-stops));
+    
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Global site scale for desktop browsers */
+    --site-scale: 0.78;
+  }
+
+  .dark {
+    --background: 260 70% 15%;
+    --foreground: 0 0% 100%;
+    --card: 260 70% 20%;
+    --card-foreground: 0 0% 100%;
+    --popover: 260 70% 20%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 260 70% 35%;
+    --secondary: 260 60% 25%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 260 60% 25%;
+    --muted-foreground: 250 10% 76%;
+    --accent: 180 80% 45%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 260 50% 30%;
+    --input: 260 50% 30%;
+    --ring: 0 0% 100%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+    overflow-x: hidden;
+    width: 100%;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+    /* Desktop zoom scaling */
+    zoom: var(--site-scale);
+  }
+  
+  @media (min-width: 768px) {
+    body {
+      font-size: 18px;
+    }
+  }
+
+  /* Accessibility - Skip to content link */
+  .skip-to-content {
+    position: absolute;
+    left: -9999px;
+    z-index: 999;
+  }
+
+  .skip-to-content:focus {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 1rem;
+  }
+
+  /* Accessibility - Focus visible styles */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary ring-2 ring-accent;
+  }
+
+  /* Accessibility - Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Screen reader only content */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .sr-only:focus,
+  .sr-only:active {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+  
+  /* Custom scrollbar for activity feed and other scrollable elements */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+    border-radius: 10px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 10px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.5);
+  }
+  
+  #root {
+    @apply min-h-screen;
+    overflow-x: hidden;
+    width: 100%;
+  }
+  
+  /* Fallback for browsers that don't support zoom */
+  @supports not (zoom: 1) {
+    body {
+      transform: scale(var(--site-scale));
+      transform-origin: top left;
+    }
+  }
+  
+  /* Prevent image flicker on load */
+  img {
+    @apply block;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+    line-height: 1.2;
+  }
+  
+  h1 {
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
+  }
+  
+  h2 {
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl;
+  }
+  
+  h3 {
+    @apply text-xl sm:text-2xl md:text-3xl;
+  }
+  
+  /* Minimum tap targets for accessibility */
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Focus indicators for accessibility */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2;
+  }
+
+  /* Performance: Enable GPU acceleration for animations */
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  .will-change-opacity {
+    will-change: opacity;
+  }
+
+  /* GPU acceleration for smooth animations on login/auth pages */
+  .login-container,
+  .form-input,
+  .login-button,
+  button[type="button"],
+  a {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+}
