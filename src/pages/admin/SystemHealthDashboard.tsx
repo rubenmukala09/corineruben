@@ -21,6 +21,7 @@ import {
   Plug,
 } from "lucide-react";
 import { toast } from "sonner";
+import { SecurityMonitor } from "@/components/admin/SecurityMonitor";
 
 interface TestResult {
   status: "pass" | "fail" | "warning";
@@ -425,6 +426,11 @@ function SystemHealthDashboard() {
               </div>
             </CardContent>
           </Card>
+
+          {/* Security Monitoring */}
+          <div className="mt-6">
+            <SecurityMonitor />
+          </div>
         </div>
       </div>
     </div>
