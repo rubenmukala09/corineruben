@@ -15,6 +15,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { BookingModal } from "@/components/BookingModal";
 import { SubscriptionDialog } from "@/components/SubscriptionDialog";
+import { ServiceInquiryDialog } from "@/components/ServiceInquiryDialog";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { trackButtonClick, trackConversion } from "@/utils/analyticsTracker";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield } from "lucide-react";
@@ -48,6 +49,20 @@ function Business() {
   const [isLoading, setIsLoading] = useState(true);
   const [businessTestimonials, setBusinessTestimonials] = useState<any[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string } | null>(null);
+  
+  // Service inquiry dialog state
+  const [inquiryDialogOpen, setInquiryDialogOpen] = useState(false);
+  const [inquiryData, setInquiryData] = useState<{
+    serviceType: 'ai-automation' | 'website-design' | 'ai-consultation' | 'ai-insurance';
+    serviceName: string;
+    servicePrice?: number;
+  } | null>(null);
+
+  const openInquiryDialog = (serviceType: 'ai-automation' | 'website-design' | 'ai-consultation' | 'ai-insurance', serviceName: string, servicePrice?: number) => {
+    setInquiryData({ serviceType, serviceName, servicePrice });
+    setInquiryDialogOpen(true);
+    trackButtonClick(`Open Inquiry - ${serviceName}`, 'Business Page');
+  };
 
   // Counter animations for pricing cards
   const price1Counter = useCounterAnimation({ end: 9500, duration: 1500, prefix: '$' });
@@ -306,19 +321,14 @@ function Business() {
                 </p>
 ...
                 <Button 
-                  asChild
                   variant="default" 
                   className="w-full transition-all duration-300 md:hover:bg-primary/90 md:hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] md:hover:scale-[1.02] active:scale-95 h-11 md:h-10"
+                  onClick={() => {
+                    openInquiryDialog('ai-automation', 'AI Receptionist & Intake Agent', 9500);
+                    trackConversion('business_ai_receptionist', 9500);
+                  }}
                 >
-                  <Link 
-                    to="/contact?service=ai-receptionist&plan=9500"
-                    onClick={() => {
-                      trackButtonClick('Get Started - AI Receptionist', 'Business Pricing');
-                      trackConversion('business_ai_receptionist', 9500);
-                    }}
-                  >
-                    GET STARTED
-                  </Link>
+                  GET STARTED
                 </Button>
               </Card>
             </ScrollReveal>
@@ -341,19 +351,14 @@ function Business() {
                     </li>
                   </ul>
                   <Button 
-                    asChild
                     variant="default" 
                     className="w-full transition-all duration-300 md:hover:bg-primary/90 md:hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] md:hover:scale-[1.02] active:scale-95 h-11 md:h-10"
+                    onClick={() => {
+                      openInquiryDialog('ai-automation', 'Follow-Up Automation System', 12500);
+                      trackConversion('business_full_automation', 12500);
+                    }}
                   >
-                    <Link 
-                      to="/contact?service=automation&plan=12500"
-                      onClick={() => {
-                        trackButtonClick('Get Started - Full Automation', 'Business Pricing');
-                        trackConversion('business_full_automation', 12500);
-                      }}
-                    >
-                      GET STARTED
-                    </Link>
+                    GET STARTED
                   </Button>
                 </Card>
               </div>
@@ -368,19 +373,14 @@ function Business() {
                 </p>
 ...
                 <Button 
-                  asChild
                   variant="default" 
                   className="w-full transition-all duration-300 md:hover:bg-primary/90 md:hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] md:hover:scale-[1.02] active:scale-95 h-11 md:h-10"
+                  onClick={() => {
+                    openInquiryDialog('ai-automation', 'Custom Automation Suite', 25000);
+                    trackConversion('business_custom_solution', 25000);
+                  }}
                 >
-                  <Link 
-                    to="/contact?service=custom&plan=25000"
-                    onClick={() => {
-                      trackButtonClick('Get Started - Custom Solution', 'Business Pricing');
-                      trackConversion('business_custom_solution', 25000);
-                    }}
-                  >
-                    GET STARTED
-                  </Link>
+                  GET STARTED
                 </Button>
               </Card>
             </ScrollReveal>
@@ -429,17 +429,12 @@ function Business() {
                     
                     button.appendChild(ripple);
                     setTimeout(() => ripple.remove(), 600);
+                    
+                    openInquiryDialog('website-design', 'Landing Page Design', 1500);
+                    trackConversion('business_landing_page', 1500);
                   }}
                 >
-                  <Link 
-                    to="/contact?service=landing-page&price=1500"
-                    onClick={() => {
-                      trackButtonClick('Get Started - Landing Page', 'Business Website');
-                      trackConversion('business_landing_page', 1500);
-                    }}
-                  >
-                    GET STARTED
-                  </Link>
+                  GET STARTED
                 </Button>
               </Card>
             </ScrollReveal>
@@ -508,17 +503,12 @@ function Business() {
                     
                     button.appendChild(ripple);
                     setTimeout(() => ripple.remove(), 600);
+                    
+                    openInquiryDialog('website-design', 'Business Website Design', 4500);
+                    trackConversion('business_website', 4500);
                   }}
                 >
-                  <Link 
-                    to="/contact?service=business-website&price=4500"
-                    onClick={() => {
-                      trackButtonClick('Get Started - Business Website', 'Business Website');
-                      trackConversion('business_website', 4500);
-                    }}
-                  >
-                    GET STARTED
-                  </Link>
+                  GET STARTED
                 </Button>
               </Card>
               </div>
@@ -565,7 +555,6 @@ function Business() {
                   </li>
                 </ul>
                 <Button 
-                  asChild
                   variant="default" 
                   className="w-full ripple-container relative overflow-hidden transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)]"
                   onClick={(e) => {
@@ -584,17 +573,12 @@ function Business() {
                     
                     button.appendChild(ripple);
                     setTimeout(() => ripple.remove(), 600);
+                    
+                    openInquiryDialog('website-design', 'E-Commerce Website', 8500);
+                    trackConversion('business_ecommerce', 8500);
                   }}
                 >
-                  <Link 
-                    to="/contact?service=ecommerce&price=8500"
-                    onClick={() => {
-                      trackButtonClick('Get Started - E-Commerce', 'Business Website');
-                      trackConversion('business_ecommerce', 8500);
-                    }}
-                  >
-                    GET STARTED
-                  </Link>
+                  GET STARTED
                 </Button>
               </Card>
             </ScrollReveal>
@@ -1197,6 +1181,16 @@ function Business() {
           serviceName={selectedSubscription.serviceName}
           planTier={selectedSubscription.planTier}
           amount={selectedSubscription.amount}
+        />
+      )}
+
+      {inquiryData && (
+        <ServiceInquiryDialog
+          open={inquiryDialogOpen}
+          onOpenChange={setInquiryDialogOpen}
+          serviceType={inquiryData.serviceType}
+          serviceName={inquiryData.serviceName}
+          servicePrice={inquiryData.servicePrice}
         />
       )}
     </div>

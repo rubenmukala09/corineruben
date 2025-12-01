@@ -22,7 +22,7 @@ interface CheckoutDialogProps {
 function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
   const stripe = useStripe();
   const elements = useElements();
-  const { items, total, clearCart } = useCart();
+  const { items, total, clearCart, isVeteran, veteranDiscount } = useCart();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -33,6 +33,8 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
     state: '',
     zip: ''
   });
+
+  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -171,7 +173,17 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
 
       <div className="hidden md:block">
         <div className="sticky top-4">
-          <OrderSummary items={items.map(item => ({ name: item.name, quantity: item.quantity, price: item.price }))} subtotal={total} total={total} />
+          <OrderSummary 
+            items={items.map(item => ({ name: item.name, quantity: item.quantity, price: item.price }))} 
+            subtotal={subtotal}
+            discount={veteranDiscount}
+            total={total} 
+          />
+          {isVeteran && (
+            <div className="mt-4 p-3 bg-success/10 border border-success/20 rounded-lg text-sm text-success">
+              ✓ Veteran discount applied (10% OFF)
+            </div>
+          )}
         </div>
       </div>
     </div>

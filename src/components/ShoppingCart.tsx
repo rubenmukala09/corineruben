@@ -1,14 +1,18 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { ShoppingCart as CartIcon, Trash2, Plus, Minus } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
+import { ShoppingCart as CartIcon, Trash2, Plus, Minus, Shield } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
 import { useState } from 'react';
 import { CheckoutDialog } from './CheckoutDialog';
 
 export function ShoppingCart() {
-  const { items, removeItem, updateQuantity, total, itemCount } = useCart();
+  const { items, removeItem, updateQuantity, total, itemCount, isVeteran, setIsVeteran, veteranDiscount } = useCart();
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
+
+  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <>
@@ -78,10 +82,39 @@ export function ShoppingCart() {
             </div>
             {items.length > 0 && (
               <div className="border-t pt-4 space-y-4">
-                <div className="flex justify-between text-lg font-semibold">
-                  <span>Total:</span>
-                  <span>${total.toFixed(2)}</span>
+                {/* Veteran Discount Toggle */}
+                <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <Shield className="w-4 h-4 text-primary" />
+                    <Label htmlFor="cart-veteran" className="text-sm font-medium cursor-pointer">
+                      Veteran/First Responder (10% OFF)
+                    </Label>
+                  </div>
+                  <Switch
+                    id="cart-veteran"
+                    checked={isVeteran}
+                    onCheckedChange={setIsVeteran}
+                  />
                 </div>
+
+                {/* Price Breakdown */}
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>Subtotal:</span>
+                    <span>${subtotal.toFixed(2)}</span>
+                  </div>
+                  {isVeteran && veteranDiscount > 0 && (
+                    <div className="flex justify-between text-sm text-success">
+                      <span>Veteran Discount (10%):</span>
+                      <span>-${veteranDiscount.toFixed(2)}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between text-lg font-semibold border-t pt-2">
+                    <span>Total:</span>
+                    <span>${total.toFixed(2)}</span>
+                  </div>
+                </div>
+
                 <Button 
                   className="w-full" 
                   size="lg"

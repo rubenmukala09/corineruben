@@ -2886,6 +2886,72 @@ export type Database = {
         }
         Relationships: []
       }
+      service_inquiries: {
+        Row: {
+          admin_notes: string | null
+          budget: string | null
+          company_name: string | null
+          created_at: string | null
+          email: string
+          full_name: string
+          id: string
+          inquiry_number: string
+          is_veteran: boolean | null
+          phone: string | null
+          requirements: string | null
+          service_name: string
+          service_price: number | null
+          service_type: string
+          status: string | null
+          timeline: string | null
+          updated_at: string | null
+          veteran_id_last4: string | null
+          veteran_type: string | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          budget?: string | null
+          company_name?: string | null
+          created_at?: string | null
+          email: string
+          full_name: string
+          id?: string
+          inquiry_number?: string
+          is_veteran?: boolean | null
+          phone?: string | null
+          requirements?: string | null
+          service_name: string
+          service_price?: number | null
+          service_type: string
+          status?: string | null
+          timeline?: string | null
+          updated_at?: string | null
+          veteran_id_last4?: string | null
+          veteran_type?: string | null
+        }
+        Update: {
+          admin_notes?: string | null
+          budget?: string | null
+          company_name?: string | null
+          created_at?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          inquiry_number?: string
+          is_veteran?: boolean | null
+          phone?: string | null
+          requirements?: string | null
+          service_name?: string
+          service_price?: number | null
+          service_type?: string
+          status?: string | null
+          timeline?: string | null
+          updated_at?: string | null
+          veteran_id_last4?: string | null
+          veteran_type?: string | null
+        }
+        Relationships: []
+      }
       services: {
         Row: {
           active: boolean

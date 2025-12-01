@@ -18,6 +18,9 @@ interface CartContextType {
   clearCart: () => void;
   total: number;
   itemCount: number;
+  isVeteran: boolean;
+  setIsVeteran: (value: boolean) => void;
+  veteranDiscount: number;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -28,9 +31,18 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     return saved ? JSON.parse(saved) : [];
   });
 
+  const [isVeteran, setIsVeteran] = useState(() => {
+    const saved = localStorage.getItem('isVeteran');
+    return saved === 'true';
+  });
+
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(items));
   }, [items]);
+
+  useEffect(() => {
+    localStorage.setItem('isVeteran', String(isVeteran));
+  }, [isVeteran]);
 
   const addItem = (item: Omit<CartItem, 'quantity'>) => {
     setItems(prev => {
@@ -64,11 +76,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     localStorage.removeItem('cart');
   };
 
-  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const veteranDiscount = isVeteran ? subtotal * 0.10 : 0;
+  const total = subtotal - veteranDiscount;
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <CartContext.Provider value={{ items, addItem, removeItem, updateQuantity, clearCart, total, itemCount }}>
+    <CartContext.Provider value={{ items, addItem, removeItem, updateQuantity, clearCart, total, itemCount, isVeteran, setIsVeteran, veteranDiscount }}>
       {children}
     </CartContext.Provider>
   );
