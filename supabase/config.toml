@@ -3,6 +3,9 @@ project_id = "avoafweoebstkgjnbadv"
 [functions.ai-chat]
 verify_jwt = false
 
+[functions.analyze-scam]
+verify_jwt = false
+
 [functions.send-verification-code]
 verify_jwt = false
 
