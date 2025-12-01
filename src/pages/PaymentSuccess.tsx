@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { CheckCircle, Package, Home, ShoppingBag } from "lucide-react";
+import { CheckCircle, Package, Home, ShoppingBag, Download, Mail } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ import confetti from "canvas-confetti";
 export default function PaymentSuccess() {
   const [searchParams] = useSearchParams();
   const orderNumber = searchParams.get("order");
+  const productType = searchParams.get("type") || "mixed"; // digital, physical, or mixed
 
   useEffect(() => {
     // Trigger confetti animation
@@ -80,28 +81,73 @@ export default function PaymentSuccess() {
                 <div className="border-t pt-6">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <Package className="w-6 h-6 text-primary" />
+                      {productType === 'digital' ? (
+                        <Download className="w-6 h-6 text-primary" />
+                      ) : (
+                        <Package className="w-6 h-6 text-primary" />
+                      )}
                     </div>
                     <div>
                       <h3 className="font-semibold mb-2">What happens next?</h3>
-                      <ul className="space-y-2 text-sm text-muted-foreground">
-                        <li className="flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                          <span>You'll receive an order confirmation email shortly</span>
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                          <span>Your order will be processed within 1-2 business days</span>
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                          <span>Shipping typically takes 2-3 business days</span>
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                          <span>You'll receive a tracking number once shipped</span>
-                        </li>
-                      </ul>
+                      
+                      {productType === 'digital' ? (
+                        <ul className="space-y-2 text-sm text-muted-foreground">
+                          <li className="flex items-center gap-2">
+                            <Mail className="w-4 h-4 text-primary" />
+                            <span className="font-semibold text-primary">Check your email for download links</span>
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                            <span>Download links will arrive within 2-5 minutes</span>
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                            <span>Links expire in 24 hours for security</span>
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                            <span>Make sure to check your spam folder</span>
+                          </li>
+                        </ul>
+                      ) : productType === 'physical' ? (
+                        <ul className="space-y-2 text-sm text-muted-foreground">
+                          <li className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                            <span>You'll receive an order confirmation email shortly</span>
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                            <span>Your order will be processed within 1-2 business days</span>
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                            <span>Shipping typically takes 2-3 business days</span>
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                            <span>You'll receive a tracking number once shipped</span>
+                          </li>
+                        </ul>
+                      ) : (
+                        <ul className="space-y-2 text-sm text-muted-foreground">
+                          <li className="flex items-center gap-2">
+                            <Download className="w-4 h-4 text-primary" />
+                            <span className="font-semibold text-primary">Digital products: Check your email (2-5 minutes)</span>
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <Package className="w-4 h-4 text-primary" />
+                            <span className="font-semibold text-primary">Physical products: Ships in 2-3 business days</span>
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                            <span>Download links expire in 24 hours</span>
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                            <span>You'll receive tracking for physical items</span>
+                          </li>
+                        </ul>
+                      )}
                     </div>
                   </div>
                 </div>

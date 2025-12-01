@@ -15,6 +15,26 @@ export function QRCodePayment({ amount, items, customerEmail }: QRCodePaymentPro
   const [loading, setLoading] = useState(false);
   const [paymentUrl, setPaymentUrl] = useState<string | null>(null);
   const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string | null>(null);
+  const [timeRemaining, setTimeRemaining] = useState(240); // 4 minutes in seconds
+  const [isExpired, setIsExpired] = useState(false);
+
+  // Timer countdown effect
+  useEffect(() => {
+    if (paymentUrl && timeRemaining > 0 && !isExpired) {
+      const timer = setInterval(() => {
+        setTimeRemaining(prev => {
+          if (prev <= 1) {
+            setIsExpired(true);
+            setPaymentUrl(null);
+            setQrCodeDataUrl(null);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [paymentUrl, timeRemaining, isExpired]);
 
   const generateQRCode = async (url: string) => {
     try {
@@ -26,8 +46,16 @@ export function QRCodePayment({ amount, items, customerEmail }: QRCodePaymentPro
     }
   };
 
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
   const handleGenerateQR = async () => {
     setLoading(true);
+    setIsExpired(false);
+    setTimeRemaining(240); // Reset to 4 minutes
     try {
       const { data, error } = await supabase.functions.invoke('generate-payment-link', {
         body: {
@@ -42,7 +70,7 @@ export function QRCodePayment({ amount, items, customerEmail }: QRCodePaymentPro
       if (data?.url) {
         setPaymentUrl(data.url);
         await generateQRCode(data.url);
-        toast.success("QR code generated! Scan to pay.");
+        toast.success("QR code generated! Scan within 4 minutes.");
       }
     } catch (error) {
       console.error("QR generation error:", error);
@@ -74,11 +102,36 @@ export function QRCodePayment({ amount, items, customerEmail }: QRCodePaymentPro
             </>
           )}
         </Button>
+      ) : isExpired ? (
+        <Alert className="border-destructive/50 bg-destructive/5">
+          <AlertDescription className="text-center space-y-3">
+            <p className="text-sm font-semibold text-destructive">QR Code Expired</p>
+            <p className="text-xs text-muted-foreground">
+              For security, QR codes expire after 4 minutes. Generate a new one to continue.
+            </p>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleGenerateQR}
+              disabled={loading}
+              className="w-full"
+            >
+              Generate New QR Code
+            </Button>
+          </AlertDescription>
+        </Alert>
       ) : (
         <Alert className="border-primary/50 bg-primary/5">
           <AlertDescription className="space-y-4">
             <div className="text-center">
-              <p className="font-semibold mb-2">Scan to Pay ${amount.toFixed(2)}</p>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <p className="font-semibold">Scan to Pay ${amount.toFixed(2)}</p>
+                <span className={`text-xs font-mono px-2 py-1 rounded ${
+                  timeRemaining < 60 ? 'bg-destructive/20 text-destructive' : 'bg-muted'
+                }`}>
+                  {formatTime(timeRemaining)}
+                </span>
+              </div>
               {qrCodeDataUrl && (
                 <div className="flex justify-center">
                   <img
@@ -91,6 +144,11 @@ export function QRCodePayment({ amount, items, customerEmail }: QRCodePaymentPro
               <p className="text-xs text-muted-foreground mt-3">
                 📱 Open your phone camera and scan the QR code above
               </p>
+              {timeRemaining < 60 && (
+                <p className="text-xs text-destructive mt-2 font-semibold">
+                  ⚠️ Expires soon! Generate new code if needed.
+                </p>
+              )}
             </div>
             <Button
               type="button"

@@ -176,12 +176,38 @@ serve(async (req) => {
       }
     }
 
+    // Check if order contains digital products
+    const hasDigitalProducts = items.some((item: any) => 
+      item.tags?.includes('digital') || item.type === 'digital'
+    );
+    const hasPhysicalProducts = items.some((item: any) => 
+      !item.tags?.includes('digital') && item.type !== 'digital'
+    );
+
     // Send receipt email
     const resendApiKey = Deno.env.get('RESEND_API_KEY');
     if (resendApiKey) {
       const itemsList = items.map((item: any) => 
         `${item.name} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`
       ).join('\n');
+
+      let productTypeMessage = '';
+      if (hasDigitalProducts && hasPhysicalProducts) {
+        productTypeMessage = `
+📦 Physical Products: Your items will be processed and shipped within 2-3 business days.
+📥 Digital Products: Check your email for download links (sent within 2-5 minutes).
+        `.trim();
+      } else if (hasDigitalProducts) {
+        productTypeMessage = `
+📥 Digital Products: Your download links will be sent to your email within 2-5 minutes.
+⏰ Download links expire in 24 hours for security.
+        `.trim();
+      } else {
+        productTypeMessage = `
+📦 Your order will be processed and shipped within 2-3 business days.
+📧 You'll receive a tracking number once shipped.
+        `.trim();
+      }
 
       const emailBody = `
 Thank you for your purchase from InVision Network!
@@ -192,17 +218,19 @@ Order ID: ${order.id}
 Order Details:
 ${itemsList}
 
+${hasPhysicalProducts ? `
 Shipping Address:
 ${customerInfo.name}
 ${customerInfo.address}
 ${customerInfo.city}, ${customerInfo.state} ${customerInfo.zip}
+` : ''}
 
 Payment Information:
 Amount: $${(amount / 100).toFixed(2)}
 Transaction ID: ${paymentIntent.id}
 Date: ${new Date().toLocaleDateString()}
 
-Your order will be processed and shipped within 2-3 business days.
+${productTypeMessage}
 
 Questions? Contact us at hello@invisionnetwork.org
 
@@ -225,6 +253,26 @@ InVision Network Team
       });
 
       console.log('Receipt email sent to:', customerInfo.email);
+    }
+
+    // Trigger digital download email if order contains digital products
+    if (hasDigitalProducts) {
+      console.log('Order contains digital products, triggering download email...');
+      try {
+        await supabaseAdmin.functions.invoke('send-digital-download', {
+          body: {
+            orderId: order.id,
+            orderNumber: orderNumber,
+            customerEmail: customerInfo.email,
+            customerName: customerInfo.name,
+            items: items,
+          },
+        });
+        console.log('Digital download email triggered successfully');
+      } catch (downloadError) {
+        console.error('Error triggering digital download email:', downloadError);
+        // Don't fail the order if download email fails
+      }
     }
 
     return new Response(
