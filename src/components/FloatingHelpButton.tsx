@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { MessageCircle, X, Phone, Mail, Calendar } from "lucide-react";
+import { MessageCircle, X, Phone, Mail, Calendar, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export function FloatingHelpButton() {
+interface FloatingHelpButtonProps {
+  onScamShieldClick?: () => void;
+}
+
+export function FloatingHelpButton({ onScamShieldClick }: FloatingHelpButtonProps = {}) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -47,6 +51,19 @@ export function FloatingHelpButton() {
                 Browse FAQ
               </Button>
             </Link>
+            {onScamShieldClick && (
+              <Button
+                onClick={() => {
+                  setIsOpen(false);
+                  onScamShieldClick();
+                }}
+                variant="outline"
+                className="w-full justify-start bg-destructive/10 hover:bg-destructive/20 text-destructive border-destructive/20"
+              >
+                <Shield className="h-4 w-4 mr-2" />
+                Report Scam
+              </Button>
+            )}
           </div>
           <p className="text-xs text-muted-foreground mt-4 text-center">
             Typical response: 4 hours

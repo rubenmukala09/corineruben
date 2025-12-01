@@ -2670,6 +2670,81 @@ export type Database = {
         }
         Relationships: []
       }
+      scam_submissions: {
+        Row: {
+          admin_notes: string | null
+          ai_confidence: number | null
+          analysis_summary: string | null
+          attachments: string[] | null
+          created_at: string
+          id: string
+          recommendations: string[] | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          risk_level: string | null
+          sender_info: string | null
+          status: string
+          submission_number: string
+          submission_type: string
+          submitter_email: string
+          submitter_name: string
+          submitter_phone: string | null
+          suspicious_content: string
+          threats_detected: string[] | null
+          updated_at: string
+          urgency: string
+          user_id: string | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          ai_confidence?: number | null
+          analysis_summary?: string | null
+          attachments?: string[] | null
+          created_at?: string
+          id?: string
+          recommendations?: string[] | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          risk_level?: string | null
+          sender_info?: string | null
+          status?: string
+          submission_number: string
+          submission_type: string
+          submitter_email: string
+          submitter_name: string
+          submitter_phone?: string | null
+          suspicious_content: string
+          threats_detected?: string[] | null
+          updated_at?: string
+          urgency: string
+          user_id?: string | null
+        }
+        Update: {
+          admin_notes?: string | null
+          ai_confidence?: number | null
+          analysis_summary?: string | null
+          attachments?: string[] | null
+          created_at?: string
+          id?: string
+          recommendations?: string[] | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          risk_level?: string | null
+          sender_info?: string | null
+          status?: string
+          submission_number?: string
+          submission_type?: string
+          submitter_email?: string
+          submitter_name?: string
+          submitter_phone?: string | null
+          suspicious_content?: string
+          threats_detected?: string[] | null
+          updated_at?: string
+          urgency?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       scheduled_emails: {
         Row: {
           campaign_id: string | null
