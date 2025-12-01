@@ -5,8 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Loader2, Tag } from "lucide-react";
+import { Loader2, Tag, Shield } from "lucide-react";
 import { trackConversion } from "@/utils/analyticsTracker";
+import { Switch } from "@/components/ui/switch";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface SubscriptionDialogProps {
   open: boolean;
@@ -30,6 +32,7 @@ export const SubscriptionDialog = ({
   const [discountCode, setDiscountCode] = useState("");
   const [discount, setDiscount] = useState<any>(null);
   const [validatingCode, setValidatingCode] = useState(false);
+  const [isVeteran, setIsVeteran] = useState(false);
 
   const validateDiscountCode = async () => {
     if (!discountCode.trim()) return;
@@ -156,9 +159,28 @@ export const SubscriptionDialog = ({
             </div>
           )}
 
+          <div className="space-y-4 border-t pt-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Shield className="w-5 h-5 text-primary" />
+                <Label className="text-base font-semibold cursor-pointer">
+                  I'm a Veteran (10% OFF)
+                </Label>
+              </div>
+              <Switch checked={isVeteran} onCheckedChange={setIsVeteran} />
+            </div>
+            {isVeteran && (
+              <Alert className="bg-primary/5">
+                <AlertDescription className="text-sm">
+                  Thank you for your service! Upload your veteran ID during checkout to verify your 10% discount.
+                </AlertDescription>
+              </Alert>
+            )}
+          </div>
+
           <div className="text-sm text-muted-foreground space-y-2">
-            <p>• Subscription will auto-renew monthly</p>
-            <p>• Cancel anytime from your portal</p>
+            <p>• Subscription auto-renews monthly</p>
+            <p>• Cancel anytime - no partial refunds</p>
             <p>• Secure payment via Stripe</p>
           </div>
 

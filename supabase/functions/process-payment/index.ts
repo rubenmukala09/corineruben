@@ -23,9 +23,9 @@ serve(async (req) => {
       apiVersion: '2023-10-16',
     });
 
-    const { paymentMethodId, amount, currency, customerInfo, items } = await req.json();
+    const { paymentMethodId, amount, currency, customerInfo, items, isVeteran, veteranIdUrl, veteranDiscount } = await req.json();
 
-    console.log('Processing payment:', { amount, currency, itemsCount: items.length });
+    console.log('Processing payment:', { amount, currency, itemsCount: items.length, isVeteran });
 
     // Get authenticated user (optional - for guest checkout support)
     let userId = null;
@@ -104,11 +104,15 @@ serve(async (req) => {
         subtotal,
         tax_amount: taxAmount,
         shipping_amount: shippingAmount,
-        discount_amount: 0,
+        discount_amount: veteranDiscount || 0,
         total_amount: totalAmount,
+        veteran_id_url: veteranIdUrl,
+        veteran_discount_applied: isVeteran || false,
+        veteran_discount_amount: veteranDiscount || 0,
         metadata: {
           stripe_payment_intent: paymentIntent.id,
-          items: items
+          items: items,
+          veteran_verification: isVeteran ? 'pending' : 'n/a'
         }
       })
       .select()

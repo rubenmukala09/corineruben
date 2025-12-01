@@ -2091,6 +2091,9 @@ export type Database = {
           total_amount: number
           tracking_number: string | null
           updated_at: string
+          veteran_discount_amount: number | null
+          veteran_discount_applied: boolean | null
+          veteran_id_url: string | null
         }
         Insert: {
           billing_address?: Json | null
@@ -2121,6 +2124,9 @@ export type Database = {
           total_amount: number
           tracking_number?: string | null
           updated_at?: string
+          veteran_discount_amount?: number | null
+          veteran_discount_applied?: boolean | null
+          veteran_id_url?: string | null
         }
         Update: {
           billing_address?: Json | null
@@ -2151,6 +2157,9 @@ export type Database = {
           total_amount?: number
           tracking_number?: string | null
           updated_at?: string
+          veteran_discount_amount?: number | null
+          veteran_discount_applied?: boolean | null
+          veteran_id_url?: string | null
         }
         Relationships: [
           {

@@ -8,11 +8,14 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, X, Shield, CheckCircle, Info } from "lucide-react";
+import { Loader2, Shield, CheckCircle, Info } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { OrderSummary } from "@/components/OrderSummary";
 import TrustBadges from "@/components/TrustBadges";
+import { VeteranIdUpload } from "@/components/VeteranIdUpload";
+import { RefundPolicyDisclaimer } from "@/components/RefundPolicyDisclaimer";
+import { AcceptedCardsDisplay } from "@/components/AcceptedCardsDisplay";
 
 interface PurchaseModalProps {
   open: boolean;
@@ -29,9 +32,9 @@ export const PurchaseModal = ({ open, onOpenChange, itemType, itemName, suggeste
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isVeteran, setIsVeteran] = useState(false);
   const [veteranType, setVeteranType] = useState<string>("");
-  const [veteranIdLast4, setVeteranIdLast4] = useState("");
-  const [veteranDocFile, setVeteranDocFile] = useState<File | null>(null);
+  const [veteranIdFile, setVeteranIdFile] = useState<File | null>(null);
   const [isUploadingDoc, setIsUploadingDoc] = useState(false);
+  const [refundPolicyAccepted, setRefundPolicyAccepted] = useState(false);
   
   const [formData, setFormData] = useState({
     fullName: "",
@@ -48,24 +51,13 @@ export const PurchaseModal = ({ open, onOpenChange, itemType, itemName, suggeste
   const discountAmount = isVeteran && subtotal > 0 ? (subtotal * veteranDiscountPercent) / 100 : 0;
   const finalPrice = subtotal - discountAmount;
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        toast({ title: "File too large", description: "Please upload a file smaller than 5MB", variant: "destructive" });
-        return;
-      }
-      setVeteranDocFile(file);
-    }
-  };
-
   const uploadVeteranDoc = async (userId: string): Promise<string | null> => {
-    if (!veteranDocFile) return null;
+    if (!veteranIdFile) return null;
     setIsUploadingDoc(true);
     try {
-      const fileExt = veteranDocFile.name.split('.').pop();
+      const fileExt = veteranIdFile.name.split('.').pop();
       const fileName = `${userId}/${Date.now()}.${fileExt}`;
-      const { error: uploadError } = await supabase.storage.from('veteran-docs').upload(fileName, veteranDocFile);
+      const { error: uploadError } = await supabase.storage.from('veteran-docs').upload(fileName, veteranIdFile);
       if (uploadError) throw uploadError;
       return fileName;
     } catch (error) {
@@ -83,23 +75,31 @@ export const PurchaseModal = ({ open, onOpenChange, itemType, itemName, suggeste
       toast({ title: "Invalid Amount", description: "Please enter at least $1", variant: "destructive" });
       return;
     }
+    if (!refundPolicyAccepted) {
+      toast({ title: "Policy Required", description: "Please accept the refund policy", variant: "destructive" });
+      return;
+    }
+    if (isVeteran && !veteranIdFile) {
+      toast({ title: "ID Required", description: "Please upload your veteran ID", variant: "destructive" });
+      return;
+    }
     setIsSubmitting(true);
     try {
       const { data: { user } } = await supabase.auth.getUser();
       let veteranDocUrl = null;
-      if (isVeteran && veteranDocFile && user) veteranDocUrl = await uploadVeteranDoc(user.id);
+      if (isVeteran && veteranIdFile && user) veteranDocUrl = await uploadVeteranDoc(user.id);
       const requestNumber = `REQ-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
       const { error } = await supabase.from('purchase_requests').insert([{
         request_number: requestNumber, user_id: user?.id || null, item_type: itemType, item_name: itemName,
         full_name: formData.fullName, email: formData.email, phone: formData.phone,
         customer_price: customerPrice, quantity: quantity, subtotal: subtotal, discount_amount: discountAmount, final_price: finalPrice,
         message: formData.message, is_veteran: isVeteran, veteran_type: isVeteran ? veteranType : null,
-        veteran_id_last4: isVeteran ? veteranIdLast4 : null, veteran_document_url: veteranDocUrl, status: 'pending'
+        veteran_document_url: veteranDocUrl, status: 'pending'
       }]);
       if (error) throw error;
       toast({ title: "Request Submitted!", description: `Reference: ${requestNumber}. Check email within 24 hours.` });
       setFormData({ fullName: "", email: "", phone: "", customerPrice: suggestedPrice.toString(), quantity: "1", message: "" });
-      setIsVeteran(false); setVeteranType(""); setVeteranIdLast4(""); setVeteranDocFile(null);
+      setIsVeteran(false); setVeteranType(""); setVeteranIdFile(null); setRefundPolicyAccepted(false);
       onOpenChange(false);
     } catch (error) {
       console.error("Error:", error);
@@ -151,12 +151,23 @@ export const PurchaseModal = ({ open, onOpenChange, itemType, itemName, suggeste
                         <SelectItem value="firefighter">Firefighter</SelectItem>
                       </SelectContent>
                     </Select>
-                    <Input placeholder="ID Last 4 digits" value={veteranIdLast4} onChange={(e) => setVeteranIdLast4(e.target.value)} maxLength={4} required />
-                    <div className="flex gap-2"><Input type="file" accept=".pdf,.jpg,.jpeg,.png" onChange={handleFileChange} />{veteranDocFile && <Button type="button" variant="ghost" size="sm" onClick={() => setVeteranDocFile(null)}><X className="w-4 h-4" /></Button>}</div>
+                    <VeteranIdUpload
+                      isVeteran={isVeteran}
+                      onFileUpload={setVeteranIdFile}
+                      uploadedFile={veteranIdFile}
+                    />
                   </>)}
                 </CollapsibleContent>
               </div>
             </Collapsible>
+
+            <RefundPolicyDisclaimer
+              onAcknowledge={setRefundPolicyAccepted}
+              type={itemType === 'guide' ? 'digital' : 'physical'}
+            />
+
+            <AcceptedCardsDisplay />
+
             <Button type="submit" className="w-full h-12" size="lg" disabled={isSubmitting || isUploadingDoc}>
               {isSubmitting || isUploadingDoc ? <><Loader2 className="mr-2 h-5 w-5 animate-spin" />{isUploadingDoc ? 'Uploading...' : 'Submitting...'}</> : <><CheckCircle className="mr-2 h-5 w-5" />Submit Request</>}
             </Button>

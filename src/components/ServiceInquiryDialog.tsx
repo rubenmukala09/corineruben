@@ -8,6 +8,8 @@ import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { Loader2, Shield } from 'lucide-react';
+import { VeteranIdUpload } from '@/components/VeteranIdUpload';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface ServiceInquiryDialogProps {
   open: boolean;
@@ -20,6 +22,7 @@ interface ServiceInquiryDialogProps {
 export function ServiceInquiryDialog({ open, onOpenChange, serviceType, serviceName, servicePrice }: ServiceInquiryDialogProps) {
   const [loading, setLoading] = useState(false);
   const [isVeteran, setIsVeteran] = useState(false);
+  const [veteranIdFile, setVeteranIdFile] = useState<File | null>(null);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -28,8 +31,7 @@ export function ServiceInquiryDialog({ open, onOpenChange, serviceType, serviceN
     budget: '',
     timeline: '',
     requirements: '',
-    veteranType: '',
-    veteranIdLast4: ''
+    veteranType: ''
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -58,7 +60,6 @@ export function ServiceInquiryDialog({ open, onOpenChange, serviceType, serviceN
           requirements: formData.requirements || null,
           is_veteran: isVeteran,
           veteran_type: isVeteran ? formData.veteranType : null,
-          veteran_id_last4: isVeteran ? formData.veteranIdLast4 : null,
           status: 'new'
         });
 
@@ -75,10 +76,10 @@ export function ServiceInquiryDialog({ open, onOpenChange, serviceType, serviceN
         budget: '',
         timeline: '',
         requirements: '',
-        veteranType: '',
-        veteranIdLast4: ''
+        veteranType: ''
       });
       setIsVeteran(false);
+      setVeteranIdFile(null);
       onOpenChange(false);
     } catch (error) {
       console.error('Inquiry error:', error);
@@ -218,7 +219,7 @@ export function ServiceInquiryDialog({ open, onOpenChange, serviceType, serviceN
             </div>
 
             {isVeteran && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-7">
+              <div className="space-y-4 pl-7">
                 <div>
                   <Label htmlFor="veteranType">Service/Department</Label>
                   <Input
@@ -228,16 +229,16 @@ export function ServiceInquiryDialog({ open, onOpenChange, serviceType, serviceN
                     onChange={e => setFormData(prev => ({ ...prev, veteranType: e.target.value }))}
                   />
                 </div>
-                <div>
-                  <Label htmlFor="veteranId">ID Last 4 Digits (Optional)</Label>
-                  <Input
-                    id="veteranId"
-                    maxLength={4}
-                    placeholder="1234"
-                    value={formData.veteranIdLast4}
-                    onChange={e => setFormData(prev => ({ ...prev, veteranIdLast4: e.target.value }))}
-                  />
-                </div>
+                <VeteranIdUpload
+                  isVeteran={isVeteran}
+                  onFileUpload={setVeteranIdFile}
+                  uploadedFile={veteranIdFile}
+                />
+                <Alert className="bg-primary/5">
+                  <AlertDescription className="text-xs">
+                    This is an inquiry form. Payment will be processed separately after we discuss your project requirements.
+                  </AlertDescription>
+                </Alert>
               </div>
             )}
           </div>

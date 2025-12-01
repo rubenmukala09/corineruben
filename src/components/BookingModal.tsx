@@ -13,10 +13,13 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Upload, X, Calendar as CalendarIcon, CheckCircle } from "lucide-react";
+import { Loader2, Calendar as CalendarIcon, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { bookingFormSchema, formatPhoneNumber } from "@/utils/formValidation";
 import { z } from "zod";
+import { VeteranIdUpload } from "@/components/VeteranIdUpload";
+import { RefundPolicyDisclaimer } from "@/components/RefundPolicyDisclaimer";
+import { AcceptedCardsDisplay } from "@/components/AcceptedCardsDisplay";
 
 interface BookingModalProps {
   open: boolean;
@@ -41,9 +44,10 @@ export const BookingModal = ({
 }: BookingModalProps) => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
-  const [veteranDocFile, setVeteranDocFile] = useState<File | null>(null);
+  const [veteranIdFile, setVeteranIdFile] = useState<File | null>(null);
   const [isUploadingDoc, setIsUploadingDoc] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>();
+  const [refundPolicyAccepted, setRefundPolicyAccepted] = useState(false);
   
   const form = useForm<BookingFormData>({
     resolver: zodResolver(bookingFormSchema),
@@ -68,32 +72,17 @@ export const BookingModal = ({
     : 0;
   const finalPrice = basePrice - discountAmount;
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        toast({
-          title: "File too large",
-          description: "Please upload a file smaller than 5MB",
-          variant: "destructive",
-        });
-        return;
-      }
-      setVeteranDocFile(file);
-    }
-  };
-
   const uploadVeteranDoc = async (userId: string): Promise<string | null> => {
-    if (!veteranDocFile) return null;
+    if (!veteranIdFile) return null;
 
     setIsUploadingDoc(true);
     try {
-      const fileExt = veteranDocFile.name.split('.').pop();
+      const fileExt = veteranIdFile.name.split('.').pop();
       const fileName = `${userId}/${Date.now()}.${fileExt}`;
       
       const { error: uploadError } = await supabase.storage
         .from('veteran-docs')
-        .upload(fileName, veteranDocFile);
+        .upload(fileName, veteranIdFile);
 
       if (uploadError) throw uploadError;
 
@@ -112,6 +101,24 @@ export const BookingModal = ({
   };
 
   const handleSubmit = async (data: BookingFormData) => {
+    if (!refundPolicyAccepted) {
+      toast({
+        title: "Policy Required",
+        description: "Please accept the cancellation policy",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (data.isVeteran && !veteranIdFile) {
+      toast({
+        title: "ID Required",
+        description: "Please upload your veteran ID for verification",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -119,7 +126,7 @@ export const BookingModal = ({
       const { data: { user } } = await supabase.auth.getUser();
       let docPath = null;
 
-      if (data.isVeteran && veteranDocFile && user) {
+      if (data.isVeteran && veteranIdFile && user) {
         docPath = await uploadVeteranDoc(user.id);
       }
 
@@ -165,8 +172,9 @@ export const BookingModal = ({
 
       onOpenChange(false);
       form.reset();
-      setVeteranDocFile(null);
+      setVeteranIdFile(null);
       setSelectedDate(undefined);
+      setRefundPolicyAccepted(false);
     } catch (error: any) {
       toast({
         title: "Submission Failed",
@@ -339,49 +347,25 @@ export const BookingModal = ({
                     name="veteranIdLast4"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Last 4 of Veteran ID *</FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            maxLength={4}
-                            placeholder="1234"
-                          />
-                        </FormControl>
+                        <VeteranIdUpload
+                          isVeteran={isVeteran}
+                          onFileUpload={setVeteranIdFile}
+                          uploadedFile={veteranIdFile}
+                        />
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-
-                  <div className="space-y-2">
-                    <FormLabel>Upload Verification Document (Optional)</FormLabel>
-                    <div className="flex items-center gap-2">
-                      <Input
-                        type="file"
-                        accept=".pdf,.jpg,.jpeg,.png"
-                        onChange={handleFileChange}
-                        disabled={isUploadingDoc}
-                      />
-                      {veteranDocFile && (
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setVeteranDocFile(null)}
-                        >
-                          <X className="w-4 h-4" />
-                        </Button>
-                      )}
-                    </div>
-                    {veteranDocFile && (
-                      <p className="text-sm text-muted-foreground flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-green-500" />
-                        {veteranDocFile.name}
-                      </p>
-                    )}
-                  </div>
                 </>
               )}
             </div>
+
+            <RefundPolicyDisclaimer
+              onAcknowledge={setRefundPolicyAccepted}
+              type="service"
+            />
+
+            <AcceptedCardsDisplay />
 
             {basePrice > 0 && (
               <div className="p-4 bg-primary/5 rounded-lg space-y-2">
