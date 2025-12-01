@@ -67,7 +67,6 @@ interface Testimonial {
 }
 
 export default function TestimonialsAdmin() {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [filteredTestimonials, setFilteredTestimonials] = useState<Testimonial[]>([]);
   const [loading, setLoading] = useState(true);
@@ -302,18 +301,20 @@ export default function TestimonialsAdmin() {
 
   return (
     <AdminLayout>
-      <div className="mb-6">
-        <div className="flex items-center justify-between mt-4">
-              <h1 className="text-3xl font-bold text-foreground">Testimonials</h1>
-              <Button onClick={() => setAddModalOpen(true)}>
-                <Plus className="h-4 w-4 mr-2" />
-                Add New Testimonial
-              </Button>
-            </div>
+      <div>
+        {/* Header */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between mt-4">
+            <h1 className="text-3xl font-bold text-foreground">Testimonials</h1>
+            <Button onClick={() => setAddModalOpen(true)}>
+              <Plus className="h-4 w-4 mr-2" />
+              Add New Testimonial
+            </Button>
           </div>
+        </div>
 
-          {/* Filters & Search */}
-          <div className="bg-background border rounded-lg p-4 mb-6">
+        {/* Filters & Search */}
+        <div className="bg-background border rounded-lg p-4 mb-6">
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1">
                 <div className="relative">
@@ -588,43 +589,42 @@ export default function TestimonialsAdmin() {
               </div>
             </>
           )}
-        </div>
-      </main>
 
-      {/* Delete Confirmation Dialog */}
-      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This will permanently delete this testimonial. This action cannot be undone.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={() => testimonialToDelete && handleDelete(testimonialToDelete)}
-              className="bg-red-500 hover:bg-red-600"
-            >
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+        {/* Delete Confirmation Dialog */}
+        <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This will permanently delete this testimonial. This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => testimonialToDelete && handleDelete(testimonialToDelete)}
+                className="bg-red-500 hover:bg-red-600"
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
 
-      {/* Add Testimonial Modal */}
-      <AddTestimonialModal
-        open={addModalOpen}
-        onOpenChange={setAddModalOpen}
-        onSuccess={fetchTestimonials}
-      />
-      
-      {/* Video Upload Modal */}
-      <VideoTestimonialUpload
-        open={videoUploadOpen}
-        onOpenChange={setVideoUploadOpen}
-        onSuccess={fetchTestimonials}
-      />
+        {/* Add Testimonial Modal */}
+        <AddTestimonialModal
+          open={addModalOpen}
+          onOpenChange={setAddModalOpen}
+          onSuccess={fetchTestimonials}
+        />
+        
+        {/* Video Upload Modal */}
+        <VideoTestimonialUpload
+          open={videoUploadOpen}
+          onOpenChange={setVideoUploadOpen}
+          onSuccess={fetchTestimonials}
+        />
+      </div>
     </AdminLayout>
   );
 }

@@ -141,7 +141,6 @@ export default function ArticlesAdmin() {
     };
   }, [refetch]);
 
-  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [articles, setArticles] = useState<Article[]>([]);
   const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(false);
@@ -344,18 +343,19 @@ export default function ArticlesAdmin() {
 
   return (
     <AdminLayout>
-      {/* Header */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between mt-4">
-              <h1 className="text-3xl font-bold text-foreground">Blog Articles</h1>
-              <Button
-                size="lg"
-                onClick={() => navigate("/admin/content/articles/new")}
-                className="hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200"
-              >
-                <PenSquare className="h-5 w-5 mr-2" />
-                Create Article
-              </Button>
+      <div>
+        {/* Header */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between mt-4">
+            <h1 className="text-3xl font-bold text-foreground">Blog Articles</h1>
+            <Button
+              size="lg"
+              onClick={() => navigate("/admin/content/articles/new")}
+              className="hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200"
+            >
+              <PenSquare className="h-5 w-5 mr-2" />
+              Create Article
+            </Button>
           </div>
         </div>
 
@@ -834,10 +834,10 @@ export default function ArticlesAdmin() {
                       <ChevronRight className="h-4 w-4" />
                     </Button>
                 </div>
+                </div>
               </div>
             </>
           )}
-        </div>
 
         {/* Delete Confirmation Dialog */}
         <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
@@ -859,6 +859,7 @@ export default function ArticlesAdmin() {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
+      </div>
     </AdminLayout>
   );
 }
