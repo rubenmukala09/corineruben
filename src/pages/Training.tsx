@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import TrustBar from "@/components/TrustBar";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { TrustIndicator } from "@/components/TrustIndicator";
 import { BookingModal } from "@/components/BookingModal";
@@ -274,6 +275,8 @@ const LearnAndTrain = () => {
       
       {/* Hero Carousel Section */}
       <TrainingHeroCarousel />
+
+      <TrustBar />
 
       {/* Stats */}
       <section className="py-12 bg-background">

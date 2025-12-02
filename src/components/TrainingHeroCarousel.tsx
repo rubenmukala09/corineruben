@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
+import { ParticleBackground } from "./ParticleBackground";
+import { FloatingShapes } from "./FloatingShapes";
 import trainingHero1 from "@/assets/hero-training-1.jpg";
 import trainingHero2 from "@/assets/hero-training-2.jpg";
 import trainingHero3 from "@/assets/hero-training-3.jpg";
@@ -92,17 +94,18 @@ export const TrainingHeroCarousel = () => {
         >
           {/* Background Image */}
           <div
-            className="absolute inset-0 bg-cover bg-center"
+            className="absolute inset-0 bg-cover bg-center brightness-115"
             style={{ 
               backgroundImage: `url(${slides[currentIndex].image})`,
               backgroundColor: '#ffffff'
             }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
+            {/* Purple gradient overlay matching Business page */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/35 to-black/45" />
           </div>
 
           {/* Text Content - Animates with image */}
-          <div className="relative h-full flex items-center">
+          <div className="relative h-full flex items-center z-10">
             <div className="container mx-auto px-4 md:px-8 max-w-7xl">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -111,7 +114,7 @@ export const TrainingHeroCarousel = () => {
                 transition={{ duration: 1, delay: 0.1 }}
                 className="max-w-3xl"
               >
-                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 md:mb-6 leading-tight drop-shadow-lg">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 md:mb-6 leading-tight drop-shadow-lg [text-shadow:0_4px_20px_rgba(139,92,246,0.4)]">
                   {slides[currentIndex].title}
                 </h1>
                 <p className="text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/90 leading-relaxed drop-shadow-md">
@@ -122,6 +125,19 @@ export const TrainingHeroCarousel = () => {
           </div>
         </motion.div>
       </AnimatePresence>
+
+      {/* Particle Network Background */}
+      <ParticleBackground />
+      
+      {/* Floating Abstract Shapes */}
+      <FloatingShapes />
+      
+      {/* Floating Orbs */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden hidden md:block" style={{ zIndex: 1 }}>
+        <div className="floating-orb" style={{ width: '150px', height: '150px', top: '20%', left: '10%', animationDelay: '0s' }} />
+        <div className="floating-orb" style={{ width: '100px', height: '100px', top: '60%', right: '15%', animationDelay: '4s' }} />
+        <div className="floating-orb" style={{ width: '120px', height: '120px', bottom: '25%', left: '40%', animationDelay: '8s' }} />
+      </div>
 
       {/* Navigation Arrows */}
       <button
