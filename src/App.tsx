@@ -540,7 +540,7 @@ function AnimatedRoutes() {
         <Route path="/articles" element={<PageTransition><Articles /></PageTransition>} />
         <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
         <Route path="/careers" element={<PageTransition><Careers /></PageTransition>} />
-        <Route path="/auth" element={<PageTransition><Auth /></PageTransition>} className="px-[7px] my-[7px] py-[210px]" />
+        <Route path="/auth" element={<PageTransition><Auth /></PageTransition>} className="px-[7px] my-0 py-[220px]" />
         <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
         <Route path="/signup" element={<PageTransition><Signup /></PageTransition>} />
         <Route path="/staff-signup" element={<PageTransition><StaffSignup /></PageTransition>} />
