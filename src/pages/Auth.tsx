@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { z } from "zod";
 import invisionLogo from "@/assets/shield-logo.png";
+import { ForgotPasswordModal } from "@/components/auth/ForgotPasswordModal";
 
 const emailSchema = z.string().email("Invalid email address");
 const passwordSchema = z.string().min(6, "Password must be at least 6 characters");
@@ -35,6 +36,7 @@ function Auth() {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -459,12 +461,13 @@ function Auth() {
                       Remember me
                     </Label>
                   </div>
-                  <Link 
-                    to="/contact" 
+                  <button
+                    type="button"
+                    onClick={() => setShowForgotPassword(true)}
                     className="text-sm text-primary hover:underline"
                   >
                     Forgot password?
-                  </Link>
+                  </button>
                 </div>
               )}
 
@@ -588,6 +591,12 @@ function Auth() {
           </div>
         </div>
       </div>
+
+      {/* Forgot Password Modal */}
+      <ForgotPasswordModal 
+        open={showForgotPassword} 
+        onClose={() => setShowForgotPassword(false)} 
+      />
     </div>
   );
 };
