@@ -77,7 +77,7 @@ export const TrainingHeroCarousel = () => {
   };
 
   return (
-    <div className="relative w-full h-[600px] md:h-[700px] lg:h-[850px] xl:h-[950px] overflow-hidden bg-background">
+    <div className="relative w-full min-h-[600px] sm:min-h-[700px] md:min-h-[850px] lg:min-h-[950px] xl:min-h-[1000px] overflow-hidden bg-gradient-to-br from-[#1e3a8a] to-[#3b82f6]">
       {/* Preload next image to prevent blank moments */}
       <div className="hidden">
         <img src={slides[(currentIndex + 1) % slides.length].image} alt="preload" />
@@ -94,33 +94,40 @@ export const TrainingHeroCarousel = () => {
         >
           {/* Background Image */}
           <div
-            className="absolute inset-0 bg-cover bg-center brightness-115"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat brightness-115"
             style={{ 
               backgroundImage: `url(${slides[currentIndex].image})`,
               backgroundColor: '#ffffff'
             }}
           >
-            {/* Purple gradient overlay matching Business page */}
+            {/* Gradient overlay matching other hero pages */}
             <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/35 to-black/45" />
           </div>
+          
+          {/* Additional overlay for depth */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/30" />
 
-          {/* Text Content - Animates with image */}
-          <div className="relative h-full flex items-center z-10">
-            <div className="container mx-auto px-4 md:px-8 max-w-7xl">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
+          {/* Content with Stagger Animation */}
+          <div className="container mx-auto px-4 py-6 sm:py-8 md:py-12 lg:py-16 relative z-10">
+            <div className="max-w-3xl mx-auto md:mx-0">
+              <motion.h1 
+                className="text-white mb-3 sm:mb-4 md:mb-6 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl [text-shadow:0_4px_20px_rgba(139,92,246,0.4)] leading-tight"
+                initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -30 }}
-                transition={{ duration: 1, delay: 0.1 }}
-                className="max-w-3xl"
+                transition={{ duration: 0.8, ease: "easeOut" }}
               >
-                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 md:mb-6 leading-tight drop-shadow-lg [text-shadow:0_4px_20px_rgba(139,92,246,0.4)]">
-                  {slides[currentIndex].title}
-                </h1>
-                <p className="text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/90 leading-relaxed drop-shadow-md">
-                  {slides[currentIndex].subtitle}
-                </p>
-              </motion.div>
+                {slides[currentIndex].title}
+              </motion.h1>
+              <motion.p 
+                className="text-white/90 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl mb-6 md:mb-8 leading-relaxed"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -30 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+              >
+                {slides[currentIndex].subtitle}
+              </motion.p>
             </div>
           </div>
         </motion.div>
