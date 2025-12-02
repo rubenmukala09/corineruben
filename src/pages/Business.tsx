@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { BookingModal } from "@/components/BookingModal";
 import { SubscriptionDialog } from "@/components/SubscriptionDialog";
 import { ServiceInquiryDialog } from "@/components/ServiceInquiryDialog";
+import { ServicePaymentDialog } from "@/components/ServicePaymentDialog";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { trackButtonClick, trackConversion } from "@/utils/analyticsTracker";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield } from "lucide-react";
@@ -58,10 +59,25 @@ function Business() {
     servicePrice?: number;
   } | null>(null);
 
+  // Service payment dialog state
+  const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
+  const [paymentData, setPaymentData] = useState<{
+    serviceType: 'ai-automation' | 'website-design' | 'ai-consultation';
+    serviceName: string;
+    servicePrice: number;
+    serviceDescription?: string;
+  } | null>(null);
+
   const openInquiryDialog = (serviceType: 'ai-automation' | 'website-design' | 'ai-consultation' | 'ai-insurance', serviceName: string, servicePrice?: number) => {
     setInquiryData({ serviceType, serviceName, servicePrice });
     setInquiryDialogOpen(true);
     trackButtonClick(`Open Inquiry - ${serviceName}`, 'Business Page');
+  };
+
+  const openPaymentDialog = (serviceType: 'ai-automation' | 'website-design' | 'ai-consultation', serviceName: string, servicePrice: number, serviceDescription?: string) => {
+    setPaymentData({ serviceType, serviceName, servicePrice, serviceDescription });
+    setPaymentDialogOpen(true);
+    trackButtonClick(`Open Payment - ${serviceName}`, 'Business Page');
   };
 
   // Counter animations for pricing cards
@@ -282,23 +298,22 @@ function Business() {
         </div>
       </section>
 
-      {/* Veterans Discount Banner */}
-      <section className="py-8 bg-gradient-to-r from-primary/10 to-accent/10">
+      {/* Veterans Discount Banner - Compact */}
+      <section className="py-4 bg-gradient-to-r from-primary/10 to-accent/10">
         <div className="container mx-auto px-4">
-          <Card className="p-6 bg-card/50 backdrop-blur-sm border-primary/20 max-w-3xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
+          <Card className="p-4 bg-card/50 backdrop-blur-sm border-primary/20 max-w-3xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center gap-3 text-center md:text-left">
               <div className="flex-shrink-0">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-2xl">
+                <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-xl">
                   🇺🇸
                 </div>
               </div>
               <div className="flex-1">
-                <h3 className="text-xl font-bold mb-1">Veterans & First Responders</h3>
-                <p className="text-muted-foreground text-sm">Active duty, veterans, reservists, and first responders receive 10% OFF all services</p>
+                <h3 className="text-base font-bold">Veterans & First Responders</h3>
+                <p className="text-muted-foreground text-xs">10% OFF all services</p>
               </div>
-              <Button variant="default" size="sm" className="w-fit" asChild>
-                <Link to="/contact">
-                  <Shield className="w-4 h-4 mr-2" />
+              <Button variant="default" size="sm" asChild>
+                <Link to="/resources">
                   Claim Discount
                 </Link>
               </Button>
@@ -315,11 +330,40 @@ function Business() {
             <ScrollReveal animation="slide-left" delay={0}>
               <Card className="p-6 md:p-8 active:scale-98">
                 <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">AI Receptionist & Intake Agent</h3>
-                <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">Answer calls/chats 24/7, book appointments</p>
+                <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">24/7 call answering, appointment booking, and lead qualification</p>
                 <p ref={price1Counter.ref} className="text-3xl md:text-4xl font-bold text-accent mb-4 md:mb-6">
                   {price1Counter.displayValue}
                 </p>
-...
+                <ul className="space-y-2 md:space-y-3 mb-6 md:mb-8">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span className="text-sm md:text-base">24/7 call answering & live chat</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span className="text-sm md:text-base">Automatic appointment booking</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span className="text-sm md:text-base">FAQ responses trained on your business</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span className="text-sm md:text-base">Lead qualification & intelligent routing</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span className="text-sm md:text-base">CRM integration</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span className="text-sm md:text-base">Multi-language support</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span className="text-sm md:text-base italic text-muted-foreground">And so more...</span>
+                  </li>
+                </ul>
                 <Button 
                   variant="default" 
                   className="w-full transition-all duration-300 md:hover:bg-primary/90 md:hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] md:hover:scale-[1.02] active:scale-95 h-11 md:h-10"
@@ -340,14 +384,38 @@ function Business() {
                 </div>
                 <Card className="p-6 md:p-8 active:scale-98 border-2 border-primary shadow-[0_8px_30px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)] transition-all">
                   <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 mt-2">Follow-Up Automation System</h3>
-                  <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">Automated email/SMS campaigns, lead nurturing</p>
+                  <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">Automated multi-channel campaigns & lead nurturing</p>
                   <p ref={price2Counter.ref} className="text-3xl md:text-4xl font-bold text-accent mb-4 md:mb-6">
                     {price2Counter.displayValue}
                   </p>
                   <ul className="space-y-2 md:space-y-3 mb-6 md:mb-8">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                      <span className="text-sm md:text-base">Multi-channel campaigns</span>
+                      <span className="text-sm md:text-base">Multi-channel campaigns (email, SMS, WhatsApp)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
+                      <span className="text-sm md:text-base">Automated lead nurturing sequences</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
+                      <span className="text-sm md:text-base">Post-appointment follow-ups</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
+                      <span className="text-sm md:text-base">Review request automation</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
+                      <span className="text-sm md:text-base">Re-engagement campaigns</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
+                      <span className="text-sm md:text-base">Advanced analytics & reporting</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
+                      <span className="text-sm md:text-base italic text-muted-foreground">And so more...</span>
                     </li>
                   </ul>
                   <Button 
@@ -358,7 +426,7 @@ function Business() {
                       trackConversion('business_full_automation', 12500);
                     }}
                   >
-                    GET STARTED
+                  GET STARTED → CUSTOMIZABLE
                   </Button>
                 </Card>
               </div>
@@ -406,35 +474,43 @@ function Business() {
             <ScrollReveal animation="fade-up" delay={0} threshold={0.2}>
               <Card className="p-8 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1">
                 <h3 className="text-2xl font-bold mb-4">Landing Page</h3>
-                <p className="text-muted-foreground mb-6">Single-page website for campaigns or simple business presence</p>
+                <p className="text-muted-foreground mb-6">Single high-converting page design</p>
                 <p className="text-4xl font-bold text-accent mb-6">$1,500</p>
-...
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span>Single high-converting page design</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span>Mobile-responsive layout</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span>Lead capture forms</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span>SEO optimization</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span>Hosting setup included</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span className="italic text-muted-foreground">And so more...</span>
+                  </li>
+                </ul>
                 <Button 
-                  asChild
                   variant="default" 
-                  className="w-full ripple-container relative overflow-hidden transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)]"
-                  onClick={(e) => {
-                    // Create ripple effect
-                    const button = e.currentTarget;
-                    const ripple = document.createElement('span');
-                    const rect = button.getBoundingClientRect();
-                    const size = Math.max(rect.width, rect.height);
-                    const x = e.clientX - rect.left - size / 2;
-                    const y = e.clientY - rect.top - size / 2;
-                    
-                    ripple.className = 'ripple';
-                    ripple.style.width = ripple.style.height = `${size}px`;
-                    ripple.style.left = `${x}px`;
-                    ripple.style.top = `${y}px`;
-                    
-                    button.appendChild(ripple);
-                    setTimeout(() => ripple.remove(), 600);
-                    
-                    openInquiryDialog('website-design', 'Landing Page Design', 1500);
+                  className="w-full transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)]"
+                  onClick={() => {
+                    openPaymentDialog('website-design', 'Landing Page Design', 1500, 'Professional single-page website designed to convert visitors into customers');
                     trackConversion('business_landing_page', 1500);
                   }}
                 >
-                  GET STARTED
+                  PAY $1,500
                 </Button>
               </Card>
             </ScrollReveal>
@@ -484,31 +560,14 @@ function Business() {
                   </li>
                 </ul>
                 <Button 
-                  asChild
                   variant="default" 
-                  className="w-full ripple-container pulse-glow relative overflow-hidden transition-all duration-300 hover:bg-primary/90 px-7 py-3.5"
-                  onClick={(e) => {
-                    // Create ripple effect
-                    const button = e.currentTarget;
-                    const ripple = document.createElement('span');
-                    const rect = button.getBoundingClientRect();
-                    const size = Math.max(rect.width, rect.height);
-                    const x = e.clientX - rect.left - size / 2;
-                    const y = e.clientY - rect.top - size / 2;
-                    
-                    ripple.className = 'ripple';
-                    ripple.style.width = ripple.style.height = `${size}px`;
-                    ripple.style.left = `${x}px`;
-                    ripple.style.top = `${y}px`;
-                    
-                    button.appendChild(ripple);
-                    setTimeout(() => ripple.remove(), 600);
-                    
-                    openInquiryDialog('website-design', 'Business Website Design', 4500);
+                  className="w-full pulse-glow transition-all duration-300 hover:bg-primary/90"
+                  onClick={() => {
+                    openPaymentDialog('website-design', 'Business Website Design', 4500, 'Professional 5-10 page business website with custom features and SEO optimization');
                     trackConversion('business_website', 4500);
                   }}
                 >
-                  GET STARTED
+                  PAY $4,500
                 </Button>
               </Card>
               </div>
@@ -556,29 +615,13 @@ function Business() {
                 </ul>
                 <Button 
                   variant="default" 
-                  className="w-full ripple-container relative overflow-hidden transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)]"
-                  onClick={(e) => {
-                    // Create ripple effect
-                    const button = e.currentTarget;
-                    const ripple = document.createElement('span');
-                    const rect = button.getBoundingClientRect();
-                    const size = Math.max(rect.width, rect.height);
-                    const x = e.clientX - rect.left - size / 2;
-                    const y = e.clientY - rect.top - size / 2;
-                    
-                    ripple.className = 'ripple';
-                    ripple.style.width = ripple.style.height = `${size}px`;
-                    ripple.style.left = `${x}px`;
-                    ripple.style.top = `${y}px`;
-                    
-                    button.appendChild(ripple);
-                    setTimeout(() => ripple.remove(), 600);
-                    
+                  className="w-full transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)]"
+                  onClick={() => {
                     openInquiryDialog('website-design', 'E-Commerce Website', 8500);
                     trackConversion('business_ecommerce', 8500);
                   }}
                 >
-                  GET STARTED
+                  CUSTOMIZABLE
                 </Button>
               </Card>
             </ScrollReveal>
@@ -646,7 +689,7 @@ function Business() {
             </Label>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
             {/* Basic Care */}
             <Card className="p-6 rounded-2xl border-border/50 hover:shadow-medium transition-all hover:-translate-y-1">
               <h3 className="text-xl font-bold mb-3">Basic Care</h3>
@@ -758,18 +801,15 @@ function Business() {
             </Card>
             </div>
 
-            {/* Premium Care */}
-            <Card className="p-6 rounded-2xl border-border/50 hover:shadow-medium transition-all hover:-translate-y-1">
-              <h3 className="text-xl font-bold mb-3">Premium Care</h3>
-              <p key={isYearly ? 'yearly-799' : 'monthly-799'} className="text-3xl font-bold gradient-text-primary mb-2 price-flip">
-                {getInsurancePrice(799).display}<span className="text-base text-muted-foreground">{getInsurancePrice(799).period}</span>
+            {/* Customized Insurance - Merged with Premium */}
+            <Card className="p-6 rounded-2xl border-primary/50 hover:shadow-medium transition-all hover:-translate-y-1 bg-gradient-to-br from-primary/5 to-accent/10 border-2">
+              <h3 className="text-xl font-bold mb-3">Customized Insurance</h3>
+              <p className="text-3xl font-bold gradient-text-primary mb-2">
+                $599+<span className="text-base text-muted-foreground"> /month</span>
               </p>
-              {isYearly && (
-                <p className="text-sm text-success mb-4 animate-fade-in">
-                  {getInsurancePrice(799).savings}
-                </p>
-              )}
-              {!isYearly && <div className="h-6 mb-4" />}
+              <p className="text-sm text-muted-foreground mb-4">
+                Premium & Enterprise solutions
+              </p>
               <ul className="space-y-2 mb-6 text-sm">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
@@ -777,63 +817,11 @@ function Business() {
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
-                  <span>24/7 monitoring & alerts</span>
+                  <span>24/7 monitoring & critical response</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
-                  <span>Critical issue response (4hr)</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
-                  <span>Custom modifications included</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
-                  <span>Up to 12 hours repair/month</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
-                  <span>Dedicated support engineer</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
-                  <span>Quarterly optimization reviews</span>
-                </li>
-              </ul>
-              <Button 
-                onClick={() => {
-                  trackButtonClick('Subscribe - Premium Care', 'Business Insurance');
-                  trackConversion('insurance_premium', 799);
-                  handleSubscribe('price_1QhNoHE7M5RA9HBzQWdpJTEh', 'AI Service Insurance', 'Premium Care', 79900);
-                }}
-                variant="default" 
-                className="w-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)]"
-              >
-                GET PREMIUM CARE
-              </Button>
-            </Card>
-
-            {/* Customized Insurance */}
-            <Card className="p-6 rounded-2xl border-accent/50 hover:shadow-medium transition-all hover:-translate-y-1 bg-gradient-to-br from-accent/5 to-accent/10">
-              <h3 className="text-xl font-bold mb-3">Customized Insurance</h3>
-              <p className="text-3xl font-bold gradient-text-primary mb-2">
-                Custom<span className="text-base text-muted-foreground"> pricing</span>
-              </p>
-              <p className="text-sm text-muted-foreground mb-4">
-                Tailored for your needs
-              </p>
-              <ul className="space-y-2 mb-6 text-sm">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
                   <span>Custom SLA agreements</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
-                  <span>Multi-location support</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
-                  <span>Enterprise-grade security</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
@@ -845,21 +833,22 @@ function Business() {
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
-                  <span>Custom integration support</span>
+                  <span>Multi-location support</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
-                  <span>Proactive monitoring</span>
+                  <span>Enterprise-grade security</span>
                 </li>
               </ul>
               <Button 
-                asChild
                 variant="default" 
                 className="w-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)]"
+                onClick={() => {
+                  openInquiryDialog('ai-insurance', 'Customized Insurance Plan', 599);
+                  trackButtonClick('Request Custom Insurance', 'Business Insurance');
+                }}
               >
-                <Link to="/contact?service=ai-insurance&plan=custom">
-                  REQUEST QUOTE
-                </Link>
+                CUSTOMIZABLE
               </Button>
             </Card>
           </div>
@@ -988,17 +977,12 @@ function Business() {
                     onClick={() => {
                       trackButtonClick('Request AI Vetting', 'Business Consulting');
                       trackConversion('consulting_vetting', 1799);
-                      setSelectedService({
-                        type: 'business',
-                        name: 'Pre-Purchase AI Tool Vetting',
-                        price: 1799
-                      });
-                      setModalOpen(true);
+                      openPaymentDialog('ai-consultation', 'Pre-Purchase AI Tool Vetting', 1799, 'Comprehensive vetting service that reviews AI tools for security risks, calculates ROI, and provides a Buy/Don\'t Buy recommendation');
                     }}
                     variant="default"
                     className="transition-all duration-300 hover:bg-primary/90 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(109,40,217,0.25)]"
                   >
-                    REQUEST VETTING
+                    PAY $1,799
                   </Button>
                 </div>
               </div>
@@ -1038,16 +1022,11 @@ function Business() {
                     onClick={() => {
                       trackButtonClick('Request Security Audit', 'Business Security');
                       trackConversion('consulting_audit', 3499);
-                      setSelectedService({
-                        type: 'business',
-                        name: 'AI Security Audit',
-                        price: 3499
-                      });
-                      setModalOpen(true);
+                      openPaymentDialog('ai-consultation', 'AI Security Audit', 3499, 'Comprehensive security audit for your existing AI systems including vulnerability assessment and implementation roadmap');
                     }}
                     variant="default"
                   >
-                    REQUEST AUDIT
+                    PAY $3,499
                   </Button>
                 </div>
               </div>
@@ -1191,6 +1170,17 @@ function Business() {
           serviceType={inquiryData.serviceType}
           serviceName={inquiryData.serviceName}
           servicePrice={inquiryData.servicePrice}
+        />
+      )}
+
+      {paymentData && (
+        <ServicePaymentDialog
+          open={paymentDialogOpen}
+          onOpenChange={setPaymentDialogOpen}
+          serviceType={paymentData.serviceType}
+          serviceName={paymentData.serviceName}
+          servicePrice={paymentData.servicePrice}
+          serviceDescription={paymentData.serviceDescription}
         />
       )}
     </div>

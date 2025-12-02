@@ -1,0 +1,450 @@
+import { useState } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
+import { Checkbox } from "@/components/ui/checkbox";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { AcceptedCardsDisplay } from "./AcceptedCardsDisplay";
+import { QRCodePayment } from "./QRCodePayment";
+import { VeteranIdUpload } from "./VeteranIdUpload";
+import { RefundPolicyDisclaimer } from "./RefundPolicyDisclaimer";
+import { Loader2 } from "lucide-react";
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+
+interface ServicePaymentDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  serviceType: 'ai-automation' | 'website-design' | 'ai-consultation';
+  serviceName: string;
+  servicePrice: number;
+  serviceDescription?: string;
+}
+
+function PaymentForm({ 
+  serviceType, 
+  serviceName, 
+  servicePrice, 
+  serviceDescription,
+  onSuccess 
+}: { 
+  serviceType: string;
+  serviceName: string;
+  servicePrice: number;
+  serviceDescription?: string;
+  onSuccess: () => void;
+}) {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [loading, setLoading] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<'card' | 'qr'>('card');
+  
+  // Form state
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [projectDetails, setProjectDetails] = useState("");
+  const [isVeteran, setIsVeteran] = useState(false);
+  const [veteranIdFile, setVeteranIdFile] = useState<File | null>(null);
+  const [acceptedPolicy, setAcceptedPolicy] = useState(false);
+
+  const veteranDiscount = isVeteran ? 0.1 : 0;
+  const discountAmount = servicePrice * veteranDiscount;
+  const finalPrice = servicePrice - discountAmount;
+
+  const handleCardPayment = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!fullName || !email || !phone) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
+    if (isVeteran && !veteranIdFile) {
+      toast.error("Please upload your veteran ID for verification");
+      return;
+    }
+
+    if (!acceptedPolicy) {
+      toast.error("Please accept the refund policy to continue");
+      return;
+    }
+
+    if (!stripe || !elements) {
+      toast.error("Payment system not ready. Please try again.");
+      return;
+    }
+
+    const cardElement = elements.getElement(CardElement);
+    if (!cardElement) {
+      toast.error("Card element not found");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      // Upload veteran ID if provided
+      let veteranIdUrl = "";
+      if (isVeteran && veteranIdFile) {
+        const fileExt = veteranIdFile.name.split('.').pop();
+        const fileName = `${crypto.randomUUID()}.${fileExt}`;
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from('veteran-docs')
+          .upload(fileName, veteranIdFile);
+        
+        if (uploadError) {
+          toast.error("Failed to upload veteran ID");
+          setLoading(false);
+          return;
+        }
+        
+        const { data: { publicUrl } } = supabase.storage
+          .from('veteran-docs')
+          .getPublicUrl(fileName);
+        
+        veteranIdUrl = publicUrl;
+      }
+
+      // Create payment method
+      const { error: pmError, paymentMethod } = await stripe.createPaymentMethod({
+        type: 'card',
+        card: cardElement,
+        billing_details: {
+          name: fullName,
+          email: email,
+          phone: phone,
+        },
+      });
+
+      if (pmError) {
+        toast.error(pmError.message || "Failed to create payment method");
+        setLoading(false);
+        return;
+      }
+
+      // First create service inquiry record
+      const { data: inquiryData, error: inquiryError } = await supabase
+        .from('service_inquiries')
+        .insert({
+          service_type: serviceType,
+          service_name: serviceName,
+          service_price: finalPrice,
+          full_name: fullName,
+          email: email,
+          phone: phone,
+          company_name: companyName || null,
+          requirements: projectDetails || null,
+          is_veteran: isVeteran,
+          veteran_id_url: veteranIdUrl || null,
+          status: 'paid'
+        })
+        .select()
+        .single();
+
+      if (inquiryError) {
+        console.error('Error creating inquiry:', inquiryError);
+        toast.error("Failed to create service inquiry");
+        setLoading(false);
+        return;
+      }
+
+      // Process payment via edge function
+      const { data: paymentData, error: paymentError } = await supabase.functions.invoke(
+        'process-payment',
+        {
+          body: {
+            paymentMethodId: paymentMethod.id,
+            amount: Math.round(finalPrice * 100), // Convert to cents
+            currency: 'usd',
+            customerInfo: {
+              name: fullName,
+              email: email,
+              phone: phone,
+            },
+            metadata: {
+              service_type: serviceType,
+              service_name: serviceName,
+              inquiry_id: inquiryData.id,
+              is_veteran: isVeteran,
+              veteran_discount: discountAmount,
+            }
+          }
+        }
+      );
+
+      if (paymentError) {
+        console.error('Payment error:', paymentError);
+        toast.error("Payment processing failed. Please try again.");
+        setLoading(false);
+        return;
+      }
+
+      if (paymentData?.success) {
+        toast.success("Payment successful! We'll contact you within 24 hours.");
+        onSuccess();
+      } else {
+        toast.error(paymentData?.error || "Payment failed");
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+      toast.error("An error occurred during payment processing");
+      setLoading(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleCardPayment} className="space-y-6">
+      {/* Service Summary */}
+      <div className="bg-muted/50 p-4 rounded-lg space-y-2">
+        <h3 className="font-semibold text-lg">{serviceName}</h3>
+        {serviceDescription && (
+          <p className="text-sm text-muted-foreground">{serviceDescription}</p>
+        )}
+        <div className="flex justify-between items-center pt-2 border-t">
+          <span className="text-sm">Base Price:</span>
+          <span className="font-semibold">${servicePrice.toLocaleString()}</span>
+        </div>
+        {isVeteran && (
+          <div className="flex justify-between items-center text-success">
+            <span className="text-sm">Veteran Discount (10%):</span>
+            <span className="font-semibold">-${discountAmount.toLocaleString()}</span>
+          </div>
+        )}
+        <div className="flex justify-between items-center pt-2 border-t">
+          <span className="font-semibold">Total:</span>
+          <span className="text-xl font-bold text-primary">${finalPrice.toLocaleString()}</span>
+        </div>
+      </div>
+
+      {/* Contact Information */}
+      <div className="space-y-4">
+        <div>
+          <Label htmlFor="fullName">Full Name *</Label>
+          <Input
+            id="fullName"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            required
+            placeholder="John Doe"
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="email">Email *</Label>
+          <Input
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            placeholder="john@company.com"
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="phone">Phone Number *</Label>
+          <Input
+            id="phone"
+            type="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            required
+            placeholder="(555) 123-4567"
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="companyName">Company Name (Optional)</Label>
+          <Input
+            id="companyName"
+            value={companyName}
+            onChange={(e) => setCompanyName(e.target.value)}
+            placeholder="Your Company LLC"
+          />
+        </div>
+
+        {serviceType === 'ai-consultation' && (
+          <div>
+            <Label htmlFor="projectDetails">What issues are you facing? *</Label>
+            <Textarea
+              id="projectDetails"
+              value={projectDetails}
+              onChange={(e) => setProjectDetails(e.target.value)}
+              placeholder="Describe your current AI challenges or concerns..."
+              rows={4}
+            />
+          </div>
+        )}
+
+        {serviceType !== 'ai-consultation' && (
+          <div>
+            <Label htmlFor="projectDetails">Project Details (Optional)</Label>
+            <Textarea
+              id="projectDetails"
+              value={projectDetails}
+              onChange={(e) => setProjectDetails(e.target.value)}
+              placeholder="Tell us about your project requirements..."
+              rows={3}
+            />
+          </div>
+        )}
+      </div>
+
+      {/* Veteran Discount */}
+      <div className="space-y-4 p-4 bg-primary/5 rounded-lg border border-primary/20">
+        <div className="flex items-center justify-between">
+          <div className="space-y-1">
+            <Label htmlFor="veteran-toggle" className="text-base font-semibold">
+              🇺🇸 Veteran or First Responder?
+            </Label>
+            <p className="text-sm text-muted-foreground">Save 10% with verification</p>
+          </div>
+          <Switch
+            id="veteran-toggle"
+            checked={isVeteran}
+            onCheckedChange={setIsVeteran}
+          />
+        </div>
+        
+        {isVeteran && (
+          <VeteranIdUpload
+            isVeteran={isVeteran}
+            onFileUpload={(file) => setVeteranIdFile(file)}
+            uploadedFile={veteranIdFile}
+          />
+        )}
+      </div>
+
+      {/* Payment Method Selection */}
+      <div className="space-y-4">
+        <Label>Payment Method</Label>
+        <div className="flex gap-4">
+          <Button
+            type="button"
+            variant={paymentMethod === 'card' ? 'default' : 'outline'}
+            onClick={() => setPaymentMethod('card')}
+            className="flex-1"
+          >
+            Credit/Debit Card
+          </Button>
+          <Button
+            type="button"
+            variant={paymentMethod === 'qr' ? 'default' : 'outline'}
+            onClick={() => setPaymentMethod('qr')}
+            className="flex-1"
+          >
+            QR Code
+          </Button>
+        </div>
+      </div>
+
+      {paymentMethod === 'card' ? (
+        <>
+          <div className="space-y-2">
+            <Label>Card Details</Label>
+            <div className="border rounded-md p-3 bg-background">
+              <CardElement
+                options={{
+                  style: {
+                    base: {
+                      fontSize: '16px',
+                      color: 'hsl(var(--foreground))',
+                      '::placeholder': {
+                        color: 'hsl(var(--muted-foreground))',
+                      },
+                    },
+                  },
+                }}
+              />
+            </div>
+            <AcceptedCardsDisplay />
+          </div>
+
+          {/* Refund Policy */}
+          <RefundPolicyDisclaimer
+            onAcknowledge={setAcceptedPolicy}
+            type="service"
+          />
+
+          <Button
+            type="submit"
+            className="w-full"
+            size="lg"
+            disabled={loading || !stripe || !acceptedPolicy}
+          >
+            {loading ? (
+              <>
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                Processing Payment...
+              </>
+            ) : (
+              `Pay $${finalPrice.toLocaleString()}`
+            )}
+          </Button>
+        </>
+      ) : (
+        <div className="space-y-4">
+          <RefundPolicyDisclaimer
+            onAcknowledge={setAcceptedPolicy}
+            type="service"
+          />
+          <QRCodePayment
+            amount={finalPrice}
+            customerEmail={email}
+            items={[
+              {
+                name: serviceName,
+                quantity: 1,
+                price: finalPrice,
+              },
+            ]}
+          />
+        </div>
+      )}
+
+      <p className="text-xs text-muted-foreground text-center">
+        Your payment is secure and encrypted. We'll contact you within 24 hours to begin your project.
+      </p>
+    </form>
+  );
+}
+
+export function ServicePaymentDialog({
+  open,
+  onOpenChange,
+  serviceType,
+  serviceName,
+  servicePrice,
+  serviceDescription,
+}: ServicePaymentDialogProps) {
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="text-2xl">Complete Your Purchase</DialogTitle>
+        </DialogHeader>
+        
+        <Elements stripe={stripePromise}>
+          <PaymentForm
+            serviceType={serviceType}
+            serviceName={serviceName}
+            servicePrice={servicePrice}
+            serviceDescription={serviceDescription}
+            onSuccess={() => {
+              onOpenChange(false);
+            }}
+          />
+        </Elements>
+      </DialogContent>
+    </Dialog>
+  );
+}
