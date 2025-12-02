@@ -13,7 +13,7 @@ import FlowingWaves from "@/components/FlowingWaves";
 import MakingADifference from "@/components/MakingADifference";
 import { TestimonialForm } from "@/components/TestimonialForm";
 import { VideoLightbox } from "@/components/VideoLightbox";
-import { FloatingHelpButton } from "@/components/FloatingHelpButton";
+
 import { ScamShieldSubmission } from "@/components/ScamShieldSubmission";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -679,7 +679,6 @@ function Index() {
 
       <Footer />
       
-      <FloatingHelpButton onScamShieldClick={() => setScamShieldOpen(true)} />
       <ScamShieldSubmission open={scamShieldOpen} onOpenChange={setScamShieldOpen} />
       <BookingModal
         open={consultationModalOpen}

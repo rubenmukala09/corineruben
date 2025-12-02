@@ -795,7 +795,7 @@ function Business() {
                 onClick={() => {
                   trackButtonClick('Subscribe - Basic Care', 'Business Insurance');
                   trackConversion('insurance_basic', 199);
-                  handleSubscribe('price_1QhNnTE7M5RA9HBzMcIcKhEF', 'AI Service Insurance', 'Basic Care', 19900);
+                  handleSubscribe('price_1SZxzbJ8osfwYbX7cl20WDoC', 'AI Service Insurance', 'Basic Care', 19900);
                 }}
                 variant="default" 
                 className="w-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)]"
@@ -854,7 +854,7 @@ function Business() {
                 onClick={() => {
                   trackButtonClick('Subscribe - Standard Care', 'Business Insurance');
                   trackConversion('insurance_standard', 399);
-                  handleSubscribe('price_1QhNnrE7M5RA9HBzbM4WDMIQ', 'AI Service Insurance', 'Standard Care', 39900);
+                  handleSubscribe('price_1SZxzcJ8osfwYbX7JGgkSQ7a', 'AI Service Insurance', 'Standard Care', 39900);
                 }}
                 variant="default" 
                 className="w-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)]"
@@ -864,18 +864,21 @@ function Business() {
             </Card>
             </div>
 
-            {/* Customized Insurance - Merged with Premium */}
+            {/* Enterprise Insurance */}
             <Card className="p-6 rounded-2xl border-primary/50 hover:shadow-medium transition-all hover:-translate-y-1 bg-gradient-to-br from-primary/5 to-accent/10 border-2 relative">
               <div className="absolute top-3 right-3">
-                <Badge variant="premium" className="text-xs font-bold">PREMIUM</Badge>
+                <Badge variant="premium" className="text-xs font-bold">ENTERPRISE</Badge>
               </div>
-              <h3 className="text-xl font-bold mb-3">Customized Insurance</h3>
-              <p className="text-3xl font-bold gradient-text-primary mb-2">
-                $599+<span className="text-base text-muted-foreground"> /month</span>
+              <h3 className="text-xl font-bold mb-3">Enterprise Insurance</h3>
+              <p key={isYearly ? 'yearly-799' : 'monthly-799'} className="text-3xl font-bold gradient-text-primary mb-2 price-flip">
+                {getInsurancePrice(799).display}<span className="text-base text-muted-foreground">{getInsurancePrice(799).period}</span>
               </p>
-              <p className="text-sm text-muted-foreground mb-4">
-                Premium & Enterprise solutions
-              </p>
+              {isYearly && (
+                <p className="text-sm text-success mb-4 animate-fade-in">
+                  {getInsurancePrice(799).savings}
+                </p>
+              )}
+              {!isYearly && <div className="h-6 mb-4" />}
               <ul className="space-y-2 mb-6 text-sm">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
@@ -907,14 +910,15 @@ function Business() {
                 </li>
               </ul>
               <Button 
+                onClick={() => {
+                  trackButtonClick('Subscribe - Enterprise', 'Business Insurance');
+                  trackConversion('insurance_enterprise', 799);
+                  handleSubscribe('price_1SZxzdJ8osfwYbX77vd9XQEN', 'AI Service Insurance', 'Enterprise', 79900);
+                }}
                 variant="default" 
                 className="w-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)]"
-                onClick={() => {
-                  openInquiryDialog('ai-insurance', 'Customized Insurance Plan', 599);
-                  trackButtonClick('Request Custom Insurance', 'Business Insurance');
-                }}
               >
-                CUSTOMIZABLE
+                GET ENTERPRISE
               </Button>
             </Card>
           </div>

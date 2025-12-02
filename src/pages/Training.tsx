@@ -81,56 +81,110 @@ const LearnAndTrain = () => {
     }
   };
 
-  const trainingPrograms = [
+  // Training courses with Stripe price IDs for one-time purchases
+  const trainingCourses = [
     {
       icon: Users,
-      title: "Standard Group Training",
-      badge: "STANDARD GROUP",
-      description: "Comprehensive cybersecurity awareness training for teams",
+      title: "Individual Training",
+      badge: "INDIVIDUAL",
+      description: "One-on-one scam prevention coaching",
       features: [
-        "Up to 20 participants per session",
-        "2-hour interactive workshop",
-        "Real-world scam scenarios",
-        "Q&A session included",
-        "Digital certificate of completion",
+        "1 hour private session",
+        "Personalized assessment",
+        "Customized safety plan",
+        "Digital resources included",
         "30-day email support"
       ],
-      price: "$499",
+      price: "$89",
+      priceId: "price_1SZxa5J8osfwYbX7CgL0vdFy",
+      duration: "1 hour",
+      popular: false
+    },
+    {
+      icon: Users,
+      title: "Family Training",
+      badge: "FAMILY",
+      description: "Comprehensive training for the whole family",
+      features: [
+        "Up to 5 family members",
+        "2-hour interactive session",
+        "Age-appropriate content",
+        "Family safety plan",
+        "60-day support access"
+      ],
+      price: "$199",
+      priceId: "price_1SZxa5J8osfwYbX7XTUX2tyN",
+      duration: "2 hours",
+      popular: true
+    },
+    {
+      icon: Users,
+      title: "Senior Group Training",
+      badge: "SENIOR GROUP",
+      description: "Group training for senior centers & communities",
+      features: [
+        "Up to 20 participants",
+        "3-hour workshop",
+        "Hands-on practice",
+        "Printed materials included",
+        "Q&A session",
+        "90-day support"
+      ],
+      price: "$399",
+      priceId: "price_1SZxa6J8osfwYbX7HnPWSvR8",
+      duration: "3 hours",
+      popular: false
+    },
+    {
+      icon: Shield,
+      title: "Healthcare Professional",
+      badge: "HEALTHCARE",
+      description: "Specialized training for healthcare staff",
+      features: [
+        "HIPAA-aware content",
+        "Patient protection focus",
+        "Compliance documentation",
+        "Staff certification",
+        "90-day priority support"
+      ],
+      price: "$299",
+      priceId: "price_1SZxa7J8osfwYbX7AQp1WI2k",
       duration: "2 hours",
       popular: false
     },
     {
       icon: Target,
-      title: "Priority Private Training",
-      badge: "PRIORITY PRIVATE",
-      description: "Personalized one-on-one cybersecurity coaching",
+      title: "Enterprise Training",
+      badge: "ENTERPRISE",
+      description: "Comprehensive corporate training program",
       features: [
-        "Individual attention",
-        "Customized curriculum",
-        "Flexible scheduling",
-        "Hands-on practice sessions",
-        "Personal action plan",
-        "90-day priority support"
+        "Up to 50 employees",
+        "Custom curriculum",
+        "On-site or virtual",
+        "Compliance reporting",
+        "Dedicated account manager",
+        "1-year support"
       ],
-      price: "Custom",
-      duration: "Flexible",
-      popular: true,
-      isCustom: true
+      price: "$599",
+      priceId: "price_1SZxa8J8osfwYbX7KsjRmalt",
+      duration: "Full day",
+      popular: false
     },
     {
-      icon: Shield,
-      title: "Enterprise Solutions",
-      description: "Tailored training programs for large organizations",
+      icon: Users,
+      title: "Spanish Language Training",
+      badge: "ESPAÑOL",
+      description: "Capacitación en español para familias",
       features: [
-        "Unlimited participants",
-        "Custom content development",
-        "On-site or virtual delivery",
-        "Ongoing support packages",
-        "Compliance documentation",
-        "Executive briefings"
+        "Sesión de 1 hora",
+        "Material en español",
+        "Plan de seguridad familiar",
+        "Soporte por email",
+        "Recursos digitales"
       ],
-      price: "Contact Us",
-      duration: "Custom",
+      price: "$89",
+      priceId: "price_1SZxa8J8osfwYbX7I9UDX9Ex",
+      duration: "1 hora",
       popular: false
     }
   ];
@@ -388,17 +442,17 @@ const LearnAndTrain = () => {
           </ScrollReveal>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {trainingPrograms.map((program, index) => (
+            {trainingCourses.map((course, index) => (
               <ScrollReveal key={index} animation="fade-up" delay={index * 100}>
                 <Card className={`p-8 h-full flex flex-col hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-2xl ${
-                  program.popular ? 'border-primary border-2 relative' : 'border-border/50'
+                  course.popular ? 'border-primary border-2 relative' : 'border-border/50'
                 } bg-gradient-to-br from-card to-card/50 relative`}>
-                  {program.badge && (
+                  {course.badge && (
                     <div className="absolute top-3 right-3 z-10">
-                      <Badge variant="default" className="text-xs font-bold">{program.badge}</Badge>
+                      <Badge variant="default" className="text-xs font-bold">{course.badge}</Badge>
                     </div>
                   )}
-                  {program.popular && (
+                  {course.popular && (
                     <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                       <Badge variant="default" className="text-xs font-bold shadow-lg">
                         <Star className="w-3 h-3 mr-1" />
@@ -409,24 +463,24 @@ const LearnAndTrain = () => {
                   
                   <div className="mb-6">
                     <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center mb-4 shadow-lg">
-                      <program.icon className="w-8 h-8 text-white" />
+                      <course.icon className="w-8 h-8 text-white" />
                     </div>
-                    <h3 className="text-2xl font-bold mb-2">{program.title}</h3>
-                    <p className="text-muted-foreground mb-4">{program.description}</p>
+                    <h3 className="text-2xl font-bold mb-2">{course.title}</h3>
+                    <p className="text-muted-foreground mb-4">{course.description}</p>
                     <div className="flex items-baseline gap-2 mb-2">
-                      <span className="text-3xl font-bold text-primary">{program.price}</span>
-                      {program.price !== "Contact Us" && program.price !== "Custom" && (
+                      <span className="text-3xl font-bold text-primary">{course.price}</span>
+                      {course.priceId && (
                         <span className="text-muted-foreground">/session</span>
                       )}
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Clock className="w-4 h-4" />
-                      <span>{program.duration}</span>
+                      <span>{course.duration}</span>
                     </div>
                   </div>
 
                   <div className="space-y-3 mb-6 flex-grow">
-                    {program.features.map((feature, idx) => (
+                    {course.features.map((feature, idx) => (
                       <div key={idx} className="flex items-start gap-2">
                         <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                         <span className="text-sm">{feature}</span>
@@ -435,12 +489,12 @@ const LearnAndTrain = () => {
                   </div>
 
                   <Button 
-                    onClick={() => program.isCustom ? setCustomTrainingOpen(true) : handleBooking(program.title)}
-                    variant={program.popular ? "default" : "outline"}
+                    onClick={() => handleBooking(course.title)}
+                    variant={course.popular ? "default" : "outline"}
                     size="lg"
                     className="w-full group"
                   >
-                    {program.price === "Contact Us" ? "Contact Sales" : program.isCustom ? "Customize Training" : "Book Now"}
+                    Book {course.title}
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </Card>
