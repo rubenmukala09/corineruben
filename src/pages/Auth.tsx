@@ -192,7 +192,7 @@ function Auth() {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden flex items-center justify-center p-4 py-8">
+    <div className="min-h-screen relative overflow-hidden flex flex-col items-center justify-center p-4">
       {/* Animated Gradient Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-accent/10" />
       
@@ -207,7 +207,7 @@ function Auth() {
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.05)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)]" />
 
       {/* Main Content */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 lg:gap-16 items-center animate-fade-in my-auto">
+      <div className="relative z-10 w-full max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 lg:gap-16 items-center animate-fade-in flex-grow">
         
         {/* Left Side - Branding & Info */}
         <div className="hidden lg:flex flex-col gap-8 animate-scale-in">

@@ -1062,12 +1062,10 @@ function Signup() {
                 <div 
                   className="relative h-[400px] cursor-pointer"
                   style={{ perspective: '1000px' }}
-                  onClick={() => handleRoleSelect("staff")}
+                  onClick={() => navigate("/staff-signup")}
                 >
                   <div 
-                    className={`relative w-full h-full transition-all duration-600 ${
-                      isFlipping && selectedRole === "staff" ? '[transform:rotateY(180deg)]' : ''
-                    }`}
+                    className="relative w-full h-full transition-all duration-600"
                     style={{ 
                       transformStyle: 'preserve-3d',
                       transition: 'transform 0.6s'
@@ -1075,7 +1073,7 @@ function Signup() {
                   >
                     {/* Front of card */}
                     <Card
-                      className={`absolute w-full h-full p-10 border-2 border-border transition-all duration-300 hover:scale-105 hover:shadow-[0_20px_50px_rgba(20,184,166,0.5)] hover:border-teal-600 hover:border-2 group`}
+                      className="absolute w-full h-full p-10 border-2 border-border transition-all duration-300 hover:scale-105 hover:shadow-[0_20px_50px_rgba(20,184,166,0.5)] hover:border-teal-600 hover:border-2 group"
                       style={{ backfaceVisibility: 'hidden' }}
                     >
                       {/* Icon */}
@@ -1087,7 +1085,7 @@ function Signup() {
                       <div className="text-center space-y-3">
                         <h3 className="text-2xl font-bold">Staff Access</h3>
                         <p className="text-muted-foreground">
-                          Request access to InVision Network internal systems
+                          InVision Network team members with @invisionnetwork.org email
                         </p>
                       </div>
 
@@ -1096,30 +1094,16 @@ function Signup() {
                         type="button"
                         className="w-full mt-6 h-12 text-base font-semibold bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 transition-all"
                       >
-                        Request Staff Access
+                        Create Staff Account
                       </Button>
 
                       {/* Note */}
                       <p className="text-xs text-muted-foreground text-center mt-3 italic">
-                        Requires admin approval
+                        Requires @invisionnetwork.org email
                       </p>
 
                       {/* Glow effect */}
                       <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity bg-teal-600/10 -z-10" />
-                    </Card>
-
-                    {/* Back of card */}
-                    <Card
-                      className="absolute w-full h-full p-10 border-2 border-teal-600 bg-gradient-to-br from-teal-500/20 to-teal-600/20 flex items-center justify-center"
-                      style={{ 
-                        backfaceVisibility: 'hidden',
-                        transform: 'rotateY(180deg)'
-                      }}
-                    >
-                      <div className="text-center">
-                        <Loader2 className="w-12 h-12 text-teal-600 animate-spin mx-auto mb-4" />
-                        <p className="text-lg font-semibold text-teal-600">Loading...</p>
-                      </div>
                     </Card>
                   </div>
                 </div>
