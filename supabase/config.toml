@@ -35,3 +35,6 @@ verify_jwt = false
 
 [functions.create-product-payment]
 verify_jwt = true
+
+[functions.process-donation]
+verify_jwt = false

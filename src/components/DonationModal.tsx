@@ -13,6 +13,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { Users, DollarSign, Building2, Loader2 } from "lucide-react";
 import { donationFormSchema, formatPhoneNumber } from "@/utils/formValidation";
 import { z } from "zod";
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { Label } from "@/components/ui/label";
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '');
 
 interface DonationModalProps {
   open: boolean;
@@ -22,7 +27,9 @@ interface DonationModalProps {
 
 type DonationFormData = z.infer<typeof donationFormSchema>;
 
-export const DonationModal = ({ open, onOpenChange, type = 'general' }: DonationModalProps) => {
+function DonationForm({ type, onSuccess }: { type: string; onSuccess: () => void }) {
+  const stripe = useStripe();
+  const elements = useElements();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [donationType, setDonationType] = useState<'one-time' | 'monthly'>('one-time');
@@ -56,36 +63,78 @@ export const DonationModal = ({ open, onOpenChange, type = 'general' }: Donation
       return;
     }
 
+    if (!stripe || !elements) return;
+
+    if (!selectedAmount || selectedAmount < 5) {
+      toast({
+        title: "Invalid Amount",
+        description: "Please select or enter a donation amount of at least $5.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const formattedPhone = data.phone ? formatPhoneNumber(data.phone) : null;
-      
-      const { error } = await supabase.from('donations').insert([
-        {
-          donor_name: data.donor_name,
+      const cardElement = elements.getElement(CardElement);
+      if (!cardElement) {
+        throw new Error('Card element not found');
+      }
+
+      const { error: pmError, paymentMethod } = await stripe.createPaymentMethod({
+        type: 'card',
+        card: cardElement,
+        billing_details: {
+          name: data.donor_name,
           email: data.email,
-          amount: selectedAmount,
-          donation_type: donationType,
-          message: `${data.message || ''}\n\nType: ${type}\n${
-            type === 'sponsor' ? `Sponsor: ${data.sponsor_info}\nRecipient: ${data.recipient_info}` : ''
-          }${type === 'corporate' ? `Company: ${data.company_name}` : ''}${
-            formattedPhone ? `\nPhone: ${formattedPhone}` : ''
-          }`,
-          payment_status: 'pending',
+          phone: data.phone || undefined,
         },
-      ]);
+      });
+
+      if (pmError) {
+        toast({
+          title: "Payment Error",
+          description: pmError.message,
+          variant: "destructive",
+        });
+        setLoading(false);
+        return;
+      }
+
+      const formattedPhone = data.phone ? formatPhoneNumber(data.phone) : null;
+      const messageText = `${data.message || ''}\n\nType: ${type}\n${
+        type === 'sponsor' ? `Sponsor: ${data.sponsor_info}\nRecipient: ${data.recipient_info}` : ''
+      }${type === 'corporate' ? `Company: ${data.company_name}` : ''}${
+        formattedPhone ? `\nPhone: ${formattedPhone}` : ''
+      }`;
+
+      const { data: result, error } = await supabase.functions.invoke('process-donation', {
+        body: {
+          paymentMethodId: paymentMethod.id,
+          amount: Math.round(selectedAmount * 100),
+          currency: 'usd',
+          donorInfo: {
+            name: data.donor_name,
+            email: data.email,
+            phone: formattedPhone,
+          },
+          donationType,
+          message: messageText,
+        },
+      });
 
       if (error) throw error;
+      if (!result.success) throw new Error(result.error || 'Payment failed');
 
       toast({
         title: "Thank you for your donation!",
-        description: "We'll contact you shortly with payment details.",
+        description: "Your payment has been processed successfully.",
       });
 
-      onOpenChange(false);
       form.reset();
       setSelectedAmount(null);
+      onSuccess();
     } catch (error: any) {
       toast({
         title: "Submission Failed",
@@ -124,15 +173,8 @@ export const DonationModal = ({ open, onOpenChange, type = 'general' }: Donation
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader className="flex flex-row items-center gap-4">
-          {getIcon()}
-          <DialogTitle className="text-2xl font-bold">{getTitle()}</DialogTitle>
-        </DialogHeader>
-
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
             {type !== 'monthly' && (
               <div className="space-y-3">
                 <label className="text-sm font-medium">Donation Type</label>
@@ -281,6 +323,25 @@ export const DonationModal = ({ open, onOpenChange, type = 'general' }: Donation
               )}
             />
 
+            <div className="space-y-2">
+              <Label>Card Details</Label>
+              <div className="border-2 border-border rounded-lg p-4 bg-card">
+                <CardElement
+                  options={{
+                    style: {
+                      base: {
+                        fontSize: '16px',
+                        color: '#424770',
+                        '::placeholder': {
+                          color: '#aab7c4',
+                        },
+                      },
+                    },
+                  }}
+                />
+              </div>
+            </div>
+
             <div className="p-4 bg-primary/5 rounded-lg">
               <p className="text-sm text-muted-foreground">
                 Your donation helps us protect and empower our community. Together, we create a safer digital world for everyone.
@@ -289,17 +350,8 @@ export const DonationModal = ({ open, onOpenChange, type = 'general' }: Donation
 
             <div className="flex gap-3">
               <Button
-                type="button"
-                variant="outline"
-                onClick={() => onOpenChange(false)}
-                disabled={loading || isSubmitting}
-                className="flex-1"
-              >
-                Cancel
-              </Button>
-              <Button
                 type="submit"
-                disabled={loading || isSubmitting || !selectedAmount}
+                disabled={!stripe || loading || isSubmitting || !selectedAmount}
                 className="flex-1"
               >
                 {loading || isSubmitting ? (
@@ -312,8 +364,49 @@ export const DonationModal = ({ open, onOpenChange, type = 'general' }: Donation
                 )}
               </Button>
             </div>
-          </form>
-        </Form>
+      </form>
+    </Form>
+  );
+}
+
+export const DonationModal = ({ open, onOpenChange, type = 'general' }: DonationModalProps) => {
+  const getTitle = () => {
+    switch (type) {
+      case 'sponsor':
+        return 'Sponsor a Seat';
+      case 'monthly':
+        return 'Monthly Ally Program';
+      case 'corporate':
+        return 'Corporate Partnership';
+      default:
+        return 'Make a Donation';
+    }
+  };
+
+  const getIcon = () => {
+    switch (type) {
+      case 'sponsor':
+        return <Users className="w-8 h-8 text-primary" />;
+      case 'monthly':
+        return <DollarSign className="w-8 h-8 text-accent" />;
+      case 'corporate':
+        return <Building2 className="w-8 h-8 text-secondary" />;
+      default:
+        return <DollarSign className="w-8 h-8 text-primary" />;
+    }
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader className="flex flex-row items-center gap-4">
+          {getIcon()}
+          <DialogTitle className="text-2xl font-bold">{getTitle()}</DialogTitle>
+        </DialogHeader>
+
+        <Elements stripe={stripePromise}>
+          <DonationForm type={type} onSuccess={() => onOpenChange(false)} />
+        </Elements>
       </DialogContent>
     </Dialog>
   );
