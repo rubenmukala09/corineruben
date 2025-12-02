@@ -204,6 +204,14 @@ const NewsletterManagement = lazy(() => {
   });
 });
 
+const ExternalLinksManagement = lazy(() => {
+  performanceMonitor.startTracking('ExternalLinksManagement');
+  return import("./pages/admin/ExternalLinksManagement").then(module => {
+    performanceMonitor.endTracking('ExternalLinksManagement');
+    return module;
+  });
+});
+
 const BillingSettings = lazy(() => {
   performanceMonitor.startTracking('BillingSettings');
   return import("./pages/admin/settings/BillingSettings").then(module => {
@@ -626,6 +634,7 @@ function AnimatedRoutes() {
         <Route path="/admin/clients/messages" element={<PageTransition><AdminRoute><ClientMessages /></AdminRoute></PageTransition>} />
         <Route path="/admin/communications/inbox" element={<PageTransition><AdminRoute><CommunicationsInbox /></AdminRoute></PageTransition>} />
         <Route path="/admin/communications/newsletter" element={<PageTransition><AdminRoute><NewsletterManagement /></AdminRoute></PageTransition>} />
+        <Route path="/admin/external-links" element={<PageTransition><AdminRoute><ExternalLinksManagement /></AdminRoute></PageTransition>} />
         <Route path="/admin/settings/billing" element={<PageTransition><AdminRoute><BillingSettings /></AdminRoute></PageTransition>} />
         <Route path="/admin/email-campaigns" element={<PageTransition><AdminRoute><EmailCampaigns /></AdminRoute></PageTransition>} />
         <Route path="/admin/analytics" element={<PageTransition><AdminRoute><Analytics /></AdminRoute></PageTransition>} />

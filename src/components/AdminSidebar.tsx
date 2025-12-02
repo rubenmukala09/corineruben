@@ -104,6 +104,7 @@ const menuItems: MenuItem[] = [
       { title: "Email Campaigns", href: "/admin/email-campaigns" },
       { title: "Inbox", href: "/admin/communications/inbox" },
       { title: "Newsletter", href: "/admin/communications/newsletter" },
+      { title: "External Links", href: "/admin/external-links" },
     ],
   },
   {
