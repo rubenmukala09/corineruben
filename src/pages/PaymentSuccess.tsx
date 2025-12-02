@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { CheckCircle, Package, Home, ShoppingBag, Download, Mail } from "lucide-react";
+import { CheckCircle, Package, Home, ShoppingBag } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -11,9 +11,6 @@ import confetti from "canvas-confetti";
 export default function PaymentSuccess() {
   const [searchParams] = useSearchParams();
   const orderNumber = searchParams.get("order");
-  const productType = searchParams.get("type") || "mixed"; // digital, physical, mixed, or service
-  const serviceName = searchParams.get("service");
-  const inquiryId = searchParams.get("inquiry");
 
   useEffect(() => {
     // Trigger confetti animation
@@ -75,117 +72,36 @@ export default function PaymentSuccess() {
               <div className="space-y-6">
                 {orderNumber && (
                   <div>
-                    <h3 className="text-sm font-medium text-muted-foreground mb-2">
-                      {productType === 'service' ? 'Inquiry Number' : 'Order Number'}
-                    </h3>
+                    <h3 className="text-sm font-medium text-muted-foreground mb-2">Order Number</h3>
                     <p className="text-2xl font-bold text-primary">{orderNumber}</p>
-                  </div>
-                )}
-                
-                {inquiryId && (
-                  <div>
-                    <h3 className="text-sm font-medium text-muted-foreground mb-2">Reference ID</h3>
-                    <p className="text-lg font-mono text-muted-foreground">{inquiryId}</p>
                   </div>
                 )}
 
                 <div className="border-t pt-6">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      {productType === 'digital' ? (
-                        <Download className="w-6 h-6 text-primary" />
-                      ) : productType === 'service' ? (
-                        <CheckCircle className="w-6 h-6 text-primary" />
-                      ) : (
-                        <Package className="w-6 h-6 text-primary" />
-                      )}
+                      <Package className="w-6 h-6 text-primary" />
                     </div>
                     <div>
                       <h3 className="font-semibold mb-2">What happens next?</h3>
-                      
-                      {productType === 'service' ? (
-                        <ul className="space-y-2 text-sm text-muted-foreground">
-                          <li className="flex items-center gap-2">
-                            <Mail className="w-4 h-4 text-primary" />
-                            <span className="font-semibold text-primary">Confirmation email sent with service details</span>
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                            <span>Our team will contact you within 24 hours</span>
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                            <span>We'll schedule your consultation or project kickoff</span>
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                            <span>You'll receive a detailed timeline and next steps</span>
-                          </li>
-                          {serviceName && (
-                            <li className="mt-4 p-3 bg-muted/50 rounded-lg">
-                              <p className="font-semibold text-foreground mb-1">Service Purchased:</p>
-                              <p className="text-sm">{serviceName}</p>
-                            </li>
-                          )}
-                        </ul>
-                      ) : productType === 'digital' ? (
-                        <ul className="space-y-2 text-sm text-muted-foreground">
-                          <li className="flex items-center gap-2">
-                            <Mail className="w-4 h-4 text-primary" />
-                            <span className="font-semibold text-primary">Check your email for download links</span>
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                            <span>Download links will arrive within 2-5 minutes</span>
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                            <span>Links expire in 24 hours for security</span>
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                            <span>Make sure to check your spam folder</span>
-                          </li>
-                        </ul>
-                      ) : productType === 'physical' ? (
-                        <ul className="space-y-2 text-sm text-muted-foreground">
-                          <li className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                            <span>You'll receive an order confirmation email shortly</span>
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                            <span>Your order will be processed within 1-2 business days</span>
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                            <span>Shipping typically takes 2-3 business days</span>
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                            <span>You'll receive a tracking number once shipped</span>
-                          </li>
-                        </ul>
-                      ) : (
-                        <ul className="space-y-2 text-sm text-muted-foreground">
-                          <li className="flex items-center gap-2">
-                            <Download className="w-4 h-4 text-primary" />
-                            <span className="font-semibold text-primary">Digital products: Check your email (2-5 minutes)</span>
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <Package className="w-4 h-4 text-primary" />
-                            <span className="font-semibold text-primary">Physical products: Ships in 2-3 business days</span>
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                            <span>Download links expire in 24 hours</span>
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                            <span>You'll receive tracking for physical items</span>
-                          </li>
-                        </ul>
-                      )}
+                      <ul className="space-y-2 text-sm text-muted-foreground">
+                        <li className="flex items-center gap-2">
+                          <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                          <span>You'll receive an order confirmation email shortly</span>
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                          <span>Your order will be processed within 1-2 business days</span>
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                          <span>Shipping typically takes 2-3 business days</span>
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                          <span>You'll receive a tracking number once shipped</span>
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 </div>

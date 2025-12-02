@@ -26,7 +26,7 @@ const paths: PathConfig[] = [
     icon: Shield,
     featured: true,
     cta: "Protect My Family",
-    link: '/training#pricing',
+    link: '/training#scamshield',
     basePrice: 39,
   },
   {
@@ -37,7 +37,7 @@ const paths: PathConfig[] = [
     icon: BookOpen,
     badge: "5% Veteran Discount",
     cta: "Start Learning",
-    link: '/training#training',
+    link: '/training#book',
     basePrice: 89,
   },
   {
@@ -48,7 +48,7 @@ const paths: PathConfig[] = [
     icon: Briefcase,
     badge: "Industry First!",
     cta: "Protect My Business",
-    link: '/business#automation-pricing',
+    link: '/contact?service=business',
     basePrice: 5000,
   }
 ];

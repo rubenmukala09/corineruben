@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
-import { BookingModal } from "@/components/BookingModal";
-import { TrustDisclaimer } from "@/components/TrustDisclaimer";
 import TrustBar from "@/components/TrustBar";
 import TestimonialCard from "@/components/TestimonialCard";
 import CTASection from "@/components/CTASection";
@@ -13,7 +11,7 @@ import FlowingWaves from "@/components/FlowingWaves";
 import MakingADifference from "@/components/MakingADifference";
 import { TestimonialForm } from "@/components/TestimonialForm";
 import { VideoLightbox } from "@/components/VideoLightbox";
-
+import { FloatingHelpButton } from "@/components/FloatingHelpButton";
 import { ScamShieldSubmission } from "@/components/ScamShieldSubmission";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -61,7 +59,6 @@ function Index() {
   const [videoTestimonials, setVideoTestimonials] = useState<any[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string } | null>(null);
   const [scamShieldOpen, setScamShieldOpen] = useState(false);
-  const [consultationModalOpen, setConsultationModalOpen] = useState(false);
 
   // Hero slideshow images with descriptive alt text
   const heroImages = [
@@ -505,7 +502,7 @@ function Index() {
                 size="xl"
                 className="border-2 hover:border-[3px] hover:bg-primary/10 transition-all duration-300 cursor-pointer"
               >
-              <Link to="/training#training">View Training Options</Link>
+              <Link to="/training">View Training Options</Link>
             </Button>
           </div>
           </ScrollRevealSection>
@@ -644,7 +641,7 @@ function Index() {
           </div>
           <div className="text-center mt-8 animate-fade-in-up" style={{ animationDelay: "300ms" }}>
             <Link
-              to="/faq"
+              to="/resources#faq"
               className="text-primary hover:text-primary/80 font-semibold text-lg inline-flex items-center gap-2 hover:gap-4 transition-all duration-300 hover:scale-105"
             >
               VIEW ALL FAQ →
@@ -657,36 +654,34 @@ function Index() {
       <MakingADifference />
 
       {/* Final CTA */}
-      <CTASection 
-        headline="Ready to Protect Your Family?" 
-        description="Join thousands of Ohio families who've taken control of their digital safety. Start your journey today."
-        variant="gold"
-      >
-        <Button 
-          size="lg" 
-          className="text-lg px-8 py-6"
-          onClick={() => setConsultationModalOpen(true)}
-        >
-          Schedule Consultation
-        </Button>
-        <Button size="lg" variant="outline" className="text-lg px-8 py-6 bg-background/80 backdrop-blur" asChild>
-          <Link to="/contact?service=business-quote">Get AI & Business Quote</Link>
-        </Button>
+      <CTASection headline="Protect What Matters Most" variant="gold">
+        <p className="text-xl text-white/90 mb-8">Join 500+ Ohio families who sleep better knowing they're protected from AI scams.</p>
+        <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center">
+          <Button asChild variant="gold" size="xl" className="w-full sm:w-auto">
+            <Link to="/training" aria-label="Book training call">
+              Schedule Consultation
+            </Link>
+          </Button>
+          <Button asChild variant="secondary" size="xl" className="w-full sm:w-auto">
+            <Link to="/training#pricing" aria-label="View protection plans">
+              Get Protection Now
+            </Link>
+          </Button>
+          <Button asChild variant="outlineLight" size="xl" className="w-full sm:w-auto">
+            <Link to="/business" aria-label="Request business quote">
+              Get Business Quote
+            </Link>
+          </Button>
+        </div>
+        <p className="text-white/80 mt-6 text-sm">
+          ✓ No credit card required ✓ Cancel anytime ✓ 60-day money-back guarantee
+        </p>
       </CTASection>
-
-      {/* Trust & Security Disclaimer */}
-      <TrustDisclaimer />
 
       <Footer />
       
+      <FloatingHelpButton onScamShieldClick={() => setScamShieldOpen(true)} />
       <ScamShieldSubmission open={scamShieldOpen} onOpenChange={setScamShieldOpen} />
-      <BookingModal
-        open={consultationModalOpen}
-        onOpenChange={setConsultationModalOpen}
-        serviceType="training"
-        serviceName="Consultation"
-        basePrice={0}
-      />
       </main>
     </div>
   );

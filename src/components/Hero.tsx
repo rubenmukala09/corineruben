@@ -50,16 +50,15 @@ const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, childr
         {useCarousel ? (
           <HeroCarousel images={backgroundImages} />
         ) : backgroundImage && (
-          <motion.img
-            src={backgroundImage}
-            alt="Hero background"
-            fetchPriority="high"
-            loading="eager"
+          <motion.div
             className={cn(
-              "absolute inset-0 w-full h-full object-cover transition-opacity duration-300 brightness-115",
+              "absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-300 brightness-115",
               singleImagePreloaded ? "opacity-100" : "opacity-0"
             )}
-            style={{ opacity }}
+            style={{ 
+              backgroundImage: `url(${backgroundImage})`,
+              opacity
+            }}
           />
         )}
         

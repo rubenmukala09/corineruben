@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { AdminLayout } from "@/components/AdminLayout";
+import { AdminSidebar } from "@/components/AdminSidebar";
+import { AdminTopBar } from "@/components/AdminTopBar";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -141,6 +142,7 @@ export default function ArticlesAdmin() {
     };
   }, [refetch]);
 
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [articles, setArticles] = useState<Article[]>([]);
   const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(false);
@@ -342,25 +344,36 @@ export default function ArticlesAdmin() {
   const categoryCounts = getCategoryCounts();
 
   return (
-    <AdminLayout>
-      <div>
-        {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between mt-4">
-            <h1 className="text-3xl font-bold text-foreground">Blog Articles</h1>
-            <Button
-              size="lg"
-              onClick={() => navigate("/admin/content/articles/new")}
-              className="hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200"
-            >
-              <PenSquare className="h-5 w-5 mr-2" />
-              Create Article
-            </Button>
-          </div>
-        </div>
+    <div className="flex min-h-screen bg-background">
+      <AdminSidebar isOpen={sidebarOpen} />
+      <AdminTopBar
+        sidebarOpen={sidebarOpen}
+        toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+      />
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
+      <main
+        className={`flex-1 transition-all duration-300 pt-16 ${
+          sidebarOpen ? "md:ml-[260px]" : "md:ml-[70px]"
+        }`}
+      >
+        <div className="p-8">
+          {/* Header */}
+          <div className="mb-6">
+            <div className="flex items-center justify-between mt-4">
+              <h1 className="text-3xl font-bold text-foreground">Blog Articles</h1>
+              <Button
+                size="lg"
+                onClick={() => navigate("/admin/content/articles/new")}
+                className="hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200"
+              >
+                <PenSquare className="h-5 w-5 mr-2" />
+                Create Article
+              </Button>
+            </div>
+          </div>
+
+          {/* Quick Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
             <Card>
               <CardContent className="p-4 flex items-center gap-3">
                 <div className="p-2 rounded-lg bg-primary/10">
@@ -833,33 +846,34 @@ export default function ArticlesAdmin() {
                     >
                       <ChevronRight className="h-4 w-4" />
                     </Button>
-                </div>
+                  </div>
                 </div>
               </div>
             </>
           )}
+        </div>
+      </main>
 
-        {/* Delete Confirmation Dialog */}
-        <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This will permanently delete this article. This action cannot be undone.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction
-                onClick={() => articleToDelete && handleDelete(articleToDelete)}
-                className="bg-red-500 hover:bg-red-600"
-              >
-                Delete
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      </div>
-    </AdminLayout>
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will permanently delete this article. This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => articleToDelete && handleDelete(articleToDelete)}
+              className="bg-red-500 hover:bg-red-600"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
   );
 }

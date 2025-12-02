@@ -15,8 +15,6 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { BookingModal } from "@/components/BookingModal";
 import { SubscriptionDialog } from "@/components/SubscriptionDialog";
-import { ServiceInquiryDialog } from "@/components/ServiceInquiryDialog";
-import { ServicePaymentDialog } from "@/components/ServicePaymentDialog";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { trackButtonClick, trackConversion } from "@/utils/analyticsTracker";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield } from "lucide-react";
@@ -50,35 +48,6 @@ function Business() {
   const [isLoading, setIsLoading] = useState(true);
   const [businessTestimonials, setBusinessTestimonials] = useState<any[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string } | null>(null);
-  
-  // Service inquiry dialog state
-  const [inquiryDialogOpen, setInquiryDialogOpen] = useState(false);
-  const [inquiryData, setInquiryData] = useState<{
-    serviceType: 'ai-automation' | 'website-design' | 'ai-consultation' | 'ai-insurance';
-    serviceName: string;
-    servicePrice?: number;
-  } | null>(null);
-
-  // Service payment dialog state
-  const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
-  const [paymentData, setPaymentData] = useState<{
-    serviceType: 'ai-automation' | 'website-design' | 'ai-consultation';
-    serviceName: string;
-    servicePrice: number;
-    serviceDescription?: string;
-  } | null>(null);
-
-  const openInquiryDialog = (serviceType: 'ai-automation' | 'website-design' | 'ai-consultation' | 'ai-insurance', serviceName: string, servicePrice?: number) => {
-    setInquiryData({ serviceType, serviceName, servicePrice });
-    setInquiryDialogOpen(true);
-    trackButtonClick(`Open Inquiry - ${serviceName}`, 'Business Page');
-  };
-
-  const openPaymentDialog = (serviceType: 'ai-automation' | 'website-design' | 'ai-consultation', serviceName: string, servicePrice: number, serviceDescription?: string) => {
-    setPaymentData({ serviceType, serviceName, servicePrice, serviceDescription });
-    setPaymentDialogOpen(true);
-    trackButtonClick(`Open Payment - ${serviceName}`, 'Business Page');
-  };
 
   // Counter animations for pricing cards
   const price1Counter = useCounterAnimation({ end: 9500, duration: 1500, prefix: '$' });
@@ -172,15 +141,6 @@ function Business() {
 
   return (
     <div className="min-h-screen">
-      <SEO 
-        title="AI Business Solutions - Automation, Websites & Insurance"
-        description="Transform your business with secure AI solutions. AI receptionists, chatbots, professional websites, and industry-leading AI Service Insurance."
-        keywords="AI business solutions, AI receptionist, business automation, AI security, website design, Dayton Ohio"
-        breadcrumbs={[
-          { name: "Home", url: "/" },
-          { name: "AI for Business", url: "/business" }
-        ]}
-      />
       <Navigation />
 
       <Hero
@@ -190,7 +150,7 @@ function Business() {
         showScrollIndicator={true}
       >
         <div className="flex flex-col sm:flex-row gap-4">
-          <Button
+          <Button 
             asChild
             variant="default" 
             size="xl"
@@ -307,22 +267,23 @@ function Business() {
         </div>
       </section>
 
-      {/* Veterans Discount Banner - Compact */}
-      <section className="py-4 bg-gradient-to-r from-primary/10 to-accent/10">
+      {/* Veterans Discount Banner */}
+      <section className="py-8 bg-gradient-to-r from-primary/10 to-accent/10">
         <div className="container mx-auto px-4">
-          <Card className="p-4 bg-card/50 backdrop-blur-sm border-primary/20 max-w-3xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center gap-3 text-center md:text-left">
+          <Card className="p-6 bg-card/50 backdrop-blur-sm border-primary/20 max-w-3xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-xl">
+                <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-2xl">
                   🇺🇸
                 </div>
               </div>
               <div className="flex-1">
-                <h3 className="text-base font-bold">Veterans & First Responders</h3>
-                <p className="text-muted-foreground text-xs">10% OFF all services</p>
+                <h3 className="text-xl font-bold mb-1">Veterans & First Responders</h3>
+                <p className="text-muted-foreground text-sm">Active duty, veterans, reservists, and first responders receive 10% OFF all services</p>
               </div>
-              <Button variant="default" size="sm" asChild>
-                <Link to="/resources">
+              <Button variant="default" size="sm" className="w-fit" asChild>
+                <Link to="/contact">
+                  <Shield className="w-4 h-4 mr-2" />
                   Claim Discount
                 </Link>
               </Button>
@@ -337,58 +298,29 @@ function Business() {
           <h2 className="text-center mb-12">AI Agents & Automation Pricing</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             <ScrollReveal animation="slide-left" delay={0}>
-              <div className="relative">
-                <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-500 to-accent text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
-                  START HERE
-                </div>
-                <Card className="p-6 md:p-8 pt-10 active:scale-98">
-                  <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">AI Receptionist & Intake Agent</h3>
-                <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">24/7 call answering, appointment booking, and lead qualification</p>
+              <Card className="p-6 md:p-8 active:scale-98">
+                <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">AI Receptionist & Intake Agent</h3>
+                <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">Answer calls/chats 24/7, book appointments</p>
                 <p ref={price1Counter.ref} className="text-3xl md:text-4xl font-bold text-accent mb-4 md:mb-6">
                   {price1Counter.displayValue}
                 </p>
-                <ul className="space-y-2 md:space-y-3 mb-6 md:mb-8">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                    <span className="text-sm md:text-base">24/7 call answering & live chat</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                    <span className="text-sm md:text-base">Automatic appointment booking</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                    <span className="text-sm md:text-base">FAQ responses trained on your business</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                    <span className="text-sm md:text-base">Lead qualification & intelligent routing</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                    <span className="text-sm md:text-base">CRM integration</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                    <span className="text-sm md:text-base">Multi-language support</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                    <span className="text-sm md:text-base italic text-muted-foreground">And so more...</span>
-                  </li>
-                </ul>
+...
                 <Button 
+                  asChild
                   variant="default" 
                   className="w-full transition-all duration-300 md:hover:bg-primary/90 md:hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] md:hover:scale-[1.02] active:scale-95 h-11 md:h-10"
-                  onClick={() => {
-                    openInquiryDialog('ai-automation', 'AI Receptionist & Intake Agent', 9500);
-                    trackConversion('business_ai_receptionist', 9500);
-                  }}
                 >
-                  GET STARTED
+                  <Link 
+                    to="/contact?service=ai-receptionist&plan=9500"
+                    onClick={() => {
+                      trackButtonClick('Get Started - AI Receptionist', 'Business Pricing');
+                      trackConversion('business_ai_receptionist', 9500);
+                    }}
+                  >
+                    GET STARTED
+                  </Link>
                 </Button>
-                </Card>
-              </div>
+              </Card>
             </ScrollReveal>
 
             <ScrollReveal animation="scale-in" delay={200}>
@@ -398,107 +330,57 @@ function Business() {
                 </div>
                 <Card className="p-6 md:p-8 active:scale-98 border-2 border-primary shadow-[0_8px_30px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)] transition-all">
                   <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 mt-2">Follow-Up Automation System</h3>
-                  <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">Automated multi-channel campaigns & lead nurturing</p>
+                  <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">Automated email/SMS campaigns, lead nurturing</p>
                   <p ref={price2Counter.ref} className="text-3xl md:text-4xl font-bold text-accent mb-4 md:mb-6">
                     {price2Counter.displayValue}
                   </p>
                   <ul className="space-y-2 md:space-y-3 mb-6 md:mb-8">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                      <span className="text-sm md:text-base">Multi-channel campaigns (email, SMS, WhatsApp)</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                      <span className="text-sm md:text-base">Automated lead nurturing sequences</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                      <span className="text-sm md:text-base">Post-appointment follow-ups</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                      <span className="text-sm md:text-base">Review request automation</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                      <span className="text-sm md:text-base">Re-engagement campaigns</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                      <span className="text-sm md:text-base">Advanced analytics & reporting</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                      <span className="text-sm md:text-base italic text-muted-foreground">And so more...</span>
+                      <span className="text-sm md:text-base">Multi-channel campaigns</span>
                     </li>
                   </ul>
                   <Button 
+                    asChild
                     variant="default" 
                     className="w-full transition-all duration-300 md:hover:bg-primary/90 md:hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] md:hover:scale-[1.02] active:scale-95 h-11 md:h-10"
-                    onClick={() => {
-                      openInquiryDialog('ai-automation', 'Follow-Up Automation System', 12500);
-                      trackConversion('business_full_automation', 12500);
-                    }}
                   >
-                    GET STARTED
+                    <Link 
+                      to="/contact?service=automation&plan=12500"
+                      onClick={() => {
+                        trackButtonClick('Get Started - Full Automation', 'Business Pricing');
+                        trackConversion('business_full_automation', 12500);
+                      }}
+                    >
+                      GET STARTED
+                    </Link>
                   </Button>
                 </Card>
               </div>
             </ScrollReveal>
 
             <ScrollReveal animation="slide-right" delay={400}>
-              <Card className="p-6 md:p-8 border-2 border-accent active:scale-98 relative">
-                <div className="absolute top-3 right-3 z-10">
-                  <Badge variant="premium" className="text-xs font-bold">ENTERPRISE</Badge>
-                </div>
+              <Card className="p-6 md:p-8 border-2 border-accent active:scale-98">
                 <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">Custom Automation Suite</h3>
-                <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">Enterprise-level multi-system automation tailored to your business</p>
+                <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">Multi-system operations</p>
                 <p ref={price3Counter.ref} className="text-3xl md:text-4xl font-bold text-accent mb-4 md:mb-6">
                   {price3Counter.displayValue}
                 </p>
-                <ul className="space-y-2 md:space-y-3 mb-6 md:mb-8">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                    <span className="text-sm md:text-base">Enterprise-level integrations</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                    <span className="text-sm md:text-base">Custom AI model training</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                    <span className="text-sm md:text-base">Dedicated support team</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                    <span className="text-sm md:text-base">Multi-department workflow automation</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                    <span className="text-sm md:text-base">Advanced analytics dashboard</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                    <span className="text-sm md:text-base">API access for developers</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                    <span className="text-sm md:text-base">Priority implementation timeline</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
-                    <span className="text-sm md:text-base italic text-muted-foreground">And so more...</span>
-                  </li>
-                </ul>
+...
                 <Button 
+                  asChild
                   variant="default" 
                   className="w-full transition-all duration-300 md:hover:bg-primary/90 md:hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] md:hover:scale-[1.02] active:scale-95 h-11 md:h-10"
-                  onClick={() => {
-                    openInquiryDialog('ai-automation', 'Custom Automation Suite', 25000);
-                    trackConversion('business_custom_solution', 25000);
-                  }}
                 >
-                  CUSTOMIZABLE
+                  <Link 
+                    to="/contact?service=custom&plan=25000"
+                    onClick={() => {
+                      trackButtonClick('Get Started - Custom Solution', 'Business Pricing');
+                      trackConversion('business_custom_solution', 25000);
+                    }}
+                  >
+                    GET STARTED
+                  </Link>
                 </Button>
               </Card>
             </ScrollReveal>
@@ -522,52 +404,44 @@ function Business() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
             {/* Landing Page */}
             <ScrollReveal animation="fade-up" delay={0} threshold={0.2}>
-              <div className="relative">
-                <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-500 to-teal-400 text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
-                  QUICK START
-                </div>
-                <Card className="p-8 pt-10 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1">
-                  <h3 className="text-2xl font-bold mb-4">Landing Page</h3>
-                <p className="text-muted-foreground mb-6">Single high-converting page design</p>
+              <Card className="p-8 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1">
+                <h3 className="text-2xl font-bold mb-4">Landing Page</h3>
+                <p className="text-muted-foreground mb-6">Single-page website for campaigns or simple business presence</p>
                 <p className="text-4xl font-bold text-accent mb-6">$1,500</p>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                    <span>Single high-converting page design</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                    <span>Mobile-responsive layout</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                    <span>Lead capture forms</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                    <span>SEO optimization</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                    <span>Hosting setup included</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                    <span className="italic text-muted-foreground">And so more...</span>
-                  </li>
-                </ul>
+...
                 <Button 
+                  asChild
                   variant="default" 
-                  className="w-full transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)]"
-                  onClick={() => {
-                    openPaymentDialog('website-design', 'Landing Page Design', 1500, 'Professional single-page website designed to convert visitors into customers');
-                    trackConversion('business_landing_page', 1500);
+                  className="w-full ripple-container relative overflow-hidden transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)]"
+                  onClick={(e) => {
+                    // Create ripple effect
+                    const button = e.currentTarget;
+                    const ripple = document.createElement('span');
+                    const rect = button.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.className = 'ripple';
+                    ripple.style.width = ripple.style.height = `${size}px`;
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    
+                    button.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
                   }}
                 >
-                  PAY $1,500
+                  <Link 
+                    to="/contact?service=landing-page&price=1500"
+                    onClick={() => {
+                      trackButtonClick('Get Started - Landing Page', 'Business Website');
+                      trackConversion('business_landing_page', 1500);
+                    }}
+                  >
+                    GET STARTED
+                  </Link>
                 </Button>
-                </Card>
-              </div>
+              </Card>
             </ScrollReveal>
 
             {/* Business Website - Featured */}
@@ -615,14 +489,36 @@ function Business() {
                   </li>
                 </ul>
                 <Button 
+                  asChild
                   variant="default" 
-                  className="w-full pulse-glow transition-all duration-300 hover:bg-primary/90"
-                  onClick={() => {
-                    openPaymentDialog('website-design', 'Business Website Design', 4500, 'Professional 5-10 page business website with custom features and SEO optimization');
-                    trackConversion('business_website', 4500);
+                  className="w-full ripple-container pulse-glow relative overflow-hidden transition-all duration-300 hover:bg-primary/90 px-7 py-3.5"
+                  onClick={(e) => {
+                    // Create ripple effect
+                    const button = e.currentTarget;
+                    const ripple = document.createElement('span');
+                    const rect = button.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.className = 'ripple';
+                    ripple.style.width = ripple.style.height = `${size}px`;
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    
+                    button.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
                   }}
                 >
-                  PAY $4,500
+                  <Link 
+                    to="/contact?service=business-website&price=4500"
+                    onClick={() => {
+                      trackButtonClick('Get Started - Business Website', 'Business Website');
+                      trackConversion('business_website', 4500);
+                    }}
+                  >
+                    GET STARTED
+                  </Link>
                 </Button>
               </Card>
               </div>
@@ -630,12 +526,8 @@ function Business() {
 
             {/* E-Commerce Website */}
             <ScrollReveal animation="fade-up" delay={300} threshold={0.2}>
-              <div className="relative">
-                <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
-                  FULL FEATURED
-                </div>
-                <Card className="p-8 pt-10 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1">
-                  <h3 className="text-2xl font-bold mb-4">E-Commerce Website</h3>
+              <Card className="p-8 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1">
+                <h3 className="text-2xl font-bold mb-4">E-Commerce Website</h3>
                 <p className="text-muted-foreground mb-6">Full online store with payment processing</p>
                 <p className="text-4xl font-bold text-accent mb-6">$8,500+</p>
                 <ul className="space-y-3 mb-8">
@@ -673,17 +565,38 @@ function Business() {
                   </li>
                 </ul>
                 <Button 
+                  asChild
                   variant="default" 
-                  className="w-full transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)]"
-                  onClick={() => {
-                    openInquiryDialog('website-design', 'E-Commerce Website', 8500);
-                    trackConversion('business_ecommerce', 8500);
+                  className="w-full ripple-container relative overflow-hidden transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)]"
+                  onClick={(e) => {
+                    // Create ripple effect
+                    const button = e.currentTarget;
+                    const ripple = document.createElement('span');
+                    const rect = button.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.className = 'ripple';
+                    ripple.style.width = ripple.style.height = `${size}px`;
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    
+                    button.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
                   }}
                 >
-                  CUSTOMIZABLE
+                  <Link 
+                    to="/contact?service=ecommerce&price=8500"
+                    onClick={() => {
+                      trackButtonClick('Get Started - E-Commerce', 'Business Website');
+                      trackConversion('business_ecommerce', 8500);
+                    }}
+                  >
+                    GET STARTED
+                  </Link>
                 </Button>
-                </Card>
-              </div>
+              </Card>
             </ScrollReveal>
           </div>
 
@@ -749,12 +662,9 @@ function Business() {
             </Label>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12">
             {/* Basic Care */}
-            <Card className="p-6 rounded-2xl border-border/50 hover:shadow-medium transition-all hover:-translate-y-1 relative">
-              <div className="absolute top-3 right-3">
-                <Badge variant="default" className="text-xs font-bold">STARTER</Badge>
-              </div>
+            <Card className="p-6 rounded-2xl border-border/50 hover:shadow-medium transition-all hover:-translate-y-1">
               <h3 className="text-xl font-bold mb-3">Basic Care</h3>
               <p key={isYearly ? 'yearly-199' : 'monthly-199'} className="text-3xl font-bold gradient-text-primary mb-2 price-flip">
                 {getInsurancePrice(199).display}<span className="text-base text-muted-foreground">{getInsurancePrice(199).period}</span>
@@ -795,7 +705,7 @@ function Business() {
                 onClick={() => {
                   trackButtonClick('Subscribe - Basic Care', 'Business Insurance');
                   trackConversion('insurance_basic', 199);
-                  handleSubscribe('price_1SZxzbJ8osfwYbX7cl20WDoC', 'AI Service Insurance', 'Basic Care', 19900);
+                  handleSubscribe('price_1QhNnTE7M5RA9HBzMcIcKhEF', 'AI Service Insurance', 'Basic Care', 19900);
                 }}
                 variant="default" 
                 className="w-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)]"
@@ -854,7 +764,7 @@ function Business() {
                 onClick={() => {
                   trackButtonClick('Subscribe - Standard Care', 'Business Insurance');
                   trackConversion('insurance_standard', 399);
-                  handleSubscribe('price_1SZxzcJ8osfwYbX7JGgkSQ7a', 'AI Service Insurance', 'Standard Care', 39900);
+                  handleSubscribe('price_1QhNnrE7M5RA9HBzbM4WDMIQ', 'AI Service Insurance', 'Standard Care', 39900);
                 }}
                 variant="default" 
                 className="w-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)]"
@@ -864,12 +774,9 @@ function Business() {
             </Card>
             </div>
 
-            {/* Enterprise Insurance */}
-            <Card className="p-6 rounded-2xl border-primary/50 hover:shadow-medium transition-all hover:-translate-y-1 bg-gradient-to-br from-primary/5 to-accent/10 border-2 relative">
-              <div className="absolute top-3 right-3">
-                <Badge variant="premium" className="text-xs font-bold">ENTERPRISE</Badge>
-              </div>
-              <h3 className="text-xl font-bold mb-3">Enterprise Insurance</h3>
+            {/* Premium Care */}
+            <Card className="p-6 rounded-2xl border-border/50 hover:shadow-medium transition-all hover:-translate-y-1">
+              <h3 className="text-xl font-bold mb-3">Premium Care</h3>
               <p key={isYearly ? 'yearly-799' : 'monthly-799'} className="text-3xl font-bold gradient-text-primary mb-2 price-flip">
                 {getInsurancePrice(799).display}<span className="text-base text-muted-foreground">{getInsurancePrice(799).period}</span>
               </p>
@@ -886,11 +793,63 @@ function Business() {
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
-                  <span>24/7 monitoring & critical response</span>
+                  <span>24/7 monitoring & alerts</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                  <span>Critical issue response (4hr)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                  <span>Custom modifications included</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                  <span>Up to 12 hours repair/month</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                  <span>Dedicated support engineer</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                  <span>Quarterly optimization reviews</span>
+                </li>
+              </ul>
+              <Button 
+                onClick={() => {
+                  trackButtonClick('Subscribe - Premium Care', 'Business Insurance');
+                  trackConversion('insurance_premium', 799);
+                  handleSubscribe('price_1QhNoHE7M5RA9HBzQWdpJTEh', 'AI Service Insurance', 'Premium Care', 79900);
+                }}
+                variant="default" 
+                className="w-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)]"
+              >
+                GET PREMIUM CARE
+              </Button>
+            </Card>
+
+            {/* Customized Insurance */}
+            <Card className="p-6 rounded-2xl border-accent/50 hover:shadow-medium transition-all hover:-translate-y-1 bg-gradient-to-br from-accent/5 to-accent/10">
+              <h3 className="text-xl font-bold mb-3">Customized Insurance</h3>
+              <p className="text-3xl font-bold gradient-text-primary mb-2">
+                Custom<span className="text-base text-muted-foreground"> pricing</span>
+              </p>
+              <p className="text-sm text-muted-foreground mb-4">
+                Tailored for your needs
+              </p>
+              <ul className="space-y-2 mb-6 text-sm">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
                   <span>Custom SLA agreements</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                  <span>Multi-location support</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                  <span>Enterprise-grade security</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
@@ -902,23 +861,21 @@ function Business() {
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
-                  <span>Multi-location support</span>
+                  <span>Custom integration support</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
-                  <span>Enterprise-grade security</span>
+                  <span>Proactive monitoring</span>
                 </li>
               </ul>
               <Button 
-                onClick={() => {
-                  trackButtonClick('Subscribe - Enterprise', 'Business Insurance');
-                  trackConversion('insurance_enterprise', 799);
-                  handleSubscribe('price_1SZxzdJ8osfwYbX77vd9XQEN', 'AI Service Insurance', 'Enterprise', 79900);
-                }}
+                asChild
                 variant="default" 
                 className="w-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)]"
               >
-                GET ENTERPRISE
+                <Link to="/contact?service=ai-insurance&plan=custom">
+                  REQUEST QUOTE
+                </Link>
               </Button>
             </Card>
           </div>
@@ -1047,12 +1004,17 @@ function Business() {
                     onClick={() => {
                       trackButtonClick('Request AI Vetting', 'Business Consulting');
                       trackConversion('consulting_vetting', 1799);
-                      openPaymentDialog('ai-consultation', 'Pre-Purchase AI Tool Vetting', 1799, 'Comprehensive vetting service that reviews AI tools for security risks, calculates ROI, and provides a Buy/Don\'t Buy recommendation');
+                      setSelectedService({
+                        type: 'business',
+                        name: 'Pre-Purchase AI Tool Vetting',
+                        price: 1799
+                      });
+                      setModalOpen(true);
                     }}
                     variant="default"
                     className="transition-all duration-300 hover:bg-primary/90 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(109,40,217,0.25)]"
                   >
-                    PAY $1,799
+                    REQUEST VETTING
                   </Button>
                 </div>
               </div>
@@ -1092,11 +1054,16 @@ function Business() {
                     onClick={() => {
                       trackButtonClick('Request Security Audit', 'Business Security');
                       trackConversion('consulting_audit', 3499);
-                      openPaymentDialog('ai-consultation', 'AI Security Audit', 3499, 'Comprehensive security audit for your existing AI systems including vulnerability assessment and implementation roadmap');
+                      setSelectedService({
+                        type: 'business',
+                        name: 'AI Security Audit',
+                        price: 3499
+                      });
+                      setModalOpen(true);
                     }}
                     variant="default"
                   >
-                    PAY $3,499
+                    REQUEST AUDIT
                   </Button>
                 </div>
               </div>
@@ -1230,27 +1197,6 @@ function Business() {
           serviceName={selectedSubscription.serviceName}
           planTier={selectedSubscription.planTier}
           amount={selectedSubscription.amount}
-        />
-      )}
-
-      {inquiryData && (
-        <ServiceInquiryDialog
-          open={inquiryDialogOpen}
-          onOpenChange={setInquiryDialogOpen}
-          serviceType={inquiryData.serviceType}
-          serviceName={inquiryData.serviceName}
-          servicePrice={inquiryData.servicePrice}
-        />
-      )}
-
-      {paymentData && (
-        <ServicePaymentDialog
-          open={paymentDialogOpen}
-          onOpenChange={setPaymentDialogOpen}
-          serviceType={paymentData.serviceType}
-          serviceName={paymentData.serviceName}
-          servicePrice={paymentData.servicePrice}
-          serviceDescription={paymentData.serviceDescription}
         />
       )}
     </div>

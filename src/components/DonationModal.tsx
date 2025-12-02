@@ -13,9 +13,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { Users, DollarSign, Building2, Loader2 } from "lucide-react";
 import { donationFormSchema, formatPhoneNumber } from "@/utils/formValidation";
 import { z } from "zod";
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { Label } from "@/components/ui/label";
-import { useStripeLoader } from '@/hooks/useStripeLoader';
 
 interface DonationModalProps {
   open: boolean;
@@ -25,9 +22,7 @@ interface DonationModalProps {
 
 type DonationFormData = z.infer<typeof donationFormSchema>;
 
-function DonationForm({ type, onSuccess }: { type: string; onSuccess: () => void }) {
-  const stripe = useStripe();
-  const elements = useElements();
+export const DonationModal = ({ open, onOpenChange, type = 'general' }: DonationModalProps) => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [donationType, setDonationType] = useState<'one-time' | 'monthly'>('one-time');
@@ -61,78 +56,36 @@ function DonationForm({ type, onSuccess }: { type: string; onSuccess: () => void
       return;
     }
 
-    if (!stripe || !elements) return;
-
-    if (!selectedAmount || selectedAmount < 5) {
-      toast({
-        title: "Invalid Amount",
-        description: "Please select or enter a donation amount of at least $5.",
-        variant: "destructive",
-      });
-      return;
-    }
-
     setLoading(true);
 
     try {
-      const cardElement = elements.getElement(CardElement);
-      if (!cardElement) {
-        throw new Error('Card element not found');
-      }
-
-      const { error: pmError, paymentMethod } = await stripe.createPaymentMethod({
-        type: 'card',
-        card: cardElement,
-        billing_details: {
-          name: data.donor_name,
-          email: data.email,
-          phone: data.phone || undefined,
-        },
-      });
-
-      if (pmError) {
-        toast({
-          title: "Payment Error",
-          description: pmError.message,
-          variant: "destructive",
-        });
-        setLoading(false);
-        return;
-      }
-
       const formattedPhone = data.phone ? formatPhoneNumber(data.phone) : null;
-      const messageText = `${data.message || ''}\n\nType: ${type}\n${
-        type === 'sponsor' ? `Sponsor: ${data.sponsor_info}\nRecipient: ${data.recipient_info}` : ''
-      }${type === 'corporate' ? `Company: ${data.company_name}` : ''}${
-        formattedPhone ? `\nPhone: ${formattedPhone}` : ''
-      }`;
-
-      const { data: result, error } = await supabase.functions.invoke('process-donation', {
-        body: {
-          paymentMethodId: paymentMethod.id,
-          amount: Math.round(selectedAmount * 100),
-          currency: 'usd',
-          donorInfo: {
-            name: data.donor_name,
-            email: data.email,
-            phone: formattedPhone,
-          },
-          donationType,
-          message: messageText,
+      
+      const { error } = await supabase.from('donations').insert([
+        {
+          donor_name: data.donor_name,
+          email: data.email,
+          amount: selectedAmount,
+          donation_type: donationType,
+          message: `${data.message || ''}\n\nType: ${type}\n${
+            type === 'sponsor' ? `Sponsor: ${data.sponsor_info}\nRecipient: ${data.recipient_info}` : ''
+          }${type === 'corporate' ? `Company: ${data.company_name}` : ''}${
+            formattedPhone ? `\nPhone: ${formattedPhone}` : ''
+          }`,
+          payment_status: 'pending',
         },
-      });
+      ]);
 
       if (error) throw error;
-      if (!result.success) throw new Error(result.error || 'Payment failed');
 
       toast({
         title: "Thank you for your donation!",
-        description: "Your payment has been processed successfully.",
+        description: "We'll contact you shortly with payment details.",
       });
 
+      onOpenChange(false);
       form.reset();
       setSelectedAmount(null);
-      onSuccess();
     } catch (error: any) {
       toast({
         title: "Submission Failed",
@@ -171,8 +124,15 @@ function DonationForm({ type, onSuccess }: { type: string; onSuccess: () => void
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader className="flex flex-row items-center gap-4">
+          {getIcon()}
+          <DialogTitle className="text-2xl font-bold">{getTitle()}</DialogTitle>
+        </DialogHeader>
+
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
             {type !== 'monthly' && (
               <div className="space-y-3">
                 <label className="text-sm font-medium">Donation Type</label>
@@ -321,25 +281,6 @@ function DonationForm({ type, onSuccess }: { type: string; onSuccess: () => void
               )}
             />
 
-            <div className="space-y-2">
-              <Label>Card Details</Label>
-              <div className="border-2 border-border rounded-lg p-4 bg-card">
-                <CardElement
-                  options={{
-                    style: {
-                      base: {
-                        fontSize: '16px',
-                        color: '#424770',
-                        '::placeholder': {
-                          color: '#aab7c4',
-                        },
-                      },
-                    },
-                  }}
-                />
-              </div>
-            </div>
-
             <div className="p-4 bg-primary/5 rounded-lg">
               <p className="text-sm text-muted-foreground">
                 Your donation helps us protect and empower our community. Together, we create a safer digital world for everyone.
@@ -348,8 +289,17 @@ function DonationForm({ type, onSuccess }: { type: string; onSuccess: () => void
 
             <div className="flex gap-3">
               <Button
+                type="button"
+                variant="outline"
+                onClick={() => onOpenChange(false)}
+                disabled={loading || isSubmitting}
+                className="flex-1"
+              >
+                Cancel
+              </Button>
+              <Button
                 type="submit"
-                disabled={!stripe || loading || isSubmitting || !selectedAmount}
+                disabled={loading || isSubmitting || !selectedAmount}
                 className="flex-1"
               >
                 {loading || isSubmitting ? (
@@ -362,59 +312,8 @@ function DonationForm({ type, onSuccess }: { type: string; onSuccess: () => void
                 )}
               </Button>
             </div>
-      </form>
-    </Form>
-  );
-}
-
-export const DonationModal = ({ open, onOpenChange, type = 'general' }: DonationModalProps) => {
-  const { stripe, loading: stripeLoading } = useStripeLoader();
-  
-  const getTitle = () => {
-    switch (type) {
-      case 'sponsor':
-        return 'Sponsor a Seat';
-      case 'monthly':
-        return 'Monthly Ally Program';
-      case 'corporate':
-        return 'Corporate Partnership';
-      default:
-        return 'Make a Donation';
-    }
-  };
-
-  const getIcon = () => {
-    switch (type) {
-      case 'sponsor':
-        return <Users className="w-8 h-8 text-primary" />;
-      case 'monthly':
-        return <DollarSign className="w-8 h-8 text-accent" />;
-      case 'corporate':
-        return <Building2 className="w-8 h-8 text-secondary" />;
-      default:
-        return <DollarSign className="w-8 h-8 text-primary" />;
-    }
-  };
-  
-  if (!open) return null;
-
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader className="flex flex-row items-center gap-4">
-          {getIcon()}
-          <DialogTitle className="text-2xl font-bold">{getTitle()}</DialogTitle>
-        </DialogHeader>
-
-        {stripeLoading ? (
-          <div className="flex items-center justify-center py-12">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
-          </div>
-        ) : (
-          <Elements stripe={stripe}>
-            <DonationForm type={type} onSuccess={() => onOpenChange(false)} />
-          </Elements>
-        )}
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );

@@ -10,7 +10,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Search, ThumbsUp, ThumbsDown, Phone, MessageCircle, ChevronDown, Mail, TrendingUp, Copy, Check, Shield, HelpCircle, Lightbulb, DollarSign, MessageSquare } from "lucide-react";
 import { ScrollRevealSection } from "@/components/ScrollRevealSection";
-
+import { FloatingHelpButton } from "@/components/FloatingHelpButton";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import {
@@ -370,14 +370,10 @@ export default function FAQ() {
         title="Frequently Asked Questions"
         description="Find answers to common questions about InVision Network's AI scam protection, business services, billing, and technical support."
         keywords="FAQ, questions, support, help, InVision Network"
-        breadcrumbs={[
-          { name: "Home", url: "/" },
-          { name: "FAQ", url: "/faq" }
-        ]}
       />
       <Navigation />
       
-      
+      <FloatingHelpButton />
 
       <main id="main-content">
         {/* Hero Section */}

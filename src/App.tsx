@@ -14,14 +14,17 @@ import { ErrorBoundary } from "./components/ErrorBoundary";
 import { RouteTracker } from "./components/RouteTracker";
 import { DraggablePerformanceMonitor } from "./components/DraggablePerformanceMonitor";
 import { useAnalyticsTracking } from "./hooks/useAnalyticsTracking";
+
 import { PageTransition } from "./components/PageTransition";
 import { Skeleton } from "@/components/ui/skeleton";
 import { performanceMonitor } from "./utils/performanceMonitor";
+
 import { NavigationProgress } from "./components/NavigationProgress";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { useSmoothAnchorScroll } from "./hooks/useSmoothAnchorScroll";
 import { CookieConsent } from "./components/CookieConsent";
 import { SkipToContent } from "./components/SkipToContent";
+
 import { AnalyticsTracker } from "./components/AnalyticsTracker";
 
 // Lazy load all pages for code splitting
@@ -32,6 +35,7 @@ const Index = lazy(() => {
     return module;
   });
 });
+
 const Training = lazy(() => {
   performanceMonitor.startTracking('Training');
   return import("./pages/Training").then(module => {
@@ -39,6 +43,7 @@ const Training = lazy(() => {
     return module;
   });
 });
+
 const Business = lazy(() => {
   performanceMonitor.startTracking('Business');
   return import("./pages/Business").then(module => {
@@ -46,6 +51,7 @@ const Business = lazy(() => {
     return module;
   });
 });
+
 const About = lazy(() => {
   performanceMonitor.startTracking('About');
   return import("./pages/About").then(module => {
@@ -53,6 +59,7 @@ const About = lazy(() => {
     return module;
   });
 });
+
 const Resources = lazy(() => {
   performanceMonitor.startTracking('Resources');
   return import("./pages/Resources").then(module => {
@@ -60,6 +67,7 @@ const Resources = lazy(() => {
     return module;
   });
 });
+
 const SafetyVault = lazy(() => {
   performanceMonitor.startTracking('SafetyVault');
   return import("./pages/SafetyVault").then(module => {
@@ -67,6 +75,7 @@ const SafetyVault = lazy(() => {
     return module;
   });
 });
+
 const Articles = lazy(() => {
   performanceMonitor.startTracking('Articles');
   return import("./pages/Articles").then(module => {
@@ -74,6 +83,7 @@ const Articles = lazy(() => {
     return module;
   });
 });
+
 const Services = lazy(() => {
   performanceMonitor.startTracking('Services');
   return import("./pages/Services").then(module => {
@@ -81,6 +91,7 @@ const Services = lazy(() => {
     return module;
   });
 });
+
 const Contact = lazy(() => {
   performanceMonitor.startTracking('Contact');
   return import("./pages/Contact").then(module => {
@@ -88,6 +99,7 @@ const Contact = lazy(() => {
     return module;
   });
 });
+
 const Careers = lazy(() => {
   performanceMonitor.startTracking('Careers');
   return import("./pages/Careers").then(module => {
@@ -95,6 +107,7 @@ const Careers = lazy(() => {
     return module;
   });
 });
+
 const Auth = lazy(() => {
   performanceMonitor.startTracking('Auth');
   return import("./pages/Auth").then(module => {
@@ -102,6 +115,7 @@ const Auth = lazy(() => {
     return module;
   });
 });
+
 const Login = lazy(() => {
   performanceMonitor.startTracking('Login');
   return import("./pages/Login").then(module => {
@@ -109,6 +123,7 @@ const Login = lazy(() => {
     return module;
   });
 });
+
 const ResetPassword = lazy(() => {
   performanceMonitor.startTracking('ResetPassword');
   return import("./pages/ResetPassword").then(module => {
@@ -116,6 +131,7 @@ const ResetPassword = lazy(() => {
     return module;
   });
 });
+
 const Signup = lazy(() => {
   performanceMonitor.startTracking('Signup');
   return import("./pages/Signup").then(module => {
@@ -123,6 +139,7 @@ const Signup = lazy(() => {
     return module;
   });
 });
+
 const StaffSignup = lazy(() => {
   performanceMonitor.startTracking('StaffSignup');
   return import("./pages/StaffSignup").then(module => {
@@ -130,6 +147,7 @@ const StaffSignup = lazy(() => {
     return module;
   });
 });
+
 const Setup = lazy(() => {
   performanceMonitor.startTracking('Setup');
   return import("./pages/Setup").then(module => {
@@ -137,6 +155,7 @@ const Setup = lazy(() => {
     return module;
   });
 });
+
 const ApplicationPending = lazy(() => {
   performanceMonitor.startTracking('ApplicationPending');
   return import("./pages/ApplicationPending").then(module => {
@@ -144,6 +163,7 @@ const ApplicationPending = lazy(() => {
     return module;
   });
 });
+
 const Pending = lazy(() => {
   performanceMonitor.startTracking('Pending');
   return import("./pages/admin/Pending").then(module => {
@@ -151,6 +171,7 @@ const Pending = lazy(() => {
     return module;
   });
 });
+
 const PagesManagement = lazy(() => {
   performanceMonitor.startTracking('PagesManagement');
   return import("./pages/admin/PagesManagement").then(module => {
@@ -158,6 +179,7 @@ const PagesManagement = lazy(() => {
     return module;
   });
 });
+
 const ClientMessages = lazy(() => {
   performanceMonitor.startTracking('ClientMessages');
   return import("./pages/admin/ClientMessages").then(module => {
@@ -165,6 +187,7 @@ const ClientMessages = lazy(() => {
     return module;
   });
 });
+
 const CommunicationsInbox = lazy(() => {
   performanceMonitor.startTracking('CommunicationsInbox');
   return import("./pages/admin/CommunicationsInbox").then(module => {
@@ -172,6 +195,7 @@ const CommunicationsInbox = lazy(() => {
     return module;
   });
 });
+
 const NewsletterManagement = lazy(() => {
   performanceMonitor.startTracking('NewsletterManagement');
   return import("./pages/admin/NewsletterManagement").then(module => {
@@ -179,13 +203,7 @@ const NewsletterManagement = lazy(() => {
     return module;
   });
 });
-const ExternalLinksManagement = lazy(() => {
-  performanceMonitor.startTracking('ExternalLinksManagement');
-  return import("./pages/admin/ExternalLinksManagement").then(module => {
-    performanceMonitor.endTracking('ExternalLinksManagement');
-    return module;
-  });
-});
+
 const BillingSettings = lazy(() => {
   performanceMonitor.startTracking('BillingSettings');
   return import("./pages/admin/settings/BillingSettings").then(module => {
@@ -193,6 +211,7 @@ const BillingSettings = lazy(() => {
     return module;
   });
 });
+
 const Admin = lazy(() => {
   performanceMonitor.startTracking('Admin');
   return import("./pages/Admin").then(module => {
@@ -200,6 +219,7 @@ const Admin = lazy(() => {
     return module;
   });
 });
+
 const TestimonialsAdmin = lazy(() => {
   performanceMonitor.startTracking('TestimonialsAdmin');
   return import("./pages/admin/TestimonialsAdmin").then(module => {
@@ -207,6 +227,7 @@ const TestimonialsAdmin = lazy(() => {
     return module;
   });
 });
+
 const ArticlesAdmin = lazy(() => {
   performanceMonitor.startTracking('ArticlesAdmin');
   return import("./pages/admin/ArticlesAdmin").then(module => {
@@ -214,6 +235,7 @@ const ArticlesAdmin = lazy(() => {
     return module;
   });
 });
+
 const ArticleEditor = lazy(() => {
   performanceMonitor.startTracking('ArticleEditor');
   return import("./pages/admin/ArticleEditor").then(module => {
@@ -221,6 +243,7 @@ const ArticleEditor = lazy(() => {
     return module;
   });
 });
+
 const ArticlePreview = lazy(() => {
   performanceMonitor.startTracking('ArticlePreview');
   return import("./pages/admin/ArticlePreview").then(module => {
@@ -228,6 +251,7 @@ const ArticlePreview = lazy(() => {
     return module;
   });
 });
+
 const TeamAdmin = lazy(() => {
   performanceMonitor.startTracking('TeamAdmin');
   return import("./pages/admin/TeamAdmin").then(module => {
@@ -235,20 +259,7 @@ const TeamAdmin = lazy(() => {
     return module;
   });
 });
-const ServiceInquiries = lazy(() => {
-  performanceMonitor.startTracking('ServiceInquiries');
-  return import("./pages/admin/ServiceInquiries").then(module => {
-    performanceMonitor.endTracking('ServiceInquiries');
-    return module;
-  });
-});
-const ScamReports = lazy(() => {
-  performanceMonitor.startTracking('ScamReports');
-  return import("./pages/admin/ScamReports").then(module => {
-    performanceMonitor.endTracking('ScamReports');
-    return module;
-  });
-});
+
 const EmailCampaigns = lazy(() => {
   performanceMonitor.startTracking('EmailCampaigns');
   return import("./pages/admin/EmailCampaigns").then(module => {
@@ -256,6 +267,7 @@ const EmailCampaigns = lazy(() => {
     return module;
   });
 });
+
 const Analytics = lazy(() => {
   performanceMonitor.startTracking('Analytics');
   return import("./pages/admin/Analytics").then(module => {
@@ -263,6 +275,7 @@ const Analytics = lazy(() => {
     return module;
   });
 });
+
 const BusinessClients = lazy(() => {
   performanceMonitor.startTracking('BusinessClients');
   return import("./pages/admin/BusinessClients").then(module => {
@@ -270,6 +283,7 @@ const BusinessClients = lazy(() => {
     return module;
   });
 });
+
 const BusinessClientDetail = lazy(() => {
   performanceMonitor.startTracking('BusinessClientDetail');
   return import("./pages/admin/BusinessClientDetail").then(module => {
@@ -277,6 +291,7 @@ const BusinessClientDetail = lazy(() => {
     return module;
   });
 });
+
 const IndividualClients = lazy(() => {
   performanceMonitor.startTracking('IndividualClients');
   return import("./pages/admin/IndividualClients").then(module => {
@@ -284,6 +299,7 @@ const IndividualClients = lazy(() => {
     return module;
   });
 });
+
 const ProductsList = lazy(() => {
   performanceMonitor.startTracking('ProductsList');
   return import("./pages/admin/ProductsList").then(module => {
@@ -291,6 +307,7 @@ const ProductsList = lazy(() => {
     return module;
   });
 });
+
 const ProductEditor = lazy(() => {
   performanceMonitor.startTracking('ProductEditor');
   return import("./pages/admin/ProductEditor").then(module => {
@@ -298,6 +315,7 @@ const ProductEditor = lazy(() => {
     return module;
   });
 });
+
 const OrdersList = lazy(() => {
   performanceMonitor.startTracking('OrdersList');
   return import("./pages/admin/OrdersList").then(module => {
@@ -305,6 +323,7 @@ const OrdersList = lazy(() => {
     return module;
   });
 });
+
 const OrderDetail = lazy(() => {
   performanceMonitor.startTracking('OrderDetail');
   return import("./pages/admin/OrderDetail").then(module => {
@@ -312,6 +331,7 @@ const OrderDetail = lazy(() => {
     return module;
   });
 });
+
 const InventoryManagement = lazy(() => {
   performanceMonitor.startTracking('InventoryManagement');
   return import("./pages/admin/InventoryManagement").then(module => {
@@ -319,6 +339,7 @@ const InventoryManagement = lazy(() => {
     return module;
   });
 });
+
 const Settings = lazy(() => {
   performanceMonitor.startTracking('Settings');
   return import("./pages/admin/Settings").then(module => {
@@ -326,6 +347,7 @@ const Settings = lazy(() => {
     return module;
   });
 });
+
 const Portal = lazy(() => {
   performanceMonitor.startTracking('Portal');
   return import("./pages/Portal").then(module => {
@@ -333,6 +355,7 @@ const Portal = lazy(() => {
     return module;
   });
 });
+
 const AdminDashboard = lazy(() => {
   performanceMonitor.startTracking('AdminDashboard');
   return import("./pages/portal/AdminDashboard").then(module => {
@@ -340,6 +363,7 @@ const AdminDashboard = lazy(() => {
     return module;
   });
 });
+
 const AnalystDashboard = lazy(() => {
   performanceMonitor.startTracking('AnalystDashboard');
   return import("./pages/portal/AnalystDashboard").then(module => {
@@ -347,6 +371,7 @@ const AnalystDashboard = lazy(() => {
     return module;
   });
 });
+
 const TrainerDashboard = lazy(() => {
   performanceMonitor.startTracking('TrainerDashboard');
   return import("./pages/portal/TrainerDashboard").then(module => {
@@ -354,6 +379,7 @@ const TrainerDashboard = lazy(() => {
     return module;
   });
 });
+
 const DeveloperDashboard = lazy(() => {
   performanceMonitor.startTracking('DeveloperDashboard');
   return import("./pages/portal/DeveloperDashboard").then(module => {
@@ -361,6 +387,7 @@ const DeveloperDashboard = lazy(() => {
     return module;
   });
 });
+
 const StaffDashboard = lazy(() => {
   performanceMonitor.startTracking('StaffDashboard');
   return import("./pages/portal/StaffDashboard").then(module => {
@@ -368,6 +395,7 @@ const StaffDashboard = lazy(() => {
     return module;
   });
 });
+
 const SeniorDashboard = lazy(() => {
   performanceMonitor.startTracking('SeniorDashboard');
   return import("./pages/portal/SeniorDashboard").then(module => {
@@ -375,6 +403,7 @@ const SeniorDashboard = lazy(() => {
     return module;
   });
 });
+
 const CaregiverDashboard = lazy(() => {
   performanceMonitor.startTracking('CaregiverDashboard');
   return import("./pages/portal/CaregiverDashboard").then(module => {
@@ -382,6 +411,7 @@ const CaregiverDashboard = lazy(() => {
     return module;
   });
 });
+
 const HealthcareDashboard = lazy(() => {
   performanceMonitor.startTracking('HealthcareDashboard');
   return import("./pages/portal/HealthcareDashboard").then(module => {
@@ -389,6 +419,7 @@ const HealthcareDashboard = lazy(() => {
     return module;
   });
 });
+
 const PrivacyPolicy = lazy(() => {
   performanceMonitor.startTracking('PrivacyPolicy');
   return import("./pages/PrivacyPolicy").then(module => {
@@ -396,6 +427,7 @@ const PrivacyPolicy = lazy(() => {
     return module;
   });
 });
+
 const TermsOfService = lazy(() => {
   performanceMonitor.startTracking('TermsOfService');
   return import("./pages/TermsOfService").then(module => {
@@ -403,6 +435,7 @@ const TermsOfService = lazy(() => {
     return module;
   });
 });
+
 const FAQ = lazy(() => {
   performanceMonitor.startTracking('FAQ');
   return import("./pages/FAQ").then(module => {
@@ -410,6 +443,7 @@ const FAQ = lazy(() => {
     return module;
   });
 });
+
 const NotFound = lazy(() => {
   performanceMonitor.startTracking('NotFound');
   return import("./pages/NotFound").then(module => {
@@ -417,7 +451,9 @@ const NotFound = lazy(() => {
     return module;
   });
 });
+
 const Subscriptions = lazy(() => import("./pages/admin/SubscriptionsRoute"));
+
 const SystemHealthDashboard = lazy(() => {
   performanceMonitor.startTracking('SystemHealthDashboard');
   return import("./pages/admin/SystemHealthDashboard").then(module => {
@@ -425,6 +461,7 @@ const SystemHealthDashboard = lazy(() => {
     return module;
   });
 });
+
 const TestingChecklist = lazy(() => {
   performanceMonitor.startTracking('TestingChecklist');
   return import("./pages/admin/TestingChecklist").then(module => {
@@ -432,6 +469,7 @@ const TestingChecklist = lazy(() => {
     return module;
   });
 });
+
 const Maintenance = lazy(() => {
   performanceMonitor.startTracking('Maintenance');
   return import("./pages/Maintenance").then(module => {
@@ -439,6 +477,7 @@ const Maintenance = lazy(() => {
     return module;
   });
 });
+
 const PaymentSuccess = lazy(() => {
   performanceMonitor.startTracking('PaymentSuccess');
   return import("./pages/PaymentSuccess").then(module => {
@@ -446,6 +485,7 @@ const PaymentSuccess = lazy(() => {
     return module;
   });
 });
+
 const PaymentCanceled = lazy(() => {
   performanceMonitor.startTracking('PaymentCanceled');
   return import("./pages/PaymentCanceled").then(module => {
@@ -455,7 +495,8 @@ const PaymentCanceled = lazy(() => {
 });
 
 // Loading fallback component with enhanced skeleton
-const PageLoader = () => <div className="min-h-screen bg-background">
+const PageLoader = () => (
+  <div className="min-h-screen bg-background">
     {/* Navigation skeleton */}
     <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="container mx-auto px-4">
@@ -495,12 +536,14 @@ const PageLoader = () => <div className="min-h-screen bg-background">
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {[1, 2, 3].map(i => <div key={i} className="space-y-4">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="space-y-4">
             <Skeleton className="h-48 w-full rounded-2xl" />
             <Skeleton className="h-6 w-3/4" />
             <Skeleton className="h-4 w-full" />
             <Skeleton className="h-4 w-5/6" />
-          </div>)}
+          </div>
+        ))}
       </div>
       
       <div className="space-y-4">
@@ -513,20 +556,27 @@ const PageLoader = () => <div className="min-h-screen bg-background">
     <div className="bg-muted py-8 mt-16">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {[1, 2, 3, 4].map(i => <div key={i} className="space-y-3">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="space-y-3">
               <Skeleton className="h-6 w-32" />
               <Skeleton className="h-4 w-full" />
               <Skeleton className="h-4 w-5/6" />
               <Skeleton className="h-4 w-4/6" />
-            </div>)}
+            </div>
+          ))}
         </div>
       </div>
     </div>
-  </div>;
+  </div>
+);
+
 const queryClient = new QueryClient();
+
 function AnimatedRoutes() {
   const location = useLocation();
-  return <AnimatePresence mode="wait">
+
+  return (
+    <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<PageTransition><Index /></PageTransition>} />
         <Route path="/training" element={<PageTransition><Training /></PageTransition>} />
@@ -554,13 +604,10 @@ function AnimatedRoutes() {
         <Route path="/admin/articles/preview" element={<PageTransition><AdminRoute><ArticlePreview /></AdminRoute></PageTransition>} />
         <Route path="/admin/content/team" element={<PageTransition><AdminRoute><TeamAdmin /></AdminRoute></PageTransition>} />
         <Route path="/admin/pending" element={<PageTransition><AdminRoute><Pending /></AdminRoute></PageTransition>} />
-        <Route path="/admin/service-inquiries" element={<PageTransition><AdminRoute><ServiceInquiries /></AdminRoute></PageTransition>} />
-        <Route path="/admin/scam-reports" element={<PageTransition><AdminRoute><ScamReports /></AdminRoute></PageTransition>} />
         <Route path="/admin/content/pages" element={<PageTransition><AdminRoute><PagesManagement /></AdminRoute></PageTransition>} />
         <Route path="/admin/clients/messages" element={<PageTransition><AdminRoute><ClientMessages /></AdminRoute></PageTransition>} />
         <Route path="/admin/communications/inbox" element={<PageTransition><AdminRoute><CommunicationsInbox /></AdminRoute></PageTransition>} />
         <Route path="/admin/communications/newsletter" element={<PageTransition><AdminRoute><NewsletterManagement /></AdminRoute></PageTransition>} />
-        <Route path="/admin/external-links" element={<PageTransition><AdminRoute><ExternalLinksManagement /></AdminRoute></PageTransition>} />
         <Route path="/admin/settings/billing" element={<PageTransition><AdminRoute><BillingSettings /></AdminRoute></PageTransition>} />
         <Route path="/admin/email-campaigns" element={<PageTransition><AdminRoute><EmailCampaigns /></AdminRoute></PageTransition>} />
         <Route path="/admin/analytics" element={<PageTransition><AdminRoute><Analytics /></AdminRoute></PageTransition>} />
@@ -581,7 +628,7 @@ function AnimatedRoutes() {
         <Route path="/maintenance" element={<PageTransition><Maintenance /></PageTransition>} />
         <Route path="/reset-password" element={<PageTransition><ResetPassword /></PageTransition>} />
         <Route path="/portal" element={<PageTransition><ProtectedRoute><Portal /></ProtectedRoute></PageTransition>} />
-        <Route path="/portal/admin" element={<Navigate to="/admin" replace />} />
+        <Route path="/portal/admin" element={<PageTransition><ProtectedRoute><AdminDashboard /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/analyst" element={<PageTransition><ProtectedRoute><AnalystDashboard /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/trainer" element={<PageTransition><ProtectedRoute><TrainerDashboard /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/developer" element={<PageTransition><ProtectedRoute><DeveloperDashboard /></ProtectedRoute></PageTransition>} />
@@ -594,18 +641,23 @@ function AnimatedRoutes() {
         <Route path="/faq" element={<PageTransition><FAQ /></PageTransition>} />
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
-    </AnimatePresence>;
+    </AnimatePresence>
+  );
 }
+
 function App() {
   // Add smooth scroll behavior for anchor links
   useSmoothAnchorScroll();
+  
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
     return () => {
       document.documentElement.style.scrollBehavior = "auto";
     };
   }, []);
-  return <QueryClientProvider client={queryClient}>
+
+  return (
+    <QueryClientProvider client={queryClient}>
       <Toaster />
       <Sonner />
       <SubscriptionProvider>
@@ -630,6 +682,8 @@ function App() {
           </AIChatProvider>
         </CartProvider>
       </SubscriptionProvider>
-    </QueryClientProvider>;
+    </QueryClientProvider>
+  );
 }
+
 export default App;

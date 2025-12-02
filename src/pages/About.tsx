@@ -126,10 +126,6 @@ function About() {
       <SEO 
         title="About Us - Our Story, Mission & Team"
         description="Learn about InVision Network's mission to protect families from digital scams. Founded from personal experience, serving 500+ families across Ohio."
-        breadcrumbs={[
-          { name: "Home", url: "/" },
-          { name: "About Us", url: "/about" }
-        ]}
       />
       <Navigation />
       
@@ -137,7 +133,6 @@ function About() {
         backgroundImages={aboutHeroImages}
         headline="Protecting Families, One Story at a Time"
         subheadline="Founded from personal experience, driven by community impact"
-        showScrollIndicator={true}
       />
 
       <TrustBar />
@@ -373,7 +368,7 @@ function About() {
           </Button>
           <Button asChild size="lg" variant="outline">
             <Link 
-              to="/contact"
+              to="/business"
               onClick={() => trackButtonClick('Partner With Us', 'About CTA')}
             >
               Partner With Us

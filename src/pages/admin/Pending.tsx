@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { AdminLayout } from "@/components/AdminLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -131,12 +130,11 @@ export default function Pending() {
   };
 
   return (
-    <AdminLayout>
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold">Pending Actions</h1>
-          <p className="text-muted-foreground">Review and manage items requiring attention</p>
-        </div>
+    <div className="container mx-auto p-6 space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold">Pending Actions</h1>
+        <p className="text-muted-foreground">Review and manage items requiring attention</p>
+      </div>
 
       <Tabs defaultValue="testimonials" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
@@ -355,7 +353,6 @@ export default function Pending() {
           </Card>
         </TabsContent>
       </Tabs>
-      </div>
-    </AdminLayout>
+    </div>
   );
 }

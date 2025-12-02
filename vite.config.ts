@@ -10,19 +10,6 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
   },
-  build: {
-    modulePreload: {
-      polyfill: false, // Reduces initial bundle size
-    },
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
-          'vendor-ui': ['framer-motion', 'lucide-react'],
-        },
-      },
-    },
-  },
   plugins: [
     react(),
     mode === "development" && componentTagger(),

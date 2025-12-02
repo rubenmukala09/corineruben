@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
@@ -74,12 +73,7 @@ function Contact() {
     fullName: "",
     email: "",
     phone: "",
-    companyName: "",
     subject: "",
-    serviceInterest: "",
-    preferredCallback: "",
-    urgencyLevel: "normal",
-    budgetRange: "",
     message: "",
     hearAbout: "",
     contactMethod: "email"
@@ -97,12 +91,7 @@ function Contact() {
           name: formData.fullName,
           email: formData.email,
           phone: formData.phone,
-          companyName: formData.companyName,
           interest: formData.subject,
-          serviceInterest: formData.serviceInterest,
-          preferredCallback: formData.preferredCallback,
-          urgencyLevel: formData.urgencyLevel,
-          budgetRange: formData.budgetRange,
           message: formData.message,
           hearAbout: formData.hearAbout,
           contactMethod: formData.contactMethod
@@ -126,12 +115,7 @@ function Contact() {
           fullName: "",
           email: "",
           phone: "",
-          companyName: "",
           subject: "",
-          serviceInterest: "",
-          preferredCallback: "",
-          urgencyLevel: "normal",
-          budgetRange: "",
           message: "",
           hearAbout: "",
           contactMethod: "email"
@@ -160,10 +144,6 @@ function Contact() {
       <SEO 
         title="Contact Us - Get Support & Answers" 
         description="Contact InVision Network for scam protection support. Phone, email, live chat available. Average 2-minute wait time. 95% same-day response rate."
-        breadcrumbs={[
-          { name: "Home", url: "/" },
-          { name: "Contact Us", url: "/contact" }
-        ]}
       />
       <Navigation />
       <Hero 
@@ -172,7 +152,6 @@ function Contact() {
         subheadline="We're here to help protect your family"
         showProtectionBadge
         badgeText="Response within 4 hours"
-        showScrollIndicator={true}
       />
       <TrustBar />
       
@@ -222,20 +201,15 @@ function Contact() {
               <Card className="shadow-2xl">
                 <CardHeader>
                   <div className="flex items-center justify-between mb-2">
-                    <CardTitle className="text-2xl md:text-3xl">Send Us a Message</CardTitle>
+                    <CardTitle className="text-2xl">Send Us a Message</CardTitle>
                     <Badge variant="outline" className="gap-1">
                       <Shield className="w-3 h-3" />
                       Secure
                     </Badge>
                   </div>
-                  <CardDescription className="text-base">
-                    Fill out the form below and we'll get back to you within 4 hours during business hours (Mon-Fri, 9am-6pm EST). For urgent matters, please call us directly at <a href="tel:+16145550100" className="text-primary font-semibold hover:underline">(614) 555-0100</a>.
+                  <CardDescription>
+                    Fill out the form below and we'll get back to you within 4 hours during business hours
                   </CardDescription>
-                  <div className="mt-4 p-4 bg-primary/5 rounded-lg border border-primary/10">
-                    <p className="text-sm text-foreground">
-                      <strong className="text-primary">Why contact us?</strong> Whether you need help with scam protection, want to learn about our training programs, or have questions about our AI business solutions, our team is here to help you stay safe online.
-                    </p>
-                  </div>
                 </CardHeader>
                 <CardContent>
                   {isSubmitted ? (
@@ -285,17 +259,6 @@ function Contact() {
                         </div>
                       </div>
 
-                      {/* Company Name */}
-                      <div>
-                        <Label htmlFor="companyName">Company / Organization Name (optional)</Label>
-                        <Input
-                          id="companyName"
-                          value={formData.companyName}
-                          onChange={(e) => setFormData({...formData, companyName: e.target.value})}
-                          placeholder="Your company name"
-                        />
-                      </div>
-
                       {/* Subject */}
                       <div>
                         <Label htmlFor="subject">Subject *</Label>
@@ -309,77 +272,8 @@ function Contact() {
                             <SelectItem value="business">Business Services</SelectItem>
                             <SelectItem value="careers">Careers</SelectItem>
                             <SelectItem value="billing">Billing Question</SelectItem>
-                            <SelectItem value="partnership">Partnership Opportunity</SelectItem>
                           </SelectContent>
                         </Select>
-                      </div>
-
-                      {/* Service Interest */}
-                      <div>
-                        <Label htmlFor="serviceInterest">Service Interest (optional)</Label>
-                        <Select value={formData.serviceInterest} onValueChange={(value) => setFormData({...formData, serviceInterest: value})}>
-                          <SelectTrigger>
-                            <SelectValue placeholder="What are you interested in?" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="scamshield">ScamShield Protection</SelectItem>
-                            <SelectItem value="training">Training Programs</SelectItem>
-                            <SelectItem value="ai-business">AI for Business</SelectItem>
-                            <SelectItem value="website">Website Design</SelectItem>
-                            <SelectItem value="general">General Information</SelectItem>
-                            <SelectItem value="partnership">Partnership</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      {/* Preferred Callback Time */}
-                      <div>
-                        <Label htmlFor="preferredCallback">Preferred Callback Time (optional)</Label>
-                        <Select value={formData.preferredCallback} onValueChange={(value) => setFormData({...formData, preferredCallback: value})}>
-                          <SelectTrigger>
-                            <SelectValue placeholder="When's best to call?" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="morning">Morning (9am-12pm EST)</SelectItem>
-                            <SelectItem value="afternoon">Afternoon (12pm-5pm EST)</SelectItem>
-                            <SelectItem value="evening">Evening (5pm-8pm EST)</SelectItem>
-                            <SelectItem value="anytime">Anytime</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      {/* Urgency Level & Budget Range */}
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                          <Label htmlFor="urgencyLevel">Urgency Level</Label>
-                          <Select value={formData.urgencyLevel} onValueChange={(value) => setFormData({...formData, urgencyLevel: value})}>
-                            <SelectTrigger>
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="low">Low - Just browsing</SelectItem>
-                              <SelectItem value="normal">Normal - Within a week</SelectItem>
-                              <SelectItem value="high">High - Within 24-48 hours</SelectItem>
-                              <SelectItem value="urgent">Urgent - ASAP</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        <div>
-                          <Label htmlFor="budgetRange">Budget Range (for services)</Label>
-                          <Select value={formData.budgetRange} onValueChange={(value) => setFormData({...formData, budgetRange: value})}>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select budget" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="under-1k">Under $1,000</SelectItem>
-                              <SelectItem value="1k-5k">$1,000 - $5,000</SelectItem>
-                              <SelectItem value="5k-10k">$5,000 - $10,000</SelectItem>
-                              <SelectItem value="10k-25k">$10,000 - $25,000</SelectItem>
-                              <SelectItem value="25k-plus">$25,000+</SelectItem>
-                              <SelectItem value="not-sure">Not sure yet</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
                       </div>
 
                       {/* Message */}
@@ -435,25 +329,16 @@ function Contact() {
                         {isSubmitting ? (
                           <>
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                            Sending your message...
+                            Sending...
                           </>
                         ) : (
-                          <>
-                            <Mail className="mr-2 h-4 w-4" />
-                            Send Message
-                          </>
+                          <>Send Message</>
                         )}
                       </Button>
 
-                      <div className="text-center space-y-2">
-                        <p className="text-xs text-muted-foreground">
-                          <Shield className="w-3 h-3 inline mr-1" />
-                          Your message is encrypted and secure. We never share your information.
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          By submitting this form, you agree to our <Link to="/privacy-policy" className="text-primary hover:underline">Privacy Policy</Link> and <Link to="/terms-of-service" className="text-primary hover:underline">Terms of Service</Link>.
-                        </p>
-                      </div>
+                      <p className="text-xs text-center text-muted-foreground">
+                        Your message is encrypted and secure. We never share your information.
+                      </p>
                     </form>
                   )}
                 </CardContent>

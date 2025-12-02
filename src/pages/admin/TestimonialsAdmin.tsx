@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { AdminLayout } from "@/components/AdminLayout";
+import { AdminSidebar } from "@/components/AdminSidebar";
+import { AdminTopBar } from "@/components/AdminTopBar";
 import { VideoTestimonialUpload } from "@/components/admin/VideoTestimonialUpload";
 
 import { AddTestimonialModal } from "@/components/admin/AddTestimonialModal";
@@ -67,6 +68,7 @@ interface Testimonial {
 }
 
 export default function TestimonialsAdmin() {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [filteredTestimonials, setFilteredTestimonials] = useState<Testimonial[]>([]);
   const [loading, setLoading] = useState(true);
@@ -300,21 +302,32 @@ export default function TestimonialsAdmin() {
   const paginatedTestimonials = filteredTestimonials.slice(startIndex, endIndex);
 
   return (
-    <AdminLayout>
-      <div>
-        {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between mt-4">
-            <h1 className="text-3xl font-bold text-foreground">Testimonials</h1>
-            <Button onClick={() => setAddModalOpen(true)}>
-              <Plus className="h-4 w-4 mr-2" />
-              Add New Testimonial
-            </Button>
-          </div>
-        </div>
+    <div className="flex min-h-screen bg-background">
+      <AdminSidebar isOpen={sidebarOpen} />
+      <AdminTopBar
+        sidebarOpen={sidebarOpen}
+        toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+      />
 
-        {/* Filters & Search */}
-        <div className="bg-background border rounded-lg p-4 mb-6">
+      <main
+        className={`flex-1 transition-all duration-300 pt-16 ${
+          sidebarOpen ? "md:ml-[260px]" : "md:ml-[70px]"
+        }`}
+      >
+        <div className="p-8">
+          {/* Header */}
+          <div className="mb-6">
+            <div className="flex items-center justify-between mt-4">
+              <h1 className="text-3xl font-bold text-foreground">Testimonials</h1>
+              <Button onClick={() => setAddModalOpen(true)}>
+                <Plus className="h-4 w-4 mr-2" />
+                Add New Testimonial
+              </Button>
+            </div>
+          </div>
+
+          {/* Filters & Search */}
+          <div className="bg-background border rounded-lg p-4 mb-6">
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1">
                 <div className="relative">
@@ -589,42 +602,43 @@ export default function TestimonialsAdmin() {
               </div>
             </>
           )}
+        </div>
+      </main>
 
-        {/* Delete Confirmation Dialog */}
-        <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This will permanently delete this testimonial. This action cannot be undone.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction
-                onClick={() => testimonialToDelete && handleDelete(testimonialToDelete)}
-                className="bg-red-500 hover:bg-red-600"
-              >
-                Delete
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will permanently delete this testimonial. This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => testimonialToDelete && handleDelete(testimonialToDelete)}
+              className="bg-red-500 hover:bg-red-600"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
-        {/* Add Testimonial Modal */}
-        <AddTestimonialModal
-          open={addModalOpen}
-          onOpenChange={setAddModalOpen}
-          onSuccess={fetchTestimonials}
-        />
-        
-        {/* Video Upload Modal */}
-        <VideoTestimonialUpload
-          open={videoUploadOpen}
-          onOpenChange={setVideoUploadOpen}
-          onSuccess={fetchTestimonials}
-        />
-      </div>
-    </AdminLayout>
+      {/* Add Testimonial Modal */}
+      <AddTestimonialModal
+        open={addModalOpen}
+        onOpenChange={setAddModalOpen}
+        onSuccess={fetchTestimonials}
+      />
+      
+      {/* Video Upload Modal */}
+      <VideoTestimonialUpload
+        open={videoUploadOpen}
+        onOpenChange={setVideoUploadOpen}
+        onSuccess={fetchTestimonials}
+      />
+    </div>
   );
 }
