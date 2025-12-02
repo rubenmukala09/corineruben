@@ -1,883 +1,747 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
-import { BookingModal } from "@/components/BookingModal";
-import { SubscriptionDialog } from "@/components/SubscriptionDialog";
-import Hero from "@/components/Hero";
-import TrustBar from "@/components/TrustBar";
-import CTASection from "@/components/CTASection";
-import FlowingWaves from "@/components/FlowingWaves";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { ScrollReveal } from "@/components/ScrollReveal";
-import { useCounterAnimation } from "@/hooks/useCounterAnimation";
-import { supabase } from "@/integrations/supabase/client";
-import { trackButtonClick, trackConversion } from "@/utils/analyticsTracker";
-import {
-  CheckCircle,
-  Mail,
-  Upload,
-  Phone,
-  Search,
-  Shield,
-  Users,
-  Clock as ClockIcon,
-  Award,
-  Lock,
-  FileText,
-  MessageSquare,
-  Link as LinkIcon,
-  QrCode,
-  FileCheck,
-  Image as ImageIcon,
-  Loader2,
+import { Input } from "@/components/ui/input";
+import { 
+  Shield, 
+  Users, 
+  Award, 
+  CheckCircle, 
+  Clock, 
+  Target,
+  BookOpen,
   Video,
+  FileText,
+  Headphones,
+  TrendingUp,
+  Lock,
+  AlertTriangle,
+  Zap,
+  Star,
+  ArrowRight,
+  Play,
+  Mail
 } from "lucide-react";
-import trainingSession from "@/assets/training-session.jpg";
-import trainingDiverse1 from "@/assets/training-diverse-1.jpg";
-import heroTrainingNew from "@/assets/hero-training-new.jpg";
-import trainingDiverse2 from "@/assets/training-diverse-2.jpg";
-import heroTraining3d from "@/assets/hero-training-3d.jpg";
-import TestimonialCard from "@/components/TestimonialCard";
+import { Navigation } from "@/components/Navigation";
+import { Footer } from "@/components/Footer";
+import { ScrollReveal } from "@/components/ScrollReveal";
+import { TrustIndicator } from "@/components/TrustIndicator";
+import { BookingModal } from "@/components/BookingModal";
+import { SubscriptionDialog } from "@/components/SubscriptionDialog";
+import { CustomTrainingDialog } from "@/components/CustomTrainingDialog";
 import { VideoLightbox } from "@/components/VideoLightbox";
-import { SEO } from "@/components/SEO";
+import { useSmoothAnchorScroll } from "@/hooks/useSmoothAnchorScroll";
+import trainingSession from "@/assets/training-session.jpg";
+import { useToast } from "@/hooks/use-toast";
 
-function ResponseTimeCallout() {
-  const { count: standardCount, ref: standardRef } = useCounterAnimation({ 
-    end: 24, 
-    start: 48, 
-    duration: 1500 
-  });
-  
-  const { count: premiumCount, ref: premiumRef } = useCounterAnimation({ 
-    end: 4, 
-    start: 24, 
-    duration: 1500 
-  });
-
-  return (
-    <div 
-      ref={standardRef as any}
-      className="mt-4 p-4 bg-gradient-to-r from-primary to-accent rounded-lg text-white"
-    >
-      <div className="flex items-center gap-3">
-        <span 
-          className="text-2xl animate-[clock-rotate_1s_ease-in-out_0.5s]"
-          style={{ display: 'inline-block' }}
-        >
-          ⏱️
-        </span>
-        <div className="flex-1 text-sm font-semibold">
-          <div>
-            Response time: <span className="text-lg font-bold" ref={premiumRef as any}>{Math.round(standardCount)}</span> hours
-          </div>
-          <div className="text-white/90 text-xs mt-1">
-            Premium: <span className="text-base font-bold">{Math.round(premiumCount)}</span> hours
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const ScamExampleCard = ({ example, index }: { example: any; index: number }) => {
-  const savedAmount = example.saved.replace(/[^0-9]/g, '');
-  const isNumeric = savedAmount !== '';
-  
-  const { count, ref } = useCounterAnimation({ 
-    end: isNumeric ? parseInt(savedAmount) : 0, 
-    duration: 2000 
-  });
-
-  const getBadgeColor = (badge: string) => {
-    const colors: Record<string, string> = {
-      "Grandparent Scam": "bg-red-500/20 text-red-700 border border-red-500/30",
-      "Bank Phishing": "bg-blue-500/20 text-blue-700 border border-blue-500/30",
-      "Tech Support Scam": "bg-orange-500/20 text-orange-700 border border-orange-500/30",
-      "Romance Scam": "bg-pink-500/20 text-pink-700 border border-pink-500/30",
-    };
-    return colors[badge] || "bg-accent/20 text-accent-foreground border border-accent/30";
-  };
-
-  return (
-    <ScrollReveal animation="scale-in" delay={index * 100} threshold={0.2}>
-      <Card
-        className="p-4 hover:shadow-strong transition-all duration-500 hover:-translate-y-1 rounded-xl border-border/50 bg-gradient-to-br from-card to-card/50"
-      >
-        <div className="mb-3">
-          <span className={`text-xs font-bold px-2 py-1 rounded-full ${getBadgeColor(example.badge)}`}>
-            {example.badge}
-          </span>
-        </div>
-        <div className="space-y-2">
-          <div>
-            <p className="text-xs font-semibold text-muted-foreground mb-1">WHAT THEY RECEIVED:</p>
-            <p className="text-foreground text-xs italic line-clamp-2">{example.received}</p>
-          </div>
-          <div>
-            <p className="text-xs font-semibold text-muted-foreground mb-1">OUR ANALYSIS:</p>
-            <p className="text-foreground text-xs line-clamp-2">{example.analysis}</p>
-          </div>
-          <div ref={ref as any}>
-            <p className="text-xs font-semibold text-muted-foreground mb-1">SAVED:</p>
-            {isNumeric ? (
-              <p className="text-lg font-bold text-success">
-                <span className="inline-block animate-[dollar-scale_2s_ease-out]">$</span>
-                {Math.round(count).toLocaleString()}
-              </p>
-            ) : (
-              <p className="text-lg font-bold text-success">{example.saved}</p>
-            )}
-          </div>
-        </div>
-      </Card>
-    </ScrollReveal>
-  );
-};
-
-const TrainingCard = ({ plan, index }: { plan: any; index: number }) => {
-  const { count, ref } = useCounterAnimation({ end: plan.priceNum, duration: 1000 });
-  
-  return (
-    <ScrollReveal 
-      animation="scale-in" 
-      delay={index * 150}
-      threshold={0.2}
-    >
-      <div className={`relative ${plan.popular ? 'scale-105' : ''}`}>
-        {plan.popular && (
-          <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-white px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 animate-[pulse_2s_ease-in-out_infinite]">
-            MOST POPULAR
-          </div>
-        )}
-        <Card
-          className={`p-8 transition-all duration-500 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 ${
-            plan.popular 
-              ? "border-primary border-[3px] shadow-[0_10px_30px_rgba(139,92,246,0.15)] hover:shadow-[0_20px_40px_rgba(139,92,246,0.25)]" 
-              : "border-border/50 hover:shadow-strong"
-          }`}
-        >
-          <h3 className="text-2xl font-bold mb-2 text-center">{plan.name}</h3>
-          <div className="text-center mb-2" ref={ref}>
-            <span className="text-4xl font-bold text-primary">${Math.round(count)}</span>
-            <span className="text-muted-foreground">/session</span>
-          </div>
-          <p className="text-center text-sm text-muted-foreground mb-2">{plan.duration}</p>
-          <p className="text-center text-sm text-accent font-semibold mb-6">{plan.size}</p>
-
-          <div className="space-y-3 mb-8">
-            {plan.features.map((feature: string, idx: number) => (
-              <div key={idx} className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                <span className="text-foreground text-sm">{feature}</span>
-              </div>
-            ))}
-          </div>
-
-          <Button 
-            asChild
-            variant={plan.popular ? "default" : "outline"} 
-            size="lg" 
-            className="w-full"
-          >
-            <Link to={`/contact?service=training&type=${plan.type}&price=${plan.priceNum}`}>
-              Book Session
-            </Link>
-          </Button>
-        </Card>
-      </div>
-    </ScrollReveal>
-  );
+interface VideoData {
+  src: string;
+  title: string;
 }
 
-function LearnAndTrain() {
+const LearnAndTrain = () => {
+  useSmoothAnchorScroll();
   const [modalOpen, setModalOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<string>("");
   const [subscriptionDialogOpen, setSubscriptionDialogOpen] = useState(false);
-  const [selectedSubscription, setSelectedSubscription] = useState<{
-    priceId: string;
-    serviceName: string;
-    planTier: string;
-    amount: number;
-  } | null>(null);
-  const [isYearly, setIsYearly] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [selectedService, setSelectedService] = useState<{
-    type: 'training' | 'scamshield';
-    name: string;
-    tier?: string;
-    price?: number;
-  } | null>(null);
-  const [trainingTestimonials, setTrainingTestimonials] = useState<any[]>([]);
-  const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string } | null>(null);
+  const [selectedSubscription, setSelectedSubscription] = useState<any>(null);
+  const [customTrainingOpen, setCustomTrainingOpen] = useState(false);
+  const [selectedVideo, setSelectedVideo] = useState<VideoData | null>(null);
+  const [email, setEmail] = useState("");
+  const { toast } = useToast();
 
-  useEffect(() => {
-    checkAdminStatus();
-    fetchTrainingTestimonials();
-  }, []);
-
-  const fetchTrainingTestimonials = async () => {
-    const { data } = await supabase
-      .from("testimonials_public")
-      .select(`
-        *,
-        testimonial_media (*)
-      `)
-      .eq("has_video", true)
-      .order("created_at", { ascending: false })
-      .limit(3);
-    
-    setTrainingTestimonials(data || []);
+  const handleBooking = (service: string) => {
+    setSelectedService(service);
+    setModalOpen(true);
   };
 
-  const checkAdminStatus = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        setIsAdmin(false);
-        return;
-      }
-
-      const { data: roles, error } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", user.id);
-
-      if (error) {
-        console.error("Error checking admin status:", error);
-        setIsAdmin(false);
-      } else {
-        setIsAdmin(roles && roles.length > 0);
-      }
-    } catch (error) {
-      console.error("Error in checkAdminStatus:", error);
-      setIsAdmin(false);
-    }
-  };
-
-  const getPlanPrice = (monthlyPrice: number) => {
-    if (isYearly) {
-      const yearlyPrice = monthlyPrice * 12 * 0.95; // 5% discount
-      return {
-        display: `$${Math.round(yearlyPrice)}`,
-        period: '/year',
-        savings: `Save 5% ($${Math.round(monthlyPrice * 12 - yearlyPrice)}/year)`
-      };
-    }
-    return {
-      display: `$${monthlyPrice}`,
-      period: '/month',
-      savings: ''
-    };
-  };
-
-  const handleSubscribe = (priceId: string, serviceName: string, planTier: string, amount: number) => {
-    trackButtonClick(`Subscribe ${planTier} Plan`, 'Training Page');
-    setSelectedSubscription({ priceId, serviceName, planTier, amount });
+  const handleSubscribe = (plan: any) => {
+    setSelectedSubscription(plan);
     setSubscriptionDialogOpen(true);
   };
 
-  const trainingHeroImages = [
-    { src: trainingDiverse1, alt: "Diverse participants in cybersecurity training" },
-    { src: heroTrainingNew, alt: "Modern training facilities and programs" },
-    { src: trainingDiverse2, alt: "Interactive learning environment" },
-    { src: trainingSession, alt: "Active training session in progress" },
-    { src: heroTraining3d, alt: "Virtual reality training experiences" }
+  const handleNewsletterSignup = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email) {
+      toast({
+        title: "Success!",
+        description: "You've been subscribed to our newsletter.",
+      });
+      setEmail("");
+    }
+  };
+
+  const trainingPrograms = [
+    {
+      icon: Users,
+      title: "Standard Group Training",
+      badge: "STANDARD GROUP",
+      description: "Comprehensive cybersecurity awareness training for teams",
+      features: [
+        "Up to 20 participants per session",
+        "2-hour interactive workshop",
+        "Real-world scam scenarios",
+        "Q&A session included",
+        "Digital certificate of completion",
+        "30-day email support"
+      ],
+      price: "$499",
+      duration: "2 hours",
+      popular: false
+    },
+    {
+      icon: Target,
+      title: "Priority Private Training",
+      badge: "PRIORITY PRIVATE",
+      description: "Personalized one-on-one cybersecurity coaching",
+      features: [
+        "Individual attention",
+        "Customized curriculum",
+        "Flexible scheduling",
+        "Hands-on practice sessions",
+        "Personal action plan",
+        "90-day priority support"
+      ],
+      price: "Custom",
+      duration: "Flexible",
+      popular: true,
+      isCustom: true
+    },
+    {
+      icon: Shield,
+      title: "Enterprise Solutions",
+      description: "Tailored training programs for large organizations",
+      features: [
+        "Unlimited participants",
+        "Custom content development",
+        "On-site or virtual delivery",
+        "Ongoing support packages",
+        "Compliance documentation",
+        "Executive briefings"
+      ],
+      price: "Contact Us",
+      duration: "Custom",
+      popular: false
+    }
+  ];
+
+  const learningResources = [
+    {
+      icon: Video,
+      title: "Video Tutorials",
+      description: "Step-by-step guides on identifying and avoiding scams",
+      count: "25+ videos"
+    },
+    {
+      icon: FileText,
+      title: "Security Guides",
+      description: "Downloadable PDFs covering essential cybersecurity topics",
+      count: "15+ guides"
+    },
+    {
+      icon: BookOpen,
+      title: "Case Studies",
+      description: "Real-world examples of scams and how to prevent them",
+      count: "30+ cases"
+    },
+    {
+      icon: Headphones,
+      title: "Podcast Series",
+      description: "Expert interviews and discussions on digital safety",
+      count: "50+ episodes"
+    }
+  ];
+
+  const scamShieldFeatures = [
+    {
+      icon: Shield,
+      title: "24/7 Monitoring",
+      description: "Round-the-clock protection against emerging threats"
+    },
+    {
+      icon: AlertTriangle,
+      title: "Real-time Alerts",
+      description: "Instant notifications about potential security risks"
+    },
+    {
+      icon: Lock,
+      title: "Identity Protection",
+      description: "Safeguard your personal information from theft"
+    },
+    {
+      icon: Zap,
+      title: "Quick Response",
+      description: "Immediate action when threats are detected"
+    }
+  ];
+
+  const protectionPlans = [
+    {
+      name: "Starter Plan",
+      badge: "STARTER",
+      price: "$9.99",
+      period: "/month",
+      description: "Essential protection for individuals",
+      features: [
+        "Basic threat monitoring",
+        "Email alerts",
+        "Monthly security reports",
+        "Access to learning resources",
+        "Community forum access"
+      ],
+      popular: false,
+      cta: "Get Started"
+    },
+    {
+      name: "Family Plan",
+      badge: "FAMILY",
+      price: "$24.99",
+      period: "/month",
+      description: "Comprehensive protection for up to 5 family members",
+      features: [
+        "Everything in Starter",
+        "Cover up to 5 people",
+        "Priority email support",
+        "Dark web monitoring",
+        "Identity theft insurance ($25K)",
+        "Weekly security reports"
+      ],
+      popular: true,
+      cta: "Most Popular"
+    },
+    {
+      name: "Premium Plan",
+      badge: "PREMIUM",
+      price: "$49.99",
+      period: "/month",
+      description: "Maximum protection with white-glove service",
+      features: [
+        "Everything in Family",
+        "Cover up to 10 people",
+        "24/7 phone support",
+        "Personal security advisor",
+        "Identity theft insurance ($100K)",
+        "Credit monitoring",
+        "Lost wallet assistance"
+      ],
+      popular: false,
+      cta: "Go Premium"
+    }
+  ];
+
+  const testimonials = [
+    {
+      name: "Sarah Johnson",
+      role: "Small Business Owner",
+      content: "The training helped my team identify and prevent a phishing attack that could have cost us thousands. Highly recommended!",
+      rating: 5
+    },
+    {
+      name: "Michael Chen",
+      role: "Retiree",
+      content: "As a senior, I was worried about online scams. The one-on-one training gave me confidence to use technology safely.",
+      rating: 5
+    },
+    {
+      name: "Emily Rodriguez",
+      role: "HR Manager",
+      content: "We've made this training mandatory for all employees. The ROI in terms of prevented incidents has been incredible.",
+      rating: 5
+    }
+  ];
+
+  const stats = [
+    { number: "10,000+", label: "People Trained" },
+    { number: "98%", label: "Satisfaction Rate" },
+    { number: "500+", label: "Scams Prevented" },
+    { number: "24/7", label: "Support Available" }
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background">
       <Navigation />
-
+      
       {/* Hero Section */}
-      <Hero
-        backgroundImages={trainingHeroImages}
-        headline="Learn How to Recognize and Stop Scams"
-        subheadline="Professional training programs and 24/7 protection services designed for real-world safety"
-        showScrollIndicator={true}
-      >
-        <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center sm:justify-start">
-          <Button 
-            onClick={() => {
-              document.getElementById('training')?.scrollIntoView({ behavior: 'smooth' });
-            }}
-            variant="default" 
-            size="xl" 
-            className="w-full sm:w-auto"
-          >
-            View Training Programs
-          </Button>
-          <Button 
-            onClick={() => {
-              document.getElementById('scamshield')?.scrollIntoView({ behavior: 'smooth' });
-            }}
-            variant="secondary" 
-            size="xl" 
-            className="w-full sm:w-auto"
-          >
-            Learn About ScamShield
-          </Button>
-        </div>
-      </Hero>
-
-      <TrustBar />
-
-      {/* Training Section */}
-      <section id="training" className="py-16 bg-background relative overflow-hidden">
-        <FlowingWaves variant="full" opacity={0.12} />
+      <section className="relative pt-32 pb-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/5 to-background pointer-events-none" />
+        
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mb-4 animate-fade-in-up">Scam Prevention Training Programs</h2>
-          <p className="text-center text-xl text-muted-foreground mb-12 max-w-3xl mx-auto">
-            Interactive training sessions that teach you practical skills to recognize and stop AI-powered scams
-          </p>
+          <div className="max-w-4xl mx-auto text-center">
+            <ScrollReveal animation="fade-up">
+              <Badge variant="secondary" className="mb-6 text-sm px-4 py-2">
+                <Award className="w-4 h-4 mr-2 inline" />
+                Certified Cybersecurity Training
+              </Badge>
+            </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto mb-16">
+            <ScrollReveal animation="fade-up" delay={100}>
+              <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent leading-tight">
+                Learn to Protect Yourself from Digital Threats
+              </h1>
+            </ScrollReveal>
+
+            <ScrollReveal animation="fade-up" delay={200}>
+              <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
+                Expert-led training programs and comprehensive protection plans to keep you safe online
+              </p>
+            </ScrollReveal>
+
+            <ScrollReveal animation="fade-up" delay={300}>
+              <div className="flex flex-wrap gap-4 justify-center mb-8">
+                <TrustIndicator type="check" text="Certified Instructors" />
+                <TrustIndicator type="shield" text="Proven Methods" />
+                <TrustIndicator type="award" text="Industry Recognition" />
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal animation="fade-up" delay={400}>
+              <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center sm:justify-start">
+                <Button 
+                  onClick={() => {
+                    document.getElementById('training')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  variant="default" 
+                  size="xl" 
+                  className="w-full sm:w-auto"
+                >
+                  View Training Programs
+                </Button>
+                <Button 
+                  onClick={() => {
+                    document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  variant="secondary" 
+                  size="xl" 
+                  className="w-full sm:w-auto"
+                >
+                  Learn About ScamShield
+                </Button>
+              </div>
+            </ScrollReveal>
+          </div>
+
+          {/* Stats */}
+          <ScrollReveal animation="fade-up" delay={500}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 max-w-4xl mx-auto">
+              {stats.map((stat, index) => (
+                <div key={index} className="text-center">
+                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
+                    {stat.number}
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Why Training Matters Section */}
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <ScrollReveal animation="fade-up">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Why Cybersecurity Training Matters
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                In today's digital world, knowledge is your best defense against cyber threats
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {[
               {
-                name: "Standard Group",
-                type: "standard",
-                price: "$79",
-                priceNum: 79,
-                duration: "90 minutes",
-                size: "Up to 25 participants",
-                features: [
-                  "Live Zoom session",
-                  "Interactive Q&A",
-                  "Digital handouts",
-                  "Certificate of completion",
-                  "Email follow-up",
-                ],
+                icon: TrendingUp,
+                title: "Rising Threats",
+                description: "Cyber attacks increase by 67% annually, targeting individuals and businesses alike"
               },
               {
-                name: "Family Small Group",
-                type: "family",
-                price: "$149",
-                priceNum: 149,
-                duration: "90 minutes",
-                size: "Up to 12 participants",
-                popular: true,
-                features: [
-                  "Intimate group setting",
-                  "More personal attention",
-                  "Extended Q&A time",
-                  "Certificates for all",
-                  "Safe word setup guide",
-                  "Family action plan",
-                ],
+                icon: Shield,
+                title: "Prevention is Key",
+                description: "95% of security breaches are caused by human error - training reduces this risk"
               },
               {
-                name: "Priority Private",
-                type: "private",
-                price: "$399",
-                priceNum: 399,
-                duration: "120 minutes",
-                size: "1-5 participants",
-                features: [
-                  "One-on-one or family session",
-                  "Customized content",
-                  "Device security review",
-                  "Personalized action plan",
-                  "30-day email support",
-                  "Priority scheduling",
-                ],
-              },
-            ].map((plan, index) => (
-              <TrainingCard 
-                key={index}
-                plan={plan}
-                index={index}
-              />
+                icon: Award,
+                title: "Stay Ahead",
+                description: "Regular training keeps you updated on the latest scam tactics and protection methods"
+              }
+            ].map((item, index) => (
+              <ScrollReveal key={index} animation="fade-up" delay={index * 100}>
+                <Card className="p-6 h-full hover:shadow-strong transition-all duration-300 hover:-translate-y-1">
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                    <item.icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                  <p className="text-muted-foreground">{item.description}</p>
+                </Card>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Divider */}
-      <section id="scamshield" className="py-8 bg-muted">
-        <div className="container mx-auto px-4 text-center">
-          <div className="inline-flex items-center justify-center gap-4 px-8 py-4 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 rounded-full">
-            <Shield className="w-8 h-8 text-primary" />
-            <h2 className="text-3xl font-bold">ScamShield Protection</h2>
-            <Shield className="w-8 h-8 text-primary" />
-          </div>
-        </div>
-      </section>
-
-      {/* How ScamShield Works Section */}
-      <section className="py-16 bg-background relative overflow-hidden">
-        <FlowingWaves variant="full" opacity={0.12} />
-        <div className="absolute inset-0 opacity-30">
-          <div
-            className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse"
-            style={{ animationDuration: "4s" }}
-          />
-          <div
-            className="absolute bottom-20 right-10 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-pulse"
-            style={{ animationDuration: "6s" }}
-          />
-        </div>
-        <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mb-10 animate-fade-in-up">Simple Protection in 4 Steps</h2>
-
-          <div className="max-w-5xl mx-auto relative">
-            {/* SVG Connecting Line */}
-            <svg 
-              className="absolute top-24 left-0 w-full h-2 hidden lg:block pointer-events-none z-0" 
-              style={{ top: '80px' }}
-            >
-              <path
-                id="steps-path"
-                d="M 12% 0 L 38% 0 L 62% 0 L 88% 0"
-                stroke="hsl(var(--primary))"
-                strokeWidth="2"
-                strokeDasharray="8 8"
-                fill="none"
-                className="steps-connecting-line"
-                style={{
-                  strokeDashoffset: 1000,
-                  animation: 'draw-line 2s ease-out forwards',
-                  animationDelay: '0.5s'
-                }}
-              />
-            </svg>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                {
-                  icon: MessageSquare,
-                  step: "STEP 1",
-                  stepNumber: "01",
-                  title: "You Receive Something Suspicious",
-                  desc: "Strange text, urgent email, odd call, suspicious link",
-                },
-                {
-                  icon: Upload,
-                  step: "STEP 2",
-                  stepNumber: "02",
-                  title: "Forward It to Our Team",
-                  desc: "Email, text, upload screenshot, or call our hotline",
-                  hasResponseTime: true,
-                },
-                {
-                  icon: Search,
-                  step: "STEP 3",
-                  stepNumber: "03",
-                  title: "Expert Analysis",
-                  desc: "Our team examines: Message content, sender verification, link destination, voice/audio analysis, AI-generated detection",
-                },
-                {
-                  icon: FileCheck,
-                  step: "STEP 4",
-                  stepNumber: "04",
-                  title: "Get Clear Guidance",
-                  desc: "Risk level (Safe/Caution/Danger/CRITICAL), detailed explanation, recommended actions, emergency scripts if needed",
-                },
-              ].map((step, index) => (
-                <ScrollReveal key={index} animation="scale-in" delay={index * 200} threshold={0.3}>
-                  <Card
-                    className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group bg-gradient-to-br from-card to-card/50 backdrop-blur-sm relative overflow-hidden"
-                  >
-                    {/* Large Step Number Badge */}
-                    <div className="absolute -top-3 -right-3 w-20 h-20 bg-gradient-to-br from-primary to-accent opacity-10 rounded-full flex items-center justify-center">
-                      <span className="text-5xl font-black text-primary/30">{step.stepNumber}</span>
-                    </div>
-
-                    <div className="flex justify-center mb-4 relative z-10">
-                      <div 
-                        className="w-20 h-20 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-lg"
-                        style={{
-                          animation: `step-icon-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards`,
-                          animationDelay: `${0.5 + index * 0.2}s`,
-                          transform: 'scale(0)'
-                        }}
-                      >
-                        <step.icon className="w-10 h-10 text-white group-hover:scale-110 transition-transform duration-500" />
-                      </div>
-                    </div>
-                    
-                    <div className="text-center mb-2 relative z-10">
-                      <span className="text-xs font-bold text-white bg-gradient-to-r from-primary to-accent px-4 py-1.5 rounded-full shadow-md">
-                        {step.step}
-                      </span>
-                    </div>
-                    
-                    <h3 className="text-xl font-bold mb-3 text-center group-hover:text-primary transition-colors duration-300 relative z-10">
-                      {step.title}
-                    </h3>
-                    
-                    <p className="text-muted-foreground text-center text-sm relative z-10">{step.desc}</p>
-                    
-                    {step.hasResponseTime && <ResponseTimeCallout />}
-                  </Card>
-                </ScrollReveal>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Veterans Discount Banner */}
-      <section className="py-8 bg-gradient-to-r from-primary/10 to-accent/10">
+      {/* Training Programs Section */}
+      <section id="training" className="py-20 scroll-mt-20">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center max-w-6xl mx-auto">
-            <div className="order-2 md:order-1">
-              <img
-                src={trainingSession}
-                alt="Cybersecurity training session"
-                className="rounded-lg shadow-large w-full h-auto object-cover"
-              />
+          <ScrollReveal animation="fade-up">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Choose Your Training Program
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Flexible options designed to meet your specific needs and schedule
+              </p>
             </div>
-            <Card className="p-6 bg-card/50 backdrop-blur-sm border-primary/20 order-1 md:order-2">
-              <div className="flex flex-col items-center gap-4 text-center md:text-left md:flex-row">
-                <div className="flex-shrink-0">
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-2xl">
-                    🇺🇸
+          </ScrollReveal>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {trainingPrograms.map((program, index) => (
+              <ScrollReveal key={index} animation="fade-up" delay={index * 100}>
+                <Card className={`p-8 h-full flex flex-col hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-2xl ${
+                  program.popular ? 'border-primary border-2 relative' : 'border-border/50'
+                } bg-gradient-to-br from-card to-card/50 relative`}>
+                  {program.badge && (
+                    <div className="absolute top-3 right-3 z-10">
+                      <Badge variant="default" className="text-xs font-bold">{program.badge}</Badge>
+                    </div>
+                  )}
+                  {program.popular && (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                      <Badge variant="default" className="text-xs font-bold shadow-lg">
+                        <Star className="w-3 h-3 mr-1" />
+                        MOST POPULAR
+                      </Badge>
+                    </div>
+                  )}
+                  
+                  <div className="mb-6">
+                    <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center mb-4 shadow-lg">
+                      <program.icon className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2">{program.title}</h3>
+                    <p className="text-muted-foreground mb-4">{program.description}</p>
+                    <div className="flex items-baseline gap-2 mb-2">
+                      <span className="text-3xl font-bold text-primary">{program.price}</span>
+                      {program.price !== "Contact Us" && program.price !== "Custom" && (
+                        <span className="text-muted-foreground">/session</span>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Clock className="w-4 h-4" />
+                      <span>{program.duration}</span>
+                    </div>
                   </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-1">Veterans & First Responders</h3>
-                  <p className="text-muted-foreground text-sm">Active duty, veterans, reservists, and first responders receive 10% OFF all training and protection plans</p>
-                </div>
-                <Button variant="default" asChild>
-                  <Link to="/signup">Claim Discount</Link>
-                </Button>
-              </div>
-            </Card>
+
+                  <div className="space-y-3 mb-6 flex-grow">
+                    {program.features.map((feature, idx) => (
+                      <div key={idx} className="flex items-start gap-2">
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                        <span className="text-sm">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <Button 
+                    onClick={() => program.isCustom ? setCustomTrainingOpen(true) : handleBooking(program.title)}
+                    variant={program.popular ? "default" : "outline"}
+                    size="lg"
+                    className="w-full group"
+                  >
+                    {program.price === "Contact Us" ? "Contact Sales" : program.isCustom ? "Customize Training" : "Book Now"}
+                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Card>
+              </ScrollReveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section id="pricing" className="py-16 bg-muted relative overflow-hidden">
-        <FlowingWaves variant="full" opacity={0.12} />
-        <div className="absolute inset-0 opacity-20">
-          <div
-            className="absolute top-1/4 right-20 w-64 h-64 bg-accent/30 rounded-full blur-3xl animate-pulse"
-            style={{ animationDuration: "5s" }}
-          />
-        </div>
-        <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mb-4 animate-fade-in-up">Choose Your Protection Level</h2>
-          <p className="text-center text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Subscribe monthly or save 5% with yearly plans. All plans can be cancelled anytime.
-          </p>
+      {/* What You'll Learn Section */}
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <ScrollReveal animation="fade-up">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                What You'll Learn
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Comprehensive curriculum covering all aspects of digital safety
+              </p>
+            </div>
+          </ScrollReveal>
 
-          {/* Payment Period Toggle */}
-          <div className="flex items-center justify-center gap-4 mb-10">
-            <Label htmlFor="payment-toggle" className={`text-lg font-semibold ${!isYearly ? 'text-primary' : 'text-muted-foreground'}`}>
-              Monthly
-            </Label>
-            <Switch
-              id="payment-toggle"
-              checked={isYearly}
-              onCheckedChange={setIsYearly}
-            />
-            <Label htmlFor="payment-toggle" className={`text-lg font-semibold ${isYearly ? 'text-primary' : 'text-muted-foreground'}`}>
-              Yearly <span className="text-sm text-success">(Save 5%)</span>
-            </Label>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            {[
+              { title: "Phishing Detection", description: "Identify suspicious emails and messages" },
+              { title: "Password Security", description: "Create and manage strong passwords" },
+              { title: "Social Engineering", description: "Recognize manipulation tactics" },
+              { title: "Safe Browsing", description: "Navigate the web securely" },
+              { title: "Mobile Security", description: "Protect your smartphone and tablets" },
+              { title: "Identity Protection", description: "Safeguard personal information" },
+              { title: "Scam Recognition", description: "Spot common fraud schemes" },
+              { title: "Incident Response", description: "What to do if you're targeted" }
+            ].map((topic, index) => (
+              <ScrollReveal key={index} animation="fade-up" delay={index * 50}>
+                <Card className="p-6 hover:shadow-strong transition-all duration-300 hover:-translate-y-1">
+                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mb-3">
+                    <CheckCircle className="w-5 h-5 text-primary" />
+                  </div>
+                  <h3 className="font-bold mb-2">{topic.title}</h3>
+                  <p className="text-sm text-muted-foreground">{topic.description}</p>
+                </Card>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Learning Resources Section */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <ScrollReveal animation="fade-up">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Free Learning Resources
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Access our library of educational materials to enhance your cybersecurity knowledge
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            {learningResources.map((resource, index) => (
+              <ScrollReveal key={index} animation="fade-up" delay={index * 100}>
+                <Card className="p-6 hover:shadow-strong transition-all duration-300 hover:-translate-y-1 cursor-pointer group">
+                  <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <resource.icon className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">{resource.title}</h3>
+                  <p className="text-muted-foreground mb-3">{resource.description}</p>
+                  <div className="text-sm font-semibold text-primary">{resource.count}</div>
+                </Card>
+              </ScrollReveal>
+            ))}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Starter Plan */}
-            <Card
-              className="p-8 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-strong hover:brightness-110 rounded-2xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50"
-              style={{ animationDelay: "0ms" }}
-            >
-              <div className="flex justify-center mb-6">
-                <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
-                  <Shield className="w-10 h-10 text-primary" />
-                </div>
-              </div>
-              <h3 className="text-2xl font-bold mb-2 text-center">Starter Plan</h3>
-              <div className="text-center mb-2">
-                <span key={isYearly ? 'yearly-39' : 'monthly-39'} className="text-4xl font-bold text-primary price-flip inline-block">{getPlanPrice(39).display}</span>
-                <span className="text-muted-foreground">{getPlanPrice(39).period}</span>
-              </div>
-              {isYearly && (
-                <div className="text-center mb-2 fade-in-savings">
-                  <p className="text-sm text-success font-semibold">{getPlanPrice(39).savings}</p>
-                </div>
-              )}
-              <p className="text-center text-sm text-muted-foreground mb-6">Perfect for: Individuals</p>
-
-              <div className="space-y-3 mb-8">
-                {[
-                  "Unlimited threat submissions",
-                  "24-hour expert analysis",
-                  "Email & text support",
-                  "Risk assessment reports",
-                  "Monthly scam trend updates",
-                  "Access to Scam Alert Map",
-                  "Educational resources",
-                  "60-day money-back guarantee",
-                ].map((feature, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground text-sm">{feature}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mb-6 p-3 bg-primary/10 rounded-lg">
-                <div className="flex items-center gap-2 justify-center">
-                  <Mail className="w-5 h-5 text-primary" />
-                  <Upload className="w-5 h-5 text-primary" />
-                  <span className="text-xs font-medium">Email, Upload</span>
-                </div>
-              </div>
-
-              <Button 
-                onClick={() => {
-                  trackButtonClick('Get Started - Starter Plan', 'Training Page');
-                  handleSubscribe('price_1QhNpBE7M5RA9HBzOSnfZ67C', 'ScamShield', 'Starter', 3900);
-                }}
-                variant="default" 
-                size="lg" 
-                className="w-full"
-              >
-                Get Started
-              </Button>
-            </Card>
-
-            {/* Family Plan - MOST POPULAR */}
-            <div className="relative">
-              <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
-                MOST POPULAR
-              </div>
-              <Card
-                className="p-8 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[0_20px_40px_rgba(109,40,217,0.2)] hover:brightness-110 rounded-2xl border-primary border-2 animate-fade-in-up bg-gradient-to-br from-card to-card/50"
-                style={{ animationDelay: "100ms" }}
-              >
-                <div className="flex justify-center mb-6">
-                <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
-                  <Users className="w-10 h-10 text-primary" />
-                </div>
-              </div>
-              <h3 className="text-2xl font-bold mb-2 text-center">Family Plan</h3>
-              <div className="text-center mb-2">
-                <span key={isYearly ? 'yearly-79' : 'monthly-79'} className="text-4xl font-bold text-primary price-flip inline-block">{getPlanPrice(79).display}</span>
-                <span className="text-muted-foreground">{getPlanPrice(79).period}</span>
-              </div>
-              {isYearly && (
-                <div className="text-center mb-2 fade-in-savings">
-                  <p className="text-sm text-success font-semibold">{getPlanPrice(79).savings}</p>
-                </div>
-              )}
-              <p className="text-center text-sm text-muted-foreground mb-6">Perfect for: Families & couples</p>
-
-              <div className="space-y-3 mb-8">
-                <p className="font-semibold text-center mb-3">Everything in Starter PLUS:</p>
-                {[
-                  "Protect up to 5 family members",
-                  "12-hour priority response",
-                  "Phone support included",
-                  "Family Safety Vault (secure storage)",
-                  "Shared safe-word system",
-                  "Call verification assistance",
-                  "Quarterly family safety briefings",
-                  "Training discounts (20% off)",
-                ].map((feature, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground text-sm">{feature}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mb-6 p-3 bg-primary/10 rounded-lg">
-                <div className="flex items-center gap-2 justify-center">
-                  <Mail className="w-4 h-4 text-primary" />
-                  <Upload className="w-4 h-4 text-primary" />
-                  <Phone className="w-4 h-4 text-primary" />
-                  <MessageSquare className="w-4 h-4 text-primary" />
-                  <span className="text-xs font-medium">All Methods</span>
-                </div>
-              </div>
-
-              <Button 
-                onClick={() => {
-                  trackButtonClick('Get Started - Family Plan', 'Training Page');
-                  handleSubscribe('price_1QhNpTE7M5RA9HBztEBr0e3z', 'ScamShield', 'Family', 7900);
-                }}
-                variant="default" 
-                size="lg" 
-                className="w-full"
-              >
-                Get Started
-              </Button>
-            </Card>
-            </div>
-
-            {/* Premium Plan */}
-            <Card
-              className="p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-2xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50"
-              style={{ animationDelay: "200ms" }}
-            >
-              <div className="flex justify-center mb-6">
-                <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
-                  <Award className="w-10 h-10 text-primary" />
-                </div>
-              </div>
-              <h3 className="text-2xl font-bold mb-2 text-center">Premium Plan</h3>
-              <div className="text-center mb-2">
-                <span key={isYearly ? 'yearly-129' : 'monthly-129'} className="text-4xl font-bold text-primary price-flip inline-block">{getPlanPrice(129).display}</span>
-                <span className="text-muted-foreground">{getPlanPrice(129).period}</span>
-              </div>
-              {isYearly && (
-                <div className="text-center mb-2 fade-in-savings">
-                  <p className="text-sm text-success font-semibold">{getPlanPrice(129).savings}</p>
-                </div>
-              )}
-              <p className="text-center text-sm text-muted-foreground mb-6">
-                Perfect for: High-risk individuals
-              </p>
-
-              <div className="space-y-3 mb-8">
-                <p className="font-semibold text-center mb-3">Everything in Family PLUS:</p>
-                {[
-                  "4-hour emergency response",
-                  "AI deepfake voice detection",
-                  '"Call Me Now" verification service',
-                  "Dedicated security advisor",
-                  "24/7 emergency hotline",
-                  "Proactive monitoring alerts",
-                  "Monthly 1-on-1 check-ins",
-                  "Custom threat briefings",
-                ].map((feature, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground text-sm">{feature}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mb-6 p-3 bg-primary/10 rounded-lg">
-                <div className="flex flex-col items-center gap-2">
-                  <div className="flex items-center gap-2">
-                    <Mail className="w-4 h-4 text-primary" />
-                    <Upload className="w-4 h-4 text-primary" />
-                    <Phone className="w-4 h-4 text-primary" />
-                    <MessageSquare className="w-4 h-4 text-primary" />
-                  </div>
-                  <span className="text-xs font-medium">+ Emergency Hotline</span>
-                </div>
-              </div>
-
-              <Button 
-                onClick={() => {
-                  trackButtonClick('Get Started - Premium Plan', 'Training Page');
-                  handleSubscribe('price_1QhNpoE7M5RA9HBzuvj62YQv', 'ScamShield', 'Premium', 12900);
-                }}
-                variant="default" 
-                size="lg" 
-                className="w-full"
-              >
-                Get Started
-              </Button>
-            </Card>
-
-            {/* Customized Plan for Businesses */}
-            <Card
-              className="p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-2xl border-accent/50 animate-fade-in-up bg-gradient-to-br from-card to-accent/5"
-              style={{ animationDelay: "300ms" }}
-            >
-              <div className="flex justify-center mb-6">
-                <div className="w-20 h-20 bg-gradient-to-br from-accent/20 to-primary/20 rounded-full flex items-center justify-center">
-                  <Users className="w-10 h-10 text-accent" />
-                </div>
-              </div>
-              <h3 className="text-2xl font-bold mb-2 text-center">Customized Plan</h3>
-              <div className="text-center mb-2">
-                <span className="text-4xl font-bold text-accent">From $229</span>
-                <span className="text-muted-foreground">/month</span>
-              </div>
-              <p className="text-center text-sm text-muted-foreground mb-6">
-                Perfect for: Businesses & organizations
-              </p>
-
-              <div className="space-y-3 mb-8">
-                <p className="font-semibold text-center mb-3">Custom tailored protection:</p>
-                {[
-                  "Unlimited team members",
-                  "Priority 2-hour response",
-                  "Dedicated account manager",
-                  "Custom training sessions",
-                  "Advanced threat monitoring",
-                  "Company-wide security protocols",
-                  "Quarterly security audits",
-                  "White-label reporting",
-                ].map((feature, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground text-sm">{feature}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mb-6 p-3 bg-accent/10 rounded-lg">
-                <div className="text-center">
-                  <p className="text-xs font-medium">Customizable based on business size and needs</p>
-                </div>
-              </div>
-
-              <Button 
-                asChild
-                variant="outline" 
-                size="lg" 
-                className="w-full text-primary border-primary hover:bg-primary hover:text-white transition-all duration-300"
-              >
-                <Link 
-                  to="/contact?subject=Custom Protection Plan"
-                  onClick={() => trackButtonClick('Request Quote - Custom Plan', 'Training Page')}
-                >
-                  Request Quote
+          <ScrollReveal animation="fade-up" delay={400}>
+            <div className="text-center mt-12">
+              <Button asChild size="lg" variant="outline">
+                <Link to="/resources">
+                  Browse All Resources
+                  <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
-            </Card>
-          </div>
-
-          <div className="text-center mt-8 animate-fade-in-up" style={{ animationDelay: "400ms" }}>
-            <p className="text-muted-foreground">All plans can be cancelled anytime. No long-term contracts required.</p>
-          </div>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
-      {/* What We Analyze Section */}
-      <section className="py-16 bg-background relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <div
-            className="absolute bottom-1/4 left-20 w-80 h-80 bg-primary/20 rounded-full blur-3xl animate-pulse"
-            style={{ animationDuration: "7s" }}
-          />
+      {/* Veterans Discount Banner - Smaller & Compact */}
+      <section className="py-3 bg-gradient-to-r from-primary/10 to-accent/10">
+        <div className="container mx-auto px-4">
+          <Card className="p-3 bg-card/50 backdrop-blur-sm border-primary/20 max-w-2xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center gap-2 text-center md:text-left">
+              <div className="flex-shrink-0">
+                <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-lg">
+                  🇺🇸
+                </div>
+              </div>
+              <div className="flex-1">
+                <h3 className="text-sm font-bold">Veterans & First Responders Save 10%</h3>
+              </div>
+              <Button variant="default" size="sm" asChild>
+                <Link to="/resources">Claim Discount</Link>
+              </Button>
+            </div>
+          </Card>
         </div>
-        <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mb-10 animate-fade-in-up">We Analyze All Types of Threats</h2>
+      </section>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-            {[
-              { icon: Mail, title: "Phishing Emails" },
-              { icon: MessageSquare, title: "SMS Scams" },
-              { icon: Phone, title: "Voice Calls" },
-              { icon: FileText, title: "Voice Messages" },
-              { icon: LinkIcon, title: "Suspicious Links" },
-              { icon: QrCode, title: "QR Codes" },
-              { icon: FileCheck, title: "Documents" },
-              { icon: ImageIcon, title: "Social Media" },
-            ].map((threat, index) => (
-              <ScrollReveal key={index} animation="scale-in" delay={index * 50} threshold={0.2}>
+      {/* ScamShield Protection Section */}
+      <section id="pricing" className="py-20 scroll-mt-20">
+        <div className="container mx-auto px-4">
+          <ScrollReveal animation="fade-up">
+            <div className="text-center mb-16">
+              <Badge variant="secondary" className="mb-4">
+                <Shield className="w-4 h-4 mr-2" />
+                ScamShield Protection
+              </Badge>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                24/7 Protection Against Digital Threats
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                ScamShield is our comprehensive protection service that monitors, alerts, and responds to potential threats in real-time. Get peace of mind knowing you're protected around the clock.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          {/* ScamShield Features */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-16">
+            {scamShieldFeatures.map((feature, index) => (
+              <ScrollReveal key={index} animation="fade-up" delay={index * 100}>
+                <Card className="p-6 text-center hover:shadow-strong transition-all duration-300 hover:-translate-y-1">
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <feature.icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <h3 className="font-bold mb-2">{feature.title}</h3>
+                  <p className="text-sm text-muted-foreground">{feature.description}</p>
+                </Card>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          {/* Protection Plans */}
+          <ScrollReveal animation="fade-up">
+            <h3 className="text-2xl md:text-3xl font-bold text-center mb-12">
+              Choose Your Protection Plan
+            </h3>
+          </ScrollReveal>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {protectionPlans.map((plan, index) => (
+              <ScrollReveal key={index} animation="fade-up" delay={index * 100}>
                 <Card
-                  className="p-6 transition-all duration-500 rounded-2xl border-border/50 hover:border-[#14B8A6] hover:border-2 group bg-gradient-to-br from-card to-card/50 backdrop-blur-sm hover:bg-gradient-to-br hover:from-card/90 hover:to-card/60 hover:shadow-strong"
+                  className={`p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-2xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50 relative ${
+                    plan.popular ? 'border-primary border-2' : ''
+                  }`}
+                  style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <div className="flex flex-col items-center text-center">
-                    <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center transition-all duration-300 mb-3 group-hover:animate-[icon-bounce_0.6s_ease-in-out]">
-                      <threat.icon className="w-7 h-7 text-primary" />
+                  <div className="absolute top-3 right-3 z-10">
+                    <Badge variant="default" className="text-xs font-bold">{plan.badge}</Badge>
+                  </div>
+                  {plan.popular && (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                      <Badge variant="default" className="text-xs font-bold shadow-lg">
+                        <Star className="w-3 h-3 mr-1" />
+                        MOST POPULAR
+                      </Badge>
                     </div>
-                    <h3 className="text-sm font-semibold group-hover:text-primary transition-colors duration-300">
-                      {threat.title}
-                    </h3>
+                  )}
+
+                  <div className="mb-6">
+                    <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
+                    <p className="text-muted-foreground mb-4">{plan.description}</p>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-4xl font-bold text-primary">{plan.price}</span>
+                      <span className="text-muted-foreground">{plan.period}</span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3 mb-8">
+                    {plan.features.map((feature, idx) => (
+                      <div key={idx} className="flex items-start gap-2">
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                        <span className="text-sm">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <Button
+                    onClick={() => handleSubscribe(plan)}
+                    variant={plan.popular ? "default" : "outline"}
+                    size="lg"
+                    className="w-full group"
+                  >
+                    {plan.cta}
+                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Card>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          {/* Disclaimers */}
+          <ScrollReveal animation="fade-up" delay={300}>
+            <div className="mt-12 max-w-4xl mx-auto">
+              <Card className="p-6 bg-muted/50">
+                <h4 className="font-bold mb-3 flex items-center gap-2">
+                  <AlertTriangle className="w-5 h-5 text-primary" />
+                  Important Information
+                </h4>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p>• All protection plans include a 30-day money-back guarantee</p>
+                  <p>• Identity theft insurance is underwritten by a licensed insurance carrier</p>
+                  <p>• Coverage limits and terms apply - see full policy details</p>
+                  <p>• Prices shown are for annual billing; monthly billing available at higher rates</p>
+                  <p>• Service availability may vary by location</p>
+                </div>
+              </Card>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Newsletter Signup Section */}
+      <section className="py-20 bg-gradient-to-br from-primary/10 via-accent/10 to-background">
+        <div className="container mx-auto px-4">
+          <ScrollReveal animation="fade-up">
+            <Card className="max-w-3xl mx-auto p-8 md:p-12 text-center bg-card/50 backdrop-blur-sm">
+              <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center mx-auto mb-6">
+                <Mail className="w-8 h-8 text-white" />
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Stay Informed About Latest Threats
+              </h2>
+              <p className="text-xl text-muted-foreground mb-8">
+                Subscribe to our newsletter for weekly security tips, scam alerts, and exclusive training offers
+              </p>
+              <form onSubmit={handleNewsletterSignup} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                <Input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="flex-1"
+                />
+                <Button type="submit" size="lg">
+                  Subscribe
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </form>
+              <p className="text-xs text-muted-foreground mt-4">
+                We respect your privacy. Unsubscribe at any time.
+              </p>
+            </Card>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <ScrollReveal animation="fade-up">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                What Our Clients Say
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Real stories from people we've helped protect
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {testimonials.map((testimonial, index) => (
+              <ScrollReveal key={index} animation="fade-up" delay={index * 100}>
+                <Card className="p-6 hover:shadow-strong transition-all duration-300 hover:-translate-y-1">
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 fill-primary text-primary" />
+                    ))}
+                  </div>
+                  <p className="text-muted-foreground mb-4 italic">"{testimonial.content}"</p>
+                  <div>
+                    <div className="font-bold">{testimonial.name}</div>
+                    <div className="text-sm text-muted-foreground">{testimonial.role}</div>
                   </div>
                 </Card>
               </ScrollReveal>
@@ -886,222 +750,73 @@ function LearnAndTrain() {
         </div>
       </section>
 
-      {/* Family Safety Vault Section */}
-      <section className="py-16 bg-muted relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20 animate-gradient-shift">
-          <div
-            className="absolute top-20 right-1/4 w-96 h-96 bg-accent/25 rounded-full blur-3xl animate-pulse"
-            style={{ animationDuration: "8s" }}
-          />
-          <div
-            className="absolute bottom-20 left-1/4 w-96 h-96 bg-primary/25 rounded-full blur-3xl animate-pulse"
-            style={{ animationDuration: "10s" }}
-          />
-        </div>
-        <div className="container mx-auto px-4 relative z-10">
-          <Card className="max-w-4xl mx-auto p-8 hover:shadow-strong transition-all duration-500 rounded-2xl border-accent border-2 animate-fade-in-up bg-gradient-to-br from-card to-card/50">
-            <div className="text-center">
-              <div className="flex justify-center mb-6">
-                <div className="w-24 h-24 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center animate-[shield-pulse_3s_ease-in-out_infinite]">
-                  <Lock className="w-12 h-12 text-primary" />
-                </div>
-              </div>
-              <h3 className="text-3xl font-bold mb-4">Secure Your Family's Most Important Information</h3>
-              <p className="text-xl text-muted-foreground mb-8">Included with Family & Premium Plans</p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 text-left max-w-2xl mx-auto">
-                {[
-                  "Family safe words",
-                  "Trusted caller list",
-                  "Emergency contacts",
-                  "Important documents (encrypted)",
-                  "Account recovery info",
-                  "Travel itineraries",
-                ].map((feature, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground">{feature}</span>
-                  </div>
-                ))}
-              </div>
-
-              <p className="text-sm text-muted-foreground mb-6">
-                Security: Bank-grade encryption, multi-factor auth, access sharing
+      {/* Final CTA Section */}
+      <section className="py-20 bg-gradient-to-br from-primary via-accent to-primary text-white">
+        <div className="container mx-auto px-4">
+          <ScrollReveal animation="fade-up">
+            <div className="text-center max-w-3xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                Ready to Enhance Your Digital Security?
+              </h2>
+              <p className="text-xl mb-8 text-white/90">
+                Join thousands of individuals and businesses who trust us to keep them safe online
               </p>
-
-              <Button 
-                asChild 
-                className="bg-[#14B8A6] hover:bg-[#0F9A8A] text-white group" 
-                size="lg"
-              >
-                <Link to="/vault" className="flex items-center gap-2">
-                  <span className="text-xl group-hover:animate-[lock-shake_0.5s_ease-in-out]">🔒</span>
-                  EXPLORE SAFETY VAULT
-                </Link>
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button 
+                  onClick={() => {
+                    document.getElementById('training')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  size="xl" 
+                  variant="secondary"
+                  className="group"
+                >
+                  Book Training Now
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                </Button>
+                <Button 
+                  onClick={() => {
+                    document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  size="xl" 
+                  variant="outline"
+                  className="bg-white/10 hover:bg-white/20 text-white border-white/30 group"
+                >
+                  View Protection Plans
+                  <Shield className="w-5 h-5 ml-2 group-hover:scale-110 transition-transform" />
+                </Button>
+              </div>
             </div>
-          </Card>
+          </ScrollReveal>
         </div>
       </section>
 
-      {/* Real Examples Section */}
-      <section className="py-16 bg-background relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <div
-            className="absolute bottom-20 left-1/4 w-72 h-72 bg-primary/25 rounded-full blur-3xl animate-pulse"
-            style={{ animationDuration: "6s" }}
-          />
-        </div>
-        <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mb-10 animate-fade-in-up">Scams We've Caught for Our Members</h2>
+      <CustomTrainingDialog 
+        open={customTrainingOpen}
+        onOpenChange={setCustomTrainingOpen}
+      />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto mb-12">
-            {[
-              {
-                badge: "Grandparent Scam",
-                received: '"Hi grandma, I\'m in jail and need bail money NOW"',
-                analysis: "Voice analysis showed AI generation. Number traced to known scam.",
-                saved: "$8,000",
-              },
-              {
-                badge: "Bank Phishing",
-                received: "Email that looked exactly like Chase Bank",
-                analysis: "Domain was chase-secure-verify.com (fake). Classic phishing.",
-                saved: "Entire savings",
-              },
-              {
-                badge: "Tech Support Scam",
-                received: "Microsoft called saying computer was hacked",
-                analysis: "Microsoft never cold-calls. Verified fake tech support operation.",
-                saved: "$2,500",
-              },
-              {
-                badge: "Romance Scam",
-                received: "Online love interest requested emergency funds",
-                analysis: "Photos were stolen. Profile matched known scammer patterns.",
-                saved: "$15,000",
-              },
-            ].map((example, index) => (
-              <ScamExampleCard key={index} example={example} index={index} />
-            ))}
-          </div>
+      <BookingModal 
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        selectedService={selectedService}
+      />
 
-          {/* Video Testimonials Section */}
-          {isAdmin && (
-            <div className="mt-12">
-              <h3 className="text-2xl font-bold text-center mb-8">Video Testimonials</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                {[1, 2, 3].map((i) => (
-                  <Card 
-                    key={i} 
-                    className="p-6 text-center border-2 border-dashed border-primary/30 hover:border-primary/50 hover:shadow-medium transition-all bg-gradient-to-br from-card to-card/50"
-                  >
-                    <div className="aspect-video bg-muted/30 rounded-lg mb-4 flex flex-col items-center justify-center gap-3">
-                      <Video className="w-12 h-12 text-primary/50" />
-                      <p className="text-sm font-semibold text-muted-foreground">Upload Member Success Stories</p>
-                    </div>
-                    <Button variant="default" size="sm" className="w-full">
-                      <Upload className="w-4 h-4 mr-2" />
-                      Add Video
-                    </Button>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
+      <SubscriptionDialog
+        open={subscriptionDialogOpen}
+        onOpenChange={setSubscriptionDialogOpen}
+        subscriptionData={selectedSubscription}
+      />
 
-      {/* Training Success Stories */}
-      {trainingTestimonials.length > 0 && (
-        <section className="py-20 bg-muted">
-          <div className="container mx-auto px-4">
-            <ScrollReveal>
-              <h2 className="text-center mb-4">Training Success Stories</h2>
-              <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-                Hear from families who have completed our training programs
-              </p>
-            </ScrollReveal>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {trainingTestimonials.map((testimonial) => {
-                const videoMedia = testimonial.testimonial_media?.find((m: any) => m.media_type === "video");
-                return (
-                  <TestimonialCard
-                    key={testimonial.id}
-                    name={testimonial.name}
-                    location={testimonial.location}
-                    quote={testimonial.story}
-                    image={videoMedia?.thumbnail_url || '/placeholder.svg'}
-                    rating={testimonial.rating}
-                    videoUrl={videoMedia?.file_url}
-                    onVideoClick={() => videoMedia && setSelectedVideo({
-                      src: videoMedia.file_url,
-                      title: `${testimonial.name}'s Story`
-                    })}
-                  />
-                );
-              })}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Final CTA */}
-      <CTASection headline="Sleep Better Tonight" variant="gold">
-        <p className="text-xl text-white/90 mb-8">Join 500+ families who trust ScamShield</p>
-        <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center">
-          <Button 
-            onClick={() => {
-              document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
-            }}
-            variant="gold" 
-            size="xl" 
-            className="w-full sm:w-auto"
-          >
-            Get Started
-          </Button>
-          <Button asChild variant="outlineLight" size="xl" className="w-full sm:w-auto">
-            <Link to="/contact">
-              TALK TO EXPERT
-            </Link>
-          </Button>
-        </div>
-      </CTASection>
-
-      <Footer />
-      
       {selectedVideo && (
         <VideoLightbox
-          isOpen={!!selectedVideo}
-          onClose={() => setSelectedVideo(null)}
           videoSrc={selectedVideo.src}
           title={selectedVideo.title}
-        />
-      )}
-      
-      {selectedService && (
-        <BookingModal
-          open={modalOpen}
-          onOpenChange={setModalOpen}
-          serviceType={selectedService.type}
-          serviceName={selectedService.name}
-          serviceTier={selectedService.tier}
-          basePrice={selectedService.price}
-          veteranDiscountPercent={10}
+          isOpen={true}
+          onClose={() => setSelectedVideo(null)}
         />
       )}
 
-      {selectedSubscription && (
-        <SubscriptionDialog
-          open={subscriptionDialogOpen}
-          onOpenChange={setSubscriptionDialogOpen}
-          priceId={selectedSubscription.priceId}
-          serviceName={selectedSubscription.serviceName}
-          planTier={selectedSubscription.planTier}
-          amount={selectedSubscription.amount}
-        />
-      )}
+      <Footer />
     </div>
   );
 }
