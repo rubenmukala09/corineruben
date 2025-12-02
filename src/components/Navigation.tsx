@@ -73,10 +73,10 @@ const Navigation = () => {
                   to={link.href}
                   className={`text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-xl whitespace-nowrap ${
                     isActive 
-                      ? 'bg-primary/10 text-primary shadow-[0_0_15px_rgba(236,72,153,0.5)]' 
+                      ? 'bg-primary/10 text-primary' 
                       : 'hover:bg-primary/5'
                   }`}
-                  style={{ fontSize: '12px' }}
+                  style={{ fontSize: '16px' }}
                 >
                   {link.name}
                 </PrefetchLink>
