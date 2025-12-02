@@ -368,7 +368,7 @@ function About() {
           </Button>
           <Button asChild size="lg" variant="outline">
             <Link 
-              to="/business"
+              to="/contact"
               onClick={() => trackButtonClick('Partner With Us', 'About CTA')}
             >
               Partner With Us
