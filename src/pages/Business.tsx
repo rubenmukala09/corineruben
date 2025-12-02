@@ -172,6 +172,15 @@ function Business() {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="AI Business Solutions - Automation, Websites & Insurance"
+        description="Transform your business with secure AI solutions. AI receptionists, chatbots, professional websites, and industry-leading AI Service Insurance."
+        keywords="AI business solutions, AI receptionist, business automation, AI security, website design, Dayton Ohio"
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "AI for Business", url: "/business" }
+        ]}
+      />
       <Navigation />
 
       <Hero

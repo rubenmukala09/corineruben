@@ -162,6 +162,10 @@ function Careers() {
       <SEO 
         title="Careers - Join Our Mission" 
         description="Join InVision Network and help protect families from AI-powered scams. Remote-first culture, competitive benefits, meaningful work. Open positions in engineering, support, design, and more."
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Careers", url: "/careers" }
+        ]}
       />
       <Navigation />
       <Hero 

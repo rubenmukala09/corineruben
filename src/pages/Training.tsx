@@ -34,6 +34,7 @@ import { SubscriptionDialog } from "@/components/SubscriptionDialog";
 import { CustomTrainingDialog } from "@/components/CustomTrainingDialog";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { TrainingHeroCarousel } from "@/components/TrainingHeroCarousel";
+import { SEO } from "@/components/SEO";
 import { useSmoothAnchorScroll } from "@/hooks/useSmoothAnchorScroll";
 import { useToast } from "@/hooks/use-toast";
 
@@ -271,6 +272,15 @@ const LearnAndTrain = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Learn & Train - AI Scam Protection Training"
+        description="Comprehensive AI scam protection training for families and seniors. Learn to spot deepfakes, phishing, and AI-powered scams. Zoom and in-person classes available."
+        keywords="AI scam training, deepfake detection, senior cybersecurity, phishing awareness, family protection, Dayton Ohio"
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Learn & Train", url: "/training" }
+        ]}
+      />
       <Navigation />
       
       {/* Hero Carousel Section */}

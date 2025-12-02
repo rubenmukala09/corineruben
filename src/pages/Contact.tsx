@@ -160,6 +160,10 @@ function Contact() {
       <SEO 
         title="Contact Us - Get Support & Answers" 
         description="Contact InVision Network for scam protection support. Phone, email, live chat available. Average 2-minute wait time. 95% same-day response rate."
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Contact Us", url: "/contact" }
+        ]}
       />
       <Navigation />
       <Hero 

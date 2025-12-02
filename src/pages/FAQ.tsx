@@ -370,6 +370,10 @@ export default function FAQ() {
         title="Frequently Asked Questions"
         description="Find answers to common questions about InVision Network's AI scam protection, business services, billing, and technical support."
         keywords="FAQ, questions, support, help, InVision Network"
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "FAQ", url: "/faq" }
+        ]}
       />
       <Navigation />
       

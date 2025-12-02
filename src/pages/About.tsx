@@ -126,6 +126,10 @@ function About() {
       <SEO 
         title="About Us - Our Story, Mission & Team"
         description="Learn about InVision Network's mission to protect families from digital scams. Founded from personal experience, serving 500+ families across Ohio."
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "About Us", url: "/about" }
+        ]}
       />
       <Navigation />
       

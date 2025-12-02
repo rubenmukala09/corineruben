@@ -80,6 +80,10 @@ function Resources() {
       <SEO 
         title="Resources & Marketplace - Digital Guides & Security Products"
         description="Browse our curated collection of scam prevention guides and physical security products. Everything you need to protect yourself and your loved ones."
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Resources", url: "/resources" }
+        ]}
       />
       <Navigation />
       
