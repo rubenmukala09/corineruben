@@ -73,7 +73,12 @@ function Contact() {
     fullName: "",
     email: "",
     phone: "",
+    companyName: "",
     subject: "",
+    serviceInterest: "",
+    preferredCallback: "",
+    urgencyLevel: "normal",
+    budgetRange: "",
     message: "",
     hearAbout: "",
     contactMethod: "email"
@@ -91,7 +96,12 @@ function Contact() {
           name: formData.fullName,
           email: formData.email,
           phone: formData.phone,
+          companyName: formData.companyName,
           interest: formData.subject,
+          serviceInterest: formData.serviceInterest,
+          preferredCallback: formData.preferredCallback,
+          urgencyLevel: formData.urgencyLevel,
+          budgetRange: formData.budgetRange,
           message: formData.message,
           hearAbout: formData.hearAbout,
           contactMethod: formData.contactMethod
@@ -115,7 +125,12 @@ function Contact() {
           fullName: "",
           email: "",
           phone: "",
+          companyName: "",
           subject: "",
+          serviceInterest: "",
+          preferredCallback: "",
+          urgencyLevel: "normal",
+          budgetRange: "",
           message: "",
           hearAbout: "",
           contactMethod: "email"
@@ -259,6 +274,17 @@ function Contact() {
                         </div>
                       </div>
 
+                      {/* Company Name */}
+                      <div>
+                        <Label htmlFor="companyName">Company / Organization Name (optional)</Label>
+                        <Input
+                          id="companyName"
+                          value={formData.companyName}
+                          onChange={(e) => setFormData({...formData, companyName: e.target.value})}
+                          placeholder="Your company name"
+                        />
+                      </div>
+
                       {/* Subject */}
                       <div>
                         <Label htmlFor="subject">Subject *</Label>
@@ -272,8 +298,77 @@ function Contact() {
                             <SelectItem value="business">Business Services</SelectItem>
                             <SelectItem value="careers">Careers</SelectItem>
                             <SelectItem value="billing">Billing Question</SelectItem>
+                            <SelectItem value="partnership">Partnership Opportunity</SelectItem>
                           </SelectContent>
                         </Select>
+                      </div>
+
+                      {/* Service Interest */}
+                      <div>
+                        <Label htmlFor="serviceInterest">Service Interest (optional)</Label>
+                        <Select value={formData.serviceInterest} onValueChange={(value) => setFormData({...formData, serviceInterest: value})}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="What are you interested in?" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="scamshield">ScamShield Protection</SelectItem>
+                            <SelectItem value="training">Training Programs</SelectItem>
+                            <SelectItem value="ai-business">AI for Business</SelectItem>
+                            <SelectItem value="website">Website Design</SelectItem>
+                            <SelectItem value="general">General Information</SelectItem>
+                            <SelectItem value="partnership">Partnership</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* Preferred Callback Time */}
+                      <div>
+                        <Label htmlFor="preferredCallback">Preferred Callback Time (optional)</Label>
+                        <Select value={formData.preferredCallback} onValueChange={(value) => setFormData({...formData, preferredCallback: value})}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="When's best to call?" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="morning">Morning (9am-12pm EST)</SelectItem>
+                            <SelectItem value="afternoon">Afternoon (12pm-5pm EST)</SelectItem>
+                            <SelectItem value="evening">Evening (5pm-8pm EST)</SelectItem>
+                            <SelectItem value="anytime">Anytime</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* Urgency Level & Budget Range */}
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor="urgencyLevel">Urgency Level</Label>
+                          <Select value={formData.urgencyLevel} onValueChange={(value) => setFormData({...formData, urgencyLevel: value})}>
+                            <SelectTrigger>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="low">Low - Just browsing</SelectItem>
+                              <SelectItem value="normal">Normal - Within a week</SelectItem>
+                              <SelectItem value="high">High - Within 24-48 hours</SelectItem>
+                              <SelectItem value="urgent">Urgent - ASAP</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div>
+                          <Label htmlFor="budgetRange">Budget Range (for services)</Label>
+                          <Select value={formData.budgetRange} onValueChange={(value) => setFormData({...formData, budgetRange: value})}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select budget" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="under-1k">Under $1,000</SelectItem>
+                              <SelectItem value="1k-5k">$1,000 - $5,000</SelectItem>
+                              <SelectItem value="5k-10k">$5,000 - $10,000</SelectItem>
+                              <SelectItem value="10k-25k">$10,000 - $25,000</SelectItem>
+                              <SelectItem value="25k-plus">$25,000+</SelectItem>
+                              <SelectItem value="not-sure">Not sure yet</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
                       </div>
 
                       {/* Message */}

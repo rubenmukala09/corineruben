@@ -438,7 +438,10 @@ function Business() {
             </ScrollReveal>
 
             <ScrollReveal animation="slide-right" delay={400}>
-              <Card className="p-6 md:p-8 border-2 border-accent active:scale-98">
+              <Card className="p-6 md:p-8 border-2 border-accent active:scale-98 relative">
+                <div className="absolute top-3 right-3 z-10">
+                  <Badge variant="premium" className="text-xs font-bold">ENTERPRISE</Badge>
+                </div>
                 <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">Custom Automation Suite</h3>
                 <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">Enterprise-level multi-system automation tailored to your business</p>
                 <p ref={price3Counter.ref} className="text-3xl md:text-4xl font-bold text-accent mb-4 md:mb-6">
@@ -739,7 +742,10 @@ function Business() {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
             {/* Basic Care */}
-            <Card className="p-6 rounded-2xl border-border/50 hover:shadow-medium transition-all hover:-translate-y-1">
+            <Card className="p-6 rounded-2xl border-border/50 hover:shadow-medium transition-all hover:-translate-y-1 relative">
+              <div className="absolute top-3 right-3">
+                <Badge variant="default" className="text-xs font-bold">STARTER</Badge>
+              </div>
               <h3 className="text-xl font-bold mb-3">Basic Care</h3>
               <p key={isYearly ? 'yearly-199' : 'monthly-199'} className="text-3xl font-bold gradient-text-primary mb-2 price-flip">
                 {getInsurancePrice(199).display}<span className="text-base text-muted-foreground">{getInsurancePrice(199).period}</span>
@@ -850,7 +856,10 @@ function Business() {
             </div>
 
             {/* Customized Insurance - Merged with Premium */}
-            <Card className="p-6 rounded-2xl border-primary/50 hover:shadow-medium transition-all hover:-translate-y-1 bg-gradient-to-br from-primary/5 to-accent/10 border-2">
+            <Card className="p-6 rounded-2xl border-primary/50 hover:shadow-medium transition-all hover:-translate-y-1 bg-gradient-to-br from-primary/5 to-accent/10 border-2 relative">
+              <div className="absolute top-3 right-3">
+                <Badge variant="premium" className="text-xs font-bold">PREMIUM</Badge>
+              </div>
               <h3 className="text-xl font-bold mb-3">Customized Insurance</h3>
               <p className="text-3xl font-bold gradient-text-primary mb-2">
                 $599+<span className="text-base text-muted-foreground"> /month</span>
