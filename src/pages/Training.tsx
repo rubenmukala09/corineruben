@@ -32,8 +32,8 @@ import { BookingModal } from "@/components/BookingModal";
 import { SubscriptionDialog } from "@/components/SubscriptionDialog";
 import { CustomTrainingDialog } from "@/components/CustomTrainingDialog";
 import { VideoLightbox } from "@/components/VideoLightbox";
+import { TrainingHeroCarousel } from "@/components/TrainingHeroCarousel";
 import { useSmoothAnchorScroll } from "@/hooks/useSmoothAnchorScroll";
-import trainingSession from "@/assets/training-session.jpg";
 import { useToast } from "@/hooks/use-toast";
 
 interface VideoData {
@@ -272,70 +272,16 @@ const LearnAndTrain = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/5 to-background pointer-events-none" />
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <ScrollReveal animation="fade-up">
-              <Badge variant="secondary" className="mb-6 text-sm px-4 py-2">
-                <Award className="w-4 h-4 mr-2 inline" />
-                Certified Cybersecurity Training
-              </Badge>
-            </ScrollReveal>
+      {/* Hero Carousel Section */}
+      <TrainingHeroCarousel />
 
-            <ScrollReveal animation="fade-up" delay={100}>
-              <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent leading-tight">
-                Learn to Protect Yourself from Digital Threats
-              </h1>
-            </ScrollReveal>
-
-            <ScrollReveal animation="fade-up" delay={200}>
-              <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-                Expert-led training programs and comprehensive protection plans to keep you safe online
-              </p>
-            </ScrollReveal>
-
-            <ScrollReveal animation="fade-up" delay={300}>
-              <div className="flex flex-wrap gap-4 justify-center mb-8">
-                <TrustIndicator type="check" text="Certified Instructors" />
-                <TrustIndicator type="shield" text="Proven Methods" />
-                <TrustIndicator type="award" text="Industry Recognition" />
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal animation="fade-up" delay={400}>
-              <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center sm:justify-start">
-                <Button 
-                  onClick={() => {
-                    document.getElementById('training')?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  variant="default" 
-                  size="xl" 
-                  className="w-full sm:w-auto"
-                >
-                  View Training Programs
-                </Button>
-                <Button 
-                  onClick={() => {
-                    document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  variant="secondary" 
-                  size="xl" 
-                  className="w-full sm:w-auto"
-                >
-                  Learn About ScamShield
-                </Button>
-              </div>
-            </ScrollReveal>
-          </div>
-
-          {/* Stats */}
-          <ScrollReveal animation="fade-up" delay={500}>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 max-w-4xl mx-auto">
-              {stats.map((stat, index) => (
-                <div key={index} className="text-center">
+      {/* Stats */}
+      <section className="py-12 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+            {stats.map((stat, index) => (
+              <ScrollReveal key={index} animation="fade-up" delay={index * 100}>
+                <div className="text-center">
                   <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
                     {stat.number}
                   </div>
@@ -343,9 +289,9 @@ const LearnAndTrain = () => {
                     {stat.label}
                   </div>
                 </div>
-              ))}
-            </div>
-          </ScrollReveal>
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
       </section>
 
