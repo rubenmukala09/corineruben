@@ -1,5 +1,24 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
+/**
+ * Analyze Scam Edge Function
+ * 
+ * PUBLIC ENDPOINT (verify_jwt = false)
+ * 
+ * RATE LIMITING ADVISORY (Post-Launch Security):
+ * This function is publicly accessible and should have rate limiting implemented
+ * to prevent abuse. Consider implementing:
+ * - IP-based rate limiting (e.g., 10 requests per minute per IP)
+ * - Request throttling using Redis/Upstash
+ * - CAPTCHA verification for repeated requests
+ * - Request size limits to prevent payload abuse
+ * 
+ * Implementation options:
+ * 1. Use Cloudflare Rate Limiting rules
+ * 2. Implement custom rate limiting with Upstash Redis
+ * 3. Add request counting per IP in Supabase
+ */
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",

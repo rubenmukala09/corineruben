@@ -1,6 +1,29 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.7.1";
 
+/**
+ * Newsletter Signup Edge Function
+ * 
+ * PUBLIC ENDPOINT (verify_jwt = false)
+ * 
+ * RATE LIMITING ADVISORY (Post-Launch Security):
+ * This function is publicly accessible and vulnerable to:
+ * - Email enumeration attacks
+ * - Spam/bot signups
+ * - Email list bombing
+ * 
+ * Recommended limits:
+ * - 3 signup attempts per IP per hour
+ * - Email domain validation (block disposable emails)
+ * - Honeypot field for bot detection
+ * - CAPTCHA integration (reCAPTCHA v3)
+ * 
+ * Implementation options:
+ * 1. Use email validation service (ZeroBounce, NeverBounce)
+ * 2. Implement IP-based rate limiting with Upstash Redis
+ * 3. Add invisible honeypot field in frontend form
+ */
+
 const resendApiKey = Deno.env.get("RESEND_API_KEY")!;
 const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
 const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;

@@ -2,6 +2,30 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import Stripe from 'https://esm.sh/stripe@14.21.0';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.2';
 
+/**
+ * Process Service Payment Edge Function
+ * 
+ * PUBLIC ENDPOINT (verify_jwt = false)
+ * 
+ * RATE LIMITING ADVISORY (Post-Launch Security):
+ * This function processes payments and is publicly accessible.
+ * Implement rate limiting to prevent:
+ * - Card testing attacks
+ * - Payment fraud
+ * - API abuse
+ * 
+ * Recommended limits:
+ * - 5 payment attempts per IP per hour
+ * - 3 failed payment attempts triggers temporary block
+ * - Velocity checks for unusual purchase patterns
+ * 
+ * Implementation options:
+ * 1. Stripe Radar for fraud detection (already enabled)
+ * 2. Upstash Redis for request counting
+ * 3. IP reputation checking
+ * 4. Device fingerprinting for repeat offenders
+ */
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',

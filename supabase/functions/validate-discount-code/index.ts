@@ -1,6 +1,29 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
 
+/**
+ * Validate Discount Code Edge Function
+ * 
+ * PUBLIC ENDPOINT (verify_jwt = false)
+ * 
+ * RATE LIMITING ADVISORY (Post-Launch Security):
+ * This function is publicly accessible and vulnerable to:
+ * - Discount code enumeration/brute-force
+ * - Automated code guessing attacks
+ * 
+ * Recommended limits:
+ * - 10 validation attempts per IP per minute
+ * - Exponential backoff after 5 failed attempts
+ * - Code complexity requirements (min 8 chars)
+ * - Logging of failed attempts for security monitoring
+ * 
+ * Implementation options:
+ * 1. Track failed attempts in database per IP
+ * 2. Implement lockout after consecutive failures
+ * 3. Use Upstash Redis for fast rate limiting
+ * 4. Add CAPTCHA after 3 failed attempts
+ */
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",

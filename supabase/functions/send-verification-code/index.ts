@@ -1,6 +1,30 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
+/**
+ * Send Verification Code Edge Function
+ * 
+ * PUBLIC ENDPOINT (verify_jwt = false)
+ * 
+ * RATE LIMITING ADVISORY (Post-Launch Security):
+ * This function sends verification codes and is vulnerable to:
+ * - SMS/Email bombing attacks
+ * - Account enumeration
+ * - Verification code brute-force
+ * 
+ * Recommended limits:
+ * - 3 code requests per email per hour
+ * - 5 code requests per IP per hour
+ * - Block after 5 failed verification attempts
+ * - Implement progressive delays between requests
+ * 
+ * Implementation options:
+ * 1. Track request count per email in database
+ * 2. Use Upstash Redis for fast rate limiting
+ * 3. Implement exponential backoff
+ * 4. Add CAPTCHA after 2 requests
+ */
+
 const resendApiKey = Deno.env.get("RESEND_API_KEY")!;
 const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
 const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;

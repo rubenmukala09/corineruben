@@ -1,6 +1,30 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 
+/**
+ * Send Contact Email Edge Function
+ * 
+ * PUBLIC ENDPOINT (verify_jwt = false)
+ * 
+ * RATE LIMITING ADVISORY (Post-Launch Security):
+ * This function is publicly accessible and vulnerable to:
+ * - Contact form spam
+ * - Email bombing attacks
+ * - Abuse of email sending quota
+ * 
+ * Recommended limits:
+ * - 5 submissions per IP per hour
+ * - 2 submissions per email per day
+ * - Message length validation (max 5000 chars)
+ * - CAPTCHA for repeated submissions
+ * 
+ * Implementation options:
+ * 1. Honeypot fields in frontend form
+ * 2. Rate limiting with Upstash Redis
+ * 3. Akismet or similar spam detection API
+ * 4. IP reputation checking
+ */
+
 const resendApiKey = Deno.env.get("RESEND_API_KEY")!;
 
 const corsHeaders = {
