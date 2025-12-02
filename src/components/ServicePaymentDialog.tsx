@@ -8,15 +8,13 @@ import { Switch } from "@/components/ui/switch";
 import { Checkbox } from "@/components/ui/checkbox";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { AcceptedCardsDisplay } from "./AcceptedCardsDisplay";
 import { QRCodePayment } from "./QRCodePayment";
 import { VeteranIdUpload } from "./VeteranIdUpload";
 import { RefundPolicyDisclaimer } from "./RefundPolicyDisclaimer";
 import { Loader2 } from "lucide-react";
-
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+import { useStripeLoader } from '@/hooks/useStripeLoader';
 
 interface ServicePaymentDialogProps {
   open: boolean;
@@ -502,6 +500,10 @@ export function ServicePaymentDialog({
   servicePrice,
   serviceDescription,
 }: ServicePaymentDialogProps) {
+  const { stripe, loading: stripeLoading } = useStripeLoader();
+  
+  if (!open) return null;
+  
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
@@ -509,17 +511,23 @@ export function ServicePaymentDialog({
           <DialogTitle className="text-2xl">Complete Your Purchase</DialogTitle>
         </DialogHeader>
         
-        <Elements stripe={stripePromise}>
-          <PaymentForm
-            serviceType={serviceType}
-            serviceName={serviceName}
-            servicePrice={servicePrice}
-            serviceDescription={serviceDescription}
-            onSuccess={() => {
-              onOpenChange(false);
-            }}
-          />
-        </Elements>
+        {stripeLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        ) : (
+          <Elements stripe={stripe}>
+            <PaymentForm
+              serviceType={serviceType}
+              serviceName={serviceName}
+              servicePrice={servicePrice}
+              serviceDescription={serviceDescription}
+              onSuccess={() => {
+                onOpenChange(false);
+              }}
+            />
+          </Elements>
+        )}
       </DialogContent>
     </Dialog>
   );

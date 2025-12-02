@@ -13,10 +13,8 @@ import { toast } from 'sonner';
 import { Loader2, Heart, CheckCircle2 } from 'lucide-react';
 import { AcceptedCardsDisplay } from '@/components/AcceptedCardsDisplay';
 import { QRCodePayment } from '@/components/QRCodePayment';
-import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '');
+import { useStripeLoader } from '@/hooks/useStripeLoader';
 
 const donationSchema = z.object({
   donationType: z.enum(['one-time', 'monthly']),
@@ -319,6 +317,7 @@ function DonationForm({ onSuccess }: { onSuccess: (confirmationNum: string) => v
 export function ChildrenDonationModal({ open, onOpenChange }: ChildrenDonationModalProps) {
   const [showThankYou, setShowThankYou] = useState(false);
   const [confirmationNumber, setConfirmationNumber] = useState('');
+  const { stripe, loading: stripeLoading } = useStripeLoader();
 
   const handleSuccess = (confirmNum: string) => {
     setConfirmationNumber(confirmNum);
@@ -361,6 +360,8 @@ export function ChildrenDonationModal({ open, onOpenChange }: ChildrenDonationMo
       </Dialog>
     );
   }
+  
+  if (!open) return null;
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -375,9 +376,15 @@ export function ChildrenDonationModal({ open, onOpenChange }: ChildrenDonationMo
           </DialogDescription>
         </DialogHeader>
 
-        <Elements stripe={stripePromise}>
-          <DonationForm onSuccess={handleSuccess} />
-        </Elements>
+        {stripeLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        ) : (
+          <Elements stripe={stripe}>
+            <DonationForm onSuccess={handleSuccess} />
+          </Elements>
+        )}
       </DialogContent>
     </Dialog>
   );

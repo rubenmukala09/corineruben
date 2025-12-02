@@ -13,11 +13,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { Users, DollarSign, Building2, Loader2 } from "lucide-react";
 import { donationFormSchema, formatPhoneNumber } from "@/utils/formValidation";
 import { z } from "zod";
-import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Label } from "@/components/ui/label";
-
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '');
+import { useStripeLoader } from '@/hooks/useStripeLoader';
 
 interface DonationModalProps {
   open: boolean;
@@ -370,6 +368,8 @@ function DonationForm({ type, onSuccess }: { type: string; onSuccess: () => void
 }
 
 export const DonationModal = ({ open, onOpenChange, type = 'general' }: DonationModalProps) => {
+  const { stripe, loading: stripeLoading } = useStripeLoader();
+  
   const getTitle = () => {
     switch (type) {
       case 'sponsor':
@@ -395,6 +395,8 @@ export const DonationModal = ({ open, onOpenChange, type = 'general' }: Donation
         return <DollarSign className="w-8 h-8 text-primary" />;
     }
   };
+  
+  if (!open) return null;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -404,9 +406,15 @@ export const DonationModal = ({ open, onOpenChange, type = 'general' }: Donation
           <DialogTitle className="text-2xl font-bold">{getTitle()}</DialogTitle>
         </DialogHeader>
 
-        <Elements stripe={stripePromise}>
-          <DonationForm type={type} onSuccess={() => onOpenChange(false)} />
-        </Elements>
+        {stripeLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        ) : (
+          <Elements stripe={stripe}>
+            <DonationForm type={type} onSuccess={() => onOpenChange(false)} />
+          </Elements>
+        )}
       </DialogContent>
     </Dialog>
   );

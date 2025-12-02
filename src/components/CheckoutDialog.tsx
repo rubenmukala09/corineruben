@@ -8,7 +8,6 @@ import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { Loader2, CreditCard, Shield } from 'lucide-react';
-import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { OrderSummary } from '@/components/OrderSummary';
 import TrustBadges from '@/components/TrustBadges';
@@ -16,8 +15,7 @@ import { VeteranIdUpload } from '@/components/VeteranIdUpload';
 import { RefundPolicyDisclaimer } from '@/components/RefundPolicyDisclaimer';
 import { AcceptedCardsDisplay } from '@/components/AcceptedCardsDisplay';
 import { QRCodePayment } from '@/components/QRCodePayment';
-
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '');
+import { useStripeLoader } from '@/hooks/useStripeLoader';
 
 interface CheckoutDialogProps {
   open: boolean;
@@ -293,6 +291,10 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
 
 export function CheckoutDialog({ open, onOpenChange }: CheckoutDialogProps) {
   const { items } = useCart();
+  const { stripe, loading: stripeLoading } = useStripeLoader();
+  
+  if (!open) return null;
+  
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
@@ -300,9 +302,15 @@ export function CheckoutDialog({ open, onOpenChange }: CheckoutDialogProps) {
           <DialogTitle className="text-2xl">Complete Your Purchase</DialogTitle>
           <DialogDescription>{items.length} {items.length === 1 ? 'item' : 'items'} in your cart</DialogDescription>
         </DialogHeader>
-        <Elements stripe={stripePromise}>
-          <CheckoutForm onSuccess={() => onOpenChange(false)} />
-        </Elements>
+        {stripeLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        ) : (
+          <Elements stripe={stripe}>
+            <CheckoutForm onSuccess={() => onOpenChange(false)} />
+          </Elements>
+        )}
       </DialogContent>
     </Dialog>
   );
