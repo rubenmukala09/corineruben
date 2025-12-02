@@ -1,185 +1,88 @@
-import { useState } from "react";
+import { ChildrenDonationModal } from "@/components/ChildrenDonationModal";
+import { PartnershipModal } from "@/components/PartnershipModal";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Shield, Heart, Gift, Users, DollarSign, Building2 } from "lucide-react";
-import { DonationModal } from "./DonationModal";
+import { Heart, Shield } from "lucide-react";
+import { useState } from "react";
 
 const MakingADifference = () => {
   const [donationModalOpen, setDonationModalOpen] = useState(false);
-  const [donationType, setDonationType] = useState<'sponsor' | 'monthly' | 'corporate' | 'general'>('general');
-
-  const openDonationModal = (type: 'sponsor' | 'monthly' | 'corporate' | 'general') => {
-    setDonationType(type);
-    setDonationModalOpen(true);
-  };
+  const [partnershipModalOpen, setPartnershipModalOpen] = useState(false);
 
   return (
-    <>
-    <section className="py-20 bg-gradient-to-b from-background to-muted/30">
+    <section className="py-16 md:py-20 bg-gradient-to-b from-background to-muted/30" role="region" aria-label="Community support">
       <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="mb-4">Making a Difference Together</h2>
-          <p className="text-xl text-muted-foreground">
-            Your enrollment powers safety education and community support programs nationwide.
-          </p>
-        </div>
+        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center animate-fade-in text-foreground">
+          Making a Difference Together
+        </h2>
+        <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto text-lg leading-relaxed">
+          Join us in supporting those who protect our nation and helping children battling cancer. Together, we can create lasting change.
+        </p>
 
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {/* Veterans & First Responders */}
-          <Card className="relative overflow-hidden group hover:shadow-lg transition-all duration-300">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-bl-full" />
-            <CardHeader>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-3 rounded-xl bg-primary/10">
-                  <Shield className="h-6 w-6 text-primary" />
-                </div>
-                <Badge variant="secondary" className="text-lg px-3 py-1">10% OFF</Badge>
+        {/* Main Contribution Cards */}
+        <div className="grid md:grid-cols-2 gap-8 mb-12 max-w-4xl mx-auto">
+          {/* Veterans & First Responders Card */}
+          <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20 rounded-xl p-8 shadow-lg hover:shadow-xl transition-all border-2 border-blue-200/50 dark:border-blue-800/50">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-3 bg-blue-500/20 rounded-lg">
+                <Shield className="w-8 h-8 text-blue-600 dark:text-blue-400" />
               </div>
-              <CardTitle className="text-2xl">Thank you for your service</CardTitle>
-              <CardDescription className="text-base">
-                🎖️ Veterans & First Responders
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-muted-foreground">
-                Active duty, veterans, reservists, and first responders receive special recognition with our standing discount program.
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Verify status at checkout
-              </p>
-              <Button className="w-full" size="lg" asChild>
-                <Link to="/contact">Claim Discount</Link>
-              </Button>
-            </CardContent>
-          </Card>
+              <h3 className="text-2xl font-bold text-foreground">Thank You for Your Service</h3>
+            </div>
+            <p className="text-muted-foreground mb-6 leading-relaxed">
+              We honor the brave men and women who serve our country and communities. Veterans and first responders receive a special 10% discount on all our services and products.
+            </p>
+            <div className="flex flex-col gap-3">
+              <Link to="/resources">
+                <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition-all shadow-md hover:shadow-lg">
+                  Shop with Discount
+                </button>
+              </Link>
+            </div>
+          </div>
 
-          {/* Support Children with Cancer */}
-          <Card className="relative overflow-hidden group hover:shadow-lg transition-all duration-300 border-2 border-primary/20">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent/10 to-transparent rounded-bl-full" />
-            <CardHeader>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-3 rounded-xl bg-accent/10">
-                  <Heart className="h-6 w-6 text-accent fill-accent" />
-                </div>
+          {/* Support Children with Cancer Card */}
+          <div className="bg-gradient-to-br from-pink-50 to-red-50 dark:from-pink-950/20 dark:to-red-950/20 rounded-xl p-8 shadow-lg hover:shadow-xl transition-all border-2 border-pink-200/50 dark:border-pink-800/50">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-3 bg-pink-500/20 rounded-lg">
+                <Heart className="w-8 h-8 text-pink-600 dark:text-pink-400" />
               </div>
-              <CardTitle className="text-2xl">Support Children with Cancer</CardTitle>
-              <CardDescription className="text-base">
-                Make a meaningful impact
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-muted-foreground">
-                Sponsor training seats for caregivers and provide specialized scam‑prevention resources during hospital stays.
-              </p>
-              <div className="flex flex-col gap-2">
-                <Button 
-                  onClick={() => openDonationModal('general')}
-                  className="w-full"
-                >
-                  Donate
-                </Button>
-                <Button variant="outline" className="w-full" asChild>
-                  <Link to="/contact">Partner with Us</Link>
-                </Button>
-                <Button variant="outline" className="w-full" asChild>
-                  <Link to="/contact">Contact Us</Link>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Donate & Sponsor */}
-          <Card className="relative overflow-hidden group hover:shadow-lg transition-all duration-300">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-secondary/10 to-transparent rounded-bl-full" />
-            <CardHeader>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-3 rounded-xl bg-secondary/10">
-                  <Gift className="h-6 w-6 text-secondary-foreground" />
-                </div>
-              </div>
-              <CardTitle className="text-2xl">Donate & Sponsor</CardTitle>
-              <CardDescription className="text-base">
-                100% supports community programs
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-muted-foreground">
-                100% of donations fund scholarships, caregiver training programs, and community safety workshops.
-              </p>
-              <Button 
-                onClick={() => openDonationModal('general')}
-                className="w-full" 
-                size="lg"
+              <h3 className="text-2xl font-bold text-foreground">Support Children with Cancer</h3>
+            </div>
+            <p className="text-muted-foreground mb-6 leading-relaxed">
+              Every contribution helps provide hope, care, and support to children and families battling cancer. Your generosity makes a real difference in their journey.
+            </p>
+            <div className="flex flex-col gap-3">
+              <button 
+                onClick={() => setDonationModalOpen(true)}
+                className="w-full bg-gradient-to-r from-pink-600 to-red-600 hover:from-pink-700 hover:to-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-all shadow-md hover:shadow-lg"
               >
                 Donate Now
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Donation Options */}
-        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          <Card 
-            className="text-center hover:border-primary transition-colors cursor-pointer group"
-            onClick={() => openDonationModal('sponsor')}
-          >
-            <CardHeader>
-              <div className="mx-auto p-3 rounded-xl bg-primary/10 w-fit mb-2 group-hover:scale-110 transition-transform">
-                <Users className="h-6 w-6 text-primary" />
-              </div>
-              <CardTitle className="text-lg">Sponsor a Seat</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-2xl font-bold text-primary mb-2">$100</p>
-              <p className="text-sm text-muted-foreground">= one complete class</p>
-              <Button variant="outline" className="mt-4 w-full">Select</Button>
-            </CardContent>
-          </Card>
-
-          <Card 
-            className="text-center hover:border-primary transition-colors cursor-pointer group"
-            onClick={() => openDonationModal('monthly')}
-          >
-            <CardHeader>
-              <div className="mx-auto p-3 rounded-xl bg-accent/10 w-fit mb-2 group-hover:scale-110 transition-transform">
-                <DollarSign className="h-6 w-6 text-accent" />
-              </div>
-              <CardTitle className="text-lg">Monthly Ally</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-2xl font-bold text-accent mb-2">$25/mo</p>
-              <p className="text-sm text-muted-foreground">sustains outreach</p>
-              <Button variant="outline" className="mt-4 w-full">Select</Button>
-            </CardContent>
-          </Card>
-
-          <Card 
-            className="text-center hover:border-primary transition-colors cursor-pointer group"
-            onClick={() => openDonationModal('corporate')}
-          >
-            <CardHeader>
-              <div className="mx-auto p-3 rounded-xl bg-secondary/10 w-fit mb-2 group-hover:scale-110 transition-transform">
-                <Building2 className="h-6 w-6 text-secondary-foreground" />
-              </div>
-              <CardTitle className="text-lg">Corporate Partner</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">Bulk training programs</p>
-              <Button variant="outline" className="mt-4 w-full">Contact Us</Button>
-            </CardContent>
-          </Card>
+              </button>
+              <button 
+                onClick={() => setPartnershipModalOpen(true)}
+                className="w-full bg-white dark:bg-gray-800 text-pink-600 dark:text-pink-400 border-2 border-pink-200 dark:border-pink-800 font-semibold py-3 px-6 rounded-lg hover:bg-pink-50 dark:hover:bg-pink-950/30 transition-all"
+              >
+                Partner with Us
+              </button>
+              <Link to="/contact">
+                <button className="w-full bg-white dark:bg-gray-800 text-muted-foreground border-2 border-border font-semibold py-3 px-6 rounded-lg hover:bg-muted transition-all">
+                  Contact Us
+                </button>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
 
-      <DonationModal
-        open={donationModalOpen}
+      <ChildrenDonationModal 
+        open={donationModalOpen} 
         onOpenChange={setDonationModalOpen}
-        type={donationType}
+      />
+      <PartnershipModal 
+        open={partnershipModalOpen} 
+        onOpenChange={setPartnershipModalOpen}
       />
     </section>
-    </>
   );
 };
 
