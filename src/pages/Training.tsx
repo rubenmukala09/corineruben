@@ -189,9 +189,9 @@ const LearnAndTrain = () => {
     {
       name: "Starter Plan",
       badge: "STARTER",
-      price: "$9.99",
+      price: "$39",
       period: "/month",
-      priceId: "price_1SZl2WJ8osfwYbX7LYuxv6br",
+      priceId: "price_1SZxa9J8osfwYbX7tTp519zb",
       description: "Essential protection for individuals",
       features: [
         "Basic threat monitoring",
@@ -206,9 +206,9 @@ const LearnAndTrain = () => {
     {
       name: "Family Plan",
       badge: "FAMILY",
-      price: "$24.99",
+      price: "$79",
       period: "/month",
-      priceId: "price_1SZl2WJ8osfwYbX7LI2Ig8j5",
+      priceId: "price_1SZxaAJ8osfwYbX7ipmpazSu",
       description: "Comprehensive protection for up to 5 family members",
       features: [
         "Everything in Starter",
@@ -224,9 +224,9 @@ const LearnAndTrain = () => {
     {
       name: "Premium Plan",
       badge: "PREMIUM",
-      price: "$49.99",
+      price: "$129",
       period: "/month",
-      priceId: "price_1SZl2XJ8osfwYbX7F81TLOM8",
+      priceId: "price_1SZxaBJ8osfwYbX7K5kna9vJ",
       description: "Maximum protection with white-glove service",
       features: [
         "Everything in Family",
@@ -239,6 +239,25 @@ const LearnAndTrain = () => {
       ],
       popular: false,
       cta: "Go Premium"
+    },
+    {
+      name: "Custom Plan",
+      badge: "CUSTOM",
+      price: "$229",
+      period: "/month",
+      priceId: "price_1SZxabJ8osfwYbX7SYkV6ZFi",
+      description: "Tailored protection for unique needs",
+      features: [
+        "Everything in Premium",
+        "Custom monitoring rules",
+        "Dedicated account manager",
+        "Priority response team",
+        "Identity theft insurance ($250K)",
+        "Full family coverage",
+        "Annual security audit"
+      ],
+      popular: false,
+      cta: "Contact Us"
     }
   ];
 
