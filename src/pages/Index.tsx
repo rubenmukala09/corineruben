@@ -644,7 +644,7 @@ function Index() {
           </div>
           <div className="text-center mt-8 animate-fade-in-up" style={{ animationDelay: "300ms" }}>
             <Link
-              to="/resources#faq"
+              to="/faq"
               className="text-primary hover:text-primary/80 font-semibold text-lg inline-flex items-center gap-2 hover:gap-4 transition-all duration-300 hover:scale-105"
             >
               VIEW ALL FAQ →
@@ -670,7 +670,7 @@ function Index() {
           Schedule Consultation
         </Button>
         <Button size="lg" variant="outline" className="text-lg px-8 py-6 bg-background/80 backdrop-blur" asChild>
-          <Link to="/business">Get AI & Business Quote</Link>
+          <Link to="/contact?service=business-quote">Get AI & Business Quote</Link>
         </Button>
       </CTASection>
 

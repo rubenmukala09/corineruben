@@ -328,8 +328,12 @@ function Business() {
           <h2 className="text-center mb-12">AI Agents & Automation Pricing</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             <ScrollReveal animation="slide-left" delay={0}>
-              <Card className="p-6 md:p-8 active:scale-98">
-                <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">AI Receptionist & Intake Agent</h3>
+              <div className="relative">
+                <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-500 to-accent text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
+                  START HERE
+                </div>
+                <Card className="p-6 md:p-8 pt-10 active:scale-98">
+                  <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">AI Receptionist & Intake Agent</h3>
                 <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">24/7 call answering, appointment booking, and lead qualification</p>
                 <p ref={price1Counter.ref} className="text-3xl md:text-4xl font-bold text-accent mb-4 md:mb-6">
                   {price1Counter.displayValue}
@@ -374,7 +378,8 @@ function Business() {
                 >
                   GET STARTED
                 </Button>
-              </Card>
+                </Card>
+              </div>
             </ScrollReveal>
 
             <ScrollReveal animation="scale-in" delay={200}>
@@ -426,7 +431,7 @@ function Business() {
                       trackConversion('business_full_automation', 12500);
                     }}
                   >
-                  GET STARTED → CUSTOMIZABLE
+                    GET STARTED
                   </Button>
                 </Card>
               </div>
@@ -435,11 +440,44 @@ function Business() {
             <ScrollReveal animation="slide-right" delay={400}>
               <Card className="p-6 md:p-8 border-2 border-accent active:scale-98">
                 <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">Custom Automation Suite</h3>
-                <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">Multi-system operations</p>
+                <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">Enterprise-level multi-system automation tailored to your business</p>
                 <p ref={price3Counter.ref} className="text-3xl md:text-4xl font-bold text-accent mb-4 md:mb-6">
                   {price3Counter.displayValue}
                 </p>
-...
+                <ul className="space-y-2 md:space-y-3 mb-6 md:mb-8">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span className="text-sm md:text-base">Enterprise-level integrations</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span className="text-sm md:text-base">Custom AI model training</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span className="text-sm md:text-base">Dedicated support team</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span className="text-sm md:text-base">Multi-department workflow automation</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span className="text-sm md:text-base">Advanced analytics dashboard</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span className="text-sm md:text-base">API access for developers</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span className="text-sm md:text-base">Priority implementation timeline</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-success flex-shrink-0 mt-0.5" />
+                    <span className="text-sm md:text-base italic text-muted-foreground">And so more...</span>
+                  </li>
+                </ul>
                 <Button 
                   variant="default" 
                   className="w-full transition-all duration-300 md:hover:bg-primary/90 md:hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] md:hover:scale-[1.02] active:scale-95 h-11 md:h-10"
@@ -448,7 +486,7 @@ function Business() {
                     trackConversion('business_custom_solution', 25000);
                   }}
                 >
-                  GET STARTED
+                  CUSTOMIZABLE
                 </Button>
               </Card>
             </ScrollReveal>
@@ -472,8 +510,12 @@ function Business() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
             {/* Landing Page */}
             <ScrollReveal animation="fade-up" delay={0} threshold={0.2}>
-              <Card className="p-8 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1">
-                <h3 className="text-2xl font-bold mb-4">Landing Page</h3>
+              <div className="relative">
+                <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-500 to-teal-400 text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
+                  QUICK START
+                </div>
+                <Card className="p-8 pt-10 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1">
+                  <h3 className="text-2xl font-bold mb-4">Landing Page</h3>
                 <p className="text-muted-foreground mb-6">Single high-converting page design</p>
                 <p className="text-4xl font-bold text-accent mb-6">$1,500</p>
                 <ul className="space-y-3 mb-8">
@@ -512,7 +554,8 @@ function Business() {
                 >
                   PAY $1,500
                 </Button>
-              </Card>
+                </Card>
+              </div>
             </ScrollReveal>
 
             {/* Business Website - Featured */}
@@ -575,8 +618,12 @@ function Business() {
 
             {/* E-Commerce Website */}
             <ScrollReveal animation="fade-up" delay={300} threshold={0.2}>
-              <Card className="p-8 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1">
-                <h3 className="text-2xl font-bold mb-4">E-Commerce Website</h3>
+              <div className="relative">
+                <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
+                  FULL FEATURED
+                </div>
+                <Card className="p-8 pt-10 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1">
+                  <h3 className="text-2xl font-bold mb-4">E-Commerce Website</h3>
                 <p className="text-muted-foreground mb-6">Full online store with payment processing</p>
                 <p className="text-4xl font-bold text-accent mb-6">$8,500+</p>
                 <ul className="space-y-3 mb-8">
@@ -623,7 +670,8 @@ function Business() {
                 >
                   CUSTOMIZABLE
                 </Button>
-              </Card>
+                </Card>
+              </div>
             </ScrollReveal>
           </div>
 

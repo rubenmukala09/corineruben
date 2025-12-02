@@ -209,6 +209,41 @@ function PaymentForm({
         {serviceDescription && (
           <p className="text-sm text-muted-foreground">{serviceDescription}</p>
         )}
+        
+        {/* Detailed Service Information for AI Consultation Services */}
+        {serviceType === 'ai-consultation' && serviceName.includes('Thinking of Buying') && (
+          <div className="mt-4 pt-4 border-t space-y-2">
+            <p className="font-semibold text-sm">What you'll receive:</p>
+            <ul className="text-xs space-y-1 text-muted-foreground">
+              <li>✓ Complete security risk assessment</li>
+              <li>✓ ROI calculation with real numbers</li>
+              <li>✓ Hidden costs analysis</li>
+              <li>✓ Vendor reliability check</li>
+              <li>✓ 3-5 alternative recommendations</li>
+              <li>✓ "Buy / Don't Buy / Wait" recommendation</li>
+              <li>✓ Written report delivered within 5 business days</li>
+              <li>✓ 30-minute consultation call to discuss findings</li>
+            </ul>
+          </div>
+        )}
+        
+        {serviceType === 'ai-consultation' && serviceName.includes('Already Using') && (
+          <div className="mt-4 pt-4 border-t space-y-2">
+            <p className="font-semibold text-sm">What you'll receive:</p>
+            <ul className="text-xs space-y-1 text-muted-foreground">
+              <li>✓ Full security vulnerability scan</li>
+              <li>✓ Data leak assessment</li>
+              <li>✓ Prompt injection testing</li>
+              <li>✓ Vendor contract review</li>
+              <li>✓ Compliance gap analysis (GDPR, HIPAA, etc.)</li>
+              <li>✓ Risk mitigation roadmap</li>
+              <li>✓ Implementation priority list</li>
+              <li>✓ 60-minute strategy call</li>
+              <li>✓ 30-day follow-up support</li>
+            </ul>
+          </div>
+        )}
+        
         <div className="flex justify-between items-center pt-2 border-t">
           <span className="text-sm">Base Price:</span>
           <span className="font-semibold">${servicePrice.toLocaleString()}</span>
