@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PrefetchLink } from "@/components/PrefetchLink";
@@ -9,6 +9,7 @@ import invisionLogo from "@/assets/shield-logo.png";
 
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   // Lock body scroll when mobile menu is open
   React.useEffect(() => {
@@ -64,15 +65,23 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-2 flex-1 justify-center max-w-3xl mx-auto">
-            {navLinks.map((link) => (
-              <PrefetchLink
-                key={link.name}
-                to={link.href}
-                className="text-sm xl:text-base text-muted-foreground hover:text-primary transition-colors duration-300 font-medium px-3 py-2 rounded-xl hover:bg-primary/5 whitespace-nowrap"
-              >
-                {link.name}
-              </PrefetchLink>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = location.pathname === link.href;
+              return (
+                <PrefetchLink
+                  key={link.name}
+                  to={link.href}
+                  className={`text-muted-foreground hover:text-primary transition-all duration-300 font-medium px-3 py-2 rounded-xl whitespace-nowrap ${
+                    isActive 
+                      ? 'bg-primary/10 text-primary shadow-[0_0_15px_rgba(236,72,153,0.5)]' 
+                      : 'hover:bg-primary/5'
+                  }`}
+                  style={{ fontSize: '12px' }}
+                >
+                  {link.name}
+                </PrefetchLink>
+              );
+            })}
           </div>
 
           {/* Right Side - Phone & Login */}
