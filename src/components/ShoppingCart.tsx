@@ -1,9 +1,10 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { ShoppingCart as CartIcon, Trash2, Plus, Minus } from 'lucide-react';
+import { ShoppingCart as CartIcon, Trash2, Plus, Minus, Sparkles } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
 import { useState } from 'react';
-import { CheckoutDialog } from './CheckoutDialog';
+import { EnhancedCheckoutDialog } from './EnhancedCheckoutDialog';
+import { Badge } from '@/components/ui/badge';
 
 export function ShoppingCart() {
   const { items, removeItem, updateQuantity, total, itemCount } = useCart();
@@ -14,10 +15,10 @@ export function ShoppingCart() {
     <>
       <Sheet open={cartOpen} onOpenChange={setCartOpen}>
         <SheetTrigger asChild>
-          <Button variant="outline" size="icon" className="relative">
-            <CartIcon className="h-5 w-5" />
+          <Button variant="outline" size="icon" className="relative group hover:bg-primary/10 transition-colors">
+            <CartIcon className="h-5 w-5 group-hover:text-primary transition-colors" />
             {itemCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">
+              <span className="absolute -top-2 -right-2 bg-gradient-to-r from-primary to-accent text-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center animate-bounce shadow-lg">
                 {itemCount}
               </span>
             )}
@@ -98,7 +99,7 @@ export function ShoppingCart() {
         </SheetContent>
       </Sheet>
 
-      <CheckoutDialog open={checkoutOpen} onOpenChange={setCheckoutOpen} />
+      <EnhancedCheckoutDialog open={checkoutOpen} onOpenChange={setCheckoutOpen} />
     </>
   );
 }
