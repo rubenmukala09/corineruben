@@ -79,48 +79,46 @@ export const HeroCarousel = ({
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Persistent gradient background - prevents white flash */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#1e3a8a] via-[#3b0764] to-[#0d9488] opacity-100" />
+      {/* Persistent gradient background - prevents white flash during any transition state */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#1e3a8a] via-[#3b0764] to-[#0d9488]" />
       
-      {/* Images with seamless crossfade */}
-      <AnimatePresence initial={false}>
-        {images.map((image, index) => (
-          index === currentIndex && (
-            <motion.div
-              key={`hero-image-${index}-${image.src}`}
-              initial={{ opacity: 0, scale: 1.02 }}
-              animate={{ 
-                opacity: 1,
-                scale: isLowEnd || prefersReducedMotion ? 1 : 1
-              }}
-              exit={{ opacity: 0, scale: 0.98 }}
-              transition={{
-                opacity: { 
-                  duration: adjustedTransitionDuration, 
-                  ease: [0.4, 0, 0.2, 1]
-                },
-                scale: { 
-                  duration: adjustedTransitionDuration * 1.5, 
-                  ease: "easeOut" 
-                }
-              }}
-              className="absolute inset-0"
-              style={{ willChange: "opacity, transform" }}
-            >
-              {/* Image with smooth loading */}
-              <div 
-                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                style={{
-                  backgroundImage: `url(${image.src})`,
-                  opacity: imagesPreloaded ? 1 : 0,
-                  transition: 'opacity 0.3s ease-out'
-                }}
-                role="img"
-                aria-label={image.alt}
-              />
-            </motion.div>
-          )
-        ))}
+      {/* Static first image as fallback during load/transitions */}
+      {images.length > 0 && (
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url(${images[0].src})`,
+            opacity: imagesPreloaded ? 0.3 : 1,
+          }}
+        />
+      )}
+      
+      {/* Images with seamless crossfade - popLayout ensures smooth enter/exit overlap */}
+      <AnimatePresence mode="popLayout" initial={false}>
+        <motion.div
+          key={`hero-image-${currentIndex}`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{
+            opacity: { 
+              duration: adjustedTransitionDuration, 
+              ease: [0.4, 0, 0.2, 1]
+            }
+          }}
+          className="absolute inset-0"
+          style={{ willChange: "opacity" }}
+        >
+          {/* Image with immediate display when preloaded */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url(${images[currentIndex].src})`,
+            }}
+            role="img"
+            aria-label={images[currentIndex].alt}
+          />
+        </motion.div>
       </AnimatePresence>
 
       {/* Pause/Play Button with premium styling */}
