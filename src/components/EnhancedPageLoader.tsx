@@ -13,12 +13,12 @@ export const EnhancedPageLoader = ({ message = "Loading..." }: EnhancedPageLoade
       transition={{ duration: 0.3 }}
       className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden"
       style={{
-        backdropFilter: "blur(8px)",
-        WebkitBackdropFilter: "blur(8px)",
+        backdropFilter: "blur(2px)",
+        WebkitBackdropFilter: "blur(2px)",
       }}
     >
       {/* Blurry gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background/90 via-primary/5 to-accent/10" />
+      <div className="absolute inset-0 bg-gradient-to-br from-background/70 via-primary/5 to-accent/10" />
       
       {/* Animated floating blobs */}
       <div className="absolute inset-0 overflow-hidden">
@@ -27,7 +27,7 @@ export const EnhancedPageLoader = ({ message = "Loading..." }: EnhancedPageLoade
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full"
           style={{
             background: "radial-gradient(circle at 30% 30%, hsl(var(--primary) / 0.3), hsl(var(--accent) / 0.15), transparent 70%)",
-            filter: "blur(40px)",
+            filter: "blur(25px)",
           }}
           animate={{
             scale: [1, 1.2, 1],
@@ -47,7 +47,7 @@ export const EnhancedPageLoader = ({ message = "Loading..." }: EnhancedPageLoade
           className="absolute top-[20%] left-[20%] w-[300px] h-[300px] rounded-full"
           style={{
             background: "radial-gradient(circle at 50% 50%, hsl(var(--accent) / 0.2), transparent 70%)",
-            filter: "blur(30px)",
+            filter: "blur(18px)",
           }}
           animate={{
             scale: [1, 1.3, 1],
@@ -67,7 +67,7 @@ export const EnhancedPageLoader = ({ message = "Loading..." }: EnhancedPageLoade
           className="absolute bottom-[20%] right-[20%] w-[250px] h-[250px] rounded-full"
           style={{
             background: "radial-gradient(circle at 50% 50%, hsl(var(--primary) / 0.18), transparent 70%)",
-            filter: "blur(25px)",
+            filter: "blur(15px)",
           }}
           animate={{
             scale: [1, 1.4, 1],
