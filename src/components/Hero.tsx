@@ -40,8 +40,11 @@ const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, childr
   return (
     <div 
       ref={ref}
-      className={cn("relative min-h-[600px] sm:min-h-[700px] md:min-h-[850px] lg:min-h-[950px] xl:min-h-[1000px] flex items-center overflow-hidden hero-mobile bg-gradient-to-br from-[#1e3a8a] to-[#3b82f6]", className)}
+      className={cn("relative min-h-[600px] sm:min-h-[700px] md:min-h-[850px] lg:min-h-[950px] xl:min-h-[1000px] flex items-center overflow-hidden hero-mobile", className)}
     >
+      {/* Persistent background gradient - prevents white flash */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#1e3a8a] via-[#3b0764] to-[#0d9488]" />
+      
       {/* Background with Parallax */}
       <motion.div 
         className="absolute inset-0 overflow-hidden"
@@ -52,12 +55,14 @@ const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, childr
         ) : backgroundImage && (
           <motion.div
             className={cn(
-              "absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-300 brightness-115",
+              "absolute inset-0 bg-cover bg-center bg-no-repeat brightness-115",
               singleImagePreloaded ? "opacity-100" : "opacity-0"
             )}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: singleImagePreloaded ? 1 : 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
             style={{ 
-              backgroundImage: `url(${backgroundImage})`,
-              opacity
+              backgroundImage: `url(${backgroundImage})`
             }}
           />
         )}
