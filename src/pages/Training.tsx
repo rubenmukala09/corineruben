@@ -36,6 +36,7 @@ import {
   Image as ImageIcon,
   Loader2,
   Video,
+  Zap,
 } from "lucide-react";
 import trainingSession from "@/assets/training-session.jpg";
 import trainingDiverse1 from "@/assets/training-diverse-1.jpg";
@@ -142,6 +143,17 @@ const ScamExampleCard = ({ example, index }: { example: any; index: number }) =>
 const TrainingCard = ({ plan, index }: { plan: any; index: number }) => {
   const { count, ref } = useCounterAnimation({ end: plan.priceNum, duration: 1000 });
   
+  const getBadgeInfo = (type: string) => {
+    const badges: Record<string, { label: string; emoji: string; gradient: string }> = {
+      standard: { label: "STARTER", emoji: "🎯", gradient: "from-blue-500 to-cyan-500" },
+      family: { label: "BEST VALUE", emoji: "⭐", gradient: "from-primary to-accent" },
+      private: { label: "PREMIUM", emoji: "👑", gradient: "from-amber-500 to-orange-500" }
+    };
+    return badges[type] || badges.standard;
+  };
+
+  const badge = getBadgeInfo(plan.type);
+  
   return (
     <ScrollReveal 
       animation="scale-in" 
@@ -149,11 +161,12 @@ const TrainingCard = ({ plan, index }: { plan: any; index: number }) => {
       threshold={0.2}
     >
       <div className={`relative ${plan.popular ? 'scale-105' : ''}`}>
-        {plan.popular && (
-          <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-[#14B8A6] text-white px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 animate-[pulse_2s_ease-in-out_infinite]">
-            MOST POPULAR
-          </div>
-        )}
+        {/* Badge */}
+        <div className={`absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r ${badge.gradient} text-white px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 ${plan.popular ? 'animate-pulse' : ''}`} style={{ animationDuration: '3s' }}>
+          <span className="mr-1">{badge.emoji}</span>
+          {badge.label}
+        </div>
+        
         <Card
           className={`p-8 transition-all duration-500 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 ${
             plan.popular 
@@ -161,13 +174,29 @@ const TrainingCard = ({ plan, index }: { plan: any; index: number }) => {
               : "border-border/50 hover:shadow-strong"
           }`}
         >
+          {/* Trust Indicator */}
+          <div className="flex items-center justify-center gap-1.5 mb-4 text-xs text-success">
+            <CheckCircle className="w-3.5 h-3.5" />
+            <span className="font-medium">100+ Students Trained</span>
+          </div>
+
           <h3 className="text-2xl font-bold mb-2 text-center">{plan.name}</h3>
           <div className="text-center mb-2" ref={ref}>
             <span className="text-4xl font-bold text-primary">${Math.round(count)}</span>
             <span className="text-muted-foreground">/session</span>
           </div>
           <p className="text-center text-sm text-muted-foreground mb-2">{plan.duration}</p>
-          <p className="text-center text-sm text-accent font-semibold mb-6">{plan.size}</p>
+          <p className="text-center text-sm text-accent font-semibold mb-4">{plan.size}</p>
+
+          {/* Highlight Tags */}
+          <div className="flex flex-wrap justify-center gap-2 mb-6">
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-success/10 text-success text-[10px] font-medium rounded-full">
+              ✓ Certificate Included
+            </span>
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-medium rounded-full">
+              📧 Email Support
+            </span>
+          </div>
 
           <div className="space-y-3 mb-8">
             {plan.features.map((feature: string, idx: number) => (
@@ -178,6 +207,14 @@ const TrainingCard = ({ plan, index }: { plan: any; index: number }) => {
             ))}
           </div>
 
+          {/* Security Badge */}
+          <div className="flex items-center justify-center gap-2 mb-4 text-xs text-muted-foreground">
+            <Lock className="w-3.5 h-3.5 text-success" />
+            <span>Secure Payment</span>
+            <Shield className="w-3.5 h-3.5 text-success" />
+            <span>Satisfaction Guaranteed</span>
+          </div>
+
           <Button 
             asChild
             variant={plan.popular ? "default" : "outline"} 
@@ -185,7 +222,7 @@ const TrainingCard = ({ plan, index }: { plan: any; index: number }) => {
             className={`w-full ${plan.popular ? 'bg-[#14B8A6] hover:bg-[#0F9A8A] text-white' : ''}`}
           >
             <Link to={`/contact?service=training&type=${plan.type}&price=${plan.priceNum}`}>
-              Book Session
+              Book Session →
             </Link>
           </Button>
         </Card>

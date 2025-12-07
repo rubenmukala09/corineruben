@@ -1,0 +1,155 @@
+import { ReactNode } from "react";
+import { Shield, Star, Zap, Award, CheckCircle, TrendingUp, Heart, Clock, Lock, Users } from "lucide-react";
+
+interface PricingBadgeProps {
+  type: 'popular' | 'recommended' | 'best-value' | 'limited' | 'trusted' | 'secure' | 'fast' | 'guaranteed' | 'premium' | 'new' | 'hot' | 'save' | 'veteran';
+  className?: string;
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const badgeConfig = {
+  popular: {
+    icon: Star,
+    label: "MOST POPULAR",
+    gradient: "from-primary via-accent to-primary",
+    emoji: "⭐"
+  },
+  recommended: {
+    icon: Award,
+    label: "RECOMMENDED",
+    gradient: "from-amber-500 to-orange-500",
+    emoji: "🏆"
+  },
+  'best-value': {
+    icon: TrendingUp,
+    label: "BEST VALUE",
+    gradient: "from-emerald-500 to-teal-500",
+    emoji: "💎"
+  },
+  limited: {
+    icon: Clock,
+    label: "LIMITED TIME",
+    gradient: "from-red-500 to-pink-500",
+    emoji: "🔥"
+  },
+  trusted: {
+    icon: Shield,
+    label: "TRUSTED",
+    gradient: "from-blue-500 to-indigo-500",
+    emoji: "✅"
+  },
+  secure: {
+    icon: Lock,
+    label: "100% SECURE",
+    gradient: "from-green-500 to-emerald-500",
+    emoji: "🔒"
+  },
+  fast: {
+    icon: Zap,
+    label: "FAST SETUP",
+    gradient: "from-yellow-500 to-amber-500",
+    emoji: "⚡"
+  },
+  guaranteed: {
+    icon: CheckCircle,
+    label: "GUARANTEED",
+    gradient: "from-primary to-purple-600",
+    emoji: "✓"
+  },
+  premium: {
+    icon: Star,
+    label: "PREMIUM",
+    gradient: "from-violet-600 to-purple-700",
+    emoji: "👑"
+  },
+  new: {
+    icon: Zap,
+    label: "NEW",
+    gradient: "from-cyan-500 to-blue-500",
+    emoji: "🆕"
+  },
+  hot: {
+    icon: TrendingUp,
+    label: "HOT",
+    gradient: "from-orange-500 to-red-500",
+    emoji: "🔥"
+  },
+  save: {
+    icon: TrendingUp,
+    label: "SAVE 10%",
+    gradient: "from-green-500 to-teal-500",
+    emoji: "💰"
+  },
+  veteran: {
+    icon: Heart,
+    label: "VETERAN DISCOUNT",
+    gradient: "from-blue-600 via-red-500 to-blue-600",
+    emoji: "🇺🇸"
+  }
+};
+
+export function PricingBadge({ type, className = "", size = 'md' }: PricingBadgeProps) {
+  const config = badgeConfig[type];
+  const Icon = config.icon;
+  
+  const sizeClasses = {
+    sm: "px-2 py-0.5 text-[10px]",
+    md: "px-4 py-1.5 text-xs",
+    lg: "px-6 py-2 text-sm"
+  };
+  
+  return (
+    <div 
+      className={`
+        inline-flex items-center gap-1.5 
+        bg-gradient-to-r ${config.gradient} 
+        text-white font-bold tracking-wider rounded-full 
+        shadow-lg animate-pulse-slow
+        ${sizeClasses[size]}
+        ${className}
+      `}
+      style={{ animationDuration: '3s' }}
+    >
+      <span className="text-sm">{config.emoji}</span>
+      <span>{config.label}</span>
+    </div>
+  );
+}
+
+export function TrustBadgeInline({ icon: Icon, label }: { icon: any; label: string }) {
+  return (
+    <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-success/10 text-success border border-success/20 rounded-full text-xs font-medium">
+      <Icon className="w-3.5 h-3.5" />
+      <span>{label}</span>
+    </div>
+  );
+}
+
+export function GuaranteeBadge() {
+  return (
+    <div className="flex items-center justify-center gap-2 p-3 bg-gradient-to-r from-success/10 to-emerald-500/10 border border-success/30 rounded-xl">
+      <Shield className="w-5 h-5 text-success" />
+      <span className="text-sm font-semibold text-success">30-Day Money-Back Guarantee</span>
+      <CheckCircle className="w-4 h-4 text-success" />
+    </div>
+  );
+}
+
+export function SecurityBadges() {
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-3 mt-4">
+      <div className="flex items-center gap-1.5 px-3 py-1.5 bg-primary/5 border border-primary/20 rounded-full text-xs">
+        <Lock className="w-3.5 h-3.5 text-primary" />
+        <span className="text-primary font-medium">256-bit SSL</span>
+      </div>
+      <div className="flex items-center gap-1.5 px-3 py-1.5 bg-success/5 border border-success/20 rounded-full text-xs">
+        <Shield className="w-3.5 h-3.5 text-success" />
+        <span className="text-success font-medium">HIPAA Compliant</span>
+      </div>
+      <div className="flex items-center gap-1.5 px-3 py-1.5 bg-accent/5 border border-accent/20 rounded-full text-xs">
+        <Users className="w-3.5 h-3.5 text-accent" />
+        <span className="text-accent font-medium">500+ Protected</span>
+      </div>
+    </div>
+  );
+}
