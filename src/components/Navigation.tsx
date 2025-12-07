@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PrefetchLink } from "@/components/PrefetchLink";
@@ -9,6 +9,7 @@ import invisionLogo from "@/assets/shield-logo.png";
 
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   // Lock body scroll when mobile menu is open
   React.useEffect(() => {
@@ -34,6 +35,11 @@ const Navigation = () => {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Check if current path matches nav link
+  const isActiveLink = (href: string) => {
+    return location.pathname === href || location.pathname.startsWith(href + '/');
   };
 
   return (
@@ -64,15 +70,26 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-2 flex-1 justify-center max-w-3xl mx-auto">
-            {navLinks.map((link) => (
-              <PrefetchLink
-                key={link.name}
-                to={link.href}
-                className="text-sm xl:text-base text-muted-foreground hover:text-primary transition-colors duration-300 font-medium px-3 py-2 rounded-xl hover:bg-primary/5 whitespace-nowrap"
-              >
-                {link.name}
-              </PrefetchLink>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = isActiveLink(link.href);
+              return (
+                <PrefetchLink
+                  key={link.name}
+                  to={link.href}
+                  className={`relative text-sm xl:text-base transition-all duration-300 font-medium px-3 py-2 rounded-xl whitespace-nowrap ${
+                    isActive 
+                      ? 'text-primary bg-primary/10 shadow-[0_0_12px_rgba(139,92,246,0.3)]' 
+                      : 'text-muted-foreground hover:text-primary hover:bg-primary/5'
+                  }`}
+                >
+                  {link.name}
+                  {/* Active indicator bar */}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-0.5 bg-gradient-to-r from-primary to-accent rounded-full" />
+                  )}
+                </PrefetchLink>
+              );
+            })}
           </div>
 
           {/* Right Side - Phone & Login */}
@@ -128,19 +145,26 @@ const Navigation = () => {
         {mobileMenuOpen && (
           <div className="lg:hidden fixed top-16 md:top-20 lg:top-24 left-0 right-0 bottom-0 bg-card/98 backdrop-blur-xl border-t border-border shadow-2xl z-50 overflow-y-auto">
             <div className="container mx-auto px-4 py-6 space-y-2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.href}
-                  className="block text-base md:text-lg text-foreground hover:text-primary transition-colors duration-300 font-medium px-4 py-3 rounded-xl hover:bg-primary/10 active:bg-primary/20 active:scale-[0.98] touch-target"
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    scrollToTop();
-                  }}
-                >
-                  {link.name}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = isActiveLink(link.href);
+                return (
+                  <Link
+                    key={link.name}
+                    to={link.href}
+                    className={`block text-base md:text-lg transition-colors duration-300 font-medium px-4 py-3 rounded-xl active:scale-[0.98] touch-target ${
+                      isActive 
+                        ? 'text-primary bg-primary/15 border-l-4 border-primary shadow-[0_0_12px_rgba(139,92,246,0.2)]' 
+                        : 'text-foreground hover:text-primary hover:bg-primary/10 active:bg-primary/20'
+                    }`}
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      scrollToTop();
+                    }}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
               
               {/* Mobile Actions */}
               <div className="pt-4 border-t border-border mt-4 space-y-3">
