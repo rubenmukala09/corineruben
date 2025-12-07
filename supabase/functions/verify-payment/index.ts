@@ -110,17 +110,57 @@ serve(async (req) => {
       }
     }
 
+    const customerEmail = session.customer_email || session.customer_details?.email;
+    const customerName = session.customer_details?.name;
+
+    // Automatically trigger digital product delivery if there are digital products
+    if (hasDigital && customerEmail) {
+      logStep("Triggering digital product delivery", { email: customerEmail, products: productNames });
+      
+      try {
+        const digitalProducts = productNames.map(name => ({
+          name,
+          download_url: `https://avoafweoebstkgjnbadv.supabase.co/storage/v1/object/public/digital-products/${encodeURIComponent(name.toLowerCase().replace(/\s+/g, '-'))}.pdf`
+        }));
+
+        // Call send-digital-download function
+        const downloadResponse = await fetch(
+          `${Deno.env.get("SUPABASE_URL")}/functions/v1/send-digital-download`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${Deno.env.get("SUPABASE_ANON_KEY")}`,
+            },
+            body: JSON.stringify({
+              customer_email: customerEmail,
+              customer_name: customerName,
+              products: digitalProducts,
+              order_id: orderId,
+            }),
+          }
+        );
+
+        const downloadResult = await downloadResponse.json();
+        logStep("Digital delivery result", downloadResult);
+      } catch (deliveryError) {
+        logStep("Warning: Digital delivery failed", { error: String(deliveryError) });
+        // Don't fail the entire verification if delivery fails
+      }
+    }
+
     // Prepare response
     const response = {
       verified: true,
       status: 'paid',
       mode: session.mode,
-      customer_email: session.customer_email || session.customer_details?.email,
+      customer_email: customerEmail,
       product_type: hasPhysical && hasDigital ? 'mixed' : hasDigital ? 'digital' : hasPhysical ? 'physical' : 'subscription',
       is_subscription: isSubscription,
       products: productNames,
       amount_total: session.amount_total,
       currency: session.currency,
+      digital_delivery_triggered: hasDigital,
     };
 
     logStep("Verification complete", response);
