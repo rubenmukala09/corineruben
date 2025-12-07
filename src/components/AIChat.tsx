@@ -210,23 +210,42 @@ export const AIChat = () => {
 
   if (!isOpen) {
     return (
-      <div className="fixed bottom-4 right-4 z-50 group">
-        <div className="absolute inset-0 rounded-full bg-primary/20 animate-ping" style={{ animationDuration: '2s' }} />
-        <div className="absolute inset-0 rounded-full bg-accent/30 animate-ping" style={{ animationDuration: '3s', animationDelay: '0.5s' }} />
+      <div className="fixed bottom-6 right-6 z-50 group">
+        {/* Outer pulsing rings */}
+        <div className="absolute inset-[-8px] rounded-full bg-gradient-to-r from-primary via-accent to-purple-500 opacity-30 animate-ping" style={{ animationDuration: '3s' }} />
+        <div className="absolute inset-[-4px] rounded-full bg-gradient-to-r from-primary to-accent opacity-50 animate-pulse" />
         
-        <Button
+        {/* Main button */}
+        <button
           onClick={openChat}
-          size="lg"
-          className="relative rounded-full w-16 h-16 bg-gradient-to-br from-primary via-accent to-purple-500 hover:scale-110 transition-transform shadow-2xl shadow-primary/50"
+          className="relative w-16 h-16 rounded-full bg-gradient-to-br from-primary via-accent to-purple-500 shadow-2xl shadow-primary/40 hover:shadow-primary/60 transition-all duration-300 hover:scale-110 active:scale-95 group overflow-hidden"
         >
-          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/20 to-transparent" />
-          <MessageSquare className="w-8 h-8 relative z-10" />
-        </Button>
+          {/* Shimmer overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+          
+          {/* Inner glow */}
+          <div className="absolute inset-1 rounded-full bg-gradient-to-br from-white/20 to-transparent" />
+          
+          {/* Icon container */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <MessageSquare className="w-7 h-7 text-white drop-shadow-lg" />
+          </div>
+          
+          {/* Online indicator */}
+          <div className="absolute top-1 right-1 w-3 h-3">
+            <div className="absolute inset-0 rounded-full bg-green-400 animate-ping opacity-75" />
+            <div className="absolute inset-0 rounded-full bg-green-500 border-2 border-white" />
+          </div>
+        </button>
         
-        <div className="absolute bottom-full right-0 mb-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-          <div className="bg-foreground text-background text-sm px-3 py-2 rounded-lg whitespace-nowrap shadow-xl">
-            Chat with Lora AI
-            <div className="absolute top-full right-4 -mt-1">
+        {/* Tooltip */}
+        <div className="absolute bottom-full right-0 mb-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 pointer-events-none">
+          <div className="bg-foreground text-background text-sm font-medium px-4 py-2.5 rounded-xl whitespace-nowrap shadow-xl">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              Chat with Lora AI
+            </div>
+            <div className="absolute top-full right-6 -mt-1">
               <div className="border-8 border-transparent border-t-foreground" />
             </div>
           </div>
@@ -234,9 +253,10 @@ export const AIChat = () => {
       </div>
     );
   }
-
   return (
-    <Card className="fixed bottom-4 right-4 left-4 sm:bottom-6 sm:right-6 sm:left-auto sm:w-full sm:max-w-[420px] h-[85vh] sm:h-[650px] max-h-[calc(100vh-2rem)] shadow-2xl z-50 flex flex-col animate-slide-up border-2 border-primary/20 backdrop-blur-xl">
+    <Card className="fixed bottom-4 right-4 left-4 sm:bottom-6 sm:right-6 sm:left-auto sm:w-full sm:max-w-[420px] h-[85vh] sm:h-[650px] max-h-[calc(100vh-2rem)] shadow-2xl z-50 flex flex-col animate-scale-in border-2 border-primary/20 backdrop-blur-xl bg-background/95 overflow-hidden">
+      {/* Decorative gradient border */}
+      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/10 via-transparent to-accent/10 pointer-events-none" />
       {/* Compact Header */}
       <div className="relative border-b border-border/50 bg-gradient-to-br from-primary/5 via-accent/5 to-transparent">
         <Button
