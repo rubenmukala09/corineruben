@@ -1,5 +1,6 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useImagePreload } from "@/hooks/useImagePreload";
 import { useDeviceCapabilities } from "@/hooks/useDeviceCapabilities";
 import { Play, Pause } from "lucide-react";
 
@@ -14,66 +15,41 @@ interface HeroCarouselProps {
   transitionDuration?: number;
 }
 
-// Global image cache for instant transitions
-const heroImageCache = new Map<string, boolean>();
-
 export const HeroCarousel = ({ 
   images, 
   interval = 5000,
-  transitionDuration = 0.6 
+  transitionDuration = 0.8 
 }: HeroCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [imagesReady, setImagesReady] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const { isLowEnd, prefersReducedMotion } = useDeviceCapabilities();
   
-  // Faster transitions for better UX
-  const adjustedTransitionDuration = isLowEnd ? 0.3 : transitionDuration;
+  // Preload all images
+  const imageUrls = useMemo(() => images.map(img => img.src), [images]);
+  const imagesPreloaded = useImagePreload(imageUrls);
+  
+  // Adjust transition duration for low-end devices
+  const adjustedTransitionDuration = isLowEnd ? transitionDuration * 0.5 : transitionDuration;
 
-  // Preload all images immediately on mount
-  const preloadAllImages = useCallback(() => {
-    let loadedCount = 0;
-    const totalImages = images.length;
-    
-    images.forEach((img, index) => {
-      if (heroImageCache.has(img.src)) {
-        loadedCount++;
-        if (loadedCount >= 1) setImagesReady(true);
-        return;
-      }
-      
-      const image = new Image();
-      image.onload = () => {
-        heroImageCache.set(img.src, true);
-        loadedCount++;
-        // Set ready after first image loads
-        if (loadedCount >= 1) setImagesReady(true);
-      };
-      image.onerror = () => {
-        heroImageCache.set(img.src, true);
-        loadedCount++;
-        if (loadedCount >= 1) setImagesReady(true);
-      };
-      // High priority for first image, low for rest
-      image.fetchPriority = index === 0 ? 'high' : 'low';
-      image.decoding = 'async';
-      image.src = img.src;
-    });
-  }, [images]);
+  // Set initial load complete after first render
+  useEffect(() => {
+    if (imagesPreloaded) {
+      const timer = setTimeout(() => setIsInitialLoad(false), 100);
+      return () => clearTimeout(timer);
+    }
+  }, [imagesPreloaded]);
 
   useEffect(() => {
-    preloadAllImages();
-  }, [preloadAllImages]);
-
-  useEffect(() => {
-    if (!imagesReady || isPaused) return;
+    // Don't start rotation until images are preloaded
+    if (!imagesPreloaded || isPaused) return;
 
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
     }, interval);
 
     return () => clearInterval(timer);
-  }, [images.length, interval, imagesReady, isPaused]);
+  }, [images.length, interval, imagesPreloaded, isPaused]);
 
   // Respect prefers-reduced-motion
   useEffect(() => {
@@ -99,39 +75,41 @@ export const HeroCarousel = ({
 
   return (
     <div 
-      className="absolute inset-0"
+      className="absolute inset-0 bg-gradient-to-br from-primary/90 via-purple-800/80 to-accent/70"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Persistent gradient background - prevents white flash */}
+      {/* Persistent gradient background - prevents white flash during any transition state */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#1e3a8a] via-[#3b0764] to-[#0d9488]" />
       
-      {/* First image as immediate fallback */}
+      {/* Static first image as fallback during load/transitions */}
       {images.length > 0 && (
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-300"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${images[0].src})`,
-            opacity: imagesReady ? 0.2 : 1,
+            opacity: imagesPreloaded ? 0.3 : 1,
           }}
         />
       )}
       
-      {/* Main carousel with crossfade */}
-      <AnimatePresence mode="sync" initial={false}>
+      {/* Images with seamless crossfade - popLayout ensures smooth enter/exit overlap */}
+      <AnimatePresence mode="popLayout" initial={false}>
         <motion.div
-          key={currentIndex}
+          key={`hero-image-${currentIndex}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{
             opacity: { 
               duration: adjustedTransitionDuration, 
-              ease: "easeInOut"
+              ease: [0.4, 0, 0.2, 1]
             }
           }}
           className="absolute inset-0"
+          style={{ willChange: "opacity" }}
         >
+          {/* Image with immediate display when preloaded */}
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
@@ -143,15 +121,15 @@ export const HeroCarousel = ({
         </motion.div>
       </AnimatePresence>
 
-      {/* Pause/Play Button */}
+      {/* Pause/Play Button with premium styling */}
       <motion.button
         onClick={() => setIsPaused(!isPaused)}
-        className="absolute top-3 right-3 z-20 bg-white/10 hover:bg-white/25 backdrop-blur-md rounded-full p-2.5 transition-all duration-300 border border-white/20 shadow-lg"
+        className="absolute top-4 right-4 z-20 bg-white/10 hover:bg-white/25 backdrop-blur-md rounded-full p-3 transition-all duration-300 border border-white/20 shadow-lg"
         aria-label={isPaused ? "Play slideshow" : "Pause slideshow"}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
       >
-        {isPaused ? <Play className="w-4 h-4 text-white" /> : <Pause className="w-4 h-4 text-white" />}
+        {isPaused ? <Play className="w-5 h-5 text-white" /> : <Pause className="w-5 h-5 text-white" />}
       </motion.button>
 
       {/* Screen Reader Announcement */}
@@ -159,21 +137,22 @@ export const HeroCarousel = ({
         Showing image {currentIndex + 1} of {images.length}: {images[currentIndex]?.alt}
       </div>
 
-      {/* Progress Indicators */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+      {/* Premium Progress Indicators with animation */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-10">
         {images.map((_, index) => (
           <motion.button
-            key={index}
+            key={`indicator-${index}`}
             onClick={() => setCurrentIndex(index)}
-            className={`relative h-2 rounded-full transition-all duration-400 overflow-hidden ${
+            className={`relative h-2.5 rounded-full transition-all duration-500 overflow-hidden ${
               index === currentIndex 
-                ? "w-8 bg-white shadow-lg" 
-                : "w-2 bg-white/40 hover:bg-white/60"
+                ? "w-10 bg-white shadow-lg" 
+                : "w-2.5 bg-white/40 hover:bg-white/60"
             }`}
             aria-label={`Go to image ${index + 1}`}
-            whileHover={{ scale: 1.15 }}
+            whileHover={{ scale: 1.2 }}
             whileTap={{ scale: 0.9 }}
           >
+            {/* Progress fill for current indicator */}
             {index === currentIndex && !isPaused && (
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-accent to-primary rounded-full"
