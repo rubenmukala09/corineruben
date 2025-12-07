@@ -155,118 +155,149 @@ function Contact() {
       />
       <TrustBar />
       
-      <div className="section-spacing bg-gradient-to-b from-background to-muted/20">
-        <div className="container-padding">
-          {/* Contact Methods Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="section-spacing bg-gradient-to-b from-background via-muted/10 to-background relative overflow-hidden">
+        {/* Premium Background Effects */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        </div>
+        
+        <div className="container-padding relative z-10">
+          {/* Contact Methods Grid with Premium Styling */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
             {contactMethods.map((method, index) => {
               const IconComponent = method.icon;
               return (
-                <Card key={index} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                  <CardHeader>
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
-                      <IconComponent className="w-6 h-6 text-primary" />
+                <div 
+                  key={index} 
+                  className="group relative bg-card/80 backdrop-blur-sm rounded-2xl border border-border/50 p-6 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden"
+                >
+                  {/* Gradient border effect on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+                  
+                  <div className="relative z-10">
+                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-accent/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:shadow-lg transition-all duration-300">
+                      <IconComponent className="w-7 h-7 text-primary" />
                     </div>
-                    <CardTitle className="text-lg">{method.title}</CardTitle>
-                    <CardDescription className="text-sm">
-                      <div className="font-semibold text-foreground mb-1">{method.detail}</div>
-                      <div className="flex items-center gap-1 text-xs">
-                        <Clock className="w-3 h-3" />
-                        {method.hours}
-                      </div>
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Badge variant={method.badgeVariant} className="mb-3 text-xs">
+                    <h3 className="text-lg font-bold mb-2">{method.title}</h3>
+                    <p className="font-semibold text-foreground mb-1 text-sm">{method.detail}</p>
+                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-4">
+                      <Clock className="w-3.5 h-3.5" />
+                      {method.hours}
+                    </div>
+                    <Badge variant={method.badgeVariant} className="mb-4 text-xs">
                       {method.badge}
                     </Badge>
                     <Button 
                       variant="outline" 
-                      className="w-full" 
+                      className="w-full group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all duration-300" 
                       size="sm"
                       onClick={() => method.action.startsWith('#') ? null : window.location.href = method.action}
                     >
                       {method.actionText}
                     </Button>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               );
             })}
           </div>
 
           {/* Main Contact Form Section */}
           <div className="grid lg:grid-cols-5 gap-8 max-w-7xl mx-auto">
-            {/* Contact Form - 60% */}
+            {/* Premium Contact Form - 60% */}
             <div className="lg:col-span-3">
-              <Card className="shadow-2xl">
-                <CardHeader>
-                  <div className="flex items-center justify-between mb-2">
-                    <CardTitle className="text-2xl">Send Us a Message</CardTitle>
-                    <Badge variant="outline" className="gap-1">
-                      <Shield className="w-3 h-3" />
+              <div className="relative bg-card/90 backdrop-blur-md rounded-3xl border border-border/30 shadow-2xl overflow-hidden">
+                {/* Premium header gradient */}
+                <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary via-accent to-primary" />
+                
+                {/* Decorative corner accents */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/10 to-transparent rounded-bl-full" />
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-accent/10 to-transparent rounded-tr-full" />
+                
+                <div className="p-8 md:p-10">
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
+                        Send Us a Message
+                      </h2>
+                      <p className="text-muted-foreground mt-2">
+                        We'll respond within 4 hours during business hours
+                      </p>
+                    </div>
+                    <Badge variant="outline" className="gap-1.5 px-3 py-1.5 bg-success/10 border-success/30 text-success">
+                      <Shield className="w-3.5 h-3.5" />
                       Secure
                     </Badge>
                   </div>
-                  <CardDescription>
-                    Fill out the form below and we'll get back to you within 4 hours during business hours
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
+                  
                   {isSubmitted ? (
-                    <div className="text-center py-12">
-                      <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <CheckCircle className="w-8 h-8 text-success" />
+                    <div className="text-center py-16">
+                      <div className="w-20 h-20 bg-gradient-to-br from-success/20 to-success/5 rounded-full flex items-center justify-center mx-auto mb-6 animate-scale-in">
+                        <CheckCircle className="w-10 h-10 text-success" />
                       </div>
-                      <h3 className="text-xl font-semibold mb-2">Message Sent Successfully!</h3>
+                      <h3 className="text-2xl font-bold mb-3">Message Sent Successfully!</h3>
                       <p className="text-muted-foreground">We'll respond within 4 hours</p>
                     </div>
                   ) : (
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                      {/* Full Name */}
-                      <div>
-                        <Label htmlFor="fullName">Full Name *</Label>
-                        <Input
-                          id="fullName"
-                          required
-                          value={formData.fullName}
-                          onChange={(e) => setFormData({...formData, fullName: e.target.value})}
-                          placeholder="John Doe"
-                        />
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                      {/* Full Name with premium styling */}
+                      <div className="group">
+                        <Label htmlFor="fullName" className="text-sm font-semibold mb-2 block">
+                          Full Name <span className="text-primary">*</span>
+                        </Label>
+                        <div className="relative">
+                          <Input
+                            id="fullName"
+                            required
+                            value={formData.fullName}
+                            onChange={(e) => setFormData({...formData, fullName: e.target.value})}
+                            placeholder="Enter your full name"
+                            className="h-12 bg-background/50 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 pl-4"
+                          />
+                        </div>
                       </div>
 
-                      {/* Email & Phone */}
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                          <Label htmlFor="email">Email *</Label>
+                      {/* Email & Phone in grid */}
+                      <div className="grid md:grid-cols-2 gap-5">
+                        <div className="group">
+                          <Label htmlFor="email" className="text-sm font-semibold mb-2 block">
+                            Email <span className="text-primary">*</span>
+                          </Label>
                           <Input
                             id="email"
                             type="email"
                             required
                             value={formData.email}
                             onChange={(e) => setFormData({...formData, email: e.target.value})}
-                            placeholder="john@example.com"
+                            placeholder="your@email.com"
+                            className="h-12 bg-background/50 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
                           />
                         </div>
-                        <div>
-                          <Label htmlFor="phone">Phone (optional)</Label>
+                        <div className="group">
+                          <Label htmlFor="phone" className="text-sm font-semibold mb-2 block">
+                            Phone <span className="text-muted-foreground text-xs">(optional)</span>
+                          </Label>
                           <Input
                             id="phone"
                             type="tel"
                             value={formData.phone}
                             onChange={(e) => setFormData({...formData, phone: e.target.value})}
                             placeholder="(555) 123-4567"
+                            className="h-12 bg-background/50 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
                           />
                         </div>
                       </div>
 
-                      {/* Subject */}
-                      <div>
-                        <Label htmlFor="subject">Subject *</Label>
+                      {/* Subject dropdown with premium styling */}
+                      <div className="group">
+                        <Label htmlFor="subject" className="text-sm font-semibold mb-2 block">
+                          Subject <span className="text-primary">*</span>
+                        </Label>
                         <Select required value={formData.subject} onValueChange={(value) => setFormData({...formData, subject: value})}>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select a subject" />
+                          <SelectTrigger className="h-12 bg-background/50 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300">
+                            <SelectValue placeholder="What can we help you with?" />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className="rounded-xl border-border/50 backdrop-blur-md">
                             <SelectItem value="general">General Inquiry</SelectItem>
                             <SelectItem value="support">Technical Support</SelectItem>
                             <SelectItem value="business">Business Services</SelectItem>
@@ -276,31 +307,50 @@ function Contact() {
                         </Select>
                       </div>
 
-                      {/* Message */}
-                      <div>
-                        <Label htmlFor="message">Message *</Label>
+                      {/* Message textarea with character counter */}
+                      <div className="group">
+                        <Label htmlFor="message" className="text-sm font-semibold mb-2 block">
+                          Message <span className="text-primary">*</span>
+                        </Label>
                         <Textarea
                           id="message"
                           required
                           value={formData.message}
                           onChange={(e) => setFormData({...formData, message: e.target.value})}
-                          placeholder="How can we help you?"
+                          placeholder="Tell us how we can help you..."
                           rows={5}
                           maxLength={maxLength}
+                          className="bg-background/50 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 resize-none"
                         />
-                        <p className={`text-xs mt-1 ${messageLength > maxLength * 0.9 ? 'text-warning' : 'text-muted-foreground'}`}>
-                          {messageLength}/{maxLength} characters
-                        </p>
+                        <div className="flex justify-between items-center mt-2">
+                          <div className="h-1.5 flex-1 bg-muted rounded-full overflow-hidden mr-4">
+                            <div 
+                              className={`h-full rounded-full transition-all duration-300 ${
+                                messageLength > maxLength * 0.9 
+                                  ? 'bg-destructive' 
+                                  : messageLength > maxLength * 0.7 
+                                    ? 'bg-yellow-500' 
+                                    : 'bg-primary'
+                              }`}
+                              style={{ width: `${(messageLength / maxLength) * 100}%` }}
+                            />
+                          </div>
+                          <span className={`text-xs font-medium ${messageLength > maxLength * 0.9 ? 'text-destructive' : 'text-muted-foreground'}`}>
+                            {messageLength}/{maxLength}
+                          </span>
+                        </div>
                       </div>
 
                       {/* How did you hear about us */}
-                      <div>
-                        <Label htmlFor="hearAbout">How did you hear about us?</Label>
+                      <div className="group">
+                        <Label htmlFor="hearAbout" className="text-sm font-semibold mb-2 block">
+                          How did you hear about us?
+                        </Label>
                         <Select value={formData.hearAbout} onValueChange={(value) => setFormData({...formData, hearAbout: value})}>
-                          <SelectTrigger>
+                          <SelectTrigger className="h-12 bg-background/50 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300">
                             <SelectValue placeholder="Select an option" />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className="rounded-xl border-border/50 backdrop-blur-md">
                             <SelectItem value="search">Search Engine</SelectItem>
                             <SelectItem value="social">Social Media</SelectItem>
                             <SelectItem value="referral">Friend/Family Referral</SelectItem>
@@ -310,117 +360,157 @@ function Contact() {
                         </Select>
                       </div>
 
-                      {/* Preferred Contact Method */}
-                      <div>
-                        <Label>Preferred Contact Method *</Label>
-                        <RadioGroup value={formData.contactMethod} onValueChange={(value) => setFormData({...formData, contactMethod: value})} className="flex gap-4 mt-2">
-                          <div className="flex items-center space-x-2">
+                      {/* Preferred Contact Method with premium radio buttons */}
+                      <div className="group">
+                        <Label className="text-sm font-semibold mb-3 block">
+                          Preferred Contact Method <span className="text-primary">*</span>
+                        </Label>
+                        <RadioGroup 
+                          value={formData.contactMethod} 
+                          onValueChange={(value) => setFormData({...formData, contactMethod: value})} 
+                          className="flex gap-4"
+                        >
+                          <div className={`flex-1 flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 ${
+                            formData.contactMethod === 'email' 
+                              ? 'border-primary bg-primary/5' 
+                              : 'border-border/50 hover:border-primary/50'
+                          }`}>
                             <RadioGroupItem value="email" id="contact-email" />
-                            <Label htmlFor="contact-email" className="cursor-pointer">Email</Label>
+                            <Label htmlFor="contact-email" className="cursor-pointer flex items-center gap-2">
+                              <Mail className="w-4 h-4" />
+                              Email
+                            </Label>
                           </div>
-                          <div className="flex items-center space-x-2">
+                          <div className={`flex-1 flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 ${
+                            formData.contactMethod === 'phone' 
+                              ? 'border-primary bg-primary/5' 
+                              : 'border-border/50 hover:border-primary/50'
+                          }`}>
                             <RadioGroupItem value="phone" id="contact-phone" />
-                            <Label htmlFor="contact-phone" className="cursor-pointer">Phone</Label>
+                            <Label htmlFor="contact-phone" className="cursor-pointer flex items-center gap-2">
+                              <Phone className="w-4 h-4" />
+                              Phone
+                            </Label>
                           </div>
                         </RadioGroup>
                       </div>
 
-                      <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
+                      {/* Premium Submit Button */}
+                      <Button 
+                        type="submit" 
+                        className="w-full h-14 text-lg font-bold rounded-xl bg-gradient-to-r from-primary via-purple-600 to-primary bg-[length:200%_100%] hover:bg-[position:100%_0] transition-all duration-500" 
+                        size="lg" 
+                        disabled={isSubmitting}
+                      >
                         {isSubmitting ? (
                           <>
-                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                             Sending...
                           </>
                         ) : (
-                          <>Send Message</>
+                          <>
+                            <MessageCircle className="mr-2 h-5 w-5" />
+                            Send Message
+                          </>
                         )}
                       </Button>
 
-                      <p className="text-xs text-center text-muted-foreground">
+                      {/* Security note */}
+                      <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground bg-muted/30 rounded-lg p-3">
+                        <Shield className="w-4 h-4 text-success" />
                         Your message is encrypted and secure. We never share your information.
-                      </p>
+                      </div>
                     </form>
                   )}
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </div>
 
-            {/* Contact Info Sidebar - 40% */}
+            {/* Contact Info Sidebar - 40% with Premium Styling */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Response Promise */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <CheckCircle className="w-5 h-5 text-success" />
+              {/* Response Promise with Premium Card */}
+              <div className="relative bg-card/90 backdrop-blur-md rounded-2xl border border-border/30 shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-500">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-success via-accent to-success" />
+                <div className="p-6">
+                  <h3 className="text-lg font-bold flex items-center gap-2 mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-success/20 to-success/5 flex items-center justify-center">
+                      <CheckCircle className="w-5 h-5 text-success" />
+                    </div>
                     Our Response Promise
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3 text-sm">
-                  <div className="flex items-start gap-2">
-                    <div className="w-2 h-2 rounded-full bg-primary mt-1.5" />
-                    <p><strong>4-hour response</strong> during business hours</p>
+                  </h3>
+                  <div className="space-y-4">
+                    {[
+                      { text: "4-hour response", sub: "during business hours" },
+                      { text: "24-hour response", sub: "on weekends" },
+                      { text: "Emergency support", sub: "for urgent issues" }
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-muted/30 border border-border/30 hover:border-primary/30 transition-all duration-300">
+                        <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-br from-primary to-accent animate-pulse" />
+                        <span className="text-sm">
+                          <strong>{item.text}</strong> {item.sub}
+                        </span>
+                      </div>
+                    ))}
                   </div>
-                  <div className="flex items-start gap-2">
-                    <div className="w-2 h-2 rounded-full bg-primary mt-1.5" />
-                    <p><strong>24-hour response</strong> on weekends</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <div className="w-2 h-2 rounded-full bg-primary mt-1.5" />
-                    <p><strong>Emergency support</strong> for urgent issues</p>
-                  </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
-              {/* Office Location */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <MapPin className="w-5 h-5 text-primary" />
+              {/* Office Location with Premium Styling */}
+              <div className="relative bg-card/90 backdrop-blur-md rounded-2xl border border-border/30 shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-500">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-primary" />
+                <div className="p-6">
+                  <h3 className="text-lg font-bold flex items-center gap-2 mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                      <MapPin className="w-5 h-5 text-primary" />
+                    </div>
                     Visit Our Office
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm mb-3">
-                    <strong>InVision Network HQ</strong><br />
-                    123 Tech Boulevard<br />
-                    Columbus, OH 43215
-                  </p>
-                  <div className="bg-muted rounded-lg h-48 flex items-center justify-center text-muted-foreground text-sm mb-3">
-                    Map placeholder
+                  </h3>
+                  <div className="p-4 rounded-xl bg-muted/30 border border-border/30 mb-4">
+                    <p className="text-sm font-semibold text-foreground mb-1">InVision Network HQ</p>
+                    <p className="text-sm text-muted-foreground">
+                      123 Tech Boulevard<br />
+                      Columbus, OH 43215
+                    </p>
                   </div>
-                  <Button variant="outline" className="w-full" size="sm">
+                  <div className="bg-gradient-to-br from-muted/50 to-muted/20 rounded-xl h-40 flex items-center justify-center text-muted-foreground text-sm mb-4 border border-border/30">
+                    <div className="text-center">
+                      <MapPin className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                      Map Preview
+                    </div>
+                  </div>
+                  <Button variant="outline" className="w-full group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all duration-300" size="sm">
                     Get Directions
                   </Button>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
-              {/* Support Team */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Meet Your Support Team</CardTitle>
-                  <CardDescription>Real people ready to help</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold">
-                      JD
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold">John Doe</p>
-                      <p className="text-xs text-muted-foreground">Support Lead</p>
-                    </div>
+              {/* Support Team with Premium Styling */}
+              <div className="relative bg-card/90 backdrop-blur-md rounded-2xl border border-border/30 shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent via-primary to-accent" />
+                <div className="p-6">
+                  <h3 className="text-lg font-bold mb-1">Meet Your Support Team</h3>
+                  <p className="text-sm text-muted-foreground mb-4">Real people ready to help</p>
+                  <div className="space-y-3">
+                    {[
+                      { initials: "JD", name: "John Doe", role: "Support Lead", color: "primary" },
+                      { initials: "SM", name: "Sarah Miller", role: "Technical Support", color: "accent" }
+                    ].map((member, i) => (
+                      <div 
+                        key={i}
+                        className="flex items-center gap-3 p-3 rounded-xl bg-muted/30 border border-border/30 hover:border-primary/30 hover:bg-muted/50 transition-all duration-300 cursor-pointer group"
+                      >
+                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br from-${member.color}/20 to-${member.color}/5 flex items-center justify-center text-${member.color} font-bold group-hover:scale-110 transition-transform duration-300`}>
+                          {member.initials}
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold">{member.name}</p>
+                          <p className="text-xs text-muted-foreground">{member.role}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-accent font-semibold">
-                      SM
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold">Sarah Miller</p>
-                      <p className="text-xs text-muted-foreground">Technical Support</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </div>
           </div>
         </div>

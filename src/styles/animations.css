@@ -621,3 +621,123 @@
 .animate-enter {
   animation: enter-scale-fade 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
+
+/* ===== PREMIUM PAGE TRANSITIONS ===== */
+
+/* Premium page enter with blur */
+@keyframes premium-page-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.animate-premium-enter {
+  animation: premium-page-enter 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Premium card hover lift */
+.premium-card-hover {
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.premium-card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 
+              0 0 30px rgba(139, 92, 246, 0.1);
+}
+
+/* Smooth image crossfade */
+@keyframes image-crossfade-in {
+  0% {
+    opacity: 0;
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes image-crossfade-out {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+.animate-image-in {
+  animation: image-crossfade-in 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-image-out {
+  animation: image-crossfade-out 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Premium button press */
+@keyframes button-press {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+.animate-button-press {
+  animation: button-press 0.2s ease-out;
+}
+
+/* Premium form focus glow */
+@keyframes focus-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.2);
+  }
+  50% {
+    box-shadow: 0 0 0 4px hsl(var(--primary) / 0.1), 0 0 20px hsl(var(--primary) / 0.1);
+  }
+}
+
+.animate-focus-glow:focus-within {
+  animation: focus-glow 2s ease-in-out infinite;
+}
+
+/* Success checkmark animation */
+@keyframes success-check {
+  0% {
+    stroke-dashoffset: 100;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Premium loading shimmer */
+@keyframes premium-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-premium-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 100%
+  );
+  animation: premium-shimmer 1.5s ease-in-out infinite;
+}
