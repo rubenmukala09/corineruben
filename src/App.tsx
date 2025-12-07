@@ -494,40 +494,44 @@ const PaymentCanceled = lazy(() => {
   });
 });
 
-// Loading fallback component with enhanced skeleton
+// Premium loading fallback with gradient background - no white flash
 const PageLoader = () => (
-  <div className="min-h-screen bg-background flex items-center justify-center">
-    <div className="flex flex-col items-center gap-6">
-      {/* Animated logo */}
-      <div className="relative">
-        <div className="absolute inset-0 rounded-full bg-primary/20 animate-ping" style={{ animationDuration: '2s' }} />
-        <div className="absolute inset-0 rounded-full bg-accent/30 blur-xl animate-pulse" />
-        <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-primary via-accent to-purple-500 flex items-center justify-center animate-pulse">
-          <div className="w-12 h-12 rounded-full bg-background/90 flex items-center justify-center">
-            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary to-accent" />
+  <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted flex items-center justify-center relative overflow-hidden">
+    {/* Subtle background pattern */}
+    <div className="absolute inset-0 opacity-5">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.1),transparent_50%)]" />
+    </div>
+    
+    <div className="flex flex-col items-center gap-5 relative z-10">
+      {/* Minimal animated logo */}
+      <div className="relative w-16 h-16">
+        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary to-accent opacity-20 animate-pulse" />
+        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-background/90 flex items-center justify-center">
+            <div className="w-4 h-4 rounded bg-gradient-to-br from-primary to-accent" />
           </div>
         </div>
       </div>
       
-      {/* Loading text */}
-      <div className="flex flex-col items-center gap-2">
-        <span className="text-lg font-semibold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent bg-[length:200%_100%] animate-gradient-x">
-          Loading...
-        </span>
-        <div className="flex gap-1.5">
-          {[0, 1, 2].map((i) => (
-            <div
-              key={i}
-              className="w-2 h-2 rounded-full bg-primary animate-bounce"
-              style={{ animationDelay: `${i * 150}ms` }}
-            />
-          ))}
-        </div>
+      {/* Clean loading indicator */}
+      <div className="flex gap-1">
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            className="w-1.5 h-1.5 rounded-full bg-primary/60 animate-bounce"
+            style={{ animationDelay: `${i * 100}ms` }}
+          />
+        ))}
       </div>
       
-      {/* Progress shimmer bar */}
-      <div className="w-48 h-1 bg-muted rounded-full overflow-hidden">
-        <div className="h-full w-1/2 bg-gradient-to-r from-primary via-accent to-primary animate-shimmer rounded-full" />
+      {/* Slim progress bar */}
+      <div className="w-32 h-0.5 bg-border rounded-full overflow-hidden">
+        <div className="h-full w-full bg-gradient-to-r from-primary to-accent animate-shimmer" 
+          style={{ 
+            animation: 'shimmer 1.5s infinite',
+            backgroundSize: '200% 100%' 
+          }} 
+        />
       </div>
     </div>
   </div>

@@ -68,7 +68,6 @@ const Navigation = () => {
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-2 flex-1 justify-center max-w-3xl mx-auto">
             {navLinks.map((link) => {
               const isActive = isActiveLink(link.href);
@@ -76,16 +75,16 @@ const Navigation = () => {
                 <PrefetchLink
                   key={link.name}
                   to={link.href}
-                  className={`relative text-sm xl:text-base transition-all duration-300 font-medium px-3 py-2 rounded-xl whitespace-nowrap ${
+                  className={`relative text-sm xl:text-base transition-all duration-300 font-medium px-3 py-2 rounded-lg whitespace-nowrap ${
                     isActive 
-                      ? 'text-primary bg-primary/10 shadow-[0_0_12px_rgba(139,92,246,0.3)]' 
+                      ? 'text-primary bg-primary/10 border border-primary/30' 
                       : 'text-muted-foreground hover:text-primary hover:bg-primary/5'
                   }`}
                 >
                   {link.name}
                   {/* Active indicator bar */}
                   {isActive && (
-                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-0.5 bg-gradient-to-r from-primary to-accent rounded-full" />
+                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-0.5 bg-primary rounded-full" />
                   )}
                 </PrefetchLink>
               );
@@ -151,9 +150,9 @@ const Navigation = () => {
                   <Link
                     key={link.name}
                     to={link.href}
-                    className={`block text-base md:text-lg transition-colors duration-300 font-medium px-4 py-3 rounded-xl active:scale-[0.98] touch-target ${
+                    className={`block text-base md:text-lg transition-colors duration-300 font-medium px-4 py-3 rounded-lg active:scale-[0.98] touch-target ${
                       isActive 
-                        ? 'text-primary bg-primary/15 border-l-4 border-primary shadow-[0_0_12px_rgba(139,92,246,0.2)]' 
+                        ? 'text-primary bg-primary/15 border-l-4 border-primary' 
                         : 'text-foreground hover:text-primary hover:bg-primary/10 active:bg-primary/20'
                     }`}
                     onClick={() => {
