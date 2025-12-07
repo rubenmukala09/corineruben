@@ -10,9 +10,53 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Rate limiting: 5 requests per minute per IP (stricter for verification codes)
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT = 5;
+const RATE_WINDOW_MS = 60 * 1000;
+
+function checkRateLimit(ip: string): { allowed: boolean; retryAfter?: number } {
+  const now = Date.now();
+  const record = rateLimitMap.get(ip);
+
+  if (!record || now > record.resetTime) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_WINDOW_MS });
+    return { allowed: true };
+  }
+
+  if (record.count >= RATE_LIMIT) {
+    const retryAfter = Math.ceil((record.resetTime - now) / 1000);
+    console.log(`[RATE LIMIT] IP ${ip} exceeded limit. Retry after ${retryAfter}s`);
+    return { allowed: false, retryAfter };
+  }
+
+  record.count++;
+  return { allowed: true };
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // Rate limiting check
+  const clientIP = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || 
+                   req.headers.get("x-real-ip") || 
+                   "unknown";
+  
+  const rateCheck = checkRateLimit(clientIP);
+  if (!rateCheck.allowed) {
+    return new Response(
+      JSON.stringify({ error: "Too many verification requests. Please wait before trying again." }),
+      {
+        status: 429,
+        headers: { 
+          ...corsHeaders, 
+          "Content-Type": "application/json",
+          "Retry-After": String(rateCheck.retryAfter)
+        },
+      }
+    );
   }
 
   try {

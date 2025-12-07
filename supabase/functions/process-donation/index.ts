@@ -7,6 +7,30 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Rate limiting: 10 requests per minute per IP
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT = 10;
+const RATE_WINDOW_MS = 60 * 1000;
+
+function checkRateLimit(ip: string): { allowed: boolean; retryAfter?: number } {
+  const now = Date.now();
+  const record = rateLimitMap.get(ip);
+
+  if (!record || now > record.resetTime) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_WINDOW_MS });
+    return { allowed: true };
+  }
+
+  if (record.count >= RATE_LIMIT) {
+    const retryAfter = Math.ceil((record.resetTime - now) / 1000);
+    console.log(`[RATE LIMIT] IP ${ip} exceeded limit. Retry after ${retryAfter}s`);
+    return { allowed: false, retryAfter };
+  }
+
+  record.count++;
+  return { allowed: true };
+}
+
 const logStep = (step: string, details?: any) => {
   const detailsStr = details ? ` - ${JSON.stringify(details)}` : '';
   console.log(`[PROCESS-DONATION] ${step}${detailsStr}`);
@@ -15,6 +39,26 @@ const logStep = (step: string, details?: any) => {
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // Rate limiting check
+  const clientIP = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || 
+                   req.headers.get("x-real-ip") || 
+                   "unknown";
+  
+  const rateCheck = checkRateLimit(clientIP);
+  if (!rateCheck.allowed) {
+    return new Response(
+      JSON.stringify({ error: "Too many requests. Please try again later." }),
+      {
+        status: 429,
+        headers: { 
+          ...corsHeaders, 
+          "Content-Type": "application/json",
+          "Retry-After": String(rateCheck.retryAfter)
+        },
+      }
+    );
   }
 
   const supabaseClient = createClient(
@@ -65,7 +109,6 @@ serve(async (req) => {
     let session;
     
     if (donationType === 'monthly') {
-      // Create recurring donation via subscription checkout
       session = await stripe.checkout.sessions.create({
         customer: customerId,
         line_items: [
@@ -96,7 +139,6 @@ serve(async (req) => {
       });
       logStep("Created subscription checkout session", { sessionId: session.id });
     } else {
-      // Create one-time donation via payment checkout
       session = await stripe.checkout.sessions.create({
         customer: customerId,
         line_items: [
@@ -125,7 +167,6 @@ serve(async (req) => {
       logStep("Created payment checkout session", { sessionId: session.id });
     }
 
-    // Update donation record with pending status
     if (donationId) {
       await supabaseClient
         .from('donations')

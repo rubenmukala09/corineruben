@@ -11,14 +11,57 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
+// Rate limiting: 10 requests per minute per IP
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT = 10;
+const RATE_WINDOW_MS = 60 * 1000;
+
+function checkRateLimit(ip: string): { allowed: boolean; retryAfter?: number } {
+  const now = Date.now();
+  const record = rateLimitMap.get(ip);
+
+  if (!record || now > record.resetTime) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_WINDOW_MS });
+    return { allowed: true };
+  }
+
+  if (record.count >= RATE_LIMIT) {
+    const retryAfter = Math.ceil((record.resetTime - now) / 1000);
+    console.log(`[RATE LIMIT] IP ${ip} exceeded limit. Retry after ${retryAfter}s`);
+    return { allowed: false, retryAfter };
+  }
+
+  record.count++;
+  return { allowed: true };
+}
+
 interface NewsletterSignupRequest {
   email: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
-  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // Rate limiting check
+  const clientIP = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || 
+                   req.headers.get("x-real-ip") || 
+                   "unknown";
+  
+  const rateCheck = checkRateLimit(clientIP);
+  if (!rateCheck.allowed) {
+    return new Response(
+      JSON.stringify({ error: "Too many requests. Please try again later." }),
+      {
+        status: 429,
+        headers: { 
+          ...corsHeaders, 
+          "Content-Type": "application/json",
+          "Retry-After": String(rateCheck.retryAfter)
+        },
+      }
+    );
   }
 
   try {
@@ -26,7 +69,6 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Newsletter signup request:", email);
 
-    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return new Response(
@@ -38,10 +80,8 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Initialize Supabase client
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Check if email already exists
     const { data: existingSubscriber } = await supabase
       .from("newsletter_subscribers")
       .select("*")
@@ -61,7 +101,6 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Add to newsletter subscribers
     const { error: insertError } = await supabase
       .from("newsletter_subscribers")
       .insert({
@@ -73,7 +112,6 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Added to newsletter subscribers:", email);
 
-    // Send welcome email
     const emailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -120,7 +158,6 @@ const handler = async (req: Request): Promise<Response> => {
     if (!emailResponse.ok) {
       const error = await emailResponse.text();
       console.error("Failed to send welcome email:", error);
-      // Don't throw - subscriber was added successfully
     } else {
       console.log("Welcome email sent successfully");
     }

@@ -3460,6 +3460,39 @@ export type Database = {
         }
         Relationships: []
       }
+      user_2fa_settings: {
+        Row: {
+          backup_codes: string[] | null
+          created_at: string
+          encrypted_totp_secret: string | null
+          id: string
+          is_enabled: boolean
+          last_used_at: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          backup_codes?: string[] | null
+          created_at?: string
+          encrypted_totp_secret?: string | null
+          id?: string
+          is_enabled?: boolean
+          last_used_at?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          backup_codes?: string[] | null
+          created_at?: string
+          encrypted_totp_secret?: string | null
+          id?: string
+          is_enabled?: boolean
+          last_used_at?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_activity_logs: {
         Row: {
           activity_type: string

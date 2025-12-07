@@ -44,3 +44,18 @@ verify_jwt = false
 
 [functions.send-digital-download]
 verify_jwt = false
+
+[functions.newsletter-signup]
+verify_jwt = false
+
+[functions.send-contact-email]
+verify_jwt = false
+
+[functions.setup-2fa]
+verify_jwt = true
+
+[functions.verify-2fa]
+verify_jwt = true
+
+[functions.generate-backup-codes]
+verify_jwt = true

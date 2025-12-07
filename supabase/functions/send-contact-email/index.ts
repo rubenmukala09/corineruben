@@ -9,6 +9,30 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
+// Rate limiting: 10 requests per minute per IP
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT = 10;
+const RATE_WINDOW_MS = 60 * 1000;
+
+function checkRateLimit(ip: string): { allowed: boolean; retryAfter?: number } {
+  const now = Date.now();
+  const record = rateLimitMap.get(ip);
+
+  if (!record || now > record.resetTime) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_WINDOW_MS });
+    return { allowed: true };
+  }
+
+  if (record.count >= RATE_LIMIT) {
+    const retryAfter = Math.ceil((record.resetTime - now) / 1000);
+    console.log(`[RATE LIMIT] IP ${ip} exceeded limit. Retry after ${retryAfter}s`);
+    return { allowed: false, retryAfter };
+  }
+
+  record.count++;
+  return { allowed: true };
+}
+
 interface ContactEmailRequest {
   name: string;
   email: string;
@@ -20,9 +44,28 @@ interface ContactEmailRequest {
 }
 
 const handler = async (req: Request): Promise<Response> => {
-  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // Rate limiting check
+  const clientIP = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || 
+                   req.headers.get("x-real-ip") || 
+                   "unknown";
+  
+  const rateCheck = checkRateLimit(clientIP);
+  if (!rateCheck.allowed) {
+    return new Response(
+      JSON.stringify({ error: "Too many requests. Please try again later." }),
+      {
+        status: 429,
+        headers: { 
+          ...corsHeaders, 
+          "Content-Type": "application/json",
+          "Retry-After": String(rateCheck.retryAfter)
+        },
+      }
+    );
   }
 
   try {
@@ -30,12 +73,10 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Sending contact form email:", { name, email, interest });
 
-    // Create Supabase client
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Save to database first
     const { data: inquiry, error: dbError } = await supabase
       .from('website_inquiries')
       .insert({
@@ -53,12 +94,10 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (dbError) {
       console.error('Database insertion error:', dbError);
-      // Continue with email even if DB fails
     } else {
       console.log('Inquiry saved to database:', inquiry.id);
     }
 
-    // Send email to admin
     const adminEmailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -96,7 +135,6 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Admin email sent successfully");
 
-    // Send confirmation email to user
     const userEmailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -135,7 +173,6 @@ const handler = async (req: Request): Promise<Response> => {
     if (!userEmailResponse.ok) {
       const error = await userEmailResponse.text();
       console.error("Failed to send user email:", error);
-      // Don't throw - admin email succeeded
     } else {
       console.log("User confirmation email sent successfully");
     }
