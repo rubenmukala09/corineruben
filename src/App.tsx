@@ -2,8 +2,9 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
+import { InitialLoader } from "./components/InitialLoader";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AdminRoute } from "./components/AdminRoute";
 import { AIChat } from "./components/AIChat";
@@ -573,6 +574,8 @@ function AnimatedRoutes() {
 }
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  
   // Add smooth scroll behavior for anchor links
   useSmoothAnchorScroll();
   
@@ -584,32 +587,37 @@ function App() {
   }, []);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Toaster />
-      <Sonner />
-      <SubscriptionProvider>
-        <CartProvider>
-          <AIChatProvider>
-            <BrowserRouter>
-              <SkipToContent />
-              <NavigationProgress />
-              <ScrollToTop />
-              
-              <RouteTracker />
-              <AnalyticsTracker />
-              <ErrorBoundary>
-                <Suspense fallback={<PageLoader />}>
-                  <AnimatedRoutes />
-                </Suspense>
-              </ErrorBoundary>
-              <AIChat />
-              <CookieConsent />
-              <DraggablePerformanceMonitor />
-            </BrowserRouter>
-          </AIChatProvider>
-        </CartProvider>
-      </SubscriptionProvider>
-    </QueryClientProvider>
+    <>
+      {/* Initial website loading effect */}
+      <InitialLoader onComplete={() => setIsLoading(false)} minDuration={1800} />
+      
+      <QueryClientProvider client={queryClient}>
+        <Toaster />
+        <Sonner />
+        <SubscriptionProvider>
+          <CartProvider>
+            <AIChatProvider>
+              <BrowserRouter>
+                <SkipToContent />
+                <NavigationProgress />
+                <ScrollToTop />
+                
+                <RouteTracker />
+                <AnalyticsTracker />
+                <ErrorBoundary>
+                  <Suspense fallback={<PageLoader />}>
+                    <AnimatedRoutes />
+                  </Suspense>
+                </ErrorBoundary>
+                <AIChat />
+                <CookieConsent />
+                <DraggablePerformanceMonitor />
+              </BrowserRouter>
+            </AIChatProvider>
+          </CartProvider>
+        </SubscriptionProvider>
+      </QueryClientProvider>
+    </>
   );
 }
 
