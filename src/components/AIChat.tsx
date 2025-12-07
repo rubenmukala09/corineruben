@@ -211,43 +211,27 @@ export const AIChat = () => {
   if (!isOpen) {
     return (
       <div className="fixed bottom-6 right-6 z-50 group">
-        {/* Outer pulsing rings */}
-        <div className="absolute inset-[-8px] rounded-full bg-gradient-to-r from-primary via-accent to-purple-500 opacity-30 animate-ping" style={{ animationDuration: '3s' }} />
-        <div className="absolute inset-[-4px] rounded-full bg-gradient-to-r from-primary to-accent opacity-50 animate-pulse" />
-        
-        {/* Main button */}
+        {/* Main button - clean, professional design */}
         <button
           onClick={openChat}
-          className="relative w-16 h-16 rounded-full bg-gradient-to-br from-primary via-accent to-purple-500 shadow-2xl shadow-primary/40 hover:shadow-primary/60 transition-all duration-300 hover:scale-110 active:scale-95 group overflow-hidden"
+          className="relative w-14 h-14 rounded-xl bg-gradient-to-br from-primary to-accent shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 overflow-hidden border border-white/10"
         >
-          {/* Shimmer overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+          {/* Subtle shimmer on hover */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
           
-          {/* Inner glow */}
-          <div className="absolute inset-1 rounded-full bg-gradient-to-br from-white/20 to-transparent" />
-          
-          {/* Icon container */}
+          {/* Icon */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <MessageSquare className="w-7 h-7 text-white drop-shadow-lg" />
+            <MessageSquare className="w-6 h-6 text-white" />
           </div>
           
           {/* Online indicator */}
-          <div className="absolute top-1 right-1 w-3 h-3">
-            <div className="absolute inset-0 rounded-full bg-green-400 animate-ping opacity-75" />
-            <div className="absolute inset-0 rounded-full bg-green-500 border-2 border-white" />
-          </div>
+          <div className="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-green-500 border-2 border-white" />
         </button>
         
-        {/* Tooltip */}
-        <div className="absolute bottom-full right-0 mb-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 pointer-events-none">
-          <div className="bg-foreground text-background text-sm font-medium px-4 py-2.5 rounded-xl whitespace-nowrap shadow-xl">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              Chat with Lora AI
-            </div>
-            <div className="absolute top-full right-6 -mt-1">
-              <div className="border-8 border-transparent border-t-foreground" />
-            </div>
+        {/* Compact tooltip */}
+        <div className="absolute bottom-full right-0 mb-2 opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none">
+          <div className="bg-foreground text-background text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg">
+            Chat with Lora
           </div>
         </div>
       </div>

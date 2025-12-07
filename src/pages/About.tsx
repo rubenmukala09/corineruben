@@ -21,8 +21,7 @@ import heroAboutNew from "@/assets/hero-about-new.jpg";
 import heroAboutProfessional from "@/assets/hero-about-professional.jpg";
 import heroAbout3d from "@/assets/hero-about-3d.jpg";
 import heroAbout from "@/assets/hero-about.jpg";
-import founderRuben from "@/assets/founder-ruben.jpg";
-import founderCorine from "@/assets/founder-corine.jpg";
+// Founder photos removed - will be uploaded later
 import teamDiverse1 from "@/assets/team-diverse-1.jpg";
 import businessCollaboration from "@/assets/business-collaboration.jpg";
 import { SEO } from "@/components/SEO";
@@ -220,12 +219,16 @@ function About() {
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 max-w-5xl mx-auto">
             <ScrollReveal delay={100}>
               <Card className="p-6 md:p-8 hover:shadow-2xl transition-all duration-500 border-2 border-border/50 hover:border-primary/50">
+                {/* Placeholder for founder photo upload */}
                 <div className="relative mb-6">
-                  <img 
-                    src={founderRuben} 
-                    alt="Ruben - Co-Founder & CEO"
-                    className="w-full aspect-square object-cover rounded-xl mb-4"
-                  />
+                  <div className="w-full aspect-square bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl flex items-center justify-center border-2 border-dashed border-primary/30">
+                    <div className="text-center p-6">
+                      <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                        <span className="text-4xl font-bold text-primary">R</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">Photo Coming Soon</p>
+                    </div>
+                  </div>
                   <Badge className="absolute top-4 right-4 bg-primary">Co-Founder & CEO</Badge>
                 </div>
                 <h3 className="text-2xl md:text-3xl font-bold mb-2">Ruben</h3>
@@ -240,12 +243,16 @@ function About() {
 
             <ScrollReveal delay={200}>
               <Card className="p-6 md:p-8 hover:shadow-2xl transition-all duration-500 border-2 border-border/50 hover:border-primary/50">
+                {/* Placeholder for founder photo upload */}
                 <div className="relative mb-6">
-              <img
-                src={founderCorine}
-                alt="Corine - Co-Founder & COO"
-                    className="w-full aspect-square object-cover rounded-xl mb-4"
-                  />
+                  <div className="w-full aspect-square bg-gradient-to-br from-accent/10 to-primary/10 rounded-xl flex items-center justify-center border-2 border-dashed border-accent/30">
+                    <div className="text-center p-6">
+                      <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-accent/20 to-primary/20 flex items-center justify-center">
+                        <span className="text-4xl font-bold text-accent">C</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">Photo Coming Soon</p>
+                    </div>
+                  </div>
                   <Badge className="absolute top-4 right-4 bg-primary">Co-Founder & COO</Badge>
                 </div>
                 <h3 className="text-2xl md:text-3xl font-bold mb-2">Corine</h3>
