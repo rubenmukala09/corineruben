@@ -10,7 +10,7 @@ import { Card } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Users, DollarSign, Building2, Loader2 } from "lucide-react";
+import { Users, DollarSign, Building2, Loader2, CreditCard, CheckCircle } from "lucide-react";
 import { donationFormSchema, formatPhoneNumber } from "@/utils/formValidation";
 import { z } from "zod";
 
@@ -25,7 +25,7 @@ type DonationFormData = z.infer<typeof donationFormSchema>;
 export const DonationModal = ({ open, onOpenChange, type = 'general' }: DonationModalProps) => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
-  const [donationType, setDonationType] = useState<'one-time' | 'monthly'>('one-time');
+  const [donationType, setDonationType] = useState<'one-time' | 'monthly'>(type === 'monthly' ? 'monthly' : 'one-time');
   const [selectedAmount, setSelectedAmount] = useState<number | null>(
     type === 'sponsor' ? 100 : type === 'monthly' ? 25 : null
   );
@@ -61,7 +61,8 @@ export const DonationModal = ({ open, onOpenChange, type = 'general' }: Donation
     try {
       const formattedPhone = data.phone ? formatPhoneNumber(data.phone) : null;
       
-      const { error } = await supabase.from('donations').insert([
+      // First create the donation record
+      const { data: donation, error: insertError } = await supabase.from('donations').insert([
         {
           donor_name: data.donor_name,
           email: data.email,
@@ -74,21 +75,41 @@ export const DonationModal = ({ open, onOpenChange, type = 'general' }: Donation
           }`,
           payment_status: 'pending',
         },
-      ]);
+      ]).select().single();
 
-      if (error) throw error;
+      if (insertError) throw insertError;
 
-      toast({
-        title: "Thank you for your donation!",
-        description: "We'll contact you shortly with payment details.",
+      // Now process the payment via edge function
+      const { data: paymentData, error: paymentError } = await supabase.functions.invoke('process-donation', {
+        body: {
+          donorName: data.donor_name,
+          email: data.email,
+          amount: selectedAmount,
+          donationType: donationType,
+          message: data.message,
+          donationId: donation?.id,
+        }
       });
 
-      onOpenChange(false);
-      form.reset();
-      setSelectedAmount(null);
+      if (paymentError) throw paymentError;
+
+      if (paymentData?.url) {
+        // Redirect to Stripe checkout
+        window.open(paymentData.url, '_blank');
+        toast({
+          title: "Redirecting to Payment",
+          description: "Opening secure payment page. Complete your donation there.",
+        });
+        onOpenChange(false);
+        form.reset();
+        setSelectedAmount(null);
+      } else {
+        throw new Error("Failed to create payment session");
+      }
     } catch (error: any) {
+      console.error('Donation error:', error);
       toast({
-        title: "Submission Failed",
+        title: "Payment Failed",
         description: error.message || "Please check your information and try again.",
         variant: "destructive",
       });
@@ -281,9 +302,14 @@ export const DonationModal = ({ open, onOpenChange, type = 'general' }: Donation
               )}
             />
 
-            <div className="p-4 bg-primary/5 rounded-lg">
+            {/* Payment Security Notice */}
+            <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
+              <div className="flex items-center gap-2 mb-2">
+                <CreditCard className="w-5 h-5 text-primary" />
+                <span className="font-medium">Secure Payment via Stripe</span>
+              </div>
               <p className="text-sm text-muted-foreground">
-                Your donation helps us protect and empower our community. Together, we create a safer digital world for everyone.
+                Your donation helps us protect and empower our community. You'll be redirected to Stripe's secure checkout to complete your payment.
               </p>
             </div>
 
@@ -308,7 +334,10 @@ export const DonationModal = ({ open, onOpenChange, type = 'general' }: Donation
                     Processing...
                   </>
                 ) : (
-                  `Donate $${selectedAmount || 0}`
+                  <>
+                    <CheckCircle className="mr-2 h-4 w-4" />
+                    Donate ${selectedAmount || 0}{donationType === 'monthly' ? '/month' : ''}
+                  </>
                 )}
               </Button>
             </div>

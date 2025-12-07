@@ -50,19 +50,9 @@ function Resources() {
 
   const handleBuyNow = async (product: any) => {
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session) {
-        toast({
-          title: "Authentication Required",
-          description: "Please sign in to purchase products",
-          variant: "destructive",
-        });
-        return;
-      }
-
       setLoading(true);
       
+      // Guest checkout enabled - no authentication required
       const { data, error } = await supabase.functions.invoke('create-product-payment', {
         body: { productId: product.id, quantity: 1 }
       });

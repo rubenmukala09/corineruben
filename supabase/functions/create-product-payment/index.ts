@@ -18,16 +18,24 @@ serve(async (req) => {
   );
 
   try {
-    const authHeader = req.headers.get("Authorization")!;
-    const token = authHeader.replace("Bearer ", "");
-    const { data } = await supabaseClient.auth.getUser(token);
-    const user = data.user;
+    // Support both authenticated and guest checkout
+    let user = null;
+    const authHeader = req.headers.get("Authorization");
+    if (authHeader && authHeader !== "Bearer null" && authHeader !== "Bearer undefined") {
+      const token = authHeader.replace("Bearer ", "");
+      if (token && token !== "null" && token !== "undefined") {
+        const { data } = await supabaseClient.auth.getUser(token);
+        user = data.user;
+      }
+    }
 
     const { productId, quantity = 1 } = await req.json();
     
     if (!productId) {
       throw new Error("Product ID is required");
     }
+    
+    console.log("Processing payment for product:", productId, "User:", user?.email || "Guest");
 
     // Get product details
     const { data: product, error: productError } = await supabaseClient
@@ -54,13 +62,20 @@ serve(async (req) => {
     }
 
     const unitPrice = product.sale_price || product.base_price;
-    const totalAmount = unitPrice * quantity;
 
-    // Create checkout session
-    const session = await stripe.checkout.sessions.create({
-      customer: customerId,
-      customer_email: customerId ? undefined : user?.email,
-      line_items: [
+    // Build line_items - use stripe_price_id if available, otherwise use price_data
+    let lineItems;
+    if (product.stripe_price_id) {
+      // Use actual Stripe price ID for proper dashboard sync
+      lineItems = [
+        {
+          price: product.stripe_price_id,
+          quantity: quantity,
+        },
+      ];
+    } else {
+      // Fallback to price_data if no Stripe price ID
+      lineItems = [
         {
           price_data: {
             currency: 'usd',
@@ -69,11 +84,18 @@ serve(async (req) => {
               description: product.description,
               images: product.images?.length > 0 ? [product.images[0]] : undefined,
             },
-            unit_amount: Math.round(unitPrice * 100), // Convert to cents
+            unit_amount: Math.round(unitPrice * 100),
           },
           quantity: quantity,
         },
-      ],
+      ];
+    }
+
+    // Create checkout session
+    const session = await stripe.checkout.sessions.create({
+      customer: customerId,
+      customer_email: customerId ? undefined : user?.email,
+      line_items: lineItems,
       mode: "payment",
       success_url: `${req.headers.get("origin")}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.get("origin")}/payment-canceled`,
@@ -81,6 +103,7 @@ serve(async (req) => {
         product_id: productId,
         user_id: user?.id || '',
         quantity: quantity.toString(),
+        is_digital: product.tags?.includes('digital') ? 'true' : 'false',
       },
     });
 

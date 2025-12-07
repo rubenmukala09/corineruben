@@ -1177,6 +1177,51 @@ export type Database = {
         }
         Relationships: []
       }
+      discount_codes: {
+        Row: {
+          code: string
+          created_at: string
+          current_uses: number
+          id: string
+          is_active: boolean
+          max_uses: number | null
+          min_purchase_amount: number | null
+          type: string
+          updated_at: string
+          valid_from: string | null
+          valid_until: string | null
+          value: number
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          current_uses?: number
+          id?: string
+          is_active?: boolean
+          max_uses?: number | null
+          min_purchase_amount?: number | null
+          type: string
+          updated_at?: string
+          valid_from?: string | null
+          valid_until?: string | null
+          value: number
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          current_uses?: number
+          id?: string
+          is_active?: boolean
+          max_uses?: number | null
+          min_purchase_amount?: number | null
+          type?: string
+          updated_at?: string
+          valid_from?: string | null
+          valid_until?: string | null
+          value?: number
+        }
+        Relationships: []
+      }
       donations: {
         Row: {
           amount: number
@@ -1481,6 +1526,48 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      external_security_links: {
+        Row: {
+          category: string | null
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          display_order: number | null
+          external_url: string
+          id: string
+          image_url: string | null
+          is_active: boolean | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          display_order?: number | null
+          external_url: string
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          display_order?: number | null
+          external_url?: string
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
       }
       funnel_steps: {
         Row: {
@@ -2091,6 +2178,9 @@ export type Database = {
           total_amount: number
           tracking_number: string | null
           updated_at: string
+          veteran_discount_amount: number | null
+          veteran_discount_applied: boolean | null
+          veteran_id_url: string | null
         }
         Insert: {
           billing_address?: Json | null
@@ -2121,6 +2211,9 @@ export type Database = {
           total_amount: number
           tracking_number?: string | null
           updated_at?: string
+          veteran_discount_amount?: number | null
+          veteran_discount_applied?: boolean | null
+          veteran_id_url?: string | null
         }
         Update: {
           billing_address?: Json | null
@@ -2151,6 +2244,9 @@ export type Database = {
           total_amount?: number
           tracking_number?: string | null
           updated_at?: string
+          veteran_discount_amount?: number | null
+          veteran_discount_applied?: boolean | null
+          veteran_id_url?: string | null
         }
         Relationships: [
           {
@@ -2391,6 +2487,7 @@ export type Database = {
           specifications: Json | null
           status: Database["public"]["Enums"]["product_status"]
           stock_quantity: number | null
+          stripe_price_id: string | null
           tags: string[] | null
           updated_at: string
           views_count: number | null
@@ -2422,6 +2519,7 @@ export type Database = {
           specifications?: Json | null
           status?: Database["public"]["Enums"]["product_status"]
           stock_quantity?: number | null
+          stripe_price_id?: string | null
           tags?: string[] | null
           updated_at?: string
           views_count?: number | null
@@ -2453,6 +2551,7 @@ export type Database = {
           specifications?: Json | null
           status?: Database["public"]["Enums"]["product_status"]
           stock_quantity?: number | null
+          stripe_price_id?: string | null
           tags?: string[] | null
           updated_at?: string
           views_count?: number | null
@@ -2880,6 +2979,72 @@ export type Database = {
           name?: string
           required_skills?: string[] | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      service_inquiries: {
+        Row: {
+          admin_notes: string | null
+          budget: string | null
+          company_name: string | null
+          created_at: string | null
+          email: string
+          full_name: string
+          id: string
+          inquiry_number: string
+          is_veteran: boolean | null
+          phone: string | null
+          requirements: string | null
+          service_name: string
+          service_price: number | null
+          service_type: string
+          status: string | null
+          timeline: string | null
+          updated_at: string | null
+          veteran_id_last4: string | null
+          veteran_type: string | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          budget?: string | null
+          company_name?: string | null
+          created_at?: string | null
+          email: string
+          full_name: string
+          id?: string
+          inquiry_number?: string
+          is_veteran?: boolean | null
+          phone?: string | null
+          requirements?: string | null
+          service_name: string
+          service_price?: number | null
+          service_type: string
+          status?: string | null
+          timeline?: string | null
+          updated_at?: string | null
+          veteran_id_last4?: string | null
+          veteran_type?: string | null
+        }
+        Update: {
+          admin_notes?: string | null
+          budget?: string | null
+          company_name?: string | null
+          created_at?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          inquiry_number?: string
+          is_veteran?: boolean | null
+          phone?: string | null
+          requirements?: string | null
+          service_name?: string
+          service_price?: number | null
+          service_type?: string
+          status?: string | null
+          timeline?: string | null
+          updated_at?: string | null
+          veteran_id_last4?: string | null
+          veteran_type?: string | null
         }
         Relationships: []
       }
