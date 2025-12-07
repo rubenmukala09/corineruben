@@ -40,7 +40,7 @@ const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, childr
   return (
     <div 
       ref={ref}
-      className={cn("relative min-h-[600px] sm:min-h-[700px] md:min-h-[850px] lg:min-h-[950px] xl:min-h-[1000px] flex items-center overflow-hidden hero-mobile", className)}
+      className={cn("relative min-h-[500px] sm:min-h-[550px] md:min-h-[600px] lg:min-h-[700px] xl:min-h-[750px] flex items-center overflow-hidden hero-mobile", className)}
     >
       {/* Persistent background gradient - prevents white flash */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#1e3a8a] via-[#3b0764] to-[#0d9488]" />

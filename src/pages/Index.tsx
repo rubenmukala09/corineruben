@@ -182,97 +182,83 @@ function Index() {
       {/* Introduction Section - Welcome to InVision */}
       <HomeIntroSection />
 
-      {/* The Growing Threat Section */}
-      <section className="section-spacing bg-muted relative overflow-hidden">
-        <FlowingWaves variant="full" opacity={0.12} />
-        <div className="absolute inset-0 opacity-30">
-          <div
-            className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse"
-            style={{ animationDuration: "4s" }}
-          />
-          <div
-            className="absolute bottom-20 right-10 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-pulse"
-            style={{ animationDuration: "6s" }}
-          />
-        </div>
+      {/* The Growing Threat Section - Compact */}
+      <section className="py-10 md:py-14 bg-muted relative overflow-hidden">
+        <FlowingWaves variant="full" opacity={0.08} />
         <div className="container mx-auto px-4 relative z-10">
           <ScrollRevealSection>
-            <div className="text-center mb-10">
-              <h2 className="mb-4">Every 14 Seconds, Another Senior Falls Victim to AI Scams</h2>
+            <div className="text-center mb-6">
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2">Every 14 Seconds, Another Senior Falls Victim</h2>
             </div>
           </ScrollRevealSection>
 
           <ScrollRevealSection staggerChildren={true}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            <Card
-              ref={stat1.ref}
-              className="p-4 sm:p-6 active:scale-95 md:hover:shadow-strong transition-all duration-500 md:hover:-translate-y-2 md:hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
-              style={{ animationDelay: "0ms" }}
-            >
-              <div className="flex justify-center mb-3 sm:mb-4">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center md:group-hover:scale-110 md:group-hover:rotate-12 transition-all duration-500">
-                  <TrendingDown className="w-6 h-6 sm:w-8 sm:h-8 text-primary md:group-hover:scale-110 transition-transform duration-500" />
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+              <Card
+                ref={stat1.ref}
+                className="p-3 md:p-4 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 rounded-xl border-border/50 group bg-gradient-to-br from-card to-card/50"
+              >
+                <div className="flex justify-center mb-2">
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <TrendingDown className="w-5 h-5 text-primary" />
+                  </div>
                 </div>
-              </div>
-              <h3 className={`text-3xl sm:text-4xl font-bold mb-2 text-center text-primary transition-all duration-300 ${stat1.count === 28.3 ? 'animate-pulse' : ''}`}>
-                {stat1.displayValue}
-              </h3>
-              <p className="text-muted-foreground text-center text-sm sm:text-base">Lost by seniors to scams in 2023</p>
-            </Card>
+                <h3 className="text-2xl md:text-3xl font-bold mb-1 text-center text-primary">
+                  {stat1.displayValue}
+                </h3>
+                <p className="text-muted-foreground text-center text-xs md:text-sm">Lost to scams in 2023</p>
+              </Card>
 
-            <Card
-              ref={stat2.ref}
-              className="p-4 sm:p-6 active:scale-95 md:hover:shadow-strong transition-all duration-500 md:hover:-translate-y-2 md:hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
-              style={{ animationDelay: "100ms" }}
-            >
-              <div className="flex justify-center mb-3 sm:mb-4">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center md:group-hover:scale-110 md:group-hover:rotate-12 transition-all duration-500">
-                  <UserX className="w-6 h-6 sm:w-8 sm:h-8 text-primary md:group-hover:scale-110 transition-transform duration-500" />
+              <Card
+                ref={stat2.ref}
+                className="p-3 md:p-4 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 rounded-xl border-border/50 group bg-gradient-to-br from-card to-card/50"
+              >
+                <div className="flex justify-center mb-2">
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <UserX className="w-5 h-5 text-primary" />
+                  </div>
                 </div>
-              </div>
-              <h3 className={`text-3xl sm:text-4xl font-bold mb-2 text-center text-primary transition-all duration-300 ${stat2.count === 87 ? 'animate-pulse' : ''}`}>
-                {stat2.displayValue}
-              </h3>
-              <p className="text-muted-foreground text-center text-sm sm:text-base">Of victims never report due to embarrassment</p>
-            </Card>
+                <h3 className="text-2xl md:text-3xl font-bold mb-1 text-center text-primary">
+                  {stat2.displayValue}
+                </h3>
+                <p className="text-muted-foreground text-center text-xs md:text-sm">Never report due to shame</p>
+              </Card>
 
-            <Card
-              ref={stat3.ref}
-              className="p-4 sm:p-6 active:scale-95 md:hover:shadow-strong transition-all duration-500 md:hover:-translate-y-2 md:hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
-              style={{ animationDelay: "200ms" }}
-            >
-              <div className="flex justify-center mb-3 sm:mb-4">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center md:group-hover:scale-110 md:group-hover:rotate-12 transition-all duration-500">
-                  <Target className="w-6 h-6 sm:w-8 sm:h-8 text-primary md:group-hover:scale-110 transition-transform duration-500" />
+              <Card
+                ref={stat3.ref}
+                className="p-3 md:p-4 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 rounded-xl border-border/50 group bg-gradient-to-br from-card to-card/50"
+              >
+                <div className="flex justify-center mb-2">
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <Target className="w-5 h-5 text-primary" />
+                  </div>
                 </div>
-              </div>
-              <h3 className={`text-3xl sm:text-4xl font-bold mb-2 text-center text-primary transition-all duration-300 ${stat3.count === 3.4 ? 'animate-pulse' : ''}`}>
-                {stat3.displayValue}
-              </h3>
-              <p className="text-muted-foreground text-center text-sm sm:text-base">Seniors targeted last year alone</p>
-            </Card>
+                <h3 className="text-2xl md:text-3xl font-bold mb-1 text-center text-primary">
+                  {stat3.displayValue}
+                </h3>
+                <p className="text-muted-foreground text-center text-xs md:text-sm">Seniors targeted yearly</p>
+              </Card>
 
-            <Card
-              ref={stat4.ref}
-              className="p-4 sm:p-6 active:scale-95 md:hover:shadow-strong transition-all duration-500 md:hover:-translate-y-2 md:hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
-              style={{ animationDelay: "300ms" }}
-            >
-              <div className="flex justify-center mb-3 sm:mb-4">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center md:group-hover:scale-110 md:group-hover:rotate-12 transition-all duration-500">
-                  <Clock className="w-6 h-6 sm:w-8 sm:h-8 text-primary md:group-hover:scale-110 transition-transform duration-500" />
+              <Card
+                ref={stat4.ref}
+                className="p-3 md:p-4 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 rounded-xl border-border/50 group bg-gradient-to-br from-card to-card/50"
+              >
+                <div className="flex justify-center mb-2">
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <Clock className="w-5 h-5 text-primary" />
+                  </div>
                 </div>
-              </div>
-              <h3 className={`text-3xl sm:text-4xl font-bold mb-2 text-center text-primary transition-all duration-300 ${stat4.count === 14 ? 'animate-pulse' : ''}`}>
-                {stat4.displayValue}
-              </h3>
-              <p className="text-muted-foreground text-center text-sm sm:text-base">Frequency of new scam victims</p>
-            </Card>
-          </div>
+                <h3 className="text-2xl md:text-3xl font-bold mb-1 text-center text-primary">
+                  {stat4.displayValue}
+                </h3>
+                <p className="text-muted-foreground text-center text-xs md:text-sm">New victim frequency</p>
+              </Card>
+            </div>
           </ScrollRevealSection>
 
           <ScrollRevealSection>
-            <div className="text-center mt-10">
-              <p className="text-2xl font-bold text-foreground">Don't become a statistic. Get protected today.</p>
+            <div className="text-center mt-6">
+              <p className="text-lg md:text-xl font-bold text-foreground">Don't become a statistic. Get protected today.</p>
             </div>
           </ScrollRevealSection>
         </div>
@@ -281,93 +267,70 @@ function Index() {
       {/* Three Paths Forward - Now includes all services */}
       <ThreePathsForward />
 
-      {/* Why Families Trust Us */}
-      <section className="py-12 md:py-16 bg-background relative overflow-hidden">
-        <FlowingWaves variant="full" opacity={0.12} />
-        <div className="absolute inset-0 opacity-30">
-          <div
-            className="absolute top-20 left-10 w-48 h-48 md:w-72 md:h-72 bg-primary/20 rounded-full blur-3xl animate-pulse"
-            style={{ animationDuration: "4s" }}
-          />
-          <div
-            className="absolute bottom-20 right-10 w-64 h-64 md:w-96 md:h-96 bg-accent/20 rounded-full blur-3xl animate-pulse"
-            style={{ animationDuration: "6s" }}
-          />
-        </div>
+      {/* Why Families Trust Us - Compact */}
+      <section className="py-10 md:py-12 bg-background relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
           <ScrollRevealSection>
-            <h2 className="text-center mb-8 md:mb-10 text-2xl sm:text-3xl md:text-4xl font-bold">Why Families Trust InVision Network</h2>
+            <h2 className="text-center mb-6 text-xl md:text-2xl lg:text-3xl font-bold">Why Families Trust InVision</h2>
           </ScrollRevealSection>
           <ScrollRevealSection staggerChildren={true}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            <Card
-              className="p-4 sm:p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
-              style={{ animationDelay: "0ms" }}
-            >
-              <div className="flex justify-center mb-3 sm:mb-4">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-                  <CheckCircle className="w-6 h-6 sm:w-8 sm:h-8 text-primary group-hover:scale-110 transition-transform duration-500" />
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+              <Card className="p-3 md:p-4 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 rounded-xl border-border/50 group bg-gradient-to-br from-card to-card/50">
+                <div className="flex justify-center mb-2">
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <CheckCircle className="w-5 h-5 text-primary" />
+                  </div>
                 </div>
-              </div>
-              <h3 className="text-lg sm:text-xl mb-2 sm:mb-3 text-center group-hover:text-primary transition-colors duration-300">
-                500+ Families Protected
-              </h3>
-              <p className="text-sm sm:text-base text-muted-foreground text-center">
-                Trusted by hundreds of Ohio families to keep them safe from AI scams.
-              </p>
-            </Card>
+                <h3 className="text-sm md:text-base font-bold mb-1 text-center group-hover:text-primary transition-colors">
+                  500+ Families Protected
+                </h3>
+                <p className="text-xs text-muted-foreground text-center">
+                  Trusted by Ohio families
+                </p>
+              </Card>
 
-            <Card
-              className="p-4 sm:p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
-              style={{ animationDelay: "100ms" }}
-            >
-              <div className="flex justify-center mb-3 sm:mb-4">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-                  <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-primary group-hover:scale-110 transition-transform duration-500" />
+              <Card className="p-3 md:p-4 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 rounded-xl border-border/50 group bg-gradient-to-br from-card to-card/50">
+                <div className="flex justify-center mb-2">
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <Heart className="w-5 h-5 text-primary" />
+                  </div>
                 </div>
-              </div>
-              <h3 className="text-lg sm:text-xl mb-2 sm:mb-3 text-center group-hover:text-primary transition-colors duration-300">
-                Ohio Based & Trusted
-              </h3>
-              <p className="text-sm sm:text-base text-muted-foreground text-center">
-                Serving Dayton, Kettering & Greater Miami Valley, Ohio
-              </p>
-            </Card>
+                <h3 className="text-sm md:text-base font-bold mb-1 text-center group-hover:text-primary transition-colors">
+                  Ohio Based & Trusted
+                </h3>
+                <p className="text-xs text-muted-foreground text-center">
+                  Dayton & Miami Valley
+                </p>
+              </Card>
 
-            <Card
-              className="p-4 sm:p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
-              style={{ animationDelay: "200ms" }}
-            >
-              <div className="flex justify-center mb-3 sm:mb-4">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-                  <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-primary group-hover:scale-110 transition-transform duration-500" />
+              <Card className="p-3 md:p-4 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 rounded-xl border-border/50 group bg-gradient-to-br from-card to-card/50">
+                <div className="flex justify-center mb-2">
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <Shield className="w-5 h-5 text-primary" />
+                  </div>
                 </div>
-              </div>
-              <h3 className="text-lg sm:text-xl mb-2 sm:mb-3 text-center group-hover:text-primary transition-colors duration-300">
-                Expert Cybersecurity Team
-              </h3>
-              <p className="text-sm sm:text-base text-muted-foreground text-center">
-                Certified professionals who understand both technology and scam tactics.
-              </p>
-            </Card>
+                <h3 className="text-sm md:text-base font-bold mb-1 text-center group-hover:text-primary transition-colors">
+                  Expert Team
+                </h3>
+                <p className="text-xs text-muted-foreground text-center">
+                  Certified professionals
+                </p>
+              </Card>
 
-            <Card
-              className="p-4 sm:p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group animate-fade-in-up bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
-              style={{ animationDelay: "300ms" }}
-            >
-              <div className="flex justify-center mb-3 sm:mb-4">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-                  <MessageSquare className="w-6 h-6 sm:w-8 sm:h-8 text-primary group-hover:scale-110 transition-transform duration-500" />
+              <Card className="p-3 md:p-4 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 rounded-xl border-border/50 group bg-gradient-to-br from-card to-card/50">
+                <div className="flex justify-center mb-2">
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <MessageSquare className="w-5 h-5 text-primary" />
+                  </div>
                 </div>
-              </div>
-              <h3 className="text-lg sm:text-xl mb-2 sm:mb-3 text-center group-hover:text-primary transition-colors duration-300">
-                Multilingual Support
-              </h3>
-              <p className="text-sm sm:text-base text-muted-foreground text-center">
-                Available in English • Français • Español for your convenience.
-              </p>
-            </Card>
-          </div>
+                <h3 className="text-sm md:text-base font-bold mb-1 text-center group-hover:text-primary transition-colors">
+                  Multilingual Support
+                </h3>
+                <p className="text-xs text-muted-foreground text-center">
+                  EN • FR • ES
+                </p>
+              </Card>
+            </div>
           </ScrollRevealSection>
         </div>
       </section>

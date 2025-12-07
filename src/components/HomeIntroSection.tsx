@@ -63,93 +63,86 @@ export const HomeIntroSection = () => {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-background via-muted/30 to-background relative overflow-hidden">
-      {/* Background decorations */}
+    <section className="py-10 md:py-14 bg-gradient-to-b from-background via-muted/30 to-background relative overflow-hidden">
+      {/* Background decorations - smaller */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: "6s" }} />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: "8s" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-primary/5 to-accent/5 rounded-full blur-3xl" />
+        <div className="absolute top-10 left-10 w-48 h-48 bg-primary/8 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 right-10 w-64 h-64 bg-accent/8 rounded-full blur-3xl" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Welcome Header */}
+        {/* Welcome Header - Compact */}
         <ScrollRevealSection>
-          <div className="text-center mb-16">
+          <div className="text-center mb-10">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
+              transition={{ duration: 0.4 }}
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-4"
             >
-              <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-primary">Welcome to InVision Network</span>
+              <Sparkles className="w-3.5 h-3.5 text-primary" />
+              <span className="text-xs font-medium text-primary">Welcome to InVision Network</span>
             </motion.div>
             
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
               Your Trusted Partner in Digital Safety
             </h2>
             
-            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              InVision Network is Ohio's premier cybersecurity company dedicated to protecting families and businesses 
-              from AI-powered scams, phishing attacks, and digital threats. We combine cutting-edge technology with 
-              personalized human support to keep you safe in an increasingly dangerous digital world.
+            <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Ohio's premier cybersecurity company protecting families and businesses from AI-powered scams and digital threats.
             </p>
           </div>
         </ScrollRevealSection>
 
-        {/* Mission Statement */}
+        {/* Mission Statement - Compact */}
         <ScrollRevealSection>
-          <Card className="p-8 md:p-12 mb-16 bg-gradient-to-br from-primary/5 via-card to-accent/5 border-primary/20 rounded-3xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-2xl" />
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-accent/10 rounded-full blur-2xl" />
-            
+          <Card className="p-5 md:p-8 mb-10 bg-gradient-to-br from-primary/5 via-card to-accent/5 border-primary/20 rounded-2xl relative overflow-hidden">
             <div className="relative z-10 text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-primary to-accent mb-6">
-                <Heart className="w-8 h-8 text-white" />
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent mb-4">
+                <Heart className="w-6 h-6 text-white" />
               </div>
               
-              <h3 className="text-2xl md:text-3xl font-bold mb-4">Our Mission</h3>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
-                "To empower every individual, family, and business with the knowledge and tools they need to stay safe 
-                from digital threats—because no one should lose their life savings to a scam."
+              <h3 className="text-xl md:text-2xl font-bold mb-3">Our Mission</h3>
+              <p className="text-sm text-muted-foreground max-w-xl mx-auto mb-4">
+                "Empowering individuals, families, and businesses with tools to stay safe from digital threats."
               </p>
               
-              <div className="flex flex-wrap justify-center gap-4">
-                <div className="flex items-center gap-2 px-4 py-2 bg-background/80 rounded-full border border-border/50">
-                  <CheckCircle2 className="w-5 h-5 text-primary" />
-                  <span className="text-sm font-medium">Kettering, Ohio Based</span>
+              <div className="flex flex-wrap justify-center gap-2">
+                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-background/80 rounded-full border border-border/50">
+                  <CheckCircle2 className="w-4 h-4 text-primary" />
+                  <span className="text-xs font-medium">Kettering, Ohio</span>
                 </div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-background/80 rounded-full border border-border/50">
-                  <CheckCircle2 className="w-5 h-5 text-primary" />
-                  <span className="text-sm font-medium">Veteran-Owned Business</span>
+                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-background/80 rounded-full border border-border/50">
+                  <CheckCircle2 className="w-4 h-4 text-primary" />
+                  <span className="text-xs font-medium">Veteran-Owned</span>
                 </div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-background/80 rounded-full border border-border/50">
-                  <CheckCircle2 className="w-5 h-5 text-primary" />
-                  <span className="text-sm font-medium">10% Veteran Discount</span>
+                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-background/80 rounded-full border border-border/50">
+                  <CheckCircle2 className="w-4 h-4 text-primary" />
+                  <span className="text-xs font-medium">10% Veteran Discount</span>
                 </div>
               </div>
             </div>
           </Card>
         </ScrollRevealSection>
 
-        {/* What We Offer */}
+        {/* What We Offer - Compact */}
         <ScrollRevealSection staggerChildren>
-          <div className="mb-16">
-            <h3 className="text-2xl md:text-3xl font-bold text-center mb-10">What We Offer</h3>
+          <div className="mb-10">
+            <h3 className="text-xl md:text-2xl font-bold text-center mb-6">What We Offer</h3>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
               {features.map((feature, index) => (
                 <Card 
                   key={index}
-                  className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group bg-gradient-to-br from-card to-card/50"
+                  className="p-4 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 rounded-xl border-border/50 group bg-gradient-to-br from-card to-card/50"
                 >
-                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
-                    <feature.icon className="w-7 h-7 text-white" />
+                  <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
+                    <feature.icon className="w-5 h-5 text-white" />
                   </div>
-                  <h4 className="text-lg font-bold mb-2 group-hover:text-primary transition-colors">
+                  <h4 className="text-sm font-bold mb-1 group-hover:text-primary transition-colors">
                     {feature.title}
                   </h4>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
                     {feature.description}
                   </p>
                 </Card>
@@ -158,21 +151,21 @@ export const HomeIntroSection = () => {
           </div>
         </ScrollRevealSection>
 
-        {/* Why Choose InVision */}
+        {/* Why Choose InVision - Compact */}
         <ScrollRevealSection>
-          <div className="mb-16">
-            <h3 className="text-2xl md:text-3xl font-bold text-center mb-10">Why Choose InVision Network?</h3>
+          <div className="mb-10">
+            <h3 className="text-xl md:text-2xl font-bold text-center mb-6">Why Choose InVision?</h3>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-2 md:gap-3">
               {whyChooseUs.map((item, index) => (
                 <Card 
                   key={index}
-                  className="p-4 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1 rounded-xl border-border/50 group bg-card/80"
+                  className="p-3 text-center hover:shadow-md transition-all duration-200 rounded-lg border-border/50 group bg-card/80"
                 >
-                  <div className="w-12 h-12 mx-auto rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                    <item.icon className="w-6 h-6 text-primary" />
+                  <div className="w-9 h-9 mx-auto rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
+                    <item.icon className="w-4 h-4 text-primary" />
                   </div>
-                  <p className="text-xs md:text-sm font-medium text-foreground leading-tight">
+                  <p className="text-[10px] md:text-xs font-medium text-foreground leading-tight">
                     {item.text}
                   </p>
                 </Card>
@@ -181,31 +174,27 @@ export const HomeIntroSection = () => {
           </div>
         </ScrollRevealSection>
 
-        {/* Quick Navigation */}
+        {/* Quick Navigation - Compact */}
         <ScrollRevealSection staggerChildren>
-          <div className="mb-12">
-            <h3 className="text-2xl md:text-3xl font-bold text-center mb-4">Explore Our Services</h3>
-            <p className="text-center text-muted-foreground mb-10 max-w-2xl mx-auto">
-              Everything you need to protect yourself, your family, and your business is just a click away
+          <div className="mb-8">
+            <h3 className="text-xl md:text-2xl font-bold text-center mb-2">Explore Our Services</h3>
+            <p className="text-center text-muted-foreground mb-6 text-sm max-w-xl mx-auto">
+              Everything you need to protect yourself and your business
             </p>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
               {quickLinks.map((link, index) => (
                 <Link key={index} to={link.href} className="group">
-                  <Card className="p-6 h-full hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:border-primary/50 rounded-2xl border-border/50 bg-gradient-to-br from-card to-card/50 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-20 h-20 bg-primary/5 rounded-full blur-xl group-hover:bg-primary/10 transition-colors" />
-                    
-                    <div className="relative z-10">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
-                        <link.icon className="w-6 h-6 text-primary" />
-                      </div>
-                      
-                      <h4 className="text-lg font-bold mb-1 group-hover:text-primary transition-colors flex items-center gap-2">
-                        {link.label}
-                        <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                      </h4>
-                      <p className="text-sm text-muted-foreground">{link.desc}</p>
+                  <Card className="p-4 h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 rounded-xl border-border/50 bg-gradient-to-br from-card to-card/50">
+                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                      <link.icon className="w-5 h-5 text-primary" />
                     </div>
+                    
+                    <h4 className="text-sm font-bold mb-0.5 group-hover:text-primary transition-colors flex items-center gap-1">
+                      {link.label}
+                      <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </h4>
+                    <p className="text-xs text-muted-foreground">{link.desc}</p>
                   </Card>
                 </Link>
               ))}
@@ -213,28 +202,27 @@ export const HomeIntroSection = () => {
           </div>
         </ScrollRevealSection>
 
-        {/* Trust Assurance */}
+        {/* Trust Assurance - Compact */}
         <ScrollRevealSection>
-          <Card className="p-8 bg-gradient-to-r from-primary/10 via-transparent to-accent/10 border-primary/20 rounded-3xl text-center">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <Shield className="w-8 h-8 text-primary" />
-              <h3 className="text-xl md:text-2xl font-bold">Your Security is Our Priority</h3>
+          <Card className="p-5 md:p-6 bg-gradient-to-r from-primary/10 via-transparent to-accent/10 border-primary/20 rounded-2xl text-center">
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <Shield className="w-6 h-6 text-primary" />
+              <h3 className="text-lg md:text-xl font-bold">Your Security is Our Priority</h3>
             </div>
-            <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
-              We use bank-level encryption, never store sensitive data, and our team is trained to the highest 
-              cybersecurity standards. Your trust is everything to us.
+            <p className="text-sm text-muted-foreground max-w-xl mx-auto mb-4">
+              Bank-level encryption, trained cybersecurity professionals, and your complete trust.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button asChild size="lg" className="gap-2">
+            <div className="flex flex-wrap justify-center gap-3">
+              <Button asChild size="sm" className="gap-1.5">
                 <Link to="/about">
-                  Learn More About Us
-                  <ArrowRight className="w-4 h-4" />
+                  Learn More
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="gap-2">
+              <Button asChild variant="outline" size="sm" className="gap-1.5">
                 <Link to="/contact">
-                  Get in Touch
-                  <ArrowRight className="w-4 h-4" />
+                  Contact Us
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </Button>
             </div>
