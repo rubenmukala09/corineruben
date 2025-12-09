@@ -6,181 +6,171 @@ import {
   Building2, 
   ArrowRight, 
   Check,
-  Star,
-  Sparkles
+  Sparkles,
+  Award,
+  Users
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const HeroValueCards = () => {
-  const plans = [
+  const offerings = [
     {
-      id: "protection",
-      popular: false,
+      id: "scamshield",
       icon: Shield,
-      name: "ScamShield",
-      tagline: "Personal & Family",
-      price: "39",
-      period: "month",
-      description: "Comprehensive AI monitoring for individuals and families.",
+      badge: "Most Popular",
+      badgeColor: "bg-primary",
+      title: "ScamShield Protection",
+      subtitle: "Personal & Family Plans",
+      price: "$39",
+      priceLabel: "/month",
+      description: "Comprehensive AI-powered monitoring and protection against scams, phishing, and digital threats.",
       features: [
-        "Real-time threat detection",
+        "24/7 Real-time threat detection",
         "Suspicious content analysis",
-        "Up to 4 family members",
+        "Family member coverage",
         "Monthly security reports",
-        "Email & chat support"
+        "Priority support access"
       ],
       href: "/training#pricing",
-      cta: "Get Protected"
+      ctaText: "Get Protected",
+      highlight: true
     },
     {
       id: "training",
-      popular: true,
       icon: GraduationCap,
-      name: "Training",
-      tagline: "Prevention Programs",
-      price: "89",
-      period: "one-time",
-      description: "Expert-led programs to recognize and prevent scams.",
+      badge: "Veteran Discount",
+      badgeColor: "bg-success",
+      title: "Prevention Training",
+      subtitle: "Individual & Group Sessions",
+      price: "$89",
+      priceLabel: "one-time",
+      description: "Expert-led training programs designed to help you recognize and prevent all types of scams.",
       features: [
         "Certified cybersecurity trainers",
-        "Interactive practice sessions",
-        "Reference materials included",
+        "Hands-on practice scenarios",
+        "Take-home reference materials",
         "Certificate of completion",
         "10% veteran discount"
       ],
       href: "/training#training",
-      cta: "Start Learning"
+      ctaText: "Start Learning",
+      highlight: false
     },
     {
       id: "business",
-      popular: false,
       icon: Building2,
-      name: "Enterprise",
-      tagline: "Business Solutions",
-      price: "1,500",
-      period: "starting",
-      description: "Custom AI automation and security for organizations.",
+      badge: "Enterprise",
+      badgeColor: "bg-accent",
+      title: "Business Solutions",
+      subtitle: "Custom AI & Security",
+      price: "$1,500",
+      priceLabel: "starting",
+      description: "Tailored solutions including AI automation, security audits, and professional consulting.",
       features: [
-        "Custom AI solutions",
+        "Custom AI automation",
         "Security vulnerability audits",
-        "Employee training included",
+        "Employee training programs",
         "Dedicated account manager",
-        "Priority 24/7 support"
+        "Flexible payment options"
       ],
       href: "/business",
-      cta: "Get Quote"
+      ctaText: "Get Quote",
+      highlight: false
     }
   ];
 
   return (
-    <section className="relative py-28 lg:py-36 overflow-hidden">
-      {/* Elegant Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-muted/50 via-background to-muted/30" />
-      
-      {/* Decorative Elements */}
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[1200px] h-[600px] bg-gradient-to-b from-primary/5 to-transparent rounded-full blur-3xl" />
+    <section className="relative py-24 lg:py-32 overflow-hidden bg-muted/30">
+      {/* Background Elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+      </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Header */}
+        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center mb-16 lg:mb-20"
+          transition={{ duration: 0.6 }}
+          className="max-w-3xl mx-auto text-center mb-16"
         >
-          <motion.div 
-            initial={{ scale: 0.9, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
-          >
-            <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-sm font-semibold text-primary">Flexible Plans</span>
-          </motion.div>
-
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-5">
-            Choose Your
-            <span className="text-primary"> Protection</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-accent/20 bg-accent/5 mb-6">
+            <Sparkles className="w-4 h-4 text-accent" />
+            <span className="text-sm font-medium text-accent">Choose Your Protection Level</span>
+          </div>
+          
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
+            Three Paths to Digital Safety
           </h2>
-
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Transparent pricing. No hidden fees. Cancel anytime.
+          
+          <p className="text-lg text-muted-foreground">
+            Whether you need personal protection, expert training, or enterprise solutions — 
+            we have a plan designed for you.
           </p>
         </motion.div>
 
         {/* Pricing Cards */}
         <div className="grid lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
-          {plans.map((plan, index) => (
+          {offerings.map((offer, index) => (
             <motion.div
-              key={plan.id}
-              initial={{ opacity: 0, y: 40 }}
+              key={offer.id}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className={`relative ${plan.popular ? 'lg:-mt-6 lg:mb-6' : ''}`}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className={`relative ${offer.highlight ? 'lg:-mt-4 lg:mb-4' : ''}`}
             >
-              {/* Popular Badge */}
-              {plan.popular && (
-                <div className="absolute -top-4 left-0 right-0 flex justify-center z-20">
-                  <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-primary to-accent text-white text-sm font-bold shadow-lg">
-                    <Star className="w-3.5 h-3.5 fill-current" />
-                    Most Popular
+              {/* Card */}
+              <div className={`relative h-full rounded-2xl border transition-all duration-500 hover:shadow-2xl ${
+                offer.highlight 
+                  ? 'bg-gradient-to-b from-primary/5 to-card border-primary/30 shadow-xl shadow-primary/10' 
+                  : 'bg-card border-border/50 hover:border-primary/20'
+              }`}>
+                {/* Badge */}
+                <div className="absolute -top-3 left-6">
+                  <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold text-white ${offer.badgeColor}`}>
+                    {offer.badge === "Most Popular" && <Award className="w-3 h-3" />}
+                    {offer.badge}
                   </span>
                 </div>
-              )}
 
-              {/* Card */}
-              <div className={`relative h-full rounded-3xl transition-all duration-500 overflow-hidden ${
-                plan.popular 
-                  ? 'bg-gradient-to-b from-primary/10 via-card to-card border-2 border-primary/30 shadow-2xl shadow-primary/10' 
-                  : 'bg-card border border-border hover:border-primary/20 hover:shadow-xl'
-              }`}>
-                {/* Shine Effect for Popular */}
-                {plan.popular && (
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none" />
-                )}
-
-                <div className="p-8 lg:p-10">
-                  {/* Icon & Title */}
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${
-                      plan.popular 
-                        ? 'bg-gradient-to-br from-primary to-accent text-white' 
-                        : 'bg-primary/10'
+                <div className="p-8 pt-10">
+                  {/* Header */}
+                  <div className="flex items-start gap-4 mb-6">
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                      offer.highlight 
+                        ? 'bg-primary text-primary-foreground' 
+                        : 'bg-gradient-to-br from-primary/10 to-accent/10'
                     }`}>
-                      <plan.icon className={`w-7 h-7 ${plan.popular ? '' : 'text-primary'}`} />
+                      <offer.icon className={`w-6 h-6 ${offer.highlight ? '' : 'text-primary'}`} />
                     </div>
-                    <div>
-                      <h3 className="text-xl font-bold">{plan.name}</h3>
-                      <p className="text-sm text-muted-foreground">{plan.tagline}</p>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold">{offer.title}</h3>
+                      <p className="text-sm text-muted-foreground">{offer.subtitle}</p>
                     </div>
                   </div>
 
                   {/* Price */}
                   <div className="mb-6">
                     <div className="flex items-baseline gap-1">
-                      <span className="text-sm text-muted-foreground">$</span>
-                      <span className="text-5xl font-bold tracking-tight">{plan.price}</span>
-                      <span className="text-muted-foreground">/{plan.period}</span>
+                      <span className="text-4xl font-bold">{offer.price}</span>
+                      <span className="text-muted-foreground">{offer.priceLabel}</span>
                     </div>
                   </div>
 
                   {/* Description */}
-                  <p className="text-muted-foreground mb-8">
-                    {plan.description}
+                  <p className="text-sm text-muted-foreground mb-6">
+                    {offer.description}
                   </p>
 
                   {/* Features */}
-                  <ul className="space-y-4 mb-8">
-                    {plan.features.map((feature, i) => (
-                      <li key={i} className="flex items-start gap-3">
-                        <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
-                          plan.popular ? 'bg-primary/20' : 'bg-muted'
-                        }`}>
-                          <Check className={`w-3 h-3 ${plan.popular ? 'text-primary' : 'text-foreground'}`} />
-                        </div>
-                        <span className="text-sm">{feature}</span>
+                  <ul className="space-y-3 mb-8">
+                    {offer.features.map((feature, i) => (
+                      <li key={i} className="flex items-start gap-3 text-sm">
+                        <Check className="w-4 h-4 text-success shrink-0 mt-0.5" />
+                        <span>{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -188,16 +178,12 @@ const HeroValueCards = () => {
                   {/* CTA */}
                   <Button 
                     asChild 
+                    className={`w-full gap-2 ${offer.highlight ? '' : 'variant-outline'}`}
+                    variant={offer.highlight ? 'default' : 'outline'}
                     size="lg"
-                    className={`w-full rounded-xl h-12 text-base font-semibold gap-2 ${
-                      plan.popular 
-                        ? 'bg-primary hover:bg-primary/90' 
-                        : ''
-                    }`}
-                    variant={plan.popular ? 'default' : 'outline'}
                   >
-                    <Link to={plan.href}>
-                      {plan.cta}
+                    <Link to={offer.href}>
+                      {offer.ctaText}
                       <ArrowRight className="w-4 h-4" />
                     </Link>
                   </Button>
@@ -207,25 +193,30 @@ const HeroValueCards = () => {
           ))}
         </div>
 
-        {/* Trust Indicators */}
+        {/* Bottom CTA */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-wrap items-center justify-center gap-8 mt-16 text-sm text-muted-foreground"
+          className="text-center mt-16"
         >
-          <div className="flex items-center gap-2">
-            <Check className="w-4 h-4 text-success" />
-            <span>30-day money-back guarantee</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Check className="w-4 h-4 text-success" />
-            <span>Cancel anytime</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Check className="w-4 h-4 text-success" />
-            <span>Secure payment via Stripe</span>
+          <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-6 rounded-2xl bg-card border border-border/50">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <Users className="w-5 h-5 text-primary" />
+              </div>
+              <div className="text-left">
+                <p className="font-medium">Not sure which plan is right?</p>
+                <p className="text-sm text-muted-foreground">Get a free consultation</p>
+              </div>
+            </div>
+            <Button asChild variant="outline" className="gap-2">
+              <Link to="/contact?service=consultation">
+                Schedule Free Call
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </Button>
           </div>
         </motion.div>
       </div>
