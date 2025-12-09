@@ -2,44 +2,55 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useCart } from '@/contexts/CartContext';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { Loader2, CreditCard, ChevronDown, ChevronUp, ShoppingBag } from 'lucide-react';
+import { Loader2, CreditCard, ChevronDown, ChevronUp } from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { motion } from 'framer-motion';
-import { ExpressCheckout, SmartPriceBreakdown, QuickVeteranToggle, TrustIndicators, AcceptedCards, PaymentSuccess } from '@/components/payment';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ExpressCheckout } from './ExpressCheckout';
+import { SmartPriceBreakdown } from './SmartPriceBreakdown';
+import { QuickVeteranToggle } from './QuickVeteranToggle';
+import { TrustIndicators, AcceptedCards } from './TrustIndicators';
+import { PaymentSuccess } from './PaymentSuccess';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '');
 
-interface CheckoutDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+export interface PaymentItem {
+  id: string;
+  name: string;
+  price: number;
+  quantity?: number;
+  isDigital?: boolean;
 }
 
-function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
+interface SmartPaymentDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  items: PaymentItem[];
+  title?: string;
+  description?: string;
+  onSuccess?: () => void;
+}
+
+function SmartPaymentForm({ 
+  items, 
+  onSuccess 
+}: { 
+  items: PaymentItem[]; 
+  onSuccess?: () => void;
+}) {
   const stripe = useStripe();
   const elements = useElements();
-  const { items, total, clearCart } = useCart();
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState<'form' | 'success'>('form');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [isVeteran, setIsVeteran] = useState(false);
-  const [showAddress, setShowAddress] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
   const [orderNumber, setOrderNumber] = useState('');
-  const [address, setAddress] = useState({
-    line1: '',
-    city: '',
-    state: '',
-    zip: ''
-  });
-
-  // Check if any items need shipping
-  const needsShipping = items.some(item => !item.isDigital);
 
   // Auto-fill from localStorage or user session
   useEffect(() => {
@@ -51,6 +62,7 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
     if (savedName) setName(savedName);
     if (savedVeteran === 'true') setIsVeteran(true);
 
+    // Try to get user info from Supabase session
     supabase.auth.getUser().then(({ data }) => {
       if (data.user?.email && !savedEmail) {
         setEmail(data.user.email);
@@ -58,14 +70,15 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
     });
   }, []);
 
-  // Calculate totals with veteran discount
-  const discount = isVeteran ? total * 0.1 : 0;
-  const finalTotal = total - discount;
+  // Calculate totals
+  const subtotal = items.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+  const discount = isVeteran ? subtotal * 0.1 : 0;
+  const total = subtotal - discount;
 
   const priceItems = [
     ...items.map(item => ({
-      label: `${item.name}${item.quantity > 1 ? ` x${item.quantity}` : ''}`,
-      amount: item.price * item.quantity
+      label: `${item.name}${item.quantity && item.quantity > 1 ? ` x${item.quantity}` : ''}`,
+      amount: item.price * (item.quantity || 1)
     })),
     ...(isVeteran ? [{ label: 'Veteran Discount (10%)', amount: discount, isDiscount: true }] : [])
   ];
@@ -79,15 +92,9 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
       return;
     }
 
-    if (needsShipping && (!address.line1 || !address.city || !address.state || !address.zip)) {
-      toast.error('Please enter your shipping address');
-      setShowAddress(true);
-      return;
-    }
-
     setLoading(true);
 
-    // Save preferences
+    // Save preferences for next time
     localStorage.setItem('checkout_email', email);
     if (name) localStorage.setItem('checkout_name', name);
     localStorage.setItem('checkout_veteran', isVeteran.toString());
@@ -100,14 +107,8 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
         type: 'card',
         card: cardElement,
         billing_details: {
-          name: name || undefined,
           email,
-          address: needsShipping ? {
-            line1: address.line1,
-            city: address.city,
-            state: address.state,
-            postal_code: address.zip
-          } : undefined
+          name: name || undefined
         }
       });
 
@@ -120,17 +121,13 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
       const { data, error } = await supabase.functions.invoke('process-payment', {
         body: {
           paymentMethodId: paymentMethod.id,
-          amount: Math.round(finalTotal * 100),
+          amount: Math.round(total * 100),
           currency: 'usd',
-          customerInfo: { 
-            name, 
-            email,
-            address: needsShipping ? `${address.line1}, ${address.city}, ${address.state} ${address.zip}` : undefined
-          },
+          customerInfo: { name, email },
           items: items.map(item => ({
-            productId: item.productId,
+            productId: item.id,
             name: item.name,
-            quantity: item.quantity,
+            quantity: item.quantity || 1,
             price: item.price
           })),
           veteranDiscount: isVeteran
@@ -142,7 +139,6 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
 
       setOrderNumber(data.orderNumber || '');
       setStep('success');
-      clearCart();
       
     } catch (error) {
       console.error('Payment error:', error);
@@ -152,34 +148,20 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
     }
   };
 
-  const isDigital = items.every(item => item.isDigital);
+  const handleClose = () => {
+    onSuccess?.();
+  };
+
+  const isDigital = items.some(item => item.isDigital);
 
   if (step === 'success') {
-    return <PaymentSuccess email={email} orderNumber={orderNumber} isDigital={isDigital} onClose={onSuccess} />;
+    return <PaymentSuccess email={email} orderNumber={orderNumber} isDigital={isDigital} onClose={handleClose} />;
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Cart Summary Mini */}
-      <motion.div 
-        className="flex items-center gap-3 p-3 bg-muted/50 rounded-xl"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        <div className="p-2 bg-primary/10 rounded-lg">
-          <ShoppingBag className="h-5 w-5 text-primary" />
-        </div>
-        <div className="flex-1">
-          <p className="text-sm font-medium">{items.length} {items.length === 1 ? 'item' : 'items'}</p>
-          <p className="text-xs text-muted-foreground">
-            {items.slice(0, 2).map(i => i.name).join(', ')}
-            {items.length > 2 && ` +${items.length - 2} more`}
-          </p>
-        </div>
-      </motion.div>
-
       <ExpressCheckout 
-        amount={finalTotal} 
+        amount={total} 
         disabled={loading}
       />
 
@@ -197,7 +179,7 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
           />
         </div>
 
-        <Collapsible open={showAddress} onOpenChange={setShowAddress}>
+        <Collapsible open={showDetails} onOpenChange={setShowDetails}>
           <CollapsibleTrigger asChild>
             <Button 
               type="button" 
@@ -205,9 +187,8 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
               size="sm" 
               className="w-full text-muted-foreground hover:text-foreground"
             >
-              {showAddress ? <ChevronUp className="h-4 w-4 mr-2" /> : <ChevronDown className="h-4 w-4 mr-2" />}
-              {needsShipping ? 'Shipping address' : 'Billing details (optional)'}
-              {needsShipping && !showAddress && ' *'}
+              {showDetails ? <ChevronUp className="h-4 w-4 mr-2" /> : <ChevronDown className="h-4 w-4 mr-2" />}
+              {showDetails ? 'Hide' : 'Add'} billing details (optional)
             </Button>
           </CollapsibleTrigger>
           <CollapsibleContent className="space-y-3 pt-2">
@@ -221,43 +202,6 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
                 className="mt-1"
               />
             </div>
-            {needsShipping && (
-              <>
-                <div>
-                  <Label htmlFor="address" className="text-sm font-medium">Street Address *</Label>
-                  <Input
-                    id="address"
-                    placeholder="123 Main St"
-                    value={address.line1}
-                    onChange={e => setAddress(prev => ({ ...prev, line1: e.target.value }))}
-                    className="mt-1"
-                    required={needsShipping}
-                  />
-                </div>
-                <div className="grid grid-cols-3 gap-2">
-                  <Input
-                    placeholder="City"
-                    value={address.city}
-                    onChange={e => setAddress(prev => ({ ...prev, city: e.target.value }))}
-                    required={needsShipping}
-                  />
-                  <Input
-                    placeholder="State"
-                    value={address.state}
-                    onChange={e => setAddress(prev => ({ ...prev, state: e.target.value }))}
-                    maxLength={2}
-                    required={needsShipping}
-                  />
-                  <Input
-                    placeholder="ZIP"
-                    value={address.zip}
-                    onChange={e => setAddress(prev => ({ ...prev, zip: e.target.value }))}
-                    maxLength={5}
-                    required={needsShipping}
-                  />
-                </div>
-              </>
-            )}
           </CollapsibleContent>
         </Collapsible>
       </div>
@@ -269,7 +213,7 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
 
       <SmartPriceBreakdown 
         items={priceItems}
-        total={finalTotal}
+        total={total}
         savings={discount}
       />
 
@@ -307,7 +251,7 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
         ) : (
           <>
             <CreditCard className="mr-2 h-5 w-5" />
-            Pay ${finalTotal.toFixed(2)}
+            Pay ${total.toFixed(2)}
           </>
         )}
       </Button>
@@ -317,20 +261,33 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
   );
 }
 
-export function CheckoutDialog({ open, onOpenChange }: CheckoutDialogProps) {
-  const { items } = useCart();
+export function SmartPaymentDialog({ 
+  open, 
+  onOpenChange, 
+  items,
+  title = "Complete Your Purchase",
+  description,
+  onSuccess
+}: SmartPaymentDialogProps) {
+  const itemCount = items.reduce((sum, item) => sum + (item.quantity || 1), 0);
   
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-xl">Complete Your Purchase</DialogTitle>
+          <DialogTitle className="text-xl">{title}</DialogTitle>
           <DialogDescription>
-            {items.length} {items.length === 1 ? 'item' : 'items'} in your cart
+            {description || `${itemCount} ${itemCount === 1 ? 'item' : 'items'} in your order`}
           </DialogDescription>
         </DialogHeader>
         <Elements stripe={stripePromise}>
-          <CheckoutForm onSuccess={() => onOpenChange(false)} />
+          <SmartPaymentForm 
+            items={items} 
+            onSuccess={() => {
+              onOpenChange(false);
+              onSuccess?.();
+            }} 
+          />
         </Elements>
       </DialogContent>
     </Dialog>

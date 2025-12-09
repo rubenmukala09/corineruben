@@ -8,6 +8,7 @@ interface CartItem {
   price: number;
   quantity: number;
   image?: string;
+  isDigital?: boolean;
 }
 
 interface CartContextType {
