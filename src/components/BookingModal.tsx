@@ -1,27 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Upload, X, Calendar as CalendarIcon, CheckCircle } from "lucide-react";
+import { 
+  Loader2, Calendar as CalendarIcon, CheckCircle, Clock, 
+  Users, Shield, Phone, Mail, MessageSquare, Sparkles,
+  Video, MapPin, Star
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { bookingFormSchema, formatPhoneNumber } from "@/utils/formValidation";
 import { z } from "zod";
+import { Badge } from "@/components/ui/badge";
+import { QuickVeteranToggle } from "@/components/payment/QuickVeteranToggle";
+import { TrustIndicators } from "@/components/payment/TrustIndicators";
 
 interface BookingModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  serviceType: 'training' | 'scamshield' | 'business' | 'website' | 'guide' | 'product';
+  serviceType: 'training' | 'scamshield' | 'business' | 'website' | 'guide' | 'product' | 'consultation';
   serviceName: string;
   serviceTier?: string;
   basePrice?: number;
@@ -29,6 +34,39 @@ interface BookingModalProps {
 }
 
 type BookingFormData = z.infer<typeof bookingFormSchema>;
+
+const serviceInfo: Record<string, { icon: React.ReactNode; benefits: string[]; duration: string; format: string }> = {
+  training: {
+    icon: <Users className="w-5 h-5" />,
+    benefits: ["Personalized curriculum", "Hands-on exercises", "Certificate of completion", "Follow-up support"],
+    duration: "1-2 hours",
+    format: "Virtual or In-Person"
+  },
+  scamshield: {
+    icon: <Shield className="w-5 h-5" />,
+    benefits: ["24/7 protection monitoring", "Real-time threat alerts", "Family account coverage", "Monthly security reports"],
+    duration: "Ongoing subscription",
+    format: "Digital Service"
+  },
+  business: {
+    icon: <Sparkles className="w-5 h-5" />,
+    benefits: ["Custom AI solutions", "Dedicated account manager", "Implementation support", "ROI tracking"],
+    duration: "Project-based",
+    format: "Virtual & On-site"
+  },
+  consultation: {
+    icon: <Video className="w-5 h-5" />,
+    benefits: ["Expert advice", "Action plan", "Resource recommendations", "Follow-up email summary"],
+    duration: "30-60 minutes",
+    format: "Video Call"
+  },
+  default: {
+    icon: <Calendar className="w-5 h-5" />,
+    benefits: ["Professional service", "Quality guarantee", "Dedicated support"],
+    duration: "Varies",
+    format: "Flexible"
+  }
+};
 
 export const BookingModal = ({
   open,
@@ -41,9 +79,11 @@ export const BookingModal = ({
 }: BookingModalProps) => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
-  const [veteranDocFile, setVeteranDocFile] = useState<File | null>(null);
-  const [isUploadingDoc, setIsUploadingDoc] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>();
+  const [step, setStep] = useState<'info' | 'schedule' | 'confirm'>('info');
+  const [isVeteran, setIsVeteran] = useState(false);
+  
+  const info = serviceInfo[serviceType] || serviceInfo.default;
   
   const form = useForm<BookingFormData>({
     resolver: zodResolver(bookingFormSchema),
@@ -59,118 +99,62 @@ export const BookingModal = ({
     },
   });
 
-  const { isSubmitting } = form.formState;
-  const isVeteran = form.watch('isVeteran');
-  const veteranType = form.watch('veteranType');
+  // Auto-fill from localStorage for returning users
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('checkout_email');
+    const savedName = localStorage.getItem('checkout_name');
+    if (savedEmail) form.setValue('email', savedEmail);
+    if (savedName) form.setValue('fullName', savedName);
+  }, [open]);
 
   const discountAmount = isVeteran && basePrice > 0 
     ? (basePrice * veteranDiscountPercent) / 100 
     : 0;
   const finalPrice = basePrice - discountAmount;
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        toast({
-          title: "File too large",
-          description: "Please upload a file smaller than 5MB",
-          variant: "destructive",
-        });
-        return;
-      }
-      setVeteranDocFile(file);
-    }
-  };
-
-  const uploadVeteranDoc = async (userId: string): Promise<string | null> => {
-    if (!veteranDocFile) return null;
-
-    setIsUploadingDoc(true);
-    try {
-      const fileExt = veteranDocFile.name.split('.').pop();
-      const fileName = `${userId}/${Date.now()}.${fileExt}`;
-      
-      const { error: uploadError } = await supabase.storage
-        .from('veteran-docs')
-        .upload(fileName, veteranDocFile);
-
-      if (uploadError) throw uploadError;
-
-      return fileName;
-    } catch (error) {
-      console.error("Error uploading veteran document:", error);
-      toast({
-        title: "Upload Failed",
-        description: "Could not upload verification document. Proceeding without it.",
-        variant: "destructive",
-      });
-      return null;
-    } finally {
-      setIsUploadingDoc(false);
-    }
-  };
-
   const handleSubmit = async (data: BookingFormData) => {
     setLoading(true);
-
     try {
       const formattedPhone = data.phone ? formatPhoneNumber(data.phone) : null;
       const { data: { user } } = await supabase.auth.getUser();
-      let docPath = null;
-
-      if (data.isVeteran && veteranDocFile && user) {
-        docPath = await uploadVeteranDoc(user.id);
-      }
-
       const requestNumber = `REQ-${Date.now().toString().slice(-8)}`;
 
-      const { error } = await supabase.from('booking_requests').insert([
-        {
-          full_name: data.fullName,
-          email: data.email,
-          phone: formattedPhone,
-          service_type: serviceType,
-          service_name: serviceName,
-          service_tier: serviceTier || null,
-          preferred_dates: data.preferredDates,
-          message: data.message,
-          is_veteran: data.isVeteran,
-          veteran_type: data.isVeteran ? data.veteranType : null,
-          veteran_id_last4: data.isVeteran ? data.veteranIdLast4 : null,
-          request_number: requestNumber,
-          status: 'pending',
-          base_price: basePrice,
-          discount_amount: discountAmount,
-          final_price: finalPrice,
-          user_id: user?.id,
-        },
-      ]);
+      // Save for future auto-fill
+      localStorage.setItem('checkout_email', data.email);
+      localStorage.setItem('checkout_name', data.fullName);
+
+      const { error } = await supabase.from('booking_requests').insert([{
+        full_name: data.fullName,
+        email: data.email,
+        phone: formattedPhone,
+        service_type: serviceType,
+        service_name: serviceName,
+        service_tier: serviceTier || null,
+        preferred_dates: data.preferredDates,
+        message: data.message,
+        is_veteran: isVeteran,
+        request_number: requestNumber,
+        status: 'pending',
+        base_price: basePrice,
+        discount_amount: discountAmount,
+        final_price: finalPrice,
+        user_id: user?.id,
+      }]);
 
       if (error) throw error;
 
-      // Track analytics
-      const { trackFormSubmit, trackConversion } = await import("@/utils/analyticsTracker");
-      trackFormSubmit("booking_form", { 
-        serviceType, 
-        serviceName, 
-        isVeteran: data.isVeteran 
-      });
-      trackConversion("booking_submission", finalPrice);
-
       toast({
-        title: "Booking Request Submitted!",
-        description: `Your request #${requestNumber} has been received. We'll contact you soon.`,
+        title: "🎉 Booking Request Submitted!",
+        description: `Reference #${requestNumber}. We'll contact you within 24 hours.`,
       });
 
       onOpenChange(false);
       form.reset();
-      setVeteranDocFile(null);
-      setSelectedDate(undefined);
+      setStep('info');
     } catch (error: any) {
       toast({
         title: "Submission Failed",
-        description: error.message || "Please check your information and try again.",
+        description: error.message || "Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -180,255 +164,242 @@ export const BookingModal = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">Request Service</DialogTitle>
-          <DialogDescription>
-            Fill out the form below to request {serviceName}
-            {serviceTier && ` - ${serviceTier}`}
-          </DialogDescription>
-        </DialogHeader>
-
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="fullName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Full Name *</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="John Doe" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email *</FormLabel>
-                    <FormControl>
-                      <Input {...field} type="email" placeholder="john@example.com" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-0">
+        {/* Header with gradient */}
+        <div className="bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 p-6 border-b">
+          <DialogHeader>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="p-2 bg-primary/20 rounded-lg text-primary">
+                {info.icon}
+              </div>
+              <Badge variant="secondary" className="text-xs">
+                {info.format}
+              </Badge>
             </div>
-
-            <FormField
-              control={form.control}
-              name="phone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Phone</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="(555) 123-4567" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="preferredDates"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Preferred Date/Time</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant="outline"
-                          className={cn(
-                            "w-full justify-start text-left font-normal",
-                            !selectedDate && "text-muted-foreground"
-                          )}
-                        >
-                          <CalendarIcon className="mr-2 h-4 w-4" />
-                          {selectedDate ? format(selectedDate, "PPP") : "Pick a date"}
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={selectedDate}
-                        onSelect={(date) => {
-                          setSelectedDate(date);
-                          field.onChange(date ? format(date, "PPP") : '');
-                        }}
-                        disabled={(date) => date < new Date()}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="message"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Additional Information</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      {...field}
-                      placeholder="Tell us more about your needs..."
-                      rows={4}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div className="space-y-4 p-4 bg-muted/50 rounded-lg">
-              <FormField
-                control={form.control}
-                name="isVeteran"
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel>I am a veteran or military family member</FormLabel>
-                    <FormControl>
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                  </FormItem>
+            <DialogTitle className="text-2xl font-bold">
+              Book: {serviceName}
+            </DialogTitle>
+            {serviceTier && (
+              <Badge className="w-fit mt-1">{serviceTier}</Badge>
+            )}
+          </DialogHeader>
+          
+          {/* Quick Info Bar */}
+          <div className="flex flex-wrap gap-4 mt-4 text-sm">
+            <div className="flex items-center gap-1.5 text-muted-foreground">
+              <Clock className="w-4 h-4" />
+              <span>{info.duration}</span>
+            </div>
+            <div className="flex items-center gap-1.5 text-muted-foreground">
+              <MapPin className="w-4 h-4" />
+              <span>{info.format}</span>
+            </div>
+            {basePrice > 0 && (
+              <div className="flex items-center gap-1.5 font-semibold text-primary">
+                <span>${finalPrice.toFixed(0)}</span>
+                {isVeteran && (
+                  <Badge variant="outline" className="text-xs text-green-600 border-green-600">
+                    -${discountAmount.toFixed(0)}
+                  </Badge>
                 )}
-              />
+              </div>
+            )}
+          </div>
+        </div>
 
-              {isVeteran && (
-                <>
+        <div className="p-6">
+          {/* What's Included */}
+          <div className="mb-6 p-4 bg-muted/50 rounded-xl">
+            <h4 className="font-semibold mb-3 flex items-center gap-2">
+              <Star className="w-4 h-4 text-amber-500" />
+              What's Included
+            </h4>
+            <div className="grid grid-cols-2 gap-2">
+              {info.benefits.map((benefit, i) => (
+                <div key={i} className="flex items-center gap-2 text-sm">
+                  <CheckCircle className="w-4 h-4 text-green-500 shrink-0" />
+                  <span>{benefit}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-5">
+              {/* Contact Info - Minimal */}
+              <div className="space-y-4">
+                <h4 className="font-semibold flex items-center gap-2">
+                  <Mail className="w-4 h-4 text-primary" />
+                  Contact Information
+                </h4>
+                
+                <div className="grid md:grid-cols-2 gap-3">
                   <FormField
                     control={form.control}
-                    name="veteranType"
+                    name="fullName"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Veteran Type *</FormLabel>
-                        <Select onValueChange={field.onChange} value={field.value}>
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select type" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectItem value="veteran">Veteran</SelectItem>
-                            <SelectItem value="active_duty">Active Duty</SelectItem>
-                            <SelectItem value="family">Family Member</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="veteranIdLast4"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Last 4 of Veteran ID *</FormLabel>
                         <FormControl>
-                          <Input
-                            {...field}
-                            maxLength={4}
-                            placeholder="1234"
-                          />
+                          <Input {...field} placeholder="Your Name *" className="h-11" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-
-                  <div className="space-y-2">
-                    <FormLabel>Upload Verification Document (Optional)</FormLabel>
-                    <div className="flex items-center gap-2">
-                      <Input
-                        type="file"
-                        accept=".pdf,.jpg,.jpeg,.png"
-                        onChange={handleFileChange}
-                        disabled={isUploadingDoc}
-                      />
-                      {veteranDocFile && (
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setVeteranDocFile(null)}
-                        >
-                          <X className="w-4 h-4" />
-                        </Button>
-                      )}
-                    </div>
-                    {veteranDocFile && (
-                      <p className="text-sm text-muted-foreground flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-green-500" />
-                        {veteranDocFile.name}
-                      </p>
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input {...field} type="email" placeholder="Email *" className="h-11" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
                     )}
-                  </div>
-                </>
-              )}
-            </div>
+                  />
+                </div>
 
-            {basePrice > 0 && (
-              <div className="p-4 bg-primary/5 rounded-lg space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span>Base Price:</span>
-                  <span>${basePrice.toFixed(2)}</span>
-                </div>
-                {isVeteran && discountAmount > 0 && (
-                  <div className="flex justify-between text-sm text-green-600">
-                    <span>Veteran Discount ({veteranDiscountPercent}%):</span>
-                    <span>-${discountAmount.toFixed(2)}</span>
-                  </div>
-                )}
-                <div className="flex justify-between font-bold text-lg pt-2 border-t">
-                  <span>Total:</span>
-                  <span>${finalPrice.toFixed(2)}</span>
-                </div>
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <div className="relative">
+                          <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                          <Input {...field} placeholder="Phone (optional)" className="h-11 pl-10" />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
-            )}
 
-            <div className="flex gap-3">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => onOpenChange(false)}
-                disabled={loading || isSubmitting}
-                className="flex-1"
-              >
-                Cancel
-              </Button>
+              {/* Schedule */}
+              <div className="space-y-3">
+                <h4 className="font-semibold flex items-center gap-2">
+                  <CalendarIcon className="w-4 h-4 text-primary" />
+                  Preferred Schedule
+                </h4>
+                
+                <FormField
+                  control={form.control}
+                  name="preferredDates"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant="outline"
+                              className={cn(
+                                "w-full h-11 justify-start text-left font-normal",
+                                !selectedDate && "text-muted-foreground"
+                              )}
+                            >
+                              <CalendarIcon className="mr-2 h-4 w-4" />
+                              {selectedDate ? format(selectedDate, "PPP") : "Select preferred date"}
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0 bg-background" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={selectedDate}
+                            onSelect={(date) => {
+                              setSelectedDate(date);
+                              field.onChange(date ? format(date, "PPP") : '');
+                            }}
+                            disabled={(date) => date < new Date()}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              {/* Message */}
+              <FormField
+                control={form.control}
+                name="message"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="relative">
+                        <MessageSquare className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
+                        <Textarea
+                          {...field}
+                          placeholder="Tell us about your needs (optional)"
+                          rows={3}
+                          className="pl-10 resize-none"
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Veteran Discount */}
+              {basePrice > 0 && (
+                <QuickVeteranToggle
+                  isVeteran={isVeteran}
+                  onVeteranChange={setIsVeteran}
+                  discountPercent={veteranDiscountPercent}
+                />
+              )}
+
+              {/* Price Summary */}
+              {basePrice > 0 && (
+                <div className="p-4 bg-gradient-to-r from-primary/5 to-accent/5 rounded-xl border">
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">Service Total</span>
+                    <div className="text-right">
+                      {isVeteran && (
+                        <span className="text-sm line-through text-muted-foreground mr-2">
+                          ${basePrice.toFixed(2)}
+                        </span>
+                      )}
+                      <span className="text-2xl font-bold text-primary">
+                        ${finalPrice.toFixed(2)}
+                      </span>
+                    </div>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2">
+                    💳 Payment collected after consultation confirmation
+                  </p>
+                </div>
+              )}
+
+              {/* Submit */}
               <Button
                 type="submit"
-                disabled={loading || isSubmitting || isUploadingDoc}
-                className="flex-1"
+                disabled={loading}
+                className="w-full h-12 text-base font-semibold"
+                size="lg"
               >
-                {loading || isSubmitting ? (
+                {loading ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                     Submitting...
                   </>
                 ) : (
-                  "Submit Request"
+                  <>
+                    <CheckCircle className="mr-2 h-5 w-5" />
+                    Request Booking
+                  </>
                 )}
               </Button>
-            </div>
-          </form>
-        </Form>
+
+              <TrustIndicators compact />
+            </form>
+          </Form>
+        </div>
       </DialogContent>
     </Dialog>
   );

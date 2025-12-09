@@ -2,11 +2,16 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Loader2, Tag } from "lucide-react";
+import { 
+  Loader2, Tag, Shield, CheckCircle, Zap, Clock, 
+  CreditCard, RefreshCw, X, Sparkles, Users, Lock
+} from "lucide-react";
 import { trackConversion } from "@/utils/analyticsTracker";
+import { Badge } from "@/components/ui/badge";
+import { TrustIndicators } from "@/components/payment/TrustIndicators";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface SubscriptionDialogProps {
   open: boolean;
@@ -15,7 +20,39 @@ interface SubscriptionDialogProps {
   serviceName: string;
   planTier: string;
   amount: number;
+  features?: string[];
 }
+
+const tierInfo: Record<string, { 
+  icon: React.ReactNode; 
+  color: string; 
+  highlights: string[];
+  badge?: string;
+}> = {
+  Starter: {
+    icon: <Shield className="w-5 h-5" />,
+    color: "from-blue-500/20 to-cyan-500/20",
+    highlights: ["Essential protection", "Email alerts", "Monthly reports"],
+  },
+  Family: {
+    icon: <Users className="w-5 h-5" />,
+    color: "from-purple-500/20 to-violet-500/20",
+    highlights: ["Up to 5 family members", "Priority support", "Real-time monitoring"],
+    badge: "MOST POPULAR"
+  },
+  Premium: {
+    icon: <Sparkles className="w-5 h-5" />,
+    color: "from-amber-500/20 to-orange-500/20",
+    highlights: ["24/7 dedicated support", "Advanced AI protection", "Identity monitoring"],
+    badge: "BEST VALUE"
+  },
+  Custom: {
+    icon: <Zap className="w-5 h-5" />,
+    color: "from-emerald-500/20 to-teal-500/20",
+    highlights: ["Enterprise features", "Custom integrations", "Dedicated manager"],
+    badge: "ENTERPRISE"
+  }
+};
 
 export const SubscriptionDialog = ({
   open,
@@ -24,12 +61,16 @@ export const SubscriptionDialog = ({
   serviceName,
   planTier,
   amount,
+  features = [],
 }: SubscriptionDialogProps) => {
   const [loading, setLoading] = useState(false);
   const [showDiscountField, setShowDiscountField] = useState(false);
   const [discountCode, setDiscountCode] = useState("");
   const [discount, setDiscount] = useState<any>(null);
   const [validatingCode, setValidatingCode] = useState(false);
+
+  const info = tierInfo[planTier] || tierInfo.Starter;
+  const displayFeatures = features.length > 0 ? features : info.highlights;
 
   const validateDiscountCode = async () => {
     if (!discountCode.trim()) return;
@@ -49,10 +90,10 @@ export const SubscriptionDialog = ({
         setDiscount(null);
       } else {
         setDiscount(data.discount);
-        toast.success("Discount code applied!");
+        toast.success("Discount applied!");
       }
     } catch (error) {
-      toast.error("Failed to validate discount code");
+      toast.error("Failed to validate code");
       setDiscount(null);
     } finally {
       setValidatingCode(false);
@@ -82,101 +123,187 @@ export const SubscriptionDialog = ({
         onOpenChange(false);
       }
     } catch (error) {
-      toast.error("Failed to start subscription process");
+      toast.error("Failed to start subscription");
     } finally {
       setLoading(false);
     }
   };
 
   const finalAmount = discount ? amount - discount.discountAmount : amount;
+  const savings = discount ? discount.discountAmount : 0;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle>Subscribe to {serviceName}</DialogTitle>
-        </DialogHeader>
-
-        <div className="space-y-6 py-4">
-          <div className="space-y-2">
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-muted-foreground">Plan</span>
-              <span className="font-semibold">{planTier}</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-muted-foreground">Billing</span>
-              <span className="font-semibold">Monthly</span>
-            </div>
-            {discount && (
-              <>
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-muted-foreground">Subtotal</span>
-                  <span>${(amount / 100).toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between items-center text-sm text-green-600">
-                  <span>Discount ({discount.code})</span>
-                  <span>-${(discount.discountAmount / 100).toFixed(2)}</span>
-                </div>
-              </>
-            )}
-            <div className="flex justify-between items-center pt-2 border-t">
-              <span className="font-semibold">Total/month</span>
-              <span className="text-2xl font-bold">${(finalAmount / 100).toFixed(2)}</span>
-            </div>
-          </div>
-
-          {!showDiscountField ? (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowDiscountField(true)}
-              className="w-full"
-            >
-              <Tag className="w-4 h-4 mr-2" />
-              Have a discount code?
-            </Button>
-          ) : (
-            <div className="space-y-2">
-              <Label htmlFor="discount">Discount Code</Label>
-              <div className="flex gap-2">
-                <Input
-                  id="discount"
-                  value={discountCode}
-                  onChange={(e) => setDiscountCode(e.target.value.toUpperCase())}
-                  placeholder="ENTER CODE"
-                  disabled={validatingCode}
-                />
-                <Button
-                  onClick={validateDiscountCode}
-                  disabled={!discountCode.trim() || validatingCode}
-                >
-                  {validatingCode ? <Loader2 className="w-4 h-4 animate-spin" /> : "Apply"}
-                </Button>
+      <DialogContent className="sm:max-w-lg p-0 overflow-hidden">
+        {/* Header */}
+        <div className={`bg-gradient-to-r ${info.color} p-6 border-b`}>
+          <DialogHeader>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="p-2 bg-background/80 backdrop-blur rounded-lg text-primary">
+                {info.icon}
               </div>
+              {info.badge && (
+                <Badge className="bg-primary/90">{info.badge}</Badge>
+              )}
             </div>
-          )}
+            <DialogTitle className="text-2xl font-bold">
+              {serviceName} - {planTier}
+            </DialogTitle>
+          </DialogHeader>
+          
+          <div className="flex items-baseline gap-1 mt-3">
+            <span className="text-4xl font-bold">${(finalAmount / 100).toFixed(2)}</span>
+            <span className="text-muted-foreground">/month</span>
+            {savings > 0 && (
+              <Badge variant="outline" className="ml-2 text-green-600 border-green-600">
+                Save ${(savings / 100).toFixed(2)}
+              </Badge>
+            )}
+          </div>
+        </div>
 
-          <div className="text-sm text-muted-foreground space-y-2">
-            <p>• Subscription will auto-renew monthly</p>
-            <p>• Cancel anytime from your portal</p>
-            <p>• Secure payment via Stripe</p>
+        <div className="p-6 space-y-5">
+          {/* Features */}
+          <div className="space-y-3">
+            <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
+              What's Included
+            </h4>
+            <div className="space-y-2">
+              {displayFeatures.map((feature, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className="flex items-center gap-2"
+                >
+                  <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
+                  <span>{feature}</span>
+                </motion.div>
+              ))}
+            </div>
           </div>
 
+          {/* Discount Code */}
+          <AnimatePresence mode="wait">
+            {!showDiscountField ? (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowDiscountField(true)}
+                  className="w-full"
+                >
+                  <Tag className="w-4 h-4 mr-2" />
+                  Have a promo code?
+                </Button>
+              </motion.div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="space-y-2"
+              >
+                <div className="flex gap-2">
+                  <Input
+                    value={discountCode}
+                    onChange={(e) => setDiscountCode(e.target.value.toUpperCase())}
+                    placeholder="PROMO CODE"
+                    disabled={validatingCode || !!discount}
+                    className="font-mono"
+                  />
+                  {!discount ? (
+                    <Button
+                      onClick={validateDiscountCode}
+                      disabled={!discountCode.trim() || validatingCode}
+                    >
+                      {validatingCode ? <Loader2 className="w-4 h-4 animate-spin" /> : "Apply"}
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="ghost"
+                      onClick={() => {
+                        setDiscount(null);
+                        setDiscountCode('');
+                      }}
+                    >
+                      <X className="w-4 h-4" />
+                    </Button>
+                  )}
+                </div>
+                {discount && (
+                  <p className="text-sm text-green-600 flex items-center gap-1">
+                    <CheckCircle className="w-4 h-4" />
+                    Code "{discount.code}" applied!
+                  </p>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Subscription Benefits */}
+          <div className="p-4 bg-muted/50 rounded-xl space-y-2 text-sm">
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <RefreshCw className="w-4 h-4" />
+              <span>Auto-renews monthly • Cancel anytime</span>
+            </div>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Clock className="w-4 h-4" />
+              <span>Instant activation after payment</span>
+            </div>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Lock className="w-4 h-4" />
+              <span>Secure billing via Stripe</span>
+            </div>
+          </div>
+
+          {/* Price Summary */}
+          <div className="p-4 bg-gradient-to-r from-primary/5 to-accent/5 rounded-xl border">
+            {discount && (
+              <div className="flex justify-between text-sm mb-2">
+                <span className="text-muted-foreground">Original price</span>
+                <span className="line-through text-muted-foreground">
+                  ${(amount / 100).toFixed(2)}/mo
+                </span>
+              </div>
+            )}
+            <div className="flex justify-between items-center">
+              <span className="font-semibold">Total today</span>
+              <span className="text-2xl font-bold text-primary">
+                ${(finalAmount / 100).toFixed(2)}
+              </span>
+            </div>
+            <p className="text-xs text-muted-foreground mt-2">
+              Then ${(finalAmount / 100).toFixed(2)}/month
+            </p>
+          </div>
+
+          {/* Subscribe Button */}
           <Button
             onClick={handleSubscribe}
             disabled={loading}
-            className="w-full"
+            className="w-full h-12 text-base font-semibold"
             size="lg"
           >
             {loading ? (
               <>
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
                 Processing...
               </>
             ) : (
-              `Subscribe for $${(finalAmount / 100).toFixed(2)}/month`
+              <>
+                <CreditCard className="w-5 h-5 mr-2" />
+                Start Subscription
+              </>
             )}
           </Button>
+
+          <TrustIndicators compact />
         </div>
       </DialogContent>
     </Dialog>

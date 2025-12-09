@@ -1,16 +1,22 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useCart } from '@/contexts/CartContext';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { Loader2, CreditCard, Smartphone, Shield, Lock, CheckCircle, Sparkles } from 'lucide-react';
+import { 
+  Loader2, CreditCard, Smartphone, Shield, Lock, CheckCircle, 
+  Sparkles, Package, ChevronRight, Zap, RefreshCw, Mail, User
+} from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { OrderSummary } from '@/components/OrderSummary';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { QuickVeteranToggle } from '@/components/payment/QuickVeteranToggle';
+import { SmartPriceBreakdown } from '@/components/payment/SmartPriceBreakdown';
+import { TrustIndicators } from '@/components/payment/TrustIndicators';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '');
 
@@ -23,7 +29,17 @@ interface EnhancedCheckoutDialogProps {
 function QRCodePayment({ total, onSuccess }: { total: number; onSuccess: () => void }) {
   const [loading, setLoading] = useState(false);
   const [qrCodeUrl, setQrCodeUrl] = useState<string | null>(null);
-  const { items, clearCart } = useCart();
+  const [timeLeft, setTimeLeft] = useState(240);
+  const { items } = useCart();
+
+  useEffect(() => {
+    if (qrCodeUrl && timeLeft > 0) {
+      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+      return () => clearTimeout(timer);
+    } else if (timeLeft === 0) {
+      setQrCodeUrl(null);
+    }
+  }, [qrCodeUrl, timeLeft]);
 
   const generateQRCode = async () => {
     setLoading(true);
@@ -42,48 +58,69 @@ function QRCodePayment({ total, onSuccess }: { total: number; onSuccess: () => v
       if (error) throw error;
       
       if (data?.url) {
-        // Generate QR code using a free API
-        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(data.url)}`;
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(data.url)}`;
         setQrCodeUrl(qrUrl);
+        setTimeLeft(240);
       }
     } catch (error: any) {
-      console.error('QR generation error:', error);
       toast.error('Failed to generate QR code');
     } finally {
       setLoading(false);
     }
   };
 
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
   return (
-    <div className="text-center space-y-6 py-4">
-      <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-sm font-medium">
-        <Smartphone className="w-4 h-4" />
-        Pay with your phone
-      </div>
-      
+    <div className="text-center space-y-5 py-4">
       {!qrCodeUrl ? (
-        <div className="space-y-4">
-          <p className="text-muted-foreground">
-            Scan a QR code with your phone to complete payment using Apple Pay, Google Pay, or any mobile payment method.
-          </p>
-          <Button onClick={generateQRCode} disabled={loading} size="lg" className="min-w-[200px]">
-            {loading ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : <Smartphone className="mr-2 h-5 w-5" />}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="space-y-4"
+        >
+          <div className="p-4 bg-muted/50 rounded-xl">
+            <Smartphone className="w-12 h-12 mx-auto mb-3 text-primary" />
+            <h4 className="font-semibold mb-2">Pay with Your Phone</h4>
+            <p className="text-sm text-muted-foreground">
+              Scan a QR code to pay with Apple Pay, Google Pay, or any mobile wallet
+            </p>
+          </div>
+          <Button onClick={generateQRCode} disabled={loading} size="lg" className="w-full">
+            {loading ? (
+              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+            ) : (
+              <Smartphone className="mr-2 h-5 w-5" />
+            )}
             Generate QR Code
           </Button>
-        </div>
+        </motion.div>
       ) : (
-        <div className="space-y-4">
-          <div className="bg-white p-6 rounded-xl inline-block shadow-lg">
-            <img src={qrCodeUrl} alt="Payment QR Code" className="w-[250px] h-[250px]" />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="space-y-4"
+        >
+          <div className="bg-white p-4 rounded-xl inline-block shadow-lg">
+            <img src={qrCodeUrl} alt="Payment QR Code" className="w-[200px] h-[200px]" />
+          </div>
+          <div className="flex items-center justify-center gap-2">
+            <Badge variant={timeLeft < 60 ? "destructive" : "secondary"}>
+              <RefreshCw className="w-3 h-3 mr-1" />
+              Expires in {formatTime(timeLeft)}
+            </Badge>
           </div>
           <p className="text-sm text-muted-foreground">
-            Scan with your phone camera to pay <strong>${total.toFixed(2)}</strong>
+            Scan to pay <strong className="text-foreground">${total.toFixed(2)}</strong>
           </p>
-          <div className="flex items-center justify-center gap-2 text-xs text-success">
-            <Lock className="w-3 h-3" />
-            Secure Payment via Stripe
-          </div>
-        </div>
+          <Button variant="outline" onClick={generateQRCode} size="sm">
+            Generate New Code
+          </Button>
+        </motion.div>
       )}
     </div>
   );
@@ -95,6 +132,7 @@ function CardPaymentForm({ onSuccess }: { onSuccess: () => void }) {
   const elements = useElements();
   const { items, total, clearCart } = useCart();
   const [loading, setLoading] = useState(false);
+  const [step, setStep] = useState<'contact' | 'payment'>('contact');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -105,17 +143,30 @@ function CardPaymentForm({ onSuccess }: { onSuccess: () => void }) {
     zip: ''
   });
 
+  // Auto-fill from localStorage
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('checkout_email');
+    const savedName = localStorage.getItem('checkout_name');
+    if (savedEmail) setFormData(prev => ({ ...prev, email: savedEmail }));
+    if (savedName) setFormData(prev => ({ ...prev, name: savedName }));
+  }, []);
+
+  const hasDigitalOnly = items.every(item => item.isDigital);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!stripe || !elements) return;
-    if (!formData.name || !formData.email || !formData.address) {
-      toast.error('Please fill in all required fields');
+    if (!formData.name || !formData.email) {
+      toast.error('Please fill in required fields');
       return;
     }
 
-    setLoading(true);
+    // Save for auto-fill
+    localStorage.setItem('checkout_email', formData.email);
+    localStorage.setItem('checkout_name', formData.name);
 
+    setLoading(true);
     try {
       const cardElement = elements.getElement(CardElement);
       if (!cardElement) throw new Error('Card element not found');
@@ -126,19 +177,11 @@ function CardPaymentForm({ onSuccess }: { onSuccess: () => void }) {
         billing_details: {
           name: formData.name,
           email: formData.email,
-          phone: formData.phone,
-          address: {
-            line1: formData.address,
-            city: formData.city,
-            state: formData.state,
-            postal_code: formData.zip
-          }
         }
       });
 
       if (pmError) {
         toast.error(pmError.message);
-        setLoading(false);
         return;
       }
 
@@ -160,12 +203,11 @@ function CardPaymentForm({ onSuccess }: { onSuccess: () => void }) {
       if (error) throw error;
       if (!data.success) throw new Error(data.error || 'Payment failed');
 
-      toast.success('Payment successful! Check your email for receipt.');
+      toast.success('Payment successful!');
       clearCart();
       onSuccess();
-    } catch (error) {
-      console.error('Payment error:', error);
-      toast.error('Payment failed. Please try again.');
+    } catch (error: any) {
+      toast.error(error.message || 'Payment failed');
     } finally {
       setLoading(false);
     }
@@ -173,151 +215,196 @@ function CardPaymentForm({ onSuccess }: { onSuccess: () => void }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      {/* Contact Information */}
-      <div className="space-y-3">
-        <h3 className="font-semibold text-lg flex items-center gap-2">
-          <span className="w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center">1</span>
-          Contact Information
-        </h3>
-        <Input
-          placeholder="Full Name *"
-          value={formData.name}
-          onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
-          required
-          className="h-12"
-        />
-        <div className="grid md:grid-cols-2 gap-3">
-          <Input
-            type="email"
-            placeholder="Email *"
-            value={formData.email}
-            onChange={e => setFormData(prev => ({ ...prev, email: e.target.value }))}
-            required
-            className="h-12"
-          />
-          <Input
-            type="tel"
-            placeholder="Phone (optional)"
-            value={formData.phone}
-            onChange={e => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-            className="h-12"
-          />
-        </div>
-      </div>
+      <AnimatePresence mode="wait">
+        {step === 'contact' && (
+          <motion.div
+            key="contact"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            className="space-y-4"
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-7 h-7 rounded-full bg-primary text-primary-foreground text-sm flex items-center justify-center font-bold">
+                1
+              </div>
+              <h3 className="font-semibold">Contact Information</h3>
+            </div>
 
-      {/* Billing Address */}
-      <div className="space-y-3">
-        <h3 className="font-semibold text-lg flex items-center gap-2">
-          <span className="w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center">2</span>
-          Billing Address
-        </h3>
-        <Input
-          placeholder="Street Address *"
-          value={formData.address}
-          onChange={e => setFormData(prev => ({ ...prev, address: e.target.value }))}
-          required
-          className="h-12"
-        />
-        <div className="grid grid-cols-6 gap-3">
-          <Input className="col-span-3 h-12" placeholder="City *" value={formData.city} onChange={e => setFormData(prev => ({ ...prev, city: e.target.value }))} required />
-          <Input className="col-span-2 h-12" placeholder="State *" value={formData.state} onChange={e => setFormData(prev => ({ ...prev, state: e.target.value }))} maxLength={2} required />
-          <Input className="h-12" placeholder="ZIP *" value={formData.zip} onChange={e => setFormData(prev => ({ ...prev, zip: e.target.value }))} maxLength={5} required />
-        </div>
-      </div>
+            <div className="relative">
+              <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input
+                placeholder="Your Name *"
+                value={formData.name}
+                onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                className="pl-10 h-12"
+                required
+              />
+            </div>
+            
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input
+                type="email"
+                placeholder="Email * (for receipt)"
+                value={formData.email}
+                onChange={e => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                className="pl-10 h-12"
+                required
+              />
+            </div>
 
-      {/* Payment Details */}
-      <div className="space-y-3">
-        <h3 className="font-semibold text-lg flex items-center gap-2">
-          <span className="w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center">3</span>
-          Payment Details
-        </h3>
-        <div className="border-2 border-border rounded-xl p-4 bg-card shadow-sm">
-          <CardElement options={{
-            style: {
-              base: {
-                fontSize: '16px',
-                color: 'hsl(var(--foreground))',
-                '::placeholder': { color: 'hsl(var(--muted-foreground))' },
-              },
-            },
-          }} />
-        </div>
-        
-        {/* Accepted Cards */}
-        <div className="flex items-center justify-center gap-3 pt-2">
-          <span className="text-xs text-muted-foreground">Accepted:</span>
-          <div className="flex gap-2">
-            {['💳 Visa', '💳 Mastercard', '💳 Amex', '💳 Discover'].map(card => (
-              <span key={card} className="text-xs bg-muted px-2 py-1 rounded">{card}</span>
-            ))}
-          </div>
-        </div>
-      </div>
+            {!hasDigitalOnly && (
+              <>
+                <Input
+                  placeholder="Street Address *"
+                  value={formData.address}
+                  onChange={e => setFormData(prev => ({ ...prev, address: e.target.value }))}
+                  className="h-11"
+                  required
+                />
+                <div className="grid grid-cols-6 gap-2">
+                  <Input className="col-span-3 h-11" placeholder="City" value={formData.city} onChange={e => setFormData(prev => ({ ...prev, city: e.target.value }))} />
+                  <Input className="col-span-2 h-11" placeholder="State" value={formData.state} onChange={e => setFormData(prev => ({ ...prev, state: e.target.value }))} maxLength={2} />
+                  <Input className="h-11" placeholder="ZIP" value={formData.zip} onChange={e => setFormData(prev => ({ ...prev, zip: e.target.value }))} maxLength={5} />
+                </div>
+              </>
+            )}
 
-      <Button type="submit" disabled={!stripe || loading} className="w-full h-14 text-lg" size="lg">
-        {loading ? (
-          <><Loader2 className="mr-2 h-5 w-5 animate-spin" />Processing...</>
-        ) : (
-          <><CreditCard className="mr-2 h-5 w-5" />Pay ${total.toFixed(2)}</>
+            <Button
+              type="button"
+              onClick={() => setStep('payment')}
+              disabled={!formData.name || !formData.email}
+              className="w-full h-11"
+            >
+              Continue to Payment
+              <ChevronRight className="w-4 h-4 ml-2" />
+            </Button>
+          </motion.div>
         )}
-      </Button>
+
+        {step === 'payment' && (
+          <motion.div
+            key="payment"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="space-y-4"
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <button
+                type="button"
+                onClick={() => setStep('contact')}
+                className="text-sm text-primary hover:underline"
+              >
+                ← Back
+              </button>
+              <div className="w-7 h-7 rounded-full bg-primary text-primary-foreground text-sm flex items-center justify-center font-bold ml-auto">
+                2
+              </div>
+              <h3 className="font-semibold">Payment</h3>
+            </div>
+
+            <div className="p-3 bg-muted/50 rounded-lg text-sm flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-green-500" />
+              <span>Paying as <strong>{formData.email}</strong></span>
+            </div>
+
+            <div className="border-2 border-border rounded-xl p-4 bg-card">
+              <CardElement options={{
+                style: {
+                  base: {
+                    fontSize: '16px',
+                    color: 'hsl(var(--foreground))',
+                    '::placeholder': { color: 'hsl(var(--muted-foreground))' },
+                  },
+                },
+              }} />
+            </div>
+
+            <div className="flex flex-wrap gap-2 justify-center">
+              {['Visa', 'Mastercard', 'Amex'].map(card => (
+                <Badge key={card} variant="outline" className="text-xs">
+                  {card}
+                </Badge>
+              ))}
+            </div>
+
+            <Button 
+              type="submit" 
+              disabled={!stripe || loading} 
+              className="w-full h-12 text-base font-semibold" 
+              size="lg"
+            >
+              {loading ? (
+                <><Loader2 className="mr-2 h-5 w-5 animate-spin" />Processing...</>
+              ) : (
+                <><Lock className="mr-2 h-5 w-5" />Pay ${total.toFixed(2)}</>
+              )}
+            </Button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </form>
   );
 }
 
 export function EnhancedCheckoutDialog({ open, onOpenChange }: EnhancedCheckoutDialogProps) {
   const { items, total } = useCart();
+  const [isVeteran, setIsVeteran] = useState(false);
+  const veteranDiscount = isVeteran ? total * 0.1 : 0;
+  const finalTotal = total - veteranDiscount;
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'qr'>('card');
+
+  const hasDigitalItems = items.some(item => item.isDigital);
+  const hasPhysicalItems = items.some(item => !item.isDigital);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-5xl max-h-[95vh] overflow-y-auto">
-        <DialogHeader className="text-center pb-4 border-b">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <div className="p-2 bg-gradient-to-br from-primary to-accent rounded-xl">
-              <Shield className="w-6 h-6 text-white" />
+      <DialogContent className="max-w-2xl max-h-[95vh] overflow-y-auto p-0">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 p-6 border-b">
+          <DialogHeader>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="p-2 bg-primary/20 rounded-lg">
+                <Package className="w-5 h-5 text-primary" />
+              </div>
+              <Badge variant="secondary">
+                {items.length} {items.length === 1 ? 'item' : 'items'}
+              </Badge>
             </div>
-          </div>
-          <DialogTitle className="text-2xl">Secure Checkout</DialogTitle>
-          <DialogDescription className="flex items-center justify-center gap-4 pt-2">
-            <span>{items.length} {items.length === 1 ? 'item' : 'items'}</span>
-            <span>•</span>
-            <span className="font-semibold text-foreground">${total.toFixed(2)}</span>
-          </DialogDescription>
-        </DialogHeader>
+            <DialogTitle className="text-2xl font-bold">Checkout</DialogTitle>
+          </DialogHeader>
 
-        {/* Trust Indicators */}
-        <div className="flex flex-wrap items-center justify-center gap-3 py-4 border-b">
-          <Badge variant="outline" className="gap-1.5 py-1.5">
-            <Lock className="w-3.5 h-3.5 text-success" />
-            256-bit SSL
-          </Badge>
-          <Badge variant="outline" className="gap-1.5 py-1.5">
-            <Shield className="w-3.5 h-3.5 text-success" />
-            Secure Payments
-          </Badge>
-          <Badge variant="outline" className="gap-1.5 py-1.5">
-            <CheckCircle className="w-3.5 h-3.5 text-success" />
-            30-Day Guarantee
-          </Badge>
-          <Badge variant="outline" className="gap-1.5 py-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-            Instant Delivery
-          </Badge>
+          {/* Delivery Info */}
+          <div className="flex flex-wrap gap-3 mt-4 text-sm">
+            {hasDigitalItems && (
+              <Badge variant="outline" className="gap-1">
+                <Zap className="w-3 h-3" />
+                Instant digital delivery
+              </Badge>
+            )}
+            {hasPhysicalItems && (
+              <Badge variant="outline" className="gap-1">
+                <Package className="w-3 h-3" />
+                Ships in 2-3 days
+              </Badge>
+            )}
+          </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 pt-4">
-          <div className="md:col-span-2">
-            {/* Payment Method Tabs */}
+        <div className="p-6 grid md:grid-cols-5 gap-6">
+          {/* Main Form */}
+          <div className="md:col-span-3">
             <Tabs value={paymentMethod} onValueChange={(v) => setPaymentMethod(v as 'card' | 'qr')} className="w-full">
               <TabsList className="grid w-full grid-cols-2 mb-6">
                 <TabsTrigger value="card" className="gap-2">
                   <CreditCard className="w-4 h-4" />
-                  Card Payment
+                  Card
                 </TabsTrigger>
                 <TabsTrigger value="qr" className="gap-2">
                   <Smartphone className="w-4 h-4" />
-                  QR Code / Mobile
+                  Mobile Pay
                 </TabsTrigger>
               </TabsList>
 
@@ -334,30 +421,42 @@ export function EnhancedCheckoutDialog({ open, onOpenChange }: EnhancedCheckoutD
           </div>
 
           {/* Order Summary Sidebar */}
-          <div className="hidden md:block">
-            <div className="sticky top-4 bg-muted/50 rounded-xl p-4 border">
-              <h4 className="font-semibold mb-4">Order Summary</h4>
-              <div className="space-y-3 mb-4">
-                {items.map(item => (
-                  <div key={item.id} className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">{item.name} × {item.quantity}</span>
-                    <span className="font-medium">${(item.price * item.quantity).toFixed(2)}</span>
+          <div className="md:col-span-2">
+            <div className="sticky top-4 space-y-4">
+              <div className="p-4 bg-muted/50 rounded-xl border">
+                <h4 className="font-semibold mb-3">Order Summary</h4>
+                <div className="space-y-2 mb-4 max-h-40 overflow-y-auto">
+                  {items.map(item => (
+                    <div key={item.id} className="flex justify-between text-sm">
+                      <span className="text-muted-foreground truncate max-w-[150px]">
+                        {item.name} × {item.quantity}
+                      </span>
+                      <span className="font-medium">${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <QuickVeteranToggle
+                  isVeteran={isVeteran}
+                  onVeteranChange={setIsVeteran}
+                  discountPercent={10}
+                />
+
+                <div className="border-t pt-3 mt-3">
+                  {veteranDiscount > 0 && (
+                    <div className="flex justify-between text-sm text-green-600 mb-1">
+                      <span>Veteran Discount</span>
+                      <span>-${veteranDiscount.toFixed(2)}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between font-bold text-lg">
+                    <span>Total</span>
+                    <span className="text-primary">${total.toFixed(2)}</span>
                   </div>
-                ))}
-              </div>
-              <div className="border-t pt-3">
-                <div className="flex justify-between font-bold text-lg">
-                  <span>Total</span>
-                  <span className="text-primary">${total.toFixed(2)}</span>
                 </div>
               </div>
-              
-              {/* Guest Checkout Notice */}
-              <div className="mt-4 p-3 bg-success/10 rounded-lg text-xs text-center">
-                <CheckCircle className="w-4 h-4 mx-auto mb-1 text-success" />
-                <span className="text-success font-medium">No account required!</span>
-                <p className="text-muted-foreground mt-1">Checkout as guest</p>
-              </div>
+
+              <TrustIndicators compact />
             </div>
           </div>
         </div>
