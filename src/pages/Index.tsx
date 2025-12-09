@@ -48,6 +48,8 @@ import {
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { RotatingHeroText } from "@/components/RotatingHeroText";
 import { motion } from "framer-motion";
+import { HomeIntroSection } from "@/components/HomeIntroSection";
+import HeroValueCards from "@/components/HeroValueCards";
 
 // Hero images
 import heroSlideshow1 from "@/assets/hero-home-1.jpg";
@@ -79,6 +81,22 @@ function Index() {
     {
       headline: "Protecting Ohio Families from AI-Powered Scams",
       subheadline: "Your parents didn't grow up with technology. Don't let scammers take advantage of that."
+    },
+    {
+      headline: "Don't Let Scammers Steal Your Life Savings",
+      subheadline: "Seniors lose $28.3 billion to scams every year. We're here to stop that."
+    },
+    {
+      headline: "Expert Cybersecurity for Seniors & Families",
+      subheadline: "Veteran-owned, Ohio-based protection you can trust."
+    },
+    {
+      headline: "AI-Powered Protection, Human-Powered Care",
+      subheadline: "Technology that protects. People who care. Results that matter."
+    },
+    {
+      headline: "Veteran-Owned. Ohio-Based. Family-Focused.",
+      subheadline: "Serving Dayton & Miami Valley with 24-hour response times."
     }
   ];
 
@@ -166,6 +184,12 @@ function Index() {
         </Hero>
 
         <TrustBar />
+
+        {/* Home Intro Section */}
+        <HomeIntroSection />
+
+        {/* Hero Value Cards - 3 Ways to Get Protected */}
+        <HeroValueCards />
 
         {/* Stats Section - Dramatic Impact */}
         <section className="relative py-20 overflow-hidden bg-gradient-to-b from-background via-muted/30 to-background">

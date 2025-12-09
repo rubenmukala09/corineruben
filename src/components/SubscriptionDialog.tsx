@@ -11,6 +11,9 @@ import {
 import { trackConversion } from "@/utils/analyticsTracker";
 import { Badge } from "@/components/ui/badge";
 import { TrustIndicators } from "@/components/payment/TrustIndicators";
+import { TermsCheckbox } from "@/components/payment/TermsCheckbox";
+import { QuickVeteranToggle } from "@/components/payment/QuickVeteranToggle";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface SubscriptionDialogProps {
@@ -68,6 +71,9 @@ export const SubscriptionDialog = ({
   const [discountCode, setDiscountCode] = useState("");
   const [discount, setDiscount] = useState<any>(null);
   const [validatingCode, setValidatingCode] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [isVeteran, setIsVeteran] = useState(false);
+  const veteranDiscountPercent = 10;
 
   const info = tierInfo[planTier] || tierInfo.Starter;
   const displayFeatures = features.length > 0 ? features : info.highlights;
@@ -129,8 +135,11 @@ export const SubscriptionDialog = ({
     }
   };
 
-  const finalAmount = discount ? amount - discount.discountAmount : amount;
-  const savings = discount ? discount.discountAmount : 0;
+  const veteranDiscount = isVeteran ? Math.round(amount * veteranDiscountPercent / 100) : 0;
+  const promoDiscount = discount ? discount.discountAmount : 0;
+  const totalDiscount = veteranDiscount + promoDiscount;
+  const finalAmount = amount - totalDiscount;
+  const savings = totalDiscount;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -246,6 +255,13 @@ export const SubscriptionDialog = ({
             )}
           </AnimatePresence>
 
+          {/* Veteran Discount Toggle */}
+          <QuickVeteranToggle
+            isVeteran={isVeteran}
+            onVeteranChange={setIsVeteran}
+            discountPercent={veteranDiscountPercent}
+          />
+
           {/* Subscription Benefits */}
           <div className="p-4 bg-muted/50 rounded-xl space-y-2 text-sm">
             <div className="flex items-center gap-2 text-muted-foreground">
@@ -261,6 +277,12 @@ export const SubscriptionDialog = ({
               <span>Secure billing via Stripe</span>
             </div>
           </div>
+
+          {/* Terms Checkbox */}
+          <TermsCheckbox
+            checked={termsAccepted}
+            onCheckedChange={setTermsAccepted}
+          />
 
           {/* Price Summary */}
           <div className="p-4 bg-gradient-to-r from-primary/5 to-accent/5 rounded-xl border">
@@ -283,10 +305,36 @@ export const SubscriptionDialog = ({
             </p>
           </div>
 
+          {/* FAQ Accordion */}
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="cancel" className="border-b-0">
+              <AccordionTrigger className="text-sm py-3 hover:no-underline">
+                <span className="flex items-center gap-2">
+                  <RefreshCw className="w-4 h-4 text-primary" />
+                  Can I cancel anytime?
+                </span>
+              </AccordionTrigger>
+              <AccordionContent className="text-sm text-muted-foreground">
+                Yes! You can cancel your subscription at any time with no cancellation fees. Your protection continues until the end of your billing period.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="billing" className="border-b-0">
+              <AccordionTrigger className="text-sm py-3 hover:no-underline">
+                <span className="flex items-center gap-2">
+                  <CreditCard className="w-4 h-4 text-primary" />
+                  How does billing work?
+                </span>
+              </AccordionTrigger>
+              <AccordionContent className="text-sm text-muted-foreground">
+                You'll be charged monthly on the same date you subscribed. We accept all major credit cards and process payments securely through Stripe.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+
           {/* Subscribe Button */}
           <Button
             onClick={handleSubscribe}
-            disabled={loading}
+            disabled={loading || !termsAccepted}
             className="w-full h-12 text-base font-semibold"
             size="lg"
           >

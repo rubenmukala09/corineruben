@@ -22,6 +22,8 @@ import { z } from "zod";
 import { Badge } from "@/components/ui/badge";
 import { QuickVeteranToggle } from "@/components/payment/QuickVeteranToggle";
 import { TrustIndicators } from "@/components/payment/TrustIndicators";
+import { TermsCheckbox } from "@/components/payment/TermsCheckbox";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 interface BookingModalProps {
   open: boolean;
@@ -80,8 +82,9 @@ export const BookingModal = ({
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>();
-  const [step, setStep] = useState<'info' | 'schedule' | 'confirm'>('info');
+  const [step, setStep] = useState<1 | 2 | 3>(1);
   const [isVeteran, setIsVeteran] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
   
   const info = serviceInfo[serviceType] || serviceInfo.default;
   
@@ -150,7 +153,8 @@ export const BookingModal = ({
 
       onOpenChange(false);
       form.reset();
-      setStep('info');
+      setStep(1);
+      setTermsAccepted(false);
     } catch (error: any) {
       toast({
         title: "Submission Failed",
@@ -161,6 +165,12 @@ export const BookingModal = ({
       setLoading(false);
     }
   };
+
+  const steps = [
+    { num: 1, label: "Contact" },
+    { num: 2, label: "Schedule" },
+    { num: 3, label: "Confirm" }
+  ];
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -183,6 +193,31 @@ export const BookingModal = ({
               <Badge className="w-fit mt-1">{serviceTier}</Badge>
             )}
           </DialogHeader>
+
+          {/* Step Indicator */}
+          <div className="flex items-center justify-between mt-6 max-w-xs">
+            {steps.map((s, i) => (
+              <div key={s.num} className="flex items-center">
+                <div className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold transition-colors ${
+                  step >= s.num 
+                    ? 'bg-primary text-primary-foreground' 
+                    : 'bg-muted text-muted-foreground'
+                }`}>
+                  {step > s.num ? <CheckCircle className="w-5 h-5" /> : s.num}
+                </div>
+                <span className={`ml-2 text-xs font-medium hidden sm:block ${
+                  step >= s.num ? 'text-primary' : 'text-muted-foreground'
+                }`}>
+                  {s.label}
+                </span>
+                {i < steps.length - 1 && (
+                  <div className={`w-8 sm:w-12 h-0.5 mx-2 ${
+                    step > s.num ? 'bg-primary' : 'bg-muted'
+                  }`} />
+                )}
+              </div>
+            ))}
+          </div>
           
           {/* Quick Info Bar */}
           <div className="flex flex-wrap gap-4 mt-4 text-sm">
@@ -354,6 +389,12 @@ export const BookingModal = ({
                 />
               )}
 
+              {/* Terms Checkbox */}
+              <TermsCheckbox
+                checked={termsAccepted}
+                onCheckedChange={setTermsAccepted}
+              />
+
               {/* Price Summary */}
               {basePrice > 0 && (
                 <div className="p-4 bg-gradient-to-r from-primary/5 to-accent/5 rounded-xl border">
@@ -376,10 +417,36 @@ export const BookingModal = ({
                 </div>
               )}
 
+              {/* FAQ Accordion */}
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="response-time" className="border-b-0">
+                  <AccordionTrigger className="text-sm py-3 hover:no-underline">
+                    <span className="flex items-center gap-2">
+                      <Clock className="w-4 h-4 text-primary" />
+                      When will I hear back?
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="text-sm text-muted-foreground">
+                    We typically respond within 24 hours. For urgent requests, call us at (937) 555-SAFE.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="cancellation" className="border-b-0">
+                  <AccordionTrigger className="text-sm py-3 hover:no-underline">
+                    <span className="flex items-center gap-2">
+                      <Shield className="w-4 h-4 text-primary" />
+                      What's your cancellation policy?
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="text-sm text-muted-foreground">
+                    Free cancellation up to 24 hours before your scheduled appointment.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+
               {/* Submit */}
               <Button
                 type="submit"
-                disabled={loading}
+                disabled={loading || !termsAccepted}
                 className="w-full h-12 text-base font-semibold"
                 size="lg"
               >
