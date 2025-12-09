@@ -5,229 +5,200 @@ import {
   Users, 
   GraduationCap, 
   Building2, 
-  ArrowRight, 
-  CheckCircle2, 
-  Sparkles,
-  Lock,
-  Heart,
-  Zap,
-  Globe,
-  Award
+  ArrowRight,
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  CheckCircle2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { ScrollRevealSection } from "@/components/ScrollRevealSection";
 
 export const HomeIntroSection = () => {
-  const features = [
+  const services = [
     {
+      id: "protection",
       icon: Shield,
-      title: "AI-Powered Protection",
-      description: "24/7 monitoring and analysis of suspicious communications using advanced AI technology",
-      color: "from-primary to-primary/70"
+      title: "ScamShield Protection",
+      tagline: "24/7 AI Monitoring",
+      description: "Real-time threat detection and analysis of suspicious communications before they reach your family.",
+      href: "/training#pricing",
+      stat: "500+",
+      statLabel: "Families Protected"
     },
     {
+      id: "training",
       icon: GraduationCap,
-      title: "Expert Training",
-      description: "Learn to identify and prevent scams with our certified cybersecurity professionals",
-      color: "from-accent to-accent/70"
+      title: "Prevention Training",
+      tagline: "Expert-Led Programs",
+      description: "Comprehensive courses designed to help you identify and avoid AI-powered scams and digital threats.",
+      href: "/training#training",
+      stat: "10%",
+      statLabel: "Veteran Discount"
     },
     {
+      id: "business",
       icon: Building2,
       title: "Business Solutions",
-      description: "Protect your business with AI automation, security audits, and professional services",
-      color: "from-primary to-accent"
-    },
-    {
-      icon: Users,
-      title: "Family Safety",
-      description: "Keep your loved ones safe with comprehensive protection plans for the whole family",
-      color: "from-accent to-primary"
+      tagline: "Enterprise Security",
+      description: "Custom AI automation, security audits, and professional services to protect your organization.",
+      href: "/business",
+      stat: "$25K+",
+      statLabel: "Value Delivered"
     }
   ];
 
-  const whyChooseUs = [
-    { icon: Lock, text: "Military-grade security protocols" },
-    { icon: Zap, text: "24-hour response time guarantee" },
-    { icon: Heart, text: "Veteran-owned & operated" },
-    { icon: Globe, text: "Multilingual support (EN, ES, FR)" },
-    { icon: Award, text: "500+ families protected" },
-    { icon: Sparkles, text: "AI-powered threat detection" }
-  ];
-
-  const quickLinks = [
-    { label: "ScamShield Protection", href: "/training#pricing", icon: Shield, desc: "Get protected now" },
-    { label: "Learn & Train", href: "/training", icon: GraduationCap, desc: "Prevention training" },
-    { label: "AI for Business", href: "/business", icon: Building2, desc: "Business solutions" },
-    { label: "Resources", href: "/resources", icon: Sparkles, desc: "Tools & guides" }
+  const contactInfo = [
+    { icon: Phone, label: "937-555-SAFE", href: "tel:937-555-7233" },
+    { icon: Mail, label: "hello@invisionnetwork.org", href: "mailto:hello@invisionnetwork.org" },
+    { icon: MapPin, label: "Kettering, Ohio", href: "/contact" },
+    { icon: Clock, label: "24hr Response", href: "/contact" }
   ];
 
   return (
-    <section className="py-10 md:py-14 bg-gradient-to-b from-background via-muted/30 to-background relative overflow-hidden">
-      {/* Background decorations - smaller */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-10 left-10 w-48 h-48 bg-primary/8 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 right-10 w-64 h-64 bg-accent/8 rounded-full blur-3xl" />
-      </div>
+    <section className="relative py-24 lg:py-32 overflow-hidden">
+      {/* Elegant gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-muted/40 via-background to-muted/20" />
+      
+      {/* Subtle geometric patterns */}
+      <div className="absolute inset-0 opacity-[0.02]" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+      }} />
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Welcome Header - Compact */}
-        <ScrollRevealSection>
-          <div className="text-center mb-10">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="max-w-3xl mx-auto text-center mb-20"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/20 bg-primary/5 mb-6">
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+            <span className="text-sm font-medium text-primary tracking-wide uppercase">
+              Ohio's Premier Cybersecurity Partner
+            </span>
+          </div>
+          
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+            Protecting What
+            <span className="block text-primary">Matters Most</span>
+          </h2>
+          
+          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+            Veteran-owned and Ohio-based, we combine advanced AI technology with 
+            human expertise to shield families and businesses from digital threats.
+          </p>
+        </motion.div>
+
+        {/* Services Grid - Elegant Cards */}
+        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8 mb-20">
+          {services.map((service, index) => (
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-4"
+              key={service.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Sparkles className="w-3.5 h-3.5 text-primary" />
-              <span className="text-xs font-medium text-primary">Welcome to InVision Network</span>
-            </motion.div>
-            
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
-              Your Trusted Partner in Digital Safety
-            </h2>
-            
-            <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Ohio's premier cybersecurity company protecting families and businesses from AI-powered scams and digital threats.
-            </p>
-          </div>
-        </ScrollRevealSection>
-
-        {/* Mission Statement - Compact */}
-        <ScrollRevealSection>
-          <Card className="p-5 md:p-8 mb-10 bg-gradient-to-br from-primary/5 via-card to-accent/5 border-primary/20 rounded-2xl relative overflow-hidden">
-            <div className="relative z-10 text-center">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent mb-4">
-                <Heart className="w-6 h-6 text-white" />
-              </div>
-              
-              <h3 className="text-xl md:text-2xl font-bold mb-3">Our Mission</h3>
-              <p className="text-sm text-muted-foreground max-w-xl mx-auto mb-4">
-                "Empowering individuals, families, and businesses with tools to stay safe from digital threats."
-              </p>
-              
-              <div className="flex flex-wrap justify-center gap-2">
-                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-background/80 rounded-full border border-border/50">
-                  <CheckCircle2 className="w-4 h-4 text-primary" />
-                  <span className="text-xs font-medium">Kettering, Ohio</span>
-                </div>
-                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-background/80 rounded-full border border-border/50">
-                  <CheckCircle2 className="w-4 h-4 text-primary" />
-                  <span className="text-xs font-medium">Veteran-Owned</span>
-                </div>
-                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-background/80 rounded-full border border-border/50">
-                  <CheckCircle2 className="w-4 h-4 text-primary" />
-                  <span className="text-xs font-medium">10% Veteran Discount</span>
-                </div>
-              </div>
-            </div>
-          </Card>
-        </ScrollRevealSection>
-
-        {/* What We Offer - Compact */}
-        <ScrollRevealSection staggerChildren>
-          <div className="mb-10">
-            <h3 className="text-xl md:text-2xl font-bold text-center mb-6">What We Offer</h3>
-            
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-              {features.map((feature, index) => (
-                <Card 
-                  key={index}
-                  className="p-4 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 rounded-xl border-border/50 group bg-gradient-to-br from-card to-card/50"
-                >
-                  <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
-                    <feature.icon className="w-5 h-5 text-white" />
+              <Link 
+                to={service.href}
+                className="group block h-full"
+              >
+                <div className="relative h-full bg-card border border-border/50 rounded-2xl p-8 transition-all duration-500 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1">
+                  {/* Service Header */}
+                  <div className="flex items-start justify-between mb-6">
+                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <service.icon className="w-7 h-7 text-primary" />
+                    </div>
+                    <div className="text-right">
+                      <span className="block text-2xl font-bold text-primary">{service.stat}</span>
+                      <span className="text-xs text-muted-foreground">{service.statLabel}</span>
+                    </div>
                   </div>
-                  <h4 className="text-sm font-bold mb-1 group-hover:text-primary transition-colors">
-                    {feature.title}
-                  </h4>
-                  <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
-                    {feature.description}
-                  </p>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </ScrollRevealSection>
 
-        {/* Why Choose InVision - Compact */}
-        <ScrollRevealSection>
-          <div className="mb-10">
-            <h3 className="text-xl md:text-2xl font-bold text-center mb-6">Why Choose InVision?</h3>
-            
-            <div className="grid grid-cols-3 md:grid-cols-6 gap-2 md:gap-3">
-              {whyChooseUs.map((item, index) => (
-                <Card 
-                  key={index}
-                  className="p-3 text-center hover:shadow-md transition-all duration-200 rounded-lg border-border/50 group bg-card/80"
-                >
-                  <div className="w-9 h-9 mx-auto rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
-                    <item.icon className="w-4 h-4 text-primary" />
-                  </div>
-                  <p className="text-[10px] md:text-xs font-medium text-foreground leading-tight">
-                    {item.text}
-                  </p>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </ScrollRevealSection>
-
-        {/* Quick Navigation - Compact */}
-        <ScrollRevealSection staggerChildren>
-          <div className="mb-8">
-            <h3 className="text-xl md:text-2xl font-bold text-center mb-2">Explore Our Services</h3>
-            <p className="text-center text-muted-foreground mb-6 text-sm max-w-xl mx-auto">
-              Everything you need to protect yourself and your business
-            </p>
-            
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-              {quickLinks.map((link, index) => (
-                <Link key={index} to={link.href} className="group">
-                  <Card className="p-4 h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 rounded-xl border-border/50 bg-gradient-to-br from-card to-card/50">
-                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                      <link.icon className="w-5 h-5 text-primary" />
+                  {/* Service Content */}
+                  <div className="space-y-3">
+                    <div>
+                      <span className="text-xs font-medium text-accent uppercase tracking-wider">
+                        {service.tagline}
+                      </span>
+                      <h3 className="text-xl font-bold mt-1 group-hover:text-primary transition-colors">
+                        {service.title}
+                      </h3>
                     </div>
                     
-                    <h4 className="text-sm font-bold mb-0.5 group-hover:text-primary transition-colors flex items-center gap-1">
-                      {link.label}
-                      <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </h4>
-                    <p className="text-xs text-muted-foreground">{link.desc}</p>
-                  </Card>
-                </Link>
-              ))}
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {service.description}
+                    </p>
+                  </div>
+
+                  {/* CTA */}
+                  <div className="mt-6 pt-6 border-t border-border/50">
+                    <span className="inline-flex items-center gap-2 text-sm font-medium text-primary group-hover:gap-3 transition-all">
+                      Learn More
+                      <ArrowRight className="w-4 h-4" />
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Trust & Contact Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="relative"
+        >
+          <div className="bg-gradient-to-r from-primary/5 via-card to-accent/5 border border-border/50 rounded-2xl p-8 lg:p-10">
+            <div className="grid lg:grid-cols-2 gap-8 items-center">
+              {/* Left - Trust Statement */}
+              <div>
+                <h3 className="text-2xl font-bold mb-4">Ready to Get Protected?</h3>
+                <p className="text-muted-foreground mb-6">
+                  Join over 500 Ohio families who trust InVision Network to keep them safe 
+                  from AI-powered scams and digital threats.
+                </p>
+                
+                <div className="flex flex-wrap gap-4">
+                  <Button asChild size="lg" className="gap-2">
+                    <Link to="/training#pricing">
+                      Start Protection
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" size="lg" className="gap-2">
+                    <Link to="/contact">
+                      <Phone className="w-4 h-4" />
+                      Schedule Call
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+
+              {/* Right - Contact Info */}
+              <div className="grid grid-cols-2 gap-4">
+                {contactInfo.map((item, index) => (
+                  <Link
+                    key={index}
+                    to={item.href}
+                    className="flex items-center gap-3 p-4 rounded-xl bg-background/60 border border-border/30 hover:border-primary/30 transition-colors group"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                      <item.icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <span className="text-sm font-medium">{item.label}</span>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
-        </ScrollRevealSection>
-
-        {/* Trust Assurance - Compact */}
-        <ScrollRevealSection>
-          <Card className="p-5 md:p-6 bg-gradient-to-r from-primary/10 via-transparent to-accent/10 border-primary/20 rounded-2xl text-center">
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <Shield className="w-6 h-6 text-primary" />
-              <h3 className="text-lg md:text-xl font-bold">Your Security is Our Priority</h3>
-            </div>
-            <p className="text-sm text-muted-foreground max-w-xl mx-auto mb-4">
-              Bank-level encryption, trained cybersecurity professionals, and your complete trust.
-            </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              <Button asChild size="sm" className="gap-1.5">
-                <Link to="/about">
-                  Learn More
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="sm" className="gap-1.5">
-                <Link to="/contact">
-                  Contact Us
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </Button>
-            </div>
-          </Card>
-        </ScrollRevealSection>
+        </motion.div>
       </div>
     </section>
   );
