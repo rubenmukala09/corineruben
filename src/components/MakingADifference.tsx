@@ -118,59 +118,6 @@ const MakingADifference = () => {
             </CardContent>
           </Card>
         </div>
-
-        {/* Donation Options */}
-        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          <Card 
-            className="text-center hover:border-primary transition-colors cursor-pointer group"
-            onClick={() => openDonationModal('sponsor')}
-          >
-            <CardHeader>
-              <div className="mx-auto p-3 rounded-xl bg-primary/10 w-fit mb-2 group-hover:scale-110 transition-transform">
-                <Users className="h-6 w-6 text-primary" />
-              </div>
-              <CardTitle className="text-lg">Sponsor a Seat</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-2xl font-bold text-primary mb-2">$100</p>
-              <p className="text-sm text-muted-foreground">= one complete class</p>
-              <Button variant="outline" className="mt-4 w-full">Select</Button>
-            </CardContent>
-          </Card>
-
-          <Card 
-            className="text-center hover:border-primary transition-colors cursor-pointer group"
-            onClick={() => openDonationModal('monthly')}
-          >
-            <CardHeader>
-              <div className="mx-auto p-3 rounded-xl bg-accent/10 w-fit mb-2 group-hover:scale-110 transition-transform">
-                <DollarSign className="h-6 w-6 text-accent" />
-              </div>
-              <CardTitle className="text-lg">Monthly Ally</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-2xl font-bold text-accent mb-2">$25/mo</p>
-              <p className="text-sm text-muted-foreground">sustains outreach</p>
-              <Button variant="outline" className="mt-4 w-full">Select</Button>
-            </CardContent>
-          </Card>
-
-          <Card 
-            className="text-center hover:border-primary transition-colors cursor-pointer group"
-            onClick={() => openDonationModal('corporate')}
-          >
-            <CardHeader>
-              <div className="mx-auto p-3 rounded-xl bg-secondary/10 w-fit mb-2 group-hover:scale-110 transition-transform">
-                <Building2 className="h-6 w-6 text-secondary-foreground" />
-              </div>
-              <CardTitle className="text-lg">Corporate Partner</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">Bulk training programs</p>
-              <Button variant="outline" className="mt-4 w-full">Contact Us</Button>
-            </CardContent>
-          </Card>
-        </div>
       </div>
 
       <DonationModal
