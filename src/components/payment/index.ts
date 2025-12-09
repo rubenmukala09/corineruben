@@ -5,3 +5,6 @@ export { SmartPriceBreakdown } from './SmartPriceBreakdown';
 export { QuickVeteranToggle } from './QuickVeteranToggle';
 export { PaymentSuccess } from './PaymentSuccess';
 export { TrustIndicators, AcceptedCards } from './TrustIndicators';
+export { DiscountCodeInput } from './DiscountCodeInput';
+export { TermsCheckbox } from './TermsCheckbox';
+export { SavedPaymentMethods } from './SavedPaymentMethods';
