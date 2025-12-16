@@ -1,163 +1,157 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Check } from "lucide-react";
+import { Shield, GraduationCap, Building2, ArrowRight, Star, Users, Zap } from "lucide-react";
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 const HeroValueCards = () => {
-  const plans = [
+  const paths = [
     {
-      id: "starter",
-      name: "Starter",
-      audience: "For individuals",
-      price: "39",
-      description: "Essential protection for personal digital security.",
-      features: [
-        "Real-time threat detection",
-        "Suspicious content analysis",
-        "Monthly security reports",
-        "Email support"
-      ],
+      icon: Shield,
+      title: "ScamShield Protection",
+      description: "24/7 AI-powered monitoring to detect and block scams before they reach you",
+      priceRange: "From $39/mo",
       href: "/training#pricing",
-      featured: false
+      color: "from-primary to-primary/70",
+      badge: "POPULAR",
+      features: ["Real-time alerts", "Family coverage", "Monthly reports"]
     },
     {
-      id: "family",
-      name: "Family",
-      audience: "Most popular",
-      price: "79",
-      description: "Comprehensive coverage for your entire household.",
-      features: [
-        "Everything in Starter",
-        "Up to 5 family members",
-        "Priority 24/7 support",
-        "Quarterly security review",
-        "Identity monitoring"
-      ],
-      href: "/training#pricing",
-      featured: true
+      icon: GraduationCap,
+      title: "Learn & Train",
+      description: "Expert-led training programs to recognize and prevent all types of scams",
+      priceRange: "From $89",
+      href: "/training#training",
+      color: "from-accent to-accent/70",
+      badge: "10% VETERAN DISCOUNT",
+      features: ["Certified trainers", "Hands-on practice", "Certificate included"]
     },
     {
-      id: "premium",
-      name: "Premium",
-      audience: "Maximum protection",
-      price: "129",
-      description: "Advanced security with dedicated support.",
-      features: [
-        "Everything in Family",
-        "Unlimited family members",
-        "Dedicated security advisor",
-        "Monthly consultation calls",
-        "Recovery assistance"
-      ],
-      href: "/training#pricing",
-      featured: false
+      icon: Building2,
+      title: "AI for Business",
+      description: "Custom AI solutions, automation, and security audits for your business",
+      priceRange: "From $1,500",
+      href: "/business",
+      color: "from-primary to-accent",
+      badge: "ENTERPRISE",
+      features: ["Custom solutions", "Dedicated support", "ROI tracking"]
     }
   ];
 
   return (
-    <section className="relative py-32 lg:py-40 bg-muted/30">
-      <div className="container mx-auto px-4">
-        {/* Section header */}
-        <motion.div
+    <section className="py-16 bg-gradient-to-b from-muted/50 to-background relative overflow-hidden">
+      {/* Background elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-20 left-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-80 h-80 bg-accent/5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="max-w-2xl mx-auto text-center mb-20"
+          className="text-center mb-12"
         >
-          <span className="inline-block text-xs font-semibold tracking-[0.2em] text-primary uppercase mb-6">
-            Protection Plans
-          </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
-            Choose your level of protection
+          <Badge variant="outline" className="mb-4 px-4 py-1.5">
+            <Zap className="w-3.5 h-3.5 mr-1.5" />
+            3 Ways to Get Protected
+          </Badge>
+          <h2 className="text-3xl md:text-4xl font-bold mb-3">
+            Choose Your <span className="text-primary">Protection Level</span>
           </h2>
-          <p className="text-lg text-muted-foreground">
-            All plans include our core ScamShield technology. Cancel anytime.
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Whether you need personal protection, family training, or business security — we've got you covered
           </p>
         </motion.div>
 
-        {/* Pricing grid */}
-        <div className="grid lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {plans.map((plan, index) => (
+        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {paths.map((path, index) => (
             <motion.div
-              key={plan.id}
+              key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`relative ${plan.featured ? 'lg:-mt-6 lg:mb-6' : ''}`}
+              transition={{ delay: index * 0.15 }}
             >
-              <div className={`h-full rounded-2xl p-8 lg:p-10 transition-all duration-300 ${
-                plan.featured 
-                  ? 'bg-foreground text-background ring-1 ring-foreground' 
-                  : 'bg-card ring-1 ring-border hover:ring-primary/30'
-              }`}>
-                {/* Header */}
-                <div className="mb-8">
-                  <span className={`text-xs font-medium tracking-wide uppercase ${
-                    plan.featured ? 'text-primary-foreground/70' : 'text-muted-foreground'
-                  }`}>
-                    {plan.audience}
-                  </span>
-                  <h3 className="text-2xl font-bold mt-1">{plan.name}</h3>
-                </div>
+              <Card className="relative h-full p-6 hover:shadow-xl transition-all duration-500 hover:-translate-y-2 border-0 bg-card/80 backdrop-blur-sm group overflow-hidden">
+                {/* Gradient overlay on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                {/* Badge */}
+                <Badge 
+                  className={`absolute top-4 right-4 text-[10px] ${
+                    path.badge === "POPULAR" ? "bg-primary" : 
+                    path.badge.includes("VETERAN") ? "bg-green-600" : "bg-accent"
+                  }`}
+                >
+                  {path.badge}
+                </Badge>
 
-                {/* Price */}
-                <div className="mb-8">
-                  <div className="flex items-baseline">
-                    <span className="text-5xl font-bold tracking-tight">${plan.price}</span>
-                    <span className={`ml-2 ${plan.featured ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
-                      /month
+                <div className="relative z-10">
+                  {/* Icon */}
+                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${path.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                    <path.icon className="w-7 h-7 text-white" />
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+                    {path.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                    {path.description}
+                  </p>
+
+                  {/* Features */}
+                  <div className="space-y-2 mb-5">
+                    {path.features.map((feature, i) => (
+                      <div key={i} className="flex items-center gap-2 text-sm">
+                        <Star className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                        <span className="text-muted-foreground">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Price */}
+                  <div className="mb-4">
+                    <span className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                      {path.priceRange}
                     </span>
                   </div>
-                  <p className={`mt-3 text-sm ${plan.featured ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
-                    {plan.description}
-                  </p>
+
+                  {/* CTA */}
+                  <Button asChild className="w-full group/btn">
+                    <Link to={path.href} className="inline-flex items-center justify-center gap-2">
+                      Get Started
+                      <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                    </Link>
+                  </Button>
                 </div>
-
-                {/* Features */}
-                <ul className="space-y-4 mb-10">
-                  {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <Check className={`w-5 h-5 shrink-0 mt-0.5 ${
-                        plan.featured ? 'text-primary' : 'text-primary'
-                      }`} />
-                      <span className="text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* CTA */}
-                <Button 
-                  asChild 
-                  className="w-full"
-                  variant={plan.featured ? 'secondary' : 'default'}
-                  size="lg"
-                >
-                  <Link to={plan.href}>
-                    Get Started
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Link>
-                </Button>
-              </div>
+              </Card>
             </motion.div>
           ))}
         </div>
 
-        {/* Footer note */}
-        <motion.p
+        {/* Bottom CTA */}
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-center text-sm text-muted-foreground mt-12"
+          className="text-center mt-10"
         >
-          All prices in USD. Veterans receive 10% discount on all plans.{" "}
-          <Link to="/contact" className="text-primary hover:underline">
-            Contact us
-          </Link>{" "}
-          for custom enterprise solutions.
-        </motion.p>
+          <p className="text-muted-foreground mb-4">
+            Not sure which option is right for you?
+          </p>
+          <Button asChild variant="outline" size="lg">
+            <Link to="/contact?service=consultation" className="inline-flex items-center gap-2">
+              <Users className="w-4 h-4" />
+              Schedule a Free Consultation
+            </Link>
+          </Button>
+        </motion.div>
       </div>
     </section>
   );
