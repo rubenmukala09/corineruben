@@ -10,6 +10,7 @@ import { WorkingProcess } from "@/components/home/WorkingProcess";
 import { TestimonialQuote } from "@/components/home/TestimonialQuote";
 import { SecuritySolutions } from "@/components/home/SecuritySolutions";
 import { BlogPreview } from "@/components/home/BlogPreview";
+import { NewsletterSection } from "@/components/home/NewsletterSection";
 import TrustBar from "@/components/TrustBar";
 import CTASection from "@/components/CTASection";
 import { ScamShieldSubmission } from "@/components/ScamShieldSubmission";
@@ -65,29 +66,29 @@ function Index() {
         {/* Hero Section */}
         <HeroHomepage />
 
-        {/* Feature Bar */}
+        {/* Feature Bar - Why Choose Us */}
         <FeatureBar />
-
-        {/* Trust Bar */}
-        <TrustBar />
 
         {/* About Section */}
         <AboutSection />
 
-        {/* Services Showcase */}
+        {/* Services Showcase - Team of Experts */}
         <ServicesShowcase />
 
-        {/* Working Process */}
+        {/* Security Solutions - Portfolio */}
+        <SecuritySolutions />
+
+        {/* Working Process - 4 Steps */}
         <WorkingProcess />
 
         {/* Testimonial Quote */}
         <TestimonialQuote />
 
-        {/* Security Solutions */}
-        <SecuritySolutions />
-
         {/* Blog Preview */}
         <BlogPreview />
+
+        {/* Newsletter Section */}
+        <NewsletterSection />
 
         {/* Final CTA */}
         <CTASection headline="Protect What Matters Most" variant="gold">

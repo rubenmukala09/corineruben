@@ -1,32 +1,32 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Shield, Phone, ArrowRight } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Shield, ArrowRight, CheckCircle } from "lucide-react";
 import heroSecurityCamera from "@/assets/hero-security-camera.jpg";
-
-interface StatItem {
-  value: string;
-  label: string;
-}
-
-const stats: StatItem[] = [
-  { value: "11", label: "Years Experience" },
-  { value: "25", label: "Services" },
-  { value: "100+", label: "Protected Clients" },
-];
 
 export const HeroHomepage = () => {
   return (
-    <section className="relative min-h-[600px] sm:min-h-[700px] md:min-h-[800px] lg:min-h-[900px] xl:min-h-[950px] overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5" />
+    <section className="relative min-h-[600px] sm:min-h-[700px] md:min-h-[800px] lg:min-h-[900px] overflow-hidden bg-gradient-to-br from-primary via-primary/95 to-primary/90">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-20 -left-20 w-[500px] h-[500px] bg-primary-foreground/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-accent/10 rounded-full blur-3xl" />
+        {/* Geometric shapes */}
+        <motion.div 
+          className="absolute top-1/4 left-10 w-20 h-20 border-2 border-white/10 rounded-full"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div 
+          className="absolute bottom-1/3 right-1/4 w-32 h-32 border border-white/5 rounded-full"
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
       
-      {/* Decorative elements */}
-      <div className="absolute top-20 left-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-20 w-40 h-40 bg-accent/10 rounded-full blur-3xl" />
-      
-      <div className="container mx-auto px-4 h-full">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[600px] sm:min-h-[700px] md:min-h-[800px] lg:min-h-[900px] xl:min-h-[950px] py-8 lg:py-0">
+      <div className="container mx-auto px-4 h-full relative z-10">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[600px] sm:min-h-[700px] md:min-h-[800px] lg:min-h-[900px] py-12 lg:py-0">
           
           {/* Left Content */}
           <motion.div 
@@ -40,7 +40,7 @@ export const HeroHomepage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-white text-sm font-medium mb-6"
             >
               <Shield className="w-4 h-4" />
               <span>Veteran-Owned & Ohio-Based</span>
@@ -48,114 +48,103 @@ export const HeroHomepage = () => {
             
             {/* Headline */}
             <motion.h1 
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-foreground leading-tight mb-6"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-6"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.8 }}
             >
-              Professional{" "}
-              <span className="text-primary">Security Services</span>{" "}
-              You Can Trust
+              <span className="font-serif italic text-accent">Secure </span>
+              Protection{" "}
+              <br className="hidden lg:block" />
+              Starts Here
             </motion.h1>
             
             {/* Description */}
             <motion.p 
-              className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8"
+              className="text-base sm:text-lg lg:text-xl text-white/80 max-w-xl mx-auto lg:mx-0 mb-8"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
             >
-              Protecting Ohio families from AI-powered scams. Your parents didn't grow up with technology—don't let scammers take advantage of that.
+              Protecting Ohio families from AI-powered scams. Professional cybersecurity services designed for seniors and families.
             </motion.p>
             
             {/* CTAs */}
             <motion.div 
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12"
+              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
             >
-              <Button asChild size="lg" className="group">
+              <Button asChild size="lg" variant="secondary" className="group">
                 <Link to="/services">
-                  Get Protected
+                  Learn More
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="group">
-                <Link to="/contact">
-                  <Phone className="mr-2 w-4 h-4" />
-                  Free Consultation
-                </Link>
-              </Button>
-            </motion.div>
-            
-            {/* Stats */}
-            <motion.div 
-              className="flex justify-center lg:justify-start gap-8 lg:gap-12"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-            >
-              {stats.map((stat, index) => (
-                <div key={index} className="text-center lg:text-left">
-                  <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary">
-                    {stat.value}
-                  </div>
-                  <div className="text-xs sm:text-sm text-muted-foreground">
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
             </motion.div>
           </motion.div>
           
-          {/* Right Content - Circular Graphic */}
+          {/* Right Content - Quote Form Card */}
           <motion.div 
             className="order-1 lg:order-2 flex justify-center lg:justify-end"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: 50, y: 20 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
           >
-            <div className="relative">
-              {/* Main circular image container */}
-              <div className="relative w-[280px] h-[280px] sm:w-[340px] sm:h-[340px] md:w-[420px] md:h-[420px] lg:w-[480px] lg:h-[480px] xl:w-[550px] xl:h-[550px]">
-                {/* Outer decorative ring */}
-                <div className="absolute inset-0 rounded-full border-2 border-dashed border-primary/20 animate-[spin_60s_linear_infinite]" />
+            <div className="relative w-full max-w-md">
+              {/* Decorative image behind form */}
+              <div className="absolute -bottom-8 -left-8 w-48 h-48 rounded-2xl overflow-hidden shadow-2xl hidden lg:block">
+                <img 
+                  src={heroSecurityCamera} 
+                  alt="Security"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-primary/40" />
+              </div>
+              
+              {/* Quote Form Card */}
+              <div className="relative bg-card rounded-2xl shadow-2xl p-8 border border-border/50">
+                <h2 className="text-2xl font-bold text-foreground mb-2">Request A Quote</h2>
+                <p className="text-muted-foreground text-sm mb-6">Get your free consultation today</p>
                 
-                {/* Secondary decorative ring */}
-                <div className="absolute inset-4 rounded-full border border-accent/30" />
-                
-                {/* Main image circle */}
-                <div className="absolute inset-8 rounded-full overflow-hidden shadow-2xl ring-4 ring-white/50">
-                  <img 
-                    src={heroSecurityCamera} 
-                    alt="Professional security camera"
-                    className="w-full h-full object-cover"
+                <form className="space-y-4">
+                  <Input 
+                    type="text" 
+                    placeholder="Your Name*" 
+                    className="bg-muted/50 border-border"
                   />
-                  {/* Overlay gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent" />
+                  <Input 
+                    type="email" 
+                    placeholder="Email Address*" 
+                    className="bg-muted/50 border-border"
+                  />
+                  <Input 
+                    type="tel" 
+                    placeholder="Phone Number*" 
+                    className="bg-muted/50 border-border"
+                  />
+                  <Input 
+                    type="text" 
+                    placeholder="How can we help?" 
+                    className="bg-muted/50 border-border"
+                  />
+                  
+                  <Button type="button" className="w-full group" size="lg" asChild>
+                    <Link to="/contact">
+                      Request A Consultation
+                      <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </Button>
+                </form>
+                
+                {/* Trust indicators */}
+                <div className="mt-6 pt-6 border-t border-border">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle className="w-4 h-4 text-success" />
+                    <span>Free consultation • No obligation</span>
+                  </div>
                 </div>
-                
-                {/* Floating accent circles */}
-                <motion.div 
-                  className="absolute -top-2 right-12 w-16 h-16 sm:w-20 sm:h-20 bg-accent rounded-full flex items-center justify-center shadow-lg"
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <Shield className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
-                </motion.div>
-                
-                <motion.div 
-                  className="absolute bottom-8 -left-4 w-12 h-12 sm:w-16 sm:h-16 bg-primary rounded-full shadow-lg"
-                  animate={{ y: [0, 10, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                />
-                
-                <motion.div 
-                  className="absolute top-1/2 -right-2 w-8 h-8 sm:w-10 sm:h-10 bg-success rounded-full shadow-lg"
-                  animate={{ y: [0, -8, 0] }}
-                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                />
               </div>
             </div>
           </motion.div>
