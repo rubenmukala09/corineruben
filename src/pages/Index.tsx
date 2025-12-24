@@ -17,32 +17,29 @@ import { ScamShieldSubmission } from "@/components/ScamShieldSubmission";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { SEO, PAGE_SEO } from "@/components/SEO";
-
 function Index() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [scamShieldOpen, setScamShieldOpen] = useState(false);
-
   useEffect(() => {
     checkAdminStatus();
   }, []);
-
   const checkAdminStatus = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
+      const {
+        data: {
+          user
+        }
+      } = await supabase.auth.getUser();
       if (!user) {
         setIsAdmin(false);
         setIsLoading(false);
         return;
       }
-
-      const { data: roles, error } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", user.id)
-        .in("role", ["admin", "staff"]);
-
+      const {
+        data: roles,
+        error
+      } = await supabase.from("user_roles").select("role").eq("user_id", user.id).in("role", ["admin", "staff"]);
       if (error) {
         console.error("Error checking admin status:", error);
         setIsAdmin(false);
@@ -56,9 +53,7 @@ function Index() {
       setIsLoading(false);
     }
   };
-
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       <SEO {...PAGE_SEO.home} />
       <Navigation />
       <main id="main-content">
@@ -88,7 +83,7 @@ function Index() {
         <BlogPreview />
 
         {/* Newsletter Section */}
-        <NewsletterSection />
+        
 
         {/* Final CTA */}
         <CTASection headline="Protect What Matters Most" variant="gold">
@@ -113,8 +108,6 @@ function Index() {
         
         <ScamShieldSubmission open={scamShieldOpen} onOpenChange={setScamShieldOpen} />
       </main>
-    </div>
-  );
+    </div>;
 }
-
 export default Index;
