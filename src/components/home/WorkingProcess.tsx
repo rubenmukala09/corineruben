@@ -1,43 +1,48 @@
 import { motion } from "framer-motion";
-import { FileText, Search, Shield, Smile } from "lucide-react";
+import { FileText, Search, Shield, Smile, Settings } from "lucide-react";
 
 const steps = [
   {
     step: "01",
     icon: FileText,
-    title: "Provide Your Details",
-    description: "Share your contact info with any specific security concerns or questions you have.",
+    title: "Share Your Details",
+    description: "Tell us about your security concerns and requirements.",
+    color: "from-blue-500 to-cyan-500",
   },
   {
     step: "02",
     icon: Search,
-    title: "Pick A Suitable Plan",
-    description: "Our experts recommend the best protection package based on your unique needs.",
+    title: "Pick A Plan",
+    description: "Our experts recommend the best protection package for you.",
+    color: "from-violet-500 to-purple-500",
   },
   {
     step: "03",
     icon: Shield,
-    title: "We Assess Channels",
-    description: "We analyze your digital footprint and identify potential vulnerabilities.",
+    title: "We Assess & Protect",
+    description: "We analyze your digital footprint and secure vulnerabilities.",
+    color: "from-emerald-500 to-teal-500",
   },
   {
     step: "04",
     icon: Smile,
-    title: "You Enjoy & Relax",
-    description: "Rest easy knowing your family is protected with 24/7 monitoring and support.",
+    title: "Enjoy Peace of Mind",
+    description: "Rest easy with 24/7 monitoring and ongoing support.",
+    color: "from-amber-500 to-orange-500",
   },
 ];
 
 export const WorkingProcess = () => {
   return (
-    <section className="py-24 bg-gradient-to-b from-background to-muted/30 relative overflow-hidden">
-      {/* Decorative background */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-0 left-0 w-full h-full" 
+    <section className="py-32 bg-muted/20 relative overflow-hidden">
+      {/* Subtle background */}
+      <div className="absolute inset-0 opacity-[0.015]">
+        <div 
+          className="absolute inset-0"
           style={{
-            backgroundImage: `radial-gradient(circle at 25% 25%, hsl(var(--primary) / 0.1) 0%, transparent 50%),
-                              radial-gradient(circle at 75% 75%, hsl(var(--accent) / 0.1) 0%, transparent 50%)`
-          }} 
+            backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)',
+            backgroundSize: '32px 32px'
+          }}
         />
       </div>
 
@@ -47,34 +52,38 @@ export const WorkingProcess = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
-          <motion.span 
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent/10 text-accent text-sm font-semibold mb-6"
-            whileHover={{ scale: 1.05 }}
+          <motion.div 
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 mb-8"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
           >
-            How It Works
-          </motion.span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Get Protected in{" "}
-            <span className="font-serif italic text-primary">Four</span>{" "}
-            <span className="text-primary">Steps</span>
+            <Settings className="w-4 h-4 text-accent" />
+            <span className="text-sm font-medium text-muted-foreground">How It Works</span>
+          </motion.div>
+          
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-tight">
+            Get Protected in
+            <br />
+            <span className="text-primary">Four Simple Steps</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Our simple process makes getting protected easy and stress-free.
+            Our streamlined process makes getting protected easy and stress-free.
           </p>
         </motion.div>
 
         {/* Process Steps */}
-        <div className="grid md:grid-cols-4 gap-8 lg:gap-6 relative">
+        <div className="grid md:grid-cols-4 gap-8 relative">
           {/* Connector line - desktop only */}
-          <div className="hidden md:block absolute top-24 left-[12%] right-[12%] h-0.5 bg-gradient-to-r from-primary/20 via-accent/40 to-primary/20" />
+          <div className="hidden md:block absolute top-[72px] left-[15%] right-[15%] h-px bg-gradient-to-r from-border via-primary/30 to-border" />
           
           {steps.map((step, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.15 }}
@@ -83,26 +92,26 @@ export const WorkingProcess = () => {
               {/* Icon container */}
               <motion.div
                 className="relative inline-block mb-8"
-                whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
               >
-                {/* Outer ring */}
-                <div className="absolute inset-0 w-24 h-24 rounded-full bg-gradient-to-br from-primary/10 to-accent/10 blur-xl group-hover:blur-2xl transition-all duration-300" />
-                
                 {/* Main circle */}
-                <div className="relative w-24 h-24 rounded-full bg-card border-2 border-border group-hover:border-primary/50 flex items-center justify-center shadow-lg transition-all duration-300">
-                  <step.icon className="w-10 h-10 text-primary" />
+                <div className="relative w-36 h-36 rounded-full bg-card border-2 border-border group-hover:border-primary/30 flex items-center justify-center shadow-lg transition-all duration-300">
+                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${step.color} flex items-center justify-center`}>
+                    <step.icon className="w-8 h-8 text-white" strokeWidth={1.5} />
+                  </div>
                 </div>
                 
                 {/* Step number badge */}
-                <div className="absolute -top-2 -right-2 w-10 h-10 bg-gradient-to-br from-primary to-accent text-primary-foreground rounded-full flex items-center justify-center font-bold text-sm shadow-lg">
+                <div className="absolute -top-1 -right-1 w-10 h-10 bg-foreground text-background rounded-full flex items-center justify-center font-bold text-sm shadow-lg">
                   {step.step}
                 </div>
               </motion.div>
 
-              <h3 className="text-xl font-bold mb-4 text-foreground group-hover:text-primary transition-colors">
+              <h3 className="text-xl font-bold mb-3 text-foreground group-hover:text-primary transition-colors">
                 {step.title}
               </h3>
-              <p className="text-muted-foreground leading-relaxed max-w-xs mx-auto">
+              <p className="text-muted-foreground leading-relaxed max-w-[240px] mx-auto">
                 {step.description}
               </p>
             </motion.div>

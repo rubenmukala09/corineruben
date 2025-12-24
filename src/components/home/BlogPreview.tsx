@@ -38,11 +38,17 @@ const sideArticles = [
 
 export const BlogPreview = () => {
   return (
-    <section className="py-24 bg-gradient-to-b from-background to-muted/30 relative overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-      <div className="absolute top-20 right-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 left-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+    <section className="py-32 bg-background relative overflow-hidden">
+      {/* Subtle background */}
+      <div className="absolute inset-0 opacity-[0.02]">
+        <div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)',
+            backgroundSize: '40px 40px'
+          }}
+        />
+      </div>
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
@@ -50,30 +56,32 @@ export const BlogPreview = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <motion.span 
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-6"
-            whileHover={{ scale: 1.05 }}
+          <motion.div 
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/10 mb-8"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
           >
-            <BookOpen className="w-4 h-4" />
-            Latest Updates
-          </motion.span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Learn About Our{" "}
-            <span className="font-serif italic text-primary">Latest</span>
+            <BookOpen className="w-4 h-4 text-primary" />
+            <span className="text-sm font-medium text-muted-foreground">Latest Updates</span>
+          </motion.div>
+          
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-tight">
+            Learn From Our
             <br />
-            <span className="text-primary">News</span> From Blog.
+            <span className="text-primary">Latest Blog</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Stay informed with the latest cybersecurity tips and protection strategies.
           </p>
         </motion.div>
 
-        {/* Articles Grid - Bento Style */}
+        {/* Articles Grid */}
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Main Article - Left Side */}
+          {/* Main Article */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -82,23 +90,23 @@ export const BlogPreview = () => {
             className="lg:row-span-2"
           >
             <Link to="/articles" className="group block h-full">
-              <div className="relative h-full min-h-[500px] rounded-3xl overflow-hidden shadow-2xl border border-border/50 group-hover:border-primary/30 transition-all duration-500">
+              <div className="relative h-full min-h-[500px] rounded-2xl overflow-hidden shadow-lg border border-border/30 group-hover:border-primary/30 group-hover:shadow-xl transition-all duration-300">
                 <img
                   src={mainArticle.image}
                   alt={mainArticle.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
                 
                 {/* Content */}
                 <div className="absolute bottom-0 left-0 right-0 p-8">
-                  <span className="inline-block px-4 py-2 bg-primary text-primary-foreground text-sm font-semibold rounded-full mb-4">
+                  <span className="inline-block px-3 py-1.5 bg-primary text-primary-foreground text-xs font-semibold rounded-full mb-4">
                     {mainArticle.category}
                   </span>
-                  <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4 group-hover:text-accent transition-colors leading-tight">
+                  <h3 className="text-2xl lg:text-3xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors leading-tight">
                     {mainArticle.title}
                   </h3>
-                  <div className="flex items-center gap-3 text-white/70 text-sm">
+                  <div className="flex items-center gap-2 text-muted-foreground text-sm">
                     <Calendar className="w-4 h-4" />
                     <span>{mainArticle.date}</span>
                   </div>
@@ -107,34 +115,34 @@ export const BlogPreview = () => {
             </Link>
           </motion.div>
 
-          {/* Side Articles - Right Side */}
-          <div className="lg:col-span-2 grid sm:grid-cols-2 gap-6">
+          {/* Side Articles */}
+          <div className="lg:col-span-2 grid sm:grid-cols-2 gap-5">
             {sideArticles.map((article, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -4 }}
               >
                 <Link to="/articles" className="group block">
-                  <div className="flex gap-5 p-5 rounded-2xl bg-card border border-border/50 hover:shadow-xl hover:border-primary/30 transition-all duration-300">
+                  <div className="flex gap-4 p-4 rounded-xl bg-card border border-border/50 hover:shadow-lg hover:border-primary/20 transition-all duration-300">
                     {article.image && (
-                      <div className="w-28 h-28 rounded-xl overflow-hidden flex-shrink-0 border border-border/50">
+                      <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
                         <img
                           src={article.image}
                           alt={article.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       </div>
                     )}
-                    <div className="flex flex-col justify-center">
-                      <h4 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors line-clamp-2 mb-3 leading-snug">
+                    <div className="flex flex-col justify-center min-w-0">
+                      <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2 mb-2 leading-snug">
                         {article.title}
                       </h4>
                       <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                        <Calendar className="w-4 h-4" />
+                        <Calendar className="w-3.5 h-3.5" />
                         <span>{article.date}</span>
                       </div>
                     </div>
@@ -153,10 +161,10 @@ export const BlogPreview = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-center mt-14"
         >
-          <Button asChild variant="outline" size="lg" className="group px-8 py-6 text-lg rounded-xl">
+          <Button asChild variant="outline" size="lg" className="h-14 px-8 text-base font-semibold rounded-xl">
             <Link to="/articles">
               View All Articles
-              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="ml-2 w-5 h-5" />
             </Link>
           </Button>
         </motion.div>
