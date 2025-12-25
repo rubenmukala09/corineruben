@@ -13,7 +13,7 @@ const features = [
 
 export const AboutSection = () => {
   return (
-    <section className="py-32 bg-gradient-to-b from-primary via-primary to-primary/95 relative overflow-hidden">
+    <section className="py-32 bg-gradient-to-br from-primary via-primary to-accent/80 relative overflow-hidden">
       {/* Subtle decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-full opacity-[0.03]">
@@ -49,7 +49,7 @@ export const AboutSection = () => {
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6 tracking-tight">
             Our Company Provides
             <br />
-            <span className="text-accent">The Best Security Services</span>
+            <span className="text-primary-foreground/90">The Best Security Services</span>
           </h2>
         </motion.div>
 

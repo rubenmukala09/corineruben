@@ -39,112 +39,135 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   }
 
   :root {
-    /* Base colors */
-    --background: 0 0% 100%;
-    --foreground: 260 30% 15%;
+    /* Base colors - Soft off-white for elegance */
+    --background: 250 30% 99%;
+    --foreground: 250 40% 12%;
     
-    /* Deep Purple - Primary brand color (Trust, creativity, innovation) */
-    --primary: 260 70% 35%;
+    /* Royal Indigo - Primary brand color (Premium, trust, sophistication) */
+    --primary: 255 65% 42%;
     --primary-foreground: 0 0% 100%;
     
-    /* Bright Teal - Accent color (Modern, fresh, dynamic) */
-    --accent: 180 80% 45%;
+    /* Electric Violet - Accent color (Energy, innovation, modern) */
+    --accent: 270 85% 60%;
     --accent-foreground: 0 0% 100%;
     
-    /* Success Green - Safety, verification */
-    --success: 158 64% 52%;
+    /* Success Emerald - Safety, verification */
+    --success: 160 70% 45%;
     --success-foreground: 0 0% 100%;
     
-    /* Alert Red - Danger, urgency */
-    --destructive: 0 84% 60%;
+    /* Alert Crimson - Danger, urgency */
+    --destructive: 0 75% 55%;
     --destructive-foreground: 0 0% 100%;
     
-    /* Neutral colors */
+    /* Card & Surface colors */
     --card: 0 0% 100%;
-    --card-foreground: 260 30% 15%;
+    --card-foreground: 250 40% 12%;
     
     --popover: 0 0% 100%;
-    --popover-foreground: 260 30% 15%;
+    --popover-foreground: 250 40% 12%;
     
-    --secondary: 250 20% 96%;
-    --secondary-foreground: 260 70% 35%;
+    /* Soft lavender secondary */
+    --secondary: 255 25% 96%;
+    --secondary-foreground: 255 65% 42%;
     
-    --muted: 250 20% 96%;
-    --muted-foreground: 250 10% 47%;
+    /* Muted tones */
+    --muted: 250 20% 94%;
+    --muted-foreground: 250 15% 45%;
     
-    --border: 250 15% 91%;
-    --input: 250 15% 91%;
-    --ring: 260 70% 35%;
+    --border: 250 20% 90%;
+    --input: 250 20% 90%;
+    --ring: 255 65% 42%;
     
     --radius: 0.5rem;
     
-    /* Extended Color Palette for Premium Design */
-    --purple-900: 260 70% 25%;
-    --purple-700: 260 65% 35%;
-    --purple-500: 260 60% 50%;
+    /* Extended Color Palette - Harmonious Purple-Violet Spectrum */
+    --purple-900: 255 70% 20%;
+    --purple-700: 255 65% 35%;
+    --purple-500: 255 60% 50%;
+    --purple-400: 255 55% 60%;
+    --purple-300: 255 50% 75%;
+    --purple-200: 255 40% 88%;
+    --purple-100: 255 35% 96%;
     
-    /* Teal variants - Full intensity */
-    --teal-600: 180 80% 40%;
-    --teal-500: 180 75% 45%;
-    --teal-400: 180 70% 55%;
-    --teal-300: 180 60% 75%;
-    --teal-100: 180 50% 98%;
+    /* Violet accents for highlights */
+    --violet-600: 270 80% 50%;
+    --violet-500: 270 75% 58%;
+    --violet-400: 270 70% 68%;
+    --violet-300: 270 60% 80%;
     
-    /* Cyan variants for accents */
-    --cyan-600: 190 85% 45%;
-    --cyan-500: 190 80% 50%;
-    --cyan-400: 190 75% 60%;
+    /* Slate neutrals for balance */
+    --slate-900: 250 25% 15%;
+    --slate-700: 250 15% 35%;
+    --slate-500: 250 10% 50%;
+    --slate-300: 250 10% 80%;
+    --slate-100: 250 15% 95%;
     
-    /* Premium Shadows */
-    --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    --shadow-strong: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    --shadow-glow-purple: 0 0 20px rgba(109, 40, 217, 0.3);
-    --shadow-glow-teal: 0 0 20px rgba(20, 184, 166, 0.3);
+    /* Gold accent for premium touches */
+    --gold-500: 40 85% 55%;
+    --gold-400: 40 80% 65%;
+    
+    /* Legacy teal/cyan - mapped to violet spectrum for harmony */
+    --teal-600: 270 70% 45%;
+    --teal-500: 270 65% 55%;
+    --teal-400: 270 60% 65%;
+    --teal-300: 270 50% 78%;
+    --teal-100: 270 40% 96%;
+    
+    --cyan-600: 280 75% 48%;
+    --cyan-500: 280 70% 55%;
+    --cyan-400: 280 65% 65%;
+    
+    /* Premium Shadows with brand colors */
+    --shadow-soft: 0 4px 6px -1px hsl(255 65% 42% / 0.08), 0 2px 4px -1px hsl(255 65% 42% / 0.04);
+    --shadow-medium: 0 10px 15px -3px hsl(255 65% 42% / 0.1), 0 4px 6px -2px hsl(255 65% 42% / 0.05);
+    --shadow-strong: 0 20px 25px -5px hsl(255 65% 42% / 0.15), 0 10px 10px -5px hsl(255 65% 42% / 0.08);
+    --shadow-glow-primary: 0 0 30px hsl(255 65% 42% / 0.25);
+    --shadow-glow-accent: 0 0 30px hsl(270 85% 60% / 0.25);
     
     /* Radial gradients for background orbs */
     --gradient-radial: radial-gradient(circle, var(--tw-gradient-stops));
     
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 255 30% 98%;
+    --sidebar-foreground: 250 30% 20%;
+    --sidebar-primary: 255 65% 42%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 255 25% 94%;
+    --sidebar-accent-foreground: 255 65% 42%;
+    --sidebar-border: 250 20% 90%;
+    --sidebar-ring: 255 65% 42%;
+    
     /* Global site scale for desktop browsers */
     --site-scale: 0.78;
   }
 
   .dark {
-    --background: 260 70% 15%;
-    --foreground: 0 0% 100%;
-    --card: 260 70% 20%;
-    --card-foreground: 0 0% 100%;
-    --popover: 260 70% 20%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 0 0% 100%;
-    --primary-foreground: 260 70% 35%;
-    --secondary: 260 60% 25%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 260 60% 25%;
-    --muted-foreground: 250 10% 76%;
-    --accent: 180 80% 45%;
+    --background: 255 50% 8%;
+    --foreground: 0 0% 98%;
+    --card: 255 45% 12%;
+    --card-foreground: 0 0% 98%;
+    --popover: 255 45% 12%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 270 80% 65%;
+    --primary-foreground: 255 50% 8%;
+    --secondary: 255 40% 18%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 255 35% 20%;
+    --muted-foreground: 250 15% 65%;
+    --accent: 270 85% 60%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 63% 31%;
+    --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
-    --border: 260 50% 30%;
-    --input: 260 50% 30%;
-    --ring: 0 0% 100%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 255 35% 22%;
+    --input: 255 35% 22%;
+    --ring: 270 80% 65%;
+    --sidebar-background: 255 50% 6%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 270 80% 65%;
+    --sidebar-primary-foreground: 255 50% 8%;
+    --sidebar-accent: 255 40% 15%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 255 35% 18%;
+    --sidebar-ring: 270 80% 65%;
   }
 }
 

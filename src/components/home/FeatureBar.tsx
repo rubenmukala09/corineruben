@@ -8,15 +8,16 @@ const features = [
     title: "Our Benefits",
     description: "Comprehensive security assessments and personalized protection plans tailored for your unique needs.",
     linkText: "More Details",
-    gradient: "from-amber-500/20 to-orange-500/20",
-    iconColor: "text-amber-500",
+    gradient: "from-accent/20 to-primary/20",
+    iconColor: "text-accent",
+    iconBg: "from-accent/15 to-primary/15",
   },
   {
     icon: Award,
     title: "100% Satisfaction Guarantee",
     description: "Complete confidence in our services with our money-back guarantee on all protection plans.",
     highlighted: true,
-    gradient: "from-primary to-primary/90",
+    gradient: "from-primary via-primary to-accent/80",
     iconColor: "text-primary-foreground",
   },
   {
@@ -24,8 +25,9 @@ const features = [
     title: "Professionalism",
     description: "Veteran-owned with certified cybersecurity experts dedicated to your family's safety.",
     linkText: "Read More",
-    gradient: "from-emerald-500/20 to-teal-500/20",
-    iconColor: "text-emerald-500",
+    gradient: "from-primary/20 to-accent/20",
+    iconColor: "text-primary",
+    iconBg: "from-primary/15 to-accent/15",
   },
 ];
 
@@ -38,13 +40,13 @@ const stats = [
 
 export const FeatureBar = () => {
   return (
-    <section className="py-32 bg-background relative overflow-hidden">
+    <section className="py-32 bg-gradient-to-b from-background via-purple-100/20 to-background relative overflow-hidden">
       {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-[0.02]">
         <div 
           className="absolute inset-0"
           style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)',
+            backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--primary)) 1px, transparent 0)',
             backgroundSize: '40px 40px'
           }}
         />
@@ -60,20 +62,20 @@ export const FeatureBar = () => {
           className="text-center mb-20"
         >
           <motion.div 
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/10 mb-8"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 mb-8"
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
             <TrendingUp className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-muted-foreground">Why Choose Us</span>
+            <span className="text-sm font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Why Choose Us</span>
           </motion.div>
           
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-tight">
             Why Will You Choose
             <br />
-            <span className="text-primary">Our Services?</span>
+            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Our Services?</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Experience the difference of professional, veteran-owned cybersecurity services.
@@ -92,8 +94,8 @@ export const FeatureBar = () => {
               whileHover={{ y: -8 }}
               className={`group relative p-10 rounded-3xl transition-all duration-500 ${
                 feature.highlighted
-                  ? "bg-gradient-to-br from-primary via-primary to-primary/95 text-primary-foreground shadow-2xl shadow-primary/20"
-                  : "bg-card border border-border/50 hover:shadow-2xl hover:border-primary/20 hover:shadow-primary/5"
+                  ? "bg-gradient-to-br from-primary via-primary to-accent/90 text-primary-foreground shadow-2xl shadow-primary/25"
+                  : "bg-card border border-primary/10 hover:shadow-2xl hover:border-primary/25 hover:shadow-primary/10"
               }`}
             >
               {/* Subtle gradient overlay for non-highlighted */}
@@ -106,7 +108,7 @@ export const FeatureBar = () => {
                   className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 transition-all duration-500 group-hover:scale-110 ${
                     feature.highlighted
                       ? "bg-primary-foreground/20"
-                      : `bg-gradient-to-br ${feature.gradient}`
+                      : `bg-gradient-to-br ${feature.iconBg || feature.gradient}`
                   }`}
                 >
                   <feature.icon className={`w-8 h-8 ${feature.highlighted ? "text-primary-foreground" : feature.iconColor}`} strokeWidth={1.5} />
@@ -151,9 +153,9 @@ export const FeatureBar = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
-              className="group text-center p-8 rounded-2xl bg-muted/30 border border-border/30 hover:bg-muted/50 hover:border-primary/20 transition-all duration-300"
+              className="group text-center p-8 rounded-2xl bg-gradient-to-br from-card to-purple-100/30 border border-primary/10 hover:border-primary/25 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300"
             >
-              <div className="text-4xl md:text-5xl font-bold text-primary mb-2 tracking-tight">
+              <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-2 tracking-tight">
                 {stat.value}
               </div>
               <div className="font-semibold text-foreground text-lg mb-1">{stat.label}</div>
