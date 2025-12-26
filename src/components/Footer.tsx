@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Facebook, Linkedin, Youtube, Instagram, Shield } from "lucide-react";
+import { Facebook, Linkedin, Youtube, Instagram, Shield, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import TrustedTechLogos from "./TrustedTechLogos";
@@ -12,170 +12,135 @@ const Footer = () => {
       <TrustedTechLogos />
 
       {/* Main Footer */}
-      <div className="bg-gradient-to-br from-[#1a0a2e] via-[#2d1b4e] to-[#1e1040] text-primary-foreground relative overflow-hidden">
-        {/* Modern Geometric Background Pattern */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
-          {/* Diagonal Lines Pattern */}
-          <div className="absolute inset-0" style={{
-            backgroundImage: `repeating-linear-gradient(
-              45deg,
-              transparent,
-              transparent 35px,
-              rgba(255,255,255,0.03) 35px,
-              rgba(255,255,255,0.03) 70px
-            )`
-          }} />
+      <div className="bg-gradient-to-b from-slate-900 via-slate-950 to-slate-950 text-white relative overflow-hidden">
+        {/* Subtle Background Pattern */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div 
+            className="absolute inset-0 opacity-[0.02]" 
+            style={{
+              backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.3) 1px, transparent 0)`,
+              backgroundSize: '40px 40px'
+            }}
+          />
           
-          {/* Animated Gradient Orbs */}
-          <div className="absolute -top-20 -right-20 w-96 h-96 bg-gradient-to-br from-accent/30 to-primary/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '8s' }} />
-          <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-gradient-to-tr from-primary/30 to-accent/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '10s' }} />
-          <div className="absolute -bottom-32 left-1/3 w-[500px] h-[500px] bg-gradient-to-tl from-accent/20 to-primary/30 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '12s' }} />
-          
-          {/* Floating Circles */}
-          <div className="absolute top-20 left-10 w-32 h-32 border-2 border-white/5 rounded-full" />
-          <div className="absolute bottom-40 right-32 w-48 h-48 border-2 border-white/5 rounded-full" />
-          <div className="absolute top-1/3 right-1/4 w-24 h-24 border-2 border-white/5 rounded-full" />
+          {/* Gradient Orbs */}
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-purple-600/8 rounded-full blur-3xl" />
         </div>
 
-        <div className="container mx-auto px-4 py-4 md:py-5 relative z-10">
+        <div className="container mx-auto px-4 py-12 md:py-16 relative z-10">
           {/* Footer Navigation Columns */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 mb-5">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 md:gap-6 mb-12">
             {/* Quick Links */}
             <div>
-              <h3 className="font-bold text-base mb-1.5 text-cyan-300">Quick Links</h3>
-              <ul className="space-y-1">
-                <li>
-                  <Link to="/" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/services" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                    Services
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/training" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                    Learn & Train
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/services" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                    ScamShield Protection
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/business" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                    AI for Business
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/resources" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                    Resources
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/about" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/contact" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                    Contact
-                  </Link>
-                </li>
+              <h3 className="font-semibold text-sm uppercase tracking-wider mb-4 text-indigo-400">Quick Links</h3>
+              <ul className="space-y-2.5">
+                {[
+                  { to: "/", label: "Home" },
+                  { to: "/services", label: "Services" },
+                  { to: "/training", label: "Learn & Train" },
+                  { to: "/services", label: "ScamShield Protection" },
+                  { to: "/business", label: "AI for Business" },
+                  { to: "/resources", label: "Resources" },
+                  { to: "/about", label: "About" },
+                  { to: "/contact", label: "Contact" }
+                ].map((link) => (
+                  <li key={link.to + link.label}>
+                    <Link 
+                      to={link.to} 
+                      className="text-sm text-white/60 hover:text-white transition-colors duration-300"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
             {/* Training */}
             <div>
-              <h3 className="font-bold text-base mb-1.5 text-cyan-300">Training</h3>
-              <ul className="space-y-1">
-                <li>
-                  <Link to="/training#zoom" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                    Zoom Classes
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/training#in-person" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                    In-Person Training
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/training#bulk" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                    Bulk/Group Bookings
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/training#gift" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                    Gift Certificates
-                  </Link>
-                </li>
+              <h3 className="font-semibold text-sm uppercase tracking-wider mb-4 text-indigo-400">Training</h3>
+              <ul className="space-y-2.5">
+                {[
+                  { to: "/training#zoom", label: "Zoom Classes" },
+                  { to: "/training#in-person", label: "In-Person Training" },
+                  { to: "/training#bulk", label: "Bulk/Group Bookings" },
+                  { to: "/training#gift", label: "Gift Certificates" }
+                ].map((link) => (
+                  <li key={link.to}>
+                    <Link 
+                      to={link.to} 
+                      className="text-sm text-white/60 hover:text-white transition-colors duration-300"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
             {/* Support */}
             <div>
-              <h3 className="font-bold text-base mb-1.5 text-cyan-300">Support</h3>
-              <ul className="space-y-1">
-                <li>
-                  <Link to="/faq" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                    FAQ
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/contact" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                    Emergency Scripts
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/contact" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                    Submit Suspicious Item
-                  </Link>
-                </li>
+              <h3 className="font-semibold text-sm uppercase tracking-wider mb-4 text-indigo-400">Support</h3>
+              <ul className="space-y-2.5">
+                {[
+                  { to: "/faq", label: "FAQ" },
+                  { to: "/contact", label: "Emergency Scripts" },
+                  { to: "/contact", label: "Submit Suspicious Item" }
+                ].map((link, i) => (
+                  <li key={i}>
+                    <Link 
+                      to={link.to} 
+                      className="text-sm text-white/60 hover:text-white transition-colors duration-300"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
             {/* Legal */}
             <div>
-              <h3 className="font-bold text-base mb-1.5 text-cyan-300">Legal</h3>
-              <ul className="space-y-1">
-                <li>
-                  <Link to="/privacy-policy" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/terms-of-service" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                    Terms of Service
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/contact" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                    Refund Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/contact" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                    Disclaimer
-                  </Link>
-                </li>
+              <h3 className="font-semibold text-sm uppercase tracking-wider mb-4 text-indigo-400">Legal</h3>
+              <ul className="space-y-2.5">
+                {[
+                  { to: "/privacy-policy", label: "Privacy Policy" },
+                  { to: "/terms-of-service", label: "Terms of Service" },
+                  { to: "/contact", label: "Refund Policy" },
+                  { to: "/contact", label: "Disclaimer" }
+                ].map((link, i) => (
+                  <li key={i}>
+                    <Link 
+                      to={link.to} 
+                      className="text-sm text-white/60 hover:text-white transition-colors duration-300"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
             {/* Community */}
             <div>
-              <h3 className="font-bold text-base mb-1.5 text-cyan-300">Community</h3>
-              <ul className="space-y-1">
-                <li className="text-sm text-primary-foreground/80">20% Military Discount</li>
-                <li className="text-sm text-primary-foreground/80">25% Cancer Patient Discount</li>
+              <h3 className="font-semibold text-sm uppercase tracking-wider mb-4 text-indigo-400">Community</h3>
+              <ul className="space-y-2.5">
+                <li className="text-sm text-white/60">20% Military Discount</li>
+                <li className="text-sm text-white/60">25% Cancer Patient Discount</li>
                 <li>
-                  <Link to="/contact" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+                  <Link 
+                    to="/contact" 
+                    className="text-sm text-white/60 hover:text-white transition-colors duration-300"
+                  >
                     Church Partnerships
                   </Link>
                 </li>
                 <li>
-                  <Link to="/contact" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+                  <Link 
+                    to="/contact" 
+                    className="text-sm text-white/60 hover:text-white transition-colors duration-300"
+                  >
                     Donate Training
                   </Link>
                 </li>
@@ -184,23 +149,26 @@ const Footer = () => {
           </div>
 
           {/* Newsletter Signup Section */}
-          <div className="max-w-2xl mx-auto mb-5">
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-3 border border-white/20">
-              <h3 className="text-base md:text-lg font-bold mb-1 text-center text-cyan-300">
-                Monthly AI Safety Tips
-              </h3>
-              <p className="text-sm text-primary-foreground/80 mb-2 text-center">
+          <div className="max-w-xl mx-auto mb-12">
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-full bg-indigo-500/20 flex items-center justify-center">
+                  <Mail className="w-5 h-5 text-indigo-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-white">Monthly AI Safety Tips</h3>
+              </div>
+              <p className="text-sm text-white/60 mb-4">
                 Stay informed about the latest scams and protection strategies.
               </p>
-              <form className="flex flex-col sm:flex-row gap-2">
+              <form className="flex flex-col sm:flex-row gap-3">
                 <Input
                   type="email"
                   placeholder="Your email address"
-                  className="flex-1 bg-white/20 border-white/30 text-white placeholder:text-white/60 focus:bg-white/30"
+                  className="flex-1 bg-white/10 border-white/10 text-white placeholder:text-white/40 focus:border-indigo-400/50 focus:bg-white/15 transition-all"
                 />
                 <Button 
                   type="submit"
-                  className="bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-500 hover:to-cyan-600 text-white font-bold uppercase tracking-wide"
+                  className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold px-6 transition-all duration-300"
                 >
                   Subscribe
                 </Button>
@@ -209,87 +177,59 @@ const Footer = () => {
           </div>
 
           {/* Social Media Icons */}
-          <div className="flex items-center justify-center gap-3 mb-3">
-            <a
-              href="https://facebook.com/invisionnetwork"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative"
-              aria-label="Visit our Facebook page"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-400/40 to-blue-600/40 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative p-2 rounded-xl bg-white/15 hover:bg-gradient-to-br hover:from-blue-500/30 hover:to-blue-700/30 backdrop-blur-sm transition-all duration-500 border border-white/30 hover:border-blue-400/50 hover:scale-110">
-                <Facebook className="w-4 h-4" />
-              </div>
-            </a>
-            <a
-              href="https://linkedin.com/company/invision-network"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative"
-              aria-label="Visit our LinkedIn page"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/40 to-blue-700/40 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative p-2 rounded-xl bg-white/15 hover:bg-gradient-to-br hover:from-blue-600/30 hover:to-blue-800/30 backdrop-blur-sm transition-all duration-500 border border-white/30 hover:border-blue-500/50 hover:scale-110">
-                <Linkedin className="w-4 h-4" />
-              </div>
-            </a>
-            <a
-              href="https://youtube.com/invisionnetwork"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative"
-              aria-label="Visit our YouTube channel"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-red-400/40 to-red-600/40 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative p-2 rounded-xl bg-white/15 hover:bg-gradient-to-br hover:from-red-500/30 hover:to-red-700/30 backdrop-blur-sm transition-all duration-500 border border-white/30 hover:border-red-400/50 hover:scale-110">
-                <Youtube className="w-4 h-4" />
-              </div>
-            </a>
-            <a
-              href="https://instagram.com/invisionnetwork"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative"
-              aria-label="Visit our Instagram page"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-pink-400/40 via-purple-500/40 to-orange-500/40 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative p-2 rounded-xl bg-white/15 hover:bg-gradient-to-br hover:from-pink-500/30 hover:via-purple-600/30 hover:to-orange-600/30 backdrop-blur-sm transition-all duration-500 border border-white/30 hover:border-pink-400/50 hover:scale-110">
-                <Instagram className="w-4 h-4" />
-              </div>
-            </a>
+          <div className="flex items-center justify-center gap-3 mb-10">
+            {[
+              { href: "https://facebook.com/invisionnetwork", icon: Facebook, label: "Facebook" },
+              { href: "https://linkedin.com/company/invision-network", icon: Linkedin, label: "LinkedIn" },
+              { href: "https://youtube.com/invisionnetwork", icon: Youtube, label: "YouTube" },
+              { href: "https://instagram.com/invisionnetwork", icon: Instagram, label: "Instagram" }
+            ].map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group"
+                aria-label={`Visit our ${social.label} page`}
+              >
+                <div className="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-indigo-500/20 hover:border-indigo-400/30 transition-all duration-300 hover:scale-110">
+                  <social.icon className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />
+                </div>
+              </a>
+            ))}
           </div>
+
+          {/* Divider */}
+          <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-8" />
 
           {/* Bottom Bar - Copyright & Badges */}
-          <div className="border-t border-primary-foreground/20 pt-3">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-3 mb-4">
-              <div className="flex items-center gap-3 text-center md:text-left">
-                <img 
-                  src={invisionLogo} 
-                  alt="InVision Network Logo" 
-                  className="h-5 w-5 brightness-0 invert"
-                />
-                <p className="text-primary-foreground/80 text-sm">
-                  © {new Date().getFullYear()} InVision Network. All rights reserved.
-                </p>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+            <div className="flex items-center gap-3 text-center md:text-left">
+              <img 
+                src={invisionLogo} 
+                alt="InVision Network Logo" 
+                className="h-6 w-6 brightness-0 invert opacity-80"
+              />
+              <p className="text-white/50 text-sm">
+                © {new Date().getFullYear()} InVision Network. All rights reserved.
+              </p>
+            </div>
+            <div className="flex items-center gap-6">
+              <div className="flex items-center gap-2 text-xs">
+                <Shield className="w-4 h-4 text-indigo-400" />
+                <span className="text-white/50">BBB Accredited</span>
               </div>
-              <div className="flex items-center gap-6">
-                <div className="flex items-center gap-2 text-xs">
-                  <Shield className="w-4 h-4 text-accent" />
-                  <span className="text-primary-foreground/80">BBB Accredited</span>
-                </div>
-                <div className="flex items-center gap-2 text-xs">
-                  <Shield className="w-4 h-4 text-accent" />
-                  <span className="text-primary-foreground/80">Veteran Support</span>
-                </div>
+              <div className="flex items-center gap-2 text-xs">
+                <Shield className="w-4 h-4 text-indigo-400" />
+                <span className="text-white/50">Veteran Support</span>
               </div>
             </div>
-
-            {/* Legal Disclaimer */}
-            <p className="text-primary-foreground/60 text-xs text-center leading-relaxed max-w-5xl mx-auto">
-              InVision Network provides educational services only. We are not legal, financial, tax, or licensed cybersecurity professionals. In case of active fraud, identity theft, or criminal activity, contact local law enforcement (911), your bank's fraud department immediately using official phone numbers, and report to FTC at IdentityTheft.gov. We never request passwords, 2FA codes, bank account information, or Social Security numbers.
-            </p>
           </div>
+
+          {/* Legal Disclaimer */}
+          <p className="text-white/40 text-xs text-center leading-relaxed max-w-5xl mx-auto">
+            InVision Network provides educational services only. We are not legal, financial, tax, or licensed cybersecurity professionals. In case of active fraud, identity theft, or criminal activity, contact local law enforcement (911), your bank's fraud department immediately using official phone numbers, and report to FTC at IdentityTheft.gov. We never request passwords, 2FA codes, bank account information, or Social Security numbers.
+          </p>
         </div>
       </div>
     </footer>
