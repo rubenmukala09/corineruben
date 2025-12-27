@@ -446,7 +446,15 @@ const FAQ = lazy(() => {
   });
 });
 
-const NotFound = lazy(() => {
+const NotFound = lazy(() => import("./pages/NotFound"));
+const GetStarted = lazy(() => import("./pages/GetStarted"));
+const Schedule = lazy(() => import("./pages/Schedule"));
+const OnboardingQuestions = lazy(() => import("./pages/OnboardingQuestions"));
+const BuyAIInsurance = lazy(() => import("./pages/BuyAIInsurance"));
+const RefundsPolicy = lazy(() => import("./pages/RefundsPolicy"));
+const Disclaimer = lazy(() => import("./pages/Disclaimer"));
+
+const NotFoundLegacy = lazy(() => {
   performanceMonitor.startTracking('NotFound');
   return import("./pages/NotFound").then(module => {
     performanceMonitor.endTracking('NotFound');
@@ -566,7 +574,13 @@ function AnimatedRoutes() {
         <Route path="/portal/healthcare" element={<PageTransition><ProtectedRoute><HealthcareDashboard /></ProtectedRoute></PageTransition>} />
         <Route path="/privacy-policy" element={<PageTransition><PrivacyPolicy /></PageTransition>} />
         <Route path="/terms-of-service" element={<PageTransition><TermsOfService /></PageTransition>} />
+        <Route path="/refunds" element={<PageTransition><RefundsPolicy /></PageTransition>} />
+        <Route path="/disclaimer" element={<PageTransition><Disclaimer /></PageTransition>} />
         <Route path="/faq" element={<PageTransition><FAQ /></PageTransition>} />
+        <Route path="/get-started/:serviceType" element={<PageTransition><GetStarted /></PageTransition>} />
+        <Route path="/schedule" element={<PageTransition><Schedule /></PageTransition>} />
+        <Route path="/onboarding/questions" element={<PageTransition><OnboardingQuestions /></PageTransition>} />
+        <Route path="/buy/ai-insurance" element={<PageTransition><BuyAIInsurance /></PageTransition>} />
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
     </AnimatePresence>

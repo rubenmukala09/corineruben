@@ -176,6 +176,51 @@ export type Database = {
           },
         ]
       }
+      ai_insurance_purchases: {
+        Row: {
+          amount: number
+          billing_cycle: string
+          coverage_tier: string
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          payment_status: string | null
+          stripe_payment_id: string | null
+          stripe_subscription_id: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          amount: number
+          billing_cycle: string
+          coverage_tier: string
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          payment_status?: string | null
+          stripe_payment_id?: string | null
+          stripe_subscription_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number
+          billing_cycle?: string
+          coverage_tier?: string
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          payment_status?: string | null
+          stripe_payment_id?: string | null
+          stripe_subscription_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       analyst_profiles: {
         Row: {
           created_at: string
@@ -1967,6 +2012,63 @@ export type Database = {
         }
         Relationships: []
       }
+      onboarding_responses: {
+        Row: {
+          acknowledged_verification: boolean | null
+          admin_notes: string | null
+          created_at: string
+          current_tools: string | null
+          email: string
+          full_name: string
+          id: string
+          main_goal: string | null
+          preferred_communication: string | null
+          problem_to_solve: string | null
+          security_compliance_needs: string | null
+          status: string | null
+          team_size: string | null
+          timeline: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          acknowledged_verification?: boolean | null
+          admin_notes?: string | null
+          created_at?: string
+          current_tools?: string | null
+          email: string
+          full_name: string
+          id?: string
+          main_goal?: string | null
+          preferred_communication?: string | null
+          problem_to_solve?: string | null
+          security_compliance_needs?: string | null
+          status?: string | null
+          team_size?: string | null
+          timeline?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          acknowledged_verification?: boolean | null
+          admin_notes?: string | null
+          created_at?: string
+          current_tools?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          main_goal?: string | null
+          preferred_communication?: string | null
+          problem_to_solve?: string | null
+          security_compliance_needs?: string | null
+          status?: string | null
+          team_size?: string | null
+          timeline?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       order_items: {
         Row: {
           created_at: string
@@ -3045,6 +3147,105 @@ export type Database = {
           updated_at?: string | null
           veteran_id_last4?: string | null
           veteran_type?: string | null
+        }
+        Relationships: []
+      }
+      service_intake_requests: {
+        Row: {
+          add_ons: string[] | null
+          admin_notes: string | null
+          agent_type: string | null
+          agreed_ai_disclaimer: boolean | null
+          agreed_onboarding: boolean | null
+          agreed_privacy: boolean | null
+          agreed_tos: boolean | null
+          assigned_to: string | null
+          branding_upload_url: string | null
+          budget_confirmed: boolean | null
+          company_name: string | null
+          created_at: string
+          current_tools: string[] | null
+          description: string | null
+          email: string
+          full_name: string
+          has_branding: boolean | null
+          id: string
+          location: string | null
+          pages_needed: string[] | null
+          phone: string | null
+          plan_selected: string
+          preferred_channels: string[] | null
+          request_number: string
+          service_type: string
+          status: string
+          timeline: string | null
+          updated_at: string
+          user_id: string | null
+          website_type: string | null
+        }
+        Insert: {
+          add_ons?: string[] | null
+          admin_notes?: string | null
+          agent_type?: string | null
+          agreed_ai_disclaimer?: boolean | null
+          agreed_onboarding?: boolean | null
+          agreed_privacy?: boolean | null
+          agreed_tos?: boolean | null
+          assigned_to?: string | null
+          branding_upload_url?: string | null
+          budget_confirmed?: boolean | null
+          company_name?: string | null
+          created_at?: string
+          current_tools?: string[] | null
+          description?: string | null
+          email: string
+          full_name: string
+          has_branding?: boolean | null
+          id?: string
+          location?: string | null
+          pages_needed?: string[] | null
+          phone?: string | null
+          plan_selected: string
+          preferred_channels?: string[] | null
+          request_number?: string
+          service_type: string
+          status?: string
+          timeline?: string | null
+          updated_at?: string
+          user_id?: string | null
+          website_type?: string | null
+        }
+        Update: {
+          add_ons?: string[] | null
+          admin_notes?: string | null
+          agent_type?: string | null
+          agreed_ai_disclaimer?: boolean | null
+          agreed_onboarding?: boolean | null
+          agreed_privacy?: boolean | null
+          agreed_tos?: boolean | null
+          assigned_to?: string | null
+          branding_upload_url?: string | null
+          budget_confirmed?: boolean | null
+          company_name?: string | null
+          created_at?: string
+          current_tools?: string[] | null
+          description?: string | null
+          email?: string
+          full_name?: string
+          has_branding?: boolean | null
+          id?: string
+          location?: string | null
+          pages_needed?: string[] | null
+          phone?: string | null
+          plan_selected?: string
+          preferred_channels?: string[] | null
+          request_number?: string
+          service_type?: string
+          status?: string
+          timeline?: string | null
+          updated_at?: string
+          user_id?: string | null
+          website_type?: string | null
         }
         Relationships: []
       }

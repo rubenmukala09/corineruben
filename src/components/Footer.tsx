@@ -107,8 +107,8 @@ const Footer = () => {
                 {[
                   { to: "/privacy-policy", label: "Privacy Policy" },
                   { to: "/terms-of-service", label: "Terms of Service" },
-                  { to: "/contact", label: "Refund Policy" },
-                  { to: "/contact", label: "Disclaimer" }
+                  { to: "/refunds", label: "Refund Policy" },
+                  { to: "/disclaimer", label: "Disclaimer" }
                 ].map((link, i) => (
                   <li key={i}>
                     <Link 
