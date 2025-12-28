@@ -19,12 +19,11 @@ import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { trackButtonClick, trackConversion } from "@/utils/analyticsTracker";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield, Lock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import businessCollaboration from "@/assets/business-collaboration.jpg";
-import teamCollaboration from "@/assets/team-collaboration.jpg";
-import businessDiverse1 from "@/assets/business-diverse-1.jpg";
-import heroBusinessNew from "@/assets/hero-business-new.jpg";
-import heroBusinessProfessional from "@/assets/hero-business-professional.jpg";
-import heroBusiness3d from "@/assets/hero-business-3d.jpg";
+import heroBusinessTeam from "@/assets/hero-business-team.jpg";
+import heroBusinessInnovation from "@/assets/hero-business-innovation.jpg";
+import heroBusinessCity from "@/assets/hero-business-city.jpg";
+import heroBusinessLaptop from "@/assets/hero-business-laptop.jpg";
+import heroBusinessExecutive from "@/assets/hero-business-executive.jpg";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
 import AgentTypeCards from "@/components/business/AgentTypeCards";
@@ -136,11 +135,11 @@ function Business() {
   };
 
   const businessHeroImages = [
-    { src: businessDiverse1, alt: "Diverse business team collaborating on AI solutions" },
-    { src: heroBusinessNew, alt: "Modern office workspace with technology" },
-    { src: heroBusinessProfessional, alt: "Professional business consultation meeting" },
-    { src: businessCollaboration, alt: "Team working together on digital transformation" },
-    { src: heroBusiness3d, alt: "3D visualization of business technology solutions" }
+    { src: heroBusinessTeam, alt: "Diverse business team collaborating on AI solutions" },
+    { src: heroBusinessInnovation, alt: "Modern office workspace with technology" },
+    { src: heroBusinessCity, alt: "Smart city with business growth and AI connectivity" },
+    { src: heroBusinessLaptop, alt: "Professional working on business analytics" },
+    { src: heroBusinessExecutive, alt: "Executive boardroom with city view" }
   ];
 
   return (
