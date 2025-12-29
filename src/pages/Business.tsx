@@ -19,11 +19,11 @@ import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { trackButtonClick, trackConversion } from "@/utils/analyticsTracker";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield, Lock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import heroBusinessPremium1 from "@/assets/hero-business-premium-1.jpg";
-import heroBusinessPremium2 from "@/assets/hero-business-premium-2.jpg";
-import heroBusinessPremium3 from "@/assets/hero-business-premium-3.jpg";
-import heroBusinessPremium4 from "@/assets/hero-business-premium-4.jpg";
-import heroBusinessPremium5 from "@/assets/hero-business-premium-5.jpg";
+import heroBusinessElite1 from "@/assets/hero-business-elite-1.jpg";
+import heroBusinessElite2 from "@/assets/hero-business-elite-2.jpg";
+import heroBusinessElite3 from "@/assets/hero-business-elite-3.jpg";
+import heroBusinessElite4 from "@/assets/hero-business-elite-4.jpg";
+import heroBusinessElite5 from "@/assets/hero-business-elite-5.jpg";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
 
@@ -131,11 +131,11 @@ function Business() {
   };
 
   const businessHeroImages = [
-    { src: heroBusinessPremium1, alt: "Modern tech startup workspace with developers" },
-    { src: heroBusinessPremium2, alt: "Sleek contemporary office architecture" },
-    { src: heroBusinessPremium3, alt: "Premium corporate building exterior" },
-    { src: heroBusinessPremium4, alt: "Professional woman working with technology" },
-    { src: heroBusinessPremium5, alt: "Team collaborating in bright modern office" }
+    { src: heroBusinessElite1, alt: "Diverse executive team reviewing AI analytics in luxury boardroom" },
+    { src: heroBusinessElite2, alt: "Successful business leaders closing corporate deal" },
+    { src: heroBusinessElite3, alt: "Tech startup founders presenting AI solutions" },
+    { src: heroBusinessElite4, alt: "Elegant executive using AI technology in premium office" },
+    { src: heroBusinessElite5, alt: "Multicultural team celebrating business success" }
   ];
 
   return (
