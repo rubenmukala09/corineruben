@@ -25,6 +25,7 @@ import heroBusinessEliteMeeting from "@/assets/hero-business-elite-meeting.jpg";
 import heroBusinessDiverse2 from "@/assets/hero-business-diverse-2.jpg";
 import heroBusinessDiverse3 from "@/assets/hero-business-diverse-3.jpg";
 import heroBusinessDiverse5 from "@/assets/hero-business-diverse-5.jpg";
+import natureParkSerene from "@/assets/nature-park-serene.jpg";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
 
@@ -1618,9 +1619,14 @@ function Business() {
         </section>
       )}
 
-      {/* Final CTA */}
-      <CTASection headline="Ready to Deploy AI Safely?" variant="gold">
-        <Button asChild variant="gold" size="xl">
+      {/* Final CTA with Park Image */}
+      <CTASection 
+        headline="Ready to Deploy AI Safely?" 
+        variant="image"
+        backgroundImage={natureParkSerene}
+        description="Take the first step towards protecting your business with AI-powered security solutions."
+      >
+        <Button asChild size="xl" className="bg-white text-slate-900 hover:bg-white/90 font-bold shadow-xl shadow-black/20">
           <Link 
             to="/contact"
             onClick={() => trackButtonClick('Schedule Discovery Call', 'Business CTA')}
@@ -1628,7 +1634,7 @@ function Business() {
             SCHEDULE DISCOVERY CALL
           </Link>
         </Button>
-        <p className="text-accent-foreground text-sm mt-4">15-minute call to discuss your needs - no sales pressure.</p>
+        <p className="text-white/80 text-sm mt-4">15-minute call to discuss your needs - no sales pressure.</p>
       </CTASection>
 
       <Footer />
