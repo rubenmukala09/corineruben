@@ -19,7 +19,7 @@ import { ServiceInquiryDialog } from "@/components/ServiceInquiryDialog";
 import { WebsiteInsuranceDialog } from "@/components/WebsiteInsuranceDialog";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { trackButtonClick, trackConversion } from "@/utils/analyticsTracker";
-import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield, Lock } from "lucide-react";
+import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield, Lock, Sparkles, FileText } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import heroBusinessDiverse1 from "@/assets/hero-business-diverse-1.jpg";
 import heroBusinessDiverse2 from "@/assets/hero-business-diverse-2.jpg";
@@ -516,19 +516,20 @@ function Business() {
                     </span>
                   </div>
                   <Button 
-                    asChild
                     variant="default" 
                     className="w-full transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)]"
+                    onClick={() => {
+                      trackButtonClick('Get Started - Landing Page', 'Business Website');
+                      setSelectedInquiry({
+                        name: 'Landing Page',
+                        price: 1500,
+                        tier: 'Quick Start',
+                        description: 'Single-page website for campaigns or simple business presence - 2-Week Delivery'
+                      });
+                      setInquiryDialogOpen(true);
+                    }}
                   >
-                    <Link 
-                      to="/contact?service=landing-page&price=1500"
-                      onClick={() => {
-                        trackButtonClick('Get Started - Landing Page', 'Business Website');
-                        trackConversion('business_landing_page', 1500);
-                      }}
-                    >
-                      GET STARTED
-                    </Link>
+                    GET STARTED
                   </Button>
                 </Card>
               </div>
@@ -579,36 +580,20 @@ function Business() {
                   </li>
                 </ul>
                 <Button 
-                  asChild
                   variant="default" 
                   className="w-full ripple-container pulse-glow relative overflow-hidden transition-all duration-300 hover:bg-primary/90 px-7 py-3.5"
-                  onClick={(e) => {
-                    // Create ripple effect
-                    const button = e.currentTarget;
-                    const ripple = document.createElement('span');
-                    const rect = button.getBoundingClientRect();
-                    const size = Math.max(rect.width, rect.height);
-                    const x = e.clientX - rect.left - size / 2;
-                    const y = e.clientY - rect.top - size / 2;
-                    
-                    ripple.className = 'ripple';
-                    ripple.style.width = ripple.style.height = `${size}px`;
-                    ripple.style.left = `${x}px`;
-                    ripple.style.top = `${y}px`;
-                    
-                    button.appendChild(ripple);
-                    setTimeout(() => ripple.remove(), 600);
+                  onClick={() => {
+                    trackButtonClick('Get Started - Business Website', 'Business Website');
+                    setSelectedInquiry({
+                      name: 'Business Website',
+                      price: 4500,
+                      tier: 'Most Popular',
+                      description: '5-10 page professional website with custom features, mobile responsive, contact & booking forms'
+                    });
+                    setInquiryDialogOpen(true);
                   }}
                 >
-                  <Link 
-                    to="/contact?service=business-website&price=4500"
-                    onClick={() => {
-                      trackButtonClick('Get Started - Business Website', 'Business Website');
-                      trackConversion('business_website', 4500);
-                    }}
-                  >
-                    GET STARTED
-                  </Link>
+                  GET STARTED
                 </Button>
               </Card>
               </div>
@@ -663,55 +648,131 @@ function Business() {
                     </li>
                   </ul>
                   <Button 
-                    asChild
                     variant="default" 
                     className="w-full transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)]"
+                    onClick={() => {
+                      trackButtonClick('Get Started - E-Commerce', 'Business Website');
+                      setSelectedInquiry({
+                        name: 'E-Commerce Website',
+                        price: 8500,
+                        tier: 'Full Featured',
+                        description: 'Full online store with payment processing, product catalog, inventory management, and security'
+                      });
+                      setInquiryDialogOpen(true);
+                    }}
                   >
-                    <Link 
-                      to="/contact?service=ecommerce&price=8500"
-                      onClick={() => {
-                        trackButtonClick('Get Started - E-Commerce', 'Business Website');
-                        trackConversion('business_ecommerce', 8500);
-                      }}
-                    >
-                      GET STARTED
-                    </Link>
+                    GET STARTED
                   </Button>
                 </Card>
               </div>
             </ScrollReveal>
           </div>
 
-          {/* Website Add-Ons */}
-          <Card className="max-w-5xl mx-auto p-10 bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20 rounded-2xl">
-            <h3 className="text-2xl font-bold text-center mb-8">Website Add-Ons & Services</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div>
-                <div className="font-bold text-primary mb-2">Logo Design</div>
-                <div className="text-sm text-muted-foreground">Starting at $500</div>
+          {/* Website Add-Ons - Redesigned */}
+          <ScrollReveal animation="fade-up" delay={100}>
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-10">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 text-accent border border-accent/20 rounded-full text-sm font-medium mb-4">
+                  <Sparkles className="w-4 h-4" />
+                  Enhance Your Project
+                </div>
+                <h3 className="text-3xl font-bold mb-3">Premium Add-Ons & Services</h3>
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  Elevate your website with professional services designed to maximize your online success
+                </p>
               </div>
-              <div>
-                <div className="font-bold text-primary mb-2">Content Writing</div>
-                <div className="text-sm text-muted-foreground">$150/page</div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                {/* Logo Design */}
+                <Card className="p-6 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-background to-primary/5 border-primary/20 group">
+                  <div className="w-14 h-14 mx-auto mb-4 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <svg className="w-7 h-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                    </svg>
+                  </div>
+                  <h4 className="font-bold text-lg mb-2">Logo Design</h4>
+                  <p className="text-xs text-muted-foreground mb-3">Professional brand identity</p>
+                  <div className="text-2xl font-bold text-primary mb-1">$500</div>
+                  <div className="text-xs text-muted-foreground">Starting price</div>
+                </Card>
+
+                {/* Content Writing */}
+                <Card className="p-6 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-background to-accent/5 border-accent/20 group">
+                  <div className="w-14 h-14 mx-auto mb-4 rounded-xl bg-gradient-to-br from-accent/20 to-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <FileText className="w-7 h-7 text-accent" />
+                  </div>
+                  <h4 className="font-bold text-lg mb-2">Content Writing</h4>
+                  <p className="text-xs text-muted-foreground mb-3">SEO-optimized copy</p>
+                  <div className="text-2xl font-bold text-accent mb-1">$150</div>
+                  <div className="text-xs text-muted-foreground">Per page</div>
+                </Card>
+
+                {/* Business Email Setup */}
+                <Card className="p-6 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-background to-success/5 border-success/20 group">
+                  <div className="w-14 h-14 mx-auto mb-4 rounded-xl bg-gradient-to-br from-success/20 to-emerald-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Mail className="w-7 h-7 text-success" />
+                  </div>
+                  <h4 className="font-bold text-lg mb-2">Business Email</h4>
+                  <p className="text-xs text-muted-foreground mb-3">Professional @yourdomain</p>
+                  <div className="text-2xl font-bold text-success mb-1">$200</div>
+                  <div className="text-xs text-muted-foreground">One-time setup</div>
+                </Card>
+
+                {/* AI Chatbot Integration */}
+                <Card className="p-6 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-background to-blue-500/5 border-blue-500/20 group relative overflow-hidden">
+                  <div className="absolute -top-2 -right-2 px-2 py-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-[10px] font-bold rounded-full">
+                    POPULAR
+                  </div>
+                  <div className="w-14 h-14 mx-auto mb-4 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <MessageSquare className="w-7 h-7 text-blue-500" />
+                  </div>
+                  <h4 className="font-bold text-lg mb-2">AI Chatbot</h4>
+                  <p className="text-xs text-muted-foreground mb-3">24/7 customer support</p>
+                  <div className="text-2xl font-bold text-blue-500 mb-1">$1,200</div>
+                  <div className="text-xs text-muted-foreground">Full integration</div>
+                </Card>
+
+                {/* Domain & Hosting */}
+                <Card className="p-6 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-background to-emerald-500/5 border-emerald-500/20 group relative overflow-hidden">
+                  <div className="absolute -top-2 -right-2 px-2 py-0.5 bg-gradient-to-r from-emerald-500 to-green-500 text-white text-[10px] font-bold rounded-full">
+                    INCLUDED
+                  </div>
+                  <div className="w-14 h-14 mx-auto mb-4 rounded-xl bg-gradient-to-br from-emerald-500/20 to-green-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <svg className="w-7 h-7 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                    </svg>
+                  </div>
+                  <h4 className="font-bold text-lg mb-2">Domain & Hosting</h4>
+                  <p className="text-xs text-muted-foreground mb-3">Full setup included</p>
+                  <div className="text-2xl font-bold text-emerald-500 mb-1">FREE</div>
+                  <div className="text-xs text-muted-foreground">With any website</div>
+                </Card>
               </div>
-              <div>
-                <div className="font-bold text-primary mb-2">Business Email Setup</div>
-                <div className="text-sm text-muted-foreground">$200 one-time</div>
-              </div>
-              <div>
-                <div className="font-bold text-primary mb-2">Monthly Maintenance</div>
-                <div className="text-sm text-muted-foreground">$99-299/month</div>
-              </div>
-              <div>
-                <div className="font-bold text-primary mb-2">AI Chatbot Integration</div>
-                <div className="text-sm text-muted-foreground">$1,200</div>
-              </div>
-              <div>
-                <div className="font-bold text-primary mb-2">Domain & Hosting Setup</div>
-                <div className="text-sm text-muted-foreground">Included</div>
+
+              {/* CTA for Add-Ons */}
+              <div className="mt-10 text-center">
+                <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-primary/10 to-accent/10 rounded-full border border-primary/20">
+                  <CheckCircle className="w-5 h-5 text-success" />
+                  <span className="text-sm font-medium">All add-ons can be bundled with your website for special pricing</span>
+                  <Button 
+                    variant="link" 
+                    className="text-primary p-0 h-auto"
+                    onClick={() => {
+                      setSelectedInquiry({
+                        name: 'Custom Website Package',
+                        price: 0,
+                        tier: 'Custom Bundle',
+                        description: 'Let us create a custom package with your chosen add-ons and services'
+                      });
+                      setInquiryDialogOpen(true);
+                    }}
+                  >
+                    Get Custom Quote →
+                  </Button>
+                </div>
               </div>
             </div>
-          </Card>
+          </ScrollReveal>
         </div>
       </section>
 
