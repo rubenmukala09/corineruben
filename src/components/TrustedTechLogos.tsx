@@ -1,163 +1,90 @@
-import { Shield, Zap, Brain, Cloud, Database, Lock, Globe, Cpu } from "lucide-react";
+import { Shield } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
-import { TrustIndicator } from "@/components/TrustIndicator";
 
-const logos = [
-  { 
-    name: "OpenAI", 
-    icon: Zap,
-    description: "GPT Models",
-    color: "text-emerald-600 dark:text-emerald-400"
-  },
-  { 
-    name: "Google AI", 
-    icon: Brain,
-    description: "Gemini",
-    color: "text-blue-600 dark:text-blue-400"
-  },
-  { 
-    name: "Microsoft Azure", 
-    icon: Cloud,
-    description: "Cloud Infrastructure",
-    color: "text-sky-600 dark:text-sky-400"
-  },
-  { 
-    name: "AWS", 
-    icon: Database,
-    description: "Secure Hosting",
-    color: "text-orange-600 dark:text-orange-400"
-  },
-  { 
-    name: "IBM Watson", 
-    icon: Cpu,
-    description: "Enterprise AI",
-    color: "text-indigo-600 dark:text-indigo-400"
-  },
-  { 
-    name: "Anthropic", 
-    icon: Lock,
-    description: "Claude Models",
-    color: "text-amber-600 dark:text-amber-400"
-  },
-  { 
-    name: "Hugging Face", 
-    icon: Globe,
-    description: "ML Models",
-    color: "text-yellow-600 dark:text-yellow-400"
-  },
-  { 
-    name: "TensorFlow", 
-    icon: Brain,
-    description: "ML Framework",
-    color: "text-red-600 dark:text-red-400"
-  },
+const techPartners = [
+  "OpenAI",
+  "Google AI", 
+  "Microsoft Azure",
+  "Amazon AWS",
+  "IBM Watson",
+  "Anthropic",
+  "Hugging Face",
+  "TensorFlow",
+  "Meta AI",
+  "NVIDIA",
+  "Salesforce Einstein",
+  "Adobe Sensei"
 ];
 
 const TrustedTechLogos = () => {
   return (
-    <section className="section-spacing-tight bg-gradient-to-b from-muted/30 to-background border-y border-border/40 overflow-hidden">
-      <div className="container-padding">
-        {/* Refined header */}
+    <section className="py-8 bg-gradient-to-b from-muted/50 to-background border-y border-border/30 overflow-hidden">
+      <div className="container mx-auto px-4">
+        {/* Header */}
         <div className="text-center mb-6">
-          <Badge variant="outline" className="mb-3">
-            <Shield className="w-3 h-3 mr-1" />
-            Enterprise-Grade AI
+          <Badge variant="outline" className="mb-3 border-primary/30">
+            <Shield className="w-3 h-3 mr-1.5 text-primary" />
+            Enterprise-Grade Technology
           </Badge>
-          <h3 className="text-xl font-semibold text-foreground/90 mb-2">
+          <h3 className="text-lg font-semibold text-foreground/90">
             Powered By Industry Leaders
           </h3>
-          <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
-            Our AI protection combines the best models from trusted providers to keep you safe
-          </p>
         </div>
         
-        {/* Floating logos - continuous right to left animation (seamless loop) */}
+        {/* Infinite scrolling names */}
         <div className="relative">
-          <div className="flex animate-scroll-left gap-8">
-            {/* First set of logos */}
-            {logos.map((logo, index) => {
-              const IconComponent = logo.icon;
-              return (
-                <div
-                  key={`set1-${index}`}
-                  className="flex-shrink-0 flex flex-col items-center justify-center transition-all duration-300 hover:scale-110"
-                >
-                  {/* Icon floating in air - no background */}
-                  <div className={`mb-2 ${logo.color}`}>
-                    <IconComponent className="w-8 h-8" />
-                  </div>
-                  
-                  {/* Logo name */}
-                  <div className="text-xs font-semibold text-foreground/80 text-center whitespace-nowrap">
-                    {logo.name}
-                  </div>
-                  
-                  {/* Description */}
-                  <div className="text-[10px] text-muted-foreground text-center whitespace-nowrap">
-                    {logo.description}
-                  </div>
-                </div>
-              );
-            })}
-            {/* Duplicate set for seamless loop */}
-            {logos.map((logo, index) => {
-              const IconComponent = logo.icon;
-              return (
-                <div
-                  key={`set2-${index}`}
-                  className="flex-shrink-0 flex flex-col items-center justify-center transition-all duration-300 hover:scale-110"
-                >
-                  {/* Icon floating in air - no background */}
-                  <div className={`mb-2 ${logo.color}`}>
-                    <IconComponent className="w-8 h-8" />
-                  </div>
-                  
-                  {/* Logo name */}
-                  <div className="text-xs font-semibold text-foreground/80 text-center whitespace-nowrap">
-                    {logo.name}
-                  </div>
-                  
-                  {/* Description */}
-                  <div className="text-[10px] text-muted-foreground text-center whitespace-nowrap">
-                    {logo.description}
-                  </div>
-                </div>
-              );
-            })}
-            {/* Third set for extra smooth seamless loop */}
-            {logos.map((logo, index) => {
-              const IconComponent = logo.icon;
-              return (
-                <div
-                  key={`set3-${index}`}
-                  className="flex-shrink-0 flex flex-col items-center justify-center transition-all duration-300 hover:scale-110"
-                >
-                  {/* Icon floating in air - no background */}
-                  <div className={`mb-2 ${logo.color}`}>
-                    <IconComponent className="w-8 h-8" />
-                  </div>
-                  
-                  {/* Logo name */}
-                  <div className="text-xs font-semibold text-foreground/80 text-center whitespace-nowrap">
-                    {logo.name}
-                  </div>
-                  
-                  {/* Description */}
-                  <div className="text-[10px] text-muted-foreground text-center whitespace-nowrap">
-                    {logo.description}
-                  </div>
-                </div>
-              );
-            })}
+          {/* Gradient fade edges */}
+          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+          
+          <div className="flex animate-scroll-left">
+            {/* First set */}
+            {techPartners.map((name, index) => (
+              <div
+                key={`set1-${index}`}
+                className="flex-shrink-0 mx-6 md:mx-8"
+              >
+                <span className="text-sm md:text-base font-medium text-muted-foreground/70 hover:text-primary transition-colors duration-300 whitespace-nowrap">
+                  {name}
+                </span>
+              </div>
+            ))}
+            {/* Duplicate for seamless loop */}
+            {techPartners.map((name, index) => (
+              <div
+                key={`set2-${index}`}
+                className="flex-shrink-0 mx-6 md:mx-8"
+              >
+                <span className="text-sm md:text-base font-medium text-muted-foreground/70 hover:text-primary transition-colors duration-300 whitespace-nowrap">
+                  {name}
+                </span>
+              </div>
+            ))}
+            {/* Third set for extra smooth loop */}
+            {techPartners.map((name, index) => (
+              <div
+                key={`set3-${index}`}
+                className="flex-shrink-0 mx-6 md:mx-8"
+              >
+                <span className="text-sm md:text-base font-medium text-muted-foreground/70 hover:text-primary transition-colors duration-300 whitespace-nowrap">
+                  {name}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
         
-        {/* Trust indicator */}
-        <div className="text-center mt-8">
-          <p className="text-xs text-muted-foreground flex items-center justify-center gap-2">
-            <TrustIndicator type="shield" size="sm" />
-            SOC 2 Compliant • GDPR Ready • Bank-Level Encryption
+        {/* Compliance badges */}
+        <div className="text-center mt-6">
+          <p className="text-xs text-muted-foreground/60 flex items-center justify-center gap-3">
+            <span className="flex items-center gap-1">
+              <Shield className="w-3 h-3" />
+              SOC 2 Compliant
+            </span>
+            <span className="text-muted-foreground/30">•</span>
+            <span>GDPR Ready</span>
+            <span className="text-muted-foreground/30">•</span>
+            <span>Bank-Level Encryption</span>
           </p>
         </div>
       </div>
