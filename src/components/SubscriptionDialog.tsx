@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { 
   Loader2, Tag, Shield, CheckCircle, Zap, Clock, 
-  CreditCard, RefreshCw, X, Sparkles, Users, Lock
+  CreditCard, RefreshCw, X, Sparkles, Users, Lock, Mail
 } from "lucide-react";
 import { trackConversion } from "@/utils/analyticsTracker";
 import { Badge } from "@/components/ui/badge";
@@ -54,6 +55,24 @@ const tierInfo: Record<string, {
     color: "from-emerald-500/20 to-teal-500/20",
     highlights: ["Enterprise features", "Custom integrations", "Dedicated manager"],
     badge: "ENTERPRISE"
+  },
+  "Basic Care": {
+    icon: <Shield className="w-5 h-5" />,
+    color: "from-slate-500/20 to-gray-500/20",
+    highlights: ["Monthly health checks", "Security patches", "Email support"],
+    badge: "STARTER"
+  },
+  "Standard Care": {
+    icon: <Shield className="w-5 h-5" />,
+    color: "from-primary/20 to-accent/20",
+    highlights: ["Weekly health checks", "Priority bug fixes", "Phone support"],
+    badge: "POPULAR"
+  },
+  "Premium Care": {
+    icon: <Sparkles className="w-5 h-5" />,
+    color: "from-amber-500/20 to-orange-500/20",
+    highlights: ["24/7 monitoring", "Critical response (4hr)", "Dedicated engineer"],
+    badge: "PREMIUM"
   }
 };
 
@@ -73,10 +92,33 @@ export const SubscriptionDialog = ({
   const [validatingCode, setValidatingCode] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [isVeteran, setIsVeteran] = useState(false);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const veteranDiscountPercent = 10;
 
   const info = tierInfo[planTier] || tierInfo.Starter;
   const displayFeatures = features.length > 0 ? features : info.highlights;
+
+  // Check authentication and auto-fill
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user?.email) {
+        setEmail(user.email);
+        setIsAuthenticated(true);
+      } else {
+        // Try localStorage
+        const savedEmail = localStorage.getItem("userEmail");
+        const savedName = localStorage.getItem("userName");
+        if (savedEmail) setEmail(savedEmail);
+        if (savedName) setName(savedName);
+      }
+    };
+    if (open) {
+      checkAuth();
+    }
+  }, [open]);
 
   const validateDiscountCode = async () => {
     if (!discountCode.trim()) return;
@@ -107,14 +149,25 @@ export const SubscriptionDialog = ({
   };
 
   const handleSubscribe = async () => {
+    if (!email) {
+      toast.error("Please enter your email address");
+      return;
+    }
+
     setLoading(true);
     try {
+      // Save to localStorage for future purchases
+      localStorage.setItem("userEmail", email);
+      if (name) localStorage.setItem("userName", name);
+
       const { data, error } = await supabase.functions.invoke('create-subscription-checkout', {
         body: {
           priceId,
           serviceName,
           planTier,
           discountCode: discount ? discountCode : null,
+          customerEmail: email,
+          customerName: name,
         },
       });
 
@@ -124,7 +177,7 @@ export const SubscriptionDialog = ({
       }
 
       if (data?.url) {
-        trackConversion(`subscription_${planTier.toLowerCase()}`, finalAmount / 100);
+        trackConversion(`subscription_${planTier.toLowerCase().replace(/\s+/g, '_')}`, finalAmount / 100);
         window.open(data.url, '_blank');
         onOpenChange(false);
       }
@@ -143,7 +196,7 @@ export const SubscriptionDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg p-0 overflow-hidden">
+      <DialogContent className="sm:max-w-lg p-0 overflow-hidden max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className={`bg-gradient-to-r ${info.color} p-6 border-b`}>
           <DialogHeader>
@@ -172,6 +225,39 @@ export const SubscriptionDialog = ({
         </div>
 
         <div className="p-6 space-y-5">
+          {/* Email Input - Required for checkout */}
+          <div className="space-y-3">
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-sm font-medium flex items-center gap-2">
+                <Mail className="w-4 h-4" />
+                Email Address *
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="your@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={isAuthenticated}
+                required
+              />
+            </div>
+            {!isAuthenticated && (
+              <div className="space-y-2">
+                <Label htmlFor="name" className="text-sm font-medium">
+                  Full Name (Optional)
+                </Label>
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="John Doe"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+            )}
+          </div>
+
           {/* Features */}
           <div className="space-y-3">
             <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
@@ -334,7 +420,7 @@ export const SubscriptionDialog = ({
           {/* Subscribe Button */}
           <Button
             onClick={handleSubscribe}
-            disabled={loading || !termsAccepted}
+            disabled={loading || !termsAccepted || !email}
             className="w-full h-12 text-base font-semibold"
             size="lg"
           >
@@ -346,7 +432,7 @@ export const SubscriptionDialog = ({
             ) : (
               <>
                 <CreditCard className="w-5 h-5 mr-2" />
-                Start Subscription
+                Subscribe Now - ${(finalAmount / 100).toFixed(2)}/mo
               </>
             )}
           </Button>

@@ -47,6 +47,7 @@ function Business() {
     amount: number;
   } | null>(null);
   const [isYearly, setIsYearly] = useState(false);
+  const [aiConsultingView, setAiConsultingView] = useState(false);
   const [selectedService, setSelectedService] = useState<{
     type: 'business' | 'website';
     name: string;
@@ -1347,102 +1348,141 @@ function Business() {
         </div>
       </section>
 
-      {/* Pre-Purchase Consulting */}
+      {/* AI Consulting Services - Combined Section */}
       <section className="py-20 bg-muted">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <Card className="p-8 bg-gradient-to-br from-accent/10 to-accent/5 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_20px_40px_rgba(20,184,166,0.2)] hover:border-accent/50">
-              <div className="flex items-start gap-6">
-                <Search className="w-16 h-16 text-accent flex-shrink-0 gentle-rotate" />
-                <div>
-                  <h3 className="text-3xl font-bold mb-4">Thinking of Buying an AI Tool?</h3>
-                  <p className="text-xl mb-6">Don't waste $5,000+ on the wrong solution.</p>
-                  <p className="text-muted-foreground mb-6">Our Pre-Purchase Vetting service:</p>
-                  <ul className="space-y-2 mb-6">
-                    {[
-                      "Reviews the tool for security risks",
-                      "Calculates realistic ROI",
-                      "Identifies hidden costs & vendor risks",
-                      "Recommends 'Buy / Don't Buy / Wait'",
-                    ].map((item, index) => (
-                      <li key={index} className="flex items-start gap-2">
-                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="text-2xl font-bold mb-6">
-                    $1,799 <span className="text-lg font-normal text-muted-foreground">for full vetting report</span>
-                  </p>
-                  <p className="text-sm text-muted-foreground mb-6">(Saves you thousands on bad purchases)</p>
-                  <Button 
-                    onClick={() => {
-                      trackButtonClick('Request AI Vetting', 'Business Consulting');
-                      trackConversion('consulting_vetting', 1799);
-                      setSelectedService({
-                        type: 'business',
-                        name: 'Pre-Purchase AI Tool Vetting',
-                        price: 1799
-                      });
-                      setModalOpen(true);
-                    }}
-                    variant="default"
-                    className="transition-all duration-300 hover:bg-primary/90 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(109,40,217,0.25)]"
-                  >
-                    REQUEST VETTING
-                  </Button>
-                </div>
-              </div>
-            </Card>
+          <div className="text-center mb-8">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">AI Consulting Services</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+              Expert guidance whether you're considering AI or already have it in place
+            </p>
+            
+            {/* Toggle Buttons */}
+            <div className="inline-flex bg-background rounded-full p-1.5 border shadow-sm">
+              <Button
+                variant={!aiConsultingView ? 'default' : 'ghost'}
+                size="lg"
+                className={`rounded-full px-8 transition-all ${!aiConsultingView ? '' : 'hover:bg-transparent'}`}
+                onClick={() => setAiConsultingView(false)}
+              >
+                <Search className="w-4 h-4 mr-2" />
+                Buying AI?
+              </Button>
+              <Button
+                variant={aiConsultingView ? 'default' : 'ghost'}
+                size="lg"
+                className={`rounded-full px-8 transition-all ${aiConsultingView ? '' : 'hover:bg-transparent'}`}
+                onClick={() => setAiConsultingView(true)}
+              >
+                <Shield className="w-4 h-4 mr-2" />
+                Already Using AI?
+              </Button>
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* AI Security Audit */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <Card className="p-8 bg-gradient-to-br from-amber-100 to-amber-50 dark:from-amber-950 dark:to-amber-900">
-              <div className="flex items-start gap-6">
-                <Shield className="w-16 h-16 text-amber-600 flex-shrink-0" />
-                <div>
-                  <h3 className="text-3xl font-bold mb-4">Already Using AI?</h3>
-                  <p className="text-xl mb-6">Is your current AI secure? We audit for:</p>
-                  <ul className="space-y-2 mb-6">
-                    {[
-                      "Data leaks & unauthorized access",
-                      "Prompt injection vulnerabilities",
-                      "Vendor contract risks",
-                      "Compliance gaps (GDPR, HIPAA, etc.)",
-                    ].map((item, index) => (
-                      <li key={index} className="flex items-start gap-2">
-                        <span className="text-amber-600">•</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="text-2xl font-bold mb-4">
-                    Starting at <span className="text-accent">$3,499</span>
-                  </p>
-                  <p className="text-sm text-muted-foreground mb-6">Deliverable: Security report + implementation roadmap</p>
-                  <Button 
-                    onClick={() => {
-                      trackButtonClick('Request Security Audit', 'Business Security');
-                      trackConversion('consulting_audit', 3499);
-                      setSelectedService({
-                        type: 'business',
-                        name: 'AI Security Audit',
-                        price: 3499
-                      });
-                      setModalOpen(true);
-                    }}
-                    variant="default"
-                  >
-                    REQUEST AUDIT
-                  </Button>
+            {!aiConsultingView ? (
+              /* Pre-Purchase Vetting */
+              <Card className="p-8 bg-gradient-to-br from-accent/10 to-accent/5 transition-all duration-500 hover:scale-[1.01] hover:shadow-lg border-accent/20 animate-fade-in">
+                <div className="flex flex-col md:flex-row items-start gap-6">
+                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-accent to-teal-500 flex items-center justify-center flex-shrink-0">
+                    <Search className="w-10 h-10 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-3xl font-bold mb-4">Pre-Purchase AI Vetting</h3>
+                    <p className="text-xl mb-4 text-muted-foreground">Don't waste $5,000+ on the wrong solution.</p>
+                    <p className="text-sm text-muted-foreground mb-4">Our Pre-Purchase Vetting service:</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-6">
+                      {[
+                        "Reviews the tool for security risks",
+                        "Calculates realistic ROI",
+                        "Identifies hidden costs & vendor risks",
+                        "Recommends 'Buy / Don't Buy / Wait'",
+                      ].map((item, index) => (
+                        <div key={index} className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                          <span className="text-sm">{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                      <div>
+                        <p className="text-3xl font-bold text-primary">$1,799</p>
+                        <p className="text-xs text-muted-foreground">Full vetting report • Saves thousands</p>
+                      </div>
+                      <Button 
+                        onClick={() => {
+                          trackButtonClick('Request AI Vetting', 'Business Consulting');
+                          trackConversion('consulting_vetting', 1799);
+                          setSelectedService({
+                            type: 'business',
+                            name: 'Pre-Purchase AI Tool Vetting',
+                            price: 1799
+                          });
+                          setModalOpen(true);
+                        }}
+                        variant="default"
+                        size="lg"
+                        className="transition-all duration-300 hover:-translate-y-0.5"
+                      >
+                        REQUEST VETTING
+                      </Button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </Card>
+              </Card>
+            ) : (
+              /* AI Security Audit */
+              <Card className="p-8 bg-gradient-to-br from-amber-100 to-amber-50 dark:from-amber-950/50 dark:to-amber-900/30 transition-all duration-500 hover:scale-[1.01] hover:shadow-lg border-amber-200 dark:border-amber-800 animate-fade-in">
+                <div className="flex flex-col md:flex-row items-start gap-6">
+                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center flex-shrink-0">
+                    <Shield className="w-10 h-10 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-3xl font-bold mb-4">AI Security Audit</h3>
+                    <p className="text-xl mb-4 text-muted-foreground">Is your current AI secure? We audit for:</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-6">
+                      {[
+                        "Data leaks & unauthorized access",
+                        "Prompt injection vulnerabilities",
+                        "Vendor contract risks",
+                        "Compliance gaps (GDPR, HIPAA, etc.)",
+                      ].map((item, index) => (
+                        <div key={index} className="flex items-start gap-2">
+                          <span className="w-4 h-4 rounded-full bg-amber-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <CheckCircle className="w-3 h-3 text-white" />
+                          </span>
+                          <span className="text-sm">{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                      <div>
+                        <p className="text-3xl font-bold text-amber-600 dark:text-amber-400">Starting at $3,499</p>
+                        <p className="text-xs text-muted-foreground">Security report + implementation roadmap</p>
+                      </div>
+                      <Button 
+                        onClick={() => {
+                          trackButtonClick('Request Security Audit', 'Business Security');
+                          trackConversion('consulting_audit', 3499);
+                          setSelectedService({
+                            type: 'business',
+                            name: 'AI Security Audit',
+                            price: 3499
+                          });
+                          setModalOpen(true);
+                        }}
+                        variant="default"
+                        size="lg"
+                        className="bg-amber-600 hover:bg-amber-700 transition-all duration-300 hover:-translate-y-0.5"
+                      >
+                        REQUEST AUDIT
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            )}
           </div>
         </div>
       </section>

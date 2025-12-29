@@ -24,25 +24,39 @@ serve(async (req) => {
       Deno.env.get("SUPABASE_ANON_KEY") ?? ""
     );
 
-    const authHeader = req.headers.get("Authorization")!;
-    const token = authHeader.replace("Bearer ", "");
-    const { data } = await supabaseClient.auth.getUser(token);
-    const user = data.user;
-    
-    if (!user?.email) {
-      throw new Error("User not authenticated or email not available");
-    }
-    logStep("User authenticated", { userId: user.id, email: user.email });
+    // Parse request body first
+    const { priceId, serviceName, planTier, discountCode, customerEmail, customerName } = await req.json();
+    logStep("Request data", { priceId, serviceName, planTier, discountCode, customerEmail });
 
-    const { priceId, serviceName, planTier, discountCode } = await req.json();
-    logStep("Request data", { priceId, serviceName, planTier, discountCode });
+    // Try to get authenticated user, but don't require it (guest checkout support)
+    let userEmail = customerEmail;
+    let userId = null;
+    
+    const authHeader = req.headers.get("Authorization");
+    if (authHeader) {
+      const token = authHeader.replace("Bearer ", "");
+      const { data } = await supabaseClient.auth.getUser(token);
+      const user = data.user;
+      
+      if (user?.email) {
+        userEmail = user.email;
+        userId = user.id;
+        logStep("User authenticated", { userId: user.id, email: user.email });
+      }
+    }
+    
+    // Require either authenticated user or customer email
+    if (!userEmail) {
+      throw new Error("Email is required for subscription checkout");
+    }
+    logStep("Using email for checkout", { email: userEmail });
 
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
       apiVersion: "2025-08-27.basil",
     });
 
     // Check if customer exists
-    const customers = await stripe.customers.list({ email: user.email, limit: 1 });
+    const customers = await stripe.customers.list({ email: userEmail, limit: 1 });
     let customerId;
     if (customers.data.length > 0) {
       customerId = customers.data[0].id;
@@ -101,10 +115,12 @@ serve(async (req) => {
       }
     }
 
+    const origin = req.headers.get("origin") || "https://invisionnetwork.org";
+
     // Create checkout session
     const sessionConfig: any = {
       customer: customerId,
-      customer_email: customerId ? undefined : user.email,
+      customer_email: customerId ? undefined : userEmail,
       line_items: [
         {
           price: priceId,
@@ -112,12 +128,14 @@ serve(async (req) => {
         },
       ],
       mode: "subscription",
-      success_url: `${req.headers.get("origin")}/portal?subscription=success`,
-      cancel_url: `${req.headers.get("origin")}/portal?subscription=cancelled`,
+      success_url: `${origin}/payment-success?type=subscription`,
+      cancel_url: `${origin}/payment-canceled`,
       metadata: {
-        user_id: user.id,
+        user_id: userId || 'guest',
         service_name: serviceName,
         plan_tier: planTier,
+        customer_email: userEmail,
+        customer_name: customerName || '',
       },
     };
 
