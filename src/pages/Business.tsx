@@ -15,6 +15,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { BookingModal } from "@/components/BookingModal";
 import { SubscriptionDialog } from "@/components/SubscriptionDialog";
+import { ServiceInquiryDialog } from "@/components/ServiceInquiryDialog";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { trackButtonClick, trackConversion } from "@/utils/analyticsTracker";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield, Lock } from "lucide-react";
@@ -30,6 +31,13 @@ import { SEO } from "@/components/SEO";
 function Business() {
   const [modalOpen, setModalOpen] = useState(false);
   const [subscriptionDialogOpen, setSubscriptionDialogOpen] = useState(false);
+  const [inquiryDialogOpen, setInquiryDialogOpen] = useState(false);
+  const [selectedInquiry, setSelectedInquiry] = useState<{
+    name: string;
+    price: number;
+    tier: string;
+    description?: string;
+  } | null>(null);
   const [selectedSubscription, setSelectedSubscription] = useState<{
     priceId: string;
     serviceName: string;
@@ -47,7 +55,6 @@ function Business() {
   const [isLoading, setIsLoading] = useState(true);
   const [businessTestimonials, setBusinessTestimonials] = useState<any[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string } | null>(null);
-
   // Counter animations for pricing cards
   const price1Counter = useCounterAnimation({ end: 9500, duration: 1500, prefix: '$' });
   const price2Counter = useCounterAnimation({ end: 12500, duration: 1500, prefix: '$' });
@@ -266,28 +273,23 @@ function Business() {
         </div>
       </section>
 
-      {/* Veterans Discount Banner */}
-      <section className="py-8 bg-gradient-to-r from-primary/10 to-accent/10">
+      {/* Veterans Discount Banner - Notification Only */}
+      <section className="py-6 bg-gradient-to-r from-primary/5 to-accent/5">
         <div className="container mx-auto px-4">
-          <Card className="p-6 bg-card/50 backdrop-blur-sm border-primary/20 max-w-3xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
-              <div className="flex-shrink-0">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-2xl">
-                  🇺🇸
-                </div>
+          <div className="flex flex-col md:flex-row items-center justify-center gap-3 text-center">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">🇺🇸</span>
+              <div className="flex items-center gap-2">
+                <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
+                  <Shield className="w-3 h-3 mr-1" />
+                  10% OFF
+                </Badge>
+                <span className="text-sm md:text-base font-medium">
+                  Veterans & First Responders receive automatic discount at checkout
+                </span>
               </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-bold mb-1">Veterans & First Responders</h3>
-                <p className="text-muted-foreground text-sm">Active duty, veterans, reservists, and first responders receive 10% OFF all services</p>
-              </div>
-              <Button variant="default" size="sm" className="w-fit" asChild>
-                <Link to="/contact">
-                  <Shield className="w-4 h-4 mr-2" />
-                  Claim Discount
-                </Link>
-              </Button>
             </div>
-          </Card>
+          </div>
         </div>
       </section>
 
@@ -343,19 +345,20 @@ function Business() {
                     </span>
                   </div>
                   <Button 
-                    asChild
                     variant="default" 
                     className="w-full transition-all duration-300 md:hover:bg-primary/90 md:hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] md:hover:scale-[1.02] active:scale-95 h-11 md:h-10"
+                    onClick={() => {
+                      trackButtonClick('Get Started - AI Receptionist', 'Business Pricing');
+                      setSelectedInquiry({
+                        name: 'AI Receptionist & Intake Agent',
+                        price: 9500,
+                        tier: 'START HERE',
+                        description: 'Answer calls/chats 24/7, book appointments, route to the right person, and never miss a lead.'
+                      });
+                      setInquiryDialogOpen(true);
+                    }}
                   >
-                    <Link 
-                      to="/contact?service=ai-receptionist&plan=9500"
-                      onClick={() => {
-                        trackButtonClick('Get Started - AI Receptionist', 'Business Pricing');
-                        trackConversion('business_ai_receptionist', 9500);
-                      }}
-                    >
-                      GET STARTED →
-                    </Link>
+                    GET STARTED →
                   </Button>
                 </Card>
               </div>
@@ -391,19 +394,20 @@ function Business() {
                     </li>
                   </ul>
                   <Button 
-                    asChild
                     variant="default" 
                     className="w-full transition-all duration-300 md:hover:bg-primary/90 md:hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] md:hover:scale-[1.02] active:scale-95 h-11 md:h-10"
+                    onClick={() => {
+                      trackButtonClick('Get Started - Full Automation', 'Business Pricing');
+                      setSelectedInquiry({
+                        name: 'Follow-Up Automation System',
+                        price: 12500,
+                        tier: 'MOST POPULAR',
+                        description: 'Automated email/SMS campaigns, lead nurturing, and multi-channel follow-ups to 10x your leads.'
+                      });
+                      setInquiryDialogOpen(true);
+                    }}
                   >
-                    <Link 
-                      to="/contact?service=automation&plan=12500"
-                      onClick={() => {
-                        trackButtonClick('Get Started - Full Automation', 'Business Pricing');
-                        trackConversion('business_full_automation', 12500);
-                      }}
-                    >
-                      GET STARTED →
-                    </Link>
+                    GET STARTED →
                   </Button>
                 </Card>
               </div>
@@ -433,19 +437,20 @@ function Business() {
                     </span>
                   </div>
                   <Button 
-                    asChild
                     variant="default" 
                     className="w-full transition-all duration-300 md:hover:bg-primary/90 md:hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] md:hover:scale-[1.02] active:scale-95 h-11 md:h-10"
+                    onClick={() => {
+                      trackButtonClick('Get Started - Custom Solution', 'Business Pricing');
+                      setSelectedInquiry({
+                        name: 'Custom Automation Suite',
+                        price: 25000,
+                        tier: 'ENTERPRISE',
+                        description: 'Full custom-built AI automation for multi-system operations with priority support and complete customization.'
+                      });
+                      setInquiryDialogOpen(true);
+                    }}
                   >
-                    <Link 
-                      to="/contact?service=custom&plan=25000"
-                      onClick={() => {
-                        trackButtonClick('Get Started - Custom Solution', 'Business Pricing');
-                        trackConversion('business_custom_solution', 25000);
-                      }}
-                    >
-                      GET STARTED →
-                    </Link>
+                    GET STARTED →
                   </Button>
                 </Card>
               </div>
@@ -1279,6 +1284,17 @@ function Business() {
           serviceName={selectedSubscription.serviceName}
           planTier={selectedSubscription.planTier}
           amount={selectedSubscription.amount}
+        />
+      )}
+
+      {selectedInquiry && (
+        <ServiceInquiryDialog
+          open={inquiryDialogOpen}
+          onOpenChange={setInquiryDialogOpen}
+          serviceName={selectedInquiry.name}
+          servicePrice={selectedInquiry.price}
+          serviceTier={selectedInquiry.tier}
+          serviceDescription={selectedInquiry.description}
         />
       )}
     </div>
