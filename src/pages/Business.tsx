@@ -19,12 +19,11 @@ import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { trackButtonClick, trackConversion } from "@/utils/analyticsTracker";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield, Lock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import businessCollaboration from "@/assets/business-collaboration.jpg";
-import teamCollaboration from "@/assets/team-collaboration.jpg";
-import businessDiverse1 from "@/assets/business-diverse-1.jpg";
-import heroBusinessNew from "@/assets/hero-business-new.jpg";
-import heroBusinessProfessional from "@/assets/hero-business-professional.jpg";
-import heroBusiness3d from "@/assets/hero-business-3d.jpg";
+import heroBusinessAiNew1 from "@/assets/hero-business-ai-new-1.jpg";
+import heroBusinessAiNew2 from "@/assets/hero-business-ai-new-2.jpg";
+import heroBusinessAiNew3 from "@/assets/hero-business-ai-new-3.jpg";
+import heroBusinessAiNew4 from "@/assets/hero-business-ai-new-4.jpg";
+import heroBusinessAiNew5 from "@/assets/hero-business-ai-new-5.jpg";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
 
