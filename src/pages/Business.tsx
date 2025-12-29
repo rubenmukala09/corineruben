@@ -20,11 +20,11 @@ import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { trackButtonClick, trackConversion } from "@/utils/analyticsTracker";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield, Lock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import heroBusinessElite1 from "@/assets/hero-business-elite-1.jpg";
-import heroBusinessElite2 from "@/assets/hero-business-elite-2.jpg";
-import heroBusinessElite3 from "@/assets/hero-business-elite-3.jpg";
-import heroBusinessElite4 from "@/assets/hero-business-elite-4.jpg";
-import heroBusinessElite5 from "@/assets/hero-business-elite-5.jpg";
+import heroBusinessDiverse1 from "@/assets/hero-business-diverse-1.jpg";
+import heroBusinessDiverse2 from "@/assets/hero-business-diverse-2.jpg";
+import heroBusinessDiverse3 from "@/assets/hero-business-diverse-3.jpg";
+import heroBusinessDiverse4 from "@/assets/hero-business-diverse-4.jpg";
+import heroBusinessDiverse5 from "@/assets/hero-business-diverse-5.jpg";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
 
@@ -138,11 +138,11 @@ function Business() {
   };
 
   const businessHeroImages = [
-    { src: heroBusinessElite1, alt: "Diverse executive team reviewing AI analytics in luxury boardroom" },
-    { src: heroBusinessElite2, alt: "Successful business leaders closing corporate deal" },
-    { src: heroBusinessElite3, alt: "Tech startup founders presenting AI solutions" },
-    { src: heroBusinessElite4, alt: "Elegant executive using AI technology in premium office" },
-    { src: heroBusinessElite5, alt: "Multicultural team celebrating business success" }
+    { src: heroBusinessDiverse1, alt: "Diverse executives smiling in luxury corporate lobby with city skyline" },
+    { src: heroBusinessDiverse2, alt: "Business professionals shaking hands on trading floor" },
+    { src: heroBusinessDiverse3, alt: "Muslim businesswoman leading happy diverse team in boardroom" },
+    { src: heroBusinessDiverse4, alt: "Successful Middle Eastern businessman with AI technology in luxury office" },
+    { src: heroBusinessDiverse5, alt: "Multicultural executive team in modern glass corporate headquarters" }
   ];
 
   return (
