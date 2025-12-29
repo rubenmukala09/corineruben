@@ -308,7 +308,7 @@ function Business() {
               Trusted by 100+ Ohio Businesses
             </div>
             <h2 className="mb-4">AI Agents & Automation Pricing</h2>
-            <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground">
+            <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground mb-6">
               <span className="inline-flex items-center gap-1.5">
                 <CheckCircle className="w-4 h-4 text-success" />
                 30-Day Guarantee
@@ -321,6 +321,11 @@ function Business() {
                 <Phone className="w-4 h-4 text-primary" />
                 24/7 Support
               </span>
+            </div>
+            <div className="max-w-4xl mx-auto bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 border border-primary/20 rounded-2xl p-6">
+              <p className="text-base text-foreground leading-relaxed">
+                <strong className="text-primary">Stop losing customers to missed calls and slow follow-ups.</strong> Our AI agents work around the clock — answering calls, booking appointments, and following up with leads while you sleep. In today's competitive market, <strong>businesses that respond faster win more customers</strong>. With InVision AI, you never miss an opportunity. <span className="text-accent font-semibold">Your competitors are already using AI — can you afford to fall behind?</span>
+              </p>
             </div>
           </div>
           
@@ -525,9 +530,14 @@ function Business() {
               Web Design
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Professional Website Design</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-6">
               Custom websites that convert visitors into customers - built for security, speed, and success
             </p>
+            <div className="max-w-4xl mx-auto bg-gradient-to-r from-accent/10 via-primary/10 to-accent/10 border border-accent/20 rounded-2xl p-6">
+              <p className="text-base text-foreground leading-relaxed">
+                <strong className="text-accent">First impressions matter — your website is often the first thing customers see.</strong> A slow, outdated, or insecure website drives customers away. With InVision, you get a <strong>stunning, fast, mobile-optimized website</strong> that builds trust and converts visitors into paying customers. Every site includes SSL security, SEO optimization, and ongoing support. <span className="text-primary font-semibold">In today's digital world, you can't succeed without a professional online presence — and with InVision, you won't have to.</span>
+              </p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16 items-stretch">
@@ -830,19 +840,24 @@ function Business() {
               Protect Your Investment
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Website Insurance</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-6">
               Comprehensive protection for your website - security monitoring, backups, support, and performance optimization
             </p>
+            <div className="max-w-4xl mx-auto bg-gradient-to-r from-success/10 via-primary/10 to-success/10 border border-success/20 rounded-2xl p-6 mb-4">
+              <p className="text-base text-foreground leading-relaxed">
+                <strong className="text-success">Your website is your most valuable digital asset.</strong> In today's world, cyber threats, data loss, and downtime can cost you thousands of dollars and irreparable damage to your reputation. With InVision Website Insurance, you get <strong>24/7 protection, instant backups, and expert support</strong> — so you can focus on growing your business while we keep your site safe, fast, and always online. <span className="text-primary font-semibold">Don't leave your investment unprotected — with InVision, you're never alone.</span>
+              </p>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto pt-8">
             {/* Essential Plan */}
             <ScrollReveal animation="fade-up" delay={0}>
-              <Card className="p-5 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1 relative overflow-visible h-full flex flex-col">
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-30 whitespace-nowrap">
+              <Card className="p-5 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1 relative h-full flex flex-col pt-8" style={{ overflow: 'visible' }}>
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-5 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg whitespace-nowrap" style={{ zIndex: 50 }}>
                   ESSENTIAL
                 </div>
-                <div className="text-center pt-4 flex-1 flex flex-col">
+                <div className="text-center flex-1 flex flex-col">
                   <h3 className="text-lg font-bold mb-2">Essential</h3>
                   <p className="text-3xl font-bold text-primary mb-1">$29<span className="text-sm text-muted-foreground font-normal">/mo</span></p>
                   <p className="text-xs text-muted-foreground mb-4">Basic protection</p>
@@ -880,11 +895,11 @@ function Business() {
 
             {/* Professional Plan */}
             <ScrollReveal animation="fade-up" delay={100}>
-              <Card className="p-5 rounded-2xl border-2 border-primary shadow-[0_8px_30px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)] transition-all relative overflow-visible h-full flex flex-col">
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-white px-4 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg animate-pulse z-30 whitespace-nowrap" style={{ animationDuration: '3s' }}>
+              <Card className="p-5 rounded-2xl border-2 border-primary shadow-[0_8px_30px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)] transition-all h-full flex flex-col pt-8" style={{ overflow: 'visible' }}>
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-white px-5 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg animate-pulse whitespace-nowrap" style={{ zIndex: 50, animationDuration: '3s' }}>
                   ⭐ MOST POPULAR
                 </div>
-                <div className="text-center pt-4 flex-1 flex flex-col">
+                <div className="text-center flex-1 flex flex-col">
                   <h3 className="text-lg font-bold mb-2">Professional</h3>
                   <p className="text-3xl font-bold text-primary mb-1">$49<span className="text-sm text-muted-foreground font-normal">/mo</span></p>
                   <p className="text-xs text-muted-foreground mb-4">Complete protection</p>
@@ -926,11 +941,11 @@ function Business() {
 
             {/* Enterprise Plan */}
             <ScrollReveal animation="fade-up" delay={200}>
-              <Card className="p-5 rounded-2xl border-2 border-amber-500/50 hover:shadow-medium transition-all hover:-translate-y-1 relative overflow-visible h-full flex flex-col">
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-30 whitespace-nowrap">
+              <Card className="p-5 rounded-2xl border-2 border-amber-500/50 hover:shadow-medium transition-all hover:-translate-y-1 h-full flex flex-col pt-8" style={{ overflow: 'visible' }}>
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-5 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg whitespace-nowrap" style={{ zIndex: 50 }}>
                   👑 ENTERPRISE
                 </div>
-                <div className="text-center pt-4 flex-1 flex flex-col">
+                <div className="text-center flex-1 flex flex-col">
                   <h3 className="text-lg font-bold mb-2">Enterprise</h3>
                   <p className="text-3xl font-bold text-primary mb-1">$99<span className="text-sm text-muted-foreground font-normal">/mo</span></p>
                   <p className="text-xs text-muted-foreground mb-4">Maximum protection</p>
@@ -972,11 +987,11 @@ function Business() {
 
             {/* Custom Plan */}
             <ScrollReveal animation="fade-up" delay={300}>
-              <Card className="p-5 rounded-2xl border-2 border-dashed border-primary/40 hover:border-primary transition-all hover:-translate-y-1 relative overflow-visible h-full flex flex-col bg-gradient-to-br from-background to-primary/5">
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary via-accent to-primary text-white px-4 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-30 whitespace-nowrap">
+              <Card className="p-5 rounded-2xl border-2 border-dashed border-primary/40 hover:border-primary transition-all hover:-translate-y-1 h-full flex flex-col bg-gradient-to-br from-background to-primary/5 pt-8" style={{ overflow: 'visible' }}>
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary via-accent to-primary text-white px-5 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg whitespace-nowrap" style={{ zIndex: 50 }}>
                   ✨ CUSTOM
                 </div>
-                <div className="text-center pt-4 flex-1 flex flex-col">
+                <div className="text-center flex-1 flex flex-col">
                   <h3 className="text-lg font-bold mb-2">Customizable</h3>
                   <p className="text-3xl font-bold text-primary mb-1">$29-500<span className="text-sm text-muted-foreground font-normal">/mo</span></p>
                   <p className="text-xs text-muted-foreground mb-4">Build your own</p>
@@ -1039,9 +1054,14 @@ function Business() {
               Protection & Maintenance
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-4">AI Services Insurance</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-6">
               Protect your AI investment with ongoing maintenance, updates, and support - regardless of where you purchased your agent.
             </p>
+            <div className="max-w-4xl mx-auto bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/10 border border-amber-500/20 rounded-2xl p-6">
+              <p className="text-base text-foreground leading-relaxed">
+                <strong className="text-amber-600 dark:text-amber-400">AI technology evolves fast — without proper care, your investment becomes obsolete.</strong> Our AI Services Insurance ensures your agents stay <strong>updated, secure, and performing at peak efficiency</strong>. From security patches to performance optimization, we handle everything so your AI keeps delivering results. <span className="text-primary font-semibold">Don't let your AI investment go to waste — protect it with InVision, because success requires ongoing commitment.</span>
+              </p>
+            </div>
           </div>
 
           {/* Payment Period Toggle */}
@@ -1378,9 +1398,14 @@ function Business() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">AI Consulting Services</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-6">
               Expert guidance whether you're considering AI or already have it in place
             </p>
+            <div className="max-w-4xl mx-auto bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-cyan-500/10 border border-cyan-500/20 rounded-2xl p-6 mb-8">
+              <p className="text-base text-foreground leading-relaxed">
+                <strong className="text-cyan-600 dark:text-cyan-400">The AI market is flooded with empty promises and overpriced solutions.</strong> Before you invest thousands in AI tools, let InVision <strong>vet them for you</strong>. We expose hidden costs, security risks, and vendor lock-ins so you make informed decisions. Already have AI? We'll audit it to ensure it's secure, optimized, and actually delivering ROI. <span className="text-primary font-semibold">In this AI revolution, those who navigate wisely win — and InVision is your trusted guide.</span>
+              </p>
+            </div>
             
             {/* Toggle Buttons */}
             <div className="inline-flex bg-background rounded-full p-1.5 border shadow-sm">
