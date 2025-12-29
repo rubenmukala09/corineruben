@@ -792,197 +792,183 @@ function Business() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-5xl mx-auto mb-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {/* Essential Plan */}
             <ScrollReveal animation="fade-up" delay={0}>
-              <Card className="p-6 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1 relative overflow-visible pt-8">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
+              <Card className="p-5 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1 relative overflow-visible h-full flex flex-col">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-30 whitespace-nowrap">
                   ESSENTIAL
                 </div>
-                <div className="text-center">
-                  <h3 className="text-xl font-bold mb-2">Essential</h3>
+                <div className="text-center pt-4 flex-1 flex flex-col">
+                  <h3 className="text-lg font-bold mb-2">Essential</h3>
                   <p className="text-3xl font-bold text-primary mb-1">$29<span className="text-sm text-muted-foreground font-normal">/mo</span></p>
-                  <p className="text-xs text-muted-foreground mb-4">Basic protection for small sites</p>
+                  <p className="text-xs text-muted-foreground mb-4">Basic protection</p>
+                  <ul className="space-y-2 mb-6 text-sm text-left flex-1">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>SSL Management</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>Weekly Backups</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>Email Support</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>Basic Monitoring</span>
+                    </li>
+                  </ul>
+                  <Button 
+                    variant="outline" 
+                    className="w-full mt-auto"
+                    onClick={() => {
+                      trackButtonClick('Subscribe Now - Website Insurance Essential', 'Website Insurance');
+                      setWebsiteInsuranceOpen(true);
+                    }}
+                  >
+                    Subscribe Now
+                  </Button>
                 </div>
-                <ul className="space-y-2 mb-6 text-sm">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>SSL Certificate Management</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>Weekly Backups</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>Email Support (48hr)</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>Basic Security Monitoring</span>
-                  </li>
-                </ul>
-                <Button 
-                  variant="outline" 
-                  className="w-full"
-                  onClick={() => {
-                    trackButtonClick('Subscribe Now - Website Insurance Essential', 'Website Insurance');
-                    setWebsiteInsuranceOpen(true);
-                  }}
-                >
-                  Subscribe Now
-                </Button>
               </Card>
             </ScrollReveal>
 
             {/* Professional Plan */}
-            <ScrollReveal animation="fade-up" delay={150}>
-              <Card className="p-6 rounded-2xl border-2 border-primary shadow-[0_8px_30px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)] transition-all relative overflow-visible pt-8">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-wider shadow-lg animate-pulse z-20" style={{ animationDuration: '3s' }}>
+            <ScrollReveal animation="fade-up" delay={100}>
+              <Card className="p-5 rounded-2xl border-2 border-primary shadow-[0_8px_30px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)] transition-all relative overflow-visible h-full flex flex-col">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-white px-4 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg animate-pulse z-30 whitespace-nowrap" style={{ animationDuration: '3s' }}>
                   ⭐ MOST POPULAR
                 </div>
-                <div className="text-center">
-                  <h3 className="text-xl font-bold mb-2">Professional</h3>
+                <div className="text-center pt-4 flex-1 flex flex-col">
+                  <h3 className="text-lg font-bold mb-2">Professional</h3>
                   <p className="text-3xl font-bold text-primary mb-1">$49<span className="text-sm text-muted-foreground font-normal">/mo</span></p>
-                  <p className="text-xs text-muted-foreground mb-4">Complete business protection</p>
+                  <p className="text-xs text-muted-foreground mb-4">Complete protection</p>
+                  <ul className="space-y-2 mb-6 text-sm text-left flex-1">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>All Essential features</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>24/7 Monitoring</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>Daily Backups</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>Priority Support</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>Malware Scanning</span>
+                    </li>
+                  </ul>
+                  <Button 
+                    variant="default" 
+                    className="w-full mt-auto"
+                    onClick={() => {
+                      trackButtonClick('Subscribe Now - Website Insurance Professional', 'Website Insurance');
+                      setWebsiteInsuranceOpen(true);
+                    }}
+                  >
+                    Subscribe Now
+                  </Button>
                 </div>
-                <ul className="space-y-2 mb-6 text-sm">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>Everything in Essential</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>24/7 Security Monitoring</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>Daily Backups (30-day)</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>Priority Support (4hr)</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>Uptime Monitoring</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>Malware Scanning</span>
-                  </li>
-                </ul>
-                <Button 
-                  variant="default" 
-                  className="w-full"
-                  onClick={() => {
-                    trackButtonClick('Subscribe Now - Website Insurance Professional', 'Website Insurance');
-                    setWebsiteInsuranceOpen(true);
-                  }}
-                >
-                  Subscribe Now
-                </Button>
               </Card>
             </ScrollReveal>
 
             {/* Enterprise Plan */}
-            <ScrollReveal animation="fade-up" delay={300}>
-              <Card className="p-6 rounded-2xl border-2 border-accent hover:shadow-medium transition-all hover:-translate-y-1 relative overflow-visible pt-8">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
+            <ScrollReveal animation="fade-up" delay={200}>
+              <Card className="p-5 rounded-2xl border-2 border-amber-500/50 hover:shadow-medium transition-all hover:-translate-y-1 relative overflow-visible h-full flex flex-col">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-30 whitespace-nowrap">
                   👑 ENTERPRISE
                 </div>
-                <div className="text-center">
-                  <h3 className="text-xl font-bold mb-2">Enterprise</h3>
+                <div className="text-center pt-4 flex-1 flex flex-col">
+                  <h3 className="text-lg font-bold mb-2">Enterprise</h3>
                   <p className="text-3xl font-bold text-primary mb-1">$99<span className="text-sm text-muted-foreground font-normal">/mo</span></p>
-                  <p className="text-xs text-muted-foreground mb-4">Maximum protection & support</p>
+                  <p className="text-xs text-muted-foreground mb-4">Maximum protection</p>
+                  <ul className="space-y-2 mb-6 text-sm text-left flex-1">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>All Professional</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>Real-Time Backups</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>DDoS Protection</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>24/7 Dedicated Support</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>Global CDN</span>
+                    </li>
+                  </ul>
+                  <Button 
+                    variant="default" 
+                    className="w-full mt-auto"
+                    onClick={() => {
+                      trackButtonClick('Subscribe Now - Website Insurance Enterprise', 'Website Insurance');
+                      setWebsiteInsuranceOpen(true);
+                    }}
+                  >
+                    Subscribe Now
+                  </Button>
                 </div>
-                <ul className="space-y-2 mb-6 text-sm">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>Everything in Professional</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>Real-Time Backups</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>DDoS Protection</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>24/7 Dedicated Support</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>Performance Optimization</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>Global CDN</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>Dedicated Account Manager</span>
-                  </li>
-                </ul>
-                <Button 
-                  variant="default" 
-                  className="w-full"
-                  onClick={() => {
-                    trackButtonClick('Subscribe Now - Website Insurance Enterprise', 'Website Insurance');
-                    setWebsiteInsuranceOpen(true);
-                  }}
-                >
-                  Subscribe Now
-                </Button>
+              </Card>
+            </ScrollReveal>
+
+            {/* Custom Plan */}
+            <ScrollReveal animation="fade-up" delay={300}>
+              <Card className="p-5 rounded-2xl border-2 border-dashed border-primary/40 hover:border-primary transition-all hover:-translate-y-1 relative overflow-visible h-full flex flex-col bg-gradient-to-br from-background to-primary/5">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary via-accent to-primary text-white px-4 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-30 whitespace-nowrap">
+                  ✨ CUSTOM
+                </div>
+                <div className="text-center pt-4 flex-1 flex flex-col">
+                  <h3 className="text-lg font-bold mb-2">Customizable</h3>
+                  <p className="text-3xl font-bold text-primary mb-1">$29-500<span className="text-sm text-muted-foreground font-normal">/mo</span></p>
+                  <p className="text-xs text-muted-foreground mb-4">Build your own</p>
+                  <ul className="space-y-2 mb-6 text-sm text-left flex-1">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>Choose features</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>Flexible pricing</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>Custom support</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                      <span>Upgrade anytime</span>
+                    </li>
+                  </ul>
+                  <Button 
+                    variant="default" 
+                    className="w-full mt-auto bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90"
+                    onClick={() => {
+                      trackButtonClick('Subscribe Now - Website Insurance Custom', 'Website Insurance');
+                      setWebsiteInsuranceOpen(true);
+                    }}
+                  >
+                    Build Your Plan
+                  </Button>
+                </div>
               </Card>
             </ScrollReveal>
           </div>
-
-          {/* Custom Plan Card */}
-          <ScrollReveal animation="fade-up" delay={400}>
-            <div className="max-w-md mx-auto">
-              <Card className="p-6 rounded-2xl border-2 border-dashed border-primary/40 hover:border-primary transition-all hover:-translate-y-1 relative overflow-visible pt-8 bg-gradient-to-br from-background to-primary/5">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary via-accent to-primary text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
-                  ✨ CUSTOMIZABLE
-                </div>
-                <div className="text-center">
-                  <h3 className="text-xl font-bold mb-2">Custom Plan</h3>
-                  <p className="text-3xl font-bold text-primary mb-1">From $29<span className="text-sm text-muted-foreground font-normal">/mo</span></p>
-                  <p className="text-xs text-muted-foreground mb-4">Build your perfect coverage</p>
-                </div>
-                <ul className="space-y-2 mb-6 text-sm">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>Select only features you need</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>Mix security, backup & support</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>Flexible pricing tiers</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
-                    <span>Upgrade anytime</span>
-                  </li>
-                </ul>
-                <Button 
-                  variant="default" 
-                  className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90"
-                  onClick={() => {
-                    trackButtonClick('Subscribe Now - Website Insurance Custom', 'Website Insurance');
-                    setWebsiteInsuranceOpen(true);
-                  }}
-                >
-                  Build Your Plan
-                </Button>
-              </Card>
-            </div>
-          </ScrollReveal>
 
           {/* Trust Badges */}
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
