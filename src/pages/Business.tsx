@@ -45,6 +45,7 @@ function Business() {
     serviceName: string;
     planTier: string;
     amount: number;
+    variant?: 'default' | 'buying' | 'existing';
   } | null>(null);
   const [isYearly, setIsYearly] = useState(false);
   const [aiConsultingView, setAiConsultingView] = useState(false);
@@ -135,8 +136,8 @@ function Business() {
     };
   };
 
-  const handleSubscribe = (priceId: string, serviceName: string, planTier: string, amount: number) => {
-    setSelectedSubscription({ priceId, serviceName, planTier, amount });
+  const handleSubscribe = (priceId: string, serviceName: string, planTier: string, amount: number, variant?: 'default' | 'buying' | 'existing') => {
+    setSelectedSubscription({ priceId, serviceName, planTier, amount, variant });
     setSubscriptionDialogOpen(true);
   };
 
@@ -1064,12 +1065,12 @@ function Business() {
                   onClick={() => {
                     trackButtonClick('Subscribe - Basic Care', 'Business Insurance');
                     trackConversion('insurance_basic', 199);
-                    handleSubscribe('price_1QhNnTE7M5RA9HBzMcIcKhEF', 'AI Service Insurance', 'Basic Care', 19900);
+                    handleSubscribe('price_1QhNnTE7M5RA9HBzMcIcKhEF', 'AI Service Insurance', 'Basic Care', 19900, 'default');
                   }}
                   variant="default" 
                   className="w-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)]"
                 >
-                  GET BASIC CARE
+                  Subscribe Now
                 </Button>
               </Card>
             </div>
@@ -1124,12 +1125,12 @@ function Business() {
                 onClick={() => {
                   trackButtonClick('Subscribe - Standard Care', 'Business Insurance');
                   trackConversion('insurance_standard', 399);
-                  handleSubscribe('price_1QhNnrE7M5RA9HBzbM4WDMIQ', 'AI Service Insurance', 'Standard Care', 39900);
+                  handleSubscribe('price_1QhNnrE7M5RA9HBzbM4WDMIQ', 'AI Service Insurance', 'Standard Care', 39900, 'default');
                 }}
                 variant="default" 
                 className="w-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)]"
               >
-                GET STANDARD CARE
+                Subscribe Now
               </Button>
             </Card>
             </div>
@@ -1180,12 +1181,12 @@ function Business() {
                   onClick={() => {
                     trackButtonClick('Subscribe - Premium Care', 'Business Insurance');
                     trackConversion('insurance_premium', 799);
-                    handleSubscribe('price_1QhNoHE7M5RA9HBzQWdpJTEh', 'AI Service Insurance', 'Premium Care', 79900);
+                    handleSubscribe('price_1QhNoHE7M5RA9HBzQWdpJTEh', 'AI Service Insurance', 'Premium Care', 79900, 'default');
                   }}
                   variant="default" 
                   className="w-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)]"
                 >
-                  GET PREMIUM CARE
+                  Subscribe Now
                 </Button>
               </Card>
             </div>
@@ -1598,6 +1599,7 @@ function Business() {
           serviceName={selectedSubscription.serviceName}
           planTier={selectedSubscription.planTier}
           amount={selectedSubscription.amount}
+          variant={selectedSubscription.variant || 'default'}
         />
       )}
 

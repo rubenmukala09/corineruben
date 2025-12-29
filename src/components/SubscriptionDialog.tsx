@@ -25,6 +25,7 @@ interface SubscriptionDialogProps {
   planTier: string;
   amount: number;
   features?: string[];
+  variant?: 'default' | 'buying' | 'existing'; // Different color themes
 }
 
 const tierInfo: Record<string, { 
@@ -76,6 +77,31 @@ const tierInfo: Record<string, {
   }
 };
 
+// Variant-specific styling
+const variantStyles = {
+  default: {
+    headerGradient: 'from-primary/20 to-accent/20',
+    priceColor: 'text-primary',
+    buttonStyle: 'bg-primary hover:bg-primary/90',
+    accentBorder: 'border-primary/20',
+    iconBg: 'bg-primary/10',
+  },
+  buying: {
+    headerGradient: 'from-accent/20 to-teal-500/20',
+    priceColor: 'text-accent',
+    buttonStyle: 'bg-gradient-to-r from-accent to-teal-500 hover:from-accent/90 hover:to-teal-500/90',
+    accentBorder: 'border-accent/30',
+    iconBg: 'bg-accent/10',
+  },
+  existing: {
+    headerGradient: 'from-amber-500/20 to-orange-500/20',
+    priceColor: 'text-amber-600 dark:text-amber-400',
+    buttonStyle: 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600',
+    accentBorder: 'border-amber-500/30',
+    iconBg: 'bg-amber-500/10',
+  },
+};
+
 export const SubscriptionDialog = ({
   open,
   onOpenChange,
@@ -84,8 +110,10 @@ export const SubscriptionDialog = ({
   planTier,
   amount,
   features = [],
+  variant = 'default',
 }: SubscriptionDialogProps) => {
   const [loading, setLoading] = useState(false);
+  const styles = variantStyles[variant];
   const [showDiscountField, setShowDiscountField] = useState(false);
   const [discountCode, setDiscountCode] = useState("");
   const [discount, setDiscount] = useState<any>(null);
@@ -196,16 +224,16 @@ export const SubscriptionDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg p-0 overflow-hidden max-h-[90vh] overflow-y-auto">
+      <DialogContent className={`sm:max-w-lg p-0 overflow-hidden max-h-[90vh] overflow-y-auto border-2 ${styles.accentBorder}`}>
         {/* Header */}
-        <div className={`bg-gradient-to-r ${info.color} p-6 border-b`}>
+        <div className={`bg-gradient-to-r ${styles.headerGradient} p-6 border-b`}>
           <DialogHeader>
             <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 bg-background/80 backdrop-blur rounded-lg text-primary">
+              <div className={`p-2 ${styles.iconBg} backdrop-blur rounded-lg ${styles.priceColor}`}>
                 {info.icon}
               </div>
               {info.badge && (
-                <Badge className="bg-primary/90">{info.badge}</Badge>
+                <Badge className={variant === 'existing' ? 'bg-amber-500' : variant === 'buying' ? 'bg-accent' : 'bg-primary/90'}>{info.badge}</Badge>
               )}
             </div>
             <DialogTitle className="text-2xl font-bold">
@@ -214,7 +242,7 @@ export const SubscriptionDialog = ({
           </DialogHeader>
           
           <div className="flex items-baseline gap-1 mt-3">
-            <span className="text-4xl font-bold">${(finalAmount / 100).toFixed(2)}</span>
+            <span className={`text-4xl font-bold ${styles.priceColor}`}>${(finalAmount / 100).toFixed(2)}</span>
             <span className="text-muted-foreground">/month</span>
             {savings > 0 && (
               <Badge variant="outline" className="ml-2 text-green-600 border-green-600">
@@ -421,7 +449,7 @@ export const SubscriptionDialog = ({
           <Button
             onClick={handleSubscribe}
             disabled={loading || !termsAccepted || !email}
-            className="w-full h-12 text-base font-semibold"
+            className={`w-full h-12 text-base font-semibold text-white ${styles.buttonStyle}`}
             size="lg"
           >
             {loading ? (
