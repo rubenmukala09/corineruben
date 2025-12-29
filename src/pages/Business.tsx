@@ -19,17 +19,14 @@ import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { trackButtonClick, trackConversion } from "@/utils/analyticsTracker";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield, Lock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import heroBusinessTeam from "@/assets/hero-business-team.jpg";
-import heroBusinessInnovation from "@/assets/hero-business-innovation.jpg";
-import heroBusinessCity from "@/assets/hero-business-city.jpg";
-import heroBusinessLaptop from "@/assets/hero-business-laptop.jpg";
-import heroBusinessExecutive from "@/assets/hero-business-executive.jpg";
+import businessCollaboration from "@/assets/business-collaboration.jpg";
+import teamCollaboration from "@/assets/team-collaboration.jpg";
+import businessDiverse1 from "@/assets/business-diverse-1.jpg";
+import heroBusinessNew from "@/assets/hero-business-new.jpg";
+import heroBusinessProfessional from "@/assets/hero-business-professional.jpg";
+import heroBusiness3d from "@/assets/hero-business-3d.jpg";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
-import AgentTypeCards from "@/components/business/AgentTypeCards";
-import AIToolsSection from "@/components/business/AIToolsSection";
-import PricingFAQ, { AI_AGENT_FAQS, WEBSITE_FAQS, INSURANCE_FAQS } from "@/components/business/PricingFAQ";
-import NextStepsTimeline from "@/components/business/NextStepsTimeline";
 
 function Business() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -135,11 +132,11 @@ function Business() {
   };
 
   const businessHeroImages = [
-    { src: heroBusinessTeam, alt: "Diverse business team collaborating on AI solutions" },
-    { src: heroBusinessInnovation, alt: "Modern office workspace with technology" },
-    { src: heroBusinessCity, alt: "Smart city with business growth and AI connectivity" },
-    { src: heroBusinessLaptop, alt: "Professional working on business analytics" },
-    { src: heroBusinessExecutive, alt: "Executive boardroom with city view" }
+    { src: businessDiverse1, alt: "Diverse business team collaborating on AI solutions" },
+    { src: heroBusinessNew, alt: "Modern office workspace with technology" },
+    { src: heroBusinessProfessional, alt: "Professional business consultation meeting" },
+    { src: businessCollaboration, alt: "Team working together on digital transformation" },
+    { src: heroBusiness3d, alt: "3D visualization of business technology solutions" }
   ];
 
   return (
@@ -160,7 +157,7 @@ function Business() {
             className="transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:brightness-110"
           >
             <Link 
-              to="/get-started/ai-agents?plan=STARTER"
+              to="/contact?service=ai-automation"
               onClick={() => trackButtonClick('Build AI Automation', 'Business Hero')}
             >
               Build AI Automation
@@ -173,7 +170,7 @@ function Business() {
             className="transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:brightness-110"
           >
             <Link 
-              to="/get-started/website-design?plan=BUSINESS"
+              to="/contact?service=web-design"
               onClick={() => trackButtonClick('Design My Website', 'Business Hero')}
             >
               Design My Website
@@ -186,7 +183,7 @@ function Business() {
             className="transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:brightness-110"
           >
             <Link 
-              to="/buy/ai-insurance"
+              to="/contact?service=ai-insurance"
               onClick={() => trackButtonClick('Get AI Insurance', 'Business Hero')}
             >
               Get AI Insurance
@@ -270,9 +267,6 @@ function Business() {
         </div>
       </section>
 
-      {/* Agent Type Cards Section */}
-      <AgentTypeCards />
-
       {/* Veterans Discount Banner */}
       <section className="py-8 bg-gradient-to-r from-primary/10 to-accent/10">
         <div className="container mx-auto px-4">
@@ -355,7 +349,7 @@ function Business() {
                     className="w-full transition-all duration-300 md:hover:bg-primary/90 md:hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] md:hover:scale-[1.02] active:scale-95 h-11 md:h-10"
                   >
                     <Link 
-                      to="/get-started/ai-agents?plan=STARTER"
+                      to="/contact?service=ai-receptionist&plan=9500"
                       onClick={() => {
                         trackButtonClick('Get Started - AI Receptionist', 'Business Pricing');
                         trackConversion('business_ai_receptionist', 9500);
@@ -403,7 +397,7 @@ function Business() {
                     className="w-full transition-all duration-300 md:hover:bg-primary/90 md:hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] md:hover:scale-[1.02] active:scale-95 h-11 md:h-10"
                   >
                     <Link 
-                      to="/get-started/ai-agents?plan=PRO"
+                      to="/contact?service=automation&plan=12500"
                       onClick={() => {
                         trackButtonClick('Get Started - Full Automation', 'Business Pricing');
                         trackConversion('business_full_automation', 12500);
@@ -445,7 +439,7 @@ function Business() {
                     className="w-full transition-all duration-300 md:hover:bg-primary/90 md:hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)] md:hover:scale-[1.02] active:scale-95 h-11 md:h-10"
                   >
                     <Link 
-                      to="/get-started/ai-agents?plan=ENTERPRISE"
+                      to="/contact?service=custom&plan=25000"
                       onClick={() => {
                         trackButtonClick('Get Started - Custom Solution', 'Business Pricing');
                         trackConversion('business_custom_solution', 25000);
@@ -475,14 +469,6 @@ function Business() {
                 <span className="text-accent font-medium">Free Consultation</span>
               </div>
             </div>
-          </div>
-          
-          {/* FAQ for AI Agents */}
-          <PricingFAQ title="AI Agents FAQ" faqs={AI_AGENT_FAQS} />
-          
-          {/* Next Steps Timeline */}
-          <div className="mt-8">
-            <NextStepsTimeline />
           </div>
         </div>
       </section>
@@ -529,7 +515,7 @@ function Business() {
                     className="w-full transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)]"
                   >
                     <Link 
-                      to="/get-started/website-design?plan=BASIC"
+                      to="/contact?service=landing-page&price=1500"
                       onClick={() => {
                         trackButtonClick('Get Started - Landing Page', 'Business Website');
                         trackConversion('business_landing_page', 1500);
@@ -609,7 +595,7 @@ function Business() {
                   }}
                 >
                   <Link 
-                    to="/get-started/website-design?plan=BUSINESS"
+                    to="/contact?service=business-website&price=4500"
                     onClick={() => {
                       trackButtonClick('Get Started - Business Website', 'Business Website');
                       trackConversion('business_website', 4500);
@@ -676,7 +662,7 @@ function Business() {
                     className="w-full transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)]"
                   >
                     <Link 
-                      to="/get-started/website-design?plan=PREMIUM"
+                      to="/contact?service=ecommerce&price=8500"
                       onClick={() => {
                         trackButtonClick('Get Started - E-Commerce', 'Business Website');
                         trackConversion('business_ecommerce', 8500);
@@ -720,14 +706,10 @@ function Business() {
               </div>
             </div>
           </Card>
-          
-          {/* FAQ for Website Design */}
-          <PricingFAQ title="Website Design FAQ" faqs={WEBSITE_FAQS} />
         </div>
       </section>
 
-      {/* AI Tools Section */}
-      <AIToolsSection />
+      {/* AI Services Insurance */}
       <section id="insurance" className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -1004,9 +986,6 @@ function Business() {
               </div>
             </div>
           </Card>
-          
-          {/* FAQ for Insurance */}
-          <PricingFAQ title="AI Service Insurance FAQ" faqs={INSURANCE_FAQS} />
         </div>
       </section>
 
