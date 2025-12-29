@@ -4077,10 +4077,7 @@ export type Database = {
     Views: {
       testimonials_public: {
         Row: {
-          approved_at: string | null
           created_at: string | null
-          display_order: number | null
-          featured: boolean | null
           has_image: boolean | null
           has_video: boolean | null
           id: string | null
@@ -4088,16 +4085,10 @@ export type Database = {
           name: string | null
           primary_media_url: string | null
           rating: number | null
-          status: Database["public"]["Enums"]["testimonial_status"] | null
           story: string | null
-          submitted_at: string | null
-          updated_at: string | null
         }
         Insert: {
-          approved_at?: string | null
           created_at?: string | null
-          display_order?: number | null
-          featured?: boolean | null
           has_image?: boolean | null
           has_video?: boolean | null
           id?: string | null
@@ -4105,16 +4096,10 @@ export type Database = {
           name?: string | null
           primary_media_url?: string | null
           rating?: number | null
-          status?: Database["public"]["Enums"]["testimonial_status"] | null
           story?: string | null
-          submitted_at?: string | null
-          updated_at?: string | null
         }
         Update: {
-          approved_at?: string | null
           created_at?: string | null
-          display_order?: number | null
-          featured?: boolean | null
           has_image?: boolean | null
           has_video?: boolean | null
           id?: string | null
@@ -4122,10 +4107,7 @@ export type Database = {
           name?: string | null
           primary_media_url?: string | null
           rating?: number | null
-          status?: Database["public"]["Enums"]["testimonial_status"] | null
           story?: string | null
-          submitted_at?: string | null
-          updated_at?: string | null
         }
         Relationships: []
       }
