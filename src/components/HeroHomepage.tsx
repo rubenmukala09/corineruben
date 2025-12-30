@@ -1,26 +1,9 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Shield, ArrowRight, Lock, Eye, Fingerprint, ShieldCheck, Zap, Globe, Play } from "lucide-react";
-import heroHomeFamilySafe from "@/assets/hero-home-family-safe.jpg";
-import heroHomeSecurityConsult from "@/assets/hero-home-security-consult.jpg";
-import heroAbout1 from "@/assets/hero-about-1.jpg";
-import heroBusiness1 from "@/assets/hero-business-1.jpg";
-
-const heroImages = [{
-  src: heroHomeFamilySafe,
-  alt: "Happy family protected together"
-}, {
-  src: heroHomeSecurityConsult,
-  alt: "Security consultation meeting"
-}, {
-  src: heroAbout1,
-  alt: "Professional security"
-}, {
-  src: heroBusiness1,
-  alt: "Business security"
-}];
+import heroVideo from "@/assets/hero-homepage-video.mp4";
 
 const securityFeatures = [{
   icon: Lock,
@@ -81,41 +64,22 @@ const TypewriterText = ({ words, className }: { words: string[]; className?: str
   );
 };
 export const HeroHomepage = () => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex(prev => (prev + 1) % heroImages.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+
   return <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-background via-background to-purple-100/30">
-      {/* Transitioning Background Images - Seamless crossfade */}
+      {/* Video Background */}
       <div className="absolute inset-0">
-        {/* Base layer - previous image stays visible during transition */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${heroImages[(currentImageIndex - 1 + heroImages.length) % heroImages.length].src})` }}
-        />
-        
-        {/* Current image fades in on top */}
-        <AnimatePresence initial={false}>
-          <motion.div 
-            key={currentImageIndex} 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{
-              duration: 1.2,
-              ease: [0.4, 0, 0.2, 1]
-            }} 
-            className="absolute inset-0"
-          >
-            <img 
-              src={heroImages[currentImageIndex].src} 
-              alt={heroImages[currentImageIndex].alt} 
-              className="w-full h-full object-cover" 
-            />
-          </motion.div>
-        </AnimatePresence>
+        {/* Video element */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          onLoadedData={() => setVideoLoaded(true)}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+        >
+          <source src={heroVideo} type="video/mp4" />
+        </video>
         
         {/* Premium gradient overlay - harmonious purple tones */}
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-transparent" />
@@ -219,17 +183,6 @@ export const HeroHomepage = () => {
               </Button>
             </motion.div>
 
-            {/* Image indicators */}
-            <motion.div className="flex gap-3 mt-16" initial={{
-            opacity: 0
-          }} animate={{
-            opacity: 1
-          }} transition={{
-            delay: 0.8,
-            duration: 0.5
-          }}>
-              {heroImages.map((_, index) => <button key={index} onClick={() => setCurrentImageIndex(index)} className={`h-1 rounded-full transition-all duration-500 ${index === currentImageIndex ? "bg-primary w-12" : "bg-border w-8 hover:bg-muted-foreground/30"}`} />)}
-            </motion.div>
           </motion.div>
           
           {/* Right Content - Premium Security Visual */}
