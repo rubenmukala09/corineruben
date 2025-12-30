@@ -362,24 +362,14 @@ function LearnAndTrain() {
             </p>
           </div>
 
-          {/* Veteran Discount Notification Banner */}
-          <div className="max-w-4xl mx-auto mb-8">
-            <div className="bg-gradient-to-r from-blue-900/20 via-red-900/10 to-blue-900/20 border border-blue-500/30 rounded-2xl p-5 shadow-lg backdrop-blur-sm">
-              <div className="flex items-center justify-center gap-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-red-600 rounded-full flex items-center justify-center text-xl shadow-md shrink-0">
-                  🇺🇸
-                </div>
-                <div className="text-center">
-                  <p className="font-bold text-lg text-foreground flex items-center justify-center gap-2">
-                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                    Veterans & First Responders Save 10%
-                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                  </p>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Discount automatically applied during booking • Just mention your service at checkout
-                  </p>
-                </div>
-              </div>
+          {/* Veteran Discount Notification - Compact */}
+          <div className="flex justify-center mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-900/10 to-red-900/10 border border-blue-500/20 rounded-full text-sm">
+              <span>🇺🇸</span>
+              <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
+              <span className="font-medium">Veterans & First Responders Save 10%</span>
+              <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
+              <span className="text-muted-foreground text-xs">• Applied at checkout</span>
             </div>
           </div>
 
@@ -491,73 +481,80 @@ function LearnAndTrain() {
             </p>
           </div>
 
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {[
                 {
                   icon: MessageSquare,
                   step: "01",
-                  title: "Something Suspicious?",
-                  desc: "Strange text, urgent email, odd call, or suspicious link — anything that doesn't feel right.",
+                  title: "Suspicious?",
+                  desc: "Strange text, email, call, or link",
                   color: "from-blue-500 to-cyan-500",
                   bgColor: "from-blue-500/20 to-cyan-500/20",
-                  image: "📱"
+                  image: "📱",
+                  action: "Send it to us"
                 },
                 {
                   icon: Upload,
                   step: "02",
-                  title: "Forward to Us",
-                  desc: "Send it via email, text, screenshot upload, or call our hotline. We make it easy.",
-                  hasResponseTime: true,
+                  title: "Forward",
+                  desc: "Email, text, or screenshot",
+                  hasResponseTime: false,
                   color: "from-purple-500 to-pink-500",
                   bgColor: "from-purple-500/20 to-pink-500/20",
-                  image: "📤"
+                  image: "📤",
+                  action: "Easy upload"
                 },
                 {
                   icon: Search,
                   step: "03",
-                  title: "Expert Analysis",
-                  desc: "Our team examines content, verifies senders, checks links, and detects AI-generated content.",
+                  title: "Analyze",
+                  desc: "Expert team reviews threats",
                   color: "from-orange-500 to-red-500",
                   bgColor: "from-orange-500/20 to-red-500/20",
-                  image: "🔍"
+                  image: "🔍",
+                  action: "AI + Human review"
                 },
                 {
                   icon: FileCheck,
                   step: "04",
-                  title: "Clear Guidance",
-                  desc: "Receive risk level assessment, detailed explanation, recommended actions, and emergency scripts.",
+                  title: "Guidance",
+                  desc: "Get clear action steps",
                   color: "from-green-500 to-emerald-500",
                   bgColor: "from-green-500/20 to-emerald-500/20",
-                  image: "✅"
+                  image: "✅",
+                  action: "Stay protected"
                 },
               ].map((step, index) => (
-                <ScrollReveal key={index} animation="scale-in" delay={index * 150} threshold={0.3}>
+                <ScrollReveal key={index} animation="scale-in" delay={index * 100} threshold={0.3}>
                   <Card
-                    className="relative p-6 h-full hover:shadow-xl transition-all duration-500 hover:-translate-y-3 rounded-2xl border-border/50 group bg-gradient-to-br from-card to-card/50 backdrop-blur-sm overflow-hidden"
+                    className="relative p-4 h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 rounded-xl border-border/50 group bg-gradient-to-br from-card to-card/50 overflow-hidden"
                   >
-                    {/* Step Number Badge */}
-                    <div className={`absolute -top-1 -right-1 w-14 h-14 bg-gradient-to-br ${step.color} rounded-bl-3xl flex items-end justify-start p-2`}>
-                      <span className="text-xl font-black text-white">{step.step}</span>
+                    {/* Step Number Badge - Smaller */}
+                    <div className={`absolute -top-0.5 -right-0.5 w-10 h-10 bg-gradient-to-br ${step.color} rounded-bl-2xl flex items-end justify-start p-1.5`}>
+                      <span className="text-sm font-black text-white">{step.step}</span>
                     </div>
                     
-                    {/* Icon Container with Emoji */}
-                    <div className="flex justify-center mb-5">
+                    {/* Icon - Smaller */}
+                    <div className="flex justify-center mb-3">
                       <div 
-                        className={`w-16 h-16 bg-gradient-to-br ${step.bgColor} rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-lg`}
+                        className={`w-12 h-12 bg-gradient-to-br ${step.bgColor} rounded-xl flex items-center justify-center group-hover:scale-105 transition-all duration-300 shadow-md`}
                       >
-                        <span className="text-3xl">{step.image}</span>
+                        <span className="text-xl">{step.image}</span>
                       </div>
                     </div>
                     
-                    <h3 className="text-lg font-bold mb-2 text-center group-hover:text-primary transition-colors duration-300">
+                    <h3 className="text-sm font-bold mb-1 text-center group-hover:text-primary transition-colors">
                       {step.title}
                     </h3>
-                    <p className="text-muted-foreground text-center text-sm leading-relaxed">{step.desc}</p>
-                    {step.hasResponseTime && <ResponseTimeCallout />}
+                    <p className="text-muted-foreground text-center text-xs leading-relaxed mb-2">{step.desc}</p>
                     
-                    {/* Bottom Gradient Line */}
-                    <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${step.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+                    {/* Bottom Action */}
+                    <div className={`text-center pt-2 border-t border-border/30`}>
+                      <span className={`text-[10px] font-semibold bg-gradient-to-r ${step.color} bg-clip-text text-transparent`}>
+                        {step.action}
+                      </span>
+                    </div>
                   </Card>
                 </ScrollReveal>
               ))}
@@ -739,41 +736,18 @@ function LearnAndTrain() {
         </div>
       </section>
 
-      {/* Veterans Discount Notification Banner - Not a Button */}
-      <section className="py-10 bg-gradient-to-r from-primary/10 via-accent/5 to-primary/10">
+      {/* Veterans Discount - Compact Notification Strip */}
+      <section className="py-4 bg-gradient-to-r from-blue-900/5 via-transparent to-red-900/5 border-y border-border/30">
         <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <div className="bg-card/80 backdrop-blur-sm border border-primary/30 rounded-2xl p-8 shadow-lg">
-              <div className="flex flex-col lg:flex-row items-center gap-6">
-                <div className="flex-shrink-0">
-                  <div className="w-20 h-20 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center text-4xl shadow-xl">
-                    🇺🇸
-                  </div>
-                </div>
-                <div className="flex-1 text-center lg:text-left">
-                  <h3 className="text-2xl font-bold mb-2">Veterans & First Responders Save 10%</h3>
-                  <p className="text-muted-foreground mb-3">
-                    Active duty military, veterans, reservists, police, firefighters, and EMTs receive 10% OFF all training programs and protection plans.
-                  </p>
-                  <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
-                    <Badge variant="outline" className="bg-primary/5">✓ Discount applied at checkout</Badge>
-                    <Badge variant="outline" className="bg-primary/5">✓ Valid ID required</Badge>
-                    <Badge variant="outline" className="bg-primary/5">✓ Stackable with other offers</Badge>
-                  </div>
-                </div>
-                <div className="flex-shrink-0">
-                  <div className="text-center">
-                    <p className="text-sm text-muted-foreground mb-2">Questions?</p>
-                    <Link 
-                      to="/contact" 
-                      className="inline-flex items-center gap-2 text-primary font-semibold hover:underline"
-                    >
-                      Contact Us →
-                    </Link>
-                  </div>
-                </div>
-              </div>
+          <div className="flex flex-wrap items-center justify-center gap-3 text-sm">
+            <span className="text-lg">🇺🇸</span>
+            <div className="flex items-center gap-2">
+              <Star className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500" />
+              <span className="font-semibold">Veterans & First Responders: 10% OFF</span>
+              <Star className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500" />
             </div>
+            <span className="text-muted-foreground">•</span>
+            <span className="text-muted-foreground text-xs">Military, Police, Fire, EMT — discount applied at checkout</span>
           </div>
         </div>
       </section>
@@ -789,13 +763,26 @@ function LearnAndTrain() {
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-center mb-4 animate-fade-in-up">Choose Your Protection Level</h2>
-          <p className="text-center text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Subscribe monthly or save 5% with yearly plans. All plans can be cancelled anytime.
+          <p className="text-center text-base text-muted-foreground mb-4 max-w-3xl mx-auto">
+            Subscribe monthly and pay per use — your credits refill each billing cycle. Upload suspicious items and our team analyzes them. The more you use, the more credits consumed. <strong>Unused credits don't roll over.</strong>
           </p>
+          
+          {/* Credit System Explainer */}
+          <div className="max-w-2xl mx-auto mb-8">
+            <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-xl p-4 text-center">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <Zap className="w-4 h-4 text-primary" />
+                <span className="font-semibold text-sm">How Credits Work</span>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Each plan includes monthly credits. 1 submission = 1 credit used. Credits reset monthly. Upgrade anytime for more capacity.
+              </p>
+            </div>
+          </div>
 
           {/* Payment Period Toggle */}
-          <div className="flex items-center justify-center gap-4 mb-10">
-            <Label htmlFor="payment-toggle" className={`text-lg font-semibold ${!isYearly ? 'text-primary' : 'text-muted-foreground'}`}>
+          <div className="flex items-center justify-center gap-4 mb-8">
+            <Label htmlFor="payment-toggle" className={`text-base font-semibold ${!isYearly ? 'text-primary' : 'text-muted-foreground'}`}>
               Monthly
             </Label>
             <Switch
@@ -803,272 +790,280 @@ function LearnAndTrain() {
               checked={isYearly}
               onCheckedChange={setIsYearly}
             />
-            <Label htmlFor="payment-toggle" className={`text-lg font-semibold ${isYearly ? 'text-primary' : 'text-muted-foreground'}`}>
+            <Label htmlFor="payment-toggle" className={`text-base font-semibold ${isYearly ? 'text-primary' : 'text-muted-foreground'}`}>
               Yearly <span className="text-sm text-success">(Save 5%)</span>
             </Label>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Starter Plan */}
-            <Card
-              className="p-8 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-strong hover:brightness-110 rounded-2xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50"
-              style={{ animationDelay: "0ms" }}
-            >
-              <div className="flex justify-center mb-6">
-                <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
-                  <Shield className="w-10 h-10 text-primary" />
-                </div>
-              </div>
-              <h3 className="text-2xl font-bold mb-2 text-center">Starter Plan</h3>
-              <div className="text-center mb-2">
-                <span key={isYearly ? 'yearly-39' : 'monthly-39'} className="text-4xl font-bold text-primary price-flip inline-block">{getPlanPrice(39).display}</span>
-                <span className="text-muted-foreground">{getPlanPrice(39).period}</span>
-              </div>
-              {isYearly && (
-                <div className="text-center mb-2 fade-in-savings">
-                  <p className="text-sm text-success font-semibold">{getPlanPrice(39).savings}</p>
-                </div>
-              )}
-              <p className="text-center text-sm text-muted-foreground mb-6">Perfect for: Individuals</p>
-
-              <div className="space-y-3 mb-8">
-                {[
-                  "Unlimited threat submissions",
-                  "24-hour expert analysis",
-                  "Email & text support",
-                  "Risk assessment reports",
-                  "Monthly scam trend updates",
-                  "Access to Scam Alert Map",
-                  "Educational resources",
-                  "60-day money-back guarantee",
-                ].map((feature, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground text-sm">{feature}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mb-6 p-3 bg-primary/10 rounded-lg">
-                <div className="flex items-center gap-2 justify-center">
-                  <Mail className="w-5 h-5 text-primary" />
-                  <Upload className="w-5 h-5 text-primary" />
-                  <span className="text-xs font-medium">Email, Upload</span>
-                </div>
-              </div>
-
-              <Button 
-                onClick={() => {
-                  trackButtonClick('Get Started - Starter Plan', 'Training Page');
-                  handleSubscribe('price_1SZxa9J8osfwYbX7tTp519zb', 'ScamShield', 'Starter', 3900);
-                }}
-                variant="default" 
-                size="lg" 
-                className="w-full"
-              >
-                Get Started
-              </Button>
-            </Card>
-
-            {/* Family Plan - MOST POPULAR */}
-            <div className="relative">
-              <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
-                MOST POPULAR
+            <div className="relative pt-5">
+              <div className="absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-5 py-2 rounded-full text-xs font-bold tracking-wide shadow-lg z-20 whitespace-nowrap">
+                🌱 STARTER
               </div>
               <Card
-                className="p-8 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[0_20px_40px_rgba(109,40,217,0.2)] hover:brightness-110 rounded-2xl border-primary border-2 animate-fade-in-up bg-gradient-to-br from-card to-card/50"
+                className="p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-strong rounded-2xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50 h-full flex flex-col"
+                style={{ animationDelay: "0ms" }}
+              >
+                <div className="flex justify-center mb-4 pt-2">
+                  <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
+                    <Shield className="w-8 h-8 text-primary" />
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-center">Starter Plan</h3>
+                <div className="text-center mb-1">
+                  <span key={isYearly ? 'yearly-39' : 'monthly-39'} className="text-3xl font-bold text-primary">{getPlanPrice(39).display}</span>
+                  <span className="text-muted-foreground text-sm">{getPlanPrice(39).period}</span>
+                </div>
+                {isYearly && (
+                  <p className="text-center text-xs text-success font-semibold mb-2">{getPlanPrice(39).savings}</p>
+                )}
+                {!isYearly && <div className="h-4 mb-2" />}
+                
+                <div className="text-center mb-4 p-2 bg-primary/5 rounded-lg">
+                  <span className="text-xs font-medium text-primary">🎫 10 credits/month</span>
+                </div>
+
+                <div className="space-y-2 mb-4 flex-1">
+                  {[
+                    "24-hour expert analysis",
+                    "Email & text support",
+                    "Risk assessment reports",
+                    "Scam Alert Map access",
+                    "Educational resources",
+                  ].map((feature, index) => (
+                    <div key={index} className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                      <span className="text-foreground text-xs">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mb-4 p-2 bg-primary/10 rounded-lg">
+                  <div className="flex items-center gap-2 justify-center">
+                    <Mail className="w-4 h-4 text-primary" />
+                    <Upload className="w-4 h-4 text-primary" />
+                    <span className="text-[10px] font-medium">Email, Upload</span>
+                  </div>
+                </div>
+
+                <Button 
+                  onClick={() => {
+                    trackButtonClick('Get Started - Starter Plan', 'Training Page');
+                    handleSubscribe('price_1SZxa9J8osfwYbX7tTp519zb', 'ScamShield', 'Starter', 3900);
+                  }}
+                  variant="outline" 
+                  size="default" 
+                  className="w-full mt-auto"
+                >
+                  Get Started
+                </Button>
+              </Card>
+            </div>
+
+            {/* Family Plan - MOST POPULAR */}
+            <div className="relative pt-5">
+              <div className="absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-5 py-2 rounded-full text-xs font-bold tracking-wide shadow-lg z-20 whitespace-nowrap animate-pulse" style={{ animationDuration: '3s' }}>
+                ⭐ MOST POPULAR
+              </div>
+              <Card
+                className="p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(109,40,217,0.2)] rounded-2xl border-primary border-2 animate-fade-in-up bg-gradient-to-br from-card to-card/50 h-full flex flex-col"
                 style={{ animationDelay: "100ms" }}
               >
-                <div className="flex justify-center mb-6">
-                <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
-                  <Users className="w-10 h-10 text-primary" />
-                </div>
-              </div>
-              <h3 className="text-2xl font-bold mb-2 text-center">Family Plan</h3>
-              <div className="text-center mb-2">
-                <span key={isYearly ? 'yearly-79' : 'monthly-79'} className="text-4xl font-bold text-primary price-flip inline-block">{getPlanPrice(79).display}</span>
-                <span className="text-muted-foreground">{getPlanPrice(79).period}</span>
-              </div>
-              {isYearly && (
-                <div className="text-center mb-2 fade-in-savings">
-                  <p className="text-sm text-success font-semibold">{getPlanPrice(79).savings}</p>
-                </div>
-              )}
-              <p className="text-center text-sm text-muted-foreground mb-6">Perfect for: Families & couples</p>
-
-              <div className="space-y-3 mb-8">
-                <p className="font-semibold text-center mb-3">Everything in Starter PLUS:</p>
-                {[
-                  "Protect up to 5 family members",
-                  "12-hour priority response",
-                  "Phone support included",
-                  "Family Safety Vault (secure storage)",
-                  "Shared safe-word system",
-                  "Call verification assistance",
-                  "Quarterly family safety briefings",
-                  "Training discounts (20% off)",
-                ].map((feature, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground text-sm">{feature}</span>
+                <div className="flex justify-center mb-4 pt-2">
+                  <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
+                    <Users className="w-8 h-8 text-primary" />
                   </div>
-                ))}
-              </div>
-
-              <div className="mb-6 p-3 bg-primary/10 rounded-lg">
-                <div className="flex items-center gap-2 justify-center">
-                  <Mail className="w-4 h-4 text-primary" />
-                  <Upload className="w-4 h-4 text-primary" />
-                  <Phone className="w-4 h-4 text-primary" />
-                  <MessageSquare className="w-4 h-4 text-primary" />
-                  <span className="text-xs font-medium">All Methods</span>
                 </div>
-              </div>
+                <h3 className="text-xl font-bold mb-2 text-center">Family Plan</h3>
+                <div className="text-center mb-1">
+                  <span key={isYearly ? 'yearly-79' : 'monthly-79'} className="text-3xl font-bold text-primary">{getPlanPrice(79).display}</span>
+                  <span className="text-muted-foreground text-sm">{getPlanPrice(79).period}</span>
+                </div>
+                {isYearly && (
+                  <p className="text-center text-xs text-success font-semibold mb-2">{getPlanPrice(79).savings}</p>
+                )}
+                {!isYearly && <div className="h-4 mb-2" />}
+                
+                <div className="text-center mb-4 p-2 bg-primary/10 rounded-lg">
+                  <span className="text-xs font-medium text-primary">🎫 30 credits/month • 5 members</span>
+                </div>
 
-              <Button 
-                onClick={() => {
-                  trackButtonClick('Get Started - Family Plan', 'Training Page');
-                  handleSubscribe('price_1SZxaAJ8osfwYbX7ipmpazSu', 'ScamShield', 'Family', 7900);
-                }}
-                variant="default" 
-                size="lg" 
-                className="w-full"
-              >
-                Get Started
-              </Button>
-            </Card>
+                <div className="space-y-2 mb-4 flex-1">
+                  <p className="font-semibold text-center text-xs mb-2">Starter PLUS:</p>
+                  {[
+                    "12-hour priority response",
+                    "Phone support included",
+                    "Family Safety Vault",
+                    "Shared safe-word system",
+                    "20% training discount",
+                  ].map((feature, index) => (
+                    <div key={index} className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                      <span className="text-foreground text-xs">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mb-4 p-2 bg-primary/10 rounded-lg">
+                  <div className="flex items-center gap-2 justify-center">
+                    <Mail className="w-3.5 h-3.5 text-primary" />
+                    <Upload className="w-3.5 h-3.5 text-primary" />
+                    <Phone className="w-3.5 h-3.5 text-primary" />
+                    <MessageSquare className="w-3.5 h-3.5 text-primary" />
+                    <span className="text-[10px] font-medium">All Methods</span>
+                  </div>
+                </div>
+
+                <Button 
+                  onClick={() => {
+                    trackButtonClick('Get Started - Family Plan', 'Training Page');
+                    handleSubscribe('price_1SZxaAJ8osfwYbX7ipmpazSu', 'ScamShield', 'Family', 7900);
+                  }}
+                  variant="default" 
+                  size="default" 
+                  className="w-full mt-auto"
+                >
+                  Get Started
+                </Button>
+              </Card>
             </div>
 
             {/* Premium Plan */}
-            <Card
-              className="p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-2xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50"
-              style={{ animationDelay: "200ms" }}
-            >
-              <div className="flex justify-center mb-6">
-                <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center">
-                  <Award className="w-10 h-10 text-primary" />
-                </div>
+            <div className="relative pt-5">
+              <div className="absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-5 py-2 rounded-full text-xs font-bold tracking-wide shadow-lg z-20 whitespace-nowrap">
+                👑 PREMIUM
               </div>
-              <h3 className="text-2xl font-bold mb-2 text-center">Premium Plan</h3>
-              <div className="text-center mb-2">
-                <span key={isYearly ? 'yearly-129' : 'monthly-129'} className="text-4xl font-bold text-primary price-flip inline-block">{getPlanPrice(129).display}</span>
-                <span className="text-muted-foreground">{getPlanPrice(129).period}</span>
-              </div>
-              {isYearly && (
-                <div className="text-center mb-2 fade-in-savings">
-                  <p className="text-sm text-success font-semibold">{getPlanPrice(129).savings}</p>
-                </div>
-              )}
-              <p className="text-center text-sm text-muted-foreground mb-6">
-                Perfect for: High-risk individuals
-              </p>
-
-              <div className="space-y-3 mb-8">
-                <p className="font-semibold text-center mb-3">Everything in Family PLUS:</p>
-                {[
-                  "4-hour emergency response",
-                  "AI deepfake voice detection",
-                  '"Call Me Now" verification service',
-                  "Dedicated security advisor",
-                  "24/7 emergency hotline",
-                  "Proactive monitoring alerts",
-                  "Monthly 1-on-1 check-ins",
-                  "Custom threat briefings",
-                ].map((feature, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground text-sm">{feature}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mb-6 p-3 bg-primary/10 rounded-lg">
-                <div className="flex flex-col items-center gap-2">
-                  <div className="flex items-center gap-2">
-                    <Mail className="w-4 h-4 text-primary" />
-                    <Upload className="w-4 h-4 text-primary" />
-                    <Phone className="w-4 h-4 text-primary" />
-                    <MessageSquare className="w-4 h-4 text-primary" />
-                  </div>
-                  <span className="text-xs font-medium">+ Emergency Hotline</span>
-                </div>
-              </div>
-
-              <Button 
-                onClick={() => {
-                  trackButtonClick('Get Started - Premium Plan', 'Training Page');
-                  handleSubscribe('price_1SZxaBJ8osfwYbX7K5kna9vJ', 'ScamShield', 'Premium', 12900);
-                }}
-                variant="default" 
-                size="lg" 
-                className="w-full"
+              <Card
+                className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 rounded-2xl border-amber-500/30 animate-fade-in-up bg-gradient-to-br from-card to-card/50 h-full flex flex-col"
+                style={{ animationDelay: "200ms" }}
               >
-                Get Started
-              </Button>
-            </Card>
+                <div className="flex justify-center mb-4 pt-2">
+                  <div className="w-16 h-16 bg-gradient-to-br from-amber-500/20 to-orange-500/20 rounded-full flex items-center justify-center">
+                    <Award className="w-8 h-8 text-amber-500" />
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-center">Premium Plan</h3>
+                <div className="text-center mb-1">
+                  <span key={isYearly ? 'yearly-129' : 'monthly-129'} className="text-3xl font-bold text-amber-500">{getPlanPrice(129).display}</span>
+                  <span className="text-muted-foreground text-sm">{getPlanPrice(129).period}</span>
+                </div>
+                {isYearly && (
+                  <p className="text-center text-xs text-success font-semibold mb-2">{getPlanPrice(129).savings}</p>
+                )}
+                {!isYearly && <div className="h-4 mb-2" />}
+                
+                <div className="text-center mb-4 p-2 bg-amber-500/10 rounded-lg">
+                  <span className="text-xs font-medium text-amber-600 dark:text-amber-400">🎫 Unlimited credits • 4hr response</span>
+                </div>
+
+                <div className="space-y-2 mb-4 flex-1">
+                  <p className="font-semibold text-center text-xs mb-2">Family PLUS:</p>
+                  {[
+                    "AI deepfake detection",
+                    "Dedicated security advisor",
+                    "24/7 emergency hotline",
+                    "Proactive monitoring",
+                    "Monthly 1-on-1 check-ins",
+                  ].map((feature, index) => (
+                    <div key={index} className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-foreground text-xs">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mb-4 p-2 bg-amber-500/10 rounded-lg">
+                  <div className="flex flex-col items-center gap-1">
+                    <div className="flex items-center gap-2">
+                      <Mail className="w-3.5 h-3.5 text-amber-500" />
+                      <Upload className="w-3.5 h-3.5 text-amber-500" />
+                      <Phone className="w-3.5 h-3.5 text-amber-500" />
+                    </div>
+                    <span className="text-[10px] font-medium">+ Emergency Hotline</span>
+                  </div>
+                </div>
+
+                <Button 
+                  onClick={() => {
+                    trackButtonClick('Get Started - Premium Plan', 'Training Page');
+                    handleSubscribe('price_1SZxaBJ8osfwYbX7K5kna9vJ', 'ScamShield', 'Premium', 12900);
+                  }}
+                  variant="default" 
+                  size="default" 
+                  className="w-full mt-auto bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600"
+                >
+                  Get Started
+                </Button>
+              </Card>
+            </div>
 
             {/* Customized Plan for Businesses */}
-            <Card
-              className="p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] rounded-2xl border-accent/50 animate-fade-in-up bg-gradient-to-br from-card to-accent/5"
-              style={{ animationDelay: "300ms" }}
-            >
-              <div className="flex justify-center mb-6">
-                <div className="w-20 h-20 bg-gradient-to-br from-accent/20 to-primary/20 rounded-full flex items-center justify-center">
-                  <Users className="w-10 h-10 text-accent" />
-                </div>
+            <div className="relative pt-5">
+              <div className="absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r from-violet-600 to-purple-600 text-white px-5 py-2 rounded-full text-xs font-bold tracking-wide shadow-lg z-20 whitespace-nowrap">
+                🏢 ENTERPRISE
               </div>
-              <h3 className="text-2xl font-bold mb-2 text-center">Customized Plan</h3>
-              <div className="text-center mb-2">
-                <span className="text-4xl font-bold text-accent">From $229</span>
-                <span className="text-muted-foreground">/month</span>
-              </div>
-              <p className="text-center text-sm text-muted-foreground mb-6">
-                Perfect for: Businesses & organizations
-              </p>
-
-              <div className="space-y-3 mb-8">
-                <p className="font-semibold text-center mb-3">Custom tailored protection:</p>
-                {[
-                  "Unlimited team members",
-                  "Priority 2-hour response",
-                  "Dedicated account manager",
-                  "Custom training sessions",
-                  "Advanced threat monitoring",
-                  "Company-wide security protocols",
-                  "Quarterly security audits",
-                  "White-label reporting",
-                ].map((feature, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground text-sm">{feature}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mb-6 p-3 bg-accent/10 rounded-lg">
-                <div className="text-center">
-                  <p className="text-xs font-medium">Customizable based on business size and needs</p>
-                </div>
-              </div>
-
-              <Button 
-                asChild
-                variant="outline" 
-                size="lg" 
-                className="w-full text-primary border-primary hover:bg-primary hover:text-white transition-all duration-300"
+              <Card
+                className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 rounded-2xl border-violet-500/30 animate-fade-in-up bg-gradient-to-br from-card to-violet-500/5 h-full flex flex-col"
+                style={{ animationDelay: "300ms" }}
               >
-                <Link 
-                  to="/contact?subject=Custom Protection Plan"
-                  onClick={() => trackButtonClick('Request Quote - Custom Plan', 'Training Page')}
+                <div className="flex justify-center mb-4 pt-2">
+                  <div className="w-16 h-16 bg-gradient-to-br from-violet-500/20 to-purple-500/20 rounded-full flex items-center justify-center">
+                    <Users className="w-8 h-8 text-violet-500" />
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-center">Customized Plan</h3>
+                <div className="text-center mb-1">
+                  <span className="text-3xl font-bold text-violet-500">From $229</span>
+                  <span className="text-muted-foreground text-sm">/month</span>
+                </div>
+                <div className="h-4 mb-2" />
+                
+                <div className="text-center mb-4 p-2 bg-violet-500/10 rounded-lg">
+                  <span className="text-xs font-medium text-violet-600 dark:text-violet-400">🎫 Custom credits • Custom SLA</span>
+                </div>
+
+                <div className="space-y-2 mb-4 flex-1">
+                  <p className="font-semibold text-center text-xs mb-2">Custom tailored:</p>
+                  {[
+                    "Unlimited team members",
+                    "2-hour priority response",
+                    "Dedicated account manager",
+                    "Company-wide protocols",
+                    "Quarterly security audits",
+                  ].map((feature, index) => (
+                    <div key={index} className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-violet-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-foreground text-xs">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mb-4 p-2 bg-violet-500/10 rounded-lg">
+                  <div className="text-center">
+                    <p className="text-[10px] font-medium">Based on business size & needs</p>
+                  </div>
+                </div>
+
+                <Button 
+                  asChild
+                  variant="outline" 
+                  size="default" 
+                  className="w-full mt-auto border-violet-500/50 hover:bg-violet-500/10"
                 >
-                  Request Quote
-                </Link>
-              </Button>
-            </Card>
+                  <Link 
+                    to="/contact?subject=Custom Protection Plan"
+                    onClick={() => trackButtonClick('Request Quote - Custom Plan', 'Training Page')}
+                  >
+                    Request Quote
+                  </Link>
+                </Button>
+              </Card>
+            </div>
           </div>
 
-          <div className="text-center mt-8 animate-fade-in-up" style={{ animationDelay: "400ms" }}>
-            <p className="text-muted-foreground">All plans can be cancelled anytime. No long-term contracts required.</p>
+          <div className="text-center mt-6 animate-fade-in-up" style={{ animationDelay: "400ms" }}>
+            <p className="text-sm text-muted-foreground">Cancel anytime • Credits reset monthly • No long-term contracts</p>
           </div>
         </div>
       </section>
