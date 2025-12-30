@@ -39,11 +39,10 @@ import {
   Zap,
   Star,
 } from "lucide-react";
-import trainingSession from "@/assets/training-session.jpg";
-import heroTrainingSeniorsNew from "@/assets/hero-training-seniors-new.jpg";
-import heroTrainingNew from "@/assets/hero-training-new.jpg";
+import heroTrainingFamilyPark from "@/assets/hero-training-family-park.jpg";
+import heroTrainingMarket from "@/assets/hero-training-market.jpg";
+import heroTrainingCommunity from "@/assets/hero-training-community.jpg";
 import trainingDiverse2 from "@/assets/training-diverse-2.jpg";
-import heroTrainingWorkshop from "@/assets/hero-training-workshop.jpg";
 import TestimonialCard from "@/components/TestimonialCard";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
@@ -300,10 +299,10 @@ function LearnAndTrain() {
   };
 
   const trainingHeroImages = [
-    { src: heroTrainingSeniorsNew, alt: "Professional cybersecurity training for seniors" },
-    { src: heroTrainingNew, alt: "Modern training facilities and programs" },
-    { src: trainingDiverse2, alt: "Interactive learning environment" },
-    { src: heroTrainingWorkshop, alt: "Hands-on digital security workshop" }
+    { src: heroTrainingFamilyPark, alt: "Happy multigenerational family enjoying community event" },
+    { src: heroTrainingMarket, alt: "Seniors confidently shopping at farmers market" },
+    { src: heroTrainingCommunity, alt: "Joyful community gathering at outdoor festival" },
+    { src: trainingDiverse2, alt: "Interactive learning environment" }
   ];
 
   return (
@@ -317,6 +316,37 @@ function LearnAndTrain() {
         subheadline="Professional training programs and 24/7 protection services designed for real-world safety"
         showScrollIndicator={true}
       >
+        {/* Scrolling Services Ticker */}
+        <div className="mb-6 overflow-hidden relative">
+          <div className="flex animate-marquee whitespace-nowrap">
+            {[
+              "🛡️ Scam Prevention Training",
+              "👨‍👩‍👧‍👦 Family Safety Programs",
+              "📞 24/7 ScamShield Hotline",
+              "🎓 Senior Tech Classes",
+              "🔍 Deepfake Detection",
+              "📱 Phone Security Basics",
+              "💳 Financial Protection",
+              "🤝 Group Workshops",
+              "🛡️ Scam Prevention Training",
+              "👨‍👩‍👧‍👦 Family Safety Programs",
+              "📞 24/7 ScamShield Hotline",
+              "🎓 Senior Tech Classes",
+              "🔍 Deepfake Detection",
+              "📱 Phone Security Basics",
+              "💳 Financial Protection",
+              "🤝 Group Workshops",
+            ].map((service, idx) => (
+              <span
+                key={idx}
+                className="mx-4 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-white border border-white/20"
+              >
+                {service}
+              </span>
+            ))}
+          </div>
+        </div>
+
         <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center sm:justify-start">
           <Button 
             onClick={() => {

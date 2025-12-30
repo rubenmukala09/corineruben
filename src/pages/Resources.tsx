@@ -14,9 +14,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Download, Shield, ShoppingCart, Star, Loader2, Zap, Award, CheckCircle, Gift, BookOpen, Package, Sparkles, Users, TrendingUp } from "lucide-react";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { AIImageDisclaimer } from "@/components/AIImageDisclaimer";
-import heroResourcesMarketplace from "@/assets/hero-resources-marketplace.jpg";
-import heroResourcesNew from "@/assets/hero-resources-new.jpg";
-import heroResources from "@/assets/hero-resources.jpg";
+import heroResourcesOffice from "@/assets/hero-resources-office.jpg";
+import heroResourcesReading from "@/assets/hero-resources-reading.jpg";
+import heroResourcesProducts from "@/assets/hero-resources-products.jpg";
 import bookAiFundamentals from "@/assets/book-ai-fundamentals.jpg";
 import bookBeingRealAi from "@/assets/book-being-real-ai.jpg";
 import bookAuthPersonalities from "@/assets/book-auth-personalities.jpg";
@@ -25,19 +25,47 @@ import bookScamPrevention from "@/assets/book-scam-prevention.jpg";
 import bookFamilySafety from "@/assets/book-family-safety.jpg";
 import bookBusinessCyber from "@/assets/book-business-cyber.jpg";
 import bookAiManagement from "@/assets/book-ai-management.jpg";
+import bookDigitalPrivacy from "@/assets/book-digital-privacy.jpg";
+import bookSeniorTechSafety from "@/assets/book-senior-tech-safety.jpg";
+import bookDeepfakeDetection from "@/assets/book-deepfake-detection.jpg";
+import bookPasswordSecurity from "@/assets/book-password-security.jpg";
+import bookSocialMediaSafety from "@/assets/book-social-media-safety.jpg";
+import bookOnlineShopping from "@/assets/book-online-shopping.jpg";
+import bookIdentityTheft from "@/assets/book-identity-theft.jpg";
 import { SEO } from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
 
 // Static book products with covers
 const staticBooks = [
-  { id: 'book-ai-fundamentals', name: 'AI Fundamentals Book', description: 'Master the basics of artificial intelligence and how to protect yourself', price: 29.99, image: bookAiFundamentals, tag: 'Best Seller' },
-  { id: 'book-ai-management', name: 'AI Management Guide', description: 'Learn to manage AI tools effectively and securely in your workflow', price: 34.99, image: bookAiManagement, tag: 'New' },
-  { id: 'book-scam-prevention', name: 'Complete Scam Prevention Guide', description: 'Comprehensive guide to identifying and avoiding all types of scams', price: 39.99, image: bookScamPrevention, tag: 'Featured' },
-  { id: 'book-business-cyber', name: 'Business Cybersecurity', description: 'Enterprise-level security strategies for modern businesses', price: 49.99, image: bookBusinessCyber, tag: 'Professional' },
-  { id: 'book-family-safety', name: 'Family Safety Toolkit', description: 'Protect your entire family with practical safety protocols', price: 24.99, image: bookFamilySafety, tag: 'Family' },
-  { id: 'book-being-real-ai', name: 'Being Real in an AI World', description: 'Navigate authenticity and human connection in the age of AI', price: 27.99, image: bookBeingRealAi, tag: 'New Release' },
-  { id: 'book-auth-personalities', name: 'Second Authentication of Personalities', description: 'Advanced identity verification techniques for personal security', price: 32.99, image: bookAuthPersonalities, tag: 'Advanced' },
-  { id: 'book-auth-friendship-v2', name: 'Second Authentication of Friendship Vol. 2', description: 'Verify and protect your social connections from imposters', price: 29.99, image: bookAuthFriendshipV2, tag: 'Volume 2' },
+  { id: 'book-ai-fundamentals', name: 'AI Fundamentals', description: 'Master AI basics and protection strategies', price: 29.99, image: bookAiFundamentals, tag: 'Best Seller' },
+  { id: 'book-scam-prevention', name: 'Scam Prevention Guide', description: 'Comprehensive guide to avoiding scams', price: 39.99, image: bookScamPrevention, tag: 'Featured' },
+  { id: 'book-family-safety', name: 'Family Safety Toolkit', description: 'Practical family safety protocols', price: 24.99, image: bookFamilySafety, tag: 'Family' },
+  { id: 'book-senior-tech', name: 'Senior Tech Handbook', description: 'Tech safety for seniors', price: 27.99, image: bookSeniorTechSafety, tag: 'Seniors' },
+  { id: 'book-digital-privacy', name: 'Digital Privacy Mastery', description: 'Protect your online privacy', price: 34.99, image: bookDigitalPrivacy, tag: 'Popular' },
+  { id: 'book-deepfake', name: 'Deepfake Detection', description: 'Spot AI fakes and imposters', price: 32.99, image: bookDeepfakeDetection, tag: 'New' },
+  { id: 'book-password', name: 'Password Security', description: 'Secure all your accounts', price: 22.99, image: bookPasswordSecurity, tag: 'Essential' },
+  { id: 'book-social-media', name: 'Social Media Safety', description: 'Stay safe on social platforms', price: 26.99, image: bookSocialMediaSafety, tag: 'Trending' },
+  { id: 'book-online-shopping', name: 'Online Shopping Guide', description: 'Shop safely anywhere', price: 24.99, image: bookOnlineShopping, tag: 'Practical' },
+  { id: 'book-identity-theft', name: 'Identity Theft Prevention', description: 'Protect your identity', price: 36.99, image: bookIdentityTheft, tag: 'Critical' },
+  { id: 'book-business-cyber', name: 'Business Cybersecurity', description: 'Enterprise security strategies', price: 49.99, image: bookBusinessCyber, tag: 'Professional' },
+  { id: 'book-ai-management', name: 'AI Management Guide', description: 'Manage AI tools securely', price: 34.99, image: bookAiManagement, tag: 'Business' },
+  { id: 'book-being-real-ai', name: 'Being Real in AI World', description: 'Authenticity in the AI age', price: 27.99, image: bookBeingRealAi, tag: 'Philosophy' },
+  { id: 'book-auth-personalities', name: 'Auth of Personalities', description: 'Advanced identity verification', price: 32.99, image: bookAuthPersonalities, tag: 'Advanced' },
+  { id: 'book-auth-friendship-v2', name: 'Auth of Friendship V2', description: 'Verify social connections', price: 29.99, image: bookAuthFriendshipV2, tag: 'Volume 2' },
+];
+
+// Static physical products
+const staticPhysicalProducts = [
+  { id: 'prod-usb-key', name: 'Security USB Key', description: 'Hardware 2FA authentication device', price: 49.99, image: '/placeholder.svg', tag: 'Best Seller' },
+  { id: 'prod-privacy-screen', name: 'Privacy Screen 15"', description: 'Anti-spy screen protector for laptops', price: 39.99, image: '/placeholder.svg', tag: 'Popular' },
+  { id: 'prod-webcam-cover', name: 'Webcam Cover Pack (6)', description: 'Sliding webcam privacy covers', price: 12.99, image: '/placeholder.svg', tag: 'Essential' },
+  { id: 'prod-rfid-wallet', name: 'RFID Blocking Wallet', description: 'Protect cards from wireless theft', price: 34.99, image: '/placeholder.svg', tag: 'Protection' },
+  { id: 'prod-faraday-bag', name: 'Faraday Phone Bag', description: 'Block all signals to your phone', price: 29.99, image: '/placeholder.svg', tag: 'Privacy' },
+  { id: 'prod-password-book', name: 'Password Organizer', description: 'Secure offline password storage', price: 18.99, image: '/placeholder.svg', tag: 'Practical' },
+  { id: 'prod-shredder', name: 'Document Shredder Mini', description: 'Compact cross-cut shredder', price: 89.99, image: '/placeholder.svg', tag: 'Office' },
+  { id: 'prod-safe-box', name: 'Fireproof Document Safe', description: 'Protect important documents', price: 129.99, image: '/placeholder.svg', tag: 'Premium' },
+  { id: 'prod-cable-lock', name: 'Laptop Cable Lock', description: 'Secure your laptop anywhere', price: 24.99, image: '/placeholder.svg', tag: 'Travel' },
+  { id: 'prod-vpn-router', name: 'VPN Home Router', description: 'Whole-home privacy protection', price: 179.99, image: '/placeholder.svg', tag: 'Advanced' },
 ];
 
 function Resources() {
@@ -110,9 +138,9 @@ function Resources() {
   };
 
   const resourcesHeroImages = [
-    { src: heroResourcesMarketplace, alt: "Safety resources and training marketplace" },
-    { src: heroResourcesNew, alt: "Educational materials and guides" },
-    { src: heroResources, alt: "Community accessing helpful resources" }
+    { src: heroResourcesOffice, alt: "Modern home office with security books" },
+    { src: heroResourcesReading, alt: "Family reading safety guides together" },
+    { src: heroResourcesProducts, alt: "Security gadgets and safety products" }
   ];
 
   return (
@@ -128,7 +156,38 @@ function Resources() {
         headline="Your Digital Safety Arsenal"
         subheadline="Premium guides, tools, and products to protect what matters most"
         showScrollIndicator={true}
-      />
+      >
+        {/* Scrolling Products Ticker */}
+        <div className="mb-6 overflow-hidden relative">
+          <div className="flex animate-marquee whitespace-nowrap">
+            {[
+              "📚 E-Books & Guides",
+              "🔐 Security Devices",
+              "📖 Printed Books",
+              "🛡️ Privacy Tools",
+              "🎁 Bundle Deals",
+              "📄 Free Resources",
+              "💳 Safe Shopping",
+              "🔑 Password Tools",
+              "📚 E-Books & Guides",
+              "🔐 Security Devices",
+              "📖 Printed Books",
+              "🛡️ Privacy Tools",
+              "🎁 Bundle Deals",
+              "📄 Free Resources",
+              "💳 Safe Shopping",
+              "🔑 Password Tools",
+            ].map((product, idx) => (
+              <span
+                key={idx}
+                className="mx-4 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-white border border-white/20"
+              >
+                {product}
+              </span>
+            ))}
+          </div>
+        </div>
+      </Hero>
 
       <TrustBar />
 
@@ -210,7 +269,7 @@ function Resources() {
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-3 md:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-3">
             {staticBooks.map((book, index) => (
               <ScrollReveal key={book.id} delay={index * 50}>
                 <Card className="group p-3 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-border/50 hover:border-primary/30 relative overflow-hidden bg-card h-full flex flex-col">
@@ -316,105 +375,77 @@ function Resources() {
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-            {isLoading ? (
-              [...Array(4)].map((_, i) => (
-                <Card key={i} className="overflow-hidden">
-                  <Skeleton className="w-full aspect-square" />
-                  <div className="p-3">
-                    <Skeleton className="h-4 w-3/4 mb-2" />
-                    <Skeleton className="h-3 w-1/2" />
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
+            {staticPhysicalProducts.map((product, index) => (
+              <ScrollReveal key={product.id} delay={index * 50}>
+                <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-border/50 hover:border-primary/30 overflow-hidden h-full flex flex-col">
+                  {/* Tag Badge */}
+                  <Badge className="absolute top-2 right-2 text-[9px] px-1.5 py-0.5 bg-gradient-to-r from-primary to-accent text-white z-10">
+                    {product.tag}
+                  </Badge>
+                  
+                  {/* Image */}
+                  <div className="aspect-square bg-gradient-to-br from-secondary/50 to-secondary/20 relative overflow-hidden flex items-center justify-center">
+                    <Shield className="w-12 h-12 text-primary/30 group-hover:scale-110 transition-transform duration-300" />
                   </div>
-                </Card>
-              ))
-            ) : error ? (
-              <div className="col-span-full text-center py-8">
-                <p className="text-destructive text-sm">Error loading products. Please try again.</p>
-              </div>
-            ) : physicalProducts.length === 0 ? (
-              <div className="col-span-full text-center py-8">
-                <div className="max-w-md mx-auto">
-                  <Package className="w-12 h-12 text-muted-foreground/50 mx-auto mb-3" />
-                  <p className="text-muted-foreground text-sm mb-2">Physical products coming soon!</p>
-                  <p className="text-xs text-muted-foreground">Check back for security gadgets, privacy tools, and protective devices.</p>
-                </div>
-              </div>
-            ) : (
-              physicalProducts.map((product, index) => (
-                <ScrollReveal key={product.id} delay={index * 50}>
-                  <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-border/50 hover:border-primary/30 overflow-hidden h-full flex flex-col">
-                    {/* Image */}
-                    <div className="aspect-square bg-secondary/30 relative overflow-hidden">
-                      {product.featured_image_url ? (
-                        <img 
-                          src={product.featured_image_url} 
-                          alt={product.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <Shield className="w-12 h-12 text-muted-foreground/30" />
-                        </div>
-                      )}
-                      {index === 0 && (
-                        <Badge className="absolute top-2 left-2 text-[9px] bg-emerald-500 text-white">
-                          <CheckCircle className="w-2.5 h-2.5 mr-0.5" /> Top Rated
-                        </Badge>
-                      )}
+                  
+                  {/* Content */}
+                  <div className="p-2 flex-1 flex flex-col">
+                    <h3 className="text-[10px] md:text-xs font-bold mb-1 text-foreground group-hover:text-primary transition-colors line-clamp-1">
+                      {product.name}
+                    </h3>
+                    <p className="text-[8px] text-muted-foreground mb-1 line-clamp-2 flex-1">
+                      {product.description}
+                    </p>
+                    
+                    <div className="flex gap-1 mb-1 flex-wrap">
+                      <span className="text-[7px] px-1 py-0.5 bg-blue-500/10 text-blue-600 rounded-full">
+                        🚚 Free Ship
+                      </span>
+                      <span className="text-[7px] px-1 py-0.5 bg-success/10 text-success rounded-full">
+                        ✓ Warranty
+                      </span>
                     </div>
                     
-                    {/* Content */}
-                    <div className="p-3 flex-1 flex flex-col">
-                      <h3 className="text-xs md:text-sm font-bold mb-1 text-foreground group-hover:text-primary transition-colors line-clamp-1">
-                        {product.name}
-                      </h3>
-                      
-                      <div className="flex gap-1 mb-2 flex-wrap">
-                        <span className="text-[8px] px-1.5 py-0.5 bg-blue-500/10 text-blue-600 rounded-full">
-                          🚚 Free Ship
-                        </span>
-                        <span className="text-[8px] px-1.5 py-0.5 bg-success/10 text-success rounded-full">
-                          ✓ Warranty
-                        </span>
-                      </div>
-                      
-                      {/* Rating */}
-                      <div className="flex items-center gap-1 mb-2">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className={`w-2.5 h-2.5 ${i < Math.floor(product.rating_average || 4.5) ? 'fill-amber-400 text-amber-400' : 'text-muted'}`} />
-                        ))}
-                      </div>
-
-                      {/* Price and Action */}
-                      <div className="mt-auto pt-2 border-t border-border/50">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-base font-bold text-primary">
-                            ${(product.sale_price || product.base_price).toFixed(0)}
-                          </span>
-                          <span className="text-[8px] text-success">🎖️ Vets 10%</span>
-                        </div>
-                        <Button 
-                          size="sm"
-                          className="w-full text-[10px] h-7"
-                          onClick={() => {
-                            addItem({
-                              id: product.id,
-                              productId: product.id,
-                              name: product.name,
-                              price: product.sale_price || product.base_price,
-                              image: product.featured_image_url
-                            });
-                          }}
-                        >
-                          <ShoppingCart className="w-3 h-3 mr-1" />
-                          Add to Cart
-                        </Button>
-                      </div>
+                    {/* Rating */}
+                    <div className="flex items-center gap-0.5 mb-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-2 h-2 fill-amber-400 text-amber-400" />
+                      ))}
+                      <span className="text-[7px] text-muted-foreground ml-1">5.0</span>
                     </div>
-                  </Card>
-                </ScrollReveal>
-              ))
-            )}
+
+                    {/* Price and Action */}
+                    <div className="mt-auto pt-1 border-t border-border/50">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-sm font-bold text-primary">${product.price}</span>
+                        <span className="text-[7px] text-success">🎖️ Vets 10%</span>
+                      </div>
+                      <Button 
+                        size="sm"
+                        className="w-full text-[9px] h-6"
+                        onClick={() => {
+                          addItem({
+                            id: product.id,
+                            productId: product.id,
+                            name: product.name,
+                            price: product.price,
+                            image: product.image
+                          });
+                          toast({
+                            title: "Added to Cart",
+                            description: `${product.name} has been added to your cart.`,
+                          });
+                        }}
+                      >
+                        <ShoppingCart className="w-2.5 h-2.5 mr-1" />
+                        Add to Cart
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              </ScrollReveal>
+            ))}
           </div>
         </div>
       </section>
