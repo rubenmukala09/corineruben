@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { BookingModal } from "@/components/BookingModal";
@@ -46,6 +47,13 @@ import trainingDiverse2 from "@/assets/training-diverse-2.jpg";
 import TestimonialCard from "@/components/TestimonialCard";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
+
+// Rotating hero headlines for Training page
+const trainingHeadlines = [
+  "Learn How to Recognize and Stop Scams",
+  "Professional Training Programs 24/7",
+  "Protection Services for Real-World Safety"
+];
 
 function ResponseTimeCallout() {
   const { count: standardCount, ref: standardRef } = useCounterAnimation({ 
@@ -231,6 +239,15 @@ function LearnAndTrain() {
   const [trainingTestimonials, setTrainingTestimonials] = useState<any[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string } | null>(null);
   const [expandedThreat, setExpandedThreat] = useState<string | null>(null);
+  const [currentHeadlineIndex, setCurrentHeadlineIndex] = useState(0);
+
+  // Rotate headlines
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentHeadlineIndex((prev) => (prev + 1) % trainingHeadlines.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     checkAdminStatus();
@@ -312,26 +329,27 @@ function LearnAndTrain() {
       {/* Hero Section */}
       <Hero
         backgroundImages={trainingHeroImages}
-        headline="Learn How to Recognize and Stop Scams"
-        subheadline="Professional training programs and 24/7 protection services designed for real-world safety"
+        headline=""
+        subheadline=""
         showScrollIndicator={true}
       >
-        {/* Rotating Headlines */}
-        <div className="mb-6 flex flex-wrap gap-3 justify-center sm:justify-start">
-          {[
-            "Learn How to Recognize and Stop Scams",
-            "Professional Training Programs",
-            "Family Safety Education",
-            "Senior-Friendly Classes",
-          ].map((headline, idx) => (
-            <span
-              key={idx}
-              className="px-5 py-2.5 bg-white/15 backdrop-blur-sm rounded-full text-sm font-semibold text-white border border-white/25 animate-pulse"
-              style={{ animationDelay: `${idx * 0.5}s`, animationDuration: '3s' }}
+        {/* Transitioning Headlines */}
+        <div className="text-center mb-6">
+          <AnimatePresence mode="wait">
+            <motion.h1
+              key={currentHeadlineIndex}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4"
             >
-              {headline}
-            </span>
-          ))}
+              {trainingHeadlines[currentHeadlineIndex]}
+            </motion.h1>
+          </AnimatePresence>
+          <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
+            Expert-led training and 24/7 protection services designed for families and seniors
+          </p>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center sm:justify-start">

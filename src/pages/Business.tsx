@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
@@ -21,6 +22,14 @@ import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { trackButtonClick, trackConversion } from "@/utils/analyticsTracker";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield, Lock, Sparkles, FileText } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+
+// Rotating hero headlines for Business page
+const businessHeadlines = [
+  "Grow Your Business with Secure AI Solutions",
+  "Custom AI Automation for Your Business",
+  "Professional Website Design & Development",
+  "Industry-Leading AI Service Insurance"
+];
 import heroBusinessSuccess1 from "@/assets/hero-business-success-1.jpg";
 import heroBusinessSuccess2 from "@/assets/hero-business-success-2.jpg";
 import heroBusinessDiverse3 from "@/assets/hero-business-diverse-3.jpg";
@@ -34,6 +43,7 @@ function Business() {
   const [subscriptionDialogOpen, setSubscriptionDialogOpen] = useState(false);
   const [inquiryDialogOpen, setInquiryDialogOpen] = useState(false);
   const [websiteInsuranceOpen, setWebsiteInsuranceOpen] = useState(false);
+  const [currentHeadlineIndex, setCurrentHeadlineIndex] = useState(0);
   const [selectedInquiry, setSelectedInquiry] = useState<{
     name: string;
     price: number;
@@ -59,6 +69,14 @@ function Business() {
   const [isLoading, setIsLoading] = useState(true);
   const [businessTestimonials, setBusinessTestimonials] = useState<any[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string } | null>(null);
+
+  // Rotate headlines
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentHeadlineIndex((prev) => (prev + 1) % businessHeadlines.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
   // Counter animations for pricing cards
   const price1Counter = useCounterAnimation({ end: 9500, duration: 1500, prefix: '$' });
   const price2Counter = useCounterAnimation({ end: 12500, duration: 1500, prefix: '$' });
@@ -154,26 +172,27 @@ function Business() {
 
       <Hero
         backgroundImages={businessHeroImages}
-        headline="Grow Your Business with Secure AI Solutions"
-        subheadline="Custom AI automation, professional websites, and industry-leading AI Service Insurance"
+        headline=""
+        subheadline=""
         showScrollIndicator={true}
       >
-        {/* Rotating Headlines */}
-        <div className="mb-8 flex flex-wrap gap-3 justify-center sm:justify-start">
-          {[
-            "Grow Your Business with Secure AI Solutions",
-            "Custom AI Automation",
-            "Professional Website Design",
-            "Industry-Leading AI Insurance",
-          ].map((headline, idx) => (
-            <span
-              key={idx}
-              className="px-5 py-2.5 bg-white/15 backdrop-blur-sm rounded-full text-sm font-semibold text-white border border-white/25 animate-pulse"
-              style={{ animationDelay: `${idx * 0.5}s`, animationDuration: '3s' }}
+        {/* Transitioning Headlines */}
+        <div className="text-center mb-6">
+          <AnimatePresence mode="wait">
+            <motion.h1
+              key={currentHeadlineIndex}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4"
             >
-              {headline}
-            </span>
-          ))}
+              {businessHeadlines[currentHeadlineIndex]}
+            </motion.h1>
+          </AnimatePresence>
+          <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
+            Transform your business with AI-powered solutions, professional websites, and expert security
+          </p>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4">
