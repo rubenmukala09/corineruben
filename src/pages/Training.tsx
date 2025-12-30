@@ -316,35 +316,22 @@ function LearnAndTrain() {
         subheadline="Professional training programs and 24/7 protection services designed for real-world safety"
         showScrollIndicator={true}
       >
-        {/* Scrolling Services Ticker */}
-        <div className="mb-6 overflow-hidden relative">
-          <div className="flex animate-marquee whitespace-nowrap">
-            {[
-              "🛡️ Scam Prevention Training",
-              "👨‍👩‍👧‍👦 Family Safety Programs",
-              "📞 24/7 ScamShield Hotline",
-              "🎓 Senior Tech Classes",
-              "🔍 Deepfake Detection",
-              "📱 Phone Security Basics",
-              "💳 Financial Protection",
-              "🤝 Group Workshops",
-              "🛡️ Scam Prevention Training",
-              "👨‍👩‍👧‍👦 Family Safety Programs",
-              "📞 24/7 ScamShield Hotline",
-              "🎓 Senior Tech Classes",
-              "🔍 Deepfake Detection",
-              "📱 Phone Security Basics",
-              "💳 Financial Protection",
-              "🤝 Group Workshops",
-            ].map((service, idx) => (
-              <span
-                key={idx}
-                className="mx-4 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-white border border-white/20"
-              >
-                {service}
-              </span>
-            ))}
-          </div>
+        {/* Rotating Headlines */}
+        <div className="mb-6 flex flex-wrap gap-3 justify-center sm:justify-start">
+          {[
+            "Learn How to Recognize and Stop Scams",
+            "Professional Training Programs",
+            "Family Safety Education",
+            "Senior-Friendly Classes",
+          ].map((headline, idx) => (
+            <span
+              key={idx}
+              className="px-5 py-2.5 bg-white/15 backdrop-blur-sm rounded-full text-sm font-semibold text-white border border-white/25 animate-pulse"
+              style={{ animationDelay: `${idx * 0.5}s`, animationDuration: '3s' }}
+            >
+              {headline}
+            </span>
+          ))}
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center sm:justify-start">

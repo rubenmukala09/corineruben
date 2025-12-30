@@ -158,35 +158,22 @@ function Business() {
         subheadline="Custom AI automation, professional websites, and industry-leading AI Service Insurance"
         showScrollIndicator={true}
       >
-        {/* Scrolling Services Ticker */}
-        <div className="mb-8 overflow-hidden relative">
-          <div className="flex animate-marquee whitespace-nowrap">
-            {[
-              "🤖 AI Receptionist",
-              "📧 Email Automation",
-              "💬 Customer Support Bots",
-              "📅 Smart Scheduling",
-              "🌐 Professional Websites",
-              "🛡️ AI Insurance",
-              "📊 Business Analytics",
-              "🔒 Cybersecurity Training",
-              "🤖 AI Receptionist",
-              "📧 Email Automation",
-              "💬 Customer Support Bots",
-              "📅 Smart Scheduling",
-              "🌐 Professional Websites",
-              "🛡️ AI Insurance",
-              "📊 Business Analytics",
-              "🔒 Cybersecurity Training",
-            ].map((service, idx) => (
-              <span
-                key={idx}
-                className="mx-4 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-white border border-white/20"
-              >
-                {service}
-              </span>
-            ))}
-          </div>
+        {/* Rotating Headlines */}
+        <div className="mb-8 flex flex-wrap gap-3 justify-center sm:justify-start">
+          {[
+            "Grow Your Business with Secure AI Solutions",
+            "Custom AI Automation",
+            "Professional Website Design",
+            "Industry-Leading AI Insurance",
+          ].map((headline, idx) => (
+            <span
+              key={idx}
+              className="px-5 py-2.5 bg-white/15 backdrop-blur-sm rounded-full text-sm font-semibold text-white border border-white/25 animate-pulse"
+              style={{ animationDelay: `${idx * 0.5}s`, animationDuration: '3s' }}
+            >
+              {headline}
+            </span>
+          ))}
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4">

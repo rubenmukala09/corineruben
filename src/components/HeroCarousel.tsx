@@ -1,7 +1,6 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDeviceCapabilities } from "@/hooks/useDeviceCapabilities";
-import { Play, Pause } from "lucide-react";
 
 interface HeroImage {
   src: string;
@@ -20,20 +19,17 @@ const heroImageCache = new Map<string, boolean>();
 export const HeroCarousel = ({ 
   images, 
   interval = 5000,
-  transitionDuration = 0.6 
+  transitionDuration = 0.8 
 }: HeroCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const [imagesReady, setImagesReady] = useState(false);
   const { isLowEnd, prefersReducedMotion } = useDeviceCapabilities();
   
-  // Faster transitions for better UX
-  const adjustedTransitionDuration = isLowEnd ? 0.3 : transitionDuration;
+  const adjustedTransitionDuration = isLowEnd ? 0.5 : transitionDuration;
 
   // Preload all images immediately on mount
   const preloadAllImages = useCallback(() => {
     let loadedCount = 0;
-    const totalImages = images.length;
     
     images.forEach((img, index) => {
       if (heroImageCache.has(img.src)) {
@@ -46,7 +42,6 @@ export const HeroCarousel = ({
       image.onload = () => {
         heroImageCache.set(img.src, true);
         loadedCount++;
-        // Set ready after first image loads
         if (loadedCount >= 1) setImagesReady(true);
       };
       image.onerror = () => {
@@ -54,7 +49,6 @@ export const HeroCarousel = ({
         loadedCount++;
         if (loadedCount >= 1) setImagesReady(true);
       };
-      // High priority for first image, low for rest
       image.fetchPriority = index === 0 ? 'high' : 'low';
       image.decoding = 'async';
       image.src = img.src;
@@ -66,22 +60,14 @@ export const HeroCarousel = ({
   }, [preloadAllImages]);
 
   useEffect(() => {
-    if (!imagesReady || isPaused) return;
+    if (!imagesReady || prefersReducedMotion) return;
 
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
     }, interval);
 
     return () => clearInterval(timer);
-  }, [images.length, interval, imagesReady, isPaused]);
-
-  // Respect prefers-reduced-motion
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mediaQuery.matches) {
-      setIsPaused(true);
-    }
-  }, []);
+  }, [images.length, interval, imagesReady, prefersReducedMotion]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -97,46 +83,37 @@ export const HeroCarousel = ({
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [images.length]);
 
+  // Get previous index for crossfade layering
+  const prevIndex = (currentIndex - 1 + images.length) % images.length;
+
   return (
-    <div 
-      className="absolute inset-0"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-    >
-      {/* Persistent gradient background - prevents white flash */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#1e3a8a] via-[#3b0764] to-[#0d9488]" />
+    <div className="absolute inset-0 overflow-hidden">
+      {/* Base dark background - prevents any flash */}
+      <div className="absolute inset-0 bg-slate-900" />
       
-      {/* First image as immediate fallback */}
-      {images.length > 0 && (
+      {/* Previous image layer (underneath) - stays visible during transition */}
+      {imagesReady && (
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-300"
-          style={{
-            backgroundImage: `url(${images[0].src})`,
-            opacity: imagesReady ? 0.2 : 1,
-          }}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${images[prevIndex].src})` }}
         />
       )}
       
-      {/* Main carousel with crossfade */}
-      <AnimatePresence mode="sync" initial={false}>
+      {/* Current image with fade-in (on top) */}
+      <AnimatePresence initial={false}>
         <motion.div
           key={currentIndex}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
           transition={{
-            opacity: { 
-              duration: adjustedTransitionDuration, 
-              ease: "easeInOut"
-            }
+            duration: adjustedTransitionDuration,
+            ease: [0.4, 0, 0.2, 1]
           }}
           className="absolute inset-0"
         >
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: `url(${images[currentIndex].src})`,
-            }}
+            style={{ backgroundImage: `url(${images[currentIndex].src})` }}
             role="img"
             aria-label={images[currentIndex].alt}
           />

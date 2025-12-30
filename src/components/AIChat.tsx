@@ -299,10 +299,10 @@ export const AIChat = () => {
   if (!isOpen) {
     return (
       <div className="fixed bottom-6 right-6 z-50 group">
-        {/* Main button with Laura avatar */}
+        {/* Main button with Laura avatar - transparent background */}
         <button
           onClick={openChat}
-          className="relative w-16 h-16 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 overflow-hidden border-3 border-primary/30 bg-gradient-to-br from-primary/10 to-accent/10"
+          className="relative w-14 h-14 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 overflow-hidden"
         >
           <img 
             src={lauraAvatar} 
@@ -311,16 +311,13 @@ export const AIChat = () => {
           />
           
           {/* Online indicator */}
-          <div className="absolute bottom-0.5 right-0.5 w-4 h-4 rounded-full bg-green-500 border-2 border-white animate-pulse" />
-          
-          {/* Subtle glow */}
-          <div className="absolute inset-0 rounded-full ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all" />
+          <div className="absolute bottom-0.5 right-0.5 w-3 h-3 rounded-full bg-green-500 border-2 border-white" />
         </button>
         
         {/* Tooltip */}
-        <div className="absolute bottom-full right-0 mb-3 opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none">
-          <div className="bg-foreground text-background text-sm font-medium px-4 py-2 rounded-xl whitespace-nowrap shadow-lg">
-            Talk to Laura 🎤
+        <div className="absolute bottom-full right-0 mb-2 opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none">
+          <div className="bg-white text-gray-800 text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap shadow-md">
+            Talk to Laura
           </div>
         </div>
       </div>
@@ -328,240 +325,182 @@ export const AIChat = () => {
   }
 
   return (
-    <Card className="fixed bottom-4 right-4 left-4 sm:bottom-6 sm:right-6 sm:left-auto sm:w-full sm:max-w-[420px] h-[85vh] sm:h-[650px] max-h-[calc(100vh-2rem)] shadow-2xl z-50 flex flex-col animate-scale-in border-2 border-primary/20 backdrop-blur-xl bg-background/95 overflow-hidden rounded-3xl">
-      {/* Decorative gradient border */}
-      <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/10 via-transparent to-accent/10 pointer-events-none" />
-      
-      {/* Header */}
-      <div className="relative border-b border-border/50 bg-gradient-to-br from-primary/5 via-accent/5 to-transparent">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={closeChat}
-          className="absolute top-3 right-3 z-10 rounded-full h-8 w-8 hover:bg-destructive/10 hover:text-destructive transition-all"
-          aria-label="Close chat"
-        >
-          <X className="h-5 w-5" />
-        </Button>
-        
-        <div className="relative p-4">
-          <div className="flex items-center gap-4 mb-4">
-            <Avatar className="h-14 w-14 border-2 border-primary/30 ring-2 ring-primary/10">
-              <AvatarImage src={lauraAvatar} alt="Laura AI" className="object-cover object-top" />
-              <AvatarFallback className="bg-gradient-to-br from-primary to-accent text-primary-foreground">
-                LA
-              </AvatarFallback>
-            </Avatar>
-            <div className="flex-1">
-              <h2 className="text-xl font-bold bg-gradient-to-r from-primary via-accent to-purple-500 bg-clip-text text-transparent">
-                Laura
-              </h2>
-              <p className="text-xs text-muted-foreground">Your AI Safety Assistant</p>
-              <div className="flex items-center gap-2 mt-1">
-                <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  Online
-                </div>
-                {/* Voice toggle */}
-                <button
-                  onClick={() => setAutoSpeak(!autoSpeak)}
-                  className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-xs transition-all ${
-                    autoSpeak 
-                      ? 'bg-primary/10 text-primary' 
-                      : 'bg-muted text-muted-foreground'
-                  }`}
-                >
-                  {autoSpeak ? <Volume2 className="w-3 h-3" /> : <VolumeX className="w-3 h-3" />}
-                  Voice {autoSpeak ? 'On' : 'Off'}
-                </button>
-              </div>
+    <div className="fixed bottom-4 right-4 z-50 sm:bottom-6 sm:right-6">
+      {/* Clean, compact white chat panel */}
+      <div className="bg-white rounded-2xl shadow-2xl w-[320px] max-h-[480px] flex flex-col overflow-hidden border border-gray-100">
+        {/* Compact Header */}
+        <div className="flex items-center justify-between p-3 border-b border-gray-100 bg-white">
+          <div className="flex items-center gap-2">
+            <div className="relative w-9 h-9 rounded-full overflow-hidden flex-shrink-0">
+              <img src={lauraAvatar} alt="Laura" className="w-full h-full object-cover object-top" />
+              <div className="absolute bottom-0 right-0 w-2 h-2 bg-green-500 rounded-full border border-white" />
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-gray-800">Laura</h3>
+              <p className="text-[10px] text-gray-400">AI Assistant</p>
             </div>
           </div>
           
-          <Tabs value={mode} onValueChange={(v) => setMode(v as AIMode)}>
-            <TabsList className="w-full justify-start bg-background/50 h-10 rounded-xl">
-              <TabsTrigger value="chat" className="flex-1 text-sm data-[state=active]:bg-primary/10 rounded-lg">
-                <MessageSquare className="w-4 h-4 mr-2" />
-                Chat
-              </TabsTrigger>
-              <TabsTrigger value="translation" className="flex-1 text-sm data-[state=active]:bg-accent/10 rounded-lg">
-                <Languages className="w-4 h-4 mr-2" />
-                Translate
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
-        </div>
-      </div>
-
-      {/* Messages Area */}
-      <ScrollArea className="flex-1 px-4" ref={scrollRef}>
-        <div className="py-4 space-y-4">
-          {messages.length === 0 && (
-            <div className="text-center py-8 space-y-4">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 mb-2 overflow-hidden">
-                <img src={lauraAvatar} alt="Laura" className="w-full h-full object-cover object-top" />
-              </div>
-              <div className="space-y-2">
-                <p className="text-lg font-medium text-foreground">Hi, I'm Laura!</p>
-                <p className="text-muted-foreground text-sm px-4 leading-relaxed">
-                  {mode === "chat" 
-                    ? "I'm here to help you stay safe online. Ask me anything about scam protection, or tap the microphone to talk to me!"
-                    : "Enter text in French and I'll translate it to Spanish for you."
-                  }
-                </p>
-              </div>
-              {mode === "chat" && (
-                <div className="flex flex-wrap justify-center gap-2 pt-2">
-                  <button 
-                    onClick={() => setInput("How do I spot a scam?")}
-                    className="px-3 py-1.5 bg-primary/10 hover:bg-primary/20 text-primary text-xs rounded-full transition-all"
-                  >
-                    How do I spot a scam?
-                  </button>
-                  <button 
-                    onClick={() => setInput("Tell me about your services")}
-                    className="px-3 py-1.5 bg-accent/10 hover:bg-accent/20 text-accent text-xs rounded-full transition-all"
-                  >
-                    Your services
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
-          
-          {messages.map((msg, idx) => (
-            <div
-              key={idx}
-              className={`flex gap-3 ${msg.role === "assistant" ? "justify-start" : "justify-end"}`}
+          <div className="flex items-center gap-0.5">
+            <button
+              onClick={() => setAutoSpeak(!autoSpeak)}
+              className={`p-1.5 rounded-full transition-all ${autoSpeak ? 'text-primary bg-primary/10' : 'text-gray-400 hover:bg-gray-100'}`}
+              title={autoSpeak ? "Voice on" : "Voice off"}
             >
-              {msg.role === "assistant" && (
-                <Avatar className="h-9 w-9 border border-primary/20 flex-shrink-0">
-                  <AvatarImage src={lauraAvatar} alt="Laura AI" className="object-cover object-top" />
-                  <AvatarFallback className="bg-gradient-to-br from-primary to-accent text-primary-foreground text-xs">
-                    LA
-                  </AvatarFallback>
-                </Avatar>
-              )}
-              
-              <div
-                className={`rounded-2xl px-4 py-3 max-w-[80%] ${
-                  msg.role === "assistant"
-                    ? "bg-muted/50 text-foreground border border-border/50"
-                    : "bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-lg"
-                }`}
-              >
-                <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">{msg.content}</p>
-                {msg.role === "assistant" && !isLoading && (
-                  <button
-                    onClick={() => speakText(msg.content)}
-                    className="mt-2 flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors"
-                    disabled={isGeneratingAudio}
-                  >
-                    {isGeneratingAudio ? (
-                      <Loader2 className="w-3 h-3 animate-spin" />
-                    ) : isSpeaking ? (
-                      <VolumeX className="w-3 h-3" onClick={(e) => { e.stopPropagation(); stopSpeaking(); }} />
-                    ) : (
-                      <Volume2 className="w-3 h-3" />
-                    )}
-                    {isSpeaking ? "Stop" : "Listen"}
-                  </button>
+              {autoSpeak ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
+            </button>
+            <button
+              onClick={() => setMode(mode === "chat" ? "translation" : "chat")}
+              className={`p-1.5 rounded-full transition-all ${mode === "translation" ? 'text-accent bg-accent/10' : 'text-gray-400 hover:bg-gray-100'}`}
+              title={mode === "chat" ? "Chat mode" : "Translation mode"}
+            >
+              <Languages className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={closeChat}
+              className="p-1.5 rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-all"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Messages Area */}
+        <ScrollArea className="flex-1 px-3 h-[280px]" ref={scrollRef}>
+          <div className="py-3 space-y-3">
+            {messages.length === 0 && (
+              <div className="text-center py-4 space-y-2">
+                <div className="inline-flex items-center justify-center w-14 h-14 rounded-full overflow-hidden">
+                  <img src={lauraAvatar} alt="Laura" className="w-full h-full object-cover object-top" />
+                </div>
+                <div className="space-y-1">
+                  <p className="text-sm font-medium text-gray-800">Hi, I'm Laura!</p>
+                  <p className="text-gray-500 text-xs px-2 leading-relaxed">
+                    {mode === "chat" 
+                      ? "Ask me anything about staying safe online, or tap the mic to talk!"
+                      : "Enter French text to translate to Spanish."
+                    }
+                  </p>
+                </div>
+                {mode === "chat" && (
+                  <div className="flex flex-wrap justify-center gap-1.5 pt-1">
+                    <button 
+                      onClick={() => setInput("How do I spot a scam?")}
+                      className="px-2.5 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-[11px] rounded-full transition-all"
+                    >
+                      Spot a scam
+                    </button>
+                    <button 
+                      onClick={() => setInput("Tell me about your services")}
+                      className="px-2.5 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-[11px] rounded-full transition-all"
+                    >
+                      Services
+                    </button>
+                  </div>
                 )}
               </div>
-            </div>
-          ))}
-          
-          {isLoading && (
-            <div className="flex gap-3 justify-start">
-              <Avatar className="h-9 w-9 border border-primary/20 flex-shrink-0">
-                <AvatarImage src={lauraAvatar} alt="Laura AI" className="object-cover object-top" />
-                <AvatarFallback className="bg-gradient-to-br from-primary to-accent text-primary-foreground text-xs">
-                  LA
-                </AvatarFallback>
-              </Avatar>
-              <div className="rounded-2xl px-4 py-3 bg-muted/50 border border-border/50">
-                <div className="flex gap-1.5">
-                  <div className="w-2 h-2 rounded-full bg-primary/60 animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <div className="w-2 h-2 rounded-full bg-primary/60 animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <div className="w-2 h-2 rounded-full bg-primary/60 animate-bounce" style={{ animationDelay: '300ms' }} />
+            )}
+            
+            {messages.map((msg, idx) => (
+              <div
+                key={idx}
+                className={`flex gap-2 ${msg.role === "assistant" ? "justify-start" : "justify-end"}`}
+              >
+                {msg.role === "assistant" && (
+                  <div className="w-7 h-7 rounded-full overflow-hidden flex-shrink-0">
+                    <img src={lauraAvatar} alt="Laura" className="w-full h-full object-cover object-top" />
+                  </div>
+                )}
+                
+                <div
+                  className={`rounded-xl px-3 py-2 max-w-[80%] ${
+                    msg.role === "assistant"
+                      ? "bg-gray-100 text-gray-800"
+                      : "bg-primary text-white"
+                  }`}
+                >
+                  <p className="text-xs leading-relaxed whitespace-pre-wrap break-words">{msg.content}</p>
+                  {msg.role === "assistant" && !isLoading && (
+                    <button
+                      onClick={() => speakText(msg.content)}
+                      className="mt-1 flex items-center gap-1 text-[10px] text-gray-500 hover:text-primary transition-colors"
+                      disabled={isGeneratingAudio}
+                    >
+                      {isGeneratingAudio ? (
+                        <Loader2 className="w-2.5 h-2.5 animate-spin" />
+                      ) : isSpeaking ? (
+                        <VolumeX className="w-2.5 h-2.5" onClick={(e) => { e.stopPropagation(); stopSpeaking(); }} />
+                      ) : (
+                        <Volume2 className="w-2.5 h-2.5" />
+                      )}
+                      {isSpeaking ? "Stop" : "Listen"}
+                    </button>
+                  )}
                 </div>
               </div>
-            </div>
-          )}
-          
-          <div ref={messagesEndRef} />
-        </div>
-      </ScrollArea>
-
-      {/* Speaking indicator */}
-      {(isSpeaking || isGeneratingAudio) && (
-        <div className="border-t border-border/50 px-4 py-2 bg-primary/5">
-          <div className="flex items-center justify-center gap-2 text-sm text-primary">
-            {isGeneratingAudio ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                <span>Preparing voice...</span>
-              </>
-            ) : (
-              <>
-                <Volume2 className="w-4 h-4 animate-pulse" />
-                <span>Laura is speaking...</span>
-                <button onClick={stopSpeaking} className="ml-2 text-xs underline hover:no-underline">
-                  Stop
-                </button>
-              </>
+            ))}
+            
+            {isLoading && (
+              <div className="flex gap-2 justify-start">
+                <div className="w-7 h-7 rounded-full overflow-hidden flex-shrink-0">
+                  <img src={lauraAvatar} alt="Laura" className="w-full h-full object-cover object-top" />
+                </div>
+                <div className="rounded-xl px-3 py-2 bg-gray-100">
+                  <div className="flex gap-1">
+                    <div className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '0ms' }} />
+                    <div className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '150ms' }} />
+                    <div className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '300ms' }} />
+                  </div>
+                </div>
+              </div>
             )}
+            
+            <div ref={messagesEndRef} />
           </div>
-        </div>
-      )}
+        </ScrollArea>
 
-      {/* Quick Actions */}
-      <div className="border-t border-border/50 px-4 py-2 bg-muted/30">
-        <div className="flex items-center justify-center gap-4 text-xs">
-          <Link to="/contact" className="flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors">
-            <Phone className="w-4 h-4" />
-            <span>Call Us</span>
-          </Link>
-          <Link to="/contact" className="flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors">
-            <Mail className="w-4 h-4" />
-            <span>Email</span>
-          </Link>
-          <Link to="/services" className="flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors">
-            <ExternalLink className="w-4 h-4" />
-            <span>Services</span>
-          </Link>
-        </div>
-      </div>
+        {/* Speaking indicator */}
+        {(isSpeaking || isGeneratingAudio) && (
+          <div className="px-3 py-1.5 bg-primary/5 border-t border-gray-100">
+            <div className="flex items-center justify-center gap-1.5 text-xs text-primary">
+              {isGeneratingAudio ? (
+                <>
+                  <Loader2 className="w-3 h-3 animate-spin" />
+                  <span>Preparing...</span>
+                </>
+              ) : (
+                <>
+                  <Volume2 className="w-3 h-3 animate-pulse" />
+                  <span>Speaking...</span>
+                  <button onClick={stopSpeaking} className="ml-1 underline hover:no-underline">Stop</button>
+                </>
+              )}
+            </div>
+          </div>
+        )}
 
-      {/* Input */}
-      <div className="border-t border-border/50 p-4 bg-background/50 backdrop-blur-sm">
-        <form onSubmit={handleSubmit} className="flex gap-3">
-          {/* Large mic button for elderly */}
-          <Button
-            type="button"
-            size="icon"
-            variant={isRecording ? "destructive" : "outline"}
-            onClick={toggleVoiceRecording}
-            className={`h-14 w-14 flex-shrink-0 rounded-xl transition-all ${
-              isRecording 
-                ? 'bg-destructive animate-pulse shadow-lg shadow-destructive/30' 
-                : 'hover:bg-primary/10 hover:border-primary'
-            }`}
-            disabled={isLoading}
-          >
-            {isRecording ? (
-              <MicOff className="h-6 w-6" />
-            ) : (
-              <Mic className="h-6 w-6" />
-            )}
-          </Button>
-          
-          <div className="flex-1 flex flex-col gap-2">
-            <Textarea
+        {/* Input */}
+        <div className="p-2.5 bg-white border-t border-gray-100">
+          <form onSubmit={handleSubmit} className="flex gap-2">
+            <button
+              type="button"
+              onClick={toggleVoiceRecording}
+              className={`h-10 w-10 flex-shrink-0 rounded-full flex items-center justify-center transition-all ${
+                isRecording 
+                  ? 'bg-red-500 text-white animate-pulse' 
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+              disabled={isLoading}
+            >
+              {isRecording ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
+            </button>
+            
+            <input
+              type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder={getModePlaceholder()}
-              className="min-h-[56px] max-h-[100px] resize-none text-base rounded-xl"
+              placeholder={mode === "chat" ? "Type a message..." : "French text..."}
+              className="flex-1 bg-gray-100 rounded-full px-3 py-2 text-sm text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/30"
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
@@ -569,24 +508,23 @@ export const AIChat = () => {
                 }
               }}
             />
-          </div>
+            
+            <button
+              type="submit"
+              disabled={!input.trim() || isLoading}
+              className="h-10 w-10 flex-shrink-0 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Send className="h-4 w-4" />
+            </button>
+          </form>
           
-          <Button
-            type="submit"
-            size="icon"
-            disabled={!input.trim() || isLoading}
-            className="h-14 w-14 flex-shrink-0 bg-gradient-to-br from-primary to-accent rounded-xl shadow-lg hover:shadow-xl transition-all"
-          >
-            <Send className="h-6 w-6" />
-          </Button>
-        </form>
-        
-        {isRecording && (
-          <p className="text-center text-sm text-primary mt-2 animate-pulse">
-            🎤 Listening... Speak now!
-          </p>
-        )}
+          {isRecording && (
+            <p className="text-center text-[10px] text-primary mt-1.5 animate-pulse">
+              🎤 Listening...
+            </p>
+          )}
+        </div>
       </div>
-    </Card>
+    </div>
   );
 };
