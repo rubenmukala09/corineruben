@@ -17,6 +17,7 @@ import { ScamShieldSubmission } from "@/components/ScamShieldSubmission";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { SEO, PAGE_SEO } from "@/components/SEO";
+import heroProtectionFamily from "@/assets/hero-protection-family-1.jpg";
 function Index() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -85,8 +86,12 @@ function Index() {
         {/* Newsletter Section */}
         
 
-        {/* Final CTA */}
-        <CTASection headline="Protect What Matters Most" variant="gold">
+        {/* Final CTA with Image Background */}
+        <CTASection 
+          headline="Protect What Matters Most" 
+          variant="image"
+          backgroundImage={heroProtectionFamily}
+        >
           <p className="text-xl text-white/90 mb-8">Join 500+ Ohio families who sleep better knowing they're protected from AI scams.</p>
           <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center">
             <Button asChild variant="gold" size="xl" className="w-full sm:w-auto">

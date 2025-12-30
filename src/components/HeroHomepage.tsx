@@ -46,24 +46,34 @@ export const HeroHomepage = () => {
     return () => clearInterval(interval);
   }, []);
   return <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-background via-background to-purple-100/30">
-      {/* Transitioning Background Images */}
+      {/* Transitioning Background Images - Seamless crossfade */}
       <div className="absolute inset-0">
-        <AnimatePresence mode="wait">
-          <motion.div key={currentImageIndex} initial={{
-          opacity: 0,
-          scale: 1.05
-        }} animate={{
-          opacity: 1,
-          scale: 1
-        }} exit={{
-          opacity: 0
-        }} transition={{
-          duration: 1.5,
-          ease: [0.22, 1, 0.36, 1]
-        }} className="absolute inset-0">
-            <img src={heroImages[currentImageIndex].src} alt={heroImages[currentImageIndex].alt} className="w-full h-full object-cover" />
+        {/* Base layer - previous image stays visible during transition */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${heroImages[(currentImageIndex - 1 + heroImages.length) % heroImages.length].src})` }}
+        />
+        
+        {/* Current image fades in on top */}
+        <AnimatePresence initial={false}>
+          <motion.div 
+            key={currentImageIndex} 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              duration: 1.2,
+              ease: [0.4, 0, 0.2, 1]
+            }} 
+            className="absolute inset-0"
+          >
+            <img 
+              src={heroImages[currentImageIndex].src} 
+              alt={heroImages[currentImageIndex].alt} 
+              className="w-full h-full object-cover" 
+            />
           </motion.div>
         </AnimatePresence>
+        
         {/* Premium gradient overlay - harmonious purple tones */}
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-purple-900/10" />

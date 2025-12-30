@@ -2,6 +2,10 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Shield, Users, Brain, Clock, Sparkles } from "lucide-react";
+import serviceScamshield from "@/assets/service-scamshield.jpg";
+import serviceTraining from "@/assets/service-training.jpg";
+import serviceAiBusiness from "@/assets/service-ai-business.jpg";
+import serviceFamilySafety from "@/assets/service-family-safety.jpg";
 
 const features = [
   {
@@ -11,6 +15,7 @@ const features = [
     gradient: "from-blue-500/10 to-cyan-500/10",
     iconBg: "bg-blue-500/10",
     iconColor: "text-blue-500",
+    image: serviceScamshield,
   },
   {
     icon: Users,
@@ -19,6 +24,7 @@ const features = [
     gradient: "from-emerald-500/10 to-teal-500/10",
     iconBg: "bg-emerald-500/10",
     iconColor: "text-emerald-500",
+    image: serviceFamilySafety,
   },
   {
     icon: Brain,
@@ -27,6 +33,7 @@ const features = [
     gradient: "from-violet-500/10 to-purple-500/10",
     iconBg: "bg-violet-500/10",
     iconColor: "text-violet-500",
+    image: serviceAiBusiness,
   },
   {
     icon: Clock,
@@ -35,6 +42,7 @@ const features = [
     gradient: "from-amber-500/10 to-orange-500/10",
     iconBg: "bg-amber-500/10",
     iconColor: "text-amber-500",
+    image: serviceTraining,
   },
 ];
 
@@ -93,7 +101,7 @@ export const ServicesShowcase = () => {
             </Button>
           </motion.div>
 
-          {/* Right - Features Grid */}
+          {/* Right - Features Grid with Images */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -109,17 +117,29 @@ export const ServicesShowcase = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
                 whileHover={{ y: -6 }}
-                className="group p-7 rounded-2xl bg-card border border-border/50 hover:shadow-xl hover:border-primary/20 transition-all duration-300"
+                className="group relative rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300"
               >
-                <div className={`w-14 h-14 rounded-xl ${feature.iconBg} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}>
-                  <feature.icon className={`w-7 h-7 ${feature.iconColor}`} strokeWidth={1.5} />
+                {/* Background Image */}
+                <div className="absolute inset-0">
+                  <img 
+                    src={feature.image} 
+                    alt={feature.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/70 to-slate-900/40" />
                 </div>
-                <h3 className="font-bold text-lg mb-2 text-foreground group-hover:text-primary transition-colors">
-                  {feature.title}
-                </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {feature.description}
-                </p>
+                
+                <div className="relative z-10 p-6 min-h-[220px] flex flex-col justify-end">
+                  <div className={`w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                    <feature.icon className="w-6 h-6 text-white" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="font-bold text-lg mb-2 text-white group-hover:text-primary-foreground transition-colors">
+                    {feature.title}
+                  </h3>
+                  <p className="text-white/80 text-sm leading-relaxed">
+                    {feature.description}
+                  </p>
+                </div>
               </motion.div>
             ))}
           </motion.div>

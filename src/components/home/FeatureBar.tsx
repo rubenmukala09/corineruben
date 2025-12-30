@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Lightbulb, Award, Shield, ArrowRight, TrendingUp } from "lucide-react";
+import featureBenefits from "@/assets/feature-benefits.jpg";
+import featureSatisfaction from "@/assets/feature-satisfaction.jpg";
+import featureProfessional from "@/assets/feature-professional.jpg";
 
 const features = [
   {
@@ -11,6 +14,7 @@ const features = [
     gradient: "from-accent/20 to-primary/20",
     iconColor: "text-accent",
     iconBg: "from-accent/15 to-primary/15",
+    image: featureBenefits,
   },
   {
     icon: Award,
@@ -19,6 +23,7 @@ const features = [
     highlighted: true,
     gradient: "from-primary via-primary to-accent/80",
     iconColor: "text-primary-foreground",
+    image: featureSatisfaction,
   },
   {
     icon: Shield,
@@ -28,6 +33,7 @@ const features = [
     gradient: "from-primary/20 to-accent/20",
     iconColor: "text-primary",
     iconBg: "from-primary/15 to-accent/15",
+    image: featureProfessional,
   },
 ];
 
@@ -82,7 +88,7 @@ export const FeatureBar = () => {
           </p>
         </motion.div>
 
-        {/* Feature Cards */}
+        {/* Feature Cards with Images */}
         <div className="grid md:grid-cols-3 gap-8 mb-24">
           {features.map((feature, index) => (
             <motion.div
@@ -92,42 +98,49 @@ export const FeatureBar = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               whileHover={{ y: -8 }}
-              className={`group relative p-10 rounded-3xl transition-all duration-500 ${
+              className={`group relative rounded-3xl overflow-hidden transition-all duration-500 ${
                 feature.highlighted
-                  ? "bg-gradient-to-br from-primary via-primary to-accent/90 text-primary-foreground shadow-2xl shadow-primary/25"
-                  : "bg-card border border-primary/10 hover:shadow-2xl hover:border-primary/25 hover:shadow-primary/10"
+                  ? "shadow-2xl shadow-primary/25"
+                  : "hover:shadow-2xl hover:shadow-primary/10"
               }`}
             >
-              {/* Subtle gradient overlay for non-highlighted */}
-              {!feature.highlighted && (
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 from-primary/[0.02] to-accent/[0.02]" />
-              )}
+              {/* Background Image */}
+              <div className="absolute inset-0">
+                <img 
+                  src={feature.image} 
+                  alt={feature.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className={`absolute inset-0 ${
+                  feature.highlighted
+                    ? "bg-gradient-to-t from-primary via-primary/90 to-primary/70"
+                    : "bg-gradient-to-t from-slate-900/95 via-slate-900/80 to-slate-900/60"
+                }`} />
+              </div>
               
-              <div className="relative z-10">
+              <div className="relative z-10 p-10 min-h-[380px] flex flex-col justify-end">
                 <div
-                  className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 transition-all duration-500 group-hover:scale-110 ${
+                  className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-all duration-500 group-hover:scale-110 ${
                     feature.highlighted
-                      ? "bg-primary-foreground/20"
-                      : `bg-gradient-to-br ${feature.iconBg || feature.gradient}`
+                      ? "bg-primary-foreground/20 backdrop-blur-sm"
+                      : "bg-white/10 backdrop-blur-sm"
                   }`}
                 >
-                  <feature.icon className={`w-8 h-8 ${feature.highlighted ? "text-primary-foreground" : feature.iconColor}`} strokeWidth={1.5} />
+                  <feature.icon className={`w-8 h-8 ${feature.highlighted ? "text-primary-foreground" : "text-white"}`} strokeWidth={1.5} />
                 </div>
                 
-                <h3 className={`font-bold text-2xl mb-4 ${!feature.highlighted && "text-foreground"}`}>
+                <h3 className={`font-bold text-2xl mb-4 ${feature.highlighted ? "text-primary-foreground" : "text-white"}`}>
                   {feature.title}
                 </h3>
                 
-                <p className={`text-base mb-8 leading-relaxed ${feature.highlighted ? "text-primary-foreground/80" : "text-muted-foreground"}`}>
+                <p className={`text-base mb-6 leading-relaxed ${feature.highlighted ? "text-primary-foreground/80" : "text-white/80"}`}>
                   {feature.description}
                 </p>
                 
                 {feature.linkText && (
                   <Link 
                     to="/about" 
-                    className={`inline-flex items-center gap-2 text-sm font-semibold group-hover:gap-3 transition-all ${
-                      feature.highlighted ? "text-primary-foreground" : "text-primary"
-                    }`}
+                    className="inline-flex items-center gap-2 text-sm font-semibold group-hover:gap-3 transition-all text-white"
                   >
                     {feature.linkText}
                     <ArrowRight className="w-4 h-4" />
