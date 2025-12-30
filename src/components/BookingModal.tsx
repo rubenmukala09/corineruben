@@ -14,7 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 import { 
   Loader2, Calendar as CalendarIcon, CheckCircle, Clock, 
   Users, Shield, Phone, Mail, MessageSquare, Sparkles,
-  Video, MapPin, Star
+  Video, MapPin, Star, QrCode
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { bookingFormSchema, formatPhoneNumber, US_STATES } from "@/utils/formValidation";
@@ -437,6 +437,16 @@ export const BookingModal = ({
                       <span className="text-2xl font-bold text-primary">
                         ${finalPrice.toFixed(2)}
                       </span>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between mt-3 pt-3 border-t border-border/50">
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <QrCode className="w-4 h-4" />
+                      <span>QR code payment available</span>
+                    </div>
+                    <div className="flex items-center gap-1 text-xs text-green-600">
+                      <Shield className="w-3 h-3" />
+                      <span>Secure</span>
                     </div>
                   </div>
                   <p className="text-xs text-muted-foreground mt-2">

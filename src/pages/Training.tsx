@@ -158,79 +158,53 @@ const TrainingCard = ({ plan, index, onBook }: { plan: any; index: number; onBoo
   return (
     <ScrollReveal 
       animation="scale-in" 
-      delay={index * 150}
+      delay={index * 100}
       threshold={0.2}
     >
-      <div className={`relative h-full ${plan.popular ? 'scale-105' : ''}`}>
+      <Card className={`relative p-4 h-full flex flex-col transition-all duration-300 hover:-translate-y-1 rounded-xl bg-gradient-to-br from-card to-card/50 ${
+        plan.popular 
+          ? "border-primary border-2 shadow-lg" 
+          : "border-border/50 hover:shadow-md"
+      }`}>
         {/* Badge */}
-        <div className={`absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r ${badge.gradient} text-white px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 ${plan.popular ? 'animate-pulse' : ''}`} style={{ animationDuration: '3s' }}>
+        <div className={`absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r ${badge.gradient} text-white px-3 py-1 rounded-full text-[10px] font-bold tracking-wide shadow-md z-10`}>
           <span className="mr-1">{badge.emoji}</span>
           {badge.label}
         </div>
         
-        <Card
-          className={`p-6 h-full flex flex-col transition-all duration-500 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 ${
-            plan.popular 
-              ? "border-primary border-[3px] shadow-[0_10px_30px_hsl(var(--primary)/0.15)] hover:shadow-[0_20px_40px_hsl(var(--primary)/0.25)]" 
-              : "border-border/50 hover:shadow-strong"
-          }`}
-        >
-          {/* Trust Indicator */}
-          <div className="flex items-center justify-center gap-1.5 mb-4 text-xs text-success">
-            <CheckCircle className="w-3.5 h-3.5" />
-            <span className="font-medium">100+ Students Trained</span>
+        <div className="pt-3">
+          <h3 className="text-base font-bold mb-1 text-center">{plan.name}</h3>
+          <div className="text-center mb-1" ref={ref}>
+            <span className="text-2xl font-bold text-primary">${Math.round(count)}{plan.pricePrefix || ''}</span>
+            <span className="text-muted-foreground text-xs">/session</span>
           </div>
-
-          <h3 className="text-xl font-bold mb-2 text-center">{plan.name}</h3>
-          <div className="text-center mb-2" ref={ref}>
-            <span className="text-3xl font-bold text-primary">${Math.round(count)}</span>
-            <span className="text-muted-foreground">/session</span>
-          </div>
-          <p className="text-center text-sm text-muted-foreground mb-1">{plan.duration}</p>
-          <p className="text-center text-sm text-accent font-semibold mb-2">{plan.size}</p>
+          <p className="text-center text-xs text-muted-foreground mb-1">{plan.duration}</p>
+          <p className="text-center text-xs text-accent font-medium mb-2">{plan.size}</p>
           
           {/* Description */}
-          <p className="text-center text-xs text-muted-foreground mb-4 px-2">
+          <p className="text-center text-[11px] text-muted-foreground mb-3 line-clamp-2">
             {plan.description}
           </p>
 
-          {/* Highlight Tags */}
-          <div className="flex flex-wrap justify-center gap-2 mb-4">
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-success/10 text-success text-[10px] font-medium rounded-full">
-              ✓ Certificate Included
-            </span>
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-medium rounded-full">
-              📧 Email Support
-            </span>
-          </div>
-
-          <div className="space-y-2.5 mb-6 flex-grow">
-            {plan.features.map((feature: string, idx: number) => (
-              <div key={idx} className="flex items-start gap-2">
-                <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                <span className="text-foreground text-sm">{feature}</span>
+          <div className="space-y-1.5 mb-3 flex-grow">
+            {plan.features.slice(0, 4).map((feature: string, idx: number) => (
+              <div key={idx} className="flex items-start gap-1.5">
+                <CheckCircle className="w-3 h-3 text-primary flex-shrink-0 mt-0.5" />
+                <span className="text-foreground text-[11px]">{feature}</span>
               </div>
             ))}
-          </div>
-
-          {/* Security Badge */}
-          <div className="flex items-center justify-center gap-2 mb-4 text-xs text-muted-foreground">
-            <Lock className="w-3.5 h-3.5 text-success" />
-            <span>Secure Payment</span>
-            <Shield className="w-3.5 h-3.5 text-success" />
-            <span>Satisfaction Guaranteed</span>
           </div>
 
           <Button 
             onClick={() => onBook(plan)}
             variant={plan.popular ? "default" : "outline"} 
-            size="lg" 
-            className={`w-full mt-auto ${plan.popular ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : ''}`}
+            size="sm" 
+            className={`w-full mt-auto text-xs ${plan.popular ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : ''}`}
           >
-            Book Session →
+            Book Now →
           </Button>
-        </Card>
-      </div>
+        </div>
+      </Card>
     </ScrollReveal>
   );
 }
@@ -367,36 +341,34 @@ function LearnAndTrain() {
       <TrustBar />
 
       {/* Training Section */}
-      <section id="training" className="py-16 bg-background relative overflow-hidden">
+      <section id="training" className="py-12 bg-background relative overflow-hidden">
         <FlowingWaves variant="full" opacity={0.12} />
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mb-4 animate-fade-in-up">Scam Prevention Training Programs</h2>
-          <p className="text-center text-lg text-muted-foreground mb-6 max-w-4xl mx-auto">
-            Protect your family and organization from AI-powered scams. No technical or coding knowledge required — 
-            just practical awareness training to help you recognize when scammers are using AI to impersonate your children, grandchildren, friends, or anyone you trust.
+          <h2 className="text-center mb-3 animate-fade-in-up text-2xl md:text-3xl">Scam Prevention Training Programs</h2>
+          <p className="text-center text-sm text-muted-foreground mb-4 max-w-3xl mx-auto">
+            Protect your family from AI-powered scams. No coding required — practical awareness training to recognize when scammers use AI to impersonate loved ones.
           </p>
-          <div className="text-center mb-12">
-            <Badge variant="outline" className="text-sm px-4 py-1.5 bg-primary/5">
-              🎓 Basic AI Safety Awareness • No Coding Required • For All Ages
+          <div className="text-center mb-8">
+            <Badge variant="outline" className="text-xs px-3 py-1 bg-primary/5">
+              🎓 Basic AI Safety • No Coding • All Ages
             </Badge>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 md:gap-8 max-w-7xl mx-auto mb-16">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 max-w-5xl mx-auto mb-12">
             {[
               {
                 name: "Standard Group",
                 type: "standard",
                 price: "$79",
                 priceNum: 79,
-                duration: "90 minutes",
-                size: "Up to 25 participants",
-                description: "Join couples and individuals in a collaborative group setting. Learn together with others facing similar concerns.",
+                duration: "90 min",
+                size: "Up to 25 people",
+                description: "Group setting for couples and individuals learning together.",
                 features: [
                   "Live Zoom session",
                   "Interactive Q&A",
                   "Digital handouts",
-                  "Certificate of completion",
-                  "Email follow-up",
+                  "Certificate included",
                 ],
               },
               {
@@ -404,16 +376,14 @@ function LearnAndTrain() {
                 type: "family",
                 price: "$149",
                 priceNum: 149,
-                duration: "90 minutes",
-                size: "Up to 12 participants",
+                duration: "90 min",
+                size: "Up to 12 people",
                 popular: true,
-                description: "Intimate setting for couples who want more personal attention and extended time for questions.",
+                description: "Intimate setting for couples wanting more personal attention.",
                 features: [
-                  "Intimate group setting",
-                  "More personal attention",
+                  "Smaller group setting",
                   "Extended Q&A time",
-                  "Certificates for all",
-                  "Safe word setup guide",
+                  "Safe word setup",
                   "Family action plan",
                 ],
               },
@@ -422,33 +392,30 @@ function LearnAndTrain() {
                 type: "private",
                 price: "$399",
                 priceNum: 399,
-                duration: "120 minutes",
-                size: "Up to 5 family members",
-                description: "One-on-one family training (father, mother, and children). Available in-person or online for your convenience.",
+                duration: "2 hours",
+                size: "Up to 5 family",
+                description: "One-on-one family training. In-person or online.",
                 features: [
                   "Private family session",
-                  "In-person or virtual option",
-                  "Customized family content",
+                  "In-person or virtual",
                   "Device security review",
-                  "Personalized action plan",
                   "30-day email support",
                 ],
               },
               {
                 name: "Customizable Group",
                 type: "custom",
-                price: "$599",
-                priceNum: 599,
+                price: "$510",
+                priceNum: 510,
+                pricePrefix: "+",
                 duration: "2-3 hours",
-                size: "10-100+ participants",
-                description: "For churches, schools, senior centers, and organizations. Tailored content for your community's specific needs.",
+                size: "10-100+ people",
+                description: "For churches, schools, organizations. Custom curriculum.",
                 features: [
-                  "Tailored for your organization",
-                  "On-site or virtual delivery",
+                  "On-site or virtual",
                   "Custom curriculum",
                   "Bulk certificates",
-                  "Admin dashboard access",
-                  "Dedicated support contact",
+                  "Dedicated support",
                 ],
               },
             ].map((plan, index) => (
@@ -467,6 +434,154 @@ function LearnAndTrain() {
                 }}
               />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* AI Professionals Training Section */}
+      <section id="ai-pro-training" className="py-12 bg-muted relative overflow-hidden">
+        <FlowingWaves variant="full" opacity={0.08} />
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-8">
+            <Badge className="mb-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white">
+              <Zap className="w-3 h-3 mr-1" /> FOR PROFESSIONALS
+            </Badge>
+            <h2 className="text-2xl md:text-3xl font-bold mb-3">AI Professional Training & Development</h2>
+            <p className="text-sm text-muted-foreground max-w-3xl mx-auto">
+              Advanced training for those who want to master AI agency building, automation workflows, web design, and project development. 
+              Perfect for entrepreneurs, developers, and organizations ready to leverage AI in their business.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 max-w-5xl mx-auto">
+            {[
+              {
+                name: "AI Automation",
+                type: "automation",
+                price: "$299",
+                priceNum: 299,
+                duration: "3 hours",
+                size: "Individual",
+                description: "Learn to build AI workflows with Make, Zapier, and custom automations.",
+                features: [
+                  "Workflow automation",
+                  "API integrations",
+                  "ChatGPT integration",
+                  "Project templates",
+                ],
+                badge: { label: "POPULAR", emoji: "🔥", gradient: "from-orange-500 to-red-500" }
+              },
+              {
+                name: "AI Agency Building",
+                type: "agency",
+                price: "$499",
+                priceNum: 499,
+                duration: "5 hours",
+                size: "Individual/Team",
+                popular: true,
+                description: "Start your AI agency from scratch. Client acquisition to delivery.",
+                features: [
+                  "Business model setup",
+                  "Client acquisition",
+                  "Service packaging",
+                  "Ongoing mentorship",
+                ],
+                badge: { label: "BEST VALUE", emoji: "⭐", gradient: "from-primary to-accent" }
+              },
+              {
+                name: "Web Design + AI",
+                type: "webdesign",
+                price: "$349",
+                priceNum: 349,
+                duration: "4 hours",
+                size: "Individual",
+                description: "AI-powered web design. Build stunning sites with AI tools.",
+                features: [
+                  "AI design tools",
+                  "Responsive layouts",
+                  "SEO optimization",
+                  "Deployment guide",
+                ],
+                badge: { label: "CREATIVE", emoji: "🎨", gradient: "from-cyan-500 to-blue-500" }
+              },
+              {
+                name: "Project Troubleshoot",
+                type: "troubleshoot",
+                price: "$150",
+                priceNum: 150,
+                pricePrefix: "/hr",
+                duration: "Flexible",
+                size: "Per project",
+                description: "We join your AI project to troubleshoot or develop further.",
+                features: [
+                  "Code review",
+                  "Bug fixing",
+                  "Feature development",
+                  "Architecture advice",
+                ],
+                badge: { label: "CONSULTING", emoji: "🛠", gradient: "from-green-500 to-emerald-500" }
+              },
+            ].map((plan, index) => (
+              <ScrollReveal key={index} animation="scale-in" delay={index * 100} threshold={0.2}>
+                <Card className={`relative p-4 h-full flex flex-col transition-all duration-300 hover:-translate-y-1 rounded-xl bg-gradient-to-br from-card to-card/50 ${
+                  plan.popular 
+                    ? "border-primary border-2 shadow-lg" 
+                    : "border-border/50 hover:shadow-md"
+                }`}>
+                  {/* Badge */}
+                  <div className={`absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r ${plan.badge.gradient} text-white px-3 py-1 rounded-full text-[10px] font-bold tracking-wide shadow-md z-10`}>
+                    <span className="mr-1">{plan.badge.emoji}</span>
+                    {plan.badge.label}
+                  </div>
+                  
+                  <div className="pt-3">
+                    <h3 className="text-base font-bold mb-1 text-center">{plan.name}</h3>
+                    <div className="text-center mb-1">
+                      <span className="text-2xl font-bold text-primary">{plan.price}</span>
+                      {plan.pricePrefix && <span className="text-muted-foreground text-xs">{plan.pricePrefix}</span>}
+                    </div>
+                    <p className="text-center text-xs text-muted-foreground mb-1">{plan.duration}</p>
+                    <p className="text-center text-xs text-accent font-medium mb-2">{plan.size}</p>
+                    
+                    <p className="text-center text-[11px] text-muted-foreground mb-3 line-clamp-2">
+                      {plan.description}
+                    </p>
+
+                    <div className="space-y-1.5 mb-3 flex-grow">
+                      {plan.features.map((feature: string, idx: number) => (
+                        <div key={idx} className="flex items-start gap-1.5">
+                          <CheckCircle className="w-3 h-3 text-primary flex-shrink-0 mt-0.5" />
+                          <span className="text-foreground text-[11px]">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <Button 
+                      onClick={() => {
+                        setSelectedService({
+                          type: 'training',
+                          name: plan.name,
+                          tier: plan.type,
+                          price: plan.priceNum
+                        });
+                        setModalOpen(true);
+                      }}
+                      variant={plan.popular ? "default" : "outline"} 
+                      size="sm" 
+                      className={`w-full mt-auto text-xs ${plan.popular ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : ''}`}
+                    >
+                      Book Now →
+                    </Button>
+                  </div>
+                </Card>
+              </ScrollReveal>
+            ))}
+          </div>
+          
+          <div className="text-center mt-8">
+            <p className="text-xs text-muted-foreground">
+              💳 All payments secured with Stripe • QR code payment available • Pay after confirmation
+            </p>
           </div>
         </div>
       </section>
