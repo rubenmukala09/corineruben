@@ -158,6 +158,37 @@ function Business() {
         subheadline="Custom AI automation, professional websites, and industry-leading AI Service Insurance"
         showScrollIndicator={true}
       >
+        {/* Scrolling Services Ticker */}
+        <div className="mb-8 overflow-hidden relative">
+          <div className="flex animate-marquee whitespace-nowrap">
+            {[
+              "🤖 AI Receptionist",
+              "📧 Email Automation",
+              "💬 Customer Support Bots",
+              "📅 Smart Scheduling",
+              "🌐 Professional Websites",
+              "🛡️ AI Insurance",
+              "📊 Business Analytics",
+              "🔒 Cybersecurity Training",
+              "🤖 AI Receptionist",
+              "📧 Email Automation",
+              "💬 Customer Support Bots",
+              "📅 Smart Scheduling",
+              "🌐 Professional Websites",
+              "🛡️ AI Insurance",
+              "📊 Business Analytics",
+              "🔒 Cybersecurity Training",
+            ].map((service, idx) => (
+              <span
+                key={idx}
+                className="mx-4 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-white border border-white/20"
+              >
+                {service}
+              </span>
+            ))}
+          </div>
+        </div>
+
         <div className="flex flex-col sm:flex-row gap-4">
           <Button 
             asChild
