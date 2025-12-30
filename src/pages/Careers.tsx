@@ -4,6 +4,8 @@ import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import TrustBar from "@/components/TrustBar";
 import { SEO } from "@/components/SEO";
+import { PageTransition } from "@/components/PageTransition";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -175,7 +177,7 @@ function Careers() {
   ];
 
   return (
-    <>
+    <PageTransition variant="fade">
       <SEO 
         title="Careers - Join Our Mission" 
         description="Join InVision Network and help protect families from AI-powered scams. Remote-first culture, competitive benefits, meaningful work. Open positions in engineering, support, design, and more."
@@ -193,29 +195,33 @@ function Careers() {
       {/* Why InVision */}
       <section className="py-10 bg-gradient-to-b from-background to-muted/20">
         <div className="container-padding">
-          <div className="text-center mb-8">
-            <Badge className="mb-3">Why InVision?</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-3">Work That Matters</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Join a team that's using AI to protect vulnerable families. Every line of code, every support call, every design decision makes the world safer.
-            </p>
-          </div>
+          <ScrollReveal>
+            <div className="text-center mb-8">
+              <Badge className="mb-3">Why InVision?</Badge>
+              <h2 className="text-3xl md:text-4xl font-bold mb-3">Work That Matters</h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Join a team that's using AI to protect vulnerable families. Every line of code, every support call, every design decision makes the world safer.
+              </p>
+            </div>
+          </ScrollReveal>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {companyValues.map((value, index) => {
               const IconComponent = value.icon;
               return (
-                <Card key={index} className="text-center hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
-                      <IconComponent className="w-6 h-6 text-primary" />
-                    </div>
-                    <CardTitle className="text-lg">{value.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground">{value.description}</p>
-                  </CardContent>
-                </Card>
+                <ScrollReveal key={index} delay={index * 100}>
+                  <Card className="text-center hover:shadow-lg transition-shadow h-full">
+                    <CardHeader>
+                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
+                        <IconComponent className="w-6 h-6 text-primary" />
+                      </div>
+                      <CardTitle className="text-lg">{value.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground">{value.description}</p>
+                    </CardContent>
+                  </Card>
+                </ScrollReveal>
               );
             })}
           </div>
@@ -225,12 +231,14 @@ function Careers() {
       {/* Open Positions */}
       <section className="section-spacing">
         <div className="container-padding">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Open Positions</h2>
-            <p className="text-lg text-muted-foreground">
-              Find your role in protecting families
-            </p>
-          </div>
+          <ScrollReveal>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Open Positions</h2>
+              <p className="text-lg text-muted-foreground">
+                Find your role in protecting families
+              </p>
+            </div>
+          </ScrollReveal>
 
           {/* Department Tabs */}
           <Tabs value={selectedDepartment} onValueChange={setSelectedDepartment} className="mb-8">
@@ -444,7 +452,7 @@ function Careers() {
       </section>
 
       <Footer />
-    </>
+    </PageTransition>
   );
 }
 

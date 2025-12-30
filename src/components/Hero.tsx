@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { Shield } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -19,6 +19,7 @@ interface HeroImage {
 interface HeroProps {
   backgroundImage?: string;
   backgroundImages?: HeroImage[];
+  backgroundVideo?: string;
   headline?: string | ReactNode;
   subheadline?: string | ReactNode;
   children?: ReactNode;
@@ -30,12 +31,15 @@ interface HeroProps {
   showTrustIndicators?: boolean;
 }
 
-const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, children, className, overlay = false, showScrollIndicator = false, showProtectionBadge = false, badgeText, showTrustIndicators = false }: HeroProps) => {
+const Hero = ({ backgroundImage, backgroundImages, backgroundVideo, headline, subheadline, children, className, overlay = false, showScrollIndicator = false, showProtectionBadge = false, badgeText, showTrustIndicators = false }: HeroProps) => {
   const { ref, y, opacity } = useParallax({ speed: 0.5 });
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoLoaded, setVideoLoaded] = useState(false);
   
   // Preload background image(s)
   const singleImagePreloaded = useImagePreload(backgroundImage ? [backgroundImage] : []);
   const useCarousel = backgroundImages && backgroundImages.length > 0;
+  const useVideo = !!backgroundVideo;
 
   return (
     <div 
@@ -50,9 +54,33 @@ const Hero = ({ backgroundImage, backgroundImages, headline, subheadline, childr
         className="absolute inset-0 overflow-hidden"
         style={{ y }}
       >
-        {useCarousel ? (
+        {/* Video Background */}
+        {useVideo && (
+          <motion.div
+            className="absolute inset-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: videoLoaded ? 1 : 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <video
+              ref={videoRef}
+              autoPlay
+              muted
+              loop
+              playsInline
+              onLoadedData={() => setVideoLoaded(true)}
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{ filter: 'brightness(0.85)' }}
+            >
+              <source src={backgroundVideo} type="video/mp4" />
+            </video>
+          </motion.div>
+        )}
+
+        {/* Image Carousel (if no video) */}
+        {!useVideo && useCarousel ? (
           <HeroCarousel images={backgroundImages} />
-        ) : backgroundImage && (
+        ) : !useVideo && backgroundImage && (
           <motion.div
             className={cn(
               "absolute inset-0 bg-cover bg-center bg-no-repeat brightness-115",

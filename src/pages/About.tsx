@@ -22,6 +22,7 @@ import { OhioServiceMap } from "@/components/OhioServiceMap";
 import { AchievementsShowcase } from "@/components/AchievementsShowcase";
 import { AIImageDisclaimer } from "@/components/AIImageDisclaimer";
 import { trackButtonClick } from "@/utils/analyticsTracker";
+import heroVideoSecurity from "@/assets/hero-video-security.mp4";
 import heroAboutNew from "@/assets/hero-about-new.jpg";
 import heroAboutProfessional from "@/assets/hero-about-professional.jpg";
 import heroAbout3d from "@/assets/hero-about-3d.jpg";
@@ -153,7 +154,7 @@ function About() {
       <Navigation />
       
       <Hero
-        backgroundImages={aboutHeroImages}
+        backgroundVideo={heroVideoSecurity}
         headline={
           <AnimatePresence mode="wait">
             <motion.span

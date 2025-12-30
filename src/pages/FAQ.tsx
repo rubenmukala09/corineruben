@@ -4,6 +4,8 @@ import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import TrustBar from "@/components/TrustBar";
 import { SEO } from "@/components/SEO";
+import { PageTransition } from "@/components/PageTransition";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -367,25 +369,26 @@ export default function FAQ() {
   ];
 
   return (
-    <div className="min-h-screen">
-      <SEO
-        title="Frequently Asked Questions"
-        description="Find answers to common questions about InVision Network's AI scam protection, business services, billing, and technical support."
-        keywords="FAQ, questions, support, help, InVision Network"
-      />
-      <Navigation />
-
-      <main id="main-content">
-        {/* Hero Section */}
-        <Hero
-          backgroundImages={faqHeroImages}
-          headline="Frequently Asked Questions"
-          subheadline="Get instant answers to your questions about our AI scam protection services, training programs, and security solutions"
-          overlay={true}
-          showScrollIndicator={false}
+    <PageTransition variant="fade">
+      <div className="min-h-screen">
+        <SEO
+          title="Frequently Asked Questions"
+          description="Find answers to common questions about InVision Network's AI scam protection, business services, billing, and technical support."
+          keywords="FAQ, questions, support, help, InVision Network"
         />
+        <Navigation />
 
-        <TrustBar />
+        <main id="main-content">
+          {/* Hero Section */}
+          <Hero
+            backgroundImages={faqHeroImages}
+            headline="Frequently Asked Questions"
+            subheadline="Get instant answers to your questions about our AI scam protection services, training programs, and security solutions"
+            overlay={true}
+            showScrollIndicator={false}
+          />
+
+          <TrustBar />
 
         {/* Platform Guide Section */}
         <section className="py-12 bg-gradient-to-b from-primary/5 to-background">
@@ -609,5 +612,6 @@ export default function FAQ() {
         <Footer />
       </main>
     </div>
+    </PageTransition>
   );
 }
