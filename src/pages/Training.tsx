@@ -37,6 +37,7 @@ import {
   Loader2,
   Video,
   Zap,
+  Star,
 } from "lucide-react";
 import trainingSession from "@/assets/training-session.jpg";
 import trainingDiverse1 from "@/assets/training-diverse-1.jpg";
@@ -161,18 +162,19 @@ const TrainingCard = ({ plan, index, onBook }: { plan: any; index: number; onBoo
       delay={index * 100}
       threshold={0.2}
     >
-      <Card className={`relative p-5 md:p-6 h-full flex flex-col transition-all duration-300 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 mt-5 ${
-        plan.popular 
-          ? "border-primary border-2 shadow-xl" 
-          : "border-border/50 hover:shadow-lg"
-      }`}>
-        {/* Badge - Always visible on top */}
-        <div className={`absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r ${badge.gradient} text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-wide shadow-lg z-20 whitespace-nowrap`}>
+      <div className="relative pt-5">
+        {/* Badge - On top of card, outside */}
+        <div className={`absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r ${badge.gradient} text-white px-5 py-2 rounded-full text-xs font-bold tracking-wide shadow-xl z-30 whitespace-nowrap border-2 border-white/20`}>
           <span className="mr-1">{badge.emoji}</span>
           {badge.label}
         </div>
         
-        <div className="pt-4">
+        <Card className={`relative p-5 md:p-6 h-full flex flex-col transition-all duration-300 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 ${
+          plan.popular 
+            ? "border-primary border-2 shadow-xl" 
+            : "border-border/50 hover:shadow-lg"
+        }`}>
+          <div className="pt-3">
           <h3 className="text-lg md:text-xl font-bold mb-2 text-center">{plan.name}</h3>
           <div className="text-center mb-2" ref={ref}>
             <span className="text-3xl md:text-4xl font-bold text-primary">${Math.round(count)}{plan.pricePrefix || ''}</span>
@@ -204,7 +206,8 @@ const TrainingCard = ({ plan, index, onBook }: { plan: any; index: number; onBoo
             Book Now →
           </Button>
         </div>
-      </Card>
+        </Card>
+      </div>
     </ScrollReveal>
   );
 }
@@ -345,33 +348,38 @@ function LearnAndTrain() {
         <FlowingWaves variant="full" opacity={0.12} />
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-6">
-            <Badge className="mb-4 bg-gradient-to-r from-red-500 to-orange-500 text-white text-sm px-4 py-1.5">
-              ⚠️ ESSENTIAL FOR EVERY FAMILY
+            <Badge className="mb-4 bg-gradient-to-r from-primary to-accent text-white text-sm px-4 py-1.5">
+              🛡️ PROTECTING FAMILIES TOGETHER
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-fade-in-up">Scam Prevention Training Programs</h2>
             <p className="text-base md:text-lg text-muted-foreground mb-4 max-w-4xl mx-auto">
-              <strong>Don't become the next victim.</strong> AI-powered scams are targeting families like yours every day. 
-              Scammers can now clone voices in seconds and impersonate your loved ones. This training teaches you exactly 
-              how to recognize and stop these attacks — <strong>no coding or technical skills required.</strong>
+              <strong>Empower yourself and your loved ones with knowledge.</strong> AI technology is evolving rapidly, 
+              and so are the tactics used to deceive. Our friendly, step-by-step training helps you stay one step ahead — 
+              <strong>no coding or technical skills required.</strong>
             </p>
             <p className="text-sm text-accent font-semibold max-w-3xl mx-auto">
-              🎓 Perfect for seniors, parents, grandparents, and anyone who wants to protect their family from sophisticated AI scams.
+              🎓 Perfect for seniors, parents, grandparents, and anyone who wants to protect their family with confidence and peace of mind.
             </p>
           </div>
 
           {/* Veteran Discount Notification Banner */}
           <div className="max-w-4xl mx-auto mb-8">
-            <div className="bg-gradient-to-r from-primary/10 via-accent/5 to-primary/10 border border-primary/20 rounded-xl p-4 flex items-center justify-center gap-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-lg shrink-0">
-                🇺🇸
+            <div className="bg-gradient-to-r from-blue-900/20 via-red-900/10 to-blue-900/20 border border-blue-500/30 rounded-2xl p-5 shadow-lg backdrop-blur-sm">
+              <div className="flex items-center justify-center gap-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-red-600 rounded-full flex items-center justify-center text-xl shadow-md shrink-0">
+                  🇺🇸
+                </div>
+                <div className="text-center">
+                  <p className="font-bold text-lg text-foreground flex items-center justify-center gap-2">
+                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                    Veterans & First Responders Save 10%
+                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                  </p>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Discount automatically applied during booking • Just mention your service at checkout
+                  </p>
+                </div>
               </div>
-              <div className="text-center md:text-left">
-                <p className="font-semibold text-foreground">Veterans & First Responders Save 10%</p>
-                <p className="text-xs text-muted-foreground">Discount automatically applied at checkout with valid ID verification</p>
-              </div>
-              <Link to="/contact" className="text-primary text-sm font-medium hover:underline shrink-0">
-                Contact Us →
-              </Link>
             </div>
           </div>
 
@@ -455,6 +463,117 @@ function LearnAndTrain() {
                 }}
               />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Simple Protection in 4 Steps - Moved here between Scam Prevention and AI Pro Training */}
+      <section className="py-20 bg-muted relative overflow-hidden">
+        <FlowingWaves variant="full" opacity={0.12} />
+        <div className="absolute inset-0 opacity-30">
+          <div
+            className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse"
+            style={{ animationDuration: "4s" }}
+          />
+          <div
+            className="absolute bottom-20 right-10 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-pulse"
+            style={{ animationDuration: "6s" }}
+          />
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-12">
+            <Badge className="mb-4 bg-gradient-to-r from-primary to-accent text-white text-sm px-4 py-1.5">
+              <Shield className="w-4 h-4 mr-1" /> HOW IT WORKS
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-fade-in-up">Simple Protection in 4 Steps</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Our proven process keeps you safe from scams with expert analysis and clear guidance.
+            </p>
+          </div>
+
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                {
+                  icon: MessageSquare,
+                  step: "01",
+                  title: "Something Suspicious?",
+                  desc: "Strange text, urgent email, odd call, or suspicious link — anything that doesn't feel right.",
+                  color: "from-blue-500 to-cyan-500",
+                  bgColor: "from-blue-500/20 to-cyan-500/20",
+                  image: "📱"
+                },
+                {
+                  icon: Upload,
+                  step: "02",
+                  title: "Forward to Us",
+                  desc: "Send it via email, text, screenshot upload, or call our hotline. We make it easy.",
+                  hasResponseTime: true,
+                  color: "from-purple-500 to-pink-500",
+                  bgColor: "from-purple-500/20 to-pink-500/20",
+                  image: "📤"
+                },
+                {
+                  icon: Search,
+                  step: "03",
+                  title: "Expert Analysis",
+                  desc: "Our team examines content, verifies senders, checks links, and detects AI-generated content.",
+                  color: "from-orange-500 to-red-500",
+                  bgColor: "from-orange-500/20 to-red-500/20",
+                  image: "🔍"
+                },
+                {
+                  icon: FileCheck,
+                  step: "04",
+                  title: "Clear Guidance",
+                  desc: "Receive risk level assessment, detailed explanation, recommended actions, and emergency scripts.",
+                  color: "from-green-500 to-emerald-500",
+                  bgColor: "from-green-500/20 to-emerald-500/20",
+                  image: "✅"
+                },
+              ].map((step, index) => (
+                <ScrollReveal key={index} animation="scale-in" delay={index * 150} threshold={0.3}>
+                  <Card
+                    className="relative p-6 h-full hover:shadow-xl transition-all duration-500 hover:-translate-y-3 rounded-2xl border-border/50 group bg-gradient-to-br from-card to-card/50 backdrop-blur-sm overflow-hidden"
+                  >
+                    {/* Step Number Badge */}
+                    <div className={`absolute -top-1 -right-1 w-14 h-14 bg-gradient-to-br ${step.color} rounded-bl-3xl flex items-end justify-start p-2`}>
+                      <span className="text-xl font-black text-white">{step.step}</span>
+                    </div>
+                    
+                    {/* Icon Container with Emoji */}
+                    <div className="flex justify-center mb-5">
+                      <div 
+                        className={`w-16 h-16 bg-gradient-to-br ${step.bgColor} rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-lg`}
+                      >
+                        <span className="text-3xl">{step.image}</span>
+                      </div>
+                    </div>
+                    
+                    <h3 className="text-lg font-bold mb-2 text-center group-hover:text-primary transition-colors duration-300">
+                      {step.title}
+                    </h3>
+                    <p className="text-muted-foreground text-center text-sm leading-relaxed">{step.desc}</p>
+                    {step.hasResponseTime && <ResponseTimeCallout />}
+                    
+                    {/* Bottom Gradient Line */}
+                    <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${step.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+                  </Card>
+                </ScrollReveal>
+              ))}
+            </div>
+            
+            {/* Connecting Line for Desktop */}
+            <div className="hidden lg:flex justify-center items-center mt-8">
+              <div className="flex items-center gap-2">
+                {[1, 2, 3].map((_, i) => (
+                  <div key={i} className="flex items-center">
+                    <div className="w-24 h-0.5 bg-gradient-to-r from-primary to-accent" />
+                    <div className="w-3 h-3 rounded-full bg-primary animate-pulse" />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -552,18 +671,19 @@ function LearnAndTrain() {
               },
             ].map((plan, index) => (
               <ScrollReveal key={index} animation="scale-in" delay={index * 100} threshold={0.2}>
-                <Card className={`relative p-5 md:p-6 h-full flex flex-col transition-all duration-300 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 mt-5 ${
-                  plan.popular 
-                    ? "border-primary border-2 shadow-xl" 
-                    : "border-border/50 hover:shadow-lg"
-                }`}>
-                  {/* Badge - Always visible on top */}
-                  <div className={`absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r ${plan.badge.gradient} text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-wide shadow-lg z-20 whitespace-nowrap`}>
+                <div className="relative pt-5 h-full">
+                  {/* Badge - On top of card, outside */}
+                  <div className={`absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r ${plan.badge.gradient} text-white px-5 py-2 rounded-full text-xs font-bold tracking-wide shadow-xl z-30 whitespace-nowrap border-2 border-white/20`}>
                     <span className="mr-1">{plan.badge.emoji}</span>
                     {plan.badge.label}
                   </div>
                   
-                  <div className="pt-4">
+                  <Card className={`relative p-5 md:p-6 h-full flex flex-col transition-all duration-300 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 ${
+                    plan.popular 
+                      ? "border-primary border-2 shadow-xl" 
+                      : "border-border/50 hover:shadow-lg"
+                  }`}>
+                    <div className="pt-3">
                     <h3 className="text-lg md:text-xl font-bold mb-2 text-center">{plan.name}</h3>
                     <div className="text-center mb-2">
                       <span className="text-3xl md:text-4xl font-bold text-primary">{plan.price}</span>
@@ -602,7 +722,8 @@ function LearnAndTrain() {
                       Book Now →
                     </Button>
                   </div>
-                </Card>
+                  </Card>
+                </div>
               </ScrollReveal>
             ))}
           </div>
@@ -613,129 +734,6 @@ function LearnAndTrain() {
               <p className="text-sm text-muted-foreground">
                 💳 All payments secured with Stripe • QR code payment available • Pay after confirmation
               </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Divider */}
-      <section id="scamshield" className="py-8 bg-muted">
-        <div className="container mx-auto px-4 text-center">
-          <div className="inline-flex items-center justify-center gap-4 px-8 py-4 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 rounded-full">
-            <Shield className="w-8 h-8 text-primary" />
-            <h2 className="text-3xl font-bold">ScamShield Protection</h2>
-            <Shield className="w-8 h-8 text-primary" />
-          </div>
-        </div>
-      </section>
-
-      {/* How ScamShield Works Section - Redesigned */}
-      <section className="py-20 bg-background relative overflow-hidden">
-        <FlowingWaves variant="full" opacity={0.12} />
-        <div className="absolute inset-0 opacity-30">
-          <div
-            className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse"
-            style={{ animationDuration: "4s" }}
-          />
-          <div
-            className="absolute bottom-20 right-10 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-pulse"
-            style={{ animationDuration: "6s" }}
-          />
-        </div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-12">
-            <Badge className="mb-4 bg-gradient-to-r from-primary to-accent text-white text-sm px-4 py-1.5">
-              <Shield className="w-4 h-4 mr-1" /> HOW IT WORKS
-            </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-fade-in-up">Simple Protection in 4 Steps</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Our proven process keeps you safe from scams with expert analysis and clear guidance.
-            </p>
-          </div>
-
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {[
-                {
-                  icon: MessageSquare,
-                  step: "01",
-                  title: "Something Suspicious?",
-                  desc: "Strange text, urgent email, odd call, or suspicious link — anything that doesn't feel right.",
-                  color: "from-blue-500 to-cyan-500",
-                  bgColor: "from-blue-500/20 to-cyan-500/20"
-                },
-                {
-                  icon: Upload,
-                  step: "02",
-                  title: "Forward to Us",
-                  desc: "Send it via email, text, screenshot upload, or call our hotline. We make it easy.",
-                  hasResponseTime: true,
-                  color: "from-purple-500 to-pink-500",
-                  bgColor: "from-purple-500/20 to-pink-500/20"
-                },
-                {
-                  icon: Search,
-                  step: "03",
-                  title: "Expert Analysis",
-                  desc: "Our team examines content, verifies senders, checks links, and detects AI-generated content.",
-                  color: "from-orange-500 to-red-500",
-                  bgColor: "from-orange-500/20 to-red-500/20"
-                },
-                {
-                  icon: FileCheck,
-                  step: "04",
-                  title: "Clear Guidance",
-                  desc: "Receive risk level assessment, detailed explanation, recommended actions, and emergency scripts.",
-                  color: "from-green-500 to-emerald-500",
-                  bgColor: "from-green-500/20 to-emerald-500/20"
-                },
-              ].map((step, index) => (
-                <ScrollReveal key={index} animation="scale-in" delay={index * 150} threshold={0.3}>
-                  <Card
-                    className="relative p-6 hover:shadow-xl transition-all duration-500 hover:-translate-y-3 rounded-2xl border-border/50 group bg-gradient-to-br from-card to-card/50 backdrop-blur-sm overflow-hidden"
-                  >
-                    {/* Step Number Badge */}
-                    <div className={`absolute -top-1 -right-1 w-16 h-16 bg-gradient-to-br ${step.color} rounded-bl-3xl flex items-end justify-start p-2`}>
-                      <span className="text-2xl font-black text-white">{step.step}</span>
-                    </div>
-                    
-                    {/* Icon Container */}
-                    <div className="flex justify-center mb-6">
-                      <div 
-                        className={`w-20 h-20 bg-gradient-to-br ${step.bgColor} rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-lg`}
-                        style={{
-                          animation: `step-icon-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards`,
-                          animationDelay: `${0.5 + index * 0.2}s`,
-                          transform: 'scale(0)'
-                        }}
-                      >
-                        <step.icon className={`w-10 h-10 bg-gradient-to-br ${step.color} bg-clip-text text-transparent`} style={{ color: 'hsl(var(--primary))' }} />
-                      </div>
-                    </div>
-                    
-                    <h3 className="text-xl font-bold mb-3 text-center group-hover:text-primary transition-colors duration-300">
-                      {step.title}
-                    </h3>
-                    <p className="text-muted-foreground text-center text-sm leading-relaxed">{step.desc}</p>
-                    {step.hasResponseTime && <ResponseTimeCallout />}
-                    
-                    {/* Bottom Gradient Line */}
-                    <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${step.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-                  </Card>
-                </ScrollReveal>
-              ))}
-            </div>
-            
-            {/* Connecting Line for Desktop */}
-            <div className="hidden lg:flex justify-center items-center mt-8">
-              <div className="flex items-center gap-2">
-                {[1, 2, 3].map((_, i) => (
-                  <div key={i} className="flex items-center">
-                    <div className="w-24 h-0.5 bg-gradient-to-r from-primary to-accent" />
-                    <div className="w-3 h-3 rounded-full bg-primary animate-pulse" />
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
         </div>
