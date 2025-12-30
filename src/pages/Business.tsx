@@ -1862,48 +1862,27 @@ function Business() {
         </section>
       )}
 
-      {/* Final CTA with Park Image */}
+      {/* Final CTA with Park Image - Merged Sections */}
       <CTASection 
         headline="Ready to Deploy AI Safely?" 
         variant="image"
         backgroundImage={natureParkSerene}
-        description="Take the first step towards protecting your business with AI-powered security solutions."
+        description="Take the first step towards protecting your business with AI-powered security solutions. Book a free discovery call to discuss your AI automation needs."
       >
-        <Button asChild size="xl" className="bg-primary hover:bg-primary/90 text-white font-bold shadow-xl shadow-black/20">
-          <Link 
-            to="/contact"
-            onClick={() => trackButtonClick('Schedule Discovery Call', 'Business CTA')}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button 
+            onClick={() => setModalOpen(true)} 
+            size="xl" 
+            className="bg-primary hover:bg-primary/90 text-white font-bold shadow-xl shadow-black/20"
           >
             SCHEDULE DISCOVERY CALL
-          </Link>
-        </Button>
+          </Button>
+          <Button asChild variant="outlineLight" size="xl">
+            <Link to="/faq">View Frequently Asked Questions</Link>
+          </Button>
+        </div>
         <p className="text-white/80 text-sm mt-4">15-minute call to discuss your needs - no sales pressure.</p>
       </CTASection>
-
-      {/* Final CTA with FAQ */}
-      <section className="py-16 bg-gradient-to-r from-primary to-accent relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjA1IiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-20" />
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          <ScrollReveal>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Transform Your Business?</h2>
-            <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
-              Book a free discovery call to discuss your AI automation needs
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                onClick={() => setModalOpen(true)} 
-                variant="gold" 
-                size="xl"
-              >
-                Schedule Discovery Call
-              </Button>
-              <Button asChild variant="outlineLight" size="xl">
-                <Link to="/faq">View Frequently Asked Questions</Link>
-              </Button>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
 
       <Footer />
       

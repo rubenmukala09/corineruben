@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
+import { CartAbandonmentNotification } from "@/components/CartAbandonmentNotification";
 import TrustBar from "@/components/TrustBar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -649,6 +650,10 @@ function Resources() {
           </div>
         </div>
       </section>
+      
+      {/* Cart Abandonment Notification */}
+      <CartAbandonmentNotification />
+      
       <Footer />
     </>
   );
