@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import CTASection from "@/components/CTASection";
 import TestimonialCard from "@/components/TestimonialCard";
+import { PageTransition } from "@/components/PageTransition";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -224,7 +225,7 @@ const Services = () => {
   ];
 
   return (
-    <>
+    <PageTransition variant="fade">
       <SEO
         title="Our Services - Comprehensive Protection Solutions"
         description="Explore InVision Network's complete range of cybersecurity services: ScamShield Protection, AI Business Solutions, Training Programs, and Safety Vault. Protect what matters most."
@@ -556,7 +557,7 @@ const Services = () => {
 
         <Footer />
       </div>
-    </>
+    </PageTransition>
   );
 };
 
