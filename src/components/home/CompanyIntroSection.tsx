@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
-import { Shield, Users, Brain, Heart, ArrowRight, CheckCircle, Sparkles, Lock, Eye, Zap } from "lucide-react";
+import { Shield, Users, Brain, Heart, ArrowRight, CheckCircle, Sparkles, Lock, Eye, Zap, Building2, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import threatProtectionBg from "@/assets/threat-protection-bg.jpg";
 
 const coreValues = [
   {
@@ -15,14 +16,14 @@ const coreValues = [
     description: "Our systems learn and adapt faster than scammers can evolve, keeping you one step ahead.",
   },
   {
-    icon: Heart,
-    title: "Community Focused",
-    description: "We're not a faceless corporation. We're your neighbors, veterans, and fellow Ohioans.",
+    icon: Building2,
+    title: "Business Solutions",
+    description: "From startups to enterprises, we provide comprehensive cybersecurity training and protection.",
   },
   {
-    icon: Users,
-    title: "Family Values",
-    description: "From grandparents to grandchildren, we protect every generation in your family.",
+    icon: GraduationCap,
+    title: "Expert Training",
+    description: "We train individuals, families, companies, and organizations to recognize and prevent threats.",
   },
 ];
 
@@ -67,9 +68,9 @@ export const CompanyIntroSection = () => {
           </motion.div>
           
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Your Digital{" "}
+            Your{" "}
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Guardian Angels
+              Trusted Security Partners
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
@@ -91,7 +92,7 @@ export const CompanyIntroSection = () => {
               whileHover={{ y: -5, transition: { duration: 0.2 } }}
               className="group"
             >
-              <div className="h-full bg-card/80 backdrop-blur-sm rounded-2xl p-6 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-lg">
+              <div className="h-full bg-card/80 backdrop-blur-sm rounded-2xl p-6 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5">
                 <motion.div 
                   className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center mb-4 group-hover:from-primary/20 group-hover:to-accent/20 transition-colors"
                   whileHover={{ rotate: 5 }}
@@ -105,82 +106,94 @@ export const CompanyIntroSection = () => {
           ))}
         </div>
 
-        {/* Why You Need Us Section */}
+        {/* Why You Need Us Section - With Background Image */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-gradient-to-r from-primary/5 via-card to-accent/5 rounded-3xl p-8 md:p-12 border border-primary/10"
+          className="relative rounded-3xl overflow-hidden"
         >
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left: Message */}
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-destructive/10 border border-destructive/20 mb-6">
-                <Lock className="w-3.5 h-3.5 text-destructive" />
-                <span className="text-xs font-semibold text-destructive uppercase tracking-wider">Why Protection Matters</span>
-              </div>
-              
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                The Threats Are Real.<br />
-                <span className="text-primary">Your Defense Should Be Too.</span>
-              </h3>
-              
-              <p className="text-muted-foreground mb-6 leading-relaxed">
-                Every 11 seconds, someone becomes a victim of identity theft. AI-powered scams are growing 
-                300% year over year. Seniors lose an average of $9,000 per scam incident. 
-                <strong className="text-foreground"> Don't become a statistic.</strong>
-              </p>
+          {/* Background image with blur effect */}
+          <div className="absolute inset-0">
+            <img 
+              src={threatProtectionBg} 
+              alt="" 
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
+          </div>
+          
+          <div className="relative z-10 p-8 md:p-12 border border-primary/10">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              {/* Left: Message */}
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/10 border border-accent/20 mb-6">
+                  <Lock className="w-3.5 h-3.5 text-accent" />
+                  <span className="text-xs font-semibold text-accent uppercase tracking-wider">Why Protection Matters</span>
+                </div>
+                
+                <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+                  The Threats Are Real.<br />
+                  <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Your Defense Should Be Too.</span>
+                </h3>
+                
+                <p className="text-muted-foreground mb-6 leading-relaxed">
+                  Every 11 seconds, someone becomes a victim of identity theft. AI-powered scams are growing 
+                  300% year over year. Seniors lose an average of $9,000 per scam incident. 
+                  <strong className="text-foreground"> Don't become a statistic.</strong>
+                </p>
 
-              <div className="grid grid-cols-2 gap-3 mb-8">
-                {whyUsPoints.map((point, index) => (
+                <div className="grid grid-cols-2 gap-3 mb-8">
+                  {whyUsPoints.map((point, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.05 }}
+                      className="flex items-center gap-2"
+                    >
+                      <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
+                      <span className="text-sm text-foreground">{point}</span>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <Button asChild size="lg" className="rounded-full">
+                  <Link to="/services">
+                    Start Your Protection
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Link>
+                </Button>
+              </div>
+
+              {/* Right: Visual Stats */}
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { icon: Eye, value: "24/7", label: "Monitoring", color: "from-primary to-accent" },
+                  { icon: Zap, value: "< 1s", label: "Response Time", color: "from-accent to-primary" },
+                  { icon: Shield, value: "99.9%", label: "Success Rate", color: "from-primary to-accent" },
+                  { icon: Users, value: "500+", label: "Families Protected", color: "from-accent to-primary" },
+                ].map((stat, index) => (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ delay: index * 0.05 }}
-                    className="flex items-center gap-2"
+                    transition={{ delay: index * 0.1 }}
+                    whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+                    className="bg-card/90 backdrop-blur-md rounded-2xl p-6 border border-border hover:border-primary/30 transition-all text-center"
                   >
-                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
-                    <span className="text-sm text-foreground">{point}</span>
+                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center mx-auto mb-3 opacity-80`}>
+                      <stat.icon className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                      {stat.value}
+                    </div>
+                    <div className="text-xs text-muted-foreground font-medium mt-1">{stat.label}</div>
                   </motion.div>
                 ))}
               </div>
-
-              <Button asChild size="lg" className="rounded-full">
-                <Link to="/services">
-                  Start Your Protection
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
-              </Button>
-            </div>
-
-            {/* Right: Visual Stats */}
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { icon: Eye, value: "24/7", label: "Monitoring", color: "from-primary to-accent" },
-                { icon: Zap, value: "< 1s", label: "Response Time", color: "from-accent to-primary" },
-                { icon: Shield, value: "99.9%", label: "Success Rate", color: "from-primary to-accent" },
-                { icon: Users, value: "500+", label: "Families Protected", color: "from-accent to-primary" },
-              ].map((stat, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-                  className="bg-card/80 backdrop-blur-sm rounded-2xl p-6 border border-border hover:border-primary/30 transition-all text-center"
-                >
-                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center mx-auto mb-3 opacity-80`}>
-                    <stat.icon className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                    {stat.value}
-                  </div>
-                  <div className="text-xs text-muted-foreground font-medium mt-1">{stat.label}</div>
-                </motion.div>
-              ))}
             </div>
           </div>
         </motion.div>

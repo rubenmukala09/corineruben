@@ -136,7 +136,7 @@ function Index() {
             <p className="text-xl text-white/90 mb-8">Join 500+ Ohio families who sleep better knowing they're protected from AI scams.</p>
             <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center">
               <Button asChild variant="gold" size="xl" className="w-full sm:w-auto">
-                <Link to="/training">Schedule Consultation</Link>
+                <Link to="/training#pricing">Get Started Today</Link>
               </Button>
               <Button asChild variant="secondary" size="xl" className="w-full sm:w-auto">
                 <Link to="/training#pricing">Get Protection Now</Link>

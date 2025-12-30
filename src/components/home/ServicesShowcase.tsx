@@ -41,9 +41,17 @@ const services = [
 export const ServicesShowcase = () => {
   return (
     <section className="py-24 bg-muted/30 relative overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute top-20 left-20 w-40 h-40 rounded-full bg-primary/5" />
-      <div className="absolute bottom-20 right-10 w-28 h-28 rounded-full bg-accent/10" />
+      {/* Animated decorative elements */}
+      <motion.div 
+        className="absolute top-20 left-20 w-40 h-40 rounded-full bg-primary/5"
+        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+        transition={{ duration: 6, repeat: Infinity }}
+      />
+      <motion.div 
+        className="absolute bottom-20 right-10 w-28 h-28 rounded-full bg-accent/10"
+        animate={{ scale: [1.2, 1, 1.2], opacity: [0.3, 0.5, 0.3] }}
+        transition={{ duration: 8, repeat: Infinity }}
+      />
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
@@ -58,7 +66,7 @@ export const ServicesShowcase = () => {
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
             We Have Experience And A{" "}
-            <span className="text-primary">Team Of Experts</span>
+            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Team Of Experts</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             We believe in protecting families through education and empowerment.
@@ -77,27 +85,37 @@ export const ServicesShowcase = () => {
               className="group"
             >
               <Link to={service.link} className="block">
-                <div className="bg-card rounded-2xl overflow-hidden border border-border hover:border-primary/30 hover:shadow-xl transition-all duration-300">
+                <div className="bg-card rounded-2xl overflow-hidden border border-border hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
                   {/* Image with circular accent */}
                   <div className="relative p-6 pb-0">
                     <div className="relative">
-                      {/* Circular image container */}
+                      {/* Circular image container with hover magnification */}
                       <div className="rounded-full overflow-hidden aspect-square border-4 border-background shadow-lg">
-                        <img
+                        <motion.img
                           src={service.image}
                           alt={service.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          className="w-full h-full object-cover"
+                          whileHover={{ scale: 1.25 }}
+                          transition={{ duration: 0.5 }}
                         />
                       </div>
-                      {/* Decorative dots */}
-                      <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-accent" />
-                      <div className="absolute -bottom-1 -left-1 w-4 h-4 rounded-full bg-primary/30" />
+                      {/* Animated decorative dots */}
+                      <motion.div 
+                        className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-accent"
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+                      />
+                      <motion.div 
+                        className="absolute -bottom-1 -left-1 w-4 h-4 rounded-full bg-primary/30"
+                        animate={{ scale: [1, 1.3, 1] }}
+                        transition={{ duration: 2.5, repeat: Infinity, delay: index * 0.3 }}
+                      />
                     </div>
                   </div>
                   
                   {/* Content */}
                   <div className="p-6 text-center">
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center mx-auto mb-4 group-hover:from-primary/20 group-hover:to-accent/20 transition-colors">
                       <service.icon className="w-6 h-6 text-primary" />
                     </div>
                     <h3 className="font-bold text-lg mb-2 text-foreground group-hover:text-primary transition-colors">
@@ -120,8 +138,8 @@ export const ServicesShowcase = () => {
           viewport={{ once: true }}
           className="text-center mt-12"
         >
-          <Button asChild variant="outline" size="lg" className="rounded-full px-8">
-            <Link to="/about">
+          <Button asChild size="lg" className="rounded-full px-8">
+            <Link to="/services">
               Learn More About Our Services
               <ArrowRight className="ml-2 w-5 h-5" />
             </Link>
