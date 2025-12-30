@@ -6,6 +6,9 @@ import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import TrustBar from "@/components/TrustBar";
 import { SEO } from "@/components/SEO";
+import { PageTransition } from "@/components/PageTransition";
+import { FloatingShapes } from "@/components/FloatingShapes";
+import AnimatedCounter from "@/components/AnimatedCounter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,7 +18,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Phone, Mail, MessageCircle, MapPin, Clock, CheckCircle, Shield, Loader2 } from "lucide-react";
+import { Phone, Mail, MessageCircle, MapPin, Clock, CheckCircle, Shield, Loader2, Users, Award, Heart } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { contactFormSchema, formatPhoneNumber } from "@/utils/formValidation";
@@ -135,7 +138,7 @@ function Contact() {
   ];
 
   return (
-    <>
+    <PageTransition variant="fade">
       <SEO 
         title="Contact Us - Get Support & Answers" 
         description="Contact InVision Network for scam protection support. Phone, email, live chat available. Average 2-minute wait time. 95% same-day response rate."
@@ -147,8 +150,32 @@ function Contact() {
         subheadline="We're here to help protect your family"
         showProtectionBadge
         badgeText="Response within 4 hours"
-      />
+      >
+        <FloatingShapes />
+      </Hero>
       <TrustBar />
+
+      {/* Stats Section with AnimatedCounter */}
+      <section className="py-10 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 border-y border-primary/20">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            {[
+              { icon: Users, end: 500, suffix: "+", label: "Families Helped" },
+              { icon: Clock, end: 4, suffix: "hr", label: "Avg Response" },
+              { icon: Award, end: 95, suffix: "%", label: "Same-Day Reply" },
+              { icon: Heart, end: 98, suffix: "%", label: "Satisfaction" },
+            ].map((stat, index) => (
+              <div key={index} className="flex flex-col items-center gap-1">
+                <stat.icon className="w-5 h-5 text-primary mb-1" />
+                <span className="text-2xl font-bold text-foreground">
+                  <AnimatedCounter end={stat.end} suffix={stat.suffix} />
+                </span>
+                <span className="text-xs text-muted-foreground">{stat.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       
       <div className="section-spacing bg-gradient-to-b from-background via-muted/10 to-background relative overflow-hidden">
         {/* Premium Background Effects */}
@@ -512,7 +539,7 @@ function Contact() {
       </div>
 
       <Footer />
-    </>
+    </PageTransition>
   );
 }
 

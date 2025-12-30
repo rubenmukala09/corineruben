@@ -6,6 +6,8 @@ import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import TrustBar from "@/components/TrustBar";
 import CTASection from "@/components/CTASection";
+import { PageTransition } from "@/components/PageTransition";
+import { FloatingShapes } from "@/components/FloatingShapes";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -143,7 +145,7 @@ function About() {
   ];
 
   return (
-    <>
+    <PageTransition variant="fade">
       <SEO 
         title="About Us - Our Story, Mission & Team"
         description="Learn about InVision Network's mission to protect families from digital scams. Founded from personal experience, serving 500+ families across Ohio."
@@ -167,7 +169,9 @@ function About() {
           </AnimatePresence>
         }
         subheadline="From victims to protectors. Serving 500+ families across Ohio."
-      />
+      >
+        <FloatingShapes />
+      </Hero>
 
       <TrustBar />
 
@@ -519,7 +523,7 @@ function About() {
           </div>
         </div>
       )}
-    </>
+    </PageTransition>
   );
 }
 

@@ -14,6 +14,7 @@ import { NewsletterSection } from "@/components/home/NewsletterSection";
 import TrustBar from "@/components/TrustBar";
 import CTASection from "@/components/CTASection";
 import { ScamShieldSubmission } from "@/components/ScamShieldSubmission";
+import { PageTransition } from "@/components/PageTransition";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { SEO, PAGE_SEO } from "@/components/SEO";
@@ -54,15 +55,15 @@ function Index() {
       setIsLoading(false);
     }
   };
-  return <div className="min-h-screen bg-background">
-      <SEO {...PAGE_SEO.home} />
-      <Navigation />
-      <main id="main-content">
+  return (
+    <PageTransition variant="fade">
+      <div className="min-h-screen bg-background">
+        <SEO {...PAGE_SEO.home} />
+        <Navigation />
+        <main id="main-content">
 
-        {/* Hero Section */}
-        <HeroHomepage />
-
-        {/* Feature Bar - Why Choose Us */}
+          {/* Hero Section */}
+          <HeroHomepage />
         <FeatureBar />
 
         {/* About Section */}
@@ -113,6 +114,8 @@ function Index() {
         
         <ScamShieldSubmission open={scamShieldOpen} onOpenChange={setScamShieldOpen} />
       </main>
-    </div>;
+      </div>
+    </PageTransition>
+  );
 }
 export default Index;

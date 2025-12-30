@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, ArrowRight, Award } from "lucide-react";
 import heroAbout from "@/assets/hero-about-1.jpg";
+import aboutSectionTeam from "@/assets/about-section-team.jpg";
 
 const features = [
   "Specialized Scam Protection",
@@ -13,19 +14,13 @@ const features = [
 
 export const AboutSection = () => {
   return (
-    <section className="py-32 bg-gradient-to-br from-primary via-primary to-accent/80 relative overflow-hidden">
-      {/* Subtle decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-full opacity-[0.03]">
-          <div 
-            className="absolute inset-0"
-            style={{
-              backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',
-              backgroundSize: '48px 48px'
-            }}
-          />
-        </div>
-      </div>
+    <section className="py-16 md:py-20 relative overflow-hidden">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url(${aboutSectionTeam})` }}
+      />
+      <div className="absolute inset-0 bg-primary/85" />
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
@@ -34,7 +29,7 @@ export const AboutSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-20"
+          className="text-center mb-12"
         >
           <motion.div 
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-foreground/10 border border-primary-foreground/20 mb-8"
@@ -53,7 +48,7 @@ export const AboutSection = () => {
           </h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
           {/* Left - Image */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}

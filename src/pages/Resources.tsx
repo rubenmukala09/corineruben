@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import { CartAbandonmentNotification } from "@/components/CartAbandonmentNotification";
 import TrustBar from "@/components/TrustBar";
+import { PageTransition } from "@/components/PageTransition";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -195,7 +196,7 @@ function Resources() {
   ];
 
   return (
-    <>
+    <PageTransition variant="fade">
       <SEO 
         title="Resources & Marketplace - Digital Guides & Security Products"
         description="Browse our curated collection of scam prevention guides and physical security products. Everything you need to protect yourself and your loved ones."
@@ -499,7 +500,7 @@ function Resources() {
       <CartAbandonmentNotification />
       
       <Footer />
-    </>
+    </PageTransition>
   );
 }
 

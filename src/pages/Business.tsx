@@ -9,6 +9,7 @@ import TrustBar from "@/components/TrustBar";
 import TestimonialCard from "@/components/TestimonialCard";
 import CTASection from "@/components/CTASection";
 import FlowingWaves from "@/components/FlowingWaves";
+import { PageTransition } from "@/components/PageTransition";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -167,8 +168,9 @@ function Business() {
   ];
 
   return (
-    <div className="min-h-screen">
-      <Navigation />
+    <PageTransition variant="fade">
+      <div className="min-h-screen">
+        <Navigation />
 
       <Hero
         backgroundImages={businessHeroImages}
@@ -1934,7 +1936,8 @@ function Business() {
         open={websiteInsuranceOpen}
         onOpenChange={setWebsiteInsuranceOpen}
       />
-    </div>
+      </div>
+    </PageTransition>
   );
 }
 

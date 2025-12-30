@@ -9,6 +9,7 @@ import Hero from "@/components/Hero";
 import TrustBar from "@/components/TrustBar";
 import CTASection from "@/components/CTASection";
 import FlowingWaves from "@/components/FlowingWaves";
+import { PageTransition } from "@/components/PageTransition";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
@@ -322,8 +323,9 @@ function LearnAndTrain() {
   ];
 
   return (
-    <div className="min-h-screen">
-      <Navigation />
+    <PageTransition variant="fade">
+      <div className="min-h-screen">
+        <Navigation />
 
       {/* Hero Section */}
       <Hero
@@ -1695,7 +1697,8 @@ function LearnAndTrain() {
           amount={selectedSubscription.amount}
         />
       )}
-    </div>
+      </div>
+    </PageTransition>
   );
 }
 
