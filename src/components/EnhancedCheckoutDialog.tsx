@@ -17,6 +17,7 @@ import { QuickVeteranToggle } from '@/components/payment/QuickVeteranToggle';
 import { SmartPriceBreakdown } from '@/components/payment/SmartPriceBreakdown';
 import { TrustIndicators } from '@/components/payment/TrustIndicators';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useCartFeedback } from './CartFeedbackNotifications';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '');
 
@@ -131,6 +132,7 @@ function CardPaymentForm({ onSuccess }: { onSuccess: () => void }) {
   const stripe = useStripe();
   const elements = useElements();
   const { items, total, clearCart } = useCart();
+  const { triggerThankYou } = useCartFeedback();
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState<'contact' | 'payment'>('contact');
   const [formData, setFormData] = useState({
@@ -205,7 +207,8 @@ function CardPaymentForm({ onSuccess }: { onSuccess: () => void }) {
       if (!data.success) throw new Error(data.error || 'Payment failed');
 
       toast.success('Payment successful!');
-      clearCart();
+      clearCart('purchase');
+      triggerThankYou();
       onSuccess();
     } catch (error: any) {
       toast.error(error.message || 'Payment failed');

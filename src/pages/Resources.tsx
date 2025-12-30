@@ -8,6 +8,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import { CartAbandonmentNotification } from "@/components/CartAbandonmentNotification";
+import { useCartFeedback } from "@/components/CartFeedbackNotifications";
 import TrustBar from "@/components/TrustBar";
 import { PageTransition } from "@/components/PageTransition";
 import { Button } from "@/components/ui/button";
@@ -112,10 +113,22 @@ const heroHeadlines = [
 ];
 
 function Resources() {
-  const { addItem } = useCart();
+  const { addItem, lastClearReason, hadItemsBeforeClear, itemCount } = useCart();
   const { toast } = useToast();
+  const { triggerEmptyCartHelp } = useCartFeedback();
   const [loading, setLoading] = useState<string | null>(null);
   const [currentHeadlineIndex, setCurrentHeadlineIndex] = useState(0);
+
+  // Track when cart is manually emptied to show help
+  useEffect(() => {
+    if (lastClearReason === 'manual' && hadItemsBeforeClear && itemCount === 0) {
+      // Delay to not interrupt user flow
+      const timer = setTimeout(() => {
+        triggerEmptyCartHelp();
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [lastClearReason, hadItemsBeforeClear, itemCount, triggerEmptyCartHelp]);
 
   // Rotate headlines
   useEffect(() => {

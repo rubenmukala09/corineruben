@@ -10,6 +10,7 @@ import { AdminRoute } from "./components/AdminRoute";
 import { AIChat } from "./components/AIChat";
 import { AIChatProvider } from "./contexts/AIChatContext";
 import { CartProvider } from "./contexts/CartContext";
+import { CartFeedbackProvider, CartFeedbackNotifications } from "./components/CartFeedbackNotifications";
 import { SubscriptionProvider } from "./contexts/SubscriptionContext";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { RouteTracker } from "./components/RouteTracker";
@@ -598,26 +599,29 @@ function App() {
         <Sonner />
         <SubscriptionProvider>
           <CartProvider>
-            <AIChatProvider>
-              <BrowserRouter>
-                <SkipToContent />
-                <ScrollProgressBar />
-                <NavigationProgress />
-                <ScrollToTop />
-                <BackToTop />
-                
-                <RouteTracker />
-                <AnalyticsTracker />
-                <ErrorBoundary>
-                  <Suspense fallback={<PageLoader />}>
-                    <AnimatedRoutes />
-                  </Suspense>
-                </ErrorBoundary>
-                <AIChat />
-                <CookieConsent />
-                <DraggablePerformanceMonitor />
-              </BrowserRouter>
-            </AIChatProvider>
+            <CartFeedbackProvider>
+              <AIChatProvider>
+                <BrowserRouter>
+                  <SkipToContent />
+                  <ScrollProgressBar />
+                  <NavigationProgress />
+                  <ScrollToTop />
+                  <BackToTop />
+                  
+                  <RouteTracker />
+                  <AnalyticsTracker />
+                  <ErrorBoundary>
+                    <Suspense fallback={<PageLoader />}>
+                      <AnimatedRoutes />
+                    </Suspense>
+                  </ErrorBoundary>
+                  <AIChat />
+                  <CookieConsent />
+                  <CartFeedbackNotifications />
+                  <DraggablePerformanceMonitor />
+                </BrowserRouter>
+              </AIChatProvider>
+            </CartFeedbackProvider>
           </CartProvider>
         </SubscriptionProvider>
       </QueryClientProvider>
