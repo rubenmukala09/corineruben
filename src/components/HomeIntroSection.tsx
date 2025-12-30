@@ -215,7 +215,7 @@ export const HomeIntroSection = () => {
             <div className="flex flex-wrap justify-center gap-3">
               <Button asChild size="sm" className="gap-1.5">
                 <Link to="/about">
-                  Learn More
+                  Learn More About Our Security Services
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </Button>
