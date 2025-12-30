@@ -1300,89 +1300,60 @@ function Business() {
             </div>
           </div>
 
-          {/* We Support AI Agents From Any Vendor - Enhanced Section */}
+          {/* We Support AI Agents From Any Vendor - Simplified */}
           <div className="mt-16">
-            <Card className="max-w-6xl mx-auto p-0 overflow-hidden bg-gradient-to-br from-primary/10 via-accent/5 to-primary/10 border-2 border-primary/30 rounded-3xl shadow-2xl">
-              {/* Header with cosmic theme */}
-              <div className="bg-gradient-to-r from-primary via-accent to-primary p-8 text-center relative overflow-hidden">
-                <div className="absolute inset-0 opacity-20">
-                  <div className="absolute top-2 left-10 w-2 h-2 bg-white rounded-full animate-pulse" />
-                  <div className="absolute top-8 right-20 w-1 h-1 bg-white rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
-                  <div className="absolute bottom-4 left-1/3 w-1.5 h-1.5 bg-white rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
-                  <div className="absolute bottom-6 right-1/4 w-2 h-2 bg-white rounded-full animate-pulse" style={{ animationDelay: '1.5s' }} />
+            <Card className="max-w-5xl mx-auto p-8 md:p-10 bg-background border rounded-2xl">
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-sm font-bold text-primary mb-4">
+                  <Sparkles className="w-4 h-4" />
+                  UNIVERSAL AI SUPPORT
                 </div>
-                <div className="relative z-10">
-                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white text-sm font-bold mb-4">
-                    <Sparkles className="w-4 h-4" />
-                    UNIVERSAL AI SUPPORT
+                <h3 className="text-2xl md:text-3xl font-bold mb-3">
+                  We Support AI Agents From Any Vendor
+                </h3>
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  Wherever you purchased your AI, we can help. We fix, optimize, secure, and develop AI systems from any platform worldwide.
+                </p>
+              </div>
+
+              {/* Simple capability icons */}
+              <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-8">
+                <div className="flex items-center gap-2 text-sm">
+                  <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <span>🔧</span>
                   </div>
-                  <h3 className="text-3xl md:text-4xl font-black text-white mb-3">
-                    We Support AI Agents From ANY Vendor
-                  </h3>
-                  <p className="text-white/90 text-xl font-medium max-w-3xl mx-auto">
-                    Mars 🪐 Jupiter 🌌 Heaven ☁️ or Anywhere Else — We Fix It All!
-                  </p>
+                  <span className="font-medium">Resuscitate</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <div className="w-8 h-8 bg-accent/10 rounded-lg flex items-center justify-center">
+                    <span>⚡</span>
+                  </div>
+                  <span className="font-medium">Optimize</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <div className="w-8 h-8 bg-success/10 rounded-lg flex items-center justify-center">
+                    <span>🛡️</span>
+                  </div>
+                  <span className="font-medium">Secure</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <div className="w-8 h-8 bg-amber-500/10 rounded-lg flex items-center justify-center">
+                    <span>🚀</span>
+                  </div>
+                  <span className="font-medium">Develop</span>
                 </div>
               </div>
 
-              {/* Main Content */}
-              <div className="p-8 md:p-12">
-                <div className="text-center mb-10">
-                  <p className="text-lg text-foreground leading-relaxed max-w-4xl mx-auto">
-                    <strong className="text-primary">Bought AI from another vendor?</strong> No problem. 
-                    <strong className="text-accent"> Built it yourself?</strong> We've got you covered. 
-                    Whether your AI agent came from a startup in Silicon Valley, an enterprise solution from Microsoft, 
-                    or an obscure platform from the farthest corners of the tech universe — 
-                    <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent font-bold"> InVision can resuscitate, optimize, repair, and make it work like new.</span>
-                  </p>
+              {/* Simple stats */}
+              <div className="flex flex-wrap justify-center gap-8 text-center text-sm text-muted-foreground">
+                <div>
+                  <span className="font-bold text-foreground">No Contracts</span> · Cancel anytime
                 </div>
-
-                {/* Capability Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-                  <div className="text-center p-6 bg-background rounded-2xl border hover:border-primary/50 transition-all hover:-translate-y-1 hover:shadow-lg">
-                    <div className="w-14 h-14 mx-auto bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mb-4">
-                      <span className="text-2xl">🔧</span>
-                    </div>
-                    <h4 className="font-bold text-lg mb-2">Resuscitate</h4>
-                    <p className="text-sm text-muted-foreground">Bring your broken AI back to life</p>
-                  </div>
-                  <div className="text-center p-6 bg-background rounded-2xl border hover:border-accent/50 transition-all hover:-translate-y-1 hover:shadow-lg">
-                    <div className="w-14 h-14 mx-auto bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mb-4">
-                      <span className="text-2xl">⚡</span>
-                    </div>
-                    <h4 className="font-bold text-lg mb-2">Optimize</h4>
-                    <p className="text-sm text-muted-foreground">Make it faster, smarter, better</p>
-                  </div>
-                  <div className="text-center p-6 bg-background rounded-2xl border hover:border-success/50 transition-all hover:-translate-y-1 hover:shadow-lg">
-                    <div className="w-14 h-14 mx-auto bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center mb-4">
-                      <span className="text-2xl">🛡️</span>
-                    </div>
-                    <h4 className="font-bold text-lg mb-2">Secure</h4>
-                    <p className="text-sm text-muted-foreground">Lock down vulnerabilities</p>
-                  </div>
-                  <div className="text-center p-6 bg-background rounded-2xl border hover:border-primary/50 transition-all hover:-translate-y-1 hover:shadow-lg">
-                    <div className="w-14 h-14 mx-auto bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-4">
-                      <span className="text-2xl">🚀</span>
-                    </div>
-                    <h4 className="font-bold text-lg mb-2">Develop</h4>
-                    <p className="text-sm text-muted-foreground">Build new features & integrations</p>
-                  </div>
+                <div>
+                  <span className="font-bold text-foreground">Any Platform</span> · Worldwide support
                 </div>
-
-                {/* Stats Row */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 rounded-2xl border border-primary/20">
-                  <div className="text-center">
-                    <div className="text-3xl font-black gradient-text-primary mb-1">No Contracts</div>
-                    <div className="text-sm text-muted-foreground font-medium">Cancel anytime, no questions asked</div>
-                  </div>
-                  <div className="text-center border-y md:border-y-0 md:border-x border-primary/20 py-4 md:py-0">
-                    <div className="text-3xl font-black gradient-text-primary mb-1">Any Platform</div>
-                    <div className="text-sm text-muted-foreground font-medium">We support ALL AI systems worldwide</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-3xl font-black gradient-text-primary mb-1">24-48hr Response</div>
-                    <div className="text-sm text-muted-foreground font-medium">Fast turnaround guaranteed</div>
-                  </div>
+                <div>
+                  <span className="font-bold text-foreground">24-48hr Response</span> · Fast turnaround
                 </div>
               </div>
             </Card>
@@ -1390,7 +1361,7 @@ function Business() {
         </div>
       </section>
 
-      {/* AI Consulting Services - Moved under We Support AI Agents */}
+      {/* AI Consulting Services - Horizontal Button Layout */}
       <section id="ai-consulting" className="py-20 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-10">
@@ -1399,159 +1370,122 @@ function Business() {
               Expert AI Guidance
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-4">AI Consulting Services</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-6">
-              Whether you're thinking about AI, buying AI, already using AI, or want to leave AI — we're here to guide you
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Whether you're thinking about AI, buying AI, already using AI, or want to leave AI, we're here to guide you
             </p>
-            <div className="max-w-4xl mx-auto bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-cyan-500/10 border border-cyan-500/20 rounded-2xl p-6 mb-8">
-              <p className="text-base text-foreground leading-relaxed">
-                <strong className="text-cyan-600 dark:text-cyan-400">The AI market is flooded with empty promises and overpriced solutions.</strong> Before you invest thousands in AI tools, let InVision <strong>vet them for you</strong>. We expose hidden costs, security risks, and vendor lock-ins so you make informed decisions. Already have AI? We'll audit it to ensure it's secure, optimized, and actually delivering ROI. <span className="text-primary font-semibold">In this AI revolution, those who navigate wisely win — and InVision is your trusted guide.</span>
-              </p>
-            </div>
           </div>
 
-          {/* Four Service Options as Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {/* Free: Thinking About AI - Consultation */}
-            <ScrollReveal animation="fade-up" delay={0}>
-              <Card className="p-6 h-full bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/30 dark:to-teal-950/30 border-emerald-200 dark:border-emerald-800 hover:shadow-lg transition-all hover:-translate-y-1">
-                <div className="flex items-start gap-4">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center flex-shrink-0">
-                    <span className="text-2xl">💭</span>
-                  </div>
-                  <div className="flex-1">
-                    <div className="inline-flex items-center gap-1 px-3 py-1 bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-bold rounded-full mb-2">
-                      FREE CONSULTATION
-                    </div>
-                    <h3 className="text-xl font-bold mb-2">Thinking About AI?</h3>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      Not sure if AI is right for your business? Schedule a free consultation to explore your options without pressure.
-                    </p>
-                    <Button 
-                      onClick={() => {
-                        trackButtonClick('Schedule Free Consultation - Thinking', 'Business Consulting');
-                        setSelectedService({
-                          type: 'business',
-                          name: 'AI Discovery Consultation (Free)',
-                          tier: 'Free'
-                        });
-                        setModalOpen(true);
-                      }}
-                      variant="outline"
-                      className="w-full border-emerald-500/50 hover:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
-                    >
-                      Schedule Free Consultation
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            </ScrollReveal>
+          {/* Horizontal Button Row */}
+          <div className="flex flex-wrap justify-center gap-3 max-w-5xl mx-auto mb-8">
+            <Button 
+              onClick={() => {
+                trackButtonClick('Thinking About AI', 'Business Consulting');
+                setSelectedService({
+                  type: 'business',
+                  name: 'AI Discovery Consultation (Free)',
+                  tier: 'Free'
+                });
+                setModalOpen(true);
+              }}
+              variant="outline"
+              size="lg"
+              className="border-emerald-500/50 hover:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 px-6"
+            >
+              💭 Thinking About AI
+              <span className="ml-2 px-2 py-0.5 bg-emerald-500/20 text-xs rounded-full">FREE</span>
+            </Button>
+            
+            <Button 
+              onClick={() => {
+                trackButtonClick('Buying AI', 'Business Consulting');
+                trackConversion('consulting_vetting', 1799);
+                setSelectedService({
+                  type: 'business',
+                  name: 'Pre-Purchase AI Tool Vetting',
+                  price: 1799
+                });
+                setModalOpen(true);
+              }}
+              variant="default"
+              size="lg"
+              className="px-6"
+            >
+              🔍 Buying AI
+              <span className="ml-2 px-2 py-0.5 bg-white/20 text-xs rounded-full">$1,799</span>
+            </Button>
+            
+            <Button 
+              onClick={() => {
+                trackButtonClick('Already Bought AI', 'Business Consulting');
+                trackConversion('consulting_audit', 3499);
+                setSelectedService({
+                  type: 'business',
+                  name: 'AI Security Audit',
+                  price: 3499
+                });
+                setModalOpen(true);
+              }}
+              variant="default"
+              size="lg"
+              className="bg-amber-600 hover:bg-amber-700 px-6"
+            >
+              🛡️ Already Bought AI
+              <span className="ml-2 px-2 py-0.5 bg-white/20 text-xs rounded-full">From $3,499</span>
+            </Button>
+            
+            <Button 
+              onClick={() => {
+                trackButtonClick('Want to Leave AI', 'Business Consulting');
+                setSelectedService({
+                  type: 'business',
+                  name: 'AI Exit Consultation (Free)',
+                  tier: 'Free'
+                });
+                setModalOpen(true);
+              }}
+              variant="outline"
+              size="lg"
+              className="border-rose-500/50 hover:bg-rose-500/10 text-rose-600 dark:text-rose-400 px-6"
+            >
+              🚪 Want to Leave AI?
+              <span className="ml-2 px-2 py-0.5 bg-rose-500/20 text-xs rounded-full">FREE</span>
+            </Button>
+          </div>
 
-            {/* Paid: Buying AI - Pre-Purchase Vetting */}
-            <ScrollReveal animation="fade-up" delay={100}>
-              <Card className="p-6 h-full bg-gradient-to-br from-accent/10 to-cyan-500/10 border-accent/30 hover:shadow-lg transition-all hover:-translate-y-1">
-                <div className="flex items-start gap-4">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent to-cyan-500 flex items-center justify-center flex-shrink-0">
-                    <Search className="w-8 h-8 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="inline-flex items-center gap-1 px-3 py-1 bg-accent/20 text-accent text-xs font-bold rounded-full mb-2">
-                      $1,799
-                    </div>
-                    <h3 className="text-xl font-bold mb-2">Buying AI?</h3>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      Before you spend $5,000+ on AI tools, let us vet them. We identify hidden costs, security risks, and give you a Buy/Don't Buy recommendation.
-                    </p>
-                    <Button 
-                      onClick={() => {
-                        trackButtonClick('Request Pre-Purchase Vetting', 'Business Consulting');
-                        trackConversion('consulting_vetting', 1799);
-                        setSelectedService({
-                          type: 'business',
-                          name: 'Pre-Purchase AI Tool Vetting',
-                          price: 1799
-                        });
-                        setModalOpen(true);
-                      }}
-                      variant="default"
-                      className="w-full"
-                    >
-                      Request Vetting — $1,799
-                    </Button>
+          {/* Service Descriptions */}
+          <div className="max-w-4xl mx-auto">
+            <Card className="p-6 bg-background/50">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+                <div className="flex items-start gap-3">
+                  <span className="text-lg">💭</span>
+                  <div>
+                    <p className="font-semibold text-emerald-700 dark:text-emerald-300">Thinking About AI</p>
+                    <p className="text-muted-foreground">Free consultation to explore if AI is right for your business.</p>
                   </div>
                 </div>
-              </Card>
-            </ScrollReveal>
-
-            {/* Paid: Already Using AI - Security Audit */}
-            <ScrollReveal animation="fade-up" delay={200}>
-              <Card className="p-6 h-full bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 border-amber-200 dark:border-amber-800 hover:shadow-lg transition-all hover:-translate-y-1">
-                <div className="flex items-start gap-4">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center flex-shrink-0">
-                    <Shield className="w-8 h-8 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="inline-flex items-center gap-1 px-3 py-1 bg-amber-500/20 text-amber-700 dark:text-amber-300 text-xs font-bold rounded-full mb-2">
-                      STARTING AT $3,499
-                    </div>
-                    <h3 className="text-xl font-bold mb-2">Already Bought AI?</h3>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      Is your current AI secure and delivering ROI? We audit for data leaks, prompt injection vulnerabilities, and compliance gaps.
-                    </p>
-                    <Button 
-                      onClick={() => {
-                        trackButtonClick('Request Security Audit', 'Business Consulting');
-                        trackConversion('consulting_audit', 3499);
-                        setSelectedService({
-                          type: 'business',
-                          name: 'AI Security Audit',
-                          price: 3499
-                        });
-                        setModalOpen(true);
-                      }}
-                      variant="default"
-                      className="w-full bg-amber-600 hover:bg-amber-700"
-                    >
-                      Request Audit — From $3,499
-                    </Button>
+                <div className="flex items-start gap-3">
+                  <span className="text-lg">🔍</span>
+                  <div>
+                    <p className="font-semibold text-primary">Buying AI</p>
+                    <p className="text-muted-foreground">We vet AI tools for hidden costs, security risks, and ROI potential before you buy.</p>
                   </div>
                 </div>
-              </Card>
-            </ScrollReveal>
-
-            {/* Free: Want to Leave AI - Exit Consultation */}
-            <ScrollReveal animation="fade-up" delay={300}>
-              <Card className="p-6 h-full bg-gradient-to-br from-violet-50 to-purple-50 dark:from-violet-950/30 dark:to-purple-950/30 border-violet-200 dark:border-violet-800 hover:shadow-lg transition-all hover:-translate-y-1">
-                <div className="flex items-start gap-4">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center flex-shrink-0">
-                    <span className="text-2xl">🚪</span>
-                  </div>
-                  <div className="flex-1">
-                    <div className="inline-flex items-center gap-1 px-3 py-1 bg-violet-500/20 text-violet-700 dark:text-violet-300 text-xs font-bold rounded-full mb-2">
-                      FREE CONSULTATION
-                    </div>
-                    <h3 className="text-xl font-bold mb-2">Want to Leave AI?</h3>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      AI not working for your business? We'll help you exit gracefully, migrate your data, and find alternative solutions.
-                    </p>
-                    <Button 
-                      onClick={() => {
-                        trackButtonClick('Schedule Exit Consultation', 'Business Consulting');
-                        setSelectedService({
-                          type: 'business',
-                          name: 'AI Exit Consultation (Free)',
-                          tier: 'Free'
-                        });
-                        setModalOpen(true);
-                      }}
-                      variant="outline"
-                      className="w-full border-violet-500/50 hover:bg-violet-500/10 text-violet-700 dark:text-violet-300"
-                    >
-                      Schedule Free Consultation
-                    </Button>
+                <div className="flex items-start gap-3">
+                  <span className="text-lg">🛡️</span>
+                  <div>
+                    <p className="font-semibold text-amber-600 dark:text-amber-400">Already Bought AI</p>
+                    <p className="text-muted-foreground">Security audit to check for data leaks, vulnerabilities, and optimize performance.</p>
                   </div>
                 </div>
-              </Card>
-            </ScrollReveal>
+                <div className="flex items-start gap-3">
+                  <span className="text-lg">🚪</span>
+                  <div>
+                    <p className="font-semibold text-rose-600 dark:text-rose-400">Want to Leave AI?</p>
+                    <p className="text-muted-foreground">Free exit consultation to migrate data and find alternative solutions.</p>
+                  </div>
+                </div>
+              </div>
+            </Card>
           </div>
         </div>
       </section>
@@ -1567,7 +1501,7 @@ function Business() {
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Why InVision for Your AI</h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Trusted across Earth and beyond — because when it comes to AI, you deserve the absolute best.
+              Trusted worldwide because when it comes to AI, you deserve the absolute best.
             </p>
           </div>
 
@@ -1585,7 +1519,7 @@ function Business() {
                       <div>
                         <h3 className="text-xl font-bold mb-2">Security-First Design</h3>
                         <p className="text-muted-foreground">
-                          We audit data flows, enforce least-privilege access, and vet vendors. Your customer data stays protected — no exceptions.
+                          We audit data flows, enforce least-privilege access, and vet vendors. Your customer data stays protected, no exceptions.
                         </p>
                       </div>
                     </div>
@@ -1599,7 +1533,7 @@ function Business() {
                         <span className="text-2xl">🎯</span>
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold mb-2">Actually Trained (Not "Set & Forget")</h3>
+                        <h3 className="text-xl font-bold mb-2">Actually Trained, Not Set and Forget</h3>
                         <p className="text-muted-foreground">
                           We train your AI on YOUR business, test thoroughly, and optimize for 30 days. Real results, not empty promises.
                         </p>
@@ -1633,7 +1567,7 @@ function Business() {
                       <div>
                         <h3 className="text-xl font-bold mb-2">Plain-English Handoff</h3>
                         <p className="text-muted-foreground">
-                          Your team gets documentation they can actually understand — no tech jargon required. Real clarity for real people.
+                          Your team gets documentation they can actually understand, no tech jargon required. Real clarity for real people.
                         </p>
                       </div>
                     </div>
@@ -1659,7 +1593,7 @@ function Business() {
                       </div>
                       <div>
                         <p className="font-bold text-lg">Trusted Worldwide</p>
-                        <p className="text-sm text-muted-foreground">From Mars to Jupiter 🚀</p>
+                        <p className="text-sm text-muted-foreground">Serving businesses globally</p>
                       </div>
                     </div>
                   </div>
@@ -1670,8 +1604,8 @@ function Business() {
             {/* Bottom Trust Bar */}
             <Card className="p-8 bg-gradient-to-r from-primary/5 via-accent/10 to-primary/5 border-primary/20">
               <div className="text-center mb-6">
-                <h3 className="text-2xl font-bold mb-2">The Best on Earth — And Beyond</h3>
-                <p className="text-muted-foreground">Whether you're in Ohio, California, or planning operations on Mars, InVision delivers excellence.</p>
+                <h3 className="text-2xl font-bold mb-2">The Best in the Industry</h3>
+                <p className="text-muted-foreground">Whether you're in Ohio, California, or anywhere else, InVision delivers excellence.</p>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
                 <div>
