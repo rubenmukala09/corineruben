@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Calendar, BookOpen } from "lucide-react";
@@ -38,10 +39,22 @@ const sideArticles = [
 ];
 
 export const BlogPreview = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const cardsY = useTransform(scrollYProgress, [0, 1], ["0%", "5%"]);
+
   return (
-    <section className="py-32 bg-background relative overflow-hidden">
-      {/* Subtle background */}
-      <div className="absolute inset-0 opacity-[0.02]">
+    <section ref={sectionRef} className="py-32 bg-background relative overflow-hidden">
+      {/* Parallax background */}
+      <motion.div 
+        className="absolute inset-0 opacity-[0.02]"
+        style={{ y: backgroundY }}
+      >
         <div 
           className="absolute inset-0"
           style={{
@@ -49,7 +62,7 @@ export const BlogPreview = () => {
             backgroundSize: '40px 40px'
           }}
         />
-      </div>
+      </motion.div>
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}

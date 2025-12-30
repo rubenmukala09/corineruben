@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Lightbulb, Award, Shield, ArrowRight, TrendingUp } from "lucide-react";
 import featureBenefits from "@/assets/feature-benefits.jpg";
@@ -45,10 +46,22 @@ const stats = [
 ];
 
 export const FeatureBar = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
+  const statsY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
+
   return (
-    <section className="py-32 bg-gradient-to-b from-background via-purple-100/20 to-background relative overflow-hidden">
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-[0.02]">
+    <section ref={sectionRef} className="py-32 bg-gradient-to-b from-background via-purple-100/20 to-background relative overflow-hidden">
+      {/* Parallax background pattern */}
+      <motion.div 
+        className="absolute inset-0 opacity-[0.02]"
+        style={{ y: backgroundY }}
+      >
         <div 
           className="absolute inset-0"
           style={{
@@ -56,7 +69,7 @@ export const FeatureBar = () => {
             backgroundSize: '40px 40px'
           }}
         />
-      </div>
+      </motion.div>
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
