@@ -131,8 +131,7 @@ function Contact() {
   const maxLength = 500;
 
   const contactHeroImages = [
-    { src: heroContactPro1, alt: "Professional support center with friendly team" },
-    { src: heroContactPro2, alt: "Executive meeting room for business inquiries" }
+    { src: heroContactPro1, alt: "Professional support center with friendly team" }
   ];
 
   return (

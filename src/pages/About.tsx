@@ -342,8 +342,8 @@ function About() {
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${communityGroupSuccess})` }}
         />
-        <div className="absolute inset-0 bg-primary/60" />
-        <div className="container mx-auto px-4 relative z-10 text-primary-foreground">
+        {/* No overlay - clear image */}
+        <div className="container mx-auto px-4 relative z-10 text-white" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.6)' }}>
           <ScrollReveal>
             <div className="text-center mb-8 md:mb-12 lg:mb-16">
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 md:mb-6">
@@ -433,21 +433,25 @@ function About() {
             </div>
           </ScrollReveal>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
             {[
-              { name: "Michael Chen", role: "Senior Security Trainer", specialty: "AI & Deepfake Detection", initial: "M" },
-              { name: "Sarah Williams", role: "Family Safety Specialist", specialty: "Elder Protection", initial: "S" },
-              { name: "David Johnson", role: "Cyber Analyst", specialty: "Phishing & Fraud", initial: "D" },
-              { name: "Emily Martinez", role: "Community Educator", specialty: "Digital Literacy", initial: "E" },
+              { name: "Michael Chen", role: "Senior Security Trainer", specialty: "AI & Deepfake Detection", bio: "Former FBI cyber consultant with 15 years protecting families from digital threats.", image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face" },
+              { name: "Sarah Williams", role: "Family Safety Specialist", specialty: "Elder Protection", bio: "Dedicated to protecting seniors after her grandmother lost savings to scammers.", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop&crop=face" },
+              { name: "David Johnson", role: "Cyber Analyst", specialty: "Phishing & Fraud", bio: "Certified ethical hacker who now teaches families to spot scam tactics.", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face" },
+              { name: "Emily Martinez", role: "Community Educator", specialty: "Digital Literacy", bio: "Former teacher who makes cybersecurity simple and accessible for everyone.", image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face" },
+              { name: "James Thompson", role: "Business Security Advisor", specialty: "Corporate Training", bio: "Enterprise security expert helping businesses protect their employees.", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face" },
             ].map((teacher, index) => (
               <ScrollReveal key={teacher.name} delay={index * 100}>
-                <Card className="p-6 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-border/50">
-                  <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                    <span className="text-3xl font-bold text-primary">{teacher.initial}</span>
-                  </div>
-                  <h3 className="text-lg font-bold mb-1">{teacher.name}</h3>
-                  <p className="text-sm text-primary font-medium mb-2">{teacher.role}</p>
-                  <p className="text-xs text-muted-foreground">{teacher.specialty}</p>
+                <Card className="p-5 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-border/50 h-full">
+                  <img 
+                    src={teacher.image} 
+                    alt={teacher.name}
+                    className="w-20 h-20 mx-auto mb-3 rounded-full object-cover border-2 border-primary/20"
+                  />
+                  <h3 className="text-base font-bold mb-1">{teacher.name}</h3>
+                  <p className="text-xs text-primary font-medium mb-1">{teacher.role}</p>
+                  <p className="text-xs text-muted-foreground mb-2">{teacher.specialty}</p>
+                  <p className="text-[10px] text-muted-foreground/80 leading-relaxed">{teacher.bio}</p>
                 </Card>
               </ScrollReveal>
             ))}
@@ -461,14 +465,20 @@ function About() {
       {/* Service Areas with Interactive Map */}
       <OhioServiceMap />
 
-      {/* CTA */}
-      <div id="cta">
-        <CTASection
-          headline="Ready to Join Our Protected Community?"
-          description="Whether you're looking for personal training, business solutions, or want to support our mission—we'd love to connect."
-          variant="image"
-          backgroundImage={heroCommunityProtected}
-        >
+      {/* CTA - No overlay, clear image with readable text */}
+      <section className="py-20 relative overflow-hidden" id="cta">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroCommunityProtected})` }}
+        />
+        <div className="container mx-auto px-4 relative z-10 text-center">
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-4" style={{ textShadow: '2px 2px 10px rgba(0,0,0,0.9), 0 0 25px rgba(0,0,0,0.7)' }}>
+            Ready to Join Our Protected Community?
+          </h2>
+          <p className="text-lg md:text-xl text-white mb-8 max-w-2xl mx-auto" style={{ textShadow: '1px 1px 6px rgba(0,0,0,0.8), 0 0 15px rgba(0,0,0,0.5)' }}>
+            Whether you're looking for personal training, business solutions, or want to support our mission—we'd love to connect.
+          </p>
+          <div className="flex flex-wrap gap-4 justify-center">
           <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white font-bold shadow-xl">
             <Link 
               to="/training"
@@ -477,16 +487,17 @@ function About() {
               Start Training
             </Link>
           </Button>
-          <Button asChild size="lg" variant="outlineLight">
-            <Link 
-              to="/business"
-              onClick={() => trackButtonClick('Partner With Us', 'About CTA')}
-            >
-              Partner With Us
-            </Link>
-          </Button>
-        </CTASection>
-      </div>
+            <Button asChild size="lg" variant="outlineLight">
+              <Link 
+                to="/business"
+                onClick={() => trackButtonClick('Partner With Us', 'About CTA')}
+              >
+                Partner With Us
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
 
       <Footer />
 
