@@ -146,6 +146,7 @@ export const TestimonialQuote = () => {
                 <button
                   onClick={prev}
                   className="w-10 h-10 rounded-full bg-muted hover:bg-primary/10 flex items-center justify-center transition-colors"
+                  aria-label="Previous testimonial"
                 >
                   <ChevronLeft className="w-5 h-5 text-foreground" />
                 </button>
@@ -158,6 +159,7 @@ export const TestimonialQuote = () => {
                       className={`h-2 rounded-full transition-all duration-300 ${
                         index === currentIndex ? "bg-primary w-8" : "bg-muted w-2 hover:bg-primary/30"
                       }`}
+                      aria-label={`Go to testimonial ${index + 1}`}
                     />
                   ))}
                 </div>
@@ -165,6 +167,7 @@ export const TestimonialQuote = () => {
                 <button
                   onClick={next}
                   className="w-10 h-10 rounded-full bg-muted hover:bg-primary/10 flex items-center justify-center transition-colors"
+                  aria-label="Next testimonial"
                 >
                   <ChevronRight className="w-5 h-5 text-foreground" />
                 </button>
