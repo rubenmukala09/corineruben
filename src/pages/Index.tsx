@@ -10,7 +10,10 @@ import { WorkingProcess } from "@/components/home/WorkingProcess";
 import { TestimonialQuote } from "@/components/home/TestimonialQuote";
 import { SecuritySolutions } from "@/components/home/SecuritySolutions";
 import { BlogPreview } from "@/components/home/BlogPreview";
-import { NewsletterSection } from "@/components/home/NewsletterSection";
+import { ScamAlertsSection } from "@/components/home/ScamAlertsSection";
+import { ProtectionComparison } from "@/components/home/ProtectionComparison";
+import { FAQPreview } from "@/components/home/FAQPreview";
+import { OhioImpactSection } from "@/components/home/OhioImpactSection";
 import TrustBar from "@/components/TrustBar";
 import CTASection from "@/components/CTASection";
 import { ScamShieldSubmission } from "@/components/ScamShieldSubmission";
@@ -70,6 +73,11 @@ function Index() {
             <HeroHomepage />
           </section>
           
+          {/* Current Scam Alerts - Immediate Value */}
+          <section id="alerts">
+            <ScamAlertsSection />
+          </section>
+          
           <section id="features">
             <FeatureBar />
           </section>
@@ -79,9 +87,19 @@ function Index() {
             <AboutSection />
           </section>
 
+          {/* Protection Plans Comparison */}
+          <section id="plans">
+            <ProtectionComparison />
+          </section>
+
           {/* Services Showcase - Team of Experts */}
           <section id="services">
             <ServicesShowcase />
+          </section>
+
+          {/* Ohio Community Impact */}
+          <section id="ohio">
+            <OhioImpactSection />
           </section>
 
           {/* Security Solutions - Portfolio */}
@@ -97,6 +115,11 @@ function Index() {
           {/* Testimonial Quote */}
           <section id="testimonials">
             <TestimonialQuote />
+          </section>
+
+          {/* FAQ Section */}
+          <section id="faq">
+            <FAQPreview />
           </section>
 
           {/* Blog Preview */}
