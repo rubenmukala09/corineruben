@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 import { z } from "zod";
 import invisionLogo from "@/assets/shield-logo.png";
-import authBackgroundVideo from "@/assets/auth-background-video.mp4";
+import authSimpleBg from "@/assets/auth-simple-bg.jpg";
 import { Session, User } from "@supabase/supabase-js";
 
 const emailSchema = z.string().email("Please enter a valid email address");
@@ -37,7 +37,7 @@ function Auth() {
   const [user, setUser] = useState<User | null>(null);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [videoLoaded, setVideoLoaded] = useState(false);
+  
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -218,26 +218,16 @@ function Auth() {
 
   return (
     <div className="min-h-screen relative overflow-hidden flex items-center justify-center p-4">
-      {/* Video Background */}
+      {/* Simple Background Image */}
       <div className="absolute inset-0 z-0">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          onLoadedData={() => setVideoLoaded(true)}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-        >
-          <source src={authBackgroundVideo} type="video/mp4" />
-        </video>
-        {/* Dark overlay for readability */}
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
+        <img
+          src={authSimpleBg}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        {/* Overlay for readability */}
+        <div className="absolute inset-0 bg-background/70" />
       </div>
-
-      {/* Fallback gradient while video loads */}
-      {!videoLoaded && (
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/10 to-accent/10 z-0" />
-      )}
 
       {/* Floating Orbs - decorative */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-[1]">
