@@ -28,6 +28,7 @@ import heroAbout from "@/assets/hero-about.jpg";
 import teamDiverse1 from "@/assets/team-diverse-1.jpg";
 import businessCollaboration from "@/assets/business-collaboration.jpg";
 import communityGroupSuccess from "@/assets/community-group-success.jpg";
+import heroCommunityProtected from "@/assets/hero-community-protected.jpg";
 import { SEO } from "@/components/SEO";
 
 // Rotating hero headlines for About page
@@ -341,7 +342,7 @@ function About() {
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${communityGroupSuccess})` }}
         />
-        <div className="absolute inset-0 bg-primary/85" />
+        <div className="absolute inset-0 bg-primary/60" />
         <div className="container mx-auto px-4 relative z-10 text-primary-foreground">
           <ScrollReveal>
             <div className="text-center mb-8 md:mb-12 lg:mb-16">
@@ -415,17 +416,47 @@ function About() {
       {/* Inspirational Verses */}
       <InspirationalVerses />
 
-      {/* Achievements Showcase */}
-      <AchievementsShowcase />
-
-      {/* AI Image Disclaimer */}
-      <section className="py-12 bg-muted/20">
+      {/* Our Team / Teachers Section */}
+      <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <AIImageDisclaimer />
+          <ScrollReveal>
+            <div className="text-center mb-10">
+              <Badge className="mb-4 text-base md:text-lg px-4 md:px-6 py-2" variant="secondary">
+                Our Team
+              </Badge>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+                Meet Our Expert Teachers
+              </h2>
+              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
+                Experienced professionals dedicated to keeping you safe
+              </p>
+            </div>
+          </ScrollReveal>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            {[
+              { name: "Michael Chen", role: "Senior Security Trainer", specialty: "AI & Deepfake Detection", initial: "M" },
+              { name: "Sarah Williams", role: "Family Safety Specialist", specialty: "Elder Protection", initial: "S" },
+              { name: "David Johnson", role: "Cyber Analyst", specialty: "Phishing & Fraud", initial: "D" },
+              { name: "Emily Martinez", role: "Community Educator", specialty: "Digital Literacy", initial: "E" },
+            ].map((teacher, index) => (
+              <ScrollReveal key={teacher.name} delay={index * 100}>
+                <Card className="p-6 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-border/50">
+                  <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                    <span className="text-3xl font-bold text-primary">{teacher.initial}</span>
+                  </div>
+                  <h3 className="text-lg font-bold mb-1">{teacher.name}</h3>
+                  <p className="text-sm text-primary font-medium mb-2">{teacher.role}</p>
+                  <p className="text-xs text-muted-foreground">{teacher.specialty}</p>
+                </Card>
+              </ScrollReveal>
+            ))}
           </div>
         </div>
       </section>
+
+      {/* Achievements Showcase */}
+      <AchievementsShowcase />
 
       {/* Service Areas with Interactive Map */}
       <OhioServiceMap />
@@ -435,8 +466,10 @@ function About() {
         <CTASection
           headline="Ready to Join Our Protected Community?"
           description="Whether you're looking for personal training, business solutions, or want to support our mission—we'd love to connect."
+          variant="image"
+          backgroundImage={heroCommunityProtected}
         >
-          <Button asChild size="lg">
+          <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white font-bold shadow-xl">
             <Link 
               to="/training"
               onClick={() => trackButtonClick('Start Training', 'About CTA')}
@@ -444,7 +477,7 @@ function About() {
               Start Training
             </Link>
           </Button>
-          <Button asChild size="lg" variant="outline">
+          <Button asChild size="lg" variant="outlineLight">
             <Link 
               to="/business"
               onClick={() => trackButtonClick('Partner With Us', 'About CTA')}

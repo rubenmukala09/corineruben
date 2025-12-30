@@ -1635,7 +1635,7 @@ function LearnAndTrain() {
             backgroundImage: `url(${libraryLearning})`,
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-accent/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/60 to-accent/50" />
         <div className="container mx-auto px-4 relative z-10 text-center">
           <ScrollReveal>
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Sleep Better Tonight</h2>
