@@ -1635,11 +1635,11 @@ function LearnAndTrain() {
             backgroundImage: `url(${libraryLearning})`,
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/60 to-accent/50" />
+        {/* No overlay - just the image */}
         <div className="container mx-auto px-4 relative z-10 text-center">
           <ScrollReveal>
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Sleep Better Tonight</h2>
-            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">Join 500+ families who trust ScamShield</p>
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.6)' }}>Sleep Better Tonight</h2>
+            <p className="text-xl text-white mb-8 max-w-2xl mx-auto" style={{ textShadow: '1px 1px 6px rgba(0,0,0,0.8), 0 0 15px rgba(0,0,0,0.5)' }}>Join 500+ families who trust ScamShield</p>
             <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center">
               <Button 
                 onClick={() => {
