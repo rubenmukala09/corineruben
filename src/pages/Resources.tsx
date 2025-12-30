@@ -38,6 +38,22 @@ import bookSmartHome from "@/assets/book-smart-home.jpg";
 import bookPhishingDefense from "@/assets/book-phishing-defense.jpg";
 import bookBankingSafety from "@/assets/book-banking-safety.jpg";
 import bookMobileSecurity from "@/assets/book-mobile-security.jpg";
+// Product images
+import productUsbKey from "@/assets/product-usb-key.jpg";
+import productPrivacyScreen from "@/assets/product-privacy-screen.jpg";
+import productWebcamCover from "@/assets/product-webcam-cover.jpg";
+import productRfidWallet from "@/assets/product-rfid-wallet.jpg";
+import productFaradayBag from "@/assets/product-faraday-bag.jpg";
+import productPasswordBook from "@/assets/product-password-book.jpg";
+import productShredder from "@/assets/product-shredder.jpg";
+import productSafeBox from "@/assets/product-safe-box.jpg";
+import productCableLock from "@/assets/product-cable-lock.jpg";
+import productVpnRouter from "@/assets/product-vpn-router.jpg";
+import productPhonePrivacy from "@/assets/product-phone-privacy.jpg";
+import productUsbBlocker from "@/assets/product-usb-blocker.jpg";
+import productTrackerDetector from "@/assets/product-tracker-detector.jpg";
+import productRfidSleeves from "@/assets/product-rfid-sleeves.jpg";
+import productSecurityCam from "@/assets/product-security-cam.jpg";
 import { SEO } from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -65,23 +81,23 @@ const staticBooks = [
   { id: 'book-mobile-security', name: 'Mobile Phone Security', description: 'Keep your smartphone safe', price: 23.99, image: bookMobileSecurity, tag: 'Mobile' },
 ];
 
-// Static physical products (15 products)
+// Static physical products (15 products) with real images
 const staticPhysicalProducts = [
-  { id: 'prod-usb-key', name: 'Security USB Key', description: 'Hardware 2FA authentication device', price: 49.99, image: '/placeholder.svg', tag: 'Best Seller' },
-  { id: 'prod-privacy-screen', name: 'Privacy Screen 15"', description: 'Anti-spy screen protector for laptops', price: 39.99, image: '/placeholder.svg', tag: 'Popular' },
-  { id: 'prod-webcam-cover', name: 'Webcam Cover Pack (6)', description: 'Sliding webcam privacy covers', price: 9.99, image: '/placeholder.svg', tag: 'Essential' },
-  { id: 'prod-rfid-wallet', name: 'RFID Blocking Wallet', description: 'Protect cards from wireless theft', price: 24.99, image: '/placeholder.svg', tag: 'Protection' },
-  { id: 'prod-faraday-bag', name: 'Faraday Phone Bag', description: 'Block all signals to your phone', price: 19.99, image: '/placeholder.svg', tag: 'Privacy' },
-  { id: 'prod-password-book', name: 'Password Organizer', description: 'Secure offline password storage', price: 14.99, image: '/placeholder.svg', tag: 'Practical' },
-  { id: 'prod-shredder', name: 'Document Shredder Mini', description: 'Compact cross-cut shredder', price: 69.99, image: '/placeholder.svg', tag: 'Office' },
-  { id: 'prod-safe-box', name: 'Fireproof Document Safe', description: 'Protect important documents', price: 99.99, image: '/placeholder.svg', tag: 'Premium' },
-  { id: 'prod-cable-lock', name: 'Laptop Cable Lock', description: 'Secure your laptop anywhere', price: 18.99, image: '/placeholder.svg', tag: 'Travel' },
-  { id: 'prod-vpn-router', name: 'VPN Home Router', description: 'Whole-home privacy protection', price: 149.99, image: '/placeholder.svg', tag: 'Advanced' },
-  { id: 'prod-privacy-filter', name: 'Phone Privacy Filter', description: 'Anti-spy screen for phones', price: 12.99, image: '/placeholder.svg', tag: 'Mobile' },
-  { id: 'prod-usb-blocker', name: 'USB Data Blocker', description: 'Safe charging, no data theft', price: 8.99, image: '/placeholder.svg', tag: 'Charging' },
-  { id: 'prod-tracker-detector', name: 'GPS Tracker Detector', description: 'Find hidden tracking devices', price: 34.99, image: '/placeholder.svg', tag: 'Detection' },
-  { id: 'prod-rfid-sleeves', name: 'RFID Card Sleeves (10)', description: 'Credit card protection sleeves', price: 7.99, image: '/placeholder.svg', tag: 'Budget' },
-  { id: 'prod-security-cam', name: 'Indoor Security Camera', description: 'WiFi camera with encryption', price: 59.99, image: '/placeholder.svg', tag: 'Monitoring' },
+  { id: 'prod-usb-key', name: 'Security USB Key', description: 'Hardware 2FA authentication device', price: 49.99, image: productUsbKey, tag: 'Best Seller' },
+  { id: 'prod-privacy-screen', name: 'Privacy Screen 15"', description: 'Anti-spy screen protector for laptops', price: 39.99, image: productPrivacyScreen, tag: 'Popular' },
+  { id: 'prod-webcam-cover', name: 'Webcam Cover Pack (6)', description: 'Sliding webcam privacy covers', price: 9.99, image: productWebcamCover, tag: 'Essential' },
+  { id: 'prod-rfid-wallet', name: 'RFID Blocking Wallet', description: 'Protect cards from wireless theft', price: 24.99, image: productRfidWallet, tag: 'Protection' },
+  { id: 'prod-faraday-bag', name: 'Faraday Phone Bag', description: 'Block all signals to your phone', price: 19.99, image: productFaradayBag, tag: 'Privacy' },
+  { id: 'prod-password-book', name: 'Password Organizer', description: 'Secure offline password storage', price: 14.99, image: productPasswordBook, tag: 'Practical' },
+  { id: 'prod-shredder', name: 'Document Shredder Mini', description: 'Compact cross-cut shredder', price: 69.99, image: productShredder, tag: 'Office' },
+  { id: 'prod-safe-box', name: 'Fireproof Document Safe', description: 'Protect important documents', price: 99.99, image: productSafeBox, tag: 'Premium' },
+  { id: 'prod-cable-lock', name: 'Laptop Cable Lock', description: 'Secure your laptop anywhere', price: 18.99, image: productCableLock, tag: 'Travel' },
+  { id: 'prod-vpn-router', name: 'VPN Home Router', description: 'Whole-home privacy protection', price: 149.99, image: productVpnRouter, tag: 'Advanced' },
+  { id: 'prod-privacy-filter', name: 'Phone Privacy Filter', description: 'Anti-spy screen for phones', price: 12.99, image: productPhonePrivacy, tag: 'Mobile' },
+  { id: 'prod-usb-blocker', name: 'USB Data Blocker', description: 'Safe charging, no data theft', price: 8.99, image: productUsbBlocker, tag: 'Charging' },
+  { id: 'prod-tracker-detector', name: 'GPS Tracker Detector', description: 'Find hidden tracking devices', price: 34.99, image: productTrackerDetector, tag: 'Detection' },
+  { id: 'prod-rfid-sleeves', name: 'RFID Card Sleeves (10)', description: 'Credit card protection sleeves', price: 7.99, image: productRfidSleeves, tag: 'Budget' },
+  { id: 'prod-security-cam', name: 'Indoor Security Camera', description: 'WiFi camera with encryption', price: 59.99, image: productSecurityCam, tag: 'Monitoring' },
 ];
 
 // Rotating hero headlines
