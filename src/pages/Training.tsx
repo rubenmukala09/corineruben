@@ -161,36 +161,36 @@ const TrainingCard = ({ plan, index, onBook }: { plan: any; index: number; onBoo
       delay={index * 100}
       threshold={0.2}
     >
-      <Card className={`relative p-4 h-full flex flex-col transition-all duration-300 hover:-translate-y-1 rounded-xl bg-gradient-to-br from-card to-card/50 ${
+      <Card className={`relative p-5 md:p-6 h-full flex flex-col transition-all duration-300 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 mt-5 ${
         plan.popular 
-          ? "border-primary border-2 shadow-lg" 
-          : "border-border/50 hover:shadow-md"
+          ? "border-primary border-2 shadow-xl" 
+          : "border-border/50 hover:shadow-lg"
       }`}>
-        {/* Badge */}
-        <div className={`absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r ${badge.gradient} text-white px-3 py-1 rounded-full text-[10px] font-bold tracking-wide shadow-md z-10`}>
+        {/* Badge - Always visible on top */}
+        <div className={`absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r ${badge.gradient} text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-wide shadow-lg z-20 whitespace-nowrap`}>
           <span className="mr-1">{badge.emoji}</span>
           {badge.label}
         </div>
         
-        <div className="pt-3">
-          <h3 className="text-base font-bold mb-1 text-center">{plan.name}</h3>
-          <div className="text-center mb-1" ref={ref}>
-            <span className="text-2xl font-bold text-primary">${Math.round(count)}{plan.pricePrefix || ''}</span>
-            <span className="text-muted-foreground text-xs">/session</span>
+        <div className="pt-4">
+          <h3 className="text-lg md:text-xl font-bold mb-2 text-center">{plan.name}</h3>
+          <div className="text-center mb-2" ref={ref}>
+            <span className="text-3xl md:text-4xl font-bold text-primary">${Math.round(count)}{plan.pricePrefix || ''}</span>
+            <span className="text-muted-foreground text-sm">/session</span>
           </div>
-          <p className="text-center text-xs text-muted-foreground mb-1">{plan.duration}</p>
-          <p className="text-center text-xs text-accent font-medium mb-2">{plan.size}</p>
+          <p className="text-center text-sm text-muted-foreground mb-1">{plan.duration}</p>
+          <p className="text-center text-sm text-accent font-semibold mb-3">{plan.size}</p>
           
           {/* Description */}
-          <p className="text-center text-[11px] text-muted-foreground mb-3 line-clamp-2">
+          <p className="text-center text-xs md:text-sm text-muted-foreground mb-4">
             {plan.description}
           </p>
 
-          <div className="space-y-1.5 mb-3 flex-grow">
+          <div className="space-y-2 mb-4 flex-grow">
             {plan.features.slice(0, 4).map((feature: string, idx: number) => (
-              <div key={idx} className="flex items-start gap-1.5">
-                <CheckCircle className="w-3 h-3 text-primary flex-shrink-0 mt-0.5" />
-                <span className="text-foreground text-[11px]">{feature}</span>
+              <div key={idx} className="flex items-start gap-2">
+                <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                <span className="text-foreground text-sm">{feature}</span>
               </div>
             ))}
           </div>
@@ -198,8 +198,8 @@ const TrainingCard = ({ plan, index, onBook }: { plan: any; index: number; onBoo
           <Button 
             onClick={() => onBook(plan)}
             variant={plan.popular ? "default" : "outline"} 
-            size="sm" 
-            className={`w-full mt-auto text-xs ${plan.popular ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : ''}`}
+            size="default" 
+            className={`w-full mt-auto ${plan.popular ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : ''}`}
           >
             Book Now →
           </Button>
@@ -341,20 +341,41 @@ function LearnAndTrain() {
       <TrustBar />
 
       {/* Training Section */}
-      <section id="training" className="py-12 bg-background relative overflow-hidden">
+      <section id="training" className="py-16 bg-background relative overflow-hidden">
         <FlowingWaves variant="full" opacity={0.12} />
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mb-3 animate-fade-in-up text-2xl md:text-3xl">Scam Prevention Training Programs</h2>
-          <p className="text-center text-sm text-muted-foreground mb-4 max-w-3xl mx-auto">
-            Protect your family from AI-powered scams. No coding required — practical awareness training to recognize when scammers use AI to impersonate loved ones.
-          </p>
-          <div className="text-center mb-8">
-            <Badge variant="outline" className="text-xs px-3 py-1 bg-primary/5">
-              🎓 Basic AI Safety • No Coding • All Ages
+          <div className="text-center mb-6">
+            <Badge className="mb-4 bg-gradient-to-r from-red-500 to-orange-500 text-white text-sm px-4 py-1.5">
+              ⚠️ ESSENTIAL FOR EVERY FAMILY
             </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-fade-in-up">Scam Prevention Training Programs</h2>
+            <p className="text-base md:text-lg text-muted-foreground mb-4 max-w-4xl mx-auto">
+              <strong>Don't become the next victim.</strong> AI-powered scams are targeting families like yours every day. 
+              Scammers can now clone voices in seconds and impersonate your loved ones. This training teaches you exactly 
+              how to recognize and stop these attacks — <strong>no coding or technical skills required.</strong>
+            </p>
+            <p className="text-sm text-accent font-semibold max-w-3xl mx-auto">
+              🎓 Perfect for seniors, parents, grandparents, and anyone who wants to protect their family from sophisticated AI scams.
+            </p>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 max-w-5xl mx-auto mb-12">
+          {/* Veteran Discount Notification Banner */}
+          <div className="max-w-4xl mx-auto mb-8">
+            <div className="bg-gradient-to-r from-primary/10 via-accent/5 to-primary/10 border border-primary/20 rounded-xl p-4 flex items-center justify-center gap-4">
+              <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-lg shrink-0">
+                🇺🇸
+              </div>
+              <div className="text-center md:text-left">
+                <p className="font-semibold text-foreground">Veterans & First Responders Save 10%</p>
+                <p className="text-xs text-muted-foreground">Discount automatically applied at checkout with valid ID verification</p>
+              </div>
+              <Link to="/contact" className="text-primary text-sm font-medium hover:underline shrink-0">
+                Contact Us →
+              </Link>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-6xl mx-auto mb-12">
             {[
               {
                 name: "Standard Group",
@@ -363,7 +384,7 @@ function LearnAndTrain() {
                 priceNum: 79,
                 duration: "90 min",
                 size: "Up to 25 people",
-                description: "Group setting for couples and individuals learning together.",
+                description: "Join a live group session with other couples and individuals. Learn to identify AI voice cloning, phishing emails, and fake tech support calls.",
                 features: [
                   "Live Zoom session",
                   "Interactive Q&A",
@@ -379,7 +400,7 @@ function LearnAndTrain() {
                 duration: "90 min",
                 size: "Up to 12 people",
                 popular: true,
-                description: "Intimate setting for couples wanting more personal attention.",
+                description: "Intimate couples-focused setting with extended personal attention. Perfect for spouses who want to protect each other from scams.",
                 features: [
                   "Smaller group setting",
                   "Extended Q&A time",
@@ -394,7 +415,7 @@ function LearnAndTrain() {
                 priceNum: 399,
                 duration: "2 hours",
                 size: "Up to 5 family",
-                description: "One-on-one family training. In-person or online.",
+                description: "One-on-one family session — bring up to 5 family members (parents, children, grandparents). In-person or virtual options available.",
                 features: [
                   "Private family session",
                   "In-person or virtual",
@@ -410,7 +431,7 @@ function LearnAndTrain() {
                 pricePrefix: "+",
                 duration: "2-3 hours",
                 size: "10-100+ people",
-                description: "For churches, schools, organizations. Custom curriculum.",
+                description: "Tailored training for churches, schools, senior centers, and organizations. Price varies based on audience size and location.",
                 features: [
                   "On-site or virtual",
                   "Custom curriculum",
@@ -439,21 +460,25 @@ function LearnAndTrain() {
       </section>
 
       {/* AI Professionals Training Section */}
-      <section id="ai-pro-training" className="py-12 bg-muted relative overflow-hidden">
+      <section id="ai-pro-training" className="py-16 bg-muted relative overflow-hidden">
         <FlowingWaves variant="full" opacity={0.08} />
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-8">
-            <Badge className="mb-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white">
-              <Zap className="w-3 h-3 mr-1" /> FOR PROFESSIONALS
+          <div className="text-center mb-10">
+            <Badge className="mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm px-4 py-1.5">
+              <Zap className="w-4 h-4 mr-1" /> FOR PROFESSIONALS & ENTREPRENEURS
             </Badge>
-            <h2 className="text-2xl md:text-3xl font-bold mb-3">AI Professional Training & Development</h2>
-            <p className="text-sm text-muted-foreground max-w-3xl mx-auto">
-              Advanced training for those who want to master AI agency building, automation workflows, web design, and project development. 
-              Perfect for entrepreneurs, developers, and organizations ready to leverage AI in their business.
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">AI Professional Training & Development</h2>
+            <p className="text-base md:text-lg text-muted-foreground max-w-4xl mx-auto mb-4">
+              <strong>This is the only place where you can get the best AI training.</strong> Whether you want to build an AI agency, 
+              create automation workflows, or design stunning websites with AI — we provide hands-on, expert-led training 
+              that will transform your business capabilities.
+            </p>
+            <p className="text-sm text-accent font-semibold max-w-3xl mx-auto">
+              🚀 Perfect for entrepreneurs, developers, marketers, and organizations ready to leverage cutting-edge AI technology.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-6xl mx-auto">
             {[
               {
                 name: "AI Automation",
@@ -462,12 +487,13 @@ function LearnAndTrain() {
                 priceNum: 299,
                 duration: "3 hours",
                 size: "Individual",
-                description: "Learn to build AI workflows with Make, Zapier, and custom automations.",
+                description: "Master AI workflow automation with Make, Zapier, n8n, and custom API integrations. Build systems that save 20+ hours per week.",
                 features: [
-                  "Workflow automation",
-                  "API integrations",
-                  "ChatGPT integration",
-                  "Project templates",
+                  "Workflow automation mastery",
+                  "API integrations & webhooks",
+                  "ChatGPT/Claude integration",
+                  "Ready-to-use templates",
+                  "Email automation setup",
                 ],
                 badge: { label: "POPULAR", emoji: "🔥", gradient: "from-orange-500 to-red-500" }
               },
@@ -479,12 +505,13 @@ function LearnAndTrain() {
                 duration: "5 hours",
                 size: "Individual/Team",
                 popular: true,
-                description: "Start your AI agency from scratch. Client acquisition to delivery.",
+                description: "Build a profitable AI agency from scratch. Learn client acquisition, service delivery, pricing strategies, and scale to 6 figures.",
                 features: [
-                  "Business model setup",
-                  "Client acquisition",
-                  "Service packaging",
-                  "Ongoing mentorship",
+                  "Complete business model",
+                  "Client acquisition system",
+                  "Service packaging & pricing",
+                  "Delivery frameworks",
+                  "Ongoing mentorship access",
                 ],
                 badge: { label: "BEST VALUE", emoji: "⭐", gradient: "from-primary to-accent" }
               },
@@ -495,12 +522,13 @@ function LearnAndTrain() {
                 priceNum: 349,
                 duration: "4 hours",
                 size: "Individual",
-                description: "AI-powered web design. Build stunning sites with AI tools.",
+                description: "Create stunning, high-converting websites using AI design tools. Learn Midjourney, Figma AI, Framer, and modern deployment.",
                 features: [
-                  "AI design tools",
-                  "Responsive layouts",
-                  "SEO optimization",
-                  "Deployment guide",
+                  "AI design tool mastery",
+                  "Responsive layout design",
+                  "SEO & performance optimization",
+                  "Deployment & hosting",
+                  "Client handoff process",
                 ],
                 badge: { label: "CREATIVE", emoji: "🎨", gradient: "from-cyan-500 to-blue-500" }
               },
@@ -512,46 +540,47 @@ function LearnAndTrain() {
                 pricePrefix: "/hr",
                 duration: "Flexible",
                 size: "Per project",
-                description: "We join your AI project to troubleshoot or develop further.",
+                description: "We join your existing AI project to troubleshoot issues, optimize performance, or develop new features. Custom pricing available.",
                 features: [
-                  "Code review",
-                  "Bug fixing",
+                  "Expert code review",
+                  "Bug fixing & debugging",
                   "Feature development",
-                  "Architecture advice",
+                  "Architecture consulting",
+                  "Performance optimization",
                 ],
                 badge: { label: "CONSULTING", emoji: "🛠", gradient: "from-green-500 to-emerald-500" }
               },
             ].map((plan, index) => (
               <ScrollReveal key={index} animation="scale-in" delay={index * 100} threshold={0.2}>
-                <Card className={`relative p-4 h-full flex flex-col transition-all duration-300 hover:-translate-y-1 rounded-xl bg-gradient-to-br from-card to-card/50 ${
+                <Card className={`relative p-5 md:p-6 h-full flex flex-col transition-all duration-300 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 mt-5 ${
                   plan.popular 
-                    ? "border-primary border-2 shadow-lg" 
-                    : "border-border/50 hover:shadow-md"
+                    ? "border-primary border-2 shadow-xl" 
+                    : "border-border/50 hover:shadow-lg"
                 }`}>
-                  {/* Badge */}
-                  <div className={`absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r ${plan.badge.gradient} text-white px-3 py-1 rounded-full text-[10px] font-bold tracking-wide shadow-md z-10`}>
+                  {/* Badge - Always visible on top */}
+                  <div className={`absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r ${plan.badge.gradient} text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-wide shadow-lg z-20 whitespace-nowrap`}>
                     <span className="mr-1">{plan.badge.emoji}</span>
                     {plan.badge.label}
                   </div>
                   
-                  <div className="pt-3">
-                    <h3 className="text-base font-bold mb-1 text-center">{plan.name}</h3>
-                    <div className="text-center mb-1">
-                      <span className="text-2xl font-bold text-primary">{plan.price}</span>
-                      {plan.pricePrefix && <span className="text-muted-foreground text-xs">{plan.pricePrefix}</span>}
+                  <div className="pt-4">
+                    <h3 className="text-lg md:text-xl font-bold mb-2 text-center">{plan.name}</h3>
+                    <div className="text-center mb-2">
+                      <span className="text-3xl md:text-4xl font-bold text-primary">{plan.price}</span>
+                      {plan.pricePrefix && <span className="text-muted-foreground text-sm">{plan.pricePrefix}</span>}
                     </div>
-                    <p className="text-center text-xs text-muted-foreground mb-1">{plan.duration}</p>
-                    <p className="text-center text-xs text-accent font-medium mb-2">{plan.size}</p>
+                    <p className="text-center text-sm text-muted-foreground mb-1">{plan.duration}</p>
+                    <p className="text-center text-sm text-accent font-semibold mb-3">{plan.size}</p>
                     
-                    <p className="text-center text-[11px] text-muted-foreground mb-3 line-clamp-2">
+                    <p className="text-center text-xs md:text-sm text-muted-foreground mb-4">
                       {plan.description}
                     </p>
 
-                    <div className="space-y-1.5 mb-3 flex-grow">
+                    <div className="space-y-2 mb-4 flex-grow">
                       {plan.features.map((feature: string, idx: number) => (
-                        <div key={idx} className="flex items-start gap-1.5">
-                          <CheckCircle className="w-3 h-3 text-primary flex-shrink-0 mt-0.5" />
-                          <span className="text-foreground text-[11px]">{feature}</span>
+                        <div key={idx} className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                          <span className="text-foreground text-sm">{feature}</span>
                         </div>
                       ))}
                     </div>
@@ -567,8 +596,8 @@ function LearnAndTrain() {
                         setModalOpen(true);
                       }}
                       variant={plan.popular ? "default" : "outline"} 
-                      size="sm" 
-                      className={`w-full mt-auto text-xs ${plan.popular ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : ''}`}
+                      size="default" 
+                      className={`w-full mt-auto ${plan.popular ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : ''}`}
                     >
                       Book Now →
                     </Button>
@@ -578,10 +607,13 @@ function LearnAndTrain() {
             ))}
           </div>
           
-          <div className="text-center mt-8">
-            <p className="text-xs text-muted-foreground">
-              💳 All payments secured with Stripe • QR code payment available • Pay after confirmation
-            </p>
+          <div className="text-center mt-10">
+            <div className="inline-flex items-center gap-3 bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl px-6 py-3">
+              <QrCode className="w-5 h-5 text-primary" />
+              <p className="text-sm text-muted-foreground">
+                💳 All payments secured with Stripe • QR code payment available • Pay after confirmation
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -597,8 +629,8 @@ function LearnAndTrain() {
         </div>
       </section>
 
-      {/* How ScamShield Works Section */}
-      <section className="py-16 bg-background relative overflow-hidden">
+      {/* How ScamShield Works Section - Redesigned */}
+      <section className="py-20 bg-background relative overflow-hidden">
         <FlowingWaves variant="full" opacity={0.12} />
         <div className="absolute inset-0 opacity-30">
           <div
@@ -611,119 +643,139 @@ function LearnAndTrain() {
           />
         </div>
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mb-10 animate-fade-in-up">Simple Protection in 4 Steps</h2>
+          <div className="text-center mb-12">
+            <Badge className="mb-4 bg-gradient-to-r from-primary to-accent text-white text-sm px-4 py-1.5">
+              <Shield className="w-4 h-4 mr-1" /> HOW IT WORKS
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-fade-in-up">Simple Protection in 4 Steps</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Our proven process keeps you safe from scams with expert analysis and clear guidance.
+            </p>
+          </div>
 
-          <div className="max-w-5xl mx-auto relative">
-            {/* SVG Connecting Line */}
-            <svg 
-              className="absolute top-24 left-0 w-full h-2 hidden lg:block pointer-events-none z-0" 
-              style={{ top: '80px' }}
-            >
-              <path
-                id="steps-path"
-                d="M 12% 0 L 38% 0 L 62% 0 L 88% 0"
-                stroke="hsl(var(--primary))"
-                strokeWidth="2"
-                strokeDasharray="8 8"
-                fill="none"
-                className="steps-connecting-line"
-                style={{
-                  strokeDashoffset: 1000,
-                  animation: 'draw-line 2s ease-out forwards',
-                  animationDelay: '0.5s'
-                }}
-              />
-            </svg>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
                 {
                   icon: MessageSquare,
-                  step: "STEP 1",
-                  title: "You Receive Something Suspicious",
-                  desc: "Strange text, urgent email, odd call, suspicious link",
+                  step: "01",
+                  title: "Something Suspicious?",
+                  desc: "Strange text, urgent email, odd call, or suspicious link — anything that doesn't feel right.",
+                  color: "from-blue-500 to-cyan-500",
+                  bgColor: "from-blue-500/20 to-cyan-500/20"
                 },
                 {
                   icon: Upload,
-                  step: "STEP 2",
-                  title: "Forward It to Our Team",
-                  desc: "Email, text, upload screenshot, or call our hotline",
+                  step: "02",
+                  title: "Forward to Us",
+                  desc: "Send it via email, text, screenshot upload, or call our hotline. We make it easy.",
                   hasResponseTime: true,
+                  color: "from-purple-500 to-pink-500",
+                  bgColor: "from-purple-500/20 to-pink-500/20"
                 },
                 {
                   icon: Search,
-                  step: "STEP 3",
+                  step: "03",
                   title: "Expert Analysis",
-                  desc: "Our team examines: Message content, sender verification, link destination, voice/audio analysis, AI-generated detection",
+                  desc: "Our team examines content, verifies senders, checks links, and detects AI-generated content.",
+                  color: "from-orange-500 to-red-500",
+                  bgColor: "from-orange-500/20 to-red-500/20"
                 },
                 {
                   icon: FileCheck,
-                  step: "STEP 4",
-                  title: "Get Clear Guidance",
-                  desc: "Risk level (Safe/Caution/Danger/CRITICAL), detailed explanation, recommended actions, emergency scripts if needed",
+                  step: "04",
+                  title: "Clear Guidance",
+                  desc: "Receive risk level assessment, detailed explanation, recommended actions, and emergency scripts.",
+                  color: "from-green-500 to-emerald-500",
+                  bgColor: "from-green-500/20 to-emerald-500/20"
                 },
               ].map((step, index) => (
-                <ScrollReveal key={index} animation="scale-in" delay={index * 200} threshold={0.3}>
+                <ScrollReveal key={index} animation="scale-in" delay={index * 150} threshold={0.3}>
                   <Card
-                    className="p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 hover:scale-105 rounded-2xl border-border/50 group bg-gradient-to-br from-card to-card/50 backdrop-blur-sm"
+                    className="relative p-6 hover:shadow-xl transition-all duration-500 hover:-translate-y-3 rounded-2xl border-border/50 group bg-gradient-to-br from-card to-card/50 backdrop-blur-sm overflow-hidden"
                   >
-                    <div className="flex justify-center mb-4">
+                    {/* Step Number Badge */}
+                    <div className={`absolute -top-1 -right-1 w-16 h-16 bg-gradient-to-br ${step.color} rounded-bl-3xl flex items-end justify-start p-2`}>
+                      <span className="text-2xl font-black text-white">{step.step}</span>
+                    </div>
+                    
+                    {/* Icon Container */}
+                    <div className="flex justify-center mb-6">
                       <div 
-                        className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500"
+                        className={`w-20 h-20 bg-gradient-to-br ${step.bgColor} rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-lg`}
                         style={{
                           animation: `step-icon-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards`,
                           animationDelay: `${0.5 + index * 0.2}s`,
                           transform: 'scale(0)'
                         }}
                       >
-                        <step.icon className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-500" />
+                        <step.icon className={`w-10 h-10 bg-gradient-to-br ${step.color} bg-clip-text text-transparent`} style={{ color: 'hsl(var(--primary))' }} />
                       </div>
                     </div>
-                    <div className="text-center mb-2">
-                      <span className="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full">
-                        {step.step}
-                      </span>
-                    </div>
-                    <h3 className="text-lg font-bold mb-3 text-center group-hover:text-primary transition-colors duration-300">
+                    
+                    <h3 className="text-xl font-bold mb-3 text-center group-hover:text-primary transition-colors duration-300">
                       {step.title}
                     </h3>
-                    <p className="text-muted-foreground text-center text-sm">{step.desc}</p>
+                    <p className="text-muted-foreground text-center text-sm leading-relaxed">{step.desc}</p>
                     {step.hasResponseTime && <ResponseTimeCallout />}
+                    
+                    {/* Bottom Gradient Line */}
+                    <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${step.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
                   </Card>
                 </ScrollReveal>
               ))}
+            </div>
+            
+            {/* Connecting Line for Desktop */}
+            <div className="hidden lg:flex justify-center items-center mt-8">
+              <div className="flex items-center gap-2">
+                {[1, 2, 3].map((_, i) => (
+                  <div key={i} className="flex items-center">
+                    <div className="w-24 h-0.5 bg-gradient-to-r from-primary to-accent" />
+                    <div className="w-3 h-3 rounded-full bg-primary animate-pulse" />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Veterans Discount Banner */}
-      <section className="py-8 bg-gradient-to-r from-primary/10 to-accent/10">
+      {/* Veterans Discount Notification Banner - Not a Button */}
+      <section className="py-10 bg-gradient-to-r from-primary/10 via-accent/5 to-primary/10">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center max-w-6xl mx-auto">
-            <div className="order-2 md:order-1">
-              <img
-                src={trainingSession}
-                alt="Cybersecurity training session"
-                className="rounded-lg shadow-large w-full h-auto object-cover"
-              />
-            </div>
-            <Card className="p-6 bg-card/50 backdrop-blur-sm border-primary/20 order-1 md:order-2">
-              <div className="flex flex-col items-center gap-4 text-center md:text-left md:flex-row">
+          <div className="max-w-5xl mx-auto">
+            <div className="bg-card/80 backdrop-blur-sm border border-primary/30 rounded-2xl p-8 shadow-lg">
+              <div className="flex flex-col lg:flex-row items-center gap-6">
                 <div className="flex-shrink-0">
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-2xl">
+                  <div className="w-20 h-20 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center text-4xl shadow-xl">
                     🇺🇸
                   </div>
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-1">Veterans & First Responders</h3>
-                  <p className="text-muted-foreground text-sm">Active duty, veterans, reservists, and first responders receive 10% OFF all training and protection plans</p>
+                <div className="flex-1 text-center lg:text-left">
+                  <h3 className="text-2xl font-bold mb-2">Veterans & First Responders Save 10%</h3>
+                  <p className="text-muted-foreground mb-3">
+                    Active duty military, veterans, reservists, police, firefighters, and EMTs receive 10% OFF all training programs and protection plans.
+                  </p>
+                  <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
+                    <Badge variant="outline" className="bg-primary/5">✓ Discount applied at checkout</Badge>
+                    <Badge variant="outline" className="bg-primary/5">✓ Valid ID required</Badge>
+                    <Badge variant="outline" className="bg-primary/5">✓ Stackable with other offers</Badge>
+                  </div>
                 </div>
-                <Button variant="default" asChild>
-                  <Link to="/signup">Claim Discount</Link>
-                </Button>
+                <div className="flex-shrink-0">
+                  <div className="text-center">
+                    <p className="text-sm text-muted-foreground mb-2">Questions?</p>
+                    <Link 
+                      to="/contact" 
+                      className="inline-flex items-center gap-2 text-primary font-semibold hover:underline"
+                    >
+                      Contact Us →
+                    </Link>
+                  </div>
+                </div>
               </div>
-            </Card>
+            </div>
           </div>
         </div>
       </section>
