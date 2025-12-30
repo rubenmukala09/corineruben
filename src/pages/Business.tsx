@@ -1880,6 +1880,24 @@ function Business() {
         <p className="text-white/80 text-sm mt-4">15-minute call to discuss your needs - no sales pressure.</p>
       </CTASection>
 
+      {/* FAQ Section */}
+      <section className="py-10 bg-gradient-to-b from-background to-secondary/20">
+        <div className="container mx-auto px-4">
+          <ScrollReveal>
+            <Card className="p-6 md:p-8 text-center max-w-2xl mx-auto border-primary/20 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5">
+              <MessageSquare className="w-12 h-12 text-primary mx-auto mb-4" />
+              <h2 className="text-2xl font-bold mb-3">Have Questions?</h2>
+              <p className="text-muted-foreground mb-6">
+                Find answers to common questions about our AI solutions, pricing, and implementation process.
+              </p>
+              <Button asChild size="lg">
+                <Link to="/faq">View Frequently Asked Questions →</Link>
+              </Button>
+            </Card>
+          </ScrollReveal>
+        </div>
+      </section>
+
       <Footer />
       
       {selectedVideo && (

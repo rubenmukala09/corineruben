@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
@@ -8,7 +9,7 @@ import CTASection from "@/components/CTASection";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Award, Heart, Shield, Users, MapPin, TrendingUp } from "lucide-react";
+import { Award, Heart, Shield, Users, MapPin, TrendingUp, Star, CheckCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
@@ -28,15 +29,32 @@ import teamDiverse1 from "@/assets/team-diverse-1.jpg";
 import businessCollaboration from "@/assets/business-collaboration.jpg";
 import { SEO } from "@/components/SEO";
 
+// Rotating hero headlines for About page
+const aboutHeadlines = [
+  "Protecting Families, One Story at a Time",
+  "Founded from Personal Experience",
+  "Driven by Community Impact",
+  "Your Safety is Our Mission"
+];
+
 function About() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [showAdminBanner, setShowAdminBanner] = useState(true);
+  const [currentHeadlineIndex, setCurrentHeadlineIndex] = useState(0);
 
   const stat1 = useCounterAnimation({ end: 500 });
   const stat2 = useCounterAnimation({ end: 89 });
   const stat3 = useCounterAnimation({ end: 15000 });
   const stat4 = useCounterAnimation({ end: 98 });
+
+  // Rotate headlines
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentHeadlineIndex((prev) => (prev + 1) % aboutHeadlines.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     checkAdminStatus();
@@ -132,8 +150,21 @@ function About() {
       
       <Hero
         backgroundImages={aboutHeroImages}
-        headline="Protecting Families, One Story at a Time"
-        subheadline="Founded from personal experience, driven by community impact"
+        headline={
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={currentHeadlineIndex}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.6 }}
+              className="block"
+            >
+              {aboutHeadlines[currentHeadlineIndex]}
+            </motion.span>
+          </AnimatePresence>
+        }
+        subheadline="From victims to protectors. Serving 500+ families across Ohio."
       />
 
       <TrustBar />

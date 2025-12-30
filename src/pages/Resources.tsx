@@ -422,8 +422,12 @@ function Resources() {
                   </Badge>
                   
                   {/* Image */}
-                  <div className="aspect-square bg-gradient-to-br from-secondary/50 to-secondary/20 relative overflow-hidden flex items-center justify-center">
-                    <Shield className="w-12 h-12 text-primary/30 group-hover:scale-110 transition-transform duration-300" />
+                  <div className="aspect-square bg-gradient-to-br from-secondary/50 to-secondary/20 relative overflow-hidden">
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
                   </div>
                   
                   {/* Content */}
@@ -643,6 +647,24 @@ function Resources() {
                   </Link>
                 </Button>
               </div>
+            </Card>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-10 bg-secondary/20">
+        <div className="container mx-auto px-4">
+          <ScrollReveal>
+            <Card className="p-6 md:p-8 text-center max-w-2xl mx-auto border-primary/20">
+              <Headphones className="w-12 h-12 text-primary mx-auto mb-4" />
+              <h2 className="text-2xl font-bold mb-3">Have Questions?</h2>
+              <p className="text-muted-foreground mb-6">
+                Find answers to common questions about our products, shipping, and returns.
+              </p>
+              <Button asChild size="lg">
+                <Link to="/faq">View Frequently Asked Questions →</Link>
+              </Button>
             </Card>
           </ScrollReveal>
         </div>

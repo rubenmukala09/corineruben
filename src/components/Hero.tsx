@@ -19,8 +19,8 @@ interface HeroImage {
 interface HeroProps {
   backgroundImage?: string;
   backgroundImages?: HeroImage[];
-  headline?: string;
-  subheadline?: string;
+  headline?: string | ReactNode;
+  subheadline?: string | ReactNode;
   children?: ReactNode;
   className?: string;
   overlay?: boolean;

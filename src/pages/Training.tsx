@@ -40,9 +40,9 @@ import {
   Zap,
   Star,
 } from "lucide-react";
-import heroTrainingFamilyPark from "@/assets/hero-training-family-park.jpg";
-import heroTrainingMarket from "@/assets/hero-training-market.jpg";
-import heroTrainingCommunity from "@/assets/hero-training-community.jpg";
+import heroTraining1 from "@/assets/hero-training-1.jpg";
+import heroTraining2 from "@/assets/hero-training-2.jpg";
+import heroTraining3 from "@/assets/hero-training-3.jpg";
 import trainingDiverse2 from "@/assets/training-diverse-2.jpg";
 import TestimonialCard from "@/components/TestimonialCard";
 import { VideoLightbox } from "@/components/VideoLightbox";
@@ -316,9 +316,9 @@ function LearnAndTrain() {
   };
 
   const trainingHeroImages = [
-    { src: heroTrainingFamilyPark, alt: "Happy multigenerational family enjoying community event" },
-    { src: heroTrainingMarket, alt: "Seniors confidently shopping at farmers market" },
-    { src: heroTrainingCommunity, alt: "Joyful community gathering at outdoor festival" },
+    { src: heroTraining1, alt: "Professional cybersecurity training workshop" },
+    { src: heroTraining2, alt: "Seniors learning about online safety" },
+    { src: heroTraining3, alt: "Family safety training session" },
     { src: trainingDiverse2, alt: "Interactive learning environment" }
   ];
 
@@ -1649,6 +1649,24 @@ function LearnAndTrain() {
           </Button>
         </div>
       </CTASection>
+
+      {/* FAQ Section */}
+      <section className="py-10 bg-gradient-to-b from-background to-secondary/20">
+        <div className="container mx-auto px-4">
+          <ScrollReveal>
+            <Card className="p-6 md:p-8 text-center max-w-2xl mx-auto border-primary/20 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5">
+              <MessageSquare className="w-12 h-12 text-primary mx-auto mb-4" />
+              <h2 className="text-2xl font-bold mb-3">Have Questions?</h2>
+              <p className="text-muted-foreground mb-6">
+                Find answers to common questions about our training programs, pricing, and services.
+              </p>
+              <Button asChild size="lg">
+                <Link to="/faq">View Frequently Asked Questions →</Link>
+              </Button>
+            </Card>
+          </ScrollReveal>
+        </div>
+      </section>
 
       <Footer />
       
