@@ -4,8 +4,7 @@ import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, ArrowRight, Award } from "lucide-react";
 import heroAbout from "@/assets/hero-about-1.jpg";
-import aboutSectionTeam from "@/assets/about-section-team.jpg";
-
+import natureSecurityServices from "@/assets/nature-security-services.jpg";
 const features = [
   "Specialized Scam Protection",
   "AI-Powered Threat Detection",
@@ -28,7 +27,7 @@ export const AboutSection = () => {
       <motion.div 
         className="absolute inset-0 bg-cover bg-center"
         style={{ 
-          backgroundImage: `url(${aboutSectionTeam})`,
+          backgroundImage: `url(${natureSecurityServices})`,
           y: backgroundY
         }}
       />
