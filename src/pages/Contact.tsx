@@ -8,6 +8,7 @@ import TrustBar from "@/components/TrustBar";
 import { SEO } from "@/components/SEO";
 import { PageTransition } from "@/components/PageTransition";
 import { FloatingShapes } from "@/components/FloatingShapes";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -190,36 +191,37 @@ function Contact() {
             {contactMethods.map((method, index) => {
               const IconComponent = method.icon;
               return (
-                <div 
-                  key={index} 
-                  className="group relative bg-card/80 backdrop-blur-sm rounded-2xl border border-border/50 p-6 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden"
-                >
-                  {/* Gradient border effect on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
-                  
-                  <div className="relative z-10">
-                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-accent/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:shadow-lg transition-all duration-300">
-                      <IconComponent className="w-7 h-7 text-primary" />
+                <ScrollReveal key={index} delay={index * 100}>
+                  <div 
+                    className="group relative bg-card/80 backdrop-blur-sm rounded-2xl border border-border/50 p-6 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden h-full"
+                  >
+                    {/* Gradient border effect on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+                    
+                    <div className="relative z-10">
+                      <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-accent/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:shadow-lg transition-all duration-300">
+                        <IconComponent className="w-7 h-7 text-primary" />
+                      </div>
+                      <h3 className="text-lg font-bold mb-2">{method.title}</h3>
+                      <p className="font-semibold text-foreground mb-1 text-sm">{method.detail}</p>
+                      <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-4">
+                        <Clock className="w-3.5 h-3.5" />
+                        {method.hours}
+                      </div>
+                      <Badge variant={method.badgeVariant} className="mb-4 text-xs">
+                        {method.badge}
+                      </Badge>
+                      <Button 
+                        variant="outline" 
+                        className="w-full group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all duration-300" 
+                        size="sm"
+                        onClick={() => method.action.startsWith('#') ? null : window.location.href = method.action}
+                      >
+                        {method.actionText}
+                      </Button>
                     </div>
-                    <h3 className="text-lg font-bold mb-2">{method.title}</h3>
-                    <p className="font-semibold text-foreground mb-1 text-sm">{method.detail}</p>
-                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-4">
-                      <Clock className="w-3.5 h-3.5" />
-                      {method.hours}
-                    </div>
-                    <Badge variant={method.badgeVariant} className="mb-4 text-xs">
-                      {method.badge}
-                    </Badge>
-                    <Button 
-                      variant="outline" 
-                      className="w-full group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all duration-300" 
-                      size="sm"
-                      onClick={() => method.action.startsWith('#') ? null : window.location.href = method.action}
-                    >
-                      {method.actionText}
-                    </Button>
                   </div>
-                </div>
+                </ScrollReveal>
               );
             })}
           </div>

@@ -7,6 +7,7 @@ import heroHomeFamilySafe from "@/assets/hero-home-family-safe.jpg";
 import heroHomeSecurityConsult from "@/assets/hero-home-security-consult.jpg";
 import heroAbout1 from "@/assets/hero-about-1.jpg";
 import heroBusiness1 from "@/assets/hero-business-1.jpg";
+
 const heroImages = [{
   src: heroHomeFamilySafe,
   alt: "Happy family protected together"
@@ -20,6 +21,7 @@ const heroImages = [{
   src: heroBusiness1,
   alt: "Business security"
 }];
+
 const securityFeatures = [{
   icon: Lock,
   label: "End-to-End Encryption",
@@ -37,6 +39,47 @@ const securityFeatures = [{
   label: "AI Protection",
   delay: 0.3
 }];
+
+// Typing animation component
+const TypewriterText = ({ words, className }: { words: string[]; className?: string }) => {
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [currentText, setCurrentText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentWord = words[currentWordIndex];
+    const typeSpeed = isDeleting ? 50 : 100;
+    const pauseTime = isDeleting ? 500 : 2000;
+
+    if (!isDeleting && currentText === currentWord) {
+      setTimeout(() => setIsDeleting(true), pauseTime);
+      return;
+    }
+
+    if (isDeleting && currentText === "") {
+      setIsDeleting(false);
+      setCurrentWordIndex((prev) => (prev + 1) % words.length);
+      return;
+    }
+
+    const timeout = setTimeout(() => {
+      setCurrentText((prev) =>
+        isDeleting
+          ? currentWord.substring(0, prev.length - 1)
+          : currentWord.substring(0, prev.length + 1)
+      );
+    }, typeSpeed);
+
+    return () => clearTimeout(timeout);
+  }, [currentText, isDeleting, currentWordIndex, words]);
+
+  return (
+    <span className={className}>
+      {currentText}
+      <span className="animate-pulse">|</span>
+    </span>
+  );
+};
 export const HeroHomepage = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   useEffect(() => {
@@ -115,7 +158,7 @@ export const HeroHomepage = () => {
               <span className="text-sm font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Veteran-Owned • Ohio-Based • Trusted</span>
             </motion.div>
             
-            {/* Headline */}
+            {/* Headline with Typing Effect */}
             <motion.h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.95] mb-8 tracking-tight" initial={{
             opacity: 0,
             y: 40
@@ -127,7 +170,12 @@ export const HeroHomepage = () => {
             duration: 1,
             ease: [0.22, 1, 0.36, 1]
           }}>
-              <span className="block text-foreground">Secure</span>
+              <span className="block text-foreground">
+                <TypewriterText 
+                  words={["Secure", "Trusted", "Expert", "Family"]} 
+                  className="bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text"
+                />
+              </span>
               <span className="block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">Protection</span>
               <span className="block font-light text-muted-foreground/80 text-4xl sm:text-5xl md:text-6xl lg:text-7xl mt-2">Starts Here</span>
             </motion.h1>

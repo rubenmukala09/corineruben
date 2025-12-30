@@ -452,25 +452,28 @@ export default function FAQ() {
         <section className="py-6 border-y border-border/40 bg-muted/20">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
-              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4 text-center">
-                Filter by Category
-              </h3>
+              <ScrollReveal animation="fade-up">
+                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4 text-center">
+                  Filter by Category
+                </h3>
+              </ScrollReveal>
               <div className="flex flex-wrap gap-3 justify-center">
-                {categories.map((category) => {
+                {categories.map((category, index) => {
                   const count = faqs.filter(faq => faq.category === category).length;
                   return (
-                    <Button
-                      key={category}
-                      variant={activeCategory === category ? "default" : "outline"}
-                      size="lg"
-                      onClick={() => setActiveCategory(category)}
-                      className="rounded-full shadow-sm hover:shadow-md transition-shadow"
-                    >
-                      {category}
-                      <Badge variant="secondary" className="ml-2 bg-background/50">
-                        {count}
-                      </Badge>
-                    </Button>
+                    <ScrollReveal key={category} delay={index * 50} animation="scale-in">
+                      <Button
+                        variant={activeCategory === category ? "default" : "outline"}
+                        size="lg"
+                        onClick={() => setActiveCategory(category)}
+                        className="rounded-full shadow-sm hover:shadow-md transition-shadow"
+                      >
+                        {category}
+                        <Badge variant="secondary" className="ml-2 bg-background/50">
+                          {count}
+                        </Badge>
+                      </Button>
+                    </ScrollReveal>
                   );
                 })}
               </div>

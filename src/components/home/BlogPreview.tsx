@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Calendar, BookOpen } from "lucide-react";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import heroArticles1 from "@/assets/hero-articles-1.jpg";
 import heroArticles2 from "@/assets/hero-articles-2.jpg";
 import heroArticles3 from "@/assets/hero-articles-3.jpg";
@@ -118,16 +119,12 @@ export const BlogPreview = () => {
           {/* Side Articles */}
           <div className="lg:col-span-2 grid sm:grid-cols-2 gap-5">
             {sideArticles.map((article, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -4 }}
-              >
+              <ScrollReveal key={index} delay={index * 100} animation="fade-up">
                 <Link to="/articles" className="group block">
-                  <div className="flex gap-4 p-4 rounded-xl bg-card border border-border/50 hover:shadow-lg hover:border-primary/20 transition-all duration-300">
+                  <motion.div
+                    whileHover={{ y: -4 }}
+                    className="flex gap-4 p-4 rounded-xl bg-card border border-border/50 hover:shadow-lg hover:border-primary/20 transition-all duration-300 h-full"
+                  >
                     {article.image && (
                       <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
                         <img
@@ -146,9 +143,9 @@ export const BlogPreview = () => {
                         <span>{article.date}</span>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </Link>
-              </motion.div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
