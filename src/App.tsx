@@ -27,6 +27,7 @@ import { useSmoothAnchorScroll } from "./hooks/useSmoothAnchorScroll";
 import { CookieConsent } from "./components/CookieConsent";
 import { SkipToContent } from "./components/SkipToContent";
 import ScrollProgressBar from "./components/ScrollProgressBar";
+import BackToTop from "./components/BackToTop";
 
 import { AnalyticsTracker } from "./components/AnalyticsTracker";
 
@@ -603,6 +604,7 @@ function App() {
                 <ScrollProgressBar />
                 <NavigationProgress />
                 <ScrollToTop />
+                <BackToTop />
                 
                 <RouteTracker />
                 <AnalyticsTracker />

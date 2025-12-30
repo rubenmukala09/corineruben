@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Quote, Star, ChevronLeft, ChevronRight, MessageSquare } from "lucide-react";
 import testimonialImage from "@/assets/testimonial-1.jpg";
 import testimonialImage2 from "@/assets/testimonial-2.jpg";
@@ -28,14 +28,25 @@ const testimonials = [
 
 export const TestimonialQuote = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const cardScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1, 0.95]);
 
   const next = () => setCurrentIndex((prev) => (prev + 1) % testimonials.length);
   const prev = () => setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
 
   return (
-    <section className="py-32 bg-background relative overflow-hidden">
-      {/* Subtle background */}
-      <div className="absolute inset-0 opacity-[0.02]">
+    <section ref={sectionRef} className="py-32 bg-background relative overflow-hidden">
+      {/* Parallax background */}
+      <motion.div 
+        className="absolute inset-0 opacity-[0.02]"
+        style={{ y: backgroundY }}
+      >
         <div 
           className="absolute inset-0"
           style={{
@@ -43,7 +54,7 @@ export const TestimonialQuote = () => {
             backgroundSize: '40px 40px'
           }}
         />
-      </div>
+      </motion.div>
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}

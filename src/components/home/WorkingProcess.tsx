@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { FileText, Search, Shield, Smile, Settings } from "lucide-react";
 
 const steps = [
@@ -33,10 +34,22 @@ const steps = [
 ];
 
 export const WorkingProcess = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const lineScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.8]);
+
   return (
-    <section className="py-32 bg-muted/20 relative overflow-hidden">
-      {/* Subtle background */}
-      <div className="absolute inset-0 opacity-[0.015]">
+    <section ref={sectionRef} className="py-32 bg-muted/20 relative overflow-hidden">
+      {/* Parallax background */}
+      <motion.div 
+        className="absolute inset-0 opacity-[0.015]"
+        style={{ y: backgroundY }}
+      >
         <div 
           className="absolute inset-0"
           style={{
@@ -44,7 +57,7 @@ export const WorkingProcess = () => {
             backgroundSize: '32px 32px'
           }}
         />
-      </div>
+      </motion.div>
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}

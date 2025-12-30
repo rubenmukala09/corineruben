@@ -1,14 +1,30 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowRight, Mail, Bell } from "lucide-react";
 
 export const NewsletterSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const patternOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.02, 0.05, 0.02]);
+
   return (
-    <section className="py-32 bg-gradient-to-b from-primary via-primary to-primary/95 relative overflow-hidden">
-      {/* Subtle pattern overlay */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 opacity-[0.03]">
+    <section ref={sectionRef} className="py-32 bg-gradient-to-b from-primary via-primary to-primary/95 relative overflow-hidden">
+      {/* Parallax pattern overlay */}
+      <motion.div 
+        className="absolute inset-0 overflow-hidden pointer-events-none"
+        style={{ y: backgroundY }}
+      >
+        <motion.div 
+          className="absolute inset-0"
+          style={{ opacity: patternOpacity }}
+        >
           <div 
             className="absolute inset-0"
             style={{
@@ -16,8 +32,8 @@ export const NewsletterSection = () => {
               backgroundSize: '40px 40px'
             }}
           />
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
