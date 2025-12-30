@@ -1165,7 +1165,7 @@ function Business() {
                   onClick={() => {
                     trackButtonClick('Subscribe - Basic Care', 'Business Insurance');
                     trackConversion('insurance_basic', 199);
-                    handleSubscribe('price_1QhNnTE7M5RA9HBzMcIcKhEF', 'AI Service Insurance', 'Basic Care', 19900, 'default');
+                    handleSubscribe('price_1SjwUMJ8osfwYbX7hBE9RiPI', 'AI Service Insurance', 'Basic Care', 19900, 'default');
                   }}
                   variant="outline" 
                   className="w-full mt-auto transition-all duration-300 hover:-translate-y-1"
@@ -1221,7 +1221,7 @@ function Business() {
                   onClick={() => {
                     trackButtonClick('Subscribe - Standard Care', 'Business Insurance');
                     trackConversion('insurance_standard', 399);
-                    handleSubscribe('price_1QhNnrE7M5RA9HBzbM4WDMIQ', 'AI Service Insurance', 'Standard Care', 39900, 'default');
+                    handleSubscribe('price_1SjwUOJ8osfwYbX7uyyCGLES', 'AI Service Insurance', 'Standard Care', 39900, 'default');
                   }}
                   variant="default" 
                   className="w-full mt-auto transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)]"
@@ -1277,7 +1277,7 @@ function Business() {
                   onClick={() => {
                     trackButtonClick('Subscribe - Premium Care', 'Business Insurance');
                     trackConversion('insurance_premium', 799);
-                    handleSubscribe('price_1QhNoHE7M5RA9HBzQWdpJTEh', 'AI Service Insurance', 'Premium Care', 79900, 'default');
+                    handleSubscribe('price_1SjwUQJ8osfwYbX7Q5jRWQEt', 'AI Service Insurance', 'Premium Care', 79900, 'default');
                   }}
                   variant="default" 
                   className="w-full mt-auto bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 transition-all duration-300 hover:-translate-y-1"

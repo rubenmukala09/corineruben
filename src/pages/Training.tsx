@@ -914,7 +914,7 @@ function LearnAndTrain() {
                 <Button 
                   onClick={() => {
                     trackButtonClick('Get Started - Starter Plan', 'Training Page');
-                    handleSubscribe('price_1SZxa9J8osfwYbX7tTp519zb', 'ScamShield', 'Starter', 3900);
+                    handleSubscribe('price_1SjwUHJ8osfwYbX7ZY71jSOR', 'ScamShield', 'Starter', 3900);
                   }}
                   variant="outline" 
                   size="default" 
@@ -981,7 +981,7 @@ function LearnAndTrain() {
                 <Button 
                   onClick={() => {
                     trackButtonClick('Get Started - Family Plan', 'Training Page');
-                    handleSubscribe('price_1SZxaAJ8osfwYbX7xJnNhOZJ', 'ScamShield', 'Family', 7900);
+                    handleSubscribe('price_1SjwUIJ8osfwYbX7Ynjt7gMq', 'ScamShield', 'Family', 7900);
                   }}
                   variant="default" 
                   size="default" 
@@ -1050,7 +1050,7 @@ function LearnAndTrain() {
                 <Button 
                   onClick={() => {
                     trackButtonClick('Get Started - Premium Plan', 'Training Page');
-                    handleSubscribe('price_1SZxaBJ8osfwYbX7K5kna9vJ', 'ScamShield', 'Premium', 12900);
+                    handleSubscribe('price_1SjwULJ8osfwYbX7DdZ4Ckqc', 'ScamShield', 'Premium', 12900);
                   }}
                   variant="default" 
                   size="default" 
