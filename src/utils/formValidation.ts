@@ -94,11 +94,24 @@ export const veteranIdSchema = z.string()
  * Complete form schemas
  */
 
+// US States for dropdown
+export const US_STATES = [
+  "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", 
+  "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", 
+  "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", 
+  "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", 
+  "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", 
+  "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", 
+  "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", 
+  "Wisconsin", "Wyoming"
+] as const;
+
 // Booking form schema
 export const bookingFormSchema = z.object({
   fullName: nameSchema,
   email: emailSchema,
   phone: phoneSchema,
+  state: z.string().trim().min(2, "Please select your state").max(50),
   message: messageSchema(0, 1000).optional(),
   preferredDates: z.string().trim().max(500).optional(),
   isVeteran: z.boolean().default(false),

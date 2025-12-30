@@ -17,13 +17,14 @@ import {
   Video, MapPin, Star
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { bookingFormSchema, formatPhoneNumber } from "@/utils/formValidation";
+import { bookingFormSchema, formatPhoneNumber, US_STATES } from "@/utils/formValidation";
 import { z } from "zod";
 import { Badge } from "@/components/ui/badge";
 import { QuickVeteranToggle } from "@/components/payment/QuickVeteranToggle";
 import { TrustIndicators } from "@/components/payment/TrustIndicators";
 import { TermsCheckbox } from "@/components/payment/TermsCheckbox";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface BookingModalProps {
   open: boolean;
@@ -94,6 +95,7 @@ export const BookingModal = ({
       fullName: '',
       email: '',
       phone: '',
+      state: '',
       preferredDates: '',
       message: '',
       isVeteran: false,
@@ -142,6 +144,7 @@ export const BookingModal = ({
         discount_amount: discountAmount,
         final_price: finalPrice,
         user_id: user?.id,
+        metadata: { state: data.state }
       }]);
 
       if (error) throw error;
@@ -295,21 +298,46 @@ export const BookingModal = ({
                   />
                 </div>
 
-                <FormField
-                  control={form.control}
-                  name="phone"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <div className="relative">
-                          <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                          <Input {...field} placeholder="Phone (optional)" className="h-11 pl-10" />
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <div className="grid md:grid-cols-2 gap-3">
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <div className="relative">
+                            <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                            <Input {...field} placeholder="Phone *" className="h-11 pl-10" />
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="state"
+                    render={({ field }) => (
+                      <FormItem>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger className="h-11">
+                              <SelectValue placeholder="Select State *" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent className="max-h-[200px]">
+                            {US_STATES.map((state) => (
+                              <SelectItem key={state} value={state}>
+                                {state}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </div>
 
               {/* Schedule */}

@@ -140,14 +140,15 @@ const ScamExampleCard = ({ example, index }: { example: any; index: number }) =>
   );
 };
 
-const TrainingCard = ({ plan, index }: { plan: any; index: number }) => {
+const TrainingCard = ({ plan, index, onBook }: { plan: any; index: number; onBook: (plan: any) => void }) => {
   const { count, ref } = useCounterAnimation({ end: plan.priceNum, duration: 1000 });
   
   const getBadgeInfo = (type: string) => {
     const badges: Record<string, { label: string; emoji: string; gradient: string }> = {
-      standard: { label: "STARTER", emoji: "🎯", gradient: "from-blue-500 to-cyan-500" },
+      standard: { label: "COUPLES & GROUPS", emoji: "👥", gradient: "from-blue-500 to-cyan-500" },
       family: { label: "BEST VALUE", emoji: "⭐", gradient: "from-primary to-accent" },
-      private: { label: "PREMIUM", emoji: "👑", gradient: "from-amber-500 to-orange-500" }
+      private: { label: "PREMIUM", emoji: "👑", gradient: "from-amber-500 to-orange-500" },
+      custom: { label: "ORGANIZATIONS", emoji: "🏢", gradient: "from-purple-500 to-pink-500" }
     };
     return badges[type] || badges.standard;
   };
@@ -160,7 +161,7 @@ const TrainingCard = ({ plan, index }: { plan: any; index: number }) => {
       delay={index * 150}
       threshold={0.2}
     >
-      <div className={`relative ${plan.popular ? 'scale-105' : ''}`}>
+      <div className={`relative h-full ${plan.popular ? 'scale-105' : ''}`}>
         {/* Badge */}
         <div className={`absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r ${badge.gradient} text-white px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 ${plan.popular ? 'animate-pulse' : ''}`} style={{ animationDuration: '3s' }}>
           <span className="mr-1">{badge.emoji}</span>
@@ -168,9 +169,9 @@ const TrainingCard = ({ plan, index }: { plan: any; index: number }) => {
         </div>
         
         <Card
-          className={`p-8 transition-all duration-500 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 ${
+          className={`p-6 h-full flex flex-col transition-all duration-500 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 ${
             plan.popular 
-              ? "border-[#14B8A6] border-[3px] shadow-[0_10px_30px_rgba(20,184,166,0.15)] hover:shadow-[0_20px_40px_rgba(20,184,166,0.25)]" 
+              ? "border-primary border-[3px] shadow-[0_10px_30px_hsl(var(--primary)/0.15)] hover:shadow-[0_20px_40px_hsl(var(--primary)/0.25)]" 
               : "border-border/50 hover:shadow-strong"
           }`}
         >
@@ -180,16 +181,21 @@ const TrainingCard = ({ plan, index }: { plan: any; index: number }) => {
             <span className="font-medium">100+ Students Trained</span>
           </div>
 
-          <h3 className="text-2xl font-bold mb-2 text-center">{plan.name}</h3>
+          <h3 className="text-xl font-bold mb-2 text-center">{plan.name}</h3>
           <div className="text-center mb-2" ref={ref}>
-            <span className="text-4xl font-bold text-primary">${Math.round(count)}</span>
+            <span className="text-3xl font-bold text-primary">${Math.round(count)}</span>
             <span className="text-muted-foreground">/session</span>
           </div>
-          <p className="text-center text-sm text-muted-foreground mb-2">{plan.duration}</p>
-          <p className="text-center text-sm text-accent font-semibold mb-4">{plan.size}</p>
+          <p className="text-center text-sm text-muted-foreground mb-1">{plan.duration}</p>
+          <p className="text-center text-sm text-accent font-semibold mb-2">{plan.size}</p>
+          
+          {/* Description */}
+          <p className="text-center text-xs text-muted-foreground mb-4 px-2">
+            {plan.description}
+          </p>
 
           {/* Highlight Tags */}
-          <div className="flex flex-wrap justify-center gap-2 mb-6">
+          <div className="flex flex-wrap justify-center gap-2 mb-4">
             <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-success/10 text-success text-[10px] font-medium rounded-full">
               ✓ Certificate Included
             </span>
@@ -198,10 +204,10 @@ const TrainingCard = ({ plan, index }: { plan: any; index: number }) => {
             </span>
           </div>
 
-          <div className="space-y-3 mb-8">
+          <div className="space-y-2.5 mb-6 flex-grow">
             {plan.features.map((feature: string, idx: number) => (
-              <div key={idx} className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+              <div key={idx} className="flex items-start gap-2">
+                <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
                 <span className="text-foreground text-sm">{feature}</span>
               </div>
             ))}
@@ -216,14 +222,12 @@ const TrainingCard = ({ plan, index }: { plan: any; index: number }) => {
           </div>
 
           <Button 
-            asChild
+            onClick={() => onBook(plan)}
             variant={plan.popular ? "default" : "outline"} 
             size="lg" 
-            className={`w-full ${plan.popular ? 'bg-[#14B8A6] hover:bg-[#0F9A8A] text-white' : ''}`}
+            className={`w-full mt-auto ${plan.popular ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : ''}`}
           >
-            <Link to={`/contact?service=training&type=${plan.type}&price=${plan.priceNum}`}>
-              Book Session →
-            </Link>
+            Book Session →
           </Button>
         </Card>
       </div>
@@ -367,11 +371,17 @@ function LearnAndTrain() {
         <FlowingWaves variant="full" opacity={0.12} />
         <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-center mb-4 animate-fade-in-up">Scam Prevention Training Programs</h2>
-          <p className="text-center text-xl text-muted-foreground mb-12 max-w-3xl mx-auto">
-            Interactive training sessions that teach you practical skills to recognize and stop AI-powered scams
+          <p className="text-center text-lg text-muted-foreground mb-6 max-w-4xl mx-auto">
+            Protect your family and organization from AI-powered scams. No technical or coding knowledge required — 
+            just practical awareness training to help you recognize when scammers are using AI to impersonate your children, grandchildren, friends, or anyone you trust.
           </p>
+          <div className="text-center mb-12">
+            <Badge variant="outline" className="text-sm px-4 py-1.5 bg-primary/5">
+              🎓 Basic AI Safety Awareness • No Coding Required • For All Ages
+            </Badge>
+          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 md:gap-8 max-w-7xl mx-auto mb-16">
             {[
               {
                 name: "Standard Group",
@@ -380,6 +390,7 @@ function LearnAndTrain() {
                 priceNum: 79,
                 duration: "90 minutes",
                 size: "Up to 25 participants",
+                description: "Join couples and individuals in a collaborative group setting. Learn together with others facing similar concerns.",
                 features: [
                   "Live Zoom session",
                   "Interactive Q&A",
@@ -396,6 +407,7 @@ function LearnAndTrain() {
                 duration: "90 minutes",
                 size: "Up to 12 participants",
                 popular: true,
+                description: "Intimate setting for couples who want more personal attention and extended time for questions.",
                 features: [
                   "Intimate group setting",
                   "More personal attention",
@@ -411,14 +423,32 @@ function LearnAndTrain() {
                 price: "$399",
                 priceNum: 399,
                 duration: "120 minutes",
-                size: "1-5 participants",
+                size: "Up to 5 family members",
+                description: "One-on-one family training (father, mother, and children). Available in-person or online for your convenience.",
                 features: [
-                  "One-on-one or family session",
-                  "Customized content",
+                  "Private family session",
+                  "In-person or virtual option",
+                  "Customized family content",
                   "Device security review",
                   "Personalized action plan",
                   "30-day email support",
-                  "Priority scheduling",
+                ],
+              },
+              {
+                name: "Customizable Group",
+                type: "custom",
+                price: "$599",
+                priceNum: 599,
+                duration: "2-3 hours",
+                size: "10-100+ participants",
+                description: "For churches, schools, senior centers, and organizations. Tailored content for your community's specific needs.",
+                features: [
+                  "Tailored for your organization",
+                  "On-site or virtual delivery",
+                  "Custom curriculum",
+                  "Bulk certificates",
+                  "Admin dashboard access",
+                  "Dedicated support contact",
                 ],
               },
             ].map((plan, index) => (
@@ -426,6 +456,15 @@ function LearnAndTrain() {
                 key={index}
                 plan={plan}
                 index={index}
+                onBook={(p) => {
+                  setSelectedService({
+                    type: 'training',
+                    name: p.name,
+                    tier: p.type,
+                    price: p.priceNum
+                  });
+                  setModalOpen(true);
+                }}
               />
             ))}
           </div>
