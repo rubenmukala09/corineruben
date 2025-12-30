@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDeviceCapabilities } from "@/hooks/useDeviceCapabilities";
 
@@ -16,47 +16,72 @@ interface HeroCarouselProps {
 // Global image cache for instant transitions
 const heroImageCache = new Map<string, boolean>();
 
+// Preload all hero images immediately
+const preloadImageWithPromise = (src: string, priority: 'high' | 'low' = 'low'): Promise<void> => {
+  return new Promise((resolve) => {
+    if (heroImageCache.has(src)) {
+      resolve();
+      return;
+    }
+    
+    const img = new Image();
+    img.onload = () => {
+      heroImageCache.set(src, true);
+      resolve();
+    };
+    img.onerror = () => {
+      heroImageCache.set(src, true);
+      resolve();
+    };
+    img.fetchPriority = priority;
+    img.decoding = 'async';
+    img.src = src;
+  });
+};
+
 export const HeroCarousel = ({ 
   images, 
   interval = 5000,
-  transitionDuration = 0.8 
+  transitionDuration = 0.9 
 }: HeroCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [imagesReady, setImagesReady] = useState(false);
+  const [imagesReady, setImagesReady] = useState(() => 
+    images.length > 0 && heroImageCache.has(images[0].src)
+  );
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const { isLowEnd, prefersReducedMotion } = useDeviceCapabilities();
+  const mountedRef = useRef(true);
   
-  const adjustedTransitionDuration = isLowEnd ? 0.5 : transitionDuration;
+  const adjustedTransitionDuration = isLowEnd ? 0.6 : transitionDuration;
 
   // Preload all images immediately on mount
-  const preloadAllImages = useCallback(() => {
-    let loadedCount = 0;
+  const preloadAllImages = useCallback(async () => {
+    if (images.length === 0) return;
     
-    images.forEach((img, index) => {
-      if (heroImageCache.has(img.src)) {
-        loadedCount++;
-        if (loadedCount >= 1) setImagesReady(true);
-        return;
-      }
-      
-      const image = new Image();
-      image.onload = () => {
-        heroImageCache.set(img.src, true);
-        loadedCount++;
-        if (loadedCount >= 1) setImagesReady(true);
-      };
-      image.onerror = () => {
-        heroImageCache.set(img.src, true);
-        loadedCount++;
-        if (loadedCount >= 1) setImagesReady(true);
-      };
-      image.fetchPriority = index === 0 ? 'high' : 'low';
-      image.decoding = 'async';
-      image.src = img.src;
+    // Load first image with high priority
+    await preloadImageWithPromise(images[0].src, 'high');
+    
+    if (mountedRef.current) {
+      setImagesReady(true);
+      // Slight delay before removing blur effect
+      setTimeout(() => {
+        if (mountedRef.current) setIsFirstLoad(false);
+      }, 100);
+    }
+    
+    // Load remaining images in background
+    images.slice(1).forEach(img => {
+      preloadImageWithPromise(img.src, 'low');
     });
   }, [images]);
 
   useEffect(() => {
+    mountedRef.current = true;
     preloadAllImages();
+    
+    return () => {
+      mountedRef.current = false;
+    };
   }, [preloadAllImages]);
 
   useEffect(() => {
@@ -91,23 +116,47 @@ export const HeroCarousel = ({
       {/* Base dark background - prevents any flash */}
       <div className="absolute inset-0 bg-slate-900" />
       
+      {/* Shimmer loader while first image loads */}
+      <AnimatePresence>
+        {!imagesReady && (
+          <motion.div
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 animate-shimmer"
+            style={{ backgroundSize: '200% 100%' }}
+          />
+        )}
+      </AnimatePresence>
+      
       {/* Previous image layer (underneath) - stays visible during transition */}
       {imagesReady && (
-        <div 
+        <motion.div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${images[prevIndex].src})` }}
+          initial={false}
+          animate={{ 
+            filter: isFirstLoad ? 'blur(10px)' : 'blur(0px)',
+            scale: isFirstLoad ? 1.05 : 1
+          }}
+          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
         />
       )}
       
-      {/* Current image with fade-in (on top) */}
+      {/* Current image with smooth crossfade (on top) */}
       <AnimatePresence initial={false}>
         <motion.div
           key={currentIndex}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, scale: 1.02 }}
+          animate={{ 
+            opacity: 1, 
+            scale: 1,
+            filter: isFirstLoad ? 'blur(10px)' : 'blur(0px)'
+          }}
           transition={{
-            duration: adjustedTransitionDuration,
-            ease: [0.4, 0, 0.2, 1]
+            opacity: { duration: adjustedTransitionDuration, ease: [0.4, 0, 0.2, 1] },
+            scale: { duration: adjustedTransitionDuration * 1.2, ease: [0.4, 0, 0.2, 1] },
+            filter: { duration: 0.5, ease: [0.4, 0, 0.2, 1] }
           }}
           className="absolute inset-0"
         >
@@ -126,4 +175,9 @@ export const HeroCarousel = ({
       </div>
     </div>
   );
+};
+
+// Export preload function for route prefetching
+export const preloadHeroImages = (images: HeroImage[]) => {
+  images.forEach(img => preloadImageWithPromise(img.src, 'low'));
 };

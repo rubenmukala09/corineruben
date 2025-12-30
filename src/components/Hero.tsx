@@ -36,11 +36,21 @@ const Hero = ({ backgroundImage, backgroundImages, backgroundVideo, headline, su
   const { ref, y, opacity } = useParallax({ speed: 0.5 });
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   
   // Preload background image(s)
   const singleImagePreloaded = useImagePreload(backgroundImage ? [backgroundImage] : []);
   const useCarousel = backgroundImages && backgroundImages.length > 0;
   const useVideo = !!backgroundVideo;
+
+  // Track when single image is fully loaded for blur effect
+  useEffect(() => {
+    if (singleImagePreloaded && backgroundImage) {
+      // Small delay for smoother blur-to-sharp transition
+      const timer = setTimeout(() => setImageLoaded(true), 50);
+      return () => clearTimeout(timer);
+    }
+  }, [singleImagePreloaded, backgroundImage]);
 
   return (
     <div 
@@ -59,9 +69,13 @@ const Hero = ({ backgroundImage, backgroundImages, backgroundVideo, headline, su
         {useVideo && (
           <motion.div
             className="absolute inset-0"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: videoLoaded ? 1 : 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            initial={{ opacity: 0, filter: 'blur(10px)', scale: 1.05 }}
+            animate={{ 
+              opacity: videoLoaded ? 1 : 0,
+              filter: videoLoaded ? 'blur(0px)' : 'blur(10px)',
+              scale: videoLoaded ? 1 : 1.05
+            }}
+            transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
           >
             <video
               ref={videoRef}
@@ -83,13 +97,18 @@ const Hero = ({ backgroundImage, backgroundImages, backgroundVideo, headline, su
           <HeroCarousel images={backgroundImages} />
         ) : !useVideo && backgroundImage && (
           <motion.div
-            className={cn(
-              "absolute inset-0 bg-cover bg-center bg-no-repeat brightness-115",
-              singleImagePreloaded ? "opacity-100" : "opacity-0"
-            )}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: singleImagePreloaded ? 1 : 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat brightness-115"
+            initial={{ opacity: 0, filter: 'blur(15px)', scale: 1.05 }}
+            animate={{ 
+              opacity: singleImagePreloaded ? 1 : 0,
+              filter: imageLoaded ? 'blur(0px)' : 'blur(15px)',
+              scale: imageLoaded ? 1 : 1.05
+            }}
+            transition={{ 
+              opacity: { duration: 0.4, ease: "easeOut" },
+              filter: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
+              scale: { duration: 0.8, ease: [0.4, 0, 0.2, 1] }
+            }}
             style={{ 
               backgroundImage: `url(${backgroundImage})`
             }}
