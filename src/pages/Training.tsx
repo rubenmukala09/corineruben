@@ -162,50 +162,50 @@ const TrainingCard = ({ plan, index, onBook }: { plan: any; index: number; onBoo
       delay={index * 100}
       threshold={0.2}
     >
-      <div className="relative pt-5">
+      <div className="relative pt-5 h-full">
         {/* Badge - On top of card, outside */}
         <div className={`absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r ${badge.gradient} text-white px-5 py-2 rounded-full text-xs font-bold tracking-wide shadow-xl z-30 whitespace-nowrap border-2 border-white/20`}>
           <span className="mr-1">{badge.emoji}</span>
           {badge.label}
         </div>
         
-        <Card className={`relative p-5 md:p-6 h-full flex flex-col transition-all duration-300 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 ${
+        <Card className={`relative p-5 md:p-6 h-full flex flex-col transition-all duration-300 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 min-h-[420px] ${
           plan.popular 
             ? "border-primary border-2 shadow-xl" 
             : "border-border/50 hover:shadow-lg"
         }`}>
-          <div className="pt-3">
-          <h3 className="text-lg md:text-xl font-bold mb-2 text-center">{plan.name}</h3>
-          <div className="text-center mb-2" ref={ref}>
-            <span className="text-3xl md:text-4xl font-bold text-primary">${Math.round(count)}{plan.pricePrefix || ''}</span>
-            <span className="text-muted-foreground text-sm">/session</span>
-          </div>
-          <p className="text-center text-sm text-muted-foreground mb-1">{plan.duration}</p>
-          <p className="text-center text-sm text-accent font-semibold mb-3">{plan.size}</p>
-          
-          {/* Description */}
-          <p className="text-center text-xs md:text-sm text-muted-foreground mb-4">
-            {plan.description}
-          </p>
+          <div className="pt-3 flex flex-col h-full">
+            <h3 className="text-lg md:text-xl font-bold mb-2 text-center">{plan.name}</h3>
+            <div className="text-center mb-2" ref={ref}>
+              <span className="text-3xl md:text-4xl font-bold text-primary">${Math.round(count)}{plan.pricePrefix || ''}</span>
+              <span className="text-muted-foreground text-sm">/session</span>
+            </div>
+            <p className="text-center text-sm text-muted-foreground mb-1">{plan.duration}</p>
+            <p className="text-center text-sm text-accent font-semibold mb-3">{plan.size}</p>
+            
+            {/* Description - Fixed height */}
+            <p className="text-center text-xs md:text-sm text-muted-foreground mb-4 min-h-[48px]">
+              {plan.description}
+            </p>
 
-          <div className="space-y-2 mb-4 flex-grow">
-            {plan.features.slice(0, 4).map((feature: string, idx: number) => (
-              <div key={idx} className="flex items-start gap-2">
-                <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                <span className="text-foreground text-sm">{feature}</span>
-              </div>
-            ))}
-          </div>
+            <div className="space-y-2 mb-4 flex-1">
+              {plan.features.slice(0, 4).map((feature: string, idx: number) => (
+                <div key={idx} className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="text-foreground text-sm">{feature}</span>
+                </div>
+              ))}
+            </div>
 
-          <Button 
-            onClick={() => onBook(plan)}
-            variant={plan.popular ? "default" : "outline"} 
-            size="default" 
-            className={`w-full mt-auto ${plan.popular ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : ''}`}
-          >
-            Book Now →
-          </Button>
-        </div>
+            <Button 
+              onClick={() => onBook(plan)}
+              variant={plan.popular ? "default" : "outline"} 
+              size="default" 
+              className={`w-full mt-auto ${plan.popular ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : ''}`}
+            >
+              Book Now →
+            </Button>
+          </div>
         </Card>
       </div>
     </ScrollReveal>
@@ -231,6 +231,7 @@ function LearnAndTrain() {
   } | null>(null);
   const [trainingTestimonials, setTrainingTestimonials] = useState<any[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string } | null>(null);
+  const [expandedThreat, setExpandedThreat] = useState<string | null>(null);
 
   useEffect(() => {
     checkAdminStatus();
@@ -457,7 +458,7 @@ function LearnAndTrain() {
         </div>
       </section>
 
-      {/* Simple Protection in 4 Steps - Moved here between Scam Prevention and AI Pro Training */}
+      {/* Simple Protection in 4 Steps */}
       <section className="py-20 bg-muted relative overflow-hidden">
         <FlowingWaves variant="full" opacity={0.12} />
         <div className="absolute inset-0 opacity-30">
@@ -476,82 +477,81 @@ function LearnAndTrain() {
               <Shield className="w-4 h-4 mr-1" /> HOW IT WORKS
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-fade-in-up">Simple Protection in 4 Steps</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-foreground max-w-2xl mx-auto">
               Our proven process keeps you safe from scams with expert analysis and clear guidance.
             </p>
           </div>
 
           <div className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
                 {
-                  icon: MessageSquare,
                   step: "01",
-                  title: "Suspicious?",
-                  desc: "Strange text, email, call, or link",
+                  title: "Something Suspicious?",
+                  desc: "Received a strange text, email, phone call, or link that doesn't feel right? Trust your instincts!",
                   color: "from-blue-500 to-cyan-500",
-                  bgColor: "from-blue-500/20 to-cyan-500/20",
+                  bgColor: "from-blue-500/10 to-cyan-500/10",
+                  borderColor: "border-blue-500/30",
                   image: "📱",
-                  action: "Send it to us"
+                  action: "Don't click — send it to us first"
                 },
                 {
-                  icon: Upload,
                   step: "02",
-                  title: "Forward",
-                  desc: "Email, text, or screenshot",
-                  hasResponseTime: false,
+                  title: "Forward to Us",
+                  desc: "Simply forward the email, screenshot the text, or describe the call. We make it easy to submit.",
                   color: "from-purple-500 to-pink-500",
-                  bgColor: "from-purple-500/20 to-pink-500/20",
+                  bgColor: "from-purple-500/10 to-pink-500/10",
+                  borderColor: "border-purple-500/30",
                   image: "📤",
-                  action: "Easy upload"
+                  action: "Email, upload, or call us"
                 },
                 {
-                  icon: Search,
                   step: "03",
-                  title: "Analyze",
-                  desc: "Expert team reviews threats",
+                  title: "Expert Analysis",
+                  desc: "Our team of experts combines AI technology with human review to analyze every threat thoroughly.",
                   color: "from-orange-500 to-red-500",
-                  bgColor: "from-orange-500/20 to-red-500/20",
+                  bgColor: "from-orange-500/10 to-red-500/10",
+                  borderColor: "border-orange-500/30",
                   image: "🔍",
-                  action: "AI + Human review"
+                  action: "AI + Human expert review"
                 },
                 {
-                  icon: FileCheck,
                   step: "04",
-                  title: "Guidance",
-                  desc: "Get clear action steps",
+                  title: "Clear Guidance",
+                  desc: "We'll tell you exactly what we found and what to do next. Safe? Great! Dangerous? We'll guide you.",
                   color: "from-green-500 to-emerald-500",
-                  bgColor: "from-green-500/20 to-emerald-500/20",
+                  bgColor: "from-green-500/10 to-emerald-500/10",
+                  borderColor: "border-green-500/30",
                   image: "✅",
-                  action: "Stay protected"
+                  action: "Know exactly what to do"
                 },
               ].map((step, index) => (
                 <ScrollReveal key={index} animation="scale-in" delay={index * 100} threshold={0.3}>
                   <Card
-                    className="relative p-4 h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 rounded-xl border-border/50 group bg-gradient-to-br from-card to-card/50 overflow-hidden"
+                    className={`relative p-6 h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-2 rounded-2xl border-2 ${step.borderColor} group bg-gradient-to-br ${step.bgColor} overflow-hidden min-h-[280px] flex flex-col`}
                   >
-                    {/* Step Number Badge - Smaller */}
-                    <div className={`absolute -top-0.5 -right-0.5 w-10 h-10 bg-gradient-to-br ${step.color} rounded-bl-2xl flex items-end justify-start p-1.5`}>
-                      <span className="text-sm font-black text-white">{step.step}</span>
+                    {/* Step Number Badge */}
+                    <div className={`absolute top-0 right-0 w-14 h-14 bg-gradient-to-br ${step.color} rounded-bl-3xl flex items-center justify-center`}>
+                      <span className="text-lg font-black text-white pr-1 pt-1">{step.step}</span>
                     </div>
                     
-                    {/* Icon - Smaller */}
-                    <div className="flex justify-center mb-3">
+                    {/* Icon */}
+                    <div className="flex justify-center mb-4">
                       <div 
-                        className={`w-12 h-12 bg-gradient-to-br ${step.bgColor} rounded-xl flex items-center justify-center group-hover:scale-105 transition-all duration-300 shadow-md`}
+                        className={`w-16 h-16 bg-gradient-to-br ${step.color} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-lg`}
                       >
-                        <span className="text-xl">{step.image}</span>
+                        <span className="text-3xl">{step.image}</span>
                       </div>
                     </div>
                     
-                    <h3 className="text-sm font-bold mb-1 text-center group-hover:text-primary transition-colors">
+                    <h3 className="text-lg font-bold mb-3 text-center text-foreground group-hover:text-primary transition-colors">
                       {step.title}
                     </h3>
-                    <p className="text-muted-foreground text-center text-xs leading-relaxed mb-2">{step.desc}</p>
+                    <p className="text-foreground/80 text-center text-sm leading-relaxed mb-4 flex-1">{step.desc}</p>
                     
                     {/* Bottom Action */}
-                    <div className={`text-center pt-2 border-t border-border/30`}>
-                      <span className={`text-[10px] font-semibold bg-gradient-to-r ${step.color} bg-clip-text text-transparent`}>
+                    <div className={`text-center pt-3 border-t border-border/50 mt-auto`}>
+                      <span className={`text-sm font-bold bg-gradient-to-r ${step.color} bg-clip-text text-transparent`}>
                         {step.action}
                       </span>
                     </div>
@@ -560,13 +560,13 @@ function LearnAndTrain() {
               ))}
             </div>
             
-            {/* Connecting Line for Desktop */}
-            <div className="hidden lg:flex justify-center items-center mt-8">
-              <div className="flex items-center gap-2">
+            {/* Connecting Arrow for Desktop */}
+            <div className="hidden lg:flex justify-center items-center mt-10">
+              <div className="flex items-center gap-4">
                 {[1, 2, 3].map((_, i) => (
                   <div key={i} className="flex items-center">
-                    <div className="w-24 h-0.5 bg-gradient-to-r from-primary to-accent" />
-                    <div className="w-3 h-3 rounded-full bg-primary animate-pulse" />
+                    <div className="w-20 h-1 bg-gradient-to-r from-primary to-accent rounded-full" />
+                    <div className="w-4 h-4 rounded-full bg-gradient-to-r from-primary to-accent animate-pulse shadow-lg" />
                   </div>
                 ))}
               </div>
@@ -1068,8 +1068,8 @@ function LearnAndTrain() {
         </div>
       </section>
 
-      {/* What We Analyze Section */}
-      <section className="py-16 bg-background relative overflow-hidden">
+      {/* What We Analyze Section - Interactive */}
+      <section className="py-20 bg-background relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div
             className="absolute bottom-1/4 left-20 w-80 h-80 bg-primary/20 rounded-full blur-3xl animate-pulse"
@@ -1077,40 +1077,124 @@ function LearnAndTrain() {
           />
         </div>
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mb-10 animate-fade-in-up">We Analyze All Types of Threats</h2>
+          <div className="text-center mb-12">
+            <Badge className="mb-4 bg-gradient-to-r from-accent to-cyan-500 text-white text-sm px-4 py-1.5">
+              <Shield className="w-4 h-4 mr-1" /> COMPREHENSIVE PROTECTION
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">We Analyze All Types of Threats</h2>
+            <p className="text-lg text-foreground max-w-3xl mx-auto">
+              Click on any threat type below to learn how we protect you. <strong>No threat is too small — if it feels suspicious, send it to us.</strong>
+            </p>
+          </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
             {[
-              { icon: Mail, title: "Phishing Emails" },
-              { icon: MessageSquare, title: "SMS Scams" },
-              { icon: Phone, title: "Voice Calls" },
-              { icon: FileText, title: "Voice Messages" },
-              { icon: LinkIcon, title: "Suspicious Links" },
-              { icon: QrCode, title: "QR Codes" },
-              { icon: FileCheck, title: "Documents" },
-              { icon: ImageIcon, title: "Social Media" },
+              { 
+                icon: Mail, 
+                title: "Phishing Emails",
+                emoji: "📧",
+                color: "from-red-500 to-rose-500",
+                description: "Received a suspicious email? Forward it to us! We check sender authenticity, analyze links, and identify fake logos. Don't click any links — just forward and we'll tell you if it's safe."
+              },
+              { 
+                icon: MessageSquare, 
+                title: "SMS Scams",
+                emoji: "💬",
+                color: "from-purple-500 to-pink-500",
+                description: "Any text message with suspicious links or urgent demands for money — screenshot it and send to us. We trace the sender and verify if the message is legitimate or a scam attempt."
+              },
+              { 
+                icon: Phone, 
+                title: "Voice Calls",
+                emoji: "📞",
+                color: "from-blue-500 to-cyan-500",
+                description: "Someone called claiming to be from the IRS, bank, or a relative in trouble? Tell us what they said. We can identify common voice scam patterns and AI-generated voices."
+              },
+              { 
+                icon: FileText, 
+                title: "Voice Messages",
+                emoji: "🎤",
+                color: "from-orange-500 to-amber-500",
+                description: "Voicemails can be AI-cloned to sound like loved ones. Send us the recording and we'll analyze it for signs of artificial generation and verify authenticity."
+              },
+              { 
+                icon: LinkIcon, 
+                title: "Suspicious Links",
+                emoji: "🔗",
+                color: "from-emerald-500 to-green-500",
+                description: "Before clicking any link, send it to us first! We safely scan the URL, check for malware, verify the destination, and tell you if it's safe or dangerous."
+              },
+              { 
+                icon: QrCode, 
+                title: "QR Codes",
+                emoji: "📱",
+                color: "from-indigo-500 to-violet-500",
+                description: "QR codes can hide malicious links. Send us a photo and we'll decode it safely to tell you where it really leads. Never scan unknown QR codes directly!"
+              },
+              { 
+                icon: FileCheck, 
+                title: "Documents",
+                emoji: "📄",
+                color: "from-teal-500 to-cyan-500",
+                description: "Suspicious PDFs, contracts, or attachments can contain malware or fake information. Upload them to us for safe analysis — we'll check for hidden threats."
+              },
+              { 
+                icon: ImageIcon, 
+                title: "Social Media",
+                emoji: "📲",
+                color: "from-pink-500 to-rose-500",
+                description: "Fake profiles, suspicious friend requests, or scam messages on Facebook, Instagram, or other platforms — screenshot and send to us for verification."
+              },
             ].map((threat, index) => (
               <ScrollReveal key={index} animation="scale-in" delay={index * 50} threshold={0.2}>
                 <Card
-                  className="p-6 transition-all duration-500 rounded-2xl border-border/50 hover:border-[#14B8A6] hover:border-2 group bg-gradient-to-br from-card to-card/50 backdrop-blur-sm hover:bg-gradient-to-br hover:from-card/90 hover:to-card/60 hover:shadow-strong"
+                  onClick={() => setExpandedThreat(expandedThreat === threat.title ? null : threat.title)}
+                  className={`p-5 cursor-pointer transition-all duration-300 rounded-2xl border-2 group bg-gradient-to-br from-card to-card/50 backdrop-blur-sm hover:shadow-xl hover:-translate-y-1 ${
+                    expandedThreat === threat.title 
+                      ? `border-primary shadow-lg bg-gradient-to-br ${threat.color.replace('from-', 'from-').replace('to-', 'to-')}/10` 
+                      : 'border-border/50 hover:border-primary/50'
+                  }`}
                 >
                   <div className="flex flex-col items-center text-center">
-                    <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center transition-all duration-300 mb-3 group-hover:animate-[icon-bounce_0.6s_ease-in-out]">
-                      <threat.icon className="w-7 h-7 text-primary" />
+                    <div className={`w-16 h-16 bg-gradient-to-br ${threat.color} rounded-2xl flex items-center justify-center transition-all duration-300 mb-3 group-hover:scale-110 shadow-lg`}>
+                      <span className="text-2xl">{threat.emoji}</span>
                     </div>
-                    <h3 className="text-sm font-semibold group-hover:text-primary transition-colors duration-300">
+                    <h3 className="text-sm font-bold group-hover:text-primary transition-colors duration-300 mb-1">
                       {threat.title}
                     </h3>
+                    <p className="text-xs text-muted-foreground">Click to learn more</p>
                   </div>
+                  
+                  {/* Expanded Description */}
+                  {expandedThreat === threat.title && (
+                    <div className="mt-4 pt-4 border-t border-border/50 animate-fade-in">
+                      <p className="text-sm text-foreground leading-relaxed">
+                        {threat.description}
+                      </p>
+                      <div className="mt-3 flex items-center justify-center gap-2">
+                        <span className="text-xs font-semibold text-primary">Forward to us and stay safe!</span>
+                        <CheckCircle className="w-4 h-4 text-primary" />
+                      </div>
+                    </div>
+                  )}
                 </Card>
               </ScrollReveal>
             ))}
           </div>
+          
+          {/* Bottom Note */}
+          <div className="max-w-2xl mx-auto mt-10 text-center">
+            <Card className="p-6 bg-gradient-to-r from-primary/10 to-accent/10 border-primary/20">
+              <p className="text-base text-foreground">
+                <strong>See something not listed?</strong> We analyze <em>everything</em>. If it feels suspicious, send it to us. Better safe than sorry!
+              </p>
+            </Card>
+          </div>
         </div>
       </section>
 
-      {/* Family Safety Vault Section */}
-      <section className="py-16 bg-muted relative overflow-hidden">
+      {/* Secure Your Family Section - Enhanced */}
+      <section className="py-20 bg-muted relative overflow-hidden">
         <div className="absolute inset-0 opacity-20 animate-gradient-shift">
           <div
             className="absolute top-20 right-1/4 w-96 h-96 bg-accent/25 rounded-full blur-3xl animate-pulse"
@@ -1122,39 +1206,103 @@ function LearnAndTrain() {
           />
         </div>
         <div className="container mx-auto px-4 relative z-10">
-          <Card className="max-w-4xl mx-auto p-8 hover:shadow-strong transition-all duration-500 rounded-2xl border-accent border-2 animate-fade-in-up bg-gradient-to-br from-card to-card/50">
-            <div className="text-center">
-              <div className="flex justify-center mb-6">
-                <div className="w-24 h-24 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center animate-[shield-pulse_3s_ease-in-out_infinite]">
-                  <Lock className="w-12 h-12 text-primary" />
+          <div className="text-center mb-10">
+            <Badge className="mb-4 bg-gradient-to-r from-primary to-accent text-white text-sm px-4 py-1.5">
+              <Lock className="w-4 h-4 mr-1" /> FAMILY PROTECTION
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Secure Your Family — This Is Critical</h2>
+            <p className="text-lg text-foreground max-w-3xl mx-auto">
+              <strong>In today's digital world, scammers don't just target you — they target your entire family.</strong> 
+              Without proper protection, one mistake can cost your family thousands of dollars and endless stress.
+            </p>
+          </div>
+
+          <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            {/* Left: Warning */}
+            <Card className="p-8 bg-gradient-to-br from-red-500/10 to-orange-500/10 border-red-500/30 rounded-2xl">
+              <div className="flex items-start gap-4 mb-6">
+                <div className="w-14 h-14 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-2xl">⚠️</span>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-red-600 dark:text-red-400 mb-2">Without InVision Protection:</h3>
+                  <ul className="space-y-2">
+                    {[
+                      "Scammers can impersonate your grandchildren using AI voice cloning",
+                      "One family member clicking a bad link can compromise everyone",
+                      "You may lose life savings to fake emergencies or romance scams",
+                      "Your personal documents and identity could be stolen"
+                    ].map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-sm text-foreground">
+                        <span className="text-red-500 mt-0.5">✗</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
-              <h3 className="text-3xl font-bold mb-4">Secure Your Family's Most Important Information</h3>
-              <p className="text-xl text-muted-foreground mb-8">Included with Family & Premium Plans</p>
+            </Card>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 text-left max-w-2xl mx-auto">
+            {/* Right: Solution */}
+            <Card className="p-8 bg-gradient-to-br from-green-500/10 to-emerald-500/10 border-green-500/30 rounded-2xl">
+              <div className="flex items-start gap-4 mb-6">
+                <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Shield className="w-7 h-7 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-green-600 dark:text-green-400 mb-2">With InVision Protection:</h3>
+                  <ul className="space-y-2">
+                    {[
+                      "Family safe words to verify real emergencies instantly",
+                      "24/7 expert analysis — just forward anything suspicious",
+                      "Proactive alerts when new scam patterns emerge",
+                      "Secure vault for important family documents"
+                    ].map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-sm text-foreground">
+                        <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </Card>
+          </div>
+
+          {/* Family Safety Vault Card */}
+          <Card className="max-w-4xl mx-auto mt-10 p-8 hover:shadow-xl transition-all duration-500 rounded-2xl border-accent border-2 bg-gradient-to-br from-card to-card/50">
+            <div className="text-center">
+              <div className="flex justify-center mb-6">
+                <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center animate-[shield-pulse_3s_ease-in-out_infinite]">
+                  <Lock className="w-10 h-10 text-primary" />
+                </div>
+              </div>
+              <h3 className="text-2xl font-bold mb-2">Family Safety Vault</h3>
+              <p className="text-muted-foreground mb-6">Included with Family & Premium Plans — keep everything secure</p>
+
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8 text-left max-w-2xl mx-auto">
                 {[
-                  "Family safe words",
-                  "Trusted caller list",
-                  "Emergency contacts",
-                  "Important documents (encrypted)",
-                  "Account recovery info",
-                  "Travel itineraries",
-                ].map((feature, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground">{feature}</span>
+                  { icon: "🔑", feature: "Family safe words" },
+                  { icon: "📞", feature: "Trusted caller list" },
+                  { icon: "🆘", feature: "Emergency contacts" },
+                  { icon: "📄", feature: "Encrypted documents" },
+                  { icon: "🔐", feature: "Account recovery info" },
+                  { icon: "✈️", feature: "Travel itineraries" },
+                ].map((item, index) => (
+                  <div key={index} className="flex items-center gap-3 p-3 bg-background/50 rounded-xl">
+                    <span className="text-xl">{item.icon}</span>
+                    <span className="text-sm font-medium text-foreground">{item.feature}</span>
                   </div>
                 ))}
               </div>
 
               <p className="text-sm text-muted-foreground mb-6">
-                Security: Bank-grade encryption, multi-factor auth, access sharing
+                🔒 Bank-grade encryption • Multi-factor authentication • Secure family sharing
               </p>
 
               <Button 
                 asChild 
-                className="bg-[#14B8A6] hover:bg-[#0F9A8A] text-white group" 
+                className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white group" 
                 size="lg"
               >
                 <Link to="/vault" className="flex items-center gap-2">
