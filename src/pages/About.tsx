@@ -30,8 +30,8 @@ import heroAbout from "@/assets/hero-about.jpg";
 // Founder photos removed - will be uploaded later
 import teamDiverse1 from "@/assets/team-diverse-1.jpg";
 import businessCollaboration from "@/assets/business-collaboration.jpg";
-import communityGroupSuccess from "@/assets/community-group-success.jpg";
-import heroCommunityProtected from "@/assets/hero-community-protected.jpg";
+import communityImpact4k from "@/assets/community-impact-4k.jpg";
+import protectedCommunity4k from "@/assets/protected-community-4k.jpg";
 import { SEO } from "@/components/SEO";
 
 // Rotating hero headlines for About page
@@ -345,7 +345,7 @@ function About() {
       <section className="py-12 md:py-16 lg:py-20 xl:py-32 relative overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${communityGroupSuccess})` }}
+          style={{ backgroundImage: `url(${communityImpact4k})` }}
         />
         {/* No overlay - clear image */}
         <div className="container mx-auto px-4 relative z-10 text-white" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.6)' }}>
@@ -474,7 +474,7 @@ function About() {
       <section className="py-20 relative overflow-hidden" id="cta">
         <div 
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroCommunityProtected})` }}
+          style={{ backgroundImage: `url(${protectedCommunity4k})` }}
         />
         <div className="container mx-auto px-4 relative z-10 text-center">
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-4" style={{ textShadow: '2px 2px 10px rgba(0,0,0,0.9), 0 0 25px rgba(0,0,0,0.7)' }}>

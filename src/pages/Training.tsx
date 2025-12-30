@@ -44,7 +44,7 @@ import {
 import heroTrainingPro1 from "@/assets/hero-training-pro-1.jpg";
 import heroTrainingPro2 from "@/assets/hero-training-pro-2.jpg";
 import heroTrainingPro3 from "@/assets/hero-training-pro-3.jpg";
-import libraryLearning from "@/assets/library-learning.jpg";
+import sleepBetter3d from "@/assets/sleep-better-3d.jpg";
 import TestimonialCard from "@/components/TestimonialCard";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
@@ -1634,7 +1634,7 @@ function LearnAndTrain() {
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ 
-            backgroundImage: `url(${libraryLearning})`,
+            backgroundImage: `url(${sleepBetter3d})`,
           }}
         />
         {/* No overlay - just the image */}
