@@ -487,38 +487,36 @@ function Resources() {
         </div>
       </section>
 
-      {/* Free Resources Section */}
+      {/* Trusted Brands Section */}
       <section className="py-10 bg-gradient-to-b from-secondary/20 to-background">
         <div className="container mx-auto px-4">
           <ScrollReveal>
             <div className="text-center mb-8">
-              <Badge className="mb-3 text-sm px-4 py-1.5 bg-success/20 text-success">
-                <Gift className="w-3.5 h-3.5 mr-1.5" />
-                Free Resources
+              <Badge className="mb-3 text-sm px-4 py-1.5" variant="secondary">
+                <Award className="w-3.5 h-3.5 mr-1.5" />
+                Trusted By Thousands
               </Badge>
               <h2 className="text-2xl md:text-3xl font-bold mb-2">
-                Start Learning Today - Free!
+                Join Our Protected Community
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto text-sm">
-                Access our free educational content to get started on your security journey
+                Trusted by families, businesses, and organizations across Ohio
               </p>
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
             {[
-              { icon: FileText, title: "Free Security Checklist", desc: "10-step guide to secure your digital life", action: "Download PDF" },
-              { icon: Video, title: "Video Tutorials", desc: "Watch our free educational videos on YouTube", action: "Watch Now" },
-              { icon: Podcast, title: "Security Podcast", desc: "Weekly tips and scam alerts on the go", action: "Listen Free" },
+              { icon: Users, value: "500+", label: "Families Protected" },
+              { icon: Shield, value: "10K+", label: "Scams Blocked" },
+              { icon: Award, value: "98%", label: "Success Rate" },
+              { icon: Heart, value: "24/7", label: "Support Available" },
             ].map((item, index) => (
               <ScrollReveal key={index} delay={index * 100}>
-                <Card className="p-5 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-2 border-success/20 hover:border-success/40">
-                  <item.icon className="w-10 h-10 text-success mx-auto mb-3" />
-                  <h3 className="font-bold text-lg mb-2">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-4">{item.desc}</p>
-                  <Button variant="outline" className="border-success text-success hover:bg-success hover:text-white">
-                    {item.action}
-                  </Button>
+                <Card className="p-5 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                  <item.icon className="w-8 h-8 text-primary mx-auto mb-2" />
+                  <h3 className="font-bold text-2xl text-primary mb-1">{item.value}</h3>
+                  <p className="text-sm text-muted-foreground">{item.label}</p>
                 </Card>
               </ScrollReveal>
             ))}
@@ -536,7 +534,7 @@ function Resources() {
                 Professional Services
               </Badge>
               <h2 className="text-2xl md:text-3xl font-bold mb-2">
-                Need Personalized Help?
+                Need Expert Help?
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto text-sm">
                 Our team of experts is ready to help you with customized security solutions
@@ -600,7 +598,7 @@ function Resources() {
             <Card className="p-6 md:p-8 max-w-2xl mx-auto text-center border-primary/20">
               <Lock className="w-10 h-10 text-primary mx-auto mb-4" />
               <h2 className="text-2xl font-bold mb-3">
-                Get Free Security Tips Weekly
+                Get Weekly Security Tips
               </h2>
               <p className="text-muted-foreground mb-4 text-sm">
                 Join 2,000+ subscribers who receive our weekly security newsletter with 
