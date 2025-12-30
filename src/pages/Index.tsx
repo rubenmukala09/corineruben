@@ -18,20 +18,22 @@ import { PageTransition } from "@/components/PageTransition";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { SEO, PAGE_SEO } from "@/components/SEO";
+import { SectionNav } from "@/components/SectionNav";
 import heroProtectionFamily from "@/assets/hero-protection-family-1.jpg";
+
 function Index() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [scamShieldOpen, setScamShieldOpen] = useState(false);
+  
   useEffect(() => {
     checkAdminStatus();
   }, []);
+  
   const checkAdminStatus = async () => {
     try {
       const {
-        data: {
-          user
-        }
+        data: { user }
       } = await supabase.auth.getUser();
       if (!user) {
         setIsAdmin(false);
@@ -55,67 +57,83 @@ function Index() {
       setIsLoading(false);
     }
   };
+  
   return (
     <PageTransition variant="fade">
       <div className="min-h-screen bg-background">
         <SEO {...PAGE_SEO.home} />
         <Navigation />
+        <SectionNav />
         <main id="main-content">
-
           {/* Hero Section */}
-          <HeroHomepage />
-        <FeatureBar />
+          <section id="hero">
+            <HeroHomepage />
+          </section>
+          
+          <section id="features">
+            <FeatureBar />
+          </section>
 
-        {/* About Section */}
-        <AboutSection />
+          {/* About Section */}
+          <section id="about">
+            <AboutSection />
+          </section>
 
-        {/* Services Showcase - Team of Experts */}
-        <ServicesShowcase />
+          {/* Services Showcase - Team of Experts */}
+          <section id="services">
+            <ServicesShowcase />
+          </section>
 
-        {/* Security Solutions - Portfolio */}
-        <SecuritySolutions />
+          {/* Security Solutions - Portfolio */}
+          <section id="portfolio">
+            <SecuritySolutions />
+          </section>
 
-        {/* Working Process - 4 Steps */}
-        <WorkingProcess />
+          {/* Working Process - 4 Steps */}
+          <section id="process">
+            <WorkingProcess />
+          </section>
 
-        {/* Testimonial Quote */}
-        <TestimonialQuote />
+          {/* Testimonial Quote */}
+          <section id="testimonials">
+            <TestimonialQuote />
+          </section>
 
-        {/* Blog Preview */}
-        <BlogPreview />
+          {/* Blog Preview */}
+          <section id="blog">
+            <BlogPreview />
+          </section>
 
-        {/* Newsletter Section */}
-        
+          {/* Final CTA with Image Background */}
+          <CTASection 
+            headline="Protect What Matters Most" 
+            variant="image"
+            backgroundImage={heroProtectionFamily}
+          >
+            <p className="text-xl text-white/90 mb-8">Join 500+ Ohio families who sleep better knowing they're protected from AI scams.</p>
+            <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center">
+              <Button asChild variant="gold" size="xl" className="w-full sm:w-auto">
+                <Link to="/training">Schedule Consultation</Link>
+              </Button>
+              <Button asChild variant="secondary" size="xl" className="w-full sm:w-auto">
+                <Link to="/training#pricing">Get Protection Now</Link>
+              </Button>
+              <Button asChild variant="outlineLight" size="xl" className="w-full sm:w-auto">
+                <Link to="/business">Get Business Quote</Link>
+              </Button>
+            </div>
+            <p className="text-white/80 mt-6 text-sm">
+              ✓ No credit card required ✓ Cancel anytime ✓ 60-day money-back guarantee
+            </p>
+          </CTASection>
 
-        {/* Final CTA with Image Background */}
-        <CTASection 
-          headline="Protect What Matters Most" 
-          variant="image"
-          backgroundImage={heroProtectionFamily}
-        >
-          <p className="text-xl text-white/90 mb-8">Join 500+ Ohio families who sleep better knowing they're protected from AI scams.</p>
-          <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center">
-            <Button asChild variant="gold" size="xl" className="w-full sm:w-auto">
-              <Link to="/training">Schedule Consultation</Link>
-            </Button>
-            <Button asChild variant="secondary" size="xl" className="w-full sm:w-auto">
-              <Link to="/training#pricing">Get Protection Now</Link>
-            </Button>
-            <Button asChild variant="outlineLight" size="xl" className="w-full sm:w-auto">
-              <Link to="/business">Get Business Quote</Link>
-            </Button>
-          </div>
-          <p className="text-white/80 mt-6 text-sm">
-            ✓ No credit card required ✓ Cancel anytime ✓ 60-day money-back guarantee
-          </p>
-        </CTASection>
-
-        <Footer />
-        
-        <ScamShieldSubmission open={scamShieldOpen} onOpenChange={setScamShieldOpen} />
-      </main>
+          <Footer />
+          
+          <ScamShieldSubmission open={scamShieldOpen} onOpenChange={setScamShieldOpen} />
+        </main>
       </div>
     </PageTransition>
   );
 }
+
 export default Index;

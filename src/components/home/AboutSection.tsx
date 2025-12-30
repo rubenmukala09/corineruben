@@ -32,7 +32,7 @@ export const AboutSection = () => {
           y: backgroundY
         }}
       />
-      <div className="absolute inset-0 bg-primary/25" />
+      <div className="absolute inset-0 bg-primary/15" />
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
