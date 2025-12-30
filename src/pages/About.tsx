@@ -27,6 +27,7 @@ import heroAbout from "@/assets/hero-about.jpg";
 // Founder photos removed - will be uploaded later
 import teamDiverse1 from "@/assets/team-diverse-1.jpg";
 import businessCollaboration from "@/assets/business-collaboration.jpg";
+import communityGroupSuccess from "@/assets/community-group-success.jpg";
 import { SEO } from "@/components/SEO";
 
 // Rotating hero headlines for About page
@@ -334,10 +335,14 @@ function About() {
         </div>
       </section>
 
-      {/* Impact Stats */}
-      <section className="py-12 md:py-16 lg:py-20 xl:py-32 bg-primary text-primary-foreground relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjA1IiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-20" />
-        <div className="container mx-auto px-4 relative z-10">
+      {/* Community Impact with Group Photo */}
+      <section className="py-12 md:py-16 lg:py-20 xl:py-32 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${communityGroupSuccess})` }}
+        />
+        <div className="absolute inset-0 bg-primary/85" />
+        <div className="container mx-auto px-4 relative z-10 text-primary-foreground">
           <ScrollReveal>
             <div className="text-center mb-8 md:mb-12 lg:mb-16">
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 md:mb-6">
@@ -383,6 +388,27 @@ function About() {
               </div>
             </ScrollReveal>
           </div>
+          
+          {/* Additional Info */}
+          <ScrollReveal delay={500}>
+            <div className="grid md:grid-cols-3 gap-6 mt-12 max-w-4xl mx-auto">
+              <div className="text-center p-4 bg-white/10 rounded-xl backdrop-blur-sm">
+                <div className="text-2xl mb-2">🏠</div>
+                <div className="font-bold">Ohio-Based</div>
+                <div className="text-sm opacity-80">Serving local communities</div>
+              </div>
+              <div className="text-center p-4 bg-white/10 rounded-xl backdrop-blur-sm">
+                <div className="text-2xl mb-2">🎖️</div>
+                <div className="font-bold">Veteran-Owned</div>
+                <div className="text-sm opacity-80">Military values drive us</div>
+              </div>
+              <div className="text-center p-4 bg-white/10 rounded-xl backdrop-blur-sm">
+                <div className="text-2xl mb-2">💙</div>
+                <div className="font-bold">Mission-Driven</div>
+                <div className="text-sm opacity-80">Protection over profit</div>
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 

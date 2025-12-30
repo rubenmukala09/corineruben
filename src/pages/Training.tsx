@@ -40,10 +40,10 @@ import {
   Zap,
   Star,
 } from "lucide-react";
-import heroTraining1 from "@/assets/hero-training-1.jpg";
-import heroTraining2 from "@/assets/hero-training-2.jpg";
-import heroTraining3 from "@/assets/hero-training-3.jpg";
-import trainingDiverse2 from "@/assets/training-diverse-2.jpg";
+import heroTrainingPro1 from "@/assets/hero-training-pro-1.jpg";
+import heroTrainingPro2 from "@/assets/hero-training-pro-2.jpg";
+import heroTrainingPro3 from "@/assets/hero-training-pro-3.jpg";
+import libraryLearning from "@/assets/library-learning.jpg";
 import TestimonialCard from "@/components/TestimonialCard";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
@@ -316,10 +316,9 @@ function LearnAndTrain() {
   };
 
   const trainingHeroImages = [
-    { src: heroTraining1, alt: "Professional cybersecurity training workshop" },
-    { src: heroTraining2, alt: "Seniors learning about online safety" },
-    { src: heroTraining3, alt: "Family safety training session" },
-    { src: trainingDiverse2, alt: "Interactive learning environment" }
+    { src: heroTrainingPro1, alt: "Professional cybersecurity training workshop" },
+    { src: heroTrainingPro2, alt: "Seniors learning about online safety" },
+    { src: heroTrainingPro3, alt: "Family digital safety workshop" }
   ];
 
   return (
@@ -1628,42 +1627,37 @@ function LearnAndTrain() {
         </section>
       )}
 
-      {/* Final CTA */}
-      <CTASection headline="Sleep Better Tonight" variant="gold">
-        <p className="text-xl text-white/90 mb-8">Join 500+ families who trust ScamShield</p>
-        <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center">
-          <Button 
-            onClick={() => {
-              document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
-            }}
-            variant="gold" 
-            size="xl" 
-            className="w-full sm:w-auto"
-          >
-            Get Started
-          </Button>
-          <Button asChild variant="outlineLight" size="xl" className="w-full sm:w-auto">
-            <Link to="/contact">
-              TALK TO EXPERT
-            </Link>
-          </Button>
-        </div>
-      </CTASection>
-
-      {/* FAQ Section */}
-      <section className="py-10 bg-gradient-to-b from-background to-secondary/20">
-        <div className="container mx-auto px-4">
+      {/* Final CTA with Library Background */}
+      <section className="py-20 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ 
+            backgroundImage: `url(${libraryLearning})`,
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-accent/80" />
+        <div className="container mx-auto px-4 relative z-10 text-center">
           <ScrollReveal>
-            <Card className="p-6 md:p-8 text-center max-w-2xl mx-auto border-primary/20 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5">
-              <MessageSquare className="w-12 h-12 text-primary mx-auto mb-4" />
-              <h2 className="text-2xl font-bold mb-3">Have Questions?</h2>
-              <p className="text-muted-foreground mb-6">
-                Find answers to common questions about our training programs, pricing, and services.
-              </p>
-              <Button asChild size="lg">
-                <Link to="/faq">View Frequently Asked Questions →</Link>
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Sleep Better Tonight</h2>
+            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">Join 500+ families who trust ScamShield</p>
+            <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center">
+              <Button 
+                onClick={() => {
+                  document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                variant="gold" 
+                size="xl" 
+                className="w-full sm:w-auto"
+              >
+                Get Started
               </Button>
-            </Card>
+              <Button asChild variant="outlineLight" size="xl" className="w-full sm:w-auto">
+                <Link to="/contact">Talk to an Expert</Link>
+              </Button>
+              <Button asChild variant="outlineLight" size="xl" className="w-full sm:w-auto">
+                <Link to="/faq">Frequently Asked Questions</Link>
+              </Button>
+            </div>
           </ScrollReveal>
         </div>
       </section>

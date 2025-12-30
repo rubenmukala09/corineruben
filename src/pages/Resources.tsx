@@ -14,7 +14,6 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Download, Shield, ShoppingCart, Star, Loader2, Zap, Award, CheckCircle, Gift, BookOpen, Package, Sparkles, Users, TrendingUp, Heart, Headphones, Clock, Lock, FileText, Video, Podcast, Globe } from "lucide-react";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { AIImageDisclaimer } from "@/components/AIImageDisclaimer";
 import heroResourcesOffice from "@/assets/hero-resources-office.jpg";
 import heroResourcesReading from "@/assets/hero-resources-reading.jpg";
 import heroResourcesProducts from "@/assets/hero-resources-products.jpg";
@@ -54,6 +53,7 @@ import productUsbBlocker from "@/assets/product-usb-blocker.jpg";
 import productTrackerDetector from "@/assets/product-tracker-detector.jpg";
 import productRfidSleeves from "@/assets/product-rfid-sleeves.jpg";
 import productSecurityCam from "@/assets/product-security-cam.jpg";
+import productWifiExtender from "@/assets/product-wifi-extender.jpg";
 import { SEO } from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -98,6 +98,7 @@ const staticPhysicalProducts = [
   { id: 'prod-tracker-detector', name: 'GPS Tracker Detector', description: 'Find hidden tracking devices', price: 34.99, image: productTrackerDetector, tag: 'Detection' },
   { id: 'prod-rfid-sleeves', name: 'RFID Card Sleeves (10)', description: 'Credit card protection sleeves', price: 7.99, image: productRfidSleeves, tag: 'Budget' },
   { id: 'prod-security-cam', name: 'Indoor Security Camera', description: 'WiFi camera with encryption', price: 59.99, image: productSecurityCam, tag: 'Monitoring' },
+  { id: 'prod-wifi-extender', name: 'WiFi Signal Extender', description: 'Extend secure WiFi coverage', price: 44.99, image: productWifiExtender, tag: 'Coverage' },
 ];
 
 // Rotating hero headlines
@@ -595,82 +596,59 @@ function Resources() {
         </div>
       </section>
 
-      {/* Newsletter Signup */}
-      <section className="py-10 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5">
+      {/* Combined Newsletter, Stories & FAQ Section */}
+      <section className="py-16 bg-gradient-to-b from-background via-primary/5 to-background">
         <div className="container mx-auto px-4">
-          <ScrollReveal>
-            <Card className="p-6 md:p-8 max-w-2xl mx-auto text-center border-primary/20">
-              <Lock className="w-10 h-10 text-primary mx-auto mb-4" />
-              <h2 className="text-2xl font-bold mb-3">
-                Get Weekly Security Tips
-              </h2>
-              <p className="text-muted-foreground mb-4 text-sm">
-                Join 2,000+ subscribers who receive our weekly security newsletter with 
-                the latest scam alerts, protection tips, and exclusive discounts.
-              </p>
-              <div className="flex gap-2 max-w-md mx-auto">
-                <input 
-                  type="email" 
-                  placeholder="Enter your email"
-                  className="flex-1 px-4 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-                />
-                <Button>Subscribe</Button>
-              </div>
-              <p className="text-xs text-muted-foreground mt-3">
-                No spam, unsubscribe anytime. We respect your privacy.
-              </p>
-            </Card>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* Success Stories Teaser */}
-      <section className="py-10 bg-gradient-to-b from-background to-secondary/20">
-        <div className="container mx-auto px-4">
-          <ScrollReveal>
-            <Card className="p-6 md:p-8 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 border-primary/20">
-              <div className="text-center max-w-2xl mx-auto">
-                <Badge className="mb-3" variant="secondary">
-                  <Star className="w-3 h-3 mr-1 fill-amber-400 text-amber-400" />
-                  Customer Stories
-                </Badge>
-                <h2 className="text-2xl font-bold mb-3">
-                  Join 500+ Protected Families
-                </h2>
-                <p className="text-muted-foreground mb-4 text-sm">
-                  Our resources have helped hundreds of families prevent scams and protect their loved ones. 
-                  Read their stories and see how our guides made a difference.
+          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {/* Newsletter */}
+            <ScrollReveal delay={0}>
+              <Card className="p-6 text-center h-full border-primary/20 hover:shadow-lg transition-all">
+                <Lock className="w-10 h-10 text-primary mx-auto mb-4" />
+                <h3 className="text-xl font-bold mb-2">Weekly Security Tips</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Join 2,000+ subscribers for scam alerts and tips.
                 </p>
-                <Button asChild variant="default">
-                  <Link to="/about#testimonials">
-                    Read Success Stories →
-                  </Link>
+                <div className="space-y-2">
+                  <input 
+                    type="email" 
+                    placeholder="Enter your email"
+                    className="w-full px-4 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                  />
+                  <Button className="w-full">Subscribe</Button>
+                </div>
+              </Card>
+            </ScrollReveal>
+
+            {/* Success Stories */}
+            <ScrollReveal delay={100}>
+              <Card className="p-6 text-center h-full border-primary/20 hover:shadow-lg transition-all">
+                <Star className="w-10 h-10 text-amber-500 mx-auto mb-4" />
+                <h3 className="text-xl font-bold mb-2">Success Stories</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  See how 500+ families prevented scams with our resources.
+                </p>
+                <Button asChild variant="outline" className="w-full">
+                  <Link to="/about#testimonials">Read Stories →</Link>
                 </Button>
-              </div>
-            </Card>
-          </ScrollReveal>
+              </Card>
+            </ScrollReveal>
+
+            {/* FAQ */}
+            <ScrollReveal delay={200}>
+              <Card className="p-6 text-center h-full border-primary/20 hover:shadow-lg transition-all">
+                <Headphones className="w-10 h-10 text-primary mx-auto mb-4" />
+                <h3 className="text-xl font-bold mb-2">Have Questions?</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Get answers about products, shipping, and returns.
+                </p>
+                <Button asChild variant="outline" className="w-full">
+                  <Link to="/faq">View FAQ →</Link>
+                </Button>
+              </Card>
+            </ScrollReveal>
+          </div>
         </div>
       </section>
-
-      {/* FAQ Section */}
-      <section className="py-10 bg-secondary/20">
-        <div className="container mx-auto px-4">
-          <ScrollReveal>
-            <Card className="p-6 md:p-8 text-center max-w-2xl mx-auto border-primary/20">
-              <Headphones className="w-12 h-12 text-primary mx-auto mb-4" />
-              <h2 className="text-2xl font-bold mb-3">Have Questions?</h2>
-              <p className="text-muted-foreground mb-6">
-                Find answers to common questions about our products, shipping, and returns.
-              </p>
-              <Button asChild size="lg">
-                <Link to="/faq">View Frequently Asked Questions →</Link>
-              </Button>
-            </Card>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      <AIImageDisclaimer />
       <Footer />
     </>
   );

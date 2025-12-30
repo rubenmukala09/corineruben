@@ -20,10 +20,8 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { contactFormSchema, formatPhoneNumber } from "@/utils/formValidation";
 import { z } from "zod";
-import heroContactNew from "@/assets/hero-contact-new.jpg";
-import heroContact3d from "@/assets/hero-contact-3d.jpg";
-import customerSupportDiverse from "@/assets/customer-support-diverse.jpg";
-import heroContactSplit from "@/assets/hero-contact-split.jpg";
+import heroContactPro1 from "@/assets/hero-contact-pro-1.jpg";
+import heroContactPro2 from "@/assets/hero-contact-pro-2.jpg";
 
 const contactMethods = [
   {
@@ -133,10 +131,8 @@ function Contact() {
   const maxLength = 500;
 
   const contactHeroImages = [
-    { src: heroContactNew, alt: "Reach out to our support team" },
-    { src: heroContact3d, alt: "Modern communication channels" },
-    { src: customerSupportDiverse, alt: "Our diverse customer support team ready to help" },
-    { src: heroContactSplit, alt: "Multiple ways to connect with us" }
+    { src: heroContactPro1, alt: "Professional support center with friendly team" },
+    { src: heroContactPro2, alt: "Executive meeting room for business inquiries" }
   ];
 
   return (

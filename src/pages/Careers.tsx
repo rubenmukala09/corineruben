@@ -24,9 +24,7 @@ const jobPositions = [
     location: "Remote",
     type: "Full-time",
     salary: "$120k - $160k",
-    description: "Build AI systems that protect families from scams. Work with cutting-edge ML models and help develop our core protection algorithms.",
-    requirements: ["5+ years Python/ML", "Experience with LLMs", "Security mindset", "Passion for social impact"],
-    benefits: ["Equity", "Health", "Remote", "Learning budget"],
+    description: "Build AI systems that protect families from scams.",
     featured: true
   },
   {
@@ -36,21 +34,17 @@ const jobPositions = [
     location: "Columbus, OH / Hybrid",
     type: "Full-time",
     salary: "$60k - $80k",
-    description: "Help families feel safe and supported. Guide seniors through our platform and build lasting relationships with our most vulnerable users.",
-    requirements: ["3+ years customer success", "Empathy & patience", "Tech-savvy", "Excellent communication"],
-    benefits: ["Health", "401k", "Flexible hours", "Purpose-driven"],
+    description: "Help families feel safe and supported with our platform.",
     featured: false
   },
   {
     id: 3,
-    title: "Content Writer (Scam Education)",
+    title: "Content Writer",
     department: "Marketing",
     location: "Remote",
-    type: "Full-time / Contract",
+    type: "Full-time",
     salary: "$50k - $70k",
-    description: "Create educational content about scam prevention. Write clear, accessible guides that help non-technical users stay safe online.",
-    requirements: ["Strong writing skills", "Research ability", "SEO knowledge", "Cybersecurity interest"],
-    benefits: ["Remote", "Flexible", "Creative freedom", "Social impact"],
+    description: "Create educational content about scam prevention.",
     featured: false
   },
   {
@@ -60,9 +54,7 @@ const jobPositions = [
     location: "Columbus, OH",
     type: "Full-time",
     salary: "$50k + Commission",
-    description: "Help businesses discover our AI solutions. Build relationships with decision-makers and grow our enterprise customer base.",
-    requirements: ["2+ years B2B sales", "Tech sales experience", "Self-starter", "Consultative approach"],
-    benefits: ["Commission", "Bonuses", "Car allowance", "Health"],
+    description: "Help businesses discover our AI solutions.",
     featured: false
   },
   {
@@ -72,9 +64,7 @@ const jobPositions = [
     location: "Remote",
     type: "Full-time",
     salary: "$80k - $110k",
-    description: "Design interfaces that seniors love. Create accessible, intuitive experiences for users who may not be tech-savvy.",
-    requirements: ["4+ years UI/UX", "Accessibility focus", "Figma expert", "User research experience"],
-    benefits: ["Remote", "Health", "Conference budget", "Creative freedom"],
+    description: "Design accessible interfaces that seniors love.",
     featured: true
   },
   {
@@ -84,22 +74,48 @@ const jobPositions = [
     location: "Remote",
     type: "Full-time",
     salary: "$55k - $75k",
-    description: "Analyze emerging scam patterns and help families avoid fraud. Research new threats and update our protection algorithms.",
-    requirements: ["Research skills", "Detail-oriented", "Cybersecurity interest", "Analytical mindset"],
-    benefits: ["Training", "Certification", "Remote", "Learning budget"],
+    description: "Analyze scam patterns and update protection algorithms.",
     featured: false
   },
   {
     id: 7,
-    title: "Part-Time Trainer (Seniors)",
+    title: "Part-Time Trainer",
     department: "Training",
     location: "Columbus, OH",
     type: "Part-time",
     salary: "$25-$35/hour",
-    description: "Teach seniors how to stay safe online. Conduct in-person and virtual training sessions with patience and empathy.",
-    requirements: ["Patient & empathetic", "Teaching experience", "Tech knowledge", "Excellent communication"],
-    benefits: ["Flexible hours", "Meaningful work", "Training provided", "Community impact"],
+    description: "Teach seniors how to stay safe online.",
     featured: false
+  },
+  {
+    id: 8,
+    title: "Full Stack Developer",
+    department: "Engineering",
+    location: "Remote",
+    type: "Full-time",
+    salary: "$100k - $140k",
+    description: "Build and maintain our protection platform.",
+    featured: true
+  },
+  {
+    id: 9,
+    title: "Marketing Manager",
+    department: "Marketing",
+    location: "Remote / Hybrid",
+    type: "Full-time",
+    salary: "$70k - $95k",
+    description: "Lead marketing campaigns to reach more families.",
+    featured: false
+  },
+  {
+    id: 10,
+    title: "Security Researcher",
+    department: "Security",
+    location: "Remote",
+    type: "Full-time",
+    salary: "$90k - $130k",
+    description: "Research emerging threats and protect our users.",
+    featured: true
   }
 ];
 
@@ -227,74 +243,48 @@ function Careers() {
             </TabsList>
           </Tabs>
 
-          {/* Job Cards */}
-          <div className="grid md:grid-cols-2 gap-4 max-w-6xl mx-auto">
+          {/* Job Cards - Simplified */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
             {filteredJobs.map(job => (
-              <Card key={job.id} className={`hover:shadow-xl transition-all ${job.featured ? 'border-primary' : ''}`}>
-                <CardHeader>
-                  <div className="flex items-start justify-between mb-2">
-                    <div>
-                      <CardTitle className="text-xl mb-2">{job.title}</CardTitle>
-                      <div className="flex flex-wrap gap-2">
-                        <Badge variant="outline">
-                          <Briefcase className="w-3 h-3 mr-1" />
-                          {job.department}
-                        </Badge>
-                        <Badge variant="outline">
-                          <MapPin className="w-3 h-3 mr-1" />
-                          {job.location}
-                        </Badge>
-                        <Badge variant="outline">
-                          <Clock className="w-3 h-3 mr-1" />
-                          {job.type}
-                        </Badge>
-                      </div>
-                    </div>
-                    {job.featured && (
-                      <Badge variant="default" className="gap-1">
-                        <Star className="w-3 h-3" />
-                        Featured
+              <Card key={job.id} className={`p-5 hover:shadow-xl transition-all hover:-translate-y-1 ${job.featured ? 'border-primary border-2' : ''}`}>
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <h3 className="font-bold text-lg mb-1">{job.title}</h3>
+                    <div className="flex flex-wrap gap-1.5">
+                      <Badge variant="outline" className="text-xs">
+                        <Briefcase className="w-3 h-3 mr-1" />
+                        {job.department}
                       </Badge>
-                    )}
+                      <Badge variant="outline" className="text-xs">
+                        <MapPin className="w-3 h-3 mr-1" />
+                        {job.location}
+                      </Badge>
+                    </div>
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-2">{job.description}</p>
-                      <div className="flex items-center gap-1 text-primary font-semibold">
-                        <DollarSign className="w-4 h-4" />
-                        <span className="text-sm">{job.salary}</span>
-                      </div>
-                    </div>
-
-                    <div>
-                      <p className="text-xs font-semibold mb-2">Requirements:</p>
-                      <div className="flex flex-wrap gap-1">
-                        {job.requirements.map((req, i) => (
-                          <Badge key={i} variant="secondary" className="text-xs">
-                            {req}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div>
-                      <p className="text-xs font-semibold mb-2">Benefits:</p>
-                      <div className="flex flex-wrap gap-1">
-                        {job.benefits.map((benefit, i) => (
-                          <Badge key={i} variant="outline" className="text-xs">
-                            {benefit}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-
-                    <Button className="w-full" asChild>
-                      <Link to="/portal">Apply Now</Link>
-                    </Button>
+                  {job.featured && (
+                    <Badge variant="default" className="gap-1 text-xs">
+                      <Star className="w-3 h-3" />
+                      Hot
+                    </Badge>
+                  )}
+                </div>
+                
+                <p className="text-sm text-muted-foreground mb-3">{job.description}</p>
+                
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1 text-primary font-semibold text-sm">
+                    <DollarSign className="w-4 h-4" />
+                    {job.salary}
                   </div>
-                </CardContent>
+                  <Badge variant="secondary" className="text-xs">
+                    <Clock className="w-3 h-3 mr-1" />
+                    {job.type}
+                  </Badge>
+                </div>
+                
+                <Button className="w-full mt-4" size="sm" asChild>
+                  <Link to="/portal">Apply Now →</Link>
+                </Button>
               </Card>
             ))}
           </div>
