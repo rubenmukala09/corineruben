@@ -1,6 +1,5 @@
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { Eye, ZoomIn, Layers } from "lucide-react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import heroServices1 from "@/assets/hero-services-1.jpg";
 import heroServices2 from "@/assets/hero-services-2.jpg";
 import heroServices3 from "@/assets/hero-services-3.jpg";
@@ -14,62 +13,34 @@ const portfolioImages = [
 ];
 
 export const SecuritySolutions = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
-
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
-  const gridY = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
-
   return (
-    <section ref={sectionRef} className="py-32 bg-muted/20 relative overflow-hidden">
-      {/* Parallax background */}
-      <motion.div 
-        className="absolute inset-0 opacity-[0.015]"
-        style={{ y: backgroundY }}
-      >
-        <div 
-          className="absolute inset-0"
-          style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)',
-            backgroundSize: '32px 32px'
-          }}
-        />
-      </motion.div>
-
+    <section className="py-24 bg-background relative overflow-hidden">
+      {/* Decorative elements */}
+      <div className="absolute top-20 right-10 w-32 h-32 rounded-full bg-primary/5" />
+      <div className="absolute bottom-20 left-20 w-24 h-24 rounded-full bg-accent/10" />
+      
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <motion.div 
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 mb-8"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-          >
-            <Layers className="w-4 h-4 text-accent" />
-            <span className="text-sm font-medium text-muted-foreground">Our Portfolio</span>
-          </motion.div>
-          
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-tight">
-            Check Our Portfolio
-            <br />
+          <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
+            Our Portfolio
+          </span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+            Check Our Portfolio{" "}
             <span className="text-primary">To See Quality</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             See the quality of our work and the trust our clients place in us.
           </p>
         </motion.div>
 
-        {/* Portfolio Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+        {/* Portfolio Grid with Circular Images */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
           {portfolioImages.map((image, index) => (
             <motion.div
               key={index}
@@ -77,32 +48,34 @@ export const SecuritySolutions = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -8 }}
-              className="group relative aspect-[4/5] rounded-2xl overflow-hidden shadow-lg cursor-pointer border border-border/30 hover:border-primary/30 transition-all duration-300"
+              className="group text-center"
             >
-              {/* Image with magnification effect */}
-              <div className="absolute inset-0 overflow-hidden">
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-125"
-                />
-              </div>
-              
-              {/* Hover overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              
-              {/* Content */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <motion.div 
-                  className="w-12 h-12 rounded-xl bg-background flex items-center justify-center mb-3 shadow-lg"
-                  initial={{ scale: 0.8 }}
-                  whileHover={{ scale: 1 }}
-                >
-                  <ZoomIn className="w-5 h-5 text-primary" />
-                </motion.div>
-                <span className="text-primary-foreground font-semibold">{image.category}</span>
-              </div>
+              <Link to="/about" className="block">
+                {/* Circular image container */}
+                <div className="relative mb-4 mx-auto w-fit">
+                  {/* Decorative rings */}
+                  <div className="absolute -inset-2 rounded-full border-2 border-primary/10 group-hover:border-primary/30 transition-colors" />
+                  <div className="absolute -inset-4 rounded-full border-2 border-accent/5 group-hover:border-accent/20 transition-colors" />
+                  
+                  {/* Main image */}
+                  <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-background shadow-xl">
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
+                  
+                  {/* Decorative dots */}
+                  <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-accent" />
+                  <div className="absolute bottom-2 -left-2 w-3 h-3 rounded-full bg-primary/50" />
+                </div>
+                
+                {/* Category label */}
+                <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors">
+                  {image.category}
+                </h3>
+              </Link>
             </motion.div>
           ))}
         </div>

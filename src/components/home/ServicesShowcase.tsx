@@ -1,161 +1,132 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Shield, Users, Brain, Clock, Sparkles } from "lucide-react";
+import { ArrowRight, Shield, Users, Brain, Clock } from "lucide-react";
 import serviceScamshield from "@/assets/service-scamshield.jpg";
 import serviceTraining from "@/assets/service-training.jpg";
 import serviceAiBusiness from "@/assets/service-ai-business.jpg";
 import serviceFamilySafety from "@/assets/service-family-safety.jpg";
 
-const features = [
+const services = [
   {
     icon: Shield,
     title: "Scam Prevention",
     description: "Advanced protection against AI-powered scams and fraud attempts.",
-    gradient: "from-blue-500/10 to-cyan-500/10",
-    iconBg: "bg-blue-500/10",
-    iconColor: "text-blue-500",
     image: serviceScamshield,
+    link: "/training",
   },
   {
     icon: Users,
     title: "Family Training",
     description: "Empowering families with knowledge to stay safe online.",
-    gradient: "from-emerald-500/10 to-teal-500/10",
-    iconBg: "bg-emerald-500/10",
-    iconColor: "text-emerald-500",
     image: serviceFamilySafety,
+    link: "/training",
   },
   {
     icon: Brain,
     title: "AI Detection",
     description: "Smart technology that identifies threats before they reach you.",
-    gradient: "from-violet-500/10 to-purple-500/10",
-    iconBg: "bg-violet-500/10",
-    iconColor: "text-violet-500",
     image: serviceAiBusiness,
+    link: "/business",
   },
   {
     icon: Clock,
     title: "24/7 Monitoring",
     description: "Round-the-clock protection and immediate threat response.",
-    gradient: "from-amber-500/10 to-orange-500/10",
-    iconBg: "bg-amber-500/10",
-    iconColor: "text-amber-500",
     image: serviceTraining,
+    link: "/training",
   },
 ];
 
 export const ServicesShowcase = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
-  
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-
   return (
-    <section ref={sectionRef} className="py-32 bg-background relative overflow-hidden">
-      {/* Parallax animated background */}
-      <motion.div 
-        className="absolute inset-0 opacity-[0.02]"
-        style={{ y: backgroundY }}
-      >
-        <div 
-          className="absolute inset-0"
-          style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)',
-            backgroundSize: '40px 40px'
-          }}
-        />
-      </motion.div>
-
+    <section className="py-24 bg-muted/30 relative overflow-hidden">
+      {/* Decorative elements */}
+      <div className="absolute top-20 left-20 w-40 h-40 rounded-full bg-primary/5" />
+      <div className="absolute bottom-20 right-10 w-28 h-28 rounded-full bg-accent/10" />
+      
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
-          {/* Left - Content */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <motion.div 
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/10 mb-8"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
+            Our Expertise
+          </span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+            We Have Experience And A{" "}
+            <span className="text-primary">Team Of Experts</span>
+          </h2>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            We believe in protecting families through education and empowerment.
+          </p>
+        </motion.div>
+
+        {/* Services Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {services.map((service, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="group"
             >
-              <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-muted-foreground">Our Expertise</span>
-            </motion.div>
-
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-8 tracking-tight leading-[1.1]">
-              We Have Experience
-              <br />
-              <span className="text-primary">And A Team</span>
-              <br />
-              <span className="font-light text-muted-foreground">Of Experts</span>
-            </h2>
-
-            <p className="text-muted-foreground text-xl mb-10 leading-relaxed max-w-lg">
-              We believe in protecting families through education and empowerment. 
-              Our team of certified experts provides personalized security solutions 
-              that are easy to understand and implement.
-            </p>
-
-            <Button asChild size="lg" className="h-14 px-8 text-base font-semibold rounded-xl">
-              <Link to="/about">
-                Read More
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Link>
-            </Button>
-          </motion.div>
-
-          {/* Right - Features Grid with Images */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="grid grid-cols-2 gap-5"
-          >
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-                whileHover={{ y: -6 }}
-                className="group relative rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300"
-              >
-                {/* Background Image */}
-                <div className="absolute inset-0">
-                  <img 
-                    src={feature.image} 
-                    alt={feature.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/70 to-slate-900/40" />
-                </div>
-                
-                <div className="relative z-10 p-6 min-h-[220px] flex flex-col justify-end">
-                  <div className={`w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                    <feature.icon className="w-6 h-6 text-white" strokeWidth={1.5} />
+              <Link to={service.link} className="block">
+                <div className="bg-card rounded-2xl overflow-hidden border border-border hover:border-primary/30 hover:shadow-xl transition-all duration-300">
+                  {/* Image with circular accent */}
+                  <div className="relative p-6 pb-0">
+                    <div className="relative">
+                      {/* Circular image container */}
+                      <div className="rounded-full overflow-hidden aspect-square border-4 border-background shadow-lg">
+                        <img
+                          src={service.image}
+                          alt={service.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                      </div>
+                      {/* Decorative dots */}
+                      <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-accent" />
+                      <div className="absolute -bottom-1 -left-1 w-4 h-4 rounded-full bg-primary/30" />
+                    </div>
                   </div>
-                  <h3 className="font-bold text-lg mb-2 text-white group-hover:text-primary-foreground transition-colors">
-                    {feature.title}
-                  </h3>
-                  <p className="text-white/80 text-sm leading-relaxed">
-                    {feature.description}
-                  </p>
+                  
+                  {/* Content */}
+                  <div className="p-6 text-center">
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                      <service.icon className="w-6 h-6 text-primary" />
+                    </div>
+                    <h3 className="font-bold text-lg mb-2 text-foreground group-hover:text-primary transition-colors">
+                      {service.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {service.description}
+                    </p>
+                  </div>
                 </div>
-              </motion.div>
-            ))}
-          </motion.div>
+              </Link>
+            </motion.div>
+          ))}
         </div>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mt-12"
+        >
+          <Button asChild variant="outline" size="lg" className="rounded-full px-8">
+            <Link to="/about">
+              Learn More About Our Services
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Link>
+          </Button>
+        </motion.div>
       </div>
     </section>
   );

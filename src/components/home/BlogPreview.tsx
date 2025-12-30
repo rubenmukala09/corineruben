@@ -1,177 +1,119 @@
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Calendar, BookOpen } from "lucide-react";
-import { ScrollReveal } from "@/components/ScrollReveal";
+import { ArrowRight, Calendar } from "lucide-react";
 import heroArticles1 from "@/assets/hero-articles-1.jpg";
 import heroArticles2 from "@/assets/hero-articles-2.jpg";
 import heroArticles3 from "@/assets/hero-articles-3.jpg";
 
-const mainArticle = {
-  image: heroArticles1,
-  category: "Security Tips",
-  title: "The Ultimate Guide to Protecting Your Family From AI Scams",
-  excerpt: "Learn the essential steps to keep your loved ones safe in the digital age...",
-  author: "InVision Team",
-  date: "Dec 2024",
-};
-
-const sideArticles = [
+const articles = [
+  {
+    image: heroArticles1,
+    category: "Security Tips",
+    title: "The Ultimate Guide to Protecting Your Family From AI Scams",
+    date: "Dec 2024",
+    featured: true,
+  },
   {
     image: heroArticles2,
+    category: "AI Awareness",
     title: "How To Recognize AI-Generated Voice Scams",
     date: "Dec 2024",
   },
   {
     image: heroArticles3,
-    title: "Why Do Scam Tactics Keep Evolving? Here's What We Know",
+    category: "Prevention",
+    title: "Why Do Scam Tactics Keep Evolving?",
     date: "Dec 2024",
-  },
-  {
-    title: "How To Keep Your Smart Home Secure From Hackers",
-    date: "Nov 2024",
-  },
-  {
-    title: "Essential Cybersecurity Tips for Seniors",
-    date: "Nov 2024",
   },
 ];
 
 export const BlogPreview = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
-
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-  const cardsY = useTransform(scrollYProgress, [0, 1], ["0%", "5%"]);
-
   return (
-    <section ref={sectionRef} className="py-32 bg-background relative overflow-hidden">
-      {/* Parallax background */}
-      <motion.div 
-        className="absolute inset-0 opacity-[0.02]"
-        style={{ y: backgroundY }}
-      >
-        <div 
-          className="absolute inset-0"
-          style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)',
-            backgroundSize: '40px 40px'
-          }}
-        />
-      </motion.div>
-
+    <section className="py-24 bg-muted/30 relative overflow-hidden">
+      {/* Decorative elements */}
+      <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-primary/5" />
+      <div className="absolute bottom-10 right-20 w-24 h-24 rounded-full bg-accent/10" />
+      
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <motion.div 
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/10 mb-8"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-          >
-            <BookOpen className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-muted-foreground">Latest Updates</span>
-          </motion.div>
-          
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-tight">
-            Learn From Our
-            <br />
+          <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
+            Latest Updates
+          </span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+            Learn From Our{" "}
             <span className="text-primary">Latest Blog</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Stay informed with the latest cybersecurity tips and protection strategies.
           </p>
         </motion.div>
 
         {/* Articles Grid */}
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Main Article */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="lg:row-span-2"
-          >
-            <Link to="/articles" className="group block h-full">
-              <div className="relative h-full min-h-[500px] rounded-2xl overflow-hidden shadow-lg border border-border/30 group-hover:border-primary/30 group-hover:shadow-xl transition-all duration-300">
-                <img
-                  src={mainArticle.image}
-                  alt={mainArticle.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
-                
-                {/* Content */}
-                <div className="absolute bottom-0 left-0 right-0 p-8">
-                  <span className="inline-block px-3 py-1.5 bg-primary text-primary-foreground text-xs font-semibold rounded-full mb-4">
-                    {mainArticle.category}
-                  </span>
-                  <h3 className="text-2xl lg:text-3xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors leading-tight">
-                    {mainArticle.title}
-                  </h3>
-                  <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                    <Calendar className="w-4 h-4" />
-                    <span>{mainArticle.date}</span>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          </motion.div>
-
-          {/* Side Articles */}
-          <div className="lg:col-span-2 grid sm:grid-cols-2 gap-5">
-            {sideArticles.map((article, index) => (
-              <ScrollReveal key={index} delay={index * 100} animation="fade-up">
-                <Link to="/articles" className="group block">
-                  <motion.div
-                    whileHover={{ y: -4 }}
-                    className="flex gap-4 p-4 rounded-xl bg-card border border-border/50 hover:shadow-lg hover:border-primary/20 transition-all duration-300 h-full"
-                  >
-                    {article.image && (
-                      <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
+          {articles.map((article, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="group"
+            >
+              <Link to="/articles" className="block">
+                <div className="bg-card rounded-2xl overflow-hidden border border-border hover:border-primary/30 hover:shadow-xl transition-all duration-300">
+                  {/* Image with circular accent */}
+                  <div className="relative p-6 pb-0">
+                    <div className="relative">
+                      {/* Circular image container */}
+                      <div className="rounded-full overflow-hidden aspect-square border-4 border-background shadow-lg">
                         <img
                           src={article.image}
                           alt={article.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                         />
                       </div>
-                    )}
-                    <div className="flex flex-col justify-center min-w-0">
-                      <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2 mb-2 leading-snug">
-                        {article.title}
-                      </h4>
-                      <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                        <Calendar className="w-3.5 h-3.5" />
-                        <span>{article.date}</span>
+                      {/* Category badge */}
+                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
+                        <span className="inline-block px-4 py-1.5 bg-primary text-primary-foreground text-xs font-semibold rounded-full shadow-lg">
+                          {article.category}
+                        </span>
                       </div>
+                      {/* Decorative dot */}
+                      <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-accent" />
                     </div>
-                  </motion.div>
-                </Link>
-              </ScrollReveal>
-            ))}
-          </div>
+                  </div>
+                  
+                  {/* Content */}
+                  <div className="p-6 text-center">
+                    <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-3">
+                      <Calendar className="w-4 h-4" />
+                      <span>{article.date}</span>
+                    </div>
+                    <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors leading-snug">
+                      {article.title}
+                    </h3>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
         </div>
 
-        {/* View All Button */}
+        {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-14"
+          className="text-center mt-12"
         >
-          <Button asChild variant="outline" size="lg" className="h-14 px-8 text-base font-semibold rounded-xl">
+          <Button asChild variant="outline" size="lg" className="rounded-full px-8">
             <Link to="/articles">
               View All Articles
               <ArrowRight className="ml-2 w-5 h-5" />

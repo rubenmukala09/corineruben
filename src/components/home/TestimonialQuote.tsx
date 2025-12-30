@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { Quote, Star, ChevronLeft, ChevronRight, MessageSquare } from "lucide-react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react";
 import testimonialImage from "@/assets/testimonial-1.jpg";
 import testimonialImage2 from "@/assets/testimonial-2.jpg";
 import testimonialImage3 from "@/assets/testimonial-3.jpg";
@@ -28,120 +28,124 @@ const testimonials = [
 
 export const TestimonialQuote = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
-
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
-  const cardScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1, 0.95]);
 
   const next = () => setCurrentIndex((prev) => (prev + 1) % testimonials.length);
   const prev = () => setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
 
-  return (
-    <section ref={sectionRef} className="py-32 bg-background relative overflow-hidden">
-      {/* Parallax background */}
-      <motion.div 
-        className="absolute inset-0 opacity-[0.02]"
-        style={{ y: backgroundY }}
-      >
-        <div 
-          className="absolute inset-0"
-          style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)',
-            backgroundSize: '40px 40px'
-          }}
-        />
-      </motion.div>
+  useEffect(() => {
+    const timer = setInterval(next, 6000);
+    return () => clearInterval(timer);
+  }, []);
 
+  return (
+    <section className="py-24 bg-muted/30 relative overflow-hidden">
+      {/* Decorative elements */}
+      <div className="absolute top-20 right-20 w-40 h-40 rounded-full bg-primary/5" />
+      <div className="absolute bottom-10 left-20 w-28 h-28 rounded-full bg-accent/10" />
+      
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <motion.div 
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/10 mb-8"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-          >
-            <MessageSquare className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-muted-foreground">Client Testimonials</span>
-          </motion.div>
-          
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-tight">
-            What Our Clients
-            <br />
+          <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
+            Client Testimonials
+          </span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
+            What Our Clients{" "}
             <span className="text-primary">Have To Say</span>
           </h2>
         </motion.div>
 
         {/* Testimonial Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="max-w-4xl mx-auto"
-        >
-          <div className="relative bg-card rounded-3xl p-10 lg:p-14 shadow-xl border border-border/50">
-            {/* Quote icon */}
-            <div className="absolute top-8 left-8 w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
-              <Quote className="w-6 h-6 text-primary" />
-            </div>
-            
-            {/* Content */}
-            <div className="text-center pt-10">
-              {/* Stars */}
-              <div className="flex justify-center gap-1 mb-8">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-accent text-accent" />
-                ))}
-              </div>
-              
-              {/* Quote */}
-              <motion.blockquote 
-                key={currentIndex}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="text-xl md:text-2xl lg:text-3xl text-foreground font-medium leading-relaxed mb-10 max-w-3xl mx-auto"
-              >
-                "{testimonials[currentIndex].quote}"
-              </motion.blockquote>
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="relative"
+          >
+            <div className="bg-card rounded-3xl p-8 md:p-12 shadow-lg border border-border">
+              <div className="grid md:grid-cols-3 gap-8 items-center">
+                {/* Image - Circular */}
+                <div className="relative mx-auto md:mx-0">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentIndex}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      transition={{ duration: 0.4 }}
+                      className="relative"
+                    >
+                      {/* Decorative rings */}
+                      <div className="absolute -inset-3 rounded-full border-2 border-primary/20" />
+                      <div className="absolute -inset-6 rounded-full border-2 border-accent/10" />
+                      
+                      {/* Main image */}
+                      <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-background shadow-xl">
+                        <img
+                          src={testimonials[currentIndex].image}
+                          alt={testimonials[currentIndex].name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      
+                      {/* Decorative dots */}
+                      <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-accent" />
+                      <div className="absolute bottom-4 -left-4 w-4 h-4 rounded-full bg-primary/50" />
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
 
-              {/* Author */}
-              <motion.div 
-                key={`author-${currentIndex}`}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="flex flex-col items-center gap-4"
-              >
-                <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-primary/20 shadow-lg">
-                  <img
-                    src={testimonials[currentIndex].image}
-                    alt={testimonials[currentIndex].name}
-                    className="w-full h-full object-cover"
-                  />
+                {/* Content */}
+                <div className="md:col-span-2 text-center md:text-left">
+                  {/* Quote icon */}
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-6 mx-auto md:mx-0">
+                    <Quote className="w-6 h-6 text-primary" />
+                  </div>
+                  
+                  {/* Stars */}
+                  <div className="flex justify-center md:justify-start gap-1 mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 fill-accent text-accent" />
+                    ))}
+                  </div>
+                  
+                  {/* Quote */}
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentIndex}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      <blockquote className="text-lg md:text-xl text-foreground font-medium leading-relaxed mb-6">
+                        "{testimonials[currentIndex].quote}"
+                      </blockquote>
+
+                      <div>
+                        <div className="font-bold text-lg text-foreground">
+                          {testimonials[currentIndex].name}
+                        </div>
+                        <div className="text-primary text-sm">
+                          {testimonials[currentIndex].location}
+                        </div>
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
-                <div>
-                  <div className="font-bold text-lg text-foreground">{testimonials[currentIndex].name}</div>
-                  <div className="text-primary text-sm font-medium">{testimonials[currentIndex].location}</div>
-                </div>
-              </motion.div>
+              </div>
 
               {/* Navigation */}
-              <div className="flex justify-center items-center gap-6 mt-10">
-                <button 
+              <div className="flex justify-center items-center gap-4 mt-8 pt-6 border-t border-border">
+                <button
                   onClick={prev}
-                  className="w-12 h-12 rounded-full bg-muted hover:bg-muted/80 flex items-center justify-center transition-colors"
+                  className="w-10 h-10 rounded-full bg-muted hover:bg-primary/10 flex items-center justify-center transition-colors"
                 >
                   <ChevronLeft className="w-5 h-5 text-foreground" />
                 </button>
@@ -152,22 +156,22 @@ export const TestimonialQuote = () => {
                       key={index}
                       onClick={() => setCurrentIndex(index)}
                       className={`h-2 rounded-full transition-all duration-300 ${
-                        index === currentIndex ? "bg-primary w-8" : "bg-muted w-2 hover:bg-muted-foreground/30"
+                        index === currentIndex ? "bg-primary w-8" : "bg-muted w-2 hover:bg-primary/30"
                       }`}
                     />
                   ))}
                 </div>
                 
-                <button 
+                <button
                   onClick={next}
-                  className="w-12 h-12 rounded-full bg-muted hover:bg-muted/80 flex items-center justify-center transition-colors"
+                  className="w-10 h-10 rounded-full bg-muted hover:bg-primary/10 flex items-center justify-center transition-colors"
                 >
                   <ChevronRight className="w-5 h-5 text-foreground" />
                 </button>
               </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
