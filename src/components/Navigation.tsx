@@ -99,7 +99,7 @@ const Navigation = () => {
             <a
               href="tel:9375550199"
               className="group hidden md:flex relative items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/5 to-accent/5 hover:from-primary/10 hover:to-accent/10 rounded-xl border border-primary/10 hover:border-primary/20 transition-all duration-300 no-underline overflow-hidden"
-              aria-label="Call us at 937-555-0199"
+              aria-label="Call us at (937) 555-0199"
             >
               {/* Gradient overlay on hover */}
               <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-accent/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

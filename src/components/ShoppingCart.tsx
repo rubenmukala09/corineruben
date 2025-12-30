@@ -15,7 +15,7 @@ export function ShoppingCart() {
     <>
       <Sheet open={cartOpen} onOpenChange={setCartOpen}>
         <SheetTrigger asChild>
-          <Button variant="outline" size="icon" className="relative group hover:bg-primary/10 transition-colors">
+          <Button variant="outline" size="icon" className="relative group hover:bg-primary/10 transition-colors" aria-label="Open shopping cart">
             <CartIcon className="h-5 w-5 group-hover:text-primary transition-colors" />
             {itemCount > 0 && (
               <span className="absolute -top-2 -right-2 bg-gradient-to-r from-primary to-accent text-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center animate-bounce shadow-lg">
@@ -50,6 +50,7 @@ export function ShoppingCart() {
                             variant="outline"
                             className="h-8 w-8"
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            aria-label={`Decrease quantity of ${item.name}`}
                           >
                             <Minus className="h-4 w-4" />
                           </Button>
@@ -59,6 +60,7 @@ export function ShoppingCart() {
                             variant="outline"
                             className="h-8 w-8"
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            aria-label={`Increase quantity of ${item.name}`}
                           >
                             <Plus className="h-4 w-4" />
                           </Button>
@@ -67,6 +69,7 @@ export function ShoppingCart() {
                             variant="ghost"
                             className="h-8 w-8 ml-auto"
                             onClick={() => removeItem(item.id)}
+                            aria-label={`Remove ${item.name} from cart`}
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>

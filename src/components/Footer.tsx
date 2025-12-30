@@ -61,8 +61,9 @@ const Footer = () => {
                   type="email"
                   placeholder="Enter your email"
                   className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:bg-white/10 rounded-xl"
+                  aria-label="Email address for newsletter"
                 />
-                <Button type="submit" className="bg-primary hover:bg-primary/90 px-5 rounded-xl">
+                <Button type="submit" className="bg-primary hover:bg-primary/90 px-5 rounded-xl" aria-label="Subscribe to newsletter">
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </form>
