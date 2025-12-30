@@ -67,11 +67,14 @@ export const SecuritySolutions = () => {
               whileHover={{ y: -8 }}
               className="group relative aspect-[4/5] rounded-2xl overflow-hidden shadow-lg cursor-pointer border border-border/30 hover:border-primary/30 transition-all duration-300"
             >
-              <img
-                src={image.src}
-                alt={image.alt}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
+              {/* Image with magnification effect */}
+              <div className="absolute inset-0 overflow-hidden">
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-125"
+                />
+              </div>
               
               {/* Hover overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

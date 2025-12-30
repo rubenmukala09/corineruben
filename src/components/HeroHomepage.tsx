@@ -67,6 +67,27 @@ export const HeroHomepage = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
 
   return <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-background via-background to-purple-100/30">
+      {/* Animated gradient background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.div 
+          className="absolute inset-0 opacity-30"
+          animate={{
+            background: [
+              'radial-gradient(circle at 0% 0%, hsl(var(--primary) / 0.3) 0%, transparent 50%)',
+              'radial-gradient(circle at 100% 0%, hsl(var(--accent) / 0.3) 0%, transparent 50%)',
+              'radial-gradient(circle at 100% 100%, hsl(var(--primary) / 0.3) 0%, transparent 50%)',
+              'radial-gradient(circle at 0% 100%, hsl(var(--accent) / 0.3) 0%, transparent 50%)',
+              'radial-gradient(circle at 0% 0%, hsl(var(--primary) / 0.3) 0%, transparent 50%)',
+            ]
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+      </div>
+
       {/* Video Background */}
       <div className="absolute inset-0">
         {/* Video element */}

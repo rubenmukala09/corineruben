@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 
 const ScrollProgressBar = () => {
   const { scrollYProgress } = useScroll();
-  const scaleY = useSpring(scrollYProgress, {
+  const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001
@@ -11,8 +10,8 @@ const ScrollProgressBar = () => {
 
   return (
     <motion.div
-      className="fixed left-0 top-0 w-1 h-full bg-gradient-to-b from-primary via-accent to-primary z-50 origin-top"
-      style={{ scaleY }}
+      className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-primary z-[60] origin-left"
+      style={{ scaleX }}
     />
   );
 };

@@ -26,6 +26,7 @@ import { ScrollToTop } from "./components/ScrollToTop";
 import { useSmoothAnchorScroll } from "./hooks/useSmoothAnchorScroll";
 import { CookieConsent } from "./components/CookieConsent";
 import { SkipToContent } from "./components/SkipToContent";
+import ScrollProgressBar from "./components/ScrollProgressBar";
 
 import { AnalyticsTracker } from "./components/AnalyticsTracker";
 
@@ -599,6 +600,7 @@ function App() {
             <AIChatProvider>
               <BrowserRouter>
                 <SkipToContent />
+                <ScrollProgressBar />
                 <NavigationProgress />
                 <ScrollToTop />
                 
