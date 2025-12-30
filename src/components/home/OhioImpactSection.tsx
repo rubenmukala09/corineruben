@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 import ohioLandscapeBg from "@/assets/ohio-landscape-bg.jpg";
 
 const impactStats = [
-  { icon: Users, value: "500+", label: "Ohio Families Protected" },
-  { icon: Shield, value: "$2.3M", label: "Scam Money Saved" },
-  { icon: Building2, value: "45+", label: "Local Business Partners" },
-  { icon: Heart, value: "12+", label: "Community Events/Year" },
+  { icon: Users, value: 246, suffix: "+", label: "Ohio Families Protected" },
+  { icon: Shield, value: 299, suffix: "K", label: "Scam Attempts Blocked" },
+  { icon: Building2, value: 364, suffix: "+", label: "Local Business Partners" },
+  { icon: Heart, value: 11, suffix: "K", label: "Community Events" },
 ];
 
 const ohioCities = [
@@ -39,6 +39,32 @@ const testimonials = [
   },
 ];
 
+// Animated counter component
+const AnimatedCounter = ({ value, suffix }: { value: number; suffix: string }) => {
+  const [count, setCount] = useState(0);
+  
+  useEffect(() => {
+    const duration = 2000;
+    const steps = 60;
+    const stepValue = value / steps;
+    let current = 0;
+    
+    const timer = setInterval(() => {
+      current += stepValue;
+      if (current >= value) {
+        setCount(value);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(current));
+      }
+    }, duration / steps);
+    
+    return () => clearInterval(timer);
+  }, [value]);
+  
+  return <span>{count}{suffix}</span>;
+};
+
 export const OhioImpactSection = () => {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
@@ -57,7 +83,7 @@ export const OhioImpactSection = () => {
         style={{ backgroundImage: `url(${ohioLandscapeBg})` }}
       />
       {/* Blur & Dark Overlay for readability */}
-      <div className="absolute inset-0 backdrop-blur-sm bg-background/85" />
+      <div className="absolute inset-0 backdrop-blur-md bg-background/80" />
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
@@ -67,7 +93,7 @@ export const OhioImpactSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6 backdrop-blur-sm">
             <MapPin className="w-4 h-4 text-primary" />
             <span className="text-sm font-bold text-primary uppercase tracking-wider">Ohio Proud</span>
           </div>
@@ -82,7 +108,7 @@ export const OhioImpactSection = () => {
           </p>
         </motion.div>
 
-        {/* Stats Grid */}
+        {/* Stats Grid - Animated counters with glassmorphism */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -96,12 +122,14 @@ export const OhioImpactSection = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="bg-card rounded-2xl p-6 text-center border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300"
+              className="backdrop-blur-xl bg-card/80 rounded-2xl p-6 text-center border border-border/50 hover:border-primary/30 hover:shadow-xl transition-all duration-300"
             >
-              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mx-auto mb-4">
                 <stat.icon className="w-7 h-7 text-primary" />
               </div>
-              <div className="text-3xl font-bold text-primary mb-1">{stat.value}</div>
+              <div className="text-3xl md:text-4xl font-bold text-primary mb-1">
+                <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+              </div>
               <div className="text-sm text-muted-foreground">{stat.label}</div>
             </motion.div>
           ))}
@@ -114,7 +142,7 @@ export const OhioImpactSection = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <div className="bg-card rounded-2xl p-8 border border-border h-full">
+            <div className="backdrop-blur-xl bg-card/80 rounded-2xl p-8 border border-border/50 h-full">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                   <MapPin className="w-6 h-6 text-primary" />
@@ -133,7 +161,7 @@ export const OhioImpactSection = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.05 }}
-                    className="flex items-center justify-between p-3 rounded-xl bg-muted/50 border border-border hover:border-primary/30 transition-colors"
+                    className="flex items-center justify-between p-3 rounded-xl bg-background/50 border border-border hover:border-primary/30 transition-colors"
                   >
                     <div className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 text-green-500" />
@@ -154,7 +182,7 @@ export const OhioImpactSection = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <div className="bg-card rounded-2xl p-8 border border-border h-full relative">
+            <div className="backdrop-blur-xl bg-card/80 rounded-2xl p-8 border border-border/50 h-full relative">
               <div className="flex items-center gap-2 mb-6">
                 <Star className="w-5 h-5 text-accent fill-accent" />
                 <span className="text-sm font-semibold text-accent">Community Voices</span>

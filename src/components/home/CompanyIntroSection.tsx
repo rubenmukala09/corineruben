@@ -2,28 +2,36 @@ import { motion } from "framer-motion";
 import { Shield, Users, Brain, Heart, ArrowRight, CheckCircle, Sparkles, Lock, Eye, Zap, Building2, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import threatProtectionBg from "@/assets/threat-protection-bg.jpg";
+import teamCollaborationBg from "@/assets/team-collaboration-bg.jpg";
 
 const coreValues = [
   {
     icon: Shield,
     title: "Protection First",
     description: "Every family deserves safety from digital threats. We make enterprise-grade security accessible to everyone.",
+    color: "from-blue-500/20 to-indigo-500/20",
+    iconColor: "text-blue-500",
   },
   {
     icon: Brain,
     title: "AI-Powered Defense",
     description: "Our systems learn and adapt faster than scammers can evolve, keeping you one step ahead.",
+    color: "from-purple-500/20 to-pink-500/20",
+    iconColor: "text-purple-500",
   },
   {
     icon: Building2,
     title: "Business Solutions",
     description: "From startups to enterprises, we provide comprehensive cybersecurity training and protection.",
+    color: "from-emerald-500/20 to-teal-500/20",
+    iconColor: "text-emerald-500",
   },
   {
     icon: GraduationCap,
     title: "Expert Training",
     description: "We train individuals, families, companies, and organizations to recognize and prevent threats.",
+    color: "from-amber-500/20 to-orange-500/20",
+    iconColor: "text-amber-500",
   },
 ];
 
@@ -80,7 +88,7 @@ export const CompanyIntroSection = () => {
           </p>
         </motion.div>
 
-        {/* Core Values Grid */}
+        {/* Core Values Grid - Redesigned with better cards */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
           {coreValues.map((value, index) => (
             <motion.div
@@ -89,24 +97,29 @@ export const CompanyIntroSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
+              whileHover={{ y: -8, transition: { duration: 0.3 } }}
               className="group"
             >
-              <div className="h-full bg-card/80 backdrop-blur-sm rounded-2xl p-6 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5">
-                <motion.div 
-                  className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center mb-4 group-hover:from-primary/20 group-hover:to-accent/20 transition-colors"
-                  whileHover={{ rotate: 5 }}
-                >
-                  <value.icon className="w-7 h-7 text-primary" />
-                </motion.div>
-                <h3 className="text-xl font-bold text-foreground mb-2">{value.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{value.description}</p>
+              <div className="h-full bg-card rounded-2xl p-6 border border-border hover:border-primary/40 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 relative overflow-hidden">
+                {/* Gradient background on hover */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${value.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+                
+                <div className="relative z-10">
+                  <motion.div 
+                    className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${value.color} flex items-center justify-center mb-5`}
+                    whileHover={{ rotate: 5, scale: 1.05 }}
+                  >
+                    <value.icon className={`w-8 h-8 ${value.iconColor}`} />
+                  </motion.div>
+                  <h3 className="text-xl font-bold text-foreground mb-3">{value.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{value.description}</p>
+                </div>
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Why You Need Us Section - With Background Image */}
+        {/* Why You Need Us Section - With Background Image and blur */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -116,14 +129,14 @@ export const CompanyIntroSection = () => {
           {/* Background image with blur effect */}
           <div className="absolute inset-0">
             <img 
-              src={threatProtectionBg} 
+              src={teamCollaborationBg} 
               alt="" 
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
+            <div className="absolute inset-0 backdrop-blur-md bg-background/70" />
           </div>
           
-          <div className="relative z-10 p-8 md:p-12 border border-primary/10">
+          <div className="relative z-10 p-8 md:p-12 border border-primary/20 rounded-3xl">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Left: Message */}
               <div>
@@ -167,13 +180,13 @@ export const CompanyIntroSection = () => {
                 </Button>
               </div>
 
-              {/* Right: Visual Stats */}
+              {/* Right: Visual Stats - Redesigned with blurry glassmorphism */}
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { icon: Eye, value: "24/7", label: "Monitoring", color: "from-primary to-accent" },
-                  { icon: Zap, value: "< 1s", label: "Response Time", color: "from-accent to-primary" },
-                  { icon: Shield, value: "99.9%", label: "Success Rate", color: "from-primary to-accent" },
-                  { icon: Users, value: "500+", label: "Families Protected", color: "from-accent to-primary" },
+                  { icon: Eye, value: "24/7", label: "Monitoring", gradient: "from-blue-500 to-indigo-500" },
+                  { icon: Zap, value: "< 1s", label: "Response Time", gradient: "from-amber-500 to-orange-500" },
+                  { icon: Shield, value: "99.9%", label: "Success Rate", gradient: "from-emerald-500 to-teal-500" },
+                  { icon: Users, value: "500+", label: "Families Protected", gradient: "from-purple-500 to-pink-500" },
                 ].map((stat, index) => (
                   <motion.div
                     key={index}
@@ -181,11 +194,11 @@ export const CompanyIntroSection = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-                    className="bg-card/90 backdrop-blur-md rounded-2xl p-6 border border-border hover:border-primary/30 transition-all text-center"
+                    whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                    className="backdrop-blur-xl bg-card/80 rounded-2xl p-6 border border-border/50 hover:border-primary/30 transition-all text-center shadow-lg"
                   >
-                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center mx-auto mb-3 opacity-80`}>
-                      <stat.icon className="w-6 h-6 text-white" />
+                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${stat.gradient} flex items-center justify-center mx-auto mb-3`}>
+                      <stat.icon className="w-7 h-7 text-white" />
                     </div>
                     <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                       {stat.value}

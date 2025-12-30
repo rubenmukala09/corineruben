@@ -9,6 +9,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import supportAgent from "@/assets/support-agent.jpg";
+import protectedFamilyBg from "@/assets/protected-family-bg.jpg";
 
 const faqs = [
   {
@@ -33,8 +34,16 @@ export const FAQPreview = () => {
   return (
     <section className="py-24 bg-background relative overflow-hidden">
       {/* Decorative elements */}
-      <div className="absolute top-20 right-10 w-32 h-32 rounded-full bg-primary/5" />
-      <div className="absolute bottom-20 left-20 w-24 h-24 rounded-full bg-accent/10" />
+      <motion.div 
+        className="absolute top-20 right-10 w-32 h-32 rounded-full bg-primary/5"
+        animate={{ scale: [1, 1.2, 1] }}
+        transition={{ duration: 5, repeat: Infinity }}
+      />
+      <motion.div 
+        className="absolute bottom-20 left-20 w-24 h-24 rounded-full bg-accent/10"
+        animate={{ scale: [1.2, 1, 1.2] }}
+        transition={{ duration: 6, repeat: Infinity }}
+      />
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
@@ -60,24 +69,32 @@ export const FAQPreview = () => {
               </p>
             </div>
 
-            {/* Support Agent Card */}
-            <div className="bg-card rounded-2xl p-6 border border-border">
+            {/* Support Agent Card - Redesigned with more professional look */}
+            <div className="bg-card rounded-2xl p-6 border border-border shadow-lg hover:shadow-xl transition-shadow">
               <div className="flex items-center gap-4 mb-6">
                 {/* Circular image with decorations */}
                 <div className="relative">
-                  <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-primary/20">
+                  <motion.div 
+                    className="w-20 h-20 rounded-full overflow-hidden border-3 border-primary/30 shadow-lg"
+                    whileHover={{ scale: 1.05 }}
+                  >
                     <img
                       src={supportAgent}
                       alt="Support specialist"
                       className="w-full h-full object-cover"
                     />
-                  </div>
-                  <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-background" />
-                  <div className="absolute -top-1 -left-1 w-4 h-4 rounded-full bg-accent" />
+                  </motion.div>
+                  <motion.div 
+                    className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-background flex items-center justify-center"
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <span className="text-[8px] text-white font-bold">ON</span>
+                  </motion.div>
                 </div>
                 <div>
                   <h4 className="font-bold text-lg text-foreground">Talk to a Human</h4>
-                  <p className="text-sm text-muted-foreground">Real experts, not bots</p>
+                  <p className="text-sm text-muted-foreground">Real experts, not bots • Available now</p>
                 </div>
               </div>
 
@@ -152,6 +169,53 @@ export const FAQPreview = () => {
             </motion.div>
           </motion.div>
         </div>
+
+        {/* Ready to Get Protected - With People Picture Background */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-20 relative rounded-3xl overflow-hidden"
+        >
+          {/* Background image - no color overlay, just slight blur for text readability */}
+          <div className="absolute inset-0">
+            <img 
+              src={protectedFamilyBg} 
+              alt="Protected family" 
+              className="w-full h-full object-cover"
+            />
+            {/* Very subtle dark gradient at bottom for text readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+          </div>
+          
+          <div className="relative z-10 p-10 md:p-16 text-center">
+            <motion.h3 
+              className="text-3xl md:text-4xl font-bold text-white mb-4 drop-shadow-lg"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              Ready to Get Protected?
+            </motion.h3>
+            <p className="text-white/90 text-lg max-w-2xl mx-auto mb-8 drop-shadow-md">
+              Join thousands of families who trust us with their digital safety. 
+              Start your protection journey today.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button asChild size="lg" className="rounded-full px-8">
+                <Link to="/training#pricing">
+                  Start Protection Now
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="rounded-full px-8 bg-white/10 border-white/30 text-white hover:bg-white/20">
+                <Link to="/contact">
+                  Talk to an Expert
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

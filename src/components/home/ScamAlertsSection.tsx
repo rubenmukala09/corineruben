@@ -1,9 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { Shield, ArrowRight, TrendingUp, Phone, Mail, CreditCard, Eye, AlertTriangle } from "lucide-react";
+import { Shield, ArrowRight, TrendingUp, Phone, Mail, CreditCard, Eye, AlertTriangle, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import threatProtectionBg from "@/assets/threat-protection-bg.jpg";
+import teamCollaborationBg from "@/assets/team-collaboration-bg.jpg";
 
 const scamAlerts = [
   {
@@ -47,36 +47,25 @@ export const ScamAlertsSection = () => {
   }, []);
 
   return (
-    <section className="py-24 relative overflow-hidden">
-      {/* Animated Background Image */}
-      <div className="absolute inset-0">
-        <motion.img 
-          src={threatProtectionBg} 
-          alt="" 
-          className="w-full h-full object-cover"
-          initial={{ scale: 1.05 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 20, repeat: Infinity, repeatType: "reverse" }}
-        />
-        {/* Gradient overlay for readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/85 to-background/90" />
-      </div>
+    <section className="py-24 relative overflow-hidden bg-background">
+      {/* Clean white background with subtle gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-muted/30 via-background to-muted/30" />
       
-      {/* Animated floating particles */}
-      {[...Array(6)].map((_, i) => (
+      {/* Subtle floating particles */}
+      {[...Array(4)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-2 h-2 rounded-full bg-primary/30"
+          className="absolute w-2 h-2 rounded-full bg-primary/20"
           style={{
-            left: `${15 + i * 15}%`,
+            left: `${15 + i * 20}%`,
             top: `${20 + (i % 3) * 25}%`,
           }}
           animate={{
-            y: [0, -30, 0],
-            opacity: [0.3, 0.7, 0.3],
+            y: [0, -20, 0],
+            opacity: [0.2, 0.4, 0.2],
           }}
           transition={{
-            duration: 3 + i * 0.5,
+            duration: 4 + i * 0.5,
             repeat: Infinity,
             delay: i * 0.3,
           }}
@@ -91,7 +80,7 @@ export const ScamAlertsSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6 backdrop-blur-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
@@ -125,9 +114,9 @@ export const ScamAlertsSection = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
                 onClick={() => setActiveAlert(index)}
-                className={`p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 backdrop-blur-md ${
+                className={`p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 ${
                   index === activeAlert
-                    ? "bg-card/90 border-primary/30 shadow-lg shadow-primary/10"
+                    ? "bg-card border-primary/30 shadow-lg shadow-primary/10"
                     : "bg-card/50 border-border hover:border-primary/30"
                 }`}
               >
@@ -181,7 +170,7 @@ export const ScamAlertsSection = () => {
             className="space-y-8"
           >
             {/* Quick Tips Card */}
-            <div className="bg-card/80 backdrop-blur-md rounded-2xl p-8 border border-border">
+            <div className="bg-card rounded-2xl p-8 border border-border shadow-lg">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
                   <Shield className="w-6 h-6 text-primary" />
@@ -200,7 +189,7 @@ export const ScamAlertsSection = () => {
                     className="flex items-center gap-3"
                   >
                     <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center flex-shrink-0">
-                      <span className="text-xs font-bold text-primary-foreground">{index + 1}</span>
+                      <CheckCircle className="w-3.5 h-3.5 text-primary-foreground" />
                     </div>
                     <span className="text-muted-foreground">{tip}</span>
                   </motion.div>
@@ -208,21 +197,23 @@ export const ScamAlertsSection = () => {
               </div>
             </div>
 
-            {/* CTA - Updated styling */}
-            <div className="bg-gradient-to-br from-primary/90 to-primary rounded-2xl p-8 text-center relative overflow-hidden">
-              {/* Subtle pattern overlay */}
-              <div className="absolute inset-0 opacity-10">
-                <div className="absolute inset-0" style={{
-                  backgroundImage: "radial-gradient(circle at 2px 2px, white 1px, transparent 0)",
-                  backgroundSize: "24px 24px"
-                }} />
+            {/* CTA - With blurry background image */}
+            <div className="relative rounded-2xl overflow-hidden">
+              {/* Background image with blur */}
+              <div className="absolute inset-0">
+                <img 
+                  src={teamCollaborationBg} 
+                  alt="" 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 backdrop-blur-md bg-primary/60" />
               </div>
               
-              <div className="relative z-10">
-                <h3 className="text-xl font-bold text-primary-foreground mb-3">
+              <div className="relative z-10 p-8 text-center">
+                <h3 className="text-xl font-bold text-white mb-3">
                   Take Action Now
                 </h3>
-                <p className="text-primary-foreground/80 mb-6">
+                <p className="text-white/90 mb-6">
                   Get protected before scammers find you
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
