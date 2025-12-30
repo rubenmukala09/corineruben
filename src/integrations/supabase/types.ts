@@ -459,6 +459,13 @@ export type Database = {
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "articles_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "profiles_limited"
+            referencedColumns: ["id"]
+          },
         ]
       }
       auth_audit_logs: {
@@ -4075,6 +4082,45 @@ export type Database = {
       }
     }
     Views: {
+      profiles_limited: {
+        Row: {
+          account_status: string | null
+          created_at: string | null
+          department: string | null
+          email: string | null
+          first_name: string | null
+          id: string | null
+          last_name: string | null
+          position: string | null
+          profile_photo_url: string | null
+          username: string | null
+        }
+        Insert: {
+          account_status?: string | null
+          created_at?: string | null
+          department?: string | null
+          email?: string | null
+          first_name?: string | null
+          id?: string | null
+          last_name?: string | null
+          position?: string | null
+          profile_photo_url?: string | null
+          username?: string | null
+        }
+        Update: {
+          account_status?: string | null
+          created_at?: string | null
+          department?: string | null
+          email?: string | null
+          first_name?: string | null
+          id?: string | null
+          last_name?: string | null
+          position?: string | null
+          profile_photo_url?: string | null
+          username?: string | null
+        }
+        Relationships: []
+      }
       testimonials_public: {
         Row: {
           created_at: string | null
