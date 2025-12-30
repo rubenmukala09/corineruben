@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState, useRef } from "react";
+import { ReactNode, useEffect, useState, useRef, Children, isValidElement } from "react";
 import { cn } from "@/lib/utils";
 import { Shield } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -10,6 +10,7 @@ import { useImagePreload } from "@/hooks/useImagePreload";
 import { motion } from "framer-motion";
 import { useParallax } from "@/hooks/useParallax";
 import { HeroCarousel } from "./HeroCarousel";
+import { MagneticWrapper } from "./ui/magnetic-button";
 
 interface HeroImage {
   src: string;
@@ -152,8 +153,15 @@ const Hero = ({ backgroundImage, backgroundImages, backgroundVideo, headline, su
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+              className="flex flex-wrap gap-4"
             >
-              {children}
+              {Children.map(children, (child) =>
+                isValidElement(child) ? (
+                  <MagneticWrapper strength={0.3}>{child}</MagneticWrapper>
+                ) : (
+                  child
+                )
+              )}
             </motion.div>
           )}
         </div>

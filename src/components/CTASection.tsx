@@ -1,5 +1,6 @@
-import { ReactNode } from "react";
+import { ReactNode, Children, cloneElement, isValidElement } from "react";
 import { cn } from "@/lib/utils";
+import { MagneticWrapper } from "@/components/ui/magnetic-button";
 
 interface CTASectionProps {
   headline: string;
@@ -8,6 +9,7 @@ interface CTASectionProps {
   className?: string;
   variant?: "default" | "gold" | "navy" | "image";
   backgroundImage?: string;
+  magneticButtons?: boolean;
 }
 
 const CTASection = ({ 
@@ -16,8 +18,20 @@ const CTASection = ({
   children, 
   className, 
   variant = "gold",
-  backgroundImage 
+  backgroundImage,
+  magneticButtons = true 
 }: CTASectionProps) => {
+  // Wrap children with magnetic effect if enabled
+  const wrappedChildren = magneticButtons
+    ? Children.map(children, (child) =>
+        isValidElement(child) ? (
+          <MagneticWrapper strength={0.25}>{child}</MagneticWrapper>
+        ) : (
+          child
+        )
+      )
+    : children;
+
   const bgClass = {
     default: "bg-muted",
     gold: "bg-gradient-to-r from-primary to-accent",
@@ -57,7 +71,7 @@ const CTASection = ({
             </p>
           )}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center flex-wrap">
-            {children}
+            {wrappedChildren}
           </div>
         </div>
       </section>
@@ -69,7 +83,7 @@ const CTASection = ({
       <div className="container mx-auto px-4 text-center">
         <h2 className={cn("mb-4 text-2xl md:text-3xl lg:text-4xl", textClass)}>{headline}</h2>
         {description && <p className={cn("text-base md:text-lg lg:text-xl mb-6 md:mb-8 max-w-2xl mx-auto leading-relaxed", textClass)}>{description}</p>}
-        <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center flex-wrap">{children}</div>
+        <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center flex-wrap">{wrappedChildren}</div>
       </div>
     </section>
   );

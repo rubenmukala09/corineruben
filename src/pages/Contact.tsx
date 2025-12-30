@@ -24,6 +24,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { contactFormSchema, formatPhoneNumber } from "@/utils/formValidation";
 import { z } from "zod";
+import { useConfetti } from "@/hooks/useConfetti";
 import heroContactPro1 from "@/assets/hero-contact-pro-1.jpg";
 import heroContactPro2 from "@/assets/hero-contact-pro-2.jpg";
 
@@ -82,6 +83,7 @@ function Contact() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const { fireCelebration } = useConfetti();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -108,6 +110,7 @@ function Contact() {
       trackConversion("contact_inquiry");
 
       setIsSubmitted(true);
+      fireCelebration();
       toast.success("Message sent! We'll respond within 4 hours.");
       
       // Reset form after 3 seconds

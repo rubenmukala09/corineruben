@@ -5,10 +5,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { newsletterSchema } from "@/utils/formValidation";
+import { useConfetti } from "@/hooks/useConfetti";
 
 export function NewsletterSignup({ compact = false }: { compact?: boolean }) {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { fireSuccess } = useConfetti();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,6 +34,7 @@ export function NewsletterSignup({ compact = false }: { compact?: boolean }) {
       if (data?.alreadySubscribed) {
         toast.info("You're already subscribed!");
       } else {
+        fireSuccess();
         toast.success("✓ Subscribed! Check your email.");
       }
       
