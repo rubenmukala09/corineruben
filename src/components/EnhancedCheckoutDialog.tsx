@@ -195,7 +195,8 @@ function CardPaymentForm({ onSuccess }: { onSuccess: () => void }) {
             productId: item.productId,
             name: item.name,
             quantity: item.quantity,
-            price: item.price
+            price: item.price,
+            stripe_price_id: (item as any).stripe_price_id
           }))
         }
       });

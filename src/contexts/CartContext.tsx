@@ -9,6 +9,7 @@ interface CartItem {
   quantity: number;
   image?: string;
   isDigital?: boolean;
+  stripe_price_id?: string;
 }
 
 interface CartContextType {
