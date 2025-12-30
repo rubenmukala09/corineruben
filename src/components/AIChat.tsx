@@ -183,20 +183,26 @@ export const AIChat = () => {
       setMessages(newMessages);
       setIsLoading(true);
 
+      console.log("Sending chat request to:", CHAT_URL);
+      
       const response = await fetch(CHAT_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${(await supabase.auth.getSession()).data.session?.access_token || ""}`
+          "apikey": import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
         },
         body: JSON.stringify({
-          messages: newMessages,
-          mode: mode
+          messages: newMessages.map(m => ({ role: m.role, content: m.content })),
+          type: mode // Edge function expects 'type', not 'mode'
         }),
       });
 
+      console.log("Response status:", response.status);
+
       if (!response.ok) {
-        throw new Error("Failed to get response from AI");
+        const errorText = await response.text();
+        console.error("AI response error:", errorText);
+        throw new Error(`Failed to get response: ${response.status}`);
       }
 
       const reader = response.body?.getReader();
@@ -207,6 +213,7 @@ export const AIChat = () => {
       }
 
       let assistantMessage = "";
+      let textBuffer = "";
       
       while (true) {
         const { done, value } = await reader.read();
@@ -215,28 +222,50 @@ export const AIChat = () => {
           break;
         }
 
-        const chunk = decoder.decode(value, { stream: true });
-        const lines = chunk.split('\n');
+        textBuffer += decoder.decode(value, { stream: true });
         
-        for (const line of lines) {
-          if (line.startsWith('data: ')) {
-            const data = line.slice(6).trim();
-            if (data === '[DONE]') {
-              continue;
+        // Process line-by-line
+        let newlineIndex: number;
+        while ((newlineIndex = textBuffer.indexOf("\n")) !== -1) {
+          let line = textBuffer.slice(0, newlineIndex);
+          textBuffer = textBuffer.slice(newlineIndex + 1);
+
+          if (line.endsWith("\r")) line = line.slice(0, -1);
+          if (line.startsWith(":") || line.trim() === "") continue;
+          if (!line.startsWith("data: ")) continue;
+
+          const jsonStr = line.slice(6).trim();
+          if (jsonStr === "[DONE]") continue;
+
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const content = parsed.choices?.[0]?.delta?.content;
+            if (content) {
+              assistantMessage += content;
+              setMessages([...newMessages, { role: "assistant", content: assistantMessage }]);
             }
-            
-            try {
-              const parsed = JSON.parse(data);
-              // Handle Lovable AI gateway format (OpenAI compatible)
-              const content = parsed.choices?.[0]?.delta?.content;
-              if (content) {
-                assistantMessage += content;
-                setMessages([...newMessages, { role: "assistant", content: assistantMessage }]);
-              }
-            } catch (e) {
-              // Ignore partial JSON chunks
-            }
+          } catch {
+            // Partial JSON, wait for more data
           }
+        }
+      }
+
+      // Process any remaining buffer
+      if (textBuffer.trim()) {
+        for (const line of textBuffer.split("\n")) {
+          if (!line.startsWith("data: ")) continue;
+          const jsonStr = line.slice(6).trim();
+          if (jsonStr === "[DONE]") continue;
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const content = parsed.choices?.[0]?.delta?.content;
+            if (content) {
+              assistantMessage += content;
+            }
+          } catch { /* ignore */ }
+        }
+        if (assistantMessage) {
+          setMessages([...newMessages, { role: "assistant", content: assistantMessage }]);
         }
       }
 
