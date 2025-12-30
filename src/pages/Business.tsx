@@ -48,7 +48,7 @@ function Business() {
     variant?: 'default' | 'buying' | 'existing';
   } | null>(null);
   const [isYearly, setIsYearly] = useState(false);
-  const [aiConsultingView, setAiConsultingView] = useState(false);
+  // aiConsultingView state removed - now using 4 separate cards instead of toggle
   const [selectedService, setSelectedService] = useState<{
     type: 'business' | 'website';
     name: string;
@@ -1300,240 +1300,398 @@ function Business() {
             </div>
           </div>
 
-          {/* Additional Info Box */}
-          <Card className="max-w-5xl mx-auto p-10 bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20 rounded-2xl">
-            <h3 className="text-2xl font-bold text-center mb-4">
-              We Support AI Agents From Any Vendor
-            </h3>
-            <p className="text-center text-muted-foreground mb-8 text-lg">
-              Whether you purchased your AI agent from another company or built it yourself, our insurance plans keep it running smoothly. We provide vendor-agnostic maintenance, troubleshooting, and optimization.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-              <div className="text-center">
-                <div className="text-2xl font-bold gradient-text-primary mb-2">No Contracts</div>
-                <div className="text-sm text-muted-foreground">Cancel anytime</div>
+          {/* We Support AI Agents From Any Vendor - Enhanced Section */}
+          <div className="mt-16">
+            <Card className="max-w-6xl mx-auto p-0 overflow-hidden bg-gradient-to-br from-primary/10 via-accent/5 to-primary/10 border-2 border-primary/30 rounded-3xl shadow-2xl">
+              {/* Header with cosmic theme */}
+              <div className="bg-gradient-to-r from-primary via-accent to-primary p-8 text-center relative overflow-hidden">
+                <div className="absolute inset-0 opacity-20">
+                  <div className="absolute top-2 left-10 w-2 h-2 bg-white rounded-full animate-pulse" />
+                  <div className="absolute top-8 right-20 w-1 h-1 bg-white rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
+                  <div className="absolute bottom-4 left-1/3 w-1.5 h-1.5 bg-white rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+                  <div className="absolute bottom-6 right-1/4 w-2 h-2 bg-white rounded-full animate-pulse" style={{ animationDelay: '1.5s' }} />
+                </div>
+                <div className="relative z-10">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white text-sm font-bold mb-4">
+                    <Sparkles className="w-4 h-4" />
+                    UNIVERSAL AI SUPPORT
+                  </div>
+                  <h3 className="text-3xl md:text-4xl font-black text-white mb-3">
+                    We Support AI Agents From ANY Vendor
+                  </h3>
+                  <p className="text-white/90 text-xl font-medium max-w-3xl mx-auto">
+                    Mars 🪐 Jupiter 🌌 Heaven ☁️ or Anywhere Else — We Fix It All!
+                  </p>
+                </div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold gradient-text-primary mb-2">Any Platform</div>
-                <div className="text-sm text-muted-foreground">We support all major AI systems</div>
+
+              {/* Main Content */}
+              <div className="p-8 md:p-12">
+                <div className="text-center mb-10">
+                  <p className="text-lg text-foreground leading-relaxed max-w-4xl mx-auto">
+                    <strong className="text-primary">Bought AI from another vendor?</strong> No problem. 
+                    <strong className="text-accent"> Built it yourself?</strong> We've got you covered. 
+                    Whether your AI agent came from a startup in Silicon Valley, an enterprise solution from Microsoft, 
+                    or an obscure platform from the farthest corners of the tech universe — 
+                    <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent font-bold"> InVision can resuscitate, optimize, repair, and make it work like new.</span>
+                  </p>
+                </div>
+
+                {/* Capability Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                  <div className="text-center p-6 bg-background rounded-2xl border hover:border-primary/50 transition-all hover:-translate-y-1 hover:shadow-lg">
+                    <div className="w-14 h-14 mx-auto bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mb-4">
+                      <span className="text-2xl">🔧</span>
+                    </div>
+                    <h4 className="font-bold text-lg mb-2">Resuscitate</h4>
+                    <p className="text-sm text-muted-foreground">Bring your broken AI back to life</p>
+                  </div>
+                  <div className="text-center p-6 bg-background rounded-2xl border hover:border-accent/50 transition-all hover:-translate-y-1 hover:shadow-lg">
+                    <div className="w-14 h-14 mx-auto bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mb-4">
+                      <span className="text-2xl">⚡</span>
+                    </div>
+                    <h4 className="font-bold text-lg mb-2">Optimize</h4>
+                    <p className="text-sm text-muted-foreground">Make it faster, smarter, better</p>
+                  </div>
+                  <div className="text-center p-6 bg-background rounded-2xl border hover:border-success/50 transition-all hover:-translate-y-1 hover:shadow-lg">
+                    <div className="w-14 h-14 mx-auto bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center mb-4">
+                      <span className="text-2xl">🛡️</span>
+                    </div>
+                    <h4 className="font-bold text-lg mb-2">Secure</h4>
+                    <p className="text-sm text-muted-foreground">Lock down vulnerabilities</p>
+                  </div>
+                  <div className="text-center p-6 bg-background rounded-2xl border hover:border-primary/50 transition-all hover:-translate-y-1 hover:shadow-lg">
+                    <div className="w-14 h-14 mx-auto bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-4">
+                      <span className="text-2xl">🚀</span>
+                    </div>
+                    <h4 className="font-bold text-lg mb-2">Develop</h4>
+                    <p className="text-sm text-muted-foreground">Build new features & integrations</p>
+                  </div>
+                </div>
+
+                {/* Stats Row */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 rounded-2xl border border-primary/20">
+                  <div className="text-center">
+                    <div className="text-3xl font-black gradient-text-primary mb-1">No Contracts</div>
+                    <div className="text-sm text-muted-foreground font-medium">Cancel anytime, no questions asked</div>
+                  </div>
+                  <div className="text-center border-y md:border-y-0 md:border-x border-primary/20 py-4 md:py-0">
+                    <div className="text-3xl font-black gradient-text-primary mb-1">Any Platform</div>
+                    <div className="text-sm text-muted-foreground font-medium">We support ALL AI systems worldwide</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-black gradient-text-primary mb-1">24-48hr Response</div>
+                    <div className="text-sm text-muted-foreground font-medium">Fast turnaround guaranteed</div>
+                  </div>
+                </div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold gradient-text-primary mb-2">Fast Response</div>
-                <div className="text-sm text-muted-foreground">24-48hr standard turnaround</div>
-              </div>
-            </div>
-          </Card>
-        </div>
-      </section>
-
-      {/* Why InVision */}
-      <section className="py-20 bg-muted">
-        <div className="container mx-auto px-4">
-          <h2 className="text-center mb-12">Why InVision for Your AI</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
-            <div className="space-y-6">
-              <ScrollReveal animation="slide-left" delay={0} threshold={0.2}>
-                <div className="flex items-start gap-4">
-                  <CheckCircle className="w-6 h-6 text-success flex-shrink-0 mt-1 checkmark-pop" style={{ animationDelay: '0.6s' }} />
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">Security-First Design</h3>
-                    <p className="text-muted-foreground">
-                      We audit data flows, enforce least-privilege access, and vet vendors. Your customer data stays protected.
-                    </p>
-                  </div>
-                </div>
-              </ScrollReveal>
-
-              <ScrollReveal animation="slide-left" delay={100} threshold={0.2}>
-                <div className="flex items-start gap-4">
-                  <CheckCircle className="w-6 h-6 text-success flex-shrink-0 mt-1 checkmark-pop" style={{ animationDelay: '0.7s' }} />
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">Actually Trained</h3>
-                    <p className="text-muted-foreground">
-                      We don't just "set it and forget it." We train your AI on YOUR business, test thoroughly, and optimize for 30 days.
-                    </p>
-                  </div>
-                </div>
-              </ScrollReveal>
-
-              <ScrollReveal animation="slide-left" delay={200} threshold={0.2}>
-                <div className="flex items-start gap-4">
-                  <CheckCircle className="w-6 h-6 text-success flex-shrink-0 mt-1 checkmark-pop" style={{ animationDelay: '0.8s' }} />
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">No Vendor Lock-In</h3>
-                    <p className="text-muted-foreground">
-                      We build on open standards. If you want to take it in-house later, you can.
-                    </p>
-                  </div>
-                </div>
-              </ScrollReveal>
-
-              <ScrollReveal animation="slide-left" delay={300} threshold={0.2}>
-                <div className="flex items-start gap-4">
-                  <CheckCircle className="w-6 h-6 text-success flex-shrink-0 mt-1 checkmark-pop" style={{ animationDelay: '0.9s' }} />
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">Plain-English Handoff</h3>
-                    <p className="text-muted-foreground">
-                      Your team gets documentation they can actually understand - no tech jargon required.
-                    </p>
-                  </div>
-                </div>
-              </ScrollReveal>
-            </div>
-
-            <div className="flex items-center relative">
-              <div className="absolute -top-4 -left-4 w-24 h-24 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-2xl" />
-              <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-gradient-to-br from-success/20 to-emerald-500/20 rounded-full blur-2xl" />
-              <img
-                src={heroBusinessEliteMeeting}
-                alt="Diverse team collaborating on AI solutions"
-                className="rounded-2xl shadow-xl relative z-10 hover:scale-[1.02] transition-transform duration-500"
-              />
-            </div>
+            </Card>
           </div>
         </div>
       </section>
 
-      {/* AI Consulting Services - Combined Section */}
-      <section className="py-20 bg-muted">
+      {/* AI Consulting Services - Moved under We Support AI Agents */}
+      <section id="ai-consulting" className="py-20 bg-muted">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-8">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-sm font-bold text-primary mb-4 uppercase tracking-wider">
+              <Search className="w-4 h-4" />
+              Expert AI Guidance
+            </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-4">AI Consulting Services</h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-6">
-              Expert guidance whether you're considering AI or already have it in place
+              Whether you're thinking about AI, buying AI, already using AI, or want to leave AI — we're here to guide you
             </p>
             <div className="max-w-4xl mx-auto bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-cyan-500/10 border border-cyan-500/20 rounded-2xl p-6 mb-8">
               <p className="text-base text-foreground leading-relaxed">
                 <strong className="text-cyan-600 dark:text-cyan-400">The AI market is flooded with empty promises and overpriced solutions.</strong> Before you invest thousands in AI tools, let InVision <strong>vet them for you</strong>. We expose hidden costs, security risks, and vendor lock-ins so you make informed decisions. Already have AI? We'll audit it to ensure it's secure, optimized, and actually delivering ROI. <span className="text-primary font-semibold">In this AI revolution, those who navigate wisely win — and InVision is your trusted guide.</span>
               </p>
             </div>
-            
-            {/* Toggle Buttons */}
-            <div className="inline-flex bg-background rounded-full p-1.5 border shadow-sm">
-              <Button
-                variant={!aiConsultingView ? 'default' : 'ghost'}
-                size="lg"
-                className={`rounded-full px-8 transition-all ${!aiConsultingView ? '' : 'hover:bg-transparent'}`}
-                onClick={() => setAiConsultingView(false)}
-              >
-                <Search className="w-4 h-4 mr-2" />
-                Buying AI?
-              </Button>
-              <Button
-                variant={aiConsultingView ? 'default' : 'ghost'}
-                size="lg"
-                className={`rounded-full px-8 transition-all ${aiConsultingView ? '' : 'hover:bg-transparent'}`}
-                onClick={() => setAiConsultingView(true)}
-              >
-                <Shield className="w-4 h-4 mr-2" />
-                Already Using AI?
-              </Button>
-            </div>
           </div>
 
-          <div className="max-w-4xl mx-auto">
-            {!aiConsultingView ? (
-              /* Pre-Purchase Vetting */
-              <Card className="p-8 bg-gradient-to-br from-accent/10 to-accent/5 transition-all duration-500 hover:scale-[1.01] hover:shadow-lg border-accent/20 animate-fade-in">
-                <div className="flex flex-col md:flex-row items-start gap-6">
-                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-accent to-teal-500 flex items-center justify-center flex-shrink-0">
-                    <Search className="w-10 h-10 text-white" />
+          {/* Four Service Options as Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {/* Free: Thinking About AI - Consultation */}
+            <ScrollReveal animation="fade-up" delay={0}>
+              <Card className="p-6 h-full bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/30 dark:to-teal-950/30 border-emerald-200 dark:border-emerald-800 hover:shadow-lg transition-all hover:-translate-y-1">
+                <div className="flex items-start gap-4">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center flex-shrink-0">
+                    <span className="text-2xl">💭</span>
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-3xl font-bold mb-4">Pre-Purchase AI Vetting</h3>
-                    <p className="text-xl mb-4 text-muted-foreground">Don't waste $5,000+ on the wrong solution.</p>
-                    <p className="text-sm text-muted-foreground mb-4">Our Pre-Purchase Vetting service:</p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-6">
-                      {[
-                        "Reviews the tool for security risks",
-                        "Calculates realistic ROI",
-                        "Identifies hidden costs & vendor risks",
-                        "Recommends 'Buy / Don't Buy / Wait'",
-                      ].map((item, index) => (
-                        <div key={index} className="flex items-start gap-2">
-                          <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
-                          <span className="text-sm">{item}</span>
-                        </div>
-                      ))}
+                    <div className="inline-flex items-center gap-1 px-3 py-1 bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-bold rounded-full mb-2">
+                      FREE CONSULTATION
                     </div>
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                      <div>
-                        <p className="text-3xl font-bold text-primary">$1,799</p>
-                        <p className="text-xs text-muted-foreground">Full vetting report • Saves thousands</p>
-                      </div>
-                      <Button 
-                        onClick={() => {
-                          trackButtonClick('Request AI Vetting', 'Business Consulting');
-                          trackConversion('consulting_vetting', 1799);
-                          setSelectedService({
-                            type: 'business',
-                            name: 'Pre-Purchase AI Tool Vetting',
-                            price: 1799
-                          });
-                          setModalOpen(true);
-                        }}
-                        variant="default"
-                        size="lg"
-                        className="transition-all duration-300 hover:-translate-y-0.5"
-                      >
-                        REQUEST VETTING
-                      </Button>
-                    </div>
+                    <h3 className="text-xl font-bold mb-2">Thinking About AI?</h3>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Not sure if AI is right for your business? Schedule a free consultation to explore your options without pressure.
+                    </p>
+                    <Button 
+                      onClick={() => {
+                        trackButtonClick('Schedule Free Consultation - Thinking', 'Business Consulting');
+                        setSelectedService({
+                          type: 'business',
+                          name: 'AI Discovery Consultation (Free)',
+                          tier: 'Free'
+                        });
+                        setModalOpen(true);
+                      }}
+                      variant="outline"
+                      className="w-full border-emerald-500/50 hover:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
+                    >
+                      Schedule Free Consultation
+                    </Button>
                   </div>
                 </div>
               </Card>
-            ) : (
-              /* AI Security Audit */
-              <Card className="p-8 bg-gradient-to-br from-amber-100 to-amber-50 dark:from-amber-950/50 dark:to-amber-900/30 transition-all duration-500 hover:scale-[1.01] hover:shadow-lg border-amber-200 dark:border-amber-800 animate-fade-in">
-                <div className="flex flex-col md:flex-row items-start gap-6">
-                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center flex-shrink-0">
-                    <Shield className="w-10 h-10 text-white" />
+            </ScrollReveal>
+
+            {/* Paid: Buying AI - Pre-Purchase Vetting */}
+            <ScrollReveal animation="fade-up" delay={100}>
+              <Card className="p-6 h-full bg-gradient-to-br from-accent/10 to-cyan-500/10 border-accent/30 hover:shadow-lg transition-all hover:-translate-y-1">
+                <div className="flex items-start gap-4">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent to-cyan-500 flex items-center justify-center flex-shrink-0">
+                    <Search className="w-8 h-8 text-white" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-3xl font-bold mb-4">AI Security Audit</h3>
-                    <p className="text-xl mb-4 text-muted-foreground">Is your current AI secure? We audit for:</p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-6">
-                      {[
-                        "Data leaks & unauthorized access",
-                        "Prompt injection vulnerabilities",
-                        "Vendor contract risks",
-                        "Compliance gaps (GDPR, HIPAA, etc.)",
-                      ].map((item, index) => (
-                        <div key={index} className="flex items-start gap-2">
-                          <span className="w-4 h-4 rounded-full bg-amber-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <CheckCircle className="w-3 h-3 text-white" />
-                          </span>
-                          <span className="text-sm">{item}</span>
-                        </div>
-                      ))}
+                    <div className="inline-flex items-center gap-1 px-3 py-1 bg-accent/20 text-accent text-xs font-bold rounded-full mb-2">
+                      $1,799
                     </div>
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                      <div>
-                        <p className="text-3xl font-bold text-amber-600 dark:text-amber-400">Starting at $3,499</p>
-                        <p className="text-xs text-muted-foreground">Security report + implementation roadmap</p>
-                      </div>
-                      <Button 
-                        onClick={() => {
-                          trackButtonClick('Request Security Audit', 'Business Security');
-                          trackConversion('consulting_audit', 3499);
-                          setSelectedService({
-                            type: 'business',
-                            name: 'AI Security Audit',
-                            price: 3499
-                          });
-                          setModalOpen(true);
-                        }}
-                        variant="default"
-                        size="lg"
-                        className="bg-amber-600 hover:bg-amber-700 transition-all duration-300 hover:-translate-y-0.5"
-                      >
-                        REQUEST AUDIT
-                      </Button>
-                    </div>
+                    <h3 className="text-xl font-bold mb-2">Buying AI?</h3>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Before you spend $5,000+ on AI tools, let us vet them. We identify hidden costs, security risks, and give you a Buy/Don't Buy recommendation.
+                    </p>
+                    <Button 
+                      onClick={() => {
+                        trackButtonClick('Request Pre-Purchase Vetting', 'Business Consulting');
+                        trackConversion('consulting_vetting', 1799);
+                        setSelectedService({
+                          type: 'business',
+                          name: 'Pre-Purchase AI Tool Vetting',
+                          price: 1799
+                        });
+                        setModalOpen(true);
+                      }}
+                      variant="default"
+                      className="w-full"
+                    >
+                      Request Vetting — $1,799
+                    </Button>
                   </div>
                 </div>
               </Card>
-            )}
+            </ScrollReveal>
+
+            {/* Paid: Already Using AI - Security Audit */}
+            <ScrollReveal animation="fade-up" delay={200}>
+              <Card className="p-6 h-full bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 border-amber-200 dark:border-amber-800 hover:shadow-lg transition-all hover:-translate-y-1">
+                <div className="flex items-start gap-4">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center flex-shrink-0">
+                    <Shield className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="inline-flex items-center gap-1 px-3 py-1 bg-amber-500/20 text-amber-700 dark:text-amber-300 text-xs font-bold rounded-full mb-2">
+                      STARTING AT $3,499
+                    </div>
+                    <h3 className="text-xl font-bold mb-2">Already Bought AI?</h3>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Is your current AI secure and delivering ROI? We audit for data leaks, prompt injection vulnerabilities, and compliance gaps.
+                    </p>
+                    <Button 
+                      onClick={() => {
+                        trackButtonClick('Request Security Audit', 'Business Consulting');
+                        trackConversion('consulting_audit', 3499);
+                        setSelectedService({
+                          type: 'business',
+                          name: 'AI Security Audit',
+                          price: 3499
+                        });
+                        setModalOpen(true);
+                      }}
+                      variant="default"
+                      className="w-full bg-amber-600 hover:bg-amber-700"
+                    >
+                      Request Audit — From $3,499
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            </ScrollReveal>
+
+            {/* Free: Want to Leave AI - Exit Consultation */}
+            <ScrollReveal animation="fade-up" delay={300}>
+              <Card className="p-6 h-full bg-gradient-to-br from-violet-50 to-purple-50 dark:from-violet-950/30 dark:to-purple-950/30 border-violet-200 dark:border-violet-800 hover:shadow-lg transition-all hover:-translate-y-1">
+                <div className="flex items-start gap-4">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center flex-shrink-0">
+                    <span className="text-2xl">🚪</span>
+                  </div>
+                  <div className="flex-1">
+                    <div className="inline-flex items-center gap-1 px-3 py-1 bg-violet-500/20 text-violet-700 dark:text-violet-300 text-xs font-bold rounded-full mb-2">
+                      FREE CONSULTATION
+                    </div>
+                    <h3 className="text-xl font-bold mb-2">Want to Leave AI?</h3>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      AI not working for your business? We'll help you exit gracefully, migrate your data, and find alternative solutions.
+                    </p>
+                    <Button 
+                      onClick={() => {
+                        trackButtonClick('Schedule Exit Consultation', 'Business Consulting');
+                        setSelectedService({
+                          type: 'business',
+                          name: 'AI Exit Consultation (Free)',
+                          tier: 'Free'
+                        });
+                        setModalOpen(true);
+                      }}
+                      variant="outline"
+                      className="w-full border-violet-500/50 hover:bg-violet-500/10 text-violet-700 dark:text-violet-300"
+                    >
+                      Schedule Free Consultation
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Why InVision for Your AI - Enhanced */}
+      <section className="py-20 bg-background relative overflow-hidden">
+        <FlowingWaves variant="full" opacity={0.08} />
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full text-sm font-bold text-primary mb-4">
+              <Sparkles className="w-4 h-4" />
+              THE INVISION DIFFERENCE
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Why InVision for Your AI</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Trusted across Earth and beyond — because when it comes to AI, you deserve the absolute best.
+            </p>
+          </div>
+
+          <div className="max-w-6xl mx-auto">
+            {/* Main Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+              {/* Benefits List */}
+              <div className="space-y-6">
+                <ScrollReveal animation="slide-left" delay={0} threshold={0.2}>
+                  <Card className="p-6 hover:shadow-lg transition-all hover:-translate-y-1 border-l-4 border-l-primary">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <Shield className="w-6 h-6 text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold mb-2">Security-First Design</h3>
+                        <p className="text-muted-foreground">
+                          We audit data flows, enforce least-privilege access, and vet vendors. Your customer data stays protected — no exceptions.
+                        </p>
+                      </div>
+                    </div>
+                  </Card>
+                </ScrollReveal>
+
+                <ScrollReveal animation="slide-left" delay={100} threshold={0.2}>
+                  <Card className="p-6 hover:shadow-lg transition-all hover:-translate-y-1 border-l-4 border-l-accent">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <span className="text-2xl">🎯</span>
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold mb-2">Actually Trained (Not "Set & Forget")</h3>
+                        <p className="text-muted-foreground">
+                          We train your AI on YOUR business, test thoroughly, and optimize for 30 days. Real results, not empty promises.
+                        </p>
+                      </div>
+                    </div>
+                  </Card>
+                </ScrollReveal>
+
+                <ScrollReveal animation="slide-left" delay={200} threshold={0.2}>
+                  <Card className="p-6 hover:shadow-lg transition-all hover:-translate-y-1 border-l-4 border-l-success">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-success/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <Lock className="w-6 h-6 text-success" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold mb-2">No Vendor Lock-In</h3>
+                        <p className="text-muted-foreground">
+                          We build on open standards. Want to take it in-house later? You can. Your AI, your data, your choice.
+                        </p>
+                      </div>
+                    </div>
+                  </Card>
+                </ScrollReveal>
+
+                <ScrollReveal animation="slide-left" delay={300} threshold={0.2}>
+                  <Card className="p-6 hover:shadow-lg transition-all hover:-translate-y-1 border-l-4 border-l-amber-500">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <FileText className="w-6 h-6 text-amber-600" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold mb-2">Plain-English Handoff</h3>
+                        <p className="text-muted-foreground">
+                          Your team gets documentation they can actually understand — no tech jargon required. Real clarity for real people.
+                        </p>
+                      </div>
+                    </div>
+                  </Card>
+                </ScrollReveal>
+              </div>
+
+              {/* Image with decorative elements */}
+              <div className="flex items-center relative">
+                <div className="absolute -top-8 -left-8 w-32 h-32 bg-gradient-to-br from-primary/30 to-accent/30 rounded-full blur-3xl" />
+                <div className="absolute -bottom-8 -right-8 w-40 h-40 bg-gradient-to-br from-success/30 to-emerald-500/30 rounded-full blur-3xl" />
+                <div className="relative z-10 w-full">
+                  <img
+                    src={heroBusinessEliteMeeting}
+                    alt="Diverse team collaborating on AI solutions"
+                    className="rounded-3xl shadow-2xl hover:scale-[1.02] transition-transform duration-500"
+                  />
+                  {/* Floating badge */}
+                  <div className="absolute -bottom-6 -left-6 bg-background p-4 rounded-2xl shadow-xl border">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center">
+                        <span className="text-xl">🌍</span>
+                      </div>
+                      <div>
+                        <p className="font-bold text-lg">Trusted Worldwide</p>
+                        <p className="text-sm text-muted-foreground">From Mars to Jupiter 🚀</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Trust Bar */}
+            <Card className="p-8 bg-gradient-to-r from-primary/5 via-accent/10 to-primary/5 border-primary/20">
+              <div className="text-center mb-6">
+                <h3 className="text-2xl font-bold mb-2">The Best on Earth — And Beyond</h3>
+                <p className="text-muted-foreground">Whether you're in Ohio, California, or planning operations on Mars, InVision delivers excellence.</p>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div>
+                  <p className="text-3xl font-black gradient-text-primary">100+</p>
+                  <p className="text-sm text-muted-foreground">Businesses Served</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-black gradient-text-primary">99.9%</p>
+                  <p className="text-sm text-muted-foreground">Uptime Guarantee</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-black gradient-text-primary">24/7</p>
+                  <p className="text-sm text-muted-foreground">Support Available</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-black gradient-text-primary">∞</p>
+                  <p className="text-sm text-muted-foreground">Platforms Supported</p>
+                </div>
+              </div>
+            </Card>
           </div>
         </div>
       </section>
