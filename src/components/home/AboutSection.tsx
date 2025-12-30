@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, ArrowRight, Award } from "lucide-react";
 import heroAbout from "@/assets/hero-about-1.jpg";
@@ -13,14 +14,25 @@ const features = [
 ];
 
 export const AboutSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+  
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+
   return (
-    <section className="py-16 md:py-20 relative overflow-hidden">
-      {/* Background Image */}
-      <div 
+    <section ref={sectionRef} className="py-16 md:py-20 relative overflow-hidden">
+      {/* Parallax Background Image */}
+      <motion.div 
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${aboutSectionTeam})` }}
+        style={{ 
+          backgroundImage: `url(${aboutSectionTeam})`,
+          y: backgroundY
+        }}
       />
-      <div className="absolute inset-0 bg-primary/40" />
+      <div className="absolute inset-0 bg-primary/25" />
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}

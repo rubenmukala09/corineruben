@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Shield, Users, Brain, Clock, Sparkles } from "lucide-react";
 import serviceScamshield from "@/assets/service-scamshield.jpg";
@@ -47,10 +48,21 @@ const features = [
 ];
 
 export const ServicesShowcase = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+  
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+
   return (
-    <section className="py-32 bg-background relative overflow-hidden">
-      {/* Subtle background */}
-      <div className="absolute inset-0 opacity-[0.02]">
+    <section ref={sectionRef} className="py-32 bg-background relative overflow-hidden">
+      {/* Parallax animated background */}
+      <motion.div 
+        className="absolute inset-0 opacity-[0.02]"
+        style={{ y: backgroundY }}
+      >
         <div 
           className="absolute inset-0"
           style={{
@@ -58,7 +70,7 @@ export const ServicesShowcase = () => {
             backgroundSize: '40px 40px'
           }}
         />
-      </div>
+      </motion.div>
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
