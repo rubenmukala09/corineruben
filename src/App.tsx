@@ -507,24 +507,24 @@ function AnimatedRoutes() {
   const location = useLocation();
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait" initial={false}>
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageTransition><Index /></PageTransition>} />
-        <Route path="/training" element={<PageTransition><Training /></PageTransition>} />
-        <Route path="/business" element={<PageTransition><Business /></PageTransition>} />
-        <Route path="/about" element={<PageTransition><About /></PageTransition>} />
-        <Route path="/services" element={<PageTransition><Services /></PageTransition>} />
-        <Route path="/resources" element={<PageTransition><Resources /></PageTransition>} />
-        <Route path="/payment-success" element={<PageTransition><PaymentSuccess /></PageTransition>} />
-        <Route path="/payment-canceled" element={<PageTransition><PaymentCanceled /></PageTransition>} />
-        <Route path="/safety-vault" element={<PageTransition><SafetyVault /></PageTransition>} />
-        <Route path="/articles" element={<PageTransition><Articles /></PageTransition>} />
-        <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
-        <Route path="/careers" element={<PageTransition><Careers /></PageTransition>} />
-        <Route path="/auth" element={<PageTransition><Auth /></PageTransition>} />
-        <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
-        <Route path="/signup" element={<PageTransition><Signup /></PageTransition>} />
-        <Route path="/staff-signup" element={<PageTransition><StaffSignup /></PageTransition>} />
+        <Route path="/" element={<PageTransition variant="auto"><Index /></PageTransition>} />
+        <Route path="/training" element={<PageTransition variant="auto"><Training /></PageTransition>} />
+        <Route path="/business" element={<PageTransition variant="auto"><Business /></PageTransition>} />
+        <Route path="/about" element={<PageTransition variant="auto"><About /></PageTransition>} />
+        <Route path="/services" element={<PageTransition variant="auto"><Services /></PageTransition>} />
+        <Route path="/resources" element={<PageTransition variant="auto"><Resources /></PageTransition>} />
+        <Route path="/payment-success" element={<PageTransition variant="fade"><PaymentSuccess /></PageTransition>} />
+        <Route path="/payment-canceled" element={<PageTransition variant="fade"><PaymentCanceled /></PageTransition>} />
+        <Route path="/safety-vault" element={<PageTransition variant="auto"><SafetyVault /></PageTransition>} />
+        <Route path="/articles" element={<PageTransition variant="auto"><Articles /></PageTransition>} />
+        <Route path="/contact" element={<PageTransition variant="auto"><Contact /></PageTransition>} />
+        <Route path="/careers" element={<PageTransition variant="auto"><Careers /></PageTransition>} />
+        <Route path="/auth" element={<PageTransition variant="auto"><Auth /></PageTransition>} />
+        <Route path="/login" element={<PageTransition variant="auto"><Login /></PageTransition>} />
+        <Route path="/signup" element={<PageTransition variant="morph"><Signup /></PageTransition>} />
+        <Route path="/staff-signup" element={<PageTransition variant="morph"><StaffSignup /></PageTransition>} />
         <Route path="/setup" element={<PageTransition><Setup /></PageTransition>} />
         <Route path="/application-pending" element={<PageTransition><ApplicationPending /></PageTransition>} />
         <Route path="/admin" element={<PageTransition><AdminRoute><Admin /></AdminRoute></PageTransition>} />
@@ -567,10 +567,10 @@ function AnimatedRoutes() {
         <Route path="/portal/senior" element={<PageTransition><ProtectedRoute><SeniorDashboard /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/caregiver" element={<PageTransition><ProtectedRoute><CaregiverDashboard /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/healthcare" element={<PageTransition><ProtectedRoute><HealthcareDashboard /></ProtectedRoute></PageTransition>} />
-        <Route path="/privacy-policy" element={<PageTransition><PrivacyPolicy /></PageTransition>} />
-        <Route path="/terms-of-service" element={<PageTransition><TermsOfService /></PageTransition>} />
-        <Route path="/faq" element={<PageTransition><FAQ /></PageTransition>} />
-        <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+        <Route path="/privacy-policy" element={<PageTransition variant="fade"><PrivacyPolicy /></PageTransition>} />
+        <Route path="/terms-of-service" element={<PageTransition variant="fade"><TermsOfService /></PageTransition>} />
+        <Route path="/faq" element={<PageTransition variant="auto"><FAQ /></PageTransition>} />
+        <Route path="*" element={<PageTransition variant="blur"><NotFound /></PageTransition>} />
       </Routes>
     </AnimatePresence>
   );

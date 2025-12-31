@@ -9,37 +9,40 @@ interface UseScrollRevealOptions {
 
 export const useScrollReveal = (options: UseScrollRevealOptions = {}) => {
   const {
-    threshold = 0.15,
-    rootMargin = '-50px',
+    threshold = 0.08,
+    rootMargin = '0px 0px -20px 0px',
     triggerOnce = true,
     delay = 0,
   } = options;
 
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [hasTriggered, setHasTriggered] = useState(false);
+  const hasTriggered = useRef(false);
 
   const handleIntersection = useCallback(([entry]: IntersectionObserverEntry[]) => {
-    if (entry.isIntersecting && !hasTriggered) {
+    if (entry.isIntersecting && !hasTriggered.current) {
+      const show = () => {
+        requestAnimationFrame(() => {
+          setIsVisible(true);
+          if (triggerOnce) {
+            hasTriggered.current = true;
+          }
+        });
+      };
+      
       if (delay > 0) {
-        setTimeout(() => setIsVisible(true), delay);
+        setTimeout(show, delay);
       } else {
-        setIsVisible(true);
-      }
-      if (triggerOnce) {
-        setHasTriggered(true);
+        show();
       }
     } else if (!triggerOnce && !entry.isIntersecting) {
       setIsVisible(false);
     }
-  }, [hasTriggered, triggerOnce, delay]);
+  }, [triggerOnce, delay]);
 
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
-
-    // GPU acceleration hint
-    element.style.willChange = 'transform, opacity, filter';
 
     const observer = new IntersectionObserver(handleIntersection, { 
       threshold, 
@@ -48,26 +51,8 @@ export const useScrollReveal = (options: UseScrollRevealOptions = {}) => {
 
     observer.observe(element);
 
-    return () => {
-      observer.disconnect();
-      if (element) {
-        element.style.willChange = 'auto';
-      }
-    };
+    return () => observer.disconnect();
   }, [threshold, rootMargin, handleIntersection]);
-
-  // Cleanup will-change after animation
-  useEffect(() => {
-    if (isVisible && triggerOnce) {
-      const element = ref.current;
-      const timer = setTimeout(() => {
-        if (element) {
-          element.style.willChange = 'auto';
-        }
-      }, 800);
-      return () => clearTimeout(timer);
-    }
-  }, [isVisible, triggerOnce]);
 
   return { ref, isVisible };
 };
