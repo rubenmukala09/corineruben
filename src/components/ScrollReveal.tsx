@@ -5,37 +5,52 @@ import { cn } from '@/lib/utils';
 interface ScrollRevealProps {
   children: ReactNode;
   className?: string;
-  animation?: 'fade-up' | 'fade-in' | 'slide-left' | 'slide-right' | 'scale-in';
+  animation?: 'blur-up' | 'blur-in' | 'slide-left' | 'slide-right' | 'elastic' | 'flip' | 'sweep' | 'fade-up' | 'fade-in' | 'scale-in';
   delay?: number;
   threshold?: number;
+  duration?: 'fast' | 'normal' | 'slow';
 }
 
 export const ScrollReveal = ({
   children,
   className,
-  animation = 'fade-up',
+  animation = 'blur-up',
   delay = 0,
-  threshold = 0.1,
+  threshold = 0.15,
+  duration = 'normal',
 }: ScrollRevealProps) => {
-  const { ref, isVisible } = useScrollReveal({ threshold, triggerOnce: true });
+  const { ref, isVisible } = useScrollReveal({ threshold, triggerOnce: true, delay });
 
-  const animationClasses = {
-    'fade-up': 'scroll-reveal-fade-up',
-    'fade-in': 'scroll-reveal-fade-in',
-    'slide-left': 'scroll-reveal-slide-left',
-    'slide-right': 'scroll-reveal-slide-right',
-    'scale-in': 'scroll-reveal-scale-in',
+  // Map old animation names to new ones for backward compatibility
+  const animationMap: Record<string, string> = {
+    'blur-up': 'scroll-blur-up',
+    'blur-in': 'scroll-blur-in',
+    'slide-left': 'scroll-slide-left',
+    'slide-right': 'scroll-slide-right',
+    'elastic': 'scroll-elastic',
+    'flip': 'scroll-flip',
+    'sweep': 'scroll-sweep',
+    // Legacy mappings
+    'fade-up': 'scroll-blur-up',
+    'fade-in': 'scroll-blur-in',
+    'scale-in': 'scroll-elastic',
+  };
+
+  const durationClasses = {
+    'fast': 'scroll-duration-fast',
+    'normal': 'scroll-duration-normal',
+    'slow': 'scroll-duration-slow',
   };
 
   return (
     <div
       ref={ref}
       className={cn(
-        animationClasses[animation],
-        isVisible && 'scroll-reveal-visible',
+        animationMap[animation] || 'scroll-blur-up',
+        durationClasses[duration],
+        isVisible && 'scroll-visible',
         className
       )}
-      style={{ animationDelay: `${delay}ms` }}
     >
       {children}
     </div>
