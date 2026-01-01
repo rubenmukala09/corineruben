@@ -5,6 +5,7 @@ import { ArrowRight, Calendar } from "lucide-react";
 import heroArticles1 from "@/assets/hero-articles-1.jpg";
 import heroArticles2 from "@/assets/hero-articles-2.jpg";
 import heroArticles3 from "@/assets/hero-articles-3.jpg";
+import { GeometricCorner, DottedPattern, GridPattern, FloatingShapes } from "@/components/ui/GeometricDecorations";
 
 const articles = [
   {
@@ -31,6 +32,24 @@ const articles = [
 export const BlogPreview = () => {
   return (
     <section className="py-24 bg-muted/30 relative overflow-hidden">
+      {/* Grid pattern */}
+      <GridPattern className="opacity-50" />
+      
+      {/* Floating shapes */}
+      <FloatingShapes />
+      
+      {/* Geometric corner accents */}
+      <GeometricCorner position="top-right" variant="lines" />
+      <GeometricCorner position="bottom-left" variant="dots" />
+      
+      {/* Diagonal stripe decorations */}
+      <div className="absolute top-0 left-0 w-40 h-40 pointer-events-none">
+        <div className="absolute inset-0 bg-primary/5 transform -skew-x-12" />
+      </div>
+      <div className="absolute bottom-0 right-0 w-48 h-48 pointer-events-none">
+        <div className="absolute inset-0 bg-accent/5 transform skew-x-12" />
+      </div>
+      
       {/* Decorative elements */}
       <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-primary/5" />
       <div className="absolute bottom-10 right-20 w-24 h-24 rounded-full bg-accent/10" />
@@ -43,9 +62,13 @@ export const BlogPreview = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
+          {/* Angular badge */}
+          <div 
+            className="inline-flex items-center gap-2 px-5 py-2 bg-primary/10 text-primary text-sm font-semibold uppercase tracking-wider mb-4 border border-primary/20"
+            style={{ clipPath: "polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%)" }}
+          >
             Latest Updates
-          </span>
+          </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
             Learn From Our{" "}
             <span className="text-primary">Latest Blog</span>
@@ -53,6 +76,9 @@ export const BlogPreview = () => {
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Stay informed with the latest cybersecurity tips and protection strategies.
           </p>
+          
+          {/* Decorative dotted line */}
+          <DottedPattern direction="horizontal" length={8} className="justify-center mt-6" />
         </motion.div>
 
         {/* Articles Grid */}

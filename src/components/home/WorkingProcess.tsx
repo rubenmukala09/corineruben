@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { FileText, Search, Shield, Smile } from "lucide-react";
 import familyCyberProtection from "@/assets/family-cyber-protection.jpg";
+import { HexagonIcon, GeometricCorner, DottedPattern, GridPattern, FloatingShapes } from "@/components/ui/GeometricDecorations";
 
 const steps = [
   {
@@ -32,9 +33,23 @@ const steps = [
 export const WorkingProcess = () => {
   return (
     <section className="py-24 bg-background relative overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute top-1/4 right-10 w-24 h-24 rounded-full bg-accent/10" />
-      <div className="absolute bottom-1/4 left-10 w-20 h-20 rounded-full bg-primary/5" />
+      {/* Grid pattern */}
+      <GridPattern />
+      
+      {/* Floating shapes */}
+      <FloatingShapes />
+      
+      {/* Geometric corner accents */}
+      <GeometricCorner position="top-right" variant="lines" />
+      <GeometricCorner position="bottom-left" variant="dots" />
+      
+      {/* Diagonal stripe decorations */}
+      <div className="absolute -top-10 right-10 w-40 h-40 pointer-events-none">
+        <div className="absolute inset-0 bg-primary/5 transform skew-x-12 rotate-6" />
+      </div>
+      <div className="absolute -bottom-10 left-10 w-32 h-32 pointer-events-none">
+        <div className="absolute inset-0 bg-accent/5 transform -skew-x-12 -rotate-6" />
+      </div>
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Header with Image */}
@@ -67,9 +82,13 @@ export const WorkingProcess = () => {
             viewport={{ once: true }}
             className="order-1 lg:order-2"
           >
-            <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
+            {/* Angular badge */}
+            <div 
+              className="inline-flex items-center gap-2 px-5 py-2 bg-primary text-primary-foreground text-sm font-semibold uppercase tracking-wider mb-4"
+              style={{ clipPath: "polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%)" }}
+            >
               How It Works
-            </span>
+            </div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
               Get Protected in{" "}
               <span className="text-primary">Four Simple Steps</span>
@@ -77,6 +96,9 @@ export const WorkingProcess = () => {
             <p className="text-muted-foreground text-lg">
               Our streamlined process makes getting protected easy and stress-free.
             </p>
+            
+            {/* Decorative dotted line */}
+            <DottedPattern direction="horizontal" length={6} className="mt-6" />
           </motion.div>
         </div>
 

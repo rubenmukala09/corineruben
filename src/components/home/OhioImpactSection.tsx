@@ -4,6 +4,7 @@ import { MapPin, Users, Shield, Heart, Building2, Star, CheckCircle } from "luci
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import ohioLandscapeBg from "@/assets/ohio-landscape-bg.jpg";
+import { HexagonIcon, GeometricCorner, DottedPattern, GridPattern } from "@/components/ui/GeometricDecorations";
 
 const impactStats = [
   { icon: Users, value: 246, suffix: "+", label: "Ohio Families Protected" },
@@ -82,8 +83,19 @@ export const OhioImpactSection = () => {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${ohioLandscapeBg})` }}
       />
-      {/* Blur & Dark Overlay for readability */}
       <div className="absolute inset-0 backdrop-blur-md bg-background/80" />
+      
+      {/* Grid pattern */}
+      <GridPattern />
+      
+      {/* Geometric corner accents */}
+      <GeometricCorner position="top-right" variant="dots" />
+      <GeometricCorner position="bottom-left" variant="lines" />
+      
+      {/* Diagonal stripe decorations */}
+      <div className="absolute top-0 right-0 w-48 h-48 pointer-events-none">
+        <div className="absolute inset-0 bg-primary/5 transform skew-x-12 rotate-6" />
+      </div>
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
@@ -93,7 +105,11 @@ export const OhioImpactSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6 backdrop-blur-sm">
+          {/* Angular badge */}
+          <div 
+            className="inline-flex items-center gap-2 px-5 py-2 bg-primary/10 border border-primary/20 mb-6 backdrop-blur-sm"
+            style={{ clipPath: "polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%)" }}
+          >
             <MapPin className="w-4 h-4 text-primary" />
             <span className="text-sm font-bold text-primary uppercase tracking-wider">Ohio Proud</span>
           </div>
@@ -106,6 +122,9 @@ export const OhioImpactSection = () => {
             We're not a faceless corporation. We're your neighbors—veteran-owned, Ohio-based, 
             and committed to protecting families across every county.
           </p>
+          
+          {/* Decorative dotted line */}
+          <DottedPattern direction="horizontal" length={8} className="justify-center mt-6" />
         </motion.div>
 
         {/* Stats Grid - Animated counters with glassmorphism */}
@@ -122,10 +141,19 @@ export const OhioImpactSection = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="backdrop-blur-xl bg-card/80 rounded-2xl p-6 text-center border border-border/50 hover:border-primary/30 hover:shadow-xl transition-all duration-300"
+              className="backdrop-blur-xl bg-card/80 rounded-2xl p-6 text-center border border-border/50 hover:border-primary/30 hover:shadow-xl transition-all duration-300 relative overflow-hidden"
             >
-              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mx-auto mb-4">
-                <stat.icon className="w-7 h-7 text-primary" />
+              {/* Corner accent */}
+              <div 
+                className="absolute top-0 right-0 w-0 h-0"
+                style={{ borderTop: "20px solid hsl(var(--primary) / 0.15)", borderLeft: "20px solid transparent" }}
+              />
+              
+              {/* Hexagon icon */}
+              <div className="flex justify-center mb-4">
+                <HexagonIcon size="md" animated>
+                  <stat.icon className="w-7 h-7 text-primary" />
+                </HexagonIcon>
               </div>
               <div className="text-3xl md:text-4xl font-bold text-primary mb-1">
                 <AnimatedCounter value={stat.value} suffix={stat.suffix} />

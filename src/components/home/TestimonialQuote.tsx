@@ -4,6 +4,7 @@ import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react";
 import testimonialImage from "@/assets/testimonial-1.jpg";
 import testimonialImage2 from "@/assets/testimonial-2.jpg";
 import testimonialImage3 from "@/assets/testimonial-3.jpg";
+import { GeometricCorner, DottedPattern, GridPattern, FloatingShapes } from "@/components/ui/GeometricDecorations";
 
 const testimonials = [
   {
@@ -39,6 +40,24 @@ export const TestimonialQuote = () => {
 
   return (
     <section className="py-24 bg-muted/30 relative overflow-hidden">
+      {/* Grid pattern */}
+      <GridPattern className="opacity-50" />
+      
+      {/* Floating shapes */}
+      <FloatingShapes />
+      
+      {/* Geometric corner accents */}
+      <GeometricCorner position="top-left" variant="dots" />
+      <GeometricCorner position="bottom-right" variant="lines" />
+      
+      {/* Diagonal stripe decorations */}
+      <div className="absolute -top-10 right-20 w-40 h-40 pointer-events-none">
+        <div className="absolute inset-0 bg-primary/5 transform skew-x-12 rotate-6" />
+      </div>
+      <div className="absolute -bottom-10 left-10 w-32 h-32 pointer-events-none">
+        <div className="absolute inset-0 bg-accent/5 transform -skew-x-12 -rotate-6" />
+      </div>
+      
       {/* Decorative elements */}
       <div className="absolute top-20 right-20 w-40 h-40 rounded-full bg-primary/5" />
       <div className="absolute bottom-10 left-20 w-28 h-28 rounded-full bg-accent/10" />
@@ -51,13 +70,20 @@ export const TestimonialQuote = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
+          {/* Angular badge */}
+          <div 
+            className="inline-flex items-center gap-2 px-5 py-2 bg-primary/10 text-primary text-sm font-semibold uppercase tracking-wider mb-4 border border-primary/20"
+            style={{ clipPath: "polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%)" }}
+          >
             Client Testimonials
-          </span>
+          </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
             What Our Clients{" "}
             <span className="text-primary">Have To Say</span>
           </h2>
+          
+          {/* Decorative dotted line */}
+          <DottedPattern direction="horizontal" length={8} className="justify-center mt-6" />
         </motion.div>
 
         {/* Testimonial Card */}

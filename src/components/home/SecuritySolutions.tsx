@@ -6,6 +6,7 @@ import heroServices3 from "@/assets/hero-services-3.jpg";
 import heroServices4 from "@/assets/hero-services-4.jpg";
 import communityTraining from "@/assets/community-training.jpg";
 import securityExpert from "@/assets/security-expert.jpg";
+import { GeometricCorner, DottedPattern, GridPattern, FloatingShapes } from "@/components/ui/GeometricDecorations";
 
 const portfolioImages = [
   { src: heroServices1, alt: "Security Assessment", category: "Assessment" },
@@ -19,6 +20,25 @@ const portfolioImages = [
 export const SecuritySolutions = () => {
   return (
     <section className="py-24 bg-background relative overflow-hidden">
+      {/* Grid pattern */}
+      <GridPattern />
+      
+      {/* Floating shapes */}
+      <FloatingShapes />
+      
+      {/* Geometric corner accents */}
+      <GeometricCorner position="top-left" variant="dots" />
+      <GeometricCorner position="bottom-right" variant="lines" />
+      
+      {/* Diagonal stripe decorations */}
+      <div className="absolute -top-10 -right-10 w-48 h-48 pointer-events-none">
+        <div className="absolute inset-0 bg-primary/5 transform skew-x-12 rotate-12" />
+        <div className="absolute inset-4 bg-primary/5 transform skew-x-12 rotate-12 opacity-50" />
+      </div>
+      <div className="absolute -bottom-10 -left-10 w-40 h-40 pointer-events-none">
+        <div className="absolute inset-0 bg-accent/5 transform -skew-x-12 -rotate-12" />
+      </div>
+      
       {/* Decorative elements */}
       <motion.div 
         className="absolute top-20 right-10 w-32 h-32 rounded-full bg-primary/5"
@@ -39,9 +59,13 @@ export const SecuritySolutions = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
+          {/* Angular badge */}
+          <div 
+            className="inline-flex items-center gap-2 px-5 py-2 bg-primary/10 text-primary text-sm font-semibold uppercase tracking-wider mb-4 border border-primary/20"
+            style={{ clipPath: "polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%)" }}
+          >
             Our Portfolio
-          </span>
+          </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
             Check Our Portfolio{" "}
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">To See Quality</span>
@@ -49,6 +73,9 @@ export const SecuritySolutions = () => {
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             See the quality of our work and the trust our clients place in us.
           </p>
+          
+          {/* Decorative dotted line */}
+          <DottedPattern direction="horizontal" length={8} className="justify-center mt-6" />
         </motion.div>
 
         {/* Portfolio Grid with Animated Circular Images */}
