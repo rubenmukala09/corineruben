@@ -9,8 +9,8 @@ interface UseScrollRevealOptions {
 
 export const useScrollReveal = (options: UseScrollRevealOptions = {}) => {
   const {
-    threshold = 0.08,
-    rootMargin = '0px 0px -20px 0px',
+    threshold = 0.03,
+    rootMargin = '50px 0px 0px 0px',
     triggerOnce = true,
     delay = 0,
   } = options;
@@ -19,26 +19,28 @@ export const useScrollReveal = (options: UseScrollRevealOptions = {}) => {
   const [isVisible, setIsVisible] = useState(false);
   const hasTriggered = useRef(false);
 
+  // Check if element is already in viewport on mount
+  useEffect(() => {
+    const element = ref.current;
+    if (!element || hasTriggered.current) return;
+    
+    const rect = element.getBoundingClientRect();
+    const isAboveFold = rect.top < window.innerHeight && rect.bottom > 0;
+    
+    if (isAboveFold) {
+      setIsVisible(true);
+      if (triggerOnce) hasTriggered.current = true;
+    }
+  }, [triggerOnce]);
+
   const handleIntersection = useCallback(([entry]: IntersectionObserverEntry[]) => {
     if (entry.isIntersecting && !hasTriggered.current) {
-      const show = () => {
-        requestAnimationFrame(() => {
-          setIsVisible(true);
-          if (triggerOnce) {
-            hasTriggered.current = true;
-          }
-        });
-      };
-      
-      if (delay > 0) {
-        setTimeout(show, delay);
-      } else {
-        show();
-      }
+      setIsVisible(true);
+      if (triggerOnce) hasTriggered.current = true;
     } else if (!triggerOnce && !entry.isIntersecting) {
       setIsVisible(false);
     }
-  }, [triggerOnce, delay]);
+  }, [triggerOnce]);
 
   useEffect(() => {
     const element = ref.current;

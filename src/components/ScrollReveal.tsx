@@ -53,14 +53,14 @@ export const ScrollReveal = memo(({
   className,
   animation = 'blur-up',
   delay = 0,
-  threshold = 0.1,
+  threshold = 0.05,
   duration = 'normal',
 }: ScrollRevealProps) => {
   const { ref, isVisible } = useScrollReveal({ 
     threshold, 
     triggerOnce: true, 
     delay,
-    rootMargin: '0px 0px -30px 0px',
+    rootMargin: '30px 0px 0px 0px',
   });
 
   return (
