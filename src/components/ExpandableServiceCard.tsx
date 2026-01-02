@@ -35,28 +35,23 @@ export const ExpandableServiceCard = ({
         )}
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <div className="p-8">
-          <div className="flex items-start gap-4">
-            <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-400 group-hover:rotate-[5deg]">
+        <div className="p-5 min-h-[120px] flex items-center">
+          <div className="flex items-center gap-3 w-full">
+            <div className="w-11 h-11 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-400 group-hover:rotate-[5deg]">
               {icon}
             </div>
-            <div className="flex-1">
-              <div className="flex items-center justify-between">
-                <h3 className="text-2xl font-bold mb-3">{title}</h3>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between gap-2">
+                <h3 className="text-lg font-bold">{title}</h3>
                 <motion.div
                   animate={{ rotate: isExpanded ? 180 : 0 }}
                   transition={{ duration: 0.3 }}
                   className="flex-shrink-0"
                 >
-                  <ChevronDown className="w-6 h-6 text-muted-foreground" />
+                  <ChevronDown className="w-5 h-5 text-muted-foreground" />
                 </motion.div>
               </div>
-              <p className="text-muted-foreground">{summary}</p>
-              {!isExpanded && (
-                <p className="text-sm text-primary mt-2 font-medium">
-                  Click to learn more →
-                </p>
-              )}
+              <p className="text-sm text-muted-foreground line-clamp-2">{summary}</p>
             </div>
           </div>
         </div>
@@ -71,7 +66,7 @@ export const ExpandableServiceCard = ({
               className="overflow-hidden"
             >
               <div 
-                className="px-8 pb-8 pt-4 border-t border-border/50"
+                className="px-5 pb-5 pt-3 border-t border-border/50"
                 onClick={(e) => e.stopPropagation()}
               >
                 {children}
