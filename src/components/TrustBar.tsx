@@ -32,7 +32,7 @@ const TrustBar = () => {
 
     const duration = 2500;
     const startTime = performance.now();
-    const end = 500;
+    const end = 100;
 
     const easeOutQuad = (t: number) => t * (2 - t);
 
@@ -53,7 +53,7 @@ const TrustBar = () => {
   }, [isVisible]);
 
   const trustIndicators = [
-    { icon: Shield, text: "500+ Families Protected", useCounter: true, count: familiesCount },
+    { icon: Shield, text: "100+ Families Protected", useCounter: true, count: familiesCount },
     { icon: MapPin, text: "Serving Greater Dayton Area" },
     { icon: Award, text: "Veteran Supportive Business" },
     { icon: UserCheck, text: "Expert Cybersecurity Team" },

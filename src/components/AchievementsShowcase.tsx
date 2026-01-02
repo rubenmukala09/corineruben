@@ -3,8 +3,8 @@ import { Award, Star, CheckCircle, Sparkles, Trophy } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 const stats = [
-  { value: "15+", label: "Projects Completed", icon: Trophy },
-  { value: "50K+", label: "Users Protected", icon: Star },
+  { value: "12+", label: "Projects Completed", icon: Trophy },
+  { value: "100+", label: "Families Protected", icon: Star },
   { value: "99.9%", label: "Uptime", icon: CheckCircle },
   { value: "24/7", label: "Support", icon: Sparkles },
 ];

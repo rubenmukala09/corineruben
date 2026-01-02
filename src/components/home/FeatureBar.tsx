@@ -29,10 +29,10 @@ const features = [
 ];
 
 const stats = [
-  { value: "246+", label: "Protected Clients" },
-  { value: "299K", label: "Scams Blocked" },
-  { value: "364+", label: "Ohio Partners" },
-  { value: "11+", label: "Years Experience" },
+  { value: "100+", label: "Protected Clients" },
+  { value: "450+", label: "Scams Blocked" },
+  { value: "15+", label: "Ohio Partners" },
+  { value: "Est. 2024", label: "Founded" },
 ];
 
 export const FeatureBar = () => {

@@ -26,7 +26,7 @@ const TrustBadges = () => {
     {
       icon: Users,
       title: "Proven Results",
-      description: "500+ Families Protected",
+      description: "100+ Families Protected",
       emoji: "👨‍👩‍👧‍👦",
       gradient: "from-success/20 to-emerald-500/20"
     },

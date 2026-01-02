@@ -7,10 +7,10 @@ import ohioLandscapeBg from "@/assets/ohio-landscape-bg.jpg";
 import { HexagonIcon, GeometricCorner, DottedPattern, GridPattern } from "@/components/ui/GeometricDecorations";
 
 const impactStats = [
-  { icon: Users, value: 246, suffix: "+", label: "Ohio Families Protected" },
-  { icon: Shield, value: 299, suffix: "K", label: "Scam Attempts Blocked" },
-  { icon: Building2, value: 364, suffix: "+", label: "Local Business Partners" },
-  { icon: Heart, value: 11, suffix: "K", label: "Community Events" },
+  { icon: Users, value: 100, suffix: "+", label: "Ohio Families Protected" },
+  { icon: Shield, value: 450, suffix: "+", label: "Scam Attempts Blocked" },
+  { icon: Building2, value: 15, suffix: "+", label: "Local Business Partners" },
+  { icon: Heart, value: 8, suffix: "+", label: "Community Events" },
 ];
 
 const ohioCities = [

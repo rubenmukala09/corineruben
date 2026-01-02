@@ -2043,7 +2043,7 @@ function Business() {
             <Card className="p-8 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 border-primary/20">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
                 <div>
-                  <p className="text-4xl font-black gradient-text-primary mb-1">100+</p>
+                  <p className="text-4xl font-black gradient-text-primary mb-1">15+</p>
                   <p className="text-sm text-muted-foreground">Businesses Served</p>
                 </div>
                 <div>

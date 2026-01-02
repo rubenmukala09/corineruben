@@ -129,8 +129,8 @@ export const AboutSection = () => {
                 <div className="relative">
                   <HexagonIcon size="lg" gradient className="w-24 h-24">
                     <div className="text-center text-white">
-                      <div className="text-2xl font-bold">11+</div>
-                      <div className="text-[10px] font-medium opacity-90">Years</div>
+                      <div className="text-2xl font-bold">Est.</div>
+                      <div className="text-[10px] font-medium opacity-90">2024</div>
                     </div>
                   </HexagonIcon>
                 </div>

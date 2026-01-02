@@ -146,7 +146,7 @@ export const CompanyIntroSection = () => {
                   { icon: Eye, value: "24/7", label: "Monitoring", gradient: "from-blue-500 to-indigo-500" },
                   { icon: Zap, value: "< 1s", label: "Response Time", gradient: "from-amber-500 to-orange-500" },
                   { icon: Shield, value: "99.9%", label: "Success Rate", gradient: "from-emerald-500 to-teal-500" },
-                  { icon: Users, value: "500+", label: "Families Protected", gradient: "from-rose-500 to-pink-500" },
+                  { icon: Users, value: "100+", label: "Families Protected", gradient: "from-rose-500 to-pink-500" },
                 ].map((stat, index) => (
                   <motion.div key={index} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} whileHover={{ scale: 1.05 }} className="backdrop-blur-xl bg-white/10 rounded-2xl p-6 border border-white/20 hover:border-white/40 transition-all text-center shadow-lg">
                     <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${stat.gradient} flex items-center justify-center mx-auto mb-3`}>

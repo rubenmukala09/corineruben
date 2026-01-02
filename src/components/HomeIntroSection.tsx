@@ -51,7 +51,7 @@ export const HomeIntroSection = () => {
     { icon: Zap, text: "24-hour response time guarantee" },
     { icon: Heart, text: "Veteran-owned & operated" },
     { icon: Globe, text: "Multilingual support (EN, ES, FR)" },
-    { icon: Award, text: "500+ families protected" },
+    { icon: Award, text: "100+ families protected" },
     { icon: Sparkles, text: "AI-powered threat detection" }
   ];
 

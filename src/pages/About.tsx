@@ -95,8 +95,8 @@ function About() {
     },
     {
       year: "Early 2024",
-      title: "First 100 Families Protected",
-      description: "Our training programs reached 100 families in the first 6 months, preventing an estimated $2M in potential fraud."
+      title: "First Families Protected",
+      description: "Our training programs began reaching families in the Dayton area, helping them identify and avoid sophisticated scam attempts."
     },
     {
       year: "Late 2024",
@@ -106,12 +106,12 @@ function About() {
     {
       year: "Early 2025",
       title: "Expanded to Business Services",
-      description: "Launched corporate training programs to help businesses protect their employees and operations from social engineering attacks."
+      description: "Launched corporate training programs and AI automation services to help businesses protect their operations."
     },
     {
       year: "Present Day",
-      title: "500+ Families Strong",
-      description: "Today we've protected over 500 families across Ohio and helped prevent over $15M in potential fraud losses."
+      title: "Growing & Protecting",
+      description: "Today we're protecting over 100 families across Ohio and growing our mission to create a scam-free community."
     }
   ];
 
@@ -169,7 +169,7 @@ function About() {
             </motion.span>
           </AnimatePresence>
         }
-        subheadline="From victims to protectors. Serving 500+ families across Ohio."
+        subheadline="From victims to protectors. Serving 100+ families across Ohio."
       >
         <FloatingShapes />
       </Hero>
@@ -209,7 +209,7 @@ function About() {
                   className="rounded-2xl shadow-2xl w-full h-auto border-4 border-primary/20"
                 />
                 <div className="absolute -bottom-4 sm:-bottom-6 -right-4 sm:-right-6 bg-primary text-primary-foreground p-4 sm:p-6 md:p-8 rounded-xl shadow-xl">
-                  <div className="text-3xl sm:text-4xl md:text-5xl font-bold mb-1 sm:mb-2">500+</div>
+                  <div className="text-3xl sm:text-4xl md:text-5xl font-bold mb-1 sm:mb-2">100+</div>
                   <div className="text-xs sm:text-sm md:text-base">Families Protected</div>
                 </div>
               </div>
