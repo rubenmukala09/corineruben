@@ -62,3 +62,6 @@ verify_jwt = true
 
 [functions.create-payment-intent]
 verify_jwt = false
+
+[functions.create-cart-payment-intent]
+verify_jwt = false

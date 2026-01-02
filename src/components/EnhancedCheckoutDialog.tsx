@@ -244,26 +244,40 @@ function CardPaymentWrapper({
 
     setLoading(true);
     try {
-      // Create payment intent via edge function
-      const { data, error } = await supabase.functions.invoke('create-payment-intent', {
+      // Calculate total with veteran discount
+      const subtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const discount = isVeteran ? subtotal * 0.1 : 0;
+      const finalAmount = Math.round((subtotal - discount) * 100); // Convert to cents
+
+      // Create payment intent via edge function using raw amount
+      const { data, error } = await supabase.functions.invoke('create-cart-payment-intent', {
         body: {
-          priceId: items[0]?.stripe_price_id || 'price_cart_checkout',
-          mode: 'payment',
+          amount: finalAmount,
           customerEmail: formData.email,
           customerName: formData.name,
           isVeteran,
+          items: items.map(i => ({
+            id: i.id,
+            name: i.name,
+            price: i.price,
+            quantity: i.quantity
+          })),
           metadata: {
-            items: items.map(i => `${i.name} x${i.quantity}`).join(', '),
             source: 'cart_checkout'
           }
         }
       });
 
       if (error) throw error;
+      
+      if (!data?.clientSecret) {
+        throw new Error('Failed to get payment client secret');
+      }
 
       setClientSecret(data.clientSecret);
       setStep('payment');
     } catch (error: any) {
+      console.error('Payment initialization error:', error);
       toast.error(error.message || 'Failed to initialize payment');
     } finally {
       setLoading(false);
