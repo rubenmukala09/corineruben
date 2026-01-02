@@ -13,43 +13,25 @@ const SITE_URL = "https://invisionnetwork.com";
 
 export const SITEMAP_PAGES: SitemapPage[] = [
   // High priority pages
-  {
-    path: "/",
-    priority: 1.0,
-    changefreq: "daily",
-  },
-  {
-    path: "/training",
-    priority: 0.9,
-    changefreq: "weekly",
-  },
-  {
-    path: "/business",
-    priority: 0.9,
-    changefreq: "weekly",
-  },
-  {
-    path: "/contact",
-    priority: 0.8,
-    changefreq: "monthly",
-  },
+  { path: "/", priority: 1.0, changefreq: "daily" },
+  { path: "/training", priority: 0.9, changefreq: "weekly" },
+  { path: "/business", priority: 0.9, changefreq: "weekly" },
+  
+  // Business service sub-pages (SEO critical)
+  { path: "/business/ai-receptionist", priority: 0.85, changefreq: "weekly" },
+  { path: "/business/ai-automation", priority: 0.85, changefreq: "weekly" },
+  { path: "/business/website-design", priority: 0.85, changefreq: "weekly" },
+  { path: "/business/website-insurance", priority: 0.85, changefreq: "weekly" },
   
   // Medium priority pages
-  {
-    path: "/about",
-    priority: 0.7,
-    changefreq: "monthly",
-  },
-  {
-    path: "/resources",
-    priority: 0.7,
-    changefreq: "weekly",
-  },
-  {
-    path: "/careers",
-    priority: 0.6,
-    changefreq: "monthly",
-  },
+  { path: "/resources", priority: 0.8, changefreq: "weekly" },
+  { path: "/contact", priority: 0.8, changefreq: "monthly" },
+  { path: "/about", priority: 0.7, changefreq: "monthly" },
+  { path: "/services", priority: 0.7, changefreq: "weekly" },
+  { path: "/faq", priority: 0.7, changefreq: "monthly" },
+  { path: "/articles", priority: 0.7, changefreq: "weekly" },
+  { path: "/safety-vault", priority: 0.7, changefreq: "weekly" },
+  { path: "/careers", priority: 0.6, changefreq: "monthly" },
   
   // Legal pages
   {

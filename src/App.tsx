@@ -58,6 +58,11 @@ const Business = lazy(() => {
   });
 });
 
+const AIReceptionist = lazy(() => import("./pages/business/AIReceptionist"));
+const AIAutomation = lazy(() => import("./pages/business/AIAutomation"));
+const WebsiteDesign = lazy(() => import("./pages/business/WebsiteDesign"));
+const WebsiteInsurance = lazy(() => import("./pages/business/WebsiteInsurance"));
+
 const About = lazy(() => {
   performanceMonitor.startTracking('About');
   return import("./pages/About").then(module => {
@@ -513,6 +518,10 @@ function AnimatedRoutes() {
         <Route path="/" element={<PageTransition variant="auto"><Index /></PageTransition>} />
         <Route path="/training" element={<PageTransition variant="auto"><Training /></PageTransition>} />
         <Route path="/business" element={<PageTransition variant="auto"><Business /></PageTransition>} />
+        <Route path="/business/ai-receptionist" element={<PageTransition variant="auto"><AIReceptionist /></PageTransition>} />
+        <Route path="/business/ai-automation" element={<PageTransition variant="auto"><AIAutomation /></PageTransition>} />
+        <Route path="/business/website-design" element={<PageTransition variant="auto"><WebsiteDesign /></PageTransition>} />
+        <Route path="/business/website-insurance" element={<PageTransition variant="auto"><WebsiteInsurance /></PageTransition>} />
         <Route path="/about" element={<PageTransition variant="auto"><About /></PageTransition>} />
         <Route path="/services" element={<PageTransition variant="auto"><Services /></PageTransition>} />
         <Route path="/resources" element={<PageTransition variant="auto"><Resources /></PageTransition>} />
