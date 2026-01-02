@@ -16,6 +16,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Download, Shield, ShoppingCart, Star, Loader2, Zap, Award, CheckCircle, Gift, BookOpen, Package, Sparkles, Users, TrendingUp, Heart, Headphones, Clock, Lock, FileText, Video, Podcast, Globe } from "lucide-react";
+import { EmbeddedPaymentModal } from "@/components/payment/EmbeddedPaymentModal";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import heroResourcesOffice from "@/assets/hero-resources-office.jpg";
 import heroResourcesReading from "@/assets/hero-resources-reading.jpg";
@@ -118,6 +119,14 @@ function Resources() {
   const { triggerEmptyCartHelp } = useCartFeedback();
   const [loading, setLoading] = useState<string | null>(null);
   const [currentHeadlineIndex, setCurrentHeadlineIndex] = useState(0);
+  const [embeddedPaymentOpen, setEmbeddedPaymentOpen] = useState(false);
+  const [embeddedPaymentConfig, setEmbeddedPaymentConfig] = useState<{
+    mode: "subscription" | "payment";
+    priceId: string;
+    productName: string;
+    amount: number;
+    description?: string;
+  } | null>(null);
 
   // Track when cart is manually emptied to show help
   useEffect(() => {
@@ -159,33 +168,16 @@ function Resources() {
     p.tags?.some((tag: string) => ['physical', 'device', 'hardware', 'kit', 'equipment'].includes(tag.toLowerCase()))
   ) || [];
 
-  const handleBuyNow = async (productId: string) => {
-    try {
-      setLoading(productId);
-      
-      const { data, error } = await supabase.functions.invoke('create-product-payment', {
-        body: { productId, quantity: 1 }
-      });
-
-      if (error) throw error;
-
-      if (data?.url) {
-        window.open(data.url, '_blank');
-        toast({
-          title: "Redirecting to Checkout",
-          description: "Opening secure payment page...",
-        });
-      }
-    } catch (error: any) {
-      console.error('Payment error:', error);
-      toast({
-        title: "Payment Error",
-        description: error.message || "Failed to create checkout session",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(null);
-    }
+  const handleBuyNow = (product: typeof staticBooks[0] | typeof staticPhysicalProducts[0]) => {
+    // Use embedded payment modal instead of redirect
+    setEmbeddedPaymentConfig({
+      mode: "payment",
+      priceId: product.stripe_price_id,
+      productName: product.name,
+      amount: Math.round(product.price * 100), // Convert to cents
+      description: product.description
+    });
+    setEmbeddedPaymentOpen(true);
   };
 
   const handleAddToCart = (book: typeof staticBooks[0]) => {
@@ -377,18 +369,11 @@ function Resources() {
                       </Button>
                       <Button 
                         size="sm"
-                        onClick={() => handleBuyNow(book.id)}
-                        disabled={loading === book.id}
+                        onClick={() => handleBuyNow(book)}
                         className="text-[10px] h-7 px-2"
                       >
-                        {loading === book.id ? (
-                          <Loader2 className="w-3 h-3 animate-spin" />
-                        ) : (
-                          <>
-                            <Zap className="w-3 h-3 mr-1" />
-                            Buy
-                          </>
-                        )}
+                        <Zap className="w-3 h-3 mr-1" />
+                        Buy
                       </Button>
                     </div>
                   </div>
@@ -705,6 +690,25 @@ function Resources() {
       
       {/* Cart Abandonment Notification */}
       <CartAbandonmentNotification />
+      
+      {/* Embedded Payment Modal */}
+      {embeddedPaymentConfig && (
+        <EmbeddedPaymentModal
+          open={embeddedPaymentOpen}
+          onOpenChange={setEmbeddedPaymentOpen}
+          mode={embeddedPaymentConfig.mode}
+          priceId={embeddedPaymentConfig.priceId}
+          productName={embeddedPaymentConfig.productName}
+          amount={embeddedPaymentConfig.amount}
+          description={embeddedPaymentConfig.description}
+          onSuccess={() => {
+            toast({
+              title: "Purchase Complete!",
+              description: "Check your email for your download link.",
+            });
+          }}
+        />
+      )}
       
       <Footer />
     </PageTransition>

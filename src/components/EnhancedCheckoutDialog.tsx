@@ -7,14 +7,13 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { 
   Loader2, CreditCard, Smartphone, Shield, Lock, CheckCircle, 
-  Sparkles, Package, ChevronRight, Zap, RefreshCw, Mail, User
+  Package, ChevronRight, Zap, RefreshCw, Mail, User
 } from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { QuickVeteranToggle } from '@/components/payment/QuickVeteranToggle';
-import { SmartPriceBreakdown } from '@/components/payment/SmartPriceBreakdown';
 import { TrustIndicators } from '@/components/payment/TrustIndicators';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCartFeedback } from './CartFeedbackNotifications';
@@ -127,84 +126,49 @@ function QRCodePayment({ total, onSuccess }: { total: number; onSuccess: () => v
   );
 }
 
-// Card Payment Form
-function CardPaymentForm({ onSuccess }: { onSuccess: () => void }) {
+// Card Payment Form with PaymentElement
+function CardPaymentForm({ 
+  onSuccess, 
+  clientSecret, 
+  isVeteran 
+}: { 
+  onSuccess: () => void;
+  clientSecret: string;
+  isVeteran: boolean;
+}) {
   const stripe = useStripe();
   const elements = useElements();
-  const { items, total, clearCart } = useCart();
+  const { clearCart } = useCart();
   const { triggerThankYou } = useCartFeedback();
   const [loading, setLoading] = useState(false);
-  const [step, setStep] = useState<'contact' | 'payment'>('contact');
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    state: '',
-    zip: ''
-  });
-
-  // Auto-fill from localStorage
-  useEffect(() => {
-    const savedEmail = localStorage.getItem('checkout_email');
-    const savedName = localStorage.getItem('checkout_name');
-    if (savedEmail) setFormData(prev => ({ ...prev, email: savedEmail }));
-    if (savedName) setFormData(prev => ({ ...prev, name: savedName }));
-  }, []);
-
-  const hasDigitalOnly = items.every(item => item.isDigital);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!stripe || !elements) return;
-    if (!formData.name || !formData.email) {
-      toast.error('Please fill in required fields');
-      return;
-    }
-
-    // Save for auto-fill
-    localStorage.setItem('checkout_email', formData.email);
-    localStorage.setItem('checkout_name', formData.name);
 
     setLoading(true);
     try {
-      const cardElement = elements.getElement(CardElement);
-      if (!cardElement) throw new Error('Card element not found');
-
-      const { error: pmError, paymentMethod } = await stripe.createPaymentMethod({
-        type: 'card',
-        card: cardElement,
-        billing_details: {
-          name: formData.name,
-          email: formData.email,
-        }
-      });
-
-      if (pmError) {
-        toast.error(pmError.message);
+      // Submit the payment element first
+      const { error: submitError } = await elements.submit();
+      if (submitError) {
+        toast.error(submitError.message);
         return;
       }
 
-      const { data, error } = await supabase.functions.invoke('process-payment', {
-        body: {
-          paymentMethodId: paymentMethod.id,
-          amount: Math.round(total * 100),
-          currency: 'usd',
-          customerInfo: formData,
-          items: items.map(item => ({
-            productId: item.productId,
-            name: item.name,
-            quantity: item.quantity,
-            price: item.price,
-            stripe_price_id: (item as any).stripe_price_id
-          }))
-        }
+      // Confirm the payment
+      const { error: confirmError } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/payment-success`,
+        },
+        redirect: 'if_required',
       });
 
-      if (error) throw error;
-      if (!data.success) throw new Error(data.error || 'Payment failed');
+      if (confirmError) {
+        toast.error(confirmError.message);
+        return;
+      }
 
       toast.success('Payment successful!');
       clearCart('purchase');
@@ -219,137 +183,196 @@ function CardPaymentForm({ onSuccess }: { onSuccess: () => void }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      <AnimatePresence mode="wait">
-        {step === 'contact' && (
-          <motion.div
-            key="contact"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 20 }}
-            className="space-y-4"
-          >
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-7 h-7 rounded-full bg-primary text-primary-foreground text-sm flex items-center justify-center font-bold">
-                1
-              </div>
-              <h3 className="font-semibold">Contact Information</h3>
-            </div>
+      <div className="border-2 border-border rounded-xl p-4 bg-card">
+        <PaymentElement options={{
+          layout: 'tabs',
+        }} />
+      </div>
 
-            <div className="relative">
-              <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input
-                placeholder="Your Name *"
-                value={formData.name}
-                onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                className="pl-10 h-12"
-                required
-              />
-            </div>
-            
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input
-                type="email"
-                placeholder="Email * (for receipt)"
-                value={formData.email}
-                onChange={e => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                className="pl-10 h-12"
-                required
-              />
-            </div>
-
-            {!hasDigitalOnly && (
-              <>
-                <Input
-                  placeholder="Street Address *"
-                  value={formData.address}
-                  onChange={e => setFormData(prev => ({ ...prev, address: e.target.value }))}
-                  className="h-11"
-                  required
-                />
-                <div className="grid grid-cols-6 gap-2">
-                  <Input className="col-span-3 h-11" placeholder="City" value={formData.city} onChange={e => setFormData(prev => ({ ...prev, city: e.target.value }))} />
-                  <Input className="col-span-2 h-11" placeholder="State" value={formData.state} onChange={e => setFormData(prev => ({ ...prev, state: e.target.value }))} maxLength={2} />
-                  <Input className="h-11" placeholder="ZIP" value={formData.zip} onChange={e => setFormData(prev => ({ ...prev, zip: e.target.value }))} maxLength={5} />
-                </div>
-              </>
-            )}
-
-            <Button
-              type="button"
-              onClick={() => setStep('payment')}
-              disabled={!formData.name || !formData.email}
-              className="w-full h-11"
-            >
-              Continue to Payment
-              <ChevronRight className="w-4 h-4 ml-2" />
-            </Button>
-          </motion.div>
+      <Button 
+        type="submit" 
+        disabled={!stripe || loading} 
+        className="w-full h-12 text-base font-semibold" 
+        size="lg"
+      >
+        {loading ? (
+          <><Loader2 className="mr-2 h-5 w-5 animate-spin" />Processing...</>
+        ) : (
+          <><Lock className="mr-2 h-5 w-5" />Complete Payment</>
         )}
-
-        {step === 'payment' && (
-          <motion.div
-            key="payment"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            className="space-y-4"
-          >
-            <div className="flex items-center gap-2 mb-4">
-              <button
-                type="button"
-                onClick={() => setStep('contact')}
-                className="text-sm text-primary hover:underline"
-              >
-                ← Back
-              </button>
-              <div className="w-7 h-7 rounded-full bg-primary text-primary-foreground text-sm flex items-center justify-center font-bold ml-auto">
-                2
-              </div>
-              <h3 className="font-semibold">Payment</h3>
-            </div>
-
-            <div className="p-3 bg-muted/50 rounded-lg text-sm flex items-center gap-2">
-              <CheckCircle className="w-4 h-4 text-green-500" />
-              <span>Paying as <strong>{formData.email}</strong></span>
-            </div>
-
-            <div className="border-2 border-border rounded-xl p-4 bg-card">
-              <CardElement options={{
-                style: {
-                  base: {
-                    fontSize: '16px',
-                    color: 'hsl(var(--foreground))',
-                    '::placeholder': { color: 'hsl(var(--muted-foreground))' },
-                  },
-                },
-              }} />
-            </div>
-
-            <div className="flex flex-wrap gap-2 justify-center">
-              {['Visa', 'Mastercard', 'Amex'].map(card => (
-                <Badge key={card} variant="outline" className="text-xs">
-                  {card}
-                </Badge>
-              ))}
-            </div>
-
-            <Button 
-              type="submit" 
-              disabled={!stripe || loading} 
-              className="w-full h-12 text-base font-semibold" 
-              size="lg"
-            >
-              {loading ? (
-                <><Loader2 className="mr-2 h-5 w-5 animate-spin" />Processing...</>
-              ) : (
-                <><Lock className="mr-2 h-5 w-5" />Pay ${total.toFixed(2)}</>
-              )}
-            </Button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      </Button>
     </form>
+  );
+}
+
+// Wrapper to handle Stripe Elements initialization
+function CardPaymentWrapper({ 
+  total, 
+  onSuccess, 
+  isVeteran,
+  formData,
+  setFormData
+}: { 
+  total: number; 
+  onSuccess: () => void;
+  isVeteran: boolean;
+  formData: { name: string; email: string };
+  setFormData: (data: { name: string; email: string }) => void;
+}) {
+  const { items } = useCart();
+  const [step, setStep] = useState<'contact' | 'payment'>('contact');
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  // Auto-fill from localStorage
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('checkout_email');
+    const savedName = localStorage.getItem('checkout_name');
+    if (savedEmail) setFormData({ ...formData, email: savedEmail });
+    if (savedName) setFormData({ ...formData, name: savedName });
+  }, []);
+
+  const handleContinue = async () => {
+    if (!formData.name || !formData.email) {
+      toast.error('Please fill in required fields');
+      return;
+    }
+
+    // Save for auto-fill
+    localStorage.setItem('checkout_email', formData.email);
+    localStorage.setItem('checkout_name', formData.name);
+
+    setLoading(true);
+    try {
+      // Create payment intent via edge function
+      const { data, error } = await supabase.functions.invoke('create-payment-intent', {
+        body: {
+          priceId: items[0]?.stripe_price_id || 'price_cart_checkout',
+          mode: 'payment',
+          customerEmail: formData.email,
+          customerName: formData.name,
+          isVeteran,
+          metadata: {
+            items: items.map(i => `${i.name} x${i.quantity}`).join(', '),
+            source: 'cart_checkout'
+          }
+        }
+      });
+
+      if (error) throw error;
+
+      setClientSecret(data.clientSecret);
+      setStep('payment');
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to initialize payment');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <AnimatePresence mode="wait">
+      {step === 'contact' && (
+        <motion.div
+          key="contact"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 20 }}
+          className="space-y-4"
+        >
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-7 h-7 rounded-full bg-primary text-primary-foreground text-sm flex items-center justify-center font-bold">
+              1
+            </div>
+            <h3 className="font-semibold">Contact Information</h3>
+          </div>
+
+          <div className="relative">
+            <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              placeholder="Your Name *"
+              value={formData.name}
+              onChange={e => setFormData({ ...formData, name: e.target.value })}
+              className="pl-10 h-12"
+              required
+            />
+          </div>
+          
+          <div className="relative">
+            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              type="email"
+              placeholder="Email * (for receipt)"
+              value={formData.email}
+              onChange={e => setFormData({ ...formData, email: e.target.value })}
+              className="pl-10 h-12"
+              required
+            />
+          </div>
+
+          <Button
+            type="button"
+            onClick={handleContinue}
+            disabled={!formData.name || !formData.email || loading}
+            className="w-full h-11"
+          >
+            {loading ? (
+              <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Initializing...</>
+            ) : (
+              <>Continue to Payment<ChevronRight className="w-4 h-4 ml-2" /></>
+            )}
+          </Button>
+        </motion.div>
+      )}
+
+      {step === 'payment' && clientSecret && (
+        <motion.div
+          key="payment"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          className="space-y-4"
+        >
+          <div className="flex items-center gap-2 mb-4">
+            <button
+              type="button"
+              onClick={() => setStep('contact')}
+              className="text-sm text-primary hover:underline"
+            >
+              ← Back
+            </button>
+            <div className="w-7 h-7 rounded-full bg-primary text-primary-foreground text-sm flex items-center justify-center font-bold ml-auto">
+              2
+            </div>
+            <h3 className="font-semibold">Payment</h3>
+          </div>
+
+          <div className="p-3 bg-muted/50 rounded-lg text-sm flex items-center gap-2">
+            <CheckCircle className="w-4 h-4 text-green-500" />
+            <span>Paying as <strong>{formData.email}</strong></span>
+          </div>
+
+          <Elements 
+            stripe={stripePromise} 
+            options={{
+              clientSecret,
+              appearance: {
+                theme: 'stripe',
+                variables: {
+                  borderRadius: '8px',
+                }
+              }
+            }}
+          >
+            <CardPaymentForm 
+              onSuccess={onSuccess} 
+              clientSecret={clientSecret}
+              isVeteran={isVeteran}
+            />
+          </Elements>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
@@ -359,6 +382,7 @@ export function EnhancedCheckoutDialog({ open, onOpenChange }: EnhancedCheckoutD
   const veteranDiscount = isVeteran ? total * 0.1 : 0;
   const finalTotal = total - veteranDiscount;
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'qr'>('card');
+  const [formData, setFormData] = useState({ name: '', email: '' });
 
   const hasDigitalItems = items.some(item => item.isDigital);
   const hasPhysicalItems = items.some(item => !item.isDigital);
@@ -413,13 +437,17 @@ export function EnhancedCheckoutDialog({ open, onOpenChange }: EnhancedCheckoutD
               </TabsList>
 
               <TabsContent value="card">
-                <Elements stripe={stripePromise}>
-                  <CardPaymentForm onSuccess={() => onOpenChange(false)} />
-                </Elements>
+                <CardPaymentWrapper 
+                  total={finalTotal} 
+                  onSuccess={() => onOpenChange(false)} 
+                  isVeteran={isVeteran}
+                  formData={formData}
+                  setFormData={setFormData}
+                />
               </TabsContent>
 
               <TabsContent value="qr">
-                <QRCodePayment total={total} onSuccess={() => onOpenChange(false)} />
+                <QRCodePayment total={finalTotal} onSuccess={() => onOpenChange(false)} />
               </TabsContent>
             </Tabs>
           </div>
@@ -455,7 +483,7 @@ export function EnhancedCheckoutDialog({ open, onOpenChange }: EnhancedCheckoutD
                   )}
                   <div className="flex justify-between font-bold text-lg">
                     <span>Total</span>
-                    <span className="text-primary">${total.toFixed(2)}</span>
+                    <span className="text-primary">${finalTotal.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
