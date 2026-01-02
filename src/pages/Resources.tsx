@@ -411,7 +411,200 @@ function Resources() {
         </div>
       </section>
 
-      {/* Physical Products Section - Compact */}
+      {/* Premier Protection - Insurance Section */}
+      <section id="insurance" className="py-12 bg-gradient-to-b from-background to-primary/5">
+        <div className="container mx-auto px-4">
+          <ScrollReveal>
+            <div className="text-center mb-10">
+              <Badge className="mb-3 text-sm px-4 py-1.5 bg-gradient-to-r from-primary to-accent text-white">
+                <Shield className="w-3.5 h-3.5 mr-1.5" />
+                Premier Protection
+              </Badge>
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">
+                Insurance Coverage for Complete Peace of Mind
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Protect your family and business with comprehensive cyber liability and identity theft coverage
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {/* Cyber Liability Insurance */}
+            <ScrollReveal delay={100}>
+              <Card className="relative h-full p-6 hover:shadow-xl transition-all duration-300 border-primary/20 hover:border-primary/40">
+                <div className="absolute top-4 right-4">
+                  <Badge variant="secondary" className="bg-blue-500/10 text-blue-600">
+                    Business
+                  </Badge>
+                </div>
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center mb-4">
+                  <Globe className="w-7 h-7 text-blue-600" />
+                </div>
+                <h3 className="text-xl font-bold mb-2">Cyber Liability Insurance</h3>
+                <p className="text-muted-foreground text-sm mb-4">
+                  Protect your business from data breaches, cyber attacks, and digital threats. Coverage includes legal fees, notification costs, and recovery expenses.
+                </p>
+                <ul className="space-y-2 mb-6 text-sm">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                    <span>Data breach response coverage</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                    <span>Business interruption protection</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                    <span>Ransomware & extortion defense</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                    <span>Legal & regulatory support</span>
+                  </li>
+                </ul>
+                <div className="flex items-center justify-between pt-4 border-t border-border">
+                  <div>
+                    <span className="text-2xl font-bold text-primary">From $49</span>
+                    <span className="text-muted-foreground text-sm">/month</span>
+                  </div>
+                  <Button asChild variant="gold">
+                    <Link to="/contact">Get Quote</Link>
+                  </Button>
+                </div>
+              </Card>
+            </ScrollReveal>
+
+            {/* Identity Theft Insurance */}
+            <ScrollReveal delay={200}>
+              <Card className="relative h-full p-6 hover:shadow-xl transition-all duration-300 border-accent/20 hover:border-accent/40">
+                <div className="absolute top-4 right-4">
+                  <Badge variant="secondary" className="bg-purple-500/10 text-purple-600">
+                    Personal
+                  </Badge>
+                </div>
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/20 flex items-center justify-center mb-4">
+                  <Lock className="w-7 h-7 text-purple-600" />
+                </div>
+                <h3 className="text-xl font-bold mb-2">Identity Theft Protection</h3>
+                <p className="text-muted-foreground text-sm mb-4">
+                  Comprehensive identity monitoring and recovery services. Get alerts, prevention tools, and expert support if your identity is compromised.
+                </p>
+                <ul className="space-y-2 mb-6 text-sm">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                    <span>24/7 identity monitoring</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                    <span>Up to $1M recovery coverage</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                    <span>Dark web surveillance</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                    <span>Dedicated recovery specialist</span>
+                  </li>
+                </ul>
+                <div className="flex items-center justify-between pt-4 border-t border-border">
+                  <div>
+                    <span className="text-2xl font-bold text-primary">From $19</span>
+                    <span className="text-muted-foreground text-sm">/month</span>
+                  </div>
+                  <Button asChild variant="gold">
+                    <Link to="/contact">Get Quote</Link>
+                  </Button>
+                </div>
+              </Card>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Emergency Scripts Section */}
+      <section id="scripts" className="py-12 bg-card">
+        <div className="container mx-auto px-4">
+          <ScrollReveal>
+            <div className="text-center mb-10">
+              <Badge className="mb-3 text-sm px-4 py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white">
+                <FileText className="w-3.5 h-3.5 mr-1.5" />
+                Free Downloads
+              </Badge>
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">
+                Emergency Anti-Scam Scripts
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Download ready-to-use scripts to protect yourself and your loved ones when scammers call
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+            {[
+              {
+                title: "IRS/Tax Scam Script",
+                description: "What to say when someone claims to be from the IRS demanding immediate payment",
+                icon: FileText,
+                color: "from-red-500/20 to-red-600/20",
+                textColor: "text-red-600"
+              },
+              {
+                title: "Tech Support Scam Script",
+                description: "Responses for fake Microsoft, Apple, or antivirus callers",
+                icon: Headphones,
+                color: "from-blue-500/20 to-blue-600/20",
+                textColor: "text-blue-600"
+              },
+              {
+                title: "Grandparent Scam Script",
+                description: "Verification questions when someone claims a family emergency",
+                icon: Heart,
+                color: "from-pink-500/20 to-pink-600/20",
+                textColor: "text-pink-600"
+              },
+              {
+                title: "Bank Fraud Alert Script",
+                description: "How to verify if a bank fraud alert is legitimate",
+                icon: Lock,
+                color: "from-green-500/20 to-green-600/20",
+                textColor: "text-green-600"
+              }
+            ].map((script, index) => (
+              <ScrollReveal key={script.title} delay={index * 100}>
+                <Card className="p-5 h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col">
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${script.color} flex items-center justify-center mb-4`}>
+                    <script.icon className={`w-6 h-6 ${script.textColor}`} />
+                  </div>
+                  <h3 className="font-bold mb-2">{script.title}</h3>
+                  <p className="text-sm text-muted-foreground mb-4 flex-1">{script.description}</p>
+                  <Button variant="outline" className="w-full gap-2" size="sm">
+                    <Download className="w-4 h-4" />
+                    Download PDF
+                  </Button>
+                </Card>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          <ScrollReveal delay={400}>
+            <div className="text-center mt-8">
+              <p className="text-sm text-muted-foreground mb-4">
+                📞 <strong>Remember:</strong> Legitimate organizations will never pressure you for immediate payment or personal info over the phone.
+              </p>
+              <Button asChild variant="default" className="gap-2">
+                <Link to="/training">
+                  <BookOpen className="w-4 h-4" />
+                  Learn More Safety Tips
+                </Link>
+              </Button>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+
       <section id="products" className="py-10 bg-background">
         <div className="container mx-auto px-4">
           <ScrollReveal>
