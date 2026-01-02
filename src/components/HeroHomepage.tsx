@@ -155,14 +155,14 @@ export const HeroHomepage = () => {
             duration: 1,
             ease: [0.22, 1, 0.36, 1]
           }}>
-              <span className="block text-foreground">
+              <span className="block text-foreground">InVision</span>
+              <span className="block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">Network</span>
+              <span className="block font-light text-muted-foreground/80 text-3xl sm:text-4xl md:text-5xl lg:text-6xl mt-3">
                 <TypewriterText 
-                  words={["Secure", "Trusted", "Expert", "Family"]} 
+                  words={["Intelligence for Life", "Intelligence for Business"]} 
                   className="bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text"
                 />
               </span>
-              <span className="block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">Protection</span>
-              <span className="block font-light text-muted-foreground/80 text-3xl sm:text-4xl md:text-5xl lg:text-6xl mt-3">Starts Here</span>
             </motion.h1>
             
             {/* Description - Wider */}
@@ -175,9 +175,9 @@ export const HeroHomepage = () => {
           }} transition={{
             delay: 0.5,
             duration: 0.8
-          }}>Protecting families from AI-powered scams with enterprise grade cybersecurity services. Professional, proactive, and always personal.</motion.p>
+          }}>Protecting families from AI-powered scams. Automating businesses with intelligent AI solutions. Professional, proactive, and always personal.</motion.p>
             
-            {/* CTAs */}
+            {/* Split Identity CTAs */}
             <motion.div className="flex flex-col sm:flex-row gap-4" initial={{
             opacity: 0,
             y: 30
@@ -189,17 +189,17 @@ export const HeroHomepage = () => {
             duration: 0.8
           }}>
               <Button asChild size="lg" className="group h-14 px-8 text-base font-semibold rounded-xl bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-accent/90 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/35 transition-all duration-300 border-0">
-                <Link to="/services">
-                  Get Protected Now
+                <Link to="/training">
+                  <Shield className="mr-2 w-5 h-5" />
+                  Protect My Family
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="group h-14 px-8 text-base font-semibold rounded-xl border-primary/20 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300">
-                <Link to="/about" className="flex items-center gap-2">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/15 to-accent/15 flex items-center justify-center group-hover:from-primary/25 group-hover:to-accent/25 transition-colors">
-                    <Play className="w-4 h-4 text-primary fill-primary/80" />
-                  </div>
-                  Watch Our Story
+              <Button asChild size="lg" className="group h-14 px-8 text-base font-semibold rounded-xl bg-gradient-to-r from-accent to-accent/90 hover:from-accent/90 hover:to-primary/90 shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/35 transition-all duration-300 border-0 text-accent-foreground">
+                <Link to="/business">
+                  <Zap className="mr-2 w-5 h-5" />
+                  Automate My Business
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
             </motion.div>
