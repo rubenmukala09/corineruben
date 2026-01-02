@@ -32,7 +32,7 @@ export function SEO({
 }: SEOProps) {
   const location = useLocation();
   const fullTitle = title ? `${title} | InVision Network` : DEFAULT_SEO.title;
-  const url = `https://invisionnetwork.com${location.pathname}`;
+  const url = `https://invisionnetwork.org${location.pathname}`;
   const canonicalUrl = canonical || url;
 
   useEffect(() => {
@@ -145,19 +145,97 @@ export const PAGE_SEO = {
     keywords: "AI scam training, deepfake detection training, senior cybersecurity, phishing awareness, Dayton Ohio",
     structuredData: {
       "@context": "https://schema.org",
-      "@type": "Course",
-      "name": "AI Scam Protection Training",
-      "description": "Learn to identify and protect against AI-powered scams",
-      "provider": {
-        "@type": "Organization",
-        "name": "InVision Network"
-      }
+      "@type": "EducationalOrganization",
+      "name": "InVision Network Training Academy",
+      "description": "Comprehensive AI scam protection training for families, seniors, and businesses",
+      "url": "https://invisionnetwork.com/training",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Dayton",
+        "addressRegion": "OH",
+        "addressCountry": "US"
+      },
+      "telephone": "(937) 301-8749",
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Individual Training Session",
+          "price": "89",
+          "priceCurrency": "USD",
+          "description": "1-hour personalized AI scam protection training"
+        },
+        {
+          "@type": "Offer",
+          "name": "Enterprise Training Program",
+          "price": "599",
+          "priceCurrency": "USD",
+          "description": "Comprehensive team training with ongoing support"
+        }
+      ]
     }
   },
   business: {
-    title: "AI Business Solutions",
-    description: "Transform your business with secure AI solutions. AI receptionists, chatbots, and business automation. Protect your company from AI-powered threats.",
-    keywords: "AI business solutions, AI receptionist, business automation, AI security, Dayton Ohio",
+    title: "AI Business Solutions & Automation",
+    description: "Transform your business with AI receptionists, automated follow-ups, and professional websites. Stop missing calls. Let AI run your front desk 24/7. Serving Dayton and all of Ohio.",
+    keywords: "AI receptionist, business automation, AI answering service, virtual receptionist, Dayton Ohio, small business AI",
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "AI Business Services",
+      "description": "Professional AI automation services for businesses",
+      "itemListElement": [
+        {
+          "@type": "Service",
+          "position": 1,
+          "name": "AI Receptionist & Virtual Intake Agent",
+          "description": "24/7 AI-powered phone answering that sounds human, filters spam, and books appointments automatically",
+          "provider": {
+            "@type": "Organization",
+            "name": "InVision Network"
+          },
+          "areaServed": {
+            "@type": "State",
+            "name": "Ohio"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": "9500",
+            "priceCurrency": "USD",
+            "priceValidUntil": "2026-12-31"
+          }
+        },
+        {
+          "@type": "Service",
+          "position": 2,
+          "name": "AI Follow-Up Automation",
+          "description": "Automated lead nurturing, appointment reminders, and customer follow-up systems",
+          "provider": {
+            "@type": "Organization",
+            "name": "InVision Network"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": "12500",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "Service",
+          "position": 3,
+          "name": "Custom AI Automation",
+          "description": "Enterprise-grade custom AI solutions tailored to your specific business needs",
+          "provider": {
+            "@type": "Organization",
+            "name": "InVision Network"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": "25000",
+            "priceCurrency": "USD"
+          }
+        }
+      ]
+    }
   },
   about: {
     title: "About Us",
