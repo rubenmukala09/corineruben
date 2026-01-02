@@ -215,37 +215,39 @@ const WebsiteDesign = () => {
               </div>
               <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
                 {packages.map((pkg, index) => (
-                  <Card 
-                    key={index} 
-                    className={`relative flex flex-col h-[480px] ${pkg.popular ? 'border-primary/50 shadow-lg ring-2 ring-primary/20' : 'border-border/50'}`}
-                  >
+                  <div key={index} className="relative pt-4">
+                    {/* Badge positioned outside the card */}
                     {pkg.popular && (
                       <Badge 
-                        className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 bg-gradient-to-r from-primary to-accent text-white border-0 px-4 py-1.5 shadow-md"
+                        className="absolute top-0 left-1/2 -translate-x-1/2 z-20 bg-gradient-to-r from-primary to-accent text-white border-0 px-4 py-1.5 shadow-lg"
                       >
                         <Star className="w-3 h-3 mr-1.5 fill-current" />
                         Most Popular
                       </Badge>
                     )}
-                    <CardHeader className="text-center pt-8 pb-4">
-                      <CardTitle className="text-xl">{pkg.name}</CardTitle>
-                      <div className="text-3xl font-bold text-primary mt-2">{pkg.price}</div>
-                      <CardDescription className="mt-2 text-sm">{pkg.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent className="flex-1 flex flex-col">
-                      <ul className="space-y-2 mb-6 flex-1">
-                        {pkg.features.map((feature, fIndex) => (
-                          <li key={fIndex} className="flex items-center gap-2">
-                            <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0" />
-                            <span className="text-sm">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                      <Button asChild className="w-full mt-auto" variant={pkg.popular ? "gold" : "outline"}>
-                        <Link to="/contact">Get Started</Link>
-                      </Button>
-                    </CardContent>
-                  </Card>
+                    <Card 
+                      className={`flex flex-col h-[460px] ${pkg.popular ? 'border-primary/50 shadow-lg ring-2 ring-primary/20' : 'border-border/50'}`}
+                    >
+                      <CardHeader className="text-center pt-6 pb-3">
+                        <CardTitle className="text-lg">{pkg.name}</CardTitle>
+                        <div className="text-2xl font-bold text-primary mt-2">{pkg.price}</div>
+                        <CardDescription className="mt-2 text-sm">{pkg.description}</CardDescription>
+                      </CardHeader>
+                      <CardContent className="flex-1 flex flex-col px-5">
+                        <ul className="space-y-2 mb-4 flex-1">
+                          {pkg.features.map((feature, fIndex) => (
+                            <li key={fIndex} className="flex items-center gap-2">
+                              <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0" />
+                              <span className="text-xs">{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        <Button asChild className="w-full mt-auto" variant={pkg.popular ? "gold" : "outline"}>
+                          <Link to="/contact">Get Started</Link>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </div>
                 ))}
               </div>
             </div>

@@ -29,7 +29,7 @@ interface InitialLoaderProps {
   minDuration?: number;
 }
 
-export const InitialLoader = ({ onComplete, minDuration = 400 }: InitialLoaderProps) => {
+export const InitialLoader = ({ onComplete, minDuration = 600 }: InitialLoaderProps) => {
   const [isVisible, setIsVisible] = useState(true);
   const [progress, setProgress] = useState(0);
 
@@ -64,56 +64,46 @@ export const InitialLoader = ({ onComplete, minDuration = 400 }: InitialLoaderPr
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.25, ease: "easeOut" }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-background"
         >
-          {/* Clean gradient background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5" />
+          {/* Clean solid background */}
+          <div className="absolute inset-0 bg-background" />
           
-          <div className="relative flex flex-col items-center gap-6">
-            {/* Simple logo container with subtle glow */}
-            <div className="relative">
-              <motion.div
-                className="absolute inset-0 rounded-full bg-primary/10 blur-2xl"
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1.2, opacity: 0.6 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-              />
-              
-              <motion.img
-                src={shieldLogo}
-                alt="InVision Network"
-                className="relative w-20 h-20 object-contain"
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-              />
-            </div>
+          <div className="relative flex flex-col items-center gap-5">
+            {/* Simple logo - no extra effects */}
+            <motion.img
+              src={shieldLogo}
+              alt="InVision Network"
+              className="w-16 h-16 object-contain"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+            />
 
             {/* Brand text */}
             <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.3 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.1, duration: 0.2 }}
               className="text-center"
             >
-              <h1 className="text-lg font-semibold tracking-wide text-foreground">InVision Network</h1>
-              <p className="text-xs text-muted-foreground mt-0.5 tracking-wider uppercase">Security Solutions</p>
+              <h1 className="text-lg font-semibold text-foreground">InVision Network</h1>
             </motion.div>
 
-            {/* Clean progress bar */}
+            {/* Simple progress bar */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.15 }}
-              className="w-40"
+              className="w-32"
             >
-              <div className="h-1 bg-muted/40 rounded-full overflow-hidden">
+              <div className="h-1 bg-muted rounded-full overflow-hidden">
                 <motion.div
-                  className="h-full bg-gradient-to-r from-primary to-accent rounded-full"
+                  className="h-full bg-primary rounded-full"
                   initial={{ width: 0 }}
                   animate={{ width: `${progress}%` }}
-                  transition={{ duration: 0.15, ease: "easeOut" }}
+                  transition={{ duration: 0.15, ease: "linear" }}
                 />
               </div>
             </motion.div>

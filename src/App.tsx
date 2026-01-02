@@ -602,7 +602,7 @@ function App() {
   return (
     <>
       {/* Initial website loading effect */}
-      <InitialLoader onComplete={() => setIsLoading(false)} minDuration={1800} />
+      <InitialLoader onComplete={() => setIsLoading(false)} minDuration={800} />
       
       <QueryClientProvider client={queryClient}>
         <Toaster />
