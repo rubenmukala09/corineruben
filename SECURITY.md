@@ -266,7 +266,7 @@ Automatic alerts triggered for:
 ### Contact Points
 - **Security Team**: security@invisionnetwork.org
 - **Admin Team**: admin@invisionnetwork.org
-- **Emergency**: (937) 555-SAFE
+- **Emergency**: (937) 301-8749
 
 ---
 

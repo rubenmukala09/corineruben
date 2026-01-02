@@ -56,7 +56,7 @@ export default function PaymentCanceled() {
                       </li>
                       <li className="flex items-center gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                        <span>Call us at (555) 123-4567</span>
+                        <span>Call us at <a href="tel:+19373018749" className="text-primary hover:underline">(937) 301-8749</a></span>
                       </li>
                       <li className="flex items-center gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-primary" />

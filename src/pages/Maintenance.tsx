@@ -167,9 +167,9 @@ function Maintenance() {
                 <Mail className="h-4 w-4" />
                 support@invisionnetwork.org
               </a>
-              <a href="tel:9375550199" className="flex items-center gap-2 hover:text-primary transition-colors">
+              <a href="tel:+19373018749" className="flex items-center gap-2 hover:text-primary transition-colors">
                 <Phone className="h-4 w-4" />
-                (937) 555-0199
+                (937) 301-8749
               </a>
             </div>
             <p className="text-xs text-muted-foreground">For urgent issues only</p>

@@ -32,9 +32,9 @@ const contactMethods = [
   {
     icon: Phone,
     title: "Phone Support",
-    detail: "(614) 555-0100",
+    detail: "(937) 301-8749",
     hours: "Mon-Fri: 9am-6pm EST",
-    action: "tel:+16145550100",
+    action: "tel:+19373018749",
     actionText: "Call Now",
     badge: "Avg. 2min wait",
     badgeVariant: "default" as const

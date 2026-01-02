@@ -293,7 +293,7 @@ export const ServiceInquiryDialog = ({
                         Phone Number
                       </FormLabel>
                       <FormControl>
-                        <Input placeholder="(555) 123-4567" {...field} />
+                        <Input placeholder="(937) 301-8749" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

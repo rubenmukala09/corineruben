@@ -296,7 +296,7 @@ ${encodeURIComponent(data.coverLetter)}
 Resume: ${encodeURIComponent(resumeFile.name)}`;
 
       // Open WhatsApp with pre-filled message
-      const whatsappUrl = `https://wa.me/19375550199?text=${message}`;
+      const whatsappUrl = `https://wa.me/19373018749?text=${message}`;
       window.open(whatsappUrl, "_blank");
 
       setIsSubmitted(true);
@@ -427,7 +427,7 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
                 id="phone"
                 type="tel"
                 {...register("phone")}
-                placeholder="(937) 555-0199"
+                placeholder="(937) 301-8749"
                 className={cn(
                   "h-14 text-base border-2 rounded-xl",
                   errors.phone ? "border-destructive" : ""
