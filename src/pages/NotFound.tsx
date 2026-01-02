@@ -110,10 +110,10 @@ function NotFound() {
               </Button>
               <span className="text-muted-foreground text-sm">or call us</span>
               <a 
-                href="tel:9375550199" 
+                href="tel:+19373018749" 
                 className="text-primary hover:text-primary/80 font-medium text-sm"
               >
-                (937) 555-0199
+                (937) 301-8749
               </a>
             </div>
           </Card>

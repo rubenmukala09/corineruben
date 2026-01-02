@@ -465,7 +465,7 @@ export const BookingModal = ({
                     </span>
                   </AccordionTrigger>
                   <AccordionContent className="text-sm text-muted-foreground">
-                    We typically respond within 24 hours. For urgent requests, call us at (937) 555-SAFE.
+                    We typically respond within 24 hours. For urgent requests, call us at <a href="tel:+19373018749" className="text-primary hover:underline">(937) 301-8749</a>.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="cancellation" className="border-b-0">

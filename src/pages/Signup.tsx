@@ -1314,7 +1314,7 @@ function Signup() {
                     const formatted = formatPhoneNumber(e.target.value);
                     setBusinessPhone(formatted);
                   }}
-                  placeholder="(937) 555-1234"
+                  placeholder="(937) 301-8749"
                   className="h-12"
                   required 
                   maxLength={14}
