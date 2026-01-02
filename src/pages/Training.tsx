@@ -44,7 +44,7 @@ import {
 import heroTrainingPro1 from "@/assets/hero-training-pro-1.jpg";
 import heroTrainingPro2 from "@/assets/hero-training-pro-2.jpg";
 import heroTrainingPro3 from "@/assets/hero-training-pro-3.jpg";
-import peacefulHomeSecurity from "@/assets/peaceful-home-security.jpg";
+import peacefulMountainDawn from "@/assets/peaceful-mountain-dawn.jpg";
 import TestimonialCard from "@/components/TestimonialCard";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
@@ -1634,7 +1634,7 @@ function LearnAndTrain() {
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ 
-            backgroundImage: `url(${peacefulHomeSecurity})`,
+            backgroundImage: `url(${peacefulMountainDawn})`,
           }}
         />
         {/* Subtle dark gradient for text readability */}
