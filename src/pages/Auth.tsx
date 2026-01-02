@@ -4,24 +4,18 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { 
   Loader2, 
-  Home, 
-  Shield, 
   Lock, 
   Mail, 
   Eye, 
   EyeOff,
-  ArrowRight,
-  CheckCircle2,
-  Sparkles
+  ArrowRight
 } from "lucide-react";
 import { z } from "zod";
 import invisionLogo from "@/assets/shield-logo.png";
-import authSimpleBg from "@/assets/auth-simple-bg.jpg";
 import { Session, User } from "@supabase/supabase-js";
 
 const emailSchema = z.string().email("Please enter a valid email address");
@@ -42,13 +36,11 @@ function Auth() {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, currentSession) => {
         setSession(currentSession);
         setUser(currentSession?.user ?? null);
         
-        // If user signs in, redirect after a brief delay
         if (event === 'SIGNED_IN' && currentSession?.user) {
           setTimeout(() => {
             handlePostLoginRedirect(currentSession.user.id);
@@ -57,7 +49,6 @@ function Auth() {
       }
     );
 
-    // THEN check for existing session
     supabase.auth.getSession().then(({ data: { session: existingSession } }) => {
       setSession(existingSession);
       setUser(existingSession?.user ?? null);
@@ -71,7 +62,6 @@ function Auth() {
 
   const handlePostLoginRedirect = async (userId: string) => {
     try {
-      // Check account status first
       const { data: profileData } = await supabase
         .from("profiles")
         .select("account_status, application_reference")
@@ -108,7 +98,6 @@ function Auth() {
         return;
       }
 
-      // Fetch user's roles and redirect accordingly
       const { data: rolesData } = await supabase
         .from("user_roles")
         .select("role")
@@ -217,60 +206,80 @@ function Auth() {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden flex items-center justify-center p-4">
-      {/* Simple Background Image */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src={authSimpleBg}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover"
+    <div className="min-h-screen w-full relative flex items-center justify-center p-4 md:p-6 lg:p-8">
+      {/* Professional Gradient Background */}
+      <div className="fixed inset-0 z-0">
+        {/* Base gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
+        
+        {/* Subtle mesh overlay */}
+        <div 
+          className="absolute inset-0 opacity-30"
+          style={{
+            backgroundImage: `
+              radial-gradient(ellipse at 20% 30%, hsl(var(--primary) / 0.15) 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 70%, hsl(var(--accent) / 0.1) 0%, transparent 50%),
+              radial-gradient(ellipse at 50% 50%, hsl(220 30% 20% / 0.5) 0%, transparent 70%)
+            `
+          }}
         />
-        {/* Overlay for readability */}
-        <div className="absolute inset-0 bg-background/70" />
-      </div>
-
-      {/* Floating Orbs - decorative */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-[1]">
-        <div className="absolute -top-20 -right-20 w-72 h-72 bg-primary/15 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-accent/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        
+        {/* Subtle grid pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '60px 60px'
+          }}
+        />
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 w-full max-w-md mx-auto animate-fade-in">
-        {/* Logo */}
-        <Link to="/" className="flex items-center justify-center gap-3 mb-8 group">
+      <div className="relative z-10 w-full max-w-[420px]">
+        {/* Logo - clickable to go home */}
+        <Link 
+          to="/" 
+          className="flex items-center justify-center gap-3 mb-8 group transition-transform duration-300 hover:scale-105"
+        >
           <img 
             src={invisionLogo} 
-            alt="InVision Network" 
-            className="w-12 h-12 group-hover:scale-110 transition-transform duration-300 drop-shadow-lg"
+            alt="InVision Network - Back to Home" 
+            className="w-12 h-12 md:w-14 md:h-14 drop-shadow-2xl"
           />
           <div className="flex flex-col leading-tight">
-            <span className="text-xl font-bold text-foreground drop-shadow-sm">InVision Network</span>
-            <span className="text-xs text-muted-foreground">Secure Portal Access</span>
+            <span className="text-xl md:text-2xl font-bold text-white drop-shadow-lg">
+              InVision Network
+            </span>
+            <span className="text-xs text-slate-400">
+              Secure Portal Access
+            </span>
           </div>
         </Link>
 
         {/* Login Card */}
-        <Card className="p-8 shadow-2xl border bg-card/95 backdrop-blur-xl animate-scale-in">
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl">
+          <form onSubmit={handleSubmit} className="space-y-5">
             {/* Header */}
-            <div className="text-center space-y-2">
-              <div className="w-14 h-14 mx-auto bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg mb-4">
+            <div className="text-center mb-6">
+              <div className="w-14 h-14 mx-auto bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center shadow-lg mb-4">
                 <Lock className="w-7 h-7 text-white" />
               </div>
-              <h1 className="text-2xl font-bold text-foreground">Welcome Back</h1>
-              <p className="text-muted-foreground text-sm">
+              <h1 className="text-2xl font-bold text-white">Welcome Back</h1>
+              <p className="text-slate-400 text-sm mt-1">
                 Sign in to access your portal
               </p>
             </div>
 
             {/* Email Field */}
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-sm font-medium">
+              <Label htmlFor="email" className="text-sm font-medium text-slate-300">
                 Email Address
               </Label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
                 <Input
                   id="email"
                   type="email"
@@ -282,22 +291,22 @@ function Auth() {
                   required
                   disabled={isLoading}
                   placeholder="your@email.com"
-                  className={`h-12 pl-10 bg-background/50 ${emailError ? 'border-destructive' : ''}`}
+                  className={`h-12 pl-10 bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:border-primary/50 focus:ring-primary/20 ${emailError ? 'border-destructive' : ''}`}
                   autoComplete="email"
                 />
               </div>
               {emailError && (
-                <p className="text-xs text-destructive">{emailError}</p>
+                <p className="text-xs text-red-400">{emailError}</p>
               )}
             </div>
 
             {/* Password Field */}
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-sm font-medium">
+              <Label htmlFor="password" className="text-sm font-medium text-slate-300">
                 Password
               </Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
@@ -309,20 +318,20 @@ function Auth() {
                   required
                   disabled={isLoading}
                   placeholder="••••••••"
-                  className={`h-12 pl-10 pr-12 bg-background/50 ${passwordError ? 'border-destructive' : ''}`}
+                  className={`h-12 pl-10 pr-12 bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:border-primary/50 focus:ring-primary/20 ${passwordError ? 'border-destructive' : ''}`}
                   autoComplete="current-password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors p-1"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors p-1"
                   tabIndex={-1}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
               {passwordError && (
-                <p className="text-xs text-destructive">{passwordError}</p>
+                <p className="text-xs text-red-400">{passwordError}</p>
               )}
             </div>
 
@@ -333,12 +342,13 @@ function Auth() {
                   id="remember" 
                   checked={rememberMe}
                   onCheckedChange={(checked) => setRememberMe(checked as boolean)}
+                  className="border-white/20 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
                 />
-                <Label htmlFor="remember" className="text-sm cursor-pointer">
+                <Label htmlFor="remember" className="text-sm cursor-pointer text-slate-400">
                   Remember me
                 </Label>
               </div>
-              <Link to="/contact" className="text-sm text-primary hover:underline">
+              <Link to="/contact" className="text-sm text-primary hover:text-primary/80 transition-colors">
                 Forgot password?
               </Link>
             </div>
@@ -346,7 +356,7 @@ function Auth() {
             {/* Submit Button */}
             <Button 
               type="submit" 
-              className="w-full h-12 text-base font-semibold hover:scale-[1.02] transition-transform" 
+              className="w-full h-12 text-base font-semibold bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-all duration-300" 
               disabled={isLoading}
             >
               {isLoading ? (
@@ -363,63 +373,28 @@ function Auth() {
             </Button>
 
             {/* Sign Up Link */}
-            <div className="text-center pt-2">
-              <p className="text-sm text-muted-foreground">
+            <div className="text-center pt-4 border-t border-white/10">
+              <p className="text-sm text-slate-400">
                 Don't have an account?{" "}
-                <Link to="/signup" className="text-primary font-semibold hover:underline">
+                <Link to="/signup" className="text-primary font-semibold hover:text-primary/80 transition-colors">
                   Apply now
                 </Link>
               </p>
-              <p className="text-xs text-muted-foreground mt-1">
-                All applications require admin approval
-              </p>
             </div>
           </form>
-        </Card>
-
-        {/* Quick Stats */}
-        <div className="mt-6 grid grid-cols-3 gap-3">
-          {[
-            { icon: Shield, value: "500+", label: "Protected" },
-            { icon: CheckCircle2, value: "24/7", label: "Support" },
-            { icon: Sparkles, value: "100%", label: "Secure" },
-          ].map((stat, i) => (
-            <div 
-              key={i} 
-              className="flex flex-col items-center p-3 bg-card/60 backdrop-blur-sm rounded-xl border border-border/50 hover:border-primary/50 transition-colors"
-            >
-              <stat.icon className="w-4 h-4 text-primary mb-1" />
-              <span className="text-sm font-bold text-foreground">{stat.value}</span>
-              <span className="text-xs text-muted-foreground">{stat.label}</span>
-            </div>
-          ))}
         </div>
 
-        {/* Footer */}
-        <div className="mt-6 text-center space-y-3">
-          <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
-            <Home className="w-4 h-4" />
-            Back to Home
+        {/* Bottom Links */}
+        <div className="mt-6 flex items-center justify-center gap-4 text-xs text-slate-500">
+          <Link to="/privacy-policy" className="hover:text-slate-300 transition-colors">
+            Privacy
           </Link>
-          
-          <div className="flex items-center justify-center gap-4 text-xs text-muted-foreground">
-            <Link to="/privacy-policy" className="hover:text-foreground transition-colors">
-              Privacy
-            </Link>
-            <span>•</span>
-            <Link to="/terms-of-service" className="hover:text-foreground transition-colors">
-              Terms
-            </Link>
-            <span>•</span>
-            <div className="flex items-center gap-1">
-              <Shield className="w-3 h-3 text-primary" />
-              Secure
-            </div>
-          </div>
-          
-          <p className="text-xs text-muted-foreground">
-            © 2026 InVision Network
-          </p>
+          <span className="text-slate-700">•</span>
+          <Link to="/terms-of-service" className="hover:text-slate-300 transition-colors">
+            Terms
+          </Link>
+          <span className="text-slate-700">•</span>
+          <span>© 2026 InVision Network</span>
         </div>
       </div>
     </div>
