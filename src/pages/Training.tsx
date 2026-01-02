@@ -44,7 +44,7 @@ import {
 import heroTrainingPro1 from "@/assets/hero-training-pro-1.jpg";
 import heroTrainingPro2 from "@/assets/hero-training-pro-2.jpg";
 import heroTrainingPro3 from "@/assets/hero-training-pro-3.jpg";
-import peacefulGrassRelaxation from "@/assets/peaceful-grass-relaxation.jpg";
+import peacefulHomeSecurity from "@/assets/peaceful-home-security.jpg";
 import TestimonialCard from "@/components/TestimonialCard";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
@@ -1629,12 +1629,12 @@ function LearnAndTrain() {
         </section>
       )}
 
-      {/* Final CTA with Peaceful Grass Background */}
+      {/* Final CTA with Peaceful Home Background */}
       <section className="py-20 relative overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ 
-            backgroundImage: `url(${peacefulGrassRelaxation})`,
+            backgroundImage: `url(${peacefulHomeSecurity})`,
           }}
         />
         {/* Subtle dark gradient for text readability */}
