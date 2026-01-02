@@ -19,6 +19,7 @@ import { BookingModal } from "@/components/BookingModal";
 import { SubscriptionDialog } from "@/components/SubscriptionDialog";
 import { ServiceInquiryDialog } from "@/components/ServiceInquiryDialog";
 import { WebsiteInsuranceDialog } from "@/components/WebsiteInsuranceDialog";
+import { EmbeddedPaymentModal } from "@/components/payment/EmbeddedPaymentModal";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { trackButtonClick, trackConversion } from "@/utils/analyticsTracker";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield, Lock, Sparkles, FileText } from "lucide-react";
@@ -60,6 +61,15 @@ function Business() {
     variant?: 'default' | 'buying' | 'existing';
   } | null>(null);
   const [isYearly, setIsYearly] = useState(false);
+  const [embeddedPaymentOpen, setEmbeddedPaymentOpen] = useState(false);
+  const [embeddedPaymentConfig, setEmbeddedPaymentConfig] = useState<{
+    mode: "subscription" | "payment";
+    priceId: string;
+    productName: string;
+    amount: number;
+    description?: string;
+    features?: string[];
+  } | null>(null);
   const [activeConsultingTab, setActiveConsultingTab] = useState<'thinking' | 'buying' | 'bought' | 'leaving'>('thinking');
   const [selectedService, setSelectedService] = useState<{
     type: 'business' | 'website';
@@ -156,9 +166,17 @@ function Business() {
     };
   };
 
-  const handleSubscribe = (priceId: string, serviceName: string, planTier: string, amount: number, variant?: 'default' | 'buying' | 'existing') => {
-    setSelectedSubscription({ priceId, serviceName, planTier, amount, variant });
-    setSubscriptionDialogOpen(true);
+  const handleSubscribe = (priceId: string, serviceName: string, planTier: string, amount: number, variant?: 'default' | 'buying' | 'existing', features?: string[]) => {
+    // Use embedded payment modal for subscriptions
+    setEmbeddedPaymentConfig({
+      mode: "subscription",
+      priceId,
+      productName: `${serviceName} - ${planTier}`,
+      amount,
+      description: `${serviceName} - Monthly subscription`,
+      features
+    });
+    setEmbeddedPaymentOpen(true);
   };
 
   const businessHeroImages = [
@@ -2182,6 +2200,20 @@ function Business() {
         open={websiteInsuranceOpen}
         onOpenChange={setWebsiteInsuranceOpen}
       />
+
+      {/* Embedded Payment Modal for inline checkout */}
+      {embeddedPaymentConfig && (
+        <EmbeddedPaymentModal
+          open={embeddedPaymentOpen}
+          onOpenChange={setEmbeddedPaymentOpen}
+          mode={embeddedPaymentConfig.mode}
+          priceId={embeddedPaymentConfig.priceId}
+          productName={embeddedPaymentConfig.productName}
+          amount={embeddedPaymentConfig.amount}
+          description={embeddedPaymentConfig.description}
+          features={embeddedPaymentConfig.features}
+        />
+      )}
       </div>
     </PageTransition>
   );

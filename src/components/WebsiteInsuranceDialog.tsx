@@ -1,5 +1,4 @@
 import { useState, useMemo } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import {
   Dialog,
@@ -30,12 +29,13 @@ import {
   AlertTriangle,
   Users,
   CreditCard,
-  QrCode,
   FileText,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Loader2
 } from "lucide-react";
-import { trackButtonClick, trackConversion } from "@/utils/analyticsTracker";
+import { trackConversion } from "@/utils/analyticsTracker";
+import { EmbeddedPaymentModal } from "@/components/payment/EmbeddedPaymentModal";
 
 interface WebsiteInsuranceDialogProps {
   open: boolean;
@@ -243,7 +243,13 @@ export const WebsiteInsuranceDialog = ({
   const [isCustom, setIsCustom] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<'card' | 'qr'>('card');
+  const [embeddedPaymentOpen, setEmbeddedPaymentOpen] = useState(false);
+  const [embeddedPaymentConfig, setEmbeddedPaymentConfig] = useState<{
+    priceId: string;
+    productName: string;
+    amount: number;
+    features: string[];
+  } | null>(null);
 
   const totalPrice = useMemo(() => {
     if (selectedPackage && !isCustom) {
@@ -299,38 +305,24 @@ export const WebsiteInsuranceDialog = ({
       return;
     }
 
-    setLoading(true);
-    try {
-      const matchingPackage = !isCustom && selectedPackage;
-      const finalPriceId = matchingPackage?.priceId || 'price_1Sjp3WJ8osfwYbX7cbaYjIqU';
-      
-      const { data, error } = await supabase.functions.invoke('create-subscription-checkout', {
-        body: {
-          priceId: finalPriceId,
-          serviceName: 'Website Insurance',
-          planTier: matchingPackage?.name || 'Custom',
-          customerEmail: email,
-          customerName: name || undefined,
-        },
-      });
+    const matchingPackage = !isCustom && selectedPackage;
+    const finalPriceId = matchingPackage?.priceId || 'price_1Sjp3WJ8osfwYbX7cbaYjIqU';
+    const planName = matchingPackage?.name || 'Custom';
+    
+    // Get selected feature names for display
+    const featureNames = selectedFeatures.map(id => {
+      const feature = insuranceFeatures.find(f => f.id === id);
+      return feature?.name || id;
+    });
 
-      if (error) throw error;
-
-      if (data?.url) {
-        trackConversion('website_insurance', totalPrice);
-        window.open(data.url, '_blank');
-        onOpenChange(false);
-      }
-    } catch (error: any) {
-      console.error('Subscription error:', error);
-      toast({
-        title: "Error",
-        description: error.message || "Failed to start subscription. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
+    // Use embedded payment modal instead of redirect
+    setEmbeddedPaymentConfig({
+      priceId: finalPriceId,
+      productName: `Website Insurance - ${planName}`,
+      amount: totalPrice * 100, // Convert to cents
+      features: featureNames.slice(0, 5) // Show first 5 features
+    });
+    setEmbeddedPaymentOpen(true);
   };
 
   const groupedFeatures = useMemo(() => {
@@ -352,6 +344,7 @@ export const WebsiteInsuranceDialog = ({
   };
 
   return (
+    <>
     <Dialog open={open} onOpenChange={(isOpen) => {
       onOpenChange(isOpen);
       if (!isOpen) resetDialog();
@@ -555,36 +548,7 @@ export const WebsiteInsuranceDialog = ({
               </div>
             </div>
 
-            {/* Payment Method */}
-            <div className="space-y-2">
-              <Label className="text-xs">Payment Method</Label>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  className={`flex items-center gap-2 p-3 rounded-lg border transition-all ${
-                    paymentMethod === 'card' ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
-                  }`}
-                  onClick={() => setPaymentMethod('card')}
-                >
-                  <CreditCard className={`w-4 h-4 ${paymentMethod === 'card' ? 'text-primary' : 'text-muted-foreground'}`} />
-                  <div className="text-left">
-                    <p className="text-xs font-medium">Card</p>
-                    <p className="text-[10px] text-muted-foreground">Visa, MC, AMEX</p>
-                  </div>
-                </button>
-                <button
-                  className={`flex items-center gap-2 p-3 rounded-lg border transition-all ${
-                    paymentMethod === 'qr' ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
-                  }`}
-                  onClick={() => setPaymentMethod('qr')}
-                >
-                  <QrCode className={`w-4 h-4 ${paymentMethod === 'qr' ? 'text-primary' : 'text-muted-foreground'}`} />
-                  <div className="text-left">
-                    <p className="text-xs font-medium">QR Code</p>
-                    <p className="text-[10px] text-muted-foreground">Scan to pay</p>
-                  </div>
-                </button>
-              </div>
-            </div>
+            {/* Payment handled by embedded modal - no method selector needed */}
 
             {/* Terms & Conditions */}
             <div className="space-y-2">
@@ -659,5 +623,23 @@ export const WebsiteInsuranceDialog = ({
         </div>
       </DialogContent>
     </Dialog>
+
+    {/* Embedded Payment Modal */}
+    {embeddedPaymentConfig && (
+      <EmbeddedPaymentModal
+        open={embeddedPaymentOpen}
+        onOpenChange={setEmbeddedPaymentOpen}
+        mode="subscription"
+        priceId={embeddedPaymentConfig.priceId}
+        productName={embeddedPaymentConfig.productName}
+        amount={embeddedPaymentConfig.amount}
+        features={embeddedPaymentConfig.features}
+        onSuccess={() => {
+          trackConversion('website_insurance', embeddedPaymentConfig.amount / 100);
+          onOpenChange(false);
+        }}
+      />
+    )}
+    </>
   );
 };
