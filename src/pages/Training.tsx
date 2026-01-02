@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { BookingModal } from "@/components/BookingModal";
 import { SubscriptionDialog } from "@/components/SubscriptionDialog";
+import { EmbeddedPaymentModal } from "@/components/payment/EmbeddedPaymentModal";
 import Hero from "@/components/Hero";
 import TrustBar from "@/components/TrustBar";
 import CTASection from "@/components/CTASection";
@@ -223,6 +224,15 @@ const TrainingCard = ({ plan, index, onBook }: { plan: any; index: number; onBoo
 function LearnAndTrain() {
   const [modalOpen, setModalOpen] = useState(false);
   const [subscriptionDialogOpen, setSubscriptionDialogOpen] = useState(false);
+  const [embeddedPaymentOpen, setEmbeddedPaymentOpen] = useState(false);
+  const [embeddedPaymentConfig, setEmbeddedPaymentConfig] = useState<{
+    mode: "subscription" | "payment";
+    priceId: string;
+    productName: string;
+    amount: number;
+    description?: string;
+    features?: string[];
+  } | null>(null);
   const [selectedSubscription, setSelectedSubscription] = useState<{
     priceId: string;
     serviceName: string;
@@ -310,10 +320,18 @@ function LearnAndTrain() {
     };
   };
 
-  const handleSubscribe = (priceId: string, serviceName: string, planTier: string, amount: number) => {
+  const handleSubscribe = (priceId: string, serviceName: string, planTier: string, amount: number, features?: string[]) => {
     trackButtonClick(`Subscribe ${planTier} Plan`, 'Training Page');
-    setSelectedSubscription({ priceId, serviceName, planTier, amount });
-    setSubscriptionDialogOpen(true);
+    // Use embedded payment modal for ScamShield subscriptions
+    setEmbeddedPaymentConfig({
+      mode: "subscription",
+      priceId,
+      productName: `ScamShield ${planTier} Plan`,
+      amount,
+      description: `${serviceName} - Monthly subscription`,
+      features
+    });
+    setEmbeddedPaymentOpen(true);
   };
 
   const trainingHeroImages = [
@@ -949,7 +967,13 @@ function LearnAndTrain() {
                 <Button 
                   onClick={() => {
                     trackButtonClick('Get Started - Starter Plan', 'Training Page');
-                    handleSubscribe('price_1SjwUHJ8osfwYbX7ZY71jSOR', 'ScamShield', 'Starter', 3900);
+                    handleSubscribe('price_1SjwUHJ8osfwYbX7ZY71jSOR', 'ScamShield', 'Starter', 3900, [
+                      "24-hour expert analysis",
+                      "Email & text support",
+                      "Risk assessment reports",
+                      "Scam Alert Map access",
+                      "10 credits/month"
+                    ]);
                   }}
                   variant="outline" 
                   size="default" 
@@ -1016,7 +1040,13 @@ function LearnAndTrain() {
                 <Button 
                   onClick={() => {
                     trackButtonClick('Get Started - Family Plan', 'Training Page');
-                    handleSubscribe('price_1SjwUIJ8osfwYbX7Ynjt7gMq', 'ScamShield', 'Family', 7900);
+                    handleSubscribe('price_1SjwUIJ8osfwYbX7Ynjt7gMq', 'ScamShield', 'Family', 7900, [
+                      "Up to 5 family members",
+                      "12-hour response time",
+                      "Family Safety Vault access",
+                      "Phone support available",
+                      "25 credits/month"
+                    ]);
                   }}
                   variant="default" 
                   size="default" 
@@ -1085,7 +1115,13 @@ function LearnAndTrain() {
                 <Button 
                   onClick={() => {
                     trackButtonClick('Get Started - Premium Plan', 'Training Page');
-                    handleSubscribe('price_1SjwULJ8osfwYbX7DdZ4Ckqc', 'ScamShield', 'Premium', 12900);
+                    handleSubscribe('price_1SjwULJ8osfwYbX7DdZ4Ckqc', 'ScamShield', 'Premium', 12900, [
+                      "AI deepfake detection",
+                      "Dedicated security advisor",
+                      "24/7 emergency hotline",
+                      "Proactive monitoring",
+                      "Unlimited credits"
+                    ]);
                   }}
                   variant="default" 
                   size="default" 
@@ -1731,6 +1767,23 @@ function LearnAndTrain() {
           serviceName={selectedSubscription.serviceName}
           planTier={selectedSubscription.planTier}
           amount={selectedSubscription.amount}
+        />
+      )}
+
+      {/* Embedded Payment Modal for inline checkout */}
+      {embeddedPaymentConfig && (
+        <EmbeddedPaymentModal
+          open={embeddedPaymentOpen}
+          onOpenChange={setEmbeddedPaymentOpen}
+          mode={embeddedPaymentConfig.mode}
+          priceId={embeddedPaymentConfig.priceId}
+          productName={embeddedPaymentConfig.productName}
+          amount={embeddedPaymentConfig.amount}
+          description={embeddedPaymentConfig.description}
+          features={embeddedPaymentConfig.features}
+          onSuccess={() => {
+            trackConversion('subscription', embeddedPaymentConfig.amount / 100);
+          }}
         />
       )}
       </div>
