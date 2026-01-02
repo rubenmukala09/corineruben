@@ -18,8 +18,6 @@ import { DraggablePerformanceMonitor } from "./components/DraggablePerformanceMo
 import { useAnalyticsTracking } from "./hooks/useAnalyticsTracking";
 
 import { PageTransition } from "./components/PageTransition";
-import { Skeleton } from "@/components/ui/skeleton";
-import { performanceMonitor } from "./utils/performanceMonitor";
 import { EnhancedPageLoader } from "./components/EnhancedPageLoader";
 
 import { NavigationProgress } from "./components/NavigationProgress";
@@ -34,508 +32,77 @@ import MobileCallButton from "./components/MobileCallButton";
 import { AnalyticsTracker } from "./components/AnalyticsTracker";
 
 // Lazy load all pages for code splitting
-const Index = lazy(() => {
-  performanceMonitor.startTracking('Index');
-  return import("./pages/Index").then(module => {
-    performanceMonitor.endTracking('Index');
-    return module;
-  });
-});
-
-const Training = lazy(() => {
-  performanceMonitor.startTracking('Training');
-  return import("./pages/Training").then(module => {
-    performanceMonitor.endTracking('Training');
-    return module;
-  });
-});
-
-const Business = lazy(() => {
-  performanceMonitor.startTracking('Business');
-  return import("./pages/Business").then(module => {
-    performanceMonitor.endTracking('Business');
-    return module;
-  });
-});
+const Index = lazy(() => import("./pages/Index"));
+const Training = lazy(() => import("./pages/Training"));
+const Business = lazy(() => import("./pages/Business"));
 
 const AIReceptionist = lazy(() => import("./pages/business/AIReceptionist"));
 const AIAutomation = lazy(() => import("./pages/business/AIAutomation"));
 const WebsiteDesign = lazy(() => import("./pages/business/WebsiteDesign"));
 const WebsiteInsurance = lazy(() => import("./pages/business/WebsiteInsurance"));
 
-const About = lazy(() => {
-  performanceMonitor.startTracking('About');
-  return import("./pages/About").then(module => {
-    performanceMonitor.endTracking('About');
-    return module;
-  });
-});
+const About = lazy(() => import("./pages/About"));
+const Resources = lazy(() => import("./pages/Resources"));
+const SafetyVault = lazy(() => import("./pages/SafetyVault"));
+const Articles = lazy(() => import("./pages/Articles"));
+const Services = lazy(() => import("./pages/Services"));
 
-const Resources = lazy(() => {
-  performanceMonitor.startTracking('Resources');
-  return import("./pages/Resources").then(module => {
-    performanceMonitor.endTracking('Resources');
-    return module;
-  });
-});
+const Contact = lazy(() => import("./pages/Contact"));
+const Careers = lazy(() => import("./pages/Careers"));
+const Auth = lazy(() => import("./pages/Auth"));
+const Login = lazy(() => import("./pages/Login"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword"));
+const Signup = lazy(() => import("./pages/Signup"));
+const StaffSignup = lazy(() => import("./pages/StaffSignup"));
+const Setup = lazy(() => import("./pages/Setup"));
+const ApplicationPending = lazy(() => import("./pages/ApplicationPending"));
 
-const SafetyVault = lazy(() => {
-  performanceMonitor.startTracking('SafetyVault');
-  return import("./pages/SafetyVault").then(module => {
-    performanceMonitor.endTracking('SafetyVault');
-    return module;
-  });
-});
-
-const Articles = lazy(() => {
-  performanceMonitor.startTracking('Articles');
-  return import("./pages/Articles").then(module => {
-    performanceMonitor.endTracking('Articles');
-    return module;
-  });
-});
-
-const Services = lazy(() => {
-  performanceMonitor.startTracking('Services');
-  return import("./pages/Services").then(module => {
-    performanceMonitor.endTracking('Services');
-    return module;
-  });
-});
-
-const Contact = lazy(() => {
-  performanceMonitor.startTracking('Contact');
-  return import("./pages/Contact").then(module => {
-    performanceMonitor.endTracking('Contact');
-    return module;
-  });
-});
-
-const Careers = lazy(() => {
-  performanceMonitor.startTracking('Careers');
-  return import("./pages/Careers").then(module => {
-    performanceMonitor.endTracking('Careers');
-    return module;
-  });
-});
-
-const Auth = lazy(() => {
-  performanceMonitor.startTracking('Auth');
-  return import("./pages/Auth").then(module => {
-    performanceMonitor.endTracking('Auth');
-    return module;
-  });
-});
-
-const Login = lazy(() => {
-  performanceMonitor.startTracking('Login');
-  return import("./pages/Login").then(module => {
-    performanceMonitor.endTracking('Login');
-    return module;
-  });
-});
-
-const ResetPassword = lazy(() => {
-  performanceMonitor.startTracking('ResetPassword');
-  return import("./pages/ResetPassword").then(module => {
-    performanceMonitor.endTracking('ResetPassword');
-    return module;
-  });
-});
-
-const Signup = lazy(() => {
-  performanceMonitor.startTracking('Signup');
-  return import("./pages/Signup").then(module => {
-    performanceMonitor.endTracking('Signup');
-    return module;
-  });
-});
-
-const StaffSignup = lazy(() => {
-  performanceMonitor.startTracking('StaffSignup');
-  return import("./pages/StaffSignup").then(module => {
-    performanceMonitor.endTracking('StaffSignup');
-    return module;
-  });
-});
-
-const Setup = lazy(() => {
-  performanceMonitor.startTracking('Setup');
-  return import("./pages/Setup").then(module => {
-    performanceMonitor.endTracking('Setup');
-    return module;
-  });
-});
-
-const ApplicationPending = lazy(() => {
-  performanceMonitor.startTracking('ApplicationPending');
-  return import("./pages/ApplicationPending").then(module => {
-    performanceMonitor.endTracking('ApplicationPending');
-    return module;
-  });
-});
-
-const Pending = lazy(() => {
-  performanceMonitor.startTracking('Pending');
-  return import("./pages/admin/Pending").then(module => {
-    performanceMonitor.endTracking('Pending');
-    return module;
-  });
-});
-
-const PagesManagement = lazy(() => {
-  performanceMonitor.startTracking('PagesManagement');
-  return import("./pages/admin/PagesManagement").then(module => {
-    performanceMonitor.endTracking('PagesManagement');
-    return module;
-  });
-});
-
-const ClientMessages = lazy(() => {
-  performanceMonitor.startTracking('ClientMessages');
-  return import("./pages/admin/ClientMessages").then(module => {
-    performanceMonitor.endTracking('ClientMessages');
-    return module;
-  });
-});
-
-const CommunicationsInbox = lazy(() => {
-  performanceMonitor.startTracking('CommunicationsInbox');
-  return import("./pages/admin/CommunicationsInbox").then(module => {
-    performanceMonitor.endTracking('CommunicationsInbox');
-    return module;
-  });
-});
-
-const NewsletterManagement = lazy(() => {
-  performanceMonitor.startTracking('NewsletterManagement');
-  return import("./pages/admin/NewsletterManagement").then(module => {
-    performanceMonitor.endTracking('NewsletterManagement');
-    return module;
-  });
-});
-
-const BillingSettings = lazy(() => {
-  performanceMonitor.startTracking('BillingSettings');
-  return import("./pages/admin/settings/BillingSettings").then(module => {
-    performanceMonitor.endTracking('BillingSettings');
-    return module;
-  });
-});
-
-const Admin = lazy(() => {
-  performanceMonitor.startTracking('Admin');
-  return import("./pages/Admin").then(module => {
-    performanceMonitor.endTracking('Admin');
-    return module;
-  });
-});
-
-const TestimonialsAdmin = lazy(() => {
-  performanceMonitor.startTracking('TestimonialsAdmin');
-  return import("./pages/admin/TestimonialsAdmin").then(module => {
-    performanceMonitor.endTracking('TestimonialsAdmin');
-    return module;
-  });
-});
-
-const ArticlesAdmin = lazy(() => {
-  performanceMonitor.startTracking('ArticlesAdmin');
-  return import("./pages/admin/ArticlesAdmin").then(module => {
-    performanceMonitor.endTracking('ArticlesAdmin');
-    return module;
-  });
-});
-
-const ArticleEditor = lazy(() => {
-  performanceMonitor.startTracking('ArticleEditor');
-  return import("./pages/admin/ArticleEditor").then(module => {
-    performanceMonitor.endTracking('ArticleEditor');
-    return module;
-  });
-});
-
-const ArticlePreview = lazy(() => {
-  performanceMonitor.startTracking('ArticlePreview');
-  return import("./pages/admin/ArticlePreview").then(module => {
-    performanceMonitor.endTracking('ArticlePreview');
-    return module;
-  });
-});
-
-const TeamAdmin = lazy(() => {
-  performanceMonitor.startTracking('TeamAdmin');
-  return import("./pages/admin/TeamAdmin").then(module => {
-    performanceMonitor.endTracking('TeamAdmin');
-    return module;
-  });
-});
-
-const EmailCampaigns = lazy(() => {
-  performanceMonitor.startTracking('EmailCampaigns');
-  return import("./pages/admin/EmailCampaigns").then(module => {
-    performanceMonitor.endTracking('EmailCampaigns');
-    return module;
-  });
-});
-
-const Analytics = lazy(() => {
-  performanceMonitor.startTracking('Analytics');
-  return import("./pages/admin/Analytics").then(module => {
-    performanceMonitor.endTracking('Analytics');
-    return module;
-  });
-});
-
-const BusinessClients = lazy(() => {
-  performanceMonitor.startTracking('BusinessClients');
-  return import("./pages/admin/BusinessClients").then(module => {
-    performanceMonitor.endTracking('BusinessClients');
-    return module;
-  });
-});
-
-const BusinessClientDetail = lazy(() => {
-  performanceMonitor.startTracking('BusinessClientDetail');
-  return import("./pages/admin/BusinessClientDetail").then(module => {
-    performanceMonitor.endTracking('BusinessClientDetail');
-    return module;
-  });
-});
-
-const IndividualClients = lazy(() => {
-  performanceMonitor.startTracking('IndividualClients');
-  return import("./pages/admin/IndividualClients").then(module => {
-    performanceMonitor.endTracking('IndividualClients');
-    return module;
-  });
-});
-
-const ProductsList = lazy(() => {
-  performanceMonitor.startTracking('ProductsList');
-  return import("./pages/admin/ProductsList").then(module => {
-    performanceMonitor.endTracking('ProductsList');
-    return module;
-  });
-});
-
-const ProductEditor = lazy(() => {
-  performanceMonitor.startTracking('ProductEditor');
-  return import("./pages/admin/ProductEditor").then(module => {
-    performanceMonitor.endTracking('ProductEditor');
-    return module;
-  });
-});
-
-const OrdersList = lazy(() => {
-  performanceMonitor.startTracking('OrdersList');
-  return import("./pages/admin/OrdersList").then(module => {
-    performanceMonitor.endTracking('OrdersList');
-    return module;
-  });
-});
-
-const OrderDetail = lazy(() => {
-  performanceMonitor.startTracking('OrderDetail');
-  return import("./pages/admin/OrderDetail").then(module => {
-    performanceMonitor.endTracking('OrderDetail');
-    return module;
-  });
-});
-
-const InventoryManagement = lazy(() => {
-  performanceMonitor.startTracking('InventoryManagement');
-  return import("./pages/admin/InventoryManagement").then(module => {
-    performanceMonitor.endTracking('InventoryManagement');
-    return module;
-  });
-});
-
-const Settings = lazy(() => {
-  performanceMonitor.startTracking('Settings');
-  return import("./pages/admin/Settings").then(module => {
-    performanceMonitor.endTracking('Settings');
-    return module;
-  });
-});
-
-const Portal = lazy(() => {
-  performanceMonitor.startTracking('Portal');
-  return import("./pages/Portal").then(module => {
-    performanceMonitor.endTracking('Portal');
-    return module;
-  });
-});
-
-const AdminDashboard = lazy(() => {
-  performanceMonitor.startTracking('AdminDashboard');
-  return import("./pages/portal/AdminDashboard").then(module => {
-    performanceMonitor.endTracking('AdminDashboard');
-    return module;
-  });
-});
-
-const AnalystDashboard = lazy(() => {
-  performanceMonitor.startTracking('AnalystDashboard');
-  return import("./pages/portal/AnalystDashboard").then(module => {
-    performanceMonitor.endTracking('AnalystDashboard');
-    return module;
-  });
-});
-
-const TrainerDashboard = lazy(() => {
-  performanceMonitor.startTracking('TrainerDashboard');
-  return import("./pages/portal/TrainerDashboard").then(module => {
-    performanceMonitor.endTracking('TrainerDashboard');
-    return module;
-  });
-});
-
-const DeveloperDashboard = lazy(() => {
-  performanceMonitor.startTracking('DeveloperDashboard');
-  return import("./pages/portal/DeveloperDashboard").then(module => {
-    performanceMonitor.endTracking('DeveloperDashboard');
-    return module;
-  });
-});
-
-const StaffDashboard = lazy(() => {
-  performanceMonitor.startTracking('StaffDashboard');
-  return import("./pages/portal/StaffDashboard").then(module => {
-    performanceMonitor.endTracking('StaffDashboard');
-    return module;
-  });
-});
-
-const SeniorDashboard = lazy(() => {
-  performanceMonitor.startTracking('SeniorDashboard');
-  return import("./pages/portal/SeniorDashboard").then(module => {
-    performanceMonitor.endTracking('SeniorDashboard');
-    return module;
-  });
-});
-
-const CaregiverDashboard = lazy(() => {
-  performanceMonitor.startTracking('CaregiverDashboard');
-  return import("./pages/portal/CaregiverDashboard").then(module => {
-    performanceMonitor.endTracking('CaregiverDashboard');
-    return module;
-  });
-});
-
-const HealthcareDashboard = lazy(() => {
-  performanceMonitor.startTracking('HealthcareDashboard');
-  return import("./pages/portal/HealthcareDashboard").then(module => {
-    performanceMonitor.endTracking('HealthcareDashboard');
-    return module;
-  });
-});
-
-const PrivacyPolicy = lazy(() => {
-  performanceMonitor.startTracking('PrivacyPolicy');
-  return import("./pages/PrivacyPolicy").then(module => {
-    performanceMonitor.endTracking('PrivacyPolicy');
-    return module;
-  });
-});
-
-const TermsOfService = lazy(() => {
-  performanceMonitor.startTracking('TermsOfService');
-  return import("./pages/TermsOfService").then(module => {
-    performanceMonitor.endTracking('TermsOfService');
-    return module;
-  });
-});
-
-const RefundPolicy = lazy(() => {
-  performanceMonitor.startTracking('RefundPolicy');
-  return import("./pages/RefundPolicy").then(module => {
-    performanceMonitor.endTracking('RefundPolicy');
-    return module;
-  });
-});
-
-const CookiePolicy = lazy(() => {
-  performanceMonitor.startTracking('CookiePolicy');
-  return import("./pages/CookiePolicy").then(module => {
-    performanceMonitor.endTracking('CookiePolicy');
-    return module;
-  });
-});
-
-const AcceptableUse = lazy(() => {
-  performanceMonitor.startTracking('AcceptableUse');
-  return import("./pages/AcceptableUse").then(module => {
-    performanceMonitor.endTracking('AcceptableUse');
-    return module;
-  });
-});
-
-const Disclaimer = lazy(() => {
-  performanceMonitor.startTracking('Disclaimer');
-  return import("./pages/Disclaimer").then(module => {
-    performanceMonitor.endTracking('Disclaimer');
-    return module;
-  });
-});
-
-const FAQ = lazy(() => {
-  performanceMonitor.startTracking('FAQ');
-  return import("./pages/FAQ").then(module => {
-    performanceMonitor.endTracking('FAQ');
-    return module;
-  });
-});
-
-const NotFound = lazy(() => {
-  performanceMonitor.startTracking('NotFound');
-  return import("./pages/NotFound").then(module => {
-    performanceMonitor.endTracking('NotFound');
-    return module;
-  });
-});
-
+const Pending = lazy(() => import("./pages/admin/Pending"));
+const PagesManagement = lazy(() => import("./pages/admin/PagesManagement"));
+const ClientMessages = lazy(() => import("./pages/admin/ClientMessages"));
+const CommunicationsInbox = lazy(() => import("./pages/admin/CommunicationsInbox"));
+const NewsletterManagement = lazy(() => import("./pages/admin/NewsletterManagement"));
+const BillingSettings = lazy(() => import("./pages/admin/settings/BillingSettings"));
+const Admin = lazy(() => import("./pages/Admin"));
+const TestimonialsAdmin = lazy(() => import("./pages/admin/TestimonialsAdmin"));
+const ArticlesAdmin = lazy(() => import("./pages/admin/ArticlesAdmin"));
+const ArticleEditor = lazy(() => import("./pages/admin/ArticleEditor"));
+const ArticlePreview = lazy(() => import("./pages/admin/ArticlePreview"));
+const TeamAdmin = lazy(() => import("./pages/admin/TeamAdmin"));
+const EmailCampaigns = lazy(() => import("./pages/admin/EmailCampaigns"));
+const Analytics = lazy(() => import("./pages/admin/Analytics"));
+const BusinessClients = lazy(() => import("./pages/admin/BusinessClients"));
+const BusinessClientDetail = lazy(() => import("./pages/admin/BusinessClientDetail"));
+const IndividualClients = lazy(() => import("./pages/admin/IndividualClients"));
+const ProductsList = lazy(() => import("./pages/admin/ProductsList"));
+const ProductEditor = lazy(() => import("./pages/admin/ProductEditor"));
+const OrdersList = lazy(() => import("./pages/admin/OrdersList"));
+const OrderDetail = lazy(() => import("./pages/admin/OrderDetail"));
+const InventoryManagement = lazy(() => import("./pages/admin/InventoryManagement"));
+const Settings = lazy(() => import("./pages/admin/Settings"));
+const Portal = lazy(() => import("./pages/Portal"));
+const AdminDashboard = lazy(() => import("./pages/portal/AdminDashboard"));
+const AnalystDashboard = lazy(() => import("./pages/portal/AnalystDashboard"));
+const TrainerDashboard = lazy(() => import("./pages/portal/TrainerDashboard"));
+const DeveloperDashboard = lazy(() => import("./pages/portal/DeveloperDashboard"));
+const StaffDashboard = lazy(() => import("./pages/portal/StaffDashboard"));
+const SeniorDashboard = lazy(() => import("./pages/portal/SeniorDashboard"));
+const CaregiverDashboard = lazy(() => import("./pages/portal/CaregiverDashboard"));
+const HealthcareDashboard = lazy(() => import("./pages/portal/HealthcareDashboard"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const TermsOfService = lazy(() => import("./pages/TermsOfService"));
+const RefundPolicy = lazy(() => import("./pages/RefundPolicy"));
+const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
+const AcceptableUse = lazy(() => import("./pages/AcceptableUse"));
+const Disclaimer = lazy(() => import("./pages/Disclaimer"));
+const FAQ = lazy(() => import("./pages/FAQ"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 const Subscriptions = lazy(() => import("./pages/admin/SubscriptionsRoute"));
-
-const SystemHealthDashboard = lazy(() => {
-  performanceMonitor.startTracking('SystemHealthDashboard');
-  return import("./pages/admin/SystemHealthDashboard").then(module => {
-    performanceMonitor.endTracking('SystemHealthDashboard');
-    return module;
-  });
-});
-
-const TestingChecklist = lazy(() => {
-  performanceMonitor.startTracking('TestingChecklist');
-  return import("./pages/admin/TestingChecklist").then(module => {
-    performanceMonitor.endTracking('TestingChecklist');
-    return module;
-  });
-});
-
-const Maintenance = lazy(() => {
-  performanceMonitor.startTracking('Maintenance');
-  return import("./pages/Maintenance").then(module => {
-    performanceMonitor.endTracking('Maintenance');
-    return module;
-  });
-});
-
-const PaymentSuccess = lazy(() => {
-  performanceMonitor.startTracking('PaymentSuccess');
-  return import("./pages/PaymentSuccess").then(module => {
-    performanceMonitor.endTracking('PaymentSuccess');
-    return module;
-  });
-});
-
-const PaymentCanceled = lazy(() => {
-  performanceMonitor.startTracking('PaymentCanceled');
-  return import("./pages/PaymentCanceled").then(module => {
-    performanceMonitor.endTracking('PaymentCanceled');
-    return module;
-  });
-});
+const SystemHealthDashboard = lazy(() => import("./pages/admin/SystemHealthDashboard"));
+const TestingChecklist = lazy(() => import("./pages/admin/TestingChecklist"));
+const Maintenance = lazy(() => import("./pages/Maintenance"));
+const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess"));
+const PaymentCanceled = lazy(() => import("./pages/PaymentCanceled"));
 
 // Premium loading fallback with beautiful bubble animation
 const PageLoader = () => <EnhancedPageLoader message="Loading..." />;
@@ -638,7 +205,7 @@ function App() {
   return (
     <>
       {/* Initial website loading effect */}
-      <InitialLoader onComplete={() => setIsLoading(false)} minDuration={800} />
+      <InitialLoader onComplete={() => setIsLoading(false)} minDuration={150} />
       
       <QueryClientProvider client={queryClient}>
         <Toaster />

@@ -26,7 +26,7 @@ interface ScrollRevealProps {
   stagger?: number;
 }
 
-// Optimized animation classes that use CSS transitions for instant rendering
+// Simple animation classes - all use same basic transition
 const animationClasses: Record<AnimationType, string> = {
   'blur-up': 'scroll-blur-up',
   'blur-in': 'scroll-blur-in',
@@ -53,14 +53,13 @@ export const ScrollReveal = memo(({
   className,
   animation = 'blur-up',
   delay = 0,
-  threshold = 0.05,
+  threshold = 0.1,
   duration = 'normal',
 }: ScrollRevealProps) => {
   const { ref, isVisible } = useScrollReveal({ 
     threshold, 
     triggerOnce: true, 
-    delay,
-    rootMargin: '30px 0px 0px 0px',
+    rootMargin: '100px 0px 0px 0px',
   });
 
   return (

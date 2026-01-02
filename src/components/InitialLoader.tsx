@@ -29,7 +29,7 @@ interface InitialLoaderProps {
   minDuration?: number;
 }
 
-export const InitialLoader = ({ onComplete, minDuration = 600 }: InitialLoaderProps) => {
+export const InitialLoader = ({ onComplete, minDuration = 150 }: InitialLoaderProps) => {
   const [isVisible, setIsVisible] = useState(true);
   const [progress, setProgress] = useState(0);
 
@@ -64,49 +64,31 @@ export const InitialLoader = ({ onComplete, minDuration = 600 }: InitialLoaderPr
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
+          transition={{ duration: 0.15 }}
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-background"
         >
-          {/* Clean solid background */}
-          <div className="absolute inset-0 bg-background" />
-          
-          <div className="relative flex flex-col items-center gap-5">
-            {/* Simple logo - no extra effects */}
+          <div className="relative flex flex-col items-center gap-4">
             <motion.img
               src={shieldLogo}
               alt="InVision Network"
-              className="w-16 h-16 object-contain"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="w-14 h-14 object-contain"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.1 }}
             />
-
-            {/* Brand text */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.1, duration: 0.2 }}
-              className="text-center"
-            >
-              <h1 className="text-lg font-semibold text-foreground">InVision Network</h1>
-            </motion.div>
-
-            {/* Simple progress bar */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.15 }}
-              className="w-32"
-            >
-              <div className="h-1 bg-muted rounded-full overflow-hidden">
+            <div className="text-center">
+              <h1 className="text-base font-semibold text-foreground">InVision Network</h1>
+            </div>
+            <div className="w-28">
+              <div className="h-0.5 bg-muted rounded-full overflow-hidden">
                 <motion.div
                   className="h-full bg-primary rounded-full"
                   initial={{ width: 0 }}
                   animate={{ width: `${progress}%` }}
-                  transition={{ duration: 0.15, ease: "linear" }}
+                  transition={{ duration: 0.1 }}
                 />
               </div>
-            </motion.div>
+            </div>
           </div>
         </motion.div>
       )}
