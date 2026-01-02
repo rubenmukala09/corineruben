@@ -353,14 +353,14 @@ function Business() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16 items-stretch pt-8">
             {/* Landing Page */}
             <ScrollReveal animation="fade-up" delay={0} threshold={0.2}>
-              <div className="relative h-full">
-                <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
+              <div className="relative h-full pt-4">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-violet-500 text-white px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 whitespace-nowrap">
                   ⚡ QUICK START
                 </div>
-                <Card className="p-6 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1 h-full flex flex-col">
+                <Card className="p-6 pt-8 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1 h-full flex flex-col border-2 border-transparent hover:border-primary/20">
                   <div className="flex items-center justify-center gap-1.5 mb-4 text-xs text-success pt-2">
                     <CheckCircle className="w-3.5 h-3.5" />
                     <span className="font-medium">2-Week Delivery</span>
@@ -416,11 +416,11 @@ function Business() {
 
             {/* Business Website - Featured */}
             <ScrollReveal animation="fade-up" delay={150} threshold={0.2}>
-              <div className="relative h-full">
-                <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
+              <div className="relative h-full pt-4">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 whitespace-nowrap">
                   ⭐ MOST POPULAR
                 </div>
-                <Card className="p-6 rounded-2xl shadow-[0_8px_30px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)] transition-all border-2 border-primary h-full flex flex-col">
+                <Card className="p-6 pt-8 rounded-2xl shadow-[0_8px_30px_hsl(var(--primary)/0.15)] hover:shadow-[0_12px_40px_hsl(var(--primary)/0.2)] transition-all border-2 border-primary h-full flex flex-col">
                   <div className="flex items-center justify-center gap-1.5 mb-4 text-xs text-success pt-2">
                     <CheckCircle className="w-3.5 h-3.5" />
                     <span className="font-medium">4-Week Delivery</span>
@@ -476,11 +476,11 @@ function Business() {
 
             {/* E-Commerce Website */}
             <ScrollReveal animation="fade-up" delay={300} threshold={0.2}>
-              <div className="relative h-full">
-                <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
+              <div className="relative h-full pt-4">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 whitespace-nowrap">
                   🛒 FULL FEATURED
                 </div>
-                <Card className="p-6 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1 h-full flex flex-col">
+                <Card className="p-6 pt-8 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1 h-full flex flex-col border-2 border-transparent hover:border-primary/20">
                   <div className="flex items-center justify-center gap-1.5 mb-4 text-xs text-success pt-2">
                     <CheckCircle className="w-3.5 h-3.5" />
                     <span className="font-medium">Complete Solution</span>
@@ -860,7 +860,7 @@ function Business() {
       </section>
 
       {/* Package Pricing - AI Agents & Automation */}
-      <section id="automation-pricing" className="py-20 bg-background relative overflow-hidden">
+      <section id="automation-pricing" className="py-20 bg-background relative">
         <FlowingWaves variant="full" opacity={0.08} />
         <div className="container mx-auto px-4 relative z-10">
           {/* Section Header with Trust */}
@@ -891,13 +891,13 @@ function Business() {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 items-stretch pt-8">
             <ScrollReveal animation="slide-left" delay={0}>
-              <div className="relative">
-                <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20">
+              <div className="relative pt-4">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-violet-500 text-white px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 whitespace-nowrap">
                   🎯 START HERE
                 </div>
-                <Card className="p-6 md:p-8 active:scale-98 hover:shadow-strong transition-all hover:-translate-y-2 h-full flex flex-col">
+                <Card className="p-6 md:p-8 pt-8 active:scale-98 hover:shadow-strong transition-all hover:-translate-y-2 h-full flex flex-col border-2 border-transparent hover:border-primary/20">
                   <div className="flex items-center justify-center gap-1.5 mb-4 text-xs text-success">
                     <CheckCircle className="w-3.5 h-3.5" />
                     <span className="font-medium">Quick 2-Week Setup</span>
@@ -950,11 +950,11 @@ function Business() {
             </ScrollReveal>
 
             <ScrollReveal animation="scale-in" delay={200}>
-              <div className="relative h-full">
-                <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 animate-pulse" style={{ animationDuration: '3s' }}>
+              <div className="relative h-full pt-4">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 whitespace-nowrap">
                   ⭐ MOST POPULAR
                 </div>
-                <Card className="p-6 md:p-8 active:scale-98 border-2 border-primary shadow-[0_8px_30px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)] transition-all hover:-translate-y-2 h-full flex flex-col">
+                <Card className="p-6 md:p-8 pt-8 active:scale-98 border-2 border-primary shadow-[0_8px_30px_hsl(var(--primary)/0.15)] hover:shadow-[0_12px_40px_hsl(var(--primary)/0.2)] transition-all hover:-translate-y-2 h-full flex flex-col">
                   <div className="flex items-center justify-center gap-1.5 mb-4 text-xs text-success">
                     <CheckCircle className="w-3.5 h-3.5" />
                     <span className="font-medium">Most ROI</span>

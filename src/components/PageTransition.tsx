@@ -4,79 +4,46 @@ import { useLocation } from "react-router-dom";
 
 interface PageTransitionProps {
   children: ReactNode;
-  variant?: "blur" | "slide" | "morph" | "curtain" | "zoom" | "fade" | "scale" | "slideUp" | "auto";
+  variant?: "fade" | "slide" | "scale" | "auto";
 }
 
-// Premium easing curves
-const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
-const snappyEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
-const curtainEase: [number, number, number, number] = [0.76, 0, 0.24, 1];
-const elasticEase: [number, number, number, number] = [0.34, 1.56, 0.64, 1];
+// Smooth easing
+const smoothEase: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
-// Route-specific transition mapping
+// Route-specific transition mapping - simpler, cleaner
 const routeTransitions: Record<string, string> = {
-  "/": "morph",
-  "/business": "slide",
-  "/training": "curtain",
-  "/resources": "zoom",
-  "/about": "blur",
-  "/careers": "slideUp",
+  "/": "fade",
+  "/business": "fade",
+  "/training": "slide",
+  "/resources": "fade",
+  "/about": "fade",
+  "/careers": "fade",
   "/faq": "fade",
-  "/contact": "scale",
-  "/auth": "morph",
-  "/login": "morph",
-  "/shop": "slide",
-  "/services": "zoom",
+  "/contact": "fade",
+  "/auth": "scale",
+  "/login": "scale",
+  "/shop": "fade",
+  "/services": "fade",
 };
 
 const variants = {
-  blur: {
-    initial: { opacity: 0, filter: "blur(4px)", y: 6 },
-    animate: { opacity: 1, filter: "blur(0px)", y: 0 },
-    exit: { opacity: 0, filter: "blur(2px)", y: -3 },
-    transition: { duration: 0.25, ease: smoothEase } as Transition,
-  },
-  slide: {
-    initial: { opacity: 0, x: 12 },
-    animate: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -6 },
-    transition: { duration: 0.22, ease: snappyEase } as Transition,
-  },
-  morph: {
-    initial: { opacity: 0, scale: 0.99 },
-    animate: { opacity: 1, scale: 1 },
-    exit: { opacity: 0, scale: 0.995 },
-    transition: { duration: 0.25, ease: smoothEase } as Transition,
-  },
-  curtain: {
-    initial: { opacity: 0, clipPath: "inset(0 30% 0 30%)" },
-    animate: { opacity: 1, clipPath: "inset(0 0% 0 0%)" },
-    exit: { opacity: 0, clipPath: "inset(0 20% 0 20%)" },
-    transition: { duration: 0.28, ease: curtainEase } as Transition,
-  },
-  zoom: {
-    initial: { opacity: 0, scale: 1.015 },
-    animate: { opacity: 1, scale: 1 },
-    exit: { opacity: 0, scale: 0.99 },
-    transition: { duration: 0.25, ease: smoothEase } as Transition,
-  },
   fade: {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
     exit: { opacity: 0 },
-    transition: { duration: 0.18, ease: "easeOut" } as Transition,
+    transition: { duration: 0.2, ease: smoothEase } as Transition,
   },
-  scale: {
-    initial: { opacity: 0, scale: 0.97 },
-    animate: { opacity: 1, scale: 1 },
-    exit: { opacity: 0, scale: 0.99 },
-    transition: { duration: 0.22, ease: elasticEase } as Transition,
-  },
-  slideUp: {
+  slide: {
     initial: { opacity: 0, y: 8 },
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -4 },
-    transition: { duration: 0.22, ease: smoothEase } as Transition,
+    transition: { duration: 0.25, ease: smoothEase } as Transition,
+  },
+  scale: {
+    initial: { opacity: 0, scale: 0.98 },
+    animate: { opacity: 1, scale: 1 },
+    exit: { opacity: 0, scale: 0.99 },
+    transition: { duration: 0.2, ease: smoothEase } as Transition,
   },
 };
 
@@ -86,13 +53,10 @@ export const PageTransition = ({
 }: PageTransitionProps) => {
   const location = useLocation();
   
-  // Determine variant based on route or prop
   const resolvedVariant = useMemo(() => {
     if (variant !== "auto") return variant;
-    
-    // Get route-specific transition or default to morph
     const routeVariant = routeTransitions[location.pathname];
-    return (routeVariant as keyof typeof variants) || "morph";
+    return (routeVariant as keyof typeof variants) || "fade";
   }, [variant, location.pathname]);
 
   const selectedVariant = variants[resolvedVariant];
@@ -104,8 +68,7 @@ export const PageTransition = ({
       exit={selectedVariant.exit}
       transition={selectedVariant.transition}
       style={{ 
-        willChange: "transform, opacity",
-        backfaceVisibility: "hidden",
+        willChange: "opacity",
       }}
     >
       {children}

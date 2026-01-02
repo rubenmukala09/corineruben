@@ -524,8 +524,8 @@ function AnimatedRoutes() {
         <Route path="/careers" element={<PageTransition variant="auto"><Careers /></PageTransition>} />
         <Route path="/auth" element={<PageTransition variant="auto"><Auth /></PageTransition>} />
         <Route path="/login" element={<PageTransition variant="auto"><Login /></PageTransition>} />
-        <Route path="/signup" element={<PageTransition variant="morph"><Signup /></PageTransition>} />
-        <Route path="/staff-signup" element={<PageTransition variant="morph"><StaffSignup /></PageTransition>} />
+        <Route path="/signup" element={<PageTransition variant="scale"><Signup /></PageTransition>} />
+        <Route path="/staff-signup" element={<PageTransition variant="scale"><StaffSignup /></PageTransition>} />
         <Route path="/setup" element={<PageTransition><Setup /></PageTransition>} />
         <Route path="/application-pending" element={<PageTransition><ApplicationPending /></PageTransition>} />
         <Route path="/admin" element={<PageTransition><AdminRoute><Admin /></AdminRoute></PageTransition>} />
@@ -571,7 +571,7 @@ function AnimatedRoutes() {
         <Route path="/privacy-policy" element={<PageTransition variant="fade"><PrivacyPolicy /></PageTransition>} />
         <Route path="/terms-of-service" element={<PageTransition variant="fade"><TermsOfService /></PageTransition>} />
         <Route path="/faq" element={<PageTransition variant="auto"><FAQ /></PageTransition>} />
-        <Route path="*" element={<PageTransition variant="blur"><NotFound /></PageTransition>} />
+        <Route path="*" element={<PageTransition variant="fade"><NotFound /></PageTransition>} />
       </Routes>
     </AnimatePresence>
   );
