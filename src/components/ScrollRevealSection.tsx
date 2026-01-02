@@ -14,12 +14,13 @@ export const ScrollRevealSection = ({
   children, 
   className = "",
   staggerChildren = false,
-  threshold = 0.2,
+  threshold = 0.08,
   animation = 'blur'
 }: ScrollRevealSectionProps) => {
   const { ref, isVisible } = useScrollReveal({ 
     threshold,
-    triggerOnce: true 
+    triggerOnce: true,
+    rootMargin: '40px 0px 0px 0px'
   });
 
   const animationClasses = {
