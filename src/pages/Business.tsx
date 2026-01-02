@@ -22,7 +22,6 @@ import { WebsiteInsuranceDialog } from "@/components/WebsiteInsuranceDialog";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { trackButtonClick, trackConversion } from "@/utils/analyticsTracker";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield, Lock, Sparkles, FileText } from "lucide-react";
-import { ExpandableServiceCard } from "@/components/ExpandableServiceCard";
 import { Badge } from "@/components/ui/badge";
 
 // Rotating hero headlines for Business page
@@ -281,275 +280,259 @@ function Business() {
 
       <TrustBar />
 
-      {/* What We Build - Expandable Cards with Full Content */}
+      {/* Core B2B Services - Visible for SEO */}
       <section className="py-20 bg-background relative">
         <FlowingWaves variant="full" opacity={0.12} />
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-12">
+          <div className="text-center mb-16">
             <div className="inline-block px-6 py-2 bg-primary/10 rounded-full text-sm font-bold text-primary mb-4 uppercase tracking-wider">
               Our Services
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-4">What We Build</h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Click on any service to learn more about how we can help your business grow
+              AI-powered solutions that transform how Ohio businesses operate
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {/* AI Receptionist */}
-            <ExpandableServiceCard
-              icon={<Phone className="w-8 h-8 text-accent" />}
-              title="AI Receptionist"
-              summary="Answer calls 24/7, route to right person, book appointments, answer FAQs. Never miss a lead again."
-              delay={0}
-            >
-              <div className="space-y-6">
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  <strong className="text-foreground">Never miss another call.</strong> Our AI Receptionist answers every incoming call 24 hours a day, 7 days a week — including holidays, weekends, and after hours. It sounds natural, handles FAQs, and routes urgent calls to the right team member instantly.
+          {/* AI Receptionist Section */}
+          <ScrollReveal animation="fade-up" delay={0}>
+            <div id="ai-receptionist" className="mb-16">
+              <Card className="p-8 md:p-10 border-2 border-primary/10 hover:border-primary/30 transition-colors">
+                <div className="flex items-start gap-6 mb-8">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-8 h-8 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-3xl font-bold mb-2">AI Receptionist</h3>
+                    <p className="text-lg text-muted-foreground">
+                      24/7 call answering that sounds human. Never miss a lead again.
+                    </p>
+                  </div>
+                </div>
+                
+                <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+                  <strong className="text-foreground">Never miss another call.</strong> Our AI Receptionist answers every incoming call 24 hours a day, 7 days a week — including holidays, weekends, and after hours. It sounds natural, handles FAQs, routes urgent calls to the right team member, and books appointments automatically.
                 </p>
                 
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <Card className="p-4 bg-gradient-to-br from-primary/5 to-transparent">
-                    <h4 className="font-bold text-sm mb-2 flex items-center gap-2">
-                      <Phone className="w-4 h-4 text-primary" />
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                  <Card className="p-5 bg-gradient-to-br from-primary/5 to-transparent">
+                    <h4 className="font-bold mb-2 flex items-center gap-2">
+                      <Phone className="w-5 h-5 text-primary" />
                       24/7 Call Handling
                     </h4>
-                    <p className="text-muted-foreground text-xs">
+                    <p className="text-muted-foreground text-sm">
                       Your AI receptionist never sleeps. Every call is answered professionally — whether it's 2pm or 2am.
                     </p>
                   </Card>
                   
-                  <Card className="p-4 bg-gradient-to-br from-accent/5 to-transparent">
-                    <h4 className="font-bold text-sm mb-2 flex items-center gap-2">
-                      <Search className="w-4 h-4 text-accent" />
+                  <Card className="p-5 bg-gradient-to-br from-accent/5 to-transparent">
+                    <h4 className="font-bold mb-2 flex items-center gap-2">
+                      <Search className="w-5 h-5 text-accent" />
                       Lead Qualification
                     </h4>
-                    <p className="text-muted-foreground text-xs">
+                    <p className="text-muted-foreground text-sm">
                       The AI asks the right questions to understand caller needs, qualifying leads before they reach your team.
                     </p>
                   </Card>
                   
-                  <Card className="p-4 bg-gradient-to-br from-success/5 to-transparent">
-                    <h4 className="font-bold text-sm mb-2 flex items-center gap-2">
-                      <MessageSquare className="w-4 h-4 text-success" />
+                  <Card className="p-5 bg-gradient-to-br from-success/5 to-transparent">
+                    <h4 className="font-bold mb-2 flex items-center gap-2">
+                      <MessageSquare className="w-5 h-5 text-success" />
                       FAQ Automation
                     </h4>
-                    <p className="text-muted-foreground text-xs">
+                    <p className="text-muted-foreground text-sm">
                       Common questions about hours, pricing, and services are answered instantly with accurate responses.
                     </p>
                   </Card>
                   
-                  <Card className="p-4 bg-gradient-to-br from-blue-500/5 to-transparent">
-                    <h4 className="font-bold text-sm mb-2 flex items-center gap-2">
-                      <Shield className="w-4 h-4 text-blue-500" />
+                  <Card className="p-5 bg-gradient-to-br from-blue-500/5 to-transparent">
+                    <h4 className="font-bold mb-2 flex items-center gap-2">
+                      <Shield className="w-5 h-5 text-blue-500" />
                       Spam Filtering
                     </h4>
-                    <p className="text-muted-foreground text-xs">
+                    <p className="text-muted-foreground text-sm">
                       Built-in spam detection blocks telemarketers and robo-calls before they waste your time.
                     </p>
                   </Card>
                 </div>
                 
-                <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-xl p-4">
-                  <p className="text-sm leading-relaxed">
+                <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-xl p-6">
+                  <p className="text-base leading-relaxed">
                     <strong className="text-primary">The bottom line:</strong> Businesses miss up to 62% of calls outside business hours. Each missed call costs $200-$500 in potential revenue. With our AI Receptionist, you capture every opportunity.
                   </p>
                 </div>
-              </div>
-            </ExpandableServiceCard>
+                
+                <div className="mt-6 flex flex-wrap gap-4">
+                  <Button asChild>
+                    <Link to="/business/ai-receptionist">Learn More About AI Receptionist</Link>
+                  </Button>
+                  <Button variant="outline" asChild>
+                    <Link to="/contact?service=ai-receptionist">Request Demo</Link>
+                  </Button>
+                </div>
+              </Card>
+            </div>
+          </ScrollReveal>
 
-            {/* Smart Scheduling (formerly Follow-Up Automation) */}
-            <ExpandableServiceCard
-              icon={<Calendar className="w-8 h-8 text-accent" />}
-              title="Smart Scheduling"
-              summary="Auto-book appointments, send reminders, sync calendars. Eliminate back-and-forth emails forever."
-              delay={150}
-            >
-              <div className="space-y-6">
-                <p className="text-lg text-muted-foreground leading-relaxed">
+          {/* Smart Scheduling Section */}
+          <ScrollReveal animation="fade-up" delay={100}>
+            <div id="smart-scheduling" className="mb-16">
+              <Card className="p-8 md:p-10 border-2 border-accent/10 hover:border-accent/30 transition-colors">
+                <div className="flex items-start gap-6 mb-8">
+                  <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Calendar className="w-8 h-8 text-accent" />
+                  </div>
+                  <div>
+                    <h3 className="text-3xl font-bold mb-2">Smart Scheduling</h3>
+                    <p className="text-lg text-muted-foreground">
+                      Auto-book appointments, send reminders, sync calendars. Eliminate back-and-forth emails forever.
+                    </p>
+                  </div>
+                </div>
+                
+                <p className="text-lg text-muted-foreground leading-relaxed mb-8">
                   <strong className="text-foreground">Eliminate the back-and-forth.</strong> Our Smart Scheduling system books appointments directly into your calendar — no human intervention required. Clients can book 24/7 through phone, chat, or web, and the AI handles rescheduling and reminders automatically.
                 </p>
                 
-                <div className="grid sm:grid-cols-3 gap-4">
-                  <Card className="p-4 text-center">
-                    <div className="w-10 h-10 mx-auto mb-3 bg-accent/10 rounded-full flex items-center justify-center">
-                      <Calendar className="w-5 h-5 text-accent" />
+                <div className="grid sm:grid-cols-3 gap-6 mb-8">
+                  <Card className="p-5 text-center">
+                    <div className="w-12 h-12 mx-auto mb-4 bg-accent/10 rounded-full flex items-center justify-center">
+                      <Calendar className="w-6 h-6 text-accent" />
                     </div>
-                    <h4 className="font-bold text-sm mb-1">Auto-Booking</h4>
-                    <p className="text-xs text-muted-foreground">
+                    <h4 className="font-bold mb-2">Auto-Booking</h4>
+                    <p className="text-sm text-muted-foreground">
                       Books directly into your calendar with real-time availability.
                     </p>
                   </Card>
                   
-                  <Card className="p-4 text-center">
-                    <div className="w-10 h-10 mx-auto mb-3 bg-primary/10 rounded-full flex items-center justify-center">
-                      <Mail className="w-5 h-5 text-primary" />
+                  <Card className="p-5 text-center">
+                    <div className="w-12 h-12 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center">
+                      <Mail className="w-6 h-6 text-primary" />
                     </div>
-                    <h4 className="font-bold text-sm mb-1">Smart Reminders</h4>
-                    <p className="text-xs text-muted-foreground">
+                    <h4 className="font-bold mb-2">Smart Reminders</h4>
+                    <p className="text-sm text-muted-foreground">
                       Reduces no-shows by up to 80% with automated SMS/email.
                     </p>
                   </Card>
                   
-                  <Card className="p-4 text-center">
-                    <div className="w-10 h-10 mx-auto mb-3 bg-success/10 rounded-full flex items-center justify-center">
-                      <CheckCircle className="w-5 h-5 text-success" />
+                  <Card className="p-5 text-center">
+                    <div className="w-12 h-12 mx-auto mb-4 bg-success/10 rounded-full flex items-center justify-center">
+                      <CheckCircle className="w-6 h-6 text-success" />
                     </div>
-                    <h4 className="font-bold text-sm mb-1">Calendar Sync</h4>
-                    <p className="text-xs text-muted-foreground">
+                    <h4 className="font-bold mb-2">Calendar Sync</h4>
+                    <p className="text-sm text-muted-foreground">
                       Works with Google Calendar, Outlook, and more.
                     </p>
                   </Card>
                 </div>
                 
-                <div className="bg-background border rounded-xl p-4">
-                  <h4 className="font-bold text-sm mb-3">How It Works:</h4>
-                  <ol className="space-y-2 text-sm text-muted-foreground">
-                    <li className="flex items-start gap-2">
-                      <span className="flex-shrink-0 w-5 h-5 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">1</span>
-                      <span>Customer calls, chats, or visits your booking page</span>
+                <div className="bg-background border rounded-xl p-6 mb-6">
+                  <h4 className="font-bold mb-4">How It Works:</h4>
+                  <ol className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <li className="flex items-start gap-3">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-white text-sm font-bold flex items-center justify-center">1</span>
+                      <span className="text-sm text-muted-foreground">Customer calls, chats, or visits your booking page</span>
                     </li>
-                    <li className="flex items-start gap-2">
-                      <span className="flex-shrink-0 w-5 h-5 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">2</span>
-                      <span>AI collects info and checks your live availability</span>
+                    <li className="flex items-start gap-3">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-white text-sm font-bold flex items-center justify-center">2</span>
+                      <span className="text-sm text-muted-foreground">AI collects info and checks your live availability</span>
                     </li>
-                    <li className="flex items-start gap-2">
-                      <span className="flex-shrink-0 w-5 h-5 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">3</span>
-                      <span>Appointment booked with instant confirmation</span>
+                    <li className="flex items-start gap-3">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-white text-sm font-bold flex items-center justify-center">3</span>
+                      <span className="text-sm text-muted-foreground">Appointment booked with instant confirmation</span>
                     </li>
-                    <li className="flex items-start gap-2">
-                      <span className="flex-shrink-0 w-5 h-5 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">4</span>
-                      <span>Automated reminders go out before the appointment</span>
+                    <li className="flex items-start gap-3">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-white text-sm font-bold flex items-center justify-center">4</span>
+                      <span className="text-sm text-muted-foreground">Automated reminders go out before the appointment</span>
                     </li>
                   </ol>
                 </div>
-              </div>
-            </ExpandableServiceCard>
+                
+                <div className="flex flex-wrap gap-4">
+                  <Button asChild>
+                    <Link to="/contact?service=smart-scheduling">Get Started</Link>
+                  </Button>
+                </div>
+              </Card>
+            </div>
+          </ScrollReveal>
 
-            {/* Customer Support Bot (with Mission Follow-Up content) */}
-            <ExpandableServiceCard
-              icon={<MessageSquare className="w-8 h-8 text-accent" />}
-              title="Customer Support Bot"
-              summary="Handle common questions instantly. 24/7 support on website, text, or WhatsApp. Focus your team on complex issues."
-              delay={300}
-            >
-              <div className="space-y-6">
-                <p className="text-lg text-muted-foreground leading-relaxed">
+          {/* Mission Follow-Up Section */}
+          <ScrollReveal animation="fade-up" delay={200}>
+            <div id="mission-follow-up" className="mb-16">
+              <Card className="p-8 md:p-10 border-2 border-success/10 hover:border-success/30 transition-colors">
+                <div className="flex items-start gap-6 mb-8">
+                  <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <MessageSquare className="w-8 h-8 text-success" />
+                  </div>
+                  <div>
+                    <h3 className="text-3xl font-bold mb-2">Mission Follow-Up</h3>
+                    <p className="text-lg text-muted-foreground">
+                      Customer support bots that handle questions instantly and keep customers coming back.
+                    </p>
+                  </div>
+                </div>
+                
+                <p className="text-lg text-muted-foreground leading-relaxed mb-8">
                   <strong className="text-foreground">Turn one-time customers into lifelong fans.</strong> Our support bots handle instant FAQ responses, post-service check-ins, review requests, and re-engagement campaigns automatically. Keep your brand top-of-mind without lifting a finger.
                 </p>
                 
-                <div className="grid sm:grid-cols-2 gap-4">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                   <div className="space-y-3">
-                    <h4 className="font-bold text-sm flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-success" />
+                    <h4 className="font-bold flex items-center gap-2">
+                      <CheckCircle className="w-5 h-5 text-success" />
                       Post-Service Check-Ins
                     </h4>
-                    <p className="text-muted-foreground text-xs">
+                    <p className="text-muted-foreground text-sm">
                       Within 24-48 hours of service, your AI sends personalized follow-ups to ensure satisfaction. Issues are flagged immediately.
                     </p>
                   </div>
                   
                   <div className="space-y-3">
-                    <h4 className="font-bold text-sm flex items-center gap-2">
-                      <Sparkles className="w-4 h-4 text-accent" />
+                    <h4 className="font-bold flex items-center gap-2">
+                      <Sparkles className="w-5 h-5 text-accent" />
                       Review Requests
                     </h4>
-                    <p className="text-muted-foreground text-xs">
+                    <p className="text-muted-foreground text-sm">
                       Happy customers are prompted to leave reviews on Google, Yelp, or Facebook with perfect timing.
                     </p>
                   </div>
                   
                   <div className="space-y-3">
-                    <h4 className="font-bold text-sm flex items-center gap-2">
-                      <Mail className="w-4 h-4 text-primary" />
+                    <h4 className="font-bold flex items-center gap-2">
+                      <Mail className="w-5 h-5 text-primary" />
                       Re-Engagement Campaigns
                     </h4>
-                    <p className="text-muted-foreground text-xs">
+                    <p className="text-muted-foreground text-sm">
                       Customers who haven't returned receive personalized "we miss you" messages with special offers.
                     </p>
                   </div>
                   
                   <div className="space-y-3">
-                    <h4 className="font-bold text-sm flex items-center gap-2">
-                      <Phone className="w-4 h-4 text-blue-500" />
+                    <h4 className="font-bold flex items-center gap-2">
+                      <Phone className="w-5 h-5 text-blue-500" />
                       Multi-Channel Support
                     </h4>
-                    <p className="text-muted-foreground text-xs">
+                    <p className="text-muted-foreground text-sm">
                       Reach customers via SMS, email, WhatsApp, or website chat — wherever they prefer.
                     </p>
                   </div>
                 </div>
                 
-                <div className="bg-gradient-to-r from-success/10 to-emerald-500/10 border border-success/20 rounded-xl p-4">
-                  <p className="text-sm leading-relaxed">
+                <div className="bg-gradient-to-r from-success/10 to-emerald-500/10 border border-success/20 rounded-xl p-6 mb-6">
+                  <p className="text-base leading-relaxed">
                     <strong className="text-success">ROI Fact:</strong> It costs 5x more to acquire a new customer than retain an existing one. Businesses that actively follow up see <strong>25-95% higher customer lifetime value</strong>.
                   </p>
                 </div>
-              </div>
-            </ExpandableServiceCard>
-
-            {/* Intake & Scheduling */}
-            <ExpandableServiceCard
-              icon={<Calendar className="w-8 h-8 text-accent" />}
-              title="Intake & Scheduling"
-              summary="Collect client info, qualify leads, book meetings automatically. Eliminate back-and-forth emails."
-              delay={450}
-            >
-              <div className="space-y-6">
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  <strong className="text-foreground">Streamline your client onboarding.</strong> Our intake system collects all necessary information before meetings, qualifies leads based on your criteria, and schedules appointments seamlessly — saving hours of administrative work every week.
-                </p>
                 
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <Card className="p-4 bg-gradient-to-br from-primary/5 to-transparent">
-                    <h4 className="font-bold text-sm mb-2 flex items-center gap-2">
-                      <FileText className="w-4 h-4 text-primary" />
-                      Smart Intake Forms
-                    </h4>
-                    <p className="text-muted-foreground text-xs">
-                      Custom forms collect exactly the information you need. Conditional logic shows relevant questions based on responses.
-                    </p>
-                  </Card>
-                  
-                  <Card className="p-4 bg-gradient-to-br from-accent/5 to-transparent">
-                    <h4 className="font-bold text-sm mb-2 flex items-center gap-2">
-                      <Search className="w-4 h-4 text-accent" />
-                      Lead Scoring
-                    </h4>
-                    <p className="text-muted-foreground text-xs">
-                      Automatically score and prioritize leads based on their responses. High-value prospects get VIP treatment.
-                    </p>
-                  </Card>
-                  
-                  <Card className="p-4 bg-gradient-to-br from-success/5 to-transparent">
-                    <h4 className="font-bold text-sm mb-2 flex items-center gap-2">
-                      <Lock className="w-4 h-4 text-success" />
-                      HIPAA Compliant
-                    </h4>
-                    <p className="text-muted-foreground text-xs">
-                      Secure data handling for healthcare, legal, and financial industries. All information encrypted and protected.
-                    </p>
-                  </Card>
-                  
-                  <Card className="p-4 bg-gradient-to-br from-blue-500/5 to-transparent">
-                    <h4 className="font-bold text-sm mb-2 flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-blue-500" />
-                      CRM Integration
-                    </h4>
-                    <p className="text-muted-foreground text-xs">
-                      Automatically sync data to your CRM. Works with Salesforce, HubSpot, and most popular platforms.
-                    </p>
-                  </Card>
+                <div className="flex flex-wrap gap-4">
+                  <Button asChild>
+                    <Link to="/contact?service=mission-follow-up">Get Started</Link>
+                  </Button>
                 </div>
-                
-                <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-xl p-4">
-                  <p className="text-sm leading-relaxed">
-                    <strong className="text-primary">Time saved:</strong> Businesses using automated intake report saving <strong>10+ hours per week</strong> on administrative tasks. That's 500+ hours per year you can spend on growing your business.
-                  </p>
-                </div>
-              </div>
-            </ExpandableServiceCard>
-          </div>
+              </Card>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
