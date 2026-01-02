@@ -325,6 +325,41 @@ function LearnAndTrain() {
   return (
     <PageTransition variant="fade">
       <div className="min-h-screen">
+        <SEO 
+          title="AI Scam Protection Training"
+          description="Comprehensive AI scam protection training for families and seniors. Learn to spot deepfakes, phishing, and AI-powered scams. Zoom and in-person classes available in Dayton, Ohio."
+          keywords="AI scam training, deepfake detection training, senior cybersecurity, phishing awareness, family safety training, Dayton Ohio"
+          structuredData={{
+            "@context": "https://schema.org",
+            "@type": "EducationalOrganization",
+            "name": "InVision Network Training Academy",
+            "description": "Comprehensive AI scam protection training for families, seniors, and businesses",
+            "url": "https://invisionnetwork.com/training",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Dayton",
+              "addressRegion": "OH",
+              "addressCountry": "US"
+            },
+            "telephone": "(937) 301-8749",
+            "offers": [
+              {
+                "@type": "Offer",
+                "name": "Individual Training Session",
+                "price": "89",
+                "priceCurrency": "USD",
+                "description": "1-hour personalized AI scam protection training"
+              },
+              {
+                "@type": "Offer",
+                "name": "Enterprise Training Program",
+                "price": "599",
+                "priceCurrency": "USD",
+                "description": "Comprehensive team training with ongoing support"
+              }
+            ]
+          }}
+        />
         <Navigation />
 
       {/* Hero Section */}

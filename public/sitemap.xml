@@ -2,19 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- High Priority Pages -->
   <url>
-    <loc>https://invisionnetwork.com/</loc>
+    <loc>https://invisionnetwork.org/</loc>
     <lastmod>2026-01-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://invisionnetwork.com/training</loc>
+    <loc>https://invisionnetwork.org/training</loc>
     <lastmod>2026-01-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://invisionnetwork.com/business</loc>
+    <loc>https://invisionnetwork.org/business</loc>
     <lastmod>2026-01-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -22,25 +22,25 @@
   
   <!-- Business Service Sub-Pages (SEO Critical) -->
   <url>
-    <loc>https://invisionnetwork.com/business/ai-receptionist</loc>
+    <loc>https://invisionnetwork.org/business/ai-receptionist</loc>
     <lastmod>2026-01-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://invisionnetwork.com/business/ai-automation</loc>
+    <loc>https://invisionnetwork.org/business/ai-automation</loc>
     <lastmod>2026-01-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://invisionnetwork.com/business/website-design</loc>
+    <loc>https://invisionnetwork.org/business/website-design</loc>
     <lastmod>2026-01-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://invisionnetwork.com/business/website-insurance</loc>
+    <loc>https://invisionnetwork.org/business/website-insurance</loc>
     <lastmod>2026-01-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -48,49 +48,49 @@
   
   <!-- Medium Priority Pages -->
   <url>
-    <loc>https://invisionnetwork.com/resources</loc>
+    <loc>https://invisionnetwork.org/resources</loc>
     <lastmod>2026-01-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://invisionnetwork.com/contact</loc>
+    <loc>https://invisionnetwork.org/services</loc>
+    <lastmod>2026-01-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://invisionnetwork.org/contact</loc>
     <lastmod>2026-01-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://invisionnetwork.com/about</loc>
+    <loc>https://invisionnetwork.org/about</loc>
     <lastmod>2026-01-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://invisionnetwork.com/services</loc>
-    <lastmod>2026-01-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://invisionnetwork.com/faq</loc>
+    <loc>https://invisionnetwork.org/faq</loc>
     <lastmod>2026-01-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://invisionnetwork.com/articles</loc>
+    <loc>https://invisionnetwork.org/articles</loc>
     <lastmod>2026-01-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://invisionnetwork.com/safety-vault</loc>
+    <loc>https://invisionnetwork.org/safety-vault</loc>
     <lastmod>2026-01-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://invisionnetwork.com/careers</loc>
+    <loc>https://invisionnetwork.org/careers</loc>
     <lastmod>2026-01-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -98,13 +98,13 @@
   
   <!-- Legal Pages -->
   <url>
-    <loc>https://invisionnetwork.com/privacy-policy</loc>
+    <loc>https://invisionnetwork.org/privacy-policy</loc>
     <lastmod>2026-01-02</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://invisionnetwork.com/terms-of-service</loc>
+    <loc>https://invisionnetwork.org/terms-of-service</loc>
     <lastmod>2026-01-02</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
