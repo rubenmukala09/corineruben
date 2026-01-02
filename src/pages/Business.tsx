@@ -594,8 +594,8 @@ function Business() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16 items-stretch pt-8">
             {/* Landing Page */}
             <ScrollReveal animation="fade-up" delay={0} threshold={0.2}>
-              <div className="relative h-full pt-4">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-violet-500 text-white px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 whitespace-nowrap">
+              <div className="relative h-full pt-5">
+                <div className="absolute -top-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-violet-500 text-white px-5 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 whitespace-nowrap">
                   ⚡ QUICK START
                 </div>
                 <Card className="p-6 pt-8 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1 h-full flex flex-col border-2 border-transparent hover:border-primary/20">
@@ -654,8 +654,8 @@ function Business() {
 
             {/* Business Website - Featured */}
             <ScrollReveal animation="fade-up" delay={150} threshold={0.2}>
-              <div className="relative h-full pt-4">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 whitespace-nowrap">
+              <div className="relative h-full pt-5">
+                <div className="absolute -top-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-5 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 whitespace-nowrap">
                   ⭐ MOST POPULAR
                 </div>
                 <Card className="p-6 pt-8 rounded-2xl shadow-[0_8px_30px_hsl(var(--primary)/0.15)] hover:shadow-[0_12px_40px_hsl(var(--primary)/0.2)] transition-all border-2 border-primary h-full flex flex-col">
@@ -714,8 +714,8 @@ function Business() {
 
             {/* E-Commerce Website */}
             <ScrollReveal animation="fade-up" delay={300} threshold={0.2}>
-              <div className="relative h-full pt-4">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 whitespace-nowrap">
+              <div className="relative h-full pt-5">
+                <div className="absolute -top-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-5 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 whitespace-nowrap">
                   🛒 FULL FEATURED
                 </div>
                 <Card className="p-6 pt-8 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1 h-full flex flex-col border-2 border-transparent hover:border-primary/20">
