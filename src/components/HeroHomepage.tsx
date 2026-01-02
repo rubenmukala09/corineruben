@@ -2,26 +2,8 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Shield, ArrowRight, Lock, Eye, Fingerprint, ShieldCheck, Zap, Globe, Play } from "lucide-react";
+import { Shield, ArrowRight, Users, Zap, Building2, Heart, Bot, Lock } from "lucide-react";
 import heroVideo from "@/assets/hero-family-warmth.mp4";
-
-const securityFeatures = [{
-  icon: Lock,
-  label: "End-to-End Encryption",
-  delay: 0
-}, {
-  icon: Eye,
-  label: "24/7 Monitoring",
-  delay: 0.1
-}, {
-  icon: Fingerprint,
-  label: "Identity Shield",
-  delay: 0.2
-}, {
-  icon: ShieldCheck,
-  label: "AI Protection",
-  delay: 0.3
-}];
 
 // Typing animation component
 const TypewriterText = ({ words, className }: { words: string[]; className?: string }) => {
@@ -63,10 +45,12 @@ const TypewriterText = ({ words, className }: { words: string[]; className?: str
     </span>
   );
 };
+
 export const HeroHomepage = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
 
-  return <section className="relative min-h-[100vh] lg:min-h-[110vh] overflow-hidden bg-gradient-to-br from-background via-background to-purple-100/30">
+  return (
+    <section className="relative min-h-[100vh] lg:min-h-[110vh] overflow-hidden bg-gradient-to-br from-background via-background to-purple-100/30">
       {/* Animated gradient background */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div 
@@ -90,7 +74,6 @@ export const HeroHomepage = () => {
 
       {/* Video Background - Full width */}
       <div className="absolute inset-0">
-        {/* Video element */}
         <video
           autoPlay
           loop
@@ -102,291 +85,187 @@ export const HeroHomepage = () => {
           <source src={heroVideo} type="video/mp4" />
         </video>
         
-        {/* Premium gradient overlay - softer for wider feel */}
+        {/* Premium gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/40" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-purple-900/10" />
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
       </div>
 
-      {/* Premium animated grid with brand colors */}
+      {/* Premium animated grid */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.02]">
         <div className="absolute inset-0" style={{
-        backgroundImage: `linear-gradient(hsl(var(--primary) / 0.3) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary) / 0.3) 1px, transparent 1px)`,
-        backgroundSize: '100px 100px'
-      }} />
+          backgroundImage: `linear-gradient(hsl(var(--primary) / 0.3) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary) / 0.3) 1px, transparent 1px)`,
+          backgroundSize: '100px 100px'
+        }} />
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-5 gap-8 lg:gap-16 items-center min-h-[100vh] py-24 lg:py-0">
+        <div className="flex flex-col items-center justify-center min-h-[100vh] py-24 lg:py-0">
           
-          {/* Left Content - Takes 3 columns */}
-          <motion.div className="lg:col-span-3 order-2 lg:order-1" initial={{
-          opacity: 0
-        }} animate={{
-          opacity: 1
-        }} transition={{
-          duration: 1,
-          ease: "easeOut"
-        }}>
-            {/* Premium Badge */}
-            <motion.div initial={{
-            opacity: 0,
-            y: 20
-          }} animate={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            delay: 0.3,
-            duration: 0.8
-          }} className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 mb-10 shadow-sm">
-              <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-primary to-accent animate-pulse shadow-sm" />
-              <span className="text-sm font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Veteran-Owned • Ohio-Based • Trusted</span>
-            </motion.div>
-            
-            {/* Headline with Typing Effect - Larger for wider layout */}
-            <motion.h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-[0.9] mb-8 tracking-tight" initial={{
-            opacity: 0,
-            y: 40
-          }} animate={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            delay: 0.4,
-            duration: 1,
-            ease: [0.22, 1, 0.36, 1]
-          }}>
-              <span className="block text-foreground">
-                <TypewriterText 
-                  words={["Secure", "Trusted", "Expert", "Family"]} 
-                  className="bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text"
-                />
-              </span>
-              <span className="block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">Protection</span>
-              <span className="block font-light text-muted-foreground/80 text-3xl sm:text-4xl md:text-5xl lg:text-6xl mt-3">Starts Here</span>
-            </motion.h1>
-            
-            {/* Description - Wider */}
-            <motion.p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mb-12 leading-relaxed" initial={{
-            opacity: 0,
-            y: 30
-          }} animate={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            delay: 0.5,
-            duration: 0.8
-          }}>Protecting families from AI-powered scams with enterprise grade cybersecurity services. Professional, proactive, and always personal.</motion.p>
-            
-            {/* CTAs */}
-            <motion.div className="flex flex-col sm:flex-row gap-4" initial={{
-            opacity: 0,
-            y: 30
-          }} animate={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            delay: 0.6,
-            duration: 0.8
-          }}>
-              <Button asChild size="lg" className="group h-14 px-8 text-base font-semibold rounded-xl bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-accent/90 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/35 transition-all duration-300 border-0">
-                <Link to="/services">
-                  Get Protected Now
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="group h-14 px-8 text-base font-semibold rounded-xl border-primary/20 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300">
-                <Link to="/about" className="flex items-center gap-2">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/15 to-accent/15 flex items-center justify-center group-hover:from-primary/25 group-hover:to-accent/25 transition-colors">
-                    <Play className="w-4 h-4 text-primary fill-primary/80" />
-                  </div>
-                  Watch Our Story
-                </Link>
-              </Button>
-            </motion.div>
-
+          {/* Premium Badge */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 mb-8 shadow-sm"
+          >
+            <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-primary to-accent animate-pulse shadow-sm" />
+            <span className="text-sm font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Veteran-Owned • Ohio-Based • Trusted</span>
           </motion.div>
           
-          {/* Right Content - Premium Security Visual - Takes 2 columns */}
-          <motion.div className="lg:col-span-2 order-1 lg:order-2 flex justify-center lg:justify-end" initial={{
-          opacity: 0,
-          scale: 0.95
-        }} animate={{
-          opacity: 1,
-          scale: 1
-        }} transition={{
-          duration: 1.2,
-          ease: [0.22, 1, 0.36, 1],
-          delay: 0.2
-        }}>
-            <div className="relative w-full max-w-md lg:max-w-lg">
-              {/* Main visual container */}
-              <div className="relative">
-                {/* Outer glow ring - premium gradient */}
-                <motion.div className="absolute inset-0 rounded-full" style={{
-                background: 'radial-gradient(circle at center, hsl(var(--primary) / 0.2) 0%, hsl(var(--accent) / 0.1) 50%, transparent 70%)'
-              }} animate={{
-                scale: [1, 1.1, 1]
-              }} transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }} />
+          {/* Main Headline - Split Identity */}
+          <motion.h1 
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-center leading-tight mb-6"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <span className="block text-foreground">InVision Network:</span>
+            <span className="block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+              <TypewriterText 
+                words={["Intelligence", "Protection", "Automation", "Security"]} 
+                className=""
+              />
+            </span>
+            <span className="block font-light text-muted-foreground/80 text-2xl sm:text-3xl md:text-4xl mt-3">
+              for Life & Business
+            </span>
+          </motion.h1>
+          
+          {/* Subheadline */}
+          <motion.p 
+            className="text-lg sm:text-xl text-muted-foreground max-w-2xl text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+          >
+            Whether you're protecting your family from AI scams or automating your business—we've got you covered.
+          </motion.p>
 
-                {/* Central Shield Container */}
-                <motion.div className="relative mx-auto w-56 h-56 md:w-72 md:h-72">
-                  {/* Rotating outer ring with gradient */}
-                  <motion.div className="absolute inset-0 rounded-full" style={{
-                  borderWidth: '1px',
-                  borderStyle: 'dashed',
-                  borderImage: 'linear-gradient(135deg, hsl(var(--primary) / 0.4), hsl(var(--accent) / 0.4)) 1'
-                }} animate={{
-                  rotate: 360
-                }} transition={{
-                  duration: 30,
-                  repeat: Infinity,
-                  ease: "linear"
-                }} />
-                  
-                  {/* Second rotating ring */}
-                  <motion.div className="absolute inset-6 rounded-full border border-accent/25" animate={{
-                  rotate: -360
-                }} transition={{
-                  duration: 20,
-                  repeat: Infinity,
-                  ease: "linear"
-                }} />
-                  
-                  {/* Pulsing glow - harmonious gradient */}
-                  <motion.div className="absolute inset-12 rounded-full bg-gradient-to-br from-primary/25 via-accent/20 to-primary/15 blur-2xl" animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [0.6, 0.9, 0.6]
-                }} transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }} />
-                  
-                  {/* Inner solid circle - premium gradient */}
-                  <div className="absolute inset-16 rounded-full bg-gradient-to-br from-primary via-primary to-accent/80 shadow-2xl shadow-primary/40" />
-                  
-                  {/* Shield icon center */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <motion.div animate={{
-                    scale: [1, 1.02, 1]
-                  }} transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}>
-                      <Shield className="w-16 h-16 md:w-20 md:h-20 text-primary-foreground drop-shadow-lg" strokeWidth={1.5} />
-                    </motion.div>
+          {/* Split Choice Cards */}
+          <motion.div 
+            className="grid md:grid-cols-2 gap-6 lg:gap-8 w-full max-w-4xl mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
+            {/* Protect My Family Card */}
+            <motion.div 
+              className="relative group"
+              whileHover={{ scale: 1.02, y: -4 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative p-8 bg-card/80 backdrop-blur-xl rounded-2xl border border-primary/20 group-hover:border-primary/40 transition-all duration-300 h-full">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/15 to-accent/15 flex items-center justify-center group-hover:from-primary/25 group-hover:to-accent/25 transition-colors">
+                    <Heart className="w-7 h-7 text-primary" />
                   </div>
-                </motion.div>
-
-                {/* Floating feature badges */}
-                {securityFeatures.map((feature, index) => {
-                const positions = [{
-                  top: '-8%',
-                  left: '50%',
-                  x: '-50%',
-                  y: '0%'
-                }, {
-                  top: '50%',
-                  right: '-15%',
-                  x: '0%',
-                  y: '-50%'
-                }, {
-                  bottom: '-8%',
-                  left: '50%',
-                  x: '-50%',
-                  y: '0%'
-                }, {
-                  top: '50%',
-                  left: '-15%',
-                  x: '0%',
-                  y: '-50%'
-                }];
-                const pos = positions[index];
-                return <motion.div key={feature.label} className="absolute" style={{
-                  top: pos.top,
-                  left: pos.left,
-                  right: pos.right,
-                  bottom: pos.bottom,
-                  transform: `translate(${pos.x}, ${pos.y})`
-                }} initial={{
-                  opacity: 0,
-                  scale: 0.8
-                }} animate={{
-                  opacity: 1,
-                  scale: 1
-                }} transition={{
-                  delay: 0.8 + feature.delay,
-                  duration: 0.6
-                }}>
-                      <motion.div className="flex items-center gap-2.5 px-4 py-2.5 bg-card/95 backdrop-blur-xl rounded-full border border-primary/15 shadow-lg shadow-primary/10" whileHover={{
-                    scale: 1.05,
-                    borderColor: 'hsl(var(--primary) / 0.3)'
-                  }} animate={{
-                    y: [0, -4, 0]
-                  }} transition={{
-                    y: {
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: index * 0.3
-                    }
-                  }}>
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/15 to-accent/15 flex items-center justify-center">
-                          <feature.icon className="w-4 h-4 text-primary" />
-                        </div>
-                        <span className="text-sm text-foreground font-medium whitespace-nowrap">{feature.label}</span>
-                      </motion.div>
-                    </motion.div>;
-              })}
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
+                    <Shield className="w-6 h-6 text-accent" />
+                  </div>
+                </div>
+                <h3 className="text-2xl font-bold mb-3 text-foreground">Protect My Family</h3>
+                <p className="text-muted-foreground mb-6">
+                  AI-powered scam protection for you and your loved ones. Training, alerts, and 24/7 expert support.
+                </p>
+                <ul className="space-y-2 mb-6 text-sm text-muted-foreground">
+                  <li className="flex items-center gap-2">
+                    <Lock className="w-4 h-4 text-primary" />
+                    <span>ScamShield Protection</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Users className="w-4 h-4 text-primary" />
+                    <span>Family Training Programs</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Shield className="w-4 h-4 text-primary" />
+                    <span>Identity Theft Insurance</span>
+                  </li>
+                </ul>
+                <Button asChild size="lg" className="w-full group/btn bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-accent/90 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/35 transition-all duration-300">
+                  <Link to="/training">
+                    Protect My Family
+                    <ArrowRight className="ml-2 w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                  </Link>
+                </Button>
               </div>
+            </motion.div>
 
-              {/* Stats Row */}
-              <motion.div className="mt-24 grid grid-cols-3 gap-4" initial={{
-              opacity: 0,
-              y: 30
-            }} animate={{
-              opacity: 1,
-              y: 0
-            }} transition={{
-              delay: 1.2,
-              duration: 0.6
-            }}>
-                {[{
-                icon: Globe,
-                value: "500+",
-                label: "Protected"
-              }, {
-                icon: Zap,
-                value: "24/7",
-                label: "Support"
-              }, {
-                icon: ShieldCheck,
-                value: "99.9%",
-                label: "Success"
-              }].map((stat, index) => <motion.div key={stat.label} className="text-center p-4 bg-card/60 backdrop-blur-sm rounded-2xl border border-primary/10 hover:border-primary/25 transition-all duration-300" whileHover={{
-                scale: 1.03,
-                y: -2
-              }} transition={{
-                duration: 0.2
-              }}>
-                    <stat.icon className="w-5 h-5 text-accent mx-auto mb-2" />
-                    <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{stat.value}</div>
-                    <div className="text-xs text-muted-foreground font-medium">{stat.label}</div>
-                  </motion.div>)}
+            {/* Automate My Business Card */}
+            <motion.div 
+              className="relative group"
+              whileHover={{ scale: 1.02, y: -4 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-primary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative p-8 bg-card/80 backdrop-blur-xl rounded-2xl border border-accent/20 group-hover:border-accent/40 transition-all duration-300 h-full">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent/15 to-primary/15 flex items-center justify-center group-hover:from-accent/25 group-hover:to-primary/25 transition-colors">
+                    <Building2 className="w-7 h-7 text-accent" />
+                  </div>
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent/10 to-primary/10 flex items-center justify-center">
+                    <Bot className="w-6 h-6 text-primary" />
+                  </div>
+                </div>
+                <h3 className="text-2xl font-bold mb-3 text-foreground">Automate My Business</h3>
+                <p className="text-muted-foreground mb-6">
+                  24/7 AI receptionists, scheduling, and follow-up automation. Never miss a lead again.
+                </p>
+                <ul className="space-y-2 mb-6 text-sm text-muted-foreground">
+                  <li className="flex items-center gap-2">
+                    <Zap className="w-4 h-4 text-accent" />
+                    <span>AI Receptionist (24/7)</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Bot className="w-4 h-4 text-accent" />
+                    <span>Smart Scheduling</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Building2 className="w-4 h-4 text-accent" />
+                    <span>Cyber Liability Insurance</span>
+                  </li>
+                </ul>
+                <Button asChild size="lg" variant="outline" className="w-full group/btn border-accent/30 hover:border-accent/50 hover:bg-accent/5 transition-all duration-300">
+                  <Link to="/business">
+                    Automate My Business
+                    <ArrowRight className="ml-2 w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                  </Link>
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Stats Row */}
+          <motion.div 
+            className="grid grid-cols-3 gap-4 max-w-xl"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+          >
+            {[
+              { value: "500+", label: "Families Protected" },
+              { value: "24/7", label: "Expert Support" },
+              { value: "99.9%", label: "Success Rate" }
+            ].map((stat, index) => (
+              <motion.div 
+                key={stat.label}
+                className="text-center p-4 bg-card/60 backdrop-blur-sm rounded-2xl border border-primary/10 hover:border-primary/25 transition-all duration-300"
+                whileHover={{ scale: 1.03, y: -2 }}
+              >
+                <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{stat.value}</div>
+                <div className="text-xs text-muted-foreground font-medium">{stat.label}</div>
               </motion.div>
-            </div>
+            ))}
           </motion.div>
           
         </div>
       </div>
 
-      {/* Bottom gradient fade - seamless transition to next section */}
+      {/* Bottom gradient fade */}
       <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background via-background/80 to-transparent" />
-    </section>;
+    </section>
+  );
 };
+
 export default HeroHomepage;

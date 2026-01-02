@@ -138,12 +138,12 @@ const AIAutomation = () => {
                   AI Business Automation
                 </Badge>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-                  <span className="gradient-text-primary">Follow-Up</span>
-                  <br />Automation System
+                  <span className="gradient-text-primary">Never Lose a Lead Again.</span>
+                  <br />Automated Mission Follow-Ups
                 </h1>
                 <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                  Stop losing leads to silence. Our AI-powered follow-up system ensures every 
-                  prospect gets the right message at the right time.
+                  Automated mission follow-ups ensure no lead is left behind. The AI nurtures leads, sends reminders, 
+                  and follows up after appointments—turning cold leads into paying customers.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button asChild size="xl" variant="gold">

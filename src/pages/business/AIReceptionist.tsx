@@ -25,12 +25,12 @@ const AIReceptionist = () => {
     {
       icon: Phone,
       title: "24/7 Call Answering",
-      description: "Never miss a call. Our AI answers every call professionally, day or night, holidays included."
+      description: "Our AI answers calls 24/7, sounds human, and filters out spam so you only talk to real clients."
     },
     {
       icon: Calendar,
       title: "Smart Scheduling",
-      description: "Automatically book appointments, check availability, and send confirmations without human intervention."
+      description: "The AI books appointments directly into your calendar while you sleep. No more back-and-forth emails."
     },
     {
       icon: MessageSquare,
@@ -57,7 +57,7 @@ const AIReceptionist = () => {
   const benefits = [
     "Save $3,000-5,000/month on receptionist costs",
     "Capture 40% more leads from after-hours calls",
-    "Reduce no-shows with automated reminders",
+    "The AI books appointments directly into your calendar while you sleep",
     "Scale without adding headcount",
     "Professional image 24/7/365"
   ];
@@ -107,12 +107,12 @@ const AIReceptionist = () => {
                   AI Business Automation
                 </Badge>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-                  <span className="gradient-text-primary">AI Receptionist</span>
-                  <br />& Virtual Intake Agent
+                  <span className="gradient-text-primary">Stop Missing Calls.</span>
+                  <br />Let AI Run Your Front Desk.
                 </h1>
                 <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                  Your 24/7 virtual front desk. Never miss a call, automatically schedule appointments, 
-                  and capture every lead—even at 3 AM.
+                  Our AI answers calls 24/7, sounds human, and filters out spam so you only talk to real clients.
+                  The AI books appointments directly into your calendar while you sleep.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button asChild size="xl" variant="gold">
