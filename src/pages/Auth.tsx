@@ -207,32 +207,20 @@ function Auth() {
 
   return (
     <div className="min-h-screen w-full relative flex items-center justify-center p-4 md:p-6 lg:p-8">
-      {/* Professional Gradient Background */}
+      {/* Light Professional Background */}
       <div className="fixed inset-0 z-0">
-        {/* Base gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
+        {/* Base gradient - light and clean */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-blue-50" />
         
-        {/* Subtle mesh overlay */}
-        <div 
-          className="absolute inset-0 opacity-30"
-          style={{
-            backgroundImage: `
-              radial-gradient(ellipse at 20% 30%, hsl(var(--primary) / 0.15) 0%, transparent 50%),
-              radial-gradient(ellipse at 80% 70%, hsl(var(--accent) / 0.1) 0%, transparent 50%),
-              radial-gradient(ellipse at 50% 50%, hsl(220 30% 20% / 0.5) 0%, transparent 70%)
-            `
-          }}
-        />
+        {/* Soft gradient orbs */}
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-primary/5 to-accent/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-accent/5 to-primary/5 rounded-full blur-3xl translate-y-1/3 -translate-x-1/3" />
         
-        {/* Subtle grid pattern */}
+        {/* Subtle geometric pattern */}
         <div 
           className="absolute inset-0 opacity-[0.03]"
           style={{
-            backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: '60px 60px'
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
           }}
         />
       </div>
@@ -247,39 +235,39 @@ function Auth() {
           <img 
             src={invisionLogo} 
             alt="InVision Network - Back to Home" 
-            className="w-12 h-12 md:w-14 md:h-14 drop-shadow-2xl"
+            className="w-12 h-12 md:w-14 md:h-14 drop-shadow-lg"
           />
           <div className="flex flex-col leading-tight">
-            <span className="text-xl md:text-2xl font-bold text-white drop-shadow-lg">
+            <span className="text-xl md:text-2xl font-bold text-foreground drop-shadow-sm">
               InVision Network
             </span>
-            <span className="text-xs text-slate-400">
+            <span className="text-xs text-muted-foreground">
               Secure Portal Access
             </span>
           </div>
         </Link>
 
         {/* Login Card */}
-        <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl">
+        <div className="bg-white/80 backdrop-blur-sm border border-slate-200/60 rounded-2xl p-6 md:p-8 shadow-xl">
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Header */}
             <div className="text-center mb-6">
               <div className="w-14 h-14 mx-auto bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center shadow-lg mb-4">
                 <Lock className="w-7 h-7 text-white" />
               </div>
-              <h1 className="text-2xl font-bold text-white">Welcome Back</h1>
-              <p className="text-slate-400 text-sm mt-1">
+              <h1 className="text-2xl font-bold text-foreground">Welcome Back</h1>
+              <p className="text-muted-foreground text-sm mt-1">
                 Sign in to access your portal
               </p>
             </div>
 
             {/* Email Field */}
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-sm font-medium text-slate-300">
+              <Label htmlFor="email" className="text-sm font-medium text-foreground">
                 Email Address
               </Label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input
                   id="email"
                   type="email"
@@ -291,22 +279,22 @@ function Auth() {
                   required
                   disabled={isLoading}
                   placeholder="your@email.com"
-                  className={`h-12 pl-10 bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:border-primary/50 focus:ring-primary/20 ${emailError ? 'border-destructive' : ''}`}
+                  className={`h-12 pl-10 bg-slate-50/50 border-slate-200 text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary ${emailError ? 'border-destructive' : ''}`}
                   autoComplete="email"
                 />
               </div>
               {emailError && (
-                <p className="text-xs text-red-400">{emailError}</p>
+                <p className="text-xs text-destructive">{emailError}</p>
               )}
             </div>
 
             {/* Password Field */}
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-sm font-medium text-slate-300">
+              <Label htmlFor="password" className="text-sm font-medium text-foreground">
                 Password
               </Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
@@ -318,20 +306,20 @@ function Auth() {
                   required
                   disabled={isLoading}
                   placeholder="••••••••"
-                  className={`h-12 pl-10 pr-12 bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:border-primary/50 focus:ring-primary/20 ${passwordError ? 'border-destructive' : ''}`}
+                  className={`h-12 pl-10 pr-12 bg-slate-50/50 border-slate-200 text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary ${passwordError ? 'border-destructive' : ''}`}
                   autoComplete="current-password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors p-1"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors p-1"
                   tabIndex={-1}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
               {passwordError && (
-                <p className="text-xs text-red-400">{passwordError}</p>
+                <p className="text-xs text-destructive">{passwordError}</p>
               )}
             </div>
 
@@ -342,13 +330,13 @@ function Auth() {
                   id="remember" 
                   checked={rememberMe}
                   onCheckedChange={(checked) => setRememberMe(checked as boolean)}
-                  className="border-white/20 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                  className="border-slate-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
                 />
-                <Label htmlFor="remember" className="text-sm cursor-pointer text-slate-400">
+                <Label htmlFor="remember" className="text-sm cursor-pointer text-muted-foreground">
                   Remember me
                 </Label>
               </div>
-              <Link to="/contact" className="text-sm text-primary hover:text-primary/80 transition-colors">
+              <Link to="/contact" className="text-sm text-primary hover:text-primary/80 transition-colors font-medium">
                 Forgot password?
               </Link>
             </div>
@@ -373,8 +361,8 @@ function Auth() {
             </Button>
 
             {/* Sign Up Link */}
-            <div className="text-center pt-4 border-t border-white/10">
-              <p className="text-sm text-slate-400">
+            <div className="text-center pt-4 border-t border-slate-200">
+              <p className="text-sm text-muted-foreground">
                 Don't have an account?{" "}
                 <Link to="/signup" className="text-primary font-semibold hover:text-primary/80 transition-colors">
                   Apply now
@@ -385,15 +373,15 @@ function Auth() {
         </div>
 
         {/* Bottom Links */}
-        <div className="mt-6 flex items-center justify-center gap-4 text-xs text-slate-500">
-          <Link to="/privacy-policy" className="hover:text-slate-300 transition-colors">
+        <div className="mt-6 flex items-center justify-center gap-4 text-xs text-muted-foreground">
+          <Link to="/privacy-policy" className="hover:text-foreground transition-colors">
             Privacy
           </Link>
-          <span className="text-slate-700">•</span>
-          <Link to="/terms-of-service" className="hover:text-slate-300 transition-colors">
+          <span className="text-slate-300">•</span>
+          <Link to="/terms-of-service" className="hover:text-foreground transition-colors">
             Terms
           </Link>
-          <span className="text-slate-700">•</span>
+          <span className="text-slate-300">•</span>
           <span>© 2026 InVision Network</span>
         </div>
       </div>
