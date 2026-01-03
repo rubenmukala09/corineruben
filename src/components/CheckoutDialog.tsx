@@ -1,19 +1,43 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { useCart } from '@/contexts/CartContext';
-import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import { toast } from 'sonner';
-import { Loader2, CreditCard, ChevronDown, ChevronUp, ShoppingBag } from 'lucide-react';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { motion } from 'framer-motion';
-import { ExpressCheckout, SmartPriceBreakdown, QuickVeteranToggle, TrustIndicators, AcceptedCards, PaymentSuccess } from '@/components/payment';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { loadStripe } from "@stripe/stripe-js";
+import {
+  Elements,
+  PaymentElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useCart } from "@/contexts/CartContext";
+import {
+  Shield,
+  CheckCircle,
+  Loader2,
+  CreditCard,
+  Lock,
+  ArrowRight,
+  ArrowLeft,
+  Sparkles,
+  Package,
+  ShoppingBag,
+  Zap,
+} from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+import { QuickVeteranToggle } from "@/components/payment/QuickVeteranToggle";
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '');
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "");
 
 interface CheckoutDialogProps {
   open: boolean;
@@ -24,33 +48,36 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
   const stripe = useStripe();
   const elements = useElements();
   const { items, total, clearCart } = useCart();
-  const [loading, setLoading] = useState(false);
-  const [step, setStep] = useState<'form' | 'success'>('form');
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
+
+  const [step, setStep] = useState<"info" | "payment" | "success">("info");
+  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [isVeteran, setIsVeteran] = useState(false);
-  const [showAddress, setShowAddress] = useState(false);
-  const [orderNumber, setOrderNumber] = useState('');
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [address, setAddress] = useState({
-    line1: '',
-    city: '',
-    state: '',
-    zip: ''
+    line1: "",
+    city: "",
+    state: "",
+    zip: "",
   });
 
   // Check if any items need shipping
-  const needsShipping = items.some(item => !item.isDigital);
+  const needsShipping = items.some((item) => !item.isDigital);
+  const isDigital = items.every((item) => item.isDigital);
 
-  // Auto-fill from localStorage or user session
+  // Auto-fill from localStorage
   useEffect(() => {
-    const savedEmail = localStorage.getItem('checkout_email');
-    const savedName = localStorage.getItem('checkout_name');
-    const savedVeteran = localStorage.getItem('checkout_veteran');
-    
+    const savedEmail = localStorage.getItem("user_email") || localStorage.getItem("checkout_email");
+    const savedName = localStorage.getItem("user_name") || localStorage.getItem("checkout_name");
+    const savedVeteran = localStorage.getItem("is_veteran") || localStorage.getItem("checkout_veteran");
     if (savedEmail) setEmail(savedEmail);
     if (savedName) setName(savedName);
-    if (savedVeteran === 'true') setIsVeteran(true);
+    if (savedVeteran === "true") setIsVeteran(true);
 
+    // Try to get user info from Supabase session
     supabase.auth.getUser().then(({ data }) => {
       if (data.user?.email && !savedEmail) {
         setEmail(data.user.email);
@@ -58,280 +85,508 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
     });
   }, []);
 
-  // Calculate totals with veteran discount
-  const discount = isVeteran ? total * 0.1 : 0;
-  const finalTotal = total - discount;
+  // Calculate pricing with veteran discount
+  const veteranDiscount = isVeteran ? total * 0.1 : 0;
+  const finalAmount = total - veteranDiscount;
+  const amountInCents = Math.round(finalAmount * 100);
 
-  const priceItems = [
-    ...items.map(item => ({
-      label: `${item.name}${item.quantity > 1 ? ` x${item.quantity}` : ''}`,
-      amount: item.price * item.quantity
-    })),
-    ...(isVeteran ? [{ label: 'Veteran Discount (10%)', amount: discount, isDiscount: true }] : [])
-  ];
+  const handleInfoSubmit = async () => {
+    if (!email || !name) {
+      toast.error("Please enter your name and email");
+      return;
+    }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!stripe || !elements) return;
-    
-    if (!email) {
-      toast.error('Please enter your email');
+    if (!termsAccepted) {
+      toast.error("Please accept the terms and conditions");
       return;
     }
 
     if (needsShipping && (!address.line1 || !address.city || !address.state || !address.zip)) {
-      toast.error('Please enter your shipping address');
-      setShowAddress(true);
+      toast.error("Please enter your shipping address");
       return;
     }
 
-    setLoading(true);
-
-    // Save preferences
-    localStorage.setItem('checkout_email', email);
-    if (name) localStorage.setItem('checkout_name', name);
-    localStorage.setItem('checkout_veteran', isVeteran.toString());
+    setIsLoading(true);
+    setError(null);
 
     try {
-      const cardElement = elements.getElement(CardElement);
-      if (!cardElement) throw new Error('Card element not found');
+      // Save to localStorage for future
+      localStorage.setItem("user_email", email);
+      localStorage.setItem("checkout_email", email);
+      localStorage.setItem("user_name", name);
+      localStorage.setItem("checkout_name", name);
+      localStorage.setItem("is_veteran", isVeteran.toString());
+      localStorage.setItem("checkout_veteran", isVeteran.toString());
 
-      const { error: pmError, paymentMethod } = await stripe.createPaymentMethod({
-        type: 'card',
-        card: cardElement,
-        billing_details: {
-          name: name || undefined,
-          email,
-          address: needsShipping ? {
-            line1: address.line1,
-            city: address.city,
-            state: address.state,
-            postal_code: address.zip
-          } : undefined
-        }
+      // Call edge function to create payment intent
+      const { data, error: fnError } = await supabase.functions.invoke("create-cart-payment-intent", {
+        body: {
+          amount: amountInCents,
+          customerEmail: email,
+          customerName: name,
+          isVeteran,
+          items: items.map((item) => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+          })),
+          metadata: {
+            source: "cart_checkout",
+            shippingAddress: needsShipping
+              ? `${address.line1}, ${address.city}, ${address.state} ${address.zip}`
+              : undefined,
+          },
+        },
       });
 
-      if (pmError) {
-        toast.error(pmError.message);
-        setLoading(false);
-        return;
+      if (fnError) throw fnError;
+      if (data?.error) throw new Error(data.error);
+
+      if (!data?.clientSecret) {
+        throw new Error("Failed to get payment client secret");
       }
 
-      const { data, error } = await supabase.functions.invoke('process-payment', {
-        body: {
-          paymentMethodId: paymentMethod.id,
-          amount: Math.round(finalTotal * 100),
-          currency: 'usd',
-          customerInfo: { 
-            name, 
-            email,
-            address: needsShipping ? `${address.line1}, ${address.city}, ${address.state} ${address.zip}` : undefined
-          },
-          items: items.map(item => ({
-            productId: item.productId,
-            name: item.name,
-            quantity: item.quantity,
-            price: item.price
-          })),
-          veteranDiscount: isVeteran
-        }
-      });
-
-      if (error) throw error;
-      if (!data.success) throw new Error(data.error || 'Payment failed');
-
-      setOrderNumber(data.orderNumber || '');
-      setStep('success');
-      clearCart();
-      
-    } catch (error) {
-      console.error('Payment error:', error);
-      toast.error('Payment failed. Please try again.');
+      setClientSecret(data.clientSecret);
+      setStep("payment");
+    } catch (err: any) {
+      console.error("Error creating payment intent:", err);
+      setError(err.message || "Failed to initialize payment");
+      toast.error("Failed to initialize payment. Please try again.");
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
-  const isDigital = items.every(item => item.isDigital);
+  const handlePaymentSubmit = async () => {
+    if (!stripe || !elements || !clientSecret) {
+      return;
+    }
 
-  if (step === 'success') {
-    return <PaymentSuccess email={email} orderNumber={orderNumber} isDigital={isDigital} onClose={onSuccess} />;
-  }
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const { error: submitError } = await elements.submit();
+      if (submitError) {
+        throw submitError;
+      }
+
+      const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
+        elements,
+        clientSecret,
+        confirmParams: {
+          return_url: `${window.location.origin}/payment-success`,
+          receipt_email: email,
+        },
+        redirect: "if_required",
+      });
+
+      if (confirmError) {
+        throw confirmError;
+      }
+
+      if (paymentIntent?.status === "succeeded" || paymentIntent?.status === "processing") {
+        setStep("success");
+        toast.success("Payment successful!");
+        clearCart();
+      }
+    } catch (err: any) {
+      console.error("Payment error:", err);
+      setError(err.message || "Payment failed");
+      toast.error(err.message || "Payment failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Cart Summary Mini */}
-      <motion.div 
-        className="flex items-center gap-3 p-3 bg-muted/50 rounded-xl"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        <div className="p-2 bg-primary/10 rounded-lg">
-          <ShoppingBag className="h-5 w-5 text-primary" />
-        </div>
-        <div className="flex-1">
-          <p className="text-sm font-medium">{items.length} {items.length === 1 ? 'item' : 'items'}</p>
-          <p className="text-xs text-muted-foreground">
-            {items.slice(0, 2).map(i => i.name).join(', ')}
-            {items.length > 2 && ` +${items.length - 2} more`}
-          </p>
-        </div>
-      </motion.div>
-
-      <ExpressCheckout 
-        amount={finalTotal} 
-        disabled={loading}
-      />
-
-      <div className="space-y-3">
-        <div>
-          <Label htmlFor="email" className="text-sm font-medium">Email *</Label>
-          <Input
-            id="email"
-            type="email"
-            placeholder="your@email.com"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            required
-            className="mt-1"
-          />
-        </div>
-
-        <Collapsible open={showAddress} onOpenChange={setShowAddress}>
-          <CollapsibleTrigger asChild>
-            <Button 
-              type="button" 
-              variant="ghost" 
-              size="sm" 
-              className="w-full text-muted-foreground hover:text-foreground"
+    <div className="space-y-6">
+      {/* Progress Steps */}
+      <div className="flex items-center justify-center gap-2 mb-6">
+        {["info", "payment", "success"].map((s, i) => (
+          <div key={s} className="flex items-center gap-2">
+            <div
+              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${
+                step === s
+                  ? "bg-primary text-primary-foreground"
+                  : ["info", "payment", "success"].indexOf(step) > i
+                  ? "bg-primary/20 text-primary"
+                  : "bg-muted text-muted-foreground"
+              }`}
             >
-              {showAddress ? <ChevronUp className="h-4 w-4 mr-2" /> : <ChevronDown className="h-4 w-4 mr-2" />}
-              {needsShipping ? 'Shipping address' : 'Billing details (optional)'}
-              {needsShipping && !showAddress && ' *'}
-            </Button>
-          </CollapsibleTrigger>
-          <CollapsibleContent className="space-y-3 pt-2">
-            <div>
-              <Label htmlFor="name" className="text-sm font-medium">Full Name</Label>
-              <Input
-                id="name"
-                placeholder="John Doe"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                className="mt-1"
-              />
+              {["info", "payment", "success"].indexOf(step) > i ? (
+                <CheckCircle className="w-4 h-4" />
+              ) : (
+                i + 1
+              )}
             </div>
-            {needsShipping && (
-              <>
-                <div>
-                  <Label htmlFor="address" className="text-sm font-medium">Street Address *</Label>
-                  <Input
-                    id="address"
-                    placeholder="123 Main St"
-                    value={address.line1}
-                    onChange={e => setAddress(prev => ({ ...prev, line1: e.target.value }))}
-                    className="mt-1"
-                    required={needsShipping}
-                  />
-                </div>
-                <div className="grid grid-cols-3 gap-2">
-                  <Input
-                    placeholder="City"
-                    value={address.city}
-                    onChange={e => setAddress(prev => ({ ...prev, city: e.target.value }))}
-                    required={needsShipping}
-                  />
-                  <Input
-                    placeholder="State"
-                    value={address.state}
-                    onChange={e => setAddress(prev => ({ ...prev, state: e.target.value }))}
-                    maxLength={2}
-                    required={needsShipping}
-                  />
-                  <Input
-                    placeholder="ZIP"
-                    value={address.zip}
-                    onChange={e => setAddress(prev => ({ ...prev, zip: e.target.value }))}
-                    maxLength={5}
-                    required={needsShipping}
-                  />
-                </div>
-              </>
+            {i < 2 && (
+              <div
+                className={`w-12 h-1 rounded ${
+                  ["info", "payment", "success"].indexOf(step) > i ? "bg-primary" : "bg-muted"
+                }`}
+              />
             )}
-          </CollapsibleContent>
-        </Collapsible>
+          </div>
+        ))}
       </div>
 
-      <QuickVeteranToggle 
-        isVeteran={isVeteran} 
-        onToggle={setIsVeteran} 
-      />
+      <AnimatePresence mode="wait">
+        {/* Step 1: Customer Info */}
+        {step === "info" && (
+          <motion.div
+            key="info"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="space-y-4"
+          >
+            {/* Cart Summary */}
+            <div className="bg-muted/50 rounded-xl p-4 border">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 bg-primary/10 rounded-lg">
+                  <ShoppingBag className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <h4 className="font-semibold">
+                    {items.length} {items.length === 1 ? "item" : "items"}
+                  </h4>
+                  <div className="flex gap-2 mt-1">
+                    {isDigital && (
+                      <Badge variant="outline" className="text-xs gap-1">
+                        <Zap className="w-3 h-3" />
+                        Instant delivery
+                      </Badge>
+                    )}
+                    {needsShipping && (
+                      <Badge variant="outline" className="text-xs gap-1">
+                        <Package className="w-3 h-3" />
+                        Ships in 2-3 days
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-1 mb-3 max-h-32 overflow-y-auto">
+                {items.map((item) => (
+                  <div key={item.id} className="flex justify-between text-sm">
+                    <span className="text-muted-foreground truncate max-w-[180px]">
+                      {item.name} × {item.quantity}
+                    </span>
+                    <span className="font-medium">${(item.price * item.quantity).toFixed(2)}</span>
+                  </div>
+                ))}
+              </div>
+              {isVeteran && veteranDiscount > 0 && (
+                <div className="flex justify-between text-sm text-green-600 border-t pt-2">
+                  <span>Veteran Discount (10%)</span>
+                  <span>-${veteranDiscount.toFixed(2)}</span>
+                </div>
+              )}
+              <div className="flex justify-between font-bold text-lg mt-2 pt-2 border-t">
+                <span>Total</span>
+                <span className="text-primary">${finalAmount.toFixed(2)}</span>
+              </div>
+            </div>
 
-      <SmartPriceBreakdown 
-        items={priceItems}
-        total={finalTotal}
-        savings={discount}
-      />
+            {/* Form Fields */}
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="email">Email Address *</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="your@email.com"
+                  className="mt-1"
+                />
+              </div>
 
-      <div className="space-y-3">
-        <Label className="text-sm font-medium">Card Details</Label>
-        <div className="border rounded-xl p-4 bg-card focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary transition-all">
-          <CardElement 
-            options={{
-              style: {
-                base: {
-                  fontSize: '16px',
-                  color: 'hsl(var(--foreground))',
-                  '::placeholder': {
-                    color: 'hsl(var(--muted-foreground))',
-                  },
-                },
-              },
-            }}
-          />
-        </div>
-        <AcceptedCards />
-      </div>
+              <div>
+                <Label htmlFor="name">Full Name *</Label>
+                <Input
+                  id="name"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="John Doe"
+                  className="mt-1"
+                />
+              </div>
 
-      <Button 
-        type="submit" 
-        disabled={!stripe || loading} 
-        className="w-full h-12 text-base font-semibold"
-        size="lg"
-      >
-        {loading ? (
-          <>
-            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-            Processing...
-          </>
-        ) : (
-          <>
-            <CreditCard className="mr-2 h-5 w-5" />
-            Pay ${finalTotal.toFixed(2)}
-          </>
+              {/* Shipping Address for Physical Items */}
+              {needsShipping && (
+                <div className="space-y-3 p-3 bg-muted/30 rounded-lg border">
+                  <Label className="font-medium flex items-center gap-2">
+                    <Package className="w-4 h-4" />
+                    Shipping Address
+                  </Label>
+                  <Input
+                    placeholder="Street Address *"
+                    value={address.line1}
+                    onChange={(e) => setAddress((prev) => ({ ...prev, line1: e.target.value }))}
+                  />
+                  <div className="grid grid-cols-3 gap-2">
+                    <Input
+                      placeholder="City *"
+                      value={address.city}
+                      onChange={(e) => setAddress((prev) => ({ ...prev, city: e.target.value }))}
+                    />
+                    <Input
+                      placeholder="State *"
+                      value={address.state}
+                      onChange={(e) => setAddress((prev) => ({ ...prev, state: e.target.value }))}
+                      maxLength={2}
+                    />
+                    <Input
+                      placeholder="ZIP *"
+                      value={address.zip}
+                      onChange={(e) => setAddress((prev) => ({ ...prev, zip: e.target.value }))}
+                      maxLength={5}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Veteran Discount Toggle */}
+              <QuickVeteranToggle isVeteran={isVeteran} onVeteranChange={setIsVeteran} discountPercent={10} />
+
+              {/* Terms Checkbox */}
+              <div className="flex items-start gap-3">
+                <Checkbox
+                  id="terms"
+                  checked={termsAccepted}
+                  onCheckedChange={(checked) => setTermsAccepted(checked === true)}
+                  className="mt-1"
+                />
+                <Label htmlFor="terms" className="text-sm text-muted-foreground">
+                  I agree to the{" "}
+                  <a href="/terms" className="text-primary hover:underline">
+                    Terms of Service
+                  </a>{" "}
+                  and{" "}
+                  <a href="/privacy" className="text-primary hover:underline">
+                    Privacy Policy
+                  </a>
+                </Label>
+              </div>
+            </div>
+
+            {error && <div className="p-3 bg-destructive/10 text-destructive rounded-lg text-sm">{error}</div>}
+
+            <Button
+              onClick={handleInfoSubmit}
+              disabled={isLoading || !email || !name || !termsAccepted}
+              className="w-full"
+              size="lg"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Processing...
+                </>
+              ) : (
+                <>
+                  Continue to Payment
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </>
+              )}
+            </Button>
+          </motion.div>
         )}
-      </Button>
 
-      <TrustIndicators />
-    </form>
+        {/* Step 2: Payment */}
+        {step === "payment" && clientSecret && (
+          <motion.div
+            key="payment"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="space-y-4"
+          >
+            {/* Order Summary */}
+            <div className="bg-muted/50 rounded-xl p-4 border">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm text-muted-foreground">Order Total:</span>
+                <span className="text-xl font-bold text-primary">${finalAmount.toFixed(2)}</span>
+              </div>
+              {isVeteran && (
+                <Badge className="bg-green-500/20 text-green-600 text-xs">
+                  <Shield className="w-3 h-3 mr-1" />
+                  Veteran discount applied
+                </Badge>
+              )}
+            </div>
+
+            {/* Stripe Payment Element */}
+            <div className="bg-background rounded-xl p-4 border">
+              <Elements
+                stripe={stripePromise}
+                options={{
+                  clientSecret,
+                  appearance: {
+                    theme: "stripe",
+                    variables: {
+                      borderRadius: "8px",
+                      colorPrimary: "#6D28D9",
+                    },
+                  },
+                }}
+              >
+                <PaymentElementWrapper
+                  onSubmit={handlePaymentSubmit}
+                  isLoading={isLoading}
+                  amount={finalAmount}
+                  error={error}
+                  onBack={() => setStep("info")}
+                />
+              </Elements>
+            </div>
+
+            {/* Trust Indicators */}
+            <div className="flex items-center justify-center gap-4 text-xs text-muted-foreground">
+              <div className="flex items-center gap-1">
+                <Lock className="w-3 h-3" />
+                <span>Secure Payment</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <CreditCard className="w-3 h-3" />
+                <span>256-bit Encryption</span>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Step 3: Success */}
+        {step === "success" && (
+          <motion.div
+            key="success"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="text-center py-8"
+          >
+            <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.2, type: "spring" }}
+              >
+                <CheckCircle className="w-10 h-10 text-green-500" />
+              </motion.div>
+            </div>
+
+            <h3 className="text-2xl font-bold mb-2">Payment Successful!</h3>
+            <p className="text-muted-foreground mb-6">
+              Thank you for your purchase!
+              <br />A confirmation email has been sent to {email}.
+            </p>
+
+            <div className="space-y-3">
+              {isDigital && (
+                <div className="bg-green-500/10 text-green-600 p-4 rounded-xl text-sm">
+                  <Sparkles className="w-5 h-5 mx-auto mb-2" />
+                  <p className="font-medium">Check your email for download links</p>
+                  <p className="text-xs mt-1">Expected delivery: 2-5 minutes</p>
+                </div>
+              )}
+
+              {needsShipping && (
+                <div className="bg-primary/10 text-primary p-4 rounded-xl text-sm">
+                  <Package className="w-5 h-5 mx-auto mb-2" />
+                  <p className="font-medium">Your order is being prepared</p>
+                  <p className="text-xs mt-1">Ships in 2-3 business days</p>
+                </div>
+              )}
+
+              <Button onClick={onSuccess} className="w-full">
+                Close
+              </Button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+// Wrapper component to use hooks inside Elements provider
+function PaymentElementWrapper({
+  onSubmit,
+  isLoading,
+  amount,
+  error,
+  onBack,
+}: {
+  onSubmit: () => void;
+  isLoading: boolean;
+  amount: number;
+  error: string | null;
+  onBack: () => void;
+}) {
+  const stripe = useStripe();
+  const elements = useElements();
+
+  return (
+    <div className="space-y-4">
+      <PaymentElement
+        options={{
+          layout: "tabs",
+          paymentMethodOrder: ["card", "apple_pay", "google_pay"],
+        }}
+      />
+
+      {error && <div className="p-3 bg-destructive/10 text-destructive rounded-lg text-sm">{error}</div>}
+
+      <div className="flex gap-3">
+        <Button variant="outline" onClick={onBack} disabled={isLoading} className="flex-1">
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Back
+        </Button>
+        <Button onClick={onSubmit} disabled={isLoading || !stripe || !elements} className="flex-1" size="lg">
+          {isLoading ? (
+            <>
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              Processing...
+            </>
+          ) : (
+            <>
+              <Lock className="w-4 h-4 mr-2" />
+              Pay ${amount.toFixed(2)}
+            </>
+          )}
+        </Button>
+      </div>
+    </div>
   );
 }
 
 export function CheckoutDialog({ open, onOpenChange }: CheckoutDialogProps) {
   const { items } = useCart();
-  
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto rounded-2xl">
         <DialogHeader>
-          <DialogTitle className="text-xl">Complete Your Purchase</DialogTitle>
+          <DialogTitle className="flex items-center gap-2">
+            <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+              <CreditCard className="w-5 h-5 text-primary" />
+            </div>
+            <div>
+              <span className="block">Complete Your Purchase</span>
+              <Badge variant="outline" className="text-xs font-normal mt-1">
+                <Lock className="w-3 h-3 mr-1" />
+                Powered by Stripe
+              </Badge>
+            </div>
+          </DialogTitle>
           <DialogDescription>
-            {items.length} {items.length === 1 ? 'item' : 'items'} in your cart
+            {items.length} {items.length === 1 ? "item" : "items"} in your cart
           </DialogDescription>
         </DialogHeader>
-        <Elements stripe={stripePromise}>
-          <CheckoutForm onSuccess={() => onOpenChange(false)} />
-        </Elements>
+
+        <CheckoutForm onSuccess={() => onOpenChange(false)} />
       </DialogContent>
     </Dialog>
   );
