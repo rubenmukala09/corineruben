@@ -78,7 +78,7 @@ serve(async (req) => {
         payment_settings: { 
           save_default_payment_method: "on_subscription",
         },
-        expand: ["latest_invoice.payment_intent"],
+        expand: ["latest_invoice.payment_intent", "pending_setup_intent"],
         metadata: {
           isVeteran: isVeteran ? 'true' : 'false',
           customerName: customerName || '',
@@ -86,36 +86,86 @@ serve(async (req) => {
         }
       });
 
-      const invoice = subscription.latest_invoice as Stripe.Invoice;
-      
-      // Safely access payment_intent
-      if (!invoice || !invoice.payment_intent) {
-        logStep("ERROR: No payment intent on invoice", { 
+      logStep("Subscription created", { subscriptionId: subscription.id });
+
+      let clientSecret: string | null = null;
+      let paymentIntentId: string | null = null;
+      const invoice = subscription.latest_invoice as Stripe.Invoice | null;
+
+      // Strategy 1: Try to get client_secret from invoice's payment_intent
+      if (invoice?.payment_intent && typeof invoice.payment_intent !== 'string') {
+        const pi = invoice.payment_intent as Stripe.PaymentIntent;
+        if (pi.client_secret) {
+          clientSecret = pi.client_secret;
+          paymentIntentId = pi.id;
+          logStep("Got client_secret from invoice payment_intent", { paymentIntentId });
+        }
+      }
+
+      // Strategy 2: Try pending_setup_intent (for $0 trials or setup-only flows)
+      if (!clientSecret && subscription.pending_setup_intent) {
+        const setupIntent = typeof subscription.pending_setup_intent === 'string'
+          ? await stripe.setupIntents.retrieve(subscription.pending_setup_intent)
+          : subscription.pending_setup_intent as Stripe.SetupIntent;
+        
+        if (setupIntent.client_secret) {
+          clientSecret = setupIntent.client_secret;
+          logStep("Got client_secret from pending_setup_intent", { setupIntentId: setupIntent.id });
+          
+          return new Response(JSON.stringify({
+            clientSecret,
+            subscriptionId: subscription.id,
+            customerId,
+            amount: price.unit_amount,
+            type: "setup" // Different type for frontend to handle
+          }), {
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+            status: 200,
+          });
+        }
+      }
+
+      // Strategy 3: Manually create a PaymentIntent for the subscription's first invoice
+      if (!clientSecret && invoice) {
+        logStep("Creating manual PaymentIntent for subscription invoice", { invoiceId: invoice.id });
+        
+        const manualPaymentIntent = await stripe.paymentIntents.create({
+          customer: customerId,
+          amount: price.unit_amount!,
+          currency: price.currency,
+          automatic_payment_methods: { enabled: true },
+          metadata: {
+            subscriptionId: subscription.id,
+            invoiceId: invoice.id,
+            priceId,
+            isVeteran: isVeteran ? 'true' : 'false',
+            customerName: customerName || '',
+          }
+        });
+
+        clientSecret = manualPaymentIntent.client_secret;
+        paymentIntentId = manualPaymentIntent.id;
+        logStep("Manual PaymentIntent created", { paymentIntentId });
+      }
+
+      // Final check - if we still don't have a client secret, error out
+      if (!clientSecret) {
+        logStep("ERROR: Could not obtain client_secret after all strategies", {
           subscriptionId: subscription.id,
           invoiceId: invoice?.id,
           invoiceStatus: invoice?.status
         });
-        throw new Error("Failed to create subscription payment intent");
-      }
-      
-      const paymentIntent = invoice.payment_intent as Stripe.PaymentIntent;
-
-      if (!paymentIntent.client_secret) {
-        logStep("ERROR: No client secret on payment intent", { 
-          paymentIntentId: paymentIntent.id,
-          paymentIntentStatus: paymentIntent.status
-        });
-        throw new Error("Failed to get payment client secret");
+        throw new Error("Failed to create payment intent for subscription");
       }
 
-      logStep("Subscription created", { 
+      logStep("Returning subscription response", { 
         subscriptionId: subscription.id, 
-        paymentIntentId: paymentIntent.id,
+        paymentIntentId,
         clientSecret: "present" 
       });
 
       return new Response(JSON.stringify({
-        clientSecret: paymentIntent.client_secret,
+        clientSecret,
         subscriptionId: subscription.id,
         customerId,
         amount: price.unit_amount,
