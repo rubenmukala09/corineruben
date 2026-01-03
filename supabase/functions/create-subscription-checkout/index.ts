@@ -92,7 +92,7 @@ serve(async (req) => {
             // Create Stripe coupon
             const couponData: any = {
               duration: 'once',
-              name: discountData.description || discountData.code,
+              name: discountData.code, // Use code as name since description doesn't exist
             };
 
             if (discountData.type === 'percentage') {

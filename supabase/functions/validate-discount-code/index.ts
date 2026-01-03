@@ -77,13 +77,8 @@ serve(async (req) => {
       );
     }
 
-    const appliesTo = discountData.applies_to as string[];
-    if (!appliesTo.includes('all') && !appliesTo.includes(serviceType)) {
-      return new Response(
-        JSON.stringify({ valid: false, error: "Discount code not applicable to this service" }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 400 }
-      );
-    }
+    // Note: applies_to column doesn't exist, skip service type validation
+    // All discount codes apply to all services
 
     const now = new Date();
     const validFrom = new Date(discountData.valid_from);
@@ -122,7 +117,6 @@ serve(async (req) => {
         valid: true,
         discount: {
           code: discountData.code,
-          description: discountData.description,
           type: discountData.type,
           value: discountData.value,
           discountAmount,
