@@ -77,7 +77,6 @@ serve(async (req) => {
         payment_behavior: "default_incomplete",
         payment_settings: { 
           save_default_payment_method: "on_subscription",
-          payment_method_types: ["card"]
         },
         expand: ["latest_invoice.payment_intent"],
         metadata: {
@@ -88,11 +87,31 @@ serve(async (req) => {
       });
 
       const invoice = subscription.latest_invoice as Stripe.Invoice;
+      
+      // Safely access payment_intent
+      if (!invoice || !invoice.payment_intent) {
+        logStep("ERROR: No payment intent on invoice", { 
+          subscriptionId: subscription.id,
+          invoiceId: invoice?.id,
+          invoiceStatus: invoice?.status
+        });
+        throw new Error("Failed to create subscription payment intent");
+      }
+      
       const paymentIntent = invoice.payment_intent as Stripe.PaymentIntent;
+
+      if (!paymentIntent.client_secret) {
+        logStep("ERROR: No client secret on payment intent", { 
+          paymentIntentId: paymentIntent.id,
+          paymentIntentStatus: paymentIntent.status
+        });
+        throw new Error("Failed to get payment client secret");
+      }
 
       logStep("Subscription created", { 
         subscriptionId: subscription.id, 
-        clientSecret: paymentIntent.client_secret ? "present" : "missing" 
+        paymentIntentId: paymentIntent.id,
+        clientSecret: "present" 
       });
 
       return new Response(JSON.stringify({
