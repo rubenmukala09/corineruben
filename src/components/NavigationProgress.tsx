@@ -11,15 +11,15 @@ export const NavigationProgress = () => {
     setIsVisible(true);
     setProgress(0);
 
-    // Fast completion
-    const timer1 = setTimeout(() => setProgress(80), 30);
+    // Ultra-fast completion
+    const timer1 = setTimeout(() => setProgress(90), 10);
     const timer2 = setTimeout(() => {
       setProgress(100);
       setTimeout(() => {
         setIsVisible(false);
         setProgress(0);
-      }, 100);
-    }, 150);
+      }, 50);
+    }, 60);
 
     return () => {
       clearTimeout(timer1);

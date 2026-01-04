@@ -12,21 +12,18 @@ export function PageLoadingBar() {
     setIsLoading(true);
     setProgress(0);
 
-    // Simulate progress
-    const timer1 = setTimeout(() => setProgress(30), 100);
-    const timer2 = setTimeout(() => setProgress(60), 300);
-    const timer3 = setTimeout(() => setProgress(90), 600);
+    // Ultra-fast progress
+    const timer1 = setTimeout(() => setProgress(70), 15);
+    const timer2 = setTimeout(() => setProgress(100), 40);
     
     // Complete loading
     const completeTimer = setTimeout(() => {
-      setProgress(100);
-      setTimeout(() => setIsLoading(false), 200);
-    }, 800);
+      setIsLoading(false);
+    }, 80);
 
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
-      clearTimeout(timer3);
       clearTimeout(completeTimer);
     };
   }, [location.pathname]);

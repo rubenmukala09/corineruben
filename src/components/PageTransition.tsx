@@ -11,19 +11,19 @@ const variants = {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
     exit: { opacity: 0 },
-    transition: { duration: 0.1 } as Transition,
+    transition: { duration: 0.05 } as Transition,
   },
   slide: {
-    initial: { opacity: 0, y: 4 },
+    initial: { opacity: 0, y: 2 },
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0 },
-    transition: { duration: 0.12 } as Transition,
+    transition: { duration: 0.06 } as Transition,
   },
   scale: {
-    initial: { opacity: 0, scale: 0.99 },
+    initial: { opacity: 0, scale: 0.995 },
     animate: { opacity: 1, scale: 1 },
     exit: { opacity: 0 },
-    transition: { duration: 0.1 } as Transition,
+    transition: { duration: 0.05 } as Transition,
   },
 };
 
