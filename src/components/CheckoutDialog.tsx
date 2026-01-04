@@ -32,13 +32,12 @@ import {
   Package,
   ShoppingBag,
   Zap,
+  RefreshCw,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { QuickVeteranToggle } from "@/components/payment/QuickVeteranToggle";
-
-const stripeKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
-const stripePromise = stripeKey ? loadStripe(stripeKey) : null;
+import { useStripeKey } from "@/hooks/useStripeKey";
 
 interface CheckoutDialogProps {
   open: boolean;
@@ -47,6 +46,7 @@ interface CheckoutDialogProps {
 
 function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
   const { items, total, clearCart } = useCart();
+  const { stripePromise, loading: stripeLoading, error: stripeError } = useStripeKey();
 
   const [step, setStep] = useState<"info" | "payment" | "success">("info");
   const [isLoading, setIsLoading] = useState(false);
@@ -385,11 +385,20 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
 
             {/* Stripe Payment Element */}
             <div className="bg-background rounded-xl p-4 border">
-              {!stripePromise ? (
+              {stripeLoading ? (
+                <div className="flex items-center justify-center py-8">
+                  <Loader2 className="w-6 h-6 animate-spin text-primary" />
+                  <span className="ml-2 text-sm text-muted-foreground">Initializing payment...</span>
+                </div>
+              ) : !stripePromise || stripeError ? (
                 <div className="p-4 bg-destructive/10 text-destructive rounded-lg text-center">
                   <CreditCard className="w-8 h-8 mx-auto mb-2 opacity-50" />
                   <p className="font-medium">Payment system unavailable</p>
-                  <p className="text-sm mt-1">Please refresh the page and try again.</p>
+                  <p className="text-sm mt-1">{stripeError || "Please refresh the page and try again."}</p>
+                  <Button variant="outline" size="sm" className="mt-3" onClick={() => window.location.reload()}>
+                    <RefreshCw className="w-4 h-4 mr-2" />
+                    Refresh Page
+                  </Button>
                 </div>
               ) : (
                 <Elements

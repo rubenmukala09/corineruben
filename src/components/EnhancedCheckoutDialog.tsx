@@ -17,9 +17,7 @@ import { QuickVeteranToggle } from '@/components/payment/QuickVeteranToggle';
 import { TrustIndicators } from '@/components/payment/TrustIndicators';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCartFeedback } from './CartFeedbackNotifications';
-
-const stripeKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
-const stripePromise = stripeKey ? loadStripe(stripeKey) : null;
+import { useStripeKey } from '@/hooks/useStripeKey';
 
 interface EnhancedCheckoutDialogProps {
   open: boolean;
@@ -262,6 +260,7 @@ function CardPaymentWrapper({
   setFormData: (data: { name: string; email: string }) => void;
 }) {
   const { items } = useCart();
+  const { stripePromise, loading: stripeLoading, error: stripeError } = useStripeKey();
   const [step, setStep] = useState<'contact' | 'payment'>('contact');
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -408,7 +407,12 @@ function CardPaymentWrapper({
             <span>Paying as <strong>{formData.email}</strong></span>
           </div>
 
-          {stripePromise ? (
+          {stripeLoading ? (
+            <div className="flex items-center justify-center py-8">
+              <Loader2 className="w-6 h-6 animate-spin text-primary" />
+              <span className="ml-2 text-sm text-muted-foreground">Initializing payment...</span>
+            </div>
+          ) : stripePromise && !stripeError ? (
             <Elements 
               stripe={stripePromise} 
               options={{
@@ -431,7 +435,11 @@ function CardPaymentWrapper({
             <div className="text-center p-6 space-y-3">
               <Lock className="w-10 h-10 mx-auto text-destructive opacity-50" />
               <p className="text-destructive font-medium">Payment system unavailable</p>
-              <p className="text-sm text-muted-foreground">Please contact support for assistance.</p>
+              <p className="text-sm text-muted-foreground">{stripeError || "Please contact support for assistance."}</p>
+              <Button variant="outline" size="sm" onClick={() => window.location.reload()}>
+                <RefreshCw className="w-4 h-4 mr-2" />
+                Refresh Page
+              </Button>
             </div>
           )}
         </motion.div>
