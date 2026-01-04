@@ -41,13 +41,13 @@ import heroBusinessDiverse5 from "@/assets/hero-business-diverse-5.jpg";
 import natureParkSerene from "@/assets/nature-park-serene.jpg";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
+import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
 
 function Business() {
   const [modalOpen, setModalOpen] = useState(false);
   const [subscriptionDialogOpen, setSubscriptionDialogOpen] = useState(false);
   const [inquiryDialogOpen, setInquiryDialogOpen] = useState(false);
   const [websiteInsuranceOpen, setWebsiteInsuranceOpen] = useState(false);
-  const [currentHeadlineIndex, setCurrentHeadlineIndex] = useState(0);
   const [selectedInquiry, setSelectedInquiry] = useState<{
     name: string;
     price: number;
@@ -78,25 +78,16 @@ function Business() {
     tier?: string;
     price?: number;
   } | null>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const { isAdmin, isLoading } = useAdminStatus();
   const [businessTestimonials, setBusinessTestimonials] = useState<any[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string } | null>(null);
 
-  // Rotate headlines
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentHeadlineIndex((prev) => (prev + 1) % businessHeadlines.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
   // Counter animations for pricing cards
   const price1Counter = useCounterAnimation({ end: 9500, duration: 1500, prefix: '$' });
   const price2Counter = useCounterAnimation({ end: 12500, duration: 1500, prefix: '$' });
   const price3Counter = useCounterAnimation({ end: 25000, duration: 1500, prefix: '$', suffix: '+' });
 
   useEffect(() => {
-    checkAdminStatus();
     fetchBusinessTestimonials();
   }, []);
 
@@ -112,36 +103,6 @@ function Business() {
       .limit(4);
     
     setBusinessTestimonials(data || []);
-  };
-
-  const checkAdminStatus = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      if (!user) {
-        setIsAdmin(false);
-        setIsLoading(false);
-        return;
-      }
-
-      const { data: roles, error } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", user.id)
-        .in("role", ["admin", "staff"]);
-
-      if (error) {
-        console.error("Error checking admin status:", error);
-        setIsAdmin(false);
-      } else {
-        setIsAdmin(roles && roles.length > 0);
-      }
-    } catch (error) {
-      console.error("Error in checkAdminStatus:", error);
-      setIsAdmin(false);
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   const scrollToSection = (id: string) => {
@@ -238,18 +199,7 @@ function Business() {
       >
         {/* Transitioning Headlines */}
         <div className="text-center mb-6">
-          <AnimatePresence mode="wait">
-            <motion.h1
-              key={currentHeadlineIndex}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4"
-            >
-              {businessHeadlines[currentHeadlineIndex]}
-            </motion.h1>
-          </AnimatePresence>
+          <RotatingHeadlines headlines={businessHeadlines} />
           <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
             Transform your business with AI-powered solutions, professional websites, and expert security
           </p>
@@ -301,20 +251,20 @@ function Business() {
       <TrustBar />
 
       {/* What We Build - Expandable Cards with Full Content */}
-      <section className="py-20 bg-background relative">
+      <section className="py-14 bg-background relative">
         <FlowingWaves variant="full" opacity={0.12} />
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-12">
-            <div className="inline-block px-6 py-2 bg-primary/10 rounded-full text-sm font-bold text-primary mb-4 uppercase tracking-wider">
+          <div className="text-center mb-8">
+            <div className="inline-block px-6 py-2 bg-primary/10 rounded-full text-sm font-bold text-primary mb-3 uppercase tracking-wider">
               Our Services
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">What We Build</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-3">What We Build</h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               Click on any service to learn more about how we can help your business grow
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
             {/* AI Receptionist */}
             <ExpandableServiceCard
               icon={<Phone className="w-8 h-8 text-accent" />}

@@ -32,7 +32,7 @@ const steps = [
 
 export const WorkingProcess = () => {
   return (
-    <section className="py-24 bg-background relative overflow-hidden">
+    <section className="py-16 bg-background relative overflow-hidden">
       {/* Grid pattern */}
       <GridPattern />
       
@@ -53,7 +53,7 @@ export const WorkingProcess = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Header with Image */}
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+        <div className="grid lg:grid-cols-2 gap-8 items-center mb-12">
           {/* Left - Image */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}

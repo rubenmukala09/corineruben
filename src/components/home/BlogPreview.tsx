@@ -31,7 +31,7 @@ const articles = [
 
 export const BlogPreview = () => {
   return (
-    <section className="py-24 bg-muted/30 relative overflow-hidden">
+    <section className="py-16 bg-muted/30 relative overflow-hidden">
       {/* Grid pattern */}
       <GridPattern className="opacity-50" />
       

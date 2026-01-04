@@ -19,7 +19,7 @@ const portfolioImages = [
 
 export const SecuritySolutions = () => {
   return (
-    <section className="py-24 bg-background relative overflow-hidden">
+    <section className="py-16 bg-background relative overflow-hidden">
       {/* Grid pattern */}
       <GridPattern />
       
@@ -57,7 +57,7 @@ export const SecuritySolutions = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-10"
         >
           {/* Angular badge */}
           <div 

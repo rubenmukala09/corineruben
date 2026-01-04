@@ -33,7 +33,7 @@ const faqs = [
 
 export const FAQPreview = () => {
   return (
-    <section className="py-24 bg-background relative overflow-hidden">
+    <section className="py-16 bg-background relative overflow-hidden">
       {/* Grid pattern */}
       <GridPattern />
       

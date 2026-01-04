@@ -139,15 +139,24 @@ p, span, li, div {
 
 /* Spacing utility classes */
 .section-spacing {
-  @apply py-6 md:py-10 lg:py-12;
+  @apply py-8 md:py-12 lg:py-14;
 }
 
 .section-spacing-tight {
-  @apply py-4 md:py-6 lg:py-8;
+  @apply py-6 md:py-8 lg:py-10;
 }
 
 .section-spacing-loose {
-  @apply py-8 md:py-12 lg:py-16;
+  @apply py-10 md:py-14 lg:py-16;
+}
+
+/* Compact section spacing */
+.section-compact {
+  @apply py-8 md:py-10;
+}
+
+.section-tight {
+  @apply py-6 md:py-8;
 }
 
 .container-padding {
@@ -155,11 +164,20 @@ p, span, li, div {
 }
 
 .heading-margin {
-  @apply mb-4 md:mb-6;
+  @apply mb-3 md:mb-4;
 }
 
 .card-gap {
-  @apply gap-4 md:gap-6;
+  @apply gap-3 md:gap-4 lg:gap-6;
+}
+
+/* Tight grid spacing */
+.grid-tight {
+  @apply gap-3 md:gap-4;
+}
+
+.grid-compact {
+  @apply gap-2 md:gap-3;
 }
 
 /* Brightness utility for hero images */
