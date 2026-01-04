@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Lightbulb, Award, Shield, GraduationCap } from "lucide-react";
 import communityTraining from "@/assets/community-training.jpg";
-import securityExpert from "@/assets/security-expert.jpg";
+import workshopInstructor from "@/assets/workshop-instructor.jpg";
 import { HexagonIcon, GeometricCorner, DottedPattern, FloatingShapes, GridPattern } from "@/components/ui/GeometricDecorations";
 
 const features = [
@@ -109,7 +109,7 @@ export const FeatureBar = () => {
             </div>
             <div className="relative flex-1 mt-8">
               <div className="rounded-2xl overflow-hidden shadow-xl border-2 border-accent/10">
-                <img src={securityExpert} alt="Security Expert" className="w-full h-48 object-cover" />
+                <img src={workshopInstructor} alt="Workshop Instructor" className="w-full h-48 object-cover" />
               </div>
               {/* Corner triangle accent */}
               <div 
