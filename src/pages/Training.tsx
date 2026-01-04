@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { BookingModal } from "@/components/BookingModal";
-import { SubscriptionDialog } from "@/components/SubscriptionDialog";
 import { EmbeddedPaymentModal } from "@/components/payment/EmbeddedPaymentModal";
 import Hero from "@/components/Hero";
 import TrustBar from "@/components/TrustBar";
@@ -18,8 +17,11 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
+import { useAdminStatus } from "@/hooks/useAdminStatus";
+import { useCheckout } from "@/contexts/CheckoutContext";
 import { supabase } from "@/integrations/supabase/client";
 import { trackButtonClick, trackConversion } from "@/utils/analyticsTracker";
+import { SCAMSHIELD_PLANS } from "@/config/products";
 import {
   CheckCircle,
   Mail,
@@ -1759,16 +1761,7 @@ function LearnAndTrain() {
         />
       )}
 
-      {selectedSubscription && (
-        <SubscriptionDialog
-          open={subscriptionDialogOpen}
-          onOpenChange={setSubscriptionDialogOpen}
-          priceId={selectedSubscription.priceId}
-          serviceName={selectedSubscription.serviceName}
-          planTier={selectedSubscription.planTier}
-          amount={selectedSubscription.amount}
-        />
-      )}
+      {/* Note: SubscriptionDialog removed - using EmbeddedPaymentModal for all subscriptions */}
 
       {/* Embedded Payment Modal for inline checkout */}
       {embeddedPaymentConfig && (

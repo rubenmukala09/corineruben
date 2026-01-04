@@ -16,12 +16,13 @@ import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { BookingModal } from "@/components/BookingModal";
-import { SubscriptionDialog } from "@/components/SubscriptionDialog";
 import { ServiceInquiryDialog } from "@/components/ServiceInquiryDialog";
 import { WebsiteInsuranceDialog } from "@/components/WebsiteInsuranceDialog";
 import { EmbeddedPaymentModal } from "@/components/payment/EmbeddedPaymentModal";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
+import { useAdminStatus } from "@/hooks/useAdminStatus";
 import { trackButtonClick, trackConversion } from "@/utils/analyticsTracker";
+import { AI_SERVICES, AI_INSURANCE_PLANS } from "@/config/products";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield, Lock, Sparkles, FileText } from "lucide-react";
 import { ExpandableServiceCard } from "@/components/ExpandableServiceCard";
 import { Badge } from "@/components/ui/badge";
@@ -2173,17 +2174,7 @@ function Business() {
         />
       )}
 
-      {selectedSubscription && (
-        <SubscriptionDialog
-          open={subscriptionDialogOpen}
-          onOpenChange={setSubscriptionDialogOpen}
-          priceId={selectedSubscription.priceId}
-          serviceName={selectedSubscription.serviceName}
-          planTier={selectedSubscription.planTier}
-          amount={selectedSubscription.amount}
-          variant={selectedSubscription.variant || 'default'}
-        />
-      )}
+      {/* Note: SubscriptionDialog removed - using EmbeddedPaymentModal for all subscriptions */}
 
       {selectedInquiry && (
         <ServiceInquiryDialog
