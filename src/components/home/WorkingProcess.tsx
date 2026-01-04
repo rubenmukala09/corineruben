@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { FileText, Search, Shield, Smile } from "lucide-react";
-import familyCyberProtection from "@/assets/family-cyber-protection.jpg";
+import peopleStudyingVideo from "@/assets/people-studying-video.mp4";
 import { HexagonIcon, GeometricCorner, DottedPattern, GridPattern, FloatingShapes } from "@/components/ui/GeometricDecorations";
 
 const steps = [
@@ -64,10 +64,13 @@ export const WorkingProcess = () => {
             <div className="relative">
               <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-primary/20 to-accent/20 blur-2xl" />
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                <img 
-                  src={familyCyberProtection} 
-                  alt="Family learning cyber protection" 
+                <video 
+                  src={peopleStudyingVideo} 
                   className="w-full h-80 object-cover"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
                 />
               </div>
               <div className="absolute -bottom-3 -right-3 w-8 h-8 rounded-full bg-accent" />
