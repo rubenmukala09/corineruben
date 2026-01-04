@@ -20,6 +20,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Shield,
   CheckCircle,
@@ -31,10 +32,12 @@ import {
   ArrowLeft,
   Sparkles,
   RefreshCw,
+  Smartphone,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useStripeKey } from "@/hooks/useStripeKey";
+import { QRCodePaymentSection } from "./QRCodePaymentSection";
 
 export interface EmbeddedPaymentModalProps {
   open: boolean;
@@ -346,46 +349,76 @@ function PaymentForm({
               )}
             </div>
 
-            {/* Stripe Payment Element */}
-            <div className="bg-background rounded-xl p-4 border">
-              {stripeLoading ? (
-                <div className="flex items-center justify-center py-8">
-                  <Loader2 className="w-6 h-6 animate-spin text-primary" />
-                  <span className="ml-2 text-sm text-muted-foreground">Initializing payment...</span>
+            {/* Payment Method Tabs */}
+            <Tabs defaultValue="card" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-4">
+                <TabsTrigger value="card" className="flex items-center gap-2">
+                  <CreditCard className="w-4 h-4" />
+                  Card
+                </TabsTrigger>
+                <TabsTrigger value="qr" className="flex items-center gap-2">
+                  <Smartphone className="w-4 h-4" />
+                  QR Code
+                </TabsTrigger>
+              </TabsList>
+
+              {/* Card Payment Tab */}
+              <TabsContent value="card" className="mt-0">
+                <div className="bg-background rounded-xl p-4 border">
+                  {stripeLoading ? (
+                    <div className="flex items-center justify-center py-8">
+                      <Loader2 className="w-6 h-6 animate-spin text-primary" />
+                      <span className="ml-2 text-sm text-muted-foreground">Initializing payment...</span>
+                    </div>
+                  ) : !stripePromise || stripeError ? (
+                    <div className="p-4 bg-destructive/10 text-destructive rounded-lg text-center">
+                      <CreditCard className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                      <p className="font-medium">Payment system unavailable</p>
+                      <p className="text-sm mt-1">{stripeError || "Please refresh the page and try again."}</p>
+                      <Button variant="outline" size="sm" className="mt-3" onClick={() => window.location.reload()}>
+                        <RefreshCw className="w-4 h-4 mr-2" />
+                        Refresh Page
+                      </Button>
+                    </div>
+                  ) : (
+                    <Elements
+                      stripe={stripePromise}
+                      options={{
+                        clientSecret,
+                        appearance: {
+                          theme: "stripe",
+                          variables: {
+                            borderRadius: "8px",
+                            colorPrimary: "#6D28D9",
+                          },
+                        },
+                      }}
+                    >
+                      <PaymentElementWrapper
+                        onSuccess={handlePaymentSuccess}
+                        amount={finalAmount / 100}
+                        email={email}
+                        onBack={() => setStep("info")}
+                      />
+                    </Elements>
+                  )}
                 </div>
-              ) : !stripePromise || stripeError ? (
-                <div className="p-4 bg-destructive/10 text-destructive rounded-lg text-center">
-                  <CreditCard className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                  <p className="font-medium">Payment system unavailable</p>
-                  <p className="text-sm mt-1">{stripeError || "Please refresh the page and try again."}</p>
-                  <Button variant="outline" size="sm" className="mt-3" onClick={() => window.location.reload()}>
-                    <RefreshCw className="w-4 h-4 mr-2" />
-                    Refresh Page
-                  </Button>
-                </div>
-              ) : (
-                <Elements
-                  stripe={stripePromise}
-                  options={{
-                    clientSecret,
-                    appearance: {
-                      theme: "stripe",
-                      variables: {
-                        borderRadius: "8px",
-                        colorPrimary: "#6D28D9",
-                      },
-                    },
-                  }}
-                >
-                  <PaymentElementWrapper
+              </TabsContent>
+
+              {/* QR Code Payment Tab */}
+              <TabsContent value="qr" className="mt-0">
+                <div className="bg-background rounded-xl p-4 border">
+                  <QRCodePaymentSection
+                    amount={finalAmount}
+                    productName={productName}
+                    customerEmail={email}
+                    customerName={name}
                     onSuccess={handlePaymentSuccess}
-                    amount={finalAmount / 100}
-                    email={email}
                     onBack={() => setStep("info")}
                   />
-                </Elements>
-              )}
-            </div>
+                </div>
+              </TabsContent>
+            </Tabs>
 
             {/* Trust Indicators */}
             <div className="flex items-center justify-center gap-4 text-xs text-muted-foreground">
