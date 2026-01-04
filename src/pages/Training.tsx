@@ -360,15 +360,14 @@ function LearnAndTrain() {
         subheadline=""
         showScrollIndicator={true}
       >
-        {/* Transitioning Headlines */}
-        <div className="text-center mb-6">
+        <div className="text-center md:text-left mb-8">
           <RotatingHeadlines headlines={trainingHeadlines} />
-          <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl lg:text-2xl text-white/90 max-w-4xl">
             Expert-led training and 24/7 protection services designed for families and seniors
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center sm:justify-start">
+        <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center md:justify-start">
           <Button 
             onClick={() => {
               document.getElementById('training')?.scrollIntoView({ behavior: 'smooth' });
