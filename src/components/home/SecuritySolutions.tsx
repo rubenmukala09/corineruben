@@ -5,7 +5,7 @@ import heroServices2 from "@/assets/hero-services-2.jpg";
 import heroServices3 from "@/assets/hero-services-3.jpg";
 import heroServices4 from "@/assets/hero-services-4.jpg";
 import communityTraining from "@/assets/community-training.jpg";
-import securityExpert from "@/assets/security-expert.jpg";
+import securityExpert from "@/assets/professional-portrait.jpg";
 import { GeometricCorner, DottedPattern, GridPattern, FloatingShapes } from "@/components/ui/GeometricDecorations";
 
 const portfolioImages = [
