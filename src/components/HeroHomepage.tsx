@@ -116,8 +116,8 @@ export const HeroHomepage = () => {
       }} />
       </div>
       
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-5 gap-8 lg:gap-16 items-center min-h-[100vh] py-24 lg:py-0">
+      <div className="w-full max-w-[1800px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16 xl:px-24 relative z-10">
+        <div className="grid lg:grid-cols-5 gap-8 lg:gap-20 xl:gap-28 items-center min-h-[100vh] py-24 lg:py-0">
           
           {/* Left Content - Takes 3 columns */}
           <motion.div className="lg:col-span-3 order-2 lg:order-1" initial={{
@@ -218,7 +218,7 @@ export const HeroHomepage = () => {
           ease: [0.22, 1, 0.36, 1],
           delay: 0.2
         }}>
-            <div className="relative w-full max-w-md lg:max-w-lg">
+            <div className="relative w-full max-w-lg lg:max-w-xl xl:max-w-2xl">
               {/* Main visual container */}
               <div className="relative">
                 {/* Outer glow ring - premium gradient */}
