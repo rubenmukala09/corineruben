@@ -18,7 +18,8 @@ import { TrustIndicators } from '@/components/payment/TrustIndicators';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCartFeedback } from './CartFeedbackNotifications';
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '');
+const stripeKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
+const stripePromise = stripeKey ? loadStripe(stripeKey) : null;
 
 interface EnhancedCheckoutDialogProps {
   open: boolean;
@@ -141,6 +142,18 @@ function CardPaymentForm({
   const { clearCart } = useCart();
   const { triggerThankYou } = useCartFeedback();
   const [loading, setLoading] = useState(false);
+  const [elementReady, setElementReady] = useState(false);
+  const [loadingTimeout, setLoadingTimeout] = useState(false);
+
+  // Timeout for PaymentElement loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!elementReady) {
+        setLoadingTimeout(true);
+      }
+    }, 15000);
+    return () => clearTimeout(timer);
+  }, [elementReady]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -181,17 +194,46 @@ function CardPaymentForm({
     }
   };
 
+  if (loadingTimeout) {
+    return (
+      <div className="text-center p-6 space-y-4">
+        <div className="text-destructive">
+          <Lock className="w-10 h-10 mx-auto mb-2 opacity-50" />
+          <p className="font-medium">Payment form failed to load</p>
+          <p className="text-sm text-muted-foreground mt-1">
+            Please refresh the page or try again later.
+          </p>
+        </div>
+        <Button variant="outline" onClick={() => window.location.reload()}>
+          <RefreshCw className="w-4 h-4 mr-2" />
+          Refresh Page
+        </Button>
+      </div>
+    );
+  }
+
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="border-2 border-border rounded-xl p-4 bg-card">
-        <PaymentElement options={{
-          layout: 'tabs',
-        }} />
+      <div className="border-2 border-border rounded-xl p-4 bg-card min-h-[200px]">
+        {!elementReady && (
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="w-6 h-6 animate-spin text-primary" />
+            <span className="ml-2 text-sm text-muted-foreground">Loading payment form...</span>
+          </div>
+        )}
+        <div className={elementReady ? 'block' : 'hidden'}>
+          <PaymentElement 
+            onReady={() => setElementReady(true)}
+            options={{
+              layout: 'tabs',
+            }} 
+          />
+        </div>
       </div>
 
       <Button 
         type="submit" 
-        disabled={!stripe || loading} 
+        disabled={!stripe || loading || !elementReady} 
         className="w-full h-12 text-base font-semibold" 
         size="lg"
       >
@@ -366,24 +408,32 @@ function CardPaymentWrapper({
             <span>Paying as <strong>{formData.email}</strong></span>
           </div>
 
-          <Elements 
-            stripe={stripePromise} 
-            options={{
-              clientSecret,
-              appearance: {
-                theme: 'stripe',
-                variables: {
-                  borderRadius: '8px',
+          {stripePromise ? (
+            <Elements 
+              stripe={stripePromise} 
+              options={{
+                clientSecret,
+                appearance: {
+                  theme: 'stripe',
+                  variables: {
+                    borderRadius: '8px',
+                  }
                 }
-              }
-            }}
-          >
-            <CardPaymentForm 
-              onSuccess={onSuccess} 
-              clientSecret={clientSecret}
-              isVeteran={isVeteran}
-            />
-          </Elements>
+              }}
+            >
+              <CardPaymentForm 
+                onSuccess={onSuccess} 
+                clientSecret={clientSecret}
+                isVeteran={isVeteran}
+              />
+            </Elements>
+          ) : (
+            <div className="text-center p-6 space-y-3">
+              <Lock className="w-10 h-10 mx-auto text-destructive opacity-50" />
+              <p className="text-destructive font-medium">Payment system unavailable</p>
+              <p className="text-sm text-muted-foreground">Please contact support for assistance.</p>
+            </div>
+          )}
         </motion.div>
       )}
     </AnimatePresence>
