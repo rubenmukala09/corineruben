@@ -274,7 +274,7 @@ function Resources() {
             {[
               { value: "20+", label: "Digital Guides", icon: BookOpen },
               { value: "15+", label: "Security Products", icon: Shield },
-              { value: "500+", label: "Happy Customers", icon: Heart },
+              { value: "100+", label: "Happy Customers", icon: Heart },
               { value: "24/7", label: "Support Available", icon: Headphones },
             ].map((stat, index) => (
               <div key={index} className="flex flex-col items-center gap-1">

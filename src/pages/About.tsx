@@ -375,48 +375,7 @@ function About() {
       {/* Inspirational Verses */}
       <InspirationalVerses />
 
-      {/* Our Team / Teachers Section */}
-      <section className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <ScrollReveal>
-            <div className="text-center mb-10">
-              <Badge className="mb-4 text-base md:text-lg px-4 md:px-6 py-2" variant="secondary">
-                Our Team
-              </Badge>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-                Meet Our Expert Teachers
-              </h2>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-                Experienced professionals dedicated to keeping you safe
-              </p>
-            </div>
-          </ScrollReveal>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
-            {[
-              { name: "Michael Chen", role: "Senior Security Trainer", specialty: "AI & Deepfake Detection", bio: "Former FBI cyber consultant with 15 years protecting families from digital threats.", image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face" },
-              { name: "Sarah Williams", role: "Family Safety Specialist", specialty: "Elder Protection", bio: "Dedicated to protecting seniors after her grandmother lost savings to scammers.", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop&crop=face" },
-              { name: "David Johnson", role: "Cyber Analyst", specialty: "Phishing & Fraud", bio: "Certified ethical hacker who now teaches families to spot scam tactics.", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face" },
-              { name: "Emily Martinez", role: "Community Educator", specialty: "Digital Literacy", bio: "Former teacher who makes cybersecurity simple and accessible for everyone.", image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face" },
-              { name: "James Thompson", role: "Business Security Advisor", specialty: "Corporate Training", bio: "Enterprise security expert helping businesses protect their employees.", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face" },
-            ].map((teacher, index) => (
-              <ScrollReveal key={teacher.name} delay={index * 100}>
-                <Card className="p-5 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-border/50 h-full">
-                  <img 
-                    src={teacher.image} 
-                    alt={teacher.name}
-                    className="w-20 h-20 mx-auto mb-3 rounded-full object-cover border-2 border-primary/20"
-                  />
-                  <h3 className="text-base font-bold mb-1">{teacher.name}</h3>
-                  <p className="text-xs text-primary font-medium mb-1">{teacher.role}</p>
-                  <p className="text-xs text-muted-foreground mb-2">{teacher.specialty}</p>
-                  <p className="text-[10px] text-muted-foreground/80 leading-relaxed">{teacher.bio}</p>
-                </Card>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Team section - real team profiles to be added via admin */}
 
       {/* Achievements Showcase */}
       <AchievementsShowcase />

@@ -1671,7 +1671,7 @@ function LearnAndTrain() {
         <div className="container mx-auto px-4 relative z-10 text-center">
           <ScrollReveal>
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-4" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.6), 0 0 15px rgba(0,0,0,0.4)' }}>Sleep Better Tonight</h2>
-            <p className="text-xl text-white mb-8 max-w-2xl mx-auto" style={{ textShadow: '1px 1px 5px rgba(0,0,0,0.6), 0 0 10px rgba(0,0,0,0.4)' }}>Join 500+ families who trust ScamShield</p>
+            <p className="text-xl text-white mb-8 max-w-2xl mx-auto" style={{ textShadow: '1px 1px 5px rgba(0,0,0,0.6), 0 0 10px rgba(0,0,0,0.4)' }}>Join 100+ families who trust ScamShield</p>
             <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center">
               <Button 
                 onClick={() => {

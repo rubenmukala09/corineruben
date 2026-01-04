@@ -42,7 +42,7 @@ const whyUsPoints = [
   "Enterprise AI technology made simple",
   "Personal support, not chatbots",
   "60-day money-back guarantee",
-  "Trusted by 500+ Ohio families",
+  "Trusted by 100+ Ohio families",
 ];
 
 export const CompanyIntroSection = () => {

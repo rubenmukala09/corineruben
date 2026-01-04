@@ -376,7 +376,7 @@ function Auth() {
             Terms
           </Link>
           <span className="text-slate-300">•</span>
-          <span>© 2026 InVision Network</span>
+          <span>© {new Date().getFullYear()} InVision Network</span>
         </div>
       </div>
     </div>
