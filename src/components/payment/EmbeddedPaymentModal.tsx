@@ -69,9 +69,6 @@ function PaymentForm({
   onSuccess,
   onClose,
 }: PaymentFormProps) {
-  const stripe = useStripe();
-  const elements = useElements();
-
   const [step, setStep] = useState<"info" | "payment" | "success">("info");
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -141,46 +138,10 @@ function PaymentForm({
     }
   };
 
-  const handlePaymentSubmit = async () => {
-    if (!stripe || !elements || !clientSecret) {
-      return;
-    }
-
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const { error: submitError } = await elements.submit();
-      if (submitError) {
-        throw submitError;
-      }
-
-      const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
-        elements,
-        clientSecret,
-        confirmParams: {
-          return_url: `${window.location.origin}/payment-success`,
-          receipt_email: email,
-        },
-        redirect: "if_required",
-      });
-
-      if (confirmError) {
-        throw confirmError;
-      }
-
-      if (paymentIntent?.status === "succeeded" || paymentIntent?.status === "processing") {
-        setStep("success");
-        toast.success("Payment successful!");
-        onSuccess?.();
-      }
-    } catch (err: any) {
-      console.error("Payment error:", err);
-      setError(err.message || "Payment failed");
-      toast.error(err.message || "Payment failed. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
+  const handlePaymentSuccess = () => {
+    setStep("success");
+    toast.success("Payment successful!");
+    onSuccess?.();
   };
 
   return (
@@ -386,19 +347,27 @@ function PaymentForm({
 
             {/* Stripe Payment Element */}
             <div className="bg-background rounded-xl p-4 border">
-              <PaymentElement
+              <Elements
+                stripe={stripePromise}
                 options={{
-                  layout: "tabs",
-                  paymentMethodOrder: ["card", "apple_pay", "google_pay"],
+                  clientSecret,
+                  appearance: {
+                    theme: "stripe",
+                    variables: {
+                      borderRadius: "8px",
+                      colorPrimary: "#6D28D9",
+                    },
+                  },
                 }}
-              />
+              >
+                <PaymentElementWrapper
+                  onSuccess={handlePaymentSuccess}
+                  amount={finalAmount / 100}
+                  email={email}
+                  onBack={() => setStep("info")}
+                />
+              </Elements>
             </div>
-
-            {error && (
-              <div className="p-3 bg-destructive/10 text-destructive rounded-lg text-sm">
-                {error}
-              </div>
-            )}
 
             {/* Trust Indicators */}
             <div className="flex items-center justify-center gap-4 text-xs text-muted-foreground">
@@ -410,36 +379,6 @@ function PaymentForm({
                 <CreditCard className="w-3 h-3" />
                 <span>256-bit Encryption</span>
               </div>
-            </div>
-
-            <div className="flex gap-3">
-              <Button
-                variant="outline"
-                onClick={() => setStep("info")}
-                disabled={isLoading}
-                className="flex-1"
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back
-              </Button>
-              <Button
-                onClick={handlePaymentSubmit}
-                disabled={isLoading || !stripe || !elements}
-                className="flex-1"
-                size="lg"
-              >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Processing...
-                  </>
-                ) : (
-                  <>
-                    <Lock className="w-4 h-4 mr-2" />
-                    Pay ${(finalAmount / 100).toFixed(2)}
-                  </>
-                )}
-              </Button>
             </div>
           </motion.div>
         )}
@@ -482,6 +421,94 @@ function PaymentForm({
           </motion.div>
         )}
       </AnimatePresence>
+    </div>
+  );
+}
+
+// Wrapper component to use hooks inside Elements provider
+function PaymentElementWrapper({
+  onSuccess,
+  amount,
+  email,
+  onBack,
+}: {
+  onSuccess: () => void;
+  amount: number;
+  email: string;
+  onBack: () => void;
+}) {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async () => {
+    if (!stripe || !elements) return;
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const { error: submitError } = await elements.submit();
+      if (submitError) throw submitError;
+
+      const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/payment-success`,
+          receipt_email: email,
+        },
+        redirect: "if_required",
+      });
+
+      if (confirmError) throw confirmError;
+
+      if (paymentIntent?.status === "succeeded" || paymentIntent?.status === "processing") {
+        onSuccess();
+      }
+    } catch (err: any) {
+      console.error("Payment error:", err);
+      setError(err.message || "Payment failed");
+      toast.error(err.message || "Payment failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      <PaymentElement
+        options={{
+          layout: "tabs",
+          paymentMethodOrder: ["card", "apple_pay", "google_pay"],
+        }}
+      />
+
+      {error && (
+        <div className="p-3 bg-destructive/10 text-destructive rounded-lg text-sm">
+          {error}
+        </div>
+      )}
+
+      <div className="flex gap-3">
+        <Button variant="outline" onClick={onBack} disabled={isLoading} className="flex-1">
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Back
+        </Button>
+        <Button onClick={handleSubmit} disabled={isLoading || !stripe || !elements} className="flex-1" size="lg">
+          {isLoading ? (
+            <>
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              Processing...
+            </>
+          ) : (
+            <>
+              <Lock className="w-4 h-4 mr-2" />
+              Pay ${amount.toFixed(2)}
+            </>
+          )}
+        </Button>
+      </div>
     </div>
   );
 }

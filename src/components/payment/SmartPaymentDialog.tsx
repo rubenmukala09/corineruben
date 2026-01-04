@@ -60,9 +60,6 @@ interface PaymentFormProps {
 }
 
 function SmartPaymentForm({ items, onSuccess, onClose }: PaymentFormProps) {
-  const stripe = useStripe();
-  const elements = useElements();
-
   const [step, setStep] = useState<"info" | "payment" | "success">("info");
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -153,46 +150,10 @@ function SmartPaymentForm({ items, onSuccess, onClose }: PaymentFormProps) {
     }
   };
 
-  const handlePaymentSubmit = async () => {
-    if (!stripe || !elements || !clientSecret) {
-      return;
-    }
-
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const { error: submitError } = await elements.submit();
-      if (submitError) {
-        throw submitError;
-      }
-
-      const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
-        elements,
-        clientSecret,
-        confirmParams: {
-          return_url: `${window.location.origin}/payment-success`,
-          receipt_email: email,
-        },
-        redirect: "if_required",
-      });
-
-      if (confirmError) {
-        throw confirmError;
-      }
-
-      if (paymentIntent?.status === "succeeded" || paymentIntent?.status === "processing") {
-        setStep("success");
-        toast.success("Payment successful!");
-        onSuccess?.();
-      }
-    } catch (err: any) {
-      console.error("Payment error:", err);
-      setError(err.message || "Payment failed");
-      toast.error(err.message || "Payment failed. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
+  const handlePaymentSuccess = () => {
+    setStep("success");
+    toast.success("Payment successful!");
+    onSuccess?.();
   };
 
   const isDigital = items.some((item) => item.isDigital);
@@ -390,10 +351,9 @@ function SmartPaymentForm({ items, onSuccess, onClose }: PaymentFormProps) {
                 }}
               >
                 <PaymentElementWrapper
-                  onSubmit={handlePaymentSubmit}
-                  isLoading={isLoading}
+                  onSuccess={handlePaymentSuccess}
                   amount={finalAmount}
-                  error={error}
+                  email={email}
                   onBack={() => setStep("info")}
                 />
               </Elements>
@@ -458,20 +418,53 @@ function SmartPaymentForm({ items, onSuccess, onClose }: PaymentFormProps) {
 
 // Wrapper component to use hooks inside Elements provider
 function PaymentElementWrapper({
-  onSubmit,
-  isLoading,
+  onSuccess,
   amount,
-  error,
+  email,
   onBack,
 }: {
-  onSubmit: () => void;
-  isLoading: boolean;
+  onSuccess: () => void;
   amount: number;
-  error: string | null;
+  email: string;
   onBack: () => void;
 }) {
   const stripe = useStripe();
   const elements = useElements();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async () => {
+    if (!stripe || !elements) return;
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const { error: submitError } = await elements.submit();
+      if (submitError) throw submitError;
+
+      const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/payment-success`,
+          receipt_email: email,
+        },
+        redirect: "if_required",
+      });
+
+      if (confirmError) throw confirmError;
+
+      if (paymentIntent?.status === "succeeded" || paymentIntent?.status === "processing") {
+        onSuccess();
+      }
+    } catch (err: any) {
+      console.error("Payment error:", err);
+      setError(err.message || "Payment failed");
+      toast.error(err.message || "Payment failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="space-y-4">
@@ -494,7 +487,7 @@ function PaymentElementWrapper({
           Back
         </Button>
         <Button
-          onClick={onSubmit}
+          onClick={handleSubmit}
           disabled={isLoading || !stripe || !elements}
           className="flex-1"
           size="lg"
