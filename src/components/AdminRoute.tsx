@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useUserRole } from "@/hooks/useUserRole";
 import { Loader2, ShieldAlert } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -13,6 +13,7 @@ interface AdminRouteProps {
 export const AdminRoute = ({ children, requiredPermission }: AdminRouteProps) => {
   const { user, roleConfig, loading, hasPermission, isAdmin } = useUserRole();
   const [permissionDenied, setPermissionDenied] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!loading && user && roleConfig && requiredPermission) {
@@ -48,7 +49,7 @@ export const AdminRoute = ({ children, requiredPermission }: AdminRouteProps) =>
                 Your account does not have permission to access the admin portal.
                 Please contact the administrator if you believe this is an error.
               </p>
-              <Button onClick={() => window.location.href = '/'} variant="outline">
+              <Button onClick={() => navigate('/')} variant="outline">
                 Return to Homepage
               </Button>
             </div>
@@ -70,7 +71,7 @@ export const AdminRoute = ({ children, requiredPermission }: AdminRouteProps) =>
                 You do not have permission to access this page.
                 Your role: <strong>{roleConfig.displayName}</strong>
               </p>
-              <Button onClick={() => window.history.back()} variant="outline">
+              <Button onClick={() => navigate(-1)} variant="outline">
                 Go Back
               </Button>
             </div>

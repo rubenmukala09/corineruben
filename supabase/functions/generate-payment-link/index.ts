@@ -71,7 +71,7 @@ serve(async (req) => {
       after_completion: {
         type: 'redirect',
         redirect: {
-          url: `${req.headers.get("origin") || 'https://invictusmaximus.com'}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+          url: `${req.headers.get("origin") || 'https://invisionnetwork.org'}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
         },
       },
     });

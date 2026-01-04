@@ -218,9 +218,9 @@ function Contact() {
                         variant="outline" 
                         className="w-full group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all duration-300" 
                         size="sm"
-                        onClick={() => method.action.startsWith('#') ? null : window.location.href = method.action}
+                        asChild
                       >
-                        {method.actionText}
+                        <a href={method.action}>{method.actionText}</a>
                       </Button>
                     </div>
                   </div>

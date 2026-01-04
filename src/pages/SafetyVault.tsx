@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
@@ -13,6 +13,7 @@ import eldersHero3d1 from "@/assets/elders-hero-3d-1.jpg";
 import teamDiverse1 from "@/assets/team-diverse-1.jpg";
 
 function SafetyVault() {
+  const navigate = useNavigate();
   const safetyVaultHeroImages = [
     { src: heroContactNew, alt: "Secure your family's information" },
     { src: heroScamshieldNew, alt: "Advanced scam protection shield" },
@@ -268,9 +269,7 @@ function SafetyVault() {
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
-                onClick={() => {
-                  window.location.href = '/training#pricing';
-                }}
+                onClick={() => navigate('/training#pricing')}
                 variant="default" 
                 size="lg" 
                 className="flex-1"
