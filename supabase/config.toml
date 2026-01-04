@@ -86,3 +86,6 @@ verify_jwt = false
 
 [functions.get-stripe-key]
 verify_jwt = false
+
+[functions.create-training-payment]
+verify_jwt = false

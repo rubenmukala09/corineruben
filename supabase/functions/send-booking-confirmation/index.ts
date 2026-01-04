@@ -19,6 +19,7 @@ interface BookingConfirmationRequest {
   requestNumber: string;
   preferredDate?: string;
   serviceType?: string;
+  isFreeInquiry?: boolean;
 }
 
 serve(async (req) => {
@@ -35,12 +36,16 @@ serve(async (req) => {
       serviceName,
       requestNumber,
       preferredDate,
-      serviceType
+      serviceType,
+      isFreeInquiry = true
     }: BookingConfirmationRequest = await req.json();
 
-    logStep("Request data", { email, name, serviceName, requestNumber });
+    logStep("Request data", { email, name, serviceName, requestNumber, isFreeInquiry });
 
-    // Send confirmation email to customer
+    // This function is now for FREE inquiries/consultations only
+    // Paid bookings go through complete-payment function
+
+    // Send confirmation email to customer with trust messaging
     const customerEmailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -50,29 +55,38 @@ serve(async (req) => {
       body: JSON.stringify({
         from: "InVision Network <onboarding@resend.dev>",
         to: [email],
-        subject: `Booking Request Received - ${serviceName} | InVision Network`,
+        subject: `Inquiry Received - ${serviceName} | InVision Network`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h1 style="color: #6D28D9;">Booking Request Received! ✓</h1>
+            <div style="text-align: center; padding: 20px 0;">
+              <h1 style="color: #6D28D9; margin-bottom: 10px;">Thank You for Trusting InVision Network! 💜</h1>
+            </div>
             
-            <p>Hi ${name},</p>
+            <p style="font-size: 16px;">Hi ${name},</p>
             
-            <p>Thank you for your booking request. We've received your inquiry and our team will contact you within <strong>24 hours</strong>.</p>
+            <p>Thank you for reaching out! We've received your inquiry and our team will contact you within <strong>24 hours</strong>.</p>
             
-            <div style="background: linear-gradient(135deg, #ede9fe, #ddd6fe); padding: 20px; border-radius: 12px; margin: 20px 0;">
-              <h2 style="color: #6D28D9; margin-top: 0;">Booking Details</h2>
+            <div style="background: linear-gradient(135deg, #ede9fe, #ddd6fe); padding: 25px; border-radius: 12px; margin: 25px 0;">
+              <h2 style="color: #6D28D9; margin-top: 0;">Inquiry Details</h2>
               <p><strong>Reference Number:</strong> ${requestNumber}</p>
               <p><strong>Service:</strong> ${serviceName}</p>
               ${preferredDate ? `<p><strong>Preferred Date:</strong> ${preferredDate}</p>` : ''}
+              <p><strong>Status:</strong> Pending Review</p>
             </div>
             
-            <h3>What Happens Next?</h3>
-            <ol>
+            <h3 style="color: #6D28D9;">What Happens Next?</h3>
+            <ol style="padding-left: 20px; line-height: 1.8;">
               <li>Our team reviews your request</li>
-              <li>We'll contact you to confirm availability</li>
-              <li>Finalize your appointment details</li>
-              <li>Receive your calendar invite</li>
+              <li>We'll contact you to discuss your needs</li>
+              <li>Receive a customized quote or plan</li>
+              <li>Proceed with payment when ready</li>
             </ol>
+            
+            <div style="background: #faf5ff; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e9d5ff;">
+              <p style="margin: 0; font-size: 14px;">
+                <strong>🔒 Your trust is important to us.</strong> We never ask for passwords, OTPs, or banking information via email or phone. All payments are processed securely through our website.
+              </p>
+            </div>
             
             <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin: 20px 0;">
               <p style="margin: 0; font-size: 14px;">
@@ -104,9 +118,12 @@ serve(async (req) => {
       body: JSON.stringify({
         from: "InVision Network <onboarding@resend.dev>",
         to: ["hello@invisionnetwork.org"],
-        subject: `New Booking Request - ${requestNumber}`,
+        subject: `📋 New Inquiry - ${requestNumber}`,
         html: `
-          <h1>New Booking Request</h1>
+          <h1>New Service Inquiry</h1>
+          <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0; border: 1px solid #fcd34d;">
+            <p style="margin: 0;"><strong>⏳ PENDING - No payment yet</strong></p>
+          </div>
           <p><strong>Reference:</strong> ${requestNumber}</p>
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Email:</strong> ${email}</p>
@@ -114,7 +131,7 @@ serve(async (req) => {
           ${serviceType ? `<p><strong>Type:</strong> ${serviceType}</p>` : ''}
           ${preferredDate ? `<p><strong>Preferred Date:</strong> ${preferredDate}</p>` : ''}
           <hr>
-          <p><small>Action required: Review and respond within 24 hours</small></p>
+          <p><strong>Action Required:</strong> Review and respond within 24 hours to discuss pricing and convert to paid booking.</p>
         `,
       }),
     });

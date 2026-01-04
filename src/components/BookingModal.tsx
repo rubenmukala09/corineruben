@@ -167,8 +167,8 @@ export const BookingModal = ({
       }
 
       toast({
-        title: "🎉 Booking Request Submitted!",
-        description: `Reference #${requestNumber}. Check your email for confirmation.`,
+        title: "✓ Inquiry Submitted Successfully!",
+        description: `Reference #${requestNumber}. We'll contact you within 24 hours.`,
       });
 
       onOpenChange(false);
@@ -467,7 +467,7 @@ export const BookingModal = ({
                     </div>
                   </div>
                   <p className="text-xs text-muted-foreground mt-2">
-                    💳 Payment collected after consultation confirmation
+                    📋 This is a free consultation request — no payment required now
                   </p>
                 </div>
               )}
@@ -513,7 +513,7 @@ export const BookingModal = ({
                 ) : (
                   <>
                     <CheckCircle className="mr-2 h-5 w-5" />
-                    Request Booking
+                    Submit Inquiry
                   </>
                 )}
               </Button>

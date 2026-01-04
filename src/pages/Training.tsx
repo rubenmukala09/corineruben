@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { BookingModal } from "@/components/BookingModal";
 import { EmbeddedPaymentModal } from "@/components/payment/EmbeddedPaymentModal";
+import { TrainingPaymentModal } from "@/components/TrainingPaymentModal";
 import Hero from "@/components/Hero";
 import TrustBar from "@/components/TrustBar";
 import CTASection from "@/components/CTASection";
@@ -215,7 +216,7 @@ const TrainingCard = ({ plan, index, onBook }: { plan: any; index: number; onBoo
               size="default" 
               className={`w-full mt-auto ${plan.popular ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : ''}`}
             >
-              Book Now →
+              Book & Pay Now →
             </Button>
           </div>
         </Card>
@@ -226,6 +227,7 @@ const TrainingCard = ({ plan, index, onBook }: { plan: any; index: number; onBoo
 
 function LearnAndTrain() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [trainingPaymentOpen, setTrainingPaymentOpen] = useState(false);
   const [subscriptionDialogOpen, setSubscriptionDialogOpen] = useState(false);
   const [embeddedPaymentOpen, setEmbeddedPaymentOpen] = useState(false);
   const [embeddedPaymentConfig, setEmbeddedPaymentConfig] = useState<{
@@ -249,6 +251,8 @@ function LearnAndTrain() {
     name: string;
     tier?: string;
     price?: number;
+    features?: string[];
+    duration?: string;
   } | null>(null);
   const [trainingTestimonials, setTrainingTestimonials] = useState<any[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string } | null>(null);
@@ -700,9 +704,11 @@ function LearnAndTrain() {
                     type: 'training',
                     name: p.name,
                     tier: p.type,
-                    price: p.priceNum
+                    price: p.priceNum,
+                    features: p.features,
+                    duration: p.duration
                   });
-                  setModalOpen(true);
+                  setTrainingPaymentOpen(true);
                 }}
               />
             ))}
@@ -1400,15 +1406,17 @@ function LearnAndTrain() {
                           type: 'training',
                           name: plan.name,
                           tier: plan.type,
-                          price: plan.priceNum
+                          price: plan.priceNum,
+                          features: plan.features,
+                          duration: plan.duration
                         });
-                        setModalOpen(true);
+                        setTrainingPaymentOpen(true);
                       }}
                       variant={plan.popular ? "default" : "outline"} 
                       size="default" 
                       className={`w-full mt-auto ${plan.popular ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : ''}`}
                     >
-                      Book Now →
+                      Book & Pay Now →
                     </Button>
                   </div>
                   </Card>
@@ -1419,9 +1427,9 @@ function LearnAndTrain() {
           
           <div className="text-center mt-10">
             <div className="inline-flex items-center gap-3 bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl px-6 py-3">
-              <QrCode className="w-5 h-5 text-primary" />
+              <Lock className="w-5 h-5 text-primary" />
               <p className="text-sm text-muted-foreground">
-                💳 All payments secured with Stripe • QR code payment available • Pay after confirmation
+                💳 Secure payment required to confirm booking • 10% veteran discount available
               </p>
             </div>
           </div>
@@ -1705,7 +1713,25 @@ function LearnAndTrain() {
         />
       )}
       
-      {selectedService && (
+      {/* Training Payment Modal - Pay First Flow */}
+      {selectedService && selectedService.type === 'training' && (
+        <TrainingPaymentModal
+          open={trainingPaymentOpen}
+          onOpenChange={setTrainingPaymentOpen}
+          serviceName={selectedService.name}
+          serviceType={selectedService.type}
+          serviceTier={selectedService.tier}
+          basePrice={selectedService.price || 0}
+          features={selectedService.features}
+          duration={selectedService.duration}
+          onSuccess={() => {
+            trackConversion('training_booking', selectedService.price || 0);
+          }}
+        />
+      )}
+
+      {/* BookingModal kept for free consultations/inquiries only */}
+      {selectedService && selectedService.type !== 'training' && (
         <BookingModal
           open={modalOpen}
           onOpenChange={setModalOpen}
