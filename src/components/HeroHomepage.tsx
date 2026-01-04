@@ -358,7 +358,7 @@ export const HeroHomepage = () => {
             }}>
                 {[{
                 icon: Globe,
-                value: "500+",
+                value: "100+",
                 label: "Protected"
               }, {
                 icon: Zap,

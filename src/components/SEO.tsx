@@ -117,7 +117,7 @@ function updateStructuredData(data: Record<string, any>) {
 export const PAGE_SEO = {
   home: {
     title: "",
-    description: "Protect your family from AI-powered scams. Expert training, deepfake detection, and 24/7 scam analysis. Trusted by 500+ families. Based in Dayton, OH.",
+    description: "Protect your family from AI-powered scams. Expert training, deepfake detection, and 24/7 scam analysis. Trusted by 100+ families. Based in Dayton, OH.",
     structuredData: {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",

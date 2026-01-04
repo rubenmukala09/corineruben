@@ -519,8 +519,8 @@ function Contact() {
                   <p className="text-sm text-muted-foreground mb-4">Real people ready to help</p>
                   <div className="space-y-3">
                     {[
-                      { initials: "JD", name: "John Doe", role: "Support Lead", color: "primary" },
-                      { initials: "SM", name: "Sarah Miller", role: "Technical Support", color: "accent" }
+                      { initials: "RN", name: "Ruben N.", role: "Support Lead", color: "primary" },
+                      { initials: "CM", name: "Corine M.", role: "Customer Care", color: "accent" }
                     ].map((member, i) => (
                       <div 
                         key={i}

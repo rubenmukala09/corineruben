@@ -148,7 +148,7 @@ export function SecurityBadges() {
       </div>
       <div className="flex items-center gap-1.5 px-3 py-1.5 bg-accent/5 border border-accent/20 rounded-full text-xs">
         <Users className="w-3.5 h-3.5 text-accent" />
-        <span className="text-accent font-medium">500+ Protected</span>
+        <span className="text-accent font-medium">100+ Protected</span>
       </div>
     </div>
   );

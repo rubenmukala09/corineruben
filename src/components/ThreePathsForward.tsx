@@ -34,7 +34,7 @@ const paths: PathConfig[] = [
     link: '/training#scamshield',
     basePrice: 39,
     highlights: ["24/7 Support", "AI-Powered"],
-    trustBadge: "500+ Families Trust Us"
+    trustBadge: "100+ Families Trust Us"
   },
   {
     id: 2,

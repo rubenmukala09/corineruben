@@ -296,6 +296,6 @@ Found a security issue? Please report responsibly:
 
 ---
 
-**Last Updated**: 2024-01-28  
+**Last Updated**: 2025-01-04  
 **Review Cycle**: Quarterly  
-**Next Review**: 2024-04-28
+**Next Review**: 2025-04-04
