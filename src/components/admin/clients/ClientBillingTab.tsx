@@ -13,12 +13,8 @@ interface ClientBillingTabProps {
 export function ClientBillingTab({ clientId }: ClientBillingTabProps) {
   const [statusFilter, setStatusFilter] = useState("all");
 
-  const invoices = [
-    { id: "INV-2024-001", date: "Jan 15, 2025", description: "AI Receptionist - Monthly", amount: 149, status: "paid" },
-    { id: "INV-2024-002", date: "Dec 15, 2024", description: "Website Hosting", amount: 99, status: "paid" },
-    { id: "INV-2024-003", date: "Nov 15, 2024", description: "AI Insurance - Monthly", amount: 799, status: "paid" },
-    { id: "INV-2024-004", date: "Feb 15, 2025", description: "AI Receptionist - Monthly", amount: 149, status: "pending" },
-  ];
+  // Placeholder - will be fetched from Stripe/database
+  const invoices: Array<{ id: string; date: string; description: string; amount: number; status: string }> = [];
 
   const filteredInvoices = statusFilter === "all" 
     ? invoices 
@@ -103,11 +99,11 @@ export function ClientBillingTab({ clientId }: ClientBillingTabProps) {
         <CardContent className="space-y-3">
           <div>
             <p className="text-sm text-muted-foreground">Billing Email</p>
-            <p className="font-medium">billing@techcorp.com</p>
+            <p className="font-medium text-muted-foreground">Not configured</p>
           </div>
           <div>
             <p className="text-sm text-muted-foreground">Billing Address</p>
-            <p className="font-medium">123 Tech Street, San Francisco, CA 94105</p>
+            <p className="font-medium text-muted-foreground">Not configured</p>
           </div>
         </CardContent>
       </Card>

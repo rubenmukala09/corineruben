@@ -143,7 +143,7 @@ const UserManagement = () => {
                   id="name"
                   value={newUser.name}
                   onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
-                  placeholder="John Doe"
+                  placeholder="Full Name"
                 />
               </div>
               <div className="space-y-2">
@@ -153,7 +153,7 @@ const UserManagement = () => {
                   type="email"
                   value={newUser.email}
                   onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-                  placeholder="john@invisionnetwork.org"
+                  placeholder="name@invisionnetwork.org"
                 />
               </div>
               <div className="space-y-2">

@@ -59,9 +59,8 @@ const AVAILABLE_CATEGORIES = [
 ];
 
 const AVAILABLE_AUTHORS = [
-  { id: "1", name: "John Smith", avatar: "/placeholder.svg", role: "Editor" },
-  { id: "2", name: "Sarah Johnson", avatar: "/placeholder.svg", role: "Author" },
-  { id: "3", name: "Mike Davis", avatar: "/placeholder.svg", role: "Admin" },
+  { id: "1", name: "Ruben Nkulu", avatar: "/placeholder.svg", role: "Admin" },
+  { id: "2", name: "Corine Miller", avatar: "/placeholder.svg", role: "Editor" },
 ];
 
 export function ArticlePublishingSidebar({

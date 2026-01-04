@@ -16,44 +16,16 @@ export function ClientMessagesTab({ clientId }: ClientMessagesTabProps) {
   const [messageFilter, setMessageFilter] = useState("all");
   const [messageText, setMessageText] = useState("");
 
-  const messages = [
-    {
-      id: 1,
-      from: "client",
-      type: "direct",
-      content: "Hi, I have a question about the AI Receptionist setup.",
-      timestamp: "2 hours ago",
-      read: true,
-      starred: false,
-    },
-    {
-      id: 2,
-      from: "admin",
-      type: "direct",
-      content: "Of course! I'd be happy to help. What would you like to know?",
-      timestamp: "1 hour ago",
-      read: true,
-      starred: false,
-    },
-    {
-      id: 3,
-      from: "client",
-      type: "support",
-      content: "Can we change the greeting message to be more specific to our business hours?",
-      timestamp: "1 hour ago",
-      read: true,
-      starred: true,
-    },
-    {
-      id: 4,
-      from: "system",
-      type: "notification",
-      content: "Invoice #2045 has been paid - $149.00",
-      timestamp: "Yesterday",
-      read: true,
-      starred: false,
-    },
-  ];
+  // Placeholder - will be fetched from database
+  const messages: Array<{
+    id: number;
+    from: string;
+    type: string;
+    content: string;
+    timestamp: string;
+    read: boolean;
+    starred: boolean;
+  }> = [];
 
   const templates = [
     { value: "activation", label: "Service Activation" },

@@ -10,40 +10,19 @@ import { Badge } from "@/components/ui/badge";
 import { Search, Plus, Download, Eye, Mail, Pencil } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-const mockClients = [
-  {
-    id: 1,
-    logo: "",
-    companyName: "TechCorp Solutions",
-    contactName: "John Smith",
-    contactEmail: "john@techcorp.com",
-    services: ["AI Receptionist", "Website", "AI Insurance"],
-    status: "active",
-    mrr: 597,
-    joinDate: "3 months ago",
-  },
-  {
-    id: 2,
-    logo: "",
-    companyName: "Healthcare Plus",
-    contactName: "Sarah Johnson",
-    contactEmail: "sarah@healthcareplus.com",
-    services: ["AI Receptionist"],
-    status: "trial",
-    mrr: 149,
-    joinDate: "2 weeks ago",
-  },
-  {
-    id: 3,
-    logo: "",
-    companyName: "Legal Associates",
-    contactName: "Michael Brown",
-    contactEmail: "michael@legalassoc.com",
-    services: ["Website", "Training"],
-    status: "inactive",
-    mrr: 0,
-    joinDate: "6 months ago",
-  },
+// Placeholder data - will be replaced with database query
+const mockClients: Array<{
+  id: number;
+  logo: string;
+  companyName: string;
+  contactName: string;
+  contactEmail: string;
+  services: string[];
+  status: string;
+  mrr: number;
+  joinDate: string;
+}> = [
+  // No clients yet - data will come from database
 ];
 
 export default function BusinessClients() {

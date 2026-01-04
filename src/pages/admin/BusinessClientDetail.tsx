@@ -14,27 +14,28 @@ import { ClientMessagesTab } from "@/components/admin/clients/ClientMessagesTab"
 import { ClientPortalAccessTab } from "@/components/admin/clients/ClientPortalAccessTab";
 import { ClientNotesTab } from "@/components/admin/clients/ClientNotesTab";
 
+// Placeholder - will be fetched from database based on ID
 const mockClient = {
   id: 1,
   logo: "",
-  companyName: "TechCorp Solutions",
-  industry: "Healthcare",
-  companySize: "51-200",
-  website: "https://techcorp.com",
-  address: "123 Tech Street\nSan Francisco, CA 94105",
-  contactName: "John Smith",
-  contactTitle: "CEO",
-  contactEmail: "john@techcorp.com",
-  contactPhone: "(555) 123-4567",
+  companyName: "Client Details",
+  industry: "—",
+  companySize: "—",
+  website: "",
+  address: "—",
+  contactName: "—",
+  contactTitle: "—",
+  contactEmail: "—",
+  contactPhone: "—",
   preferredContact: "Email",
   accountId: "#BUS-2024-001",
-  joinDate: "January 15, 2025",
+  joinDate: "—",
   status: "active",
-  lastActivity: "2 hours ago",
+  lastActivity: "—",
   accountManager: "Ruben Nkulu",
-  tags: ["Premium Client", "High Priority"],
-  services: 3,
-  openTickets: 2,
+  tags: [],
+  services: 0,
+  openTickets: 0,
   unpaidInvoices: 0,
 };
 

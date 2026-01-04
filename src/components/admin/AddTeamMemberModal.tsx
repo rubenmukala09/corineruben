@@ -428,7 +428,7 @@ export function AddTeamMemberModal({
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, name: e.target.value }))
                   }
-                  placeholder="Jane Smith"
+                  placeholder="Full Name"
                   className={errors.name ? "border-destructive" : ""}
                 />
                 {errors.name && (
@@ -530,7 +530,7 @@ export function AddTeamMemberModal({
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, email: e.target.value }))
                   }
-                  placeholder="jane@example.com"
+                  placeholder="name@invisionnetwork.org"
                   className={errors.email ? "border-destructive" : ""}
                 />
                 {errors.email && (

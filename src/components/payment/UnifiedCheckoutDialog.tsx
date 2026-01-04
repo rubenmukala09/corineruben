@@ -72,7 +72,7 @@ const CustomerInfoStep: React.FC<{
           id="name"
           value={customerInfo.name}
           onChange={(e) => setCustomerInfo({ name: e.target.value })}
-          placeholder="John Doe"
+          placeholder="Your full name"
           required
         />
       </div>
@@ -84,7 +84,7 @@ const CustomerInfoStep: React.FC<{
           type="email"
           value={customerInfo.email}
           onChange={(e) => setCustomerInfo({ email: e.target.value })}
-          placeholder="john@example.com"
+          placeholder="you@email.com"
           required
         />
       </div>

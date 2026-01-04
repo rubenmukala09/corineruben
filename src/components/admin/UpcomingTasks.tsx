@@ -138,20 +138,8 @@ export function UpcomingTasks() {
         });
       });
 
-      // Add some mock follow-up tasks (in real app, these would come from a tasks table)
-      const mockFollowups = [
-        {
-          id: "followup-1",
-          type: "followup" as const,
-          icon: Bell,
-          text: "Follow up with high-value client inquiry",
-          date: new Date(),
-          status: "urgent" as TaskStatus,
-          priority: "high" as TaskPriority,
-        },
-      ];
-
-      allTasks.push(...mockFollowups);
+      // Tasks from admin_tasks table are already fetched above
+      // No mock data needed - real tasks come from database
 
       // Sort by date
       const sortedTasks = allTasks.sort((a, b) => a.date.getTime() - b.date.getTime());

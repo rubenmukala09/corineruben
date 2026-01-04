@@ -17,44 +17,19 @@ export function ClientNotesTab({ clientId }: ClientNotesTabProps) {
   const [sortBy, setSortBy] = useState("newest");
   const [filterTag, setFilterTag] = useState("all");
 
-  const notes = [
-    {
-      id: 1,
-      title: "Follow up required",
-      content: "Client mentioned interest in upgrading to Premium plan during last call. Need to send proposal by end of week.",
-      author: "Ruben Nkulu",
-      authorAvatar: "",
-      date: "2 days ago",
-      lastEdited: "Yesterday by Corine Miller",
-      tags: ["Sales Conversation", "Follow Up Required"],
-      importance: "high",
-      pinned: true,
-    },
-    {
-      id: 2,
-      title: "Payment issue resolved",
-      content: "Card declined initially, but client updated payment method. Invoice paid in full.",
-      author: "Corine Miller",
-      authorAvatar: "",
-      date: "1 week ago",
-      lastEdited: null,
-      tags: ["Payment Issue"],
-      importance: "normal",
-      pinned: false,
-    },
-    {
-      id: 3,
-      title: "Positive feedback on AI Receptionist",
-      content: "Client called to say the AI Receptionist has been working perfectly. No complaints, very satisfied with the service.",
-      author: "Ruben Nkulu",
-      authorAvatar: "",
-      date: "2 weeks ago",
-      lastEdited: null,
-      tags: ["Positive Feedback", "General"],
-      importance: "normal",
-      pinned: false,
-    },
-  ];
+  // Placeholder - will be fetched from database
+  const notes: Array<{
+    id: number;
+    title: string;
+    content: string;
+    author: string;
+    authorAvatar: string;
+    date: string;
+    lastEdited: string | null;
+    tags: string[];
+    importance: string;
+    pinned: boolean;
+  }> = [];
 
   const templates = [
     "Called, no answer - follow up tomorrow",

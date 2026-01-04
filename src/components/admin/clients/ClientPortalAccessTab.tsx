@@ -50,7 +50,7 @@ export function ClientPortalAccessTab({ clientId }: ClientPortalAccessTabProps) 
           <CardContent className="space-y-4">
             <div>
               <label className="text-sm font-medium text-muted-foreground">Username/Email</label>
-              <p className="text-base font-medium">john@techcorp.com</p>
+              <p className="text-base font-medium text-muted-foreground">Not configured</p>
             </div>
             <div>
               <label className="text-sm font-medium text-muted-foreground">Password</label>

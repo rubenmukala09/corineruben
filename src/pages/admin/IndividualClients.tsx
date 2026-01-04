@@ -10,43 +10,20 @@ import { Badge } from "@/components/ui/badge";
 import { Search, Plus, Download, Eye, Pencil, Copy, RotateCcw, Ban } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-const mockClients = [
-  {
-    id: 1,
-    name: "Sarah Johnson",
-    email: "sarah.j@email.com",
-    phone: "(555) 234-5678",
-    plan: "family",
-    planPrice: 79,
-    status: "active",
-    accessCode: "abc123def456ghi789jkl012",
-    lastActive: "2 hours ago",
-    joinDate: "3 months ago",
-  },
-  {
-    id: 2,
-    name: "Michael Chen",
-    email: "m.chen@email.com",
-    phone: null,
-    plan: "starter",
-    planPrice: 39,
-    status: "active",
-    accessCode: "xyz789abc456def123ghi890",
-    lastActive: "1 day ago",
-    joinDate: "1 month ago",
-  },
-  {
-    id: 3,
-    name: "Emily Rodriguez",
-    email: "emily.r@email.com",
-    phone: "(555) 876-5432",
-    plan: "premium",
-    planPrice: 129,
-    status: "expired",
-    accessCode: "mno345pqr678stu901vwx234",
-    lastActive: "2 weeks ago",
-    joinDate: "8 months ago",
-  },
+// Placeholder data - will be replaced with database query
+const mockClients: Array<{
+  id: number;
+  name: string;
+  email: string;
+  phone: string | null;
+  plan: string;
+  planPrice: number;
+  status: string;
+  accessCode: string;
+  lastActive: string;
+  joinDate: string;
+}> = [
+  // No clients yet - data will come from database
 ];
 
 export default function IndividualClients() {

@@ -268,10 +268,10 @@ function AdminDashboard() {
               <h2 className="text-xl font-bold mb-6">Team Overview</h2>
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { role: "Threat Analysts", count: 3, icon: Shield, color: "bg-blue-100 text-blue-600" },
-                  { role: "Trainers", count: 2, icon: GraduationCap, color: "bg-green-100 text-green-600" },
-                  { role: "Developers", count: 4, icon: Code, color: "bg-purple-100 text-purple-600" },
-                  { role: "Support", count: 3, icon: Headphones, color: "bg-amber-100 text-amber-600" },
+                  { role: "Analysts", count: 0, icon: Shield, color: "bg-blue-100 text-blue-600" },
+                  { role: "Trainers", count: 0, icon: GraduationCap, color: "bg-green-100 text-green-600" },
+                  { role: "Developers", count: 0, icon: Code, color: "bg-purple-100 text-purple-600" },
+                  { role: "Support", count: 1, icon: Headphones, color: "bg-amber-100 text-amber-600" },
                 ].map((team) => {
                   const Icon = team.icon;
                   return (
