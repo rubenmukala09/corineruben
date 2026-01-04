@@ -662,7 +662,7 @@ function Articles() {
                   </Link>
                 </Button>
                 <Button asChild variant="outline" size="lg">
-                  <Link to="/training#training">View Training Programs</Link>
+                  <Link to="/training#training">View Workshops</Link>
                 </Button>
               </div>
             </Card>

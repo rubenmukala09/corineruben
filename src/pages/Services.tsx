@@ -106,9 +106,9 @@ const Services = () => {
     },
     {
       icon: GraduationCap,
-      title: "Training Programs",
+      title: "Safety Workshops",
       subtitle: "For Education & Community",
-      description: "Empowering workshops and training sessions for seniors, organizations, and community groups.",
+      description: "Empowering workshops and sessions for seniors, organizations, and community groups.",
       features: [
         "Senior safety workshops",
         "Corporate training sessions",

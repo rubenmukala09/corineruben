@@ -20,8 +20,8 @@ const HeroValueCards = () => {
     {
       icon: GraduationCap,
       title: "Learn & Train",
-      description: "Expert-led training programs to recognize and prevent all types of scams",
-      priceRange: "From $89",
+      description: "Expert-led workshops to recognize and prevent all types of scams",
+      priceRange: "From $79",
       href: "/training#training",
       color: "from-accent to-accent/70",
       badge: "10% VETERAN DISCOUNT",

@@ -45,9 +45,9 @@ import {
   Zap,
   Star,
 } from "lucide-react";
-import heroTrainingPro1 from "@/assets/hero-training-pro-1.jpg";
-import heroTrainingPro2 from "@/assets/hero-training-pro-2.jpg";
-import heroTrainingPro3 from "@/assets/hero-training-pro-3.jpg";
+import heroNatureTraining1 from "@/assets/hero-nature-training-1.jpg";
+import heroNatureTraining2 from "@/assets/hero-nature-training-2.jpg";
+import heroNatureTraining3 from "@/assets/hero-nature-training-3.jpg";
 import peacefulMountainDawn from "@/assets/peaceful-mountain-dawn.jpg";
 import TestimonialCard from "@/components/TestimonialCard";
 import { VideoLightbox } from "@/components/VideoLightbox";
@@ -57,7 +57,7 @@ import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
 // Rotating hero headlines for Training page
 const trainingHeadlines = [
   "Learn How to Recognize and Stop Scams",
-  "Professional Training Programs 24/7",
+  "Professional Safety Workshops 24/7",
   "Protection Services for Real-World Safety"
 ];
 
@@ -308,9 +308,9 @@ function LearnAndTrain() {
   };
 
   const trainingHeroImages = [
-    { src: heroTrainingPro1, alt: "Professional cybersecurity training workshop" },
-    { src: heroTrainingPro2, alt: "Seniors learning about online safety" },
-    { src: heroTrainingPro3, alt: "Family digital safety workshop" }
+    { src: heroNatureTraining1, alt: "Beautiful serene mountain lake at sunrise" },
+    { src: heroNatureTraining2, alt: "Peaceful meadow with wildflowers at sunset" },
+    { src: heroNatureTraining3, alt: "Tranquil forest path with morning light" }
   ];
 
   return (
@@ -376,7 +376,7 @@ function LearnAndTrain() {
             size="xl" 
             className="w-full sm:w-auto"
           >
-            View Training Programs
+            View Workshops
           </Button>
           <Button 
             onClick={() => {
@@ -607,7 +607,7 @@ function LearnAndTrain() {
             <Badge className="mb-4 bg-gradient-to-r from-primary to-accent text-white text-lg px-6 py-2">
               🛡️ PROTECTING FAMILIES TOGETHER
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in-up">Scam Prevention Training</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in-up">Scam Prevention Workshops</h2>
             <p className="text-xl md:text-2xl text-foreground mb-4 max-w-3xl mx-auto font-medium">
               Learn to spot scams before they hurt you or your family.
             </p>
@@ -1633,9 +1633,9 @@ function LearnAndTrain() {
         <section className="py-20 bg-muted">
           <div className="container mx-auto px-4">
             <ScrollReveal>
-              <h2 className="text-center mb-4">Training Success Stories</h2>
+              <h2 className="text-center mb-4">Workshop Success Stories</h2>
               <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-                Hear from families who have completed our training programs
+                Hear from families who have completed our workshops
               </p>
             </ScrollReveal>
             

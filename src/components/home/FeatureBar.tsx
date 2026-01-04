@@ -8,8 +8,8 @@ import { HexagonIcon, GeometricCorner, DottedPattern, FloatingShapes, GridPatter
 const features = [
   {
     icon: Lightbulb,
-    title: "Expert Training",
-    description: "Learn to identify and prevent AI-powered scams with our comprehensive training programs.",
+    title: "Expert Workshops",
+    description: "Learn to identify and prevent AI-powered scams with our hands-on workshops.",
   },
   {
     icon: Award,

@@ -39,8 +39,8 @@ const paths: PathConfig[] = [
   {
     id: 2,
     title: "Learn & Train",
-    description: "• In-person Dayton workshops\n• Online courses in 3 languages\n• Family training sessions\n• Corporate safety programs",
-    pricing: "$89-599",
+    description: "• In-person Dayton workshops\n• Online courses in 3 languages\n• Family safety sessions\n• Corporate safety workshops",
+    pricing: "$79-599",
     icon: BookOpen,
     badge: "10% Veteran Discount",
     badgeType: 'veteran',
