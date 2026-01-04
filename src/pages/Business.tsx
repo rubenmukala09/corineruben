@@ -34,11 +34,8 @@ const businessHeadlines = [
   "Professional Website Design & Development",
   "Industry-Leading AI Service Insurance"
 ];
-import heroBusinessSuccess1 from "@/assets/hero-business-success-1.jpg";
-import heroBusinessSuccess2 from "@/assets/hero-business-success-2.jpg";
-import heroBusinessDiverse3 from "@/assets/hero-business-diverse-3.jpg";
-import heroBusinessDiverse5 from "@/assets/hero-business-diverse-5.jpg";
-import natureParkSerene from "@/assets/nature-park-serene.jpg";
+import heroNatureBusiness1 from "@/assets/hero-nature-business-1.jpg";
+import heroNatureBusiness2 from "@/assets/hero-nature-business-2.jpg";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
@@ -142,10 +139,8 @@ function Business() {
   };
 
   const businessHeroImages = [
-    { src: heroBusinessSuccess1, alt: "Diverse executives smiling in luxury corporate boardroom meeting" },
-    { src: heroBusinessSuccess2, alt: "Happy business professionals celebrating success" },
-    { src: heroBusinessDiverse3, alt: "Muslim businesswoman leading happy diverse team in boardroom" },
-    { src: heroBusinessDiverse5, alt: "Multicultural executive team in modern glass corporate headquarters" }
+    { src: heroNatureBusiness1, alt: "Serene natural landscape with rolling hills and morning sunlight" },
+    { src: heroNatureBusiness2, alt: "Majestic mountain peaks at golden hour with lush forest" }
   ];
 
   return (
@@ -2083,7 +2078,7 @@ function Business() {
       <CTASection 
         headline="Ready to Deploy AI Safely?" 
         variant="image"
-        backgroundImage={natureParkSerene}
+        backgroundImage={heroNatureBusiness1}
         description="Take the first step towards protecting your business with AI-powered security solutions. Book a free discovery call to discuss your AI automation needs."
       >
         <div className="flex flex-col sm:flex-row gap-4 justify-center">

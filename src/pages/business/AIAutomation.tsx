@@ -3,6 +3,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { PageTransition } from "@/components/PageTransition";
 import { SEO } from "@/components/SEO";
+import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -20,6 +21,8 @@ import {
   Users,
   Bot
 } from "lucide-react";
+import heroNatureAi1 from "@/assets/hero-nature-ai-1.jpg";
+import heroNatureAi2 from "@/assets/hero-nature-ai-2.jpg";
 
 const AIAutomation = () => {
   const features = [
@@ -128,37 +131,28 @@ const AIAutomation = () => {
         <Navigation />
         
         <main id="main-content">
-          {/* Hero Section */}
-          <section className="relative py-20 lg:py-32 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-background to-primary/10" />
-            <div className="container mx-auto px-4 relative">
-              <div className="max-w-4xl mx-auto text-center">
-                <Badge variant="outline" className="mb-6 px-4 py-2 text-sm border-accent/30 bg-accent/5">
-                  <Bot className="w-4 h-4 mr-2" />
-                  AI Business Automation
-                </Badge>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-                  <span className="gradient-text-primary">Follow-Up</span>
-                  <br />Automation System
-                </h1>
-                <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                  Stop losing leads to silence. Our AI-powered follow-up system ensures every 
-                  prospect gets the right message at the right time.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button asChild size="xl" variant="gold">
-                    <Link to="/contact">
-                      Get Your Automation Plan
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </Link>
-                  </Button>
-                  <Button asChild size="xl" variant="outline">
-                    <Link to="/business">View All Services</Link>
-                  </Button>
-                </div>
-              </div>
+          {/* Hero Section with Nature Image */}
+          <Hero
+            backgroundImages={[
+              { src: heroNatureAi2, alt: "Beautiful meadow with wildflowers at sunrise" },
+              { src: heroNatureAi1, alt: "Tranquil forest path with sunbeams" }
+            ]}
+            headline="Follow-Up Automation System"
+            subheadline="Stop losing leads to silence. Our AI-powered follow-up system ensures every prospect gets the right message at the right time."
+            showScrollIndicator={true}
+          >
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button asChild size="xl" variant="gold">
+                <Link to="/contact">
+                  Get Your Automation Plan
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+              <Button asChild size="xl" variant="outlineLight">
+                <Link to="/business">View All Services</Link>
+              </Button>
             </div>
-          </section>
+          </Hero>
 
           {/* Stats Section */}
           <section className="py-12 bg-card border-y border-border">
