@@ -37,7 +37,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { QuickVeteranToggle } from "@/components/payment/QuickVeteranToggle";
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "");
+const stripeKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
+const stripePromise = stripeKey ? loadStripe(stripeKey) : null;
 
 interface CheckoutDialogProps {
   open: boolean;
@@ -384,26 +385,34 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
 
             {/* Stripe Payment Element */}
             <div className="bg-background rounded-xl p-4 border">
-              <Elements
-                stripe={stripePromise}
-                options={{
-                  clientSecret,
-                  appearance: {
-                    theme: "stripe",
-                    variables: {
-                      borderRadius: "8px",
-                      colorPrimary: "#6D28D9",
+              {!stripePromise ? (
+                <div className="p-4 bg-destructive/10 text-destructive rounded-lg text-center">
+                  <CreditCard className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                  <p className="font-medium">Payment system unavailable</p>
+                  <p className="text-sm mt-1">Please refresh the page and try again.</p>
+                </div>
+              ) : (
+                <Elements
+                  stripe={stripePromise}
+                  options={{
+                    clientSecret,
+                    appearance: {
+                      theme: "stripe",
+                      variables: {
+                        borderRadius: "8px",
+                        colorPrimary: "#6D28D9",
+                      },
                     },
-                  },
-                }}
-              >
-                <PaymentElementWrapper
-                  onSuccess={handlePaymentSuccess}
-                  amount={finalAmount}
-                  email={email}
-                  onBack={() => setStep("info")}
-                />
-              </Elements>
+                  }}
+                >
+                  <PaymentElementWrapper
+                    onSuccess={handlePaymentSuccess}
+                    amount={finalAmount}
+                    email={email}
+                    onBack={() => setStep("info")}
+                  />
+                </Elements>
+              )}
             </div>
 
             {/* Trust Indicators */}

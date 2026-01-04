@@ -25,7 +25,8 @@ import { TermsCheckbox } from "@/components/payment/TermsCheckbox";
 import { QuickVeteranToggle } from "@/components/payment/QuickVeteranToggle";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "");
+const stripeKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
+const stripePromise = stripeKey ? loadStripe(stripeKey) : null;
 
 // Inner PaymentForm component with its own stripe/elements hooks
 interface PaymentFormProps {
@@ -651,34 +652,42 @@ function SubscriptionForm({
 
             {/* Stripe Payment Element - wrapped with clientSecret */}
             <div className="bg-background rounded-xl p-4 border">
-              <Elements
-                stripe={stripePromise}
-                options={{
-                  clientSecret,
-                  appearance: {
-                    theme: "stripe",
-                    variables: {
-                      colorPrimary: "#7c3aed",
-                      borderRadius: "8px",
+              {!stripePromise ? (
+                <div className="p-4 bg-destructive/10 text-destructive rounded-lg text-center">
+                  <CreditCard className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                  <p className="font-medium">Payment system unavailable</p>
+                  <p className="text-sm mt-1">Please refresh the page and try again.</p>
+                </div>
+              ) : (
+                <Elements
+                  stripe={stripePromise}
+                  options={{
+                    clientSecret,
+                    appearance: {
+                      theme: "stripe",
+                      variables: {
+                        colorPrimary: "#7c3aed",
+                        borderRadius: "8px",
+                      },
                     },
-                  },
-                }}
-              >
-                <PaymentForm
-                  clientSecret={clientSecret}
-                  finalAmount={finalAmount}
-                  loading={loading}
-                  setLoading={setLoading}
-                  error={error}
-                  setError={setError}
-                  onSuccess={() => setStep("success")}
-                  onBack={() => setStep("info")}
-                  email={email}
-                  serviceName={serviceName}
-                  planTier={planTier}
-                  styles={styles}
-                />
-              </Elements>
+                  }}
+                >
+                  <PaymentForm
+                    clientSecret={clientSecret}
+                    finalAmount={finalAmount}
+                    loading={loading}
+                    setLoading={setLoading}
+                    error={error}
+                    setError={setError}
+                    onSuccess={() => setStep("success")}
+                    onBack={() => setStep("info")}
+                    email={email}
+                    serviceName={serviceName}
+                    planTier={planTier}
+                    styles={styles}
+                  />
+                </Elements>
+              )}
             </div>
           </motion.div>
         )}
