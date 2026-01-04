@@ -12,6 +12,8 @@ import { AIChatProvider } from "./contexts/AIChatContext";
 import { CartProvider } from "./contexts/CartContext";
 import { CartFeedbackProvider, CartFeedbackNotifications } from "./components/CartFeedbackNotifications";
 import { SubscriptionProvider } from "./contexts/SubscriptionContext";
+import { CheckoutProvider } from "./contexts/CheckoutContext";
+import UnifiedCheckoutDialog from "./components/payment/UnifiedCheckoutDialog";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { RouteTracker } from "./components/RouteTracker";
 import { DraggablePerformanceMonitor } from "./components/DraggablePerformanceMonitor";
@@ -212,30 +214,33 @@ function App() {
         <Sonner />
         <SubscriptionProvider>
           <CartProvider>
-            <CartFeedbackProvider>
-              <AIChatProvider>
-                <BrowserRouter>
-                  <SkipToContent />
-                  <ScrollProgressBar />
-                  <NavigationProgress />
-                  <ScrollToTop />
-                  <BackToTop />
-                  <MobileCallButton />
-                  
-                  <RouteTracker />
-                  <AnalyticsTracker />
-                  <ErrorBoundary>
-                    <Suspense fallback={<PageLoader />}>
-                      <AnimatedRoutes />
-                    </Suspense>
-                  </ErrorBoundary>
-                  <AIChat />
-                  <CookieConsent />
-                  <CartFeedbackNotifications />
-                  <DraggablePerformanceMonitor />
-                </BrowserRouter>
-              </AIChatProvider>
-            </CartFeedbackProvider>
+            <CheckoutProvider>
+              <CartFeedbackProvider>
+                <AIChatProvider>
+                  <BrowserRouter>
+                    <SkipToContent />
+                    <ScrollProgressBar />
+                    <NavigationProgress />
+                    <ScrollToTop />
+                    <BackToTop />
+                    <MobileCallButton />
+                    
+                    <RouteTracker />
+                    <AnalyticsTracker />
+                    <ErrorBoundary>
+                      <Suspense fallback={<PageLoader />}>
+                        <AnimatedRoutes />
+                      </Suspense>
+                    </ErrorBoundary>
+                    <AIChat />
+                    <CookieConsent />
+                    <CartFeedbackNotifications />
+                    <UnifiedCheckoutDialog />
+                    <DraggablePerformanceMonitor />
+                  </BrowserRouter>
+                </AIChatProvider>
+              </CartFeedbackProvider>
+            </CheckoutProvider>
           </CartProvider>
         </SubscriptionProvider>
       </QueryClientProvider>
