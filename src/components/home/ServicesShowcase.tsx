@@ -41,7 +41,7 @@ const services = [
 
 export const ServicesShowcase = () => {
   return (
-    <section className="py-24 bg-muted/30 relative overflow-hidden">
+    <section className="py-16 bg-muted/30 relative overflow-hidden">
       {/* Subtle grid pattern */}
       <GridPattern className="opacity-50" />
       

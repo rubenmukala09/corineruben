@@ -22,44 +22,13 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { SEO, PAGE_SEO } from "@/components/SEO";
 import { SectionNav } from "@/components/SectionNav";
+import { SectionDivider } from "@/components/ui/SectionDivider";
+import { useAdminStatus } from "@/hooks/useAdminStatus";
 import heroProtectionFamily from "@/assets/hero-protection-family-1.jpg";
 
 function Index() {
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const { isAdmin, isLoading } = useAdminStatus();
   const [scamShieldOpen, setScamShieldOpen] = useState(false);
-  
-  useEffect(() => {
-    checkAdminStatus();
-  }, []);
-  
-  const checkAdminStatus = async () => {
-    try {
-      const {
-        data: { user }
-      } = await supabase.auth.getUser();
-      if (!user) {
-        setIsAdmin(false);
-        setIsLoading(false);
-        return;
-      }
-      const {
-        data: roles,
-        error
-      } = await supabase.from("user_roles").select("role").eq("user_id", user.id).in("role", ["admin", "staff"]);
-      if (error) {
-        console.error("Error checking admin status:", error);
-        setIsAdmin(false);
-      } else {
-        setIsAdmin(roles && roles.length > 0);
-      }
-    } catch (error) {
-      console.error("Error in checkAdminStatus:", error);
-      setIsAdmin(false);
-    } finally {
-      setIsLoading(false);
-    }
-  };
   
   return (
     <PageTransition variant="fade">
@@ -78,14 +47,18 @@ function Index() {
             <ScamAlertsSection />
           </section>
           
+          <SectionDivider variant="wave" />
+          
           <section id="features">
             <FeatureBar />
           </section>
 
           {/* About Section */}
-          <section id="about">
+          <section id="about" className="relative">
             <AboutSection />
           </section>
+
+          <SectionDivider variant="dots" />
 
           {/* Company Introduction - Who We Are & Why You Need Us */}
           <section id="intro">
@@ -97,6 +70,8 @@ function Index() {
             <ServicesShowcase />
           </section>
 
+          <SectionDivider variant="line" />
+
           {/* Ohio Community Impact */}
           <section id="ohio">
             <OhioImpactSection />
@@ -107,6 +82,8 @@ function Index() {
             <SecuritySolutions />
           </section>
 
+          <SectionDivider variant="gradient" />
+
           {/* Working Process - 4 Steps */}
           <section id="process">
             <WorkingProcess />
@@ -116,6 +93,8 @@ function Index() {
           <section id="testimonials">
             <TestimonialQuote />
           </section>
+
+          <SectionDivider variant="dots" />
 
           {/* FAQ Section */}
           <section id="faq">

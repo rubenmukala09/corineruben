@@ -60,6 +60,7 @@ import productSecurityCam from "@/assets/product-security-cam.jpg";
 import productWifiExtender from "@/assets/product-wifi-extender.jpg";
 import { SEO } from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
+import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
 
 // Static book products with covers (20 books)
 const staticBooks = [
@@ -217,18 +218,7 @@ function Resources() {
       >
         {/* Transitioning Headlines */}
         <div className="text-center mb-6">
-          <AnimatePresence mode="wait">
-            <motion.h1
-              key={currentHeadlineIndex}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4"
-            >
-              {heroHeadlines[currentHeadlineIndex]}
-            </motion.h1>
-          </AnimatePresence>
+          <RotatingHeadlines headlines={heroHeadlines} />
           <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
             Expert-curated guides, tools, and products designed to keep you and your family safe
           </p>

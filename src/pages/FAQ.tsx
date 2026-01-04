@@ -391,7 +391,7 @@ export default function FAQ() {
           <TrustBar />
 
         {/* Platform Guide Section */}
-        <section className="py-12 bg-gradient-to-b from-primary/5 to-background">
+        <section className="py-10 bg-gradient-to-b from-primary/5 to-background">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">
@@ -410,7 +410,7 @@ export default function FAQ() {
         </section>
 
         {/* Search & Filter Section - Redesigned */}
-        <section className="py-10 bg-gradient-to-b from-muted/30 to-background">
+        <section className="py-8 bg-gradient-to-b from-muted/30 to-background">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               {/* Search Bar - Enhanced */}

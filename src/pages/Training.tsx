@@ -51,6 +51,7 @@ import peacefulMountainDawn from "@/assets/peaceful-mountain-dawn.jpg";
 import TestimonialCard from "@/components/TestimonialCard";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
+import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
 
 // Rotating hero headlines for Training page
 const trainingHeadlines = [
@@ -242,7 +243,7 @@ function LearnAndTrain() {
     amount: number;
   } | null>(null);
   const [isYearly, setIsYearly] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const { isAdmin } = useAdminStatus();
   const [selectedService, setSelectedService] = useState<{
     type: 'training' | 'scamshield';
     name: string;
@@ -252,18 +253,8 @@ function LearnAndTrain() {
   const [trainingTestimonials, setTrainingTestimonials] = useState<any[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string } | null>(null);
   const [expandedThreat, setExpandedThreat] = useState<string | null>(null);
-  const [currentHeadlineIndex, setCurrentHeadlineIndex] = useState(0);
-
-  // Rotate headlines
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentHeadlineIndex((prev) => (prev + 1) % trainingHeadlines.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
-    checkAdminStatus();
     fetchTrainingTestimonials();
   }, []);
 
@@ -281,30 +272,6 @@ function LearnAndTrain() {
     setTrainingTestimonials(data || []);
   };
 
-  const checkAdminStatus = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        setIsAdmin(false);
-        return;
-      }
-
-      const { data: roles, error } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", user.id);
-
-      if (error) {
-        console.error("Error checking admin status:", error);
-        setIsAdmin(false);
-      } else {
-        setIsAdmin(roles && roles.length > 0);
-      }
-    } catch (error) {
-      console.error("Error in checkAdminStatus:", error);
-      setIsAdmin(false);
-    }
-  };
 
   const getPlanPrice = (monthlyPrice: number) => {
     if (isYearly) {
@@ -391,18 +358,7 @@ function LearnAndTrain() {
       >
         {/* Transitioning Headlines */}
         <div className="text-center mb-6">
-          <AnimatePresence mode="wait">
-            <motion.h1
-              key={currentHeadlineIndex}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4"
-            >
-              {trainingHeadlines[currentHeadlineIndex]}
-            </motion.h1>
-          </AnimatePresence>
+          <RotatingHeadlines headlines={trainingHeadlines} />
           <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
             Expert-led training and 24/7 protection services designed for families and seniors
           </p>
