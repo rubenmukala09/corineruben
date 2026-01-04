@@ -55,7 +55,7 @@ const Hero = ({ backgroundImage, backgroundImages, backgroundVideo, headline, su
   return (
     <div 
       ref={ref}
-      className={cn("relative min-h-[600px] sm:min-h-[700px] md:min-h-[800px] lg:min-h-[85vh] xl:min-h-[90vh] flex items-center overflow-hidden hero-mobile", className)}
+      className={cn("relative w-full min-h-[700px] sm:min-h-[800px] md:min-h-[90vh] lg:min-h-[95vh] xl:min-h-screen flex items-center overflow-hidden hero-mobile", className)}
     >
       {/* Persistent background gradient - prevents white flash */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#1e3a8a] via-[#3b0764] to-[#0d9488]" />
@@ -238,8 +238,8 @@ const Hero = ({ backgroundImage, backgroundImages, backgroundVideo, headline, su
       </div>
       
       {/* Content with Stagger Animation */}
-      <div className="container mx-auto px-4 py-12 sm:py-16 md:py-20 lg:py-24 relative z-10">
-        <div className="max-w-4xl mx-auto md:mx-0">
+      <div className="w-full max-w-[1600px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16 xl:px-24 py-16 sm:py-20 md:py-24 lg:py-28 relative z-10">
+        <div className="max-w-5xl">
           {headline && (
             <motion.h1 
               className="text-white mb-4 sm:mb-6 md:mb-8 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl [text-shadow:0_4px_30px_rgba(139,92,246,0.5)] leading-tight font-bold"
