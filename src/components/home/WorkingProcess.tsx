@@ -63,7 +63,7 @@ export const WorkingProcess = () => {
           >
             <div className="relative">
               <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-primary/20 to-accent/20 blur-2xl" />
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl group">
                 <video 
                   src={peopleStudyingVideo} 
                   className="w-full h-80 object-cover"
@@ -72,6 +72,10 @@ export const WorkingProcess = () => {
                   muted
                   playsInline
                 />
+                {/* Gradient overlay effect */}
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-accent/20 pointer-events-none" />
+                {/* Animated shimmer effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none" />
               </div>
               <div className="absolute -bottom-3 -right-3 w-8 h-8 rounded-full bg-accent" />
               <div className="absolute -top-3 -left-3 w-6 h-6 rounded-full bg-primary" />
