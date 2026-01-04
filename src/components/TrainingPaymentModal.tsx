@@ -19,6 +19,7 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Shield,
   CheckCircle,
@@ -30,7 +31,9 @@ import {
   Calendar as CalendarIcon,
   Phone,
   Sparkles,
+  Smartphone,
 } from "lucide-react";
+import { QRCodePaymentSection } from "@/components/payment/QRCodePaymentSection";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useStripeKey } from "@/hooks/useStripeKey";
@@ -527,31 +530,61 @@ export function TrainingPaymentModal({
                   </div>
                 </div>
 
-                <Elements
-                  stripe={stripePromise}
-                  options={{
-                    clientSecret,
-                    appearance: {
-                      theme: "stripe",
-                      variables: {
-                        colorPrimary: "#6D28D9",
-                      },
-                    },
-                  }}
-                >
-                  <PaymentFormContent
-                    clientSecret={clientSecret}
-                    onSuccess={onSuccess}
-                    onClose={handleClose}
-                    customerEmail={email}
-                    customerName={name}
-                    serviceName={serviceName}
-                    serviceTier={serviceTier}
-                    preferredDate={selectedDate ? format(selectedDate, "PPP") : undefined}
-                    isVeteran={isVeteran}
-                    finalAmount={finalAmount}
-                  />
-                </Elements>
+                <Tabs defaultValue="card" className="w-full">
+                  <TabsList className="grid w-full grid-cols-2 mb-4">
+                    <TabsTrigger value="card" className="flex items-center gap-2">
+                      <CreditCard className="w-4 h-4" />
+                      Card
+                    </TabsTrigger>
+                    <TabsTrigger value="qr" className="flex items-center gap-2">
+                      <Smartphone className="w-4 h-4" />
+                      QR Code
+                    </TabsTrigger>
+                  </TabsList>
+
+                  <TabsContent value="card">
+                    <Elements
+                      stripe={stripePromise}
+                      options={{
+                        clientSecret,
+                        appearance: {
+                          theme: "stripe",
+                          variables: {
+                            colorPrimary: "#6D28D9",
+                          },
+                        },
+                      }}
+                    >
+                      <PaymentFormContent
+                        clientSecret={clientSecret}
+                        onSuccess={onSuccess}
+                        onClose={handleClose}
+                        customerEmail={email}
+                        customerName={name}
+                        serviceName={serviceName}
+                        serviceTier={serviceTier}
+                        preferredDate={selectedDate ? format(selectedDate, "PPP") : undefined}
+                        isVeteran={isVeteran}
+                        finalAmount={finalAmount}
+                      />
+                    </Elements>
+                  </TabsContent>
+
+                  <TabsContent value="qr">
+                    <QRCodePaymentSection
+                      amount={Math.round(finalAmount * 100)}
+                      productName={serviceName}
+                      customerEmail={email}
+                      customerName={name}
+                      onSuccess={() => {
+                        toast.success("Payment Confirmed! Check your email for booking details.");
+                        onSuccess?.();
+                        handleClose();
+                      }}
+                      onBack={() => setStep("info")}
+                    />
+                  </TabsContent>
+                </Tabs>
               </motion.div>
             )}
           </AnimatePresence>
