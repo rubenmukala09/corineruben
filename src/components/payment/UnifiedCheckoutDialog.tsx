@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   CreditCard, 
   Check, 
@@ -14,7 +15,9 @@ import {
   Star,
   ShieldCheck,
   PartyPopper,
-  ArrowLeft
+  ArrowLeft,
+  Smartphone,
+  RefreshCw
 } from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
@@ -23,6 +26,7 @@ import { usePaymentFlow } from '@/hooks/usePaymentFlow';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Step 1: Customer Information Form
 const CustomerInfoStep: React.FC<{
@@ -127,6 +131,160 @@ const CustomerInfoStep: React.FC<{
         )}
       </Button>
     </form>
+  );
+};
+
+// QR Code Payment Component
+const QRCodePaymentStep: React.FC<{
+  onSuccess: () => void;
+}> = ({ onSuccess }) => {
+  const { state, total } = useCheckout();
+  const [loading, setLoading] = useState(false);
+  const [qrCodeUrl, setQrCodeUrl] = useState<string | null>(null);
+  const [paymentLinkId, setPaymentLinkId] = useState<string | null>(null);
+  const [timeLeft, setTimeLeft] = useState(240);
+  const [checking, setChecking] = useState(false);
+
+  // Countdown timer
+  useEffect(() => {
+    if (qrCodeUrl && timeLeft > 0) {
+      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+      return () => clearTimeout(timer);
+    } else if (timeLeft === 0) {
+      setQrCodeUrl(null);
+      setPaymentLinkId(null);
+    }
+  }, [qrCodeUrl, timeLeft]);
+
+  // Poll for payment status
+  useEffect(() => {
+    if (!paymentLinkId || !qrCodeUrl) return;
+    
+    const checkPayment = async () => {
+      setChecking(true);
+      try {
+        const { data } = await supabase.functions.invoke('verify-payment-link', {
+          body: { paymentLinkId }
+        });
+        
+        if (data?.paid) {
+          confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+          toast.success('Payment received!');
+          onSuccess();
+        }
+      } catch (err) {
+        console.log('Payment check:', err);
+      } finally {
+        setChecking(false);
+      }
+    };
+
+    const interval = setInterval(checkPayment, 4000);
+    return () => clearInterval(interval);
+  }, [paymentLinkId, qrCodeUrl, onSuccess]);
+
+  const generateQRCode = async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-payment-link', {
+        body: {
+          amount: Math.round(total * 100),
+          customerEmail: state.customerInfo.email,
+          customerName: state.customerInfo.name,
+          items: state.items.map(item => ({
+            name: item.product.name,
+            quantity: item.quantity,
+            price: item.discountedPrice
+          }))
+        }
+      });
+
+      if (error) throw error;
+      
+      if (data?.url) {
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(data.url)}`;
+        setQrCodeUrl(qrUrl);
+        setPaymentLinkId(data.id);
+        setTimeLeft(240);
+        console.log('[QR Payment] Generated:', { id: data.id, requestId: data.requestId });
+      }
+    } catch (error: any) {
+      console.error('[QR Payment] Error:', error);
+      toast.error('Failed to generate QR code');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  return (
+    <div className="text-center space-y-4 py-2">
+      <AnimatePresence mode="wait">
+        {!qrCodeUrl ? (
+          <motion.div
+            key="generate"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="space-y-4"
+          >
+            <div className="p-4 bg-muted/50 rounded-xl">
+              <Smartphone className="w-10 h-10 mx-auto mb-3 text-primary" />
+              <h4 className="font-semibold mb-1">Pay with Your Phone</h4>
+              <p className="text-sm text-muted-foreground">
+                Scan QR code with Apple Pay, Google Pay, or any mobile wallet
+              </p>
+            </div>
+            <Button onClick={generateQRCode} disabled={loading} className="w-full">
+              {loading ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <Smartphone className="mr-2 h-4 w-4" />
+              )}
+              Generate QR Code
+            </Button>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="qr"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="space-y-3"
+          >
+            <div className="bg-white p-3 rounded-xl inline-block shadow-md">
+              <img src={qrCodeUrl} alt="Payment QR Code" className="w-[180px] h-[180px]" />
+            </div>
+            
+            <div className="flex items-center justify-center gap-2">
+              <Badge variant={timeLeft < 60 ? "destructive" : "secondary"}>
+                {checking && <Loader2 className="w-3 h-3 mr-1 animate-spin" />}
+                {!checking && <RefreshCw className="w-3 h-3 mr-1" />}
+                {formatTime(timeLeft)}
+              </Badge>
+            </div>
+            
+            <p className="text-sm text-muted-foreground">
+              Scan to pay <strong className="text-foreground">${total.toFixed(2)}</strong>
+            </p>
+            
+            <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+              <Loader2 className="w-3 h-3 animate-spin" />
+              Waiting for payment...
+            </div>
+            
+            <Button variant="outline" onClick={generateQRCode} size="sm" disabled={loading}>
+              {loading ? <Loader2 className="w-3 h-3 animate-spin" /> : 'Regenerate'}
+            </Button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 
@@ -407,24 +565,72 @@ const UnifiedCheckoutDialog: React.FC = () => {
               <CustomerInfoStep onNext={() => {}} />
             )}
 
-            {state.step === 'payment' && stripePromise && state.clientSecret && (
-              <Elements
-                stripe={stripePromise}
-                options={{
-                  clientSecret: state.clientSecret,
-                  appearance: {
-                    theme: 'stripe',
-                    variables: {
-                      colorPrimary: 'hsl(var(--primary))'
-                    }
-                  }
-                }}
-              >
-                <PaymentFormStep
-                  onSuccess={() => setStep('success')}
-                  onBack={() => setStep('info')}
-                />
-              </Elements>
+            {state.step === 'payment' && (
+              <Tabs defaultValue="card" className="w-full">
+                <TabsList className="grid w-full grid-cols-2 mb-4">
+                  <TabsTrigger value="card" className="flex items-center gap-2">
+                    <CreditCard className="w-4 h-4" />
+                    Card
+                  </TabsTrigger>
+                  <TabsTrigger value="qr" className="flex items-center gap-2">
+                    <Smartphone className="w-4 h-4" />
+                    QR Code
+                  </TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="card">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setStep('info')}
+                    className="mb-2"
+                  >
+                    <ArrowLeft className="mr-2 h-4 w-4" />
+                    Back to details
+                  </Button>
+                  
+                  {stripePromise && state.clientSecret ? (
+                    <Elements
+                      stripe={stripePromise}
+                      options={{
+                        clientSecret: state.clientSecret,
+                        appearance: {
+                          theme: 'stripe',
+                          variables: {
+                            colorPrimary: 'hsl(var(--primary))'
+                          }
+                        }
+                      }}
+                    >
+                      <PaymentFormStep
+                        onSuccess={() => setStep('success')}
+                        onBack={() => setStep('info')}
+                      />
+                    </Elements>
+                  ) : (
+                    <div className="flex items-center justify-center py-8">
+                      <Loader2 className="w-6 h-6 animate-spin text-primary" />
+                      <span className="ml-2 text-sm text-muted-foreground">Loading payment...</span>
+                    </div>
+                  )}
+                </TabsContent>
+                
+                <TabsContent value="qr">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setStep('info')}
+                    className="mb-2"
+                  >
+                    <ArrowLeft className="mr-2 h-4 w-4" />
+                    Back to details
+                  </Button>
+                  
+                  <QRCodePaymentStep onSuccess={() => setStep('success')} />
+                </TabsContent>
+              </Tabs>
             )}
 
             {state.step === 'success' && (
