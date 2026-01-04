@@ -55,7 +55,7 @@ const Hero = ({ backgroundImage, backgroundImages, backgroundVideo, headline, su
   return (
     <div 
       ref={ref}
-      className={cn("relative min-h-[500px] sm:min-h-[550px] md:min-h-[600px] lg:min-h-[650px] xl:min-h-[700px] flex items-center overflow-hidden hero-mobile", className)}
+      className={cn("relative min-h-[600px] sm:min-h-[700px] md:min-h-[800px] lg:min-h-[85vh] xl:min-h-[90vh] flex items-center overflow-hidden hero-mobile", className)}
     >
       {/* Persistent background gradient - prevents white flash */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#1e3a8a] via-[#3b0764] to-[#0d9488]" />
@@ -69,13 +69,12 @@ const Hero = ({ backgroundImage, backgroundImages, backgroundVideo, headline, su
         {useVideo && (
           <motion.div
             className="absolute inset-0"
-            initial={{ opacity: 0, filter: 'blur(10px)', scale: 1.05 }}
+            initial={{ opacity: 0, scale: 1.1 }}
             animate={{ 
               opacity: videoLoaded ? 1 : 0,
-              filter: videoLoaded ? 'blur(0px)' : 'blur(10px)',
-              scale: videoLoaded ? 1 : 1.05
+              scale: videoLoaded ? 1 : 1.1
             }}
-            transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+            transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
           >
             <video
               ref={videoRef}
@@ -98,16 +97,14 @@ const Hero = ({ backgroundImage, backgroundImages, backgroundVideo, headline, su
         ) : !useVideo && backgroundImage && (
           <motion.div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat brightness-115"
-            initial={{ opacity: 0, filter: 'blur(15px)', scale: 1.05 }}
+            initial={{ opacity: 0, scale: 1.1 }}
             animate={{ 
               opacity: singleImagePreloaded ? 1 : 0,
-              filter: imageLoaded ? 'blur(0px)' : 'blur(15px)',
-              scale: imageLoaded ? 1 : 1.05
+              scale: imageLoaded ? 1 : 1.1
             }}
             transition={{ 
-              opacity: { duration: 0.4, ease: "easeOut" },
-              filter: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
-              scale: { duration: 0.8, ease: [0.4, 0, 0.2, 1] }
+              opacity: { duration: 0.6, ease: "easeOut" },
+              scale: { duration: 1.2, ease: [0.4, 0, 0.2, 1] }
             }}
             style={{ 
               backgroundImage: `url(${backgroundImage})`
@@ -115,14 +112,75 @@ const Hero = ({ backgroundImage, backgroundImages, backgroundVideo, headline, su
           />
         )}
         
-        {/* Gradient Overlay - stronger for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/35 to-black/45" />
+        {/* Premium Gradient Overlay - cinematic effect */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/50" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30" />
         
         {/* Additional overlay */}
         {overlay && (
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/30" />
         )}
       </motion.div>
+
+      {/* Animated gradient accent */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none opacity-40"
+        animate={{
+          background: [
+            'radial-gradient(ellipse 80% 50% at 20% 40%, hsl(var(--primary) / 0.3) 0%, transparent 60%)',
+            'radial-gradient(ellipse 80% 50% at 80% 60%, hsl(var(--accent) / 0.3) 0%, transparent 60%)',
+            'radial-gradient(ellipse 80% 50% at 50% 30%, hsl(var(--primary) / 0.3) 0%, transparent 60%)',
+            'radial-gradient(ellipse 80% 50% at 20% 40%, hsl(var(--primary) / 0.3) 0%, transparent 60%)',
+          ]
+        }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+
+      {/* Geometric grid overlay */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.04]">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+          backgroundSize: '80px 80px'
+        }} />
+      </div>
+
+      {/* Animated corner accents */}
+      <div className="absolute top-0 left-0 w-64 h-64 pointer-events-none">
+        <motion.div
+          className="absolute top-8 left-8 w-32 h-[2px] bg-gradient-to-r from-primary/60 to-transparent"
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={{ scaleX: 1, opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+          style={{ transformOrigin: 'left' }}
+        />
+        <motion.div
+          className="absolute top-8 left-8 h-32 w-[2px] bg-gradient-to-b from-primary/60 to-transparent"
+          initial={{ scaleY: 0, opacity: 0 }}
+          animate={{ scaleY: 1, opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.8 }}
+          style={{ transformOrigin: 'top' }}
+        />
+      </div>
+      <div className="absolute bottom-0 right-0 w-64 h-64 pointer-events-none">
+        <motion.div
+          className="absolute bottom-8 right-8 w-32 h-[2px] bg-gradient-to-l from-accent/60 to-transparent"
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={{ scaleX: 1, opacity: 1 }}
+          transition={{ delay: 0.7, duration: 0.8 }}
+          style={{ transformOrigin: 'right' }}
+        />
+        <motion.div
+          className="absolute bottom-8 right-8 h-32 w-[2px] bg-gradient-to-t from-accent/60 to-transparent"
+          initial={{ scaleY: 0, opacity: 0 }}
+          animate={{ scaleY: 1, opacity: 1 }}
+          transition={{ delay: 0.8, duration: 0.8 }}
+          style={{ transformOrigin: 'bottom' }}
+        />
+      </div>
       
       {/* Particle Network Background */}
       <ParticleBackground />
@@ -137,41 +195,76 @@ const Hero = ({ backgroundImage, backgroundImages, backgroundVideo, headline, su
         </div>
       )}
       
-      {/* Floating Particles (existing) */}
+      {/* Floating Particles - enhanced */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden hidden md:block" style={{ zIndex: 1 }}>
-        <div className="floating-orb" style={{ width: '150px', height: '150px', top: '20%', left: '10%', animationDelay: '0s' }} />
-        <div className="floating-orb" style={{ width: '100px', height: '100px', top: '60%', right: '15%', animationDelay: '4s' }} />
-        <div className="floating-orb" style={{ width: '120px', height: '120px', bottom: '25%', left: '40%', animationDelay: '8s' }} />
+        <motion.div 
+          className="floating-orb" 
+          style={{ width: '180px', height: '180px', top: '15%', left: '8%' }}
+          animate={{ y: [0, -20, 0], x: [0, 10, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className="floating-orb" 
+          style={{ width: '120px', height: '120px', top: '55%', right: '12%' }}
+          animate={{ y: [0, 15, 0], x: [0, -8, 0] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        />
+        <motion.div 
+          className="floating-orb" 
+          style={{ width: '150px', height: '150px', bottom: '20%', left: '35%' }}
+          animate={{ y: [0, -25, 0], scale: [1, 1.05, 1] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+        />
+        <motion.div 
+          className="floating-orb" 
+          style={{ width: '100px', height: '100px', top: '30%', right: '25%' }}
+          animate={{ y: [0, 12, 0], opacity: [0.6, 0.9, 0.6] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        />
+      </div>
+
+      {/* Decorative floating rings */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden hidden lg:block">
+        <motion.div
+          className="absolute top-1/4 right-[15%] w-48 h-48 rounded-full border border-white/10"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div
+          className="absolute bottom-1/4 left-[10%] w-32 h-32 rounded-full border border-primary/20"
+          animate={{ rotate: -360 }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+        />
       </div>
       
       {/* Content with Stagger Animation */}
-      <div className="container mx-auto px-4 py-6 sm:py-8 md:py-12 lg:py-16 relative z-10">
-        <div className="max-w-3xl mx-auto md:mx-0">
+      <div className="container mx-auto px-4 py-12 sm:py-16 md:py-20 lg:py-24 relative z-10">
+        <div className="max-w-4xl mx-auto md:mx-0">
           {headline && (
             <motion.h1 
-              className="text-white mb-3 sm:mb-4 md:mb-6 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl [text-shadow:0_4px_20px_rgba(139,92,246,0.4)] leading-tight"
-              initial={{ opacity: 0, y: 50 }}
+              className="text-white mb-4 sm:mb-6 md:mb-8 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl [text-shadow:0_4px_30px_rgba(139,92,246,0.5)] leading-tight font-bold"
+              initial={{ opacity: 0, y: 60 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
             >
               {headline}
             </motion.h1>
           )}
           {subheadline && (
             <motion.p 
-              className="text-white/90 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl mb-6 md:mb-8 leading-relaxed"
-              initial={{ opacity: 0, y: 50 }}
+              className="text-white/90 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl mb-8 md:mb-10 leading-relaxed max-w-3xl"
+              initial={{ opacity: 0, y: 60 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
             >
               {subheadline}
             </motion.p>
           )}
           {children && (
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 60 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
               className="flex flex-wrap gap-4"
             >
               {Children.map(children, (child) =>
@@ -185,6 +278,9 @@ const Hero = ({ backgroundImage, backgroundImages, backgroundVideo, headline, su
           )}
         </div>
       </div>
+      
+      {/* Bottom gradient fade for seamless transition */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
       
       {/* Scroll Indicator */}
       {showScrollIndicator && <ScrollIndicator />}
