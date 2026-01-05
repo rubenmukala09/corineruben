@@ -11,10 +11,7 @@ import { FloatingShapes } from "@/components/FloatingShapes";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Award, Heart, Shield, Users, MapPin, TrendingUp, Star, CheckCircle } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import AnimatedCounter from "@/components/AnimatedCounter";
-import { useCounterAnimation } from "@/hooks/useCounterAnimation";
+import { Award, Heart, Shield, Users, MapPin, Star, CheckCircle } from "lucide-react";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { TimelineVisualization } from "@/components/TimelineVisualization";
 import { InspirationalVerses } from "@/components/InspirationalVerses";
@@ -26,8 +23,8 @@ import { PAGE_NATURE_IMAGES } from "@/config/natureHeroImages";
 // Team and culture photos
 import teamDiverse1 from "@/assets/team-diverse-1.jpg";
 import businessCollaboration from "@/assets/business-collaboration.jpg";
-import communityImpact4k from "@/assets/community-impact-4k.jpg";
-import protectedCommunity4k from "@/assets/protected-community-4k.jpg";
+import ohioNatureImpact from "@/assets/ohio-nature-impact.jpg";
+import fieldSunsetCta from "@/assets/field-sunset-cta.jpg";
 import familyGathering from "@/assets/family-gathering.jpg";
 import seniorLearning from "@/assets/senior-learning.jpg";
 import { SEO } from "@/components/SEO";
@@ -46,12 +43,6 @@ const aboutHeadlines = [
 function About() {
   const { isAdmin, isLoading } = useAdminStatus();
   const [showAdminBanner, setShowAdminBanner] = useState(true);
-  const [currentHeadlineIndex, setCurrentHeadlineIndex] = useState(0);
-
-  const stat1 = useCounterAnimation({ end: 500 });
-  const stat2 = useCounterAnimation({ end: 89 });
-  const stat3 = useCounterAnimation({ end: 15000 });
-  const stat4 = useCounterAnimation({ end: 98 });
 
   const timeline = [
     {
@@ -298,101 +289,46 @@ function About() {
         </div>
       </section>
 
-      {/* Community Impact with Group Photo */}
-      <section className="py-12 md:py-16 lg:py-20 xl:py-32 relative overflow-hidden">
-        {/* Background image with subtle animation */}
+      {/* Community Impact with Nature Background */}
+      <section className="py-16 md:py-24 lg:py-32 relative overflow-hidden">
+        {/* Background image */}
         <div 
-          className="absolute inset-0 bg-cover bg-center transform scale-105 animate-slow-zoom"
-          style={{ 
-            backgroundImage: `url(${protectedCommunity4k})`,
-            filter: 'saturate(1.1) contrast(1.05)'
-          }}
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${ohioNatureImpact})` }}
         />
         
-        {/* Professional gradient overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/70 via-primary/50 to-accent/60" />
-        
-        {/* Geometric accent patterns */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Floating orbs */}
-          <div className="absolute top-10 left-10 w-32 h-32 bg-white/5 rounded-full blur-2xl animate-float-slow" />
-          <div className="absolute bottom-20 right-20 w-40 h-40 bg-accent/10 rounded-full blur-3xl animate-float-delayed" />
-          <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-white/5 rounded-full blur-xl animate-pulse" />
-          
-          {/* Grid pattern overlay */}
-          <div 
-            className="absolute inset-0 opacity-5"
-            style={{
-              backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-              backgroundSize: '40px 40px'
-            }}
-          />
-        </div>
+        {/* Gradient overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary/60 to-accent/70" />
         
         <div className="container mx-auto px-4 relative z-10 text-white">
           <ScrollReveal>
-            <div className="text-center mb-8 md:mb-12 lg:mb-16">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 md:mb-6 drop-shadow-lg">
+            <div className="text-center mb-10 md:mb-14">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 drop-shadow-lg">
                 Our Community Impact
               </h2>
               <p className="text-base sm:text-lg md:text-xl opacity-95 max-w-3xl mx-auto px-4 drop-shadow-md">
-                Real numbers, real families, real protection
+                Protecting families and serving our local community
               </p>
             </div>
           </ScrollReveal>
-
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 lg:gap-12">
-            <ScrollReveal delay={100}>
-              <div className="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-4 md:p-6 border border-white/20 hover:bg-white/15 transition-all duration-300" ref={stat1.ref}>
-                <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4 drop-shadow-lg">
-                  <AnimatedCounter end={stat1.count} />+
-                </div>
-                <div className="text-sm sm:text-base md:text-lg opacity-95 font-medium">Families Trained</div>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal delay={200}>
-              <div className="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-4 md:p-6 border border-white/20 hover:bg-white/15 transition-all duration-300" ref={stat2.ref}>
-                <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4 drop-shadow-lg">
-                  <AnimatedCounter end={stat2.count} />%
-                </div>
-                <div className="text-sm sm:text-base md:text-lg opacity-95 font-medium">Scams Prevented</div>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal delay={300}>
-              <div className="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-4 md:p-6 border border-white/20 hover:bg-white/15 transition-all duration-300" ref={stat3.ref}>
-                <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4 drop-shadow-lg">
-                  $<AnimatedCounter end={stat3.count} />+
-                </div>
-                <div className="text-sm sm:text-base md:text-lg opacity-95 font-medium">Fraud Prevented</div>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal delay={400}>
-              <div className="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-4 md:p-6 border border-white/20 hover:bg-white/15 transition-all duration-300" ref={stat4.ref}>
-                <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4 drop-shadow-lg">
-                  <AnimatedCounter end={stat4.count} />%
-                </div>
-                <div className="text-sm sm:text-base md:text-lg opacity-95 font-medium">Satisfaction Rate</div>
-              </div>
-            </ScrollReveal>
-          </div>
           
-          {/* Additional Info */}
-          <ScrollReveal delay={500}>
-            <div className="grid md:grid-cols-3 gap-6 mt-12 max-w-4xl mx-auto">
-              <div className="text-center p-5 bg-white/15 rounded-2xl backdrop-blur-md border border-white/25 hover:bg-white/20 transition-all duration-300 hover:-translate-y-1">
-                <div className="text-3xl mb-3">🏠</div>
-                <div className="font-bold text-lg">Ohio-Based</div>
-                <div className="text-sm opacity-90">Serving local communities</div>
+          {/* Three Info Cards Only */}
+          <ScrollReveal delay={200}>
+            <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              <div className="text-center p-6 bg-white/15 rounded-2xl backdrop-blur-md border border-white/25 hover:bg-white/20 transition-all duration-300 hover:-translate-y-1">
+                <div className="text-4xl mb-4">🏠</div>
+                <div className="font-bold text-xl mb-2">Ohio-Based</div>
+                <div className="text-sm opacity-90">Serving local communities across the Buckeye State</div>
               </div>
-              <div className="text-center p-5 bg-white/15 rounded-2xl backdrop-blur-md border border-white/25 hover:bg-white/20 transition-all duration-300 hover:-translate-y-1">
-                <div className="text-3xl mb-3">🎖️</div>
-                <div className="font-bold text-lg">Veteran-Supporting</div>
-                <div className="text-sm opacity-90">Honoring those who served</div>
+              <div className="text-center p-6 bg-white/15 rounded-2xl backdrop-blur-md border border-white/25 hover:bg-white/20 transition-all duration-300 hover:-translate-y-1">
+                <div className="text-4xl mb-4">🎖️</div>
+                <div className="font-bold text-xl mb-2">Veteran-Supporting</div>
+                <div className="text-sm opacity-90">Honoring those who served with special discounts</div>
               </div>
-              <div className="text-center p-5 bg-white/15 rounded-2xl backdrop-blur-md border border-white/25 hover:bg-white/20 transition-all duration-300 hover:-translate-y-1">
-                <div className="text-3xl mb-3">💙</div>
-                <div className="font-bold text-lg">Mission-Driven</div>
-                <div className="text-sm opacity-90">Protection over profit</div>
+              <div className="text-center p-6 bg-white/15 rounded-2xl backdrop-blur-md border border-white/25 hover:bg-white/20 transition-all duration-300 hover:-translate-y-1">
+                <div className="text-4xl mb-4">💙</div>
+                <div className="font-bold text-xl mb-2">Mission-Driven</div>
+                <div className="text-sm opacity-90">Protection over profit, always</div>
               </div>
             </div>
           </ScrollReveal>
@@ -459,28 +395,31 @@ function About() {
       {/* Service Areas with Interactive Map */}
       <OhioServiceMap />
 
-      {/* CTA - No overlay, clear image with readable text */}
-      <section className="py-20 relative overflow-hidden" id="cta">
+      {/* CTA with Field Background */}
+      <section className="py-24 md:py-32 relative overflow-hidden" id="cta">
         <div 
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${protectedCommunity4k})` }}
+          style={{ backgroundImage: `url(${fieldSunsetCta})` }}
         />
+        {/* Gradient overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/50 to-transparent" />
+        
         <div className="container mx-auto px-4 relative z-10 text-center">
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-4" style={{ textShadow: '2px 2px 10px rgba(0,0,0,0.9), 0 0 25px rgba(0,0,0,0.7)' }}>
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 drop-shadow-lg">
             Ready to Join Our Protected Community?
           </h2>
-          <p className="text-lg md:text-xl text-white mb-8 max-w-2xl mx-auto" style={{ textShadow: '1px 1px 6px rgba(0,0,0,0.8), 0 0 15px rgba(0,0,0,0.5)' }}>
+          <p className="text-lg md:text-xl text-white/95 mb-8 max-w-2xl mx-auto drop-shadow-md">
             Whether you're looking for personal training, business solutions, or want to support our mission—we'd love to connect.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-          <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white font-bold shadow-xl">
-            <Link 
-              to="/training"
-              onClick={() => trackButtonClick('Start Training', 'About CTA')}
-            >
-              Start Training
-            </Link>
-          </Button>
+            <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white font-bold shadow-xl">
+              <Link 
+                to="/training"
+                onClick={() => trackButtonClick('Start Training', 'About CTA')}
+              >
+                Start Training
+              </Link>
+            </Button>
             <Button asChild size="lg" variant="outlineLight">
               <Link 
                 to="/business"
