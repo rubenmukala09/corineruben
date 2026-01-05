@@ -13,7 +13,8 @@ import { CartProvider } from "./contexts/CartContext";
 import { CartFeedbackProvider, CartFeedbackNotifications } from "./components/CartFeedbackNotifications";
 import { SubscriptionProvider } from "./contexts/SubscriptionContext";
 import { CheckoutProvider } from "./contexts/CheckoutContext";
-import UnifiedCheckoutDialog from "./components/payment/UnifiedCheckoutDialog";
+// Lazy load checkout dialog - only needed when user initiates payment
+const UnifiedCheckoutDialog = lazy(() => import("./components/payment/UnifiedCheckoutDialog"));
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { RouteTracker } from "./components/RouteTracker";
 import { DraggablePerformanceMonitor } from "./components/DraggablePerformanceMonitor";
@@ -241,7 +242,9 @@ function App() {
                     <AIChat />
                     <CookieConsent />
                     <CartFeedbackNotifications />
-                    <UnifiedCheckoutDialog />
+                    <Suspense fallback={null}>
+                      <UnifiedCheckoutDialog />
+                    </Suspense>
                     <DraggablePerformanceMonitor />
                   </BrowserRouter>
                 </AIChatProvider>
