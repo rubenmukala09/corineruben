@@ -4,11 +4,15 @@ import { cn } from '@/lib/utils';
 
 type AnimationType = 
   | 'fade-up' 
+  | 'fade-down'
+  | 'fade-left'
+  | 'fade-right'
   | 'fade-in' 
   | 'scale' 
-  | 'slide-left' 
+  | 'blur'
+  | 'slide-left'
   | 'slide-right'
-  // Legacy aliases
+  // Legacy aliases for backwards compatibility
   | 'blur-up' 
   | 'blur-in' 
   | 'elastic' 
@@ -27,28 +31,32 @@ interface ScrollRevealProps {
   duration?: 'fast' | 'normal' | 'slow';
 }
 
-// Map animation types to CSS classes
+// Map animation types to new CSS classes
 const animationClasses: Record<AnimationType, string> = {
-  'fade-up': 'scroll-fade-up',
-  'fade-in': 'scroll-fade-in',
-  'scale': 'scroll-scale-in',
-  'slide-left': 'scroll-slide-left',
-  'slide-right': 'scroll-slide-right',
+  'fade-up': 'reveal-up',
+  'fade-down': 'reveal-down',
+  'fade-left': 'reveal-left',
+  'fade-right': 'reveal-right',
+  'fade-in': 'reveal-fade',
+  'scale': 'reveal-scale',
+  'blur': 'reveal-blur',
+  'slide-left': 'reveal-left',
+  'slide-right': 'reveal-right',
   // Legacy mappings
-  'blur-up': 'scroll-fade-up',
-  'blur-in': 'scroll-fade-in',
-  'elastic': 'scroll-scale-in',
-  'flip': 'scroll-fade-up',
-  'sweep': 'scroll-fade-up',
-  'scale-in': 'scroll-scale-in',
-  'rise': 'scroll-fade-up',
-  'reveal': 'scroll-fade-in',
+  'blur-up': 'reveal-up',
+  'blur-in': 'reveal-fade',
+  'elastic': 'reveal-scale',
+  'flip': 'reveal-up',
+  'sweep': 'reveal-up',
+  'scale-in': 'reveal-scale',
+  'rise': 'reveal-up',
+  'reveal': 'reveal-fade',
 };
 
 const durationClasses = {
-  fast: 'scroll-duration-fast',
-  normal: 'scroll-duration-normal',
-  slow: 'scroll-duration-slow',
+  fast: 'reveal-fast',
+  normal: 'reveal-normal',
+  slow: 'reveal-slow',
 };
 
 export const ScrollReveal = memo(({
@@ -70,10 +78,13 @@ export const ScrollReveal = memo(({
       className={cn(
         animationClasses[animation],
         durationClasses[duration],
-        isVisible && 'scroll-visible',
+        isVisible && 'reveal-visible',
         className
       )}
-      style={delay > 0 ? { transitionDelay: `${delay}ms` } : undefined}
+      style={delay > 0 ? { 
+        transitionDelay: `${delay}ms`,
+        animationDelay: `${delay}ms`,
+      } : undefined}
     >
       {children}
     </div>

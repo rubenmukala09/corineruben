@@ -7,8 +7,25 @@ interface ScrollRevealSectionProps {
   className?: string;
   staggerChildren?: boolean;
   threshold?: number;
-  animation?: 'fade' | 'blur' | 'sweep' | 'cascade';
+  animation?: 'fade-up' | 'fade-down' | 'fade-left' | 'fade-right' | 'scale' | 'blur' | 'fade';
+  duration?: 'fast' | 'normal' | 'slow';
 }
+
+const animationClasses = {
+  'fade-up': 'reveal-up',
+  'fade-down': 'reveal-down',
+  'fade-left': 'reveal-left',
+  'fade-right': 'reveal-right',
+  'scale': 'reveal-scale',
+  'blur': 'reveal-blur',
+  'fade': 'reveal-fade',
+};
+
+const durationClasses = {
+  fast: 'reveal-fast',
+  normal: 'reveal-normal',
+  slow: 'reveal-slow',
+};
 
 // Simplified wrapper component for backward compatibility
 export const ScrollRevealSection = ({ 
@@ -16,6 +33,8 @@ export const ScrollRevealSection = ({
   className = "",
   staggerChildren = false,
   threshold = 0.08,
+  animation = 'fade-up',
+  duration = 'normal',
 }: ScrollRevealSectionProps) => {
   const { ref, isVisible } = useScrollReveal({ 
     threshold,
@@ -26,9 +45,10 @@ export const ScrollRevealSection = ({
     <div
       ref={ref}
       className={cn(
-        "scroll-fade-up scroll-duration-normal",
-        staggerChildren && "stagger-cascade",
-        isVisible && "scroll-visible section-visible",
+        animationClasses[animation],
+        durationClasses[duration],
+        staggerChildren && "stagger-container",
+        isVisible && (staggerChildren ? "stagger-visible reveal-visible" : "reveal-visible"),
         className
       )}
     >
