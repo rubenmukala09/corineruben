@@ -100,6 +100,8 @@ export const HeroHomepage = () => {
           muted
           playsInline
           preload="auto"
+          // @ts-ignore - fetchpriority is valid but not in React types yet
+          fetchpriority="high"
           onCanPlay={() => setVideoLoaded(true)}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
         >
