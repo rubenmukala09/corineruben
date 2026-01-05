@@ -170,6 +170,21 @@ export default {
           "0%": { transform: "scale(1.05)" },
           "100%": { transform: "scale(1.15)" },
         },
+        "pulse-glow": {
+          "0%, 100%": { opacity: "0.15", transform: "scale(1)" },
+          "50%": { opacity: "0.25", transform: "scale(1.1)" },
+        },
+        "float-orbit": {
+          "0%": { transform: "translate(0, 0)" },
+          "25%": { transform: "translate(30px, -20px)" },
+          "50%": { transform: "translate(0, -30px)" },
+          "75%": { transform: "translate(-30px, -10px)" },
+          "100%": { transform: "translate(0, 0)" },
+        },
+        "shimmer-slow": {
+          "0%": { backgroundPosition: "200% 0" },
+          "100%": { backgroundPosition: "-200% 0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
