@@ -99,7 +99,7 @@ export const ScamAlertsSection = () => {
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-2">
                       <h3 className="font-bold text-lg text-foreground">{alert.title}</h3>
-                      <span className="text-accent text-sm font-bold flex items-center gap-1">
+                      <span className="text-emerald-700 dark:text-emerald-400 text-sm font-bold flex items-center gap-1">
                         <TrendingUp className="w-4 h-4" />
                         {alert.trend}
                       </span>

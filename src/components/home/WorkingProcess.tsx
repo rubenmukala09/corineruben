@@ -92,7 +92,7 @@ export const WorkingProcess = () => {
                   </div>
                   
                   {/* Step number badge */}
-                  <div className="absolute -top-2 -right-2 w-10 h-10 bg-accent text-accent-foreground rounded-full flex items-center justify-center font-bold text-sm shadow-lg">
+                  <div className="absolute -top-2 -right-2 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-sm shadow-lg">
                     {step.step}
                   </div>
                 </div>
