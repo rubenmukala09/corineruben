@@ -170,6 +170,37 @@ export default {
           "0%": { transform: "scale(1.05)" },
           "100%": { transform: "scale(1.15)" },
         },
+        "pulse-glow": {
+          "0%, 100%": { opacity: "0.15", transform: "scale(1)" },
+          "50%": { opacity: "0.25", transform: "scale(1.05)" },
+        },
+        "pulse-glow-delayed": {
+          "0%, 100%": { opacity: "0.1", transform: "scale(1)" },
+          "50%": { opacity: "0.2", transform: "scale(1.08)" },
+        },
+        "gradient-wave": {
+          "0%": { opacity: "0.35" },
+          "50%": { opacity: "0.45" },
+          "100%": { opacity: "0.35" },
+        },
+        "float-orbit": {
+          "0%": { transform: "translate(0, 0) rotate(0deg)" },
+          "25%": { transform: "translate(30px, -20px) rotate(90deg)" },
+          "50%": { transform: "translate(0, -40px) rotate(180deg)" },
+          "75%": { transform: "translate(-30px, -20px) rotate(270deg)" },
+          "100%": { transform: "translate(0, 0) rotate(360deg)" },
+        },
+        "float-orbit-reverse": {
+          "0%": { transform: "translate(0, 0) rotate(0deg)" },
+          "25%": { transform: "translate(-25px, 15px) rotate(-90deg)" },
+          "50%": { transform: "translate(0, 30px) rotate(-180deg)" },
+          "75%": { transform: "translate(25px, 15px) rotate(-270deg)" },
+          "100%": { transform: "translate(0, 0) rotate(-360deg)" },
+        },
+        "shimmer-slow": {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -184,6 +215,12 @@ export default {
         "blob-morph": "blob-morph 20s ease-in-out infinite",
         "shimmer": "shimmer 2s infinite linear",
         "slow-zoom": "slow-zoom 30s ease-in-out infinite alternate",
+        "pulse-glow": "pulse-glow 4s ease-in-out infinite",
+        "pulse-glow-delayed": "pulse-glow-delayed 5s ease-in-out infinite 1s",
+        "gradient-wave": "gradient-wave 8s ease-in-out infinite",
+        "float-orbit": "float-orbit 20s ease-in-out infinite",
+        "float-orbit-reverse": "float-orbit-reverse 25s ease-in-out infinite",
+        "shimmer-slow": "shimmer-slow 8s ease-in-out infinite",
       },
       backgroundImage: {
         "gradient-hero-primary": "linear-gradient(135deg, hsl(260 50% 25%) 0%, hsl(260 45% 35%) 50%, hsl(270 50% 45%) 100%)",
