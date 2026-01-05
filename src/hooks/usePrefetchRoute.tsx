@@ -1,37 +1,20 @@
 import { useEffect, useRef } from "react";
 import { preloadRouteImages } from "./useImagePreload";
-
-// Import hero images for preloading
-import heroAboutNew from "@/assets/hero-about-new.jpg";
-import heroAboutProfessional from "@/assets/hero-about-professional.jpg";
-import heroAbout3d from "@/assets/hero-about-3d.jpg";
-import heroAbout from "@/assets/hero-about.jpg";
-import businessDiverse1 from "@/assets/business-diverse-1.jpg";
-import heroBusinessNew from "@/assets/hero-business-new.jpg";
-import heroBusinessProfessional from "@/assets/hero-business-professional.jpg";
-import heroBusiness3d from "@/assets/hero-business-3d.jpg";
-import businessCollaboration from "@/assets/business-collaboration.jpg";
-import heroTraining1 from "@/assets/hero-training-1.jpg";
-import heroTraining2 from "@/assets/hero-training-2.jpg";
-import heroTraining3 from "@/assets/hero-training-3.jpg";
-import heroResources1 from "@/assets/hero-resources-1.jpg";
-import heroResources2 from "@/assets/hero-resources-2.jpg";
-import heroCareers1 from "@/assets/hero-careers-1.jpg";
-import heroCareers2 from "@/assets/hero-careers-2.jpg";
-import heroContact1 from "@/assets/hero-contact-1.jpg";
-import heroContact2 from "@/assets/hero-contact-2.jpg";
-
-// Map routes to their hero images
-const routeHeroImages: Record<string, string[]> = {
-  "/about": [heroAboutNew, heroAboutProfessional, heroAbout3d, heroAbout],
-  "/business": [businessDiverse1, heroBusinessNew, heroBusinessProfessional, businessCollaboration, heroBusiness3d],
-  "/training": [heroTraining1, heroTraining2, heroTraining3],
-  "/resources": [heroResources1, heroResources2],
-  "/careers": [heroCareers1, heroCareers2],
-  "/contact": [heroContact1, heroContact2],
-};
+import { PAGE_NATURE_IMAGES } from "@/config/natureHeroImages";
 
 const prefetchedRoutes = new Set<string>();
+
+// Map routes to their page keys for nature images
+const routeToPageKey: Record<string, string> = {
+  "/about": "about",
+  "/business": "business",
+  "/training": "training",
+  "/resources": "resources",
+  "/careers": "careers",
+  "/contact": "contact",
+  "/faq": "faq",
+};
+
 
 export const usePrefetchRoute = (path: string) => {
   const prefetchTimerRef = useRef<NodeJS.Timeout>();
@@ -40,9 +23,10 @@ export const usePrefetchRoute = (path: string) => {
     if (prefetchedRoutes.has(path)) return;
 
     prefetchTimerRef.current = setTimeout(() => {
-      // Preload hero images for the route
-      const heroImages = routeHeroImages[path];
-      if (heroImages) {
+      // Preload nature hero images for the route
+      const pageKey = routeToPageKey[path];
+      if (pageKey && PAGE_NATURE_IMAGES[pageKey]) {
+        const heroImages = PAGE_NATURE_IMAGES[pageKey].map(img => img.src);
         preloadRouteImages(heroImages);
       }
 

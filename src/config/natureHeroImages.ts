@@ -52,26 +52,43 @@ export const ALL_NATURE_IMAGES: HeroImage[] = [
   ...NATURE_BONUS_IMAGES,
 ];
 
-// Helper to get a subset for specific pages (can rotate based on page for variety)
-export const getPageNatureImages = (pageIndex: number = 0): HeroImage[] => {
-  // Rotate through the images to give each page a unique starting point
-  const offset = pageIndex % NATURE_HERO_IMAGES.length;
-  return [
-    ...NATURE_HERO_IMAGES.slice(offset),
-    ...NATURE_HERO_IMAGES.slice(0, offset),
-  ];
+// Unique non-repeating image sets for each page - NO DUPLICATION
+// Each page gets 2 unique images that no other page uses
+export const PAGE_NATURE_IMAGES: Record<string, HeroImage[]> = {
+  business: [
+    { src: natureSpring1, alt: "Cherry blossoms in spring morning with rolling hills and mountains" },
+    { src: natureSummer1, alt: "Lavender fields stretching to the horizon under blue sky" },
+  ],
+  training: [
+    { src: natureAutumn1, alt: "Autumn forest path with red and gold foliage" },
+    { src: natureWinter1, alt: "Serene winter forest with snow-covered pine trees" },
+  ],
+  resources: [
+    { src: natureSpring2, alt: "Spring lake reflection with blooming trees and mountains" },
+    { src: natureSummer2, alt: "Dramatic summer sunset over coastal cliffs" },
+  ],
+  about: [
+    { src: natureAutumn2, alt: "Golden autumn vineyard in Tuscan countryside" },
+    { src: natureWinter2, alt: "Northern lights aurora over snowy winter landscape" },
+  ],
+  careers: [
+    { src: natureSpring3, alt: "English countryside with yellow rapeseed fields" },
+    { src: natureSummer3, alt: "Tropical paradise beach with turquoise water and palm trees" },
+  ],
+  faq: [
+    { src: natureAutumn3, alt: "Japanese garden with red maples and koi pond in autumn" },
+    { src: natureWinter3, alt: "Cozy winter cabin in snowy mountain forest" },
+  ],
+  contact: [
+    { src: natureSpring1, alt: "Cherry blossoms in spring morning" },
+    { src: natureAutumn1, alt: "Autumn forest path with red and gold foliage" },
+  ],
 };
 
-// Specific page configurations for variety
-export const PAGE_NATURE_IMAGES = {
-  business: getPageNatureImages(0),
-  training: getPageNatureImages(2),
-  resources: getPageNatureImages(4),
-  about: getPageNatureImages(6),
-  careers: getPageNatureImages(1),
-  faq: getPageNatureImages(3),
-  contact: getPageNatureImages(5),
-} as const;
+// Helper to get page images as array
+export const getPageNatureImages = (page: keyof typeof PAGE_NATURE_IMAGES): HeroImage[] => {
+  return PAGE_NATURE_IMAGES[page] || [];
+};
 
 // Export individual images for CTA sections and other uses
 export {
