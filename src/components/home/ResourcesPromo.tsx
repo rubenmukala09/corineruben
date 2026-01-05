@@ -121,7 +121,7 @@ export const ResourcesPromo = () => {
               <h4 className="font-bold text-foreground mb-4 flex items-center gap-2">
                 <ShoppingBag className="w-5 h-5 text-primary" />
                 Physical Security Products
-                <span className="ml-auto px-2 py-0.5 bg-accent/10 text-accent text-xs font-bold rounded-full flex items-center gap-1">
+                <span className="ml-auto px-2 py-0.5 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full flex items-center gap-1">
                   <Percent className="w-3 h-3" /> Bundle & Save 15%
                 </span>
               </h4>
