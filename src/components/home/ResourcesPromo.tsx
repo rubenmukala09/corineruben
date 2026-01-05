@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { FileText, Shield, BookOpen, ArrowRight, Sparkles, Download, Lock, Gift, ShoppingBag, Usb, CreditCard, Phone, Package, Star, Percent } from "lucide-react";
-import resourcesHeroDesk from "@/assets/resources-hero-desk.png";
+import { FileText, Shield, BookOpen, ArrowRight, Sparkles, Download, Lock, Gift, ShoppingBag, Usb, CreditCard, Phone, Package, Star, Percent, CheckCircle, Eye, AlertTriangle } from "lucide-react";
 
 const resources = [
   {
@@ -53,6 +52,13 @@ const features = [
   { icon: Gift, text: "Veteran Discounts (10%)" },
 ];
 
+const scriptTypes = [
+  { name: "IRS Scam", icon: AlertTriangle },
+  { name: "Tech Support", icon: Phone },
+  { name: "Grandparent", icon: Gift },
+  { name: "Bank Fraud", icon: CreditCard },
+];
+
 export const ResourcesPromo = () => {
   return (
     <section className="py-24 bg-gradient-to-b from-muted/30 via-background to-muted/20 relative overflow-hidden">
@@ -82,7 +88,7 @@ export const ResourcesPromo = () => {
             
             <p className="text-xl text-muted-foreground leading-relaxed">
               Beyond training, we provide the tools you need to stay protected. From insurance coverage to free educational materials, 
-              we've got you covered.
+              we've got you covered. Browse our digital guides, physical products, and free emergency scripts.
             </p>
 
             {/* Quick features */}
@@ -93,6 +99,27 @@ export const ResourcesPromo = () => {
                   <span className="text-sm font-medium">{feature.text}</span>
                 </div>
               ))}
+            </div>
+
+            {/* Free Emergency Scripts Highlight */}
+            <div className="bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-emerald-500/20 rounded-2xl p-5">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
+                  <FileText className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-foreground">Free Emergency Anti-Scam Scripts</h4>
+                  <p className="text-sm text-muted-foreground">Downloadable PDF scripts for common scam scenarios</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {scriptTypes.map((script, index) => (
+                  <div key={index} className="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full border border-emerald-500/20">
+                    <script.icon className="w-3 h-3 text-emerald-600" />
+                    <span className="text-sm font-medium text-foreground">{script.name}</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Book Categories */}
@@ -209,6 +236,22 @@ export const ResourcesPromo = () => {
                 <Link to="/resources" className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-full text-sm font-bold transition-colors">
                   Get Free →
                 </Link>
+              </div>
+            </div>
+
+            {/* Trust Badges */}
+            <div className="flex flex-wrap gap-3 justify-center pt-4">
+              <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border/50 shadow-sm">
+                <Shield className="w-4 h-4 text-primary" />
+                <span className="text-sm font-medium">HIPAA Protected</span>
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border/50 shadow-sm">
+                <Star className="w-4 h-4 text-amber-500" />
+                <span className="text-sm font-medium">10% Veteran Discount</span>
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border/50 shadow-sm">
+                <CheckCircle className="w-4 h-4 text-green-600" />
+                <span className="text-sm font-medium">30-Day Guarantee</span>
               </div>
             </div>
           </motion.div>

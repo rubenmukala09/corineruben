@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Phone, Calendar, Bot, Globe, ArrowRight, Sparkles, Shield, Clock, TrendingUp } from "lucide-react";
+import { Phone, Calendar, Bot, Globe, ArrowRight, Sparkles, Shield, Clock, TrendingUp, Star, Zap, Users, Award, CheckCircle, Palette, Headphones, Settings, Lock } from "lucide-react";
+import businessTechBg from "@/assets/business-tech-bg.jpg";
 import businessProfessionalsOffice from "@/assets/business-professionals-office.jpg";
 
 const services = [
@@ -21,8 +22,8 @@ const services = [
   },
   {
     icon: Bot,
-    title: "Custom Automation",
-    description: "Enterprise-grade AI solutions tailored to your specific business needs.",
+    title: "AI Agent Automation",
+    description: "We build custom AI agents & automation. Support agents from any vendor.",
     price: "$25,000+",
     highlight: "Full customization",
   },
@@ -35,9 +36,16 @@ const services = [
   },
 ];
 
+const premiumAddons = [
+  { icon: Palette, name: "Premium Add-ons & Features", desc: "Custom integrations and advanced features" },
+  { icon: Shield, name: "Website Insurance", desc: "Subscription maintenance & protection" },
+  { icon: Headphones, name: "Consultancy Services", desc: "Expert guidance for your AI journey" },
+];
+
 const highlights = [
   { icon: Clock, text: "24/7 Availability" },
-  { icon: Shield, text: "60-Day Guarantee" },
+  { icon: Shield, text: "30-Day Guarantee" },
+  { icon: Lock, text: "HIPAA Compliant" },
   { icon: TrendingUp, text: "Ohio-Based Support" },
 ];
 
@@ -50,6 +58,16 @@ const roiFacts = [
 export const AIBusinessPromo = () => {
   return (
     <section className="py-24 bg-gradient-to-b from-muted/30 via-background to-muted/20 relative overflow-hidden">
+      {/* Background Image with blur overlay */}
+      <div className="absolute inset-0">
+        <img 
+          src={businessTechBg} 
+          alt="" 
+          className="w-full h-full object-cover opacity-15"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background" />
+      </div>
+
       {/* Decorative elements */}
       <div className="absolute top-40 left-20 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px]" />
       <div className="absolute bottom-40 right-20 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[100px]" />
@@ -75,9 +93,38 @@ export const AIBusinessPromo = () => {
             </h2>
             
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Transform your business with AI-powered receptionists, automated scheduling, and professional websites. 
-              Our solutions work 24/7 so you never miss an opportunity.
+              Transform your business with AI-powered receptionists, automated scheduling, professional websites, and custom AI agents. 
+              We build solutions that work 24/7 so you never miss an opportunity.
             </p>
+
+            {/* AI Service Insurance - Star Innovation */}
+            <motion.div 
+              className="bg-gradient-to-r from-amber-500/10 via-amber-400/10 to-yellow-500/10 border-2 border-amber-500/30 rounded-2xl p-5 relative overflow-hidden"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+            >
+              {/* Stars decoration */}
+              <div className="absolute top-2 right-2 flex gap-1">
+                {[...Array(7)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 text-amber-500 fill-amber-500" />
+                ))}
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/30">
+                  <Shield className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="font-bold text-lg text-foreground">AI Service Insurance</h3>
+                    <span className="px-2 py-0.5 bg-amber-500 text-white text-[10px] font-bold rounded-full">INDUSTRY FIRST!</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    We're the first to implement AI Service Insurance — protecting your investment in AI automation with ongoing support, updates, and coverage.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
 
             {/* ROI Facts */}
             <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-2xl p-5">
@@ -96,7 +143,7 @@ export const AIBusinessPromo = () => {
             </div>
 
             {/* Quick Highlights */}
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3">
               {highlights.map((highlight, index) => (
                 <div key={index} className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border/50 shadow-sm">
                   <highlight.icon className="w-4 h-4 text-primary" />
@@ -131,6 +178,25 @@ export const AIBusinessPromo = () => {
                   </div>
                 </motion.div>
               ))}
+            </div>
+
+            {/* Premium Add-ons */}
+            <div className="bg-white rounded-2xl p-4 border border-border/50 shadow-sm">
+              <h4 className="font-bold text-foreground mb-3 flex items-center gap-2">
+                <Zap className="w-4 h-4 text-accent" />
+                Premium Services
+              </h4>
+              <div className="space-y-2">
+                {premiumAddons.map((addon, index) => (
+                  <div key={index} className="flex items-center gap-3 p-2 bg-muted/50 rounded-lg">
+                    <addon.icon className="w-4 h-4 text-primary" />
+                    <div>
+                      <span className="text-sm font-medium text-foreground">{addon.name}</span>
+                      <span className="text-xs text-muted-foreground ml-2">{addon.desc}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* CTAs */}
@@ -184,6 +250,18 @@ export const AIBusinessPromo = () => {
                   <div className="text-2xl font-bold text-primary">150+</div>
                   <div className="text-xs text-muted-foreground">Businesses Served</div>
                 </div>
+              </div>
+            </div>
+
+            {/* Trust badges below image */}
+            <div className="mt-6 flex flex-wrap gap-3 justify-center">
+              <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border/50 shadow-sm">
+                <Users className="w-4 h-4 text-primary" />
+                <span className="text-sm font-medium">10% Veteran Discount</span>
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border/50 shadow-sm">
+                <Award className="w-4 h-4 text-amber-500" />
+                <span className="text-sm font-medium">Support Any AI Vendor</span>
               </div>
             </div>
 

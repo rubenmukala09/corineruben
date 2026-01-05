@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Users, Clock, Award, Shield, CheckCircle, ArrowRight, Sparkles, Play, BookOpen, Star, DollarSign } from "lucide-react";
+import { Users, Clock, Award, Shield, CheckCircle, ArrowRight, Sparkles, Play, BookOpen, Star, DollarSign, Brain, Eye, AlertTriangle, Lock, Target, Briefcase } from "lucide-react";
 import workshopSeniorsLearning from "@/assets/workshop-seniors-learning.jpg";
+import learningBg from "@/assets/learning-bg.jpg";
 
 const benefits = [
   { icon: Shield, text: "60-Second Pause Protocol" },
@@ -51,9 +52,28 @@ const howItWorks = [
   { step: "3", title: "Get Support", desc: "Ongoing access to resources" },
 ];
 
+const services = [
+  { icon: AlertTriangle, title: "Scam Prevention Workshop", desc: "Learn to identify and avoid AI-powered scams" },
+  { icon: Shield, title: "Simple Protection in 4 Steps", desc: "Our proven methodology for staying safe" },
+  { icon: Target, title: "Choose Your Protection Level", desc: "Subscription tiers for ongoing protection" },
+  { icon: Eye, title: "Threat Analysis Training", desc: "We analyze all types of threats in real-time" },
+  { icon: Brain, title: "AI Professional Development", desc: "Advanced training for tech-savvy professionals" },
+  { icon: Briefcase, title: "Corporate Training Programs", desc: "Customized workshops for your organization" },
+];
+
 export const WorkshopsPromo = () => {
   return (
     <section className="py-24 bg-gradient-to-b from-background via-muted/20 to-background relative overflow-hidden">
+      {/* Background Image with blur overlay */}
+      <div className="absolute inset-0">
+        <img 
+          src={learningBg} 
+          alt="" 
+          className="w-full h-full object-cover opacity-20"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
+      </div>
+      
       {/* Decorative elements */}
       <div className="absolute top-20 right-10 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px]" />
       <div className="absolute bottom-20 left-10 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px]" />
@@ -99,6 +119,22 @@ export const WorkshopsPromo = () => {
                 </div>
               </div>
             </div>
+
+            {/* Trust Badges */}
+            <div className="mt-6 flex flex-wrap gap-3 justify-center">
+              <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border/50 shadow-sm">
+                <Shield className="w-4 h-4 text-primary" />
+                <span className="text-sm font-medium">HIPAA Protected</span>
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border/50 shadow-sm">
+                <Star className="w-4 h-4 text-amber-500" />
+                <span className="text-sm font-medium">10% Veteran Discount</span>
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border/50 shadow-sm">
+                <CheckCircle className="w-4 h-4 text-green-600" />
+                <span className="text-sm font-medium">30-Day Guarantee</span>
+              </div>
+            </div>
           </motion.div>
 
           {/* Content Side */}
@@ -125,8 +161,28 @@ export const WorkshopsPromo = () => {
             
             <p className="text-lg text-muted-foreground leading-relaxed">
               Expert-led workshops teaching the 60-Second Pause Protocol, identity verification scripts, and real-world scam recognition. 
-              We train seniors, families, and business professionals to spot AI-powered threats.
+              We train seniors, families, and business professionals to spot AI-powered threats. Subscribe to our protection plans for ongoing security.
             </p>
+
+            {/* Services Grid */}
+            <div className="grid grid-cols-2 gap-3">
+              {services.slice(0, 4).map((service, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="flex items-start gap-2 p-3 bg-white rounded-xl border border-border/50 shadow-sm"
+                >
+                  <service.icon className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <div>
+                    <div className="text-sm font-bold text-foreground">{service.title}</div>
+                    <div className="text-xs text-muted-foreground">{service.desc}</div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
 
             {/* Target Audiences */}
             <div className="flex flex-wrap gap-2">
@@ -134,16 +190,6 @@ export const WorkshopsPromo = () => {
                 <span key={index} className="px-3 py-1.5 bg-muted rounded-full text-sm font-medium text-foreground">
                   {audience}
                 </span>
-              ))}
-            </div>
-
-            {/* Benefits */}
-            <div className="grid grid-cols-2 gap-3">
-              {benefits.map((benefit, index) => (
-                <div key={index} className="flex items-center gap-2 px-4 py-2.5 bg-white rounded-xl border border-border/50 shadow-sm">
-                  <benefit.icon className="w-5 h-5 text-primary" />
-                  <span className="text-sm font-medium">{benefit.text}</span>
-                </div>
               ))}
             </div>
 

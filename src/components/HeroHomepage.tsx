@@ -162,7 +162,7 @@ export const HeroHomepage = () => {
               <span className="block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">Network</span>
               <span className="block font-light text-muted-foreground/80 text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mt-2 sm:mt-3">
                 <TypewriterText 
-                  words={["Intelligence for Life", "Intelligence for Business"]} 
+                  words={["Protection • Education • Innovation"]} 
                   className="bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text"
                 />
               </span>
@@ -178,7 +178,7 @@ export const HeroHomepage = () => {
           }} transition={{
             delay: 0.5,
             duration: 0.8
-          }}>Protecting families from AI-powered scams. Automating businesses with intelligent AI solutions.</motion.p>
+          }}>Empowering families with AI scam protection. Transforming businesses with cutting-edge automation solutions.</motion.p>
             
             {/* Split Identity CTAs - Stack on mobile, ensure z-index */}
             <motion.div className="flex flex-col sm:flex-row gap-3 sm:gap-4 relative z-30" initial={{

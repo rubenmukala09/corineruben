@@ -10,6 +10,7 @@ import { CommunityImpact } from "@/components/home/CommunityImpact";
 import { WorkingProcess } from "@/components/home/WorkingProcess";
 import { ScamAlertsSection } from "@/components/home/ScamAlertsSection";
 import { FAQPreview } from "@/components/home/FAQPreview";
+import { QuickLinksSection } from "@/components/home/QuickLinksSection";
 import CTASection from "@/components/CTASection";
 import { ScamShieldSubmission } from "@/components/ScamShieldSubmission";
 import { PageTransition } from "@/components/PageTransition";
@@ -79,6 +80,11 @@ function Index() {
             <FAQPreview />
           </section>
 
+          {/* Quick Links - FAQ, Contact, Careers */}
+          <section id="quick-links">
+            <QuickLinksSection />
+          </section>
+
           {/* Final CTA with Senior Couple Image */}
           <CTASection headline="Join Our Protected Community" variant="image" backgroundImage={seniorCoupleActive}>
             <p className="text-xl text-white/90 mb-8">Join families across Ohio who live confidently, knowing they're protected from AI scams.</p>
@@ -91,7 +97,7 @@ function Index() {
               </Button>
             </div>
             <p className="text-white/80 mt-6 text-sm">
-              ✓ Veteran-Supporting ✓ Ohio-Based ✓ 60-Day Money-Back Guarantee
+              ✓ 10% Veteran Discount ✓ HIPAA Compliant ✓ 30-Day Money-Back Guarantee
             </p>
           </CTASection>
 
