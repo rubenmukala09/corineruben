@@ -7,6 +7,14 @@ import { initPerformanceOptimizations } from "./utils/performanceOptimization";
 // Initialize performance optimizations
 if (typeof window !== 'undefined') {
   initPerformanceOptimizations();
+  
+  // Preload critical hero video for faster LCP
+  const videoPreload = document.createElement('link');
+  videoPreload.rel = 'preload';
+  videoPreload.as = 'video';
+  videoPreload.href = '/assets/people-studying-video.mp4';
+  videoPreload.type = 'video/mp4';
+  document.head.appendChild(videoPreload);
 }
 
 // Register service worker only in production
