@@ -39,8 +39,8 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   }
 
   :root {
-    /* Base colors - Premium warm ivory for luxury feel */
-    --background: 40 30% 98%;
+    /* Base colors - Soft Modern off-white background */
+    --background: 220 14% 96%;
     --foreground: 260 45% 12%;
     
     /* Royal Purple - Primary brand color (Professional, trustworthy) */
@@ -59,23 +59,23 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --destructive: 0 70% 45%;
     --destructive-foreground: 0 0% 100%;
     
-    /* Card & Surface colors - Warm cream with subtle depth */
-    --card: 40 25% 97%;
+    /* Card & Surface colors - Pure white for floating cards */
+    --card: 0 0% 100%;
     --card-foreground: 260 45% 12%;
     
-    --popover: 40 20% 99%;
+    --popover: 0 0% 100%;
     --popover-foreground: 260 45% 12%;
     
-    /* Warm secondary tones */
-    --secondary: 40 15% 94%;
+    /* Soft secondary tones */
+    --secondary: 220 14% 92%;
     --secondary-foreground: 265 55% 42%;
     
-    /* Muted tones - warm and readable */
-    --muted: 40 12% 90%;
+    /* Muted tones - soft and readable */
+    --muted: 220 13% 91%;
     --muted-foreground: 260 18% 38%;
     
-    --border: 40 15% 85%;
-    --input: 40 15% 88%;
+    --border: 220 13% 91%;
+    --input: 220 14% 94%;
     --ring: 265 55% 42%;
     
     --radius: 0.625rem;
@@ -95,12 +95,12 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --violet-400: 270 45% 52%;
     --violet-300: 270 40% 68%;
     
-    /* Warm slate neutrals */
+    /* Neutral slate tones */
     --slate-900: 260 30% 10%;
     --slate-700: 260 22% 25%;
     --slate-500: 260 15% 42%;
     --slate-300: 260 12% 70%;
-    --slate-100: 40 15% 94%;
+    --slate-100: 220 14% 96%;
     
     /* Gold accent for premium touches */
     --gold-500: 38 85% 48%;
@@ -117,23 +117,25 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --cyan-500: 185 65% 40%;
     --cyan-400: 185 60% 52%;
     
-    /* Premium Shadows - warm, layered depth */
-    --shadow-soft: 0 2px 8px -2px hsl(260 30% 20% / 0.08), 0 1px 3px -1px hsl(260 30% 20% / 0.04);
-    --shadow-medium: 0 8px 24px -4px hsl(260 30% 20% / 0.1), 0 4px 10px -3px hsl(260 30% 20% / 0.05);
-    --shadow-strong: 0 16px 40px -8px hsl(260 30% 20% / 0.12), 0 8px 16px -6px hsl(260 30% 20% / 0.06);
+    /* Soft Modern Shadows - diffused, premium depth */
+    --shadow-soft: 0 4px 20px -4px hsl(220 20% 20% / 0.06);
+    --shadow-medium: 0 10px 40px -10px hsl(220 20% 20% / 0.08);
+    --shadow-strong: 0 20px 60px -15px hsl(220 20% 20% / 0.1);
+    --shadow-float: 0 10px 40px -10px hsl(0 0% 0% / 0.08);
+    --shadow-float-hover: 0 20px 50px -10px hsl(0 0% 0% / 0.12);
     --shadow-glow-primary: 0 0 40px hsl(265 55% 42% / 0.18);
     --shadow-glow-accent: 0 0 40px hsl(270 50% 48% / 0.18);
     
     /* Radial gradients for background orbs */
     --gradient-radial: radial-gradient(circle, var(--tw-gradient-stops));
     
-    --sidebar-background: 40 20% 97%;
+    --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 260 45% 12%;
     --sidebar-primary: 260 55% 40%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 40 15% 92%;
+    --sidebar-accent: 220 14% 96%;
     --sidebar-accent-foreground: 260 55% 40%;
-    --sidebar-border: 40 15% 85%;
+    --sidebar-border: 220 13% 91%;
     --sidebar-ring: 260 55% 40%;
     
     /* Global site scale for desktop browsers */
@@ -194,11 +196,11 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     position: relative;
     /* Desktop zoom scaling */
     zoom: var(--site-scale);
-    /* Premium subtle texture */
+    /* Soft Modern - subtle off-white with very gentle gradient */
+    background-color: hsl(220 14% 96%);
     background-image: 
-      radial-gradient(ellipse at 20% 0%, hsl(265 55% 42% / 0.02) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 100%, hsl(170 60% 38% / 0.015) 0%, transparent 50%),
-      linear-gradient(180deg, hsl(40 30% 98%) 0%, hsl(40 25% 96%) 100%);
+      radial-gradient(ellipse at 20% 0%, hsl(265 55% 42% / 0.015) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 100%, hsl(170 60% 38% / 0.01) 0%, transparent 60%);
     background-attachment: fixed;
   }
   

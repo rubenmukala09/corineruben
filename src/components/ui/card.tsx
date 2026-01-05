@@ -6,11 +6,11 @@ const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElemen
   <div 
     ref={ref} 
     className={cn(
-      "rounded-2xl border bg-card/80 text-card-foreground shadow-soft",
-      "backdrop-blur-md relative overflow-hidden card-enhanced",
-      "before:absolute before:inset-0 before:rounded-2xl before:p-[1px]",
-      "before:bg-gradient-to-br before:from-primary/20 before:to-primary/0",
-      "before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
+      "rounded-3xl border border-white/50 bg-card text-card-foreground",
+      "shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)]",
+      "transition-all duration-400 ease-out",
+      "hover:translate-y-[-8px] hover:scale-[1.02]",
+      "hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]",
       className
     )} 
     {...props} 
@@ -20,7 +20,7 @@ Card.displayName = "Card";
 
 const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn("flex flex-col space-y-1.5 p-6", className)} {...props} />
+    <div ref={ref} className={cn("flex flex-col space-y-1.5 p-8", className)} {...props} />
   ),
 );
 CardHeader.displayName = "CardHeader";
@@ -40,13 +40,13 @@ const CardDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttribu
 CardDescription.displayName = "CardDescription";
 
 const CardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />,
+  ({ className, ...props }, ref) => <div ref={ref} className={cn("p-8 pt-0", className)} {...props} />,
 );
 CardContent.displayName = "CardContent";
 
 const CardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn("flex items-center p-6 pt-0", className)} {...props} />
+    <div ref={ref} className={cn("flex items-center p-8 pt-0", className)} {...props} />
   ),
 );
 CardFooter.displayName = "CardFooter";
