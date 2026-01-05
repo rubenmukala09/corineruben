@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* InVision Network Design System - "Liquid Trust" Premium Visual Design
-All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid animations. */
+/* InVision Network Design System - "Velvet Luxury" Premium Visual Design
+   Agency-grade aesthetics with deep color depth and refined textures */
 
 @layer base {
   * {
@@ -17,14 +17,14 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
 
   body.loaded {
     opacity: 1;
-    transition: opacity 0.3s ease-out;
+    transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   /* Instant button feedback */
   button.active-press,
   a.active-press {
-    transform: scale(0.95);
-    transition: transform 0.1s ease-out;
+    transform: scale(0.96);
+    transition: transform 0.12s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   /* Smooth GPU-accelerated animations */
@@ -33,110 +33,129 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     transform: translateZ(0);
   }
 
-  /* Remove will-change after animation */
   .smooth-animation:not(:hover):not(:focus) {
     will-change: auto;
   }
 
   :root {
-    /* Base colors - Premium warm ivory for luxury feel */
-    --background: 40 30% 98%;
-    --foreground: 260 45% 12%;
+    /* Premium base - Warm pearl with subtle depth */
+    --background: 45 25% 98%;
+    --foreground: 240 20% 12%;
     
-    /* Royal Purple - Primary brand color (Professional, trustworthy) */
-    --primary: 265 55% 42%;
+    /* Deep Royal Purple - Rich, commanding */
+    --primary: 268 65% 38%;
     --primary-foreground: 0 0% 100%;
     
-    /* Teal Accent - Fresh, vibrant complement to purple */
-    --accent: 170 60% 38%;
+    /* Emerald Teal Accent - Sophisticated complement */
+    --accent: 168 55% 32%;
     --accent-foreground: 0 0% 100%;
     
-    /* Success Green - Safety, verification */
-    --success: 160 65% 38%;
+    /* Success - Deep forest */
+    --success: 158 60% 32%;
     --success-foreground: 0 0% 100%;
     
-    /* Alert Red - Danger, urgency */
-    --destructive: 0 70% 45%;
+    /* Destructive - Refined crimson */
+    --destructive: 0 65% 42%;
     --destructive-foreground: 0 0% 100%;
     
-    /* Card & Surface colors - Warm cream with subtle depth */
-    --card: 40 25% 97%;
-    --card-foreground: 260 45% 12%;
+    /* Cards - Warm cream with depth */
+    --card: 42 35% 97%;
+    --card-foreground: 240 20% 12%;
     
-    --popover: 40 20% 99%;
-    --popover-foreground: 260 45% 12%;
+    --popover: 45 30% 99%;
+    --popover-foreground: 240 20% 12%;
     
-    /* Warm secondary tones */
-    --secondary: 40 15% 94%;
-    --secondary-foreground: 265 55% 42%;
+    /* Warm secondary - Champagne tint */
+    --secondary: 42 25% 94%;
+    --secondary-foreground: 268 65% 38%;
     
-    /* Muted tones - warm and readable */
-    --muted: 40 12% 90%;
-    --muted-foreground: 260 18% 38%;
+    /* Muted - Sophisticated gray */
+    --muted: 40 15% 88%;
+    --muted-foreground: 240 12% 35%;
     
-    --border: 40 15% 85%;
-    --input: 40 15% 88%;
-    --ring: 265 55% 42%;
+    /* Refined borders */
+    --border: 40 20% 82%;
+    --input: 42 18% 86%;
+    --ring: 268 65% 38%;
     
-    --radius: 0.625rem;
+    --radius: 0.75rem;
     
-    /* Extended Color Palette - Royal Purple Spectrum */
-    --purple-900: 260 50% 16%;
-    --purple-700: 260 48% 26%;
-    --purple-500: 260 45% 38%;
-    --purple-400: 260 42% 48%;
-    --purple-300: 260 38% 62%;
-    --purple-200: 260 30% 78%;
-    --purple-100: 260 25% 92%;
+    /* Deep Purple Spectrum */
+    --purple-900: 268 55% 12%;
+    --purple-800: 268 52% 18%;
+    --purple-700: 268 50% 24%;
+    --purple-600: 268 52% 32%;
+    --purple-500: 268 55% 38%;
+    --purple-400: 268 50% 48%;
+    --purple-300: 268 42% 62%;
+    --purple-200: 268 35% 78%;
+    --purple-100: 268 28% 92%;
     
-    /* Deep violet accents for highlights */
-    --violet-600: 270 55% 32%;
-    --violet-500: 270 50% 42%;
-    --violet-400: 270 45% 52%;
-    --violet-300: 270 40% 68%;
+    /* Violet accents */
+    --violet-600: 275 58% 28%;
+    --violet-500: 275 52% 38%;
+    --violet-400: 275 48% 50%;
+    --violet-300: 275 42% 65%;
     
-    /* Warm slate neutrals */
-    --slate-900: 260 30% 10%;
-    --slate-700: 260 22% 25%;
-    --slate-500: 260 15% 42%;
-    --slate-300: 260 12% 70%;
-    --slate-100: 40 15% 94%;
+    /* Warm slate with purple undertones */
+    --slate-900: 250 25% 8%;
+    --slate-800: 248 22% 14%;
+    --slate-700: 245 18% 22%;
+    --slate-600: 242 15% 32%;
+    --slate-500: 240 12% 42%;
+    --slate-400: 238 10% 55%;
+    --slate-300: 235 10% 70%;
+    --slate-200: 232 12% 84%;
+    --slate-100: 45 18% 95%;
     
-    /* Gold accent for premium touches */
-    --gold-500: 38 85% 48%;
-    --gold-400: 40 80% 55%;
+    /* Luxe Gold - Premium accent */
+    --gold-600: 38 90% 42%;
+    --gold-500: 40 92% 50%;
+    --gold-400: 42 88% 58%;
+    --gold-300: 44 82% 70%;
     
-    /* Keep teal for specific accents only */
-    --teal-600: 175 70% 28%;
-    --teal-500: 175 65% 35%;
-    --teal-400: 175 60% 45%;
-    --teal-300: 175 50% 60%;
-    --teal-100: 175 40% 92%;
+    /* Deep Teal spectrum */
+    --teal-700: 172 65% 22%;
+    --teal-600: 170 62% 28%;
+    --teal-500: 168 58% 34%;
+    --teal-400: 166 52% 42%;
+    --teal-300: 164 45% 55%;
+    --teal-200: 162 38% 72%;
+    --teal-100: 160 32% 90%;
     
-    --cyan-600: 185 70% 32%;
-    --cyan-500: 185 65% 40%;
-    --cyan-400: 185 60% 52%;
+    --cyan-600: 185 65% 28%;
+    --cyan-500: 183 60% 36%;
+    --cyan-400: 182 55% 48%;
     
-    /* Premium Shadows - warm, layered depth */
-    --shadow-soft: 0 2px 8px -2px hsl(260 30% 20% / 0.08), 0 1px 3px -1px hsl(260 30% 20% / 0.04);
-    --shadow-medium: 0 8px 24px -4px hsl(260 30% 20% / 0.1), 0 4px 10px -3px hsl(260 30% 20% / 0.05);
-    --shadow-strong: 0 16px 40px -8px hsl(260 30% 20% / 0.12), 0 8px 16px -6px hsl(260 30% 20% / 0.06);
-    --shadow-glow-primary: 0 0 40px hsl(265 55% 42% / 0.18);
-    --shadow-glow-accent: 0 0 40px hsl(270 50% 48% / 0.18);
+    /* Premium layered shadows */
+    --shadow-xs: 0 1px 2px hsl(240 20% 12% / 0.04);
+    --shadow-sm: 0 2px 4px hsl(240 20% 12% / 0.04), 0 1px 2px hsl(240 20% 12% / 0.02);
+    --shadow-md: 0 4px 12px hsl(240 20% 12% / 0.06), 0 2px 4px hsl(240 20% 12% / 0.03);
+    --shadow-lg: 0 8px 24px hsl(240 20% 12% / 0.08), 0 4px 8px hsl(240 20% 12% / 0.04);
+    --shadow-xl: 0 16px 48px hsl(240 20% 12% / 0.1), 0 8px 16px hsl(240 20% 12% / 0.05);
+    --shadow-2xl: 0 24px 64px hsl(240 20% 12% / 0.12), 0 12px 24px hsl(240 20% 12% / 0.06);
     
-    /* Radial gradients for background orbs */
+    /* Colored glows */
+    --shadow-glow-primary: 0 0 48px hsl(268 65% 38% / 0.15), 0 0 24px hsl(268 65% 38% / 0.08);
+    --shadow-glow-accent: 0 0 48px hsl(168 55% 32% / 0.15), 0 0 24px hsl(168 55% 32% / 0.08);
+    --shadow-glow-gold: 0 0 48px hsl(40 92% 50% / 0.2), 0 0 24px hsl(40 92% 50% / 0.1);
+    
+    /* Inner shadows for depth */
+    --shadow-inner-light: inset 0 1px 0 hsl(0 0% 100% / 0.6);
+    --shadow-inner-dark: inset 0 -1px 0 hsl(240 20% 12% / 0.05);
+    
     --gradient-radial: radial-gradient(circle, var(--tw-gradient-stops));
     
-    --sidebar-background: 40 20% 97%;
-    --sidebar-foreground: 260 45% 12%;
-    --sidebar-primary: 260 55% 40%;
+    /* Sidebar */
+    --sidebar-background: 42 30% 97%;
+    --sidebar-foreground: 240 20% 12%;
+    --sidebar-primary: 268 55% 38%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 40 15% 92%;
-    --sidebar-accent-foreground: 260 55% 40%;
-    --sidebar-border: 40 15% 85%;
-    --sidebar-ring: 260 55% 40%;
+    --sidebar-accent: 42 20% 92%;
+    --sidebar-accent-foreground: 268 55% 38%;
+    --sidebar-border: 40 18% 84%;
+    --sidebar-ring: 268 55% 38%;
     
-    /* Global site scale for desktop browsers */
     --site-scale: 0.78;
   }
 
@@ -182,30 +201,58 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     width: 100%;
     scroll-behavior: smooth;
     scrollbar-gutter: stable;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Outfit', system-ui, -apple-system, sans-serif;
     font-size: 18px;
-    line-height: 1.8;
+    line-height: 1.75;
+    letter-spacing: -0.01em;
     overflow-x: hidden;
     width: 100%;
     position: relative;
-    /* Desktop zoom scaling */
     zoom: var(--site-scale);
-    /* Premium subtle texture */
-    background-image: 
-      radial-gradient(ellipse at 20% 0%, hsl(265 55% 42% / 0.02) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 100%, hsl(170 60% 38% / 0.015) 0%, transparent 50%),
-      linear-gradient(180deg, hsl(40 30% 98%) 0%, hsl(40 25% 96%) 100%);
+    /* Luxe multi-layer background */
+    background: 
+      /* Subtle noise texture via SVG */
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"),
+      /* Ambient color washes */
+      radial-gradient(ellipse 100% 80% at 10% -20%, hsl(268 65% 38% / 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse 80% 60% at 90% 110%, hsl(168 55% 32% / 0.03) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 40% at 50% 50%, hsl(40 92% 50% / 0.02) 0%, transparent 60%),
+      /* Base warm gradient */
+      linear-gradient(175deg, hsl(45 25% 98%) 0%, hsl(42 28% 96%) 50%, hsl(45 22% 97%) 100%);
     background-attachment: fixed;
+    background-blend-mode: overlay, normal, normal, normal, normal;
+  }
+  
+  /* Noise layer opacity */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.015;
+    z-index: 9999;
+    mix-blend-mode: overlay;
   }
   
   @media (min-width: 768px) {
     body {
+      font-size: 19px;
+      line-height: 1.8;
+      letter-spacing: -0.015em;
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    body {
       font-size: 20px;
-      line-height: 1.75;
     }
   }
 
@@ -262,23 +309,43 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     white-space: normal;
   }
   
-  /* Custom scrollbar for activity feed and other scrollable elements */
+  /* Premium scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted) / 0.5);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, hsl(var(--purple-400)), hsl(var(--purple-500)));
+    border-radius: 5px;
+    border: 2px solid hsl(var(--background));
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, hsl(var(--purple-500)), hsl(var(--purple-600)));
+  }
+  
+  /* Custom scrollbar for containers */
   .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
   }
   
   .custom-scrollbar::-webkit-scrollbar-track {
-    background: hsl(var(--muted));
+    background: hsl(var(--muted) / 0.3);
     border-radius: 10px;
   }
   
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: hsl(var(--muted-foreground) / 0.3);
+    background: hsl(var(--purple-400) / 0.5);
     border-radius: 10px;
   }
   
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--muted-foreground) / 0.5);
+    background: hsl(var(--purple-500) / 0.7);
   }
   
   #root {
@@ -287,7 +354,6 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     width: 100%;
   }
   
-  /* Fallback for browsers that don't support zoom */
   @supports not (zoom: 1) {
     body {
       transform: scale(var(--site-scale));
@@ -295,26 +361,34 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     }
   }
   
-  /* Prevent image flicker on load */
   img {
     @apply block;
   }
   
+  /* Premium typography */
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold;
-    line-height: 1.2;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
   }
   
   h1 {
     @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
+    letter-spacing: -0.035em;
   }
   
   h2 {
     @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl;
+    letter-spacing: -0.03em;
   }
   
   h3 {
     @apply text-xl sm:text-2xl md:text-3xl;
+  }
+  
+  p {
+    text-wrap: pretty;
   }
   
   /* Minimum tap targets for accessibility */
