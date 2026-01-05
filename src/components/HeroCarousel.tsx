@@ -12,10 +12,12 @@ interface HeroCarouselProps {
 
 export const HeroCarousel = ({ 
   images, 
-  interval = 5000
+  interval = 6000
 }: HeroCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [previousIndex, setPreviousIndex] = useState<number | null>(null);
   const [imagesLoaded, setImagesLoaded] = useState<boolean[]>([]);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const mountedRef = useRef(true);
   
   // Initialize loaded state and preload first image immediately
@@ -60,16 +62,28 @@ export const HeroCarousel = ({
     };
   }, [images]);
 
-  // Auto-advance only after first image loads
+  // Auto-advance with smooth transition
   useEffect(() => {
     if (!imagesLoaded[0] || images.length <= 1) return;
 
     const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
+      setIsTransitioning(true);
+      setPreviousIndex(currentIndex);
+      
+      // Start fade out, then switch
+      setTimeout(() => {
+        setCurrentIndex((prev) => (prev + 1) % images.length);
+        
+        // Clear previous after transition completes
+        setTimeout(() => {
+          setPreviousIndex(null);
+          setIsTransitioning(false);
+        }, 1200);
+      }, 100);
     }, interval);
 
     return () => clearInterval(timer);
-  }, [images.length, interval, imagesLoaded]);
+  }, [images.length, interval, imagesLoaded, currentIndex]);
 
   if (images.length === 0) return null;
 
@@ -78,21 +92,37 @@ export const HeroCarousel = ({
       {/* Base dark background for instant paint */}
       <div className="absolute inset-0 bg-slate-900" />
       
-      {/* Images with CSS opacity transition - faster transitions */}
-      {images.map((image, index) => (
-        <div
-          key={index}
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-300"
-          style={{ 
-            backgroundImage: imagesLoaded[index] ? `url(${image.src})` : 'none',
-            opacity: index === currentIndex && imagesLoaded[index] ? 1 : 0,
-            willChange: index === currentIndex ? 'opacity' : 'auto'
-          }}
-          role="img"
-          aria-label={image.alt}
-          aria-hidden={index !== currentIndex}
-        />
-      ))}
+      {/* Images with smooth crossfade and subtle Ken Burns effect */}
+      {images.map((image, index) => {
+        const isActive = index === currentIndex;
+        const isPrevious = index === previousIndex;
+        const shouldShow = (isActive || isPrevious) && imagesLoaded[index];
+        
+        return (
+          <div
+            key={index}
+            className="absolute inset-0 overflow-hidden"
+            style={{
+              opacity: shouldShow ? (isActive ? 1 : isPrevious && isTransitioning ? 0 : 0) : 0,
+              transition: 'opacity 1.2s ease-in-out',
+              zIndex: isActive ? 2 : isPrevious ? 1 : 0,
+            }}
+          >
+            <div
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+              style={{ 
+                backgroundImage: imagesLoaded[index] ? `url(${image.src})` : 'none',
+                transform: isActive ? 'scale(1.05)' : 'scale(1)',
+                transition: 'transform 8s ease-out',
+                willChange: isActive ? 'transform' : 'auto'
+              }}
+              role="img"
+              aria-label={image.alt}
+              aria-hidden={!isActive}
+            />
+          </div>
+        );
+      })}
 
       {/* Screen Reader Announcement */}
       <div className="sr-only" aria-live="polite" aria-atomic="true">
