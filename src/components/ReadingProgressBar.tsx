@@ -1,50 +1,48 @@
-import { useState, useEffect, useRef } from "react";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { useState, useEffect } from "react";
 
 interface ReadingProgressBarProps {
   showPercentage?: boolean;
-  containerRef?: React.RefObject<HTMLElement>;
 }
 
 export const ReadingProgressBar = ({ 
-  showPercentage = true,
-  containerRef 
+  showPercentage = true 
 }: ReadingProgressBarProps) => {
   const [percentage, setPercentage] = useState(0);
-  const targetRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
 
   useEffect(() => {
-    const unsubscribe = scrollYProgress.on("change", (latest) => {
-      setPercentage(Math.round(latest * 100));
-    });
-    return () => unsubscribe();
-  }, [scrollYProgress]);
+    let ticking = false;
+    
+    const updateProgress = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? Math.round((scrollTop / docHeight) * 100) : 0;
+      setPercentage(progress);
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(updateProgress);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    updateProgress();
+    
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
-    <div ref={targetRef} className="fixed top-0 left-0 right-0 z-[60] h-1">
-      <motion.div
+    <div className="fixed top-0 left-0 right-0 z-[60] h-1">
+      <div
         className="h-full bg-gradient-to-r from-primary via-accent to-primary origin-left"
-        style={{ scaleX }}
+        style={{ transform: `scaleX(${percentage / 100})` }}
       />
       {showPercentage && percentage > 0 && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="absolute top-2 right-4 bg-background/90 backdrop-blur-sm border border-border/50 rounded-full px-3 py-1 text-xs font-medium text-foreground shadow-sm"
-        >
+        <div className="absolute top-2 right-4 bg-background/90 backdrop-blur-sm border border-border/50 rounded-full px-3 py-1 text-xs font-medium text-foreground shadow-sm animate-fade-in">
           {percentage}% read
-        </motion.div>
+        </div>
       )}
     </div>
   );

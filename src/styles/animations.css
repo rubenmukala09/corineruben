@@ -6,7 +6,6 @@
 /* ===== SCROLL REVEAL ===== */
 
 .scroll-fade-up,
-.scroll-blur-up,
 .scroll-rise {
   opacity: 0;
   transform: translateY(12px);
@@ -14,14 +13,12 @@
 }
 
 .scroll-fade-in,
-.scroll-blur-in,
 .scroll-reveal {
   opacity: 0;
   transition: opacity 0.2s ease-out;
 }
 
-.scroll-scale-in,
-.scroll-elastic {
+.scroll-scale-in {
   opacity: 0;
   transform: scale(0.98);
   transition: opacity 0.2s ease-out, transform 0.2s ease-out;
@@ -45,17 +42,9 @@
   transform: none;
 }
 
-/* Duration modifiers */
-.scroll-duration-fast { transition-duration: 0.15s; }
-.scroll-duration-normal { transition-duration: 0.2s; }
-.scroll-duration-slow { transition-duration: 0.25s; }
-
 /* ===== SECTION REVEALS ===== */
 
-.section-reveal-fade,
-.section-reveal-blur,
-.section-reveal-sweep,
-.section-reveal-cascade {
+.section-reveal-fade {
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 0.2s ease-out, transform 0.2s ease-out;
@@ -138,34 +127,6 @@
 .card-premium:hover {
   transform: translateY(-4px);
   box-shadow: 0 20px 40px -15px hsl(var(--primary) / 0.15);
-}
-
-/* Legacy support */
-.scroll-flip,
-.scroll-sweep,
-.scroll-reveal-fade-up { 
-  opacity: 0; 
-  transform: translateY(8px); 
-  transition: opacity 0.2s ease-out, transform 0.2s ease-out; 
-}
-.scroll-reveal-visible { opacity: 1; transform: none; }
-.animate-on-scroll { opacity: 0; transform: translateY(12px); transition: opacity 0.2s ease-out, transform 0.2s ease-out; }
-.animate-on-scroll.visible { opacity: 1; transform: none; }
-
-/* Stagger delays */
-.stagger-1 { animation-delay: 0.05s; }
-.stagger-2 { animation-delay: 0.1s; }
-.stagger-3 { animation-delay: 0.15s; }
-.stagger-4 { animation-delay: 0.2s; }
-.stagger-5 { animation-delay: 0.25s; }
-.stagger-6 { animation-delay: 0.3s; }
-
-/* Floating orb - static gradient background */
-.floating-orb {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, hsl(var(--primary) / 0.15) 0%, transparent 70%);
-  pointer-events: none;
 }
 
 /* ===== REDUCED MOTION ===== */

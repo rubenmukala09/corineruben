@@ -1,5 +1,4 @@
-import { useTransform, useScroll, MotionValue } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 
 interface UseParallaxOptions {
   speed?: number;
@@ -8,13 +7,37 @@ interface UseParallaxOptions {
 
 export const useParallax = ({ speed = 0.5, offset = 0 }: UseParallaxOptions = {}) => {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"]
-  });
+  const [y, setY] = useState(offset);
+  const [opacity, setOpacity] = useState(1);
 
-  const y = useTransform(scrollYProgress, [0, 1], [offset, offset + (1000 * speed)]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.8, 0.7]);
+  useEffect(() => {
+    let ticking = false;
+    
+    const updateParallax = () => {
+      if (!ref.current) return;
+      
+      const rect = ref.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const elementCenter = rect.top + rect.height / 2;
+      const progress = 1 - (elementCenter / viewportHeight);
+      
+      setY(offset + (progress * 100 * speed));
+      setOpacity(Math.max(0.7, 1 - Math.abs(progress) * 0.3));
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    updateParallax();
+    
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [speed, offset]);
 
   return { ref, y, opacity };
 };

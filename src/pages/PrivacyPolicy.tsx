@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Card } from "@/components/ui/card";
@@ -7,17 +6,15 @@ import { Download } from "lucide-react";
 import ReadingProgressBar from "@/components/ReadingProgressBar";
 
 function PrivacyPolicy() {
-  const contentRef = useRef<HTMLElement>(null);
-  
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <div className="min-h-screen">
-      <ReadingProgressBar containerRef={contentRef} />
+      <ReadingProgressBar />
       <Navigation />
-      <section ref={contentRef} className="py-24 bg-background">
+      <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-center mb-4">Privacy Policy</h1>
