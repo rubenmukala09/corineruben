@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface HeroImage {
   src: string;
@@ -10,61 +10,82 @@ interface HeroCarouselProps {
   interval?: number;
 }
 
-// Simplified carousel - CSS transitions only, no framer-motion
 export const HeroCarousel = ({ 
   images, 
   interval = 5000
 }: HeroCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [imagesReady, setImagesReady] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState<boolean[]>([]);
   const mountedRef = useRef(true);
   
-  // Preload first image only
+  // Initialize loaded state and preload first image immediately
   useEffect(() => {
     mountedRef.current = true;
     
     if (images.length === 0) return;
     
-    const img = new Image();
-    img.onload = () => {
-      if (mountedRef.current) setImagesReady(true);
+    // Mark first image as ready immediately for fastest LCP
+    setImagesLoaded(new Array(images.length).fill(false));
+    
+    // Preload first image with high priority
+    const firstImg = new Image();
+    firstImg.onload = () => {
+      if (mountedRef.current) {
+        setImagesLoaded(prev => {
+          const next = [...prev];
+          next[0] = true;
+          return next;
+        });
+      }
     };
-    img.onerror = () => {
-      if (mountedRef.current) setImagesReady(true);
-    };
-    img.src = images[0].src;
+    firstImg.src = images[0].src;
+    
+    // Lazy load remaining images
+    images.slice(1).forEach((image, idx) => {
+      const img = new Image();
+      img.onload = () => {
+        if (mountedRef.current) {
+          setImagesLoaded(prev => {
+            const next = [...prev];
+            next[idx + 1] = true;
+            return next;
+          });
+        }
+      };
+      img.src = image.src;
+    });
     
     return () => {
       mountedRef.current = false;
     };
   }, [images]);
 
-  // Auto-advance
+  // Auto-advance only after first image loads
   useEffect(() => {
-    if (!imagesReady || images.length <= 1) return;
+    if (!imagesLoaded[0] || images.length <= 1) return;
 
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
     }, interval);
 
     return () => clearInterval(timer);
-  }, [images.length, interval, imagesReady]);
+  }, [images.length, interval, imagesLoaded]);
 
   if (images.length === 0) return null;
 
   return (
     <div className="absolute inset-0 overflow-hidden">
-      {/* Base dark background */}
+      {/* Base dark background for instant paint */}
       <div className="absolute inset-0 bg-slate-900" />
       
-      {/* Images with CSS transition */}
+      {/* Images with CSS opacity transition */}
       {images.map((image, index) => (
         <div
           key={index}
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-700"
           style={{ 
-            backgroundImage: `url(${image.src})`,
-            opacity: imagesReady && index === currentIndex ? 1 : 0
+            backgroundImage: imagesLoaded[index] ? `url(${image.src})` : 'none',
+            opacity: index === currentIndex && imagesLoaded[index] ? 1 : 0
           }}
           role="img"
           aria-label={image.alt}

@@ -13,19 +13,11 @@
     <meta name="keywords" content="AI scam protection, deepfake detection, senior scam training, family cybersecurity, phishing defense, Dayton Ohio">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
-    <!-- Performance Hints -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <!-- DNS Prefetch -->
     <link rel="dns-prefetch" href="https://avoafweoebstkgjnbadv.supabase.co">
     
-    <!-- Preload critical hero image for fastest initial paint -->
+    <!-- Preload critical hero image for fastest LCP -->
     <link rel="preload" as="image" href="/src/assets/hero-business-professional.jpg" fetchpriority="high" />
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" as="style" />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
-    <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    </noscript>
     
     <!-- Open Graph Tags -->
     <meta property="og:type" content="website" />
@@ -122,31 +114,6 @@
       }
     </script>
 
-    <!-- Performance Monitoring -->
-    <script>
-      (async () => {
-        try {
-          if (!sessionStorage.getItem('sw-cleaned-once')) {
-            if ('serviceWorker' in navigator) {
-              const regs = await navigator.serviceWorker.getRegistrations();
-              if (regs.length) {
-                await Promise.all(regs.map(r => r.unregister()));
-              }
-            }
-            if ('caches' in window) {
-              const keys = await caches.keys();
-              if (keys.length) {
-                await Promise.all(keys.map(k => caches.delete(k)));
-              }
-            }
-            sessionStorage.setItem('sw-cleaned-once', '1');
-            location.reload();
-          }
-        } catch (e) {
-          // no-op
-        }
-      })();
-    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

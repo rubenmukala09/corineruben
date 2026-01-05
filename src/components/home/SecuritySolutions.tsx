@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import heroServices1 from "@/assets/hero-services-1.jpg";
 import heroServices2 from "@/assets/hero-services-2.jpg";
@@ -6,7 +5,6 @@ import heroServices3 from "@/assets/hero-services-3.jpg";
 import heroServices4 from "@/assets/hero-services-4.jpg";
 import communityTraining from "@/assets/community-training.jpg";
 import securityExpert from "@/assets/professional-portrait.jpg";
-import { GeometricCorner, DottedPattern, GridPattern, FloatingShapes } from "@/components/ui/GeometricDecorations";
 
 const portfolioImages = [
   { src: heroServices1, alt: "Security Assessment", category: "Assessment" },
@@ -20,45 +18,12 @@ const portfolioImages = [
 export const SecuritySolutions = () => {
   return (
     <section className="py-16 bg-background relative overflow-hidden">
-      {/* Grid pattern */}
-      <GridPattern />
-      
-      {/* Floating shapes */}
-      <FloatingShapes />
-      
-      {/* Geometric corner accents */}
-      <GeometricCorner position="top-left" variant="dots" />
-      <GeometricCorner position="bottom-right" variant="lines" />
-      
-      {/* Diagonal stripe decorations */}
-      <div className="absolute -top-10 -right-10 w-48 h-48 pointer-events-none">
-        <div className="absolute inset-0 bg-primary/5 transform skew-x-12 rotate-12" />
-        <div className="absolute inset-4 bg-primary/5 transform skew-x-12 rotate-12 opacity-50" />
-      </div>
-      <div className="absolute -bottom-10 -left-10 w-40 h-40 pointer-events-none">
-        <div className="absolute inset-0 bg-accent/5 transform -skew-x-12 -rotate-12" />
-      </div>
-      
-      {/* Decorative elements */}
-      <motion.div 
-        className="absolute top-20 right-10 w-32 h-32 rounded-full bg-primary/5"
-        animate={{ scale: [1, 1.2, 1] }}
-        transition={{ duration: 5, repeat: Infinity }}
-      />
-      <motion.div 
-        className="absolute bottom-20 left-20 w-24 h-24 rounded-full bg-accent/10"
-        animate={{ scale: [1.2, 1, 1.2] }}
-        transition={{ duration: 6, repeat: Infinity }}
-      />
+      {/* Simple gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-10"
-        >
+        <div className="text-center mb-10 animate-fade-in">
           {/* Angular badge */}
           <div 
             className="inline-flex items-center gap-2 px-5 py-2 bg-primary/10 text-primary text-sm font-semibold uppercase tracking-wider mb-4 border border-primary/20"
@@ -73,96 +38,40 @@ export const SecuritySolutions = () => {
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             See the quality of our work and the trust our clients place in us.
           </p>
-          
-          {/* Decorative dotted line */}
-          <DottedPattern direction="horizontal" length={8} className="justify-center mt-6" />
-        </motion.div>
+        </div>
 
-        {/* Portfolio Grid with Animated Circular Images */}
+        {/* Portfolio Grid - Simple CSS hover effects */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
           {portfolioImages.map((image, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1, type: "spring" }}
-              className="group text-center"
+              className="group text-center animate-fade-in"
+              style={{ animationDelay: `${index * 50}ms` }}
             >
               <Link to="/about" className="block">
-                {/* Circular image container with enhanced orbiting rings */}
+                {/* Circular image container */}
                 <div className="relative mb-4 mx-auto w-fit">
-                  {/* Multiple animated orbiting rings with glow */}
-                  <motion.div 
-                    className="absolute -inset-4 rounded-full border-2 border-primary/30"
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 12 + index * 2, repeat: Infinity, ease: "linear" }}
-                  />
-                  <motion.div 
-                    className="absolute -inset-6 rounded-full border border-accent/20"
-                    animate={{ rotate: -360 }}
-                    transition={{ duration: 18 + index * 2, repeat: Infinity, ease: "linear" }}
-                  />
-                  <motion.div 
-                    className="absolute -inset-8 rounded-full border border-primary/10"
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 25 + index * 2, repeat: Infinity, ease: "linear" }}
-                  />
+                  {/* Static decorative ring */}
+                  <div className="absolute -inset-3 rounded-full border-2 border-primary/20 group-hover:border-primary/40 transition-colors duration-300" />
                   
-                  {/* Main image with hover zoom and glow effect */}
-                  <motion.div 
-                    className="w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden border-4 border-background shadow-xl group-hover:shadow-2xl group-hover:shadow-primary/30 transition-all duration-500"
-                    whileHover={{ scale: 1.1 }}
-                  >
-                    <motion.img
+                  {/* Main image */}
+                  <div className="w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden border-4 border-background shadow-xl group-hover:shadow-2xl group-hover:shadow-primary/20 transition-all duration-300">
+                    <img
                       src={image.src}
                       alt={image.alt}
-                      className="w-full h-full object-cover"
-                      whileHover={{ scale: 1.3 }}
-                      transition={{ duration: 0.5 }}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      loading="lazy"
+                      decoding="async"
                     />
-                  </motion.div>
-                  
-                  {/* Enhanced animated decorative dots with pulse */}
-                  <motion.div 
-                    className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-gradient-to-br from-accent to-primary shadow-lg shadow-accent/50"
-                    animate={{ 
-                      scale: [1, 1.3, 1],
-                      opacity: [0.8, 1, 0.8],
-                      boxShadow: ["0 0 10px rgba(var(--accent), 0.3)", "0 0 20px rgba(var(--accent), 0.6)", "0 0 10px rgba(var(--accent), 0.3)"]
-                    }}
-                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
-                  />
-                  <motion.div 
-                    className="absolute bottom-0 -left-3 w-4 h-4 rounded-full bg-gradient-to-br from-primary to-accent shadow-lg"
-                    animate={{ 
-                      scale: [1, 1.4, 1],
-                      opacity: [0.6, 1, 0.6]
-                    }}
-                    transition={{ duration: 2.5, repeat: Infinity, delay: index * 0.3 }}
-                  />
-                  <motion.div 
-                    className="absolute top-1/2 -right-4 w-3 h-3 rounded-full bg-primary/60"
-                    animate={{ 
-                      y: [-5, 5, -5],
-                      opacity: [0.4, 0.8, 0.4]
-                    }}
-                    transition={{ duration: 3, repeat: Infinity, delay: index * 0.4 }}
-                  />
+                  </div>
                 </div>
                 
-                {/* Category label with underline animation */}
-                <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors relative inline-block">
+                {/* Category label */}
+                <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors">
                   {image.category}
-                  <motion.div 
-                    className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-primary to-accent"
-                    initial={{ width: 0 }}
-                    whileHover={{ width: "100%" }}
-                    transition={{ duration: 0.3 }}
-                  />
                 </h3>
               </Link>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
