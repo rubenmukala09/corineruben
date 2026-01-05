@@ -34,7 +34,7 @@ function CaregiverDashboard() {
       }
 
       const { data: profileData } = await supabase
-        .from("profiles")
+        .from("profiles_safe")
         .select("*")
         .eq("id", user.id)
         .single();

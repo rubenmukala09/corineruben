@@ -36,14 +36,14 @@ export const useAdminStatus = () => {
         return;
       }
 
-      const { data: profile, error } = await supabase
-        .from('profiles')
+      // Get role from user_roles table (secure - has RLS)
+      const { data: userRoles, error } = await supabase
+        .from('user_roles')
         .select('role')
-        .eq('id', user.id)
-        .single();
+        .eq('user_id', user.id);
 
       if (error) {
-        console.error('Error fetching profile:', error);
+        console.error('Error fetching user roles:', error);
         setStatus({
           isAdmin: false,
           isStaff: false,
@@ -54,7 +54,8 @@ export const useAdminStatus = () => {
         return;
       }
 
-      const role = profile?.role || null;
+      // Get the first/primary role
+      const role = userRoles?.[0]?.role || null;
       
       setStatus({
         isAdmin: role ? ADMIN_ROLES.includes(role) : false,

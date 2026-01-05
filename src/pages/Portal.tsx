@@ -71,7 +71,7 @@ function Portal() {
         { data: caregiverProfile },
         { data: healthcareProfile },
       ] = await Promise.all([
-        supabase.from("profiles").select("*").eq("id", user.id).single(),
+        supabase.from("profiles_safe").select("*").eq("id", user.id).single(),
         supabase.from("user_roles").select("role").eq("user_id", user.id),
         supabase.from("senior_client_profiles").select("id").eq("user_id", user.id).maybeSingle(),
         supabase.from("caregiver_profiles").select("id").eq("user_id", user.id).maybeSingle(),

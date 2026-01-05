@@ -29,13 +29,13 @@ export function AdminTopBar({ sidebarOpen, toggleSidebar }: AdminTopBarProps) {
       if (user) {
         setAdminEmail(user.email || "");
         const { data: profile } = await supabase
-          .from("profiles")
-          .select("full_name")
+          .from("profiles_safe")
+          .select("first_name, last_name")
           .eq("id", user.id)
           .single();
         
-        if (profile?.full_name) {
-          setAdminName(profile.full_name);
+        if (profile?.first_name || profile?.last_name) {
+          setAdminName(`${profile.first_name || ''} ${profile.last_name || ''}`.trim());
         }
       }
     };
