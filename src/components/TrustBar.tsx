@@ -70,20 +70,19 @@ const TrustBar = () => {
     <div ref={counterRef} className="relative z-20 px-4 -mt-12 md:-mt-16" role="complementary" aria-label="Trust indicators">
       <div className="container mx-auto">
         <div className="relative mx-auto max-w-4xl">
-          {/* Arrow/Triangle shaped bar */}
+          {/* Arrow/Triangle shaped bar with left arrow point */}
           <div 
-            className="bg-accent py-4 px-6 md:px-10 flex flex-wrap justify-center md:justify-between items-center gap-4 md:gap-6"
+            className="bg-accent py-4 pl-8 pr-6 md:pl-12 md:pr-10 flex flex-wrap justify-center md:justify-between items-center gap-4 md:gap-8 rounded-r-xl"
             style={{
-              clipPath: "polygon(3% 0%, 100% 0%, 100% 100%, 0% 100%)",
-              borderRadius: "0 12px 12px 0"
+              clipPath: "polygon(4% 50%, 0% 0%, 100% 0%, 100% 100%, 0% 100%)"
             }}
           >
             {trustIndicators.map((indicator, index) => (
               <div 
                 key={index}
-                className="flex items-center gap-2 text-accent-foreground"
+                className="flex items-center gap-2 text-white"
               >
-                <indicator.icon className="w-5 h-5 text-accent-foreground/90" />
+                <indicator.icon className="w-5 h-5 text-white/90" strokeWidth={1.5} />
                 <span className="text-sm md:text-base font-medium whitespace-nowrap">
                   {indicator.prefix && <span className="font-bold">{indicator.prefix} </span>}
                   {indicator.text}
