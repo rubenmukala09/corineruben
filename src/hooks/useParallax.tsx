@@ -34,9 +34,15 @@ export const useParallax = ({ speed = 0.5, offset = 0 }: UseParallaxOptions = {}
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    updateParallax();
+    // Defer initial read to avoid forced reflow during mount
+    const timeoutId = setTimeout(() => {
+      requestAnimationFrame(updateParallax);
+    }, 50);
     
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      clearTimeout(timeoutId);
+    };
   }, [speed, offset]);
 
   return { ref, y, opacity };
