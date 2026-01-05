@@ -18,18 +18,23 @@ export const useScrollReveal = (options: UseScrollRevealOptions = {}) => {
   const [isVisible, setIsVisible] = useState(false);
   const hasTriggered = useRef(false);
 
-  // Check if element is already in viewport on mount
+  // Check if element is already in viewport on mount - deferred to avoid forced reflow
   useEffect(() => {
     const element = ref.current;
     if (!element || hasTriggered.current) return;
     
-    const rect = element.getBoundingClientRect();
-    const isAboveFold = rect.top < window.innerHeight && rect.bottom > 0;
+    // Defer layout read to next frame to avoid forced reflow during initial render
+    const frameId = requestAnimationFrame(() => {
+      const rect = element.getBoundingClientRect();
+      const isAboveFold = rect.top < window.innerHeight && rect.bottom > 0;
+      
+      if (isAboveFold) {
+        setIsVisible(true);
+        if (triggerOnce) hasTriggered.current = true;
+      }
+    });
     
-    if (isAboveFold) {
-      setIsVisible(true);
-      if (triggerOnce) hasTriggered.current = true;
-    }
+    return () => cancelAnimationFrame(frameId);
   }, [triggerOnce]);
 
   const handleIntersection = useCallback(([entry]: IntersectionObserverEntry[]) => {
