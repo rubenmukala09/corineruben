@@ -11,8 +11,23 @@ export function useAnalyticsTracking() {
   }, []);
 
   useEffect(() => {
-    // Track page view on route change
-    trackPageView(location.pathname + location.search, document.title);
+    // Defer tracking to avoid blocking critical rendering path
+    const deferTracking = () => {
+      trackPageView(location.pathname + location.search, document.title);
+    };
+    
+    // Use requestIdleCallback if available, otherwise setTimeout
+    const scheduleTracking = 'requestIdleCallback' in window
+      ? (window as any).requestIdleCallback(deferTracking, { timeout: 2000 })
+      : setTimeout(deferTracking, 100);
+    
+    const cancelTracking = () => {
+      if ('requestIdleCallback' in window) {
+        (window as any).cancelIdleCallback(scheduleTracking);
+      } else {
+        clearTimeout(scheduleTracking);
+      }
+    };
 
     // Track scroll depth
     let maxScroll = 0;
@@ -43,6 +58,7 @@ export function useAnalyticsTracking() {
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
+      cancelTracking();
       window.removeEventListener("scroll", handleScroll);
     };
   }, [location]);

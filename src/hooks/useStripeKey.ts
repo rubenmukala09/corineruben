@@ -11,6 +11,9 @@ export function useStripeKey() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // Defer Stripe initialization to avoid blocking critical rendering path
+    const timeoutId = setTimeout(() => initStripe(), 100);
+    
     const initStripe = async () => {
       // First try VITE env variable (fastest)
       const envKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
@@ -59,7 +62,7 @@ export function useStripeKey() {
       }
     };
 
-    initStripe();
+    return () => clearTimeout(timeoutId);
   }, []);
 
   return { stripePromise, loading, error };
