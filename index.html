@@ -4,6 +4,27 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+    
+    <!-- Critical CSS for above-the-fold content - reduces render blocking -->
+    <style>
+      /* Critical reset and base styles */
+      *,*::before,*::after{box-sizing:border-box;border-width:0;border-style:solid}
+      html{line-height:1.5;-webkit-text-size-adjust:100%;font-family:Outfit,ui-sans-serif,system-ui,sans-serif}
+      body{margin:0;line-height:inherit;background-color:hsl(0 0% 100%);color:hsl(222.2 84% 4.9%)}
+      #root{min-height:100vh;display:flex;flex-direction:column}
+      /* Loading state - prevents FOUC */
+      body:not(.loaded){opacity:0}
+      body.loaded{opacity:1;transition:opacity 0.1s ease-in}
+      /* Critical layout classes */
+      .fixed{position:fixed}.relative{position:relative}.flex{display:flex}.hidden{display:none}
+      .h-screen{height:100vh}.w-full{width:100%}.min-h-screen{min-height:100vh}
+      .items-center{align-items:center}.justify-center{justify-content:center}
+      .overflow-hidden{overflow:hidden}.z-50{z-index:50}
+      /* Primary colors for immediate visual */
+      .bg-primary{background-color:hsl(262.1 83.3% 57.8%)}.text-white{color:#fff}
+      .bg-background{background-color:hsl(0 0% 100%)}
+    </style>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap">
