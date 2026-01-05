@@ -122,15 +122,8 @@ export const HeroHomepage = () => {
       <div className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10">
         <div className="flex flex-col lg:grid lg:grid-cols-5 gap-8 lg:gap-20 xl:gap-28 items-center min-h-[100vh] py-16 sm:py-20 lg:py-0">
           
-          {/* Left Content - Takes 3 columns */}
-          <motion.div className="lg:col-span-3 order-2 lg:order-1 w-full" initial={{
-          opacity: 0
-        }} animate={{
-          opacity: 1
-        }} transition={{
-          duration: 1,
-          ease: "easeOut"
-        }}>
+          {/* Left Content - Takes 3 columns - No initial animation delay for LCP */}
+          <div className="lg:col-span-3 order-2 lg:order-1 w-full">
             {/* Premium Badge */}
             <motion.div initial={{
             opacity: 0,
@@ -146,18 +139,8 @@ export const HeroHomepage = () => {
               <span className="text-xs sm:text-sm font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Veteran-Supporting • Ohio-Based</span>
             </motion.div>
             
-            {/* Headline with Typing Effect - Responsive sizing */}
-            <motion.h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold leading-[0.95] mb-6 sm:mb-8 tracking-tight" initial={{
-            opacity: 0,
-            y: 40
-          }} animate={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            delay: 0.4,
-            duration: 1,
-            ease: [0.22, 1, 0.36, 1]
-          }}>
+            {/* Headline - No animation delay to optimize LCP */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold leading-[0.95] mb-6 sm:mb-8 tracking-tight">
               <span className="block text-foreground">InVision</span>
               <span className="block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">Network</span>
               <span className="block font-light text-muted-foreground/80 text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mt-2 sm:mt-3">
@@ -166,7 +149,7 @@ export const HeroHomepage = () => {
                   className="bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text"
                 />
               </span>
-            </motion.h1>
+            </h1>
             
             {/* Description - Responsive */}
             <motion.p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mb-8 sm:mb-12 leading-relaxed" initial={{
@@ -207,7 +190,7 @@ export const HeroHomepage = () => {
               </Button>
             </motion.div>
 
-          </motion.div>
+          </div>
           
           {/* Right Content - Premium Security Visual - Takes 2 columns */}
           <motion.div className="lg:col-span-2 order-1 lg:order-2 flex justify-center lg:justify-end w-full" initial={{
