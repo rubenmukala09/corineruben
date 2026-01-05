@@ -50,6 +50,17 @@ import TestimonialCard from "@/components/TestimonialCard";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
+import { 
+  DiagonalStripes, 
+  DottedGrid, 
+  HexagonShape, 
+  TriangleAccent, 
+  CircleRing, 
+  GradientOrb, 
+  FloatingIcon,
+  CornerBracket,
+  SectionDecorations
+} from "@/components/decorations/TrainingPageDecorations";
 
 // Rotating hero headlines for Training page
 const trainingHeadlines = [
@@ -389,6 +400,12 @@ function LearnAndTrain() {
       {/* Why Families Trust InVision Network Section */}
       <section className="py-16 bg-muted relative overflow-hidden">
         <FlowingWaves variant="full" opacity={0.08} />
+        {/* Decorative Graphics */}
+        <SectionDecorations variant="trust" />
+        <HexagonShape className="top-16 right-[5%] w-28 h-28 hidden xl:block" filled />
+        <TriangleAccent className="bottom-32 left-[3%] w-16 h-16 hidden lg:block" direction="up" />
+        <CircleRing className="-bottom-10 right-20" size="lg" />
+        
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-10">
             <Badge className="mb-4 bg-gradient-to-r from-primary to-accent text-white text-sm px-4 py-1.5">
@@ -595,6 +612,17 @@ function LearnAndTrain() {
       {/* Training Section */}
       <section id="training" className="py-16 bg-background relative overflow-hidden">
         <FlowingWaves variant="full" opacity={0.12} />
+        {/* Decorative Graphics */}
+        <SectionDecorations variant="training" />
+        <FloatingIcon 
+          icon={<Award className="w-6 h-6 text-primary/60" />} 
+          className="top-24 right-[8%] hidden xl:flex"
+          size="lg"
+        />
+        <GradientOrb className="w-80 h-80 -left-40 top-1/3" variant="primary" />
+        <CornerBracket className="top-8 left-8 hidden lg:block" corner="top-left" />
+        <CornerBracket className="bottom-8 right-8 hidden lg:block" corner="bottom-right" />
+        
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-8">
             <Badge className="mb-4 bg-gradient-to-r from-primary to-accent text-white text-lg px-6 py-2">
@@ -709,6 +737,17 @@ function LearnAndTrain() {
       {/* Simple Protection in 4 Steps */}
       <section className="py-20 bg-muted relative overflow-hidden">
         <FlowingWaves variant="full" opacity={0.12} />
+        {/* Decorative Graphics */}
+        <DiagonalStripes />
+        <HexagonShape className="top-20 left-[8%] w-24 h-24 hidden lg:block" filled />
+        <HexagonShape className="bottom-24 right-[6%] w-20 h-20 hidden xl:block" />
+        <CircleRing className="top-1/2 -right-16" size="xl" />
+        <FloatingIcon 
+          icon={<Zap className="w-5 h-5 text-accent/60" />} 
+          className="top-32 right-[12%] hidden xl:flex"
+          size="md"
+        />
+        
         <div className="absolute inset-0 opacity-30">
           <div
             className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse"
@@ -826,6 +865,13 @@ function LearnAndTrain() {
       {/* Choose Your Protection Level - Moved up after Simple Protection */}
       <section id="pricing" className="py-16 bg-background relative overflow-hidden">
         <FlowingWaves variant="full" opacity={0.12} />
+        {/* Decorative Graphics */}
+        <SectionDecorations variant="scamshield" />
+        <DottedGrid />
+        <TriangleAccent className="top-24 left-[4%] w-20 h-20 hidden xl:block" direction="right" />
+        <TriangleAccent className="bottom-32 right-[5%] w-16 h-16 hidden lg:block" direction="left" />
+        <CircleRing className="-top-8 left-1/4" size="lg" />
+        
         <div className="absolute inset-0 opacity-20">
           <div
             className="absolute top-1/4 right-20 w-64 h-64 bg-accent/30 rounded-full blur-3xl animate-pulse"
@@ -1158,6 +1204,19 @@ function LearnAndTrain() {
 
       {/* What We Analyze Section - Interactive */}
       <section className="py-20 bg-muted relative overflow-hidden">
+        {/* Decorative Graphics */}
+        <DiagonalStripes />
+        <HexagonShape className="top-16 right-[10%] w-32 h-32 hidden xl:block" filled />
+        <HexagonShape className="bottom-20 left-[8%] w-24 h-24 hidden lg:block" />
+        <CircleRing className="top-1/3 -left-12" size="xl" />
+        <CircleRing className="bottom-1/4 -right-8" size="lg" />
+        <FloatingIcon 
+          icon={<Search className="w-5 h-5 text-primary/60" />} 
+          className="top-28 left-[12%] hidden xl:flex"
+          size="md"
+        />
+        <GradientOrb className="w-96 h-96 -right-48 bottom-0" variant="accent" />
+        
         <div className="absolute inset-0 opacity-20">
           <div
             className="absolute bottom-1/4 left-20 w-80 h-80 bg-primary/20 rounded-full blur-3xl animate-pulse"
@@ -1266,6 +1325,18 @@ function LearnAndTrain() {
       {/* AI Professionals Training Section - Moved after We Analyze */}
       <section id="ai-pro-training" className="py-16 bg-background relative overflow-hidden">
         <FlowingWaves variant="full" opacity={0.08} />
+        {/* Decorative Graphics */}
+        <DottedGrid />
+        <HexagonShape className="top-20 right-[6%] w-28 h-28 hidden xl:block" filled />
+        <TriangleAccent className="bottom-24 left-[5%] w-18 h-18 hidden lg:block" direction="up" />
+        <CircleRing className="top-1/3 -left-12" size="lg" />
+        <FloatingIcon 
+          icon={<Zap className="w-5 h-5 text-accent/60" />} 
+          className="top-32 left-[10%] hidden xl:flex"
+          size="md"
+        />
+        <GradientOrb className="w-72 h-72 -right-36 top-1/4" variant="mixed" />
+        
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-10">
             <Badge className="mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm px-4 py-1.5">
@@ -1444,6 +1515,18 @@ function LearnAndTrain() {
 
       {/* Secure Your Family Section - Enhanced */}
       <section className="py-20 bg-muted relative overflow-hidden">
+        {/* Decorative Graphics */}
+        <DiagonalStripes />
+        <HexagonShape className="top-16 left-[8%] w-24 h-24 hidden xl:block" filled />
+        <HexagonShape className="bottom-20 right-[10%] w-20 h-20 hidden lg:block" />
+        <CircleRing className="top-1/2 -right-16" size="xl" />
+        <FloatingIcon 
+          icon={<Lock className="w-5 h-5 text-primary/60" />} 
+          className="top-28 right-[15%] hidden xl:flex"
+          size="md"
+        />
+        <CornerBracket className="top-8 right-8 hidden lg:block" corner="top-right" />
+        
         <div className="absolute inset-0 opacity-20 animate-gradient-shift">
           <div
             className="absolute top-20 right-1/4 w-96 h-96 bg-accent/25 rounded-full blur-3xl animate-pulse"
