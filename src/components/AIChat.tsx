@@ -53,13 +53,15 @@ export const AIChat = () => {
     scrollToBottom();
   }, [messages, scrollToBottom]);
 
-  // Check if scrolled to bottom
+  // Check if scrolled to bottom - wrapped in rAF to avoid forced reflows
   const handleScroll = useCallback(() => {
-    if (scrollContainerRef.current) {
-      const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
-      const isNearBottom = scrollHeight - scrollTop - clientHeight < 100;
-      setShowScrollButton(!isNearBottom);
-    }
+    requestAnimationFrame(() => {
+      if (scrollContainerRef.current) {
+        const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
+        const isNearBottom = scrollHeight - scrollTop - clientHeight < 100;
+        setShowScrollButton(!isNearBottom);
+      }
+    });
   }, []);
 
   useEffect(() => {
