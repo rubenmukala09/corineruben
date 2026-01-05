@@ -1,20 +1,20 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Bot, Zap, Clock, Phone, Globe, ArrowRight, TrendingUp, Sparkles, CheckCircle } from "lucide-react";
-import heroBusinessProfessional from "@/assets/hero-business-professional.jpg";
+import { Bot, Zap, Clock, Phone, Globe, ArrowRight, TrendingUp, Sparkles, CheckCircle, Mail, Shield, Users } from "lucide-react";
+import businessTeamOffice from "@/assets/business-team-office.jpg";
 
 const services = [
-  { icon: Phone, title: "AI Receptionist", desc: "24/7 call handling", highlight: "Save $37K+/year" },
-  { icon: Clock, title: "Smart Scheduling", desc: "Automated bookings", highlight: "Zero no-shows" },
-  { icon: Globe, title: "Professional Websites", desc: "SEO-optimized design", highlight: "Lead generation" },
-  { icon: Bot, title: "Support Chatbots", desc: "Instant customer help", highlight: "Always available" },
+  { icon: Phone, title: "AI Receptionist", desc: "Answer calls 24/7, route to right person, book appointments, answer FAQs", highlight: "Save $37K+/year", price: "$9,500" },
+  { icon: Clock, title: "Smart Scheduling", desc: "Automated booking with calendar sync, reminders & smart intake forms", highlight: "Zero no-shows", price: "Custom" },
+  { icon: Globe, title: "Professional Websites", desc: "Custom SEO-optimized websites with lead generation & e-commerce", highlight: "Lead generation", price: "From $2,500" },
+  { icon: Mail, title: "AI Follow-Up", desc: "Automated email sequences, SMS reminders & re-engagement campaigns", highlight: "35% higher close rates", price: "$12,500" },
 ];
 
 const highlights = [
-  "Ohio-based support team",
-  "Veteran-supporting business",
-  "60-day money-back guarantee",
+  { icon: Users, text: "Ohio-based support team" },
+  { icon: Shield, text: "Veteran-supporting business" },
+  { icon: CheckCircle, text: "60-day money-back guarantee" },
 ];
 
 export const AIBusinessPromo = () => {
@@ -59,8 +59,8 @@ export const AIBusinessPromo = () => {
             <div className="flex flex-wrap gap-3">
               {highlights.map((item, index) => (
                 <div key={index} className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/10">
-                  <CheckCircle className="w-4 h-4 text-emerald-400" />
-                  <span className="text-sm text-white/80">{item}</span>
+                  <item.icon className="w-4 h-4 text-emerald-400" />
+                  <span className="text-sm text-white/80">{item.text}</span>
                 </div>
               ))}
             </div>
@@ -76,15 +76,18 @@ export const AIBusinessPromo = () => {
                   transition={{ delay: index * 0.1 }}
                   className="bg-white/5 backdrop-blur-sm rounded-2xl p-5 border border-white/10 hover:border-white/30 hover:bg-white/10 transition-all duration-300 group hover:-translate-y-2"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/30 to-accent/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/30 to-accent/30 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                     <service.icon className="w-6 h-6 text-primary" />
                   </div>
                   <h3 className="font-bold text-white text-lg mb-1">{service.title}</h3>
-                  <p className="text-white/60 text-sm mb-3">{service.desc}</p>
-                  <span className="inline-flex items-center gap-1 text-sm font-bold text-amber-400">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    {service.highlight}
-                  </span>
+                  <p className="text-white/60 text-xs mb-2 line-clamp-2">{service.desc}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-400">
+                      <Sparkles className="w-3 h-3" />
+                      {service.highlight}
+                    </span>
+                    <span className="text-xs text-white/50">{service.price}</span>
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -113,8 +116,8 @@ export const AIBusinessPromo = () => {
           >
             <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-white/20 group">
               <img
-                src={heroBusinessProfessional}
-                alt="Professional business automation solutions"
+                src={businessTeamOffice}
+                alt="Professional business team collaborating on AI solutions"
                 className="w-full h-[550px] object-cover transition-transform duration-700 group-hover:scale-105"
               />
               {/* Overlay gradient */}

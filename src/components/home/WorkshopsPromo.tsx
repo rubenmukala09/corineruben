@@ -5,16 +5,23 @@ import { GraduationCap, Users, Calendar, CheckCircle, ArrowRight, Star, Play, Aw
 import workshopInstructor from "@/assets/workshop-instructor.jpg";
 
 const benefits = [
-  "Hands-on scam detection training",
-  "Family-friendly group sessions",
-  "Expert instructors with real experience",
-  "Take-home materials & resources",
+  { title: "Hands-on Practice", desc: "Real-world exercises to recognize scams" },
+  { title: "Actionable Playbooks", desc: "Ready-to-use scripts for bank, IRS & romance scams" },
+  { title: "60-Second Pause Protocol", desc: "Emergency process for potential scam encounters" },
+  { title: "Certificate of Completion", desc: "Professional certification after training" },
 ];
 
 const formats = [
-  { icon: Users, title: "In-Person", desc: "Community workshops" },
-  { icon: Calendar, title: "Zoom Classes", desc: "Learn from home" },
-  { icon: GraduationCap, title: "Private Sessions", desc: "Personalized training" },
+  { icon: Users, title: "Couples & Groups", desc: "Community workshops", badge: null },
+  { icon: Calendar, title: "Family Plan", desc: "Best value option", badge: "⭐" },
+  { icon: GraduationCap, title: "Private Sessions", desc: "1-on-1 premium training", badge: "👑" },
+];
+
+const audiences = [
+  "Seniors & Retirees",
+  "Families & Parents", 
+  "Business Professionals",
+  "Organizations & Churches",
 ];
 
 export const WorkshopsPromo = () => {
@@ -107,13 +114,26 @@ export const WorkshopsPromo = () => {
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">AI Scams</span>
             </h2>
             
-            <p className="text-xl text-muted-foreground leading-relaxed">
-              Our expert-led workshops teach seniors, families, and community groups how to identify and avoid sophisticated AI-powered scams. 
-              <span className="font-semibold text-foreground"> No technical experience needed</span>—just bring your curiosity!
+            <p className="text-lg text-muted-foreground font-medium italic">
+              Know the threats. Stay ahead.
             </p>
+            
+            <p className="text-xl text-muted-foreground leading-relaxed">
+              Our expert-led workshops teach <span className="font-semibold text-foreground">seniors, families, business professionals, and organizations</span> how to identify and avoid sophisticated AI-powered scams. 
+              We also offer <span className="font-semibold text-foreground">advanced AI training</span> to help you harness the power of AI safely.
+            </p>
+            
+            {/* Who we train */}
+            <div className="flex flex-wrap gap-2">
+              {audiences.map((audience, index) => (
+                <span key={index} className="px-4 py-2 bg-white rounded-full border border-border/50 text-sm font-medium text-foreground shadow-sm">
+                  {audience}
+                </span>
+              ))}
+            </div>
 
             {/* Benefits with enhanced styling */}
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {benefits.map((benefit, index) => (
                 <motion.div
                   key={index}
@@ -121,12 +141,15 @@ export const WorkshopsPromo = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="flex items-center gap-4 p-3 rounded-2xl hover:bg-white/50 transition-colors"
+                  className="flex items-start gap-4 p-4 rounded-2xl bg-white/70 border border-border/30 hover:shadow-md transition-all"
                 >
                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center flex-shrink-0">
                     <CheckCircle className="w-4 h-4 text-white" />
                   </div>
-                  <span className="text-lg text-foreground font-medium">{benefit}</span>
+                  <div>
+                    <p className="font-bold text-foreground">{benefit.title}</p>
+                    <p className="text-sm text-muted-foreground">{benefit.desc}</p>
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -140,8 +163,11 @@ export const WorkshopsPromo = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.3 + index * 0.1 }}
-                  className="flex items-center gap-3 px-5 py-3 bg-white rounded-2xl border border-border/50 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+                  className="flex items-center gap-3 px-5 py-3 bg-white rounded-2xl border border-border/50 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 relative"
                 >
+                  {format.badge && (
+                    <span className="absolute -top-2 -right-2 text-lg">{format.badge}</span>
+                  )}
                   <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
                     <format.icon className="w-5 h-5 text-primary" />
                   </div>

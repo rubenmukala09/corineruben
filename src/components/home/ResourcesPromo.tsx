@@ -1,14 +1,14 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { FileText, Shield, BookOpen, ArrowRight, Sparkles, Download, Lock, Gift } from "lucide-react";
+import { FileText, Shield, BookOpen, ArrowRight, Sparkles, Download, Lock, Gift, ShoppingBag, Usb, CreditCard, Phone } from "lucide-react";
 import resourcesHeroDesk from "@/assets/resources-hero-desk.png";
 
 const resources = [
   {
     icon: Shield,
     title: "Cyber Insurance",
-    description: "Protection against identity theft and cyber fraud with coverage up to $1M.",
+    description: "Protection against identity theft and cyber fraud with coverage up to $1M. Peace of mind for your digital life.",
     tag: "Protection",
     color: "from-blue-500 to-indigo-500",
     badge: "Most Popular",
@@ -16,25 +16,32 @@ const resources = [
   {
     icon: FileText,
     title: "Emergency Scripts",
-    description: "Downloadable PDF scripts to handle scam calls and suspicious contacts.",
+    description: "Free downloadable PDF scripts for IRS scams, tech support scams, grandparent scams, and bank fraud alerts.",
     tag: "Free Download",
     color: "from-emerald-500 to-teal-500",
     badge: null,
   },
   {
     icon: BookOpen,
-    title: "Free Articles",
-    description: "Expert guides on staying safe online, recognizing scams, and protecting your data.",
-    tag: "Free Resources",
+    title: "Digital Guides",
+    description: "20+ specialized books including AI Fundamentals, Scam Prevention, Senior Tech Handbook, and Identity Theft Prevention.",
+    tag: "eBooks",
     color: "from-amber-500 to-orange-500",
-    badge: null,
+    badge: "New",
   },
+];
+
+const products = [
+  { icon: Usb, name: "Security USB Keys", price: "$49.99" },
+  { icon: CreditCard, name: "RFID Wallets", price: "$24.99" },
+  { icon: Phone, name: "Faraday Bags", price: "$19.99" },
+  { icon: ShoppingBag, name: "Privacy Screens", price: "$39.99" },
 ];
 
 const features = [
   { icon: Download, text: "Instant Downloads" },
   { icon: Lock, text: "Secure Access" },
-  { icon: Gift, text: "Veteran Discounts" },
+  { icon: Gift, text: "Veteran Discounts (10%)" },
 ];
 
 export const ResourcesPromo = () => {
@@ -79,13 +86,21 @@ export const ResourcesPromo = () => {
               ))}
             </div>
 
-            {/* Image - Mobile only */}
-            <div className="lg:hidden">
-              <img
-                src={resourcesHeroDesk}
-                alt="Security resources and tools"
-                className="w-full rounded-3xl shadow-lg"
-              />
+            {/* Physical Products Preview */}
+            <div className="bg-white rounded-3xl p-5 border border-border/50 shadow-sm">
+              <h4 className="font-bold text-foreground mb-4 flex items-center gap-2">
+                <ShoppingBag className="w-5 h-5 text-primary" />
+                Physical Security Products
+              </h4>
+              <div className="grid grid-cols-2 gap-3">
+                {products.map((product, index) => (
+                  <div key={index} className="flex items-center gap-2 text-sm">
+                    <product.icon className="w-4 h-4 text-muted-foreground" />
+                    <span className="text-foreground">{product.name}</span>
+                    <span className="text-muted-foreground ml-auto">{product.price}</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* CTA */}
