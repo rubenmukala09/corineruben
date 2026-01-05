@@ -73,12 +73,12 @@ export const FAQPreview = () => {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-green-600 rounded-full border-2 border-background flex items-center justify-center">
+                  <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-green-700 rounded-full border-2 border-background flex items-center justify-center" aria-label="Online status">
                     <span className="text-[9px] text-white font-bold">ON</span>
                   </div>
                 </div>
                 <div>
-                  <h4 className="font-bold text-lg text-foreground">Talk to a Human</h4>
+                  <h3 className="font-bold text-lg text-foreground">Talk to a Human</h3>
                   <p className="text-sm text-muted-foreground">Real experts, not bots • Available now</p>
                 </div>
               </div>

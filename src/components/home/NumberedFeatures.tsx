@@ -18,10 +18,10 @@ export const NumberedFeatures = () => {
               className="bg-background rounded-xl p-6 shadow-sm border border-border/50 hover:shadow-md transition-shadow"
             >
               <div className="flex items-start gap-3">
-                <span className="text-3xl font-bold text-primary/40">{feature.num}</span>
+                <span className="text-3xl font-bold text-primary/60" aria-hidden="true">{feature.num}</span>
                 <div className="pt-1">
-                  <feature.icon className="w-5 h-5 text-primary mb-2" />
-                  <h3 className="font-semibold text-foreground text-sm">{feature.title}</h3>
+                  <feature.icon className="w-5 h-5 text-primary mb-2" aria-hidden="true" />
+                  <p className="font-semibold text-foreground text-sm">{feature.title}</p>
                 </div>
               </div>
             </div>
