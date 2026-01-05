@@ -276,7 +276,7 @@ function SubscriptionForm({
 }: SubscriptionFormProps) {
   const stripe = useStripe();
   const elements = useElements();
-  const { stripePromise, loading: stripeLoading, error: stripeError } = useStripeKey();
+  const { stripePromise, loading: stripeLoading, error: stripeError, initializeStripe } = useStripeKey();
 
   const [step, setStep] = useState<"info" | "payment" | "success">("info");
   const [loading, setLoading] = useState(false);
@@ -291,6 +291,11 @@ function SubscriptionForm({
   const [discount, setDiscount] = useState<any>(null);
   const [validatingCode, setValidatingCode] = useState(false);
   const [showDiscountField, setShowDiscountField] = useState(false);
+
+  // Initialize Stripe when component mounts (dialog opens)
+  useEffect(() => {
+    initializeStripe();
+  }, [initializeStripe]);
 
   const styles = variantStyles[variant];
   const info = tierInfo[planTier] || tierInfo.Starter;

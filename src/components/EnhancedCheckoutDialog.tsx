@@ -288,10 +288,15 @@ function CardPaymentWrapper({
   setFormData: (data: { name: string; email: string }) => void;
 }) {
   const { items } = useCart();
-  const { stripePromise, loading: stripeLoading, error: stripeError } = useStripeKey();
+  const { stripePromise, loading: stripeLoading, error: stripeError, initializeStripe } = useStripeKey();
   const [step, setStep] = useState<'contact' | 'payment'>('contact');
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  // Initialize Stripe when component mounts (dialog opens)
+  useEffect(() => {
+    initializeStripe();
+  }, [initializeStripe]);
 
   // Auto-fill from localStorage
   useEffect(() => {

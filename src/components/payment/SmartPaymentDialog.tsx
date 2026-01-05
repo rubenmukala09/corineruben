@@ -60,7 +60,7 @@ interface PaymentFormProps {
 }
 
 function SmartPaymentForm({ items, onSuccess, onClose }: PaymentFormProps) {
-  const { stripePromise, loading: stripeLoading, error: stripeError } = useStripeKey();
+  const { stripePromise, loading: stripeLoading, error: stripeError, initializeStripe } = useStripeKey();
   const [step, setStep] = useState<"info" | "payment" | "success">("info");
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -69,6 +69,11 @@ function SmartPaymentForm({ items, onSuccess, onClose }: PaymentFormProps) {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  // Initialize Stripe when component mounts (dialog opens)
+  useEffect(() => {
+    initializeStripe();
+  }, [initializeStripe]);
 
   // Auto-fill from localStorage
   useEffect(() => {

@@ -46,7 +46,7 @@ interface CheckoutDialogProps {
 
 function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
   const { items, total, clearCart } = useCart();
-  const { stripePromise, loading: stripeLoading, error: stripeError } = useStripeKey();
+  const { stripePromise, loading: stripeLoading, error: stripeError, initializeStripe } = useStripeKey();
 
   const [step, setStep] = useState<"info" | "payment" | "success">("info");
   const [isLoading, setIsLoading] = useState(false);
@@ -56,6 +56,11 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  // Initialize Stripe when component mounts (dialog opens)
+  useEffect(() => {
+    initializeStripe();
+  }, [initializeStripe]);
   const [address, setAddress] = useState({
     line1: "",
     city: "",

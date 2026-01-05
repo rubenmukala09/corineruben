@@ -195,7 +195,7 @@ export function TrainingPaymentModal({
   duration,
   onSuccess,
 }: TrainingPaymentModalProps) {
-  const { stripePromise, loading: stripeLoading } = useStripeKey();
+  const { stripePromise, loading: stripeLoading, initializeStripe } = useStripeKey();
   const [step, setStep] = useState<"info" | "payment" | "success">("info");
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -207,6 +207,13 @@ export function TrainingPaymentModal({
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  // Initialize Stripe when dialog opens
+  useEffect(() => {
+    if (open) {
+      initializeStripe();
+    }
+  }, [open, initializeStripe]);
 
   // Auto-fill from localStorage
   useEffect(() => {
