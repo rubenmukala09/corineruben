@@ -25,25 +25,38 @@ export const useSectionNavigation = (sections: Section[]) => {
 
   // Track active section based on scroll position
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 150; // Offset for detection
+      if (ticking) return;
+      
+      ticking = true;
+      requestAnimationFrame(() => {
+        const scrollPosition = window.scrollY + 150; // Offset for detection
 
-      for (const section of sections) {
-        const element = document.getElementById(section.id);
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section.id);
-            break;
+        for (const section of sections) {
+          const element = document.getElementById(section.id);
+          if (element) {
+            const { offsetTop, offsetHeight } = element;
+            if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+              setActiveSection(section.id);
+              break;
+            }
           }
         }
-      }
+        ticking = false;
+      });
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Initial check
+    
+    // Defer initial check to avoid forced reflow during initial render
+    const frameId = requestAnimationFrame(handleScroll);
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(frameId);
+    };
   }, [sections]);
 
   return { activeSection, scrollToSection };
