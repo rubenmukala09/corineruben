@@ -82,20 +82,47 @@ export function getStripePromise(): Promise<Stripe | null> | null {
   
   return stripePromiseCache;
 }
+// Lazy pre-fetch: only start after user interaction or when idle
+// This defers Stripe loading to improve TTI
+let prefetchScheduled = false;
 
-// Pre-fetch the key on module load
-(async () => {
-  const envKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
-  if (!envKey || envKey.trim() === '') {
-    try {
-      const { data } = await supabase.functions.invoke('get-stripe-key');
-      if (data?.publishableKey) {
-        cachedKey = data.publishableKey;
-        stripePromiseCache = loadStripe(data.publishableKey);
-        console.log('[Stripe] Pre-fetched key successfully');
+export function schedulePrefetch() {
+  if (prefetchScheduled || stripePromiseCache) return;
+  prefetchScheduled = true;
+  
+  const doPrefetch = async () => {
+    const envKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
+    if (!envKey || envKey.trim() === '') {
+      try {
+        const { data } = await supabase.functions.invoke('get-stripe-key');
+        if (data?.publishableKey) {
+          cachedKey = data.publishableKey;
+          stripePromiseCache = loadStripe(data.publishableKey);
+        }
+      } catch (err) {
+        // Silently fail - will retry when needed
       }
-    } catch (err) {
-      console.error('[Stripe] Pre-fetch failed:', err);
     }
+  };
+  
+  // Use requestIdleCallback if available, otherwise setTimeout
+  if ('requestIdleCallback' in window) {
+    (window as any).requestIdleCallback(doPrefetch, { timeout: 5000 });
+  } else {
+    setTimeout(doPrefetch, 3000);
   }
-})();
+}
+
+// Schedule prefetch on first user interaction (click, scroll, keydown)
+if (typeof window !== 'undefined') {
+  const triggerPrefetch = () => {
+    schedulePrefetch();
+    window.removeEventListener('click', triggerPrefetch);
+    window.removeEventListener('scroll', triggerPrefetch);
+    window.removeEventListener('keydown', triggerPrefetch);
+  };
+  
+  window.addEventListener('click', triggerPrefetch, { once: true, passive: true });
+  window.addEventListener('scroll', triggerPrefetch, { once: true, passive: true });
+  window.addEventListener('keydown', triggerPrefetch, { once: true, passive: true });
+}
