@@ -1,9 +1,16 @@
 // ============================================
 // SIMPLIFIED FRAMER MOTION VARIANTS
-// Clean, fast, no blur filters
+// Clean, fast, no unnecessary animations
 // ============================================
 
-import { TIMING, EASING } from './animation-config';
+// Core timing
+const TIMING = {
+  fast: 0.15,
+  normal: 0.2,
+  slow: 0.3,
+};
+
+const EASING = [0.4, 0, 0.2, 1] as const;
 
 // Simple fade up (most common)
 export const fadeUp = {
@@ -11,7 +18,7 @@ export const fadeUp = {
   visible: { 
     opacity: 1, 
     y: 0,
-    transition: { duration: TIMING.normal, ease: EASING.smooth }
+    transition: { duration: TIMING.normal, ease: EASING }
   }
 };
 
@@ -20,7 +27,7 @@ export const fadeIn = {
   hidden: { opacity: 0 },
   visible: { 
     opacity: 1,
-    transition: { duration: TIMING.normal, ease: EASING.out }
+    transition: { duration: TIMING.normal, ease: EASING }
   }
 };
 
@@ -30,7 +37,7 @@ export const scaleIn = {
   visible: { 
     opacity: 1, 
     scale: 1,
-    transition: { duration: TIMING.normal, ease: EASING.smooth }
+    transition: { duration: TIMING.normal, ease: EASING }
   }
 };
 
@@ -40,7 +47,7 @@ export const slideLeft = {
   visible: { 
     opacity: 1, 
     x: 0,
-    transition: { duration: TIMING.normal, ease: EASING.smooth }
+    transition: { duration: TIMING.normal, ease: EASING }
   }
 };
 
@@ -50,7 +57,7 @@ export const slideRight = {
   visible: { 
     opacity: 1, 
     x: 0,
-    transition: { duration: TIMING.normal, ease: EASING.smooth }
+    transition: { duration: TIMING.normal, ease: EASING }
   }
 };
 
@@ -61,7 +68,7 @@ export const staggerContainer = {
     opacity: 1,
     transition: {
       staggerChildren: 0.05,
-      delayChildren: 0.1,
+      delayChildren: 0.05,
     }
   }
 };
@@ -72,7 +79,7 @@ export const staggerItem = {
   visible: { 
     opacity: 1, 
     y: 0,
-    transition: { duration: TIMING.normal, ease: EASING.smooth }
+    transition: { duration: TIMING.normal, ease: EASING }
   }
 };
 
@@ -82,54 +89,39 @@ export const modalAnimation = {
   animate: { 
     opacity: 1, 
     scale: 1,
-    transition: { duration: TIMING.fast, ease: EASING.out }
+    transition: { duration: TIMING.fast, ease: EASING }
   },
   exit: { 
     opacity: 0, 
     scale: 0.98,
-    transition: { duration: TIMING.instant }
+    transition: { duration: 0.1 }
   }
 };
 
 // Hover effect
 export const hoverScale = {
   rest: { scale: 1 },
-  hover: { 
-    scale: 1.03, 
-    transition: { duration: TIMING.fast, ease: EASING.out } 
-  },
-  tap: { 
-    scale: 0.98, 
-    transition: { duration: TIMING.instant } 
-  }
+  hover: { scale: 1.03, transition: { duration: TIMING.fast, ease: EASING } },
+  tap: { scale: 0.98, transition: { duration: 0.1 } }
 };
 
-// Float animation (for decorative elements)
+// Float animation (simplified, used sparingly)
 export const floatAnimation = {
   animate: {
-    y: [0, -8, 0],
-    transition: {
-      duration: 4,
-      repeat: Infinity,
-      ease: "easeInOut"
-    }
+    y: [0, -6, 0],
+    transition: { duration: 4, repeat: Infinity, ease: "easeInOut" }
   }
 };
 
-// Rotate slowly (for icons/decorations)
+// Rotate slowly (simplified)
 export const rotateAnimation = {
   animate: {
     rotate: 360,
-    transition: {
-      duration: 20,
-      repeat: Infinity,
-      ease: "linear"
-    }
+    transition: { duration: 20, repeat: Infinity, ease: "linear" }
   }
 };
 
 // ===== LEGACY EXPORTS (for compatibility) =====
-
 export const blurReveal = fadeUp;
 export const elasticPop = scaleIn;
 export const sweepUp = fadeUp;
@@ -153,17 +145,11 @@ export const letterAnimation = staggerItem;
 export const textReveal = staggerItem;
 export const cardFlip = scaleIn;
 
-// Page transition (simplified)
+// Page transition (fast)
 export const cinematicPage = {
   initial: { opacity: 0 },
-  animate: { 
-    opacity: 1,
-    transition: { duration: TIMING.fast }
-  },
-  exit: { 
-    opacity: 0,
-    transition: { duration: TIMING.instant }
-  }
+  animate: { opacity: 1, transition: { duration: 0.1 } },
+  exit: { opacity: 0, transition: { duration: 0.05 } }
 };
 
 export const pageTransition = cinematicPage;

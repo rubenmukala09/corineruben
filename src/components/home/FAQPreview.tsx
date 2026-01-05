@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { HelpCircle, ArrowRight, MessageCircle, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -10,7 +9,7 @@ import {
 } from "@/components/ui/accordion";
 import supportAgent from "@/assets/support-agent.jpg";
 import protectedFamilyBg from "@/assets/protected-family-bg.jpg";
-import { HexagonIcon, GeometricCorner, DottedPattern, GridPattern, FloatingShapes } from "@/components/ui/GeometricDecorations";
+import { GeometricCorner, GridPattern } from "@/components/ui/GeometricDecorations";
 
 const faqs = [
   {
@@ -37,44 +36,15 @@ export const FAQPreview = () => {
       {/* Grid pattern */}
       <GridPattern />
       
-      {/* Floating shapes */}
-      <FloatingShapes />
-      
       {/* Geometric corner accents */}
       <GeometricCorner position="top-right" variant="lines" />
       <GeometricCorner position="bottom-left" variant="dots" />
       
-      {/* Diagonal stripe decorations */}
-      <div className="absolute -top-10 -right-10 w-48 h-48 pointer-events-none">
-        <div className="absolute inset-0 bg-primary/5 transform skew-x-12 rotate-12" />
-      </div>
-      <div className="absolute -bottom-10 -left-10 w-40 h-40 pointer-events-none">
-        <div className="absolute inset-0 bg-accent/5 transform -skew-x-12 -rotate-12" />
-      </div>
-      
-      {/* Decorative elements */}
-      <motion.div 
-        className="absolute top-20 right-10 w-32 h-32 rounded-full bg-primary/5"
-        animate={{ scale: [1, 1.2, 1] }}
-        transition={{ duration: 5, repeat: Infinity }}
-      />
-      <motion.div 
-        className="absolute bottom-20 left-20 w-24 h-24 rounded-full bg-accent/10"
-        animate={{ scale: [1.2, 1, 1.2] }}
-        transition={{ duration: 6, repeat: Infinity }}
-      />
-      
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Left - Header & Support Card */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="lg:sticky lg:top-24 space-y-8"
-          >
+          <div className="lg:sticky lg:top-24 space-y-8">
             <div>
-              {/* Angular badge */}
               <div 
                 className="inline-flex items-center gap-2 px-5 py-2 bg-primary text-primary-foreground text-sm font-semibold uppercase tracking-wider mb-4"
                 style={{ clipPath: "polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%)" }}
@@ -90,33 +60,22 @@ export const FAQPreview = () => {
               <p className="text-muted-foreground text-lg leading-relaxed">
                 Protecting your family from scams is a serious decision. Here's what you need to know.
               </p>
-              
-              {/* Decorative dotted line */}
-              <DottedPattern direction="horizontal" length={6} className="mt-6" />
             </div>
 
-            {/* Support Agent Card - Redesigned with more professional look */}
+            {/* Support Agent Card */}
             <div className="bg-card rounded-2xl p-6 border border-border shadow-lg hover:shadow-xl transition-shadow">
               <div className="flex items-center gap-4 mb-6">
-                {/* Circular image with decorations */}
                 <div className="relative">
-                  <motion.div 
-                    className="w-20 h-20 rounded-full overflow-hidden border-3 border-primary/30 shadow-lg"
-                    whileHover={{ scale: 1.05 }}
-                  >
+                  <div className="w-20 h-20 rounded-full overflow-hidden border-3 border-primary/30 shadow-lg">
                     <img
                       src={supportAgent}
                       alt="Support specialist"
                       className="w-full h-full object-cover"
                     />
-                  </motion.div>
-                  <motion.div 
-                    className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-background flex items-center justify-center"
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
+                  </div>
+                  <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-background flex items-center justify-center">
                     <span className="text-[8px] text-white font-bold">ON</span>
-                  </motion.div>
+                  </div>
                 </div>
                 <div>
                   <h4 className="font-bold text-lg text-foreground">Talk to a Human</h4>
@@ -143,86 +102,58 @@ export const FAQPreview = () => {
                 </Button>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Right - FAQ Accordion */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
+          <div>
             <Accordion type="single" collapsible className="space-y-4">
               {faqs.map((faq, index) => (
-                <motion.div
+                <AccordionItem
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
+                  value={`item-${index}`}
+                  className="group border border-border rounded-xl px-6 bg-card hover:border-primary/30 transition-all duration-200 data-[state=open]:border-primary/40 data-[state=open]:shadow-lg"
                 >
-                  <AccordionItem
-                    value={`item-${index}`}
-                    className="group border border-border rounded-xl px-6 bg-card hover:border-primary/30 transition-all duration-300 data-[state=open]:border-primary/40 data-[state=open]:shadow-lg"
-                  >
-                    <AccordionTrigger className="text-left font-semibold hover:no-underline py-5 text-foreground group-data-[state=open]:text-primary transition-colors">
-                      <div className="flex items-center gap-4 pr-4">
-                        <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 group-data-[state=open]:bg-primary/20 transition-colors">
-                          <span className="text-primary font-bold text-sm">{index + 1}</span>
-                        </div>
-                        {faq.question}
+                  <AccordionTrigger className="text-left font-semibold hover:no-underline py-5 text-foreground group-data-[state=open]:text-primary transition-colors">
+                    <div className="flex items-center gap-4 pr-4">
+                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 group-data-[state=open]:bg-primary/20 transition-colors">
+                        <span className="text-primary font-bold text-sm">{index + 1}</span>
                       </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="text-muted-foreground pb-5 pl-12 text-base leading-relaxed">
-                      {faq.answer}
-                    </AccordionContent>
-                  </AccordionItem>
-                </motion.div>
+                      {faq.question}
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground pb-5 pl-12 text-base leading-relaxed">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
               ))}
             </Accordion>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="mt-8 text-center"
-            >
+            <div className="mt-8 text-center">
               <Button asChild variant="ghost" size="lg" className="rounded-full">
                 <Link to="/resources#faq">
                   View All FAQs
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Link>
               </Button>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
 
-        {/* Ready to Get Protected - With People Picture Background */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-20 relative rounded-3xl overflow-hidden"
-        >
-          {/* Background image - no color overlay, just slight blur for text readability */}
+        {/* Ready to Get Protected */}
+        <div className="mt-20 relative rounded-3xl overflow-hidden">
           <div className="absolute inset-0">
             <img 
               src={protectedFamilyBg} 
               alt="Protected family" 
               className="w-full h-full object-cover"
             />
-            {/* Very subtle dark gradient at bottom for text readability */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
           </div>
           
           <div className="relative z-10 p-10 md:p-16 text-center">
-            <motion.h3 
-              className="text-3xl md:text-4xl font-bold text-white mb-4 drop-shadow-lg"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
+            <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 drop-shadow-lg">
               Ready to Get Protected?
-            </motion.h3>
+            </h3>
             <p className="text-white/90 text-lg max-w-2xl mx-auto mb-8 drop-shadow-md">
               Join thousands of families who trust us with their digital safety. 
               Start your protection journey today.
@@ -241,7 +172,7 @@ export const FAQPreview = () => {
               </Button>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

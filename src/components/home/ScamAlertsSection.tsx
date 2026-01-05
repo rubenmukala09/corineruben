@@ -1,6 +1,5 @@
-import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { Shield, ArrowRight, TrendingUp, Phone, Mail, CreditCard, Eye, AlertTriangle, CheckCircle } from "lucide-react";
+import { Shield, ArrowRight, TrendingUp, Phone, Mail, CreditCard, AlertTriangle, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import teamCollaborationBg from "@/assets/team-collaboration-bg.jpg";
@@ -51,48 +50,17 @@ export const ScamAlertsSection = () => {
 
   return (
     <section className="py-24 relative overflow-hidden bg-background">
-      {/* Seamless fade from hero - gradient top edge */}
+      {/* Seamless fade from hero */}
       <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-background to-transparent z-[1]" />
       
       {/* Clean white background */}
       <div className="absolute inset-0 bg-background" />
       
-      {/* Subtle floating particles */}
-      {[...Array(4)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-2 h-2 rounded-full bg-primary/10"
-          style={{
-            left: `${15 + i * 20}%`,
-            top: `${20 + (i % 3) * 25}%`,
-          }}
-          animate={{
-            y: [0, -15, 0],
-            opacity: [0.1, 0.25, 0.1],
-          }}
-          transition={{
-            duration: 4 + i * 0.5,
-            repeat: Infinity,
-            delay: i * 0.3,
-          }}
-        />
-      ))}
-      
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-            >
-              <Eye className="w-4 h-4 text-primary" />
-            </motion.div>
+            <Shield className="w-4 h-4 text-primary" />
             <span className="text-sm font-semibold text-primary">Active Threat Intelligence</span>
           </div>
           
@@ -102,25 +70,16 @@ export const ScamAlertsSection = () => {
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Real-time intelligence on scams targeting your community right now.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Left - Alert Cards */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="space-y-4"
-          >
+          <div className="space-y-4">
             {scamAlerts.map((alert, index) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
                 onClick={() => setActiveAlert(index)}
-                className={`p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 ${
+                className={`p-6 rounded-2xl border-2 cursor-pointer transition-all duration-200 ${
                   index === activeAlert
                     ? "bg-card border-primary/30 shadow-lg shadow-primary/10"
                     : "bg-card/50 border-border hover:border-primary/30"
@@ -147,34 +106,22 @@ export const ScamAlertsSection = () => {
                     </div>
                     <p className="text-muted-foreground text-sm mb-3">{alert.description}</p>
                     
-                    <AnimatePresence>
-                      {index === activeAlert && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={{ opacity: 0, height: 0 }}
-                          className="pt-3 border-t border-border"
-                        >
-                          <p className="text-sm text-primary font-medium flex items-center gap-2">
-                            <AlertTriangle className="w-4 h-4" />
-                            Tip: {alert.tip}
-                          </p>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                    {index === activeAlert && (
+                      <div className="pt-3 border-t border-border">
+                        <p className="text-sm text-primary font-medium flex items-center gap-2">
+                          <AlertTriangle className="w-4 h-4" />
+                          Tip: {alert.tip}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
 
           {/* Right - Quick Tips & CTA */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="space-y-8"
-          >
+          <div className="space-y-8">
             {/* Quick Tips Card */}
             <div className="bg-card rounded-2xl p-8 border border-border shadow-lg">
               <div className="flex items-center gap-3 mb-6">
@@ -186,53 +133,43 @@ export const ScamAlertsSection = () => {
               
               <div className="space-y-4">
                 {quickTips.map((tip, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="flex items-center gap-3"
-                  >
+                  <div key={index} className="flex items-center gap-3">
                     <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center flex-shrink-0">
                       <CheckCircle className="w-3.5 h-3.5 text-primary-foreground" />
                     </div>
                     <span className="text-muted-foreground">{tip}</span>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
 
-            {/* CTA - With blurry background image, no purple */}
+            {/* CTA */}
             <div className="relative rounded-2xl overflow-hidden">
-              {/* Background image with blur - no purple overlay */}
               <div className="absolute inset-0">
                 <img 
                   src={teamCollaborationBg} 
                   alt="" 
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 backdrop-blur-sm bg-black/40" />
+                <div className="absolute inset-0 bg-black/50" />
               </div>
               
               <div className="relative z-10 p-8 text-center">
-                <h3 className="text-xl font-bold text-white mb-3" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.5)' }}>
+                <h3 className="text-xl font-bold text-white mb-3">
                   Take Action Now
                 </h3>
-                <p className="text-white/90 mb-6" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.4)' }}>
+                <p className="text-white/90 mb-6">
                   Get protected before scammers find you
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button asChild variant="secondary" size="lg" className="rounded-full">
-                    <Link to="/training#pricing">
-                      Get Protected Now
-                      <ArrowRight className="ml-2 w-4 h-4" />
-                    </Link>
-                  </Button>
-                </div>
+                <Button asChild variant="secondary" size="lg" className="rounded-full">
+                  <Link to="/training#pricing">
+                    Get Protected Now
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Link>
+                </Button>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

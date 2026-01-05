@@ -1,5 +1,4 @@
-import { useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowRight, Mail, Bell, Loader2 } from "lucide-react";
@@ -10,18 +9,9 @@ import { toast } from "sonner";
 import { newsletterSchema } from "@/utils/formValidation";
 
 export const NewsletterSection = () => {
-  const sectionRef = useRef<HTMLElement>(null);
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { fireCelebration } = useConfetti();
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
-
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-  const patternOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.02, 0.05, 0.02]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,42 +48,23 @@ export const NewsletterSection = () => {
   };
 
   return (
-    <section ref={sectionRef} className="py-32 bg-gradient-to-b from-primary via-primary to-primary/95 relative overflow-hidden">
-      {/* Parallax pattern overlay */}
-      <motion.div 
-        className="absolute inset-0 overflow-hidden pointer-events-none"
-        style={{ y: backgroundY }}
-      >
-        <motion.div 
+    <section className="py-32 bg-gradient-to-b from-primary via-primary to-primary/95 relative overflow-hidden">
+      {/* Pattern overlay */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
+        <div 
           className="absolute inset-0"
-          style={{ opacity: patternOpacity }}
-        >
-          <div 
-            className="absolute inset-0"
-            style={{
-              backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',
-              backgroundSize: '40px 40px'
-            }}
-          />
-        </motion.div>
-      </motion.div>
+          style={{
+            backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',
+            backgroundSize: '40px 40px'
+          }}
+        />
+      </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="max-w-3xl mx-auto text-center"
-        >
-          <motion.div 
-            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary-foreground/10 border border-primary-foreground/20 mb-8"
-            initial={{ scale: 0.9 }}
-            whileInView={{ scale: 1 }}
-            viewport={{ once: true }}
-          >
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary-foreground/10 border border-primary-foreground/20 mb-8">
             <Bell className="w-8 h-8 text-primary-foreground" />
-          </motion.div>
+          </div>
           
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6 tracking-tight">
             Join Our Newsletter
@@ -105,12 +76,8 @@ export const NewsletterSection = () => {
             Get the latest security tips, scam alerts, and protection updates delivered to your inbox.
           </p>
 
-          <motion.form
+          <form
             onSubmit={handleSubmit}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
             className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto"
           >
             <div className="relative flex-1">
@@ -145,18 +112,12 @@ export const NewsletterSection = () => {
                 )}
               </Button>
             </MagneticWrapper>
-          </motion.form>
+          </form>
 
-          <motion.p 
-            className="text-primary-foreground/60 text-sm mt-6"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-          >
+          <p className="text-primary-foreground/60 text-sm mt-6">
             We respect your privacy. Unsubscribe at any time.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
       </div>
     </section>
   );
