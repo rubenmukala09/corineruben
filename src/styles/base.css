@@ -39,16 +39,16 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   }
 
   :root {
-    /* Base colors - Clean white for trust & readability (seniors) */
-    --background: 0 0% 100%;
-    --foreground: 260 45% 15%;
+    /* Base colors - Premium warm ivory for luxury feel */
+    --background: 40 30% 98%;
+    --foreground: 260 45% 12%;
     
     /* Royal Purple - Primary brand color (Professional, trustworthy) */
-    --primary: 265 55% 45%;
+    --primary: 265 55% 42%;
     --primary-foreground: 0 0% 100%;
     
     /* Teal Accent - Fresh, vibrant complement to purple */
-    --accent: 170 60% 40%;
+    --accent: 170 60% 38%;
     --accent-foreground: 0 0% 100%;
     
     /* Success Green - Safety, verification */
@@ -59,52 +59,52 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --destructive: 0 70% 45%;
     --destructive-foreground: 0 0% 100%;
     
-    /* Card & Surface colors - Slightly off-white with purple tint */
-    --card: 260 15% 98%;
-    --card-foreground: 260 45% 15%;
+    /* Card & Surface colors - Warm cream with subtle depth */
+    --card: 40 25% 97%;
+    --card-foreground: 260 45% 12%;
     
-    --popover: 0 0% 100%;
-    --popover-foreground: 260 45% 15%;
+    --popover: 40 20% 99%;
+    --popover-foreground: 260 45% 12%;
     
-    /* Light purple secondary */
-    --secondary: 260 20% 95%;
-    --secondary-foreground: 265 55% 45%;
+    /* Warm secondary tones */
+    --secondary: 40 15% 94%;
+    --secondary-foreground: 265 55% 42%;
     
-    /* Muted tones - high contrast for readability */
-    --muted: 260 15% 92%;
-    --muted-foreground: 260 20% 35%;
+    /* Muted tones - warm and readable */
+    --muted: 40 12% 90%;
+    --muted-foreground: 260 18% 38%;
     
-    --border: 260 20% 85%;
-    --input: 260 20% 88%;
-    --ring: 265 55% 45%;
+    --border: 40 15% 85%;
+    --input: 40 15% 88%;
+    --ring: 265 55% 42%;
     
-    --radius: 0.5rem;
+    --radius: 0.625rem;
     
     /* Extended Color Palette - Royal Purple Spectrum */
-    --purple-900: 260 50% 18%;
-    --purple-700: 260 48% 28%;
-    --purple-500: 260 45% 40%;
-    --purple-400: 260 42% 50%;
-    --purple-300: 260 38% 65%;
-    --purple-200: 260 30% 80%;
-    --purple-100: 260 25% 94%;
+    --purple-900: 260 50% 16%;
+    --purple-700: 260 48% 26%;
+    --purple-500: 260 45% 38%;
+    --purple-400: 260 42% 48%;
+    --purple-300: 260 38% 62%;
+    --purple-200: 260 30% 78%;
+    --purple-100: 260 25% 92%;
     
     /* Deep violet accents for highlights */
-    --violet-600: 270 55% 35%;
-    --violet-500: 270 50% 45%;
-    --violet-400: 270 45% 55%;
-    --violet-300: 270 40% 70%;
+    --violet-600: 270 55% 32%;
+    --violet-500: 270 50% 42%;
+    --violet-400: 270 45% 52%;
+    --violet-300: 270 40% 68%;
     
-    /* Slate neutrals with purple undertones */
-    --slate-900: 260 30% 12%;
-    --slate-700: 260 22% 28%;
-    --slate-500: 260 15% 45%;
-    --slate-300: 260 12% 72%;
-    --slate-100: 260 15% 95%;
+    /* Warm slate neutrals */
+    --slate-900: 260 30% 10%;
+    --slate-700: 260 22% 25%;
+    --slate-500: 260 15% 42%;
+    --slate-300: 260 12% 70%;
+    --slate-100: 40 15% 94%;
     
     /* Gold accent for premium touches */
-    --gold-500: 40 80% 45%;
-    --gold-400: 40 75% 55%;
+    --gold-500: 38 85% 48%;
+    --gold-400: 40 80% 55%;
     
     /* Keep teal for specific accents only */
     --teal-600: 175 70% 28%;
@@ -117,23 +117,23 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --cyan-500: 185 65% 40%;
     --cyan-400: 185 60% 52%;
     
-    /* Premium Shadows - subtle purple undertones */
-    --shadow-soft: 0 4px 6px -1px hsl(260 45% 15% / 0.06), 0 2px 4px -1px hsl(260 45% 15% / 0.03);
-    --shadow-medium: 0 10px 15px -3px hsl(260 45% 15% / 0.08), 0 4px 6px -2px hsl(260 45% 15% / 0.04);
-    --shadow-strong: 0 20px 25px -5px hsl(260 45% 15% / 0.1), 0 10px 10px -5px hsl(260 45% 15% / 0.06);
-    --shadow-glow-primary: 0 0 30px hsl(260 55% 40% / 0.2);
-    --shadow-glow-accent: 0 0 30px hsl(270 50% 50% / 0.2);
+    /* Premium Shadows - warm, layered depth */
+    --shadow-soft: 0 2px 8px -2px hsl(260 30% 20% / 0.08), 0 1px 3px -1px hsl(260 30% 20% / 0.04);
+    --shadow-medium: 0 8px 24px -4px hsl(260 30% 20% / 0.1), 0 4px 10px -3px hsl(260 30% 20% / 0.05);
+    --shadow-strong: 0 16px 40px -8px hsl(260 30% 20% / 0.12), 0 8px 16px -6px hsl(260 30% 20% / 0.06);
+    --shadow-glow-primary: 0 0 40px hsl(265 55% 42% / 0.18);
+    --shadow-glow-accent: 0 0 40px hsl(270 50% 48% / 0.18);
     
     /* Radial gradients for background orbs */
     --gradient-radial: radial-gradient(circle, var(--tw-gradient-stops));
     
-    --sidebar-background: 260 15% 98%;
-    --sidebar-foreground: 260 45% 15%;
+    --sidebar-background: 40 20% 97%;
+    --sidebar-foreground: 260 45% 12%;
     --sidebar-primary: 260 55% 40%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 260 20% 92%;
+    --sidebar-accent: 40 15% 92%;
     --sidebar-accent-foreground: 260 55% 40%;
-    --sidebar-border: 260 20% 85%;
+    --sidebar-border: 40 15% 85%;
     --sidebar-ring: 260 55% 40%;
     
     /* Global site scale for desktop browsers */
@@ -180,6 +180,8 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     @apply scroll-smooth;
     overflow-x: hidden;
     width: 100%;
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
   }
   
   body {
@@ -192,6 +194,12 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     position: relative;
     /* Desktop zoom scaling */
     zoom: var(--site-scale);
+    /* Premium subtle texture */
+    background-image: 
+      radial-gradient(ellipse at 20% 0%, hsl(265 55% 42% / 0.02) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 100%, hsl(170 60% 38% / 0.015) 0%, transparent 50%),
+      linear-gradient(180deg, hsl(40 30% 98%) 0%, hsl(40 25% 96%) 100%);
+    background-attachment: fixed;
   }
   
   @media (min-width: 768px) {
