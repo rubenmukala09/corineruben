@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { GraduationCap, Users, Calendar, CheckCircle, ArrowRight, Star } from "lucide-react";
-import workshopPromo from "@/assets/workshop-promo.jpg";
+import { GraduationCap, Users, Calendar, CheckCircle, ArrowRight, Star, Play, Award } from "lucide-react";
+import workshopInstructor from "@/assets/workshop-instructor.jpg";
 
 const benefits = [
   "Hands-on scam detection training",
@@ -19,114 +19,149 @@ const formats = [
 
 export const WorkshopsPromo = () => {
   return (
-    <section className="py-20 bg-gradient-to-br from-background via-primary/5 to-background relative overflow-hidden">
+    <section className="py-24 bg-gradient-to-br from-background via-primary/5 to-background relative overflow-hidden">
       {/* Decorative elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-50" />
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-accent/10 rounded-full blur-3xl opacity-50" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[100px] opacity-60" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[80px] opacity-50" />
+      
+      {/* Subtle grid pattern */}
+      <div className="absolute inset-0 opacity-[0.02]" style={{
+        backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--primary)) 1px, transparent 0)`,
+        backgroundSize: '48px 48px'
+      }} />
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Image Side */}
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Image Side - Enhanced with overlays */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
             className="relative"
           >
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-white/50">
-              <img
-                src={workshopPromo}
-                alt="Security workshop in progress"
-                className="w-full h-[400px] object-cover"
-              />
-              {/* Overlay badge */}
-              <div className="absolute top-4 left-4 flex items-center gap-2 px-4 py-2 bg-white/95 backdrop-blur-sm rounded-full shadow-lg">
-                <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-                <span className="text-sm font-semibold">Top-Rated Training</span>
+            <div className="relative">
+              {/* Main image container - Physical Photo Effect */}
+              <div className="relative rounded-3xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-white/80 group">
+                <img
+                  src={workshopInstructor}
+                  alt="Professional workshop instructor teaching scam prevention"
+                  className="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                
+                {/* Top badge */}
+                <div className="absolute top-6 left-6 flex items-center gap-2 px-4 py-2.5 bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg">
+                  <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
+                  <span className="font-bold text-foreground">Top-Rated Training</span>
+                </div>
+                
+                {/* Play button overlay */}
+                <motion.div 
+                  className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  whileHover={{ scale: 1.1 }}
+                >
+                  <div className="w-20 h-20 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-2xl cursor-pointer">
+                    <Play className="w-8 h-8 text-primary fill-primary ml-1" />
+                  </div>
+                </motion.div>
               </div>
+              
+              {/* Floating stats card */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+                className="absolute -bottom-8 -right-8 bg-white rounded-3xl p-6 shadow-[0_15px_50px_-12px_rgba(0,0,0,0.15)] border border-border/30 hidden md:block"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+                    <Award className="w-8 h-8 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-2xl text-foreground">200+</p>
+                    <p className="text-muted-foreground">Families Trained</p>
+                  </div>
+                </div>
+              </motion.div>
             </div>
-            
-            {/* Floating card */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="absolute -bottom-6 -right-6 bg-white rounded-2xl p-4 shadow-xl border border-border/50 hidden md:block"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                  <Users className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <p className="font-bold text-lg">200+ Families</p>
-                  <p className="text-sm text-muted-foreground">Trained & Protected</p>
-                </div>
-              </div>
-            </motion.div>
           </motion.div>
 
           {/* Content Side */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="space-y-6"
+            transition={{ duration: 0.6 }}
+            className="space-y-8"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full border border-primary/20">
-              <GraduationCap className="w-4 h-4 text-primary" />
-              <span className="text-sm font-semibold text-primary">Expert Workshops</span>
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary/10 rounded-2xl border border-primary/20">
+              <GraduationCap className="w-5 h-5 text-primary" />
+              <span className="font-bold text-primary">Learn & Train Workshops</span>
             </div>
             
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
               Learn to Protect Your Family from{" "}
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">AI Scams</span>
             </h2>
             
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-xl text-muted-foreground leading-relaxed">
               Our expert-led workshops teach seniors, families, and community groups how to identify and avoid sophisticated AI-powered scams. 
-              No technical experience needed—just bring your curiosity!
+              <span className="font-semibold text-foreground"> No technical experience needed</span>—just bring your curiosity!
             </p>
 
-            {/* Benefits */}
-            <div className="space-y-3">
+            {/* Benefits with enhanced styling */}
+            <div className="space-y-4">
               {benefits.map((benefit, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, x: 20 }}
+                  initial={{ opacity: 0, x: 30 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="flex items-center gap-3"
+                  className="flex items-center gap-4 p-3 rounded-2xl hover:bg-white/50 transition-colors"
                 >
-                  <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0" />
-                  <span className="text-foreground">{benefit}</span>
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center flex-shrink-0">
+                    <CheckCircle className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="text-lg text-foreground font-medium">{benefit}</span>
                 </motion.div>
               ))}
             </div>
 
-            {/* Format options */}
-            <div className="flex flex-wrap gap-4 pt-2">
+            {/* Format options - Enhanced cards */}
+            <div className="flex flex-wrap gap-4 pt-4">
               {formats.map((format, index) => (
-                <div key={index} className="flex items-center gap-2 px-3 py-2 bg-muted/50 rounded-xl border border-border/50">
-                  <format.icon className="w-4 h-4 text-primary" />
-                  <div>
-                    <p className="text-sm font-semibold">{format.title}</p>
-                    <p className="text-xs text-muted-foreground">{format.desc}</p>
+                <motion.div 
+                  key={index} 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 + index * 0.1 }}
+                  className="flex items-center gap-3 px-5 py-3 bg-white rounded-2xl border border-border/50 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <format.icon className="w-5 h-5 text-primary" />
                   </div>
-                </div>
+                  <div>
+                    <p className="font-bold text-foreground">{format.title}</p>
+                    <p className="text-sm text-muted-foreground">{format.desc}</p>
+                  </div>
+                </motion.div>
               ))}
             </div>
 
-            {/* CTA */}
-            <div className="flex flex-wrap gap-4 pt-4">
-              <Button asChild size="lg" className="rounded-full px-8">
+            {/* CTA Buttons */}
+            <div className="flex flex-wrap gap-4 pt-6">
+              <Button asChild size="xl" className="rounded-2xl px-10 shadow-lg shadow-primary/25">
                 <Link to="/training">
                   Explore Workshops
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full">
+              <Button asChild variant="outline" size="xl" className="rounded-2xl">
                 <Link to="/training#pricing">View Pricing</Link>
               </Button>
             </div>

@@ -35,7 +35,7 @@ function Index() {
             <HeroHomepage />
           </section>
           
-          {/* Trusted Experts Bar */}
+          {/* Trusted Experts Bar - Social Proof */}
           <TrustedExpertsBar />
           
           {/* Workshops Promo - Learn & Train Introduction */}
