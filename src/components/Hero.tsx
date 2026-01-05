@@ -159,8 +159,7 @@ const Hero = ({
         </div>
       </div>
       
-      {/* Bottom gradient fade for seamless transition */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
+      {/* Bottom gradient removed for clean hero edge */}
       
       {/* Scroll Indicator */}
       {showScrollIndicator && <ScrollIndicator />}

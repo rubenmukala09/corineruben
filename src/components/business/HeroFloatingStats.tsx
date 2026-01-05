@@ -9,7 +9,7 @@ const HeroFloatingStats = () => {
   ];
 
   return (
-    <div className="absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-1/2 z-40 pointer-events-none">
+    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-20 pointer-events-none">
       <div 
         className="rounded-full py-4 px-10 md:px-14 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)]"
         style={{

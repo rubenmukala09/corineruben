@@ -183,67 +183,70 @@ function Business() {
         />
         <Navigation />
 
-      <Hero
-        backgroundImages={businessHeroImages}
-        headline=""
-        subheadline=""
-        showScrollIndicator={true}
-      >
-        {/* Transitioning Headlines */}
-        <div className="text-center mb-6">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-            <RotatingHeadlines headlines={businessHeadlines} className="" />
-          </h1>
-          <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
-            Transform your business with AI-powered solutions, professional websites, and expert security
-          </p>
-        </div>
+      {/* Hero wrapper with relative positioning for stats bar */}
+      <div className="relative">
+        <Hero
+          backgroundImages={businessHeroImages}
+          headline=""
+          subheadline=""
+          showScrollIndicator={true}
+        >
+          {/* Transitioning Headlines */}
+          <div className="text-center mb-6">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+              <RotatingHeadlines headlines={businessHeadlines} className="" />
+            </h1>
+            <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
+              Transform your business with AI-powered solutions, professional websites, and expert security
+            </p>
+          </div>
 
-        <div className="flex flex-col sm:flex-row gap-4">
-          <Button 
-            asChild
-            variant="default" 
-            size="xl"
-            className="transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:brightness-110"
-          >
-            <Link 
-              to="/contact?service=ai-automation"
-              onClick={() => trackButtonClick('Build AI Automation', 'Business Hero')}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Button 
+              asChild
+              variant="default" 
+              size="xl"
+              className="transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:brightness-110"
             >
-              Build AI Automation
-            </Link>
-          </Button>
-          <Button 
-            asChild
-            variant="outlineLight" 
-            size="xl"
-            className="transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:brightness-110"
-          >
-            <Link 
-              to="/contact?service=web-design"
-              onClick={() => trackButtonClick('Design My Website', 'Business Hero')}
+              <Link 
+                to="/contact?service=ai-automation"
+                onClick={() => trackButtonClick('Build AI Automation', 'Business Hero')}
+              >
+                Build AI Automation
+              </Link>
+            </Button>
+            <Button 
+              asChild
+              variant="outlineLight" 
+              size="xl"
+              className="transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:brightness-110"
             >
-              Design My Website
-            </Link>
-          </Button>
-          <Button 
-            asChild
-            variant="outlineLight" 
-            size="xl"
-            className="transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:brightness-110"
-          >
-            <Link 
-              to="/contact?service=ai-insurance"
-              onClick={() => trackButtonClick('Get AI Insurance', 'Business Hero')}
+              <Link 
+                to="/contact?service=web-design"
+                onClick={() => trackButtonClick('Design My Website', 'Business Hero')}
+              >
+                Design My Website
+              </Link>
+            </Button>
+            <Button 
+              asChild
+              variant="outlineLight" 
+              size="xl"
+              className="transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:brightness-110"
             >
-              Get AI Insurance
-            </Link>
-          </Button>
-        </div>
+              <Link 
+                to="/contact?service=ai-insurance"
+                onClick={() => trackButtonClick('Get AI Insurance', 'Business Hero')}
+              >
+                Get AI Insurance
+              </Link>
+            </Button>
+          </div>
+        </Hero>
         
-        {/* Floating Stats Bar */}
+        {/* Floating Stats Bar - Outside Hero to stay static */}
         <HeroFloatingStats />
-      </Hero>
+      </div>
 
       {/* Spacer to account for floating stats bar */}
       <div className="h-12" />
