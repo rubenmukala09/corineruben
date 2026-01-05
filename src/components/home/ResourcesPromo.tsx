@@ -124,10 +124,10 @@ export const ResourcesPromo = () => {
 
             {/* Book Categories */}
             <div className="bg-white rounded-3xl p-5 border border-border/50 shadow-sm">
-              <h4 className="font-bold text-foreground mb-3 flex items-center gap-2">
+              <h3 className="font-bold text-foreground mb-3 flex items-center gap-2 text-base">
                 <BookOpen className="w-5 h-5 text-primary" />
                 Digital Guide Categories
-              </h4>
+              </h3>
               <div className="flex flex-wrap gap-2">
                 {bookCategories.map((category, index) => (
                   <span key={index} className="px-3 py-1.5 bg-muted rounded-full text-sm font-medium text-foreground">
@@ -145,13 +145,13 @@ export const ResourcesPromo = () => {
 
             {/* Physical Products Preview */}
             <div className="bg-white rounded-3xl p-5 border border-border/50 shadow-sm">
-              <h4 className="font-bold text-foreground mb-4 flex items-center gap-2">
+              <h3 className="font-bold text-foreground mb-4 flex items-center gap-2 text-base">
                 <ShoppingBag className="w-5 h-5 text-primary" />
                 Physical Security Products
                 <span className="ml-auto px-2 py-0.5 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full flex items-center gap-1">
                   <Percent className="w-3 h-3" /> Bundle & Save 15%
                 </span>
-              </h4>
+              </h3>
               <div className="grid grid-cols-2 gap-3">
                 {products.map((product, index) => (
                   <div key={index} className="flex items-center gap-2 text-sm">

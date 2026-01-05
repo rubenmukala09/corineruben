@@ -128,10 +128,10 @@ export const AIBusinessPromo = () => {
 
             {/* ROI Facts */}
             <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-2xl p-5">
-              <h4 className="font-bold text-foreground mb-3 flex items-center gap-2">
+              <h3 className="font-bold text-foreground mb-3 flex items-center gap-2 text-base">
                 <TrendingUp className="w-5 h-5 text-primary" />
                 Why This Matters
-              </h4>
+              </h3>
               <div className="grid grid-cols-3 gap-4">
                 {roiFacts.map((fact, index) => (
                   <div key={index} className="text-center">
@@ -182,10 +182,10 @@ export const AIBusinessPromo = () => {
 
             {/* Premium Add-ons */}
             <div className="bg-white rounded-2xl p-4 border border-border/50 shadow-sm">
-              <h4 className="font-bold text-foreground mb-3 flex items-center gap-2">
+              <h3 className="font-bold text-foreground mb-3 flex items-center gap-2 text-base">
                 <Zap className="w-4 h-4 text-accent" />
                 Premium Services
-              </h4>
+              </h3>
               <div className="space-y-2">
                 {premiumAddons.map((addon, index) => (
                   <div key={index} className="flex items-center gap-3 p-2 bg-muted/50 rounded-lg">

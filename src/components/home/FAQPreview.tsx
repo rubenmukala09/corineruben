@@ -78,7 +78,7 @@ export const FAQPreview = () => {
                   </div>
                 </div>
                 <div>
-                  <h4 className="font-bold text-lg text-foreground">Talk to a Human</h4>
+                  <h3 className="font-bold text-lg text-foreground">Talk to a Human</h3>
                   <p className="text-sm text-muted-foreground">Real experts, not bots • Available now</p>
                 </div>
               </div>

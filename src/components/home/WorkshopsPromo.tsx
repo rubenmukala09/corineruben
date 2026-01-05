@@ -195,7 +195,7 @@ export const WorkshopsPromo = () => {
 
             {/* How It Works */}
             <div className="bg-white rounded-3xl p-5 border border-border/50 shadow-sm">
-              <h4 className="font-bold text-foreground mb-4">How It Works</h4>
+              <h3 className="font-bold text-foreground mb-4 text-base">How It Works</h3>
               <div className="flex gap-4">
                 {howItWorks.map((item, index) => (
                   <div key={index} className="flex-1 text-center">
