@@ -47,12 +47,14 @@ const Navigation = () => {
       {/* Mobile backdrop overlay */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9998] lg:hidden"
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
 
-      <nav className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border shadow-soft">
+      <nav className="sticky top-0 z-[9999] bg-card border-b border-border shadow-lg">
+        {/* Solid background layer for mobile */}
+        <div className="absolute inset-0 bg-card" />
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16 md:h-20 lg:h-24">
             {/* Logo */}
@@ -124,10 +126,10 @@ const Navigation = () => {
               <Link to="/portal" aria-label="Login to your account">Login</Link>
             </Button>
 
-          {/* Mobile menu button */}
+          {/* Mobile menu button - highest z-index to stay above hero elements */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 md:p-3 rounded-xl hover:bg-primary/10 transition-colors duration-300 min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="lg:hidden relative z-[10000] p-2 md:p-3 rounded-xl bg-card hover:bg-primary/10 transition-colors duration-300 min-w-[44px] min-h-[44px] flex items-center justify-center border border-border/50"
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? (
@@ -142,7 +144,7 @@ const Navigation = () => {
 
       {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden fixed top-16 md:top-20 lg:top-24 left-0 right-0 bottom-0 bg-card/98 backdrop-blur-xl border-t border-border shadow-2xl z-50 overflow-y-auto">
+          <div className="lg:hidden fixed top-16 md:top-20 lg:top-24 left-0 right-0 bottom-0 bg-card border-t border-border shadow-2xl z-[9999] overflow-y-auto">
             <div className="container mx-auto px-4 py-6 space-y-2">
               {navLinks.map((link) => {
                 const isActive = isActiveLink(link.href);
