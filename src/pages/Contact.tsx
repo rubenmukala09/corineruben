@@ -26,6 +26,7 @@ import { contactFormSchema, formatPhoneNumber } from "@/utils/formValidation";
 import { z } from "zod";
 import { useConfetti } from "@/hooks/useConfetti";
 import { PAGE_NATURE_IMAGES } from "@/config/natureHeroImages";
+import HeroFloatingStats from "@/components/business/HeroFloatingStats";
 
 const contactMethods = [
   {
@@ -145,15 +146,25 @@ function Contact() {
         description="Contact InVision Network for scam protection support. Phone, email, live chat available. Average 2-minute wait time. 95% same-day response rate."
       />
       <Navigation />
-      <Hero 
-        backgroundImages={contactHeroImages} 
-        headline="Contact Us" 
-        subheadline="We're here to help protect your family"
-        showProtectionBadge
-        badgeText="Response within 4 hours"
-      >
-        <FloatingShapes />
-      </Hero>
+      {/* Hero wrapper for floating stats */}
+      <div className="relative">
+        <Hero 
+          backgroundImages={contactHeroImages} 
+          headline="Contact Us" 
+          subheadline="We're here to help protect your family"
+          showProtectionBadge
+          badgeText="Response within 4 hours"
+        >
+          <FloatingShapes />
+        </Hero>
+        
+        {/* Floating Stats Bar - Outside Hero to stay static */}
+        <HeroFloatingStats />
+      </div>
+
+      {/* Spacer for floating stats bar */}
+      <div className="h-12" />
+      
       <TrustBar />
 
       {/* Stats Section with AnimatedCounter */}

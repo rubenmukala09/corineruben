@@ -14,6 +14,7 @@ import { Heart, Users, Zap, Target, MapPin, Clock, DollarSign, Briefcase, Star, 
 import { Link } from "react-router-dom";
 import { AIImageDisclaimer } from "@/components/AIImageDisclaimer";
 import { PAGE_NATURE_IMAGES } from "@/config/natureHeroImages";
+import HeroFloatingStats from "@/components/business/HeroFloatingStats";
 const jobPositions = [{
   id: 1,
   title: "Senior AI Engineer",
@@ -170,7 +171,17 @@ function Careers() {
   return <PageTransition variant="fade">
       <SEO title="Careers - Join Our Mission" description="Join InVision Network and help protect families from AI-powered scams. Remote-first culture, competitive benefits, meaningful work. Open positions in engineering, support, design, and more." />
       <Navigation />
-      <Hero backgroundImages={careersHeroImages} headline="Join Our Mission" subheadline="Help us protect families from AI-powered scams" showProtectionBadge badgeText="We're Hiring" />
+      {/* Hero wrapper for floating stats */}
+      <div className="relative">
+        <Hero backgroundImages={careersHeroImages} headline="Join Our Mission" subheadline="Help us protect families from AI-powered scams" showProtectionBadge badgeText="We're Hiring" />
+        
+        {/* Floating Stats Bar - Outside Hero to stay static */}
+        <HeroFloatingStats />
+      </div>
+
+      {/* Spacer for floating stats bar */}
+      <div className="h-12" />
+      
       <TrustBar />
       
       {/* Why InVision */}

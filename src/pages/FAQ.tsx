@@ -24,6 +24,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { PAGE_NATURE_IMAGES } from "@/config/natureHeroImages";
+import HeroFloatingStats from "@/components/business/HeroFloatingStats";
 
 interface FAQ {
   id: string;
@@ -371,14 +372,22 @@ export default function FAQ() {
         <Navigation />
 
         <main id="main-content">
-          {/* Hero Section */}
-          <Hero
-            backgroundImages={faqHeroImages}
-            headline="Frequently Asked Questions"
-            subheadline="Get instant answers to your questions about our AI scam protection services, training programs, and security solutions"
-            overlay={true}
-            showScrollIndicator={false}
-          />
+          {/* Hero wrapper for floating stats */}
+          <div className="relative">
+            <Hero
+              backgroundImages={faqHeroImages}
+              headline="Frequently Asked Questions"
+              subheadline="Get instant answers to your questions about our AI scam protection services, training programs, and security solutions"
+              overlay={true}
+              showScrollIndicator={false}
+            />
+            
+            {/* Floating Stats Bar - Outside Hero to stay static */}
+            <HeroFloatingStats />
+          </div>
+
+          {/* Spacer for floating stats bar */}
+          <div className="h-12" />
 
           <TrustBar />
 

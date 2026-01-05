@@ -50,6 +50,7 @@ import TestimonialCard from "@/components/TestimonialCard";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
+import HeroFloatingStats from "@/components/business/HeroFloatingStats";
 
 // Rotating hero headlines for Training page
 const trainingHeadlines = [
@@ -346,47 +347,53 @@ function LearnAndTrain() {
         />
         <Navigation />
 
-      {/* Hero Section */}
-      <Hero
-        backgroundImages={trainingHeroImages}
-        headline=""
-        subheadline=""
-        showScrollIndicator={true}
-      >
-        <div className="text-center md:text-left mb-8">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-            <RotatingHeadlines headlines={trainingHeadlines} className="" />
-          </h1>
-          <p className="text-lg md:text-xl lg:text-2xl text-white/90 max-w-4xl">
-            Expert-led training and 24/7 protection services designed for families and seniors
-          </p>
-        </div>
+      {/* Hero Section with wrapper for floating stats */}
+      <div className="relative">
+        <Hero
+          backgroundImages={trainingHeroImages}
+          headline=""
+          subheadline=""
+          showScrollIndicator={true}
+        >
+          <div className="text-center md:text-left mb-8">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+              <RotatingHeadlines headlines={trainingHeadlines} className="" />
+            </h1>
+            <p className="text-lg md:text-xl lg:text-2xl text-white/90 max-w-4xl">
+              Expert-led training and 24/7 protection services designed for families and seniors
+            </p>
+          </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center md:justify-start">
-          <Button 
-            onClick={() => {
-              document.getElementById('training')?.scrollIntoView({ behavior: 'smooth' });
-            }}
-            variant="default" 
-            size="xl" 
-            className="w-full sm:w-auto"
-          >
-            View Workshops
-          </Button>
-          <Button 
-            onClick={() => {
-              document.getElementById('scamshield')?.scrollIntoView({ behavior: 'smooth' });
-            }}
-            variant="secondary" 
-            size="xl" 
-            className="w-full sm:w-auto"
-          >
-            Learn About ScamShield
-          </Button>
-        </div>
-      </Hero>
+          <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center md:justify-start">
+            <Button 
+              onClick={() => {
+                document.getElementById('training')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              variant="default" 
+              size="xl" 
+              className="w-full sm:w-auto"
+            >
+              View Workshops
+            </Button>
+            <Button 
+              onClick={() => {
+                document.getElementById('scamshield')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              variant="secondary" 
+              size="xl" 
+              className="w-full sm:w-auto"
+            >
+              Learn About ScamShield
+            </Button>
+          </div>
+        </Hero>
+        
+        {/* Floating Stats Bar - Outside Hero to stay static */}
+        <HeroFloatingStats />
+      </div>
 
-      <TrustBar />
+      {/* Spacer for floating stats bar */}
+      <div className="h-12" />
 
       {/* Why Families Trust InVision Network Section */}
       <section className="py-16 bg-muted relative overflow-hidden">

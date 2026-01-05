@@ -30,6 +30,7 @@ import communityImpact4k from "@/assets/community-impact-4k.jpg";
 import protectedCommunity4k from "@/assets/protected-community-4k.jpg";
 import { SEO } from "@/components/SEO";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
+import HeroFloatingStats from "@/components/business/HeroFloatingStats";
 import { useAdminStatus } from "@/hooks/useAdminStatus";
 
 // Rotating hero headlines for About page
@@ -111,13 +112,22 @@ function About() {
       />
       <Navigation />
       
-      <Hero
-        backgroundImages={aboutHeroImages}
-        headline={<RotatingHeadlines headlines={aboutHeadlines} />}
-        subheadline="From victims to protectors. Serving 100+ families across Ohio."
-      >
-        <FloatingShapes />
-      </Hero>
+      {/* Hero wrapper for floating stats */}
+      <div className="relative">
+        <Hero
+          backgroundImages={aboutHeroImages}
+          headline={<RotatingHeadlines headlines={aboutHeadlines} />}
+          subheadline="From victims to protectors. Serving 100+ families across Ohio."
+        >
+          <FloatingShapes />
+        </Hero>
+        
+        {/* Floating Stats Bar - Outside Hero to stay static */}
+        <HeroFloatingStats />
+      </div>
+
+      {/* Spacer for floating stats bar */}
+      <div className="h-12" />
 
       <TrustBar />
 

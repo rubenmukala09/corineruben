@@ -59,6 +59,7 @@ import productWifiExtender from "@/assets/product-wifi-extender.jpg";
 import { SEO } from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
+import HeroFloatingStats from "@/components/business/HeroFloatingStats";
 
 // Static book products with covers (20 books)
 const staticBooks = [{
@@ -453,17 +454,26 @@ function Resources() {
       <SEO title="Resources & Marketplace - Digital Guides & Security Products" description="Browse our curated collection of scam prevention guides and physical security products. Everything you need to protect yourself and your loved ones." />
       <Navigation />
       
-      <Hero backgroundImages={resourcesHeroImages} headline="" subheadline="" showScrollIndicator={true}>
-        {/* Transitioning Headlines */}
-        <div className="text-center mb-6">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-            <RotatingHeadlines headlines={heroHeadlines} className="" />
-          </h1>
-          <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
-            Expert-curated guides, tools, and products designed to keep you and your family safe
-          </p>
-        </div>
-      </Hero>
+      {/* Hero wrapper for floating stats */}
+      <div className="relative">
+        <Hero backgroundImages={resourcesHeroImages} headline="" subheadline="" showScrollIndicator={true}>
+          {/* Transitioning Headlines */}
+          <div className="text-center mb-6">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+              <RotatingHeadlines headlines={heroHeadlines} className="" />
+            </h1>
+            <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
+              Expert-curated guides, tools, and products designed to keep you and your family safe
+            </p>
+          </div>
+        </Hero>
+        
+        {/* Floating Stats Bar - Outside Hero to stay static */}
+        <HeroFloatingStats />
+      </div>
+
+      {/* Spacer for floating stats bar */}
+      <div className="h-12" />
 
       <TrustBar />
 
