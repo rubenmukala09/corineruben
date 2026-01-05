@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -19,12 +19,17 @@ import CTASection from "@/components/CTASection";
 import { ScamShieldSubmission } from "@/components/ScamShieldSubmission";
 import { PageTransition } from "@/components/PageTransition";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
 import { SEO, PAGE_SEO } from "@/components/SEO";
 import { SectionNav } from "@/components/SectionNav";
 import { SectionDivider } from "@/components/ui/SectionDivider";
 import { useAdminStatus } from "@/hooks/useAdminStatus";
 import heroProtectionFamily from "@/assets/hero-protection-family-1.jpg";
+
+// New components
+import { TrustedExpertsBar } from "@/components/home/TrustedExpertsBar";
+import { NumberedFeatures } from "@/components/home/NumberedFeatures";
+import { ImpactStatsRow } from "@/components/home/ImpactStatsRow";
+import { TeamShowcase } from "@/components/home/TeamShowcase";
 
 function Index() {
   const { isAdmin, isLoading } = useAdminStatus();
@@ -42,47 +47,47 @@ function Index() {
             <HeroHomepage />
           </section>
           
+          {/* Trusted Experts Bar - NEW */}
+          <TrustedExpertsBar />
+          
+          {/* Numbered Features - NEW */}
+          <NumberedFeatures />
+          
           {/* Current Scam Alerts - Immediate Value */}
           <section id="alerts">
             <ScamAlertsSection />
           </section>
           
-          <SectionDivider variant="wave" />
+          <SectionDivider variant="curve" />
           
           <section id="features">
             <FeatureBar />
           </section>
 
-          {/* About Section */}
-          <section id="about" className="relative">
-            <AboutSection />
-          </section>
-
-          <SectionDivider variant="dots" />
+          <SectionDivider variant="drops" />
 
           {/* Company Introduction - Who We Are & Why You Need Us */}
           <section id="intro">
             <CompanyIntroSection />
           </section>
 
+          {/* Impact Stats Row - NEW */}
+          <ImpactStatsRow />
+
           {/* Services Showcase - Team of Experts */}
           <section id="services">
             <ServicesShowcase />
           </section>
 
-          <SectionDivider variant="line" />
+          <SectionDivider variant="mountains" />
 
           {/* Ohio Community Impact */}
           <section id="ohio">
             <OhioImpactSection />
           </section>
 
-          {/* Security Solutions - Portfolio */}
-          <section id="portfolio">
-            <SecuritySolutions />
-          </section>
-
-          <SectionDivider variant="gradient" />
+          {/* Team Showcase - NEW */}
+          <TeamShowcase />
 
           {/* Working Process - 4 Steps */}
           <section id="process">
@@ -94,7 +99,7 @@ function Index() {
             <TestimonialQuote />
           </section>
 
-          <SectionDivider variant="dots" />
+          <SectionDivider variant="clouds" />
 
           {/* FAQ Section */}
           <section id="faq">

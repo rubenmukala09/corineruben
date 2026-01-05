@@ -14,6 +14,7 @@ const services = [
     description: "Advanced protection against AI-powered scams and fraud attempts.",
     image: serviceScamshield,
     link: "/training",
+    category: "Protection",
   },
   {
     icon: Users,
@@ -21,6 +22,7 @@ const services = [
     description: "Empowering families with knowledge to stay safe online.",
     image: serviceFamilySafety,
     link: "/training",
+    category: "Education",
   },
   {
     icon: Brain,
@@ -28,6 +30,7 @@ const services = [
     description: "Smart technology that identifies threats before they reach you.",
     image: serviceAiBusiness,
     link: "/business",
+    category: "Technology",
   },
   {
     icon: Clock,
@@ -35,6 +38,7 @@ const services = [
     description: "Round-the-clock protection and immediate threat response.",
     image: serviceTraining,
     link: "/training",
+    category: "Support",
   },
 ];
 
@@ -71,9 +75,16 @@ export const ServicesShowcase = () => {
           {services.map((service, index) => (
             <div key={index} className="group">
               <Link to={service.link} className="block">
-                <div className="bg-card rounded-2xl overflow-hidden border border-border hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-200 relative">
+                <div className="bg-card rounded-2xl overflow-hidden border border-border hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-200 relative hover:-translate-y-1">
+                  {/* Category Tag */}
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="px-3 py-1 text-xs font-medium bg-primary/90 text-primary-foreground rounded-full">
+                      {service.category}
+                    </span>
+                  </div>
+                  
                   {/* Image */}
-                  <div className="relative p-6 pb-0">
+                  <div className="relative p-6 pb-0 pt-12">
                     <div className="relative">
                       <div className="rounded-full overflow-hidden aspect-square border-4 border-background shadow-lg">
                         <img
