@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Shield, ArrowRight, Lock, Eye, Fingerprint, ShieldCheck, Zap, Globe, Play } from "lucide-react";
-import heroVideo from "@/assets/people-studying-video.mp4";
+import heroVideo from "@/assets/hero-video.mp4";
 
 const securityFeatures = [{
   icon: Lock,
@@ -140,7 +140,7 @@ export const HeroHomepage = () => {
             duration: 0.8
           }} className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 mb-10 shadow-sm">
               <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-primary to-accent animate-pulse shadow-sm" />
-              <span className="text-sm font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Veteran-Owned • Ohio-Based • Trusted</span>
+              <span className="text-sm font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Veteran-Supporting • Ohio-Based • Trusted</span>
             </motion.div>
             
             {/* Headline with Typing Effect - Larger for wider layout */}
