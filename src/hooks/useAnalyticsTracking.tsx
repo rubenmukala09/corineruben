@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { trackPageView, trackScroll, getSessionId } from "@/utils/analyticsTracker";
 
@@ -13,14 +13,10 @@ const scheduleIdleTask = (callback: () => void) => {
 
 export function useAnalyticsTracking() {
   const location = useLocation();
-  const initializedRef = useRef(false);
 
   useEffect(() => {
-    // Initialize session - defer to idle
-    if (!initializedRef.current) {
-      initializedRef.current = true;
-      scheduleIdleTask(() => getSessionId());
-    }
+    // Initialize session - defer to idle (runs once on mount)
+    scheduleIdleTask(() => getSessionId());
   }, []);
 
   useEffect(() => {
