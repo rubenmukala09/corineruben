@@ -25,8 +25,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { contactFormSchema, formatPhoneNumber } from "@/utils/formValidation";
 import { z } from "zod";
 import { useConfetti } from "@/hooks/useConfetti";
-import heroContactPro1 from "@/assets/hero-contact-pro-1.jpg";
-import heroContactPro2 from "@/assets/hero-contact-pro-2.jpg";
+import { PAGE_NATURE_IMAGES } from "@/config/natureHeroImages";
 
 const contactMethods = [
   {
@@ -137,9 +136,7 @@ function Contact() {
   const messageLength = formData.message.length;
   const maxLength = 500;
 
-  const contactHeroImages = [
-    { src: heroContactPro1, alt: "Professional support center with friendly team" }
-  ];
+  const contactHeroImages = PAGE_NATURE_IMAGES.contact;
 
   return (
     <PageTransition variant="fade">

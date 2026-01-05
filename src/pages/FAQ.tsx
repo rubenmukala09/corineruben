@@ -23,10 +23,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import heroFaqModern from "@/assets/hero-faq-modern.jpg";
-import customerSupport from "@/assets/customer-support.jpg";
-import communityDiverse1 from "@/assets/community-diverse-1.jpg";
-import supportDiverse1 from "@/assets/support-diverse-1.jpg";
+import { PAGE_NATURE_IMAGES } from "@/config/natureHeroImages";
 
 interface FAQ {
   id: string;
@@ -361,12 +358,7 @@ export default function FAQ() {
     );
   };
 
-  const faqHeroImages = [
-    { src: heroFaqModern, alt: "Common questions and helpful answers" },
-    { src: customerSupport, alt: "Our team ready to answer your questions" },
-    { src: communityDiverse1, alt: "Community members finding answers" },
-    { src: supportDiverse1, alt: "Comprehensive support resources" }
-  ];
+  const faqHeroImages = PAGE_NATURE_IMAGES.faq;
 
   return (
     <PageTransition variant="fade">

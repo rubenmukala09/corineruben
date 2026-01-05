@@ -45,10 +45,7 @@ import {
   Zap,
   Star,
 } from "lucide-react";
-import heroNatureTraining1 from "@/assets/hero-nature-training-1.jpg";
-import heroNatureTraining2 from "@/assets/hero-nature-training-2.jpg";
-import heroNatureTraining3 from "@/assets/hero-nature-training-3.jpg";
-import peacefulMountainDawn from "@/assets/peaceful-mountain-dawn.jpg";
+import { PAGE_NATURE_IMAGES, natureWinter3 } from "@/config/natureHeroImages";
 import TestimonialCard from "@/components/TestimonialCard";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
@@ -307,11 +304,7 @@ function LearnAndTrain() {
     setEmbeddedPaymentOpen(true);
   };
 
-  const trainingHeroImages = [
-    { src: heroNatureTraining1, alt: "Beautiful serene mountain lake at sunrise" },
-    { src: heroNatureTraining2, alt: "Peaceful meadow with wildflowers at sunset" },
-    { src: heroNatureTraining3, alt: "Tranquil forest path with morning light" }
-  ];
+  const trainingHeroImages = PAGE_NATURE_IMAGES.training;
 
   return (
     <PageTransition variant="fade">
@@ -1668,7 +1661,7 @@ function LearnAndTrain() {
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ 
-            backgroundImage: `url(${peacefulMountainDawn})`,
+            backgroundImage: `url(${natureWinter3})`,
           }}
         />
         {/* Subtle dark gradient for text readability */}

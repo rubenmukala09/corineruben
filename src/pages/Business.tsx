@@ -34,8 +34,7 @@ const businessHeadlines = [
   "Professional Website Design & Development",
   "Industry-Leading AI Service Insurance"
 ];
-import heroNatureBusiness1 from "@/assets/hero-nature-business-1.jpg";
-import heroNatureBusiness2 from "@/assets/hero-nature-business-2.jpg";
+import { PAGE_NATURE_IMAGES, natureSummer2 } from "@/config/natureHeroImages";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
@@ -138,10 +137,7 @@ function Business() {
     setEmbeddedPaymentOpen(true);
   };
 
-  const businessHeroImages = [
-    { src: heroNatureBusiness1, alt: "Serene natural landscape with rolling hills and morning sunlight" },
-    { src: heroNatureBusiness2, alt: "Majestic mountain peaks at golden hour with lush forest" }
-  ];
+  const businessHeroImages = PAGE_NATURE_IMAGES.business;
 
   return (
     <PageTransition variant="fade">
@@ -2078,7 +2074,7 @@ function Business() {
       <CTASection 
         headline="Ready to Deploy AI Safely?" 
         variant="image"
-        backgroundImage={heroNatureBusiness1}
+        backgroundImage={natureSummer2}
         description="Take the first step towards protecting your business with AI-powered security solutions. Book a free discovery call to discuss your AI automation needs."
       >
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
