@@ -1,27 +1,17 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 
-type RevealDirection = 'up' | 'down' | 'left' | 'right' | 'scale' | 'blur' | 'fade';
-
 interface UseScrollRevealOptions {
   threshold?: number;
   rootMargin?: string;
   triggerOnce?: boolean;
   delay?: number;
-  direction?: RevealDirection;
 }
 
-interface UseScrollRevealReturn {
-  ref: React.RefObject<HTMLDivElement>;
-  isVisible: boolean;
-  direction: RevealDirection;
-}
-
-export const useScrollReveal = (options: UseScrollRevealOptions = {}): UseScrollRevealReturn => {
+export const useScrollReveal = (options: UseScrollRevealOptions = {}) => {
   const {
     threshold = 0.1,
-    rootMargin = '50px 0px 0px 0px',
+    rootMargin = '100px 0px 0px 0px',
     triggerOnce = true,
-    direction = 'up',
   } = options;
 
   const ref = useRef<HTMLDivElement>(null);
@@ -70,30 +60,5 @@ export const useScrollReveal = (options: UseScrollRevealOptions = {}): UseScroll
     return () => observer.disconnect();
   }, [threshold, rootMargin, handleIntersection]);
 
-  return { ref, isVisible, direction };
-};
-
-// Stagger hook for animating multiple elements
-export const useStaggerReveal = (
-  itemCount: number,
-  options: UseScrollRevealOptions & { staggerDelay?: number } = {}
-) => {
-  const { staggerDelay = 50, ...revealOptions } = options;
-  const { ref, isVisible } = useScrollReveal(revealOptions);
-
-  const getItemDelay = useCallback((index: number) => {
-    return isVisible ? index * staggerDelay : 0;
-  }, [isVisible, staggerDelay]);
-
-  const getItemStyle = useCallback((index: number) => ({
-    transitionDelay: `${getItemDelay(index)}ms`,
-    animationDelay: `${getItemDelay(index)}ms`,
-  }), [getItemDelay]);
-
-  return {
-    containerRef: ref,
-    isVisible,
-    getItemDelay,
-    getItemStyle,
-  };
+  return { ref, isVisible };
 };

@@ -4,17 +4,11 @@ import { cn } from '@/lib/utils';
 
 type AnimationType = 
   | 'fade-up' 
-  | 'fade-down'
-  | 'fade-left'
-  | 'fade-right'
   | 'fade-in' 
   | 'scale' 
-  | 'blur'
-  | 'float'
-  | 'unveil'
-  // Legacy aliases
-  | 'slide-left'
+  | 'slide-left' 
   | 'slide-right'
+  // Legacy aliases
   | 'blur-up' 
   | 'blur-in' 
   | 'elastic' 
@@ -30,38 +24,31 @@ interface ScrollRevealProps {
   animation?: AnimationType;
   delay?: number;
   threshold?: number;
-  duration?: 'fast' | 'normal' | 'slow' | 'luxurious';
+  duration?: 'fast' | 'normal' | 'slow';
 }
 
-// Map animation types to luxury CSS classes
+// Map animation types to CSS classes
 const animationClasses: Record<AnimationType, string> = {
-  'fade-up': 'luxury-reveal-up',
-  'fade-down': 'luxury-reveal-down',
-  'fade-left': 'luxury-reveal-left',
-  'fade-right': 'luxury-reveal-right',
-  'fade-in': 'luxury-reveal-fade',
-  'scale': 'luxury-reveal-scale',
-  'blur': 'luxury-reveal-blur',
-  'float': 'luxury-reveal-float',
-  'unveil': 'luxury-reveal-unveil',
-  'slide-left': 'luxury-reveal-left',
-  'slide-right': 'luxury-reveal-right',
+  'fade-up': 'scroll-fade-up',
+  'fade-in': 'scroll-fade-in',
+  'scale': 'scroll-scale-in',
+  'slide-left': 'scroll-slide-left',
+  'slide-right': 'scroll-slide-right',
   // Legacy mappings
-  'blur-up': 'luxury-reveal-up',
-  'blur-in': 'luxury-reveal-fade',
-  'elastic': 'luxury-reveal-scale',
-  'flip': 'luxury-reveal-up',
-  'sweep': 'luxury-reveal-up',
-  'scale-in': 'luxury-reveal-scale',
-  'rise': 'luxury-reveal-float',
-  'reveal': 'luxury-reveal-fade',
+  'blur-up': 'scroll-fade-up',
+  'blur-in': 'scroll-fade-in',
+  'elastic': 'scroll-scale-in',
+  'flip': 'scroll-fade-up',
+  'sweep': 'scroll-fade-up',
+  'scale-in': 'scroll-scale-in',
+  'rise': 'scroll-fade-up',
+  'reveal': 'scroll-fade-in',
 };
 
 const durationClasses = {
-  fast: 'luxury-duration-fast',
-  normal: 'luxury-duration-normal',
-  slow: 'luxury-duration-slow',
-  luxurious: 'luxury-duration-luxurious',
+  fast: 'scroll-duration-fast',
+  normal: 'scroll-duration-normal',
+  slow: 'scroll-duration-slow',
 };
 
 export const ScrollReveal = memo(({
@@ -83,12 +70,10 @@ export const ScrollReveal = memo(({
       className={cn(
         animationClasses[animation],
         durationClasses[duration],
-        isVisible && 'luxury-visible',
+        isVisible && 'scroll-visible',
         className
       )}
-      style={delay > 0 ? { 
-        transitionDelay: `${delay}ms`,
-      } : undefined}
+      style={delay > 0 ? { transitionDelay: `${delay}ms` } : undefined}
     >
       {children}
     </div>
