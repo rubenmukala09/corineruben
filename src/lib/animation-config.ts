@@ -1,31 +1,30 @@
 // ============================================
-// UNIFIED ANIMATION SYSTEM - Single Source of Truth
+// UNIFIED ANIMATION SYSTEM - Simplified
 // ============================================
 
 // Core timing constants (in seconds)
 export const TIMING = {
-  instant: 0.1,    // 100ms - micro-interactions
-  fast: 0.15,      // 150ms - hover states
-  normal: 0.2,     // 200ms - reveals, transitions
-  slow: 0.3,       // 300ms - page transitions
+  instant: 0.1,
+  fast: 0.15,
+  normal: 0.2,
+  slow: 0.3,
 } as const;
 
-// Standard easing curves
+// Standard easing curve
 export const EASING = {
-  smooth: [0.4, 0, 0.2, 1] as const,      // Material Design standard
-  bounce: [0.34, 1.56, 0.64, 1] as const, // Subtle elastic
-  out: [0.0, 0, 0.2, 1] as const,         // Ease out
-  in: [0.4, 0, 1, 1] as const,            // Ease in
+  smooth: [0.4, 0, 0.2, 1] as const,
+  out: [0.0, 0, 0.2, 1] as const,
+  in: [0.4, 0, 1, 1] as const,
 } as const;
 
-// Stagger delays (in seconds)
+// Stagger delays
 export const STAGGER = {
   fast: 0.03,
   normal: 0.05,
   slow: 0.08,
 } as const;
 
-// GPU-accelerated transform presets (no blur filters!)
+// Transform presets
 export const TRANSFORMS = {
   fadeUp: { 
     from: { opacity: 0, y: 12 }, 

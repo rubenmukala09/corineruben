@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
+import React from "react";
 
-// Diagonal stripe accent - like the green angular shapes in reference
+// Diagonal stripe accent - static, no animations
 export const DiagonalStripes = ({ 
   position = "top-right",
   color = "primary"
@@ -29,13 +29,12 @@ export const DiagonalStripes = ({
   );
 };
 
-// Hexagon icon container - like the service icons in reference
+// Hexagon icon container - static
 export const HexagonIcon = ({ 
   children, 
   className = "",
   size = "md",
   gradient = false,
-  animated = false
 }: { 
   children: React.ReactNode;
   className?: string;
@@ -49,25 +48,9 @@ export const HexagonIcon = ({
     lg: "w-28 h-28",
   };
 
-  if (animated) {
-    return (
-      <motion.div
-        className={`relative ${sizeClasses[size]} ${className}`}
-        style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
-        whileHover={{ scale: 1.1, rotate: 5 }}
-        transition={{ type: "spring" as const, stiffness: 300 }}
-      >
-        <div className={`absolute inset-0 ${gradient ? 'bg-gradient-to-br from-primary to-accent' : 'bg-primary/10'}`} />
-        <div className="absolute inset-0 flex items-center justify-center">
-          {children}
-        </div>
-      </motion.div>
-    );
-  }
-
   return (
     <div
-      className={`relative ${sizeClasses[size]} ${className}`}
+      className={`relative ${sizeClasses[size]} ${className} transition-transform hover:scale-105`}
       style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
     >
       <div className={`absolute inset-0 ${gradient ? 'bg-gradient-to-br from-primary to-accent' : 'bg-primary/10'}`} />
@@ -78,7 +61,7 @@ export const HexagonIcon = ({
   );
 };
 
-// Dotted line pattern decoration
+// Dotted line pattern decoration - static
 export const DottedPattern = ({ 
   direction = "horizontal",
   length = 8,
@@ -99,19 +82,16 @@ export const DottedPattern = ({
   return (
     <div className={`flex ${directionClasses[direction]} gap-2 ${className}`}>
       {dots.map((i) => (
-        <motion.div
+        <div
           key={i}
           className="w-2 h-2 rounded-full bg-primary/30"
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: i * 0.05 }}
         />
       ))}
     </div>
   );
 };
 
-// Angular badge/tag accent - like the "We Serve" tag in reference
+// Angular badge/tag accent
 export const AngularBadge = ({
   children,
   variant = "primary",
@@ -130,16 +110,14 @@ export const AngularBadge = ({
   return (
     <div 
       className={`inline-flex items-center gap-2 px-4 py-2 ${variantClasses[variant]} ${className}`}
-      style={{ 
-        clipPath: "polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%)",
-      }}
+      style={{ clipPath: "polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%)" }}
     >
       {children}
     </div>
   );
 };
 
-// Geometric corner accent
+// Geometric corner accent - static
 export const GeometricCorner = ({
   position = "top-right",
   variant = "lines"
@@ -173,11 +151,9 @@ export const GeometricCorner = ({
         {[0, 1, 2].map((row) => (
           <div key={row} className="flex gap-2 justify-end" style={{ marginTop: row * 8 }}>
             {[0, 1, 2].slice(0, 3 - row).map((col) => (
-              <motion.div
+              <div
                 key={col}
                 className="w-1.5 h-1.5 rounded-full bg-primary/30"
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 2, repeat: Infinity, delay: (row + col) * 0.2 }}
               />
             ))}
           </div>
@@ -199,7 +175,7 @@ export const GeometricCorner = ({
   );
 };
 
-// Animated arrow/chevron decoration
+// Animated arrow/chevron decoration - CSS only
 export const AnimatedArrow = ({
   direction = "right",
   className = ""
@@ -215,19 +191,15 @@ export const AnimatedArrow = ({
   };
 
   return (
-    <motion.div 
-      className={`flex items-center gap-0.5 ${rotations[direction]} ${className}`}
-      animate={{ x: [0, 4, 0] }}
-      transition={{ duration: 1.5, repeat: Infinity }}
-    >
+    <div className={`flex items-center gap-0.5 ${rotations[direction]} ${className}`}>
       <div className="w-1.5 h-1.5 border-t-2 border-r-2 border-primary/40 rotate-45" />
       <div className="w-1.5 h-1.5 border-t-2 border-r-2 border-primary/60 rotate-45" />
       <div className="w-1.5 h-1.5 border-t-2 border-r-2 border-primary rotate-45" />
-    </motion.div>
+    </div>
   );
 };
 
-// Circular progress ring decoration
+// Circular progress ring decoration - static
 export const CircularRing = ({
   size = 120,
   strokeWidth = 3,
@@ -244,14 +216,7 @@ export const CircularRing = ({
   const offset = circumference - (progress / 100) * circumference;
 
   return (
-    <motion.svg
-      width={size}
-      height={size}
-      className={className}
-      initial={{ rotate: 0 }}
-      animate={{ rotate: 360 }}
-      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-    >
+    <svg width={size} height={size} className={className}>
       <circle
         cx={size / 2}
         cy={size / 2}
@@ -260,7 +225,7 @@ export const CircularRing = ({
         stroke="hsl(var(--primary) / 0.1)"
         strokeWidth={strokeWidth}
       />
-      <motion.circle
+      <circle
         cx={size / 2}
         cy={size / 2}
         r={radius}
@@ -270,15 +235,12 @@ export const CircularRing = ({
         strokeDasharray={circumference}
         strokeDashoffset={offset}
         strokeLinecap="round"
-        initial={{ strokeDashoffset: circumference }}
-        animate={{ strokeDashoffset: offset }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
       />
-    </motion.svg>
+    </svg>
   );
 };
 
-// Grid pattern background
+// Grid pattern background - static
 export const GridPattern = ({
   className = ""
 }: {
@@ -300,7 +262,7 @@ export const GridPattern = ({
   );
 };
 
-// Floating geometric shapes
+// Floating geometric shapes - static (no motion)
 export const FloatingShapes = ({
   className = ""
 }: {
@@ -309,14 +271,7 @@ export const FloatingShapes = ({
   return (
     <div className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}>
       {/* Triangle */}
-      <motion.div
-        className="absolute top-1/4 left-[10%]"
-        animate={{ 
-          y: [0, -20, 0],
-          rotate: [0, 10, 0]
-        }}
-        transition={{ duration: 6, repeat: Infinity }}
-      >
+      <div className="absolute top-1/4 left-[10%]">
         <div 
           className="w-0 h-0"
           style={{
@@ -325,39 +280,21 @@ export const FloatingShapes = ({
             borderBottom: "26px solid hsl(var(--primary) / 0.1)",
           }}
         />
-      </motion.div>
+      </div>
       
       {/* Square */}
-      <motion.div
-        className="absolute top-1/3 right-[15%] w-6 h-6 border-2 border-accent/20 rotate-45"
-        animate={{ 
-          y: [0, 15, 0],
-          rotate: [45, 90, 45]
-        }}
-        transition={{ duration: 8, repeat: Infinity }}
-      />
+      <div className="absolute top-1/3 right-[15%] w-6 h-6 border-2 border-accent/20 rotate-45" />
       
       {/* Circle */}
-      <motion.div
-        className="absolute bottom-1/4 left-[20%] w-8 h-8 rounded-full border-2 border-primary/15"
-        animate={{ 
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.6, 0.3]
-        }}
-        transition={{ duration: 4, repeat: Infinity }}
-      />
+      <div className="absolute bottom-1/4 left-[20%] w-8 h-8 rounded-full border-2 border-primary/15" />
       
       {/* Plus sign */}
-      <motion.div
-        className="absolute top-1/2 right-[25%]"
-        animate={{ rotate: [0, 180, 360] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-      >
+      <div className="absolute top-1/2 right-[25%]">
         <div className="relative w-4 h-4">
           <div className="absolute top-1/2 left-0 w-full h-0.5 bg-primary/20 -translate-y-1/2" />
           <div className="absolute left-1/2 top-0 w-0.5 h-full bg-primary/20 -translate-x-1/2" />
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };
