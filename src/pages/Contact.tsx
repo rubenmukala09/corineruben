@@ -27,6 +27,8 @@ import { z } from "zod";
 import { useConfetti } from "@/hooks/useConfetti";
 import { PAGE_NATURE_IMAGES } from "@/config/natureHeroImages";
 import HeroFloatingStats from "@/components/business/HeroFloatingStats";
+import supportAgentPhoto from "@/assets/support-agent.jpg";
+import familyGathering from "@/assets/family-gathering.jpg";
 
 const contactMethods = [
   {
@@ -519,12 +521,26 @@ function Contact() {
                 </div>
               </div>
 
-              {/* Support Team with Premium Styling */}
+              {/* Support Team with Photo */}
               <div className="relative bg-card/90 backdrop-blur-md rounded-2xl border border-border/30 shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500">
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent via-primary to-accent" />
                 <div className="p-6">
                   <h3 className="text-lg font-bold mb-1">Meet Your Support Team</h3>
                   <p className="text-sm text-muted-foreground mb-4">Real people ready to help</p>
+                  
+                  {/* Team Photo */}
+                  <div className="relative rounded-xl overflow-hidden mb-4 group">
+                    <img 
+                      src={supportAgentPhoto} 
+                      alt="Our friendly support team member" 
+                      className="w-full h-40 object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent" />
+                    <div className="absolute bottom-2 left-3 text-white">
+                      <span className="text-xs bg-success/80 px-2 py-0.5 rounded-full">● Online Now</span>
+                    </div>
+                  </div>
+                  
                   <div className="space-y-3">
                     {[
                       { initials: "RN", name: "Ruben N.", role: "Support Lead", color: "primary" },

@@ -15,6 +15,8 @@ import { Link } from "react-router-dom";
 import { AIImageDisclaimer } from "@/components/AIImageDisclaimer";
 import { PAGE_NATURE_IMAGES } from "@/config/natureHeroImages";
 import HeroFloatingStats from "@/components/business/HeroFloatingStats";
+import teamCollaboration from "@/assets/team-collaboration.jpg";
+import supportAgent from "@/assets/support-agent.jpg";
 const jobPositions = [{
   id: 1,
   title: "Senior AI Engineer",
@@ -361,7 +363,7 @@ function Careers() {
         </div>
       </section>
 
-      {/* Company Culture */}
+      {/* Company Culture with Real Photos */}
       <section className="section-spacing bg-gradient-to-b from-muted/20 to-background">
         <div className="container-padding">
           <div className="text-center mb-12">
@@ -370,6 +372,39 @@ function Careers() {
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               A remote-first culture built on trust, transparency, and making a difference
             </p>
+          </div>
+
+          {/* Team Photo Section */}
+          <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto mb-12">
+            <ScrollReveal>
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl group">
+                <img 
+                  src={teamCollaboration} 
+                  alt="Our team collaborating in a meeting" 
+                  className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  <h3 className="text-xl font-bold mb-1">Collaborative Spirit</h3>
+                  <p className="text-white/90 text-sm">Ideas flow freely in our open environment</p>
+                </div>
+              </div>
+            </ScrollReveal>
+            
+            <ScrollReveal delay={200}>
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl group">
+                <img 
+                  src={supportAgent} 
+                  alt="Support team member helping customers" 
+                  className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-accent/80 via-transparent to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  <h3 className="text-xl font-bold mb-1">People First</h3>
+                  <p className="text-white/90 text-sm">We genuinely care about every customer</p>
+                </div>
+              </div>
+            </ScrollReveal>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
@@ -420,7 +455,7 @@ function Careers() {
 
       {/* AI Image Disclaimer */}
       <section className="py-12 bg-muted/20">
-        
+        <AIImageDisclaimer />
       </section>
 
       <Footer />

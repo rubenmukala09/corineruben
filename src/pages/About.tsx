@@ -23,11 +23,13 @@ import { AchievementsShowcase } from "@/components/AchievementsShowcase";
 import { AIImageDisclaimer } from "@/components/AIImageDisclaimer";
 import { trackButtonClick } from "@/utils/analyticsTracker";
 import { PAGE_NATURE_IMAGES } from "@/config/natureHeroImages";
-// Founder photos removed - will be uploaded later
+// Team and culture photos
 import teamDiverse1 from "@/assets/team-diverse-1.jpg";
 import businessCollaboration from "@/assets/business-collaboration.jpg";
 import communityImpact4k from "@/assets/community-impact-4k.jpg";
 import protectedCommunity4k from "@/assets/protected-community-4k.jpg";
+import familyGathering from "@/assets/family-gathering.jpg";
+import seniorLearning from "@/assets/senior-learning.jpg";
 import { SEO } from "@/components/SEO";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
 import HeroFloatingStats from "@/components/business/HeroFloatingStats";
@@ -394,6 +396,55 @@ function About() {
               </div>
             </div>
           </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Who We Help - Photo Gallery */}
+      <section className="py-16 bg-background">
+        <div className="container mx-auto px-4">
+          <ScrollReveal>
+            <div className="text-center mb-12">
+              <Badge className="mb-4" variant="secondary">Who We Serve</Badge>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Protecting Those Who Matter Most
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                From multi-generational families to seniors learning new technology
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <ScrollReveal delay={100}>
+              <div className="relative group overflow-hidden rounded-3xl shadow-2xl">
+                <img 
+                  src={familyGathering} 
+                  alt="Multi-generational family enjoying time together" 
+                  className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+                  <h3 className="text-2xl font-bold mb-2">Family Protection</h3>
+                  <p className="text-white/90">Keeping your loved ones safe across all generations—from tech-savvy kids to treasured grandparents.</p>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={200}>
+              <div className="relative group overflow-hidden rounded-3xl shadow-2xl">
+                <img 
+                  src={seniorLearning} 
+                  alt="Senior learning to use technology with instructor" 
+                  className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-accent/90 via-accent/40 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+                  <h3 className="text-2xl font-bold mb-2">Senior Education</h3>
+                  <p className="text-white/90">Patient, compassionate training designed specifically for seniors who want to stay safe online.</p>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
         </div>
       </section>
 
