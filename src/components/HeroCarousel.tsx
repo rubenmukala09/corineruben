@@ -78,14 +78,15 @@ export const HeroCarousel = ({
       {/* Base dark background for instant paint */}
       <div className="absolute inset-0 bg-slate-900" />
       
-      {/* Images with CSS opacity transition */}
+      {/* Images with CSS opacity transition - faster transitions */}
       {images.map((image, index) => (
         <div
           key={index}
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-700"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-300"
           style={{ 
             backgroundImage: imagesLoaded[index] ? `url(${image.src})` : 'none',
-            opacity: index === currentIndex && imagesLoaded[index] ? 1 : 0
+            opacity: index === currentIndex && imagesLoaded[index] ? 1 : 0,
+            willChange: index === currentIndex ? 'opacity' : 'auto'
           }}
           role="img"
           aria-label={image.alt}

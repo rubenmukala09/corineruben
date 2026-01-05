@@ -63,8 +63,8 @@ const Hero = ({
         className
       )}
     >
-      {/* Persistent background gradient - prevents white flash */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#1e3a8a] via-[#3b0764] to-[#0d9488]" />
+      {/* Persistent background - prevents white flash */}
+      <div className="absolute inset-0 bg-slate-900" />
       
       {/* Background */}
       <div className="absolute inset-0 overflow-hidden">
@@ -72,7 +72,7 @@ const Hero = ({
         {useVideo && (
           <div
             className={cn(
-              "absolute inset-0 transition-opacity duration-500",
+              "absolute inset-0 transition-opacity duration-300",
               videoLoaded ? "opacity-100" : "opacity-0"
             )}
           >
@@ -82,7 +82,8 @@ const Hero = ({
               muted
               loop
               playsInline
-              onLoadedData={() => setVideoLoaded(true)}
+              preload="auto"
+              onCanPlay={() => setVideoLoaded(true)}
               className="absolute inset-0 w-full h-full object-cover brightness-[0.85]"
             >
               <source src={backgroundVideo} type="video/mp4" />

@@ -91,13 +91,16 @@ export const HeroHomepage = () => {
       {/* Video Background - Full width */}
       <div className="absolute inset-0">
         {/* Video element */}
+        {/* Solid background while video loads */}
+        <div className="absolute inset-0 bg-slate-900" />
         <video
           autoPlay
           loop
           muted
           playsInline
-          onLoadedData={() => setVideoLoaded(true)}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+          preload="auto"
+          onCanPlay={() => setVideoLoaded(true)}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
         >
           <source src={heroVideo} type="video/mp4" />
         </video>
