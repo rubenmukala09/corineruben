@@ -50,12 +50,14 @@ export const useSectionNavigation = (sections: Section[]) => {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     
-    // Defer initial check to avoid forced reflow during initial render
-    const frameId = requestAnimationFrame(handleScroll);
+    // Defer initial check significantly to avoid forced reflow during FCP
+    const timeoutId = setTimeout(() => {
+      requestAnimationFrame(handleScroll);
+    }, 100);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      cancelAnimationFrame(frameId);
+      clearTimeout(timeoutId);
     };
   }, [sections]);
 

@@ -23,18 +23,20 @@ export const useScrollReveal = (options: UseScrollRevealOptions = {}) => {
     const element = ref.current;
     if (!element || hasTriggered.current) return;
     
-    // Defer layout read to next frame to avoid forced reflow during initial render
-    const frameId = requestAnimationFrame(() => {
-      const rect = element.getBoundingClientRect();
-      const isAboveFold = rect.top < window.innerHeight && rect.bottom > 0;
-      
-      if (isAboveFold) {
-        setIsVisible(true);
-        if (triggerOnce) hasTriggered.current = true;
-      }
-    });
+    // Defer layout read significantly to avoid blocking FCP
+    const timeoutId = setTimeout(() => {
+      requestAnimationFrame(() => {
+        const rect = element.getBoundingClientRect();
+        const isAboveFold = rect.top < window.innerHeight && rect.bottom > 0;
+        
+        if (isAboveFold) {
+          setIsVisible(true);
+          if (triggerOnce) hasTriggered.current = true;
+        }
+      });
+    }, 50);
     
-    return () => cancelAnimationFrame(frameId);
+    return () => clearTimeout(timeoutId);
   }, [triggerOnce]);
 
   const handleIntersection = useCallback(([entry]: IntersectionObserverEntry[]) => {

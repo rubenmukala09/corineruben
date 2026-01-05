@@ -22,9 +22,14 @@ const ScrollProgressBar = () => {
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    updateProgress();
     
-    return () => window.removeEventListener('scroll', onScroll);
+    // Defer initial read to avoid blocking FCP
+    const timeoutId = setTimeout(() => requestAnimationFrame(updateProgress), 100);
+    
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   return (
