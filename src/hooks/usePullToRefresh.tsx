@@ -19,9 +19,12 @@ export function usePullToRefresh({
   const isDragging = useRef(false);
 
   const handleTouchStart = useCallback((e: TouchEvent) => {
-    if (!enabled || window.scrollY > 0) return;
-    startY.current = e.touches[0].clientY;
-    isDragging.current = true;
+    if (!enabled) return;
+    requestAnimationFrame(() => {
+      if (window.scrollY > 0) return;
+      startY.current = e.touches[0].clientY;
+      isDragging.current = true;
+    });
   }, [enabled]);
 
   const handleTouchMove = useCallback((e: TouchEvent) => {
@@ -30,11 +33,12 @@ export function usePullToRefresh({
     const currentY = e.touches[0].clientY;
     const distance = currentY - startY.current;
     
-    if (distance > 0 && window.scrollY === 0) {
-      e.preventDefault();
-      setPullDistance(Math.min(distance, threshold * 1.5));
-      setIsPulling(distance > threshold);
-    }
+    requestAnimationFrame(() => {
+      if (distance > 0 && window.scrollY === 0) {
+        setPullDistance(Math.min(distance, threshold * 1.5));
+        setIsPulling(distance > threshold);
+      }
+    });
   }, [enabled, threshold]);
 
   const handleTouchEnd = useCallback(async () => {
