@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import Hero from "@/components/Hero";
 import TrustBar from "@/components/TrustBar";
 import TestimonialCard from "@/components/TestimonialCard";
 import CTASection from "@/components/CTASection";
@@ -26,18 +25,10 @@ import { AI_SERVICES, AI_INSURANCE_PLANS } from "@/config/products";
 import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield, Lock, Sparkles, FileText } from "lucide-react";
 import { ExpandableServiceCard } from "@/components/ExpandableServiceCard";
 import { Badge } from "@/components/ui/badge";
-
-// Rotating hero headlines for Business page
-const businessHeadlines = [
-  "Grow Your Business with Secure AI Solutions",
-  "Custom AI Automation for Your Business",
-  "Professional Website Design & Development",
-  "Industry-Leading AI Service Insurance"
-];
-import { PAGE_NATURE_IMAGES, natureSummer2 } from "@/config/natureHeroImages";
+import { natureSummer2 } from "@/config/natureHeroImages";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
-import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
+import { BusinessHero } from "@/components/business/BusinessHero";
 
 function Business() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -137,7 +128,7 @@ function Business() {
     setEmbeddedPaymentOpen(true);
   };
 
-  const businessHeroImages = PAGE_NATURE_IMAGES.business;
+  // BusinessHero component handles its own images
 
   return (
     <PageTransition variant="fade">
@@ -182,62 +173,7 @@ function Business() {
         />
         <Navigation />
 
-      <Hero
-        backgroundImages={businessHeroImages}
-        headline=""
-        subheadline=""
-        showScrollIndicator={true}
-      >
-        {/* Transitioning Headlines */}
-        <div className="text-center mb-6">
-          <RotatingHeadlines headlines={businessHeadlines} />
-          <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
-            Transform your business with AI-powered solutions, professional websites, and expert security
-          </p>
-        </div>
-
-        <div className="flex flex-col sm:flex-row gap-4">
-          <Button 
-            asChild
-            variant="default" 
-            size="xl"
-            className="transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:brightness-110"
-          >
-            <Link 
-              to="/contact?service=ai-automation"
-              onClick={() => trackButtonClick('Build AI Automation', 'Business Hero')}
-            >
-              Build AI Automation
-            </Link>
-          </Button>
-          <Button 
-            asChild
-            variant="outlineLight" 
-            size="xl"
-            className="transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:brightness-110"
-          >
-            <Link 
-              to="/contact?service=web-design"
-              onClick={() => trackButtonClick('Design My Website', 'Business Hero')}
-            >
-              Design My Website
-            </Link>
-          </Button>
-          <Button 
-            asChild
-            variant="outlineLight" 
-            size="xl"
-            className="transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:brightness-110"
-          >
-            <Link 
-              to="/contact?service=ai-insurance"
-              onClick={() => trackButtonClick('Get AI Insurance', 'Business Hero')}
-            >
-              Get AI Insurance
-            </Link>
-          </Button>
-        </div>
-      </Hero>
+      <BusinessHero />
 
       <TrustBar />
 
