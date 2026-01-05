@@ -27,6 +27,10 @@ export const InitialLoader = ({ onComplete, minDuration = 50 }: InitialLoaderPro
       <img
         src={shieldLogo}
         alt="InVision Network"
+        width={48}
+        height={48}
+        loading="eager"
+        decoding="async"
         className="w-12 h-12 object-contain"
       />
     </div>

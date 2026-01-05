@@ -363,7 +363,7 @@ export const AIChat = () => {
         <div className="flex items-center justify-between p-3 border-b border-border bg-card shrink-0">
           <div className="flex items-center gap-2">
             <div className="relative w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
-              <img src={lauraAvatar} alt="Laura" className="w-full h-full object-cover object-top" />
+              <img src={lauraAvatar} alt="Laura" width={40} height={40} loading="lazy" decoding="async" className="w-full h-full object-cover object-top" />
               <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-card" />
             </div>
             <div>
@@ -427,7 +427,7 @@ export const AIChat = () => {
           {messages.length === 0 && (
             <div className="text-center py-6 space-y-3">
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full overflow-hidden ring-2 ring-primary/20">
-                <img src={lauraAvatar} alt="Laura" className="w-full h-full object-cover object-top" />
+                <img src={lauraAvatar} alt="Laura" width={64} height={64} loading="lazy" decoding="async" className="w-full h-full object-cover object-top" />
               </div>
               <div className="space-y-2">
                 <p className="text-base font-semibold text-foreground">Hi, I'm Laura!</p>
@@ -470,7 +470,7 @@ export const AIChat = () => {
             >
               {msg.role === "assistant" && (
                 <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
-                  <img src={lauraAvatar} alt="Laura" className="w-full h-full object-cover object-top" />
+                  <img src={lauraAvatar} alt="Laura" width={32} height={32} loading="lazy" decoding="async" className="w-full h-full object-cover object-top" />
                 </div>
               )}
               
@@ -510,7 +510,7 @@ export const AIChat = () => {
           {isLoading && (
             <div className="flex gap-2 justify-start">
               <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
-                <img src={lauraAvatar} alt="Laura" className="w-full h-full object-cover object-top" />
+                <img src={lauraAvatar} alt="Laura" width={32} height={32} loading="lazy" decoding="async" className="w-full h-full object-cover object-top" />
               </div>
               <div className="rounded-2xl px-4 py-3 bg-muted">
                 <div className="flex gap-1.5">
