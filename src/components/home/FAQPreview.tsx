@@ -32,7 +32,7 @@ const faqs = [
 
 export const FAQPreview = () => {
   return (
-    <section className="py-16 bg-background relative overflow-hidden">
+    <section className="py-16 relative overflow-hidden">
       {/* Grid pattern */}
       <GridPattern />
       
@@ -62,11 +62,11 @@ export const FAQPreview = () => {
               </p>
             </div>
 
-            {/* Support Agent Card */}
-            <div className="bg-card rounded-2xl p-6 border border-border shadow-lg hover:shadow-xl transition-shadow">
+            {/* Support Agent Card - Soft Modern */}
+            <div className="bg-white rounded-3xl p-8 border border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] transition-all duration-400 ease-out hover:translate-y-[-8px] hover:scale-[1.02] hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]">
               <div className="flex items-center gap-4 mb-6">
                 <div className="relative">
-                  <div className="w-20 h-20 rounded-full overflow-hidden border-3 border-primary/30 shadow-lg">
+                  <div className="w-20 h-20 rounded-full overflow-hidden border-3 border-primary/30 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)]">
                     <img
                       src={supportAgent}
                       alt="Support specialist"
@@ -88,13 +88,13 @@ export const FAQPreview = () => {
               </p>
 
               <div className="flex flex-col gap-3">
-                <Button asChild className="w-full rounded-full">
+                <Button asChild className="w-full rounded-2xl">
                   <Link to="/contact">
                     <MessageCircle className="mr-2 w-5 h-5" />
                     Chat With Expert
                   </Link>
                 </Button>
-                <Button asChild variant="outline" className="w-full rounded-full">
+                <Button asChild variant="outline" className="w-full rounded-2xl">
                   <a href="tel:+1234567890">
                     <Phone className="mr-2 w-5 h-5" />
                     Call Now
@@ -111,7 +111,7 @@ export const FAQPreview = () => {
                 <AccordionItem
                   key={index}
                   value={`item-${index}`}
-                  className="group border border-border rounded-xl px-6 bg-card hover:border-primary/30 transition-all duration-200 data-[state=open]:border-primary/40 data-[state=open]:shadow-lg"
+                  className="group border border-white/50 rounded-2xl px-6 bg-white shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] transition-all duration-400 ease-out hover:translate-y-[-4px] hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)] data-[state=open]:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]"
                 >
                   <AccordionTrigger className="text-left font-semibold hover:no-underline py-5 text-foreground group-data-[state=open]:text-primary transition-colors">
                     <div className="flex items-center gap-4 pr-4">
@@ -129,7 +129,7 @@ export const FAQPreview = () => {
             </Accordion>
 
             <div className="mt-8 text-center">
-              <Button asChild variant="ghost" size="lg" className="rounded-full">
+              <Button asChild variant="ghost" size="lg" className="rounded-2xl">
                 <Link to="/resources#faq">
                   View All FAQs
                   <ArrowRight className="ml-2 w-4 h-4" />

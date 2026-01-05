@@ -119,7 +119,7 @@ const Navigation = () => {
             </a>
             <Button 
               asChild 
-              className="h-[44px] px-6 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-semibold rounded-xl shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+              className="h-[44px] px-6 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-semibold rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.15)] hover:shadow-[0_12px_30px_-8px_rgba(0,0,0,0.2)] hover:-translate-y-1 transition-all duration-300"
             >
               <Link to="/portal" aria-label="Login to your account">Login</Link>
             </Button>

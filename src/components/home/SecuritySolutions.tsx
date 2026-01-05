@@ -17,7 +17,7 @@ const portfolioImages = [
 
 export const SecuritySolutions = () => {
   return (
-    <section className="py-16 bg-background relative overflow-hidden">
+    <section className="py-16 relative overflow-hidden">
       {/* Simple gradient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
       
@@ -40,7 +40,7 @@ export const SecuritySolutions = () => {
           </p>
         </div>
 
-        {/* Portfolio Grid - Simple CSS hover effects */}
+        {/* Portfolio Grid - Soft Modern with Physical Photo Effect */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
           {portfolioImages.map((image, index) => (
             <div
@@ -49,13 +49,13 @@ export const SecuritySolutions = () => {
               style={{ animationDelay: `${index * 50}ms` }}
             >
               <Link to="/about" className="block">
-                {/* Circular image container */}
+                {/* Image container - Physical Photo Effect */}
                 <div className="relative mb-4 mx-auto w-fit">
                   {/* Static decorative ring */}
-                  <div className="absolute -inset-3 rounded-full border-2 border-primary/20 group-hover:border-primary/40 transition-colors duration-300" />
+                  <div className="absolute -inset-3 rounded-2xl border-2 border-primary/20 group-hover:border-primary/40 transition-colors duration-300" />
                   
-                  {/* Main image */}
-                  <div className="w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden border-4 border-background shadow-xl group-hover:shadow-2xl group-hover:shadow-primary/20 transition-all duration-300">
+                  {/* Main image - Soft Modern */}
+                  <div className="w-36 h-36 md:w-44 md:h-44 rounded-2xl overflow-hidden border border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] transition-all duration-400 ease-out group-hover:translate-y-[-8px] group-hover:scale-[1.02] group-hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]">
                     <img
                       src={image.src}
                       alt={image.alt}

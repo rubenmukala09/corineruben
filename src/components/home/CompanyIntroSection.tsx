@@ -47,7 +47,7 @@ const whyUsPoints = [
 
 export const CompanyIntroSection = () => {
   return (
-    <section className="py-24 bg-gradient-to-b from-background via-muted/20 to-background relative overflow-hidden">
+    <section className="py-24 relative overflow-hidden">
       <GridPattern />
       <FloatingShapes />
       <GeometricCorner position="top-right" variant="lines" />
@@ -82,6 +82,7 @@ export const CompanyIntroSection = () => {
           <DottedPattern direction="horizontal" length={8} className="justify-center mt-6" />
         </motion.div>
 
+        {/* Value Cards - Soft Modern */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
           {coreValues.map((value, index) => (
             <motion.div
@@ -90,10 +91,9 @@ export const CompanyIntroSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              whileHover={{ y: -8 }}
               className="group"
             >
-              <div className="h-full bg-card rounded-2xl p-6 border border-border hover:border-primary/40 transition-all duration-300 hover:shadow-xl relative overflow-hidden">
+              <div className="h-full bg-white rounded-3xl p-8 border border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] transition-all duration-400 ease-out hover:translate-y-[-8px] hover:scale-[1.02] hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)] relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-0 h-0" style={{ borderTop: "24px solid hsl(var(--primary) / 0.1)", borderLeft: "24px solid transparent" }} />
                 <div className={`absolute inset-0 bg-gradient-to-br ${value.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
                 <div className="relative z-10">

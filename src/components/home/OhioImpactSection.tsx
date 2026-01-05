@@ -112,12 +112,12 @@ export const OhioImpactSection = () => {
           </p>
         </div>
 
-        {/* Stats Grid */}
+        {/* Stats Grid - Soft Modern */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {impactStats.map((stat, index) => (
             <div
               key={index}
-              className="bg-card/80 rounded-2xl p-6 text-center border border-border/50 hover:border-primary/30 hover:shadow-xl transition-all duration-200 relative overflow-hidden"
+              className="bg-white rounded-3xl p-8 text-center border border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] transition-all duration-400 ease-out hover:translate-y-[-8px] hover:scale-[1.02] hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)] relative overflow-hidden"
             >
               <div className="flex justify-center mb-4">
                 <HexagonIcon size="md">
@@ -133,10 +133,10 @@ export const OhioImpactSection = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8">
-          {/* Cities We Serve */}
-          <div className="bg-card/80 rounded-2xl p-8 border border-border/50 h-full">
+          {/* Cities We Serve - Soft Modern */}
+          <div className="bg-white rounded-3xl p-8 border border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] h-full">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
                 <MapPin className="w-6 h-6 text-primary" />
               </div>
               <div>
@@ -149,7 +149,7 @@ export const OhioImpactSection = () => {
               {ohioCities.map((city, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-3 rounded-xl bg-background/50 border border-border hover:border-primary/30 transition-colors"
+                  className="flex items-center justify-between p-4 rounded-2xl bg-background border border-white/50 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_25px_-4px_rgba(0,0,0,0.08)] transition-all duration-300"
                 >
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-green-500" />
@@ -163,8 +163,8 @@ export const OhioImpactSection = () => {
             <p className="text-sm text-muted-foreground mt-4 text-center">+ Many more communities</p>
           </div>
 
-          {/* Testimonial */}
-          <div className="bg-card/80 rounded-2xl p-8 border border-border/50 h-full relative">
+          {/* Testimonial - Soft Modern */}
+          <div className="bg-white rounded-3xl p-8 border border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] h-full relative">
             <div className="flex items-center gap-2 mb-6">
               <Star className="w-5 h-5 text-accent fill-accent" />
               <span className="text-sm font-semibold text-accent">Community Voices</span>
@@ -182,7 +182,7 @@ export const OhioImpactSection = () => {
             </blockquote>
 
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold">
+              <div className="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center text-primary-foreground font-bold">
                 {testimonials[activeTestimonial].name.charAt(0)}
               </div>
               <div>
@@ -210,7 +210,7 @@ export const OhioImpactSection = () => {
 
         {/* CTA */}
         <div className="mt-12 text-center">
-          <Button asChild size="lg" className="rounded-full px-8">
+          <Button asChild size="lg" className="rounded-2xl px-8">
             <Link to="/training#pricing">
               Get Started Today
             </Link>

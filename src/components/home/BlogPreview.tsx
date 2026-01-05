@@ -30,7 +30,7 @@ const articles = [
 
 export const BlogPreview = () => {
   return (
-    <section className="py-16 bg-muted/30 relative overflow-hidden">
+    <section className="py-16 relative overflow-hidden">
       {/* Grid pattern */}
       <GridPattern className="opacity-50" />
       
@@ -56,20 +56,20 @@ export const BlogPreview = () => {
           </p>
         </div>
 
-        {/* Articles Grid */}
+        {/* Articles Grid - Soft Modern */}
         <div className="grid lg:grid-cols-3 gap-8">
           {articles.map((article, index) => (
             <div key={index} className="group">
               <Link to="/articles" className="block">
-                <div className="bg-card rounded-2xl overflow-hidden border border-border hover:border-primary/30 hover:shadow-xl transition-all duration-200">
-                  {/* Image */}
+                <div className="bg-white rounded-3xl overflow-hidden border border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] transition-all duration-400 ease-out hover:translate-y-[-8px] hover:scale-[1.02] hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]">
+                  {/* Image - Physical Photo Effect */}
                   <div className="relative p-6 pb-0">
                     <div className="relative">
-                      <div className="rounded-full overflow-hidden aspect-square border-4 border-background shadow-lg">
+                      <div className="rounded-2xl overflow-hidden aspect-square border border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)]">
                         <img
                           src={article.image}
                           alt={article.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                       </div>
                       <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
@@ -81,7 +81,7 @@ export const BlogPreview = () => {
                   </div>
                   
                   {/* Content */}
-                  <div className="p-6 text-center">
+                  <div className="p-8 text-center">
                     <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-3">
                       <Calendar className="w-4 h-4" />
                       <span>{article.date}</span>
@@ -98,7 +98,7 @@ export const BlogPreview = () => {
 
         {/* CTA */}
         <div className="text-center mt-12">
-          <Button asChild variant="outline" size="lg" className="rounded-full px-8">
+          <Button asChild variant="outline" size="lg" className="rounded-2xl px-8">
             <Link to="/articles">
               View All Articles
               <ArrowRight className="ml-2 w-5 h-5" />

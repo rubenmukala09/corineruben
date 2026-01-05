@@ -241,12 +241,12 @@ function Auth() {
           </div>
         </Link>
 
-        {/* Login Card */}
-        <div className="bg-white/80 backdrop-blur-sm border border-slate-200/60 rounded-2xl p-6 md:p-8 shadow-xl">
+        {/* Login Card - Soft Modern */}
+        <div className="bg-white rounded-3xl p-8 md:p-10 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] border border-white/50">
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Header */}
             <div className="text-center mb-6">
-              <div className="w-14 h-14 mx-auto bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center shadow-lg mb-4">
+              <div className="w-14 h-14 mx-auto bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg mb-4">
                 <Lock className="w-7 h-7 text-white" />
               </div>
               <h1 className="text-2xl font-bold text-foreground">Welcome Back</h1>

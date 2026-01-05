@@ -31,7 +31,7 @@ export const TestimonialQuote = () => {
   }, []);
 
   return (
-    <section className="py-16 bg-muted/30 relative overflow-hidden">
+    <section className="py-16 relative overflow-hidden">
       {/* Grid pattern */}
       <GridPattern className="opacity-50" />
       
@@ -54,15 +54,15 @@ export const TestimonialQuote = () => {
           </h2>
         </div>
 
-        {/* Testimonial Card */}
+        {/* Testimonial Card - Soft Modern */}
         <div className="max-w-4xl mx-auto">
-          <div className="bg-card rounded-3xl p-8 md:p-12 shadow-lg border border-border">
+          <div className="bg-white rounded-3xl p-8 md:p-12 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] border border-white/50 transition-all duration-400 ease-out hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]">
             <div className="grid md:grid-cols-3 gap-8 items-center">
-              {/* Image - Circular */}
+              {/* Image - Physical Photo Effect */}
               <div className="relative mx-auto md:mx-0">
                 <div className="relative">
-                  <div className="absolute -inset-3 rounded-full border-2 border-primary/20" />
-                  <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-background shadow-xl">
+                  <div className="absolute -inset-3 rounded-2xl border-2 border-primary/20" />
+                  <div className="w-40 h-40 md:w-48 md:h-48 rounded-2xl overflow-hidden border border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)]">
                     <img
                       src={testimonials[currentIndex].image}
                       alt={testimonials[currentIndex].name}
@@ -74,7 +74,7 @@ export const TestimonialQuote = () => {
 
               {/* Content */}
               <div className="md:col-span-2 text-center md:text-left">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-6 mx-auto md:mx-0">
+                <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 mx-auto md:mx-0">
                   <Quote className="w-6 h-6 text-primary" />
                 </div>
                 
@@ -102,10 +102,10 @@ export const TestimonialQuote = () => {
             </div>
 
             {/* Navigation */}
-            <div className="flex justify-center items-center gap-4 mt-8 pt-6 border-t border-border">
+            <div className="flex justify-center items-center gap-4 mt-8 pt-6 border-t border-border/30">
               <button
                 onClick={prev}
-                className="w-10 h-10 rounded-full bg-muted hover:bg-primary/10 flex items-center justify-center transition-colors"
+                className="w-10 h-10 rounded-2xl bg-muted hover:bg-primary/10 flex items-center justify-center transition-all duration-300 hover:-translate-y-1"
                 aria-label="Previous testimonial"
               >
                 <ChevronLeft className="w-5 h-5 text-foreground" />
@@ -116,7 +116,7 @@ export const TestimonialQuote = () => {
                   <button
                     key={index}
                     onClick={() => setCurrentIndex(index)}
-                    className={`h-2 rounded-full transition-all duration-200 ${
+                    className={`h-2 rounded-full transition-all duration-300 ${
                       index === currentIndex ? "bg-primary w-8" : "bg-muted w-2 hover:bg-primary/30"
                     }`}
                     aria-label={`Go to testimonial ${index + 1}`}
@@ -126,7 +126,7 @@ export const TestimonialQuote = () => {
               
               <button
                 onClick={next}
-                className="w-10 h-10 rounded-full bg-muted hover:bg-primary/10 flex items-center justify-center transition-colors"
+                className="w-10 h-10 rounded-2xl bg-muted hover:bg-primary/10 flex items-center justify-center transition-all duration-300 hover:-translate-y-1"
                 aria-label="Next testimonial"
               >
                 <ChevronRight className="w-5 h-5 text-foreground" />

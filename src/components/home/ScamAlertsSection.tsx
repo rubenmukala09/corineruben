@@ -73,21 +73,21 @@ export const ScamAlertsSection = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Left - Alert Cards */}
+          {/* Left - Alert Cards - Soft Modern */}
           <div className="space-y-4">
             {scamAlerts.map((alert, index) => (
               <div
                 key={index}
                 onClick={() => setActiveAlert(index)}
-                className={`p-6 rounded-2xl border-2 cursor-pointer transition-all duration-200 ${
+                className={`p-6 rounded-3xl border cursor-pointer transition-all duration-400 ease-out ${
                   index === activeAlert
-                    ? "bg-card border-primary/30 shadow-lg shadow-primary/10"
-                    : "bg-card/50 border-border hover:border-primary/30"
+                    ? "bg-white border-white/50 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)] translate-y-[-4px]"
+                    : "bg-white/80 border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] hover:translate-y-[-4px] hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]"
                 }`}
               >
                 <div className="flex items-start gap-4">
                   {/* Icon */}
-                  <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 ${
                     index === activeAlert ? "bg-primary/20" : "bg-muted"
                   }`}>
                     <alert.icon className={`w-7 h-7 ${
@@ -107,7 +107,7 @@ export const ScamAlertsSection = () => {
                     <p className="text-muted-foreground text-sm mb-3">{alert.description}</p>
                     
                     {index === activeAlert && (
-                      <div className="pt-3 border-t border-border">
+                      <div className="pt-3 border-t border-border/30">
                         <p className="text-sm text-primary font-medium flex items-center gap-2">
                           <AlertTriangle className="w-4 h-4" />
                           Tip: {alert.tip}
@@ -120,12 +120,12 @@ export const ScamAlertsSection = () => {
             ))}
           </div>
 
-          {/* Right - Quick Tips & CTA */}
+          {/* Right - Quick Tips & CTA - Soft Modern */}
           <div className="space-y-8">
             {/* Quick Tips Card */}
-            <div className="bg-card rounded-2xl p-8 border border-border shadow-lg">
+            <div className="bg-white rounded-3xl p-8 border border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)]">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
                   <Shield className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="text-xl font-bold text-foreground">Quick Protection Tips</h3>
@@ -143,8 +143,8 @@ export const ScamAlertsSection = () => {
               </div>
             </div>
 
-            {/* CTA */}
-            <div className="relative rounded-2xl overflow-hidden">
+            {/* CTA - Soft Modern with Physical Photo */}
+            <div className="relative rounded-3xl overflow-hidden shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] border border-white/50">
               <div className="absolute inset-0">
                 <img 
                   src={teamCollaborationBg} 
@@ -161,7 +161,7 @@ export const ScamAlertsSection = () => {
                 <p className="text-white/90 mb-6">
                   Get protected before scammers find you
                 </p>
-                <Button asChild variant="secondary" size="lg" className="rounded-full">
+                <Button asChild variant="secondary" size="lg" className="rounded-2xl">
                   <Link to="/training#pricing">
                     Get Protected Now
                     <ArrowRight className="ml-2 w-4 h-4" />

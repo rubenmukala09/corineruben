@@ -31,7 +31,7 @@ const steps = [
 
 export const WorkingProcess = () => {
   return (
-    <section className="py-16 bg-background relative overflow-hidden">
+    <section className="py-16 relative overflow-hidden">
       {/* Grid pattern */}
       <GridPattern />
       
@@ -42,9 +42,9 @@ export const WorkingProcess = () => {
       <div className="container mx-auto px-4 relative z-10">
         {/* Header with Image */}
         <div className="grid lg:grid-cols-2 gap-8 items-center mb-12">
-          {/* Left - Image */}
+          {/* Left - Video - Physical Photo Effect */}
           <div className="relative order-2 lg:order-1">
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+            <div className="relative rounded-3xl overflow-hidden shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] border border-white/50 transition-all duration-400 ease-out hover:translate-y-[-8px] hover:scale-[1.02] hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]">
               <video 
                 src={peopleStudyingVideo} 
                 className="w-full h-80 object-cover"
@@ -75,24 +75,24 @@ export const WorkingProcess = () => {
           </div>
         </div>
 
-        {/* Process Steps */}
+        {/* Process Steps - Soft Modern */}
         <div className="relative">
           {/* Connector line - desktop only */}
           <div className="hidden lg:block absolute top-20 left-[12%] right-[12%] h-0.5 bg-gradient-to-r from-primary/20 via-primary to-primary/20" />
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
             {steps.map((step, index) => (
-              <div key={index} className="relative text-center">
-                {/* Icon container with number */}
+              <div key={index} className="relative text-center group">
+                {/* Icon container with number - Soft Modern */}
                 <div className="relative inline-block mb-8">
-                  <div className="w-32 h-32 rounded-full bg-card border-2 border-border flex items-center justify-center shadow-lg mx-auto hover:border-primary/50 transition-colors">
-                    <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="w-32 h-32 rounded-3xl bg-white border border-white/50 flex items-center justify-center shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] mx-auto transition-all duration-400 ease-out group-hover:translate-y-[-8px] group-hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]">
+                    <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
                       <step.icon className="w-7 h-7 text-primary" strokeWidth={1.5} />
                     </div>
                   </div>
                   
                   {/* Step number badge */}
-                  <div className="absolute -top-2 -right-2 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-sm shadow-lg">
+                  <div className="absolute -top-2 -right-2 w-10 h-10 bg-primary text-primary-foreground rounded-2xl flex items-center justify-center font-bold text-sm shadow-lg">
                     {step.step}
                   </div>
                 </div>

@@ -88,10 +88,9 @@ const ThreePathsForward = () => {
   };
 
   return (
-    <section className="py-12 md:py-16 lg:py-20 relative overflow-hidden bg-gradient-to-br from-secondary via-card to-teal-100">
-      {/* Background blobs */}
-      <div className="absolute top-[-100px] left-[-100px] w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full bg-gradient-to-br from-primary to-accent opacity-10 blur-[80px] animate-blob-morph" />
-      <div className="absolute bottom-[-80px] right-[-80px] w-[250px] h-[250px] md:w-[350px] md:h-[350px] rounded-full bg-gradient-to-br from-accent to-teal-500 opacity-10 blur-[80px] animate-float-slow" style={{ animationDelay: '5s', animationDirection: 'reverse' }} />
+    <section className="py-12 md:py-16 lg:py-20 relative overflow-hidden">
+      {/* Soft gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header with Trust Indicators */}
@@ -130,7 +129,7 @@ const ThreePathsForward = () => {
           </div>
         </div>
 
-        {/* Cards Grid */}
+        {/* Cards Grid - Soft Modern */}
         <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10 pt-6 md:pt-8">
           {paths.map((path, index) => {
             const Icon = path.icon;
@@ -150,13 +149,12 @@ const ThreePathsForward = () => {
                 <Card
                   className={`
                     relative p-6 sm:p-8 md:p-10 lg:p-12 flex flex-col items-center text-center overflow-visible
-                    transition-all duration-600 ease-out rounded-3xl
-                    bg-white
-                    ${path.featured 
-                      ? 'border-[3px] border-primary shadow-[0_8px_30px_rgba(139,92,246,0.2)]' 
-                      : 'border-2 border-border shadow-soft'}
-                    hover:-translate-y-4 hover:scale-[1.02] ${path.featured ? 'hover:shadow-[0_16px_50px_rgba(139,92,246,0.3)]' : 'hover:shadow-medium'}
-                    hover:border-primary hover:rotate-1
+                    transition-all duration-400 ease-out rounded-3xl
+                    bg-white border border-white/50
+                    shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)]
+                    hover:translate-y-[-8px] hover:scale-[1.02]
+                    hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]
+                    ${path.featured ? 'ring-2 ring-primary ring-offset-2' : ''}
                   `}
                 >
                   {/* Trust Badge Inside Card */}

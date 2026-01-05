@@ -44,7 +44,7 @@ const services = [
 
 export const ServicesShowcase = () => {
   return (
-    <section className="py-16 bg-muted/30 relative overflow-hidden">
+    <section className="py-16 relative overflow-hidden">
       {/* Subtle grid pattern */}
       <GridPattern className="opacity-50" />
       
@@ -70,12 +70,12 @@ export const ServicesShowcase = () => {
           </p>
         </div>
 
-        {/* Services Grid */}
+        {/* Services Grid - Soft Modern */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service, index) => (
             <div key={index} className="group">
               <Link to={service.link} className="block">
-                <div className="bg-card rounded-2xl overflow-hidden border border-border hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-200 relative hover:-translate-y-1">
+                <div className="bg-white rounded-3xl overflow-hidden border border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] transition-all duration-400 ease-out hover:translate-y-[-8px] hover:scale-[1.02] hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)] relative">
                   {/* Category Tag */}
                   <div className="absolute top-4 left-4 z-10">
                     <span className="px-3 py-1 text-xs font-medium bg-primary/90 text-primary-foreground rounded-full">
@@ -83,22 +83,22 @@ export const ServicesShowcase = () => {
                     </span>
                   </div>
                   
-                  {/* Image */}
+                  {/* Image - Physical Photo Effect */}
                   <div className="relative p-6 pb-0 pt-12">
                     <div className="relative">
-                      <div className="rounded-full overflow-hidden aspect-square border-4 border-background shadow-lg">
+                      <div className="rounded-2xl overflow-hidden aspect-square border border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)]">
                         <img
                           src={service.image}
                           alt={service.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                         />
                       </div>
-                      <div className="absolute -inset-2 border-2 border-dashed border-primary/20 rounded-full" />
+                      <div className="absolute -inset-2 border-2 border-dashed border-primary/20 rounded-2xl" />
                     </div>
                   </div>
                   
                   {/* Content */}
-                  <div className="p-6 text-center">
+                  <div className="p-8 text-center">
                     <div className="flex justify-center mb-4">
                       <HexagonIcon size="md" className="group-hover:scale-105 transition-transform">
                         <service.icon className="w-6 h-6 text-primary" />
@@ -123,7 +123,7 @@ export const ServicesShowcase = () => {
 
         {/* CTA */}
         <div className="text-center mt-12">
-          <Button asChild size="lg" className="rounded-full px-8">
+          <Button asChild size="lg" className="rounded-2xl px-8">
             <Link to="/services">
               Learn More About Our Services
               <ArrowRight className="ml-2 w-5 h-5" />

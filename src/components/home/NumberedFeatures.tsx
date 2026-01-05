@@ -9,13 +9,13 @@ const features = [
 
 export const NumberedFeatures = () => {
   return (
-    <section className="py-12 bg-muted/30">
+    <section className="py-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {features.map((feature) => (
             <div
               key={feature.num}
-              className="bg-background rounded-xl p-6 shadow-sm border border-border/50 hover:shadow-md transition-shadow"
+              className="bg-white rounded-3xl p-8 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] border border-white/50 transition-all duration-400 ease-out hover:translate-y-[-8px] hover:scale-[1.02] hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]"
             >
               <div className="flex items-start gap-3">
                 <span className="text-3xl font-bold text-primary/40">{feature.num}</span>
