@@ -1,4 +1,51 @@
-/* Mobile-specific form enhancements */
+/* ========================================
+   MOBILE-FIRST RESPONSIVE SYSTEM
+   Ensures images and content are never cropped
+======================================== */
+
+/* ===== MOBILE IMAGE HANDLING ===== */
+
+/* Ensure all hero and feature images stack vertically on mobile */
+.responsive-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .responsive-stack {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4rem;
+    align-items: center;
+  }
+}
+
+/* Mobile image container - shows full image without cropping */
+.mobile-image-container {
+  position: relative;
+  width: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .mobile-image-container img {
+    object-fit: contain !important;
+    max-height: 300px;
+    width: 100%;
+    background-color: hsl(var(--muted) / 0.5);
+  }
+}
+
+@media (min-width: 641px) {
+  .mobile-image-container img {
+    object-fit: cover;
+  }
+}
+
+/* ===== MOBILE-SPECIFIC FORM ENHANCEMENTS ===== */
+
 @media (max-width: 768px) {
   /* Ensure checkboxes and radio buttons are touch-friendly */
   input[type="checkbox"],
@@ -55,9 +102,46 @@
     max-width: none;
     border-radius: 0;
   }
+  
+  /* Mobile section padding */
+  .section-mobile {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  
+  /* Mobile grid layouts - always single column */
+  .mobile-single-col {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Stack horizontal layouts on mobile */
+  .mobile-stack {
+    flex-direction: column !important;
+  }
+  
+  /* Reverse order on mobile for image-first layouts */
+  .mobile-image-first {
+    order: -1;
+  }
 }
 
-/* Touch device optimizations */
+/* ===== TABLET SPECIFIC ===== */
+
+@media (min-width: 641px) and (max-width: 1023px) {
+  /* Two-column grids on tablet */
+  .tablet-two-col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  /* Tablet padding */
+  .section-tablet {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+
+/* ===== TOUCH DEVICE OPTIMIZATIONS ===== */
+
 @media (hover: none) and (pointer: coarse) {
   .card-enhanced:hover {
     transform: translateY(0);
@@ -72,9 +156,24 @@
   .card-enhanced:hover img {
     transform: scale(1);
   }
+  
+  /* Disable hover animations on touch devices for performance */
+  .hover-lift:hover,
+  .hover-glow:hover,
+  .hover-scale:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  /* Active states for touch */
+  .hover-lift:active,
+  .hover-scale:active {
+    transform: scale(0.98);
+  }
 }
 
-/* Mobile-specific optimizations */
+/* ===== MOBILE-SPECIFIC OPTIMIZATIONS ===== */
+
 @media (max-width: 768px) {
   .section-spacing {
     @apply py-6;
@@ -93,7 +192,8 @@
   h3 { font-size: 1.25rem; }
 }
 
-/* Mobile Typography Optimizations */
+/* ===== MOBILE TYPOGRAPHY OPTIMIZATIONS ===== */
+
 @media (max-width: 640px) {
   .hero-mobile h1 {
     font-size: clamp(1.75rem, 5vw, 2.5rem) !important;
@@ -128,9 +228,23 @@
   .card {
     padding: 1rem !important;
   }
+  
+  /* Mobile grid adjustments */
+  .grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .grid-cols-3 {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
 }
 
-/* Extra small screens */
+/* ===== EXTRA SMALL SCREENS ===== */
+
 @media (max-width: 380px) {
   .hero-mobile h1 {
     font-size: 1.5rem !important;
@@ -147,7 +261,8 @@
   }
 }
 
-/* Very small phones (<375px) - 2FA code input 2x3 grid */
+/* ===== VERY SMALL PHONES (<375px) ===== */
+
 @media (max-width: 374px) {
   .xs-small\:grid-cols-3 {
     grid-template-columns: repeat(3, 1fr) !important;
@@ -159,5 +274,99 @@
     min-width: 44px !important;
     min-height: 44px !important;
     font-size: 18px !important;
+  }
+}
+
+/* ===== SCROLL REVEAL MOBILE PERFORMANCE ===== */
+
+@media (max-width: 768px) {
+  /* Reduce animation distance on mobile for snappier feel */
+  .scroll-fade-up,
+  .scroll-rise {
+    transform: translateY(10px);
+  }
+  
+  .scroll-slide-left {
+    transform: translateX(-15px);
+  }
+  
+  .scroll-slide-right {
+    transform: translateX(15px);
+  }
+  
+  /* Faster animations on mobile */
+  .scroll-fade-up,
+  .scroll-fade-in,
+  .scroll-scale-in,
+  .scroll-slide-left,
+  .scroll-slide-right {
+    transition-duration: 0.35s;
+  }
+}
+
+/* ===== RESPONSIVE PROMO SECTIONS ===== */
+
+.promo-section {
+  padding: 3rem 0;
+}
+
+@media (min-width: 768px) {
+  .promo-section {
+    padding: 4rem 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .promo-section {
+    padding: 6rem 0;
+  }
+}
+
+/* Promo grid - stacks on mobile, side-by-side on desktop */
+.promo-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .promo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4rem;
+    align-items: center;
+  }
+}
+
+/* Image container in promo sections */
+.promo-image {
+  width: 100%;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.promo-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .promo-image {
+    max-height: 280px;
+    border-radius: 1rem;
+  }
+  
+  .promo-image img {
+    object-fit: contain;
+    background-color: hsl(var(--muted) / 0.3);
+  }
+}
+
+@media (min-width: 641px) {
+  .promo-image img {
+    object-fit: cover;
+    aspect-ratio: 16/10;
   }
 }
