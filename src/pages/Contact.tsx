@@ -196,6 +196,11 @@ function Contact() {
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-pulse" />
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+          
+          {/* Decorative 3D Question Marks - Visual engagement */}
+          <div className="hidden lg:block absolute top-40 right-20 text-8xl font-bold text-primary/5 transform rotate-12">?</div>
+          <div className="hidden lg:block absolute bottom-40 left-16 text-6xl font-bold text-accent/5 transform -rotate-12">@</div>
+          <div className="hidden lg:block absolute top-1/3 right-1/4 text-4xl font-bold text-primary/3 transform rotate-6">✉</div>
         </div>
         
         <div className="container-padding relative z-10">
@@ -239,7 +244,7 @@ function Contact() {
             })}
           </div>
 
-          {/* Main Contact Form Section */}
+          {/* Main Contact Form Section - With decorative side image */}
           <div className="grid lg:grid-cols-5 gap-8 max-w-7xl mx-auto">
             {/* Premium Contact Form - 60% */}
             <div className="lg:col-span-3">
