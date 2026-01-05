@@ -3,19 +3,17 @@ import { EASING, TIMING } from '@/lib/premium-animations';
 
 interface SmoothScrollOptions {
   duration?: number;
-  easing?: 'smooth' | 'outExpo' | 'spring' | 'glide';
+  easing?: 'silk' | 'velvet' | 'cashmere' | 'satin';
   offset?: number;
 }
 
 // Easing functions for smooth scrolling
+// Luxury easing functions for silk-like scrolling
 const easingFunctions = {
-  smooth: (t: number) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
-  outExpo: (t: number) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t),
-  spring: (t: number) => {
-    const c4 = (2 * Math.PI) / 3;
-    return t === 0 ? 0 : t === 1 ? 1 : Math.pow(2, -10 * t) * Math.sin((t * 10 - 0.75) * c4) + 1;
-  },
-  glide: (t: number) => 1 - Math.pow(1 - t, 4),
+  silk: (t: number) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t),
+  velvet: (t: number) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
+  cashmere: (t: number) => t === 1 ? 1 : 1 - Math.pow(2, -12 * t),
+  satin: (t: number) => 1 - Math.pow(1 - t, 4),
 };
 
 export const useSmoothScroll = () => {
@@ -33,7 +31,7 @@ export const useSmoothScroll = () => {
   const scrollTo = useCallback((target: number | HTMLElement | string, options: SmoothScrollOptions = {}) => {
     const {
       duration = TIMING.slow,
-      easing = 'outExpo',
+      easing = 'silk',
       offset = 0,
     } = options;
 

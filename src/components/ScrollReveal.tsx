@@ -10,9 +10,11 @@ type AnimationType =
   | 'fade-in' 
   | 'scale' 
   | 'blur'
+  | 'float'
+  | 'unveil'
+  // Legacy aliases
   | 'slide-left'
   | 'slide-right'
-  // Legacy aliases for backwards compatibility
   | 'blur-up' 
   | 'blur-in' 
   | 'elastic' 
@@ -28,35 +30,38 @@ interface ScrollRevealProps {
   animation?: AnimationType;
   delay?: number;
   threshold?: number;
-  duration?: 'fast' | 'normal' | 'slow';
+  duration?: 'fast' | 'normal' | 'slow' | 'luxurious';
 }
 
-// Map animation types to new CSS classes
+// Map animation types to luxury CSS classes
 const animationClasses: Record<AnimationType, string> = {
-  'fade-up': 'reveal-up',
-  'fade-down': 'reveal-down',
-  'fade-left': 'reveal-left',
-  'fade-right': 'reveal-right',
-  'fade-in': 'reveal-fade',
-  'scale': 'reveal-scale',
-  'blur': 'reveal-blur',
-  'slide-left': 'reveal-left',
-  'slide-right': 'reveal-right',
+  'fade-up': 'luxury-reveal-up',
+  'fade-down': 'luxury-reveal-down',
+  'fade-left': 'luxury-reveal-left',
+  'fade-right': 'luxury-reveal-right',
+  'fade-in': 'luxury-reveal-fade',
+  'scale': 'luxury-reveal-scale',
+  'blur': 'luxury-reveal-blur',
+  'float': 'luxury-reveal-float',
+  'unveil': 'luxury-reveal-unveil',
+  'slide-left': 'luxury-reveal-left',
+  'slide-right': 'luxury-reveal-right',
   // Legacy mappings
-  'blur-up': 'reveal-up',
-  'blur-in': 'reveal-fade',
-  'elastic': 'reveal-scale',
-  'flip': 'reveal-up',
-  'sweep': 'reveal-up',
-  'scale-in': 'reveal-scale',
-  'rise': 'reveal-up',
-  'reveal': 'reveal-fade',
+  'blur-up': 'luxury-reveal-up',
+  'blur-in': 'luxury-reveal-fade',
+  'elastic': 'luxury-reveal-scale',
+  'flip': 'luxury-reveal-up',
+  'sweep': 'luxury-reveal-up',
+  'scale-in': 'luxury-reveal-scale',
+  'rise': 'luxury-reveal-float',
+  'reveal': 'luxury-reveal-fade',
 };
 
 const durationClasses = {
-  fast: 'reveal-fast',
-  normal: 'reveal-normal',
-  slow: 'reveal-slow',
+  fast: 'luxury-duration-fast',
+  normal: 'luxury-duration-normal',
+  slow: 'luxury-duration-slow',
+  luxurious: 'luxury-duration-luxurious',
 };
 
 export const ScrollReveal = memo(({
@@ -78,12 +83,11 @@ export const ScrollReveal = memo(({
       className={cn(
         animationClasses[animation],
         durationClasses[duration],
-        isVisible && 'reveal-visible',
+        isVisible && 'luxury-visible',
         className
       )}
       style={delay > 0 ? { 
         transitionDelay: `${delay}ms`,
-        animationDelay: `${delay}ms`,
       } : undefined}
     >
       {children}
