@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Shield, ArrowRight, Lock, Eye, Fingerprint, ShieldCheck, Zap, Globe, Play } from "lucide-react";
-import heroVideo from "@/assets/people-studying-video.mp4";
+import heroVideo from "@/assets/hero-family-video.mp4";
 
 const securityFeatures = [{
   icon: Lock,
