@@ -32,6 +32,10 @@ export const trackEvent = async ({
   pageTitle,
 }: TrackEventParams) => {
   try {
+    // Use AbortController for timeout to prevent hanging requests
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+    
     const { data: { user } } = await supabase.auth.getUser();
     
     const eventPayload = {
@@ -46,11 +50,18 @@ export const trackEvent = async ({
       userAgent: navigator.userAgent,
     };
 
-    await supabase.functions.invoke("track-analytics-event", {
-      body: eventPayload,
-    });
-  } catch (error) {
-    console.error("Error tracking event:", error);
+    await Promise.race([
+      supabase.functions.invoke("track-analytics-event", {
+        body: eventPayload,
+      }),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Analytics timeout')), 5000)
+      )
+    ]);
+    
+    clearTimeout(timeoutId);
+  } catch {
+    // Silently ignore analytics errors - they should never affect UX
   }
 };
 
