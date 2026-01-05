@@ -127,18 +127,18 @@
   <body>
     <div id="root"></div>
     
-    <!-- Service Worker Registration -->
+    <!-- Service Worker Registration - deferred to reduce main-thread blocking -->
     <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-              console.log('SW registered:', registration);
-            })
-            .catch(error => {
-              console.log('SW registration failed:', error);
-            });
-        });
+      // Use requestIdleCallback to defer SW registration out of critical path
+      function registerSW() {
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/sw.js').catch(function(){});
+        }
+      }
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(registerSW, { timeout: 5000 });
+      } else {
+        setTimeout(registerSW, 3000);
       }
     </script>
 
