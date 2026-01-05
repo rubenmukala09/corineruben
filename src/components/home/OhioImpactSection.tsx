@@ -192,8 +192,8 @@ export const OhioImpactSection = () => {
             </div>
 
             {/* Navigation dots */}
-            <div className="flex gap-2 mt-6">
-              {testimonials.map((_, idx) => (
+            <div className="flex gap-2 mt-6" role="tablist" aria-label="Testimonial navigation">
+              {testimonials.map((t, idx) => (
                 <button
                   key={idx}
                   onClick={() => setActiveTestimonial(idx)}
@@ -202,6 +202,9 @@ export const OhioImpactSection = () => {
                       ? "bg-primary w-6"
                       : "bg-muted-foreground/30 w-2 hover:bg-muted-foreground/50"
                   }`}
+                  role="tab"
+                  aria-selected={idx === activeTestimonial}
+                  aria-label={`Go to testimonial from ${t.name}`}
                 />
               ))}
             </div>
