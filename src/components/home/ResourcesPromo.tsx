@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { FileText, Shield, BookOpen, ArrowRight, Sparkles, Download, Lock, Gift, ShoppingBag, Usb, CreditCard, Phone } from "lucide-react";
+import { FileText, Shield, BookOpen, ArrowRight, Sparkles, Download, Lock, Gift, ShoppingBag, Usb, CreditCard, Phone, Package, Star, Percent } from "lucide-react";
 import resourcesHeroDesk from "@/assets/resources-hero-desk.png";
 
 const resources = [
@@ -36,6 +36,15 @@ const products = [
   { icon: CreditCard, name: "RFID Wallets", price: "$24.99" },
   { icon: Phone, name: "Faraday Bags", price: "$19.99" },
   { icon: ShoppingBag, name: "Privacy Screens", price: "$39.99" },
+];
+
+const bookCategories = [
+  "AI Fundamentals",
+  "Scam Prevention",
+  "Family Safety",
+  "Digital Privacy",
+  "Deepfake Detection",
+  "Password Security",
 ];
 
 const features = [
@@ -86,11 +95,35 @@ export const ResourcesPromo = () => {
               ))}
             </div>
 
+            {/* Book Categories */}
+            <div className="bg-white rounded-3xl p-5 border border-border/50 shadow-sm">
+              <h4 className="font-bold text-foreground mb-3 flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-primary" />
+                Digital Guide Categories
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {bookCategories.map((category, index) => (
+                  <span key={index} className="px-3 py-1.5 bg-muted rounded-full text-sm font-medium text-foreground">
+                    {category}
+                  </span>
+                ))}
+                <span className="px-3 py-1.5 bg-primary/10 rounded-full text-sm font-bold text-primary">
+                  +14 more
+                </span>
+              </div>
+              <p className="text-sm text-muted-foreground mt-3">
+                Books from <span className="font-bold text-foreground">$19.99 - $49.99</span>
+              </p>
+            </div>
+
             {/* Physical Products Preview */}
             <div className="bg-white rounded-3xl p-5 border border-border/50 shadow-sm">
               <h4 className="font-bold text-foreground mb-4 flex items-center gap-2">
                 <ShoppingBag className="w-5 h-5 text-primary" />
                 Physical Security Products
+                <span className="ml-auto px-2 py-0.5 bg-accent/10 text-accent text-xs font-bold rounded-full flex items-center gap-1">
+                  <Percent className="w-3 h-3" /> Bundle & Save 15%
+                </span>
               </h4>
               <div className="grid grid-cols-2 gap-3">
                 {products.map((product, index) => (
@@ -101,6 +134,9 @@ export const ResourcesPromo = () => {
                   </div>
                 ))}
               </div>
+              <p className="text-xs text-muted-foreground mt-3">
+                15+ products from <span className="font-bold text-foreground">$7.99 - $149.99</span>
+              </p>
             </div>
 
             {/* CTA */}
@@ -159,6 +195,22 @@ export const ResourcesPromo = () => {
                 </Link>
               </motion.div>
             ))}
+
+            {/* Free Resources Banner */}
+            <div className="bg-gradient-to-r from-primary to-accent rounded-3xl p-6 text-white">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center">
+                  <Download className="w-7 h-7" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="font-bold text-lg">Free Emergency Anti-Scam Scripts</h4>
+                  <p className="text-white/80 text-sm">IRS • Tech Support • Grandparent • Bank Fraud</p>
+                </div>
+                <Link to="/resources" className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-full text-sm font-bold transition-colors">
+                  Get Free →
+                </Link>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
