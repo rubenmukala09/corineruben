@@ -20,7 +20,8 @@ import { SectionNav } from "@/components/SectionNav";
 import { SectionDivider } from "@/components/ui/SectionDivider";
 import seniorCoupleActive from "@/assets/senior-couple-active.jpg";
 import { TrustedExpertsBar } from "@/components/home/TrustedExpertsBar";
-
+import { FloatingGraphics } from "@/components/ui/FloatingGraphics";
+import { AccentDecoration } from "@/components/ui/AccentDecoration";
 function Index() {
   const [scamShieldOpen, setScamShieldOpen] = useState(false);
   
@@ -40,48 +41,60 @@ function Index() {
           <TrustedExpertsBar />
           
           {/* Workshops Promo - Learn & Train Introduction */}
-          <section id="workshops">
+          <section id="workshops" className="relative">
+            <FloatingGraphics variant="orbs" intensity="light" />
             <WorkshopsPromo />
           </section>
           
           <SectionDivider variant="curve" />
           
           {/* AI & Business Promo */}
-          <section id="business">
+          <section id="business" className="relative">
+            <FloatingGraphics variant="shapes" intensity="light" />
+            <AccentDecoration variant="ring" position="top-right" className="opacity-30" />
             <AIBusinessPromo />
           </section>
           
           {/* Current Scam Alerts - Immediate Value */}
-          <section id="alerts">
+          <section id="alerts" className="relative">
+            <FloatingGraphics variant="particles" intensity="light" />
             <ScamAlertsSection />
           </section>
           
           <SectionDivider variant="drops" />
           
           {/* Resources Promo */}
-          <section id="resources">
+          <section id="resources" className="relative">
+            <FloatingGraphics variant="mesh" intensity="light" />
+            <AccentDecoration variant="orb" position="bottom-left" className="opacity-20" />
             <ResourcesPromo />
           </section>
-          
           <SectionDivider variant="mountains" />
           
           {/* Community Impact - Veteran Support, Cancer Children, etc. */}
-          <section id="community">
+          <section id="community" className="relative">
+            <FloatingGraphics variant="hexagons" intensity="light" />
             <CommunityImpact />
           </section>
 
           {/* Working Process - How It Works */}
-          <section id="process">
+          <section id="process" className="relative">
+            <FloatingGraphics variant="orbs" intensity="light" />
+            <AccentDecoration variant="corner" position="top-left" className="opacity-40" />
+            <AccentDecoration variant="corner" position="bottom-right" className="opacity-40" />
             <WorkingProcess />
           </section>
 
           {/* FAQ Section */}
-          <section id="faq">
+          <section id="faq" className="relative">
+            <FloatingGraphics variant="mesh" intensity="light" />
             <FAQPreview />
           </section>
 
           {/* Quick Links - FAQ, Contact, Careers */}
-          <section id="quick-links">
+          <section id="quick-links" className="relative">
+            <FloatingGraphics variant="shapes" intensity="light" />
+            <AccentDecoration variant="grid" position="top-right" className="opacity-20" />
             <QuickLinksSection />
           </section>
 
