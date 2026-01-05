@@ -5,6 +5,7 @@ import { ProtectionBadge } from "./ProtectionBadge";
 import { useImagePreload } from "@/hooks/useImagePreload";
 import { HeroCarousel } from "./HeroCarousel";
 import { MagneticWrapper } from "./ui/magnetic-button";
+import HeroPurpleOverlay from "./HeroPurpleOverlay";
 
 interface HeroImage {
   src: string;
@@ -107,9 +108,11 @@ const Hero = ({
           />
         )}
         
-        {/* Premium Purple Gradient Overlay - enhanced for text visibility */}
+        {/* Premium Purple Animated Overlay - enhanced for text visibility */}
         {!disablePurpleOverlay && (
           <>
+            <HeroPurpleOverlay />
+            
             {/* Primary purple-tinted gradient from left */}
             <div 
               className="absolute inset-0 pointer-events-none"
@@ -133,53 +136,6 @@ const Hero = ({
                 background: 'linear-gradient(to bottom, rgba(88, 28, 135, 0.4) 0%, transparent 30%, transparent 70%, rgba(15, 23, 42, 0.6) 100%)'
               }}
             />
-            
-            {/* Subtle geometric pattern overlay */}
-            <div 
-              className="absolute inset-0 pointer-events-none opacity-[0.08]"
-              style={{
-                backgroundImage: `
-                  radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.4) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 70%, rgba(124, 58, 237, 0.3) 0%, transparent 40%)
-                `
-              }}
-            />
-            
-            {/* Animated floating orbs for visual interest */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden">
-              <div 
-                className="absolute w-[600px] h-[600px] rounded-full blur-[120px] opacity-20 animate-float-slow"
-                style={{
-                  background: 'radial-gradient(circle, rgba(139, 92, 246, 0.6) 0%, transparent 70%)',
-                  top: '-10%',
-                  left: '-10%',
-                }}
-              />
-              <div 
-                className="absolute w-[400px] h-[400px] rounded-full blur-[100px] opacity-15 animate-float-delayed"
-                style={{
-                  background: 'radial-gradient(circle, rgba(124, 58, 237, 0.5) 0%, transparent 70%)',
-                  bottom: '10%',
-                  right: '5%',
-                }}
-              />
-            </div>
-            
-            {/* Diagonal accent lines */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.06]">
-              <div 
-                className="absolute w-[200%] h-[1px] bg-gradient-to-r from-transparent via-purple-400 to-transparent"
-                style={{ top: '25%', left: '-50%', transform: 'rotate(-15deg)' }}
-              />
-              <div 
-                className="absolute w-[200%] h-[1px] bg-gradient-to-r from-transparent via-violet-400 to-transparent"
-                style={{ top: '45%', left: '-50%', transform: 'rotate(-15deg)' }}
-              />
-              <div 
-                className="absolute w-[200%] h-[1px] bg-gradient-to-r from-transparent via-purple-300 to-transparent"
-                style={{ top: '65%', left: '-50%', transform: 'rotate(-15deg)' }}
-              />
-            </div>
           </>
         )}
         
