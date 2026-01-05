@@ -149,6 +149,10 @@ export const ScamAlertsSection = () => {
                 <img 
                   src={teamCollaborationBg} 
                   alt="" 
+                  width={634}
+                  height={357}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black/50" />

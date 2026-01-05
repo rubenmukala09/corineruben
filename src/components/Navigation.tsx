@@ -62,6 +62,11 @@ const Navigation = () => {
             <img 
               src={invisionLogo} 
               alt="InVision Network Shield Logo" 
+              width={56}
+              height={56}
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
               className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 object-contain group-hover:scale-110 transition-transform duration-300 flex-shrink-0"
             />
             <div className="flex flex-col leading-tight min-w-0">

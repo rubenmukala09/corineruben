@@ -92,6 +92,10 @@ export const WorkshopsPromo = () => {
               <img 
                 src={workshopSeniorsLearning} 
                 alt="Seniors learning in a workshop" 
+                width={700}
+                height={394}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-auto object-cover aspect-[16/10]"
               />
               {/* Overlay gradient */}

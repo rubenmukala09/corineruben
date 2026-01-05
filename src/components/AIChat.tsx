@@ -336,6 +336,10 @@ export const AIChat = () => {
           <img 
             src={lauraAvatar} 
             alt="Laura AI Assistant" 
+            width={56}
+            height={56}
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover object-top"
           />
           <div className="absolute bottom-0.5 right-0.5 w-3 h-3 rounded-full bg-green-500 border-2 border-white" />
