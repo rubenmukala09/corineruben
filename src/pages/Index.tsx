@@ -4,17 +4,12 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { HeroHomepage } from "@/components/HeroHomepage";
 import { FeatureBar } from "@/components/home/FeatureBar";
-import { AboutSection } from "@/components/home/AboutSection";
 import { ServicesShowcase } from "@/components/home/ServicesShowcase";
 import { WorkingProcess } from "@/components/home/WorkingProcess";
-import { TestimonialQuote } from "@/components/home/TestimonialQuote";
-import { SecuritySolutions } from "@/components/home/SecuritySolutions";
-import { BlogPreview } from "@/components/home/BlogPreview";
 import { ScamAlertsSection } from "@/components/home/ScamAlertsSection";
 import { CompanyIntroSection } from "@/components/home/CompanyIntroSection";
 import { FAQPreview } from "@/components/home/FAQPreview";
 import { OhioImpactSection } from "@/components/home/OhioImpactSection";
-import TrustBar from "@/components/TrustBar";
 import CTASection from "@/components/CTASection";
 import { ScamShieldSubmission } from "@/components/ScamShieldSubmission";
 import { PageTransition } from "@/components/PageTransition";
@@ -23,13 +18,10 @@ import { SEO, PAGE_SEO } from "@/components/SEO";
 import { SectionNav } from "@/components/SectionNav";
 import { SectionDivider } from "@/components/ui/SectionDivider";
 import { useAdminStatus } from "@/hooks/useAdminStatus";
-import heroProtectionFamily from "@/assets/hero-protection-family-1.jpg";
-
-// New components
+import seniorCoupleActive from "@/assets/senior-couple-active.jpg";
 import { TrustedExpertsBar } from "@/components/home/TrustedExpertsBar";
-import { NumberedFeatures } from "@/components/home/NumberedFeatures";
-import { ImpactStatsRow } from "@/components/home/ImpactStatsRow";
 import { TeamShowcase } from "@/components/home/TeamShowcase";
+
 function Index() {
   const {
     isAdmin,
@@ -94,39 +86,24 @@ function Index() {
             <WorkingProcess />
           </section>
 
-          {/* Testimonial Quote */}
-          <section id="testimonials">
-            <TestimonialQuote />
-          </section>
-
-          <SectionDivider variant="clouds" />
-
           {/* FAQ Section */}
           <section id="faq">
             <FAQPreview />
           </section>
 
-          {/* Blog Preview */}
-          <section id="blog">
-            <BlogPreview />
-          </section>
-
-          {/* Final CTA with Image Background */}
-          <CTASection headline="Protect What Matters Most" variant="image" backgroundImage={heroProtectionFamily}>
-            <p className="text-xl text-white/90 mb-8">Join 100+ Ohio families who sleep better knowing they're protected from AI scams.</p>
+          {/* Final CTA with Senior Couple Image */}
+          <CTASection headline="Join Our Protected Community" variant="image" backgroundImage={seniorCoupleActive}>
+            <p className="text-xl text-white/90 mb-8">Join 100+ Ohio families who live confidently, knowing they're protected from AI scams.</p>
             <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center">
               <Button asChild variant="gold" size="xl" className="w-full sm:w-auto">
-                <Link to="/training#pricing">Get Started Today</Link>
-              </Button>
-              <Button asChild variant="secondary" size="xl" className="w-full sm:w-auto">
-                <Link to="/training#pricing">Get Protection Now</Link>
+                <Link to="/training#pricing">Get Protected Today</Link>
               </Button>
               <Button asChild variant="outlineLight" size="xl" className="w-full sm:w-auto">
-                <Link to="/business">Get Business Quote</Link>
+                <Link to="/business">Business Solutions</Link>
               </Button>
             </div>
             <p className="text-white/80 mt-6 text-sm">
-              ✓ No credit card required ✓ Cancel anytime ✓ 60-day money-back guarantee
+              ✓ Veteran-Owned ✓ Ohio-Based ✓ 60-Day Money-Back Guarantee
             </p>
           </CTASection>
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { MapPin, Users, Shield, Heart, Building2, Star, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import ohioLandscapeBg from "@/assets/ohio-landscape-bg.jpg";
+import ohioCountrysideBg from "@/assets/ohio-countryside-sunrise.jpg";
 import { HexagonIcon, GeometricCorner, GridPattern } from "@/components/ui/GeometricDecorations";
 
 const impactStats = [
@@ -79,10 +79,11 @@ export const OhioImpactSection = () => {
     <section className="py-24 relative overflow-hidden">
       {/* Background Image */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${ohioLandscapeBg})` }}
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat animate-slow-zoom"
+        style={{ backgroundImage: `url(${ohioCountrysideBg})` }}
       />
-      <div className="absolute inset-0 bg-background/80" />
+      {/* Soft warm overlay for text readability */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background/90 via-background/85 to-primary/20" />
       
       {/* Grid pattern */}
       <GridPattern />
