@@ -16,7 +16,9 @@ export function useAnalyticsTracking() {
 
     // Track scroll depth
     let maxScroll = 0;
-    const handleScroll = () => {
+    let ticking = false;
+    
+    const updateScrollDepth = () => {
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
@@ -27,6 +29,14 @@ export function useAnalyticsTracking() {
       if (scrollPercent > maxScroll && [25, 50, 75, 100].includes(scrollPercent)) {
         maxScroll = scrollPercent;
         trackScroll(scrollPercent);
+      }
+      ticking = false;
+    };
+    
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(updateScrollDepth);
+        ticking = true;
       }
     };
 

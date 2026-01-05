@@ -20,7 +20,9 @@ export function useAnalytics() {
 
     // Track scroll depth
     let scrollDepth = 0;
-    const handleScroll = () => {
+    let ticking = false;
+    
+    const updateScrollDepth = () => {
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
@@ -61,6 +63,14 @@ export function useAnalytics() {
         if (window.gtag) {
           window.gtag("event", "scroll_depth", { percentage: 100 });
         }
+      }
+      ticking = false;
+    };
+    
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(updateScrollDepth);
+        ticking = true;
       }
     };
 
