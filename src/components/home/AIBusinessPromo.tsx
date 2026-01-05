@@ -173,7 +173,7 @@ export const AIBusinessPromo = () => {
                       <div className="flex items-center justify-between mt-2">
                         <span className="text-lg font-bold text-primary">{service.price}</span>
                       </div>
-                      <span className="text-[10px] text-emerald-700 font-medium">{service.highlight}</span>
+                      <span className="text-[10px] text-emerald-800 font-semibold">{service.highlight}</span>
                     </div>
                   </div>
                 </motion.div>

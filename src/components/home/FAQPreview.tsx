@@ -73,8 +73,8 @@ export const FAQPreview = () => {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-green-700 rounded-full border-2 border-background flex items-center justify-center">
-                    <span className="text-[10px] text-white font-bold">ON</span>
+                  <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-green-800 rounded-full border-2 border-background flex items-center justify-center">
+                    <span className="text-[11px] text-white font-bold">ON</span>
                   </div>
                 </div>
                 <div>
