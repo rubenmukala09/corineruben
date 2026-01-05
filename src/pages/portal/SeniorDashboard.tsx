@@ -45,8 +45,9 @@ function SeniorDashboard() {
         .eq("id", user.id)
         .single();
 
+      // Use secure view - excludes sensitive emergency contact and medical data
       const { data: seniorData } = await supabase
-        .from("senior_client_profiles")
+        .from("senior_profiles_safe")
         .select("*")
         .eq("user_id", user.id)
         .single();
@@ -152,7 +153,7 @@ function SeniorDashboard() {
             </div>
           </Card>
 
-          {/* Emergency Contact */}
+          {/* Emergency Contact - Note: Sensitive data accessed via secure function when needed */}
           <Card className="p-6">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 bg-red-500/10 rounded-full flex items-center justify-center">
@@ -164,11 +165,10 @@ function SeniorDashboard() {
               </div>
             </div>
             <div className="space-y-2 text-sm">
-              <p><strong>Name:</strong> {profile?.emergency_contact_name || "Not set"}</p>
-              <p><strong>Phone:</strong> {profile?.emergency_contact_phone || "Not set"}</p>
+              <p className="text-muted-foreground">Contact information available in secure settings</p>
               <Button size="sm" className="w-full mt-3" variant="outline">
                 <Phone className="w-4 h-4 mr-2" />
-                Call Emergency Contact
+                View Emergency Contacts
               </Button>
             </div>
           </Card>

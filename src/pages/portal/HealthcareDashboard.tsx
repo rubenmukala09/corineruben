@@ -39,8 +39,9 @@ function HealthcareDashboard() {
         .eq("id", user.id)
         .single();
 
+      // Use secure view - excludes sensitive DEA/license numbers
       const { data: healthcareData } = await supabase
-        .from("healthcare_professional_profiles")
+        .from("healthcare_profiles_safe")
         .select("*")
         .eq("user_id", user.id)
         .single();
@@ -120,8 +121,7 @@ function HealthcareDashboard() {
               </div>
             </div>
             <div className="space-y-2 text-sm">
-              <p><strong>License:</strong> {profile?.license_type || "N/A"}</p>
-              <p><strong>License #:</strong> {profile?.license_number || "N/A"}</p>
+              <p><strong>License Type:</strong> {profile?.license_type || "N/A"}</p>
               <p><strong>Specialty:</strong> {profile?.medical_specialty || "N/A"}</p>
               <p><strong>Experience:</strong> {profile?.years_in_practice || 0} years</p>
             </div>

@@ -4089,6 +4089,39 @@ export type Database = {
       }
     }
     Views: {
+      healthcare_profiles_safe: {
+        Row: {
+          created_at: string | null
+          hospital_affiliation: string | null
+          id: string | null
+          license_type: string | null
+          medical_specialty: string | null
+          updated_at: string | null
+          user_id: string | null
+          years_in_practice: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          hospital_affiliation?: string | null
+          id?: string | null
+          license_type?: string | null
+          medical_specialty?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+          years_in_practice?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          hospital_affiliation?: string | null
+          id?: string | null
+          license_type?: string | null
+          medical_specialty?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+          years_in_practice?: number | null
+        }
+        Relationships: []
+      }
       profiles_limited: {
         Row: {
           account_status: string | null
@@ -4170,6 +4203,33 @@ export type Database = {
         }
         Relationships: []
       }
+      senior_profiles_safe: {
+        Row: {
+          created_at: string | null
+          id: string | null
+          preferred_language: string | null
+          relationship: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string | null
+          preferred_language?: string | null
+          relationship?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string | null
+          preferred_language?: string | null
+          relationship?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       testimonials_public: {
         Row: {
           created_at: string | null
@@ -4236,7 +4296,15 @@ export type Database = {
       generate_payout_number: { Args: never; Returns: string }
       generate_request_number: { Args: never; Returns: string }
       generate_worker_id: { Args: never; Returns: string }
+      get_healthcare_sensitive_data: {
+        Args: { target_user_id: string }
+        Returns: Json
+      }
       get_profile_sensitive_data: {
+        Args: { target_user_id: string }
+        Returns: Json
+      }
+      get_senior_sensitive_data: {
         Args: { target_user_id: string }
         Returns: Json
       }
