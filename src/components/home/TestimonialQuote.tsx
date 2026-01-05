@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react";
 import testimonialImage from "@/assets/testimonial-1.jpg";
 import testimonialImage2 from "@/assets/testimonial-2.jpg";
-import corineImage from "@/assets/corine-testimonial.jpg";
 import { GeometricCorner, GridPattern } from "@/components/ui/GeometricDecorations";
 
 const testimonials = [
@@ -17,12 +16,6 @@ const testimonials = [
     name: "Robert Johnson",
     location: "Columbus, Ohio",
     image: testimonialImage2,
-  },
-  {
-    quote: "The best investment we've made for our family's digital safety. Professional, patient, and incredibly knowledgeable. They made cybersecurity accessible for my elderly parents.",
-    name: "Corine M.",
-    location: "Nurse at Kettering Hospital",
-    image: corineImage,
   },
 ];
 
