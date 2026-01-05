@@ -83,19 +83,25 @@ export function getStripePromise(): Promise<Stripe | null> | null {
   return stripePromiseCache;
 }
 
-// Pre-fetch the key on module load
-(async () => {
+// Lazy pre-fetch - only triggered when user shows intent to pay
+export async function prefetchStripeKey() {
   const envKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
-  if (!envKey || envKey.trim() === '') {
+  if (envKey && envKey.trim() !== '') {
+    if (!stripePromiseCache) {
+      stripePromiseCache = loadStripe(envKey);
+    }
+    return;
+  }
+  
+  if (!cachedKey) {
     try {
       const { data } = await supabase.functions.invoke('get-stripe-key');
       if (data?.publishableKey) {
         cachedKey = data.publishableKey;
         stripePromiseCache = loadStripe(data.publishableKey);
-        console.log('[Stripe] Pre-fetched key successfully');
       }
     } catch (err) {
       console.error('[Stripe] Pre-fetch failed:', err);
     }
   }
-})();
+}
