@@ -76,9 +76,9 @@ export const ResourcesPromo = () => {
             transition={{ duration: 0.6 }}
             className="space-y-8"
           >
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent/10 rounded-2xl border border-accent/20">
-              <Sparkles className="w-5 h-5 text-accent" />
-              <span className="font-bold text-accent">Resources & Tools</span>
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-50 rounded-2xl border border-emerald-200">
+              <Sparkles className="w-5 h-5 text-emerald-800" />
+              <span className="font-bold text-emerald-800">Resources & Tools</span>
             </div>
             
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
