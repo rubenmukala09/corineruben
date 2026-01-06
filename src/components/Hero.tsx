@@ -100,10 +100,7 @@ const Hero = ({
           <HeroCarousel images={backgroundImages} />
         ) : !useVideo && backgroundImage && (
           <div
-            className={cn(
-              "absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-500",
-              singleImagePreloaded ? "opacity-100" : "opacity-0"
-            )}
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url(${backgroundImage})` }}
           />
         )}

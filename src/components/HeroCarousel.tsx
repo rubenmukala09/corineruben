@@ -89,32 +89,23 @@ export const HeroCarousel = ({
 
   return (
     <div className="absolute inset-0 overflow-hidden">
-      {/* Base dark background for instant paint */}
-      <div className="absolute inset-0 bg-slate-900" />
-      
-      {/* Images with smooth crossfade and subtle Ken Burns effect */}
+      {/* Images - no transitions, instant display */}
       {images.map((image, index) => {
         const isActive = index === currentIndex;
-        const isPrevious = index === previousIndex;
-        const shouldShow = (isActive || isPrevious) && imagesLoaded[index];
         
         return (
           <div
             key={index}
             className="absolute inset-0 overflow-hidden"
             style={{
-              opacity: shouldShow ? (isActive ? 1 : isPrevious && isTransitioning ? 0 : 0) : 0,
-              transition: 'opacity 1.2s ease-in-out',
-              zIndex: isActive ? 2 : isPrevious ? 1 : 0,
+              opacity: isActive ? 1 : 0,
+              zIndex: isActive ? 2 : 0,
             }}
           >
             <div
               className="absolute inset-0 bg-cover bg-center bg-no-repeat"
               style={{ 
-                backgroundImage: imagesLoaded[index] ? `url(${image.src})` : 'none',
-                transform: isActive ? 'scale(1.05)' : 'scale(1)',
-                transition: 'transform 8s ease-out',
-                willChange: isActive ? 'transform' : 'auto'
+                backgroundImage: `url(${image.src})`,
               }}
               role="img"
               aria-label={image.alt}
