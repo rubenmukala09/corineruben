@@ -1,5 +1,5 @@
 import { FileText, Search, Shield, Smile } from "lucide-react";
-import peopleStudyingVideo from "@/assets/people-studying-video.mp4";
+import workingProcessScreenshot from "@/assets/working-process-screenshot.png";
 import { GeometricCorner, GridPattern } from "@/components/ui/GeometricDecorations";
 
 const steps = [
@@ -44,16 +44,28 @@ export const WorkingProcess = () => {
         <div className="grid lg:grid-cols-2 gap-8 items-center mb-12">
           {/* Left - Video - Physical Photo Effect */}
           <div className="relative order-2 lg:order-1">
-            <div className="relative rounded-3xl overflow-hidden shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] border border-white/50 transition-all duration-400 ease-out hover:translate-y-[-8px] hover:scale-[1.02] hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]">
-              <video 
-                src={peopleStudyingVideo} 
-                className="w-full h-80 object-cover"
-                autoPlay
-                loop
-                muted
-                playsInline
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-accent/20 pointer-events-none" />
+            {/* Laptop Frame */}
+            <div className="relative mx-auto max-w-lg">
+              {/* Laptop screen bezel */}
+              <div className="relative bg-gray-900 rounded-t-xl pt-4 px-4 pb-2 shadow-2xl">
+                {/* Camera dot */}
+                <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-700 rounded-full" />
+                {/* Screen */}
+                <div className="relative rounded-lg overflow-hidden bg-white">
+                  <img 
+                    src={workingProcessScreenshot}
+                    alt="InVision Network training platform interface"
+                    className="w-full h-auto object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              {/* Laptop base */}
+              <div className="relative h-4 bg-gradient-to-b from-gray-800 to-gray-900 rounded-b-xl">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-1 bg-gray-700 rounded-b" />
+              </div>
+              {/* Shadow/reflection */}
+              <div className="absolute -bottom-4 left-4 right-4 h-4 bg-black/10 blur-xl rounded-full" />
             </div>
           </div>
           
