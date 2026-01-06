@@ -8,20 +8,32 @@ export const useImageParallax = () => {
     const element = ref.current;
     if (!element) return;
 
+    let ticking = false;
+
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = element.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      if (ticking) return;
       
-      setTransform({ x: x * 15, y: y * 15 });
+      ticking = true;
+      requestAnimationFrame(() => {
+        if (!element) {
+          ticking = false;
+          return;
+        }
+        const rect = element.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        
+        setTransform({ x: x * 15, y: y * 15 });
+        ticking = false;
+      });
     };
 
     const handleMouseLeave = () => {
       setTransform({ x: 0, y: 0 });
     };
 
-    element.addEventListener('mousemove', handleMouseMove);
-    element.addEventListener('mouseleave', handleMouseLeave);
+    element.addEventListener('mousemove', handleMouseMove, { passive: true });
+    element.addEventListener('mouseleave', handleMouseLeave, { passive: true });
 
     return () => {
       element.removeEventListener('mousemove', handleMouseMove);
