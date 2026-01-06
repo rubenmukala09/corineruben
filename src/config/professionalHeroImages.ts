@@ -20,7 +20,7 @@ export const PROFESSIONAL_HERO_IMAGES: Record<string, HeroImage[]> = {
     { src: heroProBusiness, alt: "Professional business team collaborating in modern office" },
   ],
   training: [
-    { src: heroProTraining, alt: "Professional workshop training session with diverse learners" },
+    { src: heroProTraining, alt: "Professional cybersecurity training workshop with diverse professionals learning digital protection" },
   ],
   resources: [
     { src: heroProResources, alt: "Modern library with digital resources and learning materials" },
