@@ -93,21 +93,19 @@ export const AIBusinessPromo = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-accent/20 to-primary/20 rounded-2xl border border-accent/30"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-muted rounded-2xl border border-border"
             >
-              <Sparkles className="w-5 h-5 text-accent animate-pulse" />
-              <span className="font-bold text-accent">AI & Business Solutions</span>
-              <span className="text-lg">🚀</span>
+              <Bot className="w-5 h-5 text-muted-foreground" />
+              <span className="font-medium text-muted-foreground">AI & Business Solutions</span>
             </motion.div>
             
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
               Stop Missing Calls.{" "}
-              <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">Let AI Run Your Front Desk.</span>
-              <span className="ml-2">💼</span>
+              <span className="text-foreground/80">Let AI Run Your Front Desk.</span>
             </h2>
             
             <p className="text-base text-muted-foreground leading-relaxed">
-              Transform your business with AI-powered automation. We build solutions that work 24/7 so you never miss an opportunity. ✨
+              Transform your business with AI-powered automation. We build solutions that work 24/7 so you never miss an opportunity.
             </p>
 
             {/* Combined ROI + Premium Section - Side by Side */}

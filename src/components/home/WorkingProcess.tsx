@@ -8,24 +8,32 @@ const steps = [
     icon: FileText,
     title: "Share Your Details",
     description: "Tell us about your security concerns and requirements.",
+    gradient: "from-blue-500 to-cyan-500",
+    bgGlow: "bg-blue-500/20",
   },
   {
     step: "02",
     icon: Search,
     title: "Pick A Plan",
     description: "Our experts recommend the best protection package for you.",
+    gradient: "from-purple-500 to-pink-500",
+    bgGlow: "bg-purple-500/20",
   },
   {
     step: "03",
     icon: Shield,
     title: "We Assess & Protect",
     description: "We analyze your digital footprint and secure vulnerabilities.",
+    gradient: "from-emerald-500 to-teal-500",
+    bgGlow: "bg-emerald-500/20",
   },
   {
     step: "04",
     icon: Smile,
     title: "Enjoy Peace of Mind",
     description: "Rest easy with 24/7 monitoring and ongoing support.",
+    gradient: "from-amber-500 to-orange-500",
+    bgGlow: "bg-amber-500/20",
   },
 ];
 
@@ -87,32 +95,43 @@ export const WorkingProcess = () => {
           </div>
         </div>
 
-        {/* Process Steps - Soft Modern */}
+        {/* Process Steps - Professional Active Design */}
         <div className="relative">
           {/* Connector line - desktop only */}
-          <div className="hidden lg:block absolute top-20 left-[12%] right-[12%] h-0.5 bg-gradient-to-r from-primary/20 via-primary to-primary/20" />
+          <div className="hidden lg:block absolute top-20 left-[12%] right-[12%] h-0.5 bg-gradient-to-r from-blue-500/30 via-purple-500/50 via-emerald-500/50 to-amber-500/30" />
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {steps.map((step, index) => (
               <div key={index} className="relative text-center group">
-                {/* Icon container with number - Soft Modern */}
-                <div className="relative inline-block mb-8">
-                  <div className="w-32 h-32 rounded-3xl bg-white border border-white/50 flex items-center justify-center shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] mx-auto transition-all duration-400 ease-out group-hover:translate-y-[-8px] group-hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]">
-                    <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
-                      <step.icon className="w-7 h-7 text-primary" strokeWidth={1.5} />
+                {/* Icon container - Active Professional Design */}
+                <div className="relative inline-block mb-6">
+                  {/* Animated glow ring */}
+                  <div className={`absolute inset-0 rounded-3xl ${step.bgGlow} blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-110`} />
+                  
+                  {/* Main icon container */}
+                  <div className="relative w-28 h-28 rounded-3xl bg-white border border-border/50 flex items-center justify-center shadow-lg mx-auto transition-all duration-300 group-hover:translate-y-[-6px] group-hover:shadow-xl overflow-hidden">
+                    {/* Gradient background on hover */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${step.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+                    
+                    {/* Icon with gradient */}
+                    <div className={`relative w-14 h-14 rounded-2xl bg-gradient-to-br ${step.gradient} flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300`}>
+                      <step.icon className="w-7 h-7 text-white" strokeWidth={2} />
                     </div>
                   </div>
                   
-                  {/* Step number badge */}
-                  <div className="absolute -top-2 -right-2 w-10 h-10 bg-primary text-primary-foreground rounded-2xl flex items-center justify-center font-bold text-sm shadow-lg">
+                  {/* Step number badge - gradient matching */}
+                  <div className={`absolute -top-2 -right-2 w-9 h-9 bg-gradient-to-br ${step.gradient} text-white rounded-xl flex items-center justify-center font-bold text-sm shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                     {step.step}
                   </div>
+                  
+                  {/* Animated pulse ring */}
+                  <div className={`absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-current opacity-0 group-hover:opacity-20 scale-100 group-hover:scale-125 transition-all duration-500`} style={{ borderColor: index === 0 ? '#3b82f6' : index === 1 ? '#a855f7' : index === 2 ? '#10b981' : '#f59e0b' }} />
                 </div>
 
-                <h3 className="text-xl font-bold mb-3 text-foreground">
+                <h3 className="text-lg font-bold mb-2 text-foreground group-hover:text-primary transition-colors duration-300">
                   {step.title}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed max-w-[260px] mx-auto">
+                <p className="text-muted-foreground text-sm leading-relaxed max-w-[240px] mx-auto">
                   {step.description}
                 </p>
               </div>

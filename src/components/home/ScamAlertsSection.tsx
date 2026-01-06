@@ -57,15 +57,15 @@ export const ScamAlertsSection = () => {
       <div className="absolute inset-0 bg-background" />
       
       <div className="container mx-auto px-4 relative z-10">
-        {/* Header */}
+        {/* Header - Toned Down / Muted Theme */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
-            <Shield className="w-4 h-4 text-primary" />
-            <span className="text-sm font-semibold text-primary">Active Threat Intelligence</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted border border-border mb-6">
+            <Shield className="w-4 h-4 text-muted-foreground" />
+            <span className="text-sm font-medium text-muted-foreground">Active Threat Intelligence</span>
           </div>
           
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Know the <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Threats</span>, Stay <span className="text-primary">Ahead</span>
+            Know the <span className="text-foreground/70">Threats</span>, Stay <span className="text-foreground/80">Ahead</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Real-time intelligence on scams targeting your community right now.

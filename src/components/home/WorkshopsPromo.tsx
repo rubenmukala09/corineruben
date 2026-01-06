@@ -98,10 +98,10 @@ export const WorkshopsPromo = () => {
               initial={{ opacity: 0, y: -20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl p-4 border border-primary/20"
+              className="bg-muted/50 rounded-2xl p-4 border border-border"
             >
               <div className="flex items-start gap-3">
-                <Quote className="w-8 h-8 text-primary/40 flex-shrink-0" />
+                <Quote className="w-8 h-8 text-muted-foreground/40 flex-shrink-0" />
                 <div>
                   <p className="text-sm italic text-foreground leading-relaxed">
                     "In the age of AI, the pause you take could be the protection you need."
@@ -184,17 +184,15 @@ export const WorkshopsPromo = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl border border-primary/30"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-muted rounded-2xl border border-border"
             >
-              <Sparkles className="w-5 h-5 text-primary animate-pulse" />
-              <span className="font-bold text-primary">Learn & Train Workshops</span>
-              <span className="text-lg">🎓</span>
+              <GraduationCap className="w-5 h-5 text-muted-foreground" />
+              <span className="font-medium text-muted-foreground">Learn & Train Workshops</span>
             </motion.div>
             
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
               Protect Your Family from{" "}
-              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">AI Scams</span>
-              <span className="ml-2">🛡️</span>
+              <span className="text-foreground/80">AI Scams</span>
             </h2>
             
             <p className="text-base text-muted-foreground leading-relaxed">
