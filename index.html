@@ -32,6 +32,8 @@
       @media(min-width:640px){h1{font-size:2.25rem}}
       @media(min-width:768px){h1{font-size:3rem}}
       @media(min-width:1024px){h1{font-size:3.75rem}}
+      /* LCP paragraph - critical for immediate paint */
+      .lcp-text{font-size:clamp(1rem,2vw,1.5rem);color:#64748b;line-height:1.6;margin:0 0 2rem}
     </style>
     
     <!-- Modulepreload for main bundle - reduces chain latency -->
@@ -133,9 +135,7 @@
                 <span style="display:block;color:#0f172a">InVision</span>
                 <span style="display:block;background:linear-gradient(90deg,#7c3aed,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Network</span>
               </h1>
-              <p style="font-size:clamp(1rem,2vw,1.5rem);color:#64748b;margin:0 0 2rem;line-height:1.6">
-                Empowering families with AI scam protection. Transforming businesses with cutting-edge automation solutions.
-              </p>
+              <p class="lcp-text">Empowering families with AI scam protection. Transforming businesses with cutting-edge automation solutions.</p>
             </div>
           </div>
         </section>
