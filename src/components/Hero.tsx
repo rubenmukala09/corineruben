@@ -67,8 +67,8 @@ const Hero = ({
         className
       )}
     >
-      {/* Persistent background - prevents white flash */}
-      <div className="absolute inset-0 bg-slate-900" />
+      {/* Transparent fallback - no color flash */}
+      <div className="absolute inset-0 bg-transparent" />
       
       {/* Background */}
       <div className="absolute inset-0 overflow-hidden">
