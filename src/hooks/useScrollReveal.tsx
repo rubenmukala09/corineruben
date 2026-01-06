@@ -18,14 +18,15 @@ export const useScrollReveal = (options: UseScrollRevealOptions = {}) => {
   const [isVisible, setIsVisible] = useState(false);
   const hasTriggered = useRef(false);
 
-  // Check if element is already in viewport on mount - deferred to avoid forced reflow
+  // Check if element is already in viewport on mount - deferred to idle time
   useEffect(() => {
     const element = ref.current;
     if (!element || hasTriggered.current) return;
     
-    // Defer layout read significantly to avoid blocking FCP
-    const timeoutId = setTimeout(() => {
+    // Use requestIdleCallback to defer layout read until browser is idle
+    const checkVisibility = () => {
       requestAnimationFrame(() => {
+        if (!element || hasTriggered.current) return;
         const rect = element.getBoundingClientRect();
         const isAboveFold = rect.top < window.innerHeight && rect.bottom > 0;
         
@@ -34,9 +35,23 @@ export const useScrollReveal = (options: UseScrollRevealOptions = {}) => {
           if (triggerOnce) hasTriggered.current = true;
         }
       });
-    }, 50);
+    };
     
-    return () => clearTimeout(timeoutId);
+    let idleHandle: number | undefined;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    
+    if ('requestIdleCallback' in window) {
+      idleHandle = requestIdleCallback(checkVisibility, { timeout: 200 });
+    } else {
+      timeoutId = setTimeout(checkVisibility, 100);
+    }
+    
+    return () => {
+      if (idleHandle !== undefined && 'cancelIdleCallback' in window) {
+        cancelIdleCallback(idleHandle);
+      }
+      if (timeoutId !== undefined) clearTimeout(timeoutId);
+    };
   }, [triggerOnce]);
 
   const handleIntersection = useCallback(([entry]: IntersectionObserverEntry[]) => {

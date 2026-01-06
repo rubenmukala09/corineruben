@@ -34,14 +34,26 @@ export const useParallax = ({ speed = 0.5, offset = 0 }: UseParallaxOptions = {}
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    // Defer initial read to avoid forced reflow during mount
-    const timeoutId = setTimeout(() => {
-      requestAnimationFrame(updateParallax);
-    }, 50);
+    // Use requestIdleCallback to defer initial read until browser is idle
+    let idleHandle: number | undefined;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    
+    if ('requestIdleCallback' in window) {
+      idleHandle = requestIdleCallback(() => {
+        requestAnimationFrame(updateParallax);
+      }, { timeout: 200 });
+    } else {
+      timeoutId = setTimeout(() => {
+        requestAnimationFrame(updateParallax);
+      }, 100);
+    }
     
     return () => {
       window.removeEventListener('scroll', onScroll);
-      clearTimeout(timeoutId);
+      if (idleHandle !== undefined && 'cancelIdleCallback' in window) {
+        cancelIdleCallback(idleHandle);
+      }
+      if (timeoutId !== undefined) clearTimeout(timeoutId);
     };
   }, [speed, offset]);
 
