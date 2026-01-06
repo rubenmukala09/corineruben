@@ -50,9 +50,8 @@
       html{line-height:1.5;-webkit-text-size-adjust:100%;font-family:Outfit,ui-sans-serif,system-ui,sans-serif}
       body{margin:0;line-height:inherit;background-color:hsl(0 0% 100%);color:hsl(222.2 84% 4.9%)}
       #root{min-height:100vh;display:flex;flex-direction:column}
-      /* Loading state - prevents FOUC */
-      body:not(.loaded){opacity:0}
-      body.loaded{opacity:1;transition:opacity 0.1s ease-in}
+      /* Loading state - IMMEDIATE visibility for LCP */
+      body{opacity:1}
       /* Critical layout classes */
       .fixed{position:fixed}.relative{position:relative}.flex{display:flex}.hidden{display:none}
       .h-screen{height:100vh}.w-full{width:100%}.min-h-screen{min-height:100vh}
@@ -61,6 +60,8 @@
       /* Primary colors for immediate visual */
       .bg-primary{background-color:hsl(262.1 83.3% 57.8%)}.text-white{color:#fff}
       .bg-background{background-color:hsl(0 0% 100%)}
+      /* LCP text optimization - force immediate paint */
+      p{content-visibility:auto}
     </style>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
