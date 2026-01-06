@@ -37,16 +37,14 @@ export const HeroHomepage = () => {
           loop
           muted
           playsInline
-          preload="auto"
+          preload="none"
           className="absolute inset-0 w-full h-full object-cover"
         >
           <source src={heroVideo} type="video/mp4" />
         </video>
         
-        {/* Premium gradient overlay */}
+        {/* Single simplified gradient overlay for faster paint */}
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/40" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-purple-900/10" />
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
       </div>
 
       {/* Grid pattern */}
@@ -152,7 +150,7 @@ export const HeroHomepage = () => {
                         className="absolute"
                         style={pos}
                       >
-                        <div className="flex items-center gap-2.5 px-4 py-2.5 bg-card/95 backdrop-blur-xl rounded-full border border-primary/15 shadow-lg shadow-primary/10">
+                        <div className="flex items-center gap-2.5 px-4 py-2.5 bg-card/95 rounded-full border border-primary/15 shadow-lg shadow-primary/10">
                           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/15 to-accent/15 flex items-center justify-center">
                             <feature.icon className="w-4 h-4 text-primary" />
                           </div>
@@ -169,7 +167,7 @@ export const HeroHomepage = () => {
                 {securityFeatures.map((feature) => (
                   <div 
                     key={feature.label}
-                    className="flex items-center gap-2 px-3 py-2 bg-card/90 backdrop-blur-sm rounded-lg border border-primary/10 shadow-sm"
+                    className="flex items-center gap-2 px-3 py-2 bg-card/90 rounded-lg border border-primary/10 shadow-sm"
                   >
                     <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary/15 to-accent/15 flex items-center justify-center flex-shrink-0">
                       <feature.icon className="w-3 h-3 text-primary" />
@@ -188,7 +186,7 @@ export const HeroHomepage = () => {
                 ].map((stat) => (
                   <div
                     key={stat.label}
-                    className="text-center p-2 sm:p-4 bg-card/60 backdrop-blur-sm rounded-xl sm:rounded-2xl border border-primary/10 hover:border-primary/25 transition-colors duration-300"
+                    className="text-center p-2 sm:p-4 bg-card/60 rounded-xl sm:rounded-2xl border border-primary/10 hover:border-primary/25 transition-colors duration-300"
                   >
                     <stat.icon className="w-4 h-4 sm:w-5 sm:h-5 text-accent mx-auto mb-1 sm:mb-2" />
                     <div className="text-lg sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{stat.value}</div>
