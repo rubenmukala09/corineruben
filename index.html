@@ -36,11 +36,23 @@
       .lcp-text{font-size:clamp(1rem,2vw,1.5rem);color:#64748b;line-height:1.6;margin:0 0 2rem}
     </style>
     
-    <!-- CSS async loader - makes main CSS non-render-blocking -->
+    <!-- CSS async loader - injects stylesheets as non-render-blocking -->
     <script>
       (function(){
-        var l=function(h){var s=document.createElement('link');s.rel='stylesheet';s.href=h;s.media='print';s.onload=function(){this.media='all'};document.head.appendChild(s)};
-        window.__loadCSS=l;
+        // Intercept stylesheet links and make them non-blocking
+        var o=document.createElement;
+        document.createElement=function(t){
+          var e=o.call(document,t);
+          if(t.toLowerCase()==='link'){
+            setTimeout(function(){
+              if(e.rel==='stylesheet'&&e.href&&!e.dataset.critical){
+                e.media='print';
+                e.onload=function(){this.media='all';this.onload=null};
+              }
+            },0);
+          }
+          return e;
+        };
       })();
     </script>
     
