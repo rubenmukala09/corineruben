@@ -108,7 +108,7 @@ export const ResourcesPromo = () => {
                   <FileText className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-foreground">Free Emergency Anti-Scam Scripts</h4>
+                  <h3 className="font-bold text-foreground text-base">Free Emergency Anti-Scam Scripts</h3>
                   <p className="text-sm text-muted-foreground">Downloadable PDF scripts for common scam scenarios</p>
                 </div>
               </div>
@@ -230,7 +230,7 @@ export const ResourcesPromo = () => {
                   <Download className="w-7 h-7" />
                 </div>
                 <div className="flex-1">
-                  <h4 className="font-bold text-lg">Free Emergency Anti-Scam Scripts</h4>
+                  <h3 className="font-bold text-lg">Free Emergency Anti-Scam Scripts</h3>
                   <p className="text-white/80 text-sm">IRS • Tech Support • Grandparent • Bank Fraud</p>
                 </div>
                 <Link to="/resources" className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-full text-sm font-bold transition-colors">
