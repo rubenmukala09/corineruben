@@ -6,12 +6,17 @@ interface InitialLoaderProps {
   minDuration?: number;
 }
 
-// Ultra-fast initial loader - no animations, instant display
-export const InitialLoader = ({ onComplete, minDuration = 50 }: InitialLoaderProps) => {
+// Ultra-fast initial loader - instant completion, no delay
+export const InitialLoader = ({ onComplete, minDuration = 0 }: InitialLoaderProps) => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // Instant completion
+    // Immediate completion - no delay blocking FCP
+    if (minDuration === 0) {
+      setIsVisible(false);
+      onComplete?.();
+      return;
+    }
     const timer = setTimeout(() => {
       setIsVisible(false);
       onComplete?.();
