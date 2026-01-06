@@ -11,16 +11,13 @@ export const NavigationProgress = () => {
     setIsVisible(true);
     setProgress(0);
 
-    // Smooth progress animation
-    const timer1 = setTimeout(() => setProgress(40), 20);
-    const timer2 = setTimeout(() => setProgress(80), 80);
-    const timer3 = setTimeout(() => {
-      setProgress(100);
-      setTimeout(() => {
-        setIsVisible(false);
-        setProgress(0);
-      }, 100);
-    }, 150);
+    // Ultra-fast progress
+    const timer1 = setTimeout(() => setProgress(100), 10);
+    const timer2 = setTimeout(() => {
+      setIsVisible(false);
+      setProgress(0);
+    }, 50);
+    const timer3 = null;
 
     return () => {
       clearTimeout(timer1);
