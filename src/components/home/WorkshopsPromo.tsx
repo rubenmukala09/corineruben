@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Users, Clock, Award, Shield, CheckCircle, ArrowRight, Sparkles, Play, BookOpen, Star, DollarSign, Brain, Eye, AlertTriangle, Lock, Target, Briefcase } from "lucide-react";
+import { Users, Clock, Award, Shield, CheckCircle, ArrowRight, Sparkles, Play, BookOpen, Star, DollarSign, Brain, Eye, AlertTriangle, Lock, Target, Briefcase, Quote } from "lucide-react";
 import workshopSeniorsLearning from "@/assets/workshop-seniors-learning.jpg";
 import learningBg from "@/assets/learning-bg.jpg";
+import { TestimonialBubble } from "./TestimonialBubble";
 
 const benefits = [
   { icon: Shield, text: "60-Second Pause Protocol" },
@@ -47,9 +48,9 @@ const audiences = [
 ];
 
 const howItWorks = [
-  { step: "1", title: "Book", desc: "Choose your format and schedule" },
-  { step: "2", title: "Learn & Practice", desc: "Interactive training with real scenarios" },
-  { step: "3", title: "Get Support", desc: "Ongoing access to resources" },
+  { step: "1", title: "Book", desc: "Choose your format" },
+  { step: "2", title: "Learn", desc: "Interactive training" },
+  { step: "3", title: "Support", desc: "Ongoing access" },
 ];
 
 const services = [
@@ -61,9 +62,14 @@ const services = [
   { icon: Briefcase, title: "Corporate Training Programs", desc: "Customized workshops for your organization" },
 ];
 
+const testimonials = [
+  { quote: "The 60-Second Protocol saved me from a $5,000 scam!", author: "Margaret T.", location: "Columbus, OH" },
+  { quote: "Finally, training my parents understood and enjoyed.", author: "David R.", location: "Dayton, OH" },
+];
+
 export const WorkshopsPromo = () => {
   return (
-    <section className="py-24 bg-gradient-to-b from-background via-muted/20 to-background relative overflow-hidden">
+    <section className="py-16 bg-gradient-to-b from-background via-muted/20 to-background relative overflow-hidden">
       {/* Background Image with blur overlay */}
       <div className="absolute inset-0">
         <img 
@@ -79,15 +85,33 @@ export const WorkshopsPromo = () => {
       <div className="absolute bottom-20 left-10 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px]" />
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Image Side */}
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+          {/* Image Side with Decorative Elements */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative"
+            className="relative space-y-4"
           >
+            {/* Decorative Quote */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl p-4 border border-primary/20"
+            >
+              <div className="flex items-start gap-3">
+                <Quote className="w-8 h-8 text-primary/40 flex-shrink-0" />
+                <div>
+                  <p className="text-sm italic text-foreground leading-relaxed">
+                    "In the age of AI, the pause you take could be the protection you need."
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1 font-medium">— InVision Network Team</p>
+                </div>
+              </div>
+            </motion.div>
+
             <div className="relative rounded-3xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)]">
               <img 
                 src={workshopSeniorsLearning}
@@ -106,38 +130,45 @@ export const WorkshopsPromo = () => {
               <div className="absolute inset-0 flex items-center justify-center">
                 <motion.div 
                   whileHover={{ scale: 1.1 }}
-                  className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center cursor-pointer shadow-xl"
+                  className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center cursor-pointer shadow-xl"
                 >
-                  <Play className="w-8 h-8 text-primary ml-1" fill="currentColor" />
+                  <Play className="w-6 h-6 text-primary ml-1" fill="currentColor" />
                 </motion.div>
               </div>
 
               {/* Stats overlay */}
-              <div className="absolute bottom-4 left-4 right-4 flex gap-3">
-                <div className="bg-white/95 backdrop-blur-sm rounded-2xl px-4 py-3 flex-1">
-                  <div className="text-2xl font-bold text-primary">500+</div>
-                  <div className="text-xs text-muted-foreground">Families Trained</div>
+              <div className="absolute bottom-3 left-3 right-3 flex gap-2">
+                <div className="bg-white/95 backdrop-blur-sm rounded-xl px-3 py-2 flex-1">
+                  <div className="text-xl font-bold text-primary">500+</div>
+                  <div className="text-[10px] text-muted-foreground">Families Trained</div>
                 </div>
-                <div className="bg-white/95 backdrop-blur-sm rounded-2xl px-4 py-3 flex-1">
-                  <div className="text-2xl font-bold text-primary">98%</div>
-                  <div className="text-xs text-muted-foreground">Satisfaction Rate</div>
+                <div className="bg-white/95 backdrop-blur-sm rounded-xl px-3 py-2 flex-1">
+                  <div className="text-xl font-bold text-primary">98%</div>
+                  <div className="text-[10px] text-muted-foreground">Satisfaction Rate</div>
                 </div>
               </div>
             </div>
 
+            {/* Testimonial Bubbles */}
+            <div className="grid grid-cols-2 gap-3">
+              {testimonials.map((t, i) => (
+                <TestimonialBubble key={i} {...t} />
+              ))}
+            </div>
+
             {/* Trust Badges */}
-            <div className="mt-6 flex flex-wrap gap-3 justify-center">
-              <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border/50 shadow-sm">
-                <Shield className="w-4 h-4 text-primary" />
-                <span className="text-sm font-medium">HIPAA Protected</span>
+            <div className="flex flex-wrap gap-2 justify-center">
+              <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full border border-border/50 shadow-sm">
+                <Shield className="w-3.5 h-3.5 text-primary" />
+                <span className="text-xs font-medium">HIPAA Protected</span>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border/50 shadow-sm">
-                <Star className="w-4 h-4 text-amber-500" />
-                <span className="text-sm font-medium">10% Veteran Discount</span>
+              <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full border border-border/50 shadow-sm">
+                <Star className="w-3.5 h-3.5 text-amber-500" />
+                <span className="text-xs font-medium">10% Veteran Discount</span>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border/50 shadow-sm">
-                <CheckCircle className="w-4 h-4 text-green-600" />
-                <span className="text-sm font-medium">30-Day Guarantee</span>
+              <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full border border-border/50 shadow-sm">
+                <CheckCircle className="w-3.5 h-3.5 text-green-600" />
+                <span className="text-xs font-medium">30-Day Guarantee</span>
               </div>
             </div>
           </motion.div>

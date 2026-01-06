@@ -1,63 +1,69 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Phone, Calendar, Bot, Globe, ArrowRight, Sparkles, Shield, Clock, TrendingUp, Star, Zap, Users, Award, CheckCircle, Palette, Headphones, Settings, Lock } from "lucide-react";
+import { Phone, Calendar, Bot, Globe, ArrowRight, Sparkles, Shield, Clock, TrendingUp, Star, Zap, Users, Award, CheckCircle, Palette, Headphones, Settings, Lock, Quote, Lightbulb } from "lucide-react";
 import businessTechBg from "@/assets/business-tech-bg.jpg";
 import businessProfessionalsOffice from "@/assets/business-professionals-office.jpg";
+import { TestimonialBubble } from "./TestimonialBubble";
 
 const services = [
   {
     icon: Phone,
     title: "AI Receptionist",
-    description: "Answer calls 24/7, route to the right person, book appointments, handle FAQs.",
+    description: "Answer calls 24/7, route to the right person, book appointments.",
     price: "$9,500",
     highlight: "Never miss a lead",
   },
   {
     icon: Calendar,
     title: "Smart Scheduling",
-    description: "Auto-book appointments, send reminders, sync with your calendar.",
+    description: "Auto-book appointments, send reminders, sync calendars.",
     price: "Custom",
     highlight: "Eliminate back-and-forth",
   },
   {
     icon: Bot,
     title: "AI Agent Automation",
-    description: "We build custom AI agents & automation. Support agents from any vendor.",
+    description: "Custom AI agents & automation. Support any vendor.",
     price: "$25,000+",
     highlight: "Full customization",
   },
   {
     icon: Globe,
     title: "Website Design",
-    description: "Professional websites from landing pages to full e-commerce solutions.",
+    description: "Landing pages to full e-commerce solutions.",
     price: "From $1,500",
     highlight: "Landing • Business • E-commerce",
   },
 ];
 
 const premiumAddons = [
-  { icon: Palette, name: "Premium Add-ons & Features", desc: "Custom integrations and advanced features" },
-  { icon: Shield, name: "Website Insurance", desc: "Subscription maintenance & protection" },
-  { icon: Headphones, name: "Consultancy Services", desc: "Expert guidance for your AI journey" },
+  { icon: Palette, name: "Premium Add-ons", desc: "Custom integrations" },
+  { icon: Shield, name: "Website Insurance", desc: "Subscription protection" },
+  { icon: Headphones, name: "Consultancy", desc: "Expert AI guidance" },
 ];
 
 const highlights = [
   { icon: Clock, text: "24/7 Availability" },
   { icon: Shield, text: "30-Day Guarantee" },
   { icon: Lock, text: "HIPAA Compliant" },
-  { icon: TrendingUp, text: "Ohio-Based Support" },
+  { icon: TrendingUp, text: "Ohio-Based" },
 ];
 
 const roiFacts = [
-  { stat: "62%", desc: "of calls missed outside business hours" },
+  { stat: "62%", desc: "calls missed after hours" },
   { stat: "$200-$500", desc: "lost per missed call" },
-  { stat: "80%", desc: "reduction in no-shows with reminders" },
+  { stat: "80%", desc: "fewer no-shows" },
+];
+
+const businessTestimonials = [
+  { quote: "AI receptionist paid for itself in 3 months!", author: "James K.", location: "Cincinnati, OH" },
+  { quote: "Our scheduling is now completely hands-free.", author: "Sarah M.", location: "Cleveland, OH" },
 ];
 
 export const AIBusinessPromo = () => {
   return (
-    <section className="py-24 bg-gradient-to-b from-muted/30 via-background to-muted/20 relative overflow-hidden">
+    <section className="py-16 bg-gradient-to-b from-muted/30 via-background to-muted/20 relative overflow-hidden">
       {/* Background Image with blur overlay */}
       <div className="absolute inset-0">
         <img 
@@ -69,11 +75,11 @@ export const AIBusinessPromo = () => {
       </div>
 
       {/* Decorative elements */}
-      <div className="absolute top-40 left-20 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px]" />
-      <div className="absolute bottom-40 right-20 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[100px]" />
+      <div className="absolute top-40 left-20 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px]" />
+      <div className="absolute bottom-40 right-20 w-[300px] h-[300px] bg-primary/5 rounded-full blur-[80px]" />
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Content Side */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
@@ -215,14 +221,32 @@ export const AIBusinessPromo = () => {
             </div>
           </motion.div>
 
-          {/* Image Side */}
+          {/* Image Side with Decorative Elements */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative"
+            className="relative space-y-4"
           >
+            {/* Inspirational Quote */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-r from-accent/10 to-primary/10 rounded-2xl p-4 border border-accent/20"
+            >
+              <div className="flex items-start gap-3">
+                <Lightbulb className="w-8 h-8 text-accent/60 flex-shrink-0" />
+                <div>
+                  <p className="text-sm italic text-foreground leading-relaxed">
+                    "Every missed call is a missed opportunity. Let AI handle the front desk while you focus on growth."
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1 font-medium">— Business Automation Insight</p>
+                </div>
+              </div>
+            </motion.div>
+
             <div className="relative rounded-3xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)]">
               <img 
                 src={businessProfessionalsOffice} 
@@ -238,40 +262,60 @@ export const AIBusinessPromo = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
               {/* Floating stats */}
-              <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-2xl px-4 py-3 shadow-lg">
+              <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm rounded-xl px-3 py-2 shadow-lg">
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                  <span className="text-sm font-bold text-foreground">AI Active 24/7</span>
+                  <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse" />
+                  <span className="text-xs font-bold text-foreground">AI Active 24/7</span>
                 </div>
               </div>
 
               {/* Bottom stats */}
-              <div className="absolute bottom-4 left-4 right-4 flex gap-3">
-                <div className="bg-white/95 backdrop-blur-sm rounded-2xl px-4 py-3 flex-1">
-                  <div className="text-2xl font-bold text-primary">$2.3M+</div>
-                  <div className="text-xs text-muted-foreground">Revenue Protected</div>
+              <div className="absolute bottom-3 left-3 right-3 flex gap-2">
+                <div className="bg-white/95 backdrop-blur-sm rounded-xl px-3 py-2 flex-1">
+                  <div className="text-xl font-bold text-primary">$2.3M+</div>
+                  <div className="text-[10px] text-muted-foreground">Revenue Protected</div>
                 </div>
-                <div className="bg-white/95 backdrop-blur-sm rounded-2xl px-4 py-3 flex-1">
-                  <div className="text-2xl font-bold text-primary">150+</div>
-                  <div className="text-xs text-muted-foreground">Businesses Served</div>
+                <div className="bg-white/95 backdrop-blur-sm rounded-xl px-3 py-2 flex-1">
+                  <div className="text-xl font-bold text-primary">150+</div>
+                  <div className="text-[10px] text-muted-foreground">Businesses Served</div>
                 </div>
               </div>
             </div>
+
+            {/* Testimonial Bubbles */}
+            <div className="grid grid-cols-2 gap-3">
+              {businessTestimonials.map((t, i) => (
+                <TestimonialBubble key={i} {...t} />
+              ))}
+            </div>
+
+            {/* Quick Stats Bar */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-r from-primary to-accent rounded-2xl p-4 text-white"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Zap className="w-5 h-5" />
+                  <span className="text-sm font-bold">Average ROI: 340%</span>
+                </div>
+                <div className="text-xs bg-white/20 px-3 py-1 rounded-full">Within 6 months</div>
+              </div>
+            </motion.div>
 
             {/* Trust badges below image */}
-            <div className="mt-6 flex flex-wrap gap-3 justify-center">
-              <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border/50 shadow-sm">
-                <Users className="w-4 h-4 text-primary" />
-                <span className="text-sm font-medium">10% Veteran Discount</span>
+            <div className="flex flex-wrap gap-2 justify-center">
+              <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full border border-border/50 shadow-sm">
+                <Users className="w-3.5 h-3.5 text-primary" />
+                <span className="text-xs font-medium">10% Veteran Discount</span>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border/50 shadow-sm">
-                <Award className="w-4 h-4 text-amber-500" />
-                <span className="text-sm font-medium">Support Any AI Vendor</span>
+              <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full border border-border/50 shadow-sm">
+                <Award className="w-3.5 h-3.5 text-amber-500" />
+                <span className="text-xs font-medium">Any AI Vendor</span>
               </div>
             </div>
-
-            {/* Decorative ring */}
-            <div className="absolute -z-10 -top-8 -right-8 w-full h-full border-2 border-primary/20 rounded-3xl" />
           </motion.div>
         </div>
       </div>

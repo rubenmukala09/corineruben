@@ -39,7 +39,7 @@ const quickStats = [
 
 export const CommunityImpact = () => {
   return (
-    <section className="py-24 bg-background relative overflow-hidden">
+    <section className="py-16 bg-background relative overflow-hidden">
       {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-[0.02]" style={{
         backgroundImage: `radial-gradient(circle at 2px 2px, hsl(var(--primary)) 1px, transparent 0)`,
@@ -52,27 +52,27 @@ export const CommunityImpact = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-10"
         >
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-rose-500/10 rounded-2xl border border-rose-500/20 mb-6">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-rose-500/10 rounded-2xl border border-rose-500/20 mb-5">
             <Heart className="w-5 h-5 text-rose-500" />
             <span className="font-bold text-rose-600">Giving Back</span>
           </div>
           
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
             More Than a Business—{" "}
             <span className="bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent">A Mission</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            We believe in building a safer community for everyone. Here's how we're making a difference in Ohio and beyond.
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            We believe in building a safer community for everyone. Here's how we're making a difference.
           </p>
           
           {/* Quick stats badges */}
-          <div className="flex flex-wrap justify-center gap-4 mt-8">
+          <div className="flex flex-wrap justify-center gap-3 mt-6">
             {quickStats.map((stat, index) => (
-              <div key={index} className="flex items-center gap-2 px-5 py-2.5 bg-white rounded-full border border-border/50 shadow-sm">
+              <div key={index} className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border/50 shadow-sm">
                 <stat.icon className="w-4 h-4 text-primary" />
-                <span className="font-medium">{stat.label}</span>
+                <span className="text-sm font-medium">{stat.label}</span>
               </div>
             ))}
           </div>
@@ -83,43 +83,43 @@ export const CommunityImpact = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative rounded-3xl overflow-hidden mb-16 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)]"
+          className="relative rounded-3xl overflow-hidden mb-10 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)]"
         >
           <img
             src={ohioNatureImpact}
             alt="Ohio community and nature"
             width={1310}
-            height={400}
+            height={320}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
             loading="lazy"
             decoding="async"
-            className="w-full h-[400px] object-cover"
+            className="w-full h-[320px] object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 p-10 text-center text-white">
-            <h3 className="text-3xl font-bold mb-3">Proudly Serving Ohio Communities</h3>
-            <p className="text-white/80 text-lg max-w-2xl mx-auto">
+          <div className="absolute bottom-0 left-0 right-0 p-8 text-center text-white">
+            <h3 className="text-2xl font-bold mb-2">Proudly Serving Ohio Communities</h3>
+            <p className="text-white/80 max-w-2xl mx-auto">
               From Dayton to Columbus to Cincinnati—protecting families across the Buckeye State
             </p>
           </div>
         </motion.div>
 
         {/* Impact Cards Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
           {impacts.map((impact, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="bg-white rounded-3xl p-7 border border-border/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)] hover:-translate-y-2 transition-all duration-300"
+              className="bg-white rounded-2xl p-5 border border-border/50 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
             >
-              <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${impact.color} flex items-center justify-center mb-5 shadow-lg`}>
-                <impact.icon className="w-8 h-8 text-white" />
+              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${impact.color} flex items-center justify-center mb-4 shadow-md`}>
+                <impact.icon className="w-6 h-6 text-white" />
               </div>
-              <h3 className="font-bold text-xl text-foreground mb-3">{impact.title}</h3>
-              <p className="text-muted-foreground leading-relaxed">{impact.description}</p>
+              <h3 className="font-bold text-lg text-foreground mb-2">{impact.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{impact.description}</p>
             </motion.div>
           ))}
         </div>

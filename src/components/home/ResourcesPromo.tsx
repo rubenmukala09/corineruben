@@ -61,13 +61,13 @@ const scriptTypes = [
 
 export const ResourcesPromo = () => {
   return (
-    <section className="py-24 bg-gradient-to-b from-muted/30 via-background to-muted/20 relative overflow-hidden">
+    <section className="py-16 bg-gradient-to-b from-muted/30 via-background to-muted/20 relative overflow-hidden">
       {/* Decorative elements */}
-      <div className="absolute top-20 left-10 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[100px]" />
-      <div className="absolute bottom-20 right-10 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[100px]" />
+      <div className="absolute top-20 left-10 w-[300px] h-[300px] bg-primary/5 rounded-full blur-[80px]" />
+      <div className="absolute bottom-20 right-10 w-[350px] h-[350px] bg-accent/5 rounded-full blur-[80px]" />
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Content Side */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
