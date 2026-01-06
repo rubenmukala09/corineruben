@@ -41,9 +41,9 @@ const transitionVariants = {
   },
 };
 
-// Luxury easing for smooth, elegant feel
+// Fast, clean transition - no purple flash, instant feel
 const luxuryTransition: Transition = {
-  duration: 0.5,
+  duration: 0.15,
   ease: "easeOut",
 };
 
