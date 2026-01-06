@@ -15,107 +15,38 @@ export const HeroCarousel = ({
   interval = 6000
 }: HeroCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [previousIndex, setPreviousIndex] = useState<number | null>(null);
-  const [imagesLoaded, setImagesLoaded] = useState<boolean[]>([]);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const mountedRef = useRef(true);
   
-  // Initialize loaded state and preload first image immediately
+  // Preload all images in background
   useEffect(() => {
     mountedRef.current = true;
-    
-    if (images.length === 0) return;
-    
-    // Mark first image as ready immediately for fastest LCP
-    setImagesLoaded(new Array(images.length).fill(false));
-    
-    // Preload first image with high priority
-    const firstImg = new Image();
-    firstImg.onload = () => {
-      if (mountedRef.current) {
-        setImagesLoaded(prev => {
-          const next = [...prev];
-          next[0] = true;
-          return next;
-        });
-      }
-    };
-    firstImg.src = images[0].src;
-    
-    // Lazy load remaining images
-    images.slice(1).forEach((image, idx) => {
+    images.forEach((image) => {
       const img = new Image();
-      img.onload = () => {
-        if (mountedRef.current) {
-          setImagesLoaded(prev => {
-            const next = [...prev];
-            next[idx + 1] = true;
-            return next;
-          });
-        }
-      };
       img.src = image.src;
     });
-    
-    return () => {
-      mountedRef.current = false;
-    };
+    return () => { mountedRef.current = false; };
   }, [images]);
 
-  // Auto-advance with smooth transition
+  // Simple auto-advance - no transitions
   useEffect(() => {
-    if (!imagesLoaded[0] || images.length <= 1) return;
-
+    if (images.length <= 1) return;
     const timer = setInterval(() => {
-      setIsTransitioning(true);
-      setPreviousIndex(currentIndex);
-      
-      // Start fade out, then switch
-      setTimeout(() => {
-        setCurrentIndex((prev) => (prev + 1) % images.length);
-        
-        // Clear previous after transition completes
-        setTimeout(() => {
-          setPreviousIndex(null);
-          setIsTransitioning(false);
-        }, 1200);
-      }, 100);
+      setCurrentIndex((prev) => (prev + 1) % images.length);
     }, interval);
-
     return () => clearInterval(timer);
-  }, [images.length, interval, imagesLoaded, currentIndex]);
+  }, [images.length, interval]);
 
   if (images.length === 0) return null;
 
   return (
     <div className="absolute inset-0 overflow-hidden">
-      {/* Images - no transitions, instant display */}
-      {images.map((image, index) => {
-        const isActive = index === currentIndex;
-        
-        return (
-          <div
-            key={index}
-            className="absolute inset-0 overflow-hidden"
-            style={{
-              opacity: isActive ? 1 : 0,
-              zIndex: isActive ? 2 : 0,
-            }}
-          >
-            <div
-              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-              style={{ 
-                backgroundImage: `url(${image.src})`,
-              }}
-              role="img"
-              aria-label={image.alt}
-              aria-hidden={!isActive}
-            />
-          </div>
-        );
-      })}
-
-      {/* Screen Reader Announcement */}
+      {/* Single active image - instant swap, no transitions */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${images[currentIndex].src})` }}
+        role="img"
+        aria-label={images[currentIndex].alt}
+      />
       <div className="sr-only" aria-live="polite" aria-atomic="true">
         Showing image {currentIndex + 1} of {images.length}: {images[currentIndex]?.alt}
       </div>
