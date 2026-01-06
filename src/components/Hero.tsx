@@ -108,14 +108,11 @@ const Hero = ({
           />
         )}
         
-        {/* Simple gradient overlay for text visibility */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/50" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30" />
+        {/* Purple mesh overlay for inner pages - glassmorphism effect */}
+        {!disablePurpleOverlay && <HeroPurpleOverlay />}
         
-        {/* Additional overlay */}
-        {overlay && (
-          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/30" />
-        )}
+        {/* Minimal dark gradient only at bottom for text contrast */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
       </div>
 
       {/* Subtle grid overlay */}
