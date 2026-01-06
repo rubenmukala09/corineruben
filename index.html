@@ -134,20 +134,25 @@
   <body>
     <div id="root">
       <!-- Critical Hero Content for LCP - replaced by React on hydration -->
-      <div style="display:flex;flex-direction:column;min-height:100vh;background:#fff">
-        <nav style="height:72px"></nav>
-        <section style="flex:1;display:flex;align-items:center;padding:1rem 1.5rem">
-          <div style="max-width:1800px;margin:0 auto;width:100%">
-            <div style="max-width:42rem">
-              <h1 style="font-size:clamp(1.875rem,5vw,4.5rem);font-weight:700;line-height:.95;margin:0 0 1.5rem">
-                <span style="display:block;color:#0f172a">InVision</span>
-                <span style="display:block;background:linear-gradient(90deg,#7c3aed,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Network</span>
-              </h1>
-              <p class="lcp-text">Empowering families with AI scam protection. Transforming businesses with cutting-edge automation solutions.</p>
+      <section class="relative min-h-screen overflow-hidden" style="background:linear-gradient(135deg,#fff,#fff,rgba(243,232,255,0.3))">
+        <div style="max-width:1800px;margin:0 auto;padding:4rem 1.5rem">
+          <div style="max-width:42rem">
+            <!-- Premium Badge -->
+            <div style="display:inline-flex;align-items:center;gap:0.75rem;padding:0.5rem 1.25rem;border-radius:9999px;background:linear-gradient(90deg,rgba(124,58,237,0.1),rgba(168,85,247,0.1));border:1px solid rgba(124,58,237,0.2);margin-bottom:2.5rem">
+              <span style="width:10px;height:10px;border-radius:50%;background:linear-gradient(90deg,#7c3aed,#a855f7)"></span>
+              <span style="font-size:0.875rem;font-weight:600;background:linear-gradient(90deg,#7c3aed,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Veteran-Supporting • Ohio-Based</span>
             </div>
+            <!-- Headline - matches React exactly -->
+            <h1 style="font-size:clamp(1.875rem,5vw,4.5rem);font-weight:700;line-height:0.95;margin:0 0 1.5rem;letter-spacing:-0.025em">
+              <span style="display:block;color:#0f172a">InVision</span>
+              <span style="display:block;background:linear-gradient(90deg,#7c3aed,#a855f7,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Network</span>
+              <span style="display:block;font-weight:300;color:rgba(100,116,139,0.8);font-size:clamp(1.125rem,3vw,3rem);margin-top:0.75rem">Protection • Education • Innovation</span>
+            </h1>
+            <!-- LCP Element - exact match to React output -->
+            <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mb-8 sm:mb-12 leading-relaxed" style="font-size:clamp(1rem,2vw,1.5rem);color:#64748b;line-height:1.625;margin:0 0 2rem;max-width:42rem">Empowering families with AI scam protection. Transforming businesses with cutting-edge automation solutions.</p>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
     </div>
     
     <!-- Service Worker Registration - deferred to reduce main-thread blocking -->
