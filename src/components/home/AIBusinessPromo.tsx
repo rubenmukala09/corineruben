@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Phone, Calendar, Bot, Globe, ArrowRight, Sparkles, Shield, Clock, TrendingUp, Star, Zap, Users, Award, CheckCircle, Palette, Headphones, Settings, Lock, Quote, Lightbulb } from "lucide-react";
+import { Phone, Calendar, Bot, Globe, ArrowRight, Sparkles, Shield, Clock, TrendingUp, Star, Zap, Users, Award, CheckCircle, Palette, Headphones, Lock, Lightbulb, Rocket, DollarSign, Target, BarChart3 } from "lucide-react";
 import businessTechBg from "@/assets/business-tech-bg.jpg";
 import businessProfessionalsOffice from "@/assets/business-professionals-office.jpg";
 import { TestimonialBubble } from "./TestimonialBubble";
@@ -10,50 +10,51 @@ const services = [
   {
     icon: Phone,
     title: "AI Receptionist",
-    description: "Answer calls 24/7, route to the right person, book appointments.",
+    description: "24/7 calls, booking, FAQs",
     price: "$9,500",
     highlight: "Never miss a lead",
+    emoji: "📞",
+    color: "from-blue-500 to-indigo-500",
   },
   {
     icon: Calendar,
     title: "Smart Scheduling",
-    description: "Auto-book appointments, send reminders, sync calendars.",
+    description: "Auto-book & reminders",
     price: "Custom",
-    highlight: "Eliminate back-and-forth",
+    highlight: "Zero back-and-forth",
+    emoji: "📅",
+    color: "from-emerald-500 to-teal-500",
   },
   {
     icon: Bot,
-    title: "AI Agent Automation",
-    description: "Custom AI agents & automation. Support any vendor.",
-    price: "$25,000+",
+    title: "AI Automation",
+    description: "Custom agents & bots",
+    price: "$25K+",
     highlight: "Full customization",
+    emoji: "🤖",
+    color: "from-violet-500 to-purple-500",
   },
   {
     icon: Globe,
     title: "Website Design",
-    description: "Landing pages to full e-commerce solutions.",
-    price: "From $1,500",
-    highlight: "Landing • Business • E-commerce",
+    description: "Landing to e-commerce",
+    price: "$1,500+",
+    highlight: "Pro websites",
+    emoji: "🌐",
+    color: "from-orange-500 to-amber-500",
   },
 ];
 
 const premiumAddons = [
-  { icon: Palette, name: "Premium Add-ons", desc: "Custom integrations" },
-  { icon: Shield, name: "Website Insurance", desc: "Subscription protection" },
-  { icon: Headphones, name: "Consultancy", desc: "Expert AI guidance" },
-];
-
-const highlights = [
-  { icon: Clock, text: "24/7 Availability" },
-  { icon: Shield, text: "30-Day Guarantee" },
-  { icon: Lock, text: "HIPAA Compliant" },
-  { icon: TrendingUp, text: "Ohio-Based" },
+  { icon: Palette, name: "Custom Integrations", emoji: "🎨" },
+  { icon: Shield, name: "Website Insurance", emoji: "🛡️" },
+  { icon: Headphones, name: "Expert Consulting", emoji: "💼" },
 ];
 
 const roiFacts = [
-  { stat: "62%", desc: "calls missed after hours" },
-  { stat: "$200-$500", desc: "lost per missed call" },
-  { stat: "80%", desc: "fewer no-shows" },
+  { stat: "62%", desc: "calls missed", emoji: "📵", color: "text-rose-500" },
+  { stat: "$500", desc: "lost/missed call", emoji: "💸", color: "text-amber-500" },
+  { stat: "80%", desc: "fewer no-shows", emoji: "✅", color: "text-emerald-500" },
 ];
 
 const businessTestimonials = [
@@ -86,136 +87,184 @@ export const AIBusinessPromo = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="space-y-6"
+            className="space-y-4"
           >
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent/10 rounded-2xl border border-accent/20">
-              <Sparkles className="w-5 h-5 text-accent" />
-              <span className="font-bold text-accent">AI & Business Solutions</span>
-            </div>
-            
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-              Stop Missing Calls.{" "}
-              <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">Let AI Run Your Front Desk.</span>
-            </h2>
-            
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Transform your business with AI-powered receptionists, automated scheduling, professional websites, and custom AI agents. 
-              We build solutions that work 24/7 so you never miss an opportunity.
-            </p>
-
-            {/* AI Service Insurance - Star Innovation */}
             <motion.div 
-              className="bg-gradient-to-r from-amber-500/10 via-amber-400/10 to-yellow-500/10 border-2 border-amber-500/30 rounded-2xl p-5 relative overflow-hidden"
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-accent/20 to-primary/20 rounded-2xl border border-accent/30"
             >
-              {/* Stars decoration */}
-              <div className="absolute top-2 right-2 flex gap-1">
-                {[...Array(7)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 text-amber-500 fill-amber-500" />
-                ))}
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/30">
-                  <Shield className="w-6 h-6 text-white" />
+              <Sparkles className="w-5 h-5 text-accent animate-pulse" />
+              <span className="font-bold text-accent">AI & Business Solutions</span>
+              <span className="text-lg">🚀</span>
+            </motion.div>
+            
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
+              Stop Missing Calls.{" "}
+              <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">Let AI Run Your Front Desk.</span>
+              <span className="ml-2">💼</span>
+            </h2>
+            
+            <p className="text-base text-muted-foreground leading-relaxed">
+              Transform your business with AI-powered automation. We build solutions that work 24/7 so you never miss an opportunity. ✨
+            </p>
+
+            {/* Combined ROI + Premium Section - Side by Side */}
+            <div className="grid grid-cols-2 gap-3">
+              {/* ROI Card with Animation */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.02 }}
+                className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-4 text-white relative overflow-hidden"
+              >
+                <motion.div 
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  className="absolute -top-4 -right-4 w-20 h-20 border-2 border-white/10 rounded-full"
+                />
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2 mb-2">
+                    <TrendingUp className="w-5 h-5" />
+                    <span className="text-sm font-medium opacity-90">Average ROI</span>
+                  </div>
+                  <div className="text-4xl font-black mb-1">340%</div>
+                  <div className="flex items-center gap-1 text-xs opacity-80">
+                    <Rocket className="w-3 h-3" />
+                    <span>Within 6 months</span>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Premium Services Card */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl p-4 text-white"
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  <Zap className="w-5 h-5" />
+                  <span className="text-sm font-bold">Premium</span>
+                </div>
+                <div className="space-y-1.5">
+                  {premiumAddons.map((addon, i) => (
+                    <motion.div 
+                      key={i}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.2 + i * 0.1 }}
+                      className="flex items-center gap-2 text-xs bg-white/10 rounded-lg px-2 py-1"
+                    >
+                      <span>{addon.emoji}</span>
+                      <span>{addon.name}</span>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+
+            {/* AI Service Insurance */}
+            <motion.div 
+              className="bg-gradient-to-r from-amber-500/15 via-amber-400/15 to-yellow-500/15 border-2 border-amber-500/40 rounded-2xl p-4 relative overflow-hidden"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              whileHover={{ scale: 1.01 }}
+              viewport={{ once: true }}
+            >
+              <motion.div 
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="absolute top-2 right-2 text-2xl"
+              >
+                ⭐
+              </motion.div>
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/30">
+                  <Shield className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-bold text-lg text-foreground">AI Service Insurance</h3>
-                    <span className="px-2 py-0.5 bg-amber-500 text-amber-950 text-[10px] font-bold rounded-full">INDUSTRY FIRST!</span>
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
+                    <h3 className="font-bold text-foreground">AI Service Insurance</h3>
+                    <span className="px-2 py-0.5 bg-amber-500 text-amber-950 text-[10px] font-bold rounded-full animate-pulse">INDUSTRY FIRST! 🏆</span>
                   </div>
-                  <p className="text-sm text-muted-foreground">
-                    We're the first to implement AI Service Insurance — protecting your investment in AI automation with ongoing support, updates, and coverage.
+                  <p className="text-xs text-muted-foreground">
+                    First-ever AI insurance—protecting your investment with ongoing support & updates.
                   </p>
                 </div>
               </div>
             </motion.div>
 
-            {/* ROI Facts */}
-            <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-2xl p-5">
-              <h3 className="font-bold text-foreground mb-3 flex items-center gap-2 text-base">
-                <TrendingUp className="w-5 h-5 text-primary" />
-                Why This Matters
-              </h3>
-              <div className="grid grid-cols-3 gap-4">
-                {roiFacts.map((fact, index) => (
-                  <div key={index} className="text-center">
-                    <div className="text-xl font-bold text-primary">{fact.stat}</div>
-                    <div className="text-xs text-muted-foreground">{fact.desc}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Quick Highlights */}
-            <div className="flex flex-wrap gap-3">
-              {highlights.map((highlight, index) => (
-                <div key={index} className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border/50 shadow-sm">
-                  <highlight.icon className="w-4 h-4 text-primary" />
-                  <span className="text-sm font-medium">{highlight.text}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Services Grid */}
-            <div className="grid grid-cols-2 gap-4">
-              {services.map((service, index) => (
-                <motion.div
+            {/* ROI Facts - Compact Animated */}
+            <div className="flex gap-2">
+              {roiFacts.map((fact, index) => (
+                <motion.div 
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="bg-white rounded-2xl p-4 border border-border/50 shadow-sm hover:-translate-y-1 transition-all group"
+                  whileHover={{ y: -3 }}
+                  className="flex-1 bg-white rounded-xl p-3 border border-border/50 shadow-sm text-center"
                 >
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                      <service.icon className="w-5 h-5 text-white" />
+                  <motion.div 
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 }}
+                    className="text-xl mb-1"
+                  >
+                    {fact.emoji}
+                  </motion.div>
+                  <div className={`text-lg font-black ${fact.color}`}>{fact.stat}</div>
+                  <div className="text-[10px] text-muted-foreground">{fact.desc}</div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Services Grid - Colorful */}
+            <div className="grid grid-cols-2 gap-2">
+              {services.map((service, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.08 }}
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  className="bg-white rounded-xl p-3 border border-border/50 shadow-sm group cursor-pointer"
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${service.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
+                      <service.icon className="w-4 h-4 text-white" />
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-foreground text-sm">{service.title}</h3>
-                      <p className="text-xs text-muted-foreground line-clamp-2 mt-1">{service.description}</p>
-                      <div className="flex items-center justify-between mt-2">
-                        <span className="text-lg font-bold text-primary">{service.price}</span>
-                      </div>
-                      <span className="text-[10px] text-emerald-800 font-semibold">{service.highlight}</span>
-                    </div>
+                    <span className="text-lg">{service.emoji}</span>
+                  </div>
+                  <h3 className="font-bold text-foreground text-sm">{service.title}</h3>
+                  <p className="text-[10px] text-muted-foreground mb-1">{service.description}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{service.price}</span>
+                    <span className="text-[8px] text-emerald-600 font-semibold bg-emerald-50 px-1.5 py-0.5 rounded">{service.highlight}</span>
                   </div>
                 </motion.div>
               ))}
             </div>
 
-            {/* Premium Add-ons */}
-            <div className="bg-white rounded-2xl p-4 border border-border/50 shadow-sm">
-              <h3 className="font-bold text-foreground mb-3 flex items-center gap-2 text-base">
-                <Zap className="w-4 h-4 text-accent" />
-                Premium Services
-              </h3>
-              <div className="space-y-2">
-                {premiumAddons.map((addon, index) => (
-                  <div key={index} className="flex items-center gap-3 p-2 bg-muted/50 rounded-lg">
-                    <addon.icon className="w-4 h-4 text-primary" />
-                    <div>
-                      <span className="text-sm font-medium text-foreground">{addon.name}</span>
-                      <span className="text-xs text-muted-foreground ml-2">{addon.desc}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
             {/* CTAs */}
-            <div className="flex flex-wrap gap-4 pt-4">
-              <Button asChild size="xl" className="rounded-2xl px-10 shadow-lg shadow-primary/25">
+            <div className="flex flex-wrap gap-3">
+              <Button asChild size="lg" className="rounded-xl shadow-lg shadow-primary/25 group">
                 <Link to="/business">
-                  Explore AI Solutions
-                  <ArrowRight className="ml-2 w-5 h-5" />
+                  <Rocket className="mr-2 w-4 h-4 group-hover:animate-bounce" />
+                  Explore Solutions
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="xl" className="rounded-2xl px-8">
+              <Button asChild variant="outline" size="lg" className="rounded-xl group">
                 <Link to="/contact?service=ai-automation">
-                  Get a Quote
+                  <DollarSign className="mr-1 w-4 h-4" />
+                  Get Quote
                 </Link>
               </Button>
             </div>
@@ -283,39 +332,80 @@ export const AIBusinessPromo = () => {
             </div>
 
             {/* Testimonial Bubbles */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2">
               {businessTestimonials.map((t, i) => (
                 <TestimonialBubble key={i} {...t} />
               ))}
             </div>
 
-            {/* Quick Stats Bar */}
+            {/* Feature Highlights Bar */}
+            <div className="grid grid-cols-3 gap-2">
+              <motion.div
+                whileHover={{ scale: 1.03 }}
+                className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl p-3 text-white text-center"
+              >
+                <motion.span 
+                  animate={{ rotate: [0, 10, -10, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="text-xl block mb-1"
+                >
+                  🕐
+                </motion.span>
+                <div className="text-xs font-bold">24/7</div>
+                <div className="text-[9px] opacity-80">Always On</div>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.03 }}
+                className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl p-3 text-white text-center"
+              >
+                <motion.span 
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                  className="text-xl block mb-1"
+                >
+                  ✅
+                </motion.span>
+                <div className="text-xs font-bold">HIPAA</div>
+                <div className="text-[9px] opacity-80">Compliant</div>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.03 }}
+                className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl p-3 text-white text-center"
+              >
+                <motion.span 
+                  animate={{ y: [0, -3, 0] }}
+                  transition={{ duration: 1, repeat: Infinity }}
+                  className="text-xl block mb-1"
+                >
+                  🎖️
+                </motion.span>
+                <div className="text-xs font-bold">Veteran</div>
+                <div className="text-[9px] opacity-80">10% Off</div>
+              </motion.div>
+            </div>
+
+            {/* Ohio Pride Badge */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-r from-primary to-accent rounded-2xl p-4 text-white"
+              className="bg-white rounded-xl p-3 border border-border/50 shadow-sm flex items-center justify-between"
             >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Zap className="w-5 h-5" />
-                  <span className="text-sm font-bold">Average ROI: 340%</span>
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">📍</span>
+                <div>
+                  <div className="text-sm font-bold text-foreground">Ohio-Based Support</div>
+                  <div className="text-xs text-muted-foreground">Local expertise you can trust</div>
                 </div>
-                <div className="text-xs bg-white/20 px-3 py-1 rounded-full">Within 6 months</div>
+              </div>
+              <div className="flex gap-1">
+                <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity, delay: 0 }}>⭐</motion.span>
+                <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity, delay: 0.2 }}>⭐</motion.span>
+                <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity, delay: 0.4 }}>⭐</motion.span>
+                <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}>⭐</motion.span>
+                <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity, delay: 0.8 }}>⭐</motion.span>
               </div>
             </motion.div>
-
-            {/* Trust badges below image */}
-            <div className="flex flex-wrap gap-2 justify-center">
-              <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full border border-border/50 shadow-sm">
-                <Users className="w-3.5 h-3.5 text-primary" />
-                <span className="text-xs font-medium">10% Veteran Discount</span>
-              </div>
-              <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full border border-border/50 shadow-sm">
-                <Award className="w-3.5 h-3.5 text-amber-500" />
-                <span className="text-xs font-medium">Any AI Vendor</span>
-              </div>
-            </div>
           </motion.div>
         </div>
       </div>

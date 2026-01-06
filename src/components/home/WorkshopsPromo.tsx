@@ -1,65 +1,64 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Users, Clock, Award, Shield, CheckCircle, ArrowRight, Sparkles, Play, BookOpen, Star, DollarSign, Brain, Eye, AlertTriangle, Lock, Target, Briefcase, Quote } from "lucide-react";
+import { Users, Clock, Award, Shield, CheckCircle, ArrowRight, Sparkles, Play, BookOpen, Star, DollarSign, Brain, Eye, AlertTriangle, Target, Briefcase, Quote, GraduationCap, Heart } from "lucide-react";
 import workshopSeniorsLearning from "@/assets/workshop-seniors-learning.jpg";
 import learningBg from "@/assets/learning-bg.jpg";
 import { TestimonialBubble } from "./TestimonialBubble";
 
-const benefits = [
-  { icon: Shield, text: "60-Second Pause Protocol" },
-  { icon: BookOpen, text: "Identity Verification Scripts" },
-  { icon: Award, text: "Certificate of Completion" },
-  { icon: Clock, text: "Lifetime Access" },
-];
-
 const formats = [
   {
     icon: Users,
-    title: "Couples & Groups",
+    title: "Groups",
     price: "$79",
     badge: null,
+    emoji: "👥",
+    color: "from-blue-500 to-indigo-500",
   },
   {
     icon: Star,
-    title: "Family Plan",
+    title: "Family",
     price: "$199",
-    badge: "Best Value",
+    badge: "Best",
+    emoji: "👨‍👩‍👧‍👦",
+    color: "from-amber-500 to-orange-500",
   },
   {
     icon: Award,
-    title: "Private Sessions",
+    title: "Private",
     price: "$299",
-    badge: "Premium",
+    badge: "VIP",
+    emoji: "🎖️",
+    color: "from-violet-500 to-purple-500",
   },
   {
     icon: DollarSign,
-    title: "Organizations",
+    title: "Orgs",
     price: "$510+",
-    badge: "Custom",
+    badge: null,
+    emoji: "🏢",
+    color: "from-emerald-500 to-teal-500",
   },
 ];
 
 const audiences = [
-  "Seniors & Retirees",
-  "Families & Caregivers", 
-  "Business Professionals",
-  "Organizations & Churches",
+  { text: "Seniors & Retirees", emoji: "👴" },
+  { text: "Families", emoji: "👨‍👩‍👧" }, 
+  { text: "Business Pros", emoji: "💼" },
+  { text: "Churches", emoji: "⛪" },
 ];
 
 const howItWorks = [
-  { step: "1", title: "Book", desc: "Choose your format" },
-  { step: "2", title: "Learn", desc: "Interactive training" },
-  { step: "3", title: "Support", desc: "Ongoing access" },
+  { step: "1", title: "Book", desc: "Pick format", emoji: "📅", color: "from-blue-500 to-indigo-500" },
+  { step: "2", title: "Learn", desc: "Interactive", emoji: "📚", color: "from-emerald-500 to-teal-500" },
+  { step: "3", title: "Support", desc: "Ongoing", emoji: "🛡️", color: "from-violet-500 to-purple-500" },
 ];
 
 const services = [
-  { icon: AlertTriangle, title: "Scam Prevention Workshop", desc: "Learn to identify and avoid AI-powered scams" },
-  { icon: Shield, title: "Simple Protection in 4 Steps", desc: "Our proven methodology for staying safe" },
-  { icon: Target, title: "Choose Your Protection Level", desc: "Subscription tiers for ongoing protection" },
-  { icon: Eye, title: "Threat Analysis Training", desc: "We analyze all types of threats in real-time" },
-  { icon: Brain, title: "AI Professional Development", desc: "Advanced training for tech-savvy professionals" },
-  { icon: Briefcase, title: "Corporate Training Programs", desc: "Customized workshops for your organization" },
+  { icon: AlertTriangle, title: "Scam Prevention", desc: "Identify AI scams", emoji: "⚠️", color: "from-rose-500 to-pink-500" },
+  { icon: Shield, title: "4-Step Protection", desc: "Proven method", emoji: "🛡️", color: "from-blue-500 to-indigo-500" },
+  { icon: Target, title: "Protection Levels", desc: "Choose your tier", emoji: "🎯", color: "from-amber-500 to-orange-500" },
+  { icon: Eye, title: "Threat Analysis", desc: "Real-time", emoji: "👁️", color: "from-violet-500 to-purple-500" },
 ];
 
 const testimonials = [
@@ -179,98 +178,138 @@ export const WorkshopsPromo = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="space-y-6"
+            className="space-y-4"
           >
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary/10 rounded-2xl border border-primary/20">
-              <Sparkles className="w-5 h-5 text-primary" />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl border border-primary/30"
+            >
+              <Sparkles className="w-5 h-5 text-primary animate-pulse" />
               <span className="font-bold text-primary">Learn & Train Workshops</span>
-            </div>
+              <span className="text-lg">🎓</span>
+            </motion.div>
             
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-              Learn to Protect Your Family from{" "}
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
+              Protect Your Family from{" "}
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">AI Scams</span>
+              <span className="ml-2">🛡️</span>
             </h2>
             
-            <p className="text-xl text-muted-foreground font-medium">
-              Know the threats. Stay ahead.
-            </p>
-            
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Expert-led workshops teaching the 60-Second Pause Protocol, identity verification scripts, and real-world scam recognition. 
-              We train seniors, families, and business professionals to spot AI-powered threats. Subscribe to our protection plans for ongoing security.
+            <p className="text-base text-muted-foreground leading-relaxed">
+              Expert-led workshops teaching the 60-Second Pause Protocol and real-world scam recognition. ✨
             </p>
 
-            {/* Services Grid */}
-            <div className="grid grid-cols-2 gap-3">
-              {services.slice(0, 4).map((service, index) => (
-                <motion.div
+            {/* How It Works - Animated */}
+            <div className="grid grid-cols-3 gap-2">
+              {howItWorks.map((item, index) => (
+                <motion.div 
                   key={index}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="flex items-start gap-2 p-3 bg-white rounded-xl border border-border/50 shadow-sm"
+                  whileHover={{ scale: 1.05, y: -3 }}
+                  className={`bg-gradient-to-br ${item.color} rounded-xl p-3 text-center text-white`}
                 >
-                  <service.icon className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                  <div>
-                    <div className="text-sm font-bold text-foreground">{service.title}</div>
-                    <div className="text-xs text-muted-foreground">{service.desc}</div>
-                  </div>
+                  <motion.div 
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 }}
+                    className="text-2xl mb-1"
+                  >
+                    {item.emoji}
+                  </motion.div>
+                  <div className="text-sm font-bold">{item.title}</div>
+                  <div className="text-[10px] opacity-80">{item.desc}</div>
                 </motion.div>
               ))}
             </div>
 
-            {/* Target Audiences */}
-            <div className="flex flex-wrap gap-2">
-              {audiences.map((audience, index) => (
-                <span key={index} className="px-3 py-1.5 bg-muted rounded-full text-sm font-medium text-foreground">
-                  {audience}
-                </span>
+            {/* Services Grid - Colorful */}
+            <div className="grid grid-cols-2 gap-2">
+              {services.map((service, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.08 }}
+                  whileHover={{ scale: 1.03 }}
+                  className="bg-white rounded-xl p-3 border border-border/50 shadow-sm group"
+                >
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className={`w-7 h-7 rounded-lg bg-gradient-to-br ${service.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
+                      <service.icon className="w-3.5 h-3.5 text-white" />
+                    </div>
+                    <span className="text-base">{service.emoji}</span>
+                  </div>
+                  <div className="text-sm font-bold text-foreground">{service.title}</div>
+                  <div className="text-[10px] text-muted-foreground">{service.desc}</div>
+                </motion.div>
               ))}
             </div>
 
-            {/* How It Works */}
-            <div className="bg-white rounded-3xl p-5 border border-border/50 shadow-sm">
-              <h3 className="font-bold text-foreground mb-4 text-base">How It Works</h3>
-              <div className="flex gap-4">
-                {howItWorks.map((item, index) => (
-                  <div key={index} className="flex-1 text-center">
-                    <div className="w-10 h-10 mx-auto bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg mb-2">
-                      {item.step}
-                    </div>
-                    <div className="text-sm font-bold text-foreground">{item.title}</div>
-                    <div className="text-xs text-muted-foreground">{item.desc}</div>
-                  </div>
-                ))}
-              </div>
+            {/* Target Audiences - Emoji Pills */}
+            <div className="flex flex-wrap gap-2">
+              {audiences.map((audience, index) => (
+                <motion.span 
+                  key={index} 
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ scale: 1.05 }}
+                  className="px-3 py-1.5 bg-gradient-to-r from-muted to-muted/50 rounded-full text-sm font-medium text-foreground flex items-center gap-1.5"
+                >
+                  <span>{audience.emoji}</span>
+                  <span>{audience.text}</span>
+                </motion.span>
+              ))}
             </div>
 
-            {/* Pricing Preview */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {/* Pricing Preview - Colorful */}
+            <div className="grid grid-cols-4 gap-2">
               {formats.map((format, index) => (
-                <div key={index} className="relative bg-white rounded-2xl p-4 border border-border/50 shadow-sm text-center hover:-translate-y-1 transition-transform">
+                <motion.div 
+                  key={index} 
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  className="relative bg-white rounded-xl p-3 border border-border/50 shadow-sm text-center cursor-pointer"
+                >
                   {format.badge && (
-                    <span className="absolute -top-2 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-primary text-white text-[10px] font-bold rounded-full whitespace-nowrap">
+                    <span className="absolute -top-1.5 left-1/2 -translate-x-1/2 px-1.5 py-0.5 bg-gradient-to-r from-primary to-accent text-white text-[8px] font-bold rounded-full whitespace-nowrap">
                       {format.badge}
                     </span>
                   )}
-                  <format.icon className="w-6 h-6 text-primary mx-auto mb-2" />
-                  <div className="text-xs font-medium text-muted-foreground mb-1">{format.title}</div>
-                  <div className="text-xl font-bold text-foreground">{format.price}</div>
-                </div>
+                  <motion.div 
+                    animate={{ rotate: [0, 5, -5, 0] }}
+                    transition={{ duration: 3, repeat: Infinity, delay: index * 0.2 }}
+                    className="text-xl mb-1"
+                  >
+                    {format.emoji}
+                  </motion.div>
+                  <div className="text-[10px] font-medium text-muted-foreground">{format.title}</div>
+                  <div className="text-base font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{format.price}</div>
+                </motion.div>
               ))}
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-wrap gap-4 pt-4">
-              <Button asChild size="xl" className="rounded-2xl px-10 shadow-lg shadow-primary/25">
+            <div className="flex flex-wrap gap-3">
+              <Button asChild size="lg" className="rounded-xl shadow-lg shadow-primary/25 group">
                 <Link to="/training">
-                  View All Workshops
-                  <ArrowRight className="ml-2 w-5 h-5" />
+                  <GraduationCap className="mr-2 w-4 h-4 group-hover:animate-bounce" />
+                  View Workshops
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="xl" className="rounded-2xl px-8">
+              <Button asChild variant="outline" size="lg" className="rounded-xl group">
                 <Link to="/training#pricing">
+                  <Heart className="mr-1 w-4 h-4 text-rose-500" />
                   See Pricing
                 </Link>
               </Button>
