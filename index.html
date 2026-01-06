@@ -3,10 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     
-    <!-- CSS async loader - MUST be first to intercept Vite CSS before it blocks -->
+    <!-- Preconnect hints FIRST - before any scripts to maximize benefit -->
+    <link rel="preconnect" href="https://avoafweoebstkgjnbadv.supabase.co">
+    <link rel="preconnect" href="https://avoafweoebstkgjnbadv.supabase.co" crossorigin>
+    <link rel="dns-prefetch" href="https://avoafweoebstkgjnbadv.supabase.co">
+    <link rel="preconnect" href="https://js.stripe.com">
+    <link rel="preconnect" href="https://js.stripe.com" crossorigin>
+    <link rel="dns-prefetch" href="https://js.stripe.com">
+    <link rel="preconnect" href="https://m.stripe.network">
+    <link rel="preconnect" href="https://m.stripe.network" crossorigin>
+    <link rel="dns-prefetch" href="https://m.stripe.network">
+    
+    <!-- CSS async loader - intercepts Vite CSS before it blocks -->
     <script>
       (function(){
-        // MutationObserver intercepts stylesheets as Vite injects them
         var observer = new MutationObserver(function(mutations) {
           mutations.forEach(function(mutation) {
             mutation.addedNodes.forEach(function(node) {
@@ -14,7 +24,6 @@
                   node.rel === 'stylesheet' && 
                   node.href && 
                   node.href.includes('/assets/')) {
-                // Convert to async loading pattern
                 node.media = 'print';
                 node.onload = function() { this.media = 'all'; };
               }
@@ -22,23 +31,11 @@
           });
         });
         observer.observe(document.head, { childList: true });
-        // Stop observing after DOMContentLoaded to avoid memory leaks
         document.addEventListener('DOMContentLoaded', function() {
           observer.disconnect();
         });
       })();
     </script>
-    
-    <!-- Preconnect hints MUST be early in head for maximum benefit -->
-    <link rel="preconnect" href="https://avoafweoebstkgjnbadv.supabase.co">
-    <link rel="preconnect" href="https://avoafweoebstkgjnbadv.supabase.co" crossorigin="anonymous">
-    <link rel="preconnect" href="https://js.stripe.com">
-    <link rel="preconnect" href="https://js.stripe.com" crossorigin="anonymous">
-    <link rel="preconnect" href="https://m.stripe.network">
-    <link rel="preconnect" href="https://m.stripe.network" crossorigin="anonymous">
-    <link rel="dns-prefetch" href="https://avoafweoebstkgjnbadv.supabase.co">
-    <link rel="dns-prefetch" href="https://js.stripe.com">
-    <link rel="dns-prefetch" href="https://m.stripe.network">
     
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
