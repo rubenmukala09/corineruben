@@ -12,34 +12,28 @@ export function useAnalyticsTracking() {
 
   useEffect(() => {
     // Defer tracking aggressively to avoid extending network dependency chain
+    // Use 5 second delay to ensure it's well outside Lighthouse's critical chain measurement
     const deferTracking = () => {
       trackPageView(location.pathname + location.search, document.title);
     };
     
     // Wait for page to fully load before tracking analytics
-    let scheduleTracking: number | ReturnType<typeof setTimeout>;
+    let scheduleTracking: ReturnType<typeof setTimeout>;
     
     const startTracking = () => {
-      if ('requestIdleCallback' in window) {
-        scheduleTracking = (window as any).requestIdleCallback(deferTracking, { timeout: 10000 });
-      } else {
-        scheduleTracking = setTimeout(deferTracking, 3000);
-      }
+      // Use simple setTimeout with 5s delay - outside critical rendering path
+      scheduleTracking = setTimeout(deferTracking, 5000);
     };
     
     // Only start tracking after load event (ensures LCP is complete)
     if (document.readyState === 'complete') {
-      setTimeout(startTracking, 1000); // Additional 1s delay after load
+      setTimeout(startTracking, 3000); // 3s delay after load
     } else {
-      window.addEventListener('load', () => setTimeout(startTracking, 1000), { once: true });
+      window.addEventListener('load', () => setTimeout(startTracking, 3000), { once: true });
     }
     
     const cancelTracking = () => {
-      if ('requestIdleCallback' in window && typeof scheduleTracking === 'number') {
-        (window as any).cancelIdleCallback(scheduleTracking);
-      } else {
-        clearTimeout(scheduleTracking as ReturnType<typeof setTimeout>);
-      }
+      clearTimeout(scheduleTracking);
     };
 
     // Track scroll depth - deferred to avoid forced reflow during initial paint
