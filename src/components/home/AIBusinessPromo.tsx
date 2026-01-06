@@ -117,7 +117,7 @@ export const AIBusinessPromo = () => {
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <h3 className="font-bold text-lg text-foreground">AI Service Insurance</h3>
-                    <span className="px-2 py-0.5 bg-amber-500 text-white text-[10px] font-bold rounded-full">INDUSTRY FIRST!</span>
+                    <span className="px-2 py-0.5 bg-amber-500 text-amber-950 text-[10px] font-bold rounded-full">INDUSTRY FIRST!</span>
                   </div>
                   <p className="text-sm text-muted-foreground">
                     We're the first to implement AI Service Insurance — protecting your investment in AI automation with ongoing support, updates, and coverage.
