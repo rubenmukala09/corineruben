@@ -52,8 +52,6 @@ export const CartAbandonmentNotification = () => {
   const handleSubmitFeedback = () => {
     if (feedback.trim()) {
       toast.success("Thank you for your feedback! We'll work to improve.");
-      console.log("Cart abandonment feedback:", feedback);
-      // In production, this would send to backend
     }
     setShowFeedback(false);
     setShowNotification(false);

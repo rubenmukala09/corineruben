@@ -159,7 +159,6 @@ export const CartEmptyHelpNotification = () => {
   const handleSubmitFeedback = () => {
     if (feedback.trim()) {
       toast.success("Thank you for your feedback! We'll use it to improve.");
-      console.log("Cart empty feedback:", feedback);
     }
     setShowFeedback(false);
     dismissAll();

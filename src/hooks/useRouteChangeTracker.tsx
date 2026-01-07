@@ -10,10 +10,6 @@ export function useRouteChangeTracker() {
     const currentPath = location.pathname;
 
     if (prevPath !== currentPath) {
-      const navigationTime = performance.now();
-      
-      console.log(`🧭 [Navigation] ${prevPath} → ${currentPath}`);
-      
       // Track with Performance API
       if (window.performance && window.performance.mark) {
         performance.mark(`route-change-${currentPath}`);

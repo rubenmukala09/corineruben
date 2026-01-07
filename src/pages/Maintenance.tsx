@@ -58,8 +58,6 @@ function Maintenance() {
     e.preventDefault();
     if (!email) return;
     
-    // In production, save to database
-    console.log("Notify email:", email);
     toast.success("You'll be notified when we're back online!");
     setEmail("");
   };

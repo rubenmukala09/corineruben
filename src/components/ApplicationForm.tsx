@@ -269,8 +269,6 @@ export const ApplicationForm = ({ positions }: ApplicationFormProps) => {
         throw new Error("Failed to save application");
       }
 
-      console.log('Application saved:', application.id);
-
       // Track analytics
       const { trackFormSubmit, trackConversion } = await import("@/utils/analyticsTracker");
       trackFormSubmit("job_application_form", { 

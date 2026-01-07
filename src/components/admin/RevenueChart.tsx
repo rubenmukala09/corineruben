@@ -284,8 +284,10 @@ export function RevenueChart() {
             </ResponsiveContainer>
           </motion.div>
         ) : (
-          <div className="h-80 flex items-center justify-center text-muted-foreground">
-            No revenue data available for this period
+          <div className="h-80 flex flex-col items-center justify-center text-center p-8">
+            <span className="text-4xl mb-4">📊</span>
+            <h3 className="text-lg font-semibold text-foreground mb-2">No Revenue Data</h3>
+            <p className="text-muted-foreground text-sm">Revenue will appear here as orders come in</p>
           </div>
         )}
 

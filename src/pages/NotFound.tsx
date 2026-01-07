@@ -11,9 +11,6 @@ function NotFound() {
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
 
-  useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-  }, [location.pathname]);
 
   const popularPages = [
     { icon: Home, label: "Home", path: "/" },

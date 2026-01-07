@@ -68,8 +68,5 @@ ${urls}
 // Generate sitemap and save to public folder
 export function saveSitemap() {
   const sitemap = generateSitemap();
-  console.log("Generated sitemap:", sitemap);
-  // Note: In production, you would write this to public/sitemap.xml
-  // This requires server-side generation or build-time generation
   return sitemap;
 }

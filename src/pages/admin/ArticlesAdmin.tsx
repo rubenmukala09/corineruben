@@ -548,7 +548,7 @@ export default function ArticlesAdmin() {
                     {selectedIds.size} articles selected
                   </span>
                   <div className="flex gap-2">
-                    <Select onValueChange={(category) => console.log(category)}>
+                    <Select onValueChange={() => {}}>
                       <SelectTrigger className="w-[180px] h-9">
                         <SelectValue placeholder="Change Category" />
                       </SelectTrigger>
