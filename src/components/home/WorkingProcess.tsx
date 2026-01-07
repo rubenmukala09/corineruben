@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { FileText, Search, Shield, Smile } from "lucide-react";
 import workingProcessScreenshot from "@/assets/working-process-screenshot.png";
 import { GeometricCorner, GridPattern, LightOrbs, IllustrationLines, Sparkles } from "@/components/ui/GeometricDecorations";
@@ -37,7 +39,25 @@ const steps = [
   },
 ];
 
+// Array of screenshots to cycle through (simulating different pages)
+const screenshotPages = [
+  { transform: "translateY(0%)", label: "Home" },
+  { transform: "translateY(-15%)", label: "Training" },
+  { transform: "translateY(-30%)", label: "Resources" },
+  { transform: "translateY(-45%)", label: "Business" },
+];
+
 export const WorkingProcess = () => {
+  const [currentPage, setCurrentPage] = useState(0);
+
+  // Auto-scroll through "pages" in the laptop
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentPage((prev) => (prev + 1) % screenshotPages.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="py-16 relative overflow-hidden">
       {/* Grid pattern */}
@@ -59,22 +79,67 @@ export const WorkingProcess = () => {
       <div className="container mx-auto px-4 relative z-10">
         {/* Header with Image */}
         <div className="grid lg:grid-cols-2 gap-8 items-center mb-12">
-          {/* Left - Video - Physical Photo Effect */}
-          <div className="relative order-2 lg:order-1">
+          {/* Left - Animated Laptop */}
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="relative order-2 lg:order-1"
+          >
             {/* Laptop Frame */}
             <div className="relative mx-auto max-w-lg">
+              {/* Glow effect behind laptop */}
+              <motion.div 
+                animate={{ 
+                  opacity: [0.3, 0.5, 0.3],
+                  scale: [1, 1.02, 1]
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+                className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-3xl blur-xl"
+              />
+              
               {/* Laptop screen bezel */}
               <div className="relative bg-gray-900 rounded-t-xl pt-4 px-4 pb-2 shadow-2xl">
-                {/* Camera dot */}
-                <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-700 rounded-full" />
+                {/* Camera dot with breathing animation */}
+                <motion.div 
+                  animate={{ opacity: [0.5, 1, 0.5] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="absolute top-1.5 left-1/2 -translate-x-1/2 w-2 h-2 bg-green-500 rounded-full"
+                />
                 {/* Screen */}
-                <div className="relative rounded-lg overflow-hidden bg-white">
-                  <img 
+                <div className="relative rounded-lg overflow-hidden bg-white h-[280px]">
+                  <motion.img 
                     src={workingProcessScreenshot}
                     alt="InVision Network training platform interface"
-                    className="w-full h-auto object-cover"
+                    className="w-full object-cover object-top"
+                    animate={{ 
+                      y: currentPage * -50
+                    }}
+                    transition={{ 
+                      duration: 1.5, 
+                      ease: "easeInOut"
+                    }}
                     loading="lazy"
                   />
+                  {/* Scan line effect */}
+                  <motion.div 
+                    animate={{ y: ["0%", "100%", "0%"] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                    className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent pointer-events-none"
+                  />
+                </div>
+                
+                {/* Page indicator dots */}
+                <div className="flex justify-center gap-2 mt-2 pb-1">
+                  {screenshotPages.map((_, idx) => (
+                    <motion.div
+                      key={idx}
+                      className={`w-1.5 h-1.5 rounded-full transition-colors ${
+                        idx === currentPage ? "bg-primary" : "bg-gray-600"
+                      }`}
+                      animate={{ scale: idx === currentPage ? 1.2 : 1 }}
+                    />
+                  ))}
                 </div>
               </div>
               {/* Laptop base */}
@@ -82,12 +147,21 @@ export const WorkingProcess = () => {
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-1 bg-gray-700 rounded-b" />
               </div>
               {/* Shadow/reflection */}
-              <div className="absolute -bottom-4 left-4 right-4 h-4 bg-black/10 blur-xl rounded-full" />
+              <motion.div 
+                animate={{ opacity: [0.1, 0.2, 0.1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="absolute -bottom-4 left-4 right-4 h-4 bg-black/10 blur-xl rounded-full"
+              />
             </div>
-          </div>
+          </motion.div>
           
           {/* Right - Text */}
-          <div className="order-1 lg:order-2">
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="order-1 lg:order-2"
+          >
             <div 
               className="inline-flex items-center gap-2 px-5 py-2 bg-primary text-primary-foreground text-sm font-semibold uppercase tracking-wider mb-4"
               style={{ clipPath: "polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%)" }}
@@ -101,40 +175,39 @@ export const WorkingProcess = () => {
             <p className="text-muted-foreground text-lg">
               Our streamlined process makes getting protected easy and stress-free.
             </p>
-          </div>
+          </motion.div>
         </div>
 
-        {/* Process Steps - Professional Active Design */}
+        {/* Process Steps */}
         <div className="relative">
           {/* Connector line - desktop only */}
           <div className="hidden lg:block absolute top-20 left-[12%] right-[12%] h-0.5 bg-gradient-to-r from-blue-500/30 via-purple-500/50 via-emerald-500/50 to-amber-500/30" />
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {steps.map((step, index) => (
-              <div key={index} className="relative text-center group">
-                {/* Icon container - Active Professional Design */}
+              <motion.div 
+                key={index} 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="relative text-center group"
+              >
+                {/* Icon container */}
                 <div className="relative inline-block mb-6">
-                  {/* Animated glow ring */}
                   <div className={`absolute inset-0 rounded-3xl ${step.bgGlow} blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-110`} />
                   
-                  {/* Main icon container */}
                   <div className="relative w-28 h-28 rounded-3xl bg-white border border-border/50 flex items-center justify-center shadow-lg mx-auto transition-all duration-300 group-hover:translate-y-[-6px] group-hover:shadow-xl overflow-hidden">
-                    {/* Gradient background on hover */}
                     <div className={`absolute inset-0 bg-gradient-to-br ${step.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
                     
-                    {/* Icon with gradient */}
                     <div className={`relative w-14 h-14 rounded-2xl bg-gradient-to-br ${step.gradient} flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300`}>
                       <step.icon className="w-7 h-7 text-white" strokeWidth={2} />
                     </div>
                   </div>
                   
-                  {/* Step number badge - gradient matching */}
                   <div className={`absolute -top-2 -right-2 w-9 h-9 bg-gradient-to-br ${step.gradient} text-white rounded-xl flex items-center justify-center font-bold text-sm shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                     {step.step}
                   </div>
-                  
-                  {/* Animated pulse ring */}
-                  <div className={`absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-current opacity-0 group-hover:opacity-20 scale-100 group-hover:scale-125 transition-all duration-500`} style={{ borderColor: index === 0 ? '#3b82f6' : index === 1 ? '#a855f7' : index === 2 ? '#10b981' : '#f59e0b' }} />
                 </div>
 
                 <h3 className="text-lg font-bold mb-2 text-foreground group-hover:text-primary transition-colors duration-300">
@@ -143,7 +216,7 @@ export const WorkingProcess = () => {
                 <p className="text-muted-foreground text-sm leading-relaxed max-w-[240px] mx-auto">
                   {step.description}
                 </p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

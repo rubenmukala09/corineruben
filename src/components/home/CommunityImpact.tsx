@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Heart, Shield, Users, Ribbon, ArrowRight, Award, MapPin, GraduationCap } from "lucide-react";
+import { Heart, Shield, Users, Ribbon, ArrowRight, Award, MapPin, GraduationCap, DollarSign } from "lucide-react";
 import ohioNatureImpact from "@/assets/ohio-nature-impact.jpg";
 import veteranSupport from "@/assets/veteran-support.jpg";
-import communityGiving from "@/assets/community-giving.jpg";
-import communityTraining from "@/assets/community-training.jpg";
+import communityGivingReal from "@/assets/community-giving-real.jpg";
+import paidWorkshopTraining from "@/assets/paid-workshop-training.jpg";
 
 const impacts = [
   {
@@ -29,7 +29,7 @@ const impacts = [
   {
     icon: Heart,
     title: "Community Education",
-    description: "Free workshops at libraries, churches, and community centers across Ohio to spread digital safety awareness.",
+    description: "Affordable workshops at libraries, churches, and community centers across Ohio to spread digital safety awareness.",
     color: "from-emerald-500 to-teal-500",
   },
 ];
@@ -139,7 +139,7 @@ export const CommunityImpact = () => {
             className="relative rounded-2xl overflow-hidden shadow-lg group"
           >
             <img
-              src={communityGiving}
+              src={communityGivingReal}
               alt="Community giving back"
               className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
               loading="lazy"
@@ -150,7 +150,7 @@ export const CommunityImpact = () => {
                 <Heart className="w-4 h-4" />
                 <span className="text-sm font-bold">Giving Back</span>
               </div>
-              <p className="text-white/80 text-xs mt-1">Donations to families in need</p>
+              <p className="text-white/80 text-xs mt-1">Supporting families in need</p>
             </div>
           </motion.div>
           
@@ -162,18 +162,21 @@ export const CommunityImpact = () => {
             className="relative rounded-2xl overflow-hidden shadow-lg group"
           >
             <img
-              src={communityTraining}
-              alt="Community training workshops"
+              src={paidWorkshopTraining}
+              alt="Professional training workshops"
               className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
               loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
             <div className="absolute bottom-3 left-3 right-3">
               <div className="flex items-center gap-2 text-white">
-                <Users className="w-4 h-4" />
-                <span className="text-sm font-bold">Free Workshops</span>
+                <GraduationCap className="w-4 h-4" />
+                <span className="text-sm font-bold">Professional Workshops</span>
               </div>
-              <p className="text-white/80 text-xs mt-1">At libraries and community centers</p>
+              <div className="flex items-center gap-2 mt-1">
+                <DollarSign className="w-3 h-3 text-emerald-400" />
+                <p className="text-white/80 text-xs">Affordable expert-led training</p>
+              </div>
             </div>
           </motion.div>
         </div>

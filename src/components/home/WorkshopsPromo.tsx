@@ -199,10 +199,10 @@ export const WorkshopsPromo = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-muted rounded-2xl border border-border"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-2xl border-2 border-emerald-500/30"
             >
-              <GraduationCap className="w-5 h-5 text-muted-foreground" />
-              <span className="font-medium text-muted-foreground">Learn & Train Workshops</span>
+              <GraduationCap className="w-5 h-5 text-emerald-600" />
+              <span className="font-bold text-emerald-700 text-lg">Learn & Train Workshops</span>
             </motion.div>
             
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
