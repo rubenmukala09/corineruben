@@ -30,20 +30,24 @@ export const HeroHomepage = () => {
         />
       </div>
 
-      {/* Video Background - No transition */}
+      {/* Video Background - Desktop only for instant mobile load */}
       <div className="absolute inset-0">
+        {/* Static gradient for mobile - instant paint */}
+        <div className="absolute inset-0 md:hidden bg-gradient-to-br from-primary/20 via-accent/10 to-background" />
+        
+        {/* Video only on desktop */}
         <video
           autoPlay
           loop
           muted
           playsInline
-          preload="auto"
-          className="absolute inset-0 w-full h-full object-cover"
+          preload="none"
+          className="absolute inset-0 w-full h-full object-cover hidden md:block"
         >
           <source src={heroVideo} type="video/mp4" />
         </video>
         
-        {/* Single simplified gradient overlay for faster paint */}
+        {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/40" />
       </div>
 
