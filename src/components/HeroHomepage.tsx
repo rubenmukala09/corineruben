@@ -49,7 +49,8 @@ export const HeroHomepage = () => {
       </div>
 
       {/* Video Background - Full mobile support */}
-      <div className="absolute inset-0 bg-slate-900">
+      {/* Safety background: dark purple/grey to prevent white flash */}
+      <div className="absolute inset-0" style={{ backgroundColor: '#1a1625' }}>
         <video
           autoPlay
           loop
@@ -58,7 +59,7 @@ export const HeroHomepage = () => {
           preload="auto"
           poster=""
           className="absolute inset-0 w-full h-full object-cover"
-          style={{ backgroundColor: 'hsl(var(--primary) / 0.1)' }}
+          style={{ backgroundColor: '#1a1625' }}
         >
           <source src={heroVideo} type="video/mp4" />
         </video>
