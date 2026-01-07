@@ -92,3 +92,6 @@ verify_jwt = false
 
 [functions.serve-download]
 verify_jwt = false
+
+[functions.create-post-purchase-session]
+verify_jwt = false

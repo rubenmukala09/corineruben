@@ -117,7 +117,7 @@ serve(async (req) => {
 
     const origin = req.headers.get("origin") || "https://invisionnetwork.org";
 
-    // Create checkout session
+    // Create checkout session with session_id in success URL for auto-login
     const sessionConfig: any = {
       customer: customerId,
       customer_email: customerId ? undefined : userEmail,
@@ -128,7 +128,7 @@ serve(async (req) => {
         },
       ],
       mode: "subscription",
-      success_url: `${origin}/payment-success?type=subscription`,
+      success_url: `${origin}/payment-success?type=subscription&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/payment-canceled`,
       metadata: {
         user_id: userId || 'guest',

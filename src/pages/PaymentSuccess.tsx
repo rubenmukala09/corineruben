@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
-import { CheckCircle, Package, Home, ShoppingBag, Mail, Download, Truck, Loader2 } from "lucide-react";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import { CheckCircle, Package, Home, ShoppingBag, Mail, Download, Truck, Loader2, LogIn, ArrowRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -22,14 +22,31 @@ interface PaymentVerification {
   message?: string;
 }
 
+interface PostPurchaseSession {
+  success: boolean;
+  user_id?: string;
+  is_new_user?: boolean;
+  magic_link?: string;
+  dashboard_path?: string;
+  customer_email?: string;
+  customer_name?: string;
+  is_subscription?: boolean;
+  plan_tier?: string;
+}
+
 export default function PaymentSuccess() {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const sessionId = searchParams.get("session_id");
   const orderNumber = searchParams.get("order");
+  const paymentType = searchParams.get("type");
   
   const [verifying, setVerifying] = useState(true);
   const [verification, setVerification] = useState<PaymentVerification | null>(null);
+  const [postPurchase, setPostPurchase] = useState<PostPurchaseSession | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [autoLoginCountdown, setAutoLoginCountdown] = useState(5);
+  const [showAutoLogin, setShowAutoLogin] = useState(false);
 
   useEffect(() => {
     const verifyPayment = async () => {
@@ -40,6 +57,7 @@ export default function PaymentSuccess() {
       }
 
       try {
+        // First verify the payment
         const { data, error: invokeError } = await supabase.functions.invoke('verify-payment', {
           body: { session_id: sessionId }
         });
@@ -50,6 +68,23 @@ export default function PaymentSuccess() {
           setVerification({ verified: true, status: 'paid', product_type: 'physical' });
         } else {
           setVerification(data);
+          
+          // For subscriptions, create post-purchase session for auto-login
+          if (data?.verified && (data?.is_subscription || paymentType === 'subscription')) {
+            try {
+              const { data: sessionData, error: sessionError } = await supabase.functions.invoke('create-post-purchase-session', {
+                body: { session_id: sessionId }
+              });
+              
+              if (!sessionError && sessionData?.success) {
+                setPostPurchase(sessionData);
+                setShowAutoLogin(true);
+              }
+            } catch (sessionErr) {
+              console.error('Post-purchase session creation failed:', sessionErr);
+              // Non-fatal - user can still manually login
+            }
+          }
         }
       } catch (err) {
         console.error('Payment verification failed:', err);
@@ -60,7 +95,20 @@ export default function PaymentSuccess() {
     };
 
     verifyPayment();
-  }, [sessionId]);
+  }, [sessionId, paymentType]);
+
+  // Auto-login countdown for subscriptions
+  useEffect(() => {
+    if (showAutoLogin && postPurchase?.magic_link && autoLoginCountdown > 0) {
+      const timer = setTimeout(() => {
+        setAutoLoginCountdown(prev => prev - 1);
+      }, 1000);
+      return () => clearTimeout(timer);
+    } else if (showAutoLogin && postPurchase?.magic_link && autoLoginCountdown === 0) {
+      // Redirect to magic link for auto-login
+      window.location.href = postPurchase.magic_link;
+    }
+  }, [showAutoLogin, postPurchase, autoLoginCountdown]);
 
   useEffect(() => {
     if (!verifying && verification?.verified) {
@@ -94,6 +142,18 @@ export default function PaymentSuccess() {
       return () => clearInterval(interval);
     }
   }, [verifying, verification]);
+
+  const handleManualLogin = () => {
+    if (postPurchase?.magic_link) {
+      window.location.href = postPurchase.magic_link;
+    } else {
+      navigate('/auth');
+    }
+  };
+
+  const handleSkipAutoLogin = () => {
+    setShowAutoLogin(false);
+  };
 
   const getProductTypeMessage = () => {
     if (!verification) return null;
@@ -316,20 +376,67 @@ export default function PaymentSuccess() {
                   </div>
                 </Card>
 
+                {/* Auto-Login Banner for Subscriptions */}
+                {showAutoLogin && postPurchase?.magic_link && (
+                  <Card className="p-6 mb-8 bg-gradient-to-r from-primary/10 to-accent/10 border-primary/20 animate-in slide-in-from-bottom duration-500 delay-250">
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center animate-pulse">
+                          <LogIn className="w-6 h-6 text-primary" />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-lg">
+                            {postPurchase.is_new_user ? 'Account Created!' : 'Welcome Back!'}
+                          </h3>
+                          <p className="text-sm text-muted-foreground">
+                            Redirecting to your dashboard in <strong className="text-primary">{autoLoginCountdown}s</strong>
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button onClick={handleManualLogin} className="gap-2">
+                          <ArrowRight className="w-4 h-4" />
+                          Go Now
+                        </Button>
+                        <Button variant="ghost" onClick={handleSkipAutoLogin}>
+                          Skip
+                        </Button>
+                      </div>
+                    </div>
+                  </Card>
+                )}
+
                 {/* Action Buttons */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 animate-in slide-in-from-bottom duration-500 delay-300">
-                  <Button asChild size="lg" className="w-full">
-                    <Link to="/">
-                      <Home className="w-4 h-4 mr-2" />
-                      Return Home
-                    </Link>
-                  </Button>
-                  <Button asChild size="lg" variant="outline" className="w-full">
-                    <Link to="/resources">
-                      <ShoppingBag className="w-4 h-4 mr-2" />
-                      Continue Shopping
-                    </Link>
-                  </Button>
+                  {showAutoLogin && postPurchase ? (
+                    <>
+                      <Button onClick={handleManualLogin} size="lg" className="w-full">
+                        <LogIn className="w-4 h-4 mr-2" />
+                        Go to Dashboard
+                      </Button>
+                      <Button asChild size="lg" variant="outline" className="w-full">
+                        <Link to="/">
+                          <Home className="w-4 h-4 mr-2" />
+                          Return Home
+                        </Link>
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button asChild size="lg" className="w-full">
+                        <Link to="/">
+                          <Home className="w-4 h-4 mr-2" />
+                          Return Home
+                        </Link>
+                      </Button>
+                      <Button asChild size="lg" variant="outline" className="w-full">
+                        <Link to="/resources">
+                          <ShoppingBag className="w-4 h-4 mr-2" />
+                          Continue Shopping
+                        </Link>
+                      </Button>
+                    </>
+                  )}
                 </div>
               </>
             )}
