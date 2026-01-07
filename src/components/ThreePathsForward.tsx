@@ -34,7 +34,7 @@ const paths: PathConfig[] = [
     link: '/training#scamshield',
     basePrice: 39,
     highlights: ["24/7 Support", "AI-Powered"],
-    trustBadge: "100+ Families Trust Us"
+    trustBadge: "Families Trust Us"
   },
   {
     id: 2,
@@ -62,7 +62,7 @@ const paths: PathConfig[] = [
     link: '/contact?service=business',
     basePrice: 5000,
     highlights: ["Enterprise Ready", "24/7 Monitor"],
-    trustBadge: "Fortune 500 Trusted"
+    trustBadge: "Enterprise Ready"
   }
 ];
 
@@ -98,7 +98,7 @@ const ThreePathsForward = () => {
           <div className="flex items-center justify-center gap-2 mb-4">
             <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-success/10 text-success border border-success/20 rounded-full text-sm font-medium">
               <Shield className="w-4 h-4" />
-              Trusted by 500+ Ohio Families
+              Trusted by Ohio Families
             </span>
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 gradient-text-primary">

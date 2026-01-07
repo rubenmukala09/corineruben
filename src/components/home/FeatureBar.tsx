@@ -21,19 +21,6 @@ const features = [{
   title: "Family Education",
   description: "Empowering every family member with the knowledge to stay safe online."
 }];
-const stats = [{
-  value: "100+",
-  label: "Protected Clients"
-}, {
-  value: "450+",
-  label: "Scams Blocked"
-}, {
-  value: "15+",
-  label: "Ohio Partners"
-}, {
-  value: "Est. 2024",
-  label: "Founded"
-}];
 export const FeatureBar = () => {
   return <section className="py-24 bg-background relative overflow-hidden">
       {/* Grid pattern background */}

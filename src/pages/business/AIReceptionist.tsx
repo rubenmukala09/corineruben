@@ -228,11 +228,11 @@ const AIReceptionist = () => {
                         </div>
                         <div className="flex justify-between py-3 text-xl bg-success/10 px-4 rounded-lg">
                           <span className="font-bold">First Year Savings</span>
-                          <span className="font-bold text-success">$37,500+</span>
+                          <span className="font-bold text-success">Significant*</span>
                         </div>
                       </div>
                       <p className="text-sm text-muted-foreground mt-4">
-                        Plus: Capture leads 24/7, not just 9-5. No sick days. No vacations.
+                        *Savings vary based on current staffing costs. Plus: Capture leads 24/7, not just 9-5. No sick days. No vacations.
                       </p>
                     </div>
                   </Card>

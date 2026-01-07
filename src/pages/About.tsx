@@ -101,7 +101,7 @@ function About() {
     <PageTransition variant="fade">
       <SEO 
         title="About Us - Our Story, Mission & Team"
-        description="Learn about InVision Network's mission to protect families from digital scams. Founded from personal experience, serving 500+ families across Ohio."
+        description="Learn about InVision Network's mission to protect families from digital scams. Founded from personal experience, serving families across Ohio."
       />
       <Navigation />
       
@@ -110,7 +110,7 @@ function About() {
         <Hero
           backgroundImages={aboutHeroImages}
           headline={<RotatingHeadlines headlines={aboutHeadlines} />}
-          subheadline="From victims to protectors. Serving 100+ families across Ohio."
+          subheadline="From victims to protectors. Serving families across Ohio."
         >
           <FloatingShapes />
         </Hero>

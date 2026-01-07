@@ -57,10 +57,6 @@ const services = [
   { icon: Eye, title: "Threat Analysis", desc: "Real-time", color: "from-violet-500 to-purple-500" },
 ];
 
-const testimonials = [
-  { quote: "The 60-Second Protocol saved me from a $5,000 scam!", author: "Margaret T.", location: "Columbus, OH" },
-  { quote: "Finally, training my parents understood and enjoyed.", author: "David R.", location: "Dayton, OH" },
-];
 
 export const WorkshopsPromo = () => {
   return (
@@ -131,24 +127,6 @@ export const WorkshopsPromo = () => {
                 </motion.div>
               </div>
 
-              {/* Stats overlay */}
-              <div className="absolute bottom-3 left-3 right-3 flex gap-2">
-                <div className="bg-white/95 backdrop-blur-sm rounded-xl px-3 py-2 flex-1">
-                  <div className="text-xl font-bold text-primary">500+</div>
-                  <div className="text-[10px] text-muted-foreground">Families Trained</div>
-                </div>
-                <div className="bg-white/95 backdrop-blur-sm rounded-xl px-3 py-2 flex-1">
-                  <div className="text-xl font-bold text-primary">98%</div>
-                  <div className="text-[10px] text-muted-foreground">Satisfaction Rate</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Testimonial Bubbles */}
-            <div className="grid grid-cols-2 gap-3">
-              {testimonials.map((t, i) => (
-                <TestimonialBubble key={i} {...t} />
-              ))}
             </div>
 
             {/* Trust Badges */}

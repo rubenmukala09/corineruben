@@ -45,9 +45,8 @@ export const TrustedExpertsBar = () => {
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
                 ))}
-                <span className="text-lg font-bold ml-2">4.9</span>
               </div>
-              <p className="text-muted-foreground">Trusted by 500+ Ohio Families</p>
+              <p className="text-muted-foreground">Trusted by Ohio Families</p>
             </div>
           </motion.div>
 

@@ -53,10 +53,6 @@ const roiFacts = [
   { stat: "80%", desc: "fewer no-shows", icon: CheckCircle, color: "text-emerald-500" },
 ];
 
-const businessTestimonials = [
-  { quote: "AI receptionist paid for itself in 3 months!", author: "James K.", location: "Cincinnati, OH" },
-  { quote: "Our scheduling is now completely hands-free.", author: "Sarah M.", location: "Cleveland, OH" },
-];
 
 export const AIBusinessPromo = () => {
   return (
@@ -303,24 +299,6 @@ export const AIBusinessPromo = () => {
                 </div>
               </div>
 
-              {/* Bottom stats */}
-              <div className="absolute bottom-3 left-3 right-3 flex gap-2">
-                <div className="bg-white/95 backdrop-blur-sm rounded-xl px-3 py-2 flex-1">
-                  <div className="text-xl font-bold text-primary">$2.3M+</div>
-                  <div className="text-[10px] text-muted-foreground">Revenue Protected</div>
-                </div>
-                <div className="bg-white/95 backdrop-blur-sm rounded-xl px-3 py-2 flex-1">
-                  <div className="text-xl font-bold text-primary">150+</div>
-                  <div className="text-[10px] text-muted-foreground">Businesses Served</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Testimonial Bubbles */}
-            <div className="grid grid-cols-2 gap-2">
-              {businessTestimonials.map((t, i) => (
-                <TestimonialBubble key={i} {...t} />
-              ))}
             </div>
 
             {/* Feature Highlights Bar */}

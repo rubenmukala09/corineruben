@@ -221,16 +221,15 @@ export const HeroHomepage = () => {
               {/* Stats Row */}
               <div className="mt-8 sm:mt-16 lg:mt-24 grid grid-cols-3 gap-2 sm:gap-4">
                 {[
-                  { icon: Globe, value: "100+", label: "Protected" },
-                  { icon: Zap, value: "24/7", label: "Support" },
-                  { icon: ShieldCheck, value: "99.9%", label: "Success" },
+                  { icon: Globe, label: "Ohio-Based" },
+                  { icon: Zap, label: "24/7 Support" },
+                  { icon: ShieldCheck, label: "Veteran-Supporting" },
                 ].map((stat) => (
                   <div
                     key={stat.label}
                     className="text-center p-2 sm:p-4 bg-card/60 rounded-xl sm:rounded-2xl border border-primary/10 hover:border-primary/25 transition-colors duration-300"
                   >
                     <stat.icon className="w-4 h-4 sm:w-5 sm:h-5 text-accent mx-auto mb-1 sm:mb-2" />
-                    <div className="text-lg sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{stat.value}</div>
                     <div className="text-[10px] sm:text-xs text-muted-foreground font-medium">{stat.label}</div>
                   </div>
                 ))}
