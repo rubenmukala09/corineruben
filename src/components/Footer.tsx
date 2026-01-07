@@ -1,11 +1,58 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Facebook, Linkedin, Youtube, Instagram, Shield, Mail, MapPin, ArrowRight } from "lucide-react";
+import { Facebook, Linkedin, Youtube, Instagram, Shield, Mail, MapPin, ArrowRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import TrustedTechLogos from "./TrustedTechLogos";
 import invisionLogo from "@/assets/shield-logo.png";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+import { useConfetti } from "@/hooks/useConfetti";
+import { z } from "zod";
+
+const newsletterSchema = z.object({
+  email: z.string().trim().email("Please enter a valid email address").max(255, "Email too long"),
+});
 
 const Footer = () => {
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { fireSuccess } = useConfetti();
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const validation = newsletterSchema.safeParse({ email: email.trim() });
+    if (!validation.success) {
+      toast.error(validation.error.errors[0]?.message || "Please enter a valid email address");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('newsletter-signup', {
+        body: { email: validation.data.email }
+      });
+
+      if (error) throw error;
+
+      if (data?.alreadySubscribed) {
+        toast.info("You're already subscribed!");
+      } else {
+        fireSuccess();
+        toast.success("✓ Subscribed! Check your email.");
+      }
+      
+      setEmail("");
+    } catch (error: any) {
+      console.error("Newsletter signup error:", error);
+      toast.error("Subscription failed. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <footer className="relative">
       {/* Tech Partners Marquee */}
@@ -56,15 +103,23 @@ const Footer = () => {
               <p className="text-sm text-white/60 mb-4">
                 Get monthly AI safety tips and scam alerts delivered to your inbox.
               </p>
-              <form className="flex gap-2">
+              <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
                 <Input
                   type="email"
                   placeholder="Enter your email"
-                  className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:bg-white/10 rounded-xl"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={isSubmitting}
+                  className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:bg-white/10 rounded-xl disabled:opacity-50"
                   aria-label="Email address for newsletter"
                 />
-                <Button type="submit" className="bg-primary hover:bg-primary/90 px-5 rounded-xl" aria-label="Subscribe to newsletter">
-                  <ArrowRight className="w-4 h-4" />
+                <Button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className="bg-primary hover:bg-primary/90 px-5 rounded-xl disabled:opacity-50" 
+                  aria-label="Subscribe to newsletter"
+                >
+                  {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <ArrowRight className="w-4 h-4" />}
                 </Button>
               </form>
             </div>
