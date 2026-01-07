@@ -210,6 +210,17 @@ function App() {
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
     
+    // Remove the hardcoded splash screen from index.html
+    const initialSplash = document.getElementById('initial-splash');
+    if (initialSplash) {
+      // Add fade-out class for smooth transition
+      initialSplash.classList.add('fade-out');
+      // Remove from DOM after transition completes
+      setTimeout(() => {
+        initialSplash.remove();
+      }, 500);
+    }
+    
     // Simple timer-based splash - hero handles its own fade-in
     const timer = setTimeout(() => {
       setShowSplash(false);
