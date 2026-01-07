@@ -22,7 +22,7 @@ import seniorCoupleActive from "@/assets/senior-couple-active.jpg";
 import { TrustedExpertsBar } from "@/components/home/TrustedExpertsBar";
 import { FloatingGraphics } from "@/components/ui/FloatingGraphics";
 import { AccentDecoration } from "@/components/ui/AccentDecoration";
-function Index() {
+const Index = () => {
   const [scamShieldOpen, setScamShieldOpen] = useState(false);
   
   return (
