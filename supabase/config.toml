@@ -89,3 +89,6 @@ verify_jwt = false
 
 [functions.create-training-payment]
 verify_jwt = false
+
+[functions.serve-download]
+verify_jwt = false

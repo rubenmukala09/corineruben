@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { MobileComparisonCards } from "@/components/MobileComparisonCards";
 import { SEO } from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
 import { trackButtonClick } from "@/utils/analyticsTracker";
@@ -412,7 +413,11 @@ const Services = () => {
             </ScrollReveal>
 
             <ScrollReveal delay={200}>
-              <div className="max-w-5xl mx-auto overflow-x-auto">
+              {/* Mobile: Card view */}
+              <MobileComparisonCards comparisons={comparisons} />
+              
+              {/* Desktop: Table view */}
+              <div className="hidden md:block max-w-5xl mx-auto overflow-x-auto">
                 <table className="w-full border-collapse">
                   <thead>
                     <tr className="border-b-2 border-border">

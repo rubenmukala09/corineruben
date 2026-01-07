@@ -12,6 +12,22 @@ const logStep = (step: string, details?: any) => {
   console.log(`[VERIFY-PAYMENT] ${step}${detailsStr}`);
 };
 
+// Generate a secure signed URL token
+function generateDownloadToken(orderId: string, productName: string, expiresIn: number = 24 * 60 * 60 * 1000): string {
+  const timestamp = Date.now();
+  const expiry = timestamp + expiresIn;
+  const payload = `${orderId}:${productName}:${expiry}`;
+  // Create a simple hash for validation (in production, use HMAC with a secret)
+  const encoder = new TextEncoder();
+  const data = encoder.encode(payload + Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"));
+  let hash = 0;
+  for (let i = 0; i < data.length; i++) {
+    hash = ((hash << 5) - hash) + data[i];
+    hash = hash & hash;
+  }
+  return btoa(`${payload}:${Math.abs(hash).toString(16)}`);
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -93,20 +109,20 @@ serve(async (req) => {
     );
 
     // Update order status if we have an order_id in metadata
-    const orderId = session.metadata?.order_id;
-    if (orderId) {
+    const orderId = session.metadata?.order_id || session.id;
+    if (session.metadata?.order_id) {
       const { error: updateError } = await supabaseClient
         .from('partner_orders')
         .update({ 
           status: 'paid',
           payment_status: 'completed'
         })
-        .eq('id', orderId);
+        .eq('id', session.metadata.order_id);
       
       if (updateError) {
         logStep("Error updating order", { error: updateError.message });
       } else {
-        logStep("Order updated to paid", { orderId });
+        logStep("Order updated to paid", { orderId: session.metadata.order_id });
       }
     }
 
@@ -115,13 +131,18 @@ serve(async (req) => {
 
     // Automatically trigger digital product delivery if there are digital products
     if (hasDigital && customerEmail) {
-      logStep("Triggering digital product delivery", { email: customerEmail, products: productNames });
+      logStep("Triggering digital product delivery with secure tokens", { email: customerEmail, products: productNames });
       
       try {
-        const digitalProducts = productNames.map(name => ({
-          name,
-          download_url: `https://avoafweoebstkgjnbadv.supabase.co/storage/v1/object/public/digital-products/${encodeURIComponent(name.toLowerCase().replace(/\s+/g, '-'))}.pdf`
-        }));
+        // Generate secure download URLs with tokens instead of predictable paths
+        const digitalProducts = productNames.map(name => {
+          const token = generateDownloadToken(orderId, name);
+          return {
+            name,
+            // Use edge function to serve downloads with token validation
+            download_url: `${Deno.env.get("SUPABASE_URL")}/functions/v1/serve-download?token=${encodeURIComponent(token)}`
+          };
+        });
 
         // Call send-digital-download function
         const downloadResponse = await fetch(

@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import Stripe from "https://esm.sh/stripe@18.5.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
 
 const resendApiKey = Deno.env.get("RESEND_API_KEY")!;
@@ -26,6 +27,35 @@ interface CompletePaymentRequest {
   preferredDate?: string;
   isVeteran?: boolean;
   metadata?: Record<string, any>;
+}
+
+async function verifyStripePayment(stripeKey: string, paymentIntentId?: string, sessionId?: string): Promise<{ verified: boolean; amount?: number }> {
+  if (!paymentIntentId && !sessionId) {
+    return { verified: false };
+  }
+
+  try {
+    const stripe = new Stripe(stripeKey, { apiVersion: "2025-08-27.basil" });
+    
+    if (sessionId) {
+      const session = await stripe.checkout.sessions.retrieve(sessionId);
+      if (session.payment_status === 'paid') {
+        return { verified: true, amount: session.amount_total || undefined };
+      }
+    }
+    
+    if (paymentIntentId) {
+      const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+      if (paymentIntent.status === 'succeeded') {
+        return { verified: true, amount: paymentIntent.amount };
+      }
+    }
+    
+    return { verified: false };
+  } catch (error) {
+    logStep("Stripe verification error", { error: String(error) });
+    return { verified: false };
+  }
 }
 
 async function sendEmail(to: string, subject: string, html: string) {
@@ -86,6 +116,9 @@ serve(async (req) => {
   try {
     logStep("Function started");
     
+    const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
+    if (!stripeKey) throw new Error("STRIPE_SECRET_KEY is not set");
+    
     const {
       paymentType,
       paymentIntentId,
@@ -102,6 +135,22 @@ serve(async (req) => {
     }: CompletePaymentRequest = await req.json();
 
     logStep("Request data", { paymentType, paymentIntentId, sessionId, recordId, customerEmail });
+
+    // CRITICAL: Verify payment with Stripe before processing
+    const { verified, amount: stripeAmount } = await verifyStripePayment(stripeKey, paymentIntentId, sessionId);
+    
+    if (!verified) {
+      logStep("Payment verification failed - rejecting request");
+      return new Response(
+        JSON.stringify({ error: "Payment could not be verified with Stripe. Please contact support." }),
+        {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 400,
+        }
+      );
+    }
+    
+    logStep("Payment verified with Stripe", { verified: true, stripeAmount });
 
     const formattedAmount = `$${(amount / 100).toFixed(2)}`;
     const requestNumber = `TRN-${Date.now().toString().slice(-8)}`;
