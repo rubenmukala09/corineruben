@@ -30,19 +30,18 @@ export const HeroHomepage = () => {
         />
       </div>
 
-      {/* Video Background - Desktop only for instant mobile load */}
+      {/* Video Background */}
       <div className="absolute inset-0">
-        {/* Static gradient for mobile - instant paint */}
-        <div className="absolute inset-0 md:hidden bg-gradient-to-br from-primary/20 via-accent/10 to-background" />
+        {/* Instant background color while video loads */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-background" />
         
-        {/* Video only on desktop */}
         <video
           autoPlay
           loop
           muted
           playsInline
-          preload="none"
-          className="absolute inset-0 w-full h-full object-cover hidden md:block"
+          preload="metadata"
+          className="absolute inset-0 w-full h-full object-cover"
         >
           <source src={heroVideo} type="video/mp4" />
         </video>
