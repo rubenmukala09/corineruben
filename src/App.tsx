@@ -110,8 +110,9 @@ const DonationsList = lazy(() => import("./pages/admin/DonationsList"));
 const ServiceInquiriesList = lazy(() => import("./pages/admin/ServiceInquiriesList"));
 const BookingsList = lazy(() => import("./pages/admin/BookingsList"));
 
-// Premium loading fallback with beautiful bubble animation
-const PageLoader = () => <EnhancedPageLoader message="Loading..." />;
+// Premium loading fallback with pulsing radar animation
+import { AIPulseLoader } from "./components/AIPulseLoader";
+const PageLoader = () => <AIPulseLoader message="Loading..." fullScreen={true} />;
 const queryClient = new QueryClient();
 
 function AnimatedRoutes() {

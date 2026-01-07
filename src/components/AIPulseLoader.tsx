@@ -16,7 +16,7 @@ export const AIPulseLoader = ({
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
       className={`flex flex-col items-center justify-center gap-6 ${
-        fullScreen ? "fixed inset-0 z-[9999] bg-background/98 backdrop-blur-sm" : "py-10"
+        fullScreen ? "fixed inset-0 z-[9999] bg-background backdrop-blur-sm" : "py-10"
       }`}
     >
       {/* AI Pulse Animation Container */}
