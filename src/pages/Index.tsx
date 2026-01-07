@@ -42,7 +42,8 @@ const Index = () => {
           
           {/* Workshops Promo - Learn & Train Introduction */}
           <section id="workshops" className="relative">
-            <FloatingGraphics variant="orbs" intensity="light" />
+            <FloatingGraphics variant="shields" intensity="light" />
+            <AccentDecoration variant="shield3d" position="top-right" className="opacity-40" />
             <WorkshopsPromo />
           </section>
           
@@ -50,14 +51,16 @@ const Index = () => {
           
           {/* AI & Business Promo */}
           <section id="business" className="relative">
-            <FloatingGraphics variant="shapes" intensity="light" />
-            <AccentDecoration variant="ring" position="top-right" className="opacity-30" />
+            <FloatingGraphics variant="cubes3d" intensity="light" />
+            <AccentDecoration variant="tech-lines" position="top-right" className="opacity-30" />
+            <AccentDecoration variant="cubeStack" position="bottom-left" className="opacity-25" />
             <AIBusinessPromo />
           </section>
           
           {/* Current Scam Alerts - Immediate Value */}
           <section id="alerts" className="relative">
-            <FloatingGraphics variant="particles" intensity="light" />
+            <FloatingGraphics variant="circuits" intensity="light" />
+            <AccentDecoration variant="gradient-blob" position="top-left" className="opacity-20" />
             <ScamAlertsSection />
           </section>
           
@@ -65,8 +68,9 @@ const Index = () => {
           
           {/* Resources Promo */}
           <section id="resources" className="relative">
-            <FloatingGraphics variant="mesh" intensity="light" />
+            <FloatingGraphics variant="waves" intensity="light" />
             <AccentDecoration variant="orb" position="bottom-left" className="opacity-20" />
+            <AccentDecoration variant="shield3d" position="bottom-right" className="opacity-30" />
             <ResourcesPromo />
           </section>
           <SectionDivider variant="mountains" />
@@ -74,27 +78,30 @@ const Index = () => {
           {/* Community Impact - Veteran Support, Cancer Children, etc. */}
           <section id="community" className="relative">
             <FloatingGraphics variant="hexagons" intensity="light" />
+            <AccentDecoration variant="cubeStack" position="top-right" className="opacity-25" />
             <CommunityImpact />
           </section>
 
           {/* Working Process - How It Works */}
           <section id="process" className="relative">
-            <FloatingGraphics variant="orbs" intensity="light" />
+            <FloatingGraphics variant="shields" intensity="light" />
             <AccentDecoration variant="corner" position="top-left" className="opacity-40" />
-            <AccentDecoration variant="corner" position="bottom-right" className="opacity-40" />
+            <AccentDecoration variant="tech-lines" position="bottom-right" className="opacity-30" />
             <WorkingProcess />
           </section>
 
           {/* FAQ Section */}
           <section id="faq" className="relative">
-            <FloatingGraphics variant="mesh" intensity="light" />
+            <FloatingGraphics variant="particles" intensity="medium" />
+            <AccentDecoration variant="gradient-blob" position="top-right" className="opacity-15" />
             <FAQPreview />
           </section>
 
           {/* Quick Links - FAQ, Contact, Careers */}
           <section id="quick-links" className="relative">
-            <FloatingGraphics variant="shapes" intensity="light" />
+            <FloatingGraphics variant="cubes3d" intensity="light" />
             <AccentDecoration variant="grid" position="top-right" className="opacity-20" />
+            <AccentDecoration variant="dots" position="bottom-left" className="opacity-25" />
             <QuickLinksSection />
           </section>
 
