@@ -365,27 +365,53 @@ function LearnAndTrain() {
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center md:justify-start">
-            <Button 
-              onClick={() => {
-                document.getElementById('training')?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              variant="default" 
-              size="xl" 
-              className="w-full sm:w-auto"
-            >
-              View Workshops
-            </Button>
-            <Button 
-              onClick={() => {
-                document.getElementById('scamshield')?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              variant="secondary" 
-              size="xl" 
-              className="w-full sm:w-auto"
-            >
-              Learn About ScamShield
-            </Button>
+          {/* Distinct CTA Buttons with Visual Separation */}
+          <div className="flex flex-col sm:flex-row gap-6 flex-wrap justify-center md:justify-start">
+            {/* Learn & Train Workshops - Primary Featured */}
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 rounded-xl blur-md opacity-75 group-hover:opacity-100 transition-opacity duration-300" />
+              <Button 
+                onClick={() => {
+                  document.getElementById('training')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                size="xl" 
+                className="relative w-full sm:w-auto bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white border-0 shadow-xl text-lg md:text-xl px-8 py-6"
+              >
+                <span className="mr-2 text-2xl">🎓</span>
+                Learn & Train Workshops
+              </Button>
+            </div>
+            
+            {/* AI & Business Solutions - Secondary Style */}
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 via-primary to-accent rounded-xl blur-md opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
+              <Button 
+                asChild
+                size="xl" 
+                className="relative w-full sm:w-auto bg-gradient-to-r from-purple-600 to-primary hover:from-purple-500 hover:to-primary/90 text-white border-0 shadow-xl text-lg md:text-xl px-8 py-6"
+              >
+                <Link to="/business">
+                  <span className="mr-2 text-2xl">🤖</span>
+                  AI & Business Solutions
+                </Link>
+              </Button>
+            </div>
+          </div>
+
+          {/* Decorative floating graphics */}
+          <div className="hidden lg:flex gap-6 mt-8 opacity-90">
+            <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-full px-5 py-2.5 border border-white/20">
+              <Shield className="w-5 h-5 text-emerald-400" />
+              <span className="text-white/90 text-base font-medium">Family Protection</span>
+            </div>
+            <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-full px-5 py-2.5 border border-white/20">
+              <Users className="w-5 h-5 text-cyan-400" />
+              <span className="text-white/90 text-base font-medium">Expert-Led Training</span>
+            </div>
+            <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-full px-5 py-2.5 border border-white/20">
+              <Award className="w-5 h-5 text-amber-400" />
+              <span className="text-white/90 text-base font-medium">24/7 Support</span>
+            </div>
           </div>
         </Hero>
         
@@ -536,15 +562,15 @@ function LearnAndTrain() {
                 },
               ].map((item, index) => (
                 <ScrollReveal key={index} animation="scale-in" delay={index * 150}>
-                  <Card className="p-6 md:p-8 h-full bg-gradient-to-br from-card to-card/50 border-border/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 rounded-xl text-center relative overflow-hidden min-h-[320px]">
-                    <div className="absolute -top-2 -right-2 w-14 h-14 bg-gradient-to-br from-primary to-accent rounded-bl-2xl flex items-center justify-center">
-                      <span className="text-white font-bold text-lg">{item.step}</span>
+                  <Card className="p-8 md:p-10 bg-gradient-to-br from-card to-card/50 border-border/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 rounded-xl text-center relative overflow-hidden h-[380px] flex flex-col">
+                    <div className="absolute -top-2 -right-2 w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-bl-2xl flex items-center justify-center">
+                      <span className="text-white font-bold text-xl">{item.step}</span>
                     </div>
-                    <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
-                      <span className="text-4xl">{item.icon}</span>
+                    <div className="w-24 h-24 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                      <span className="text-5xl">{item.icon}</span>
                     </div>
-                    <h4 className="text-xl md:text-2xl font-bold mb-3">{item.title}</h4>
-                    <p className="text-base md:text-lg text-muted-foreground leading-relaxed">{item.desc}</p>
+                    <h4 className="text-2xl md:text-3xl font-bold mb-4">{item.title}</h4>
+                    <p className="text-lg md:text-xl text-muted-foreground leading-relaxed flex-1">{item.desc}</p>
                   </Card>
                 </ScrollReveal>
               ))}
