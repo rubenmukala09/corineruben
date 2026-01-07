@@ -177,12 +177,12 @@ const TrainingCard = ({ plan, index, onBook }: { plan: any; index: number; onBoo
     >
       <div className="relative pt-6 h-full">
         {/* Badge - On top of card, outside */}
-        <div className={`absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r ${badge.gradient} text-white px-6 py-2.5 rounded-full text-sm font-bold tracking-wide shadow-xl z-30 whitespace-nowrap border-2 border-white/20`}>
+        <div className={`absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r ${badge.gradient} text-white px-5 py-2 rounded-full text-sm font-bold tracking-wide shadow-xl z-30 whitespace-nowrap border-2 border-white/20`}>
           <span className="mr-1.5">{badge.emoji}</span>
           {badge.label}
         </div>
         
-        <Card className={`relative p-6 md:p-8 flex flex-col transition-all duration-300 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 h-[560px] ${
+        <Card className={`relative p-6 md:p-7 lg:p-8 flex flex-col transition-all duration-300 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 min-h-[620px] ${
           plan.popular 
             ? "border-primary border-2 shadow-xl" 
             : "border-border/50 hover:shadow-lg"
@@ -196,16 +196,16 @@ const TrainingCard = ({ plan, index, onBook }: { plan: any; index: number; onBoo
             <p className="text-center text-base text-muted-foreground mb-1">{plan.duration}</p>
             <p className="text-center text-base text-accent font-semibold mb-4">{plan.size}</p>
             
-            {/* Description - Single line friendly */}
-            <p className="text-center text-base text-muted-foreground mb-5 min-h-[48px] leading-relaxed">
+            {/* Description - More breathing room */}
+            <p className="text-center text-base text-muted-foreground mb-6 min-h-[56px] leading-relaxed px-2">
               {plan.description}
             </p>
 
-            <div className="space-y-3 mb-5 flex-1">
+            <div className="space-y-3 mb-6 flex-1 px-1">
               {plan.features.slice(0, 4).map((feature: string, idx: number) => (
                 <div key={idx} className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-foreground text-base whitespace-nowrap">{feature}</span>
+                  <span className="text-foreground text-base leading-relaxed">{feature}</span>
                 </div>
               ))}
             </div>
@@ -1328,7 +1328,7 @@ function LearnAndTrain() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 max-w-5xl mx-auto">
             {[
               {
                 name: "AI Automation",
@@ -1573,17 +1573,18 @@ function LearnAndTrain() {
                 backgroundImage: `url(${heroVault})`,
               }}
             />
-            {/* Overlay for readability */}
-            <div className="absolute inset-0 bg-gradient-to-br from-card/95 via-card/90 to-card/85 backdrop-blur-sm" />
+            {/* Enhanced overlay for better text readability */}
+            <div className="absolute inset-0 bg-gradient-to-br from-background/98 via-background/95 to-background/92" />
+            <div className="absolute inset-0 backdrop-blur-[2px]" />
             
             <div className="text-center relative z-10">
               <div className="flex justify-center mb-6">
-                <div className="w-20 h-20 bg-gradient-to-br from-primary/30 to-accent/30 rounded-full flex items-center justify-center animate-[shield-pulse_3s_ease-in-out_infinite] shadow-lg">
+                <div className="w-20 h-20 bg-gradient-to-br from-primary/40 to-accent/40 rounded-full flex items-center justify-center animate-[shield-pulse_3s_ease-in-out_infinite] shadow-lg border-2 border-primary/20">
                   <Lock className="w-10 h-10 text-primary" />
                 </div>
               </div>
-              <h3 className="text-2xl md:text-3xl font-bold mb-3 text-foreground">Family Safety Vault</h3>
-              <p className="text-foreground/80 mb-6 text-base md:text-lg">Included with Family & Premium Plans — keep everything secure</p>
+              <h3 className="text-2xl md:text-3xl font-bold mb-3 text-foreground drop-shadow-sm">Family Safety Vault</h3>
+              <p className="text-foreground mb-6 text-base md:text-lg font-medium">Included with Family & Premium Plans — keep everything secure</p>
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8 text-left max-w-2xl mx-auto">
                 {[
@@ -1594,14 +1595,14 @@ function LearnAndTrain() {
                   { icon: "🔐", feature: "Account recovery info" },
                   { icon: "✈️", feature: "Travel itineraries" },
                 ].map((item, index) => (
-                  <div key={index} className="flex items-center gap-3 p-3 bg-background/80 rounded-xl backdrop-blur-sm border border-border/50 shadow-sm">
+                  <div key={index} className="flex items-center gap-3 p-3 bg-card/95 rounded-xl border border-border shadow-md">
                     <span className="text-xl">{item.icon}</span>
-                    <span className="text-sm md:text-base font-medium text-foreground">{item.feature}</span>
+                    <span className="text-sm md:text-base font-semibold text-foreground">{item.feature}</span>
                   </div>
                 ))}
               </div>
 
-              <p className="text-sm md:text-base text-foreground/80 font-medium">
+              <p className="text-base md:text-lg text-foreground font-semibold">
                 🔒 Bank-grade encryption • Multi-factor authentication • Secure family sharing
               </p>
             </div>
