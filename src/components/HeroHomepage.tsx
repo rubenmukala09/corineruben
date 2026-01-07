@@ -38,29 +38,41 @@ const staggerContainer = {
 
 export const HeroHomepage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [showContent, setShowContent] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const video = videoRef.current;
+    
+    const showAll = () => {
+      setIsLoaded(true);
+      // Delay showing content slightly to ensure background is painted first
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setShowContent(true);
+        });
+      });
+    };
+    
     if (!video) {
       // Fallback: show content after short delay if no video
-      const timer = setTimeout(() => setIsLoaded(true), 300);
+      const timer = setTimeout(showAll, 300);
       return () => clearTimeout(timer);
     }
 
-    const handleReady = () => setIsLoaded(true);
+    const handleReady = () => showAll();
     
     // Check if already ready
     if (video.readyState >= 3) {
-      setIsLoaded(true);
+      showAll();
       return;
     }
 
     video.addEventListener('canplaythrough', handleReady);
     video.addEventListener('loadeddata', handleReady);
     
-    // Fallback timeout
-    const timeout = setTimeout(() => setIsLoaded(true), 2000);
+    // Fallback timeout - show after 1.5s max
+    const timeout = setTimeout(showAll, 1500);
 
     return () => {
       video.removeEventListener('canplaythrough', handleReady);
@@ -71,10 +83,9 @@ export const HeroHomepage = () => {
 
   return (
     <section 
-      className="relative min-h-[100vh] lg:min-h-[110vh] overflow-hidden transition-opacity duration-500 ease-out"
+      className="relative min-h-[100vh] lg:min-h-[110vh] overflow-hidden"
       style={{ 
-        backgroundColor: '#F3F0FF',
-        opacity: isLoaded ? 1 : 0 
+        backgroundColor: '#1a1625',
       }}
     >
       {/* Static gradient background */}
@@ -114,7 +125,10 @@ export const HeroHomepage = () => {
         }} />
       </div>
       
-      <div className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10">
+      <div 
+        className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10 transition-opacity duration-500"
+        style={{ opacity: showContent ? 1 : 0 }}
+      >
         <div className="flex flex-col lg:grid lg:grid-cols-5 gap-8 lg:gap-20 xl:gap-28 items-center min-h-[100vh] py-16 sm:py-20 lg:py-0">
           
           {/* Left Content */}
@@ -122,7 +136,7 @@ export const HeroHomepage = () => {
             className="lg:col-span-3 order-2 lg:order-1 w-full"
             variants={staggerContainer}
             initial="hidden"
-            animate="visible"
+            animate={showContent ? "visible" : "hidden"}
           >
             {/* Premium Badge */}
             <motion.div 

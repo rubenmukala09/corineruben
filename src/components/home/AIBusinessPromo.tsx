@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Phone, Calendar, Bot, Globe, ArrowRight, Sparkles, Shield, Clock, TrendingUp, Star, Zap, Users, Award, CheckCircle, Palette, Headphones, Lock, Lightbulb, Rocket, DollarSign, Target, BarChart3 } from "lucide-react";
 import businessTechBg from "@/assets/business-tech-bg.jpg";
 import businessProfessionalsOffice from "@/assets/business-professionals-office.jpg";
+import customerSupport from "@/assets/customer-support-diverse.jpg";
+import businessCollaboration from "@/assets/business-collaboration.jpg";
 import { TestimonialBubble } from "./TestimonialBubble";
 
 const services = [
@@ -332,6 +334,45 @@ export const AIBusinessPromo = () => {
                 </div>
                 <div className="text-xs font-bold">Veteran</div>
                 <div className="text-[9px] opacity-80">10% Off</div>
+              </motion.div>
+            </div>
+
+            {/* Additional Service Photos */}
+            <div className="grid grid-cols-2 gap-3 mt-4">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                className="relative rounded-2xl overflow-hidden shadow-lg"
+              >
+                <img 
+                  src={customerSupport}
+                  alt="AI customer support in action"
+                  className="w-full h-28 object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                <div className="absolute bottom-2 left-2 right-2">
+                  <span className="text-white text-xs font-semibold">AI Receptionist</span>
+                </div>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="relative rounded-2xl overflow-hidden shadow-lg"
+              >
+                <img 
+                  src={businessCollaboration}
+                  alt="Business team collaboration"
+                  className="w-full h-28 object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                <div className="absolute bottom-2 left-2 right-2">
+                  <span className="text-white text-xs font-semibold">Custom Automation</span>
+                </div>
               </motion.div>
             </div>
 

@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Users, Clock, Award, Shield, CheckCircle, ArrowRight, Sparkles, Play, BookOpen, Star, DollarSign, Brain, Eye, AlertTriangle, Target, Briefcase, Quote, GraduationCap, Heart } from "lucide-react";
 import workshopSeniorsLearning from "@/assets/workshop-seniors-learning.jpg";
 import learningBg from "@/assets/learning-bg.jpg";
+import seniorLearning from "@/assets/senior-learning.jpg";
+import trainingSession from "@/assets/training-session.jpg";
 import { TestimonialBubble } from "./TestimonialBubble";
 
 const formats = [
@@ -127,6 +129,45 @@ export const WorkshopsPromo = () => {
                 </motion.div>
               </div>
 
+            </div>
+
+            {/* Additional Photos Grid - What We Do */}
+            <div className="grid grid-cols-2 gap-3 mt-4">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                className="relative rounded-2xl overflow-hidden shadow-lg"
+              >
+                <img 
+                  src={seniorLearning}
+                  alt="Senior learning digital safety"
+                  className="w-full h-32 object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute bottom-2 left-2 right-2">
+                  <span className="text-white text-xs font-semibold">One-on-One Training</span>
+                </div>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="relative rounded-2xl overflow-hidden shadow-lg"
+              >
+                <img 
+                  src={trainingSession}
+                  alt="Group training session"
+                  className="w-full h-32 object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute bottom-2 left-2 right-2">
+                  <span className="text-white text-xs font-semibold">Group Workshops</span>
+                </div>
+              </motion.div>
             </div>
 
             {/* Trust Badges */}

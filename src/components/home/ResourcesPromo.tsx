@@ -2,6 +2,9 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { FileText, Shield, BookOpen, ArrowRight, Sparkles, Download, Lock, Gift, ShoppingBag, Usb, CreditCard, Phone, Package, Star, Percent, CheckCircle, Eye, AlertTriangle } from "lucide-react";
+import libraryLearning from "@/assets/library-learning.jpg";
+import productRfidWallet from "@/assets/product-rfid-wallet.jpg";
+import productUsbKey from "@/assets/product-usb-key.jpg";
 
 const resources = [
   {
@@ -152,6 +155,42 @@ export const ResourcesPromo = () => {
                   <Percent className="w-3 h-3" /> Bundle & Save 15%
                 </span>
               </h3>
+              {/* Product Photos */}
+              <div className="grid grid-cols-2 gap-3 mb-4">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  className="relative rounded-xl overflow-hidden shadow-md"
+                >
+                  <img 
+                    src={productRfidWallet}
+                    alt="RFID protection wallet"
+                    className="w-full h-24 object-cover"
+                    loading="lazy"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-2 py-1">
+                    <span className="text-white text-xs font-medium">RFID Wallets</span>
+                  </div>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1 }}
+                  className="relative rounded-xl overflow-hidden shadow-md"
+                >
+                  <img 
+                    src={productUsbKey}
+                    alt="Security USB key"
+                    className="w-full h-24 object-cover"
+                    loading="lazy"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-2 py-1">
+                    <span className="text-white text-xs font-medium">Security USB Keys</span>
+                  </div>
+                </motion.div>
+              </div>
               <div className="grid grid-cols-2 gap-3">
                 {products.map((product, index) => (
                   <div key={index} className="flex items-center gap-2 text-sm">
@@ -185,6 +224,29 @@ export const ResourcesPromo = () => {
             transition={{ duration: 0.6 }}
             className="space-y-5"
           >
+            {/* Hero Photo for Resources */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="relative rounded-3xl overflow-hidden shadow-lg"
+            >
+              <img 
+                src={libraryLearning}
+                alt="Learning resources and guides"
+                className="w-full h-48 object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4 text-white">
+                <div className="flex items-center gap-2 mb-1">
+                  <BookOpen className="w-5 h-5" />
+                  <span className="text-lg font-bold">Educational Resources</span>
+                </div>
+                <p className="text-sm text-white/80">20+ guides, scripts, and tools for complete protection</p>
+              </div>
+            </motion.div>
+
             {resources.map((resource, index) => (
               <motion.div
                 key={index}

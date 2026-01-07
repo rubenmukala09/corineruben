@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Heart, Shield, Users, Ribbon, ArrowRight, Award, MapPin, GraduationCap } from "lucide-react";
 import ohioNatureImpact from "@/assets/ohio-nature-impact.jpg";
+import veteranSupport from "@/assets/veteran-support.jpg";
+import communityGiving from "@/assets/community-giving.jpg";
+import communityTraining from "@/assets/community-training.jpg";
 
 const impacts = [
   {
@@ -103,6 +106,77 @@ export const CommunityImpact = () => {
             </p>
           </div>
         </motion.div>
+
+        {/* What We Do Photo Grid */}
+        <div className="grid grid-cols-3 gap-4 mb-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="relative rounded-2xl overflow-hidden shadow-lg group"
+          >
+            <img
+              src={veteranSupport}
+              alt="Supporting veterans"
+              className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            <div className="absolute bottom-3 left-3 right-3">
+              <div className="flex items-center gap-2 text-white">
+                <Shield className="w-4 h-4" />
+                <span className="text-sm font-bold">Veteran Support</span>
+              </div>
+              <p className="text-white/80 text-xs mt-1">17% discount for those who served</p>
+            </div>
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="relative rounded-2xl overflow-hidden shadow-lg group"
+          >
+            <img
+              src={communityGiving}
+              alt="Community giving back"
+              className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            <div className="absolute bottom-3 left-3 right-3">
+              <div className="flex items-center gap-2 text-white">
+                <Heart className="w-4 h-4" />
+                <span className="text-sm font-bold">Giving Back</span>
+              </div>
+              <p className="text-white/80 text-xs mt-1">Donations to families in need</p>
+            </div>
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="relative rounded-2xl overflow-hidden shadow-lg group"
+          >
+            <img
+              src={communityTraining}
+              alt="Community training workshops"
+              className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            <div className="absolute bottom-3 left-3 right-3">
+              <div className="flex items-center gap-2 text-white">
+                <Users className="w-4 h-4" />
+                <span className="text-sm font-bold">Free Workshops</span>
+              </div>
+              <p className="text-white/80 text-xs mt-1">At libraries and community centers</p>
+            </div>
+          </motion.div>
+        </div>
 
         {/* Impact Cards Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
