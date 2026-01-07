@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import { InitialLoader } from "./components/InitialLoader";
+import { SplashScreen } from "./components/SplashScreen";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AdminRoute } from "./components/AdminRoute";
 import { AIChat } from "./components/AIChat";
@@ -199,22 +199,29 @@ function AnimatedRoutes() {
 }
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [showSplash, setShowSplash] = useState(true);
   
   // Add smooth scroll behavior for anchor links
   useSmoothAnchorScroll();
   
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
+    
+    // Show splash for at least 1.5 seconds
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 1500);
+    
     return () => {
       document.documentElement.style.scrollBehavior = "auto";
+      clearTimeout(timer);
     };
   }, []);
 
   return (
     <>
-      {/* Initial website loading effect */}
-      <InitialLoader onComplete={() => setIsLoading(false)} minDuration={150} />
+      {/* Premium Splash Screen */}
+      <SplashScreen isVisible={showSplash} />
       
       <QueryClientProvider client={queryClient}>
         <Toaster />
