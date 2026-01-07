@@ -182,30 +182,30 @@ const TrainingCard = ({ plan, index, onBook }: { plan: any; index: number; onBoo
           {badge.label}
         </div>
         
-        <Card className={`relative p-6 md:p-7 lg:p-8 flex flex-col transition-all duration-300 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 min-h-[620px] ${
+        <Card className={`relative p-5 md:p-6 flex flex-col transition-all duration-300 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 min-h-[580px] ${
           plan.popular 
             ? "border-primary border-2 shadow-xl" 
             : "border-border/50 hover:shadow-lg"
         }`}>
-          <div className="pt-4 flex flex-col h-full">
-            <h3 className="text-xl md:text-2xl font-bold mb-3 text-center">{plan.name}</h3>
-            <div className="text-center mb-3" ref={ref}>
-              <span className="text-4xl md:text-5xl font-bold text-primary">${Math.round(count)}{plan.pricePrefix || ''}</span>
-              <span className="text-muted-foreground text-base ml-1">/session</span>
+          <div className="pt-3 flex flex-col h-full">
+            <h3 className="text-lg md:text-xl font-bold mb-2 text-center">{plan.name}</h3>
+            <div className="text-center mb-2" ref={ref}>
+              <span className="text-3xl md:text-4xl font-bold text-primary">${Math.round(count)}{plan.pricePrefix || ''}</span>
+              <span className="text-muted-foreground text-sm ml-1">/session</span>
             </div>
-            <p className="text-center text-base text-muted-foreground mb-1">{plan.duration}</p>
-            <p className="text-center text-base text-accent font-semibold mb-4">{plan.size}</p>
+            <p className="text-center text-sm text-muted-foreground mb-1">{plan.duration}</p>
+            <p className="text-center text-sm text-accent font-semibold mb-3">{plan.size}</p>
             
             {/* Description - More breathing room */}
-            <p className="text-center text-base text-muted-foreground mb-6 min-h-[56px] leading-relaxed px-2">
+            <p className="text-center text-sm text-muted-foreground mb-4 min-h-[48px] leading-relaxed px-1">
               {plan.description}
             </p>
 
-            <div className="space-y-3 mb-6 flex-1 px-1">
+            <div className="space-y-2.5 mb-5 flex-1 px-0">
               {plan.features.slice(0, 4).map((feature: string, idx: number) => (
-                <div key={idx} className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-foreground text-base leading-relaxed">{feature}</span>
+                <div key={idx} className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="text-foreground text-sm leading-snug">{feature}</span>
                 </div>
               ))}
             </div>
@@ -213,8 +213,8 @@ const TrainingCard = ({ plan, index, onBook }: { plan: any; index: number; onBoo
             <Button 
               onClick={() => onBook(plan)}
               variant={plan.popular ? "default" : "outline"} 
-              size="lg" 
-              className={`w-full mt-auto text-lg py-6 ${plan.popular ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : ''}`}
+              size="default" 
+              className={`w-full mt-auto text-base py-5 ${plan.popular ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : ''}`}
             >
               Book & Pay Now →
             </Button>
@@ -657,7 +657,7 @@ function LearnAndTrain() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-6xl mx-auto mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 max-w-5xl mx-auto mb-12">
             {[
               {
                 name: "Group Class",
@@ -904,7 +904,7 @@ function LearnAndTrain() {
             </Label>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 xl:gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 xl:gap-4 max-w-[1100px] mx-auto">
             {/* Starter Plan */}
             <div className="relative pt-6 h-full">
               <div className="absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-6 py-2.5 rounded-full text-sm font-bold tracking-wide shadow-lg z-20 whitespace-nowrap">
@@ -1328,7 +1328,7 @@ function LearnAndTrain() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 max-w-[1200px] mx-auto">
             {[
               {
                 name: "AI Automation",
@@ -1409,29 +1409,29 @@ function LearnAndTrain() {
                     {plan.badge.label}
                   </div>
                   
-                  <Card className={`relative p-5 md:p-6 h-full flex flex-col transition-all duration-300 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 ${
+                  <Card className={`relative p-6 md:p-7 h-full flex flex-col transition-all duration-300 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 min-h-[520px] ${
                     plan.popular 
                       ? "border-primary border-2 shadow-xl" 
                       : "border-border/50 hover:shadow-lg"
                   }`}>
-                    <div className="pt-3">
-                    <h3 className="text-lg md:text-xl font-bold mb-2 text-center">{plan.name}</h3>
-                    <div className="text-center mb-2">
-                      <span className="text-3xl md:text-4xl font-bold text-primary">{plan.price}</span>
-                      {plan.pricePrefix && <span className="text-muted-foreground text-sm">{plan.pricePrefix}</span>}
+                    <div className="pt-4 flex flex-col h-full">
+                    <h3 className="text-xl md:text-2xl font-bold mb-3 text-center">{plan.name}</h3>
+                    <div className="text-center mb-3">
+                      <span className="text-4xl md:text-5xl font-bold text-primary">{plan.price}</span>
+                      {plan.pricePrefix && <span className="text-muted-foreground text-base">{plan.pricePrefix}</span>}
                     </div>
-                    <p className="text-center text-sm text-muted-foreground mb-1">{plan.duration}</p>
-                    <p className="text-center text-sm text-accent font-semibold mb-3">{plan.size}</p>
+                    <p className="text-center text-base text-muted-foreground mb-1">{plan.duration}</p>
+                    <p className="text-center text-base text-accent font-semibold mb-4">{plan.size}</p>
                     
-                    <p className="text-center text-xs md:text-sm text-muted-foreground mb-4">
+                    <p className="text-center text-sm md:text-base text-muted-foreground mb-5 min-h-[60px] leading-relaxed">
                       {plan.description}
                     </p>
 
-                    <div className="space-y-2 mb-4 flex-grow">
+                    <div className="space-y-3 mb-5 flex-1">
                       {plan.features.map((feature: string, idx: number) => (
-                        <div key={idx} className="flex items-start gap-2">
-                          <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                          <span className="text-foreground text-sm">{feature}</span>
+                        <div key={idx} className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                          <span className="text-foreground text-base leading-snug">{feature}</span>
                         </div>
                       ))}
                     </div>
@@ -1449,8 +1449,8 @@ function LearnAndTrain() {
                         setTrainingPaymentOpen(true);
                       }}
                       variant={plan.popular ? "default" : "outline"} 
-                      size="default" 
-                      className={`w-full mt-auto ${plan.popular ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : ''}`}
+                      size="lg" 
+                      className={`w-full mt-auto text-lg py-6 ${plan.popular ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : ''}`}
                     >
                       Book & Pay Now →
                     </Button>
@@ -1573,18 +1573,18 @@ function LearnAndTrain() {
                 backgroundImage: `url(${heroVault})`,
               }}
             />
-            {/* Enhanced overlay for better text readability */}
-            <div className="absolute inset-0 bg-gradient-to-br from-background/98 via-background/95 to-background/92" />
-            <div className="absolute inset-0 backdrop-blur-[2px]" />
+            {/* Dark overlay for text readability - significantly enhanced */}
+            <div className="absolute inset-0 bg-gradient-to-br from-black/85 via-black/80 to-black/75" />
+            <div className="absolute inset-0 backdrop-blur-[1px]" />
             
             <div className="text-center relative z-10">
               <div className="flex justify-center mb-6">
-                <div className="w-20 h-20 bg-gradient-to-br from-primary/40 to-accent/40 rounded-full flex items-center justify-center animate-[shield-pulse_3s_ease-in-out_infinite] shadow-lg border-2 border-primary/20">
-                  <Lock className="w-10 h-10 text-primary" />
+                <div className="w-20 h-20 bg-gradient-to-br from-primary/60 to-accent/60 rounded-full flex items-center justify-center animate-[shield-pulse_3s_ease-in-out_infinite] shadow-lg border-2 border-white/30">
+                  <Lock className="w-10 h-10 text-white" />
                 </div>
               </div>
-              <h3 className="text-2xl md:text-3xl font-bold mb-3 text-foreground drop-shadow-sm">Family Safety Vault</h3>
-              <p className="text-foreground mb-6 text-base md:text-lg font-medium">Included with Family & Premium Plans — keep everything secure</p>
+              <h3 className="text-2xl md:text-3xl font-bold mb-3 text-white drop-shadow-lg">Family Safety Vault</h3>
+              <p className="text-white/90 mb-6 text-base md:text-lg font-medium drop-shadow-md">Included with Family & Premium Plans — keep everything secure</p>
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8 text-left max-w-2xl mx-auto">
                 {[
@@ -1595,14 +1595,14 @@ function LearnAndTrain() {
                   { icon: "🔐", feature: "Account recovery info" },
                   { icon: "✈️", feature: "Travel itineraries" },
                 ].map((item, index) => (
-                  <div key={index} className="flex items-center gap-3 p-3 bg-card/95 rounded-xl border border-border shadow-md">
+                  <div key={index} className="flex items-center gap-3 p-3 bg-white/95 rounded-xl border border-white/20 shadow-lg">
                     <span className="text-xl">{item.icon}</span>
                     <span className="text-sm md:text-base font-semibold text-foreground">{item.feature}</span>
                   </div>
                 ))}
               </div>
 
-              <p className="text-base md:text-lg text-foreground font-semibold">
+              <p className="text-base md:text-lg text-white font-semibold drop-shadow-md">
                 🔒 Bank-grade encryption • Multi-factor authentication • Secure family sharing
               </p>
             </div>
