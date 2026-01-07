@@ -30,18 +30,17 @@ export const HeroHomepage = () => {
         />
       </div>
 
-      {/* Video Background */}
-      <div className="absolute inset-0">
-        {/* Instant background color while video loads */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-background" />
-        
+      {/* Video Background - Full mobile support */}
+      <div className="absolute inset-0 bg-slate-900">
         <video
           autoPlay
           loop
           muted
           playsInline
-          preload="metadata"
+          preload="auto"
+          poster=""
           className="absolute inset-0 w-full h-full object-cover"
+          style={{ backgroundColor: 'hsl(var(--primary) / 0.1)' }}
         >
           <source src={heroVideo} type="video/mp4" />
         </video>
