@@ -13,7 +13,6 @@ const services = [
     description: "24/7 calls, booking, FAQs",
     price: "$9,500",
     highlight: "Never miss a lead",
-    emoji: "📞",
     color: "from-blue-500 to-indigo-500",
   },
   {
@@ -22,7 +21,6 @@ const services = [
     description: "Auto-book & reminders",
     price: "Custom",
     highlight: "Zero back-and-forth",
-    emoji: "📅",
     color: "from-emerald-500 to-teal-500",
   },
   {
@@ -31,7 +29,6 @@ const services = [
     description: "Custom agents & bots",
     price: "$25K+",
     highlight: "Full customization",
-    emoji: "🤖",
     color: "from-violet-500 to-purple-500",
   },
   {
@@ -40,21 +37,20 @@ const services = [
     description: "Landing to e-commerce",
     price: "$1,500+",
     highlight: "Pro websites",
-    emoji: "🌐",
     color: "from-orange-500 to-amber-500",
   },
 ];
 
 const premiumAddons = [
-  { icon: Palette, name: "Custom Integrations", emoji: "🎨" },
-  { icon: Shield, name: "Website Insurance", emoji: "🛡️" },
-  { icon: Headphones, name: "Expert Consulting", emoji: "💼" },
+  { icon: Palette, name: "Custom Integrations" },
+  { icon: Shield, name: "Website Insurance" },
+  { icon: Headphones, name: "Expert Consulting" },
 ];
 
 const roiFacts = [
-  { stat: "62%", desc: "calls missed", emoji: "📵", color: "text-rose-500" },
-  { stat: "$500", desc: "lost/missed call", emoji: "💸", color: "text-amber-500" },
-  { stat: "80%", desc: "fewer no-shows", emoji: "✅", color: "text-emerald-500" },
+  { stat: "62%", desc: "calls missed", icon: Phone, color: "text-rose-500" },
+  { stat: "$500", desc: "lost/missed call", icon: DollarSign, color: "text-amber-500" },
+  { stat: "80%", desc: "fewer no-shows", icon: CheckCircle, color: "text-emerald-500" },
 ];
 
 const businessTestimonials = [
@@ -158,7 +154,7 @@ export const AIBusinessPromo = () => {
                       transition={{ delay: 0.2 + i * 0.1 }}
                       className="flex items-center gap-2 text-xs bg-white/10 rounded-lg px-2 py-1"
                     >
-                      <span>{addon.emoji}</span>
+                      <addon.icon className="w-3 h-3" />
                       <span>{addon.name}</span>
                     </motion.div>
                   ))}
@@ -174,13 +170,9 @@ export const AIBusinessPromo = () => {
               whileHover={{ scale: 1.01 }}
               viewport={{ once: true }}
             >
-              <motion.div 
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="absolute top-2 right-2 text-2xl"
-              >
-                ⭐
-              </motion.div>
+              <div className="absolute top-2 right-2">
+                <Star className="w-5 h-5 text-amber-500" />
+              </div>
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/30">
                   <Shield className="w-5 h-5 text-white" />
@@ -188,7 +180,7 @@ export const AIBusinessPromo = () => {
                 <div>
                   <div className="flex items-center gap-2 mb-1 flex-wrap">
                     <h3 className="font-bold text-foreground">AI Service Insurance</h3>
-                    <span className="px-2 py-0.5 bg-amber-500 text-amber-950 text-[10px] font-bold rounded-full animate-pulse">INDUSTRY FIRST! 🏆</span>
+                    <span className="px-2 py-0.5 bg-amber-500 text-amber-950 text-[10px] font-bold rounded-full">INDUSTRY FIRST</span>
                   </div>
                   <p className="text-xs text-muted-foreground">
                     First-ever AI insurance—protecting your investment with ongoing support & updates.
@@ -209,13 +201,9 @@ export const AIBusinessPromo = () => {
                   whileHover={{ y: -3 }}
                   className="flex-1 bg-white rounded-xl p-3 border border-border/50 shadow-sm text-center"
                 >
-                  <motion.div 
-                    animate={{ scale: [1, 1.1, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 }}
-                    className="text-xl mb-1"
-                  >
-                    {fact.emoji}
-                  </motion.div>
+                  <div className="w-8 h-8 mx-auto mb-1 rounded-full bg-muted flex items-center justify-center">
+                    <fact.icon className={`w-4 h-4 ${fact.color}`} />
+                  </div>
                   <div className={`text-lg font-black ${fact.color}`}>{fact.stat}</div>
                   <div className="text-[10px] text-muted-foreground">{fact.desc}</div>
                 </motion.div>
@@ -238,7 +226,6 @@ export const AIBusinessPromo = () => {
                     <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${service.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
                       <service.icon className="w-4 h-4 text-white" />
                     </div>
-                    <span className="text-lg">{service.emoji}</span>
                   </div>
                   <h3 className="font-bold text-foreground text-sm">{service.title}</h3>
                   <p className="text-[10px] text-muted-foreground mb-1">{service.description}</p>
@@ -342,13 +329,9 @@ export const AIBusinessPromo = () => {
                 whileHover={{ scale: 1.03 }}
                 className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl p-3 text-white text-center"
               >
-                <motion.span 
-                  animate={{ rotate: [0, 10, -10, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="text-xl block mb-1"
-                >
-                  🕐
-                </motion.span>
+                <div className="w-8 h-8 mx-auto mb-1 rounded-full bg-white/20 flex items-center justify-center">
+                  <Clock className="w-4 h-4" />
+                </div>
                 <div className="text-xs font-bold">24/7</div>
                 <div className="text-[9px] opacity-80">Always On</div>
               </motion.div>
@@ -356,13 +339,9 @@ export const AIBusinessPromo = () => {
                 whileHover={{ scale: 1.03 }}
                 className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl p-3 text-white text-center"
               >
-                <motion.span 
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                  className="text-xl block mb-1"
-                >
-                  ✅
-                </motion.span>
+                <div className="w-8 h-8 mx-auto mb-1 rounded-full bg-white/20 flex items-center justify-center">
+                  <Shield className="w-4 h-4" />
+                </div>
                 <div className="text-xs font-bold">HIPAA</div>
                 <div className="text-[9px] opacity-80">Compliant</div>
               </motion.div>
@@ -370,13 +349,9 @@ export const AIBusinessPromo = () => {
                 whileHover={{ scale: 1.03 }}
                 className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl p-3 text-white text-center"
               >
-                <motion.span 
-                  animate={{ y: [0, -3, 0] }}
-                  transition={{ duration: 1, repeat: Infinity }}
-                  className="text-xl block mb-1"
-                >
-                  🎖️
-                </motion.span>
+                <div className="w-8 h-8 mx-auto mb-1 rounded-full bg-white/20 flex items-center justify-center">
+                  <Award className="w-4 h-4" />
+                </div>
                 <div className="text-xs font-bold">Veteran</div>
                 <div className="text-[9px] opacity-80">10% Off</div>
               </motion.div>
@@ -397,11 +372,9 @@ export const AIBusinessPromo = () => {
                 </div>
               </div>
               <div className="flex gap-1">
-                <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity, delay: 0 }}>⭐</motion.span>
-                <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity, delay: 0.2 }}>⭐</motion.span>
-                <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity, delay: 0.4 }}>⭐</motion.span>
-                <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}>⭐</motion.span>
-                <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity, delay: 0.8 }}>⭐</motion.span>
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 text-amber-400 fill-amber-400" />
+                ))}
               </div>
             </motion.div>
           </motion.div>

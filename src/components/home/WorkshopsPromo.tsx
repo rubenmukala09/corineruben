@@ -12,7 +12,6 @@ const formats = [
     title: "Groups",
     price: "$79",
     badge: null,
-    emoji: "👥",
     color: "from-blue-500 to-indigo-500",
   },
   {
@@ -20,7 +19,6 @@ const formats = [
     title: "Family",
     price: "$199",
     badge: "Best",
-    emoji: "👨‍👩‍👧‍👦",
     color: "from-amber-500 to-orange-500",
   },
   {
@@ -28,7 +26,6 @@ const formats = [
     title: "Private",
     price: "$299",
     badge: "VIP",
-    emoji: "🎖️",
     color: "from-violet-500 to-purple-500",
   },
   {
@@ -36,29 +33,28 @@ const formats = [
     title: "Orgs",
     price: "$510+",
     badge: null,
-    emoji: "🏢",
     color: "from-emerald-500 to-teal-500",
   },
 ];
 
 const audiences = [
-  { text: "Seniors & Retirees", emoji: "👴" },
-  { text: "Families", emoji: "👨‍👩‍👧" }, 
-  { text: "Business Pros", emoji: "💼" },
-  { text: "Churches", emoji: "⛪" },
+  { text: "Seniors & Retirees", icon: Users },
+  { text: "Families", icon: Heart }, 
+  { text: "Business Pros", icon: Briefcase },
+  { text: "Churches", icon: Star },
 ];
 
 const howItWorks = [
-  { step: "1", title: "Book", desc: "Pick format", emoji: "📅", color: "from-blue-500 to-indigo-500" },
-  { step: "2", title: "Learn", desc: "Interactive", emoji: "📚", color: "from-emerald-500 to-teal-500" },
-  { step: "3", title: "Support", desc: "Ongoing", emoji: "🛡️", color: "from-violet-500 to-purple-500" },
+  { step: "1", title: "Book", desc: "Pick format", icon: BookOpen, color: "from-blue-500 to-indigo-500" },
+  { step: "2", title: "Learn", desc: "Interactive", icon: GraduationCap, color: "from-emerald-500 to-teal-500" },
+  { step: "3", title: "Support", desc: "Ongoing", icon: Shield, color: "from-violet-500 to-purple-500" },
 ];
 
 const services = [
-  { icon: AlertTriangle, title: "Scam Prevention", desc: "Identify AI scams", emoji: "⚠️", color: "from-rose-500 to-pink-500" },
-  { icon: Shield, title: "4-Step Protection", desc: "Proven method", emoji: "🛡️", color: "from-blue-500 to-indigo-500" },
-  { icon: Target, title: "Protection Levels", desc: "Choose your tier", emoji: "🎯", color: "from-amber-500 to-orange-500" },
-  { icon: Eye, title: "Threat Analysis", desc: "Real-time", emoji: "👁️", color: "from-violet-500 to-purple-500" },
+  { icon: AlertTriangle, title: "Scam Prevention", desc: "Identify AI scams", color: "from-rose-500 to-pink-500" },
+  { icon: Shield, title: "4-Step Protection", desc: "Proven method", color: "from-blue-500 to-indigo-500" },
+  { icon: Target, title: "Protection Levels", desc: "Choose your tier", color: "from-amber-500 to-orange-500" },
+  { icon: Eye, title: "Threat Analysis", desc: "Real-time", color: "from-violet-500 to-purple-500" },
 ];
 
 const testimonials = [
@@ -196,7 +192,7 @@ export const WorkshopsPromo = () => {
             </h2>
             
             <p className="text-base text-muted-foreground leading-relaxed">
-              Expert-led workshops teaching the 60-Second Pause Protocol and real-world scam recognition. ✨
+              Expert-led workshops teaching the 60-Second Pause Protocol and real-world scam recognition.
             </p>
 
             {/* How It Works - Animated */}
@@ -211,13 +207,9 @@ export const WorkshopsPromo = () => {
                   whileHover={{ scale: 1.05, y: -3 }}
                   className={`bg-gradient-to-br ${item.color} rounded-xl p-3 text-center text-white`}
                 >
-                  <motion.div 
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 }}
-                    className="text-2xl mb-1"
-                  >
-                    {item.emoji}
-                  </motion.div>
+                  <div className="w-8 h-8 mx-auto mb-1 rounded-full bg-white/20 flex items-center justify-center">
+                    <item.icon className="w-4 h-4" />
+                  </div>
                   <div className="text-sm font-bold">{item.title}</div>
                   <div className="text-[10px] opacity-80">{item.desc}</div>
                 </motion.div>
@@ -240,7 +232,6 @@ export const WorkshopsPromo = () => {
                     <div className={`w-7 h-7 rounded-lg bg-gradient-to-br ${service.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
                       <service.icon className="w-3.5 h-3.5 text-white" />
                     </div>
-                    <span className="text-base">{service.emoji}</span>
                   </div>
                   <div className="text-sm font-bold text-foreground">{service.title}</div>
                   <div className="text-[10px] text-muted-foreground">{service.desc}</div>
@@ -248,7 +239,7 @@ export const WorkshopsPromo = () => {
               ))}
             </div>
 
-            {/* Target Audiences - Emoji Pills */}
+            {/* Target Audiences - Icon Pills */}
             <div className="flex flex-wrap gap-2">
               {audiences.map((audience, index) => (
                 <motion.span 
@@ -260,7 +251,7 @@ export const WorkshopsPromo = () => {
                   whileHover={{ scale: 1.05 }}
                   className="px-3 py-1.5 bg-gradient-to-r from-muted to-muted/50 rounded-full text-sm font-medium text-foreground flex items-center gap-1.5"
                 >
-                  <span>{audience.emoji}</span>
+                  <audience.icon className="w-3.5 h-3.5 text-primary" />
                   <span>{audience.text}</span>
                 </motion.span>
               ))}
@@ -283,13 +274,9 @@ export const WorkshopsPromo = () => {
                       {format.badge}
                     </span>
                   )}
-                  <motion.div 
-                    animate={{ rotate: [0, 5, -5, 0] }}
-                    transition={{ duration: 3, repeat: Infinity, delay: index * 0.2 }}
-                    className="text-xl mb-1"
-                  >
-                    {format.emoji}
-                  </motion.div>
+                  <div className={`w-8 h-8 mx-auto mb-1 rounded-full bg-gradient-to-br ${format.color} flex items-center justify-center`}>
+                    <format.icon className="w-4 h-4 text-white" />
+                  </div>
                   <div className="text-[10px] font-medium text-muted-foreground">{format.title}</div>
                   <div className="text-base font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{format.price}</div>
                 </motion.div>
