@@ -208,14 +208,50 @@ function App() {
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
     
-    // Show splash for at least 1.5 seconds
-    const timer = setTimeout(() => {
-      setShowSplash(false);
-    }, 1500);
+    // Preload hero video and wait for it before hiding splash
+    const heroVideo = document.createElement('video');
+    heroVideo.preload = 'auto';
+    heroVideo.muted = true;
+    
+    const minDuration = 1500; // Minimum splash duration
+    const startTime = Date.now();
+    
+    let videoReady = false;
+    let minTimeElapsed = false;
+    
+    const tryHideSplash = () => {
+      if (videoReady && minTimeElapsed) {
+        setShowSplash(false);
+      }
+    };
+    
+    // Import hero video dynamically
+    import("@/assets/hero-video.mp4").then((module) => {
+      heroVideo.src = module.default;
+      heroVideo.load();
+    });
+    
+    heroVideo.oncanplaythrough = () => {
+      videoReady = true;
+      tryHideSplash();
+    };
+    
+    // Fallback: mark video ready after 3s even if not loaded
+    const videoTimeout = setTimeout(() => {
+      videoReady = true;
+      tryHideSplash();
+    }, 3000);
+    
+    // Minimum duration timer
+    const minTimer = setTimeout(() => {
+      minTimeElapsed = true;
+      tryHideSplash();
+    }, minDuration);
     
     return () => {
       document.documentElement.style.scrollBehavior = "auto";
-      clearTimeout(timer);
+      clearTimeout(minTimer);
+      clearTimeout(videoTimeout);
     };
   }, []);
 

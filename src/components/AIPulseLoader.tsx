@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Shield } from "lucide-react";
 
 interface AIPulseLoaderProps {
   message?: string;
@@ -6,7 +7,7 @@ interface AIPulseLoaderProps {
 }
 
 export const AIPulseLoader = ({ 
-  message = "Verifying Security...", 
+  message = "Loading...", 
   fullScreen = true 
 }: AIPulseLoaderProps) => {
   return (
@@ -14,91 +15,110 @@ export const AIPulseLoader = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
       className={`flex flex-col items-center justify-center gap-6 ${
-        fullScreen ? "fixed inset-0 z-[9999] bg-background backdrop-blur-sm" : "py-10"
+        fullScreen ? "fixed inset-0 z-[9999]" : "py-10"
       }`}
+      style={{ backgroundColor: fullScreen ? '#F8F9FC' : 'transparent' }}
     >
-      {/* AI Pulse Animation Container */}
-      <div className="relative flex items-center justify-center w-32 h-32">
-        {/* Outer ripple ring 1 */}
+      {/* Glassmorphism Shield Loader */}
+      <div className="relative flex items-center justify-center">
+        {/* Outer breathing glow */}
         <motion.div
-          className="absolute w-full h-full rounded-full border-2 border-primary/40"
-          initial={{ scale: 0.6, opacity: 0.8 }}
-          animate={{ scale: 1.8, opacity: 0 }}
+          className="absolute w-36 h-36 rounded-full"
+          animate={{
+            scale: [1, 1.15, 1],
+            opacity: [0.25, 0.45, 0.25],
+          }}
+          transition={{
+            duration: 2.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          style={{
+            background: 'radial-gradient(circle, hsl(var(--primary) / 0.4) 0%, transparent 70%)',
+            filter: 'blur(16px)',
+          }}
+        />
+
+        {/* Ripple ring 1 */}
+        <motion.div
+          className="absolute w-28 h-28 rounded-full border-2"
+          style={{ borderColor: 'hsl(var(--primary) / 0.3)' }}
+          initial={{ scale: 0.5, opacity: 0.6 }}
+          animate={{ scale: 1.6, opacity: 0 }}
           transition={{
             duration: 2,
             repeat: Infinity,
             ease: "easeOut",
           }}
-          style={{ filter: "blur(2px)" }}
         />
 
-        {/* Outer ripple ring 2 (delayed) */}
+        {/* Ripple ring 2 (delayed) */}
         <motion.div
-          className="absolute w-full h-full rounded-full border-2 border-primary/30"
-          initial={{ scale: 0.6, opacity: 0.6 }}
-          animate={{ scale: 1.6, opacity: 0 }}
+          className="absolute w-28 h-28 rounded-full border-2"
+          style={{ borderColor: 'hsl(var(--primary) / 0.2)' }}
+          initial={{ scale: 0.5, opacity: 0.4 }}
+          animate={{ scale: 1.4, opacity: 0 }}
           transition={{
             duration: 2,
             repeat: Infinity,
             ease: "easeOut",
             delay: 0.6,
           }}
-          style={{ filter: "blur(1px)" }}
         />
 
-        {/* Inner glow ring */}
+        {/* Glassmorphism shield container */}
         <motion.div
-          className="absolute w-20 h-20 rounded-full bg-primary/20"
+          className="relative w-20 h-20 rounded-2xl flex items-center justify-center"
           animate={{
-            scale: [1, 1.15, 1],
-            opacity: [0.3, 0.5, 0.3],
+            scale: [1, 1.05, 1],
           }}
           transition={{
-            duration: 1.5,
+            duration: 2.5,
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          style={{ filter: "blur(12px)" }}
-        />
-
-        {/* Central glowing orb */}
-        <motion.div
-          className="relative w-12 h-12 rounded-full bg-gradient-to-br from-primary via-primary/80 to-accent"
-          animate={{
-            scale: [1, 1.08, 1],
-            boxShadow: [
-              "0 0 20px hsl(var(--primary) / 0.4), 0 0 40px hsl(var(--primary) / 0.2)",
-              "0 0 30px hsl(var(--primary) / 0.6), 0 0 60px hsl(var(--primary) / 0.3)",
-              "0 0 20px hsl(var(--primary) / 0.4), 0 0 40px hsl(var(--primary) / 0.2)",
-            ],
-          }}
-          transition={{
-            duration: 1.5,
-            repeat: Infinity,
-            ease: "easeInOut",
+          style={{
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 100%)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            border: '1px solid rgba(255,255,255,0.8)',
+            boxShadow: `
+              0 8px 32px rgba(139, 92, 246, 0.25),
+              0 0 50px rgba(139, 92, 246, 0.12),
+              inset 0 1px 0 rgba(255,255,255,0.9)
+            `,
           }}
         >
-          {/* Inner bright core */}
+          {/* Shield icon with purple glow */}
           <motion.div
-            className="absolute inset-2 rounded-full bg-white/30"
-            animate={{ opacity: [0.4, 0.7, 0.4] }}
+            animate={{
+              filter: [
+                'drop-shadow(0 0 6px hsl(var(--primary) / 0.5))',
+                'drop-shadow(0 0 16px hsl(var(--primary) / 0.7))',
+                'drop-shadow(0 0 6px hsl(var(--primary) / 0.5))',
+              ],
+            }}
             transition={{
-              duration: 1.5,
+              duration: 2.5,
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            style={{ filter: "blur(4px)" }}
-          />
+          >
+            <Shield 
+              className="w-10 h-10 text-primary" 
+              strokeWidth={1.5}
+            />
+          </motion.div>
         </motion.div>
       </div>
 
-      {/* Loading text */}
+      {/* Loading text with fade animation */}
       <motion.span
         className="text-sm font-medium text-muted-foreground tracking-wide"
         animate={{ opacity: [0.5, 1, 0.5] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
       >
         {message}
       </motion.span>
