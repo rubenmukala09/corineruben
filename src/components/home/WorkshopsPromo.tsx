@@ -166,11 +166,11 @@ export const WorkshopsPromo = () => {
             
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
               Protect Your Family from{" "}
-              <span className="text-foreground/80">AI Scams</span>
+              <span className="text-primary">AI-Powered Scams</span>
             </h2>
             
-            <p className="text-base text-muted-foreground leading-relaxed">
-              Expert-led workshops teaching the 60-Second Pause Protocol and real-world scam recognition.
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              With the rise of AI, scammers use deepfakes and voice cloning to trick families. Our expert-led workshops teach you to recognize and stop these sophisticated threats.
             </p>
 
             {/* How It Works - Animated */}
