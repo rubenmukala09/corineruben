@@ -52,6 +52,7 @@ import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
 import HeroFloatingStats from "@/components/business/HeroFloatingStats";
+import heroVault from "@/assets/hero-vault-1.jpg";
 
 // Rotating hero headlines for Training page
 const trainingHeadlines = [
@@ -903,14 +904,14 @@ function LearnAndTrain() {
             </Label>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 xl:gap-5">
             {/* Starter Plan */}
             <div className="relative pt-6 h-full">
               <div className="absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-6 py-2.5 rounded-full text-sm font-bold tracking-wide shadow-lg z-20 whitespace-nowrap">
                 🌱 STARTER
               </div>
               <Card
-                className="p-6 md:p-8 transition-all duration-500 hover:-translate-y-2 hover:shadow-strong rounded-2xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50 h-full flex flex-col min-h-[560px]"
+                className="p-5 md:p-6 lg:p-7 transition-all duration-500 hover:-translate-y-2 hover:shadow-strong rounded-2xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50 h-full flex flex-col min-h-[600px]"
                 style={{ animationDelay: "0ms" }}
               >
                 <div className="flex justify-center mb-5 pt-3">
@@ -981,7 +982,7 @@ function LearnAndTrain() {
                 ⭐ MOST POPULAR
               </div>
               <Card
-                className="p-6 md:p-8 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(109,40,217,0.2)] rounded-2xl border-primary border-2 animate-fade-in-up bg-gradient-to-br from-card to-card/50 h-full flex flex-col min-h-[560px]"
+                className="p-5 md:p-6 lg:p-7 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(109,40,217,0.2)] rounded-2xl border-primary border-2 animate-fade-in-up bg-gradient-to-br from-card to-card/50 h-full flex flex-col min-h-[600px]"
                 style={{ animationDelay: "100ms" }}
               >
                 <div className="flex justify-center mb-5 pt-3">
@@ -1054,7 +1055,7 @@ function LearnAndTrain() {
                 👑 PREMIUM
               </div>
               <Card
-                className="p-6 md:p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 rounded-2xl border-amber-500/30 animate-fade-in-up bg-gradient-to-br from-card to-amber-500/5 h-full flex flex-col min-h-[560px]"
+                className="p-5 md:p-6 lg:p-7 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 rounded-2xl border-amber-500/30 animate-fade-in-up bg-gradient-to-br from-card to-amber-500/5 h-full flex flex-col min-h-[600px]"
                 style={{ animationDelay: "200ms" }}
               >
                 <div className="flex justify-center mb-5 pt-3">
@@ -1129,7 +1130,7 @@ function LearnAndTrain() {
                 🏢 ENTERPRISE
               </div>
               <Card
-                className="p-6 md:p-8 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 rounded-2xl border-violet-500/30 animate-fade-in-up bg-gradient-to-br from-card to-violet-500/5 h-full flex flex-col min-h-[560px]"
+                className="p-5 md:p-6 lg:p-7 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 rounded-2xl border-violet-500/30 animate-fade-in-up bg-gradient-to-br from-card to-violet-500/5 h-full flex flex-col min-h-[600px]"
                 style={{ animationDelay: "300ms" }}
               >
                 <div className="flex justify-center mb-5 pt-3">
@@ -1564,24 +1565,25 @@ function LearnAndTrain() {
           </div>
 
           {/* Family Safety Vault Card */}
-          <Card className="max-w-4xl mx-auto mt-10 p-8 hover:shadow-xl transition-all duration-500 rounded-2xl border-accent border-2 relative overflow-hidden">
-            {/* Background Image */}
+          <Card className="max-w-4xl mx-auto mt-10 p-8 md:p-10 hover:shadow-xl transition-all duration-500 rounded-2xl border-accent border-2 relative overflow-hidden">
+            {/* Background Image - Vault themed */}
             <div 
-              className="absolute inset-0 bg-cover bg-center opacity-10"
+              className="absolute inset-0 bg-cover bg-center"
               style={{ 
-                backgroundImage: 'url("https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=1920&q=80")',
+                backgroundImage: `url(${heroVault})`,
               }}
             />
-            <div className="absolute inset-0 bg-gradient-to-br from-card via-card/95 to-card/90" />
+            {/* Overlay for readability */}
+            <div className="absolute inset-0 bg-gradient-to-br from-card/95 via-card/90 to-card/85 backdrop-blur-sm" />
             
             <div className="text-center relative z-10">
               <div className="flex justify-center mb-6">
-                <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center animate-[shield-pulse_3s_ease-in-out_infinite]">
+                <div className="w-20 h-20 bg-gradient-to-br from-primary/30 to-accent/30 rounded-full flex items-center justify-center animate-[shield-pulse_3s_ease-in-out_infinite] shadow-lg">
                   <Lock className="w-10 h-10 text-primary" />
                 </div>
               </div>
-              <h3 className="text-2xl font-bold mb-2">Family Safety Vault</h3>
-              <p className="text-muted-foreground mb-6">Included with Family & Premium Plans — keep everything secure</p>
+              <h3 className="text-2xl md:text-3xl font-bold mb-3 text-foreground">Family Safety Vault</h3>
+              <p className="text-foreground/80 mb-6 text-base md:text-lg">Included with Family & Premium Plans — keep everything secure</p>
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8 text-left max-w-2xl mx-auto">
                 {[
@@ -1592,14 +1594,14 @@ function LearnAndTrain() {
                   { icon: "🔐", feature: "Account recovery info" },
                   { icon: "✈️", feature: "Travel itineraries" },
                 ].map((item, index) => (
-                  <div key={index} className="flex items-center gap-3 p-3 bg-background/70 rounded-xl backdrop-blur-sm">
+                  <div key={index} className="flex items-center gap-3 p-3 bg-background/80 rounded-xl backdrop-blur-sm border border-border/50 shadow-sm">
                     <span className="text-xl">{item.icon}</span>
-                    <span className="text-sm font-medium text-foreground">{item.feature}</span>
+                    <span className="text-sm md:text-base font-medium text-foreground">{item.feature}</span>
                   </div>
                 ))}
               </div>
 
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm md:text-base text-foreground/80 font-medium">
                 🔒 Bank-grade encryption • Multi-factor authentication • Secure family sharing
               </p>
             </div>
