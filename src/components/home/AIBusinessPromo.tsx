@@ -406,10 +406,10 @@ export const AIBusinessPromo = () => {
                   <div className="font-bold text-foreground">Dayton, Ohio</div>
                 </div>
               </div>
-              <div className="flex items-center gap-1 text-xs text-emerald-600 font-medium">
-                <CheckCircle className="w-3 h-3" />
-                Veteran-Owned
-              </div>
+                  <div className="flex items-center gap-1 text-xs text-emerald-600 font-medium">
+                    <CheckCircle className="w-3 h-3" />
+                    Veteran-Supporting
+                  </div>
             </motion.div>
           </motion.div>
         </div>
