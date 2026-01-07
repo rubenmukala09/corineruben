@@ -120,31 +120,31 @@ const ScamExampleCard = ({ example, index }: { example: any; index: number }) =>
   return (
     <ScrollReveal animation="scale-in" delay={index * 100} threshold={0.2}>
       <Card
-        className="p-4 hover:shadow-strong transition-all duration-500 hover:-translate-y-1 rounded-xl border-border/50 bg-gradient-to-br from-card to-card/50"
+        className="p-5 md:p-6 hover:shadow-strong transition-all duration-500 hover:-translate-y-1 rounded-xl border-border/50 bg-gradient-to-br from-card to-card/50 h-full min-h-[280px] flex flex-col"
       >
-        <div className="mb-3">
-          <span className={`text-xs font-bold px-2 py-1 rounded-full ${getBadgeColor(example.badge)}`}>
+        <div className="mb-4">
+          <span className={`text-sm font-bold px-3 py-1.5 rounded-full ${getBadgeColor(example.badge)}`}>
             {example.badge}
           </span>
         </div>
-        <div className="space-y-2">
+        <div className="space-y-4 flex-1">
           <div>
-            <p className="text-xs font-semibold text-muted-foreground mb-1">WHAT THEY RECEIVED:</p>
-            <p className="text-foreground text-xs italic line-clamp-2">{example.received}</p>
+            <p className="text-sm md:text-base font-bold text-muted-foreground mb-2">WHAT THEY RECEIVED:</p>
+            <p className="text-foreground text-base md:text-lg italic leading-relaxed">{example.received}</p>
           </div>
           <div>
-            <p className="text-xs font-semibold text-muted-foreground mb-1">OUR ANALYSIS:</p>
-            <p className="text-foreground text-xs line-clamp-2">{example.analysis}</p>
+            <p className="text-sm md:text-base font-bold text-muted-foreground mb-2">OUR ANALYSIS:</p>
+            <p className="text-foreground text-base md:text-lg leading-relaxed">{example.analysis}</p>
           </div>
           <div ref={ref as any}>
-            <p className="text-xs font-semibold text-muted-foreground mb-1">SAVED:</p>
+            <p className="text-sm md:text-base font-bold text-muted-foreground mb-2">SAVED:</p>
             {isNumeric ? (
-              <p className="text-lg font-bold text-success">
+              <p className="text-2xl md:text-3xl font-bold text-success">
                 <span className="inline-block animate-[dollar-scale_2s_ease-out]">$</span>
                 {Math.round(count).toLocaleString()}
               </p>
             ) : (
-              <p className="text-lg font-bold text-success">{example.saved}</p>
+              <p className="text-2xl md:text-3xl font-bold text-success">{example.saved}</p>
             )}
           </div>
         </div>
@@ -401,11 +401,11 @@ function LearnAndTrain() {
         <FlowingWaves variant="full" opacity={0.08} />
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-10">
-            <Badge className="mb-4 bg-gradient-to-r from-primary to-accent text-white text-sm px-4 py-1.5">
-              <Shield className="w-4 h-4 mr-1" /> TRUSTED BY FAMILIES
+            <Badge className="mb-4 bg-gradient-to-r from-primary to-accent text-white text-base md:text-lg px-5 py-2">
+              <Shield className="w-5 h-5 mr-1.5" /> TRUSTED BY FAMILIES
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Families Trust InVision Network</h2>
-            <p className="text-lg text-foreground max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5">Why Families Trust InVision Network</h2>
+            <p className="text-lg md:text-xl lg:text-2xl text-foreground max-w-3xl mx-auto leading-relaxed">
               Clear teaching, privacy-first protocols, and real scripts your family can use in any emergency situation.
             </p>
           </div>
@@ -435,13 +435,13 @@ function LearnAndTrain() {
               },
             ].map((item, index) => (
               <ScrollReveal key={index} animation="scale-in" delay={index * 100}>
-                <Card className="p-6 h-full bg-gradient-to-br from-card to-card/50 border-border/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 rounded-xl">
+                <Card className="p-6 md:p-8 h-full bg-gradient-to-br from-card to-card/50 border-border/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 rounded-xl min-h-[280px]">
                   <div className="flex flex-col items-center text-center">
-                    <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
-                      <span className="text-2xl">{item.icon}</span>
+                    <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-5">
+                      <span className="text-3xl">{item.icon}</span>
                     </div>
-                    <h3 className="text-lg font-bold mb-2">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground">{item.desc}</p>
+                    <h3 className="text-xl md:text-2xl font-bold mb-3">{item.title}</h3>
+                    <p className="text-base md:text-lg text-muted-foreground leading-relaxed">{item.desc}</p>
                   </div>
                 </Card>
               </ScrollReveal>
@@ -451,14 +451,14 @@ function LearnAndTrain() {
           {/* Emergency Protocol & Verification Script */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {/* Emergency Pause Protocol */}
-            <Card className="p-6 bg-gradient-to-br from-red-500/5 to-orange-500/5 border-red-500/20 rounded-xl">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-red-500/10 rounded-lg flex items-center justify-center">
-                  <span className="text-xl">🚨</span>
+            <Card className="p-6 md:p-8 bg-gradient-to-br from-red-500/5 to-orange-500/5 border-red-500/20 rounded-xl">
+              <div className="flex items-center gap-4 mb-5">
+                <div className="w-14 h-14 bg-red-500/10 rounded-lg flex items-center justify-center">
+                  <span className="text-3xl">🚨</span>
                 </div>
-                <h3 className="text-lg font-bold">Emergency? Use the 60-Second Pause Protocol</h3>
+                <h3 className="text-xl md:text-2xl font-bold">Emergency? Use the 60-Second Pause Protocol</h3>
               </div>
-              <ol className="space-y-3">
+              <ol className="space-y-4">
                 {[
                   { step: "Stop immediately.", detail: "Hang up / stop replying. Take a breath." },
                   { step: "Verify independently.", detail: "Call back using the official number on your card." },
@@ -466,11 +466,11 @@ function LearnAndTrain() {
                   { step: "Double-check money requests", detail: "with a second family member." },
                   { step: "Report and document", detail: "the attempt (we provide templates)." },
                 ].map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-3">
-                    <span className="w-6 h-6 bg-red-500/20 text-red-600 dark:text-red-400 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">{idx + 1}</span>
+                  <li key={idx} className="flex items-start gap-4">
+                    <span className="w-8 h-8 bg-red-500/20 text-red-600 dark:text-red-400 rounded-full flex items-center justify-center text-base font-bold flex-shrink-0">{idx + 1}</span>
                     <div>
-                      <span className="font-semibold text-foreground">{item.step}</span>{" "}
-                      <span className="text-muted-foreground text-sm">{item.detail}</span>
+                      <span className="font-bold text-foreground text-lg">{item.step}</span>{" "}
+                      <span className="text-muted-foreground text-base">{item.detail}</span>
                     </div>
                   </li>
                 ))}
@@ -478,25 +478,25 @@ function LearnAndTrain() {
             </Card>
 
             {/* Identity Verification Script */}
-            <Card className="p-6 bg-gradient-to-br from-blue-500/5 to-cyan-500/5 border-blue-500/20 rounded-xl">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center">
-                  <span className="text-xl">🔍</span>
+            <Card className="p-6 md:p-8 bg-gradient-to-br from-blue-500/5 to-cyan-500/5 border-blue-500/20 rounded-xl">
+              <div className="flex items-center gap-4 mb-5">
+                <div className="w-14 h-14 bg-blue-500/10 rounded-lg flex items-center justify-center">
+                  <span className="text-3xl">🔍</span>
                 </div>
-                <h3 className="text-lg font-bold">Identity Verification Script</h3>
+                <h3 className="text-xl md:text-2xl font-bold">Identity Verification Script</h3>
               </div>
-              <ul className="space-y-3">
+              <ul className="space-y-4">
                 {[
                   { action: "Demand specifics:", detail: "Full name, department, callback number, case number." },
-                  { action: "Always say:", detail: '"I\'ll call you back through the main line."' },
+                  { action: "Always say:", detail: "\"I'll call you back through the main line.\"" },
                   { action: "Never share:", detail: "Codes, passwords, or download any software." },
                   { action: "Forward suspicious items", detail: "to our help line for expert review." },
                 ].map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
+                  <li key={idx} className="flex items-start gap-4">
+                    <CheckCircle className="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5" />
                     <div>
-                      <span className="font-semibold text-foreground">{item.action}</span>{" "}
-                      <span className="text-muted-foreground text-sm">{item.detail}</span>
+                      <span className="font-bold text-foreground text-lg">{item.action}</span>{" "}
+                      <span className="text-muted-foreground text-base">{item.detail}</span>
                     </div>
                   </li>
                 ))}
@@ -507,11 +507,11 @@ function LearnAndTrain() {
           {/* Getting Started - How It Works */}
           <div className="max-w-5xl mx-auto mt-16">
             <div className="text-center mb-10">
-              <Badge className="mb-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-sm px-4 py-1.5">
+              <Badge className="mb-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-base md:text-lg px-5 py-2">
                 GETTING STARTED
               </Badge>
-              <h3 className="text-2xl md:text-3xl font-bold mb-2">How It Works</h3>
-              <p className="text-muted-foreground">Three simple steps to build calm, repeatable safety habits that protect you and your family.</p>
+              <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">How It Works</h3>
+              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">Three simple steps to build calm, repeatable safety habits that protect you and your family.</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -536,15 +536,15 @@ function LearnAndTrain() {
                 },
               ].map((item, index) => (
                 <ScrollReveal key={index} animation="scale-in" delay={index * 150}>
-                  <Card className="p-6 h-full bg-gradient-to-br from-card to-card/50 border-border/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 rounded-xl text-center relative overflow-hidden">
-                    <div className="absolute -top-2 -right-2 w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-bl-2xl flex items-center justify-center">
-                      <span className="text-white font-bold">{item.step}</span>
+                  <Card className="p-6 md:p-8 h-full bg-gradient-to-br from-card to-card/50 border-border/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 rounded-xl text-center relative overflow-hidden min-h-[320px]">
+                    <div className="absolute -top-2 -right-2 w-14 h-14 bg-gradient-to-br from-primary to-accent rounded-bl-2xl flex items-center justify-center">
+                      <span className="text-white font-bold text-lg">{item.step}</span>
                     </div>
-                    <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                      <span className="text-3xl">{item.icon}</span>
+                    <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                      <span className="text-4xl">{item.icon}</span>
                     </div>
-                    <h4 className="text-lg font-bold mb-2">{item.title}</h4>
-                    <p className="text-sm text-muted-foreground">{item.desc}</p>
+                    <h4 className="text-xl md:text-2xl font-bold mb-3">{item.title}</h4>
+                    <p className="text-base md:text-lg text-muted-foreground leading-relaxed">{item.desc}</p>
                   </Card>
                 </ScrollReveal>
               ))}
@@ -554,46 +554,46 @@ function LearnAndTrain() {
           {/* Our Safety Pledge & Always Verify */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto mt-16">
             {/* Our Safety Pledge */}
-            <Card className="p-6 bg-gradient-to-br from-emerald-500/5 to-teal-500/5 border-emerald-500/20 rounded-xl">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 bg-emerald-500/10 rounded-lg flex items-center justify-center">
-                  <Shield className="w-5 h-5 text-emerald-600" />
+            <Card className="p-6 md:p-8 bg-gradient-to-br from-emerald-500/5 to-teal-500/5 border-emerald-500/20 rounded-xl">
+              <div className="flex items-center gap-4 mb-5">
+                <div className="w-14 h-14 bg-emerald-500/10 rounded-lg flex items-center justify-center">
+                  <Shield className="w-7 h-7 text-emerald-600" />
                 </div>
-                <h3 className="text-lg font-bold">Our Safety Pledge</h3>
+                <h3 className="text-xl md:text-2xl font-bold">Our Safety Pledge</h3>
               </div>
-              <ul className="space-y-3">
+              <ul className="space-y-4">
                 {[
                   { text: "Educational focus: We teach techniques, never take control of devices" },
                   { text: "Privacy first: Minimal data collection, maximum respect for your privacy" },
                   { text: "Clear guidance: Simple scripts and checklists you can follow confidently" },
                 ].map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground text-sm">{item.text}</span>
+                  <li key={idx} className="flex items-start gap-4">
+                    <CheckCircle className="w-6 h-6 text-emerald-500 flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground text-base md:text-lg leading-relaxed">{item.text}</span>
                   </li>
                 ))}
               </ul>
             </Card>
 
             {/* Always Verify */}
-            <Card className="p-6 bg-gradient-to-br from-amber-500/5 to-orange-500/5 border-amber-500/20 rounded-xl">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 bg-amber-500/10 rounded-lg flex items-center justify-center">
-                  <span className="text-xl">⚠️</span>
+            <Card className="p-6 md:p-8 bg-gradient-to-br from-amber-500/5 to-orange-500/5 border-amber-500/20 rounded-xl">
+              <div className="flex items-center gap-4 mb-5">
+                <div className="w-14 h-14 bg-amber-500/10 rounded-lg flex items-center justify-center">
+                  <span className="text-3xl">⚠️</span>
                 </div>
-                <h3 className="text-lg font-bold">Always Verify</h3>
+                <h3 className="text-xl md:text-2xl font-bold">Always Verify</h3>
               </div>
-              <ul className="space-y-3">
+              <ul className="space-y-4">
                 {[
                   { text: "Never trust unsolicited pictures, videos, voice notes, or links" },
                   { text: "Always call your bank using the official number on your card" },
                   { text: "When in doubt, contact InVision Network for expert review" },
                 ].map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-3">
-                    <div className="w-5 h-5 bg-amber-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span className="text-white text-xs font-bold">!</span>
+                  <li key={idx} className="flex items-start gap-4">
+                    <div className="w-6 h-6 bg-amber-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-white text-sm font-bold">!</span>
                     </div>
-                    <span className="text-foreground text-sm">{item.text}</span>
+                    <span className="text-foreground text-base md:text-lg leading-relaxed">{item.text}</span>
                   </li>
                 ))}
               </ul>
@@ -619,14 +619,14 @@ function LearnAndTrain() {
             </p>
           </div>
 
-          {/* Veteran Discount Notification - Compact */}
-          <div className="flex justify-center mb-8">
-            <div className="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-blue-900/10 to-red-900/10 border border-blue-500/20 rounded-full text-base">
-              <span>🇺🇸</span>
-              <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-              <span className="font-semibold">Veterans & First Responders Save 10%</span>
-              <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-              <span className="text-muted-foreground">• Applied at checkout</span>
+          {/* Veteran Discount Notification - Enhanced Visibility */}
+          <div className="flex justify-center mb-10">
+            <div className="inline-flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-blue-900/15 to-red-900/15 border-2 border-blue-500/30 rounded-2xl text-lg md:text-xl">
+              <span className="text-2xl">🇺🇸</span>
+              <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
+              <span className="font-bold">Veterans & First Responders Save 10%</span>
+              <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
+              <span className="text-muted-foreground text-base">• Applied at checkout</span>
             </div>
           </div>
 
@@ -1177,11 +1177,11 @@ function LearnAndTrain() {
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
-            <Badge className="mb-4 bg-gradient-to-r from-accent to-cyan-500 text-white text-sm px-4 py-1.5">
-              <Shield className="w-4 h-4 mr-1" /> COMPREHENSIVE PROTECTION
+            <Badge className="mb-4 bg-gradient-to-r from-accent to-cyan-500 text-white text-base md:text-lg px-5 py-2">
+              <Shield className="w-5 h-5 mr-1.5" /> COMPREHENSIVE PROTECTION
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">We Analyze All Types of Threats</h2>
-            <p className="text-lg text-foreground max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5">We Analyze All Types of Threats</h2>
+            <p className="text-lg md:text-xl lg:text-2xl text-foreground max-w-3xl mx-auto leading-relaxed">
               Click on any threat type below to learn how we protect you. <strong>No threat is too small — if it feels suspicious, send it to us.</strong>
             </p>
           </div>
@@ -1232,31 +1232,31 @@ function LearnAndTrain() {
               <ScrollReveal key={index} animation="scale-in" delay={index * 50} threshold={0.2}>
                 <Card
                   onClick={() => setExpandedThreat(expandedThreat === threat.title ? null : threat.title)}
-                  className={`p-5 cursor-pointer transition-all duration-300 rounded-2xl border-2 group bg-gradient-to-br from-card to-card/50 backdrop-blur-sm hover:shadow-xl hover:-translate-y-1 ${
+                  className={`p-5 md:p-6 cursor-pointer transition-all duration-300 rounded-2xl border-2 group bg-gradient-to-br from-card to-card/50 backdrop-blur-sm hover:shadow-xl hover:-translate-y-1 min-h-[180px] ${
                     expandedThreat === threat.title 
                       ? 'border-primary shadow-lg bg-primary/5' 
                       : 'border-border/50 hover:border-primary/50'
                   }`}
                 >
                   <div className="flex flex-col items-center text-center">
-                    <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center transition-all duration-300 mb-3 group-hover:scale-110 group-hover:bg-primary/20">
-                      <threat.icon className="w-8 h-8 text-primary" />
+                    <div className="w-18 h-18 md:w-20 md:h-20 bg-primary/10 rounded-2xl flex items-center justify-center transition-all duration-300 mb-4 group-hover:scale-110 group-hover:bg-primary/20">
+                      <threat.icon className="w-9 h-9 md:w-10 md:h-10 text-primary" />
                     </div>
-                    <h3 className="text-sm font-bold group-hover:text-primary transition-colors duration-300 mb-1">
+                    <h3 className="text-base md:text-lg font-bold group-hover:text-primary transition-colors duration-300 mb-2">
                       {threat.title}
                     </h3>
-                    <p className="text-xs text-muted-foreground">Click to learn more</p>
+                    <p className="text-sm md:text-base text-muted-foreground">Click to learn more</p>
                   </div>
                   
                   {/* Expanded Description */}
                   {expandedThreat === threat.title && (
                     <div className="mt-4 pt-4 border-t border-border/50 animate-fade-in">
-                      <p className="text-sm text-foreground leading-relaxed">
+                      <p className="text-base md:text-lg text-foreground leading-relaxed">
                         {threat.description}
                       </p>
-                      <div className="mt-3 flex items-center justify-center gap-2">
-                        <span className="text-xs font-semibold text-primary">Forward to us and stay safe!</span>
-                        <CheckCircle className="w-4 h-4 text-primary" />
+                      <div className="mt-4 flex items-center justify-center gap-2">
+                        <span className="text-sm md:text-base font-bold text-primary">Forward to us and stay safe!</span>
+                        <CheckCircle className="w-5 h-5 text-primary" />
                       </div>
                     </div>
                   )}
@@ -1266,29 +1266,37 @@ function LearnAndTrain() {
           </div>
           
           {/* Bottom Note - Simplified */}
-          <div className="max-w-2xl mx-auto mt-10 text-center">
-            <p className="text-base text-muted-foreground">
+          <div className="max-w-3xl mx-auto mt-10 text-center">
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
               <strong className="text-foreground">See something not listed?</strong> We analyze <em>everything</em>. If it feels suspicious, send it to us. Better safe than sorry!
             </p>
           </div>
         </div>
       </section>
 
-      {/* AI Professionals Training Section - Moved after We Analyze */}
-      <section id="ai-pro-training" className="py-16 bg-background relative overflow-hidden">
+      {/* AI Professionals Training Section - Enhanced with Background */}
+      <section id="ai-pro-training" className="py-20 bg-background relative overflow-hidden">
+        {/* Background Image with Overlay */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-10"
+          style={{ 
+            backgroundImage: 'url("https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1920&q=80")',
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background" />
         <FlowingWaves variant="full" opacity={0.08} />
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-10">
-            <Badge className="mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm px-4 py-1.5">
-              <Zap className="w-4 h-4 mr-1" /> FOR PROFESSIONALS & ENTREPRENEURS
+          <div className="text-center mb-12">
+            <Badge className="mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-base md:text-lg px-5 py-2">
+              <Zap className="w-5 h-5 mr-1.5" /> FOR PROFESSIONALS & ENTREPRENEURS
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">AI Professional Training & Development</h2>
-            <p className="text-base md:text-lg text-muted-foreground max-w-4xl mx-auto mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5">AI Professional Training & Development</h2>
+            <p className="text-lg md:text-xl lg:text-2xl text-foreground max-w-4xl mx-auto mb-5 leading-relaxed">
               <strong>This is the only place where you can get the best AI training.</strong> Whether you want to build an AI agency, 
               create automation workflows, or design stunning websites with AI — we provide hands-on, expert-led training 
               that will transform your business capabilities.
             </p>
-            <p className="text-sm text-accent font-semibold max-w-3xl mx-auto">
+            <p className="text-base md:text-lg text-accent font-semibold max-w-3xl mx-auto">
               🚀 Perfect for entrepreneurs, developers, marketers, and organizations ready to leverage cutting-edge AI technology.
             </p>
           </div>
@@ -1437,18 +1445,18 @@ function LearnAndTrain() {
         </div>
       </section>
 
-      {/* Veterans Discount - Compact Notification Strip */}
-      <section className="py-4 bg-gradient-to-r from-blue-900/5 via-transparent to-red-900/5 border-y border-border/30">
+      {/* Veterans Discount - Enhanced Visibility Strip */}
+      <section className="py-6 bg-gradient-to-r from-blue-900/10 via-transparent to-red-900/10 border-y-2 border-blue-500/20">
         <div className="container mx-auto px-4">
-          <div className="flex flex-wrap items-center justify-center gap-3 text-sm">
-            <span className="text-lg">🇺🇸</span>
-            <div className="flex items-center gap-2">
-              <Star className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500" />
-              <span className="font-semibold">Veterans & First Responders: 10% OFF</span>
-              <Star className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500" />
+          <div className="flex flex-wrap items-center justify-center gap-4 text-lg md:text-xl">
+            <span className="text-2xl">🇺🇸</span>
+            <div className="flex items-center gap-3">
+              <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
+              <span className="font-bold">Veterans & First Responders: 10% OFF</span>
+              <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
             </div>
-            <span className="text-muted-foreground">•</span>
-            <span className="text-muted-foreground text-xs">Military, Police, Fire, EMT — discount applied at checkout</span>
+            <span className="text-muted-foreground text-lg">•</span>
+            <span className="text-muted-foreground text-base md:text-lg">Military, Police, Fire, EMT — discount applied at checkout</span>
           </div>
         </div>
       </section>
@@ -1467,34 +1475,34 @@ function LearnAndTrain() {
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-10">
-            <Badge className="mb-4 bg-gradient-to-r from-primary to-accent text-white text-sm px-4 py-1.5">
-              <Lock className="w-4 h-4 mr-1" /> FAMILY PROTECTION
+            <Badge className="mb-4 bg-gradient-to-r from-primary to-accent text-white text-base md:text-lg px-5 py-2">
+              <Lock className="w-5 h-5 mr-1.5" /> FAMILY PROTECTION
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Secure Your Family — This Is Critical</h2>
-            <p className="text-lg text-foreground max-w-3xl mx-auto">
-              <strong>In today's digital world, scammers don't just target you — they target your entire family.</strong> 
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5">Secure Your Family — This Is Critical</h2>
+            <p className="text-lg md:text-xl lg:text-2xl text-foreground max-w-3xl mx-auto leading-relaxed">
+              <strong>In today's digital world, AI-powered scammers don't just target you — they target your entire family.</strong> 
               Without proper protection, one mistake can cost your family thousands of dollars and endless stress.
             </p>
           </div>
 
-          <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
             {/* Left: Warning */}
-            <Card className="p-8 bg-gradient-to-br from-red-500/10 to-orange-500/10 border-red-500/30 rounded-2xl">
-              <div className="flex items-start gap-4 mb-6">
-                <div className="w-14 h-14 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <span className="text-2xl">⚠️</span>
+            <Card className="p-8 md:p-10 bg-gradient-to-br from-red-500/10 to-orange-500/10 border-red-500/30 rounded-2xl">
+              <div className="flex items-start gap-5 mb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-3xl">⚠️</span>
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-red-600 dark:text-red-400 mb-2">Without InVision Protection:</h3>
-                  <ul className="space-y-2">
+                  <h3 className="text-2xl md:text-3xl font-bold text-red-600 dark:text-red-400 mb-4">Without InVision Protection:</h3>
+                  <ul className="space-y-4">
                     {[
                       "Scammers can impersonate your grandchildren using AI voice cloning",
                       "One family member clicking a bad link can compromise everyone",
                       "You may lose life savings to fake emergencies or romance scams",
                       "Your personal documents and identity could be stolen"
                     ].map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm text-foreground">
-                        <span className="text-red-500 mt-0.5">✗</span>
+                      <li key={idx} className="flex items-start gap-3 text-base md:text-lg text-foreground">
+                        <span className="text-red-500 mt-0.5 text-xl">✗</span>
                         {item}
                       </li>
                     ))}
@@ -1504,22 +1512,22 @@ function LearnAndTrain() {
             </Card>
 
             {/* Right: Solution */}
-            <Card className="p-8 bg-gradient-to-br from-green-500/10 to-emerald-500/10 border-green-500/30 rounded-2xl">
-              <div className="flex items-start gap-4 mb-6">
-                <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Shield className="w-7 h-7 text-white" />
+            <Card className="p-8 md:p-10 bg-gradient-to-br from-green-500/10 to-emerald-500/10 border-green-500/30 rounded-2xl">
+              <div className="flex items-start gap-5 mb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Shield className="w-8 h-8 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-green-600 dark:text-green-400 mb-2">With InVision Protection:</h3>
-                  <ul className="space-y-2">
+                  <h3 className="text-2xl md:text-3xl font-bold text-green-600 dark:text-green-400 mb-4">With InVision Protection:</h3>
+                  <ul className="space-y-4">
                     {[
                       "Family safe words to verify real emergencies instantly",
                       "24/7 expert analysis — just forward anything suspicious",
                       "Proactive alerts when new scam patterns emerge",
                       "Secure vault for important family documents"
                     ].map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm text-foreground">
-                        <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                      <li key={idx} className="flex items-start gap-3 text-base md:text-lg text-foreground">
+                        <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
                         {item}
                       </li>
                     ))}
@@ -1573,7 +1581,7 @@ function LearnAndTrain() {
           />
         </div>
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-center mb-10 animate-fade-in-up">Scams We've Caught for Our Members</h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-10 animate-fade-in-up">Scams We've Caught for Our Members</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto mb-12">
             {[
