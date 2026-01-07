@@ -90,6 +90,7 @@ const TrainerDashboard = lazy(() => import("./pages/portal/TrainerDashboard"));
 const DeveloperDashboard = lazy(() => import("./pages/portal/DeveloperDashboard"));
 const StaffDashboard = lazy(() => import("./pages/portal/StaffDashboard"));
 const SeniorDashboard = lazy(() => import("./pages/portal/SeniorDashboard"));
+const BusinessDashboard = lazy(() => import("./pages/portal/BusinessDashboard"));
 const CaregiverDashboard = lazy(() => import("./pages/portal/CaregiverDashboard"));
 const HealthcareDashboard = lazy(() => import("./pages/portal/HealthcareDashboard"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
@@ -184,6 +185,7 @@ function AnimatedRoutes() {
         <Route path="/portal/developer" element={<PageTransition><ProtectedRoute><DeveloperDashboard /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/staff" element={<PageTransition><ProtectedRoute><StaffDashboard /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/senior" element={<PageTransition><ProtectedRoute><SeniorDashboard /></ProtectedRoute></PageTransition>} />
+        <Route path="/portal/business" element={<PageTransition><ProtectedRoute><BusinessDashboard /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/caregiver" element={<PageTransition><ProtectedRoute><CaregiverDashboard /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/healthcare" element={<PageTransition><ProtectedRoute><HealthcareDashboard /></ProtectedRoute></PageTransition>} />
         <Route path="/privacy-policy" element={<PageTransition variant="fade"><PrivacyPolicy /></PageTransition>} />

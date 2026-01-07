@@ -14,9 +14,10 @@ import {
   UserCog,
   Heart,
   Stethoscope,
+  Bot,
 } from "lucide-react";
 
-type UserRole = "admin" | "secretary" | "training_coordinator" | "business_consultant" | "support_specialist" | "staff" | "moderator" | "senior" | "caregiver" | "healthcare";
+type UserRole = "admin" | "secretary" | "training_coordinator" | "business_consultant" | "support_specialist" | "staff" | "moderator" | "senior" | "caregiver" | "healthcare" | "business";
 
 interface Profile {
   first_name: string;
@@ -120,6 +121,7 @@ function Portal() {
           staff: "/portal/staff",
           moderator: "/admin",
           senior: "/portal/senior",
+          business: "/portal/business",
           caregiver: "/portal/caregiver",
           healthcare: "/portal/healthcare",
         };
@@ -214,6 +216,14 @@ function Portal() {
       icon: Heart,
       path: "/portal/senior",
       color: "from-pink-500 to-rose-500",
+    },
+    {
+      role: "business" as UserRole,
+      title: "Business Automation Hub",
+      description: "AI automations, receptionist, analytics",
+      icon: Bot,
+      path: "/portal/business",
+      color: "from-violet-500 to-purple-500",
     },
     {
       role: "caregiver" as UserRole,
