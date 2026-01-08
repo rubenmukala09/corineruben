@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
-import { Settings, Bell, Search, LogOut, User, ChevronDown } from "lucide-react";
+import { Settings, Bell, Search, LogOut, User, ChevronDown, Command } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -22,6 +22,13 @@ import { NeonEventsCard } from "@/components/admin/neon/NeonEventsCard";
 import { NeonTeamOverview } from "@/components/admin/neon/NeonTeamOverview";
 import { NeonCalendarCard } from "@/components/admin/neon/NeonCalendarCard";
 import { NeonQuickActions } from "@/components/admin/neon/NeonQuickActions";
+import { NeonAdminModules } from "@/components/admin/neon/NeonAdminModules";
+import { NeonSystemHealth } from "@/components/admin/neon/NeonSystemHealth";
+import { NeonAccountActions } from "@/components/admin/neon/NeonAccountActions";
+import { NeonPendingRequests } from "@/components/admin/neon/NeonPendingRequests";
+import { NeonDashboardLinks } from "@/components/admin/neon/NeonDashboardLinks";
+import { ThreatActivityChart } from "@/components/admin/neon/ThreatActivityChart";
+import { NeonDashboardStats } from "@/components/admin/neon/NeonDashboardStats";
 
 function AdminDashboard() {
   const navigate = useNavigate();
@@ -32,6 +39,13 @@ function AdminDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [adminName, setAdminName] = useState("Admin");
+  const [moduleStats, setModuleStats] = useState({
+    pendingBookings: 0,
+    pendingInquiries: 0,
+    pendingApplications: 0,
+    unreadMessages: 0,
+    lowStockProducts: 0,
+  });
   const [stats, setStats] = useState({
     totalStaff: 0,
     activeProjects: 0,
@@ -43,6 +57,7 @@ function AdminDashboard() {
   useEffect(() => {
     loadDashboardData();
     loadUserProfile();
+    loadModuleStats();
   }, []);
 
   const loadUserProfile = async () => {
@@ -57,6 +72,38 @@ function AdminDashboard() {
       if (profile) {
         setAdminName(`${profile.first_name || ''} ${profile.last_name || ''}`.trim() || 'Admin');
       }
+    }
+  };
+
+  const loadModuleStats = async () => {
+    try {
+      // Count pending bookings
+      const { count: bookingsCount } = await supabase
+        .from("booking_requests")
+        .select("*", { count: "exact", head: true })
+        .eq("status", "pending");
+
+      // Count pending job applications
+      const { count: applicationsCount } = await supabase
+        .from("job_applications")
+        .select("*", { count: "exact", head: true })
+        .eq("status", "pending");
+
+      // Count unread messages
+      const { count: messagesCount } = await supabase
+        .from("internal_messages")
+        .select("*", { count: "exact", head: true })
+        .eq("is_read", false);
+
+      setModuleStats({
+        pendingBookings: bookingsCount || 0,
+        pendingInquiries: 0,
+        pendingApplications: applicationsCount || 0,
+        unreadMessages: messagesCount || 0,
+        lowStockProducts: 0,
+      });
+    } catch (err) {
+      console.error("Error loading module stats:", err);
     }
   };
 
@@ -160,8 +207,8 @@ function AdminDashboard() {
             <div className="relative hidden md:block">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
               <Input
-                placeholder="Search operations..."
-                className="w-64 pl-10 bg-[#1F2937] border-gray-800/50 text-gray-300 placeholder:text-gray-500 focus:border-purple-500/50 focus:ring-purple-500/20"
+                placeholder="Search everything..."
+                className="w-80 pl-10 bg-[#1F2937] border-gray-800/50 text-gray-300 placeholder:text-gray-500 focus:border-purple-500/50 focus:ring-purple-500/20"
               />
             </div>
           </div>
@@ -174,7 +221,11 @@ function AdminDashboard() {
               className="relative text-gray-400 hover:text-white hover:bg-gray-800/50"
             >
               <Bell className="w-5 h-5" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
+              {(moduleStats.pendingBookings + moduleStats.pendingApplications) > 0 && (
+                <span className="absolute top-0 right-0 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                  {moduleStats.pendingBookings + moduleStats.pendingApplications}
+                </span>
+              )}
             </Button>
 
             {/* Settings */}
@@ -182,6 +233,7 @@ function AdminDashboard() {
               variant="ghost"
               size="icon"
               className="text-gray-400 hover:text-white hover:bg-gray-800/50"
+              onClick={() => navigate("/admin/settings/site")}
             >
               <Settings className="w-5 h-5" />
             </Button>
@@ -204,7 +256,10 @@ function AdminDashboard() {
                   <User className="w-4 h-4 mr-2" />
                   Profile
                 </DropdownMenuItem>
-                <DropdownMenuItem className="text-gray-300 focus:bg-gray-800 focus:text-white cursor-pointer">
+                <DropdownMenuItem 
+                  className="text-gray-300 focus:bg-gray-800 focus:text-white cursor-pointer"
+                  onClick={() => navigate("/admin/settings/site")}
+                >
                   <Settings className="w-4 h-4 mr-2" />
                   Settings
                 </DropdownMenuItem>
@@ -230,13 +285,35 @@ function AdminDashboard() {
             transition={{ duration: 0.5 }}
             className="mb-6"
           >
-            <h1 className="text-2xl md:text-3xl font-bold text-white">Operations Center</h1>
-            <p className="text-gray-400">Staff management and administrative tasks</p>
+            <div className="flex items-center gap-3 mb-1">
+              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/20">
+                <Command className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h1 className="text-2xl md:text-3xl font-bold text-white">Command Center</h1>
+                <p className="text-gray-400 text-sm">Central hub for all administrative operations</p>
+              </div>
+            </div>
           </motion.div>
 
-          {/* Stats Grid */}
+          {/* Security Stats (from /admin) */}
+          <div className="mb-6">
+            <NeonDashboardStats />
+          </div>
+
+          {/* Admin Modules Grid */}
+          <div className="mb-6">
+            <NeonAdminModules stats={moduleStats} />
+          </div>
+
+          {/* Operations Stats */}
           <div className="mb-6">
             <NeonOperationsStats stats={stats} />
+          </div>
+
+          {/* Threat Activity Chart */}
+          <div className="mb-6">
+            <ThreatActivityChart />
           </div>
 
           {/* Management Tabs */}
@@ -244,15 +321,26 @@ function AdminDashboard() {
             <NeonManagementTabs />
           </div>
 
-          {/* Two Column Layout */}
+          {/* Three Column Layout */}
           <div className="grid lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 space-y-6">
+            {/* Left Column */}
+            <div className="space-y-6">
+              <NeonPendingRequests />
               <NeonTasksCard tasks={tasks} />
               <NeonEventsCard events={events} />
-              <NeonTeamOverview />
             </div>
+
+            {/* Middle Column */}
+            <div className="space-y-6">
+              <NeonSystemHealth />
+              <NeonTeamOverview />
+              <NeonAccountActions />
+            </div>
+
+            {/* Right Column */}
             <div className="space-y-6">
               <NeonCalendarCard date={date} onSelect={setDate} />
+              <NeonDashboardLinks />
               <NeonQuickActions />
             </div>
           </div>
