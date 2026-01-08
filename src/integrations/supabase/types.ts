@@ -3574,6 +3574,7 @@ export type Database = {
           approved_at: string | null
           approved_by: string | null
           created_at: string
+          display_location: string | null
           display_order: number | null
           email: string
           featured: boolean | null
@@ -3593,6 +3594,7 @@ export type Database = {
           approved_at?: string | null
           approved_by?: string | null
           created_at?: string
+          display_location?: string | null
           display_order?: number | null
           email: string
           featured?: boolean | null
@@ -3612,6 +3614,7 @@ export type Database = {
           approved_at?: string | null
           approved_by?: string | null
           created_at?: string
+          display_location?: string | null
           display_order?: number | null
           email?: string
           featured?: boolean | null
