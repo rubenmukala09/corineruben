@@ -16,6 +16,7 @@ interface AdminLayoutProps {
   headerActions?: React.ReactNode;
   actions?: React.ReactNode;
   searchPlaceholder?: string;
+  onSearch?: (value: string) => void;
 }
 
 export function AdminLayout({ 
@@ -24,7 +25,8 @@ export function AdminLayout({
   subtitle, 
   headerActions,
   actions,
-  searchPlaceholder = "Search..."
+  searchPlaceholder = "Search...",
+  onSearch
 }: AdminLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
@@ -128,6 +130,7 @@ export function AdminLayout({
               <Input 
                 type="text" 
                 placeholder={searchPlaceholder} 
+                onChange={(e) => onSearch?.(e.target.value)}
                 className="pl-10 bg-[#374151] border-gray-700 text-[#F9FAFB] placeholder:text-[#9CA3AF] h-10 rounded-lg" 
               />
             </div>

@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Loader2, Plus, Download, Trash2, Search } from "lucide-react";
+import { Plus, Download, Trash2, Search, RefreshCw, Mail, TrendingUp, Users } from "lucide-react";
 import { format } from "date-fns";
+import { AdminLayout } from "@/components/admin/AdminLayout";
 
 export default function NewsletterManagement() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -107,117 +108,142 @@ export default function NewsletterManagement() {
   };
 
   return (
-    <div className="container mx-auto p-6 space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold">Newsletter Management</h1>
-        <p className="text-muted-foreground">Manage newsletter subscribers</p>
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-3">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Subscribers</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.total}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">New This Month</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.thisMonth}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Growth Rate</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {stats.total > 0 ? ((stats.thisMonth / stats.total) * 100).toFixed(1) : 0}%
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <Card>
-        <CardHeader>
-          <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
-            <CardTitle>Subscribers</CardTitle>
-            <div className="flex gap-2 w-full md:w-auto">
-              <div className="relative flex-1 md:w-64">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search by email..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-8"
-                />
-              </div>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button>
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Add Subscriber</DialogTitle>
-                  </DialogHeader>
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label>Email Address</Label>
-                      <Input
-                        type="email"
-                        placeholder="subscriber@example.com"
-                        value={newSubscriber}
-                        onChange={(e) => setNewSubscriber(e.target.value)}
-                      />
-                    </div>
-                    <Button onClick={handleAddSubscriber} className="w-full">
-                      Add Subscriber
-                    </Button>
-                  </div>
-                </DialogContent>
-              </Dialog>
-              <Button variant="outline" onClick={handleExport}>
-                <Download className="h-4 w-4 mr-2" />
-                Export
+    <AdminLayout
+      title="Newsletter Management"
+      subtitle="Manage newsletter subscribers and campaigns"
+      searchPlaceholder="Search subscribers..."
+      onSearch={setSearchTerm}
+      headerActions={
+        <div className="flex items-center gap-2">
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white">
+                <Plus className="h-4 w-4 mr-2" />
+                Add Subscriber
               </Button>
+            </DialogTrigger>
+            <DialogContent className="bg-[#111827] border-gray-800">
+              <DialogHeader>
+                <DialogTitle className="text-[#F9FAFB]">Add Subscriber</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label className="text-[#9CA3AF]">Email Address</Label>
+                  <Input
+                    type="email"
+                    placeholder="subscriber@example.com"
+                    value={newSubscriber}
+                    onChange={(e) => setNewSubscriber(e.target.value)}
+                    className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
+                  />
+                </div>
+                <Button onClick={handleAddSubscriber} className="w-full bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white">
+                  Add Subscriber
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
+          <Button variant="outline" onClick={handleExport} className="border-gray-700 text-[#9CA3AF] hover:text-white">
+            <Download className="h-4 w-4 mr-2" />
+            Export
+          </Button>
+        </div>
+      }
+    >
+      {/* Stats Cards */}
+      <div className="grid gap-4 md:grid-cols-3 mb-8">
+        <Card className="bg-[#111827] border-gray-800">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-4">
+              <div className="p-3 rounded-lg bg-gradient-to-br from-[#3B82F6]/20 to-[#06B6D4]/20">
+                <Users className="h-6 w-6 text-[#06B6D4]" />
+              </div>
+              <div>
+                <p className="text-3xl font-bold text-[#F9FAFB]">{stats.total}</p>
+                <p className="text-sm text-[#9CA3AF]">Total Subscribers</p>
+              </div>
             </div>
-          </div>
-        </CardHeader>
-        <CardContent>
+          </CardContent>
+        </Card>
+        <Card className="bg-[#111827] border-gray-800">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-4">
+              <div className="p-3 rounded-lg bg-gradient-to-br from-[#10B981]/20 to-[#06B6D4]/20">
+                <Mail className="h-6 w-6 text-[#10B981]" />
+              </div>
+              <div>
+                <p className="text-3xl font-bold text-[#F9FAFB]">{stats.thisMonth}</p>
+                <p className="text-sm text-[#9CA3AF]">New This Month</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="bg-[#111827] border-gray-800">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-4">
+              <div className="p-3 rounded-lg bg-gradient-to-br from-[#8B5CF6]/20 to-[#06B6D4]/20">
+                <TrendingUp className="h-6 w-6 text-[#8B5CF6]" />
+              </div>
+              <div>
+                <p className="text-3xl font-bold text-[#F9FAFB]">
+                  {stats.total > 0 ? ((stats.thisMonth / stats.total) * 100).toFixed(1) : 0}%
+                </p>
+                <p className="text-sm text-[#9CA3AF]">Growth Rate</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Subscribers Table */}
+      <Card className="bg-[#111827] border-gray-800">
+        <div className="p-4 border-b border-gray-800 flex items-center justify-between">
+          <h3 className="text-lg font-semibold text-[#F9FAFB]">Subscribers</h3>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => refetch()}
+            className="text-[#9CA3AF] hover:text-white"
+          >
+            <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+            Refresh
+          </Button>
+        </div>
+        <CardContent className="p-0">
           {isLoading ? (
-            <div className="flex justify-center p-8">
-              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+            <div className="flex justify-center p-12">
+              <RefreshCw className="h-8 w-8 animate-spin text-[#06B6D4]" />
             </div>
           ) : !filteredSubscribers || filteredSubscribers.length === 0 ? (
-            <p className="text-center text-muted-foreground py-8">No subscribers found</p>
+            <div className="text-center py-12">
+              <Mail className="h-16 w-16 mx-auto text-[#3B82F6]/50 mb-4" />
+              <h3 className="text-xl font-semibold text-[#F9FAFB] mb-2">No Subscribers Yet</h3>
+              <p className="text-[#9CA3AF]">Add your first subscriber to get started</p>
+            </div>
           ) : (
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Subscribed Date</TableHead>
-                  <TableHead>Actions</TableHead>
+                <TableRow className="border-gray-800 hover:bg-transparent">
+                  <TableHead className="text-[#9CA3AF]">Email</TableHead>
+                  <TableHead className="text-[#9CA3AF]">Subscribed Date</TableHead>
+                  <TableHead className="text-[#9CA3AF]">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredSubscribers.map((subscriber) => (
-                  <TableRow key={subscriber.id}>
-                    <TableCell className="font-medium">{subscriber.email}</TableCell>
-                    <TableCell>{format(new Date(subscriber.subscribed_at), "MMM dd, yyyy HH:mm")}</TableCell>
+                  <TableRow key={subscriber.id} className="border-gray-800 hover:bg-[#1F2937]">
+                    <TableCell className="font-medium text-[#F9FAFB]">{subscriber.email}</TableCell>
+                    <TableCell className="text-[#9CA3AF]">
+                      {format(new Date(subscriber.subscribed_at), "MMM dd, yyyy HH:mm")}
+                    </TableCell>
                     <TableCell>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => handleRemoveSubscriber(subscriber.id)}
+                        className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
                       >
-                        <Trash2 className="h-4 w-4 text-destructive" />
+                        <Trash2 className="h-4 w-4" />
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -227,6 +253,6 @@ export default function NewsletterManagement() {
           )}
         </CardContent>
       </Card>
-    </div>
+    </AdminLayout>
   );
 }

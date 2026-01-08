@@ -5,9 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
-import { Save, CreditCard, Receipt } from "lucide-react";
+import { Save, CreditCard, Receipt, Building2, FileText } from "lucide-react";
+import { AdminLayout } from "@/components/admin/AdminLayout";
 
 export default function BillingSettings() {
   const [settings, setSettings] = useState({
@@ -31,135 +31,143 @@ export default function BillingSettings() {
   };
 
   return (
-    <div className="container mx-auto p-6 space-y-6">
-      <div className="flex justify-between items-start">
-        <div>
-          <h1 className="text-3xl font-bold">Billing Settings</h1>
-          <p className="text-muted-foreground">Configure your business billing and payment settings</p>
-        </div>
-        <Button onClick={handleSave}>
+    <AdminLayout
+      title="Billing Settings"
+      subtitle="Configure your business billing and payment settings"
+      searchPlaceholder="Search settings..."
+      headerActions={
+        <Button onClick={handleSave} className="bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white">
           <Save className="h-4 w-4 mr-2" />
           Save Changes
         </Button>
-      </div>
-
+      }
+    >
       <div className="grid gap-6">
-        <Card>
+        {/* Company Information */}
+        <Card className="bg-[#111827] border-gray-800">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Receipt className="h-5 w-5" />
+            <CardTitle className="flex items-center gap-2 text-[#F9FAFB]">
+              <Building2 className="h-5 w-5 text-[#06B6D4]" />
               Company Information
             </CardTitle>
-            <CardDescription>Details that appear on invoices and receipts</CardDescription>
+            <CardDescription className="text-[#9CA3AF]">
+              Details that appear on invoices and receipts
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="companyName">Company Name</Label>
+                <Label className="text-[#9CA3AF]">Company Name</Label>
                 <Input
-                  id="companyName"
                   value={settings.companyName}
                   onChange={(e) => setSettings({ ...settings, companyName: e.target.value })}
                   placeholder="Your Company LLC"
+                  className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="taxId">Tax ID / EIN</Label>
+                <Label className="text-[#9CA3AF]">Tax ID / EIN</Label>
                 <Input
-                  id="taxId"
                   value={settings.taxId}
                   onChange={(e) => setSettings({ ...settings, taxId: e.target.value })}
                   placeholder="XX-XXXXXXX"
+                  className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
                 />
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="companyAddress">Business Address</Label>
+              <Label className="text-[#9CA3AF]">Business Address</Label>
               <Textarea
-                id="companyAddress"
                 value={settings.companyAddress}
                 onChange={(e) => setSettings({ ...settings, companyAddress: e.target.value })}
                 placeholder="123 Main St, City, State ZIP"
                 rows={3}
+                className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
               />
             </div>
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="companyPhone">Phone Number</Label>
+                <Label className="text-[#9CA3AF]">Phone Number</Label>
                 <Input
-                  id="companyPhone"
                   value={settings.companyPhone}
                   onChange={(e) => setSettings({ ...settings, companyPhone: e.target.value })}
                   placeholder="(937) 000-0000"
+                  className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="companyEmail">Billing Email</Label>
+                <Label className="text-[#9CA3AF]">Billing Email</Label>
                 <Input
-                  id="companyEmail"
                   type="email"
                   value={settings.companyEmail}
                   onChange={(e) => setSettings({ ...settings, companyEmail: e.target.value })}
                   placeholder="billing@company.com"
+                  className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
                 />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        {/* Invoice Settings */}
+        <Card className="bg-[#111827] border-gray-800">
           <CardHeader>
-            <CardTitle>Invoice Settings</CardTitle>
-            <CardDescription>Configure invoice numbering and payment terms</CardDescription>
+            <CardTitle className="flex items-center gap-2 text-[#F9FAFB]">
+              <FileText className="h-5 w-5 text-[#10B981]" />
+              Invoice Settings
+            </CardTitle>
+            <CardDescription className="text-[#9CA3AF]">
+              Configure invoice numbering and payment terms
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="invoicePrefix">Invoice Number Prefix</Label>
+                <Label className="text-[#9CA3AF]">Invoice Number Prefix</Label>
                 <Input
-                  id="invoicePrefix"
                   value={settings.invoicePrefix}
                   onChange={(e) => setSettings({ ...settings, invoicePrefix: e.target.value })}
                   placeholder="INV-"
+                  className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="invoiceStartNumber">Starting Number</Label>
+                <Label className="text-[#9CA3AF]">Starting Number</Label>
                 <Input
-                  id="invoiceStartNumber"
                   type="number"
                   value={settings.invoiceStartNumber}
                   onChange={(e) => setSettings({ ...settings, invoiceStartNumber: e.target.value })}
                   placeholder="1000"
+                  className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
                 />
               </div>
             </div>
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="paymentTerms">Payment Terms (days)</Label>
+                <Label className="text-[#9CA3AF]">Payment Terms (days)</Label>
                 <Input
-                  id="paymentTerms"
                   type="number"
                   value={settings.paymentTerms}
                   onChange={(e) => setSettings({ ...settings, paymentTerms: e.target.value })}
                   placeholder="30"
+                  className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="latePaymentFee">Late Payment Fee (%)</Label>
+                <Label className="text-[#9CA3AF]">Late Payment Fee (%)</Label>
                 <Input
-                  id="latePaymentFee"
                   type="number"
                   value={settings.latePaymentFee}
                   onChange={(e) => setSettings({ ...settings, latePaymentFee: e.target.value })}
                   placeholder="5"
+                  className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
                 />
               </div>
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between p-4 bg-[#1F2937] rounded-lg border border-gray-700">
               <div className="space-y-0.5">
-                <Label>Automatic Invoicing</Label>
-                <p className="text-sm text-muted-foreground">
+                <Label className="text-[#F9FAFB]">Automatic Invoicing</Label>
+                <p className="text-sm text-[#9CA3AF]">
                   Automatically generate invoices for completed services
                 </p>
               </div>
@@ -171,59 +179,68 @@ export default function BillingSettings() {
           </CardContent>
         </Card>
 
-        <Card>
+        {/* Payment Gateway */}
+        <Card className="bg-[#111827] border-gray-800">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <CreditCard className="h-5 w-5" />
+            <CardTitle className="flex items-center gap-2 text-[#F9FAFB]">
+              <CreditCard className="h-5 w-5 text-[#8B5CF6]" />
               Payment Gateway
             </CardTitle>
-            <CardDescription>Configure Stripe payment integration</CardDescription>
+            <CardDescription className="text-[#9CA3AF]">
+              Configure Stripe payment integration
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="stripePublishableKey">Stripe Publishable Key</Label>
+              <Label className="text-[#9CA3AF]">Stripe Publishable Key</Label>
               <Input
-                id="stripePublishableKey"
                 value={settings.stripePublishableKey}
                 onChange={(e) => setSettings({ ...settings, stripePublishableKey: e.target.value })}
                 placeholder="pk_test_..."
+                className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="stripeSecretKey">Stripe Secret Key</Label>
+              <Label className="text-[#9CA3AF]">Stripe Secret Key</Label>
               <Input
-                id="stripeSecretKey"
                 type="password"
                 value={settings.stripeSecretKey}
                 onChange={(e) => setSettings({ ...settings, stripeSecretKey: e.target.value })}
                 placeholder="sk_test_..."
+                className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
               />
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        {/* Tax Settings */}
+        <Card className="bg-[#111827] border-gray-800">
           <CardHeader>
-            <CardTitle>Tax Settings</CardTitle>
-            <CardDescription>Configure tax rates for invoices</CardDescription>
+            <CardTitle className="flex items-center gap-2 text-[#F9FAFB]">
+              <Receipt className="h-5 w-5 text-[#F97316]" />
+              Tax Settings
+            </CardTitle>
+            <CardDescription className="text-[#9CA3AF]">
+              Configure tax rates for invoices
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              <Label htmlFor="taxRate">Default Tax Rate (%)</Label>
+              <Label className="text-[#9CA3AF]">Default Tax Rate (%)</Label>
               <Input
-                id="taxRate"
                 type="number"
                 value={settings.taxRate}
                 onChange={(e) => setSettings({ ...settings, taxRate: e.target.value })}
                 placeholder="8.5"
+                className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
               />
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-[#9CA3AF]">
                 This rate will be applied to all taxable items on invoices
               </p>
             </div>
           </CardContent>
         </Card>
       </div>
-    </div>
+    </AdminLayout>
   );
 }
