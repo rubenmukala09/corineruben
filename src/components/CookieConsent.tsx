@@ -21,6 +21,8 @@ interface CookiePreferences {
 
 const COOKIE_CONSENT_KEY = "invision-cookie-consent";
 const COOKIE_PREFERENCES_KEY = "invision-cookie-preferences";
+const PAGE_VISIT_COUNT_KEY = "invision-page-visit-count";
+const VISIT_THRESHOLD = 3; // Show banner after 3 visits
 
 export function CookieConsent() {
   const [showBanner, setShowBanner] = useState(false);
@@ -33,8 +35,15 @@ export function CookieConsent() {
 
   useEffect(() => {
     const consent = localStorage.getItem(COOKIE_CONSENT_KEY);
+    
     if (!consent) {
-      setShowBanner(true);
+      // Track page visits and only show after threshold
+      const visitCount = parseInt(localStorage.getItem(PAGE_VISIT_COUNT_KEY) || "0", 10) + 1;
+      localStorage.setItem(PAGE_VISIT_COUNT_KEY, visitCount.toString());
+      
+      if (visitCount >= VISIT_THRESHOLD) {
+        setShowBanner(true);
+      }
     } else {
       const saved = localStorage.getItem(COOKIE_PREFERENCES_KEY);
       if (saved) {
