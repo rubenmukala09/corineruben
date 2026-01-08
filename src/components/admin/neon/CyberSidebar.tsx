@@ -10,12 +10,26 @@ import {
   Settings,
   ChevronDown,
   Database,
-  FileText,
   BarChart3,
   Lock,
   Smartphone,
   Globe,
   X,
+  FileText,
+  MessageSquare,
+  ShoppingCart,
+  ClipboardList,
+  Mail,
+  Wrench,
+  Briefcase,
+  Building2,
+  Package,
+  DollarSign,
+  Calendar,
+  Inbox,
+  Newspaper,
+  TestTube,
+  Rocket,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -44,7 +58,69 @@ const menuItems: MenuItem[] = [
   { title: "Database", icon: Database, href: "/admin/database" },
   { title: "Notifications", icon: Bell, href: "/admin/notifications" },
   { title: "Security", icon: Lock, href: "/admin/security" },
-  { title: "Settings", icon: Settings, href: "/admin/settings" },
+  {
+    title: "Content",
+    icon: FileText,
+    children: [
+      { title: "Pages", href: "/admin/content/pages" },
+      { title: "Articles", href: "/admin/content/articles" },
+      { title: "Testimonials", href: "/admin/testimonials" },
+      { title: "Team", href: "/admin/team" },
+    ],
+  },
+  {
+    title: "Clients",
+    icon: Building2,
+    children: [
+      { title: "All Clients", href: "/admin/clients" },
+      { title: "Messages", href: "/admin/inbox" },
+    ],
+  },
+  {
+    title: "E-Commerce",
+    icon: ShoppingCart,
+    children: [
+      { title: "Products", href: "/admin/products" },
+      { title: "Orders", href: "/admin/orders" },
+      { title: "Inventory", href: "/admin/inventory" },
+      { title: "Donations", href: "/admin/donations" },
+    ],
+  },
+  {
+    title: "Requests",
+    icon: ClipboardList,
+    children: [
+      { title: "Service Inquiries", href: "/admin/inquiries" },
+      { title: "Bookings", href: "/admin/bookings" },
+      { title: "Job Applications", href: "/admin/applications" },
+    ],
+  },
+  {
+    title: "Communications",
+    icon: Mail,
+    children: [
+      { title: "Email Campaigns", href: "/admin/email" },
+      { title: "Inbox", href: "/admin/inbox" },
+      { title: "Newsletter", href: "/admin/newsletter" },
+    ],
+  },
+  {
+    title: "Settings",
+    icon: Settings,
+    children: [
+      { title: "Site Settings", href: "/admin/settings/site" },
+      { title: "User Roles", href: "/admin/settings/users" },
+      { title: "Billing", href: "/admin/settings/billing" },
+    ],
+  },
+  {
+    title: "Testing",
+    icon: TestTube,
+    children: [
+      { title: "System Health", href: "/admin/system-health" },
+      { title: "Launch Checklist", href: "/admin/checklist" },
+    ],
+  },
 ];
 
 interface CyberSidebarProps {
@@ -114,7 +190,6 @@ export function CyberSidebar({ isOpen, isMobileOpen, onMobileClose }: CyberSideb
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all
                     ${active ? "bg-gray-800 text-[#F9FAFB]" : "text-[#9CA3AF] hover:text-[#F9FAFB] hover:bg-gray-800/50"}`}
                 >
-                  {/* Blue vertical indicator for active */}
                   {active && (
                     <div className="absolute left-0 w-1 h-8 bg-gradient-to-b from-[#3B82F6] to-[#06B6D4] rounded-r" />
                   )}
@@ -137,7 +212,6 @@ export function CyberSidebar({ isOpen, isMobileOpen, onMobileClose }: CyberSideb
                       : "text-[#9CA3AF] hover:text-[#F9FAFB] hover:bg-gray-800/50"
                     }`}
                 >
-                  {/* Blue vertical indicator for active */}
                   {active && (
                     <div className="absolute left-0 w-1 h-8 bg-gradient-to-b from-[#3B82F6] to-[#06B6D4] rounded-r" />
                   )}
