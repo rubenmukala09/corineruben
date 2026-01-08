@@ -1,30 +1,31 @@
 import { useState } from "react";
-import { AdminSidebar } from "@/components/AdminSidebar";
-import { AdminTopBar } from "@/components/AdminTopBar";
-import { NeonDashboardStats } from "@/components/admin/neon/NeonDashboardStats";
-import { ThreatActivityChart } from "@/components/admin/neon/ThreatActivityChart";
-import { AttackVectorChart } from "@/components/admin/neon/AttackVectorChart";
-import { FamilyProtectionChart } from "@/components/admin/neon/FamilyProtectionChart";
-import { NeonRecentAlerts } from "@/components/admin/neon/NeonRecentAlerts";
-import { Search, Bell } from "lucide-react";
+import { Search, Bell, Menu } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+
+import { CyberSidebar } from "@/components/admin/neon/CyberSidebar";
+import { CyberGuardianStats } from "@/components/admin/neon/CyberGuardianStats";
+import { GlobalThreatActivityChart } from "@/components/admin/neon/GlobalThreatActivityChart";
+import { AttackVectorBarChart } from "@/components/admin/neon/AttackVectorBarChart";
+import { DeviceSecurityShield } from "@/components/admin/neon/DeviceSecurityShield";
+import { CyberRecentAlerts } from "@/components/admin/neon/CyberRecentAlerts";
 
 export default function Admin() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-[#111827] w-full overflow-x-hidden">
-      <AdminSidebar 
+    <div className="flex min-h-screen bg-[#0B0F19] w-full overflow-x-hidden">
+      {/* Cyber Sidebar */}
+      <CyberSidebar 
         isOpen={sidebarOpen} 
         isMobileOpen={mobileSidebarOpen}
         onMobileClose={() => setMobileSidebarOpen(false)}
       />
       
-      {/* Top Bar - Custom Neon Style */}
-      <div className={`fixed top-0 right-0 left-0 h-16 bg-[#111827]/95 backdrop-blur-xl border-b border-gray-800/50 z-40 
+      {/* Top Bar - Minimalist Dark Style */}
+      <header className={`fixed top-0 right-0 left-0 h-16 bg-[#111827]/95 backdrop-blur-xl border-b border-gray-800 z-40 
         transition-all duration-300 ${sidebarOpen ? 'md:left-[260px]' : 'md:left-[70px]'}`}>
         <div className="flex items-center justify-between h-full px-4 lg:px-6">
           {/* Left - Menu Toggle + Search */}
@@ -39,21 +40,19 @@ export default function Admin() {
                   setSidebarOpen(!sidebarOpen);
                 }
               }}
-              className="text-gray-400 hover:text-white hover:bg-gray-800"
+              className="text-[#9CA3AF] hover:text-[#F9FAFB] hover:bg-gray-800"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
+              <Menu className="w-5 h-5" />
             </Button>
             
-            {/* Search Bar */}
+            {/* Dark Grey Search Bar */}
             <div className="relative hidden sm:block max-w-md flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#9CA3AF]" />
               <Input
                 type="text"
-                placeholder="Search threat database..."
-                className="pl-10 bg-[#1F2937] border-gray-700 text-white placeholder:text-gray-500 
-                  focus:border-cyan-500 focus:ring-cyan-500/20 h-10"
+                placeholder="Search threats, devices..."
+                className="pl-10 bg-[#374151] border-gray-700 text-[#F9FAFB] placeholder:text-[#9CA3AF] 
+                  focus:border-[#3B82F6] focus:ring-[#3B82F6]/20 h-10 rounded-lg"
               />
             </div>
           </div>
@@ -63,25 +62,25 @@ export default function Admin() {
             <Button
               variant="ghost"
               size="icon"
-              className="relative text-gray-400 hover:text-white hover:bg-gray-800"
+              className="relative text-[#9CA3AF] hover:text-[#F9FAFB] hover:bg-gray-800"
             >
               <Bell className="h-5 w-5" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+              <span className="absolute top-1 right-1 w-2 h-2 bg-[#EF4444] rounded-full animate-pulse" />
             </Button>
             
             <div className="flex items-center gap-3 pl-3 border-l border-gray-700">
               <div className="hidden sm:block text-right">
-                <p className="text-sm font-medium text-white">Admin User</p>
-                <p className="text-xs text-gray-400">Security Operator</p>
+                <p className="text-sm font-medium text-[#F9FAFB]">Security Admin</p>
+                <p className="text-xs text-[#9CA3AF]">Operator</p>
               </div>
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-cyan-500 to-purple-600 
-                flex items-center justify-center text-white font-semibold text-sm shadow-lg shadow-cyan-500/20">
-                AU
+              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#3B82F6] to-[#06B6D4] 
+                flex items-center justify-center text-white font-semibold text-sm shadow-lg shadow-[#3B82F6]/20">
+                SA
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </header>
       
       {/* Main Content */}
       <main className={`flex-1 transition-all duration-300 pt-16 w-full ${sidebarOpen ? 'md:ml-[260px]' : 'md:ml-[70px]'}`}>
@@ -92,37 +91,44 @@ export default function Admin() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <h1 className="text-3xl font-bold text-white">
-              Security Command Center
-            </h1>
-            <p className="text-gray-400 mt-1">
+            <div className="flex items-center gap-3 mb-2">
+              <h1 className="text-3xl font-bold text-[#F9FAFB]">
+                Security Command Center
+              </h1>
+              {/* Live Status Badge */}
+              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#10B981]/10 border border-[#10B981]/30">
+                <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
+                <span className="text-xs font-medium text-[#10B981]">LIVE</span>
+              </div>
+            </div>
+            <p className="text-[#9CA3AF]">
               Real-time threat monitoring and family protection overview
             </p>
           </motion.div>
 
-          {/* Dashboard Stats Cards - Neon Style */}
-          <NeonDashboardStats />
+          {/* Live Monitor Cards - 4 Mini-Charts */}
+          <CyberGuardianStats />
 
-          {/* Charts Grid */}
+          {/* Charts Grid - Main Row */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-            {/* Threat Activity - Large Chart */}
+            {/* Threat Neutralization History - Large Spline Area Chart */}
             <div className="lg:col-span-2">
-              <ThreatActivityChart />
+              <GlobalThreatActivityChart />
             </div>
             
-            {/* Family Protection - Donut */}
+            {/* Device Security Shield - Donut Chart */}
             <div className="lg:col-span-1">
-              <FamilyProtectionChart />
+              <DeviceSecurityShield />
             </div>
           </div>
 
           {/* Second Row */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Attack Vector Analysis */}
-            <AttackVectorChart />
+            {/* Attack Vector Analysis - Vertical Bar Chart */}
+            <AttackVectorBarChart />
             
             {/* Recent Alerts */}
-            <NeonRecentAlerts />
+            <CyberRecentAlerts />
           </div>
         </div>
       </main>
