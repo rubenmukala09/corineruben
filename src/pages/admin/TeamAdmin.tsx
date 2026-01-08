@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -426,7 +427,6 @@ export default function TeamAdmin() {
               </Table>
             </Card>
           )}
-        </div>
 
         {/* Delete Confirmation Dialog */}
         <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
