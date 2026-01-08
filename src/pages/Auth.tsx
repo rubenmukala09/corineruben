@@ -482,7 +482,6 @@ function Auth() {
                       onChange={(e) => { setEmail(e.target.value); setEmailError(""); }}
                       required
                       disabled={isLoading}
-                      placeholder="your@email.com"
                       className={`${inputClassName} ${emailError ? 'border-destructive focus:border-destructive' : ''}`}
                       autoComplete="email"
                     />
@@ -615,7 +614,6 @@ function Auth() {
                       onChange={(e) => setFirstName(e.target.value)}
                       required
                       disabled={isLoading}
-                      placeholder="John"
                       className="h-11 bg-slate-50/50 border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
                     />
                   </div>
@@ -627,7 +625,6 @@ function Auth() {
                       onChange={(e) => setLastName(e.target.value)}
                       required
                       disabled={isLoading}
-                      placeholder="Doe"
                       className="h-11 bg-slate-50/50 border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
                     />
                   </div>
@@ -644,7 +641,6 @@ function Auth() {
                       onChange={(e) => setEmail(e.target.value)}
                       required
                       disabled={isLoading}
-                      placeholder="your@email.com"
                       className={inputClassName}
                       autoComplete="email"
                     />
@@ -741,8 +737,22 @@ function Auth() {
           </Tabs>
         </div>
 
+        {/* Apply Link */}
+        <div className="mt-6 text-center">
+          <p className="text-sm text-muted-foreground mb-2">
+            Want to join our team?
+          </p>
+          <Link 
+            to="/apply" 
+            className="inline-flex items-center gap-2 text-primary font-semibold hover:text-primary/80 transition-colors"
+          >
+            Don't have an account? Apply
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+
         {/* Bottom Links */}
-        <div className="mt-6 flex items-center justify-center gap-4 text-xs text-muted-foreground">
+        <div className="mt-4 flex items-center justify-center gap-4 text-xs text-muted-foreground">
           <Link to="/privacy-policy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
           <span className="text-slate-300">•</span>
           <Link to="/terms-of-service" className="hover:text-foreground transition-colors">Terms of Service</Link>
