@@ -211,6 +211,15 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     background-color: #0B0F19 !important;
     background-image: none !important;
   }
+
+  /* === ZERO-DISTRACTION: Disable all animations in admin === */
+  [data-admin-layout],
+  [data-admin-layout] * {
+    transition-property: none !important;
+    animation: none !important;
+    animation-duration: 0ms !important;
+    transition-duration: 0ms !important;
+  }
   
   @media (min-width: 768px) {
     body {
