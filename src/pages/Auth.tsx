@@ -519,17 +519,16 @@ function Auth() {
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
+                  <label htmlFor="remember" className="flex items-center gap-2 cursor-pointer">
                     <Checkbox 
                       id="remember" 
                       checked={rememberMe}
                       onCheckedChange={(checked) => setRememberMe(checked as boolean)}
-                      className="mt-0"
                     />
-                    <Label htmlFor="remember" className="text-sm cursor-pointer text-muted-foreground leading-none">
+                    <span className="text-sm text-muted-foreground select-none">
                       Remember me
-                    </Label>
-                  </div>
+                    </span>
+                  </label>
                   <button 
                     type="button"
                     onClick={() => setShowForgotPassword(true)}
