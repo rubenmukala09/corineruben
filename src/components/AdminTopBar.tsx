@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Menu, Search, ChevronDown, User, Settings, LogOut } from "lucide-react";
+import { Menu, Search, ChevronDown, User, Settings, LogOut, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -22,6 +22,9 @@ export function AdminTopBar({ sidebarOpen, toggleSidebar }: AdminTopBarProps) {
   const profileRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  const handleBack = () => window.history.back();
+  const handleForward = () => window.history.forward();
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -73,6 +76,17 @@ export function AdminTopBar({ sidebarOpen, toggleSidebar }: AdminTopBarProps) {
           <Button variant="ghost" size="icon" onClick={toggleSidebar} className="h-10 w-10 flex-shrink-0">
             <Menu className="h-5 w-5" />
           </Button>
+          
+          {/* Back/Forward Navigation */}
+          <div className="flex items-center gap-1">
+            <Button variant="ghost" size="icon" onClick={handleBack} className="h-9 w-9">
+              <ChevronLeft className="h-5 w-5" />
+            </Button>
+            <Button variant="ghost" size="icon" onClick={handleForward} className="h-9 w-9">
+              <ChevronRight className="h-5 w-5" />
+            </Button>
+          </div>
+          
           <div className="flex items-center gap-2 min-w-0">
             <img src={invisionLogo} alt="InVision Network Logo" className="h-7 w-7 sm:h-8 sm:w-8 flex-shrink-0" />
             <span className="text-base sm:text-lg font-semibold hidden sm:inline truncate">InVision Network</span>

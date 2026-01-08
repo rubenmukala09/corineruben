@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
-import { Settings, Bell, Search, LogOut, User, ChevronDown, Command } from "lucide-react";
+import { Settings, Bell, Search, LogOut, User, ChevronDown, Command, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -203,6 +203,26 @@ function AdminDashboard() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </Button>
+            
+            {/* Back/Forward Navigation */}
+            <div className="flex items-center gap-1">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => window.history.back()}
+                className="text-gray-400 hover:text-white hover:bg-gray-800/50 h-9 w-9"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => window.history.forward()}
+                className="text-gray-400 hover:text-white hover:bg-gray-800/50 h-9 w-9"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </Button>
+            </div>
             
             <div className="relative hidden md:block">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />

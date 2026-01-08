@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, Bell, Menu } from "lucide-react";
+import { Search, Bell, Menu, ChevronLeft, ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
@@ -15,6 +15,9 @@ export default function Admin() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
+  const handleBack = () => window.history.back();
+  const handleForward = () => window.history.forward();
+
   return (
     <div className="flex min-h-screen bg-[#0B0F19] w-full overflow-x-hidden">
       {/* Cyber Sidebar */}
@@ -28,7 +31,7 @@ export default function Admin() {
       <header className={`fixed top-0 right-0 left-0 h-16 bg-[#111827]/95 backdrop-blur-xl border-b border-gray-800 z-40 
         transition-all duration-300 ${sidebarOpen ? 'md:left-[260px]' : 'md:left-[70px]'}`}>
         <div className="flex items-center justify-between h-full px-4 lg:px-6">
-          {/* Left - Menu Toggle + Search */}
+          {/* Left - Menu Toggle + Nav + Search */}
           <div className="flex items-center gap-4 flex-1">
             <Button
               variant="ghost"
@@ -44,6 +47,26 @@ export default function Admin() {
             >
               <Menu className="w-5 h-5" />
             </Button>
+            
+            {/* Back/Forward Navigation */}
+            <div className="flex items-center gap-1">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleBack}
+                className="text-[#9CA3AF] hover:text-[#F9FAFB] hover:bg-gray-800 h-9 w-9"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleForward}
+                className="text-[#9CA3AF] hover:text-[#F9FAFB] hover:bg-gray-800 h-9 w-9"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </Button>
+            </div>
             
             {/* Dark Grey Search Bar */}
             <div className="relative hidden sm:block max-w-md flex-1">
