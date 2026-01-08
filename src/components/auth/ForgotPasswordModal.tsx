@@ -70,7 +70,7 @@ export function ForgotPasswordModal({ open, onClose }: ForgotPasswordModalProps)
                 <Input
                   id="reset-email"
                   type="email"
-                  placeholder="your@invisionnetwork.org"
+                  placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="pl-10"

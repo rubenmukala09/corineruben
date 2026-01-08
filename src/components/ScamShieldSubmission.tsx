@@ -215,7 +215,7 @@ export const ScamShieldSubmission = ({ open, onOpenChange }: ScamShieldSubmissio
                     <FormItem>
                       <FormLabel>Your Name *</FormLabel>
                       <FormControl>
-                        <Input {...field} placeholder="John Doe" />
+                        <Input {...field} placeholder="Your full name" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -229,7 +229,7 @@ export const ScamShieldSubmission = ({ open, onOpenChange }: ScamShieldSubmissio
                     <FormItem>
                       <FormLabel>Your Email *</FormLabel>
                       <FormControl>
-                        <Input {...field} type="email" placeholder="john@example.com" />
+                        <Input {...field} type="email" placeholder="Your email address" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
