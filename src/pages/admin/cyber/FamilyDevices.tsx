@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Device {
   id: string;
@@ -205,20 +206,47 @@ export default function FamilyDevices() {
       <div className="grid gap-4 md:grid-cols-3 mb-8">
         <Card className="bg-[#111827] border-gray-800">
           <CardContent className="p-6 text-center">
-            <p className="text-4xl font-bold text-[#06B6D4]">{totalDevices}</p>
-            <p className="text-[#9CA3AF]">Total Devices</p>
+            {isLoading ? (
+              <div className="space-y-2">
+                <Skeleton className="h-10 w-16 mx-auto bg-gray-700" />
+                <Skeleton className="h-4 w-24 mx-auto bg-gray-700" />
+              </div>
+            ) : (
+              <>
+                <p className="text-4xl font-bold text-[#06B6D4]">{totalDevices}</p>
+                <p className="text-[#9CA3AF]">Total Devices</p>
+              </>
+            )}
           </CardContent>
         </Card>
         <Card className="bg-[#111827] border-gray-800">
           <CardContent className="p-6 text-center">
-            <p className="text-4xl font-bold text-green-500">{fullyProtected}</p>
-            <p className="text-[#9CA3AF]">Fully Protected</p>
+            {isLoading ? (
+              <div className="space-y-2">
+                <Skeleton className="h-10 w-16 mx-auto bg-gray-700" />
+                <Skeleton className="h-4 w-28 mx-auto bg-gray-700" />
+              </div>
+            ) : (
+              <>
+                <p className="text-4xl font-bold text-green-500">{fullyProtected}</p>
+                <p className="text-[#9CA3AF]">Fully Protected</p>
+              </>
+            )}
           </CardContent>
         </Card>
         <Card className="bg-[#111827] border-gray-800">
           <CardContent className="p-6 text-center">
-            <p className="text-4xl font-bold text-red-500">{needsAttention}</p>
-            <p className="text-[#9CA3AF]">Needs Attention</p>
+            {isLoading ? (
+              <div className="space-y-2">
+                <Skeleton className="h-10 w-16 mx-auto bg-gray-700" />
+                <Skeleton className="h-4 w-28 mx-auto bg-gray-700" />
+              </div>
+            ) : (
+              <>
+                <p className="text-4xl font-bold text-red-500">{needsAttention}</p>
+                <p className="text-[#9CA3AF]">Needs Attention</p>
+              </>
+            )}
           </CardContent>
         </Card>
       </div>
@@ -239,9 +267,29 @@ export default function FamilyDevices() {
         </CardHeader>
         <CardContent>
           {isLoading ? (
-            <div className="text-center py-12">
-              <RefreshCw className="h-8 w-8 animate-spin mx-auto text-[#06B6D4] mb-4" />
-              <p className="text-[#9CA3AF]">Loading devices...</p>
+            <div className="space-y-4">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="flex items-center justify-between p-4 rounded-lg bg-[#1F2937] border border-gray-800">
+                  <div className="flex items-center gap-4">
+                    <Skeleton className="h-12 w-12 rounded-lg bg-gray-700" />
+                    <div className="space-y-2">
+                      <Skeleton className="h-4 w-32 bg-gray-700" />
+                      <Skeleton className="h-3 w-48 bg-gray-700" />
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-6">
+                    <div className="w-32 space-y-2">
+                      <div className="flex justify-between">
+                        <Skeleton className="h-3 w-10 bg-gray-700" />
+                        <Skeleton className="h-3 w-8 bg-gray-700" />
+                      </div>
+                      <Skeleton className="h-2 w-full rounded-full bg-gray-700" />
+                    </div>
+                    <Skeleton className="h-5 w-16 rounded-full bg-gray-700" />
+                    <Skeleton className="h-8 w-16 rounded bg-gray-700" />
+                  </div>
+                </div>
+              ))}
             </div>
           ) : devices.length === 0 ? (
             <div className="text-center py-12">

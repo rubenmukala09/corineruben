@@ -42,6 +42,32 @@ export default function SuperAdminActivityFeed() {
   const [loading, setLoading] = useState(true);
   const [autoRefresh, setAutoRefresh] = useState(true);
 
+  // Filter function to exclude healthy heartbeats and only show errors/warnings
+  const shouldShowActivity = (activity: ActivityLogEntry): boolean => {
+    // If it's a system alert, check the status in details
+    if (activity.action === 'SYSTEM_ALERT' && activity.details) {
+      const details = activity.details as Record<string, unknown>;
+      const alertType = details.alert_type as string;
+      // Only show if it's an actual error/warning, not healthy status
+      if (alertType === 'service_healthy' || alertType === 'all_healthy') {
+        return false;
+      }
+      return true;
+    }
+    
+    // Check for status field in details
+    if (activity.details) {
+      const details = activity.details as Record<string, unknown>;
+      const status = (details.status as string)?.toLowerCase();
+      if (status === 'healthy' || status === 'success' || status === 'ok') {
+        return false;
+      }
+    }
+    
+    // Show all other activities
+    return true;
+  };
+
   useEffect(() => {
     fetchActivities();
 
@@ -56,7 +82,10 @@ export default function SuperAdminActivityFeed() {
           table: 'activity_log',
         },
         (payload) => {
-          setActivities(prev => [payload.new as ActivityLogEntry, ...prev].slice(0, 50));
+          const newActivity = payload.new as ActivityLogEntry;
+          if (shouldShowActivity(newActivity)) {
+            setActivities(prev => [newActivity, ...prev].slice(0, 50));
+          }
         }
       )
       .subscribe();
@@ -81,10 +110,13 @@ export default function SuperAdminActivityFeed() {
         .from('activity_log')
         .select('*')
         .order('created_at', { ascending: false })
-        .limit(50);
+        .limit(100); // Fetch more to filter
 
       if (error) throw error;
-      setActivities(data || []);
+      
+      // Filter out healthy heartbeats
+      const filteredActivities = (data || []).filter(shouldShowActivity).slice(0, 50);
+      setActivities(filteredActivities);
     } catch (error) {
       console.error('Error fetching activities:', error);
     } finally {
@@ -107,7 +139,28 @@ export default function SuperAdminActivityFeed() {
     return iconMap[action] || <Activity className="w-4 h-4" />;
   };
 
-  const getActivityColor = (action: string) => {
+  const getActivityColor = (action: string, details?: Record<string, unknown> | null) => {
+    // Check for status-based colors (Error=Red, Warning=Orange, Success=Green)
+    if (details) {
+      const status = (details.status as string)?.toLowerCase();
+      const alertType = (details.alert_type as string)?.toLowerCase();
+      
+      if (status === 'error' || status === 'failed' || alertType === 'service_dead') {
+        return 'from-red-500 to-red-600';
+      }
+      if (status === 'warning' || alertType === 'service_struggling') {
+        return 'from-orange-500 to-amber-500';
+      }
+      if (status === 'success' || status === 'healthy') {
+        return 'from-green-500 to-emerald-500';
+      }
+    }
+    
+    // System alerts default to warning/error colors
+    if (action === 'SYSTEM_ALERT') {
+      return 'from-red-500 to-orange-500';
+    }
+
     const colorMap: Record<string, string> = {
       'LOGIN': 'from-green-500 to-emerald-500',
       'LOGOUT': 'from-gray-500 to-gray-600',
@@ -204,7 +257,7 @@ export default function SuperAdminActivityFeed() {
                   key={activity.id}
                   className="flex items-start gap-3 p-3 rounded-lg bg-gray-800/50 hover:bg-gray-800 transition-colors"
                 >
-                  <div className={`p-2 rounded-lg bg-gradient-to-br ${getActivityColor(activity.action)}`}>
+                  <div className={`p-2 rounded-lg bg-gradient-to-br ${getActivityColor(activity.action, activity.details)}`}>
                     {getActivityIcon(activity.action, activity.entity_type)}
                   </div>
                   <div className="flex-1 min-w-0">

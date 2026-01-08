@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { format, subDays } from "date-fns";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Analytics() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -19,7 +20,7 @@ export default function Analytics() {
   const startDate = subDays(new Date(), dateRange).toISOString();
 
   // Fetch analytics data
-  const { data: events } = useQuery({
+  const { data: events, isLoading: eventsLoading } = useQuery({
     queryKey: ["analytics-events", startDate],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -31,6 +32,8 @@ export default function Analytics() {
       return data || [];
     },
   });
+
+  const isLoading = eventsLoading;
 
   const { data: pageViews } = useQuery({
     queryKey: ["page-views", startDate],
@@ -158,8 +161,17 @@ export default function Analytics() {
                 <Eye className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{totalPageViews.toLocaleString()}</div>
-                <p className="text-xs text-muted-foreground">Last {dateRange} days</p>
+                {isLoading ? (
+                  <div className="space-y-2">
+                    <Skeleton className="h-7 w-20" />
+                    <Skeleton className="h-3 w-24" />
+                  </div>
+                ) : (
+                  <>
+                    <div className="text-2xl font-bold">{totalPageViews.toLocaleString()}</div>
+                    <p className="text-xs text-muted-foreground">Last {dateRange} days</p>
+                  </>
+                )}
               </CardContent>
             </Card>
 
@@ -169,8 +181,17 @@ export default function Analytics() {
                 <Users className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{totalSessions.toLocaleString()}</div>
-                <p className="text-xs text-muted-foreground">Unique visitors</p>
+                {isLoading ? (
+                  <div className="space-y-2">
+                    <Skeleton className="h-7 w-20" />
+                    <Skeleton className="h-3 w-24" />
+                  </div>
+                ) : (
+                  <>
+                    <div className="text-2xl font-bold">{totalSessions.toLocaleString()}</div>
+                    <p className="text-xs text-muted-foreground">Unique visitors</p>
+                  </>
+                )}
               </CardContent>
             </Card>
 
@@ -180,8 +201,17 @@ export default function Analytics() {
                 <TrendingUp className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{conversionRate}%</div>
-                <p className="text-xs text-muted-foreground">{totalConversions} conversions</p>
+                {isLoading ? (
+                  <div className="space-y-2">
+                    <Skeleton className="h-7 w-16" />
+                    <Skeleton className="h-3 w-24" />
+                  </div>
+                ) : (
+                  <>
+                    <div className="text-2xl font-bold">{conversionRate}%</div>
+                    <p className="text-xs text-muted-foreground">{totalConversions} conversions</p>
+                  </>
+                )}
               </CardContent>
             </Card>
 
@@ -191,8 +221,17 @@ export default function Analytics() {
                 <Clock className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{Math.floor(avgSessionDuration / 60)}m {avgSessionDuration % 60}s</div>
-                <p className="text-xs text-muted-foreground">Time on site</p>
+                {isLoading ? (
+                  <div className="space-y-2">
+                    <Skeleton className="h-7 w-20" />
+                    <Skeleton className="h-3 w-24" />
+                  </div>
+                ) : (
+                  <>
+                    <div className="text-2xl font-bold">{Math.floor(avgSessionDuration / 60)}m {avgSessionDuration % 60}s</div>
+                    <p className="text-xs text-muted-foreground">Time on site</p>
+                  </>
+                )}
               </CardContent>
             </Card>
           </div>
