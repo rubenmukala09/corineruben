@@ -1,21 +1,69 @@
 import { Card } from "@/components/ui/card";
-import { Shield } from "lucide-react";
+import { Shield, RefreshCw } from "lucide-react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
-// Device Security Data with exact colors from spec
-const deviceData = [
-  { name: "Mobile Protected", value: 65, color: "#10B981" }, // Neon Green
-  { name: "Desktop Protected", value: 25, color: "#3B82F6" }, // Neon Blue  
-  { name: "Vulnerable", value: 10, color: "#EF4444" }, // Neon Red
-];
-
-const safetyScore = 90; // Center text value
+interface Device {
+  id: string;
+  device_name: string;
+  device_type: string;
+  status: string;
+  protection_level: number;
+}
 
 export function DeviceSecurityShield() {
+  const { data: devices = [], isLoading } = useQuery({
+    queryKey: ["user-devices-shield"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("user_devices")
+        .select("*");
+
+      if (error) throw error;
+      return data as Device[];
+    },
+  });
+
+  // Calculate device data from real devices
+  const mobileDevices = devices.filter(d => d.device_type === "mobile" || d.device_type === "tablet");
+  const desktopDevices = devices.filter(d => d.device_type === "desktop" || d.device_type === "laptop");
+  const vulnerableDevices = devices.filter(d => d.status === "at_risk" || d.protection_level < 70);
+
+  const totalDevices = devices.length || 1; // Prevent division by zero
+  
+  const deviceData = [
+    { 
+      name: "Mobile Protected", 
+      value: totalDevices > 0 ? Math.round((mobileDevices.filter(d => d.status === "protected").length / totalDevices) * 100) : 0, 
+      color: "#10B981" 
+    },
+    { 
+      name: "Desktop Protected", 
+      value: totalDevices > 0 ? Math.round((desktopDevices.filter(d => d.status === "protected").length / totalDevices) * 100) : 0, 
+      color: "#3B82F6" 
+    },
+    { 
+      name: "Vulnerable", 
+      value: totalDevices > 0 ? Math.round((vulnerableDevices.length / totalDevices) * 100) : 0, 
+      color: "#EF4444" 
+    },
+  ];
+
+  // Ensure we have at least some data to show
+  const chartData = devices.length > 0 
+    ? deviceData.filter(d => d.value > 0)
+    : [{ name: "No Data", value: 100, color: "#374151" }];
+
+  // Calculate safety score
+  const protectedDevices = devices.filter(d => d.status === "protected").length;
+  const safetyScore = devices.length > 0 ? Math.round((protectedDevices / devices.length) * 100) : 0;
+
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
+      if (data.name === "No Data") return null;
       return (
         <div className="bg-[#111827] border border-gray-800 rounded-lg shadow-xl p-3">
           <p className="text-sm font-medium text-[#F9FAFB]">{data.name}</p>
@@ -27,6 +75,14 @@ export function DeviceSecurityShield() {
     }
     return null;
   };
+
+  if (isLoading) {
+    return (
+      <Card className="p-6 bg-[#111827] border border-gray-800 rounded-xl h-full flex items-center justify-center">
+        <RefreshCw className="h-8 w-8 animate-spin text-[#06B6D4]" />
+      </Card>
+    );
+  }
 
   return (
     <motion.div
@@ -42,7 +98,9 @@ export function DeviceSecurityShield() {
           </div>
           <div>
             <h2 className="text-lg font-bold text-[#F9FAFB]">Device Security Shield</h2>
-            <p className="text-sm text-[#9CA3AF]">Protection coverage</p>
+            <p className="text-sm text-[#9CA3AF]">
+              {devices.length > 0 ? `${devices.length} device${devices.length > 1 ? 's' : ''} monitored` : 'No devices'}
+            </p>
           </div>
         </div>
 
@@ -51,21 +109,21 @@ export function DeviceSecurityShield() {
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
-                data={deviceData}
+                data={chartData}
                 cx="50%"
                 cy="50%"
                 innerRadius={65}
                 outerRadius={95}
-                paddingAngle={2}
+                paddingAngle={chartData.length > 1 ? 2 : 0}
                 dataKey="value"
                 stroke="none"
               >
-                {deviceData.map((entry, index) => (
+                {chartData.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
                     fill={entry.color}
                     style={{
-                      filter: `drop-shadow(0 0 10px ${entry.color}80)`,
+                      filter: entry.name !== "No Data" ? `drop-shadow(0 0 10px ${entry.color}80)` : undefined,
                     }}
                   />
                 ))}
@@ -90,29 +148,35 @@ export function DeviceSecurityShield() {
 
         {/* Legend */}
         <div className="mt-4 space-y-2">
-          {deviceData.map((item, index) => (
-            <motion.div
-              key={item.name}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3 + index * 0.1 }}
-              className="flex items-center justify-between py-2 px-3 rounded-lg bg-[#0B0F19] border border-gray-800"
-            >
-              <div className="flex items-center gap-2">
-                <div
-                  className="w-3 h-3 rounded-full"
-                  style={{
-                    backgroundColor: item.color,
-                    boxShadow: `0 0 8px ${item.color}`,
-                  }}
-                />
-                <span className="text-sm text-[#9CA3AF]">{item.name}</span>
-              </div>
-              <span className="text-sm font-semibold" style={{ color: item.color }}>
-                {item.value}%
-              </span>
-            </motion.div>
-          ))}
+          {devices.length === 0 ? (
+            <div className="text-center py-4">
+              <p className="text-sm text-[#9CA3AF]">Add devices to see security breakdown</p>
+            </div>
+          ) : (
+            deviceData.map((item, index) => (
+              <motion.div
+                key={item.name}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 + index * 0.1 }}
+                className="flex items-center justify-between py-2 px-3 rounded-lg bg-[#0B0F19] border border-gray-800"
+              >
+                <div className="flex items-center gap-2">
+                  <div
+                    className="w-3 h-3 rounded-full"
+                    style={{
+                      backgroundColor: item.color,
+                      boxShadow: `0 0 8px ${item.color}`,
+                    }}
+                  />
+                  <span className="text-sm text-[#9CA3AF]">{item.name}</span>
+                </div>
+                <span className="text-sm font-semibold" style={{ color: item.color }}>
+                  {item.value}%
+                </span>
+              </motion.div>
+            ))
+          )}
         </div>
       </Card>
     </motion.div>

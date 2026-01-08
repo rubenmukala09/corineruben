@@ -3629,6 +3629,101 @@ export type Database = {
         }
         Relationships: []
       }
+      threat_events: {
+        Row: {
+          created_at: string
+          description: string | null
+          device_id: string | null
+          id: string
+          profile_id: string | null
+          resolved_at: string | null
+          resolved_by: string | null
+          severity: string
+          status: string
+          target: string | null
+          threat_type: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          device_id?: string | null
+          id?: string
+          profile_id?: string | null
+          resolved_at?: string | null
+          resolved_by?: string | null
+          severity: string
+          status?: string
+          target?: string | null
+          threat_type: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          device_id?: string | null
+          id?: string
+          profile_id?: string | null
+          resolved_at?: string | null
+          resolved_by?: string | null
+          severity?: string
+          status?: string
+          target?: string | null
+          threat_type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "threat_events_device_id_fkey"
+            columns: ["device_id"]
+            isOneToOne: false
+            referencedRelation: "user_devices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "threat_events_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "threat_events_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles_limited"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "threat_events_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles_safe"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "threat_events_resolved_by_fkey"
+            columns: ["resolved_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "threat_events_resolved_by_fkey"
+            columns: ["resolved_by"]
+            isOneToOne: false
+            referencedRelation: "profiles_limited"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "threat_events_resolved_by_fkey"
+            columns: ["resolved_by"]
+            isOneToOne: false
+            referencedRelation: "profiles_safe"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       tickets: {
         Row: {
           assigned_to: string | null
@@ -3851,6 +3946,70 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      user_devices: {
+        Row: {
+          created_at: string
+          device_name: string
+          device_type: string
+          id: string
+          ip_address: string | null
+          last_scan: string | null
+          os_version: string | null
+          profile_id: string | null
+          protection_level: number
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          device_name: string
+          device_type: string
+          id?: string
+          ip_address?: string | null
+          last_scan?: string | null
+          os_version?: string | null
+          profile_id?: string | null
+          protection_level?: number
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          device_name?: string
+          device_type?: string
+          id?: string
+          ip_address?: string | null
+          last_scan?: string | null
+          os_version?: string | null
+          profile_id?: string | null
+          protection_level?: number
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_devices_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_devices_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles_limited"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_devices_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles_safe"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {

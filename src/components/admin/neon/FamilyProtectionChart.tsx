@@ -1,35 +1,75 @@
 import { Card } from "@/components/ui/card";
-import { Users } from "lucide-react";
+import { Users, RefreshCw } from "lucide-react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
-const deviceData = [
-  { name: "Mom's Phone", value: 30, status: "safe", color: "#10b981" },
-  { name: "Dad's Laptop", value: 25, status: "safe", color: "#06b6d4" },
-  { name: "Kids' Tablet", value: 20, status: "safe", color: "#8b5cf6" },
-  { name: "Home Wi-Fi", value: 15, status: "needs-update", color: "#f97316" },
-  { name: "Smart TV", value: 10, status: "safe", color: "#3b82f6" },
-];
+interface Device {
+  id: string;
+  device_name: string;
+  device_type: string;
+  status: string;
+  protection_level: number;
+}
 
-const totalDevices = 5;
-const safeDevices = deviceData.filter(d => d.status === "safe").length;
-const securityScore = Math.round((safeDevices / totalDevices) * 100);
+const COLORS = ["#10b981", "#06b6d4", "#8b5cf6", "#f97316", "#3b82f6", "#ec4899"];
 
 export function FamilyProtectionChart() {
+  const { data: devices = [], isLoading } = useQuery({
+    queryKey: ["user-devices-chart"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("user_devices")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(6);
+
+      if (error) throw error;
+      return data as Device[];
+    },
+  });
+
+  // Transform real data into chart format
+  const chartData = devices.length > 0
+    ? devices.map((device, index) => ({
+        name: device.device_name,
+        value: device.protection_level,
+        status: device.status === "protected" ? "safe" : "needs-update",
+        color: COLORS[index % COLORS.length],
+      }))
+    : [
+        { name: "No devices", value: 100, status: "none", color: "#374151" },
+      ];
+
+  const totalDevices = devices.length;
+  const safeDevices = devices.filter(d => d.status === "protected").length;
+  const securityScore = totalDevices > 0 ? Math.round((safeDevices / totalDevices) * 100) : 0;
+
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
+      if (data.status === "none") return null;
       return (
         <div className="bg-[#1F2937] border border-cyan-500/30 rounded-lg shadow-lg shadow-cyan-500/10 p-3">
           <p className="text-sm font-medium text-white">{data.name}</p>
           <p className={`text-sm font-bold ${data.status === "safe" ? "text-emerald-400" : "text-orange-400"}`}>
             {data.status === "safe" ? "✓ Protected" : "⚠ Needs Update"}
           </p>
+          <p className="text-xs text-gray-400 mt-1">Protection: {data.value}%</p>
         </div>
       );
     }
     return null;
   };
+
+  if (isLoading) {
+    return (
+      <Card className="p-6 bg-[#1F2937] border-gray-700/50 rounded-xl shadow-lg shadow-emerald-500/5 h-full flex items-center justify-center">
+        <RefreshCw className="h-8 w-8 animate-spin text-cyan-500" />
+      </Card>
+    );
+  }
 
   return (
     <motion.div
@@ -45,7 +85,9 @@ export function FamilyProtectionChart() {
           </div>
           <div>
             <h2 className="text-lg font-bold text-white">Family Protection</h2>
-            <p className="text-sm text-gray-400">Device coverage status</p>
+            <p className="text-sm text-gray-400">
+              {totalDevices > 0 ? `${totalDevices} device${totalDevices > 1 ? 's' : ''} connected` : 'No devices connected'}
+            </p>
           </div>
         </div>
 
@@ -54,7 +96,7 @@ export function FamilyProtectionChart() {
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <defs>
-                {deviceData.map((entry, index) => (
+                {chartData.map((entry, index) => (
                   <filter key={`glow-${index}`} id={`glow-${index}`} x="-50%" y="-50%" width="200%" height="200%">
                     <feGaussianBlur stdDeviation="3" result="coloredBlur" />
                     <feMerge>
@@ -65,21 +107,21 @@ export function FamilyProtectionChart() {
                 ))}
               </defs>
               <Pie
-                data={deviceData}
+                data={chartData}
                 cx="50%"
                 cy="50%"
                 innerRadius={60}
                 outerRadius={80}
-                paddingAngle={3}
+                paddingAngle={devices.length > 0 ? 3 : 0}
                 dataKey="value"
                 stroke="none"
               >
-                {deviceData.map((entry, index) => (
+                {chartData.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
                     fill={entry.color}
                     style={{
-                      filter: `drop-shadow(0 0 6px ${entry.color})`,
+                      filter: entry.status !== "none" ? `drop-shadow(0 0 6px ${entry.color})` : undefined,
                     }}
                   />
                 ))}
@@ -104,29 +146,35 @@ export function FamilyProtectionChart() {
 
         {/* Device Status List */}
         <div className="mt-4 space-y-2">
-          {deviceData.map((device, index) => (
-            <motion.div
-              key={device.name}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3 + index * 0.1 }}
-              className="flex items-center justify-between py-2 px-3 rounded-lg bg-[#111827]/50"
-            >
-              <div className="flex items-center gap-2">
-                <div
-                  className="w-2 h-2 rounded-full"
-                  style={{
-                    backgroundColor: device.color,
-                    boxShadow: `0 0 8px ${device.color}`,
-                  }}
-                />
-                <span className="text-sm text-gray-300">{device.name}</span>
-              </div>
-              <span className={`text-xs font-medium ${device.status === "safe" ? "text-emerald-400" : "text-orange-400"}`}>
-                {device.status === "safe" ? "Safe" : "Update"}
-              </span>
-            </motion.div>
-          ))}
+          {devices.length === 0 ? (
+            <div className="text-center py-4">
+              <p className="text-sm text-gray-400">Add devices to see protection status</p>
+            </div>
+          ) : (
+            devices.slice(0, 5).map((device, index) => (
+              <motion.div
+                key={device.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 + index * 0.1 }}
+                className="flex items-center justify-between py-2 px-3 rounded-lg bg-[#111827]/50"
+              >
+                <div className="flex items-center gap-2">
+                  <div
+                    className="w-2 h-2 rounded-full"
+                    style={{
+                      backgroundColor: COLORS[index % COLORS.length],
+                      boxShadow: `0 0 8px ${COLORS[index % COLORS.length]}`,
+                    }}
+                  />
+                  <span className="text-sm text-gray-300">{device.device_name}</span>
+                </div>
+                <span className={`text-xs font-medium ${device.status === "protected" ? "text-emerald-400" : device.status === "warning" ? "text-orange-400" : "text-red-400"}`}>
+                  {device.status === "protected" ? "Safe" : device.status === "warning" ? "Update" : "At Risk"}
+                </span>
+              </motion.div>
+            ))
+          )}
         </div>
       </Card>
     </motion.div>
