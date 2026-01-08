@@ -359,7 +359,6 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
               <Input
                 id="firstName"
                 {...register("firstName")}
-                placeholder="John"
                 className={cn(
                   "h-14 text-base border-2 rounded-xl",
                   errors.firstName ? "border-destructive" : ""
@@ -377,7 +376,6 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
               <Input
                 id="lastName"
                 {...register("lastName")}
-                placeholder="Doe"
                 className={cn(
                   "h-14 text-base border-2 rounded-xl",
                   errors.lastName ? "border-destructive" : ""
@@ -406,7 +404,6 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
                 id="email"
                 type="email"
                 {...register("email")}
-                placeholder="john.doe@example.com"
                 className={cn(
                   "h-14 text-base border-2 rounded-xl",
                   errors.email ? "border-destructive" : ""
