@@ -138,7 +138,7 @@ export function AdminShell() {
   }
 
   return (
-    <div className="flex min-h-screen bg-[#0B0F19] w-full overflow-x-hidden">
+    <div data-admin-layout className="flex min-h-screen bg-[#0B0F19] w-full overflow-x-hidden">
       {/* Persistent Sidebar - Never re-renders on navigation */}
       <CyberSidebar 
         isOpen={sidebarOpen} 

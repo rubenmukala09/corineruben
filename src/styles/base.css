@@ -178,12 +178,14 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     @apply border-border;
   }
 
+  /* === CANVAS SEAL: Prevent white flashes === */
   html {
     @apply scroll-smooth;
     overflow-x: hidden;
     width: 100%;
     scroll-behavior: smooth;
     scrollbar-gutter: stable;
+    background-color: #0B0F19;
   }
   
   body {
@@ -202,6 +204,12 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
       radial-gradient(ellipse at 20% 0%, hsl(265 55% 42% / 0.015) 0%, transparent 60%),
       radial-gradient(ellipse at 80% 100%, hsl(170 60% 38% / 0.01) 0%, transparent 60%);
     background-attachment: fixed;
+  }
+
+  /* Admin/Dashboard pages get the dark theme base */
+  body:has([data-admin-layout]) {
+    background-color: #0B0F19 !important;
+    background-image: none !important;
   }
   
   @media (min-width: 768px) {
@@ -264,6 +272,25 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     white-space: normal;
   }
   
+  /* === CYBER-SCROLLBAR: Dark themed scrollbar === */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #0B0F19;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #1F2937;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #374151;
+  }
+  
   /* Custom scrollbar for activity feed and other scrollable elements */
   .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
@@ -283,10 +310,12 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     background: hsl(var(--muted-foreground) / 0.5);
   }
   
+  /* === INFINITY HEIGHT: Ensure full viewport coverage === */
   #root {
     @apply min-h-screen;
     overflow-x: hidden;
     width: 100%;
+    background-color: #0B0F19;
   }
   
   /* Fallback for browsers that don't support zoom */
