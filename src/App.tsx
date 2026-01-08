@@ -76,6 +76,7 @@ const EmailCampaigns = lazy(() => import("./pages/admin/EmailCampaigns"));
 const Analytics = lazy(() => import("./pages/admin/Analytics"));
 const BusinessClients = lazy(() => import("./pages/admin/BusinessClients"));
 const BusinessClientDetail = lazy(() => import("./pages/admin/BusinessClientDetail"));
+const IndividualClientDetail = lazy(() => import("./pages/admin/IndividualClientDetail"));
 const IndividualClients = lazy(() => import("./pages/admin/IndividualClients"));
 const ProductsList = lazy(() => import("./pages/admin/ProductsList"));
 const ProductEditor = lazy(() => import("./pages/admin/ProductEditor"));
@@ -182,7 +183,7 @@ function AnimatedRoutes() {
         <Route path="/admin/clients/businesses" element={<PageTransition><AdminRoute><BusinessClients /></AdminRoute></PageTransition>} />
         <Route path="/admin/clients/businesses/:id" element={<PageTransition><AdminRoute><BusinessClientDetail /></AdminRoute></PageTransition>} />
         <Route path="/admin/clients/individuals" element={<PageTransition><AdminRoute><IndividualClients /></AdminRoute></PageTransition>} />
-        <Route path="/admin/clients/individuals/:id" element={<PageTransition><AdminRoute><BusinessClientDetail /></AdminRoute></PageTransition>} />
+        <Route path="/admin/clients/individuals/:id" element={<PageTransition><AdminRoute><IndividualClientDetail /></AdminRoute></PageTransition>} />
         <Route path="/admin/ecommerce/products" element={<PageTransition><AdminRoute><ProductsList /></AdminRoute></PageTransition>} />
         <Route path="/admin/ecommerce/products/new" element={<PageTransition><AdminRoute><ProductEditor /></AdminRoute></PageTransition>} />
         <Route path="/admin/ecommerce/products/:id" element={<PageTransition><AdminRoute><ProductEditor /></AdminRoute></PageTransition>} />

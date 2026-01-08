@@ -283,11 +283,32 @@ export default function ArticlesAdmin() {
   };
 
   const handleExport = (format: "csv" | "excel" | "pdf") => {
-    toast({
-      title: "Export Started",
-      description: `Exporting articles as ${format.toUpperCase()}...`,
-    });
-    // Implement actual export logic here
+    try {
+      if (format === "csv") {
+        const headers = ["Title", "Category", "Status", "Author", "Views", "Created At"];
+        const rows = articles.map(a => [
+          a.title,
+          a.category,
+          a.status,
+          a.author.name,
+          a.views.toString(),
+          a.createdAt
+        ]);
+        const csvContent = [headers, ...rows].map(row => row.map(cell => `"${cell}"`).join(",")).join("\n");
+        const blob = new Blob([csvContent], { type: "text/csv" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `articles_export_${new Date().toISOString().split('T')[0]}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+        toast({ title: "Export Complete", description: "Articles exported as CSV" });
+      } else {
+        toast({ title: "Export Started", description: `Exporting articles as ${format.toUpperCase()}...` });
+      }
+    } catch (error) {
+      toast({ title: "Export Failed", description: "Failed to export articles", variant: "destructive" });
+    }
   };
 
   const getStatusBadge = (article: Article) => {

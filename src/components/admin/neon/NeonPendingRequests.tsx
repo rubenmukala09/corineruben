@@ -139,11 +139,11 @@ export function NeonPendingRequests() {
     const links = {
       booking: "/admin/bookings",
       inquiry: "/admin/service-inquiries",
-      application: "/portal/admin",
+      application: "/admin/job-applications",
       testimonial: "/admin/content/testimonials",
       order: "/admin/ecommerce/orders",
     };
-    return links[type as keyof typeof links] || "/portal/admin";
+    return links[type as keyof typeof links] || "/admin";
   };
 
   return (
