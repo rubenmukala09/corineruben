@@ -52,7 +52,6 @@ export default function Pending() {
     },
   });
 
-  // Add realtime updates
   useEffect(() => {
     const channel = supabase
       .channel('pending-updates')
@@ -130,14 +129,14 @@ export default function Pending() {
   };
 
   return (
-    <div className="container mx-auto p-6 space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold">Pending Actions</h1>
-        <p className="text-muted-foreground">Review and manage items requiring attention</p>
+    <div className="p-6 max-w-7xl mx-auto space-y-6">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-[#F9FAFB]">Pending Actions</h1>
+        <p className="text-[#9CA3AF]">Review and manage items requiring attention</p>
       </div>
 
       <Tabs defaultValue="testimonials" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-3 bg-[#111827]">
           <TabsTrigger value="testimonials">
             Testimonials
             {pendingTestimonials && pendingTestimonials.length > 0 && (
@@ -165,33 +164,33 @@ export default function Pending() {
         </TabsList>
 
         <TabsContent value="testimonials">
-          <Card>
+          <Card className="bg-[#111827] border-gray-800">
             <CardHeader>
-              <CardTitle>Pending Testimonials</CardTitle>
+              <CardTitle className="text-[#F9FAFB]">Pending Testimonials</CardTitle>
             </CardHeader>
             <CardContent>
               {!pendingTestimonials ? (
                 <div className="flex justify-center p-8">
-                  <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                  <Loader2 className="h-8 w-8 animate-spin text-[#9CA3AF]" />
                 </div>
               ) : pendingTestimonials.length === 0 ? (
-                <p className="text-center text-muted-foreground py-8">No pending testimonials</p>
+                <p className="text-center text-[#9CA3AF] py-8">No pending testimonials</p>
               ) : (
                 <Table>
                   <TableHeader>
-                    <TableRow>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Content</TableHead>
-                      <TableHead>Date</TableHead>
-                      <TableHead>Actions</TableHead>
+                    <TableRow className="border-gray-700">
+                      <TableHead className="text-[#9CA3AF]">Name</TableHead>
+                      <TableHead className="text-[#9CA3AF]">Content</TableHead>
+                      <TableHead className="text-[#9CA3AF]">Date</TableHead>
+                      <TableHead className="text-[#9CA3AF]">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {pendingTestimonials.map((testimonial) => (
-                      <TableRow key={testimonial.id}>
-                        <TableCell className="font-medium">{testimonial.name}</TableCell>
-                        <TableCell className="max-w-md truncate">{testimonial.content}</TableCell>
-                        <TableCell>{format(new Date(testimonial.created_at), "MMM dd, yyyy")}</TableCell>
+                      <TableRow key={testimonial.id} className="border-gray-700">
+                        <TableCell className="font-medium text-[#F9FAFB]">{testimonial.name}</TableCell>
+                        <TableCell className="max-w-md truncate text-[#9CA3AF]">{testimonial.content}</TableCell>
+                        <TableCell className="text-[#9CA3AF]">{format(new Date(testimonial.created_at), "MMM dd, yyyy")}</TableCell>
                         <TableCell>
                           <div className="flex gap-2">
                             <Button
@@ -227,35 +226,35 @@ export default function Pending() {
         </TabsContent>
 
         <TabsContent value="bookings">
-          <Card>
+          <Card className="bg-[#111827] border-gray-800">
             <CardHeader>
-              <CardTitle>Pending Bookings</CardTitle>
+              <CardTitle className="text-[#F9FAFB]">Pending Bookings</CardTitle>
             </CardHeader>
             <CardContent>
               {!pendingBookings ? (
                 <div className="flex justify-center p-8">
-                  <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                  <Loader2 className="h-8 w-8 animate-spin text-[#9CA3AF]" />
                 </div>
               ) : pendingBookings.length === 0 ? (
-                <p className="text-center text-muted-foreground py-8">No pending bookings</p>
+                <p className="text-center text-[#9CA3AF] py-8">No pending bookings</p>
               ) : (
                 <Table>
                   <TableHeader>
-                    <TableRow>
-                      <TableHead>Request #</TableHead>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Service</TableHead>
-                      <TableHead>Date</TableHead>
-                      <TableHead>Actions</TableHead>
+                    <TableRow className="border-gray-700">
+                      <TableHead className="text-[#9CA3AF]">Request #</TableHead>
+                      <TableHead className="text-[#9CA3AF]">Name</TableHead>
+                      <TableHead className="text-[#9CA3AF]">Service</TableHead>
+                      <TableHead className="text-[#9CA3AF]">Date</TableHead>
+                      <TableHead className="text-[#9CA3AF]">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {pendingBookings.map((booking) => (
-                      <TableRow key={booking.id}>
-                        <TableCell className="font-medium">{booking.request_number}</TableCell>
-                        <TableCell>{booking.full_name}</TableCell>
-                        <TableCell>{booking.service_name}</TableCell>
-                        <TableCell>{format(new Date(booking.created_at), "MMM dd, yyyy")}</TableCell>
+                      <TableRow key={booking.id} className="border-gray-700">
+                        <TableCell className="font-medium text-[#F9FAFB]">{booking.request_number}</TableCell>
+                        <TableCell className="text-[#9CA3AF]">{booking.full_name}</TableCell>
+                        <TableCell className="text-[#9CA3AF]">{booking.service_name}</TableCell>
+                        <TableCell className="text-[#9CA3AF]">{format(new Date(booking.created_at), "MMM dd, yyyy")}</TableCell>
                         <TableCell>
                           <div className="flex gap-2">
                             <Button
@@ -291,35 +290,35 @@ export default function Pending() {
         </TabsContent>
 
         <TabsContent value="inquiries">
-          <Card>
+          <Card className="bg-[#111827] border-gray-800">
             <CardHeader>
-              <CardTitle>Pending Inquiries</CardTitle>
+              <CardTitle className="text-[#F9FAFB]">Pending Inquiries</CardTitle>
             </CardHeader>
             <CardContent>
               {!pendingInquiries ? (
                 <div className="flex justify-center p-8">
-                  <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                  <Loader2 className="h-8 w-8 animate-spin text-[#9CA3AF]" />
                 </div>
               ) : pendingInquiries.length === 0 ? (
-                <p className="text-center text-muted-foreground py-8">No pending inquiries</p>
+                <p className="text-center text-[#9CA3AF] py-8">No pending inquiries</p>
               ) : (
                 <Table>
                   <TableHeader>
-                    <TableRow>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Email</TableHead>
-                      <TableHead>Message</TableHead>
-                      <TableHead>Date</TableHead>
-                      <TableHead>Actions</TableHead>
+                    <TableRow className="border-gray-700">
+                      <TableHead className="text-[#9CA3AF]">Name</TableHead>
+                      <TableHead className="text-[#9CA3AF]">Email</TableHead>
+                      <TableHead className="text-[#9CA3AF]">Message</TableHead>
+                      <TableHead className="text-[#9CA3AF]">Date</TableHead>
+                      <TableHead className="text-[#9CA3AF]">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {pendingInquiries.map((inquiry) => (
-                      <TableRow key={inquiry.id}>
-                        <TableCell className="font-medium">{inquiry.name}</TableCell>
-                        <TableCell>{inquiry.email}</TableCell>
-                        <TableCell className="max-w-md truncate">{inquiry.message}</TableCell>
-                        <TableCell>{format(new Date(inquiry.created_at), "MMM dd, yyyy")}</TableCell>
+                      <TableRow key={inquiry.id} className="border-gray-700">
+                        <TableCell className="font-medium text-[#F9FAFB]">{inquiry.name}</TableCell>
+                        <TableCell className="text-[#9CA3AF]">{inquiry.email}</TableCell>
+                        <TableCell className="max-w-md truncate text-[#9CA3AF]">{inquiry.message}</TableCell>
+                        <TableCell className="text-[#9CA3AF]">{format(new Date(inquiry.created_at), "MMM dd, yyyy")}</TableCell>
                         <TableCell>
                           <div className="flex gap-2">
                             <Button
@@ -337,6 +336,7 @@ export default function Pending() {
                             <Button
                               size="sm"
                               variant="outline"
+                              className="border-gray-700"
                               onClick={() => handleInquiryAction(inquiry.id, "archived")}
                               disabled={updatingId === inquiry.id}
                             >

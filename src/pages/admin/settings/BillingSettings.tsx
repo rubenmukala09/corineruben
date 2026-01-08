@@ -7,7 +7,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { Save, CreditCard, Receipt, Building2, FileText } from "lucide-react";
-import { AdminLayout } from "@/components/admin/AdminLayout";
 
 export default function BillingSettings() {
   const [settings, setSettings] = useState({
@@ -31,20 +30,21 @@ export default function BillingSettings() {
   };
 
   return (
-    <AdminLayout
-      title="Billing Settings"
-      subtitle="Configure your business billing and payment settings"
-      searchPlaceholder="Search settings..."
-      headerActions={
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-bold text-[#F9FAFB]">Billing Settings</h2>
+          <p className="text-[#9CA3AF]">Configure your business billing and payment settings</p>
+        </div>
         <Button onClick={handleSave} className="bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white">
           <Save className="h-4 w-4 mr-2" />
           Save Changes
         </Button>
-      }
-    >
+      </div>
+
       <div className="grid gap-6">
         {/* Company Information */}
-        <Card className="bg-[#111827] border-gray-800">
+        <Card className="bg-[#1F2937] border-gray-700">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-[#F9FAFB]">
               <Building2 className="h-5 w-5 text-[#06B6D4]" />
@@ -62,7 +62,7 @@ export default function BillingSettings() {
                   value={settings.companyName}
                   onChange={(e) => setSettings({ ...settings, companyName: e.target.value })}
                   placeholder="Your Company LLC"
-                  className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
+                  className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
                 />
               </div>
               <div className="space-y-2">
@@ -71,7 +71,7 @@ export default function BillingSettings() {
                   value={settings.taxId}
                   onChange={(e) => setSettings({ ...settings, taxId: e.target.value })}
                   placeholder="XX-XXXXXXX"
-                  className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
+                  className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
                 />
               </div>
             </div>
@@ -82,7 +82,7 @@ export default function BillingSettings() {
                 onChange={(e) => setSettings({ ...settings, companyAddress: e.target.value })}
                 placeholder="123 Main St, City, State ZIP"
                 rows={3}
-                className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
+                className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
               />
             </div>
             <div className="grid gap-4 md:grid-cols-2">
@@ -92,7 +92,7 @@ export default function BillingSettings() {
                   value={settings.companyPhone}
                   onChange={(e) => setSettings({ ...settings, companyPhone: e.target.value })}
                   placeholder="(937) 000-0000"
-                  className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
+                  className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
                 />
               </div>
               <div className="space-y-2">
@@ -102,7 +102,7 @@ export default function BillingSettings() {
                   value={settings.companyEmail}
                   onChange={(e) => setSettings({ ...settings, companyEmail: e.target.value })}
                   placeholder="billing@company.com"
-                  className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
+                  className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
                 />
               </div>
             </div>
@@ -110,7 +110,7 @@ export default function BillingSettings() {
         </Card>
 
         {/* Invoice Settings */}
-        <Card className="bg-[#111827] border-gray-800">
+        <Card className="bg-[#1F2937] border-gray-700">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-[#F9FAFB]">
               <FileText className="h-5 w-5 text-[#10B981]" />
@@ -128,7 +128,7 @@ export default function BillingSettings() {
                   value={settings.invoicePrefix}
                   onChange={(e) => setSettings({ ...settings, invoicePrefix: e.target.value })}
                   placeholder="INV-"
-                  className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
+                  className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
                 />
               </div>
               <div className="space-y-2">
@@ -138,7 +138,7 @@ export default function BillingSettings() {
                   value={settings.invoiceStartNumber}
                   onChange={(e) => setSettings({ ...settings, invoiceStartNumber: e.target.value })}
                   placeholder="1000"
-                  className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
+                  className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
                 />
               </div>
             </div>
@@ -150,7 +150,7 @@ export default function BillingSettings() {
                   value={settings.paymentTerms}
                   onChange={(e) => setSettings({ ...settings, paymentTerms: e.target.value })}
                   placeholder="30"
-                  className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
+                  className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
                 />
               </div>
               <div className="space-y-2">
@@ -160,11 +160,11 @@ export default function BillingSettings() {
                   value={settings.latePaymentFee}
                   onChange={(e) => setSettings({ ...settings, latePaymentFee: e.target.value })}
                   placeholder="5"
-                  className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
+                  className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
                 />
               </div>
             </div>
-            <div className="flex items-center justify-between p-4 bg-[#1F2937] rounded-lg border border-gray-700">
+            <div className="flex items-center justify-between p-4 bg-[#111827] rounded-lg border border-gray-600">
               <div className="space-y-0.5">
                 <Label className="text-[#F9FAFB]">Automatic Invoicing</Label>
                 <p className="text-sm text-[#9CA3AF]">
@@ -180,7 +180,7 @@ export default function BillingSettings() {
         </Card>
 
         {/* Payment Gateway */}
-        <Card className="bg-[#111827] border-gray-800">
+        <Card className="bg-[#1F2937] border-gray-700">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-[#F9FAFB]">
               <CreditCard className="h-5 w-5 text-[#8B5CF6]" />
@@ -197,7 +197,7 @@ export default function BillingSettings() {
                 value={settings.stripePublishableKey}
                 onChange={(e) => setSettings({ ...settings, stripePublishableKey: e.target.value })}
                 placeholder="pk_test_..."
-                className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
+                className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
               />
             </div>
             <div className="space-y-2">
@@ -207,14 +207,14 @@ export default function BillingSettings() {
                 value={settings.stripeSecretKey}
                 onChange={(e) => setSettings({ ...settings, stripeSecretKey: e.target.value })}
                 placeholder="sk_test_..."
-                className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
+                className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
               />
             </div>
           </CardContent>
         </Card>
 
         {/* Tax Settings */}
-        <Card className="bg-[#111827] border-gray-800">
+        <Card className="bg-[#1F2937] border-gray-700">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-[#F9FAFB]">
               <Receipt className="h-5 w-5 text-[#F97316]" />
@@ -232,7 +232,7 @@ export default function BillingSettings() {
                 value={settings.taxRate}
                 onChange={(e) => setSettings({ ...settings, taxRate: e.target.value })}
                 placeholder="8.5"
-                className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
+                className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
               />
               <p className="text-sm text-[#9CA3AF]">
                 This rate will be applied to all taxable items on invoices
@@ -241,6 +241,6 @@ export default function BillingSettings() {
           </CardContent>
         </Card>
       </div>
-    </AdminLayout>
+    </div>
   );
 }

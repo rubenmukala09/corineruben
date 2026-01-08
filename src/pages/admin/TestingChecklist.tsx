@@ -4,8 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
-import { Download, CheckCircle2, Rocket } from "lucide-react";
-import { AdminLayout } from "@/components/admin/AdminLayout";
+import { Download, CheckCircle2 } from "lucide-react";
 
 interface ChecklistItem {
   id: string;
@@ -18,7 +17,7 @@ interface ChecklistSection {
   items: ChecklistItem[];
 }
 
-function TestingChecklist() {
+export default function TestingChecklist() {
   const [functionalityChecklist, setFunctionalityChecklist] = useState<ChecklistSection[]>([
     {
       title: "Homepage",
@@ -161,22 +160,24 @@ function TestingChecklist() {
   const overallProgress = (functionalityProgress + responsiveProgress + seoProgress + performanceProgress) / 4;
 
   return (
-    <AdminLayout 
-      title="Pre-Launch Testing Checklist" 
-      subtitle="Track your launch readiness"
-      actions={
+    <div className="p-6 max-w-7xl mx-auto space-y-6">
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-[#F9FAFB]">Pre-Launch Testing Checklist</h1>
+          <p className="text-[#9CA3AF]">Track your launch readiness</p>
+        </div>
         <Button onClick={exportChecklist} className="gap-2 bg-cyan-600 hover:bg-cyan-700">
           <Download className="h-4 w-4" />
           Export Report
         </Button>
-      }
-    >
+      </div>
+
       {/* Overall Progress */}
-      <Card className="p-6 mb-6 bg-slate-800/50 border-slate-700">
+      <Card className="p-6 bg-[#111827] border-gray-800">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="text-lg font-semibold text-white">Overall Progress</h3>
-            <p className="text-sm text-slate-400">Complete all items to launch</p>
+            <h3 className="text-lg font-semibold text-[#F9FAFB]">Overall Progress</h3>
+            <p className="text-sm text-[#9CA3AF]">Complete all items to launch</p>
           </div>
           <div className="text-3xl font-bold text-cyan-400">{Math.round(overallProgress)}%</div>
         </div>
@@ -191,7 +192,7 @@ function TestingChecklist() {
 
       {/* Tabs */}
       <Tabs defaultValue="functionality" className="space-y-6">
-        <TabsList className="grid grid-cols-4 w-full max-w-2xl bg-slate-800/50">
+        <TabsList className="grid grid-cols-4 w-full max-w-2xl bg-[#111827]">
           <TabsTrigger value="functionality">Functionality</TabsTrigger>
           <TabsTrigger value="responsive">Responsive</TabsTrigger>
           <TabsTrigger value="seo">SEO</TabsTrigger>
@@ -199,11 +200,11 @@ function TestingChecklist() {
         </TabsList>
 
         <TabsContent value="functionality" className="space-y-4">
-          <Card className="p-6 bg-slate-800/50 border-slate-700">
+          <Card className="p-6 bg-[#111827] border-gray-800">
             <div className="mb-4">
-              <h3 className="text-lg font-semibold mb-2 text-white">Functionality Testing</h3>
+              <h3 className="text-lg font-semibold mb-2 text-[#F9FAFB]">Functionality Testing</h3>
               <Progress value={functionalityProgress} className="h-2" />
-              <p className="text-sm text-slate-400 mt-2">{Math.round(functionalityProgress)}% complete</p>
+              <p className="text-sm text-[#9CA3AF] mt-2">{Math.round(functionalityProgress)}% complete</p>
             </div>
             
             {functionalityChecklist.map((section, sectionIndex) => (
@@ -217,7 +218,7 @@ function TestingChecklist() {
                         checked={item.checked}
                         onCheckedChange={() => toggleItem(functionalityChecklist, setFunctionalityChecklist, sectionIndex, item.id)}
                       />
-                      <label htmlFor={item.id} className="text-sm cursor-pointer text-slate-300">
+                      <label htmlFor={item.id} className="text-sm cursor-pointer text-[#9CA3AF]">
                         {item.label}
                       </label>
                     </div>
@@ -229,11 +230,11 @@ function TestingChecklist() {
         </TabsContent>
 
         <TabsContent value="responsive" className="space-y-4">
-          <Card className="p-6 bg-slate-800/50 border-slate-700">
+          <Card className="p-6 bg-[#111827] border-gray-800">
             <div className="mb-4">
-              <h3 className="text-lg font-semibold mb-2 text-white">Responsive Testing</h3>
+              <h3 className="text-lg font-semibold mb-2 text-[#F9FAFB]">Responsive Testing</h3>
               <Progress value={responsiveProgress} className="h-2" />
-              <p className="text-sm text-slate-400 mt-2">{Math.round(responsiveProgress)}% complete</p>
+              <p className="text-sm text-[#9CA3AF] mt-2">{Math.round(responsiveProgress)}% complete</p>
             </div>
             
             <div className="space-y-3">
@@ -244,7 +245,7 @@ function TestingChecklist() {
                     checked={item.checked}
                     onCheckedChange={() => toggleSimpleItem(responsiveChecklist, setResponsiveChecklist, item.id)}
                   />
-                  <label htmlFor={item.id} className="text-sm cursor-pointer text-slate-300">
+                  <label htmlFor={item.id} className="text-sm cursor-pointer text-[#9CA3AF]">
                     {item.label}
                   </label>
                 </div>
@@ -254,11 +255,11 @@ function TestingChecklist() {
         </TabsContent>
 
         <TabsContent value="seo" className="space-y-4">
-          <Card className="p-6 bg-slate-800/50 border-slate-700">
+          <Card className="p-6 bg-[#111827] border-gray-800">
             <div className="mb-4">
-              <h3 className="text-lg font-semibold mb-2 text-white">SEO Testing</h3>
+              <h3 className="text-lg font-semibold mb-2 text-[#F9FAFB]">SEO Testing</h3>
               <Progress value={seoProgress} className="h-2" />
-              <p className="text-sm text-slate-400 mt-2">{Math.round(seoProgress)}% complete</p>
+              <p className="text-sm text-[#9CA3AF] mt-2">{Math.round(seoProgress)}% complete</p>
             </div>
             
             <div className="space-y-3">
@@ -269,7 +270,7 @@ function TestingChecklist() {
                     checked={item.checked}
                     onCheckedChange={() => toggleSimpleItem(seoChecklist, setSeoChecklist, item.id)}
                   />
-                  <label htmlFor={item.id} className="text-sm cursor-pointer text-slate-300">
+                  <label htmlFor={item.id} className="text-sm cursor-pointer text-[#9CA3AF]">
                     {item.label}
                   </label>
                 </div>
@@ -279,11 +280,11 @@ function TestingChecklist() {
         </TabsContent>
 
         <TabsContent value="performance" className="space-y-4">
-          <Card className="p-6 bg-slate-800/50 border-slate-700">
+          <Card className="p-6 bg-[#111827] border-gray-800">
             <div className="mb-4">
-              <h3 className="text-lg font-semibold mb-2 text-white">Performance Testing</h3>
+              <h3 className="text-lg font-semibold mb-2 text-[#F9FAFB]">Performance Testing</h3>
               <Progress value={performanceProgress} className="h-2" />
-              <p className="text-sm text-slate-400 mt-2">{Math.round(performanceProgress)}% complete</p>
+              <p className="text-sm text-[#9CA3AF] mt-2">{Math.round(performanceProgress)}% complete</p>
             </div>
             
             <div className="space-y-3">
@@ -294,7 +295,7 @@ function TestingChecklist() {
                     checked={item.checked}
                     onCheckedChange={() => toggleSimpleItem(performanceChecklist, setPerformanceChecklist, item.id)}
                   />
-                  <label htmlFor={item.id} className="text-sm cursor-pointer text-slate-300">
+                  <label htmlFor={item.id} className="text-sm cursor-pointer text-[#9CA3AF]">
                     {item.label}
                   </label>
                 </div>
@@ -303,8 +304,6 @@ function TestingChecklist() {
           </Card>
         </TabsContent>
       </Tabs>
-    </AdminLayout>
+    </div>
   );
 }
-
-export default TestingChecklist;

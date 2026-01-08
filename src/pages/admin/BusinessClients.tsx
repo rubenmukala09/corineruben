@@ -10,7 +10,6 @@ import { Badge } from "@/components/ui/badge";
 import { Search, Plus, Download, Eye, Mail, Pencil } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-// Placeholder data - will be replaced with database query
 const mockClients: Array<{
   id: number;
   logo: string;
@@ -21,9 +20,7 @@ const mockClients: Array<{
   status: string;
   mrr: number;
   joinDate: string;
-}> = [
-  // No clients yet - data will come from database
-];
+}> = [];
 
 export default function BusinessClients() {
   const navigate = useNavigate();
@@ -76,10 +73,10 @@ export default function BusinessClients() {
 
   const getServiceBadges = (services: string[]) => {
     const colors: Record<string, string> = {
-      "AI Receptionist": "bg-blue-100 text-blue-800 border-blue-200",
-      "Website": "bg-purple-100 text-purple-800 border-purple-200",
-      "AI Insurance": "bg-teal-100 text-teal-800 border-teal-200",
-      "Training": "bg-orange-100 text-orange-800 border-orange-200",
+      "AI Receptionist": "bg-blue-500/20 text-blue-400 border-blue-500/30",
+      "Website": "bg-purple-500/20 text-purple-400 border-purple-500/30",
+      "AI Insurance": "bg-teal-500/20 text-teal-400 border-teal-500/30",
+      "Training": "bg-orange-500/20 text-orange-400 border-orange-500/30",
     };
 
     if (services.length <= 2) {
@@ -101,7 +98,7 @@ export default function BusinessClients() {
             {service}
           </span>
         ))}
-        <span className="px-2 py-1 rounded-full text-xs font-medium bg-muted text-muted-foreground">
+        <span className="px-2 py-1 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
           +{services.length - 2} more
         </span>
       </div>
@@ -109,10 +106,11 @@ export default function BusinessClients() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="p-6 max-w-7xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Business Clients</h1>
+          <h1 className="text-2xl font-bold text-[#F9FAFB]">Business Clients</h1>
+          <p className="text-[#9CA3AF]">Manage your business client accounts</p>
         </div>
         <Button onClick={() => navigate("/admin/clients/businesses/new")}>
           <Plus className="mr-2 h-4 w-4" />
@@ -121,19 +119,19 @@ export default function BusinessClients() {
       </div>
 
       {selectedClients.length > 0 && (
-        <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 flex items-center justify-between">
-          <span className="font-medium">{selectedClients.length} clients selected</span>
+        <div className="bg-[#1F2937] border border-gray-700 rounded-lg p-4 flex items-center justify-between">
+          <span className="font-medium text-[#F9FAFB]">{selectedClients.length} clients selected</span>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" className="border-gray-700">
               <Mail className="mr-2 h-4 w-4" />
               Send Email
             </Button>
-            <Button variant="outline" size="sm">Change Status</Button>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" className="border-gray-700">Change Status</Button>
+            <Button variant="outline" size="sm" className="border-gray-700">
               <Download className="mr-2 h-4 w-4" />
               Export
             </Button>
-            <Button variant="outline" size="sm" onClick={() => setSelectedClients([])}>
+            <Button variant="outline" size="sm" className="border-gray-700" onClick={() => setSelectedClients([])}>
               Clear Selection
             </Button>
           </div>
@@ -143,18 +141,18 @@ export default function BusinessClients() {
       <div className="flex flex-wrap gap-4 items-center">
         <div className="flex-1 min-w-[200px]">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#9CA3AF]" />
             <Input
               placeholder="Search company, contact, email..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
+              className="pl-10 bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
             />
           </div>
         </div>
         
         <Select value={serviceFilter} onValueChange={setServiceFilter}>
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-[180px] bg-[#1F2937] border-gray-700">
             <SelectValue placeholder="Service Type" />
           </SelectTrigger>
           <SelectContent>
@@ -167,7 +165,7 @@ export default function BusinessClients() {
         </Select>
 
         <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger className="w-[140px]">
+          <SelectTrigger className="w-[140px] bg-[#1F2937] border-gray-700">
             <SelectValue placeholder="Status" />
           </SelectTrigger>
           <SelectContent>
@@ -179,7 +177,7 @@ export default function BusinessClients() {
         </Select>
 
         <Select value={dateFilter} onValueChange={setDateFilter}>
-          <SelectTrigger className="w-[160px]">
+          <SelectTrigger className="w-[160px] bg-[#1F2937] border-gray-700">
             <SelectValue placeholder="Date Range" />
           </SelectTrigger>
           <SelectContent>
@@ -190,7 +188,7 @@ export default function BusinessClients() {
           </SelectContent>
         </Select>
 
-        <Button variant="outline">
+        <Button variant="outline" className="border-gray-700">
           <Download className="mr-2 h-4 w-4" />
           Export to CSV
         </Button>
@@ -199,8 +197,8 @@ export default function BusinessClients() {
       {filteredClients.length === 0 ? (
         <div className="text-center py-16">
           <div className="text-6xl mb-4">🏢</div>
-          <h3 className="text-xl font-semibold mb-2">No Business Clients Yet</h3>
-          <p className="text-muted-foreground mb-6">Add your first business client</p>
+          <h3 className="text-xl font-semibold mb-2 text-[#F9FAFB]">No Business Clients Yet</h3>
+          <p className="text-[#9CA3AF] mb-6">Add your first business client</p>
           <Button onClick={() => navigate("/admin/clients/businesses/new")}>
             <Plus className="mr-2 h-4 w-4" />
             Add Client
@@ -208,98 +206,32 @@ export default function BusinessClients() {
         </div>
       ) : (
         <>
-          {/* Mobile Card View */}
-          <div className="space-y-4 mobile-cards">
-            {filteredClients.map((client) => {
-              const isSelected = selectedClients.includes(client.id);
-              return (
-                <div
-                  key={client.id}
-                  className="bg-card border border-border rounded-lg p-4 active:scale-[0.98] transition-transform"
-                  onClick={() => navigate(`/admin/clients/businesses/${client.id}`)}
-                >
-                  <div className="flex items-start gap-3 mb-4 pb-4 border-b border-border">
-                    <div className="flex-shrink-0" onClick={(e) => e.stopPropagation()}>
-                      <Checkbox 
-                        checked={isSelected}
-                        onCheckedChange={() => toggleClientSelection(client.id)}
-                      />
-                    </div>
-                    <Avatar className="h-12 w-12 rounded-md flex-shrink-0">
-                      <AvatarImage src={client.logo} />
-                      <AvatarFallback className="rounded-md bg-primary/10 text-primary">
-                        {client.companyName.substring(0, 2).toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-2 mb-1">
-                        <h3 className="font-semibold text-base truncate">{client.companyName}</h3>
-                        {getStatusBadge(client.status)}
-                      </div>
-                      <p className="text-sm text-muted-foreground">{client.contactName}</p>
-                      <p className="text-xs text-muted-foreground">{client.contactEmail}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-3">
-                    <div>
-                      <div className="text-xs text-muted-foreground mb-1 font-medium">Services</div>
-                      {getServiceBadges(client.services)}
-                    </div>
-                    
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <div className="text-xs text-muted-foreground mb-1 font-medium">MRR</div>
-                        <div className="text-lg font-bold">${client.mrr}</div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-muted-foreground mb-1 font-medium">Join Date</div>
-                        <div className="text-sm">{client.joinDate}</div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="flex gap-2 mt-4 pt-4 border-t border-border" onClick={(e) => e.stopPropagation()}>
-                    <Button variant="outline" size="sm" className="flex-1">
-                      <Eye className="mr-2 h-4 w-4" />
-                      View
-                    </Button>
-                    <Button variant="outline" size="sm" className="flex-1">
-                      <Mail className="mr-2 h-4 w-4" />
-                      Email
-                    </Button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
           {/* Desktop Table View */}
-          <div className="border rounded-lg overflow-hidden desktop-table">
+          <div className="border border-gray-800 rounded-lg overflow-hidden bg-[#111827]">
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead className="w-12">
+                <TableRow className="border-gray-700 hover:bg-transparent">
+                  <TableHead className="w-12 text-[#9CA3AF]">
                     <Checkbox 
                       checked={selectedClients.length === filteredClients.length}
                       onCheckedChange={toggleSelectAll}
                     />
                   </TableHead>
-                  <TableHead className="w-16">Logo</TableHead>
-                  <TableHead>Company Name</TableHead>
-                  <TableHead>Contact Person</TableHead>
-                  <TableHead>Services</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>MRR</TableHead>
-                  <TableHead>Join Date</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                  <TableHead className="w-16 text-[#9CA3AF]">Logo</TableHead>
+                  <TableHead className="text-[#9CA3AF]">Company Name</TableHead>
+                  <TableHead className="text-[#9CA3AF]">Contact Person</TableHead>
+                  <TableHead className="text-[#9CA3AF]">Services</TableHead>
+                  <TableHead className="text-[#9CA3AF]">Status</TableHead>
+                  <TableHead className="text-[#9CA3AF]">MRR</TableHead>
+                  <TableHead className="text-[#9CA3AF]">Join Date</TableHead>
+                  <TableHead className="text-right text-[#9CA3AF]">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredClients.map((client) => (
                   <TableRow 
                     key={client.id}
-                    className="cursor-pointer hover:bg-muted/50"
+                    className="cursor-pointer border-gray-700 hover:bg-[#1F2937]"
                     onClick={() => navigate(`/admin/clients/businesses/${client.id}`)}
                   >
                     <TableCell onClick={(e) => e.stopPropagation()}>
@@ -316,17 +248,17 @@ export default function BusinessClients() {
                         </AvatarFallback>
                       </Avatar>
                     </TableCell>
-                    <TableCell className="font-semibold">{client.companyName}</TableCell>
+                    <TableCell className="font-semibold text-[#F9FAFB]">{client.companyName}</TableCell>
                     <TableCell>
                       <div>
-                        <div className="font-medium">{client.contactName}</div>
-                        <div className="text-sm text-muted-foreground">{client.contactEmail}</div>
+                        <div className="font-medium text-[#F9FAFB]">{client.contactName}</div>
+                        <div className="text-sm text-[#9CA3AF]">{client.contactEmail}</div>
                       </div>
                     </TableCell>
                     <TableCell>{getServiceBadges(client.services)}</TableCell>
                     <TableCell>{getStatusBadge(client.status)}</TableCell>
-                    <TableCell className="font-bold text-lg">${client.mrr}</TableCell>
-                    <TableCell className="text-muted-foreground">{client.joinDate}</TableCell>
+                    <TableCell className="font-bold text-lg text-[#F9FAFB]">${client.mrr}</TableCell>
+                    <TableCell className="text-[#9CA3AF]">{client.joinDate}</TableCell>
                     <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
                       <div className="flex justify-end gap-2">
                         <Button variant="ghost" size="icon">
@@ -347,12 +279,12 @@ export default function BusinessClients() {
           </div>
 
           <div className="flex items-center justify-between">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-[#9CA3AF]">
               Showing 1-{filteredClients.length} of {filteredClients.length} clients
             </p>
             <div className="flex gap-2">
-              <Button variant="outline" size="sm" disabled>Previous</Button>
-              <Button variant="outline" size="sm" disabled>Next</Button>
+              <Button variant="outline" size="sm" disabled className="border-gray-700">Previous</Button>
+              <Button variant="outline" size="sm" disabled className="border-gray-700">Next</Button>
             </div>
           </div>
         </>
