@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { FileText, Save, Eye } from "lucide-react";
+import { FileText, Save, Eye, ChevronLeft, ChevronRight } from "lucide-react";
 
 const PAGES = [
   { id: "home", name: "Home", path: "/" },
@@ -36,12 +36,46 @@ export default function PagesManagement() {
     window.open(selectedPage.path, "_blank");
   };
 
+  const currentIndex = PAGES.findIndex(p => p.id === selectedPage.id);
+
+  const handleBack = () => {
+    if (currentIndex > 0) {
+      setSelectedPage(PAGES[currentIndex - 1]);
+    }
+  };
+
+  const handleForward = () => {
+    if (currentIndex < PAGES.length - 1) {
+      setSelectedPage(PAGES[currentIndex + 1]);
+    }
+  };
+
   return (
     <div className="container mx-auto p-6 space-y-6">
       <div className="flex justify-between items-start">
-        <div>
-          <h1 className="text-3xl font-bold">Pages Management</h1>
-          <p className="text-muted-foreground">Edit website pages content and SEO settings</p>
+        <div className="flex items-center gap-3">
+          <div className="flex gap-1">
+            <Button 
+              variant="outline" 
+              size="icon" 
+              onClick={handleBack}
+              disabled={currentIndex === 0}
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <Button 
+              variant="outline" 
+              size="icon" 
+              onClick={handleForward}
+              disabled={currentIndex === PAGES.length - 1}
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold">Pages Management</h1>
+            <p className="text-muted-foreground">Edit website pages content and SEO settings</p>
+          </div>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" onClick={handlePreview}>
