@@ -184,8 +184,8 @@ function Auth() {
       isValid = false;
     }
 
-    if (password.length < 6) {
-      setPasswordError("Password must be at least 6 characters");
+    if (password.length < 8) {
+      setPasswordError("Password must be at least 8 characters");
       isValid = false;
     }
 
@@ -508,8 +508,9 @@ function Auth() {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground p-1"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-slate-100 transition-colors"
                       tabIndex={-1}
+                      aria-label={showPassword ? "Hide password" : "Show password"}
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
@@ -667,8 +668,9 @@ function Auth() {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground p-1"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-slate-100 transition-colors"
                       tabIndex={-1}
+                      aria-label={showPassword ? "Hide password" : "Show password"}
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
@@ -699,8 +701,9 @@ function Auth() {
                     <button
                       type="button"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground p-1"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-slate-100 transition-colors"
                       tabIndex={-1}
+                      aria-label={showConfirmPassword ? "Hide password" : "Show password"}
                     >
                       {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
