@@ -14,6 +14,7 @@ interface AdminLayoutProps {
   title?: string;
   subtitle?: string;
   headerActions?: React.ReactNode;
+  actions?: React.ReactNode;
   searchPlaceholder?: string;
 }
 
@@ -22,6 +23,7 @@ export function AdminLayout({
   title, 
   subtitle, 
   headerActions,
+  actions,
   searchPlaceholder = "Search..."
 }: AdminLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true);

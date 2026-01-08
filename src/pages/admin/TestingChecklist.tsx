@@ -4,9 +4,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
-import { Download, CheckCircle2 } from "lucide-react";
-import { AdminTopBar } from "@/components/AdminTopBar";
-import { AdminSidebar } from "@/components/AdminSidebar";
+import { Download, CheckCircle2, Rocket } from "lucide-react";
+import { AdminLayout } from "@/components/admin/AdminLayout";
 
 interface ChecklistItem {
   id: string;
@@ -20,8 +19,6 @@ interface ChecklistSection {
 }
 
 function TestingChecklist() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
   const [functionalityChecklist, setFunctionalityChecklist] = useState<ChecklistSection[]>([
     {
       title: "Homepage",
@@ -164,160 +161,149 @@ function TestingChecklist() {
   const overallProgress = (functionalityProgress + responsiveProgress + seoProgress + performanceProgress) / 4;
 
   return (
-    <div className="min-h-screen bg-background">
-      <AdminSidebar isOpen={sidebarOpen} />
-      
-      <div className="transition-all duration-300 md:ml-64">
-        <AdminTopBar sidebarOpen={sidebarOpen} toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
-        
-        <div className="p-6 space-y-6">
-          {/* Header */}
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold">Pre-Launch Testing Checklist</h1>
-              <p className="text-muted-foreground mt-1">Track your launch readiness</p>
-            </div>
-            <Button onClick={exportChecklist} className="gap-2">
-              <Download className="h-4 w-4" />
-              Export Report
-            </Button>
+    <AdminLayout 
+      title="Pre-Launch Testing Checklist" 
+      subtitle="Track your launch readiness"
+      actions={
+        <Button onClick={exportChecklist} className="gap-2 bg-cyan-600 hover:bg-cyan-700">
+          <Download className="h-4 w-4" />
+          Export Report
+        </Button>
+      }
+    >
+      {/* Overall Progress */}
+      <Card className="p-6 mb-6 bg-slate-800/50 border-slate-700">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-lg font-semibold text-white">Overall Progress</h3>
+            <p className="text-sm text-slate-400">Complete all items to launch</p>
           </div>
-
-          {/* Overall Progress */}
-          <Card className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <h3 className="text-lg font-semibold">Overall Progress</h3>
-                <p className="text-sm text-muted-foreground">Complete all items to launch</p>
-              </div>
-              <div className="text-3xl font-bold text-primary">{Math.round(overallProgress)}%</div>
-            </div>
-            <Progress value={overallProgress} className="h-3" />
-            {overallProgress === 100 && (
-              <div className="mt-4 flex items-center gap-2 text-success">
-                <CheckCircle2 className="h-5 w-5" />
-                <span className="font-semibold">Ready to launch! 🚀</span>
-              </div>
-            )}
-          </Card>
-
-          {/* Tabs */}
-          <Tabs defaultValue="functionality" className="space-y-6">
-            <TabsList className="grid grid-cols-4 w-full max-w-2xl">
-              <TabsTrigger value="functionality">Functionality</TabsTrigger>
-              <TabsTrigger value="responsive">Responsive</TabsTrigger>
-              <TabsTrigger value="seo">SEO</TabsTrigger>
-              <TabsTrigger value="performance">Performance</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="functionality" className="space-y-4">
-              <Card className="p-6">
-                <div className="mb-4">
-                  <h3 className="text-lg font-semibold mb-2">Functionality Testing</h3>
-                  <Progress value={functionalityProgress} className="h-2" />
-                  <p className="text-sm text-muted-foreground mt-2">{Math.round(functionalityProgress)}% complete</p>
-                </div>
-                
-                {functionalityChecklist.map((section, sectionIndex) => (
-                  <div key={section.title} className="mb-6">
-                    <h4 className="font-semibold mb-3 text-primary">{section.title}</h4>
-                    <div className="space-y-3">
-                      {section.items.map((item) => (
-                        <div key={item.id} className="flex items-center gap-3">
-                          <Checkbox
-                            id={item.id}
-                            checked={item.checked}
-                            onCheckedChange={() => toggleItem(functionalityChecklist, setFunctionalityChecklist, sectionIndex, item.id)}
-                          />
-                          <label htmlFor={item.id} className="text-sm cursor-pointer">
-                            {item.label}
-                          </label>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="responsive" className="space-y-4">
-              <Card className="p-6">
-                <div className="mb-4">
-                  <h3 className="text-lg font-semibold mb-2">Responsive Testing</h3>
-                  <Progress value={responsiveProgress} className="h-2" />
-                  <p className="text-sm text-muted-foreground mt-2">{Math.round(responsiveProgress)}% complete</p>
-                </div>
-                
-                <div className="space-y-3">
-                  {responsiveChecklist.map((item) => (
-                    <div key={item.id} className="flex items-center gap-3">
-                      <Checkbox
-                        id={item.id}
-                        checked={item.checked}
-                        onCheckedChange={() => toggleSimpleItem(responsiveChecklist, setResponsiveChecklist, item.id)}
-                      />
-                      <label htmlFor={item.id} className="text-sm cursor-pointer">
-                        {item.label}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="seo" className="space-y-4">
-              <Card className="p-6">
-                <div className="mb-4">
-                  <h3 className="text-lg font-semibold mb-2">SEO Testing</h3>
-                  <Progress value={seoProgress} className="h-2" />
-                  <p className="text-sm text-muted-foreground mt-2">{Math.round(seoProgress)}% complete</p>
-                </div>
-                
-                <div className="space-y-3">
-                  {seoChecklist.map((item) => (
-                    <div key={item.id} className="flex items-center gap-3">
-                      <Checkbox
-                        id={item.id}
-                        checked={item.checked}
-                        onCheckedChange={() => toggleSimpleItem(seoChecklist, setSeoChecklist, item.id)}
-                      />
-                      <label htmlFor={item.id} className="text-sm cursor-pointer">
-                        {item.label}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="performance" className="space-y-4">
-              <Card className="p-6">
-                <div className="mb-4">
-                  <h3 className="text-lg font-semibold mb-2">Performance Testing</h3>
-                  <Progress value={performanceProgress} className="h-2" />
-                  <p className="text-sm text-muted-foreground mt-2">{Math.round(performanceProgress)}% complete</p>
-                </div>
-                
-                <div className="space-y-3">
-                  {performanceChecklist.map((item) => (
-                    <div key={item.id} className="flex items-center gap-3">
-                      <Checkbox
-                        id={item.id}
-                        checked={item.checked}
-                        onCheckedChange={() => toggleSimpleItem(performanceChecklist, setPerformanceChecklist, item.id)}
-                      />
-                      <label htmlFor={item.id} className="text-sm cursor-pointer">
-                        {item.label}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              </Card>
-            </TabsContent>
-          </Tabs>
+          <div className="text-3xl font-bold text-cyan-400">{Math.round(overallProgress)}%</div>
         </div>
-      </div>
-    </div>
+        <Progress value={overallProgress} className="h-3" />
+        {overallProgress === 100 && (
+          <div className="mt-4 flex items-center gap-2 text-green-400">
+            <CheckCircle2 className="h-5 w-5" />
+            <span className="font-semibold">Ready to launch! 🚀</span>
+          </div>
+        )}
+      </Card>
+
+      {/* Tabs */}
+      <Tabs defaultValue="functionality" className="space-y-6">
+        <TabsList className="grid grid-cols-4 w-full max-w-2xl bg-slate-800/50">
+          <TabsTrigger value="functionality">Functionality</TabsTrigger>
+          <TabsTrigger value="responsive">Responsive</TabsTrigger>
+          <TabsTrigger value="seo">SEO</TabsTrigger>
+          <TabsTrigger value="performance">Performance</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="functionality" className="space-y-4">
+          <Card className="p-6 bg-slate-800/50 border-slate-700">
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold mb-2 text-white">Functionality Testing</h3>
+              <Progress value={functionalityProgress} className="h-2" />
+              <p className="text-sm text-slate-400 mt-2">{Math.round(functionalityProgress)}% complete</p>
+            </div>
+            
+            {functionalityChecklist.map((section, sectionIndex) => (
+              <div key={section.title} className="mb-6">
+                <h4 className="font-semibold mb-3 text-cyan-400">{section.title}</h4>
+                <div className="space-y-3">
+                  {section.items.map((item) => (
+                    <div key={item.id} className="flex items-center gap-3">
+                      <Checkbox
+                        id={item.id}
+                        checked={item.checked}
+                        onCheckedChange={() => toggleItem(functionalityChecklist, setFunctionalityChecklist, sectionIndex, item.id)}
+                      />
+                      <label htmlFor={item.id} className="text-sm cursor-pointer text-slate-300">
+                        {item.label}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="responsive" className="space-y-4">
+          <Card className="p-6 bg-slate-800/50 border-slate-700">
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold mb-2 text-white">Responsive Testing</h3>
+              <Progress value={responsiveProgress} className="h-2" />
+              <p className="text-sm text-slate-400 mt-2">{Math.round(responsiveProgress)}% complete</p>
+            </div>
+            
+            <div className="space-y-3">
+              {responsiveChecklist.map((item) => (
+                <div key={item.id} className="flex items-center gap-3">
+                  <Checkbox
+                    id={item.id}
+                    checked={item.checked}
+                    onCheckedChange={() => toggleSimpleItem(responsiveChecklist, setResponsiveChecklist, item.id)}
+                  />
+                  <label htmlFor={item.id} className="text-sm cursor-pointer text-slate-300">
+                    {item.label}
+                  </label>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="seo" className="space-y-4">
+          <Card className="p-6 bg-slate-800/50 border-slate-700">
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold mb-2 text-white">SEO Testing</h3>
+              <Progress value={seoProgress} className="h-2" />
+              <p className="text-sm text-slate-400 mt-2">{Math.round(seoProgress)}% complete</p>
+            </div>
+            
+            <div className="space-y-3">
+              {seoChecklist.map((item) => (
+                <div key={item.id} className="flex items-center gap-3">
+                  <Checkbox
+                    id={item.id}
+                    checked={item.checked}
+                    onCheckedChange={() => toggleSimpleItem(seoChecklist, setSeoChecklist, item.id)}
+                  />
+                  <label htmlFor={item.id} className="text-sm cursor-pointer text-slate-300">
+                    {item.label}
+                  </label>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="performance" className="space-y-4">
+          <Card className="p-6 bg-slate-800/50 border-slate-700">
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold mb-2 text-white">Performance Testing</h3>
+              <Progress value={performanceProgress} className="h-2" />
+              <p className="text-sm text-slate-400 mt-2">{Math.round(performanceProgress)}% complete</p>
+            </div>
+            
+            <div className="space-y-3">
+              {performanceChecklist.map((item) => (
+                <div key={item.id} className="flex items-center gap-3">
+                  <Checkbox
+                    id={item.id}
+                    checked={item.checked}
+                    onCheckedChange={() => toggleSimpleItem(performanceChecklist, setPerformanceChecklist, item.id)}
+                  />
+                  <label htmlFor={item.id} className="text-sm cursor-pointer text-slate-300">
+                    {item.label}
+                  </label>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </TabsContent>
+      </Tabs>
+    </AdminLayout>
   );
 }
 

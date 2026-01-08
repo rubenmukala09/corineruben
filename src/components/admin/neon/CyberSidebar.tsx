@@ -16,20 +16,25 @@ import {
   Globe,
   X,
   FileText,
-  MessageSquare,
   ShoppingCart,
   ClipboardList,
   Mail,
-  Wrench,
-  Briefcase,
   Building2,
+  TestTube,
+  MessageSquare,
   Package,
-  DollarSign,
+  Heart,
   Calendar,
+  Briefcase,
   Inbox,
   Newspaper,
-  TestTube,
   Rocket,
+  CreditCard,
+  UserCog,
+  HeartHandshake,
+  FileEdit,
+  Quote,
+  UsersRound,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -37,88 +42,86 @@ interface MenuItem {
   title: string;
   icon: React.ElementType;
   href?: string;
-  children?: { title: string; href: string }[];
+  children?: { title: string; href: string; icon?: React.ElementType }[];
 }
 
 const menuItems: MenuItem[] = [
-  { title: "Dashboard", icon: LayoutDashboard, href: "/admin" },
-  { title: "Threat Monitor", icon: Shield, href: "/admin/threats" },
-  { title: "Family Devices", icon: Smartphone, href: "/admin/devices" },
   {
-    title: "Analytics",
-    icon: BarChart3,
+    title: "Dashboard",
+    icon: LayoutDashboard,
     children: [
-      { title: "Overview", href: "/admin/analytics" },
-      { title: "Reports", href: "/admin/reports" },
-      { title: "Insights", href: "/admin/insights" },
+      { title: "Command Center", href: "/admin", icon: LayoutDashboard },
+      { title: "Threat Monitor", href: "/admin/threats", icon: Shield },
+      { title: "Family Devices", href: "/admin/devices", icon: Smartphone },
+      { title: "Analytics", href: "/admin/analytics", icon: BarChart3 },
+      { title: "User Management", href: "/admin/users", icon: Users },
+      { title: "Activity Log", href: "/admin/activity", icon: Activity },
+      { title: "Database", href: "/admin/database", icon: Database },
+      { title: "Notifications", href: "/admin/notifications", icon: Bell },
+      { title: "Security", href: "/admin/security", icon: Lock },
     ],
   },
-  { title: "User Management", icon: Users, href: "/admin/users" },
-  { title: "Activity Log", icon: Activity, href: "/admin/activity" },
-  { title: "Database", icon: Database, href: "/admin/database" },
-  { title: "Notifications", icon: Bell, href: "/admin/notifications" },
-  { title: "Security", icon: Lock, href: "/admin/security" },
   {
     title: "Content",
     icon: FileText,
     children: [
-      { title: "Pages", href: "/admin/content/pages" },
-      { title: "Articles", href: "/admin/content/articles" },
-      { title: "Testimonials", href: "/admin/testimonials" },
-      { title: "Team", href: "/admin/team" },
+      { title: "Pages", href: "/admin/content/pages", icon: FileEdit },
+      { title: "Articles", href: "/admin/content/articles", icon: FileText },
+      { title: "Testimonials", href: "/admin/content/testimonials", icon: Quote },
+      { title: "Team", href: "/admin/content/team", icon: UsersRound },
     ],
   },
   {
     title: "Clients",
     icon: Building2,
     children: [
-      { title: "All Clients", href: "/admin/clients" },
-      { title: "Messages", href: "/admin/inbox" },
+      { title: "All Clients", href: "/admin/clients/businesses", icon: Building2 },
+      { title: "Messages", href: "/admin/clients/messages", icon: MessageSquare },
     ],
   },
   {
     title: "E-Commerce",
     icon: ShoppingCart,
     children: [
-      { title: "Products", href: "/admin/products" },
-      { title: "Orders", href: "/admin/orders" },
-      { title: "Inventory", href: "/admin/inventory" },
-      { title: "Donations", href: "/admin/donations" },
+      { title: "Products", href: "/admin/ecommerce/products", icon: Package },
+      { title: "Orders", href: "/admin/ecommerce/orders", icon: ShoppingCart },
+      { title: "Inventory", href: "/admin/ecommerce/inventory", icon: Package },
+      { title: "Donations", href: "/admin/donations", icon: Heart },
     ],
   },
   {
     title: "Requests",
     icon: ClipboardList,
     children: [
-      { title: "Service Inquiries", href: "/admin/inquiries" },
-      { title: "Bookings", href: "/admin/bookings" },
-      { title: "Job Applications", href: "/admin/applications" },
+      { title: "Service Inquiries", href: "/admin/service-inquiries", icon: ClipboardList },
+      { title: "Bookings", href: "/admin/bookings", icon: Calendar },
+      { title: "Job Applications", href: "/admin/job-applications", icon: Briefcase },
     ],
   },
   {
     title: "Communications",
     icon: Mail,
     children: [
-      { title: "Email Campaigns", href: "/admin/email" },
-      { title: "Inbox", href: "/admin/inbox" },
-      { title: "Newsletter", href: "/admin/newsletter" },
+      { title: "Email Campaigns", href: "/admin/email-campaigns", icon: Mail },
+      { title: "Inbox", href: "/admin/communications/inbox", icon: Inbox },
+      { title: "Newsletter", href: "/admin/communications/newsletter", icon: Newspaper },
     ],
   },
   {
     title: "Settings",
     icon: Settings,
     children: [
-      { title: "Site Settings", href: "/admin/settings/site" },
-      { title: "User Roles", href: "/admin/settings/users" },
-      { title: "Billing", href: "/admin/settings/billing" },
+      { title: "Site Settings", href: "/admin/settings/site", icon: Settings },
+      { title: "User Roles", href: "/admin/settings/users", icon: UserCog },
+      { title: "Billing", href: "/admin/settings/billing", icon: CreditCard },
     ],
   },
   {
     title: "Testing",
     icon: TestTube,
     children: [
-      { title: "System Health", href: "/admin/system-health" },
-      { title: "Launch Checklist", href: "/admin/checklist" },
+      { title: "System Health", href: "/admin/testing", icon: HeartHandshake },
+      { title: "Launch Checklist", href: "/admin/testing/checklist", icon: Rocket },
     ],
   },
 ];
@@ -131,7 +134,7 @@ interface CyberSidebarProps {
 
 export function CyberSidebar({ isOpen, isMobileOpen, onMobileClose }: CyberSidebarProps) {
   const location = useLocation();
-  const [expandedMenus, setExpandedMenus] = useState<string[]>([]);
+  const [expandedMenus, setExpandedMenus] = useState<string[]>(["Dashboard"]);
 
   const toggleMenu = (title: string) => {
     setExpandedMenus((prev) =>
@@ -227,21 +230,26 @@ export function CyberSidebar({ isOpen, isMobileOpen, onMobileClose }: CyberSideb
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    className="overflow-hidden pl-8 mt-1 space-y-1"
+                    className="overflow-hidden pl-4 mt-1 space-y-1"
                   >
-                    {item.children.map((child) => (
-                      <Link
-                        key={child.href}
-                        to={child.href}
-                        className={`block px-3 py-2 rounded-lg text-sm transition-all
-                          ${location.pathname === child.href
-                            ? "text-[#06B6D4] bg-[#06B6D4]/10"
-                            : "text-[#9CA3AF] hover:text-[#F9FAFB] hover:bg-gray-800/50"
-                          }`}
-                      >
-                        {child.title}
-                      </Link>
-                    ))}
+                    {item.children.map((child) => {
+                      const ChildIcon = child.icon;
+                      return (
+                        <Link
+                          key={child.href}
+                          to={child.href}
+                          onClick={onMobileClose}
+                          className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-all
+                            ${location.pathname === child.href
+                              ? "text-[#06B6D4] bg-[#06B6D4]/10"
+                              : "text-[#9CA3AF] hover:text-[#F9FAFB] hover:bg-gray-800/50"
+                            }`}
+                        >
+                          {ChildIcon && <ChildIcon className="h-4 w-4" />}
+                          {child.title}
+                        </Link>
+                      );
+                    })}
                   </motion.div>
                 )}
               </AnimatePresence>
