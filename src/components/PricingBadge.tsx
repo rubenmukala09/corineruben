@@ -104,11 +104,10 @@ export function PricingBadge({ type, className = "", size = 'md' }: PricingBadge
         inline-flex items-center gap-1.5 
         bg-gradient-to-r ${config.gradient} 
         text-white font-bold tracking-wider rounded-full 
-        shadow-lg animate-pulse-slow
+        shadow-lg
         ${sizeClasses[size]}
         ${className}
       `}
-      style={{ animationDuration: '3s' }}
     >
       <span className="text-sm">{config.emoji}</span>
       <span>{config.label}</span>

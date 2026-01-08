@@ -103,7 +103,7 @@ export const ProtectionComparison = () => {
                 </div>
               )}
               
-              <div className={`h-full rounded-2xl border-2 p-8 transition-all duration-300 ${
+              <div className={`h-full min-h-[520px] rounded-2xl border-2 p-8 transition-all duration-300 flex flex-col ${
                 plan.popular
                   ? "bg-card border-primary shadow-xl scale-105"
                   : "bg-card border-border hover:border-primary/30 hover:shadow-lg"

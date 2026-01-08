@@ -149,11 +149,12 @@ const ThreePathsForward = () => {
                 <Card
                   className={`
                     relative p-6 sm:p-8 md:p-10 lg:p-12 flex flex-col items-center text-center overflow-visible
-                    transition-all duration-400 ease-out rounded-3xl
+                    transition-all duration-300 ease-out rounded-3xl
                     bg-white border border-white/50
                     shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)]
                     hover:translate-y-[-8px] hover:scale-[1.02]
                     hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]
+                    min-h-[520px] sm:min-h-[560px] md:min-h-[600px]
                     ${path.featured ? 'ring-2 ring-primary ring-offset-2' : ''}
                   `}
                 >
@@ -167,18 +168,17 @@ const ThreePathsForward = () => {
                     </div>
                   )}
 
-                  {/* Icon Container */}
+                  {/* Icon Container - Static, no continuous animations */}
                   <div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-[100px] md:h-[100px] rounded-2xl sm:rounded-3xl mb-5 sm:mb-7
                     bg-gradient-to-br from-primary to-accent
                     shadow-[0_8px_24px_rgba(139,92,246,0.4)]
                     flex items-center justify-center
-                    transition-all duration-600 ease-out hover:scale-[1.2] hover:rotate-[-10deg]
+                    transition-all duration-300 ease-out hover:scale-110 hover:rotate-[-5deg]
                     hover:shadow-[0_12px_35px_rgba(139,92,246,0.6)]
                     after:absolute after:inset-[-6px] sm:after:inset-[-8px] after:rounded-2xl sm:after:rounded-[28px]
                     after:border-2 after:border-primary/40
-                    after:animate-[pulse-ring_3s_ease-out_infinite]
                   ">
-                    <Icon className="w-8 h-8 sm:w-10 sm:h-10 md:w-14 md:h-14 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.2)] transition-transform duration-500" />
+                    <Icon className="w-8 h-8 sm:w-10 sm:h-10 md:w-14 md:h-14 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.2)]" />
                   </div>
 
                   {/* Highlights Tags */}

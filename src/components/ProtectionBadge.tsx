@@ -25,7 +25,6 @@ export const ProtectionBadge = ({
       className
     )}>
       <Shield className={cn(
-        "animate-pulse",
         size === "sm" && "w-3 h-3",
         size === "md" && "w-4 h-4",
         size === "lg" && "w-5 h-5"

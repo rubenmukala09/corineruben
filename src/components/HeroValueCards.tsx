@@ -75,7 +75,7 @@ const HeroValueCards = () => {
               viewport={{ once: true }}
               transition={{ delay: index * 0.15 }}
             >
-              <Card className="relative h-full p-6 hover:shadow-xl transition-all duration-500 hover:-translate-y-2 border-0 bg-card/80 backdrop-blur-sm group overflow-hidden">
+              <Card className="relative h-full min-h-[420px] p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-0 bg-card/80 backdrop-blur-sm group overflow-hidden flex flex-col">
                 {/* Gradient overlay on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
@@ -89,9 +89,9 @@ const HeroValueCards = () => {
                   {path.badge}
                 </Badge>
 
-                <div className="relative z-10">
+                <div className="relative z-10 flex flex-col h-full">
                   {/* Icon */}
-                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${path.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${path.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 flex-shrink-0`}>
                     <path.icon className="w-7 h-7 text-white" />
                   </div>
 
@@ -106,7 +106,7 @@ const HeroValueCards = () => {
                   </p>
 
                   {/* Features */}
-                  <div className="space-y-2 mb-5">
+                  <div className="space-y-2 mb-5 flex-1">
                     {path.features.map((feature, i) => (
                       <div key={i} className="flex items-center gap-2 text-sm">
                         <Star className="w-3.5 h-3.5 text-amber-500 shrink-0" />
@@ -116,14 +116,14 @@ const HeroValueCards = () => {
                   </div>
 
                   {/* Price */}
-                  <div className="mb-4">
+                  <div className="mb-4 flex-shrink-0">
                     <span className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                       {path.priceRange}
                     </span>
                   </div>
 
                   {/* CTA */}
-                  <Button asChild className="w-full group/btn">
+                  <Button asChild className="w-full group/btn flex-shrink-0">
                     <Link to={path.href} className="inline-flex items-center justify-center gap-2">
                       Get Started
                       <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
