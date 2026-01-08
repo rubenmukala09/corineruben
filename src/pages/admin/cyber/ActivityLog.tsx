@@ -1,23 +1,13 @@
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { AdminLayout } from "@/components/admin/AdminLayout";
 import SuperAdminActivityFeed from "@/components/admin/super/SuperAdminActivityFeed";
 
 export default function ActivityLog() {
   return (
-    <AdminLayout
-      title="Activity Log"
-      subtitle="Complete history of all system activities"
-      searchPlaceholder="Search activities..."
-      headerActions={
-        <Link to="/admin">
-          <Button className="bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white">
-            Back to Dashboard
-          </Button>
-        </Link>
-      }
-    >
+    <div className="p-6 max-w-7xl mx-auto space-y-6">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-[#F9FAFB]">Activity Log</h1>
+        <p className="text-[#9CA3AF]">Complete history of all system activities</p>
+      </div>
       <SuperAdminActivityFeed />
-    </AdminLayout>
+    </div>
   );
 }

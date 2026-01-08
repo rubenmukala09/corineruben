@@ -6,14 +6,13 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { SplashScreen } from "./components/SplashScreen";
 import { ProtectedRoute } from "./components/ProtectedRoute";
-import { AdminRoute } from "./components/AdminRoute";
 import { AIChat } from "./components/AIChat";
 import { AIChatProvider } from "./contexts/AIChatContext";
+import { AuthProvider } from "./contexts/AuthContext";
 import { CartProvider } from "./contexts/CartContext";
 import { CartFeedbackProvider, CartFeedbackNotifications } from "./components/CartFeedbackNotifications";
 import { SubscriptionProvider } from "./contexts/SubscriptionContext";
 import { CheckoutProvider } from "./contexts/CheckoutContext";
-// Lazy load checkout dialog - only needed when user initiates payment
 const UnifiedCheckoutDialog = lazy(() => import("./components/payment/UnifiedCheckoutDialog"));
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { RouteTracker } from "./components/RouteTracker";
@@ -21,7 +20,6 @@ import { DraggablePerformanceMonitor } from "./components/DraggablePerformanceMo
 import { useAnalyticsTracking } from "./hooks/useAnalyticsTracking";
 
 import { PageTransition } from "./components/PageTransition";
-import { EnhancedPageLoader } from "./components/EnhancedPageLoader";
 
 import { NavigationProgress } from "./components/NavigationProgress";
 import { ScrollToTop } from "./components/ScrollToTop";
@@ -31,25 +29,24 @@ import { SkipToContent } from "./components/SkipToContent";
 import ScrollProgressBar from "./components/ScrollProgressBar";
 import BackToTop from "./components/BackToTop";
 import MobileCallButton from "./components/MobileCallButton";
-
 import { AnalyticsTracker } from "./components/AnalyticsTracker";
 
-// Lazy load all pages for code splitting
+// Admin Shell - persistent layout wrapper
+import { AdminShell } from "./components/admin/AdminShell";
+
+// Lazy load all pages
 const Index = lazy(() => import("./pages/Index"));
 const Training = lazy(() => import("./pages/Training"));
 const Business = lazy(() => import("./pages/Business"));
-
 const AIReceptionist = lazy(() => import("./pages/business/AIReceptionist"));
 const AIAutomation = lazy(() => import("./pages/business/AIAutomation"));
 const WebsiteDesign = lazy(() => import("./pages/business/WebsiteDesign"));
 const WebsiteInsurance = lazy(() => import("./pages/business/WebsiteInsurance"));
-
 const About = lazy(() => import("./pages/About"));
 const Resources = lazy(() => import("./pages/Resources"));
 const SafetyVault = lazy(() => import("./pages/SafetyVault"));
 const Articles = lazy(() => import("./pages/Articles"));
 const Services = lazy(() => import("./pages/Services"));
-
 const Contact = lazy(() => import("./pages/Contact"));
 const Careers = lazy(() => import("./pages/Careers"));
 const Auth = lazy(() => import("./pages/Auth"));
@@ -60,13 +57,14 @@ const StaffSignup = lazy(() => import("./pages/StaffSignup"));
 const Setup = lazy(() => import("./pages/Setup"));
 const ApplicationPending = lazy(() => import("./pages/ApplicationPending"));
 
+// Admin pages - content only (shell is handled by AdminShell)
+const AdminDashboardContent = lazy(() => import("./pages/admin/AdminDashboardContent"));
 const Pending = lazy(() => import("./pages/admin/Pending"));
 const PagesManagement = lazy(() => import("./pages/admin/PagesManagement"));
 const ClientMessages = lazy(() => import("./pages/admin/ClientMessages"));
 const CommunicationsInbox = lazy(() => import("./pages/admin/CommunicationsInbox"));
 const NewsletterManagement = lazy(() => import("./pages/admin/NewsletterManagement"));
 const BillingSettings = lazy(() => import("./pages/admin/settings/BillingSettings"));
-const Admin = lazy(() => import("./pages/Admin"));
 const TestimonialsAdmin = lazy(() => import("./pages/admin/TestimonialsAdmin"));
 const ArticlesAdmin = lazy(() => import("./pages/admin/ArticlesAdmin"));
 const ArticleEditor = lazy(() => import("./pages/admin/ArticleEditor"));
@@ -85,30 +83,9 @@ const OrderDetail = lazy(() => import("./pages/admin/OrderDetail"));
 const InventoryManagement = lazy(() => import("./pages/admin/InventoryManagement"));
 const JobApplicationsList = lazy(() => import("./pages/admin/JobApplicationsList"));
 const Settings = lazy(() => import("./pages/admin/Settings"));
-const Portal = lazy(() => import("./pages/Portal"));
-const AdminDashboard = lazy(() => import("./pages/portal/AdminDashboard"));
-const AnalystDashboard = lazy(() => import("./pages/portal/AnalystDashboard"));
-const TrainerDashboard = lazy(() => import("./pages/portal/TrainerDashboard"));
-const DeveloperDashboard = lazy(() => import("./pages/portal/DeveloperDashboard"));
-const StaffDashboard = lazy(() => import("./pages/portal/StaffDashboard"));
-const SeniorDashboard = lazy(() => import("./pages/portal/SeniorDashboard"));
-const BusinessDashboard = lazy(() => import("./pages/portal/BusinessDashboard"));
-const CaregiverDashboard = lazy(() => import("./pages/portal/CaregiverDashboard"));
-const HealthcareDashboard = lazy(() => import("./pages/portal/HealthcareDashboard"));
-const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
-const TermsOfService = lazy(() => import("./pages/TermsOfService"));
-const RefundPolicy = lazy(() => import("./pages/RefundPolicy"));
-const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
-const AcceptableUse = lazy(() => import("./pages/AcceptableUse"));
-const Disclaimer = lazy(() => import("./pages/Disclaimer"));
-const FAQ = lazy(() => import("./pages/FAQ"));
-const NotFound = lazy(() => import("./pages/NotFound"));
 const Subscriptions = lazy(() => import("./pages/admin/SubscriptionsRoute"));
 const SystemHealthDashboard = lazy(() => import("./pages/admin/SystemHealthDashboard"));
 const TestingChecklist = lazy(() => import("./pages/admin/TestingChecklist"));
-const Maintenance = lazy(() => import("./pages/Maintenance"));
-const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess"));
-const PaymentCanceled = lazy(() => import("./pages/PaymentCanceled"));
 const DonationsList = lazy(() => import("./pages/admin/DonationsList"));
 const ServiceInquiriesList = lazy(() => import("./pages/admin/ServiceInquiriesList"));
 const BookingsList = lazy(() => import("./pages/admin/BookingsList"));
@@ -123,12 +100,36 @@ const CyberNotifications = lazy(() => import("./pages/admin/cyber/Notifications"
 const SecuritySettings = lazy(() => import("./pages/admin/cyber/SecuritySettings"));
 const CyberAnalytics = lazy(() => import("./pages/admin/cyber/CyberAnalytics"));
 
-// Premium loading fallback with pulsing radar animation
+// Portal pages
+const Portal = lazy(() => import("./pages/Portal"));
+const AdminDashboard = lazy(() => import("./pages/portal/AdminDashboard"));
+const AnalystDashboard = lazy(() => import("./pages/portal/AnalystDashboard"));
+const TrainerDashboard = lazy(() => import("./pages/portal/TrainerDashboard"));
+const DeveloperDashboard = lazy(() => import("./pages/portal/DeveloperDashboard"));
+const StaffDashboard = lazy(() => import("./pages/portal/StaffDashboard"));
+const SeniorDashboard = lazy(() => import("./pages/portal/SeniorDashboard"));
+const BusinessDashboard = lazy(() => import("./pages/portal/BusinessDashboard"));
+const CaregiverDashboard = lazy(() => import("./pages/portal/CaregiverDashboard"));
+const HealthcareDashboard = lazy(() => import("./pages/portal/HealthcareDashboard"));
+
+// Other pages
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const TermsOfService = lazy(() => import("./pages/TermsOfService"));
+const RefundPolicy = lazy(() => import("./pages/RefundPolicy"));
+const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
+const AcceptableUse = lazy(() => import("./pages/AcceptableUse"));
+const Disclaimer = lazy(() => import("./pages/Disclaimer"));
+const FAQ = lazy(() => import("./pages/FAQ"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const Maintenance = lazy(() => import("./pages/Maintenance"));
+const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess"));
+const PaymentCanceled = lazy(() => import("./pages/PaymentCanceled"));
+
 import { AIPulseLoader } from "./components/AIPulseLoader";
 const PageLoader = () => <AIPulseLoader message="Loading..." fullScreen={true} />;
 const queryClient = new QueryClient();
 
-function AnimatedRoutes() {
+function PublicRoutes() {
   const location = useLocation();
 
   return (
@@ -156,50 +157,10 @@ function AnimatedRoutes() {
         <Route path="/staff-signup" element={<PageTransition variant="scale"><StaffSignup /></PageTransition>} />
         <Route path="/setup" element={<PageTransition><Setup /></PageTransition>} />
         <Route path="/application-pending" element={<PageTransition><ApplicationPending /></PageTransition>} />
-        <Route path="/admin" element={<PageTransition><AdminRoute><Admin /></AdminRoute></PageTransition>} />
-        <Route path="/admin/threats" element={<PageTransition><AdminRoute><ThreatMonitor /></AdminRoute></PageTransition>} />
-        <Route path="/admin/devices" element={<PageTransition><AdminRoute><FamilyDevices /></AdminRoute></PageTransition>} />
-        <Route path="/admin/users" element={<PageTransition><AdminRoute><CyberUserManagement /></AdminRoute></PageTransition>} />
-        <Route path="/admin/activity" element={<PageTransition><AdminRoute><ActivityLog /></AdminRoute></PageTransition>} />
-        <Route path="/admin/database" element={<PageTransition><AdminRoute><DatabaseView /></AdminRoute></PageTransition>} />
-        <Route path="/admin/notifications" element={<PageTransition><AdminRoute><CyberNotifications /></AdminRoute></PageTransition>} />
-        <Route path="/admin/security" element={<PageTransition><AdminRoute><SecuritySettings /></AdminRoute></PageTransition>} />
-        <Route path="/admin/reports" element={<PageTransition><AdminRoute><CyberAnalytics /></AdminRoute></PageTransition>} />
-        <Route path="/admin/insights" element={<PageTransition><AdminRoute><CyberAnalytics /></AdminRoute></PageTransition>} />
-        <Route path="/admin/content/testimonials" element={<PageTransition><AdminRoute><TestimonialsAdmin /></AdminRoute></PageTransition>} />
-        <Route path="/admin/content/articles" element={<PageTransition><AdminRoute><ArticlesAdmin /></AdminRoute></PageTransition>} />
-        <Route path="/admin/content/articles/new" element={<PageTransition><AdminRoute><ArticleEditor /></AdminRoute></PageTransition>} />
-        <Route path="/admin/content/articles/:id" element={<PageTransition><AdminRoute><ArticleEditor /></AdminRoute></PageTransition>} />
-        <Route path="/admin/articles/preview" element={<PageTransition><AdminRoute><ArticlePreview /></AdminRoute></PageTransition>} />
-        <Route path="/admin/content/team" element={<PageTransition><AdminRoute><TeamAdmin /></AdminRoute></PageTransition>} />
-        <Route path="/admin/pending" element={<PageTransition><AdminRoute><Pending /></AdminRoute></PageTransition>} />
-        <Route path="/admin/content/pages" element={<PageTransition><AdminRoute><PagesManagement /></AdminRoute></PageTransition>} />
-        <Route path="/admin/clients/messages" element={<PageTransition><AdminRoute><ClientMessages /></AdminRoute></PageTransition>} />
-        <Route path="/admin/communications/inbox" element={<PageTransition><AdminRoute><CommunicationsInbox /></AdminRoute></PageTransition>} />
-        <Route path="/admin/communications/newsletter" element={<PageTransition><AdminRoute><NewsletterManagement /></AdminRoute></PageTransition>} />
-        <Route path="/admin/settings/billing" element={<PageTransition><AdminRoute><BillingSettings /></AdminRoute></PageTransition>} />
-        <Route path="/admin/email-campaigns" element={<PageTransition><AdminRoute><EmailCampaigns /></AdminRoute></PageTransition>} />
-        <Route path="/admin/analytics" element={<PageTransition><AdminRoute><Analytics /></AdminRoute></PageTransition>} />
-        <Route path="/admin/clients/businesses" element={<PageTransition><AdminRoute><BusinessClients /></AdminRoute></PageTransition>} />
-        <Route path="/admin/clients/businesses/:id" element={<PageTransition><AdminRoute><BusinessClientDetail /></AdminRoute></PageTransition>} />
-        <Route path="/admin/clients/individuals" element={<PageTransition><AdminRoute><IndividualClients /></AdminRoute></PageTransition>} />
-        <Route path="/admin/clients/individuals/:id" element={<PageTransition><AdminRoute><IndividualClientDetail /></AdminRoute></PageTransition>} />
-        <Route path="/admin/ecommerce/products" element={<PageTransition><AdminRoute><ProductsList /></AdminRoute></PageTransition>} />
-        <Route path="/admin/ecommerce/products/new" element={<PageTransition><AdminRoute><ProductEditor /></AdminRoute></PageTransition>} />
-        <Route path="/admin/ecommerce/products/:id" element={<PageTransition><AdminRoute><ProductEditor /></AdminRoute></PageTransition>} />
-        <Route path="/admin/ecommerce/orders" element={<PageTransition><AdminRoute><OrdersList /></AdminRoute></PageTransition>} />
-        <Route path="/admin/ecommerce/orders/:id" element={<PageTransition><AdminRoute><OrderDetail /></AdminRoute></PageTransition>} />
-        <Route path="/admin/ecommerce/inventory" element={<PageTransition><AdminRoute><InventoryManagement /></AdminRoute></PageTransition>} />
-        <Route path="/admin/testing" element={<PageTransition><AdminRoute><SystemHealthDashboard /></AdminRoute></PageTransition>} />
-        <Route path="/admin/testing/checklist" element={<PageTransition><AdminRoute><TestingChecklist /></AdminRoute></PageTransition>} />
-        <Route path="/admin/settings/*" element={<PageTransition><AdminRoute><Settings /></AdminRoute></PageTransition>} />
-        <Route path="/admin/subscriptions" element={<PageTransition><AdminRoute><Subscriptions /></AdminRoute></PageTransition>} />
-        <Route path="/admin/donations" element={<PageTransition><AdminRoute><DonationsList /></AdminRoute></PageTransition>} />
-        <Route path="/admin/service-inquiries" element={<PageTransition><AdminRoute><ServiceInquiriesList /></AdminRoute></PageTransition>} />
-        <Route path="/admin/bookings" element={<PageTransition><AdminRoute><BookingsList /></AdminRoute></PageTransition>} />
-        <Route path="/admin/job-applications" element={<PageTransition><AdminRoute><JobApplicationsList /></AdminRoute></PageTransition>} />
         <Route path="/maintenance" element={<PageTransition><Maintenance /></PageTransition>} />
         <Route path="/reset-password" element={<PageTransition><ResetPassword /></PageTransition>} />
+        
+        {/* Portal Routes */}
         <Route path="/portal" element={<PageTransition><ProtectedRoute><Portal /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/admin" element={<Navigate to="/admin" replace />} />
         <Route path="/portal/analyst" element={<PageTransition><ProtectedRoute><AnalystDashboard /></ProtectedRoute></PageTransition>} />
@@ -210,6 +171,8 @@ function AnimatedRoutes() {
         <Route path="/portal/business" element={<PageTransition><ProtectedRoute><BusinessDashboard /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/caregiver" element={<PageTransition><ProtectedRoute><CaregiverDashboard /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/healthcare" element={<PageTransition><ProtectedRoute><HealthcareDashboard /></ProtectedRoute></PageTransition>} />
+        
+        {/* Legal Pages */}
         <Route path="/privacy-policy" element={<PageTransition variant="fade"><PrivacyPolicy /></PageTransition>} />
         <Route path="/terms-of-service" element={<PageTransition variant="fade"><TermsOfService /></PageTransition>} />
         <Route path="/refund-policy" element={<PageTransition variant="fade"><RefundPolicy /></PageTransition>} />
@@ -217,6 +180,53 @@ function AnimatedRoutes() {
         <Route path="/acceptable-use" element={<PageTransition variant="fade"><AcceptableUse /></PageTransition>} />
         <Route path="/disclaimer" element={<PageTransition variant="fade"><Disclaimer /></PageTransition>} />
         <Route path="/faq" element={<PageTransition variant="auto"><FAQ /></PageTransition>} />
+        
+        {/* Admin Routes - Wrapped in AdminShell */}
+        <Route path="/admin/*" element={<AdminShell />}>
+          <Route index element={<AdminDashboardContent />} />
+          <Route path="threats" element={<ThreatMonitor />} />
+          <Route path="devices" element={<FamilyDevices />} />
+          <Route path="users" element={<CyberUserManagement />} />
+          <Route path="activity" element={<ActivityLog />} />
+          <Route path="database" element={<DatabaseView />} />
+          <Route path="notifications" element={<CyberNotifications />} />
+          <Route path="security" element={<SecuritySettings />} />
+          <Route path="reports" element={<CyberAnalytics />} />
+          <Route path="insights" element={<CyberAnalytics />} />
+          <Route path="content/testimonials" element={<TestimonialsAdmin />} />
+          <Route path="content/articles" element={<ArticlesAdmin />} />
+          <Route path="content/articles/new" element={<ArticleEditor />} />
+          <Route path="content/articles/:id" element={<ArticleEditor />} />
+          <Route path="articles/preview" element={<ArticlePreview />} />
+          <Route path="content/team" element={<TeamAdmin />} />
+          <Route path="pending" element={<Pending />} />
+          <Route path="content/pages" element={<PagesManagement />} />
+          <Route path="clients/messages" element={<ClientMessages />} />
+          <Route path="communications/inbox" element={<CommunicationsInbox />} />
+          <Route path="communications/newsletter" element={<NewsletterManagement />} />
+          <Route path="settings/billing" element={<BillingSettings />} />
+          <Route path="email-campaigns" element={<EmailCampaigns />} />
+          <Route path="analytics" element={<Analytics />} />
+          <Route path="clients/businesses" element={<BusinessClients />} />
+          <Route path="clients/businesses/:id" element={<BusinessClientDetail />} />
+          <Route path="clients/individuals" element={<IndividualClients />} />
+          <Route path="clients/individuals/:id" element={<IndividualClientDetail />} />
+          <Route path="ecommerce/products" element={<ProductsList />} />
+          <Route path="ecommerce/products/new" element={<ProductEditor />} />
+          <Route path="ecommerce/products/:id" element={<ProductEditor />} />
+          <Route path="ecommerce/orders" element={<OrdersList />} />
+          <Route path="ecommerce/orders/:id" element={<OrderDetail />} />
+          <Route path="ecommerce/inventory" element={<InventoryManagement />} />
+          <Route path="testing" element={<SystemHealthDashboard />} />
+          <Route path="testing/checklist" element={<TestingChecklist />} />
+          <Route path="settings/*" element={<Settings />} />
+          <Route path="subscriptions" element={<Subscriptions />} />
+          <Route path="donations" element={<DonationsList />} />
+          <Route path="service-inquiries" element={<ServiceInquiriesList />} />
+          <Route path="bookings" element={<BookingsList />} />
+          <Route path="job-applications" element={<JobApplicationsList />} />
+        </Route>
+        
         <Route path="*" element={<PageTransition variant="fade"><NotFound /></PageTransition>} />
       </Routes>
     </AnimatePresence>
@@ -226,24 +236,19 @@ function AnimatedRoutes() {
 function App() {
   const [showSplash, setShowSplash] = useState(true);
   
-  // Add smooth scroll behavior for anchor links
   useSmoothAnchorScroll();
   
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
     
-    // Remove the hardcoded splash screen from index.html
     const initialSplash = document.getElementById('initial-splash');
     if (initialSplash) {
-      // Add fade-out class for smooth transition
       initialSplash.classList.add('fade-out');
-      // Remove from DOM after transition completes
       setTimeout(() => {
         initialSplash.remove();
       }, 500);
     }
     
-    // Simple timer-based splash - hero handles its own fade-in
     const timer = setTimeout(() => {
       setShowSplash(false);
     }, 800);
@@ -256,45 +261,46 @@ function App() {
 
   return (
     <>
-      {/* Premium Splash Screen */}
       <SplashScreen isVisible={showSplash} />
       
       <QueryClientProvider client={queryClient}>
-        <Toaster />
-        <Sonner />
-        <SubscriptionProvider>
-          <CartProvider>
-            <CheckoutProvider>
-              <CartFeedbackProvider>
-                <AIChatProvider>
-                  <BrowserRouter>
-                    <SkipToContent />
-                    <ScrollProgressBar />
-                    <NavigationProgress />
-                    <ScrollToTop />
-                    <BackToTop />
-                    <MobileCallButton />
-                    
-                    <RouteTracker />
-                    <AnalyticsTracker />
-                    <ErrorBoundary>
-                      <Suspense fallback={<PageLoader />}>
-                        <AnimatedRoutes />
+        <AuthProvider>
+          <Toaster />
+          <Sonner />
+          <SubscriptionProvider>
+            <CartProvider>
+              <CheckoutProvider>
+                <CartFeedbackProvider>
+                  <AIChatProvider>
+                    <BrowserRouter>
+                      <SkipToContent />
+                      <ScrollProgressBar />
+                      <NavigationProgress />
+                      <ScrollToTop />
+                      <BackToTop />
+                      <MobileCallButton />
+                      
+                      <RouteTracker />
+                      <AnalyticsTracker />
+                      <ErrorBoundary>
+                        <Suspense fallback={<PageLoader />}>
+                          <PublicRoutes />
+                        </Suspense>
+                      </ErrorBoundary>
+                      <AIChat />
+                      <CookieConsent />
+                      <CartFeedbackNotifications />
+                      <Suspense fallback={null}>
+                        <UnifiedCheckoutDialog />
                       </Suspense>
-                    </ErrorBoundary>
-                    <AIChat />
-                    <CookieConsent />
-                    <CartFeedbackNotifications />
-                    <Suspense fallback={null}>
-                      <UnifiedCheckoutDialog />
-                    </Suspense>
-                    <DraggablePerformanceMonitor />
-                  </BrowserRouter>
-                </AIChatProvider>
-              </CartFeedbackProvider>
-            </CheckoutProvider>
-          </CartProvider>
-        </SubscriptionProvider>
+                      <DraggablePerformanceMonitor />
+                    </BrowserRouter>
+                  </AIChatProvider>
+                </CartFeedbackProvider>
+              </CheckoutProvider>
+            </CartProvider>
+          </SubscriptionProvider>
+        </AuthProvider>
       </QueryClientProvider>
     </>
   );

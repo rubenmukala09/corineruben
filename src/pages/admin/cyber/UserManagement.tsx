@@ -1,23 +1,13 @@
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { AdminLayout } from "@/components/admin/AdminLayout";
 import SuperAdminUserManagement from "@/components/admin/super/SuperAdminUserManagement";
 
 export default function UserManagement() {
   return (
-    <AdminLayout
-      title="User Management"
-      subtitle="Manage all registered clients and their permissions"
-      searchPlaceholder="Search users..."
-      headerActions={
-        <Link to="/admin">
-          <Button variant="outline" className="border-gray-700 text-[#9CA3AF] hover:text-[#F9FAFB] hover:bg-gray-800">
-            Back to Dashboard
-          </Button>
-        </Link>
-      }
-    >
+    <div className="p-6 max-w-7xl mx-auto space-y-6">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-[#F9FAFB]">User Management</h1>
+        <p className="text-[#9CA3AF]">Manage all registered clients and their permissions</p>
+      </div>
       <SuperAdminUserManagement />
-    </AdminLayout>
+    </div>
   );
 }
