@@ -104,7 +104,7 @@ export function NeonSystemHealth() {
   };
 
   const healthyCount = services.filter(s => s.status === "healthy").length;
-  const overallHealth = (healthyCount / services.length) * 100;
+  const overallHealth = services.length > 0 ? (healthyCount / services.length) * 100 : 0;
 
   return (
     <motion.div
@@ -112,9 +112,9 @@ export function NeonSystemHealth() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.5, duration: 0.5 }}
     >
-      <Card className="bg-[#1F2937] border-gray-800/50 p-5 shadow-lg shadow-teal-500/5">
+      <Card className="bg-[#111827] border-gray-800 p-5 shadow-lg shadow-teal-500/5">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+          <h2 className="text-lg font-semibold text-[#F9FAFB] flex items-center gap-2">
             <Activity className="w-5 h-5 text-teal-400" />
             System Health
           </h2>
@@ -123,7 +123,7 @@ export function NeonSystemHealth() {
             size="sm"
             onClick={fetchSystemHealth}
             disabled={refreshing}
-            className="text-gray-400 hover:text-white hover:bg-gray-800/50"
+            className="text-[#D1D5DB] hover:text-[#F9FAFB] hover:bg-gray-800/50"
           >
             <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
           </Button>
@@ -132,9 +132,9 @@ export function NeonSystemHealth() {
         {/* Overall Health Bar */}
         <div className="mb-4">
           <div className="flex items-center justify-between text-sm mb-1">
-            <span className="text-gray-400">Overall Status</span>
-            <span className={overallHealth === 100 ? "text-green-400" : "text-amber-400"}>
-              {overallHealth.toFixed(0)}% Operational
+            <span className="text-[#D1D5DB]">Overall Status</span>
+            <span className={overallHealth === 100 ? "text-[#10B981]" : "text-[#FBBF24]"}>
+              {(overallHealth ?? 0).toFixed(0)}% Operational
             </span>
           </div>
           <div className="h-2 bg-gray-800 rounded-full overflow-hidden">
@@ -169,10 +169,10 @@ export function NeonSystemHealth() {
                   }`} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-medium text-white truncate">{service.name}</p>
+                  <p className="text-xs font-medium text-[#F9FAFB] truncate">{service.name}</p>
                   <div className="flex items-center gap-1">
                     {getStatusIcon(service.status)}
-                    <span className="text-xs text-gray-500 capitalize">{service.status}</span>
+                    <span className="text-xs text-[#9CA3AF] capitalize">{service.status}</span>
                   </div>
                 </div>
               </motion.div>

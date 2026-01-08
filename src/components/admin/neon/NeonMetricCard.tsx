@@ -125,7 +125,7 @@ export function NeonMetricCard({
           <p className={`text-3xl font-bold text-white mb-1`}>
             {prefix}{animatedValue.toLocaleString()}{suffix}
           </p>
-          <p className="text-sm text-gray-400">{title}</p>
+          <p className="text-sm text-[#D1D5DB]">{title}</p>
         </div>
 
         {/* Mini Sparkline */}

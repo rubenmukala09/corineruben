@@ -182,7 +182,7 @@ export function DashboardStats() {
         iconBgColor="bg-gradient-to-br from-success/80 to-success"
         title="Revenue This Month"
         value={Math.round(data.revenueThisMonth)}
-        subtitle={`${data.revenueGrowth >= 0 ? '+' : ''}${data.revenueGrowth.toFixed(1)}% vs last month ${data.revenueGrowth >= 0 ? '↑' : '↓'}`}
+        subtitle={`${data.revenueGrowth >= 0 ? '+' : ''}${(data.revenueGrowth ?? 0).toFixed(1)}% vs last month ${data.revenueGrowth >= 0 ? '↑' : '↓'}`}
         subtitleColor={data.revenueGrowth >= 0 ? "success" : "destructive"}
         gradientFrom="hsl(var(--success) / 0.1)"
         gradientTo="hsl(var(--success) / 0.05)"

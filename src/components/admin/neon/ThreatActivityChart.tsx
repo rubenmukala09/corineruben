@@ -32,16 +32,20 @@ export function ThreatActivityChart() {
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
+      const attemptedValue = payload[0]?.value ?? 0;
+      const blockedValue = payload[1]?.value ?? 0;
+      const blockRate = attemptedValue > 0 ? ((blockedValue / attemptedValue) * 100) : 0;
+      
       return (
-        <div className="bg-[#1F2937] border border-cyan-500/30 rounded-lg shadow-lg shadow-cyan-500/10 p-4">
-          <p className="text-sm font-medium text-white mb-2">{label}</p>
+        <div className="bg-[#111827] border border-gray-700 rounded-lg shadow-xl p-4">
+          <p className="text-sm font-medium text-[#F9FAFB] mb-2">{label}</p>
           {payload.map((entry: any, index: number) => (
             <p key={index} className="text-sm" style={{ color: entry.color }}>
-              {entry.name}: <span className="font-bold">{entry.value.toLocaleString()}</span>
+              {entry.name}: <span className="font-bold">{(entry.value ?? 0).toLocaleString()}</span>
             </p>
           ))}
-          <p className="text-xs text-emerald-400 mt-2">
-            Block rate: {((payload[1]?.value / payload[0]?.value) * 100).toFixed(1)}%
+          <p className="text-xs text-[#10B981] mt-2">
+            Block rate: {blockRate.toFixed(1)}%
           </p>
         </div>
       );
