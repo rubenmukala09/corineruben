@@ -16,7 +16,20 @@ import {
   UserCheck,
   CalendarClock,
   Download,
+  Trash2,
+  Ban,
+  Check,
 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 
 
@@ -65,6 +78,10 @@ const BookingsList = () => {
   const queryClient = useQueryClient();
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [bookingToDelete, setBookingToDelete] = useState<BookingRequest | null>(null);
+  const [denyDialogOpen, setDenyDialogOpen] = useState(false);
+  const [bookingToDeny, setBookingToDeny] = useState<BookingRequest | null>(null);
 
   const { data: bookings = [], isLoading, refetch } = useQuery({
     queryKey: ["booking-requests", statusFilter],
@@ -109,7 +126,67 @@ const BookingsList = () => {
     },
   });
 
-  // Calculate stats
+  // Delete booking mutation
+  const deleteMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase
+        .from("booking_requests")
+        .delete()
+        .eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["booking-requests"] });
+      toast({
+        title: "Booking Deleted",
+        description: "The booking request has been removed",
+      });
+      setDeleteDialogOpen(false);
+      setBookingToDelete(null);
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to delete booking",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Handle confirm booking (send confirmation email)
+  const handleConfirmBooking = async (booking: BookingRequest) => {
+    updateStatusMutation.mutate({ id: booking.id, status: "confirmed" });
+    // Open email client with confirmation template
+    const subject = encodeURIComponent(`Booking Confirmed: ${booking.service_name}`);
+    const body = encodeURIComponent(
+      `Dear ${booking.full_name},\n\n` +
+      `We're pleased to confirm your booking for ${booking.service_name}.\n\n` +
+      `Reference Number: ${booking.request_number}\n` +
+      `Preferred Date: ${booking.preferred_dates || 'To be scheduled'}\n` +
+      (booking.final_price ? `Total: $${booking.final_price.toFixed(2)}\n` : '') +
+      `\nWe'll be in touch shortly with additional details.\n\n` +
+      `Best regards,\nInVision Network Team`
+    );
+    window.open(`mailto:${booking.email}?subject=${subject}&body=${body}`, "_blank");
+  };
+
+  // Handle deny booking (send rejection email)
+  const handleDenyBooking = async (booking: BookingRequest) => {
+    updateStatusMutation.mutate({ id: booking.id, status: "cancelled" });
+    // Open email client with denial template
+    const subject = encodeURIComponent(`Booking Update: ${booking.service_name}`);
+    const body = encodeURIComponent(
+      `Dear ${booking.full_name},\n\n` +
+      `Thank you for your interest in ${booking.service_name}.\n\n` +
+      `Unfortunately, we are unable to accommodate your booking request at this time.\n\n` +
+      `If you have any questions or would like to discuss alternative options, please don't hesitate to contact us.\n\n` +
+      `Best regards,\nInVision Network Team`
+    );
+    window.open(`mailto:${booking.email}?subject=${subject}&body=${body}`, "_blank");
+    setDenyDialogOpen(false);
+    setBookingToDeny(null);
+  };
+
   const pendingCount = bookings.filter(b => b.status === "pending").length;
   const confirmedCount = bookings.filter(b => b.status === "confirmed").length;
   const completedCount = bookings.filter(b => b.status === "completed").length;
@@ -350,26 +427,44 @@ const BookingsList = () => {
                       </div>
                     </TableCell>
                     <TableCell>
-                      <div className="flex gap-1">
+                      <div className="flex flex-wrap gap-1">
+                        {/* Status-based action buttons */}
                         {booking.status === "pending" && (
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => updateStatusMutation.mutate({ id: booking.id, status: "contacted" })}
-                            disabled={updateStatusMutation.isPending}
-                          >
-                            <UserCheck className="h-4 w-4 mr-1" />
-                            Contacted
-                          </Button>
+                          <>
+                            <Button
+                              size="sm"
+                              variant="default"
+                              className="bg-green-600 hover:bg-green-700"
+                              onClick={() => handleConfirmBooking(booking)}
+                              disabled={updateStatusMutation.isPending}
+                            >
+                              <Check className="h-4 w-4 mr-1" />
+                              Confirm
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="text-red-500 border-red-500/30 hover:bg-red-500/10"
+                              onClick={() => {
+                                setBookingToDeny(booking);
+                                setDenyDialogOpen(true);
+                              }}
+                              disabled={updateStatusMutation.isPending}
+                            >
+                              <Ban className="h-4 w-4 mr-1" />
+                              Deny
+                            </Button>
+                          </>
                         )}
                         {booking.status === "contacted" && (
                           <Button
                             size="sm"
                             variant="default"
-                            onClick={() => updateStatusMutation.mutate({ id: booking.id, status: "confirmed" })}
+                            className="bg-green-600 hover:bg-green-700"
+                            onClick={() => handleConfirmBooking(booking)}
                             disabled={updateStatusMutation.isPending}
                           >
-                            <CheckCircle className="h-4 w-4 mr-1" />
+                            <Check className="h-4 w-4 mr-1" />
                             Confirm
                           </Button>
                         )}
@@ -384,10 +479,13 @@ const BookingsList = () => {
                             Complete
                           </Button>
                         )}
+                        
+                        {/* Quick contact buttons */}
                         <Button
                           size="sm"
                           variant="ghost"
                           onClick={() => window.open(`mailto:${booking.email}`, "_blank")}
+                          title="Send Email"
                         >
                           <Mail className="h-4 w-4" />
                         </Button>
@@ -396,10 +494,25 @@ const BookingsList = () => {
                             size="sm"
                             variant="ghost"
                             onClick={() => window.open(`tel:${booking.phone}`, "_blank")}
+                            title="Call"
                           >
                             <Phone className="h-4 w-4" />
                           </Button>
                         )}
+                        
+                        {/* Delete button */}
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="text-red-500 hover:text-red-600 hover:bg-red-500/10"
+                          onClick={() => {
+                            setBookingToDelete(booking);
+                            setDeleteDialogOpen(true);
+                          }}
+                          title="Delete"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -409,6 +522,56 @@ const BookingsList = () => {
           </Table>
         </Card>
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent className="bg-[#1F2937] border-gray-700">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-white">Delete Booking Request</AlertDialogTitle>
+            <AlertDialogDescription className="text-gray-400">
+              Are you sure you want to delete this booking from {bookingToDelete?.full_name}? 
+              This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="border-gray-700 text-gray-300 hover:bg-gray-800">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-600 hover:bg-red-700 text-white"
+              onClick={() => bookingToDelete && deleteMutation.mutate(bookingToDelete.id)}
+            >
+              <Trash2 className="h-4 w-4 mr-2" />
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Deny Confirmation Dialog */}
+      <AlertDialog open={denyDialogOpen} onOpenChange={setDenyDialogOpen}>
+        <AlertDialogContent className="bg-[#1F2937] border-gray-700">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-white">Deny Booking Request</AlertDialogTitle>
+            <AlertDialogDescription className="text-gray-400">
+              This will mark the booking as cancelled and open your email client to send a 
+              rejection notification to {bookingToDeny?.full_name}.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="border-gray-700 text-gray-300 hover:bg-gray-800">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-600 hover:bg-red-700 text-white"
+              onClick={() => bookingToDeny && handleDenyBooking(bookingToDeny)}
+            >
+              <Ban className="h-4 w-4 mr-2" />
+              Deny & Send Email
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

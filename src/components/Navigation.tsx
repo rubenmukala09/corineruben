@@ -1,15 +1,20 @@
 import * as React from "react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PrefetchLink } from "@/components/PrefetchLink";
 import { ShoppingCart } from "@/components/ShoppingCart";
+import { useAuth } from "@/contexts/AuthContext";
 import invisionLogo from "@/assets/shield-logo.png";
 
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { user, roleConfig } = useAuth();
+  
+  // Check if user is logged in with admin/staff role
+  const isAdminOrStaff = user && roleConfig;
 
   // Lock body scroll when mobile menu is open
   React.useEffect(() => {
@@ -129,7 +134,14 @@ const Navigation = () => {
               asChild 
               className="h-[44px] px-6 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-semibold rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.15)] hover:shadow-[0_12px_30px_-8px_rgba(0,0,0,0.2)] hover:-translate-y-1 transition-all duration-300"
             >
-              <Link to="/portal" aria-label="Login to your account">Login</Link>
+              {isAdminOrStaff ? (
+                <Link to="/admin" aria-label="Go to Dashboard" className="flex items-center gap-2">
+                  <LayoutDashboard className="h-4 w-4" />
+                  Dashboard
+                </Link>
+              ) : (
+                <Link to="/portal" aria-label="Login to your account">Login</Link>
+              )}
             </Button>
 
           {/* Mobile menu button - highest z-index to stay above hero elements */}
@@ -175,14 +187,21 @@ const Navigation = () => {
               
               {/* Mobile Actions */}
               <div className="pt-4 border-t border-border mt-4 space-y-3">
-                {/* Mobile Login Button */}
+                {/* Mobile Login/Dashboard Button */}
                 <Button
                   asChild 
                   className="w-full bg-gradient-to-r from-primary to-accent text-primary-foreground hover:shadow-glow-purple transition-all duration-300 h-12 text-base font-semibold touch-target"
                 >
-                  <Link to="/portal" onClick={() => setMobileMenuOpen(false)} aria-label="Login to your account">
-                    Login
-                  </Link>
+                  {isAdminOrStaff ? (
+                    <Link to="/admin" onClick={() => setMobileMenuOpen(false)} aria-label="Go to Dashboard" className="flex items-center justify-center gap-2">
+                      <LayoutDashboard className="h-5 w-5" />
+                      Dashboard
+                    </Link>
+                  ) : (
+                    <Link to="/portal" onClick={() => setMobileMenuOpen(false)} aria-label="Login to your account">
+                      Login
+                    </Link>
+                  )}
                 </Button>
 
                 {/* Mobile Phone Link */}

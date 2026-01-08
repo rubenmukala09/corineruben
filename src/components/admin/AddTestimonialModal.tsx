@@ -47,6 +47,7 @@ const testimonialSchema = z
     status: z.enum(["pending", "approved"]),
     featured: z.boolean(),
     email: z.string().email({ message: "Valid email is required" }),
+    displayLocation: z.enum(["home", "services", "about", "all"]),
   })
   .refine(
     (data) => {
@@ -109,6 +110,7 @@ export function AddTestimonialModal({
       rating: 5,
       status: "pending",
       featured: false,
+      displayLocation: "home",
     },
   });
 
@@ -222,8 +224,8 @@ export function AddTestimonialModal({
         email: data.email,
         rating: rating,
         status: data.status,
+        display_location: data.displayLocation,
         submitted_at: new Date().toISOString(),
-        // Note: featured field would need to be added to the database schema
       });
 
       if (error) throw error;
