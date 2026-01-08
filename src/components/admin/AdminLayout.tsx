@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Menu, Search, ChevronDown, ChevronLeft, ChevronRight, User, Settings, LogOut } from "lucide-react";
+import { Menu, Search, ChevronDown, ChevronLeft, ChevronRight, User, Settings, LogOut, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -8,6 +8,8 @@ import { CyberSidebar } from "@/components/admin/neon/CyberSidebar";
 import { NotificationBell } from "@/components/NotificationBell";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+
+const INACTIVITY_TIMEOUT = 60 * 1000; // 1 minute
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -35,8 +37,55 @@ export function AdminLayout({
   const [adminEmail, setAdminEmail] = useState("");
   
   const profileRef = useRef<HTMLDivElement>(null);
+  const inactivityTimerRef = useRef<NodeJS.Timeout | null>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  const handleSignOut = useCallback(async () => {
+    try {
+      await supabase.auth.signOut();
+      toast({ title: "Signed Out", description: "You've been successfully logged out." });
+      navigate("/auth");
+    } catch (error: any) {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    }
+  }, [navigate, toast]);
+
+  // Auto-logout after 1 minute of inactivity
+  const resetInactivityTimer = useCallback(() => {
+    if (inactivityTimerRef.current) {
+      clearTimeout(inactivityTimerRef.current);
+    }
+    inactivityTimerRef.current = setTimeout(() => {
+      toast({ 
+        title: "Session Expired", 
+        description: "You've been logged out due to inactivity.",
+        variant: "destructive"
+      });
+      handleSignOut();
+    }, INACTIVITY_TIMEOUT);
+  }, [handleSignOut, toast]);
+
+  useEffect(() => {
+    const events = ['mousedown', 'mousemove', 'keydown', 'scroll', 'touchstart', 'click'];
+    
+    const handleActivity = () => resetInactivityTimer();
+    
+    events.forEach(event => {
+      document.addEventListener(event, handleActivity);
+    });
+    
+    resetInactivityTimer(); // Start the timer
+    
+    return () => {
+      events.forEach(event => {
+        document.removeEventListener(event, handleActivity);
+      });
+      if (inactivityTimerRef.current) {
+        clearTimeout(inactivityTimerRef.current);
+      }
+    };
+  }, [resetInactivityTimer]);
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -66,16 +115,6 @@ export function AdminLayout({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  const handleSignOut = async () => {
-    try {
-      await supabase.auth.signOut();
-      toast({ title: "Signed Out", description: "You've been successfully logged out." });
-      navigate("/auth");
-    } catch (error: any) {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
-    }
-  };
 
   const getInitials = (name: string) => {
     return name.split(" ").map(part => part[0]).join("").toUpperCase().slice(0, 2);
@@ -136,8 +175,18 @@ export function AdminLayout({
             </div>
           </div>
 
-          {/* Right Section: Notifications & Profile */}
+          {/* Right Section: Home, Notifications & Profile */}
           <div className="flex items-center gap-3">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate("/")}
+              className="text-[#9CA3AF] hover:text-[#F9FAFB] hover:bg-gray-800 h-9 w-9"
+              title="Go to Home"
+            >
+              <Home className="h-5 w-5" />
+            </Button>
+            
             <NotificationBell />
             
             {/* Profile Dropdown */}
