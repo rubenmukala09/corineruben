@@ -1,8 +1,6 @@
-import { Link } from "react-router-dom";
 import { Bell, Shield, AlertTriangle, Info, CheckCircle, Trash2, CheckCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AdminLayout } from "@/components/admin/AdminLayout";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -83,29 +81,23 @@ export default function Notifications() {
   const unreadCount = notifications.filter(n => !n.is_read).length;
 
   return (
-    <AdminLayout
-      title="Notifications"
-      subtitle="Stay updated on security events and alerts"
-      searchPlaceholder="Search notifications..."
-      headerActions={
-        <div className="flex gap-3">
-          <Link to="/admin">
-            <Button variant="outline" className="border-gray-700 text-[#9CA3AF] hover:text-[#F9FAFB] hover:bg-gray-800">
-              Back to Dashboard
-            </Button>
-          </Link>
-          <Button 
-            variant="outline" 
-            className="border-gray-700 text-[#9CA3AF] hover:text-[#F9FAFB] hover:bg-gray-800"
-            onClick={() => markAllReadMutation.mutate()}
-            disabled={unreadCount === 0}
-          >
-            <CheckCheck className="h-4 w-4 mr-2" />
-            Mark all as read
-          </Button>
+    <div className="p-6 max-w-7xl mx-auto space-y-6">
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h1 className="text-2xl font-bold text-[#F9FAFB]">Notifications</h1>
+          <p className="text-[#9CA3AF]">Stay updated on security events and alerts</p>
         </div>
-      }
-    >
+        <Button 
+          variant="outline" 
+          className="border-gray-700 text-[#9CA3AF] hover:text-[#F9FAFB] hover:bg-gray-800"
+          onClick={() => markAllReadMutation.mutate()}
+          disabled={unreadCount === 0}
+        >
+          <CheckCheck className="h-4 w-4 mr-2" />
+          Mark all as read
+        </Button>
+      </div>
+      
       <Card className="bg-[#111827] border-gray-800">
         <CardHeader>
           <CardTitle className="text-[#F9FAFB] flex items-center gap-2">
@@ -171,6 +163,6 @@ export default function Notifications() {
           )}
         </CardContent>
       </Card>
-    </AdminLayout>
+    </div>
   );
 }

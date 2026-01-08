@@ -1,8 +1,5 @@
-import { Link } from "react-router-dom";
 import { TrendingUp, TrendingDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AdminLayout } from "@/components/admin/AdminLayout";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
 
 const threatData = [
@@ -25,20 +22,14 @@ const categoryData = [
 
 export default function CyberAnalytics() {
   return (
-    <AdminLayout
-      title="Analytics Overview"
-      subtitle="Security metrics and threat intelligence"
-      searchPlaceholder="Search analytics..."
-      headerActions={
-        <Link to="/admin">
-          <Button className="bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white">
-            Back to Dashboard
-          </Button>
-        </Link>
-      }
-    >
+    <div className="p-6 max-w-7xl mx-auto space-y-6">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-[#F9FAFB]">Analytics Overview</h1>
+        <p className="text-[#9CA3AF]">Security metrics and threat intelligence</p>
+      </div>
+      
       {/* Stats Cards */}
-      <div className="grid gap-4 md:grid-cols-4 mb-8">
+      <div className="grid gap-4 md:grid-cols-4">
         {[
           { label: "Threats Blocked", value: "1,234", change: "+12%", up: true },
           { label: "Protection Rate", value: "99.2%", change: "+0.5%", up: true },
@@ -119,6 +110,6 @@ export default function CyberAnalytics() {
           </CardContent>
         </Card>
       </div>
-    </AdminLayout>
+    </div>
   );
 }

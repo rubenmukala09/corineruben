@@ -1,30 +1,17 @@
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { AdminLayout } from "@/components/admin/AdminLayout";
 import SuperAdminProductManager from "@/components/admin/super/SuperAdminProductManager";
 import SuperAdminSalesOverview from "@/components/admin/super/SuperAdminSalesOverview";
 
 export default function ProductsList() {
   return (
-    <AdminLayout
-      title="Products & Sales"
-      subtitle="Manage digital products and view sales analytics"
-      searchPlaceholder="Search products..."
-      headerActions={
-        <Link to="/admin">
-          <Button className="bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white">
-            Back to Dashboard
-          </Button>
-        </Link>
-      }
-    >
+    <div className="p-6 max-w-7xl mx-auto space-y-6">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-[#F9FAFB]">Products & Sales</h1>
+        <p className="text-[#9CA3AF]">Manage digital products and view sales analytics</p>
+      </div>
       <div className="grid gap-6 lg:grid-cols-2">
-        {/* Product Manager */}
         <SuperAdminProductManager />
-        
-        {/* Sales Overview */}
         <SuperAdminSalesOverview />
       </div>
-    </AdminLayout>
+    </div>
   );
 }

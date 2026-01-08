@@ -2,11 +2,10 @@ import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowLeft, Mail, Phone, MapPin, Calendar, Shield, Edit } from "lucide-react";
 import { format } from "date-fns";
@@ -61,18 +60,19 @@ export default function IndividualClientDetail() {
 
   if (loading) {
     return (
-      <AdminLayout
-        title="Client Details"
-        subtitle="Loading client information..."
-        headerActions={
+      <div className="p-6 max-w-7xl mx-auto space-y-6">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <Skeleton className="h-8 w-48 bg-gray-800" />
+            <Skeleton className="h-4 w-64 mt-2 bg-gray-800" />
+          </div>
           <Link to="/admin/clients/individuals">
             <Button variant="outline" className="border-gray-700 text-gray-300 hover:bg-gray-800">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Clients
             </Button>
           </Link>
-        }
-      >
+        </div>
         <div className="grid gap-6 lg:grid-cols-3">
           <Card className="lg:col-span-1 bg-[#111827] border-gray-800">
             <CardContent className="p-6">
@@ -91,36 +91,39 @@ export default function IndividualClientDetail() {
             </CardContent>
           </Card>
         </div>
-      </AdminLayout>
+      </div>
     );
   }
 
   if (!client) {
     return (
-      <AdminLayout
-        title="Client Not Found"
-        subtitle="The requested client could not be found"
-        headerActions={
+      <div className="p-6 max-w-7xl mx-auto space-y-6">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-2xl font-bold text-[#F9FAFB]">Client Not Found</h1>
+            <p className="text-[#9CA3AF]">The requested client could not be found</p>
+          </div>
           <Link to="/admin/clients/individuals">
             <Button variant="outline" className="border-gray-700 text-gray-300 hover:bg-gray-800">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Clients
             </Button>
           </Link>
-        }
-      >
+        </div>
         <Card className="bg-[#111827] border-gray-800 p-8 text-center">
           <p className="text-gray-400">This client does not exist or has been removed.</p>
         </Card>
-      </AdminLayout>
+      </div>
     );
   }
 
   return (
-    <AdminLayout
-      title={`${client.first_name} ${client.last_name}`}
-      subtitle="Individual client details and activity"
-      headerActions={
+    <div className="p-6 max-w-7xl mx-auto space-y-6">
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h1 className="text-2xl font-bold text-[#F9FAFB]">{client.first_name} {client.last_name}</h1>
+          <p className="text-[#9CA3AF]">Individual client details and activity</p>
+        </div>
         <div className="flex gap-2">
           <Link to="/admin/clients/individuals">
             <Button variant="outline" className="border-gray-700 text-gray-300 hover:bg-gray-800">
@@ -133,8 +136,8 @@ export default function IndividualClientDetail() {
             Edit Client
           </Button>
         </div>
-      }
-    >
+      </div>
+      
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Profile Card */}
         <Card className="lg:col-span-1 bg-[#111827] border-gray-800">
@@ -226,6 +229,6 @@ export default function IndividualClientDetail() {
           </CardContent>
         </Card>
       </div>
-    </AdminLayout>
+    </div>
   );
 }

@@ -1,9 +1,7 @@
-import { Link } from "react-router-dom";
 import { Database, RefreshCw, Download, HardDrive } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { AdminLayout } from "@/components/admin/AdminLayout";
 
 const databases = [
   { id: 1, name: "Threat Signatures", records: "2.4M", lastUpdate: "32ms ago", size: "1.2 GB", status: "Synced" },
@@ -15,26 +13,20 @@ const databases = [
 
 export default function DatabaseView() {
   return (
-    <AdminLayout
-      title="Database"
-      subtitle="Security databases and threat intelligence"
-      searchPlaceholder="Search databases..."
-      headerActions={
-        <div className="flex gap-3">
-          <Link to="/admin">
-            <Button variant="outline" className="border-gray-700 text-[#9CA3AF] hover:text-[#F9FAFB] hover:bg-gray-800">
-              Back to Dashboard
-            </Button>
-          </Link>
-          <Button className="bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white">
-            <RefreshCw className="h-4 w-4 mr-2" />
-            Sync All
-          </Button>
+    <div className="p-6 max-w-7xl mx-auto space-y-6">
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h1 className="text-2xl font-bold text-[#F9FAFB]">Database</h1>
+          <p className="text-[#9CA3AF]">Security databases and threat intelligence</p>
         </div>
-      }
-    >
+        <Button className="bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white">
+          <RefreshCw className="h-4 w-4 mr-2" />
+          Sync All
+        </Button>
+      </div>
+      
       {/* Stats Cards */}
-      <div className="grid gap-4 md:grid-cols-3 mb-8">
+      <div className="grid gap-4 md:grid-cols-3">
         <Card className="bg-[#111827] border-gray-800">
           <CardContent className="p-6">
             <div className="flex items-center gap-3 mb-2">
@@ -104,6 +96,6 @@ export default function DatabaseView() {
           </div>
         </CardContent>
       </Card>
-    </AdminLayout>
+    </div>
   );
 }

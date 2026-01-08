@@ -7,7 +7,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { FileText, Save, Eye } from "lucide-react";
-import { AdminLayout } from "@/components/admin/AdminLayout";
 
 const PAGES = [
   { id: "home", name: "Home", path: "/" },
@@ -38,12 +37,14 @@ export default function PagesManagement() {
   };
 
   return (
-    <AdminLayout
-      title="Pages Management"
-      subtitle="Edit website pages content and SEO settings"
-      headerActions={
+    <div className="p-6 max-w-7xl mx-auto space-y-6">
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h1 className="text-2xl font-bold text-[#F9FAFB]">Pages Management</h1>
+          <p className="text-[#9CA3AF]">Edit website pages content and SEO settings</p>
+        </div>
         <div className="flex gap-2">
-          <Button variant="outline" onClick={handlePreview}>
+          <Button variant="outline" onClick={handlePreview} className="border-gray-700 text-gray-300 hover:bg-gray-800">
             <Eye className="h-4 w-4 mr-2" />
             Preview
           </Button>
@@ -52,8 +53,8 @@ export default function PagesManagement() {
             Save Changes
           </Button>
         </div>
-      }
-    >
+      </div>
+      
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <Card className="lg:col-span-1 bg-[#111827] border-gray-800">
           <CardHeader>
@@ -155,6 +156,6 @@ export default function PagesManagement() {
           </CardContent>
         </Card>
       </div>
-    </AdminLayout>
+    </div>
   );
 }

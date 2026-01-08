@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { AdminLayout } from "@/components/admin/AdminLayout";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -364,10 +362,12 @@ export default function ArticlesAdmin() {
   const categoryCounts = getCategoryCounts();
 
   return (
-    <AdminLayout
-      title="Blog Articles"
-      subtitle="Manage and publish blog content"
-      headerActions={
+    <div className="p-6 max-w-7xl mx-auto space-y-6">
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h1 className="text-2xl font-bold text-[#F9FAFB]">Blog Articles</h1>
+          <p className="text-[#9CA3AF]">Manage and publish blog content</p>
+        </div>
         <Button
           size="lg"
           onClick={() => navigate("/admin/content/articles/new")}
@@ -376,8 +376,7 @@ export default function ArticlesAdmin() {
           <PenSquare className="h-5 w-5 mr-2" />
           Create Article
         </Button>
-      }
-    >
+      </div>
       <div className="space-y-6">
         {/* Quick Stats */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
@@ -880,6 +879,6 @@ export default function ArticlesAdmin() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </AdminLayout>
+    </div>
   );
 }
