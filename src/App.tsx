@@ -50,11 +50,7 @@ const Services = lazy(() => import("./pages/Services"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Careers = lazy(() => import("./pages/Careers"));
 const Auth = lazy(() => import("./pages/Auth"));
-const Login = lazy(() => import("./pages/Login"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
-const Signup = lazy(() => import("./pages/Signup"));
-const StaffSignup = lazy(() => import("./pages/StaffSignup"));
-const Setup = lazy(() => import("./pages/Setup"));
 const ApplicationPending = lazy(() => import("./pages/ApplicationPending"));
 
 // Admin pages - content only (shell is handled by AdminShell)
@@ -152,10 +148,10 @@ function PublicRoutes() {
         <Route path="/contact" element={<PageTransition variant="auto"><Contact /></PageTransition>} />
         <Route path="/careers" element={<PageTransition variant="auto"><Careers /></PageTransition>} />
         <Route path="/auth" element={<PageTransition variant="auto"><Auth /></PageTransition>} />
-        <Route path="/login" element={<PageTransition variant="auto"><Login /></PageTransition>} />
-        <Route path="/signup" element={<PageTransition variant="scale"><Signup /></PageTransition>} />
-        <Route path="/staff-signup" element={<PageTransition variant="scale"><StaffSignup /></PageTransition>} />
-        <Route path="/setup" element={<PageTransition><Setup /></PageTransition>} />
+        <Route path="/login" element={<Navigate to="/auth" replace />} />
+        <Route path="/signup" element={<Navigate to="/auth?mode=signup" replace />} />
+        <Route path="/staff-signup" element={<Navigate to="/auth?mode=signup" replace />} />
+        <Route path="/setup" element={<Navigate to="/auth" replace />} />
         <Route path="/application-pending" element={<PageTransition><ApplicationPending /></PageTransition>} />
         <Route path="/maintenance" element={<PageTransition><Maintenance /></PageTransition>} />
         <Route path="/reset-password" element={<PageTransition><ResetPassword /></PageTransition>} />
