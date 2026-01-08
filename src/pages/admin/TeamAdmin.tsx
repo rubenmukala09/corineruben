@@ -1,6 +1,5 @@
 import { useState, useRef } from "react";
-import { AdminSidebar } from "@/components/AdminSidebar";
-import { AdminTopBar } from "@/components/AdminTopBar";
+import { AdminLayout } from "@/components/admin/AdminLayout";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -165,101 +164,83 @@ export default function TeamAdmin() {
   };
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <AdminSidebar isOpen={sidebarOpen} />
-      <AdminTopBar
-        sidebarOpen={sidebarOpen}
-        toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
-      />
+    <AdminLayout
+      title="Team Members"
+      subtitle="Manage your team members and their display settings"
+      headerActions={
+        <Button size="lg" className="gap-2 bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white" onClick={() => setAddModalOpen(true)}>
+          <Plus className="h-5 w-5" />
+          Add Team Member
+        </Button>
+      }
+    >
+      <div className="space-y-6">
+        {/* Controls Bar */}
+        <div className="flex items-center justify-between gap-4">
+          {/* Search */}
+          <div className="relative flex-1 max-w-md">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search team members..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10 bg-[#1F2937] border-gray-700"
+            />
+          </div>
 
-      <main
-        className={`flex-1 transition-all duration-300 pt-16 ${
-          sidebarOpen ? "md:ml-[260px]" : "md:ml-[70px]"
-        }`}
-      >
-        {/* Header */}
-        <div className="bg-background border-b sticky top-16 z-10">
-          <div className="px-8 py-6">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <h1 className="text-3xl font-bold mb-2">Team Members</h1>
-              </div>
-              <Button size="lg" className="gap-2" onClick={() => setAddModalOpen(true)}>
-                <Plus className="h-5 w-5" />
-                Add Team Member
-              </Button>
-            </div>
-
-            {/* Controls Bar */}
-            <div className="flex items-center justify-between gap-4">
-              {/* Search */}
-              <div className="relative flex-1 max-w-md">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search team members..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
-
-              {/* View Mode Toggle */}
-              <div className="flex items-center gap-2 border rounded-lg p-1">
-                <Button
-                  variant={viewMode === "grid" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setViewMode("grid")}
-                  className="gap-2"
-                >
-                  <Grid3x3 className="h-4 w-4" />
-                  Grid
-                </Button>
-                <Button
-                  variant={viewMode === "list" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setViewMode("list")}
-                  className="gap-2"
-                >
-                  <List className="h-4 w-4" />
-                  List
-                </Button>
-              </div>
-            </div>
+          {/* View Mode Toggle */}
+          <div className="flex items-center gap-2 border border-gray-700 rounded-lg p-1 bg-[#111827]">
+            <Button
+              variant={viewMode === "grid" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setViewMode("grid")}
+              className="gap-2"
+            >
+              <Grid3x3 className="h-4 w-4" />
+              Grid
+            </Button>
+            <Button
+              variant={viewMode === "list" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setViewMode("list")}
+              className="gap-2"
+            >
+              <List className="h-4 w-4" />
+              List
+            </Button>
           </div>
         </div>
 
-        {/* Content */}
-        <div className="p-8">
-          {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <Card>
-              <CardContent className="pt-6">
-                <div className="text-2xl font-bold">1</div>
-                <p className="text-sm text-muted-foreground">Total Members</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-6">
-                <div className="text-2xl font-bold text-green-600">1</div>
-                <p className="text-sm text-muted-foreground">Active</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-6">
-                <div className="text-2xl font-bold">1</div>
-                <p className="text-sm text-muted-foreground">Department</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-6">
-                <div className="text-2xl font-bold">5</div>
-                <p className="text-sm text-muted-foreground">Years Active</p>
-              </CardContent>
-            </Card>
-          </div>
+        {/* Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <Card className="bg-[#111827] border-gray-800">
+            <CardContent className="pt-6">
+              <div className="text-2xl font-bold text-gray-100">{teamMembers.length}</div>
+              <p className="text-sm text-muted-foreground">Total Members</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-[#111827] border-gray-800">
+            <CardContent className="pt-6">
+              <div className="text-2xl font-bold text-green-500">{teamMembers.filter(m => m.status === 'active').length}</div>
+              <p className="text-sm text-muted-foreground">Active</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-[#111827] border-gray-800">
+            <CardContent className="pt-6">
+              <div className="text-2xl font-bold text-gray-100">{new Set(teamMembers.map(m => m.department)).size}</div>
+              <p className="text-sm text-muted-foreground">Departments</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-[#111827] border-gray-800">
+            <CardContent className="pt-6">
+              <div className="text-2xl font-bold text-gray-100">5</div>
+              <p className="text-sm text-muted-foreground">Years Active</p>
+            </CardContent>
+          </Card>
+        </div>
 
-          {/* Team Members */}
-          {filteredMembers.length === 0 ? (
+        {/* Team Members */}
+        {filteredMembers.length === 0 ? (
             <Card className="border-2 border-dashed">
               <CardContent className="py-24 text-center">
                 <div className="flex flex-col items-center gap-4 text-muted-foreground">
@@ -477,7 +458,7 @@ export default function TeamAdmin() {
           nextOrderNumber={teamMembers.length + 1}
           editMember={editingMember}
         />
-      </main>
-    </div>
+      </div>
+    </AdminLayout>
   );
 }

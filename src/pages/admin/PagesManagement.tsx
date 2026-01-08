@@ -6,7 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { FileText, Save, Eye, ChevronLeft, ChevronRight } from "lucide-react";
+import { FileText, Save, Eye } from "lucide-react";
+import { AdminLayout } from "@/components/admin/AdminLayout";
 
 const PAGES = [
   { id: "home", name: "Home", path: "/" },
@@ -36,63 +37,27 @@ export default function PagesManagement() {
     window.open(selectedPage.path, "_blank");
   };
 
-  const currentIndex = PAGES.findIndex(p => p.id === selectedPage.id);
-
-  const handleBack = () => {
-    if (currentIndex > 0) {
-      setSelectedPage(PAGES[currentIndex - 1]);
-    }
-  };
-
-  const handleForward = () => {
-    if (currentIndex < PAGES.length - 1) {
-      setSelectedPage(PAGES[currentIndex + 1]);
-    }
-  };
-
   return (
-    <div className="container mx-auto p-6 space-y-6">
-      <div className="flex justify-between items-start">
-        <div className="flex items-center gap-3">
-          <div className="flex gap-1">
-            <Button 
-              variant="outline" 
-              size="icon" 
-              onClick={handleBack}
-              disabled={currentIndex === 0}
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            <Button 
-              variant="outline" 
-              size="icon" 
-              onClick={handleForward}
-              disabled={currentIndex === PAGES.length - 1}
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
-          <div>
-            <h1 className="text-3xl font-bold">Pages Management</h1>
-            <p className="text-muted-foreground">Edit website pages content and SEO settings</p>
-          </div>
-        </div>
+    <AdminLayout
+      title="Pages Management"
+      subtitle="Edit website pages content and SEO settings"
+      headerActions={
         <div className="flex gap-2">
           <Button variant="outline" onClick={handlePreview}>
             <Eye className="h-4 w-4 mr-2" />
             Preview
           </Button>
-          <Button onClick={handleSave}>
+          <Button onClick={handleSave} className="bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white">
             <Save className="h-4 w-4 mr-2" />
             Save Changes
           </Button>
         </div>
-      </div>
-
+      }
+    >
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <Card className="lg:col-span-1">
+        <Card className="lg:col-span-1 bg-[#111827] border-gray-800">
           <CardHeader>
-            <CardTitle>Pages</CardTitle>
+            <CardTitle className="text-gray-100">Pages</CardTitle>
             <CardDescription>Select a page to edit</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
@@ -110,14 +75,14 @@ export default function PagesManagement() {
           </CardContent>
         </Card>
 
-        <Card className="lg:col-span-3">
+        <Card className="lg:col-span-3 bg-[#111827] border-gray-800">
           <CardHeader>
-            <CardTitle>Edit {selectedPage.name} Page</CardTitle>
+            <CardTitle className="text-gray-100">Edit {selectedPage.name} Page</CardTitle>
             <CardDescription>Update content and SEO settings for {selectedPage.path}</CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="seo" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
+              <TabsList className="grid w-full grid-cols-2 bg-[#1F2937]">
                 <TabsTrigger value="seo">SEO Settings</TabsTrigger>
                 <TabsTrigger value="hero">Hero Section</TabsTrigger>
               </TabsList>
@@ -131,6 +96,7 @@ export default function PagesManagement() {
                     value={formData.metaTitle}
                     onChange={(e) => setFormData({ ...formData, metaTitle: e.target.value })}
                     maxLength={60}
+                    className="bg-[#1F2937] border-gray-700"
                   />
                   <p className="text-xs text-muted-foreground">{formData.metaTitle.length}/60 characters</p>
                 </div>
@@ -144,6 +110,7 @@ export default function PagesManagement() {
                     onChange={(e) => setFormData({ ...formData, metaDescription: e.target.value })}
                     maxLength={160}
                     rows={3}
+                    className="bg-[#1F2937] border-gray-700"
                   />
                   <p className="text-xs text-muted-foreground">{formData.metaDescription.length}/160 characters</p>
                 </div>
@@ -157,6 +124,7 @@ export default function PagesManagement() {
                     placeholder="Enter main headline"
                     value={formData.heroHeadline}
                     onChange={(e) => setFormData({ ...formData, heroHeadline: e.target.value })}
+                    className="bg-[#1F2937] border-gray-700"
                   />
                 </div>
 
@@ -168,6 +136,7 @@ export default function PagesManagement() {
                     value={formData.heroSubheadline}
                     onChange={(e) => setFormData({ ...formData, heroSubheadline: e.target.value })}
                     rows={3}
+                    className="bg-[#1F2937] border-gray-700"
                   />
                 </div>
 
@@ -178,6 +147,7 @@ export default function PagesManagement() {
                     placeholder="e.g., Get Started, Learn More"
                     value={formData.heroCtaText}
                     onChange={(e) => setFormData({ ...formData, heroCtaText: e.target.value })}
+                    className="bg-[#1F2937] border-gray-700"
                   />
                 </div>
               </TabsContent>
@@ -185,6 +155,6 @@ export default function PagesManagement() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </AdminLayout>
   );
 }

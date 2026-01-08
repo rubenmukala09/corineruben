@@ -1,6 +1,6 @@
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useNavigate } from "react-router-dom";
+import { AdminLayout } from "@/components/admin/AdminLayout";
 import SiteSettings from "./settings/SiteSettings";
 import EmailSettings from "./settings/EmailSettings";
 import PaymentSettings from "./settings/PaymentSettings";
@@ -14,16 +14,12 @@ const Settings = () => {
   const currentTab = location.pathname.split("/").pop() || "site";
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold">Settings</h1>
-        <p className="text-muted-foreground mt-2">
-          Manage your site configuration and preferences
-        </p>
-      </div>
-
+    <AdminLayout
+      title="Settings"
+      subtitle="Manage your site configuration and preferences"
+    >
       <Tabs value={currentTab} onValueChange={(value) => navigate(`/admin/settings/${value}`)}>
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList className="grid w-full grid-cols-5 bg-[#111827]">
           <TabsTrigger value="site">Site Settings</TabsTrigger>
           <TabsTrigger value="email">Email Settings</TabsTrigger>
           <TabsTrigger value="payment">Payment Settings</TabsTrigger>
@@ -32,7 +28,7 @@ const Settings = () => {
         </TabsList>
       </Tabs>
 
-      <div className="bg-card rounded-lg shadow-sm p-6">
+      <div className="bg-[#111827] border border-gray-800 rounded-lg shadow-sm p-6 mt-6">
         <Routes>
           <Route index element={<Navigate to="/admin/settings/site" replace />} />
           <Route path="site" element={<SiteSettings />} />
@@ -42,7 +38,7 @@ const Settings = () => {
           <Route path="discounts" element={<DiscountCodes />} />
         </Routes>
       </div>
-    </div>
+    </AdminLayout>
   );
 };
 

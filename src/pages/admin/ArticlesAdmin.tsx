@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { AdminSidebar } from "@/components/AdminSidebar";
-import { AdminTopBar } from "@/components/AdminTopBar";
+import { AdminLayout } from "@/components/admin/AdminLayout";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -344,36 +343,23 @@ export default function ArticlesAdmin() {
   const categoryCounts = getCategoryCounts();
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <AdminSidebar isOpen={sidebarOpen} />
-      <AdminTopBar
-        sidebarOpen={sidebarOpen}
-        toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
-      />
-
-      <main
-        className={`flex-1 transition-all duration-300 pt-16 ${
-          sidebarOpen ? "md:ml-[260px]" : "md:ml-[70px]"
-        }`}
-      >
-        <div className="p-8">
-          {/* Header */}
-          <div className="mb-6">
-            <div className="flex items-center justify-between mt-4">
-              <h1 className="text-3xl font-bold text-foreground">Blog Articles</h1>
-              <Button
-                size="lg"
-                onClick={() => navigate("/admin/content/articles/new")}
-                className="hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200"
-              >
-                <PenSquare className="h-5 w-5 mr-2" />
-                Create Article
-              </Button>
-            </div>
-          </div>
-
-          {/* Quick Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
+    <AdminLayout
+      title="Blog Articles"
+      subtitle="Manage and publish blog content"
+      headerActions={
+        <Button
+          size="lg"
+          onClick={() => navigate("/admin/content/articles/new")}
+          className="bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200"
+        >
+          <PenSquare className="h-5 w-5 mr-2" />
+          Create Article
+        </Button>
+      }
+    >
+      <div className="space-y-6">
+        {/* Quick Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <Card>
               <CardContent className="p-4 flex items-center gap-3">
                 <div className="p-2 rounded-lg bg-primary/10">
@@ -852,7 +838,6 @@ export default function ArticlesAdmin() {
             </>
           )}
         </div>
-      </main>
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
@@ -874,6 +859,6 @@ export default function ArticlesAdmin() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+    </AdminLayout>
   );
 }

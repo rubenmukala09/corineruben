@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Package, Printer, Eye, MoreVertical, Download, TrendingUp, DollarSign, ShoppingCart, AlertTriangle } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { AdminLayout } from "@/components/admin/AdminLayout";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -152,23 +153,17 @@ const OrdersList = () => {
   const avgOrderValue = orders.length > 0 ? todaysRevenue / todaysOrders : 0;
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto px-6 py-4">
-          <div className="mt-4 flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold">Orders</h1>
-              <p className="text-muted-foreground">Manage and fulfill customer orders</p>
-            </div>
-            <Button variant="outline">
-              <Package className="mr-2 h-4 w-4" />
-              Create Manual Order
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-6 py-8">
+    <AdminLayout
+      title="Orders"
+      subtitle="Manage and fulfill customer orders"
+      headerActions={
+        <Button variant="outline">
+          <Package className="mr-2 h-4 w-4" />
+          Create Manual Order
+        </Button>
+      }
+    >
+      <div className="space-y-6">
         {/* Low Stock Alert */}
         <Alert className="mb-6 border-yellow-500">
           <AlertTriangle className="h-4 w-4 text-yellow-500" />
@@ -464,7 +459,7 @@ const OrdersList = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </div>
+    </AdminLayout>
   );
 };
 
