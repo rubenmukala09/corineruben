@@ -3356,6 +3356,39 @@ export type Database = {
         }
         Relationships: []
       }
+      system_heartbeats: {
+        Row: {
+          created_at: string
+          description: string | null
+          error_log: string | null
+          last_heartbeat: string | null
+          service_name: string
+          status: string
+          threshold_minutes: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          error_log?: string | null
+          last_heartbeat?: string | null
+          service_name: string
+          status?: string
+          threshold_minutes?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          error_log?: string | null
+          last_heartbeat?: string | null
+          service_name?: string
+          status?: string
+          threshold_minutes?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       tasks: {
         Row: {
           created_at: string
@@ -4292,6 +4325,16 @@ export type Database = {
           window_minutes: number
         }[]
       }
+      check_stale_heartbeats: {
+        Args: never
+        Returns: {
+          last_heartbeat: string
+          minutes_since_heartbeat: number
+          new_status: string
+          previous_status: string
+          service_name: string
+        }[]
+      }
       generate_order_number: { Args: never; Returns: string }
       generate_payout_number: { Args: never; Returns: string }
       generate_request_number: { Args: never; Returns: string }
@@ -4318,6 +4361,14 @@ export type Database = {
       has_worker_role: {
         Args: { _role: string; _user_id: string }
         Returns: boolean
+      }
+      update_service_heartbeat: {
+        Args: {
+          p_error_log?: string
+          p_service_name: string
+          p_status?: string
+        }
+        Returns: undefined
       }
     }
     Enums: {

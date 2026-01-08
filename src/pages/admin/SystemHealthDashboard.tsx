@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { SecurityMonitor } from "@/components/admin/SecurityMonitor";
+import { SystemHeartbeatMonitor } from "@/components/admin/SystemHeartbeatMonitor";
 
 interface TestResult {
   status: "pass" | "fail" | "warning";
@@ -426,6 +427,11 @@ function SystemHealthDashboard() {
               </div>
             </CardContent>
           </Card>
+
+          {/* System Heartbeat Monitor */}
+          <div className="mt-6">
+            <SystemHeartbeatMonitor />
+          </div>
 
           {/* Security Monitoring */}
           <div className="mt-6">

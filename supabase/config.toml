@@ -95,3 +95,9 @@ verify_jwt = false
 
 [functions.create-post-purchase-session]
 verify_jwt = false
+
+[functions.heartbeat]
+verify_jwt = false
+
+[functions.heartbeat-watchdog]
+verify_jwt = false
