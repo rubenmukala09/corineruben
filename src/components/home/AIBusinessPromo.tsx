@@ -50,9 +50,9 @@ const premiumAddons = [
 ];
 
 const roiFacts = [
-  { stat: "62%", desc: "calls missed", icon: Phone, color: "text-rose-500" },
-  { stat: "$500", desc: "lost/missed call", icon: DollarSign, color: "text-amber-500" },
-  { stat: "80%", desc: "fewer no-shows", icon: CheckCircle, color: "text-emerald-500" },
+  { stat: "62%", desc: "calls missed", icon: Phone, color: "text-rose-700" },
+  { stat: "$500", desc: "lost/missed call", icon: DollarSign, color: "text-amber-700" },
+  { stat: "80%", desc: "fewer no-shows", icon: CheckCircle, color: "text-emerald-700" },
 ];
 
 
@@ -229,7 +229,7 @@ export const AIBusinessPromo = () => {
                   <p className="text-[10px] text-muted-foreground mb-1">{service.description}</p>
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{service.price}</span>
-                    <span className="text-[8px] text-emerald-600 font-semibold bg-emerald-50 px-1.5 py-0.5 rounded">{service.highlight}</span>
+                    <span className="text-[8px] text-emerald-800 font-semibold bg-emerald-50 px-1.5 py-0.5 rounded">{service.highlight}</span>
                   </div>
                 </motion.div>
               ))}
@@ -406,7 +406,7 @@ export const AIBusinessPromo = () => {
                   <div className="font-bold text-foreground">Dayton, Ohio</div>
                 </div>
               </div>
-                  <div className="flex items-center gap-1 text-xs text-emerald-600 font-medium">
+                  <div className="flex items-center gap-1 text-xs text-emerald-800 font-medium">
                     <CheckCircle className="w-3 h-3" />
                     Veteran-Supporting
                   </div>
