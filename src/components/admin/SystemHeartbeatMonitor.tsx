@@ -20,6 +20,7 @@ export function SystemHeartbeatMonitor() {
   const [heartbeats, setHeartbeats] = useState<Heartbeat[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [resetting, setResetting] = useState(false);
   const { toast } = useToast();
 
   const fetchHeartbeats = async () => {
@@ -59,6 +60,40 @@ export function SystemHeartbeatMonitor() {
   const handleRefresh = () => {
     setRefreshing(true);
     fetchHeartbeats();
+  };
+
+  const handleResetAll = async () => {
+    setResetting(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("heartbeat-keeper");
+      
+      if (error) {
+        console.error("Reset error:", error);
+        toast({
+          title: "Reset Failed",
+          description: "Could not reset service heartbeats.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      toast({
+        title: "Services Reset",
+        description: `Successfully checked ${data?.results?.length || 0} services.`,
+      });
+      
+      // Refresh the display
+      await fetchHeartbeats();
+    } catch (err) {
+      console.error("Reset error:", err);
+      toast({
+        title: "Reset Failed",
+        description: "An error occurred while resetting services.",
+        variant: "destructive",
+      });
+    } finally {
+      setResetting(false);
+    }
   };
 
   const getStatusIcon = (status: string) => {
@@ -130,16 +165,28 @@ export function SystemHeartbeatMonitor() {
               <CardDescription>Real-time status of critical security services</CardDescription>
             </div>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleRefresh}
-            disabled={refreshing}
-            className="gap-2"
-          >
-            <RefreshCw className={`h-4 w-4 ${refreshing ? "animate-spin" : ""}`} />
-            Refresh
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="default"
+              size="sm"
+              onClick={handleResetAll}
+              disabled={resetting}
+              className="gap-2"
+            >
+              <Heart className={`h-4 w-4 ${resetting ? "animate-pulse" : ""}`} />
+              {resetting ? "Checking..." : "Ping All Services"}
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleRefresh}
+              disabled={refreshing}
+              className="gap-2"
+            >
+              <RefreshCw className={`h-4 w-4 ${refreshing ? "animate-spin" : ""}`} />
+              Refresh
+            </Button>
+          </div>
         </div>
       </CardHeader>
 
