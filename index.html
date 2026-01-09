@@ -17,13 +17,29 @@
     <link rel="dns-prefetch" href="https://m.stripe.network">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     
-    <!-- Google Analytics - moved after preconnect hints -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B1MKM2FPV7"></script>
+    <!-- Google Analytics - deferred to reduce initial JS blocking -->
     <script>
+      // Defer GA loading until browser is idle to reduce unused JS on initial load
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-B1MKM2FPV7');
+      
+      function loadGA() {
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-B1MKM2FPV7';
+        script.onload = function() {
+          gtag('js', new Date());
+          gtag('config', 'G-B1MKM2FPV7');
+        };
+        document.head.appendChild(script);
+      }
+      
+      // Load GA after initial render using requestIdleCallback or setTimeout fallback
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadGA, { timeout: 3000 });
+      } else {
+        setTimeout(loadGA, 2000);
+      }
     </script>
     
     <!-- Critical CSS inlined for FCP/LCP -->
