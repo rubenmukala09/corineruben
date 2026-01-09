@@ -19,19 +19,20 @@ const securityFeatures = [{
   label: "AI Protection",
 }];
 
-// Animation variants
+// Animation variants - LCP-optimized (no initial hidden state for critical elements)
 const fadeSlideUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0 },
 };
 
+// Non-blocking container - no delays for LCP
 const staggerContainer = {
-  hidden: { opacity: 0 },
+  hidden: { opacity: 1 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.2,
+      staggerChildren: 0.1,
+      delayChildren: 0,
     },
   },
 };
@@ -126,8 +127,7 @@ export const HeroHomepage = () => {
       </div>
       
       <div 
-        className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10 transition-opacity duration-500"
-        style={{ opacity: showContent ? 1 : 0 }}
+        className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10"
       >
         <div className="flex flex-col lg:grid lg:grid-cols-5 gap-8 lg:gap-20 xl:gap-28 items-center min-h-[100vh] py-16 sm:py-20 lg:py-0">
           
@@ -135,8 +135,8 @@ export const HeroHomepage = () => {
           <motion.div 
             className="lg:col-span-3 order-2 lg:order-1 w-full"
             variants={staggerContainer}
-            initial="hidden"
-            animate={showContent ? "visible" : "hidden"}
+            initial="visible"
+            animate="visible"
           >
             {/* Premium Badge */}
             <motion.div 
@@ -148,27 +148,19 @@ export const HeroHomepage = () => {
               <span className="text-xs sm:text-sm font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Veteran-Supporting • Ohio-Based</span>
             </motion.div>
             
-            {/* Headline with Fade In + Slide Up */}
-            <motion.h1 
-              variants={fadeSlideUp}
-              transition={{ duration: 0.7, ease: "easeOut" }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold leading-[0.95] mb-6 sm:mb-8 tracking-tight"
-            >
+            {/* Headline - rendered immediately for LCP */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold leading-[0.95] mb-6 sm:mb-8 tracking-tight">
               <span className="block text-foreground">InVision</span>
               <span className="block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">Network</span>
               <span className="block font-light text-muted-foreground/80 text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mt-2 sm:mt-3">
                 Protection • Education • Innovation
               </span>
-            </motion.h1>
+            </h1>
             
-            {/* Description */}
-            <motion.p 
-              variants={fadeSlideUp}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mb-8 sm:mb-12 leading-relaxed"
-            >
+            {/* Description - rendered immediately for LCP */}
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mb-8 sm:mb-12 leading-relaxed">
               Empowering families with AI scam protection. Transforming businesses with cutting-edge automation solutions.
-            </motion.p>
+            </p>
             
             {/* CTAs */}
             <motion.div 
