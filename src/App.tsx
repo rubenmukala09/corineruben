@@ -96,17 +96,17 @@ const CyberNotifications = lazy(() => import("./pages/admin/cyber/Notifications"
 const SecuritySettings = lazy(() => import("./pages/admin/cyber/SecuritySettings"));
 const CyberAnalytics = lazy(() => import("./pages/admin/cyber/CyberAnalytics"));
 
-// Portal pages
-const Portal = lazy(() => import("./pages/Portal"));
-const AdminDashboard = lazy(() => import("./pages/portal/AdminDashboard"));
-const AnalystDashboard = lazy(() => import("./pages/portal/AnalystDashboard"));
-const TrainerDashboard = lazy(() => import("./pages/portal/TrainerDashboard"));
-const DeveloperDashboard = lazy(() => import("./pages/portal/DeveloperDashboard"));
-const StaffDashboard = lazy(() => import("./pages/portal/StaffDashboard"));
-const SeniorDashboard = lazy(() => import("./pages/portal/SeniorDashboard"));
-const BusinessDashboard = lazy(() => import("./pages/portal/BusinessDashboard"));
-const CaregiverDashboard = lazy(() => import("./pages/portal/CaregiverDashboard"));
-const HealthcareDashboard = lazy(() => import("./pages/portal/HealthcareDashboard"));
+// Portal pages - static imports for immediate CSS loading
+import Portal from "./pages/Portal";
+import AdminDashboard from "./pages/portal/AdminDashboard";
+import AnalystDashboard from "./pages/portal/AnalystDashboard";
+import TrainerDashboard from "./pages/portal/TrainerDashboard";
+import DeveloperDashboard from "./pages/portal/DeveloperDashboard";
+import StaffDashboard from "./pages/portal/StaffDashboard";
+import SeniorDashboard from "./pages/portal/SeniorDashboard";
+import BusinessDashboard from "./pages/portal/BusinessDashboard";
+import CaregiverDashboard from "./pages/portal/CaregiverDashboard";
+import HealthcareDashboard from "./pages/portal/HealthcareDashboard";
 
 // Other pages
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
