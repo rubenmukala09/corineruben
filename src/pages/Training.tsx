@@ -182,10 +182,10 @@ const TrainingCard = ({ plan, index, onBook }: { plan: any; index: number; onBoo
           {badge.label}
         </div>
         
-        <Card className={`relative p-6 md:p-7 flex flex-col transition-all duration-300 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 min-h-[520px] ${
+        <Card className={`relative p-6 md:p-7 flex flex-col transition-all duration-300 hover:-translate-y-2 rounded-2xl bg-card h-[540px] ${
           plan.popular 
-            ? "border-primary border-2 shadow-xl" 
-            : "border-border/50 hover:shadow-lg"
+            ? "border-primary border-2 shadow-xl ring-2 ring-primary/20" 
+            : "border-border hover:border-primary/50 hover:shadow-lg"
         }`}>
           <div className="pt-4 flex flex-col h-full">
             <h3 className="text-xl md:text-2xl font-bold mb-3 text-center">{plan.name}</h3>
@@ -646,14 +646,14 @@ function LearnAndTrain() {
             </p>
           </div>
 
-          {/* Veteran Discount Notification - Enhanced Visibility */}
+          {/* Veteran Discount Notification - Light Background for Visibility */}
           <div className="flex justify-center mb-10">
-            <div className="inline-flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-gray-500/15 to-gray-600/15 border-2 border-gray-500/30 rounded-2xl text-lg md:text-xl">
+            <div className="inline-flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-300 rounded-2xl text-lg md:text-xl shadow-sm">
               <span className="text-2xl">🇺🇸</span>
-              <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
-              <span className="font-bold">Veterans & First Responders Save 10%</span>
-              <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
-              <span className="text-muted-foreground text-base">• Applied at checkout</span>
+              <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
+              <span className="font-bold text-gray-900">Veterans & First Responders Save 10%</span>
+              <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
+              <span className="text-gray-600 text-base">• Military, Police, Fire, EMT — Applied at checkout</span>
             </div>
           </div>
 
