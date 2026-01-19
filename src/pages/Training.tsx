@@ -177,15 +177,15 @@ const TrainingCard = ({ plan, index, onBook }: { plan: any; index: number; onBoo
     >
       <div className="relative pt-5 h-full">
         {/* Badge - On top of card, outside */}
-        <div className={`absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r ${badge.gradient} text-white px-5 py-2 rounded-full text-sm font-bold tracking-wide shadow-xl z-30 whitespace-nowrap border-2 border-white/20`}>
+        <div className={`absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r ${badge.gradient} text-white px-5 py-2 rounded-full text-xs font-bold tracking-wide shadow-xl z-30 whitespace-nowrap border-2 border-white/20`}>
           <span className="mr-1">{badge.emoji}</span>
           {badge.label}
         </div>
         
-        <Card className={`relative p-6 md:p-7 flex flex-col transition-all duration-300 hover:-translate-y-2 rounded-2xl bg-card h-[540px] ${
+        <Card className={`relative p-6 md:p-7 h-full flex flex-col transition-all duration-300 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 min-h-[520px] ${
           plan.popular 
-            ? "border-primary border-2 shadow-xl ring-2 ring-primary/20" 
-            : "border-border hover:border-primary/50 hover:shadow-lg"
+            ? "border-primary border-2 shadow-xl" 
+            : "border-border/50 hover:shadow-lg"
         }`}>
           <div className="pt-4 flex flex-col h-full">
             <h3 className="text-xl md:text-2xl font-bold mb-3 text-center">{plan.name}</h3>
@@ -197,7 +197,7 @@ const TrainingCard = ({ plan, index, onBook }: { plan: any; index: number; onBoo
             <p className="text-center text-base text-accent font-semibold mb-4">{plan.size}</p>
             
             {/* Description */}
-            <p className="text-center text-sm md:text-base text-muted-foreground mb-5 leading-relaxed min-h-[48px]">
+            <p className="text-center text-sm md:text-base text-muted-foreground mb-5 min-h-[60px] leading-relaxed">
               {plan.description}
             </p>
 
@@ -205,7 +205,7 @@ const TrainingCard = ({ plan, index, onBook }: { plan: any; index: number; onBoo
               {plan.features.map((feature: string, idx: number) => (
                 <div key={idx} className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-foreground text-base leading-snug">{feature}</span>
+                  <span className="text-foreground text-base leading-snug">{feature.replace('✓ ', '')}</span>
                 </div>
               ))}
             </div>
@@ -648,12 +648,12 @@ function LearnAndTrain() {
 
           {/* Veteran Discount Notification - Light Background for Visibility */}
           <div className="flex justify-center mb-10">
-            <div className="inline-flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-300 rounded-2xl text-lg md:text-xl shadow-sm">
+            <div className="inline-flex items-center gap-3 px-6 py-4 bg-amber-50 border-2 border-amber-200 rounded-2xl text-lg md:text-xl shadow-sm">
               <span className="text-2xl">🇺🇸</span>
               <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
-              <span className="font-bold text-gray-900">Veterans & First Responders Save 10%</span>
+              <span className="font-bold text-amber-900">Veterans & First Responders Save 10%</span>
               <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
-              <span className="text-gray-600 text-base">• Military, Police, Fire, EMT — Applied at checkout</span>
+              <span className="text-amber-700 text-base">• Military, Police, Fire, EMT — Applied at checkout</span>
             </div>
           </div>
 
@@ -1472,18 +1472,18 @@ function LearnAndTrain() {
         </div>
       </section>
 
-      {/* Veterans Discount - Enhanced Visibility Strip */}
-      <section className="py-6 bg-gradient-to-r from-gray-500/15 via-gray-400/10 to-gray-500/15 border-y-2 border-gray-500/20">
+      {/* Veterans Discount - Light Background Strip */}
+      <section className="py-6 bg-amber-50 border-y-2 border-amber-200">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap items-center justify-center gap-4 text-lg md:text-xl">
             <span className="text-2xl">🇺🇸</span>
             <div className="flex items-center gap-3">
-              <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
-              <span className="font-bold">Veterans & First Responders: 10% OFF</span>
-              <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
+              <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
+              <span className="font-bold text-amber-900">Veterans & First Responders: 10% OFF</span>
+              <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
             </div>
-            <span className="text-muted-foreground text-lg">•</span>
-            <span className="text-muted-foreground text-base md:text-lg">Military, Police, Fire, EMT — discount applied at checkout</span>
+            <span className="text-amber-600 text-lg">•</span>
+            <span className="text-amber-700 text-base md:text-lg">Military, Police, Fire, EMT — discount applied at checkout</span>
           </div>
         </div>
       </section>
