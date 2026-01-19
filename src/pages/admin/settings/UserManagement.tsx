@@ -105,12 +105,8 @@ const UserManagement = () => {
           "Modify site settings",
         ],
       },
-      role3: {
-        can: ["To be defined"],
-        cannot: ["To be defined"],
-      },
     };
-    return permissions[role] || permissions.role3;
+    return permissions[role] || permissions.secretary;
   };
 
   return (
@@ -168,7 +164,6 @@ const UserManagement = () => {
                   <SelectContent>
                     <SelectItem value="admin">Admin</SelectItem>
                     <SelectItem value="secretary">Secretary</SelectItem>
-                    <SelectItem value="role3">Role 3 (TBD)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
