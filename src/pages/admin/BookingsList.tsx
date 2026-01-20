@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -72,6 +72,13 @@ interface BookingRequest {
   status: string;
   is_veteran: boolean | null;
   created_at: string;
+  assigned_to: string | null;
+}
+
+interface StaffMember {
+  id: string;
+  full_name: string;
+  email: string;
 }
 
 const BookingsList = () => {
@@ -85,8 +92,40 @@ const BookingsList = () => {
   const [bookingToDeny, setBookingToDeny] = useState<BookingRequest | null>(null);
   const [assignDialogOpen, setAssignDialogOpen] = useState(false);
   const [bookingToAssign, setBookingToAssign] = useState<BookingRequest | null>(null);
-  const [staffMembers, setStaffMembers] = useState<{ id: string; name: string; email: string }[]>([]);
-  const [loadingStaff, setLoadingStaff] = useState(false);
+  const [selectedStaffId, setSelectedStaffId] = useState<string>("");
+
+  // Fetch staff members (users with staff-related roles)
+  const { data: staffMembers = [], isLoading: loadingStaff } = useQuery({
+    queryKey: ["staff-members"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("id, full_name, email")
+        .not("full_name", "is", null)
+        .order("full_name");
+      
+      if (error) throw error;
+      return (data || []) as StaffMember[];
+    },
+  });
+
+  // Realtime subscription for booking updates
+  useEffect(() => {
+    const channel = supabase
+      .channel("booking_requests_realtime")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "booking_requests" },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ["booking-requests"] });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [queryClient]);
 
   const { data: bookings = [], isLoading, refetch } = useQuery({
     queryKey: ["booking-requests", statusFilter],
@@ -157,6 +196,47 @@ const BookingsList = () => {
       });
     },
   });
+
+  // Assign staff mutation
+  const assignStaffMutation = useMutation({
+    mutationFn: async ({ bookingId, staffId }: { bookingId: string; staffId: string }) => {
+      const { error } = await supabase
+        .from("booking_requests")
+        .update({ 
+          assigned_to: staffId,
+          status: "contacted"
+        })
+        .eq("id", bookingId);
+      
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["booking-requests"] });
+      toast({
+        title: "Staff Assigned",
+        description: "Booking has been assigned and status updated to 'Contacted'",
+      });
+      setAssignDialogOpen(false);
+      setBookingToAssign(null);
+      setSelectedStaffId("");
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to assign staff member",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleAssignStaff = () => {
+    if (bookingToAssign && selectedStaffId) {
+      assignStaffMutation.mutate({
+        bookingId: bookingToAssign.id,
+        staffId: selectedStaffId,
+      });
+    }
+  };
 
   // Handle confirm booking (send confirmation email)
   const handleConfirmBooking = async (booking: BookingRequest) => {
@@ -438,6 +518,18 @@ const BookingsList = () => {
                           <>
                             <Button
                               size="sm"
+                              variant="outline"
+                              className="border-blue-500/30 text-blue-400 hover:bg-blue-500/10"
+                              onClick={() => {
+                                setBookingToAssign(booking);
+                                setAssignDialogOpen(true);
+                              }}
+                            >
+                              <Users className="h-4 w-4 mr-1" />
+                              Assign
+                            </Button>
+                            <Button
+                              size="sm"
                               variant="default"
                               className="bg-green-600 hover:bg-green-700"
                               onClick={() => handleConfirmBooking(booking)}
@@ -573,6 +665,56 @@ const BookingsList = () => {
             >
               <Ban className="h-4 w-4 mr-2" />
               Deny & Send Email
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Assign Staff Dialog */}
+      <AlertDialog open={assignDialogOpen} onOpenChange={(open) => {
+        setAssignDialogOpen(open);
+        if (!open) {
+          setSelectedStaffId("");
+          setBookingToAssign(null);
+        }
+      }}>
+        <AlertDialogContent className="bg-[#1F2937] border-gray-700">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-white">Assign Staff Member</AlertDialogTitle>
+            <AlertDialogDescription className="text-gray-400">
+              Select a team member to handle this booking request from {bookingToAssign?.full_name}.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          
+          <div className="py-4">
+            <Select value={selectedStaffId} onValueChange={setSelectedStaffId}>
+              <SelectTrigger className="w-full bg-[#111827] border-gray-700">
+                <SelectValue placeholder={loadingStaff ? "Loading staff..." : "Select staff member"} />
+              </SelectTrigger>
+              <SelectContent className="bg-[#1F2937] border-gray-700">
+                {staffMembers.map((staff) => (
+                  <SelectItem key={staff.id} value={staff.id}>
+                    <div className="flex flex-col">
+                      <span>{staff.full_name || "Unnamed"}</span>
+                      <span className="text-xs text-gray-400">{staff.email}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <AlertDialogFooter>
+            <AlertDialogCancel className="border-gray-700 text-gray-300 hover:bg-gray-800">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+              onClick={handleAssignStaff}
+              disabled={!selectedStaffId || assignStaffMutation.isPending}
+            >
+              <UserCheck className="h-4 w-4 mr-2" />
+              {assignStaffMutation.isPending ? "Assigning..." : "Assign Staff"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

@@ -72,7 +72,6 @@ const Navigation = () => {
               sizes="(max-width: 640px) 32px, (max-width: 768px) 40px, (max-width: 1024px) 48px, 56px"
               loading="eager"
               decoding="async"
-              fetchPriority="high"
               className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 object-contain group-hover:scale-110 transition-transform duration-300 flex-shrink-0"
             />
             <div className="flex flex-col leading-tight min-w-0">
