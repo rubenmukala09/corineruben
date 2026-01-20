@@ -279,7 +279,7 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="John Doe"
+                  placeholder="Your full name"
                   className="mt-1"
                 />
               </div>

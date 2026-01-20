@@ -86,7 +86,7 @@ export function ClientMessagesTab({ clientId }: ClientMessagesTabProps) {
                     <div className="flex items-center gap-2 mb-1">
                       {message.from !== "admin" && (
                         <span className="text-sm font-semibold">
-                          {message.from === "client" ? "John Smith" : "System"}
+                          {message.from === "client" ? "Client" : "System"}
                         </span>
                       )}
                       <span className="text-xs">{getMessageIcon(message.type)}</span>

@@ -131,7 +131,7 @@ export default function NewsletterManagement() {
                   <Label className="text-[#9CA3AF]">Email Address</Label>
                   <Input
                     type="email"
-                    placeholder="subscriber@example.com"
+                    placeholder="email@domain.com"
                     value={newSubscriber}
                     onChange={(e) => setNewSubscriber(e.target.value)}
                     className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"

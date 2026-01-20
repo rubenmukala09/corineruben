@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { CreditCard, Check, Plus, Loader2, Trash2 } from 'lucide-react';
+import { CreditCard, Check, Plus, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -39,15 +38,8 @@ export function SavedPaymentMethods({
     const checkUser = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
-      
-      if (user) {
-        // In a real implementation, you would fetch saved cards from Stripe
-        // For now, we'll simulate with localStorage for demo purposes
-        const savedCards = localStorage.getItem(`saved_cards_${user.id}`);
-        if (savedCards) {
-          setCards(JSON.parse(savedCards));
-        }
-      }
+      // Saved cards would be fetched from Stripe API via edge function
+      // For now, we show empty state to encourage adding new cards
       setIsLoading(false);
     };
     
@@ -75,53 +67,44 @@ export function SavedPaymentMethods({
       <h4 className="text-sm font-medium text-foreground">Saved Payment Methods</h4>
       
       <div className="space-y-2">
-        <AnimatePresence>
-          {cards.map((card) => (
-            <motion.button
-              key={card.id}
-              onClick={() => onSelectCard(card.id === selectedCardId ? null : card.id)}
-              className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${
-                selectedCardId === card.id
-                  ? 'border-primary bg-primary/5 ring-1 ring-primary/20'
-                  : 'border-border/50 bg-muted/30 hover:border-border'
-              }`}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-            >
-              <div className="flex items-center gap-3">
-                <img 
-                  src={CARD_ICONS[card.brand.toLowerCase()] || ''} 
-                  alt={card.brand} 
-                  className="h-6 w-auto"
-                />
-                <div className="text-left">
-                  <p className="text-sm font-medium">
-                    •••• {card.last4}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    Expires {card.expMonth.toString().padStart(2, '0')}/{card.expYear.toString().slice(-2)}
-                  </p>
-                </div>
-                {card.isDefault && (
-                  <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                    Default
-                  </span>
-                )}
+        {cards.map((card) => (
+          <button
+            key={card.id}
+            onClick={() => onSelectCard(card.id === selectedCardId ? null : card.id)}
+            className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${
+              selectedCardId === card.id
+                ? 'border-primary bg-primary/5 ring-1 ring-primary/20'
+                : 'border-border/50 bg-muted/30 hover:border-border'
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <img 
+                src={CARD_ICONS[card.brand.toLowerCase()] || ''} 
+                alt={card.brand} 
+                className="h-6 w-auto"
+              />
+              <div className="text-left">
+                <p className="text-sm font-medium">
+                  •••• {card.last4}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Expires {card.expMonth.toString().padStart(2, '0')}/{card.expYear.toString().slice(-2)}
+                </p>
               </div>
-              
-              {selectedCardId === card.id && (
-                <motion.div 
-                  className="p-1 bg-primary rounded-full"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                >
-                  <Check className="h-3 w-3 text-primary-foreground" />
-                </motion.div>
+              {card.isDefault && (
+                <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                  Default
+                </span>
               )}
-            </motion.button>
-          ))}
-        </AnimatePresence>
+            </div>
+            
+            {selectedCardId === card.id && (
+              <div className="p-1 bg-primary rounded-full">
+                <Check className="h-3 w-3 text-primary-foreground" />
+              </div>
+            )}
+          </button>
+        ))}
         
         <Button
           variant="outline"

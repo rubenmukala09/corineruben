@@ -16,14 +16,17 @@ function Maintenance() {
   const [email, setEmail] = useState("");
   const [timeRemaining, setTimeRemaining] = useState("");
   
-  // This would come from your database/config in production
+  // Dynamic maintenance data - dates calculated relative to now
+  const now = new Date();
+  const startTime = new Date(now.getTime() - 60 * 60 * 1000); // Started 1 hour ago
+  const expectedCompletion = new Date(now.getTime() + 2 * 60 * 60 * 1000); // 2 hours from now
+  
   const maintenanceData: MaintenanceData = {
-    expectedCompletion: new Date("2025-01-15T15:00:00"),
-    startTime: new Date("2025-01-15T12:00:00"),
+    expectedCompletion,
+    startTime,
     reason: "System upgrades and performance improvements",
     updates: [
-      { time: "2:30 PM", message: "Database migration in progress" },
-      { time: "1:00 PM", message: "Beginning scheduled maintenance" }
+      { time: startTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }), message: "Beginning scheduled maintenance" }
     ]
   };
 
