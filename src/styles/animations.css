@@ -1,146 +1,47 @@
 /* ========================================
-   PREMIUM ANIMATION SYSTEM
-   Silky smooth, GPU-accelerated, luxurious
+   EMERGENCY STABILIZATION - ANIMATIONS DISABLED
+   All transitions killed to prevent layout shifts
 ======================================== */
 
-/* ===== PREMIUM SCROLL BEHAVIOR ===== */
+/* CRITICAL: Global animation kill switch already in base.css */
 
+/* Only allow smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-@supports (scroll-behavior: smooth) {
-  html {
-    scroll-behavior: smooth;
-  }
-}
-
-/* Silky smooth scroll container */
-.smooth-scroll {
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* ===== SCROLL REVEAL ===== */
-
+/* All scroll reveal classes render immediately - no animation */
 .scroll-fade-up,
-.scroll-rise {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), 
-              transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
+.scroll-rise,
 .scroll-fade-in,
-.scroll-reveal {
-  opacity: 0;
-  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.scroll-scale-in {
-  opacity: 0;
-  transform: scale(0.96);
-  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), 
-              transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.scroll-slide-left {
-  opacity: 0;
-  transform: translateX(-24px);
-  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), 
-              transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.scroll-slide-right {
-  opacity: 0;
-  transform: translateX(24px);
-  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), 
-              transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Visible state with premium easing */
+.scroll-reveal,
+.scroll-scale-in,
+.scroll-slide-left,
+.scroll-slide-right,
 .scroll-visible {
-  opacity: 1;
-  transform: none;
+  opacity: 1 !important;
+  transform: none !important;
 }
 
-/* ===== SECTION REVEALS ===== */
-
-.section-reveal-fade {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
-}
-
+/* Section reveals - instant */
+.section-reveal-fade,
 .section-visible {
-  opacity: 1;
-  transform: none;
+  opacity: 1 !important;
+  transform: none !important;
 }
 
-/* ===== PREMIUM HOVER EFFECTS ===== */
-
-.hover-lift {
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), 
-              box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.hover-lift:hover {
-  transform: translateY(-6px);
-  box-shadow: 
-    0 16px 32px -8px hsl(var(--primary) / 0.12),
-    0 8px 16px -4px hsl(260 30% 20% / 0.06);
+/* All hover effects disabled */
+.hover-lift,
+.hover-glow,
+.hover-scale,
+.btn-press,
+.hover-magnetic,
+.card-luxury,
+.card-premium {
+  transform: none !important;
 }
 
-.hover-glow {
-  transition: box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.hover-glow:hover {
-  box-shadow: 0 0 32px hsl(var(--primary) / 0.18);
-}
-
-.hover-scale {
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.hover-scale:hover {
-  transform: scale(1.025);
-}
-
-.btn-press {
-  transition: transform 0.15s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.btn-press:active {
-  transform: scale(0.97);
-}
-
-/* Premium magnetic hover */
-.hover-magnetic {
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Luxurious card hover */
-.card-luxury {
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), 
-              box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-              border-color 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.card-luxury:hover {
-  transform: translateY(-4px) scale(1.01);
-  box-shadow: 
-    0 24px 48px -12px hsl(var(--primary) / 0.1),
-    0 12px 24px -8px hsl(260 30% 20% / 0.05);
-  border-color: hsl(var(--primary) / 0.2);
-}
-
-/* ===== BASIC KEYFRAMES ===== */
-
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes skeleton-wave {
-  to { background-position: 200% 0; }
-}
-
+/* Accordion animations - keep for functionality */
 @keyframes accordion-expand {
   from { height: 0; opacity: 0; }
   to { height: var(--radix-accordion-content-height); opacity: 1; }
@@ -151,71 +52,42 @@ html {
   to { height: 0; opacity: 0; }
 }
 
-/* ===== UTILITY CLASSES ===== */
+.accordion-down { 
+  animation: accordion-expand 0.15s ease-out !important; 
+}
+.accordion-up { 
+  animation: accordion-collapse 0.1s ease-out !important; 
+}
 
-.animate-fade-in { animation: fade-in 0.2s ease-out forwards; }
-.accordion-down { animation: accordion-expand 0.2s ease-out; }
-.accordion-up { animation: accordion-collapse 0.15s ease-out; }
+/* Skeleton animation - keep for loading states */
+@keyframes skeleton-wave {
+  to { background-position: 200% 0; }
+}
 
 .skeleton {
   background: linear-gradient(90deg, hsl(var(--muted)) 0%, hsl(var(--muted-foreground) / 0.15) 50%, hsl(var(--muted)) 100%);
   background-size: 200% 100%;
-  animation: skeleton-wave 1.5s ease-in-out infinite;
+  animation: skeleton-wave 1.5s ease-in-out infinite !important;
   border-radius: 0.5rem;
 }
 
-/* Premium card hover */
-.card-premium {
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), 
-              box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.card-premium:hover {
-  transform: translateY(-6px);
-  box-shadow: 
-    0 24px 48px -16px hsl(var(--primary) / 0.12),
-    0 12px 24px -8px hsl(260 30% 20% / 0.05);
-}
-
-/* Premium page transitions */
-.page-enter {
-  opacity: 0;
-  transform: translateY(8px);
-}
-
+/* Page transition - instant render */
+.page-enter,
 .page-enter-active {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1), 
-              transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 1 !important;
+  transform: none !important;
 }
 
-/* Staggered children animation */
-.stagger-children > * {
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), 
-              transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.stagger-children.visible > *:nth-child(1) { transition-delay: 0ms; }
-.stagger-children.visible > *:nth-child(2) { transition-delay: 60ms; }
-.stagger-children.visible > *:nth-child(3) { transition-delay: 120ms; }
-.stagger-children.visible > *:nth-child(4) { transition-delay: 180ms; }
-.stagger-children.visible > *:nth-child(5) { transition-delay: 240ms; }
-.stagger-children.visible > *:nth-child(6) { transition-delay: 300ms; }
-
+/* Stagger children - instant render */
+.stagger-children > *,
 .stagger-children.visible > * {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 1 !important;
+  transform: none !important;
 }
 
-/* ===== REDUCED MOTION ===== */
-
+/* Reduced motion - browser preference */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  html {
     scroll-behavior: auto !important;
   }
 }

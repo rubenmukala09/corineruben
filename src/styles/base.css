@@ -2,42 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
-/* InVision Network Design System - "Liquid Trust" Premium Visual Design
-All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid animations. */
+/* ========================================
+   INVISION NETWORK - EMERGENCY STABILIZATION
+   Global theme seal - prevents white flash
+======================================== */
+
+/* CRITICAL: Browser-level dark theme seal for admin dashboard */
+html,
+body,
+#root {
+  background-color: #0B0F19 !important;
+  min-height: 100vh !important;
+}
+
+/* Force dark color scheme at browser level */
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+/* EMERGENCY: Kill all animations and transitions globally */
+*,
+*::before,
+*::after {
+  transition-property: none !important;
+  animation: none !important;
+  animation-duration: 0.01ms !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* Exception: Allow skeleton loaders to animate */
+.skeleton {
+  animation: skeleton-wave 1.5s ease-in-out infinite !important;
+}
+
+@keyframes skeleton-wave {
+  to { background-position: 200% 0; }
+}
 
 @layer base {
-  * {
-    scroll-behavior: smooth;
-  }
-
-  /* Prevent FOUC */
-  body:not(.loaded) {
-    opacity: 0;
-  }
-
-  body.loaded {
-    opacity: 1;
-    transition: opacity 0.3s ease-out;
-  }
-
-  /* Instant button feedback */
-  button.active-press,
-  a.active-press {
-    transform: scale(0.95);
-    transition: transform 0.1s ease-out;
-  }
-
-  /* Smooth GPU-accelerated animations */
-  .smooth-animation {
-    will-change: transform, opacity;
-    transform: translateZ(0);
-  }
-
-  /* Remove will-change after animation */
-  .smooth-animation:not(:hover):not(:focus) {
-    will-change: auto;
-  }
-
   :root {
     /* Base colors - Soft Modern off-white background */
     --background: 220 14% 96%;
