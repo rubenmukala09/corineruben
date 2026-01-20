@@ -49,8 +49,11 @@ import {
   Crown,
   Loader2,
   Eye,
+  Pencil,
+  Ban,
 } from 'lucide-react';
 import { format } from 'date-fns';
+import { EditUserModal } from '@/components/admin/EditUserModal';
 
 interface UserProfile {
   id: string;
@@ -75,6 +78,8 @@ export default function SuperAdminUserManagement() {
   const [selectedUser, setSelectedUser] = useState<UserWithRole | null>(null);
   const [showResetDialog, setShowResetDialog] = useState(false);
   const [showDetailsDialog, setShowDetailsDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
+  const [showDeactivateDialog, setShowDeactivateDialog] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
   const { toast } = useToast();
   const { logAction } = useAdminAudit();
@@ -351,6 +356,16 @@ export default function SuperAdminUserManagement() {
                           </DropdownMenuItem>
                           <DropdownMenuItem 
                             className="text-gray-200 hover:bg-gray-700 cursor-pointer"
+                            onClick={() => {
+                              setSelectedUser(user);
+                              setShowEditDialog(true);
+                            }}
+                          >
+                            <Pencil className="mr-2 h-4 w-4" />
+                            Edit User
+                          </DropdownMenuItem>
+                          <DropdownMenuItem 
+                            className="text-gray-200 hover:bg-gray-700 cursor-pointer"
                             onClick={() => handleSendPasswordReset(user)}
                           >
                             <Mail className="mr-2 h-4 w-4" />
@@ -365,6 +380,17 @@ export default function SuperAdminUserManagement() {
                           >
                             <RefreshCw className="mr-2 h-4 w-4" />
                             Reset User Dashboard
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator className="bg-gray-700" />
+                          <DropdownMenuItem 
+                            className="text-red-400 hover:bg-red-900/30 cursor-pointer"
+                            onClick={() => {
+                              setSelectedUser(user);
+                              setShowDeactivateDialog(true);
+                            }}
+                          >
+                            <Ban className="mr-2 h-4 w-4" />
+                            Deactivate Account
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
@@ -463,6 +489,79 @@ export default function SuperAdminUserManagement() {
                 className="border-gray-600"
               >
                 Close
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Edit User Modal */}
+        <EditUserModal
+          user={selectedUser}
+          open={showEditDialog}
+          onOpenChange={setShowEditDialog}
+          onSaved={fetchUsers}
+        />
+
+        {/* Deactivate User Dialog */}
+        <Dialog open={showDeactivateDialog} onOpenChange={setShowDeactivateDialog}>
+          <DialogContent className="bg-[#1F2937] border-gray-700 text-white">
+            <DialogHeader>
+              <DialogTitle className="text-red-400">Deactivate Account</DialogTitle>
+              <DialogDescription className="text-gray-400">
+                This will suspend the user's account. They will not be able to log in until reactivated.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="py-4">
+              <p className="text-gray-300">
+                Are you sure you want to deactivate the account for{' '}
+                <span className="font-semibold text-red-400">{selectedUser?.email}</span>?
+              </p>
+            </div>
+            <DialogFooter>
+              <Button 
+                variant="outline" 
+                onClick={() => setShowDeactivateDialog(false)}
+                className="border-gray-600"
+              >
+                Cancel
+              </Button>
+              <Button 
+                variant="destructive"
+                onClick={async () => {
+                  if (!selectedUser) return;
+                  try {
+                    setActionLoading(true);
+                    await supabase
+                      .from('profiles')
+                      .update({ account_status: 'suspended' })
+                      .eq('id', selectedUser.id);
+                    
+                    await logAction('delete_user', 'user', selectedUser.id, {
+                      email: selectedUser.email,
+                      action: 'deactivated'
+                    });
+                    
+                    toast({
+                      title: 'Account Deactivated',
+                      description: `${selectedUser.email} has been suspended`,
+                    });
+                    setShowDeactivateDialog(false);
+                    setSelectedUser(null);
+                    fetchUsers();
+                  } catch (error: any) {
+                    toast({
+                      title: 'Error',
+                      description: error.message || 'Failed to deactivate account',
+                      variant: 'destructive',
+                    });
+                  } finally {
+                    setActionLoading(false);
+                  }
+                }}
+                disabled={actionLoading}
+              >
+                {actionLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                Deactivate Account
               </Button>
             </DialogFooter>
           </DialogContent>

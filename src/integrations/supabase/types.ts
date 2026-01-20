@@ -550,6 +550,7 @@ export type Database = {
       booking_requests: {
         Row: {
           admin_notes: string | null
+          assigned_to: string | null
           base_price: number | null
           created_at: string
           discount_amount: number | null
@@ -574,6 +575,7 @@ export type Database = {
         }
         Insert: {
           admin_notes?: string | null
+          assigned_to?: string | null
           base_price?: number | null
           created_at?: string
           discount_amount?: number | null
@@ -598,6 +600,7 @@ export type Database = {
         }
         Update: {
           admin_notes?: string | null
+          assigned_to?: string | null
           base_price?: number | null
           created_at?: string
           discount_amount?: number | null
@@ -620,7 +623,29 @@ export type Database = {
           veteran_id_last4?: string | null
           veteran_type?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "booking_requests_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "booking_requests_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "profiles_limited"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "booking_requests_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "profiles_safe"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       bookings: {
         Row: {

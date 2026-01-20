@@ -3,7 +3,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SiteSettings from "./settings/SiteSettings";
 import EmailSettings from "./settings/EmailSettings";
 import PaymentSettings from "./settings/PaymentSettings";
-import UserManagement from "./settings/UserManagement";
+import SuperAdminUserManagement from "@/components/admin/super/SuperAdminUserManagement";
 import DiscountCodes from "./settings/DiscountCodes";
 
 const Settings = () => {
@@ -35,7 +35,7 @@ const Settings = () => {
           <Route path="site" element={<SiteSettings />} />
           <Route path="email" element={<EmailSettings />} />
           <Route path="payment" element={<PaymentSettings />} />
-          <Route path="users" element={<UserManagement />} />
+          <Route path="users" element={<SuperAdminUserManagement />} />
           <Route path="discounts" element={<DiscountCodes />} />
         </Routes>
       </div>

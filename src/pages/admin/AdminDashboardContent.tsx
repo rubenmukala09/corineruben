@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+// Framer Motion removed for Zero-Distraction protocol
 import { Command } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -139,11 +139,7 @@ export default function AdminDashboardContent() {
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-[1600px] mx-auto">
       {/* Header */}
-      <motion.div 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mb-8"
-      >
+      <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
           <div className="w-10 h-10 bg-gradient-to-br from-[#3B82F6] to-[#06B6D4] rounded-lg flex items-center justify-center shadow-lg shadow-[#3B82F6]/20">
             <Command className="w-5 h-5 text-white" />
@@ -155,7 +151,7 @@ export default function AdminDashboardContent() {
               </h1>
               {/* Live Status Badge */}
               <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#10B981]/10 border border-[#10B981]/30">
-                <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-[#10B981]" />
                 <span className="text-xs font-medium text-[#10B981]">LIVE</span>
               </div>
             </div>
@@ -164,7 +160,7 @@ export default function AdminDashboardContent() {
             </p>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Live Monitor Cards */}
       <CyberGuardianStats />

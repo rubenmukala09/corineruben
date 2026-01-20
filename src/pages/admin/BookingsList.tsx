@@ -19,6 +19,7 @@ import {
   Trash2,
   Ban,
   Check,
+  Users,
 } from "lucide-react";
 import {
   AlertDialog,
@@ -82,6 +83,10 @@ const BookingsList = () => {
   const [bookingToDelete, setBookingToDelete] = useState<BookingRequest | null>(null);
   const [denyDialogOpen, setDenyDialogOpen] = useState(false);
   const [bookingToDeny, setBookingToDeny] = useState<BookingRequest | null>(null);
+  const [assignDialogOpen, setAssignDialogOpen] = useState(false);
+  const [bookingToAssign, setBookingToAssign] = useState<BookingRequest | null>(null);
+  const [staffMembers, setStaffMembers] = useState<{ id: string; name: string; email: string }[]>([]);
+  const [loadingStaff, setLoadingStaff] = useState(false);
 
   const { data: bookings = [], isLoading, refetch } = useQuery({
     queryKey: ["booking-requests", statusFilter],
