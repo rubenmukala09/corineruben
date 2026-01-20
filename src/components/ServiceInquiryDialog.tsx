@@ -275,7 +275,7 @@ export const ServiceInquiryDialog = ({
                         Full Name *
                       </FormLabel>
                       <FormControl>
-                        <Input placeholder="John Smith" {...field} />
+                        <Input placeholder="Your Name" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -292,7 +292,7 @@ export const ServiceInquiryDialog = ({
                         Email *
                       </FormLabel>
                       <FormControl>
-                        <Input type="email" placeholder="john@company.com" {...field} />
+                        <Input type="email" placeholder="your@email.com" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

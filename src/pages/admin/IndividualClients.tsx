@@ -186,32 +186,32 @@ export default function IndividualClients() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label className="text-gray-300">First Name *</Label>
-                  <Input
-                    value={newClient.first_name}
-                    onChange={(e) => setNewClient({ ...newClient, first_name: e.target.value })}
-                    className="bg-gray-800 border-gray-700 text-white mt-1"
-                    placeholder="John"
-                  />
-                </div>
-                <div>
-                  <Label className="text-gray-300">Last Name *</Label>
-                  <Input
-                    value={newClient.last_name}
-                    onChange={(e) => setNewClient({ ...newClient, last_name: e.target.value })}
-                    className="bg-gray-800 border-gray-700 text-white mt-1"
-                    placeholder="Doe"
-                  />
+                    <Input
+                      value={newClient.first_name}
+                      onChange={(e) => setNewClient({ ...newClient, first_name: e.target.value })}
+                      className="bg-gray-800 border-gray-700 text-white mt-1"
+                      placeholder="First Name"
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-gray-300">Last Name *</Label>
+                    <Input
+                      value={newClient.last_name}
+                      onChange={(e) => setNewClient({ ...newClient, last_name: e.target.value })}
+                      className="bg-gray-800 border-gray-700 text-white mt-1"
+                      placeholder="Last Name"
+                    />
                 </div>
               </div>
               <div>
                 <Label className="text-gray-300">Email *</Label>
-                <Input
-                  type="email"
-                  value={newClient.email}
-                  onChange={(e) => setNewClient({ ...newClient, email: e.target.value })}
-                  className="bg-gray-800 border-gray-700 text-white mt-1"
-                  placeholder="john@example.com"
-                />
+                  <Input
+                    type="email"
+                    value={newClient.email}
+                    onChange={(e) => setNewClient({ ...newClient, email: e.target.value })}
+                    className="bg-gray-800 border-gray-700 text-white mt-1"
+                    placeholder="email@domain.com"
+                  />
               </div>
               <div>
                 <Label className="text-gray-300">Phone</Label>

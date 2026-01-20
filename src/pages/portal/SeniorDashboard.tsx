@@ -13,7 +13,6 @@ import { QuickActionsGrid } from "@/components/dashboard/QuickActionsGrid";
 import { TrainingProgressCard } from "@/components/dashboard/TrainingProgressCard";
 import { UpcomingAppointmentsCard } from "@/components/dashboard/UpcomingAppointmentsCard";
 import { SubscriptionStatus } from "@/components/SubscriptionStatus";
-import { motion } from "framer-motion";
 
 function SeniorDashboard() {
   const [profile, setProfile] = useState<any>(null);
@@ -102,14 +101,10 @@ function SeniorDashboard() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-background via-primary/5 to-accent/10">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="text-center space-y-4"
-        >
+        <div className="text-center space-y-4">
           <div className="w-16 h-16 mx-auto rounded-full bg-primary/20 animate-pulse" />
           <p className="text-muted-foreground">Loading your dashboard...</p>
-        </motion.div>
+        </div>
       </div>
     );
   }
@@ -125,71 +120,46 @@ function SeniorDashboard() {
 
       <main className="container mx-auto px-4 py-6 space-y-6">
         {/* Hero Protection Status */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-        >
+        <div>
           <ProtectionStatusHero 
             planName={planName}
             status={protectionStatus}
             protectionScore={94}
           />
-        </motion.div>
+        </div>
 
         {/* Main Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Column - Threat Activity */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.1 }}
-            className="lg:col-span-2"
-          >
+          <div className="lg:col-span-2">
             <ThreatActivityTimeline />
-          </motion.div>
+          </div>
 
           {/* Right Column - Training Progress */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.2 }}
-          >
+          <div>
             <TrainingProgressCard />
-          </motion.div>
+          </div>
         </div>
 
         {/* Quick Actions */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.3 }}
-        >
+        <div>
           <QuickActionsGrid onBookAppointment={() => setBookingModalOpen(true)} />
-        </motion.div>
+        </div>
 
         {/* Bottom Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Appointments */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.4 }}
-          >
+          <div>
             <UpcomingAppointmentsCard 
               appointments={appointments}
               onBookAppointment={() => setBookingModalOpen(true)}
             />
-          </motion.div>
+          </div>
 
           {/* Subscription Status */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.5 }}
-          >
+          <div>
             <SubscriptionStatus />
-          </motion.div>
+          </div>
         </div>
       </main>
 
