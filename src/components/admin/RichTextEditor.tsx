@@ -322,7 +322,7 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
               <Label htmlFor="link-url">URL</Label>
               <Input
                 id="link-url"
-                placeholder="https://example.com"
+                placeholder="https://"
                 value={linkUrl}
                 onChange={(e) => setLinkUrl(e.target.value)}
               />
@@ -380,7 +380,7 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
                 <Label htmlFor="image-url">Image URL</Label>
                 <Input
                   id="image-url"
-                  placeholder="https://example.com/image.jpg"
+                  placeholder="https://your-image-url.com"
                   value={imageUrl}
                   onChange={(e) => setImageUrl(e.target.value)}
                 />

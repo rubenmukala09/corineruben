@@ -289,7 +289,7 @@ export function AddTestimonialModal({
               </Label>
               <Input
                 id="name"
-                placeholder="John Smith"
+                placeholder="Client Name"
                 {...register("name")}
                 className={cn(
                   "transition-all duration-200",
@@ -315,7 +315,7 @@ export function AddTestimonialModal({
               <Input
                 id="email"
                 type="email"
-                placeholder="john@example.com"
+                placeholder="client@email.com"
                 {...register("email")}
                 className={cn(
                   "transition-all duration-200",
