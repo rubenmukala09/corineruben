@@ -1,14 +1,16 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface PageTransitionProps {
   children: ReactNode;
   variant?: "fade" | "slide" | "scale" | "slideUp" | "crossfade" | "auto";
 }
 
-// EMERGENCY STABILIZATION: Zero animations, instant render
+// Instant page transition - no delays, no blinking
 export const PageTransition = ({ children }: PageTransitionProps) => {
   return (
-    <div className="min-h-screen bg-[#0B0F19]">
+    <div className="min-h-screen">
       {children}
     </div>
   );
