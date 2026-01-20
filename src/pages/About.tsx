@@ -207,10 +207,14 @@ function About() {
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 max-w-5xl mx-auto">
             <ScrollReveal delay={100}>
               <Card className="p-6 md:p-8 hover:shadow-2xl transition-all duration-500 border-2 border-border/50 hover:border-primary/50">
+                {/* Placeholder for founder photo upload */}
                 <div className="relative mb-6">
-                  <div className="w-full aspect-square bg-gradient-to-br from-primary/20 to-accent/10 rounded-xl flex items-center justify-center">
-                    <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-xl">
-                      <span className="text-6xl font-bold text-primary-foreground">R</span>
+                  <div className="w-full aspect-square bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl flex items-center justify-center border-2 border-dashed border-primary/30">
+                    <div className="text-center p-6">
+                      <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                        <span className="text-4xl font-bold text-primary">R</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">Photo Coming Soon</p>
                     </div>
                   </div>
                   <Badge className="absolute top-4 right-4 bg-primary">Co-Founder & CEO</Badge>
@@ -227,10 +231,14 @@ function About() {
 
             <ScrollReveal delay={200}>
               <Card className="p-6 md:p-8 hover:shadow-2xl transition-all duration-500 border-2 border-border/50 hover:border-primary/50">
+                {/* Placeholder for founder photo upload */}
                 <div className="relative mb-6">
-                  <div className="w-full aspect-square bg-gradient-to-br from-accent/20 to-primary/10 rounded-xl flex items-center justify-center">
-                    <div className="w-32 h-32 rounded-full bg-gradient-to-br from-accent to-accent/80 flex items-center justify-center shadow-xl">
-                      <span className="text-6xl font-bold text-accent-foreground">C</span>
+                  <div className="w-full aspect-square bg-gradient-to-br from-accent/10 to-primary/10 rounded-xl flex items-center justify-center border-2 border-dashed border-accent/30">
+                    <div className="text-center p-6">
+                      <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-accent/20 to-primary/20 flex items-center justify-center">
+                        <span className="text-4xl font-bold text-accent">C</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">Photo Coming Soon</p>
                     </div>
                   </div>
                   <Badge className="absolute top-4 right-4 bg-primary">Co-Founder & COO</Badge>

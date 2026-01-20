@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Shield, ArrowRight, Lock, Eye, Fingerprint, ShieldCheck, Zap, Globe } from "lucide-react";
-import { useRef } from "react";
+import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 import heroVideo from "@/assets/hero-video.mp4";
 
 const securityFeatures = [{
@@ -18,8 +19,67 @@ const securityFeatures = [{
   label: "AI Protection",
 }];
 
+// Animation variants
+const fadeSlideUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
+};
+
 export const HeroHomepage = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [showContent, setShowContent] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    
+    const showAll = () => {
+      setIsLoaded(true);
+      // Delay showing content slightly to ensure background is painted first
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setShowContent(true);
+        });
+      });
+    };
+    
+    if (!video) {
+      // Fallback: show content after short delay if no video
+      const timer = setTimeout(showAll, 300);
+      return () => clearTimeout(timer);
+    }
+
+    const handleReady = () => showAll();
+    
+    // Check if already ready
+    if (video.readyState >= 3) {
+      showAll();
+      return;
+    }
+
+    video.addEventListener('canplaythrough', handleReady);
+    video.addEventListener('loadeddata', handleReady);
+    
+    // Fallback timeout - show after 1.5s max
+    const timeout = setTimeout(showAll, 1500);
+
+    return () => {
+      video.removeEventListener('canplaythrough', handleReady);
+      video.removeEventListener('loadeddata', handleReady);
+      clearTimeout(timeout);
+    };
+  }, []);
 
   return (
     <section 
@@ -66,34 +126,56 @@ export const HeroHomepage = () => {
       </div>
       
       <div 
-        className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10"
+        className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10 transition-opacity duration-500"
+        style={{ opacity: showContent ? 1 : 0 }}
       >
         <div className="flex flex-col lg:grid lg:grid-cols-5 gap-8 lg:gap-20 xl:gap-28 items-center min-h-[100vh] py-16 sm:py-20 lg:py-0">
           
-          {/* Left Content - No motion wrappers for LCP-critical elements */}
-          <div className="lg:col-span-3 order-2 lg:order-1 w-full">
+          {/* Left Content */}
+          <motion.div 
+            className="lg:col-span-3 order-2 lg:order-1 w-full"
+            variants={staggerContainer}
+            initial="hidden"
+            animate={showContent ? "visible" : "hidden"}
+          >
             {/* Premium Badge */}
-            <div className="inline-flex items-center gap-2 sm:gap-3 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 mb-6 sm:mb-10 shadow-sm">
+            <motion.div 
+              variants={fadeSlideUp}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="inline-flex items-center gap-2 sm:gap-3 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 mb-6 sm:mb-10 shadow-sm"
+            >
               <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-gradient-to-r from-primary to-accent shadow-sm" />
               <span className="text-xs sm:text-sm font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Veteran-Supporting • Ohio-Based</span>
-            </div>
+            </motion.div>
             
-            {/* Headline - rendered immediately for LCP */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold leading-[0.95] mb-6 sm:mb-8 tracking-tight">
+            {/* Headline with Fade In + Slide Up */}
+            <motion.h1 
+              variants={fadeSlideUp}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold leading-[0.95] mb-6 sm:mb-8 tracking-tight"
+            >
               <span className="block text-foreground">InVision</span>
               <span className="block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">Network</span>
               <span className="block font-light text-muted-foreground/80 text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mt-2 sm:mt-3">
                 Protection • Education • Innovation
               </span>
-            </h1>
+            </motion.h1>
             
-            {/* Description - rendered immediately for LCP */}
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mb-8 sm:mb-12 leading-relaxed">
+            {/* Description */}
+            <motion.p 
+              variants={fadeSlideUp}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mb-8 sm:mb-12 leading-relaxed"
+            >
               Empowering families with AI scam protection. Transforming businesses with cutting-edge automation solutions.
-            </p>
+            </motion.p>
             
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 relative z-30">
+            <motion.div 
+              variants={fadeSlideUp}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4 relative z-30"
+            >
               <Button asChild size="lg" className="group h-12 sm:h-14 px-6 sm:px-8 text-sm sm:text-base font-semibold rounded-xl bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-accent/90 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/35 transition-all duration-300 border-0 w-full sm:w-auto">
                 <Link to="/training">
                   <Shield className="mr-2 w-4 h-4 sm:w-5 sm:h-5" />
@@ -108,8 +190,8 @@ export const HeroHomepage = () => {
                   <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
           
           {/* Right Content - Security Visual */}
           <div className="lg:col-span-2 order-1 lg:order-2 flex justify-center lg:justify-end w-full">

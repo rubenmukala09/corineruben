@@ -101,6 +101,3 @@ verify_jwt = false
 
 [functions.heartbeat-watchdog]
 verify_jwt = false
-
-[functions.heartbeat-keeper]
-verify_jwt = false

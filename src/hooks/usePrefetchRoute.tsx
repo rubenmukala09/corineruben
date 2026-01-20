@@ -37,6 +37,7 @@ export const usePrefetchRoute = (path: string) => {
         "/business": () => import("../pages/Business"),
         "/about": () => import("../pages/About"),
         "/resources": () => import("../pages/Resources"),
+        "/safety-vault": () => import("../pages/SafetyVault"),
         "/articles": () => import("../pages/Articles"),
         "/contact": () => import("../pages/Contact"),
         "/careers": () => import("../pages/Careers"),

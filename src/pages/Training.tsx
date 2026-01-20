@@ -52,7 +52,7 @@ import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
 import HeroFloatingStats from "@/components/business/HeroFloatingStats";
-
+import heroVault from "@/assets/hero-vault-1.jpg";
 
 // Rotating hero headlines for Training page
 const trainingHeadlines = [
@@ -177,35 +177,35 @@ const TrainingCard = ({ plan, index, onBook }: { plan: any; index: number; onBoo
     >
       <div className="relative pt-5 h-full">
         {/* Badge - On top of card, outside */}
-        <div className={`absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r ${badge.gradient} text-white px-5 py-2 rounded-full text-xs font-bold tracking-wide shadow-xl z-30 whitespace-nowrap border-2 border-white/20`}>
+        <div className={`absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r ${badge.gradient} text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-wide shadow-lg z-30 whitespace-nowrap border border-white/20`}>
           <span className="mr-1">{badge.emoji}</span>
           {badge.label}
         </div>
         
-        <Card className={`relative p-6 md:p-7 h-full flex flex-col transition-all duration-300 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 min-h-[520px] ${
+        <Card className={`relative p-4 md:p-5 flex flex-col transition-all duration-300 hover:-translate-y-2 rounded-2xl bg-gradient-to-br from-card to-card/50 h-[480px] ${
           plan.popular 
             ? "border-primary border-2 shadow-xl" 
             : "border-border/50 hover:shadow-lg"
         }`}>
-          <div className="pt-4 flex flex-col h-full">
-            <h3 className="text-xl md:text-2xl font-bold mb-3 text-center">{plan.name}</h3>
-            <div className="text-center mb-3" ref={ref}>
-              <span className="text-4xl md:text-5xl font-bold text-primary">${Math.round(count)}{plan.pricePrefix || ''}</span>
-              <span className="text-muted-foreground text-base ml-1">/session</span>
+          <div className="pt-2 flex flex-col h-full">
+            <h3 className="text-base md:text-lg font-bold mb-1.5 text-center leading-tight">{plan.name}</h3>
+            <div className="text-center mb-1" ref={ref}>
+              <span className="text-2xl md:text-3xl font-bold text-primary">${Math.round(count)}{plan.pricePrefix || ''}</span>
+              <span className="text-muted-foreground text-xs ml-1">/session</span>
             </div>
-            <p className="text-center text-base text-muted-foreground mb-1">{plan.duration}</p>
-            <p className="text-center text-base text-accent font-semibold mb-4">{plan.size}</p>
+            <p className="text-center text-xs text-muted-foreground">{plan.duration}</p>
+            <p className="text-center text-xs text-accent font-semibold mb-2">{plan.size}</p>
             
             {/* Description */}
-            <p className="text-center text-sm md:text-base text-muted-foreground mb-5 min-h-[60px] leading-relaxed">
+            <p className="text-center text-xs text-muted-foreground mb-3 leading-relaxed line-clamp-2">
               {plan.description}
             </p>
 
-            <div className="space-y-3 mb-5 flex-1">
-              {plan.features.map((feature: string, idx: number) => (
-                <div key={idx} className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-foreground text-base leading-snug">{feature.replace('✓ ', '')}</span>
+            <div className="space-y-1.5 mb-4 flex-1">
+              {plan.features.slice(0, 4).map((feature: string, idx: number) => (
+                <div key={idx} className="flex items-start gap-1.5">
+                  <CheckCircle className="w-3.5 h-3.5 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="text-foreground text-xs leading-snug">{feature}</span>
                 </div>
               ))}
             </div>
@@ -213,8 +213,8 @@ const TrainingCard = ({ plan, index, onBook }: { plan: any; index: number; onBoo
             <Button 
               onClick={() => onBook(plan)}
               variant={plan.popular ? "default" : "outline"} 
-              size="lg" 
-              className={`w-full mt-auto text-lg py-6 ${plan.popular ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : ''}`}
+              size="sm" 
+              className={`w-full mt-auto text-sm py-4 ${plan.popular ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : ''}`}
             >
               Book Now →
             </Button>
@@ -646,14 +646,14 @@ function LearnAndTrain() {
             </p>
           </div>
 
-          {/* Veteran Discount Notification - Light Background for Visibility */}
+          {/* Veteran Discount Notification - Enhanced Visibility */}
           <div className="flex justify-center mb-10">
-            <div className="inline-flex items-center gap-3 px-6 py-4 bg-amber-50 border-2 border-amber-200 rounded-2xl text-lg md:text-xl shadow-sm">
+            <div className="inline-flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-blue-900/15 to-red-900/15 border-2 border-blue-500/30 rounded-2xl text-lg md:text-xl">
               <span className="text-2xl">🇺🇸</span>
-              <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
-              <span className="font-bold text-amber-900">Veterans & First Responders Save 10%</span>
-              <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
-              <span className="text-amber-700 text-base">• Military, Police, Fire, EMT — Applied at checkout</span>
+              <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
+              <span className="font-bold">Veterans & First Responders Save 10%</span>
+              <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
+              <span className="text-muted-foreground text-base">• Applied at checkout</span>
             </div>
           </div>
 
@@ -904,14 +904,14 @@ function LearnAndTrain() {
             </Label>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 xl:gap-6 max-w-[1200px] mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 xl:gap-4 max-w-[1100px] mx-auto">
             {/* Starter Plan */}
             <div className="relative pt-6 h-full">
-              <div className="absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-5 py-2 rounded-full text-sm font-bold tracking-wide shadow-xl z-20 whitespace-nowrap border-2 border-white/20">
+              <div className="absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-6 py-2.5 rounded-full text-sm font-bold tracking-wide shadow-lg z-20 whitespace-nowrap">
                 🌱 STARTER
               </div>
               <Card
-                className="p-6 md:p-7 transition-all duration-500 hover:-translate-y-2 hover:shadow-strong rounded-2xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50 h-full flex flex-col min-h-[520px]"
+                className="p-5 md:p-6 lg:p-7 transition-all duration-500 hover:-translate-y-2 hover:shadow-strong rounded-2xl border-border/50 animate-fade-in-up bg-gradient-to-br from-card to-card/50 h-full flex flex-col min-h-[600px]"
                 style={{ animationDelay: "0ms" }}
               >
                 <div className="flex justify-center mb-5 pt-3">
@@ -978,11 +978,11 @@ function LearnAndTrain() {
 
             {/* Family Plan - MOST POPULAR */}
             <div className="relative pt-6 h-full">
-              <div className="absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-5 py-2 rounded-full text-sm font-bold tracking-wide shadow-xl z-20 whitespace-nowrap animate-pulse border-2 border-white/20" style={{ animationDuration: '3s' }}>
+              <div className="absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-6 py-2.5 rounded-full text-sm font-bold tracking-wide shadow-lg z-20 whitespace-nowrap animate-pulse" style={{ animationDuration: '3s' }}>
                 ⭐ MOST POPULAR
               </div>
               <Card
-                className="p-6 md:p-7 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(109,40,217,0.2)] rounded-2xl border-primary border-2 animate-fade-in-up bg-gradient-to-br from-card to-card/50 h-full flex flex-col min-h-[520px]"
+                className="p-5 md:p-6 lg:p-7 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(109,40,217,0.2)] rounded-2xl border-primary border-2 animate-fade-in-up bg-gradient-to-br from-card to-card/50 h-full flex flex-col min-h-[600px]"
                 style={{ animationDelay: "100ms" }}
               >
                 <div className="flex justify-center mb-5 pt-3">
@@ -1009,9 +1009,9 @@ function LearnAndTrain() {
                   {[
                     "Up to 5 family members",
                     "12-hour AI response time",
+                    "Family Safety Vault access",
                     "Safe word setup system",
                     "Phone support available",
-                    "Priority email support",
                   ].map((feature, index) => (
                     <div key={index} className="flex items-start gap-3">
                       <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
@@ -1035,7 +1035,7 @@ function LearnAndTrain() {
                     handleSubscribe('price_1SjwUIJ8osfwYbX7Ynjt7gMq', 'ScamShield', 'Family', 7900, [
                       "Up to 5 family members",
                       "12-hour response time",
-                      "Safe word setup system",
+                      "Family Safety Vault access",
                       "Phone support available",
                       "25 credits/month"
                     ]);
@@ -1051,11 +1051,11 @@ function LearnAndTrain() {
 
             {/* Premium Plan */}
             <div className="relative pt-6 h-full">
-              <div className="absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-5 py-2 rounded-full text-sm font-bold tracking-wide shadow-xl z-20 whitespace-nowrap border-2 border-white/20">
+              <div className="absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-2.5 rounded-full text-sm font-bold tracking-wide shadow-lg z-20 whitespace-nowrap">
                 👑 PREMIUM
               </div>
               <Card
-                className="p-6 md:p-7 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 rounded-2xl border-amber-500/30 animate-fade-in-up bg-gradient-to-br from-card to-amber-500/5 h-full flex flex-col min-h-[520px]"
+                className="p-5 md:p-6 lg:p-7 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 rounded-2xl border-amber-500/30 animate-fade-in-up bg-gradient-to-br from-card to-amber-500/5 h-full flex flex-col min-h-[600px]"
                 style={{ animationDelay: "200ms" }}
               >
                 <div className="flex justify-center mb-5 pt-3">
@@ -1126,11 +1126,11 @@ function LearnAndTrain() {
 
             {/* Customized Plan for Businesses */}
             <div className="relative pt-6 h-full">
-              <div className="absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r from-violet-600 to-purple-600 text-white px-5 py-2 rounded-full text-sm font-bold tracking-wide shadow-xl z-20 whitespace-nowrap border-2 border-white/20">
+              <div className="absolute -top-0 left-1/2 -translate-x-1/2 bg-gradient-to-r from-violet-600 to-purple-600 text-white px-6 py-2.5 rounded-full text-sm font-bold tracking-wide shadow-lg z-20 whitespace-nowrap">
                 🏢 ENTERPRISE
               </div>
               <Card
-                className="p-6 md:p-7 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 rounded-2xl border-violet-500/30 animate-fade-in-up bg-gradient-to-br from-card to-violet-500/5 h-full flex flex-col min-h-[520px]"
+                className="p-5 md:p-6 lg:p-7 hover:shadow-strong transition-all duration-500 hover:-translate-y-2 rounded-2xl border-violet-500/30 animate-fade-in-up bg-gradient-to-br from-card to-violet-500/5 h-full flex flex-col min-h-[600px]"
                 style={{ animationDelay: "300ms" }}
               >
                 <div className="flex justify-center mb-5 pt-3">
@@ -1472,18 +1472,18 @@ function LearnAndTrain() {
         </div>
       </section>
 
-      {/* Veterans Discount - Light Background Strip */}
-      <section className="py-6 bg-amber-50 border-y-2 border-amber-200">
+      {/* Veterans Discount - Enhanced Visibility Strip */}
+      <section className="py-6 bg-gradient-to-r from-blue-900/10 via-transparent to-red-900/10 border-y-2 border-blue-500/20">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap items-center justify-center gap-4 text-lg md:text-xl">
             <span className="text-2xl">🇺🇸</span>
             <div className="flex items-center gap-3">
-              <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
-              <span className="font-bold text-amber-900">Veterans & First Responders: 10% OFF</span>
-              <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
+              <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
+              <span className="font-bold">Veterans & First Responders: 10% OFF</span>
+              <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
             </div>
-            <span className="text-amber-600 text-lg">•</span>
-            <span className="text-amber-700 text-base md:text-lg">Military, Police, Fire, EMT — discount applied at checkout</span>
+            <span className="text-muted-foreground text-lg">•</span>
+            <span className="text-muted-foreground text-base md:text-lg">Military, Police, Fire, EMT — discount applied at checkout</span>
           </div>
         </div>
       </section>
@@ -1550,7 +1550,8 @@ function LearnAndTrain() {
                     {[
                       "Family safe words to verify real emergencies instantly",
                       "24/7 expert analysis — just forward anything suspicious",
-                      "Proactive alerts when new scam patterns emerge"
+                      "Proactive alerts when new scam patterns emerge",
+                      "Secure vault for important family documents"
                     ].map((item, idx) => (
                       <li key={idx} className="flex items-start gap-3 text-base md:text-lg text-foreground">
                         <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
@@ -1563,6 +1564,49 @@ function LearnAndTrain() {
             </Card>
           </div>
 
+          {/* Family Safety Vault Card */}
+          <Card className="max-w-4xl mx-auto mt-10 p-8 md:p-10 hover:shadow-xl transition-all duration-500 rounded-2xl border-accent border-2 relative overflow-hidden">
+            {/* Background Image - Vault themed */}
+            <div 
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ 
+                backgroundImage: `url(${heroVault})`,
+              }}
+            />
+            {/* Dark overlay for text readability - significantly enhanced */}
+            <div className="absolute inset-0 bg-gradient-to-br from-black/85 via-black/80 to-black/75" />
+            <div className="absolute inset-0 backdrop-blur-[1px]" />
+            
+            <div className="text-center relative z-10">
+              <div className="flex justify-center mb-6">
+                <div className="w-20 h-20 bg-gradient-to-br from-primary/60 to-accent/60 rounded-full flex items-center justify-center animate-[shield-pulse_3s_ease-in-out_infinite] shadow-lg border-2 border-white/30">
+                  <Lock className="w-10 h-10 text-white" />
+                </div>
+              </div>
+              <h3 className="text-2xl md:text-3xl font-bold mb-3 text-white drop-shadow-lg">Family Safety Vault</h3>
+              <p className="text-white/90 mb-6 text-base md:text-lg font-medium drop-shadow-md">Included with Family & Premium Plans — keep everything secure</p>
+
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8 text-left max-w-2xl mx-auto">
+                {[
+                  { icon: "🔑", feature: "Family safe words" },
+                  { icon: "📞", feature: "Trusted caller list" },
+                  { icon: "🆘", feature: "Emergency contacts" },
+                  { icon: "📄", feature: "Encrypted documents" },
+                  { icon: "🔐", feature: "Account recovery info" },
+                  { icon: "✈️", feature: "Travel itineraries" },
+                ].map((item, index) => (
+                  <div key={index} className="flex items-center gap-3 p-3 bg-white/95 rounded-xl border border-white/20 shadow-lg">
+                    <span className="text-xl">{item.icon}</span>
+                    <span className="text-sm md:text-base font-semibold text-foreground">{item.feature}</span>
+                  </div>
+                ))}
+              </div>
+
+              <p className="text-base md:text-lg text-white font-semibold drop-shadow-md">
+                🔒 Bank-grade encryption • Multi-factor authentication • Secure family sharing
+              </p>
+            </div>
+          </Card>
         </div>
       </section>
 

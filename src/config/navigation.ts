@@ -100,20 +100,20 @@ export const PORTAL_ROUTES: NavRoute[] = [
 // Legal/Policy Routes
 export const LEGAL_ROUTES: NavRoute[] = [
   {
-    path: '/privacy-policy',
+    path: '/privacy',
     name: 'Privacy Policy'
   },
   {
-    path: '/terms-of-service',
+    path: '/terms',
     name: 'Terms of Service'
   },
   {
-    path: '/refund-policy',
-    name: 'Refund Policy'
+    path: '/accessibility',
+    name: 'Accessibility'
   },
   {
-    path: '/cookie-policy',
-    name: 'Cookie Policy'
+    path: '/sitemap',
+    name: 'Sitemap'
   }
 ];
 
