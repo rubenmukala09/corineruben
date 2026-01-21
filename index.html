@@ -4,7 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
     
-    <!-- CRITICAL: Preconnect hints FIRST - before ANY scripts for Speed Index -->
+    <!-- CRITICAL: CSS async loader MUST be first to intercept Vite-injected CSS before render-blocking -->
+    <script>
+      (function(){
+        function makeAsync(link){
+          if(link.rel==='stylesheet'&&link.href&&!link.dataset.critical){
+            link.media='print';
+            link.onload=function(){this.media='all';this.onload=null};
+          }
+        }
+        var obs=new MutationObserver(function(m){
+          m.forEach(function(mut){
+            mut.addedNodes.forEach(function(n){
+              if(n.tagName==='LINK')makeAsync(n);
+            });
+          });
+        });
+        obs.observe(document.documentElement,{childList:true,subtree:true});
+        document.querySelectorAll('link[rel="stylesheet"]').forEach(makeAsync);
+      })();
+    </script>
+    
+    <!-- Preconnect hints for early connection establishment -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://avoafweoebstkgjnbadv.supabase.co" crossorigin>
@@ -12,7 +33,7 @@
     <!-- Preload critical font for immediate text rendering -->
     <link rel="preload" href="https://fonts.gstatic.com/s/outfit/v11/QGYyz_MVcBeNP4NjuGObqx1XmO1I4TC0C4G-EiAou6Y.woff2" as="font" type="font/woff2" crossorigin>
     
-    <!-- Critical CSS inlined for FCP/LCP - BEFORE any scripts -->
+    <!-- Critical CSS inlined for FCP/LCP -->
     <style>
       /* System font stack for instant text paint, then swap to Outfit */
       @font-face{font-family:'Outfit';font-style:normal;font-weight:400 900;font-display:swap;src:url(https://fonts.gstatic.com/s/outfit/v11/QGYyz_MVcBeNP4NjuGObqx1XmO1I4TC0C4G-EiAou6Y.woff2) format('woff2')}
@@ -64,25 +85,32 @@
       }
     </script>
     
-    <!-- CSS async loader - makes stylesheets non-render-blocking -->
+    
+    <!-- DNS prefetch for other origins -->
+    <link rel="dns-prefetch" href="https://js.stripe.com">
+    <link rel="dns-prefetch" href="https://m.stripe.network">
+    
+    <!-- Preload main entry to reduce critical chain -->
+    <link rel="modulepreload" href="/src/main.tsx">
+    
+    <!-- Google Analytics - deferred to reduce main-thread impact -->
     <script>
-      (function(){
-        function makeAsync(link){
-          if(link.rel==='stylesheet'&&link.href&&!link.dataset.critical){
-            link.media='print';
-            link.onload=function(){this.media='all';this.onload=null};
-          }
-        }
-        var obs=new MutationObserver(function(m){
-          m.forEach(function(mut){
-            mut.addedNodes.forEach(function(n){
-              if(n.tagName==='LINK')makeAsync(n);
-            });
-          });
-        });
-        obs.observe(document.documentElement,{childList:true,subtree:true});
-        document.querySelectorAll('link[rel="stylesheet"]').forEach(makeAsync);
-      })();
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('consent', 'default', {analytics_storage: 'denied', ad_storage: 'denied'});
+      function loadGA() {
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-B1MKM2FPV7';
+        document.head.appendChild(s);
+        gtag('js', new Date());
+        gtag('config', 'G-B1MKM2FPV7', {send_page_view: false});
+      }
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadGA, {timeout: 4000});
+      } else {
+        setTimeout(loadGA, 2000);
+      }
     </script>
     
     <link rel="icon" type="image/png" href="/favicon.png" />
