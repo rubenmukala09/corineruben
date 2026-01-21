@@ -1,8 +1,7 @@
-import { ReactNode, useEffect, useState, useRef, Children, isValidElement } from "react";
+import { ReactNode, useState, useRef, Children, isValidElement } from "react";
 import { cn } from "@/lib/utils";
 import ScrollIndicator from "./ScrollIndicator";
 import { ProtectionBadge } from "./ProtectionBadge";
-import { useImagePreload } from "@/hooks/useImagePreload";
 import { HeroCarousel } from "./HeroCarousel";
 import { MagneticWrapper } from "./ui/magnetic-button";
 import HeroPurpleOverlay from "./HeroPurpleOverlay";
@@ -45,20 +44,10 @@ const Hero = ({
 }: HeroProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoLoaded, setVideoLoaded] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
   
-  // Preload background image(s)
-  const singleImagePreloaded = useImagePreload(backgroundImage ? [backgroundImage] : []);
+  // No loading states for images - show immediately for instant page transitions
   const useCarousel = backgroundImages && backgroundImages.length > 0;
   const useVideo = !!backgroundVideo;
-
-  // Track when single image is fully loaded
-  useEffect(() => {
-    if (singleImagePreloaded && backgroundImage) {
-      const timer = setTimeout(() => setImageLoaded(true), 50);
-      return () => clearTimeout(timer);
-    }
-  }, [singleImagePreloaded, backgroundImage]);
 
   return (
     <div 
