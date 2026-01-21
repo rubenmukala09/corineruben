@@ -101,7 +101,17 @@ const Footer = () => {
 
             {/* Newsletter */}
             <div className="lg:pl-8">
-              <h3 className="text-lg font-semibold mb-2">Stay Protected</h3>
+              <div className="flex items-center gap-3 mb-2">
+                <h3 className="text-lg font-semibold">Stay Protected</h3>
+                <Button
+                  onClick={() => setDonationModalOpen(true)}
+                  size="sm"
+                  className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white text-xs px-3 py-1 h-7 rounded-lg shadow-sm shadow-rose-500/20"
+                >
+                  <Heart className="w-3 h-3 mr-1" />
+                  Donate
+                </Button>
+              </div>
               <p className="text-sm text-white/60 mb-4">
                 Get monthly AI safety tips and scam alerts delivered to your inbox.
               </p>
@@ -197,27 +207,6 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Donate Section */}
-          <div className="py-8 border-t border-white/10 mb-6">
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-center">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center shadow-lg shadow-rose-500/20">
-                  <Heart className="w-6 h-6 text-white" />
-                </div>
-                <div className="text-left">
-                  <h4 className="text-white font-semibold">Support Our Mission</h4>
-                  <p className="text-white/60 text-sm">Help protect families from AI scams</p>
-                </div>
-              </div>
-              <Button
-                onClick={() => setDonationModalOpen(true)}
-                className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white px-8 rounded-xl shadow-lg shadow-rose-500/20 transition-all hover:shadow-xl hover:shadow-rose-500/30"
-              >
-                <Heart className="w-4 h-4 mr-2" />
-                Donate Now
-              </Button>
-            </div>
-          </div>
 
           {/* Bottom Bar */}
           <div className="pt-6 border-t border-white/10">
