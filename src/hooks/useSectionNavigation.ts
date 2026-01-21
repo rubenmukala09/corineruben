@@ -74,9 +74,14 @@ export const useSectionNavigation = (sections: Section[]) => {
     };
 
     // Defer initial calculation to avoid forced reflow during paint
+    // Using longer delay ensures layout is fully stable
     const timeoutId = setTimeout(() => {
-      requestAnimationFrame(updateAndScroll);
-    }, 200);
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(updateAndScroll, { timeout: 500 });
+      } else {
+        requestAnimationFrame(updateAndScroll);
+      }
+    }, 300);
 
     // Update bounds on resize (throttled)
     let resizeTimeout: ReturnType<typeof setTimeout>;

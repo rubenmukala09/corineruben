@@ -79,10 +79,11 @@ export const ScamAlertsSection = () => {
               <div
                 key={index}
                 onClick={() => setActiveAlert(index)}
-                className={`p-6 rounded-3xl border cursor-pointer transition-all duration-400 ease-out ${
+                style={{ transform: index === activeAlert ? 'translateY(-4px)' : 'translateY(0)' }}
+                className={`p-6 rounded-3xl border cursor-pointer transition-[box-shadow,background-color,border-color] duration-300 will-change-transform ${
                   index === activeAlert
-                    ? "bg-white border-white/50 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)] translate-y-[-4px]"
-                    : "bg-white/80 border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] hover:translate-y-[-4px] hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]"
+                    ? "bg-white border-white/50 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]"
+                    : "bg-white/80 border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]"
                 }`}
               >
                 <div className="flex items-start gap-4">
