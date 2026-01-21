@@ -1,8 +1,8 @@
 // Professional Hero Images Configuration
 // Clean, modern professional images for each page - InVision Network branded
 
-import heroBrandedBusiness from "@/assets/hero-branded-business.jpg";
-import heroBrandedTraining from "@/assets/hero-branded-training.jpg";
+import heroBrandedBusiness from "@/assets/hero-nature-business.jpg";
+import heroBrandedTraining from "@/assets/hero-nature-training.jpg";
 import heroBrandedResources from "@/assets/hero-branded-resources.jpg";
 import heroBrandedAbout from "@/assets/hero-branded-about.jpg";
 import heroBrandedCareers from "@/assets/hero-branded-careers.jpg";
@@ -17,10 +17,10 @@ export interface HeroImage {
 // Professional branded hero images for each page - InVision Network integrated
 export const PROFESSIONAL_HERO_IMAGES: Record<string, HeroImage[]> = {
   business: [
-    { src: heroBrandedBusiness, alt: "InVision Network AI-powered boardroom with holographic displays showcasing business automation solutions" },
+    { src: heroBrandedBusiness, alt: "Diverse professionals united at sunrise overlooking city skyline, embracing new beginnings and ambition with InVision Network" },
   ],
   training: [
-    { src: heroBrandedTraining, alt: "InVision Network cybersecurity training workshop with diverse seniors learning digital protection" },
+    { src: heroBrandedTraining, alt: "Seniors joyfully learning together in sunlit community center, empowered by hope and lifelong growth with InVision Network" },
   ],
   resources: [
     { src: heroBrandedResources, alt: "InVision Network digital knowledge center with security resources and learning materials" },
