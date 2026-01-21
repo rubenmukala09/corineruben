@@ -20,8 +20,7 @@ import {
   TrendingUp,
   Bot
 } from "lucide-react";
-import heroNatureAi1 from "@/assets/hero-nature-ai-1.jpg";
-import heroNatureAi2 from "@/assets/hero-nature-ai-2.jpg";
+import aiReceptionistHero from "@/assets/ai-receptionist-hero.jpg";
 
 const AIReceptionist = () => {
   const features = [
@@ -101,14 +100,13 @@ const AIReceptionist = () => {
         <Navigation />
         
         <main id="main-content">
-          {/* Hero Section with Nature Image */}
+          {/* Hero Section with AI Technology Image */}
           <Hero
             backgroundImages={[
-              { src: heroNatureAi1, alt: "Tranquil forest path with sunbeams" },
-              { src: heroNatureAi2, alt: "Beautiful meadow with wildflowers at sunrise" }
+              { src: aiReceptionistHero, alt: "AI-powered business data analysis visualization" }
             ]}
-            headline="Stop Missing Calls. Let AI Run Your Front Desk."
-            subheadline="Our AI answers calls 24/7, sounds human, filters spam, and books appointments directly into your calendar—while you sleep. Never lose another customer to voicemail."
+            headline="AI-Powered Call Analysis & Smart Intake"
+            subheadline="Our intelligent system analyzes incoming calls, identifies legitimate inquiries vs spam, and ensures you only speak with real customers. Smart screening that protects your time."
             showScrollIndicator={true}
           >
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

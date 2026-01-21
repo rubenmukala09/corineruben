@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Facebook, Linkedin, Youtube, Instagram, Shield, Mail, MapPin, ArrowRight, Loader2 } from "lucide-react";
+import { Facebook, Linkedin, Youtube, Instagram, Shield, Mail, MapPin, ArrowRight, Loader2, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import TrustedTechLogos from "./TrustedTechLogos";
@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useConfetti } from "@/hooks/useConfetti";
 import { z } from "zod";
+import { DonationModal } from "@/components/DonationModal";
 
 const newsletterSchema = z.object({
   email: z.string().trim().email("Please enter a valid email address").max(255, "Email too long"),
@@ -17,6 +18,7 @@ const newsletterSchema = z.object({
 const Footer = () => {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [donationModalOpen, setDonationModalOpen] = useState(false);
   const { fireSuccess } = useConfetti();
 
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
@@ -195,6 +197,28 @@ const Footer = () => {
             </div>
           </div>
 
+          {/* Donate Section */}
+          <div className="py-8 border-t border-white/10 mb-6">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-center">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center shadow-lg shadow-rose-500/20">
+                  <Heart className="w-6 h-6 text-white" />
+                </div>
+                <div className="text-left">
+                  <h4 className="text-white font-semibold">Support Our Mission</h4>
+                  <p className="text-white/60 text-sm">Help protect families from AI scams</p>
+                </div>
+              </div>
+              <Button
+                onClick={() => setDonationModalOpen(true)}
+                className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white px-8 rounded-xl shadow-lg shadow-rose-500/20 transition-all hover:shadow-xl hover:shadow-rose-500/30"
+              >
+                <Heart className="w-4 h-4 mr-2" />
+                Donate Now
+              </Button>
+            </div>
+          </div>
+
           {/* Bottom Bar */}
           <div className="pt-6 border-t border-white/10">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-4">
@@ -241,6 +265,13 @@ const Footer = () => {
           </div>
         </div>
       </div>
+
+      {/* Donation Modal */}
+      <DonationModal 
+        open={donationModalOpen} 
+        onOpenChange={setDonationModalOpen}
+        type="general"
+      />
     </footer>
   );
 };
