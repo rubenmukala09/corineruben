@@ -65,23 +65,27 @@
       .lcp-text{font-size:clamp(1rem,2vw,1.5rem);color:#64748b;line-height:1.6;margin:0 0 2rem}
     </style>
     
-    <!-- CSS async loader - injects stylesheets as non-render-blocking -->
+    <!-- CSS async loader - makes stylesheets non-render-blocking -->
     <script>
       (function(){
-        // Intercept stylesheet links and make them non-blocking
-        var o=document.createElement;
-        document.createElement=function(t){
-          var e=o.call(document,t);
-          if(t.toLowerCase()==='link'){
-            setTimeout(function(){
-              if(e.rel==='stylesheet'&&e.href&&!e.dataset.critical){
-                e.media='print';
-                e.onload=function(){this.media='all';this.onload=null};
-              }
-            },0);
+        // MutationObserver to catch dynamically added stylesheets
+        function makeAsync(link){
+          if(link.rel==='stylesheet'&&link.href&&!link.dataset.critical){
+            link.media='print';
+            link.onload=function(){this.media='all';this.onload=null};
           }
-          return e;
-        };
+        }
+        // Watch for new links
+        var obs=new MutationObserver(function(m){
+          m.forEach(function(mut){
+            mut.addedNodes.forEach(function(n){
+              if(n.tagName==='LINK')makeAsync(n);
+            });
+          });
+        });
+        obs.observe(document.documentElement,{childList:true,subtree:true});
+        // Process any existing links
+        document.querySelectorAll('link[rel="stylesheet"]').forEach(makeAsync);
       })();
     </script>
     
