@@ -22,9 +22,11 @@ export function ForgotPasswordModal({ open, onClose }: ForgotPasswordModalProps)
     setIsLoading(true);
 
     try {
-      const { error } = await supabase.functions.invoke("send-password-reset", {
-        body: { email: email.toLowerCase().trim() },
-      });
+      // Use Supabase's built-in password reset for all users
+      const { error } = await supabase.auth.resetPasswordForEmail(
+        email.toLowerCase().trim(),
+        { redirectTo: `${window.location.origin}/reset-password` }
+      );
 
       if (error) {
         toast.error("Failed to send reset link. Please try again.");
