@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -166,11 +165,7 @@ export function QRCodePaymentSection({
 
   if (isPaid) {
     return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="text-center py-6"
-      >
+      <div className="text-center py-6 animate-scale-in">
         <div className="w-16 h-16 bg-success/20 rounded-full flex items-center justify-center mx-auto mb-4">
           <CheckCircle className="w-8 h-8 text-success" />
         </div>
@@ -178,7 +173,7 @@ export function QRCodePaymentSection({
         <p className="text-sm text-muted-foreground">
           Your mobile payment was successful
         </p>
-      </motion.div>
+      </div>
     );
   }
 
@@ -197,11 +192,7 @@ export function QRCodePaymentSection({
 
       {/* QR Code Display */}
       {qrImageUrl ? (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col items-center gap-4"
-        >
+        <div className="flex flex-col items-center gap-4 animate-fade-in">
           <div className="relative bg-white p-4 rounded-xl border-2 border-primary/20">
             <img
               src={qrImageUrl}
@@ -249,7 +240,7 @@ export function QRCodePaymentSection({
             <RefreshCw className={`w-3 h-3 mr-1 ${isGenerating ? "animate-spin" : ""}`} />
             Generate new code
           </Button>
-        </motion.div>
+        </div>
       ) : (
         <div className="flex flex-col items-center gap-4">
           <div className="w-48 h-48 bg-muted/50 rounded-xl border-2 border-dashed border-muted-foreground/30 flex items-center justify-center">

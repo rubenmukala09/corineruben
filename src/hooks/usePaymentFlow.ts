@@ -25,6 +25,16 @@ interface PaymentIntentResponse {
   type: string;
 }
 
+// Timeout wrapper for edge function calls
+const withTimeout = <T>(promise: Promise<T>, timeoutMs: number = 15000): Promise<T> => {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) =>
+      setTimeout(() => reject(new Error('Request timed out. Please try again.')), timeoutMs)
+    )
+  ]);
+};
+
 export const usePaymentFlow = () => {
   const { setPaymentDetails, setLoading, setError, setStep } = useCheckout();
 
@@ -36,16 +46,19 @@ export const usePaymentFlow = () => {
       // Convert amount to cents for Stripe
       const amountInCents = Math.round(options.amount * 100);
 
-      const { data, error } = await supabase.functions.invoke('create-cart-payment-intent', {
-        body: {
-          amount: amountInCents,
-          customerEmail: options.customerEmail,
-          customerName: options.customerName,
-          isVeteran: options.isVeteran || false,
-          items: options.items || [],
-          metadata: options.metadata || {}
-        }
-      });
+      const { data, error } = await withTimeout(
+        supabase.functions.invoke('create-cart-payment-intent', {
+          body: {
+            amount: amountInCents,
+            customerEmail: options.customerEmail,
+            customerName: options.customerName,
+            isVeteran: options.isVeteran || false,
+            items: options.items || [],
+            metadata: options.metadata || {}
+          }
+        }),
+        15000
+      );
 
       if (error) {
         throw new Error(error.message || 'Failed to create payment intent');
@@ -65,6 +78,7 @@ export const usePaymentFlow = () => {
       console.error('Payment intent creation failed:', err);
       setError(message);
       toast.error(message);
+      setLoading(false);
       return null;
     }
   }, [setPaymentDetails, setLoading, setError, setStep]);

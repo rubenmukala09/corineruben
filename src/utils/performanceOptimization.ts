@@ -182,6 +182,28 @@ export function initPerformanceMonitoring() {
 }
 
 /**
+ * Track form submission performance
+ */
+export function trackFormTiming(formName: string, startTime: number) {
+  const duration = performance.now() - startTime;
+  if (duration > 3000) {
+    console.warn(`Slow form submission: ${formName} took ${duration.toFixed(0)}ms`);
+  }
+  return duration;
+}
+
+/**
+ * Track edge function performance
+ */
+export function trackEdgeFunctionTiming(functionName: string, startTime: number) {
+  const duration = performance.now() - startTime;
+  if (duration > 5000) {
+    console.warn(`Slow edge function: ${functionName} took ${duration.toFixed(0)}ms`);
+  }
+  return duration;
+}
+
+/**
  * Initialize all performance optimizations
  */
 export function initPerformanceOptimizations() {
