@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
@@ -200,16 +199,10 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
         ))}
       </div>
 
-      <AnimatePresence mode="wait">
+      <>
         {/* Step 1: Customer Info */}
         {step === "info" && (
-          <motion.div
-            key="info"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            className="space-y-4"
-          >
+          <div className="space-y-4 animate-fade-in">
             {/* Cart Summary */}
             <div className="bg-muted/50 rounded-xl p-4 border">
               <div className="flex items-center gap-3 mb-3">
@@ -362,18 +355,12 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
                 </>
               )}
             </Button>
-          </motion.div>
+          </div>
         )}
 
         {/* Step 2: Payment */}
         {step === "payment" && clientSecret && (
-          <motion.div
-            key="payment"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            className="space-y-4"
-          >
+          <div className="space-y-4 animate-fade-in">
             {/* Order Summary */}
             <div className="bg-muted/50 rounded-xl p-4 border">
               <div className="flex items-center justify-between mb-2">
@@ -440,25 +427,14 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
                 <span>256-bit Encryption</span>
               </div>
             </div>
-          </motion.div>
+          </div>
         )}
 
         {/* Step 3: Success */}
         {step === "success" && (
-          <motion.div
-            key="success"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="text-center py-8"
-          >
-            <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.2, type: "spring" }}
-              >
-                <CheckCircle className="w-10 h-10 text-green-500" />
-              </motion.div>
+          <div className="text-center py-8 animate-scale-in">
+            <div className="w-20 h-20 bg-success/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle className="w-10 h-10 text-success" />
             </div>
 
             <h3 className="text-2xl font-bold mb-2">Payment Successful!</h3>
@@ -488,9 +464,9 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
                 Close
               </Button>
             </div>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
+      </>
     </div>
   );
 }

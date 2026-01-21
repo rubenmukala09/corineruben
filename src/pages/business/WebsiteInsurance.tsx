@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { PageTransition } from "@/components/PageTransition";
@@ -21,22 +20,6 @@ import {
   Zap
 } from "lucide-react";
 
-// Animation variants
-const fadeSlideUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0 },
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.1,
-    },
-  },
-};
 
 const WebsiteInsurance = () => {
   const plans = [
@@ -187,39 +170,22 @@ const WebsiteInsurance = () => {
           <section className="relative py-20 lg:py-32 overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-success/10 via-background to-primary/10" />
             <div className="container mx-auto px-4 relative">
-              <motion.div 
-                className="max-w-4xl mx-auto text-center"
-                variants={staggerContainer}
-                initial="hidden"
-                animate="visible"
-              >
-                <motion.div variants={fadeSlideUp} transition={{ duration: 0.5, ease: "easeOut" }}>
+              <div className="max-w-4xl mx-auto text-center animate-fade-in">
+                <div>
                   <Badge variant="outline" className="mb-6 px-4 py-2 text-sm border-success/30 bg-success/5">
                     <Shield className="w-4 h-4 mr-2" />
                     Website Protection
                   </Badge>
-                </motion.div>
-                <motion.h1 
-                  variants={fadeSlideUp}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
-                >
+                </div>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
                   <span className="gradient-text-primary">Website Insurance</span>
                   <br />& Protection Plans
-                </motion.h1>
-                <motion.p 
-                  variants={fadeSlideUp}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto"
-                >
+                </h1>
+                <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
                   Sleep soundly knowing your website is protected 24/7. Automatic backups, 
                   security monitoring, and expert support—all in one plan.
-                </motion.p>
-                <motion.div 
-                  variants={fadeSlideUp}
-                  transition={{ duration: 0.5, ease: "easeOut" }}
-                  className="flex flex-col sm:flex-row gap-4 justify-center"
-                >
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button asChild size="xl" variant="gold">
                     <Link to="/contact">
                       Get Protected Today
@@ -229,8 +195,8 @@ const WebsiteInsurance = () => {
                   <Button asChild size="xl" variant="outline">
                     <Link to="/business">View All Services</Link>
                   </Button>
-                </motion.div>
-              </motion.div>
+                </div>
+              </div>
             </div>
           </section>
 

@@ -16,7 +16,6 @@ import { donationFormSchema, formatPhoneNumber } from "@/utils/formValidation";
 import { z } from "zod";
 import { Badge } from "@/components/ui/badge";
 import { TrustIndicators } from "@/components/payment/TrustIndicators";
-import { motion, AnimatePresence } from "framer-motion";
 
 interface DonationModalProps {
   open: boolean;
@@ -229,20 +228,18 @@ export const DonationModal = ({ open, onOpenChange, type = 'general', cause }: D
             <label className="text-sm font-medium mb-3 block">Select Amount</label>
             <div className="grid grid-cols-4 gap-2 mb-3">
               {amounts.map((amount) => (
-                <motion.button
+                <button
                   key={amount}
                   type="button"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
                   onClick={() => handleAmountSelect(amount)}
-                  className={`p-3 rounded-xl text-center font-semibold transition-all border-2 ${
+                  className={`p-3 rounded-xl text-center font-semibold transition-all border-2 hover:scale-[1.02] active:scale-[0.98] ${
                     selectedAmount === amount
                       ? 'bg-primary text-primary-foreground border-primary shadow-lg'
                       : 'bg-muted/50 border-transparent hover:border-primary/30'
                   }`}
                 >
                   ${amount}
-                </motion.button>
+                </button>
               ))}
             </div>
             <div className="relative">
@@ -259,24 +256,17 @@ export const DonationModal = ({ open, onOpenChange, type = 'general', cause }: D
           </div>
 
           {/* Impact Message */}
-          <AnimatePresence mode="wait">
-            {finalAmount > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-xl"
-              >
-                <div className="flex items-center gap-2 text-green-700 dark:text-green-400">
-                  <Sparkles className="w-5 h-5" />
-                  <span className="font-medium">Your Impact</span>
-                </div>
-                <p className="text-sm mt-1 text-muted-foreground">
-                  {getImpactMessage()}
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {finalAmount > 0 && (
+            <div className="mb-6 p-4 bg-success/10 border border-success/20 rounded-xl animate-fade-in">
+              <div className="flex items-center gap-2 text-success">
+                <Sparkles className="w-5 h-5" />
+                <span className="font-medium">Your Impact</span>
+              </div>
+              <p className="text-sm mt-1 text-muted-foreground">
+                {getImpactMessage()}
+              </p>
+            </div>
+          )}
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
