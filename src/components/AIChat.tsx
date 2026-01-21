@@ -15,7 +15,8 @@ import {
   Square,
   ChevronDown
 } from "lucide-react";
-import lauraAvatar from "@/assets/laura-avatar-new.png";
+// Use public path for LCP optimization - image must be discoverable in initial HTML
+const lauraAvatar = "/laura-avatar.png";
 
 interface Message {
   role: "user" | "assistant";
