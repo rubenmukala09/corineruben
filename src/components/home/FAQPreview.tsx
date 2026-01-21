@@ -95,7 +95,7 @@ export const FAQPreview = () => {
                   </Link>
                 </Button>
                 <Button asChild variant="outline" className="w-full rounded-2xl">
-                  <a href="tel:+1234567890">
+                  <a href="tel:+19373018749">
                     <Phone className="mr-2 w-5 h-5" />
                     Call Now
                   </a>

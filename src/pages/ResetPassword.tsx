@@ -55,7 +55,7 @@ export default function ResetPassword() {
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
       return () => clearTimeout(timer);
     } else if (success && countdown === 0) {
-      navigate("/login");
+      navigate("/auth");
     }
   }, [success, countdown, navigate]);
 
@@ -168,7 +168,7 @@ export default function ResetPassword() {
           <p className="text-gray-600 mb-6">
             This reset link is invalid or has expired. Please request a new password reset.
           </p>
-          <Button onClick={() => navigate("/login")}>
+          <Button onClick={() => navigate("/auth")}>
             Back to Login
           </Button>
         </div>
@@ -193,7 +193,7 @@ export default function ResetPassword() {
           <p className="text-sm text-gray-500 mb-4">
             Redirecting to login in {countdown} seconds...
           </p>
-          <Button onClick={() => navigate("/login")}>
+          <Button onClick={() => navigate("/auth")}>
             Sign In Now
           </Button>
         </div>
