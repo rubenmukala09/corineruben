@@ -4,13 +4,51 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
     
-    <!-- Google Analytics - deferred to reduce unused JS impact -->
+    <!-- CRITICAL: Preconnect hints FIRST - before ANY scripts for Speed Index -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://avoafweoebstkgjnbadv.supabase.co" crossorigin>
+    
+    <!-- Preload critical font for immediate text rendering -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/outfit/v11/QGYyz_MVcBeNP4NjuGObqx1XmO1I4TC0C4G-EiAou6Y.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <!-- Critical CSS inlined for FCP/LCP - BEFORE any scripts -->
+    <style>
+      /* System font stack for instant text paint, then swap to Outfit */
+      @font-face{font-family:'Outfit';font-style:normal;font-weight:400 900;font-display:swap;src:url(https://fonts.gstatic.com/s/outfit/v11/QGYyz_MVcBeNP4NjuGObqx1XmO1I4TC0C4G-EiAou6Y.woff2) format('woff2')}
+      *,*::before,*::after{box-sizing:border-box;border-width:0;border-style:solid}
+      html{line-height:1.5;-webkit-text-size-adjust:100%;font-family:Outfit,ui-sans-serif,system-ui,-apple-system,sans-serif}
+      body{margin:0;line-height:inherit;background-color:#fff;color:#0f172a}
+      #root{min-height:100vh;display:flex;flex-direction:column}
+      .fixed{position:fixed}.relative{position:relative}.flex{display:flex}.hidden{display:none}
+      .h-screen{height:100vh}.w-full{width:100%}.min-h-screen{min-height:100vh}
+      .items-center{align-items:center}.justify-center{justify-content:center}
+      .overflow-hidden{overflow:hidden}.z-50{z-index:50}
+      .bg-primary{background-color:#7c3aed}.text-white{color:#fff}
+      .bg-background{background-color:#fff}
+      /* LCP element - gradient text for nav brand */
+      .gradient-text-primary{background:linear-gradient(135deg,hsl(260,70%,35%),hsl(260,60%,55%));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+      .sticky{position:sticky}.top-0{top:0}.bg-card{background-color:#fff}.border-b{border-bottom-width:1px}.border-border{border-color:#e2e8f0}.shadow-lg{box-shadow:0 10px 15px -3px rgba(0,0,0,.1)}
+      nav{z-index:9999}
+      h1{font-weight:700;line-height:.95;letter-spacing:-.025em}
+      @media(min-width:640px){h1{font-size:2.25rem}}
+      @media(min-width:768px){h1{font-size:3rem}}
+      @media(min-width:1024px){h1{font-size:3.75rem}}
+      .lcp-text{font-size:clamp(1rem,2vw,1.5rem);color:#64748b;line-height:1.6;margin:0 0 2rem}
+    </style>
+    
+    <!-- DNS prefetch for other origins -->
+    <link rel="dns-prefetch" href="https://js.stripe.com">
+    <link rel="dns-prefetch" href="https://m.stripe.network">
+    
+    <!-- Preload main entry to reduce critical chain -->
+    <link rel="modulepreload" href="/src/main.tsx">
+    
+    <!-- Google Analytics - deferred to reduce main-thread impact -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('consent', 'default', {analytics_storage: 'denied', ad_storage: 'denied'});
-      
-      // Defer GA loading until after critical content
       function loadGA() {
         var s = document.createElement('script');
         s.async = true;
@@ -26,56 +64,15 @@
       }
     </script>
     
-    <!-- Preconnect hints IMMEDIATELY after meta tags - no scripts before -->
-    <link rel="preconnect" href="https://avoafweoebstkgjnbadv.supabase.co" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <!-- DNS prefetch as fallback -->
-    <link rel="dns-prefetch" href="https://avoafweoebstkgjnbadv.supabase.co">
-    <link rel="dns-prefetch" href="https://js.stripe.com">
-    <link rel="dns-prefetch" href="https://m.stripe.network">
-    
-    <!-- Preload main entry to reduce critical chain -->
-    <link rel="modulepreload" href="/src/main.tsx">
-    
-    <!-- Critical CSS inlined for FCP/LCP -->
-    <style>
-      *,*::before,*::after{box-sizing:border-box;border-width:0;border-style:solid}
-      html{line-height:1.5;-webkit-text-size-adjust:100%;font-family:Outfit,ui-sans-serif,system-ui,sans-serif}
-      body{margin:0;line-height:inherit;background-color:#fff;color:#0f172a}
-      #root{min-height:100vh;display:flex;flex-direction:column}
-      .fixed{position:fixed}.relative{position:relative}.flex{display:flex}.hidden{display:none}
-      .h-screen{height:100vh}.w-full{width:100%}.min-h-screen{min-height:100vh}
-      .items-center{align-items:center}.justify-center{justify-content:center}
-      .overflow-hidden{overflow:hidden}.z-50{z-index:50}
-      .bg-primary{background-color:#7c3aed}.text-white{color:#fff}
-      .bg-background{background-color:#fff}
-      /* LCP element - gradient text for nav brand (critical for immediate paint) */
-      .gradient-text-primary{background:linear-gradient(135deg,hsl(260,70%,35%),hsl(260,60%,55%));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-      /* Navigation critical styles */
-      .sticky{position:sticky}.top-0{top:0}.bg-card{background-color:#fff}.border-b{border-bottom-width:1px}.border-border{border-color:#e2e8f0}.shadow-lg{box-shadow:0 10px 15px -3px rgba(0,0,0,.1)}
-      nav{z-index:9999}
-      /* Hero LCP styles - ensure fast text paint */
-      h1{font-weight:700;line-height:.95;letter-spacing:-.025em}
-      @media(min-width:640px){h1{font-size:2.25rem}}
-      @media(min-width:768px){h1{font-size:3rem}}
-      @media(min-width:1024px){h1{font-size:3.75rem}}
-      /* LCP paragraph - critical for immediate paint */
-      .lcp-text{font-size:clamp(1rem,2vw,1.5rem);color:#64748b;line-height:1.6;margin:0 0 2rem}
-    </style>
-    
     <!-- CSS async loader - makes stylesheets non-render-blocking -->
     <script>
       (function(){
-        // MutationObserver to catch dynamically added stylesheets
         function makeAsync(link){
           if(link.rel==='stylesheet'&&link.href&&!link.dataset.critical){
             link.media='print';
             link.onload=function(){this.media='all';this.onload=null};
           }
         }
-        // Watch for new links
         var obs=new MutationObserver(function(m){
           m.forEach(function(mut){
             mut.addedNodes.forEach(function(n){
@@ -84,15 +81,9 @@
           });
         });
         obs.observe(document.documentElement,{childList:true,subtree:true});
-        // Process any existing links
         document.querySelectorAll('link[rel="stylesheet"]').forEach(makeAsync);
       })();
     </script>
-    
-    <!-- Font loading - non-blocking -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"></noscript>
     
     <link rel="icon" type="image/png" href="/favicon.png" />
     <title>InVision Network | Cybersecurity & AI Protection in Ohio</title>
