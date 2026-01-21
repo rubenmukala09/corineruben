@@ -103,6 +103,11 @@ export default {
           500: "hsl(var(--cyan-500))",
           400: "hsl(var(--cyan-400))",
         },
+        exodus: {
+          DEFAULT: "hsl(var(--exodus-navy))",
+          light: "hsl(var(--exodus-navy-light))",
+          dark: "hsl(var(--exodus-navy-dark))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
