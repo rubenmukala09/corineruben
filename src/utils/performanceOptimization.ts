@@ -205,23 +205,23 @@ export function trackEdgeFunctionTiming(functionName: string, startTime: number)
 
 /**
  * Initialize all performance optimizations
- * CRITICAL: This function is designed to minimize TTI impact
  */
 export function initPerformanceOptimizations() {
   if (typeof window === 'undefined') return;
 
-  // Add loaded class via RAF to avoid forced reflow during initial parse
-  requestAnimationFrame(() => {
+  // Add loaded class immediately - critical for LCP
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.classList.add('loaded');
+    });
+  } else {
     document.body.classList.add('loaded');
-  });
+  }
 
-  // Defer ALL non-critical operations until after TTI
-  // Use a longer timeout to ensure we don't block interactivity
+  // Defer all non-critical operations to avoid blocking TTI
   runWhenIdle(() => {
-    // Setup prefetch on hover (heavily deferred)
+    // Setup prefetch on hover (deferred)
     const prefetchedUrls = new Set<string>();
-    
-    // Use passive event listener with capture for better performance
     document.addEventListener('mouseover', (e) => {
       const target = e.target as HTMLElement;
       const link = target.closest('a');
@@ -233,5 +233,16 @@ export function initPerformanceOptimizations() {
         }
       }
     }, { passive: true, capture: true });
-  }, { timeout: 5000 }); // Increased timeout to ensure TTI completes first
+
+    // Add instant button feedback (deferred)
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      const button = target.closest('button, a');
+      
+      if (button) {
+        button.classList.add('active-press');
+        setTimeout(() => button.classList.remove('active-press'), 100);
+      }
+    }, { passive: true });
+  }, { timeout: 3000 });
 }
