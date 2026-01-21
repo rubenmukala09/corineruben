@@ -37,10 +37,10 @@ export const TrustedExpertsBar = () => {
             <div>
               <div className="flex items-center gap-1.5 mb-1">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
+                  <Star key={i} className="w-6 h-6 fill-amber-400 text-amber-400" />
                 ))}
               </div>
-              <p className="text-muted-foreground">Trusted by Ohio Families</p>
+              <p className="text-foreground/80 text-lg font-medium">Trusted by Ohio Families</p>
             </div>
           </div>
 
@@ -53,25 +53,25 @@ export const TrustedExpertsBar = () => {
             ].map((item, index) => (
               <div
                 key={index}
-                className="flex items-center gap-2.5 px-5 py-2.5 bg-white rounded-full border border-border/50 shadow-sm hover:shadow-md transition-shadow"
+                className="flex items-center gap-3 px-6 py-3 bg-white rounded-full border border-border/50 shadow-sm hover:shadow-md transition-shadow"
               >
-                <span className="text-xs font-bold text-primary bg-primary/10 w-6 h-6 rounded-full flex items-center justify-center">{item.num}</span>
-                <item.icon className="w-4 h-4 text-primary" />
-                <span className="font-medium">{item.label}</span>
+                <span className="text-sm font-bold text-primary bg-primary/10 w-7 h-7 rounded-full flex items-center justify-center">{item.num}</span>
+                <item.icon className="w-5 h-5 text-primary" />
+                <span className="font-semibold text-lg">{item.label}</span>
               </div>
             ))}
           </div>
 
           {/* Right - Stats */}
-          <div className="flex items-center gap-8 animate-fade-in" style={{ animationDelay: "200ms" }}>
+          <div className="flex items-center gap-10 animate-fade-in" style={{ animationDelay: "200ms" }}>
             <div className="text-center">
-              <p className="text-3xl font-bold text-primary">17%</p>
-              <p className="text-sm text-muted-foreground">Veteran Discount</p>
+              <p className="text-4xl font-black text-primary">17%</p>
+              <p className="text-base text-foreground/70 font-medium">Veteran Discount</p>
             </div>
-            <div className="w-px h-12 bg-border" />
+            <div className="w-px h-14 bg-border" />
             <div className="text-center">
-              <p className="text-3xl font-bold text-foreground">60</p>
-              <p className="text-sm text-muted-foreground">Day Guarantee</p>
+              <p className="text-4xl font-black text-foreground">60</p>
+              <p className="text-base text-foreground/70 font-medium">Day Guarantee</p>
             </div>
           </div>
         </div>

@@ -59,15 +59,15 @@ export const ScamAlertsSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         {/* Header - Toned Down / Muted Theme */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted border border-border mb-6">
-            <Shield className="w-4 h-4 text-muted-foreground" />
-            <span className="text-sm font-medium text-muted-foreground">Active Threat Intelligence</span>
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-muted border border-border mb-6">
+            <Shield className="w-5 h-5 text-muted-foreground" />
+            <span className="text-base font-semibold text-muted-foreground">Active Threat Intelligence</span>
           </div>
           
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
             Know the <span className="text-foreground/70">Threats</span>, Stay <span className="text-foreground/80">Ahead</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-foreground/80 text-xl md:text-2xl max-w-2xl mx-auto font-medium leading-relaxed">
             Real-time intelligence on scams targeting your community right now.
           </p>
         </div>
@@ -98,13 +98,13 @@ export const ScamAlertsSection = () => {
                   {/* Content */}
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-bold text-lg text-foreground">{alert.title}</h3>
-                      <span className="text-emerald-700 dark:text-emerald-400 text-sm font-bold flex items-center gap-1">
-                        <TrendingUp className="w-4 h-4" />
+                      <h3 className="font-bold text-xl text-foreground">{alert.title}</h3>
+                      <span className="text-emerald-700 dark:text-emerald-400 text-base font-bold flex items-center gap-1">
+                        <TrendingUp className="w-5 h-5" />
                         {alert.trend}
                       </span>
                     </div>
-                    <p className="text-muted-foreground text-sm mb-3">{alert.description}</p>
+                    <p className="text-foreground/70 text-base mb-3 leading-relaxed">{alert.description}</p>
                     
                     {index === activeAlert && (
                       <div className="pt-3 border-t border-border/30">
@@ -128,16 +128,16 @@ export const ScamAlertsSection = () => {
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
                   <Shield className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold text-foreground">Quick Protection Tips</h3>
+                <h3 className="text-2xl font-bold text-foreground">Quick Protection Tips</h3>
               </div>
               
-              <div className="space-y-4">
+              <div className="space-y-5">
                 {quickTips.map((tip, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center flex-shrink-0">
-                      <CheckCircle className="w-3.5 h-3.5 text-primary-foreground" />
+                  <div key={index} className="flex items-center gap-4">
+                    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center flex-shrink-0">
+                      <CheckCircle className="w-4 h-4 text-primary-foreground" />
                     </div>
-                    <span className="text-muted-foreground">{tip}</span>
+                    <span className="text-foreground/80 text-lg font-medium">{tip}</span>
                   </div>
                 ))}
               </div>
@@ -159,17 +159,17 @@ export const ScamAlertsSection = () => {
                 <div className="absolute inset-0 bg-black/50" />
               </div>
               
-              <div className="relative z-10 p-8 text-center">
-                <h3 className="text-xl font-bold text-white mb-3">
+              <div className="relative z-10 p-10 text-center">
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
                   Take Action Now
                 </h3>
-                <p className="text-white/90 mb-6">
+                <p className="text-white/90 mb-8 text-lg md:text-xl font-medium">
                   Get protected before scammers find you
                 </p>
-                <Button asChild variant="secondary" size="lg" className="rounded-2xl">
+                <Button asChild variant="secondary" size="lg" className="h-14 px-8 text-lg font-bold rounded-2xl">
                   <Link to="/training#pricing">
                     Get Protected Now
-                    <ArrowRight className="ml-2 w-4 h-4" />
+                    <ArrowRight className="ml-2 w-5 h-5" />
                   </Link>
                 </Button>
               </div>

@@ -42,16 +42,16 @@ export const BlogPreview = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <div 
-            className="inline-flex items-center gap-2 px-5 py-2 bg-primary/10 text-primary text-sm font-semibold uppercase tracking-wider mb-4 border border-primary/20"
+            className="inline-flex items-center gap-2 px-6 py-2.5 bg-primary/10 text-primary text-base font-bold uppercase tracking-wider mb-6 border border-primary/20"
             style={{ clipPath: "polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%)" }}
           >
             Latest Updates
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
             Learn From Our{" "}
             <span className="text-primary">Latest Blog</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-foreground/80 text-xl md:text-2xl max-w-2xl mx-auto font-medium leading-relaxed">
             Stay informed with the latest cybersecurity tips and protection strategies.
           </p>
         </div>
@@ -82,11 +82,11 @@ export const BlogPreview = () => {
                   
                   {/* Content */}
                   <div className="p-8 text-center">
-                    <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-3">
-                      <Calendar className="w-4 h-4" />
-                      <span>{article.date}</span>
+                    <div className="flex items-center justify-center gap-2 text-base text-foreground/70 mb-4">
+                      <Calendar className="w-5 h-5" />
+                      <span className="font-medium">{article.date}</span>
                     </div>
-                    <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors leading-snug">
+                    <h3 className="font-bold text-xl text-foreground group-hover:text-primary transition-colors leading-snug">
                       {article.title}
                     </h3>
                   </div>
@@ -97,8 +97,8 @@ export const BlogPreview = () => {
         </div>
 
         {/* CTA */}
-        <div className="text-center mt-12">
-          <Button asChild variant="outline" size="lg" className="rounded-2xl px-8">
+        <div className="text-center mt-14">
+          <Button asChild variant="outline" size="lg" className="h-14 px-10 text-lg font-bold rounded-2xl border-2">
             <Link to="/articles">
               View All Articles
               <ArrowRight className="ml-2 w-5 h-5" />

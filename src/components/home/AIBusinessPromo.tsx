@@ -80,12 +80,12 @@ export const AIBusinessPromo = () => {
               <span className="font-bold text-primary text-lg">AI & Business Solutions</span>
             </div>
             
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
               Stop Missing Calls.{" "}
               <span className="text-foreground/80">Let AI Run Your Front Desk.</span>
             </h2>
             
-            <p className="text-base text-muted-foreground leading-relaxed">
+            <p className="text-xl md:text-2xl text-foreground/80 leading-relaxed font-medium">
               Transform your business with AI-powered automation. We build solutions that work 24/7 so you never miss an opportunity.
             </p>
 
@@ -186,18 +186,18 @@ export const AIBusinessPromo = () => {
               ))}
             </div>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-3">
-              <Button asChild size="lg" className="rounded-xl shadow-lg shadow-primary/25 group">
+            {/* CTAs - Larger buttons */}
+            <div className="flex flex-wrap gap-4">
+              <Button asChild size="lg" className="h-14 px-8 text-lg font-bold rounded-2xl shadow-xl shadow-primary/30 group">
                 <Link to="/business">
-                  <Rocket className="mr-2 w-4 h-4 group-hover:animate-bounce" />
+                  <Rocket className="mr-2 w-5 h-5 group-hover:animate-bounce" />
                   Explore Solutions
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-xl group">
+              <Button asChild variant="outline" size="lg" className="h-14 px-8 text-lg font-bold rounded-2xl border-2 group">
                 <Link to="/contact?service=ai-automation">
-                  <DollarSign className="mr-1 w-4 h-4" />
+                  <DollarSign className="mr-2 w-5 h-5" />
                   Get Quote
                 </Link>
               </Button>

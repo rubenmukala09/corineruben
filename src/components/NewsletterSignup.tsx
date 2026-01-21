@@ -68,12 +68,12 @@ export function NewsletterSignup({ compact = false }: { compact?: boolean }) {
       </Button>
     </form>
   ) : (
-    <div className="bg-primary-foreground/10 rounded-lg p-1.5 md:p-2.5 mb-2 md:mb-3">
-      <h3 className="font-semibold text-xs md:text-sm mb-0.5">Monthly AI Safety Tips</h3>
-      <p className="text-primary-foreground/80 mb-1.5 text-[10px] md:text-[11px] leading-tight">
+    <div className="bg-primary-foreground/10 rounded-xl p-4 md:p-5 mb-3 md:mb-4">
+      <h3 className="font-bold text-base md:text-lg mb-1">Monthly AI Safety Tips</h3>
+      <p className="text-primary-foreground/80 mb-3 text-sm md:text-base leading-relaxed">
         Stay informed about the latest scams and protection strategies.
       </p>
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-1.5">
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
         <Input
           type="email"
           placeholder="Your email address"
@@ -81,17 +81,17 @@ export function NewsletterSignup({ compact = false }: { compact?: boolean }) {
           onChange={(e) => setEmail(e.target.value)}
           disabled={isSubmitting}
           required
-          className="bg-primary-foreground/20 border-primary-foreground/30 text-primary-foreground placeholder:text-primary-foreground/50 h-7 md:h-7 text-[11px]"
+          className="bg-primary-foreground/20 border-primary-foreground/30 text-primary-foreground placeholder:text-primary-foreground/50 h-12 md:h-12 text-base"
         />
         <Button 
           variant="default" 
-          className="bg-accent hover:bg-accent/90 h-7 md:h-7 whitespace-nowrap text-[11px] font-semibold px-3" 
+          className="bg-accent hover:bg-accent/90 h-12 md:h-12 whitespace-nowrap text-base font-bold px-6" 
           type="submit"
           disabled={isSubmitting}
         >
           {isSubmitting ? (
             <>
-              <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               Subscribing...
             </>
           ) : (

@@ -46,18 +46,18 @@ export const FAQPreview = () => {
           <div className="lg:sticky lg:top-24 space-y-8">
             <div>
               <div 
-                className="inline-flex items-center gap-2 px-5 py-2 bg-primary text-primary-foreground text-sm font-semibold uppercase tracking-wider mb-4"
+                className="inline-flex items-center gap-2 px-6 py-2.5 bg-primary text-primary-foreground text-base font-bold uppercase tracking-wider mb-6"
                 style={{ clipPath: "polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%)" }}
               >
                 FAQ
               </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
                 Got{" "}
                 <span className="text-primary">Questions?</span>
                 <br />
                 We've Got Answers
               </h2>
-              <p className="text-muted-foreground text-lg leading-relaxed">
+              <p className="text-foreground/80 text-xl md:text-2xl leading-relaxed font-medium">
                 Protecting your family from scams is a serious decision. Here's what you need to know.
               </p>
             </div>
@@ -78,23 +78,23 @@ export const FAQPreview = () => {
                   </div>
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg text-foreground">Talk to a Human</h3>
-                  <p className="text-sm text-muted-foreground">Real experts, not bots • Available now</p>
+                  <h3 className="font-bold text-xl text-foreground">Talk to a Human</h3>
+                  <p className="text-base text-foreground/70">Real experts, not bots • Available now</p>
                 </div>
               </div>
 
-              <p className="text-muted-foreground text-sm mb-6">
+              <p className="text-foreground/70 text-lg mb-6 leading-relaxed">
                 Our Ohio-based team is ready to answer your questions and help you find the right protection.
               </p>
 
               <div className="flex flex-col gap-3">
-                <Button asChild className="w-full rounded-2xl">
+                <Button asChild size="lg" className="w-full h-14 text-lg font-bold rounded-2xl">
                   <Link to="/contact">
                     <MessageCircle className="mr-2 w-5 h-5" />
                     Chat With Expert
                   </Link>
                 </Button>
-                <Button asChild variant="outline" className="w-full rounded-2xl">
+                <Button asChild variant="outline" size="lg" className="w-full h-14 text-lg font-bold rounded-2xl border-2">
                   <a href="tel:+19373018749">
                     <Phone className="mr-2 w-5 h-5" />
                     Call Now
@@ -113,15 +113,15 @@ export const FAQPreview = () => {
                   value={`item-${index}`}
                   className="group border border-white/50 rounded-2xl px-6 bg-white shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] transition-all duration-400 ease-out hover:translate-y-[-4px] hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)] data-[state=open]:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]"
                 >
-                  <AccordionTrigger className="text-left font-semibold hover:no-underline py-5 text-foreground group-data-[state=open]:text-primary transition-colors">
+                  <AccordionTrigger className="text-left font-bold hover:no-underline py-6 text-lg text-foreground group-data-[state=open]:text-primary transition-colors">
                     <div className="flex items-center gap-4 pr-4">
-                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 group-data-[state=open]:bg-primary/20 transition-colors">
-                        <span className="text-primary font-bold text-sm">{index + 1}</span>
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 group-data-[state=open]:bg-primary/20 transition-colors">
+                        <span className="text-primary font-bold text-base">{index + 1}</span>
                       </div>
                       {faq.question}
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground pb-5 pl-12 text-base leading-relaxed">
+                  <AccordionContent className="text-foreground/70 pb-6 pl-14 text-lg leading-relaxed font-medium">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -150,22 +150,22 @@ export const FAQPreview = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
           </div>
           
-          <div className="relative z-10 p-10 md:p-16 text-center">
-            <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 drop-shadow-lg">
+          <div className="relative z-10 p-12 md:p-20 text-center">
+            <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 drop-shadow-lg">
               Ready to Get Protected?
             </h3>
-            <p className="text-white/90 text-lg max-w-2xl mx-auto mb-8 drop-shadow-md">
+            <p className="text-white/90 text-xl md:text-2xl max-w-3xl mx-auto mb-10 drop-shadow-md font-medium leading-relaxed">
               Join thousands of families who trust us with their digital safety. 
               Start your protection journey today.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="rounded-full px-8">
+            <div className="flex flex-col sm:flex-row gap-5 justify-center">
+              <Button asChild size="lg" className="h-16 px-10 text-xl font-bold rounded-full">
                 <Link to="/training#pricing">
                   Start Protection Now
-                  <ArrowRight className="ml-2 w-5 h-5" />
+                  <ArrowRight className="ml-2 w-6 h-6" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full px-8 bg-white/10 border-white/30 text-white hover:bg-white/20">
+              <Button asChild variant="outline" size="lg" className="h-16 px-10 text-xl font-bold rounded-full bg-white/10 border-2 border-white/40 text-white hover:bg-white/20">
                 <Link to="/contact">
                   Talk to an Expert
                 </Link>

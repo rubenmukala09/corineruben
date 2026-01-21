@@ -109,34 +109,34 @@ export const HeroHomepage = () => {
               <span className="text-xs sm:text-sm font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Veteran-Supporting • Ohio-Based</span>
             </div>
             
-            {/* Headline - Renders immediately */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold leading-[0.95] mb-6 sm:mb-8 tracking-tight">
+            {/* Headline - Renders immediately - LARGE for elderly readability */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-bold leading-[0.95] mb-6 sm:mb-8 tracking-tight">
               <span className="block text-foreground">InVision</span>
               <span className="block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">Network</span>
-              <span className="block font-light text-muted-foreground/80 text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mt-2 sm:mt-3">
+              <span className="block font-medium text-muted-foreground text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mt-2 sm:mt-3">
                 Protection • Education • Innovation
               </span>
             </h1>
             
-            {/* Description */}
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mb-8 sm:mb-12 leading-relaxed">
+            {/* Description - Larger for readability */}
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-foreground/80 max-w-2xl mb-8 sm:mb-12 leading-relaxed font-medium">
               Empowering families with AI scam protection. Transforming businesses with cutting-edge automation solutions.
             </p>
             
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 relative z-30">
-              <Button asChild size="lg" className="group h-12 sm:h-14 px-6 sm:px-8 text-sm sm:text-base font-semibold rounded-xl bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-accent/90 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/35 transition-all duration-200 border-0 w-full sm:w-auto">
+            {/* CTAs - Larger, more prominent buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 relative z-30">
+              <Button asChild size="lg" className="group h-14 sm:h-16 px-8 sm:px-10 text-base sm:text-lg font-bold rounded-2xl bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-accent/90 shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/40 transition-all duration-200 border-0 w-full sm:w-auto">
                 <Link to="/training">
-                  <Shield className="mr-2 w-4 h-4 sm:w-5 sm:h-5" />
+                  <Shield className="mr-2 w-5 h-5 sm:w-6 sm:h-6" />
                   Protect My Family
-                  <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="ml-2 w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
-              <Button asChild size="lg" className="group h-12 sm:h-14 px-6 sm:px-8 text-sm sm:text-base font-semibold rounded-xl bg-gradient-to-r from-accent to-accent/90 hover:from-accent/90 hover:to-primary/90 shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/35 transition-all duration-200 border-0 text-accent-foreground w-full sm:w-auto">
+              <Button asChild size="lg" className="group h-14 sm:h-16 px-8 sm:px-10 text-base sm:text-lg font-bold rounded-2xl bg-gradient-to-r from-accent to-accent/90 hover:from-accent/90 hover:to-primary/90 shadow-xl shadow-accent/30 hover:shadow-2xl hover:shadow-accent/40 transition-all duration-200 border-0 text-accent-foreground w-full sm:w-auto">
                 <Link to="/business">
-                  <Zap className="mr-2 w-4 h-4 sm:w-5 sm:h-5" />
+                  <Zap className="mr-2 w-5 h-5 sm:w-6 sm:h-6" />
                   Automate My Business
-                  <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="ml-2 w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
             </div>

@@ -166,12 +166,12 @@ export const WorkshopsPromo = () => {
               <span className="font-bold text-emerald-700 text-lg">Learn & Train Workshops</span>
             </div>
             
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
               Protect Your Family from{" "}
               <span className="text-primary">AI-Powered Scams</span>
             </h2>
             
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-xl md:text-2xl text-foreground/80 leading-relaxed font-medium">
               With the rise of AI, scammers use deepfakes and voice cloning to trick families. Our expert-led workshops teach you to recognize and stop these sophisticated threats.
             </p>
 
@@ -243,18 +243,18 @@ export const WorkshopsPromo = () => {
               ))}
             </div>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-3">
-              <Button asChild size="lg" className="rounded-xl shadow-lg shadow-primary/25 group">
+            {/* CTAs - Larger buttons */}
+            <div className="flex flex-wrap gap-4">
+              <Button asChild size="lg" className="h-14 px-8 text-lg font-bold rounded-2xl shadow-xl shadow-primary/30 group">
                 <Link to="/training">
-                  <GraduationCap className="mr-2 w-4 h-4 group-hover:animate-bounce" />
+                  <GraduationCap className="mr-2 w-5 h-5 group-hover:animate-bounce" />
                   View Workshops
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-xl group">
+              <Button asChild variant="outline" size="lg" className="h-14 px-8 text-lg font-bold rounded-2xl border-2 group">
                 <Link to="/training#pricing">
-                  <Heart className="mr-1 w-4 h-4 text-rose-500" />
+                  <Heart className="mr-2 w-5 h-5 text-rose-500" />
                   See Pricing
                 </Link>
               </Button>
