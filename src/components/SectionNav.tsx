@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { useSectionNavigation } from "@/hooks/useSectionNavigation";
 
 const sections = [
@@ -16,12 +15,7 @@ export const SectionNav = () => {
   const { activeSection, scrollToSection } = useSectionNavigation(sections);
 
   return (
-    <motion.nav
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: 1, duration: 0.5 }}
-      className="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-3"
-    >
+    <nav className="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-3 animate-fade-in">
       {sections.map((section) => (
         <button
           key={section.id}
@@ -35,18 +29,16 @@ export const SectionNav = () => {
           </span>
           
           {/* Dot indicator */}
-          <motion.div
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+          <div
+            className={`w-3 h-3 rounded-full transition-all duration-300 hover:scale-130 active:scale-90 ${
               activeSection === section.id
                 ? "bg-primary scale-125 shadow-lg shadow-primary/50"
                 : "bg-muted-foreground/30 hover:bg-primary/50"
             }`}
-            whileHover={{ scale: 1.3 }}
-            whileTap={{ scale: 0.9 }}
           />
         </button>
       ))}
-    </motion.nav>
+    </nav>
   );
 };
 

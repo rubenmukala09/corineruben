@@ -1,7 +1,6 @@
 import { Shield, Mail, Phone, MessageSquare, QrCode, AlertTriangle, CheckCircle } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { motion } from "framer-motion";
 
 const mockThreatActivity = [
   {
@@ -80,12 +79,10 @@ export function ThreatActivityTimeline() {
         {mockThreatActivity.map((threat, index) => {
           const Icon = getIcon(threat.type);
           return (
-            <motion.div
+            <div
               key={threat.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="flex items-start gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors group"
+              className="flex items-start gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors group animate-fade-in"
+              style={{ animationDelay: `${index * 50}ms` }}
             >
               <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${getSeverityColor(threat.severity)}`}>
                 <Icon className="w-4 h-4" />
@@ -107,7 +104,7 @@ export function ThreatActivityTimeline() {
                 <p className="text-xs text-muted-foreground truncate">{threat.description}</p>
                 <p className="text-xs text-muted-foreground/60 mt-1">{threat.time}</p>
               </div>
-            </motion.div>
+            </div>
           );
         })}
       </CardContent>

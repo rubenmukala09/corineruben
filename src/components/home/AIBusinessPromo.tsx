@@ -1,12 +1,10 @@
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Phone, Calendar, Bot, Globe, ArrowRight, Sparkles, Shield, Clock, TrendingUp, Star, Zap, Users, Award, CheckCircle, Palette, Headphones, Lock, Lightbulb, Rocket, DollarSign, Target, BarChart3 } from "lucide-react";
+import { Phone, Calendar, Bot, Globe, ArrowRight, Shield, Clock, TrendingUp, Star, Zap, Award, CheckCircle, Palette, Headphones, Lightbulb, Rocket, DollarSign } from "lucide-react";
 import businessTechBg from "@/assets/business-tech-bg.jpg";
 import businessProfessionalsOffice from "@/assets/business-professionals-office.jpg";
 import aiReceptionistTech from "@/assets/ai-receptionist-tech.jpg";
 import aiAutomationTech from "@/assets/ai-automation-tech.jpg";
-import { TestimonialBubble } from "./TestimonialBubble";
 
 const services = [
   {
@@ -50,9 +48,9 @@ const premiumAddons = [
 ];
 
 const roiFacts = [
-  { stat: "62%", desc: "calls missed", icon: Phone, color: "text-rose-500" },
-  { stat: "$500", desc: "lost/missed call", icon: DollarSign, color: "text-amber-500" },
-  { stat: "80%", desc: "fewer no-shows", icon: CheckCircle, color: "text-emerald-500" },
+  { stat: "62%", desc: "calls missed", icon: Phone, color: "text-rose-700" },
+  { stat: "$500", desc: "lost/missed call", icon: DollarSign, color: "text-amber-700" },
+  { stat: "80%", desc: "fewer no-shows", icon: CheckCircle, color: "text-emerald-700" },
 ];
 
 
@@ -76,22 +74,11 @@ export const AIBusinessPromo = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Content Side */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-4"
-          >
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl border-2 border-primary/30"
-            >
+          <div className="space-y-4 animate-fade-in">
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl border-2 border-primary/30">
               <Bot className="w-5 h-5 text-primary" />
               <span className="font-bold text-primary text-lg">AI & Business Solutions</span>
-            </motion.div>
+            </div>
             
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
               Stop Missing Calls.{" "}
@@ -102,21 +89,11 @@ export const AIBusinessPromo = () => {
               Transform your business with AI-powered automation. We build solutions that work 24/7 so you never miss an opportunity.
             </p>
 
-            {/* Combined ROI + Premium Section - Side by Side */}
+            {/* Combined ROI + Premium Section */}
             <div className="grid grid-cols-2 gap-3">
-              {/* ROI Card with Animation */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.02 }}
-                className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-4 text-white relative overflow-hidden"
-              >
-                <motion.div 
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                  className="absolute -top-4 -right-4 w-20 h-20 border-2 border-white/10 rounded-full"
-                />
+              {/* ROI Card */}
+              <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-4 text-white relative overflow-hidden hover:scale-[1.02] transition-transform">
+                <div className="absolute -top-4 -right-4 w-20 h-20 border-2 border-white/10 rounded-full animate-spin" style={{ animationDuration: "20s" }} />
                 <div className="relative z-10">
                   <div className="flex items-center gap-2 mb-2">
                     <TrendingUp className="w-5 h-5" />
@@ -128,46 +105,30 @@ export const AIBusinessPromo = () => {
                     <span>Within 6 months</span>
                   </div>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Premium Services Card */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                className="bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl p-4 text-white"
-              >
+              <div className="bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl p-4 text-white">
                 <div className="flex items-center gap-2 mb-2">
                   <Zap className="w-5 h-5" />
                   <span className="text-sm font-bold">Premium</span>
                 </div>
                 <div className="space-y-1.5">
                   {premiumAddons.map((addon, i) => (
-                    <motion.div 
+                    <div 
                       key={i}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.2 + i * 0.1 }}
                       className="flex items-center gap-2 text-xs bg-white/10 rounded-lg px-2 py-1"
                     >
                       <addon.icon className="w-3 h-3" />
                       <span>{addon.name}</span>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             </div>
 
             {/* AI Service Insurance */}
-            <motion.div 
-              className="bg-gradient-to-r from-amber-500/15 via-amber-400/15 to-yellow-500/15 border-2 border-amber-500/40 rounded-2xl p-4 relative overflow-hidden"
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              whileHover={{ scale: 1.01 }}
-              viewport={{ once: true }}
-            >
+            <div className="bg-gradient-to-r from-amber-500/15 via-amber-400/15 to-yellow-500/15 border-2 border-amber-500/40 rounded-2xl p-4 relative overflow-hidden hover:scale-[1.01] transition-transform">
               <div className="absolute top-2 right-2">
                 <Star className="w-5 h-5 text-amber-500" />
               </div>
@@ -185,40 +146,30 @@ export const AIBusinessPromo = () => {
                   </p>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
-            {/* ROI Facts - Compact Animated */}
+            {/* ROI Facts */}
             <div className="flex gap-2">
               {roiFacts.map((fact, index) => (
-                <motion.div 
+                <div 
                   key={index}
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{ y: -3 }}
-                  className="flex-1 bg-white rounded-xl p-3 border border-border/50 shadow-sm text-center"
+                  className="flex-1 bg-white rounded-xl p-3 border border-border/50 shadow-sm text-center hover:-translate-y-1 transition-transform"
                 >
                   <div className="w-8 h-8 mx-auto mb-1 rounded-full bg-muted flex items-center justify-center">
                     <fact.icon className={`w-4 h-4 ${fact.color}`} />
                   </div>
                   <div className={`text-lg font-black ${fact.color}`}>{fact.stat}</div>
                   <div className="text-[10px] text-muted-foreground">{fact.desc}</div>
-                </motion.div>
+                </div>
               ))}
             </div>
 
-            {/* Services Grid - Colorful */}
+            {/* Services Grid */}
             <div className="grid grid-cols-2 gap-2">
               {services.map((service, index) => (
-                <motion.div
+                <div
                   key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.08 }}
-                  whileHover={{ scale: 1.03, y: -2 }}
-                  className="bg-white rounded-xl p-3 border border-border/50 shadow-sm group cursor-pointer"
+                  className="bg-white rounded-xl p-3 border border-border/50 shadow-sm group cursor-pointer hover:scale-[1.03] hover:-translate-y-1 transition-transform"
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${service.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
@@ -229,9 +180,9 @@ export const AIBusinessPromo = () => {
                   <p className="text-[10px] text-muted-foreground mb-1">{service.description}</p>
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{service.price}</span>
-                    <span className="text-[8px] text-emerald-600 font-semibold bg-emerald-50 px-1.5 py-0.5 rounded">{service.highlight}</span>
+                    <span className="text-[8px] text-emerald-700 font-semibold bg-emerald-50 px-1.5 py-0.5 rounded">{service.highlight}</span>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
 
@@ -251,23 +202,12 @@ export const AIBusinessPromo = () => {
                 </Link>
               </Button>
             </div>
-          </motion.div>
+          </div>
 
           {/* Image Side with Decorative Elements */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative space-y-4"
-          >
+          <div className="relative space-y-4 animate-fade-in" style={{ animationDelay: "100ms" }}>
             {/* Inspirational Quote */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-gradient-to-r from-accent/10 to-primary/10 rounded-2xl p-4 border border-accent/20"
-            >
+            <div className="bg-gradient-to-r from-accent/10 to-primary/10 rounded-2xl p-4 border border-accent/20">
               <div className="flex items-start gap-3">
                 <Lightbulb className="w-8 h-8 text-accent/60 flex-shrink-0" />
                 <div>
@@ -277,7 +217,7 @@ export const AIBusinessPromo = () => {
                   <p className="text-xs text-muted-foreground mt-1 font-medium">— Business Automation Insight</p>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             <div className="relative rounded-3xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)]">
               <img 
@@ -300,52 +240,36 @@ export const AIBusinessPromo = () => {
                   <span className="text-xs font-bold text-foreground">AI Active 24/7</span>
                 </div>
               </div>
-
             </div>
 
             {/* Feature Highlights Bar */}
             <div className="grid grid-cols-3 gap-2">
-              <motion.div
-                whileHover={{ scale: 1.03 }}
-                className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl p-3 text-white text-center"
-              >
+              <div className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl p-3 text-white text-center hover:scale-[1.03] transition-transform">
                 <div className="w-8 h-8 mx-auto mb-1 rounded-full bg-white/20 flex items-center justify-center">
                   <Clock className="w-4 h-4" />
                 </div>
                 <div className="text-xs font-bold">24/7</div>
                 <div className="text-[9px] opacity-80">Always On</div>
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.03 }}
-                className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl p-3 text-white text-center"
-              >
+              </div>
+              <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl p-3 text-white text-center hover:scale-[1.03] transition-transform">
                 <div className="w-8 h-8 mx-auto mb-1 rounded-full bg-white/20 flex items-center justify-center">
                   <Shield className="w-4 h-4" />
                 </div>
                 <div className="text-xs font-bold">HIPAA</div>
                 <div className="text-[9px] opacity-80">Compliant</div>
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.03 }}
-                className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl p-3 text-white text-center"
-              >
+              </div>
+              <div className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl p-3 text-white text-center hover:scale-[1.03] transition-transform">
                 <div className="w-8 h-8 mx-auto mb-1 rounded-full bg-white/20 flex items-center justify-center">
                   <Award className="w-4 h-4" />
                 </div>
                 <div className="text-xs font-bold">Veteran</div>
                 <div className="text-[9px] opacity-80">10% Off</div>
-              </motion.div>
+              </div>
             </div>
 
-            {/* Additional Service Photos - Tech-focused, no people */}
+            {/* Additional Service Photos */}
             <div className="grid grid-cols-2 gap-3 mt-4">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.05 }}
-                className="relative rounded-2xl overflow-hidden shadow-lg group"
-              >
+              <div className="relative rounded-2xl overflow-hidden shadow-lg group hover:scale-105 transition-transform">
                 <img 
                   src={aiReceptionistTech}
                   alt="AI receptionist technology concept"
@@ -358,20 +282,9 @@ export const AIBusinessPromo = () => {
                   <p className="text-white/70 text-xs">24/7 Intelligent Calls</p>
                 </div>
                 {/* Animated glow */}
-                <motion.div 
-                  animate={{ opacity: [0.3, 0.6, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="absolute top-2 right-2 w-2 h-2 bg-blue-400 rounded-full shadow-lg shadow-blue-400/50"
-                />
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                whileHover={{ scale: 1.05 }}
-                className="relative rounded-2xl overflow-hidden shadow-lg group"
-              >
+                <div className="absolute top-2 right-2 w-2 h-2 bg-blue-400 rounded-full shadow-lg shadow-blue-400/50 animate-pulse" />
+              </div>
+              <div className="relative rounded-2xl overflow-hidden shadow-lg group hover:scale-105 transition-transform">
                 <img 
                   src={aiAutomationTech}
                   alt="AI automation technology concept"
@@ -380,38 +293,25 @@ export const AIBusinessPromo = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                 <div className="absolute bottom-2 left-2 right-2">
-                  <span className="text-white text-sm font-bold">Custom Automation</span>
-                  <p className="text-white/70 text-xs">Intelligent Workflows</p>
+                  <span className="text-white text-sm font-bold">AI Automation</span>
+                  <p className="text-white/70 text-xs">Custom Workflows</p>
                 </div>
-                {/* Animated glow */}
-                <motion.div 
-                  animate={{ opacity: [0.3, 0.6, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                  className="absolute top-2 right-2 w-2 h-2 bg-purple-400 rounded-full shadow-lg shadow-purple-400/50"
-                />
-              </motion.div>
+                <div className="absolute top-2 right-2 w-2 h-2 bg-violet-400 rounded-full shadow-lg shadow-violet-400/50 animate-pulse" />
+              </div>
             </div>
 
-            {/* Ohio Pride Badge */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-xl p-3 border border-border/50 shadow-sm flex items-center justify-between"
-            >
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">📍</span>
-                <div>
-                  <div className="text-xs text-muted-foreground">Proudly Based In</div>
-                  <div className="font-bold text-foreground">Dayton, Ohio</div>
-                </div>
+            {/* Trust Badges */}
+            <div className="flex flex-wrap gap-2 justify-center">
+              <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full border border-border/50 shadow-sm">
+                <Shield className="w-3.5 h-3.5 text-primary" />
+                <span className="text-xs font-medium">Enterprise Ready</span>
               </div>
-                  <div className="flex items-center gap-1 text-xs text-emerald-600 font-medium">
-                    <CheckCircle className="w-3 h-3" />
-                    Veteran-Supporting
-                  </div>
-            </motion.div>
-          </motion.div>
+              <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full border border-border/50 shadow-sm">
+                <Star className="w-3.5 h-3.5 text-amber-500" />
+                <span className="text-xs font-medium">Ohio Business Certified</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

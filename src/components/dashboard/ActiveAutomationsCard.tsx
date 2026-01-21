@@ -3,8 +3,6 @@ import {
   MessageSquare, 
   Mail, 
   Calendar,
-  Pause,
-  Play,
   Settings,
   MoreVertical
 } from "lucide-react";
@@ -12,7 +10,6 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
-import { motion } from "framer-motion";
 
 interface Automation {
   id: string;
@@ -98,14 +95,12 @@ export function ActiveAutomationsCard() {
           const isActive = automation.status === "active";
           
           return (
-            <motion.div
+            <div
               key={automation.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className={`p-4 rounded-xl border transition-all ${
+              className={`p-4 rounded-xl border transition-all animate-fade-in ${
                 isActive ? "bg-card hover:shadow-md" : "bg-muted/30 opacity-60"
               }`}
+              style={{ animationDelay: `${index * 50}ms` }}
             >
               <div className="flex items-center gap-4">
                 <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${getGradient(automation.type)} flex items-center justify-center`}>
@@ -135,7 +130,7 @@ export function ActiveAutomationsCard() {
                   </Button>
                 </div>
               </div>
-            </motion.div>
+            </div>
           );
         })}
       </CardContent>

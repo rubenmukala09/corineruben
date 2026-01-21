@@ -2,7 +2,6 @@ import { Calendar, Clock, Video, MapPin, Plus } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { motion } from "framer-motion";
 import { format } from "date-fns";
 
 interface Appointment {
@@ -36,11 +35,7 @@ export function UpcomingAppointmentsCard({ appointments, onBookAppointment }: Up
       </CardHeader>
       <CardContent>
         {appointments.length === 0 ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-8 space-y-4"
-          >
+          <div className="text-center py-8 space-y-4 animate-fade-in">
             <div className="w-16 h-16 mx-auto rounded-full bg-muted flex items-center justify-center">
               <Calendar className="w-8 h-8 text-muted-foreground" />
             </div>
@@ -52,16 +47,14 @@ export function UpcomingAppointmentsCard({ appointments, onBookAppointment }: Up
               <Plus className="w-4 h-4 mr-2" />
               Book Your First Session
             </Button>
-          </motion.div>
+          </div>
         ) : (
           <div className="space-y-3">
             {appointments.slice(0, 3).map((apt, index) => (
-              <motion.div
+              <div
                 key={apt.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="p-4 rounded-xl border bg-card hover:shadow-md transition-all cursor-pointer group"
+                className="p-4 rounded-xl border bg-card hover:shadow-md transition-all cursor-pointer group animate-fade-in"
+                style={{ animationDelay: `${index * 50}ms` }}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1">
@@ -90,7 +83,7 @@ export function UpcomingAppointmentsCard({ appointments, onBookAppointment }: Up
                     Confirmed
                   </Badge>
                 </div>
-              </motion.div>
+              </div>
             ))}
             {appointments.length > 3 && (
               <Button variant="ghost" className="w-full text-sm">

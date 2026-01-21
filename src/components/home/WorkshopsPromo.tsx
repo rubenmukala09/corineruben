@@ -1,12 +1,10 @@
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Users, Clock, Award, Shield, CheckCircle, ArrowRight, Sparkles, Play, BookOpen, Star, DollarSign, Brain, Eye, AlertTriangle, Target, Briefcase, Quote, GraduationCap, Heart } from "lucide-react";
+import { Users, Clock, Award, Shield, CheckCircle, ArrowRight, Play, BookOpen, Star, DollarSign, Eye, AlertTriangle, Target, Briefcase, Quote, GraduationCap, Heart } from "lucide-react";
 import workshopSeniorsLearning from "@/assets/workshop-seniors-learning.jpg";
 import learningBg from "@/assets/learning-bg.jpg";
 import seniorLearning from "@/assets/senior-learning.jpg";
 import trainingSession from "@/assets/training-session.jpg";
-import { TestimonialBubble } from "./TestimonialBubble";
 
 const formats = [
   {
@@ -80,20 +78,9 @@ export const WorkshopsPromo = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Image Side with Decorative Elements */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative space-y-4"
-          >
+          <div className="relative space-y-4 animate-fade-in">
             {/* Decorative Quote */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-muted/50 rounded-2xl p-4 border border-border"
-            >
+            <div className="bg-muted/50 rounded-2xl p-4 border border-border">
               <div className="flex items-start gap-3">
                 <Quote className="w-8 h-8 text-muted-foreground/40 flex-shrink-0" />
                 <div>
@@ -103,7 +90,7 @@ export const WorkshopsPromo = () => {
                   <p className="text-xs text-muted-foreground mt-1 font-medium">— InVision Network Team</p>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             <div className="relative rounded-3xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)]">
               <img 
@@ -121,24 +108,15 @@ export const WorkshopsPromo = () => {
               
               {/* Play button overlay */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <motion.div 
-                  whileHover={{ scale: 1.1 }}
-                  className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center cursor-pointer shadow-xl"
-                >
+                <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center cursor-pointer shadow-xl hover:scale-110 transition-transform">
                   <Play className="w-6 h-6 text-primary ml-1" fill="currentColor" />
-                </motion.div>
+                </div>
               </div>
-
             </div>
 
             {/* Additional Photos Grid - What We Do */}
             <div className="grid grid-cols-2 gap-3 mt-4">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                className="relative rounded-2xl overflow-hidden shadow-lg"
-              >
+              <div className="relative rounded-2xl overflow-hidden shadow-lg">
                 <img 
                   src={seniorLearning}
                   alt="Senior learning digital safety"
@@ -149,14 +127,8 @@ export const WorkshopsPromo = () => {
                 <div className="absolute bottom-2 left-2 right-2">
                   <span className="text-white text-xs font-semibold">One-on-One Training</span>
                 </div>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                className="relative rounded-2xl overflow-hidden shadow-lg"
-              >
+              </div>
+              <div className="relative rounded-2xl overflow-hidden shadow-lg">
                 <img 
                   src={trainingSession}
                   alt="Group training session"
@@ -167,7 +139,7 @@ export const WorkshopsPromo = () => {
                 <div className="absolute bottom-2 left-2 right-2">
                   <span className="text-white text-xs font-semibold">Group Workshops</span>
                 </div>
-              </motion.div>
+              </div>
             </div>
 
             {/* Trust Badges */}
@@ -185,25 +157,14 @@ export const WorkshopsPromo = () => {
                 <span className="text-xs font-medium">30-Day Guarantee</span>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Content Side */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-4"
-          >
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-2xl border-2 border-emerald-500/30"
-            >
+          <div className="space-y-4 animate-fade-in" style={{ animationDelay: "100ms" }}>
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-2xl border-2 border-emerald-500/30">
               <GraduationCap className="w-5 h-5 text-emerald-600" />
               <span className="font-bold text-emerald-700 text-lg">Learn & Train Workshops</span>
-            </motion.div>
+            </div>
             
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
               Protect Your Family from{" "}
@@ -214,38 +175,28 @@ export const WorkshopsPromo = () => {
               With the rise of AI, scammers use deepfakes and voice cloning to trick families. Our expert-led workshops teach you to recognize and stop these sophisticated threats.
             </p>
 
-            {/* How It Works - Animated */}
+            {/* How It Works */}
             <div className="grid grid-cols-3 gap-2">
               {howItWorks.map((item, index) => (
-                <motion.div 
+                <div 
                   key={index}
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{ scale: 1.05, y: -3 }}
-                  className={`bg-gradient-to-br ${item.color} rounded-xl p-3 text-center text-white`}
+                  className={`bg-gradient-to-br ${item.color} rounded-xl p-3 text-center text-white hover:scale-105 hover:-translate-y-1 transition-transform`}
                 >
                   <div className="w-8 h-8 mx-auto mb-1 rounded-full bg-white/20 flex items-center justify-center">
                     <item.icon className="w-4 h-4" />
                   </div>
                   <div className="text-sm font-bold">{item.title}</div>
                   <div className="text-[10px] opacity-80">{item.desc}</div>
-                </motion.div>
+                </div>
               ))}
             </div>
 
-            {/* Services Grid - Colorful */}
+            {/* Services Grid */}
             <div className="grid grid-cols-2 gap-2">
               {services.map((service, index) => (
-                <motion.div
+                <div
                   key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.08 }}
-                  whileHover={{ scale: 1.03 }}
-                  className="bg-white rounded-xl p-3 border border-border/50 shadow-sm group"
+                  className="bg-white rounded-xl p-3 border border-border/50 shadow-sm group hover:scale-[1.03] transition-transform"
                 >
                   <div className="flex items-center gap-2 mb-1">
                     <div className={`w-7 h-7 rounded-lg bg-gradient-to-br ${service.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
@@ -254,39 +205,29 @@ export const WorkshopsPromo = () => {
                   </div>
                   <div className="text-sm font-bold text-foreground">{service.title}</div>
                   <div className="text-[10px] text-muted-foreground">{service.desc}</div>
-                </motion.div>
+                </div>
               ))}
             </div>
 
-            {/* Target Audiences - Icon Pills */}
+            {/* Target Audiences */}
             <div className="flex flex-wrap gap-2">
               {audiences.map((audience, index) => (
-                <motion.span 
+                <span 
                   key={index} 
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{ scale: 1.05 }}
-                  className="px-3 py-1.5 bg-gradient-to-r from-muted to-muted/50 rounded-full text-sm font-medium text-foreground flex items-center gap-1.5"
+                  className="px-3 py-1.5 bg-gradient-to-r from-muted to-muted/50 rounded-full text-sm font-medium text-foreground flex items-center gap-1.5 hover:scale-105 transition-transform"
                 >
                   <audience.icon className="w-3.5 h-3.5 text-primary" />
                   <span>{audience.text}</span>
-                </motion.span>
+                </span>
               ))}
             </div>
 
-            {/* Pricing Preview - Colorful */}
+            {/* Pricing Preview */}
             <div className="grid grid-cols-4 gap-2">
               {formats.map((format, index) => (
-                <motion.div 
+                <div 
                   key={index} 
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  className="relative bg-white rounded-xl p-3 border border-border/50 shadow-sm text-center cursor-pointer"
+                  className="relative bg-white rounded-xl p-3 border border-border/50 shadow-sm text-center cursor-pointer hover:scale-105 hover:-translate-y-1 transition-transform"
                 >
                   {format.badge && (
                     <span className="absolute -top-1.5 left-1/2 -translate-x-1/2 px-1.5 py-0.5 bg-gradient-to-r from-primary to-accent text-white text-[8px] font-bold rounded-full whitespace-nowrap">
@@ -298,7 +239,7 @@ export const WorkshopsPromo = () => {
                   </div>
                   <div className="text-[10px] font-medium text-muted-foreground">{format.title}</div>
                   <div className="text-base font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{format.price}</div>
-                </motion.div>
+                </div>
               ))}
             </div>
 
@@ -318,7 +259,7 @@ export const WorkshopsPromo = () => {
                 </Link>
               </Button>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

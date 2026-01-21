@@ -1,5 +1,4 @@
 import { Star, Shield, Award } from "lucide-react";
-import { motion } from "framer-motion";
 
 const experts = [
   { name: "Security Expert", role: "Lead Trainer" },
@@ -21,12 +20,7 @@ export const TrustedExpertsBar = () => {
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
           {/* Left - Avatar Stack with Rating */}
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-5"
-          >
+          <div className="flex items-center gap-5 animate-fade-in">
             <div className="flex -space-x-3">
               {experts.map((expert, index) => (
                 <div
@@ -48,15 +42,10 @@ export const TrustedExpertsBar = () => {
               </div>
               <p className="text-muted-foreground">Trusted by Ohio Families</p>
             </div>
-          </motion.div>
+          </div>
 
           {/* Center - Feature Pills */}
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex flex-wrap justify-center gap-3"
-          >
+          <div className="flex flex-wrap justify-center gap-3 animate-fade-in" style={{ animationDelay: "100ms" }}>
             {[
               { icon: Shield, label: "Verified Experts", num: "01" },
               { icon: Award, label: "Ohio Certified", num: "02" },
@@ -71,15 +60,10 @@ export const TrustedExpertsBar = () => {
                 <span className="font-medium">{item.label}</span>
               </div>
             ))}
-          </motion.div>
+          </div>
 
           {/* Right - Stats */}
-          <motion.div 
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-8"
-          >
+          <div className="flex items-center gap-8 animate-fade-in" style={{ animationDelay: "200ms" }}>
             <div className="text-center">
               <p className="text-3xl font-bold text-primary">17%</p>
               <p className="text-sm text-muted-foreground">Veteran Discount</p>
@@ -89,7 +73,7 @@ export const TrustedExpertsBar = () => {
               <p className="text-3xl font-bold text-foreground">60</p>
               <p className="text-sm text-muted-foreground">Day Guarantee</p>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

@@ -1,5 +1,3 @@
-import { motion } from "framer-motion";
-
 interface AccentDecorationProps {
   variant?: "corner" | "orb" | "grid" | "ring" | "dots" | "quote" | "shield3d" | "cubeStack" | "gradient-blob" | "tech-lines";
   position?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
@@ -30,13 +28,9 @@ export const AccentDecoration = ({ variant = "corner", position = "top-right", c
 
   if (variant === "orb") {
     return (
-      <motion.div
-        animate={{ scale: [1, 1.1, 1] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className={`absolute ${posClass} pointer-events-none ${className}`}
-      >
+      <div className={`absolute ${posClass} pointer-events-none ${className} animate-pulse`} style={{ animationDuration: "8s" }}>
         <div className="w-[200px] h-[200px] rounded-full bg-gradient-to-br from-primary/20 to-accent/20 blur-[60px]" />
-      </motion.div>
+      </div>
     );
   }
 
@@ -45,11 +39,10 @@ export const AccentDecoration = ({ variant = "corner", position = "top-right", c
       <div className={`absolute ${posClass} pointer-events-none ${className}`}>
         <div className="grid grid-cols-4 gap-2 p-4">
           {[...Array(16)].map((_, i) => (
-            <motion.div
+            <div
               key={i}
-              animate={{ opacity: [0.2, 0.5, 0.2] }}
-              transition={{ duration: 3, repeat: Infinity, delay: i * 0.1 }}
-              className="w-2 h-2 rounded-full bg-primary/20"
+              className="w-2 h-2 rounded-full bg-primary/20 animate-pulse"
+              style={{ animationDelay: `${i * 100}ms`, animationDuration: "3s" }}
             />
           ))}
         </div>
@@ -60,10 +53,9 @@ export const AccentDecoration = ({ variant = "corner", position = "top-right", c
   if (variant === "ring") {
     return (
       <div className={`absolute ${posClass} pointer-events-none ${className}`}>
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          className="w-32 h-32 border-2 border-dashed border-primary/10 rounded-full"
+        <div
+          className="w-32 h-32 border-2 border-dashed border-primary/10 rounded-full animate-spin"
+          style={{ animationDuration: "30s" }}
         />
       </div>
     );
@@ -76,16 +68,10 @@ export const AccentDecoration = ({ variant = "corner", position = "top-right", c
           {[...Array(5)].map((_, row) => (
             <div key={row} className="flex gap-3">
               {[...Array(5)].map((_, col) => (
-                <motion.div
+                <div
                   key={col}
-                  animate={{ scale: [1, 1.3, 1] }}
-                  transition={{ 
-                    duration: 2, 
-                    repeat: Infinity, 
-                    delay: (row + col) * 0.15,
-                    ease: "easeInOut"
-                  }}
-                  className="w-1.5 h-1.5 rounded-full bg-primary/15"
+                  className="w-1.5 h-1.5 rounded-full bg-primary/15 animate-pulse"
+                  style={{ animationDelay: `${(row + col) * 150}ms`, animationDuration: "2s" }}
                 />
               ))}
             </div>
@@ -97,12 +83,7 @@ export const AccentDecoration = ({ variant = "corner", position = "top-right", c
 
   if (variant === "shield3d") {
     return (
-      <motion.div
-        animate={{ rotateY: [0, 15, 0, -15, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className={`absolute ${posClass} pointer-events-none ${className}`}
-        style={{ perspective: "400px" }}
-      >
+      <div className={`absolute ${posClass} pointer-events-none ${className}`} style={{ perspective: "400px" }}>
         <svg width="100" height="120" viewBox="0 0 100 120" className="opacity-30">
           {/* 3D Shield with gradient */}
           <defs>
@@ -128,17 +109,13 @@ export const AccentDecoration = ({ variant = "corner", position = "top-right", c
           {/* Checkmark */}
           <path d="M35 55 L45 68 L68 42" stroke="hsl(var(--primary))" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" opacity="0.5" />
         </svg>
-      </motion.div>
+      </div>
     );
   }
 
   if (variant === "cubeStack") {
     return (
-      <motion.div
-        animate={{ y: [-5, 5, -5] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className={`absolute ${posClass} pointer-events-none ${className}`}
-      >
+      <div className={`absolute ${posClass} pointer-events-none ${className} animate-bounce`} style={{ animationDuration: "6s" }}>
         <svg width="80" height="100" viewBox="0 0 80 100" className="opacity-25">
           {/* Bottom cube */}
           <polygon points="40,85 70,70 70,50 40,65 10,50 10,70" fill="hsl(var(--primary))" opacity="0.4" />
@@ -152,29 +129,26 @@ export const AccentDecoration = ({ variant = "corner", position = "top-right", c
           <path d="M40,65 L40,85 M10,50 L10,70 M70,50 L70,70" stroke="hsl(var(--primary))" strokeWidth="1" opacity="0.3" />
           <path d="M40,30 L40,50 M10,15 L10,35 M70,15 L70,35" stroke="hsl(var(--accent))" strokeWidth="1" opacity="0.3" />
         </svg>
-      </motion.div>
+      </div>
     );
   }
 
   if (variant === "gradient-blob") {
     return (
-      <motion.div
-        animate={{ 
-          scale: [1, 1.2, 1],
-          rotate: [0, 180, 360],
-        }}
-        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-        className={`absolute ${posClass} pointer-events-none ${className}`}
+      <div
+        className={`absolute ${posClass} pointer-events-none ${className} animate-spin`}
+        style={{ animationDuration: "20s" }}
       >
         <div 
-          className="w-40 h-40 opacity-30"
+          className="w-40 h-40 opacity-30 animate-pulse"
           style={{
             background: "radial-gradient(ellipse at 30% 30%, hsl(var(--primary)) 0%, transparent 50%), radial-gradient(ellipse at 70% 70%, hsl(var(--accent)) 0%, transparent 50%)",
             borderRadius: "60% 40% 30% 70% / 60% 30% 70% 40%",
             filter: "blur(30px)",
+            animationDuration: "4s",
           }}
         />
-      </motion.div>
+      </div>
     );
   }
 
@@ -182,40 +156,27 @@ export const AccentDecoration = ({ variant = "corner", position = "top-right", c
     return (
       <div className={`absolute ${posClass} pointer-events-none ${className}`}>
         <svg width="150" height="150" viewBox="0 0 150 150" className="opacity-20">
-          {/* Circuit-like lines */}
-          <motion.path
+          {/* Circuit-like lines - static SVG paths */}
+          <path
             d="M10 75 L40 75 L50 50 L90 50 L100 75 L140 75"
             stroke="hsl(var(--primary))"
             strokeWidth="2"
             fill="none"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="animate-pulse"
           />
-          <motion.path
+          <path
             d="M75 10 L75 40 L100 60 L100 90 L75 110 L75 140"
             stroke="hsl(var(--accent))"
             strokeWidth="1.5"
             fill="none"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+            className="animate-pulse"
+            style={{ animationDelay: "500ms" }}
           />
           {/* Nodes */}
           <circle cx="40" cy="75" r="4" fill="hsl(var(--primary))" opacity="0.5" />
           <circle cx="100" cy="75" r="4" fill="hsl(var(--primary))" opacity="0.5" />
           <circle cx="75" cy="60" r="3" fill="hsl(var(--accent))" opacity="0.4" />
           <circle cx="75" cy="110" r="3" fill="hsl(var(--accent))" opacity="0.4" />
-          
-          {/* Data points */}
-          <motion.circle
-            cx="70"
-            cy="75"
-            r="2"
-            fill="hsl(var(--primary))"
-            animate={{ cx: [40, 100, 40] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-          />
         </svg>
       </div>
     );
