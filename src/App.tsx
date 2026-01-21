@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import { SplashScreen } from "./components/SplashScreen";
+import NeuralShieldLoader from "./components/NeuralShieldLoader";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AIChat } from "./components/AIChat";
 import { AIChatProvider } from "./contexts/AIChatContext";
@@ -255,7 +255,7 @@ function App() {
 
   return (
     <>
-      <SplashScreen isVisible={showSplash} />
+      <NeuralShieldLoader isVisible={showSplash} />
       
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
