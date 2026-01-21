@@ -1,61 +1,97 @@
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Plus } from "lucide-react";
+import { Plus, Loader2, Package } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface ClientServicesTabProps {
-  clientId: number;
+  clientId: string;
+}
+
+interface Service {
+  id: string;
+  name: string;
+  status: string;
+  plan?: string;
+  price?: number;
+  startDate?: string;
+  nextBilling?: string;
 }
 
 export function ClientServicesTab({ clientId }: ClientServicesTabProps) {
-  const services = [
-    {
-      id: 1,
-      icon: "🤖",
-      name: "AI Receptionist",
-      status: "active",
-      plan: "Standard",
-      price: 149,
-      startDate: "Jan 15, 2025",
-      nextBilling: "Feb 15, 2025",
-      stats: {
-        calls: 1234,
-        appointments: 45,
-        uptime: "99.8%",
-      },
-    },
-    {
-      id: 2,
-      icon: "🌐",
-      name: "Website Design",
-      status: "active",
-      website: "example.com",
-      hosting: "Premium",
-      ssl: "Valid until Feb 2026",
-      lastUpdated: "2 days ago",
-      stats: {
-        visitors: "2,456",
-        uptime: "100%",
-        pageSpeed: "92/100",
-      },
-    },
-    {
-      id: 3,
-      icon: "🛡️",
-      name: "AI Insurance",
-      status: "active",
-      coverage: "Premium",
-      price: 799,
-      aiSystem: "ChatBot v2.1",
-      lastCheck: "Today",
-      features: [
-        "24/7 monitoring",
-        "Instant updates",
-        "Security patches",
-        "Priority support",
-      ],
-    },
-  ];
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (clientId) {
+      fetchClientServices();
+    }
+  }, [clientId]);
+
+  const fetchClientServices = async () => {
+    try {
+      setLoading(true);
+      
+      // Fetch subscriptions for this client
+      const { data: subscriptions, error } = await supabase
+        .from("subscriptions")
+        .select("*")
+        .eq("user_id", clientId);
+
+      if (subscriptions && subscriptions.length > 0) {
+        const mappedServices = subscriptions.map((sub) => ({
+          id: sub.id,
+          name: sub.plan_name || "Service",
+          status: sub.status || "active",
+          plan: sub.plan_name,
+          price: sub.amount,
+          startDate: sub.created_at ? new Date(sub.created_at).toLocaleDateString() : "—",
+          nextBilling: sub.current_period_end ? new Date(sub.current_period_end).toLocaleDateString() : "—",
+        }));
+        setServices(mappedServices);
+      } else {
+        setServices([]);
+      }
+    } catch (err) {
+      console.error("Error fetching client services:", err);
+      setServices([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[200px]">
+        <Loader2 className="w-6 h-6 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (services.length === 0) {
+    return (
+      <div className="space-y-6">
+        <Card className="p-12 text-center">
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center">
+              <Package className="w-8 h-8 text-muted-foreground" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-1">No Active Services</h3>
+              <p className="text-muted-foreground text-sm">
+                This client doesn't have any active services yet.
+              </p>
+            </div>
+            <Button>
+              <Plus className="mr-2 h-4 w-4" />
+              Add Service
+            </Button>
+          </div>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -64,109 +100,43 @@ export function ClientServicesTab({ clientId }: ClientServicesTabProps) {
           <Card key={service.id} className="hover:shadow-lg transition-shadow">
             <CardHeader>
               <div className="flex items-center gap-3 mb-2">
-                <span className="text-3xl">{service.icon}</span>
+                <span className="text-3xl">📦</span>
                 <div>
                   <CardTitle className="text-lg">{service.name}</CardTitle>
-                  <Badge variant="success" className="mt-1">● Active</Badge>
+                  <Badge 
+                    variant={service.status === "active" ? "success" : "secondary"} 
+                    className="mt-1"
+                  >
+                    {service.status === "active" ? "● Active" : service.status}
+                  </Badge>
                 </div>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
-              {service.name === "AI Receptionist" && (
-                <>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Plan</p>
-                    <p className="font-semibold">{service.plan} (${service.price}/month)</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Started</p>
-                    <p>{service.startDate}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Next Billing</p>
-                    <p>{service.nextBilling}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold mb-2">Quick Stats</p>
-                    <ul className="text-sm space-y-1">
-                      <li>• Calls handled: {service.stats?.calls}</li>
-                      <li>• Appointments booked: {service.stats?.appointments}</li>
-                      <li>• Uptime: {service.stats?.uptime}</li>
-                    </ul>
-                  </div>
-                  <div className="flex gap-2 pt-2">
-                    <Button variant="outline" size="sm" className="flex-1">Upgrade</Button>
-                    <Button variant="outline" size="sm" className="flex-1">Settings</Button>
-                  </div>
-                  <Button variant="link" className="w-full p-0">View Portal →</Button>
-                </>
+              {service.plan && (
+                <div>
+                  <p className="text-sm text-muted-foreground">Plan</p>
+                  <p className="font-semibold">
+                    {service.plan} {service.price ? `($${service.price}/month)` : ""}
+                  </p>
+                </div>
               )}
-
-              {service.name === "Website Design" && (
-                <>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Website</p>
-                    <a href={`https://${service.website}`} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                      {service.website} 🔗
-                    </a>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Hosting</p>
-                    <p>{service.hosting}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">SSL</p>
-                    <p>{service.ssl}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Last Updated</p>
-                    <p>{service.lastUpdated}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold mb-2">Quick Stats</p>
-                    <ul className="text-sm space-y-1">
-                      <li>• Visitors this month: {service.stats?.visitors}</li>
-                      <li>• Uptime: {service.stats?.uptime}</li>
-                      <li>• Page speed: {service.stats?.pageSpeed}</li>
-                    </ul>
-                  </div>
-                  <div className="flex gap-2 pt-2">
-                    <Button variant="outline" size="sm" className="flex-1">Edit Site</Button>
-                    <Button variant="outline" size="sm" className="flex-1">Analytics</Button>
-                  </div>
-                  <Button variant="link" className="w-full p-0">View Live Site →</Button>
-                </>
+              {service.startDate && (
+                <div>
+                  <p className="text-sm text-muted-foreground">Started</p>
+                  <p>{service.startDate}</p>
+                </div>
               )}
-
-              {service.name === "AI Insurance" && (
-                <>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Coverage</p>
-                    <p className="font-semibold">{service.coverage} (${service.price}/month)</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">AI System</p>
-                    <p>{service.aiSystem}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Last Health Check</p>
-                    <p>{service.lastCheck}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold mb-2">Coverage Includes</p>
-                    <ul className="text-sm space-y-1">
-                      {service.features?.map((feature, idx) => (
-                        <li key={idx}>• {feature}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="flex gap-2 pt-2">
-                    <Button variant="outline" size="sm" className="flex-1">View Reports</Button>
-                    <Button variant="outline" size="sm" className="flex-1">Run Check</Button>
-                  </div>
-                  <Button variant="link" className="w-full p-0">Support Tickets →</Button>
-                </>
+              {service.nextBilling && (
+                <div>
+                  <p className="text-sm text-muted-foreground">Next Billing</p>
+                  <p>{service.nextBilling}</p>
+                </div>
               )}
+              <div className="flex gap-2 pt-2">
+                <Button variant="outline" size="sm" className="flex-1">Manage</Button>
+                <Button variant="outline" size="sm" className="flex-1">Details</Button>
+              </div>
             </CardContent>
           </Card>
         ))}

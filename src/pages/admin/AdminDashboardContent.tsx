@@ -65,12 +65,22 @@ export default function AdminDashboardContent() {
         .select("*", { count: "exact", head: true })
         .eq("is_read", false);
 
+      const { count: inquiriesCount } = await supabase
+        .from("service_inquiries")
+        .select("*", { count: "exact", head: true })
+        .eq("status", "pending");
+
+      const { count: lowStockCount } = await supabase
+        .from("products")
+        .select("*", { count: "exact", head: true })
+        .lt("stock_quantity", 10);
+
       setModuleStats({
         pendingBookings: bookingsCount || 0,
-        pendingInquiries: 0,
+        pendingInquiries: inquiriesCount || 0,
         pendingApplications: applicationsCount || 0,
         unreadMessages: messagesCount || 0,
-        lowStockProducts: 0,
+        lowStockProducts: lowStockCount || 0,
       });
     } catch (err) {
       console.error("Error loading module stats:", err);

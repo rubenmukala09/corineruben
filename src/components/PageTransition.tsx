@@ -1,13 +1,11 @@
-import { ReactNode, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { ReactNode } from "react";
 
 interface PageTransitionProps {
   children: ReactNode;
   variant?: "fade" | "slide" | "scale" | "slideUp" | "crossfade" | "auto";
 }
 
-// Instant page transition - no delays, no blinking
+// Simple page wrapper - no animations for fast loading
 export const PageTransition = ({ children }: PageTransitionProps) => {
   return (
     <div className="min-h-screen">

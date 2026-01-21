@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { trackPageView, initGA } from "@/utils/analytics";
 
-// Google Analytics Measurement ID (replace with your actual ID)
-const GA_MEASUREMENT_ID = "G-XXXXXXXXXX"; // TODO: Replace with actual GA4 ID
+// Google Analytics Measurement ID - configure in environment or leave empty to disable
+const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID || "";
 
 export function useAnalytics() {
   const location = useLocation();

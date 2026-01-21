@@ -179,8 +179,8 @@ const Services = () => {
       answer: "We offer hands-on workshops for seniors, corporate cybersecurity training, community education programs, and customized training sessions tailored to your organization's specific needs.",
     },
     {
-      question: "How secure is the Safety Vault?",
-      answer: "Safety Vault uses military-grade AES-256 encryption, zero-knowledge architecture (we can't see your passwords), biometric authentication, and multi-factor authentication to ensure maximum security.",
+      question: "How do I get started?",
+      answer: "Getting started is easy! Simply choose the service that fits your needs, and our team will guide you through setup. We offer free consultations to help you find the right solution for your family or business.",
     },
   ];
 
