@@ -47,7 +47,8 @@ export const HeroHomepage = () => {
         <img
           src={heroVideoPoster}
           alt="Hero background"
-          fetchPriority="high"
+          // @ts-expect-error - fetchpriority is a valid HTML attribute
+          fetchpriority="high"
           loading="eager"
           decoding="sync"
           className="absolute inset-0 w-full h-full object-cover"

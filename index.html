@@ -35,12 +35,11 @@
     
     <!-- Laura avatar not preloaded - only used for small chat button, not LCP -->
     
-    <!-- Preload critical hero images for instant page rendering -->
-    <link rel="preload" href="/src/assets/hero-video-poster.jpg" as="image" fetchpriority="high">
-    <link rel="preload" href="/src/assets/hero-nature-business.jpg" as="image">
-    <link rel="preload" href="/src/assets/hero-nature-training.jpg" as="image">
-    <link rel="preload" href="/src/assets/hero-branded-resources.jpg" as="image">
-    <link rel="preload" href="/src/assets/hero-branded-about.jpg" as="image">
+    <!-- 
+      NOTE: Hero images are imported via ES6 modules in components.
+      Vite hashes these filenames in production, so we cannot preload them here.
+      The components use fetchpriority="high" and loading="eager" for instant render.
+    -->
     
     <!-- Critical CSS inlined for FCP/LCP -->
     <style>

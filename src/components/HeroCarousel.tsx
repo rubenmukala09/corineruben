@@ -46,7 +46,8 @@ export const HeroCarousel = ({
         <img
           src={images[0].src}
           alt={images[0].alt}
-          fetchPriority="high"
+          // @ts-expect-error - fetchpriority is a valid HTML attribute
+          fetchpriority="high"
           loading="eager"
           decoding="sync"
           className="absolute inset-0 w-full h-full object-cover"
