@@ -1,5 +1,5 @@
-const CACHE_NAME = 'invision-network-v6';
-const IMAGE_CACHE = 'invision-images-v4';
+const CACHE_NAME = 'invision-network-v7';
+const IMAGE_CACHE = 'invision-images-v5';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -18,14 +18,18 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
-// Activate event - clean up old caches
+// Activate event - clean up old caches aggressively
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
+      console.log('[SW] Cleaning old caches, keeping:', CACHE_NAME, IMAGE_CACHE);
       return Promise.all(
         cacheNames
           .filter((name) => name !== CACHE_NAME && name !== IMAGE_CACHE)
-          .map((name) => caches.delete(name))
+          .map((name) => {
+            console.log('[SW] Deleting old cache:', name);
+            return caches.delete(name);
+          })
       );
     })
   );

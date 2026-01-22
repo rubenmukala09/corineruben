@@ -79,12 +79,23 @@ export const HeroHomepage = () => {
       </div>
       
       <div 
-        className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-20 hero-instant"
-        style={{ position: 'relative', zIndex: 20, opacity: 1, visibility: 'visible' }}
+        className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-50 hero-instant"
+        style={{ 
+          position: 'relative', 
+          zIndex: 50, 
+          opacity: 1, 
+          visibility: 'visible',
+          display: 'block',
+          width: '100%'
+        }}
       >
         <div 
           className="flex flex-col lg:grid lg:grid-cols-5 gap-8 lg:gap-20 xl:gap-28 items-center min-h-[100vh] min-h-[100dvh] py-16 sm:py-20 lg:py-0"
-          style={{ minWidth: '1px' }}
+          style={{ 
+            minWidth: '100%',
+            width: '100%',
+            display: 'flex'
+          }}
         >
           
           {/* Left Content - Instant render, no animation delay */}
