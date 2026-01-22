@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
-import { CheckCircle, Package, Home, ShoppingBag, Mail, Download, Truck, Loader2, LogIn, ArrowRight } from "lucide-react";
+import { CheckCircle, Package, Home, ShoppingBag, Mail, Download, Truck, Loader2, LogIn, ArrowRight, Heart, Sparkles } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -157,6 +157,38 @@ export default function PaymentSuccess() {
 
   const getProductTypeMessage = () => {
     if (!verification) return null;
+
+    // Special handling for donations
+    if (paymentType === 'donation') {
+      return (
+        <div className="flex items-start gap-4">
+          <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-rose-500/20 to-pink-500/20 flex items-center justify-center flex-shrink-0">
+            <Heart className="w-6 h-6 text-rose-500" />
+          </div>
+          <div>
+            <h3 className="font-semibold mb-2 text-rose-600">Your Generosity Matters!</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-rose-500" />
+                <span>Your donation helps protect families from AI scams</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+                <span>A receipt will be sent to <strong>{verification.customer_email || 'your email'}</strong></span>
+              </li>
+              <li className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+                <span>100% of your donation goes directly to our mission</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+                <span>You're making a real difference in someone's life</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      );
+    }
 
     if (verification.is_subscription) {
       return (
@@ -321,16 +353,34 @@ export default function PaymentSuccess() {
               <>
                 {/* Success Icon */}
                 <div className="text-center mb-8">
-                  <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-success/10 mb-6 animate-in zoom-in duration-500">
-                    <CheckCircle className="w-12 h-12 text-success" />
+                  <div className={`inline-flex items-center justify-center w-24 h-24 rounded-full mb-6 animate-in zoom-in duration-500 ${
+                    paymentType === 'donation' 
+                      ? 'bg-gradient-to-br from-rose-500/20 to-pink-500/20' 
+                      : 'bg-success/10'
+                  }`}>
+                    {paymentType === 'donation' ? (
+                      <Heart className="w-12 h-12 text-rose-500" />
+                    ) : (
+                      <CheckCircle className="w-12 h-12 text-success" />
+                    )}
                   </div>
-                  <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent animate-in slide-in-from-bottom duration-500">
-                    {verification?.is_subscription ? 'Subscription Confirmed!' : 'Order Confirmed!'}
+                  <h1 className={`text-4xl md:text-5xl font-bold mb-4 animate-in slide-in-from-bottom duration-500 ${
+                    paymentType === 'donation'
+                      ? 'bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent'
+                      : 'bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent'
+                  }`}>
+                    {paymentType === 'donation' 
+                      ? 'Thank You, Hero! 💖' 
+                      : verification?.is_subscription 
+                        ? 'Subscription Confirmed!' 
+                        : 'Order Confirmed!'}
                   </h1>
                   <p className="text-lg text-muted-foreground animate-in slide-in-from-bottom duration-500 delay-100">
-                    Thank you for your purchase. {verification?.is_subscription 
-                      ? 'Your subscription is now active.' 
-                      : 'Your order has been successfully placed.'}
+                    {paymentType === 'donation' 
+                      ? 'Your generous donation makes a real difference in protecting families from scams.'
+                      : verification?.is_subscription 
+                        ? 'Your subscription is now active.' 
+                        : 'Your order has been successfully placed.'}
                   </p>
                 </div>
 

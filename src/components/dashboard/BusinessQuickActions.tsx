@@ -11,6 +11,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 interface QuickAction {
   icon: React.ElementType;
@@ -22,6 +23,7 @@ interface QuickAction {
 
 export function BusinessQuickActions() {
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const quickActions: QuickAction[] = [
     {
@@ -36,28 +38,28 @@ export function BusinessQuickActions() {
       label: "View Analytics",
       description: "Performance reports",
       color: "from-blue-500 to-cyan-600",
-      action: () => {}
+      action: () => toast({ title: "Analytics Dashboard", description: "Coming soon! We're building powerful analytics for you." })
     },
     {
       icon: Phone,
       label: "Test Receptionist",
       description: "Make a test call",
       color: "from-green-500 to-emerald-600",
-      action: () => {}
+      action: () => navigate("/business/ai-receptionist")
     },
     {
       icon: FileText,
       label: "View Leads",
       description: "Recent captures",
       color: "from-orange-500 to-amber-600",
-      action: () => {}
+      action: () => toast({ title: "Lead Management", description: "Coming soon! Track all your captured leads here." })
     },
     {
       icon: Settings,
       label: "Settings",
       description: "Configure AI",
       color: "from-slate-500 to-slate-600",
-      action: () => {}
+      action: () => toast({ title: "AI Settings", description: "Coming soon! Configure your AI assistant preferences." })
     },
     {
       icon: Headphones,

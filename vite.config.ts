@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, type PluginOption } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
@@ -13,6 +13,7 @@ export default defineConfig(({ mode }) => ({
   build: {
     sourcemap: true,
     cssCodeSplit: true,
+    cssMinify: 'lightningcss',
     rollupOptions: {
       output: {
         manualChunks: {
@@ -23,6 +24,11 @@ export default defineConfig(({ mode }) => ({
   },
   css: {
     devSourcemap: true,
+    transformer: 'lightningcss',
+    lightningcss: {
+      // Enable dead code elimination and minification
+      unusedSymbols: [],
+    },
   },
   plugins: [
     react(),
@@ -41,7 +47,7 @@ export default defineConfig(({ mode }) => ({
         quality: 80,
       },
     }),
-  ].filter(Boolean),
+  ].filter(Boolean) as PluginOption[],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
