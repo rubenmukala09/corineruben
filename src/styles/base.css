@@ -123,11 +123,6 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --teal-300: 175 50% 60%;
     --teal-100: 175 40% 92%;
     
-    /* Exodus Health Couriers - Medical Navy Theme */
-    --exodus-navy: 221 69% 33%;
-    --exodus-navy-light: 221 69% 43%;
-    --exodus-navy-dark: 221 69% 23%;
-    
     --cyan-600: 185 70% 32%;
     --cyan-500: 185 65% 40%;
     --cyan-400: 185 60% 52%;
