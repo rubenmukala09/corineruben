@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Shield, ArrowRight, Lock, Eye, Fingerprint, ShieldCheck, Zap, Globe } from "lucide-react";
-import { useState, useEffect, useRef } from "react";
+import { useRef } from "react";
 import heroVideo from "@/assets/hero-video.mp4";
 
 const securityFeatures = [{
@@ -19,40 +19,7 @@ const securityFeatures = [{
 }];
 
 export const HeroHomepage = () => {
-  const [showContent, setShowContent] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    
-    const showAll = () => setShowContent(true);
-    
-    if (!video) {
-      // Show content immediately if no video
-      showAll();
-      return;
-    }
-
-    const handleReady = () => showAll();
-    
-    // Check if already ready
-    if (video.readyState >= 3) {
-      showAll();
-      return;
-    }
-
-    video.addEventListener('canplaythrough', handleReady);
-    video.addEventListener('loadeddata', handleReady);
-    
-    // Faster fallback - show after 500ms max
-    const timeout = setTimeout(showAll, 500);
-
-    return () => {
-      video.removeEventListener('canplaythrough', handleReady);
-      video.removeEventListener('loadeddata', handleReady);
-      clearTimeout(timeout);
-    };
-  }, []);
 
   return (
     <section 
@@ -97,12 +64,12 @@ export const HeroHomepage = () => {
       </div>
       
       <div 
-        className={`w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10 transition-opacity duration-300 ${showContent ? 'opacity-100' : 'opacity-0'}`}
+        className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10"
       >
         <div className="flex flex-col lg:grid lg:grid-cols-5 gap-8 lg:gap-20 xl:gap-28 items-center min-h-[100vh] py-16 sm:py-20 lg:py-0">
           
           {/* Left Content - No framer-motion, using CSS animations */}
-          <div className={`lg:col-span-3 order-2 lg:order-1 w-full ${showContent ? 'animate-fade-in' : ''}`}>
+          <div className="lg:col-span-3 order-2 lg:order-1 w-full animate-fade-in">
             {/* Premium Badge */}
             <div className="inline-flex items-center gap-2 sm:gap-3 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 mb-6 sm:mb-10 shadow-sm">
               <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-gradient-to-r from-primary to-accent shadow-sm" />
