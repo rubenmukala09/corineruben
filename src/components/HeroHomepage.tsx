@@ -24,8 +24,12 @@ export const HeroHomepage = () => {
 
   return (
     <section 
-      className="relative min-h-[100vh] lg:min-h-[110vh] overflow-hidden"
-      style={{ backgroundColor: '#1a1625' }}
+      className="relative min-h-[100vh] min-h-[100dvh] lg:min-h-[110vh] overflow-hidden"
+      style={{ 
+        backgroundColor: 'hsl(260, 40%, 8%)', 
+        minHeight: '100vh',
+        contain: 'layout style'
+      }}
     >
       {/* Static gradient background */}
       <div className="absolute inset-0 overflow-hidden">
@@ -75,12 +79,16 @@ export const HeroHomepage = () => {
       </div>
       
       <div 
-        className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10 hero-instant"
+        className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-20 hero-instant"
+        style={{ position: 'relative', zIndex: 20, opacity: 1, visibility: 'visible' }}
       >
-        <div className="flex flex-col lg:grid lg:grid-cols-5 gap-8 lg:gap-20 xl:gap-28 items-center min-h-[100vh] py-16 sm:py-20 lg:py-0">
+        <div 
+          className="flex flex-col lg:grid lg:grid-cols-5 gap-8 lg:gap-20 xl:gap-28 items-center min-h-[100vh] min-h-[100dvh] py-16 sm:py-20 lg:py-0"
+          style={{ minWidth: '1px' }}
+        >
           
           {/* Left Content - Instant render, no animation delay */}
-          <div className="lg:col-span-3 order-2 lg:order-1 w-full">
+          <div className="lg:col-span-3 order-2 lg:order-1 w-full" style={{ minWidth: '1px', opacity: 1 }}>
             {/* Premium Badge */}
             <div className="inline-flex items-center gap-2 sm:gap-3 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 mb-6 sm:mb-10 shadow-sm">
               <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-gradient-to-r from-primary to-accent shadow-sm" />
@@ -121,7 +129,7 @@ export const HeroHomepage = () => {
           </div>
           
           {/* Right Content - Security Visual */}
-          <div className="lg:col-span-2 order-1 lg:order-2 flex justify-center lg:justify-end w-full">
+          <div className="lg:col-span-2 order-1 lg:order-2 flex justify-center lg:justify-end w-full" style={{ minWidth: '1px', opacity: 1 }}>
             <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-xl xl:max-w-2xl">
               {/* Main visual container */}
               <div className="relative">

@@ -368,6 +368,22 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   backface-visibility: hidden;
   transform: translateZ(0);
   contain: layout style paint;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Ensure hero content is always visible */
+.hero-instant > * {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Dynamic viewport height support */
+@supports (min-height: 100dvh) {
+  .hero-homepage,
+  section.min-h-\[100vh\] {
+    min-height: 100dvh;
+  }
 }
 
 /* ===== Premium Button Ripple Effect ===== */
