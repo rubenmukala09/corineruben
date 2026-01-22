@@ -229,6 +229,29 @@
       </div></div></div></div>
     </div>
     
+    <!-- EMERGENCY: Clear all stale service workers and caches FIRST -->
+    <script>
+      (function() {
+        // Immediately unregister all service workers and clear caches
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(registrations) {
+            for (var i = 0; i < registrations.length; i++) {
+              registrations[i].unregister();
+              console.log('[Cache Clear] SW unregistered:', registrations[i].scope);
+            }
+          });
+        }
+        if ('caches' in window) {
+          caches.keys().then(function(names) {
+            for (var i = 0; i < names.length; i++) {
+              caches.delete(names[i]);
+              console.log('[Cache Clear] Cache deleted:', names[i]);
+            }
+          });
+        }
+      })();
+    </script>
+    
     <!-- Service Worker Registration - deferred to reduce main-thread blocking -->
     <script>
       // Use requestIdleCallback to defer SW registration out of critical path

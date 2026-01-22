@@ -1,137 +1,77 @@
-const CACHE_NAME = 'invision-network-v8';
-const IMAGE_CACHE = 'invision-images-v6';
-const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/favicon.ico',
-  '/robots.txt',
-  '/manifest.json',
-];
+// Version 9 - Force complete reset to fix stale cache issues
+const CACHE_NAME = 'invision-network-v9';
+const IMAGE_CACHE = 'invision-images-v7';
 
-// Install event - cache static assets
+// On install, clear ALL caches immediately to force fresh content
 self.addEventListener('install', (event) => {
+  console.log('[SW] Installing v9 - clearing all caches');
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(STATIC_ASSETS);
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((name) => {
+          console.log('[SW] Deleting cache:', name);
+          return caches.delete(name);
+        })
+      );
     })
   );
   self.skipWaiting();
 });
 
-// Activate event - clean up old caches aggressively
+// On activate, take control immediately and clear caches again
 self.addEventListener('activate', (event) => {
+  console.log('[SW] Activating v9 - taking control');
   event.waitUntil(
     caches.keys().then((cacheNames) => {
-      console.log('[SW] Cleaning old caches, keeping:', CACHE_NAME, IMAGE_CACHE);
       return Promise.all(
-        cacheNames
-          .filter((name) => name !== CACHE_NAME && name !== IMAGE_CACHE)
-          .map((name) => {
-            console.log('[SW] Deleting old cache:', name);
-            return caches.delete(name);
-          })
+        cacheNames.map((name) => {
+          console.log('[SW] Clearing cache on activate:', name);
+          return caches.delete(name);
+        })
       );
-    })
+    }).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
-// Fetch event - smart caching strategy
+// TEMPORARILY bypass all caching for navigation/document requests to force fresh content
 self.addEventListener('fetch', (event) => {
-  const request = event.request;
-  const url = new URL(request.url);
-
-  // Only handle same-origin GET requests
-  if (request.method !== 'GET' || url.origin !== self.location.origin) {
+  // Skip non-GET requests
+  if (event.request.method !== 'GET') return;
+  
+  // Skip caching entirely for navigation requests - always get fresh HTML
+  if (event.request.mode === 'navigate') {
+    console.log('[SW] Navigation request - bypassing cache:', event.request.url);
+    return; // Let the browser fetch fresh from network
+  }
+  
+  // Skip caching for HTML documents
+  if (event.request.destination === 'document') {
+    console.log('[SW] Document request - bypassing cache:', event.request.url);
+    return; // Let the browser fetch fresh from network
+  }
+  
+  // Skip Vite dev server and HMR in development
+  const url = new URL(event.request.url);
+  if (url.pathname.includes('/@vite') || 
+      url.pathname.includes('__vite') ||
+      url.pathname.includes('.hot-update') ||
+      url.pathname.startsWith('/@') ||
+      url.pathname.startsWith('/src/') ||
+      url.searchParams.has('t')) {
     return;
   }
-
-  // Ignore dev/HMR routes to avoid interfering with Vite
-  if (
-    url.pathname.startsWith('/@') ||
-    url.pathname.startsWith('/src/') ||
-    url.pathname.includes('vite') ||
-    url.searchParams.has('t')
-  ) {
-    return;
-  }
-
-  // Images: cache-first with long expiry
-  if (request.destination === 'image' || /\.(jpg|jpeg|png|gif|webp|svg|ico)$/i.test(url.pathname)) {
-    event.respondWith(
-      caches.match(request).then((cached) => {
-        if (cached) {
-          return cached;
-        }
-        return fetch(request).then((response) => {
-          // Only cache successful responses
-          if (response.ok) {
-            const responseClone = response.clone();
-            caches.open(IMAGE_CACHE).then((cache) => {
-              cache.put(request, responseClone);
-            });
-          }
-          return response;
-        }).catch(() => {
-          // Return empty image on failure
-          return new Response('', { status: 404, statusText: 'Image not found' });
-        });
+  
+  // For other resources, use network-first strategy during this fix period
+  // This ensures fresh assets are always fetched
+  event.respondWith(
+    fetch(event.request)
+      .then((response) => {
+        // Don't cache anything during this reset period
+        return response;
       })
-    );
-    return;
-  }
-
-  // Fonts and CSS: cache-first
-  if (request.destination === 'font' || request.destination === 'style' || /\.(woff2?|ttf|otf|eot|css)$/i.test(url.pathname)) {
-    event.respondWith(
-      caches.match(request).then((cached) => {
-        return cached || fetch(request).then((response) => {
-          const responseClone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(request, responseClone);
-          });
-          return response;
-        });
+      .catch(() => {
+        // If network fails, try cache as last resort
+        return caches.match(event.request);
       })
-    );
-    return;
-  }
-
-  // HTML navigation: network-first with cache fallback
-  if (request.mode === 'navigate') {
-    event.respondWith(
-      fetch(request)
-        .then((response) => {
-          const responseClone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put('/', responseClone);
-          });
-          return response;
-        })
-        .catch(() => {
-          return caches.match('/').then((cached) => {
-            return cached || caches.match('/index.html');
-          });
-        })
-    );
-    return;
-  }
-
-  // Known static assets: cache-first
-  if (STATIC_ASSETS.includes(url.pathname)) {
-    event.respondWith(
-      caches.match(request).then((cached) => {
-        if (cached) {
-          return cached;
-        }
-        return fetch(request).then((response) => {
-          const responseClone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(request, responseClone);
-          });
-          return response;
-        });
-      })
-    );
-  }
+  );
 });

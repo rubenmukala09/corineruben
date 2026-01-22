@@ -331,10 +331,14 @@ export const AIChat = () => {
   // Closed state - just show floating button
   if (!isOpen) {
     return (
-      <div className="fixed bottom-6 right-6 z-[9998] group">
+      <div 
+        className="fixed bottom-6 right-6 z-[9998] group"
+        style={{ maxWidth: '56px', maxHeight: '56px', width: '56px', height: '56px' }}
+      >
         <button
           onClick={openChat}
           className="relative w-14 h-14 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 overflow-hidden ring-2 ring-primary/20"
+          style={{ width: '56px', height: '56px', maxWidth: '56px', maxHeight: '56px' }}
         >
           <img 
             src={lauraAvatar} 
@@ -342,10 +346,9 @@ export const AIChat = () => {
             width={56}
             height={56}
             sizes="56px"
-            loading="eager"
+            loading="lazy"
             decoding="async"
-            // @ts-expect-error - fetchpriority is a valid HTML attribute
-            fetchpriority="high"
+            style={{ width: '56px', height: '56px', maxWidth: '56px', maxHeight: '56px', objectFit: 'cover' }}
             className="w-full h-full object-cover object-top"
           />
           <div className="absolute bottom-0.5 right-0.5 w-3 h-3 rounded-full bg-green-500 border-2 border-white" />
