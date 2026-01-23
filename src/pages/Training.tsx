@@ -1564,26 +1564,20 @@ function LearnAndTrain() {
           </div>
 
           {/* Family Safety Vault Card */}
-          <Card className="max-w-4xl mx-auto mt-10 p-8 md:p-10 hover:shadow-xl transition-all duration-500 rounded-2xl border-accent border-2 relative overflow-hidden">
-            {/* Background Image - Vault themed */}
-            <div 
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ 
-                backgroundImage: `url(${heroVault})`,
-              }}
-            />
-            {/* Dark overlay for text readability - significantly enhanced */}
-            <div className="absolute inset-0 bg-gradient-to-br from-black/85 via-black/80 to-black/75" />
-            <div className="absolute inset-0 backdrop-blur-[1px]" />
+          <Card className="max-w-4xl mx-auto mt-10 p-8 md:p-10 hover:shadow-xl transition-all duration-500 rounded-2xl border-primary/20 border relative overflow-hidden bg-gradient-to-br from-primary/5 via-card to-accent/5">
+            {/* Soft gradient overlay for professional look */}
+            <div className="absolute inset-0 bg-gradient-to-br from-teal-50/80 via-white/90 to-primary/5" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full blur-3xl" />
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-accent/10 to-primary/10 rounded-full blur-2xl" />
             
             <div className="text-center relative z-10">
               <div className="flex justify-center mb-6">
-                <div className="w-20 h-20 bg-gradient-to-br from-primary/60 to-accent/60 rounded-full flex items-center justify-center animate-[shield-pulse_3s_ease-in-out_infinite] shadow-lg border-2 border-white/30">
+                <div className="w-20 h-20 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center shadow-lg shadow-primary/25 border-2 border-white">
                   <Lock className="w-10 h-10 text-white" />
                 </div>
               </div>
-              <h3 className="text-2xl md:text-3xl font-bold mb-3 text-white drop-shadow-lg">Family Safety Vault</h3>
-              <p className="text-white/90 mb-6 text-base md:text-lg font-medium drop-shadow-md">Included with Family & Premium Plans — keep everything secure</p>
+              <h3 className="text-2xl md:text-3xl font-bold mb-3 text-foreground">Family Safety Vault</h3>
+              <p className="text-muted-foreground mb-6 text-base md:text-lg font-medium">Included with Family & Premium Plans — keep everything secure</p>
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8 text-left max-w-2xl mx-auto">
                 {[
@@ -1594,14 +1588,14 @@ function LearnAndTrain() {
                   { icon: "🔐", feature: "Account recovery info" },
                   { icon: "✈️", feature: "Travel itineraries" },
                 ].map((item, index) => (
-                  <div key={index} className="flex items-center gap-3 p-3 bg-white/95 rounded-xl border border-white/20 shadow-lg">
+                  <div key={index} className="flex items-center gap-3 p-3 bg-card/80 backdrop-blur-sm rounded-xl border border-border/50 shadow-sm hover:shadow-md transition-shadow">
                     <span className="text-xl">{item.icon}</span>
                     <span className="text-sm md:text-base font-semibold text-foreground">{item.feature}</span>
                   </div>
                 ))}
               </div>
 
-              <p className="text-base md:text-lg text-white font-semibold drop-shadow-md">
+              <p className="text-base md:text-lg text-foreground/80 font-semibold">
                 🔒 Bank-grade encryption • Multi-factor authentication • Secure family sharing
               </p>
             </div>
