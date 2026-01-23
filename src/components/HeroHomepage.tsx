@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Shield, ArrowRight, Lock, Eye, Fingerprint, ShieldCheck, Zap, Globe } from "lucide-react";
 import { useRef } from "react";
 import heroVideo from "@/assets/hero-video.mp4";
-import heroVideoPoster from "@/assets/hero-video-poster.jpg";
+import heroVideoPoster from "@/assets/hero-homepage.jpg";
 const securityFeatures = [{
   icon: Lock,
   label: "End-to-End Encryption"
