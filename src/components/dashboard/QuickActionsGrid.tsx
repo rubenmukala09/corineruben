@@ -41,10 +41,17 @@ export function QuickActionsGrid({ onBookAppointment }: { onBookAppointment: () 
     },
     {
       icon: GraduationCap,
-      label: "Learn & Train",
-      description: "Free courses",
+      label: "My Courses",
+      description: "Your training",
       color: "from-purple-500 to-violet-600",
-      action: () => navigate("/learn-and-train")
+      action: () => navigate("/portal/my-courses")
+    },
+    {
+      icon: Calendar,
+      label: "My Bookings",
+      description: "Appointments",
+      color: "from-teal-500 to-cyan-600",
+      action: () => navigate("/portal/my-bookings")
     },
     {
       icon: Shield,

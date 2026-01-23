@@ -16,6 +16,31 @@ export interface Course {
   updated_at: string;
 }
 
+export interface CourseModule {
+  id: string;
+  course_id: string;
+  title: string;
+  description: string | null;
+  order_index: number;
+  duration_minutes: number | null;
+  created_at: string;
+  updated_at: string;
+  lessons?: CourseLesson[];
+}
+
+export interface CourseLesson {
+  id: string;
+  module_id: string;
+  title: string;
+  content: string | null;
+  video_url: string | null;
+  order_index: number;
+  duration_minutes: number | null;
+  is_free_preview: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface Enrollment {
   id: string;
   user_id: string | null;
@@ -70,6 +95,34 @@ export function useCourseById(courseId: string) {
       }
 
       return data as Course;
+    },
+    enabled: !!courseId,
+  });
+}
+
+export function useCourseModules(courseId: string) {
+  return useQuery({
+    queryKey: ["course-modules", courseId],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("course_modules")
+        .select(`
+          *,
+          lessons:course_lessons(*)
+        `)
+        .eq("course_id", courseId)
+        .order("order_index", { ascending: true });
+
+      if (error) {
+        console.error("Error fetching course modules:", error);
+        throw error;
+      }
+
+      // Sort lessons within each module
+      return (data as (CourseModule & { lessons: CourseLesson[] })[]).map(module => ({
+        ...module,
+        lessons: module.lessons?.sort((a, b) => a.order_index - b.order_index) || []
+      }));
     },
     enabled: !!courseId,
   });

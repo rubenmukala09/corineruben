@@ -21,10 +21,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
+// Note: Using testimonials_staff view to protect submitter email from non-admin staff
 interface Testimonial {
   id: string;
   name: string;
-  email: string;
+  email: string | null; // May be null for non-admin staff via view
   location: string;
   rating: number;
   story: string;
@@ -43,7 +44,7 @@ export const TestimonialsTable = () => {
     queryKey: ["admin-testimonials"],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("testimonials")
+        .from("testimonials_staff")
         .select("*")
         .order("submitted_at", { ascending: false });
 
@@ -195,10 +196,12 @@ export const TestimonialsTable = () => {
                     <span className="font-medium">Name:</span>
                     <span>{selectedTestimonial.name}</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Mail className="w-4 h-4" />
-                    <span>{selectedTestimonial.email}</span>
-                  </div>
+                  {selectedTestimonial.email && (
+                    <div className="flex items-center gap-2">
+                      <Mail className="w-4 h-4" />
+                      <span>{selectedTestimonial.email}</span>
+                    </div>
+                  )}
                   <div className="flex items-center gap-2">
                     <MapPin className="w-4 h-4" />
                     <span>{selectedTestimonial.location}</span>

@@ -58,7 +58,7 @@ const DonationsList = () => {
     queryKey: ["donations", typeFilter, statusFilter],
     queryFn: async () => {
       let query = supabase
-        .from("donations")
+        .from("donations_summary")
         .select("*")
         .order("created_at", { ascending: false });
 
