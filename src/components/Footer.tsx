@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Facebook, Linkedin, Youtube, Instagram, Shield, Mail, MapPin, ArrowRight, Loader2 } from "lucide-react";
+import { Facebook, Linkedin, Youtube, Instagram, Shield, Mail, MapPin, ArrowRight, Loader2, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import TrustedTechLogos from "./TrustedTechLogos";
@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useConfetti } from "@/hooks/useConfetti";
 import { z } from "zod";
+import { clearAllCachesAndReload } from "@/utils/cacheUtils";
 
 const newsletterSchema = z.object({
   email: z.string().trim().email("Please enter a valid email address").max(255, "Email too long"),
@@ -179,6 +180,18 @@ const Footer = () => {
                 <li><Link to="/faq" className="text-sm text-white/50 hover:text-white transition-colors">FAQ</Link></li>
                 <li><Link to="/contact" className="text-sm text-white/50 hover:text-white transition-colors">Contact Us</Link></li>
                 <li><Link to="/contact" className="text-sm text-white/50 hover:text-white transition-colors">Emergency Help</Link></li>
+                <li>
+                  <button 
+                    onClick={() => {
+                      toast.info("Clearing cache...", { duration: 1500 });
+                      setTimeout(() => clearAllCachesAndReload(), 300);
+                    }}
+                    className="flex items-center gap-1.5 text-sm text-white/50 hover:text-white transition-colors"
+                  >
+                    <RefreshCw className="w-3.5 h-3.5" />
+                    Clear Cache & Refresh
+                  </button>
+                </li>
               </ul>
             </div>
 
