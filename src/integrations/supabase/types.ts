@@ -879,6 +879,100 @@ export type Database = {
           },
         ]
       }
+      client_messages: {
+        Row: {
+          client_id: string | null
+          content: string
+          created_at: string | null
+          id: string
+          is_from_client: boolean | null
+          is_read: boolean | null
+          is_starred: boolean | null
+          message_type: string | null
+          sender_id: string | null
+          subject: string | null
+        }
+        Insert: {
+          client_id?: string | null
+          content: string
+          created_at?: string | null
+          id?: string
+          is_from_client?: boolean | null
+          is_read?: boolean | null
+          is_starred?: boolean | null
+          message_type?: string | null
+          sender_id?: string | null
+          subject?: string | null
+        }
+        Update: {
+          client_id?: string | null
+          content?: string
+          created_at?: string | null
+          id?: string
+          is_from_client?: boolean | null
+          is_read?: boolean | null
+          is_starred?: boolean | null
+          message_type?: string | null
+          sender_id?: string | null
+          subject?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_messages_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_notes: {
+        Row: {
+          author_id: string | null
+          client_id: string | null
+          content: string | null
+          created_at: string | null
+          id: string
+          importance: string | null
+          is_pinned: boolean | null
+          tags: string[] | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          author_id?: string | null
+          client_id?: string | null
+          content?: string | null
+          created_at?: string | null
+          id?: string
+          importance?: string | null
+          is_pinned?: boolean | null
+          tags?: string[] | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          author_id?: string | null
+          client_id?: string | null
+          content?: string | null
+          created_at?: string | null
+          id?: string
+          importance?: string | null
+          is_pinned?: boolean | null
+          tags?: string[] | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_notes_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       client_requests: {
         Row: {
           assigned_worker_id: string | null
@@ -1621,7 +1715,10 @@ export type Database = {
           course_id: string
           enrolled_at: string
           id: string
+          last_accessed_at: string | null
+          progress_percentage: number | null
           status: string
+          user_id: string | null
         }
         Insert: {
           completed_at?: string | null
@@ -1629,7 +1726,10 @@ export type Database = {
           course_id: string
           enrolled_at?: string
           id?: string
+          last_accessed_at?: string | null
+          progress_percentage?: number | null
           status?: string
+          user_id?: string | null
         }
         Update: {
           completed_at?: string | null
@@ -1637,7 +1737,10 @@ export type Database = {
           course_id?: string
           enrolled_at?: string
           id?: string
+          last_accessed_at?: string | null
+          progress_percentage?: number | null
           status?: string
+          user_id?: string | null
         }
         Relationships: [
           {
@@ -3661,6 +3764,13 @@ export type Database = {
             referencedRelation: "testimonials_public"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "testimonial_media_testimonial_id_fkey"
+            columns: ["testimonial_id"]
+            isOneToOne: false
+            referencedRelation: "testimonials_staff"
+            referencedColumns: ["id"]
+          },
         ]
       }
       testimonials: {
@@ -4459,6 +4569,42 @@ export type Database = {
       }
     }
     Views: {
+      donations_summary: {
+        Row: {
+          amount: number | null
+          created_at: string | null
+          donation_type: string | null
+          donor_name: string | null
+          email: string | null
+          id: string | null
+          message: string | null
+          payment_status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          amount?: number | null
+          created_at?: string | null
+          donation_type?: string | null
+          donor_name?: string | null
+          email?: never
+          id?: string | null
+          message?: string | null
+          payment_status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          amount?: number | null
+          created_at?: string | null
+          donation_type?: string | null
+          donor_name?: string | null
+          email?: never
+          id?: string | null
+          message?: string | null
+          payment_status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       healthcare_profiles_safe: {
         Row: {
           created_at: string | null
@@ -4658,6 +4804,108 @@ export type Database = {
           rating?: number | null
           status?: Database["public"]["Enums"]["testimonial_status"] | null
           story?: string | null
+        }
+        Relationships: []
+      }
+      testimonials_staff: {
+        Row: {
+          approved_at: string | null
+          created_at: string | null
+          display_location: string | null
+          display_order: number | null
+          featured: boolean | null
+          has_image: boolean | null
+          has_video: boolean | null
+          id: string | null
+          location: string | null
+          name: string | null
+          primary_media_url: string | null
+          rating: number | null
+          status: Database["public"]["Enums"]["testimonial_status"] | null
+          story: string | null
+          submitted_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          approved_at?: string | null
+          created_at?: string | null
+          display_location?: string | null
+          display_order?: number | null
+          featured?: boolean | null
+          has_image?: boolean | null
+          has_video?: boolean | null
+          id?: string | null
+          location?: string | null
+          name?: string | null
+          primary_media_url?: string | null
+          rating?: number | null
+          status?: Database["public"]["Enums"]["testimonial_status"] | null
+          story?: string | null
+          submitted_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          approved_at?: string | null
+          created_at?: string | null
+          display_location?: string | null
+          display_order?: number | null
+          featured?: boolean | null
+          has_image?: boolean | null
+          has_video?: boolean | null
+          id?: string | null
+          location?: string | null
+          name?: string | null
+          primary_media_url?: string | null
+          rating?: number | null
+          status?: Database["public"]["Enums"]["testimonial_status"] | null
+          story?: string | null
+          submitted_at?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      user_booking_requests: {
+        Row: {
+          base_price: number | null
+          created_at: string | null
+          discount_amount: number | null
+          final_price: number | null
+          id: string | null
+          preferred_dates: string | null
+          request_number: string | null
+          service_name: string | null
+          service_tier: string | null
+          service_type: string | null
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          base_price?: number | null
+          created_at?: string | null
+          discount_amount?: number | null
+          final_price?: number | null
+          id?: string | null
+          preferred_dates?: string | null
+          request_number?: string | null
+          service_name?: string | null
+          service_tier?: string | null
+          service_type?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          base_price?: number | null
+          created_at?: string | null
+          discount_amount?: number | null
+          final_price?: number | null
+          id?: string | null
+          preferred_dates?: string | null
+          request_number?: string | null
+          service_name?: string | null
+          service_tier?: string | null
+          service_type?: string | null
+          status?: string | null
+          updated_at?: string | null
         }
         Relationships: []
       }
