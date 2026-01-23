@@ -101,6 +101,3 @@ verify_jwt = false
 
 [functions.heartbeat-watchdog]
 verify_jwt = false
-
-[functions.send-article-newsletter]
-verify_jwt = false

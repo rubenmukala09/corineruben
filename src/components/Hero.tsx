@@ -1,4 +1,4 @@
-import { ReactNode, useRef, Children, isValidElement } from "react";
+import { ReactNode, useState, useRef, Children, isValidElement } from "react";
 import { cn } from "@/lib/utils";
 import ScrollIndicator from "./ScrollIndicator";
 import { ProtectionBadge } from "./ProtectionBadge";
@@ -43,26 +43,32 @@ const Hero = ({
   disablePurpleOverlay = false,
 }: HeroProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoLoaded, setVideoLoaded] = useState(false);
   
-  // No loading states - show immediately for instant page transitions
+  // No loading states for images - show immediately for instant page transitions
   const useCarousel = backgroundImages && backgroundImages.length > 0;
   const useVideo = !!backgroundVideo;
 
   return (
     <div 
       className={cn(
-        "relative w-full min-h-[800px] sm:min-h-[900px] md:min-h-screen lg:min-h-[105vh] xl:min-h-[110vh] flex items-center overflow-hidden hero-mobile hero-instant", 
+        "relative w-full min-h-[800px] sm:min-h-[900px] md:min-h-screen lg:min-h-[105vh] xl:min-h-[110vh] flex items-center overflow-hidden hero-mobile", 
         className
       )}
     >
-      {/* Instant background - no flash */}
-      <div className="absolute inset-0 bg-background/5" />
+      {/* Transparent fallback - no color flash */}
+      <div className="absolute inset-0 bg-transparent" />
       
       {/* Background */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Video Background - Instant display */}
+        {/* Video Background */}
         {useVideo && (
-          <div className="absolute inset-0">
+          <div
+            className={cn(
+              "absolute inset-0 transition-opacity duration-300",
+              videoLoaded ? "opacity-100" : "opacity-0"
+            )}
+          >
             <video
               ref={videoRef}
               autoPlay
@@ -70,6 +76,7 @@ const Hero = ({
               loop
               playsInline
               preload="auto"
+              onCanPlay={() => setVideoLoaded(true)}
               className="absolute inset-0 w-full h-full object-cover brightness-[0.85]"
             >
               <source src={backgroundVideo} type="video/mp4" />
@@ -81,14 +88,9 @@ const Hero = ({
         {!useVideo && useCarousel ? (
           <HeroCarousel images={backgroundImages} />
         ) : !useVideo && backgroundImage && (
-          <img
-            src={backgroundImage}
-            alt="Hero background"
-            // @ts-expect-error - fetchpriority is a valid HTML attribute
-            fetchpriority="high"
-            loading="eager"
-            decoding="sync"
-            className="absolute inset-0 w-full h-full object-cover"
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${backgroundImage})` }}
           />
         )}
         

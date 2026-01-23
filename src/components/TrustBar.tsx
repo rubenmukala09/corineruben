@@ -55,32 +55,13 @@ const TrustBar = () => {
     icon: UserCheck,
     text: "Expert Cybersecurity Team"
   }];
-  return (
-    <div ref={counterRef} className="relative z-10 px-4 -mt-10" role="complementary" aria-label="Trust indicators">
+  return <div ref={counterRef} className="relative z-10 px-4 -mt-10" role="complementary" aria-label="Trust indicators">
       <div className="container mx-auto">
-        <div className="relative mx-auto max-w-7xl">
-          <div className="bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl border border-border/20 p-6">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {trustIndicators.map((indicator, index) => (
-                <div 
-                  key={index}
-                  className="flex items-center gap-3 p-3 rounded-xl bg-muted/30 hover:bg-primary/5 transition-all cursor-default"
-                  onMouseEnter={() => setHoveredIndex(index)}
-                  onMouseLeave={() => setHoveredIndex(null)}
-                >
-                  <div className={`p-2 rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 ${hoveredIndex === index ? 'scale-110' : ''} transition-transform`}>
-                    <indicator.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <span className="text-sm font-medium text-foreground">
-                    {indicator.useCounter ? `${indicator.count}+ Families Protected` : indicator.text}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
+        <div className="relative mx-auto max-w-7xl group/trust">
+          {/* Enhanced gradient card matching website colors */}
+          
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
 export default TrustBar;

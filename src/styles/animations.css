@@ -153,20 +153,9 @@ html {
 
 /* ===== UTILITY CLASSES ===== */
 
-.animate-fade-in { animation: fade-in 0.1s ease-out forwards; }
+.animate-fade-in { animation: fade-in 0.2s ease-out forwards; }
 .accordion-down { animation: accordion-expand 0.2s ease-out; }
 .accordion-up { animation: accordion-collapse 0.15s ease-out; }
-
-/* Hero instant render - no animation delay */
-.hero-instant {
-  opacity: 1 !important;
-  transform: none !important;
-}
-
-.hero-instant > * {
-  opacity: 1;
-  transform: none;
-}
 
 .skeleton {
   background: linear-gradient(90deg, hsl(var(--muted)) 0%, hsl(var(--muted-foreground) / 0.15) 50%, hsl(var(--muted)) 100%);

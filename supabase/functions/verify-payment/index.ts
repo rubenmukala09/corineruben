@@ -126,23 +126,6 @@ serve(async (req) => {
       }
     }
 
-    // Update donation status if this is a donation payment
-    if (session.metadata?.donation_id) {
-      const { error: donationError } = await supabaseClient
-        .from('donations')
-        .update({ 
-          payment_status: 'completed',
-          stripe_payment_id: session.payment_intent as string || session.id
-        })
-        .eq('id', session.metadata.donation_id);
-      
-      if (donationError) {
-        logStep("Error updating donation", { error: donationError.message });
-      } else {
-        logStep("Donation updated to completed", { donationId: session.metadata.donation_id });
-      }
-    }
-
     const customerEmail = session.customer_email || session.customer_details?.email;
     const customerName = session.customer_details?.name;
 

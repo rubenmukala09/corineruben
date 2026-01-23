@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Shield, ArrowRight, Lock, Eye, Fingerprint, ShieldCheck, Zap, Globe } from "lucide-react";
-import { useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import heroVideo from "@/assets/hero-video.mp4";
-import heroVideoPoster from "@/assets/hero-video-poster.jpg";
 
 const securityFeatures = [{
   icon: Lock,
@@ -20,16 +19,45 @@ const securityFeatures = [{
 }];
 
 export const HeroHomepage = () => {
+  const [showContent, setShowContent] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    
+    const showAll = () => setShowContent(true);
+    
+    if (!video) {
+      // Show content immediately if no video
+      showAll();
+      return;
+    }
+
+    const handleReady = () => showAll();
+    
+    // Check if already ready
+    if (video.readyState >= 3) {
+      showAll();
+      return;
+    }
+
+    video.addEventListener('canplaythrough', handleReady);
+    video.addEventListener('loadeddata', handleReady);
+    
+    // Faster fallback - show after 500ms max
+    const timeout = setTimeout(showAll, 500);
+
+    return () => {
+      video.removeEventListener('canplaythrough', handleReady);
+      video.removeEventListener('loadeddata', handleReady);
+      clearTimeout(timeout);
+    };
+  }, []);
 
   return (
     <section 
-      className="relative min-h-[100vh] min-h-[100dvh] lg:min-h-[110vh] overflow-hidden"
-      style={{ 
-        backgroundColor: 'hsl(260, 40%, 8%)', 
-        minHeight: '100vh',
-        contain: 'layout style'
-      }}
+      className="relative min-h-[100vh] lg:min-h-[110vh] overflow-hidden"
+      style={{ backgroundColor: '#1a1625' }}
     >
       {/* Static gradient background */}
       <div className="absolute inset-0 overflow-hidden">
@@ -41,19 +69,8 @@ export const HeroHomepage = () => {
         />
       </div>
 
-      {/* Video Background with poster for instant display */}
+      {/* Video Background with eager loading */}
       <div className="absolute inset-0" style={{ backgroundColor: '#F3F0FF' }}>
-        {/* Poster image shows instantly while video loads */}
-        <img
-          src={heroVideoPoster}
-          alt="Hero background"
-          // @ts-expect-error - fetchpriority is a valid HTML attribute
-          fetchpriority="high"
-          loading="eager"
-          decoding="sync"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        {/* Video loads on top and plays when ready */}
         <video
           ref={videoRef}
           autoPlay
@@ -61,8 +78,8 @@ export const HeroHomepage = () => {
           muted
           playsInline
           preload="auto"
-          poster={heroVideoPoster}
           className="absolute inset-0 w-full h-full object-cover"
+          style={{ backgroundColor: '#F3F0FF' }}
         >
           <source src={heroVideo} type="video/mp4" />
         </video>
@@ -80,27 +97,12 @@ export const HeroHomepage = () => {
       </div>
       
       <div 
-        className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-50 hero-instant"
-        style={{ 
-          position: 'relative', 
-          zIndex: 50, 
-          opacity: 1, 
-          visibility: 'visible',
-          display: 'block',
-          width: '100%'
-        }}
+        className={`w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10 transition-opacity duration-300 ${showContent ? 'opacity-100' : 'opacity-0'}`}
       >
-        <div 
-          className="flex flex-col lg:grid lg:grid-cols-5 gap-8 lg:gap-20 xl:gap-28 items-center min-h-[100vh] min-h-[100dvh] py-16 sm:py-20 lg:py-0"
-          style={{ 
-            minWidth: '100%',
-            width: '100%',
-            display: 'flex'
-          }}
-        >
+        <div className="flex flex-col lg:grid lg:grid-cols-5 gap-8 lg:gap-20 xl:gap-28 items-center min-h-[100vh] py-16 sm:py-20 lg:py-0">
           
-          {/* Left Content - Instant render, no animation delay */}
-          <div className="lg:col-span-3 order-2 lg:order-1 w-full" style={{ minWidth: '1px', opacity: 1 }}>
+          {/* Left Content - No framer-motion, using CSS animations */}
+          <div className={`lg:col-span-3 order-2 lg:order-1 w-full ${showContent ? 'animate-fade-in' : ''}`}>
             {/* Premium Badge */}
             <div className="inline-flex items-center gap-2 sm:gap-3 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 mb-6 sm:mb-10 shadow-sm">
               <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-gradient-to-r from-primary to-accent shadow-sm" />
@@ -141,7 +143,7 @@ export const HeroHomepage = () => {
           </div>
           
           {/* Right Content - Security Visual */}
-          <div className="lg:col-span-2 order-1 lg:order-2 flex justify-center lg:justify-end w-full" style={{ minWidth: '1px', opacity: 1 }}>
+          <div className="lg:col-span-2 order-1 lg:order-2 flex justify-center lg:justify-end w-full">
             <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-xl xl:max-w-2xl">
               {/* Main visual container */}
               <div className="relative">

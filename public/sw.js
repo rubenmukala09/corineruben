@@ -1,54 +1,133 @@
-// Version 10 - Fix production path issue
-const CACHE_NAME = 'invision-network-v10';
-const IMAGE_CACHE = 'invision-images-v8';
+const CACHE_NAME = 'invision-network-v5';
+const IMAGE_CACHE = 'invision-images-v3';
+const STATIC_ASSETS = [
+  '/',
+  '/index.html',
+  '/favicon.ico',
+  '/robots.txt',
+  '/manifest.json',
+];
 
-// On install, clear all old caches
+// Install event - cache static assets
 self.addEventListener('install', (event) => {
-  console.log('[SW] Installing v10');
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(cacheNames.map((name) => caches.delete(name)));
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(STATIC_ASSETS);
     })
   );
   self.skipWaiting();
 });
 
-// On activate, take control immediately
+// Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
-  console.log('[SW] Activating v10');
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames
-          .filter(name => name !== CACHE_NAME && name !== IMAGE_CACHE)
-          .map(name => caches.delete(name))
+          .filter((name) => name !== CACHE_NAME && name !== IMAGE_CACHE)
+          .map((name) => caches.delete(name))
       );
-    }).then(() => self.clients.claim())
+    })
   );
+  self.clients.claim();
 });
 
-// Fetch handler - network-first for HTML, cache fallback for assets
+// Fetch event - smart caching strategy
 self.addEventListener('fetch', (event) => {
-  if (event.request.method !== 'GET') return;
-  
-  // Always get fresh HTML - never cache navigation
-  if (event.request.mode === 'navigate' || event.request.destination === 'document') {
-    return; // Let browser fetch from network
-  }
-  
-  // Skip dev server paths entirely
-  const url = new URL(event.request.url);
-  if (url.pathname.startsWith('/src/') || 
-      url.pathname.includes('/@vite') ||
-      url.pathname.includes('__vite') ||
-      url.searchParams.has('t')) {
+  const request = event.request;
+  const url = new URL(request.url);
+
+  // Only handle same-origin GET requests
+  if (request.method !== 'GET' || url.origin !== self.location.origin) {
     return;
   }
-  
-  // Network-first with cache fallback for other assets
-  event.respondWith(
-    fetch(event.request)
-      .then(response => response)
-      .catch(() => caches.match(event.request))
-  );
+
+  // Ignore dev/HMR routes to avoid interfering with Vite
+  if (
+    url.pathname.startsWith('/@') ||
+    url.pathname.startsWith('/src/') ||
+    url.pathname.includes('vite') ||
+    url.searchParams.has('t')
+  ) {
+    return;
+  }
+
+  // Images: cache-first with long expiry
+  if (request.destination === 'image' || /\.(jpg|jpeg|png|gif|webp|svg|ico)$/i.test(url.pathname)) {
+    event.respondWith(
+      caches.match(request).then((cached) => {
+        if (cached) {
+          return cached;
+        }
+        return fetch(request).then((response) => {
+          // Only cache successful responses
+          if (response.ok) {
+            const responseClone = response.clone();
+            caches.open(IMAGE_CACHE).then((cache) => {
+              cache.put(request, responseClone);
+            });
+          }
+          return response;
+        }).catch(() => {
+          // Return empty image on failure
+          return new Response('', { status: 404, statusText: 'Image not found' });
+        });
+      })
+    );
+    return;
+  }
+
+  // Fonts and CSS: cache-first
+  if (request.destination === 'font' || request.destination === 'style' || /\.(woff2?|ttf|otf|eot|css)$/i.test(url.pathname)) {
+    event.respondWith(
+      caches.match(request).then((cached) => {
+        return cached || fetch(request).then((response) => {
+          const responseClone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, responseClone);
+          });
+          return response;
+        });
+      })
+    );
+    return;
+  }
+
+  // HTML navigation: network-first with cache fallback
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          const responseClone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put('/', responseClone);
+          });
+          return response;
+        })
+        .catch(() => {
+          return caches.match('/').then((cached) => {
+            return cached || caches.match('/index.html');
+          });
+        })
+    );
+    return;
+  }
+
+  // Known static assets: cache-first
+  if (STATIC_ASSETS.includes(url.pathname)) {
+    event.respondWith(
+      caches.match(request).then((cached) => {
+        if (cached) {
+          return cached;
+        }
+        return fetch(request).then((response) => {
+          const responseClone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, responseClone);
+          });
+          return response;
+        });
+      })
+    );
+  }
 });

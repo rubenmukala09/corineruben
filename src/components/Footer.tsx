@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Facebook, Linkedin, Youtube, Instagram, Shield, Mail, MapPin, ArrowRight, Loader2, Heart } from "lucide-react";
+import { Facebook, Linkedin, Youtube, Instagram, Shield, Mail, MapPin, ArrowRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import TrustedTechLogos from "./TrustedTechLogos";
@@ -9,43 +9,41 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useConfetti } from "@/hooks/useConfetti";
 import { z } from "zod";
-import { DonationModal } from "@/components/DonationModal";
+
 const newsletterSchema = z.object({
-  email: z.string().trim().email("Please enter a valid email address").max(255, "Email too long")
+  email: z.string().trim().email("Please enter a valid email address").max(255, "Email too long"),
 });
+
 const Footer = () => {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [donationModalOpen, setDonationModalOpen] = useState(false);
-  const {
-    fireSuccess
-  } = useConfetti();
+  const { fireSuccess } = useConfetti();
+
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const validation = newsletterSchema.safeParse({
-      email: email.trim()
-    });
+    
+    const validation = newsletterSchema.safeParse({ email: email.trim() });
     if (!validation.success) {
       toast.error(validation.error.errors[0]?.message || "Please enter a valid email address");
       return;
     }
+
     setIsSubmitting(true);
+
     try {
-      const {
-        data,
-        error
-      } = await supabase.functions.invoke('newsletter-signup', {
-        body: {
-          email: validation.data.email
-        }
+      const { data, error } = await supabase.functions.invoke('newsletter-signup', {
+        body: { email: validation.data.email }
       });
+
       if (error) throw error;
+
       if (data?.alreadySubscribed) {
         toast.info("You're already subscribed!");
       } else {
         fireSuccess();
         toast.success("✓ Subscribed! Check your email.");
       }
+      
       setEmail("");
     } catch (error: any) {
       console.error("Newsletter signup error:", error);
@@ -54,7 +52,9 @@ const Footer = () => {
       setIsSubmitting(false);
     }
   };
-  return <footer className="relative">
+
+  return (
+    <footer className="relative">
       {/* Tech Partners Marquee */}
       <TrustedTechLogos />
 
@@ -63,9 +63,9 @@ const Footer = () => {
         {/* Background */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute inset-0 opacity-[0.02]" style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-          backgroundSize: '40px 40px'
-        }} />
+            backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
+            backgroundSize: '40px 40px'
+          }} />
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px]" />
           <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-accent/5 rounded-full blur-[100px]" />
         </div>
@@ -91,25 +91,34 @@ const Footer = () => {
                 <span className="flex items-center gap-2 text-sm text-white/50">
                   <MapPin className="w-4 h-4" />Serving the Greater Dayton Area
                 </span>
-                
+                <span className="flex items-center gap-2 text-sm text-white/50">
+                  <Mail className="w-4 h-4" />hello@invisionnetwork.org
+                </span>
               </div>
             </div>
 
             {/* Newsletter */}
             <div className="lg:pl-8">
-              <div className="flex items-center gap-3 mb-2">
-                <h3 className="text-lg font-semibold">Stay Protected</h3>
-                <Button onClick={() => setDonationModalOpen(true)} size="sm" className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white text-xs px-3 py-1 h-7 rounded-lg shadow-sm shadow-rose-500/20">
-                  <Heart className="w-3 h-3 mr-1" />
-                  Donate
-                </Button>
-              </div>
+              <h3 className="text-lg font-semibold mb-2">Stay Protected</h3>
               <p className="text-sm text-white/60 mb-4">
                 Get monthly AI safety tips and scam alerts delivered to your inbox.
               </p>
               <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
-                <Input type="email" placeholder="Enter your email" value={email} onChange={e => setEmail(e.target.value)} disabled={isSubmitting} className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:bg-white/10 rounded-xl disabled:opacity-50" aria-label="Email address for newsletter" />
-                <Button type="submit" disabled={isSubmitting} className="bg-primary hover:bg-primary/90 px-5 rounded-xl disabled:opacity-50" aria-label="Subscribe to newsletter">
+                <Input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={isSubmitting}
+                  className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:bg-white/10 rounded-xl disabled:opacity-50"
+                  aria-label="Email address for newsletter"
+                />
+                <Button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className="bg-primary hover:bg-primary/90 px-5 rounded-xl disabled:opacity-50" 
+                  aria-label="Subscribe to newsletter"
+                >
                   {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <ArrowRight className="w-4 h-4" />}
                 </Button>
               </form>
@@ -121,51 +130,46 @@ const Footer = () => {
             <div>
               <h4 className="font-semibold text-sm mb-4 text-white/90">Navigation</h4>
               <ul className="space-y-2">
-                {[{
-                to: "/",
-                label: "Home"
-              }, {
-                to: "/services",
-                label: "Services"
-              }, {
-                to: "/training",
-                label: "Training"
-              }, {
-                to: "/business",
-                label: "AI for Business"
-              }, {
-                to: "/resources",
-                label: "Resources"
-              }, {
-                to: "/about",
-                label: "About"
-              }].map(link => <li key={link.to}>
+                {[
+                  { to: "/", label: "Home" },
+                  { to: "/services", label: "Services" },
+                  { to: "/training", label: "Training" },
+                  { to: "/business", label: "AI for Business" },
+                  { to: "/resources", label: "Resources" },
+                  { to: "/about", label: "About" },
+                ].map((link) => (
+                  <li key={link.to}>
                     <Link to={link.to} className="text-sm text-white/50 hover:text-white transition-colors">
                       {link.label}
                     </Link>
-                  </li>)}
+                  </li>
+                ))}
               </ul>
             </div>
 
             <div>
               <h4 className="font-semibold text-sm mb-4 text-white/90">Services</h4>
               <ul className="space-y-2">
-                {["ScamShield Protection", "Safety Audit", "Web Design", "AI Automation"].map((label, i) => <li key={i}>
+                {["ScamShield Protection", "Safety Audit", "Web Design", "AI Automation"].map((label, i) => (
+                  <li key={i}>
                     <Link to="/services" className="text-sm text-white/50 hover:text-white transition-colors">
                       {label}
                     </Link>
-                  </li>)}
+                  </li>
+                ))}
               </ul>
             </div>
 
             <div>
               <h4 className="font-semibold text-sm mb-4 text-white/90">Training</h4>
               <ul className="space-y-2">
-                {["Zoom Classes", "In-Person", "Group Bookings", "Gift Certificates"].map((label, i) => <li key={i}>
+                {["Zoom Classes", "In-Person", "Group Bookings", "Gift Certificates"].map((label, i) => (
+                  <li key={i}>
                     <Link to="/training" className="text-sm text-white/50 hover:text-white transition-colors">
                       {label}
                     </Link>
-                  </li>)}
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -191,7 +195,6 @@ const Footer = () => {
             </div>
           </div>
 
-
           {/* Bottom Bar */}
           <div className="pt-6 border-t border-white/10">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-4">
@@ -211,25 +214,23 @@ const Footer = () => {
 
               {/* Social Icons */}
               <div className="flex items-center gap-2">
-                {[{
-                href: "https://facebook.com/invisionnetwork",
-                icon: Facebook,
-                label: "Facebook"
-              }, {
-                href: "https://linkedin.com/company/invision-network",
-                icon: Linkedin,
-                label: "LinkedIn"
-              }, {
-                href: "https://youtube.com/invisionnetwork",
-                icon: Youtube,
-                label: "YouTube"
-              }, {
-                href: "https://instagram.com/invisionnetwork",
-                icon: Instagram,
-                label: "Instagram"
-              }].map(social => <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/5 transition-all" aria-label={social.label}>
+                {[
+                  { href: "https://facebook.com/invisionnetwork", icon: Facebook, label: "Facebook" },
+                  { href: "https://linkedin.com/company/invision-network", icon: Linkedin, label: "LinkedIn" },
+                  { href: "https://youtube.com/invisionnetwork", icon: Youtube, label: "YouTube" },
+                  { href: "https://instagram.com/invisionnetwork", icon: Instagram, label: "Instagram" },
+                ].map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/5 transition-all"
+                    aria-label={social.label}
+                  >
                     <social.icon className="w-4 h-4 text-white/60" />
-                  </a>)}
+                  </a>
+                ))}
               </div>
             </div>
 
@@ -240,9 +241,8 @@ const Footer = () => {
           </div>
         </div>
       </div>
-
-      {/* Donation Modal */}
-      <DonationModal open={donationModalOpen} onOpenChange={setDonationModalOpen} type="general" />
-    </footer>;
+    </footer>
+  );
 };
+
 export default Footer;

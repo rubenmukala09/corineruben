@@ -15,8 +15,7 @@ import {
   Square,
   ChevronDown
 } from "lucide-react";
-// Use public path for LCP optimization - image must be discoverable in initial HTML
-const lauraAvatar = "/laura-avatar.png";
+import lauraAvatar from "@/assets/laura-avatar-new.png";
 
 interface Message {
   role: "user" | "assistant";
@@ -331,14 +330,10 @@ export const AIChat = () => {
   // Closed state - just show floating button
   if (!isOpen) {
     return (
-      <div 
-        className="fixed bottom-6 right-6 z-[9998] group"
-        style={{ maxWidth: '56px', maxHeight: '56px', width: '56px', height: '56px' }}
-      >
+      <div className="fixed bottom-6 right-6 z-[9998] group">
         <button
           onClick={openChat}
           className="relative w-14 h-14 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 overflow-hidden ring-2 ring-primary/20"
-          style={{ width: '56px', height: '56px', maxWidth: '56px', maxHeight: '56px' }}
         >
           <img 
             src={lauraAvatar} 
@@ -346,10 +341,10 @@ export const AIChat = () => {
             width={56}
             height={56}
             sizes="56px"
-            loading="lazy"
+            loading="eager"
             decoding="async"
-            style={{ width: '56px', height: '56px', maxWidth: '56px', maxHeight: '56px', objectFit: 'cover' }}
             className="w-full h-full object-cover object-top"
+            style={{ fetchPriority: 'high' } as React.CSSProperties}
           />
           <div className="absolute bottom-0.5 right-0.5 w-3 h-3 rounded-full bg-green-500 border-2 border-white" />
         </button>

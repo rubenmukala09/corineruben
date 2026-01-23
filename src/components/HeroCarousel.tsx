@@ -39,18 +39,14 @@ export const HeroCarousel = ({
   if (images.length === 0) return null;
 
   // For single image, render immediately without any state tracking
-  // Single image: use native <img> for instant browser discovery
   if (images.length === 1) {
     return (
       <div className="absolute inset-0 overflow-hidden">
-        <img
-          src={images[0].src}
-          alt={images[0].alt}
-          // @ts-expect-error - fetchpriority is a valid HTML attribute
-          fetchpriority="high"
-          loading="eager"
-          decoding="sync"
-          className="absolute inset-0 w-full h-full object-cover"
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${images[0].src})` }}
+          role="img"
+          aria-label={images[0].alt}
         />
       </div>
     );
@@ -58,20 +54,18 @@ export const HeroCarousel = ({
 
   return (
     <div className="absolute inset-0 overflow-hidden">
-      {/* Stack all images - first image instant, others transition */}
+      {/* Stack all images, show active one with z-index */}
       {images.map((image, index) => (
-        <img
+        <div
           key={image.src}
-          src={image.src}
-          alt={image.alt}
-          fetchPriority={index === 0 ? "high" : "low"}
-          loading={index === 0 ? "eager" : "lazy"}
-          decoding={index === 0 ? "sync" : "async"}
-          className={`absolute inset-0 w-full h-full object-cover ${index === 0 ? '' : 'transition-opacity duration-700'}`}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-700"
           style={{ 
+            backgroundImage: `url(${image.src})`,
             opacity: index === currentIndex ? 1 : 0,
             zIndex: index === currentIndex ? 1 : 0
           }}
+          role="img"
+          aria-label={image.alt}
         />
       ))}
       <div className="sr-only" aria-live="polite" aria-atomic="true">

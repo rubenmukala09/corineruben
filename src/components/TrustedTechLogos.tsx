@@ -30,10 +30,11 @@ const TrustedTechLogos = () => {
                 className="flex-shrink-0 mx-10 flex items-center gap-2"
               >
                 <span 
-                  className="text-lg font-black text-slate-400 hover:text-slate-900 transition-all duration-500 whitespace-nowrap tracking-tight uppercase opacity-60 hover:opacity-100"
+                  className="text-lg font-black text-slate-900 hover:text-primary transition-colors duration-300 whitespace-nowrap tracking-tight uppercase"
                   style={{ 
                     fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
                     letterSpacing: '-0.02em',
+                    textShadow: '0 1px 2px rgba(0,0,0,0.08)'
                   }}
                 >
                   {name}

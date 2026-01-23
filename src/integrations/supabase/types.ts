@@ -1243,42 +1243,6 @@ export type Database = {
         }
         Relationships: []
       }
-      dashboard_health_checks: {
-        Row: {
-          check_type: string
-          created_at: string
-          dashboard_name: string
-          error_message: string | null
-          id: string
-          last_check_at: string
-          response_time_ms: number | null
-          status: string
-          tables_checked: string[] | null
-        }
-        Insert: {
-          check_type?: string
-          created_at?: string
-          dashboard_name: string
-          error_message?: string | null
-          id?: string
-          last_check_at?: string
-          response_time_ms?: number | null
-          status?: string
-          tables_checked?: string[] | null
-        }
-        Update: {
-          check_type?: string
-          created_at?: string
-          dashboard_name?: string
-          error_message?: string | null
-          id?: string
-          last_check_at?: string
-          response_time_ms?: number | null
-          status?: string
-          tables_checked?: string[] | null
-        }
-        Relationships: []
-      }
       deals: {
         Row: {
           amount: number | null
@@ -1758,39 +1722,6 @@ export type Database = {
           is_active?: boolean | null
           title?: string
           updated_at?: string | null
-        }
-        Relationships: []
-      }
-      form_submission_metrics: {
-        Row: {
-          created_at: string
-          failure_count: number | null
-          form_type: string
-          id: string
-          last_submission_at: string | null
-          submission_count: number | null
-          success_count: number | null
-          window_start: string
-        }
-        Insert: {
-          created_at?: string
-          failure_count?: number | null
-          form_type: string
-          id?: string
-          last_submission_at?: string | null
-          submission_count?: number | null
-          success_count?: number | null
-          window_start?: string
-        }
-        Update: {
-          created_at?: string
-          failure_count?: number | null
-          form_type?: string
-          id?: string
-          last_submission_at?: string | null
-          submission_count?: number | null
-          success_count?: number | null
-          window_start?: string
         }
         Relationships: []
       }
@@ -4573,19 +4504,6 @@ export type Database = {
         }
         Relationships: []
       }
-      rls_policy_status: {
-        Row: {
-          cmd: string | null
-          permissive: string | null
-          policyname: unknown
-          qual: string | null
-          roles: unknown[] | null
-          schemaname: unknown
-          tablename: unknown
-          with_check: string | null
-        }
-        Relationships: []
-      }
       senior_profiles_safe: {
         Row: {
           created_at: string | null
@@ -4711,10 +4629,6 @@ export type Database = {
       }
       get_senior_sensitive_data: {
         Args: { target_user_id: string }
-        Returns: Json
-      }
-      get_worker_sensitive_data: {
-        Args: { target_worker_id: string }
         Returns: Json
       }
       has_role: {

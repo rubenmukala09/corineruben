@@ -43,10 +43,6 @@ import {
   Video,
   Zap,
   Star,
-  Key,
-  UserCheck,
-  ShieldCheck,
-  Plane,
 } from "lucide-react";
 import { natureWinter3 } from "@/config/natureHeroImages";
 import { PROFESSIONAL_HERO_IMAGES } from "@/config/professionalHeroImages";
@@ -1567,53 +1563,49 @@ function LearnAndTrain() {
             </Card>
           </div>
 
-          {/* Family Safety Vault Card - Soft Trust Design */}
-          <div className="max-w-4xl mx-auto mt-10 bg-gradient-to-br from-slate-50 via-white to-teal-50/30 rounded-3xl p-8 md:p-12 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)] transition-all duration-500 border border-slate-100">
-            <div className="text-center">
-              {/* Professional Security Icon */}
+          {/* Family Safety Vault Card */}
+          <Card className="max-w-4xl mx-auto mt-10 p-8 md:p-10 hover:shadow-xl transition-all duration-500 rounded-2xl border-accent border-2 relative overflow-hidden">
+            {/* Background Image - Vault themed */}
+            <div 
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ 
+                backgroundImage: `url(${heroVault})`,
+              }}
+            />
+            {/* Dark overlay for text readability - significantly enhanced */}
+            <div className="absolute inset-0 bg-gradient-to-br from-black/85 via-black/80 to-black/75" />
+            <div className="absolute inset-0 backdrop-blur-[1px]" />
+            
+            <div className="text-center relative z-10">
               <div className="flex justify-center mb-6">
-                <div className="w-20 h-20 bg-gradient-to-br from-teal-500 to-emerald-500 rounded-2xl flex items-center justify-center shadow-lg shadow-teal-500/20 border border-white/50">
+                <div className="w-20 h-20 bg-gradient-to-br from-primary/60 to-accent/60 rounded-full flex items-center justify-center animate-[shield-pulse_3s_ease-in-out_infinite] shadow-lg border-2 border-white/30">
                   <Lock className="w-10 h-10 text-white" />
                 </div>
               </div>
-              
-              <h3 className="text-2xl md:text-3xl font-bold mb-3 text-foreground">Family Safety Vault</h3>
-              <p className="text-muted-foreground mb-8 text-base md:text-lg font-medium">Included with Family & Premium Plans — keep everything secure</p>
+              <h3 className="text-2xl md:text-3xl font-bold mb-3 text-white drop-shadow-lg">Family Safety Vault</h3>
+              <p className="text-white/90 mb-6 text-base md:text-lg font-medium drop-shadow-md">Included with Family & Premium Plans — keep everything secure</p>
 
-              {/* Feature Grid - Soft Pastel Cards */}
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8 text-left max-w-2xl mx-auto">
                 {[
-                  { icon: <Key className="w-5 h-5 text-teal-600" />, feature: "Family safe words" },
-                  { icon: <Phone className="w-5 h-5 text-teal-600" />, feature: "Trusted caller list" },
-                  { icon: <UserCheck className="w-5 h-5 text-teal-600" />, feature: "Emergency contacts" },
-                  { icon: <FileText className="w-5 h-5 text-teal-600" />, feature: "Encrypted documents" },
-                  { icon: <ShieldCheck className="w-5 h-5 text-teal-600" />, feature: "Account recovery info" },
-                  { icon: <Plane className="w-5 h-5 text-teal-600" />, feature: "Travel itineraries" },
+                  { icon: "🔑", feature: "Family safe words" },
+                  { icon: "📞", feature: "Trusted caller list" },
+                  { icon: "🆘", feature: "Emergency contacts" },
+                  { icon: "📄", feature: "Encrypted documents" },
+                  { icon: "🔐", feature: "Account recovery info" },
+                  { icon: "✈️", feature: "Travel itineraries" },
                 ].map((item, index) => (
-                  <div key={index} className="flex items-center gap-3 p-4 bg-gradient-to-br from-slate-50 to-slate-100/50 rounded-xl border border-slate-200/50 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-                    <div className="flex-shrink-0">{item.icon}</div>
+                  <div key={index} className="flex items-center gap-3 p-3 bg-white/95 rounded-xl border border-white/20 shadow-lg">
+                    <span className="text-xl">{item.icon}</span>
                     <span className="text-sm md:text-base font-semibold text-foreground">{item.feature}</span>
                   </div>
                 ))}
               </div>
 
-              {/* Trust Footer - Professional Icons */}
-              <div className="flex flex-wrap justify-center gap-6 pt-6 border-t border-slate-100">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Shield className="w-4 h-4 text-teal-500" />
-                  <span>Bank-grade encryption</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Lock className="w-4 h-4 text-teal-500" />
-                  <span>Multi-factor authentication</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Users className="w-4 h-4 text-teal-500" />
-                  <span>Secure family sharing</span>
-                </div>
-              </div>
+              <p className="text-base md:text-lg text-white font-semibold drop-shadow-md">
+                🔒 Bank-grade encryption • Multi-factor authentication • Secure family sharing
+              </p>
             </div>
-          </div>
+          </Card>
         </div>
       </section>
 

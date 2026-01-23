@@ -1,14 +1,13 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-import { useArticle } from "@/hooks/useArticle";
-import { useArticleMutations } from "@/hooks/useArticleMutations";
 import { AdminSidebar } from "@/components/AdminSidebar";
 import { AdminTopBar } from "@/components/AdminTopBar";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
 import { ArticlePublishingSidebar } from "@/components/admin/ArticlePublishingSidebar";
@@ -25,7 +24,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { supabase } from "@/integrations/supabase/client";
+import { cn } from "@/lib/utils";
 
 interface ArticleData {
   title: string;
@@ -52,10 +51,6 @@ export default function ArticleEditor() {
   const { toast } = useToast();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   
-  // Fetch existing article if editing
-  const { data: existingArticle, isLoading: loadingArticle } = useArticle(id);
-  const { createArticle, updateArticle, publishArticle } = useArticleMutations();
-  
   const [article, setArticle] = useState<ArticleData>({
     title: "",
     slug: "",
@@ -67,7 +62,10 @@ export default function ArticleEditor() {
     tags: [],
   });
 
+  const [title, setTitle] = useState("");
+  const [slug, setSlug] = useState("");
   const [slugLocked, setSlugLocked] = useState(false);
+  const [content, setContent] = useState("");
   const [saving, setSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [wordCount, setWordCount] = useState(0);
@@ -78,29 +76,6 @@ export default function ArticleEditor() {
   const [publishing, setPublishing] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [articleId, setArticleId] = useState<string | null>(id || null);
-
-  // Load existing article data
-  useEffect(() => {
-    if (existingArticle) {
-      setArticle({
-        title: existingArticle.title || "",
-        slug: existingArticle.slug || "",
-        content: existingArticle.content || "",
-        categories: existingArticle.category ? [existingArticle.category] : [],
-        status: existingArticle.status as "draft" | "scheduled" | "published",
-        visibility: "public",
-        author: "Current User",
-        tags: existingArticle.tags || [],
-        featuredImage: existingArticle.featured_image_url,
-        excerpt: existingArticle.excerpt,
-        scheduledDate: existingArticle.scheduled_for,
-        seoTitle: existingArticle.seo_title,
-        seoDescription: existingArticle.seo_description,
-      });
-      setSlugLocked(true);
-      setArticleId(existingArticle.id);
-    }
-  }, [existingArticle]);
 
   // Validation for required fields
   const requiredFieldsComplete = () => {
@@ -113,7 +88,7 @@ export default function ArticleEditor() {
   };
 
   const getPublishingChecklist = () => {
-    return [
+    const checks = [
       { id: "title", label: "Title entered", completed: !!article.title },
       { id: "content", label: "Content added (min 300 words)", completed: wordCount >= 300 },
       { id: "image", label: "Featured image set", completed: !!article.featuredImage },
@@ -121,6 +96,7 @@ export default function ArticleEditor() {
       { id: "excerpt", label: "Excerpt added", completed: !!article.excerpt },
       { id: "seo", label: "SEO title and description", completed: !!(article.seoTitle && article.seoDescription) },
     ];
+    return checks;
   };
 
   const getSEOScore = () => {
@@ -131,7 +107,7 @@ export default function ArticleEditor() {
       { completed: !!article.seoTitle && article.seoTitle.length >= 50 && article.seoTitle.length <= 60, weight: 10 },
       { completed: !!article.seoDescription && article.seoDescription.length >= 120 && article.seoDescription.length <= 160, weight: 15 },
       { completed: !!article.featuredImage, weight: 15 },
-      { completed: article.focusKeyword && article.content ? (article.content.toLowerCase().split(article.focusKeyword.toLowerCase()).length - 1) / article.content.split(/\s+/).length * 100 >= 0.5 && (article.content.toLowerCase().split(article.focusKeyword.toLowerCase()).length - 1) / article.content.split(/\s+/).length * 100 <= 2.5 : false, weight: 10 },
+      { completed: article.focusKeyword && content ? (content.toLowerCase().split(article.focusKeyword.toLowerCase()).length - 1) / content.split(/\s+/).length * 100 >= 0.5 && (content.toLowerCase().split(article.focusKeyword.toLowerCase()).length - 1) / content.split(/\s+/).length * 100 <= 2.5 : false, weight: 10 },
     ];
     const totalWeight = checks.reduce((sum, check) => sum + check.weight, 0);
     const earnedWeight = checks.filter(check => check.completed).reduce((sum, check) => sum + check.weight, 0);
@@ -147,26 +123,20 @@ export default function ArticleEditor() {
     return missing;
   };
 
-  const generateSlug = (text: string) => {
-    return text
-      .toLowerCase()
-      .trim()
-      .replace(/[^\w\s-]/g, "")
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-");
-  };
-
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Cmd/Ctrl + S: Save draft
       if ((e.metaKey || e.ctrlKey) && e.key === "s") {
         e.preventDefault();
         handleSave(false);
       }
+      // Cmd/Ctrl + P: Preview
       if ((e.metaKey || e.ctrlKey) && e.key === "p") {
         e.preventDefault();
         handlePreview();
       }
+      // Cmd/Ctrl + Shift + P: Publish
       if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === "P") {
         e.preventDefault();
         if (requiredFieldsComplete()) {
@@ -195,109 +165,85 @@ export default function ArticleEditor() {
 
   // Track changes
   useEffect(() => {
-    if (article.title || article.content) {
+    if (title || content) {
       setHasUnsavedChanges(true);
     }
-  }, [article]);
+  }, [title, content, article]);
+  const generateSlug = (text: string) => {
+    return text
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-");
+  };
 
   // Auto-generate slug from title
   useEffect(() => {
-    if (!slugLocked && article.title) {
-      setArticle(prev => ({ ...prev, slug: generateSlug(article.title) }));
+    if (!slugLocked && title) {
+      setSlug(generateSlug(title));
     }
-  }, [article.title, slugLocked]);
+  }, [title, slugLocked]);
 
   // Calculate word count, character count, and reading time
   useEffect(() => {
-    const text = article.content.replace(/<[^>]*>/g, "");
+    const text = content.replace(/<[^>]*>/g, ""); // Remove HTML tags
     const words = text.trim().split(/\s+/).filter(Boolean);
     const chars = text.length;
-    const reading = Math.ceil(words.length / 200);
+    const reading = Math.ceil(words.length / 200); // Average reading speed: 200 words/min
 
     setWordCount(words.length);
     setCharCount(chars);
     setReadingTime(reading);
-  }, [article.content]);
+  }, [content]);
 
   // Auto-save every 30 seconds
   useEffect(() => {
     const autoSaveInterval = setInterval(() => {
-      if (article.title || article.content) {
+      if (title || content) {
         handleSave(true);
       }
     }, 30000);
 
     return () => clearInterval(autoSaveInterval);
-  }, [article]);
-
-  // Restore from localStorage on load (only for new articles)
-  useEffect(() => {
-    if (!id) {
-      const savedDraft = localStorage.getItem("article-draft");
-      if (savedDraft) {
-        try {
-          const draft = JSON.parse(savedDraft);
-          if (draft.title || draft.content) {
-            setArticle(prev => ({
-              ...prev,
-              title: draft.title || "",
-              slug: draft.slug || "",
-              content: draft.content || "",
-            }));
-            toast({
-              title: "Draft Restored",
-              description: "Your previous work has been restored",
-            });
-          }
-        } catch (error) {
-          console.error("Failed to restore draft:", error);
-        }
-      }
-    }
-  }, [id]);
+  }, [title, content]);
 
   // Save to localStorage for offline support
   useEffect(() => {
-    if (!id) {
-      const draft = {
-        title: article.title,
-        slug: article.slug,
-        content: article.content,
-        timestamp: new Date().toISOString(),
-      };
-      localStorage.setItem("article-draft", JSON.stringify(draft));
+    const draft = {
+      title,
+      slug,
+      content,
+      timestamp: new Date().toISOString(),
+    };
+    localStorage.setItem("article-draft", JSON.stringify(draft));
+  }, [title, slug, content]);
+
+  // Restore from localStorage on load
+  useEffect(() => {
+    const savedDraft = localStorage.getItem("article-draft");
+    if (savedDraft && !id) {
+      try {
+        const draft = JSON.parse(savedDraft);
+        setTitle(draft.title || "");
+        setSlug(draft.slug || "");
+        setContent(draft.content || "");
+        toast({
+          title: "Draft Restored",
+          description: "Your previous work has been restored",
+        });
+      } catch (error) {
+        console.error("Failed to restore draft:", error);
+      }
     }
-  }, [article.title, article.slug, article.content, id]);
+  }, [id]);
 
   const handleSave = async (silent = false) => {
     try {
       setSaving(true);
 
-      const articlePayload = {
-        title: article.title,
-        slug: article.slug || generateSlug(article.title),
-        content: article.content,
-        category: article.categories[0] || "News",
-        status: article.status as "draft" | "scheduled" | "published",
-        excerpt: article.excerpt,
-        featured_image_url: article.featuredImage,
-        tags: article.tags,
-        scheduled_for: article.scheduledDate,
-        seo_title: article.seoTitle,
-        seo_description: article.seoDescription,
-      };
-
-      if (articleId) {
-        // Update existing article
-        await updateArticle.mutateAsync({ id: articleId, ...articlePayload });
-      } else {
-        // Create new article
-        const result = await createArticle.mutateAsync(articlePayload);
-        setArticleId(result.id);
-        navigate(`/admin/content/articles/${result.id}`, { replace: true });
-        // Clear localStorage draft after successful save
-        localStorage.removeItem("article-draft");
-      }
+      // Simulate API call - replace with actual save logic
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
       setLastSaved(new Date());
       setHasUnsavedChanges(false);
@@ -338,68 +284,43 @@ export default function ArticleEditor() {
       setPublishing(true);
       setShowPublishModal(false);
 
-      // First save the article to get an ID if new
-      let currentArticleId = articleId;
-      
-      const articlePayload = {
-        title: article.title,
-        slug: article.slug || generateSlug(article.title),
-        content: article.content,
-        category: article.categories[0] || "News",
-        status: "published" as const,
-        excerpt: article.excerpt,
-        featured_image_url: article.featuredImage,
-        tags: article.tags,
-        seo_title: article.seoTitle,
-        seo_description: article.seoDescription,
-        published_at: new Date().toISOString(),
-      };
+      // Simulate upload images and save
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      if (currentArticleId) {
-        // Update and publish existing article
-        await updateArticle.mutateAsync({ id: currentArticleId, ...articlePayload });
-      } else {
-        // Create and publish new article
-        const result = await createArticle.mutateAsync(articlePayload);
-        currentArticleId = result.id;
-        setArticleId(result.id);
-        navigate(`/admin/content/articles/${result.id}`, { replace: true });
-        localStorage.removeItem("article-draft");
+      // Update article status
+      const updatedArticle = {
+        ...article,
+        status: "published" as const,
+        scheduledDate: new Date().toISOString(),
+      };
+      setArticle(updatedArticle);
+
+      // Generate article ID if new
+      if (!articleId) {
+        const newId = Math.random().toString(36).substring(7);
+        setArticleId(newId);
+        // Update URL
+        navigate(`/admin/content/articles/${newId}`, { replace: true });
       }
 
-      // Update local state
-      setArticle(prev => ({ ...prev, status: "published" }));
       setHasUnsavedChanges(false);
       setPublishing(false);
       setShowSuccessModal(true);
 
-      // Handle newsletter sending
-      if (options?.sendNewsletter && currentArticleId) {
-        try {
-          const { error } = await supabase.functions.invoke("send-article-newsletter", {
-            body: { articleId: currentArticleId },
-          });
-          if (error) {
-            console.error("Newsletter send error:", error);
-            toast({
-              title: "Newsletter not sent",
-              description: "Article published but newsletter delivery failed.",
-              variant: "destructive",
-            });
-          }
-        } catch (err) {
-          console.error("Newsletter invocation error:", err);
-        }
+      // Log the newsletter and social options (in real app, would trigger actions)
+      if (options?.sendNewsletter) {
+        console.log("Sending to newsletter subscribers...");
       }
-
-      // Handle social sharing
       if (options?.shareOnSocial) {
-        console.log("Social sharing would be triggered here");
+        console.log("Sharing on social media...");
       }
 
       toast({
         title: articleId ? "Article Updated!" : "Article Published!",
-        description: "Your article is now live",
+        description:
+          article.status === "scheduled"
+            ? "Your article has been scheduled"
+            : "Your article is now live",
       });
     } catch (error) {
       console.error("Publish error:", error);
@@ -413,14 +334,20 @@ export default function ArticleEditor() {
   };
 
   const handlePreview = async () => {
+    // Auto-save before preview
     await handleSave(true);
 
+    // Store article data in localStorage for preview
     const previewData = {
       ...article,
-      readingTime: Math.ceil(wordCount / 200),
+      title: article.title,
+      content: article.content,
+      readingTime: Math.ceil(wordCount / 200), // Average reading speed
     };
 
     localStorage.setItem("article-preview", JSON.stringify(previewData));
+
+    // Open preview in new tab
     window.open("/admin/articles/preview", "_blank");
   };
 
@@ -433,14 +360,6 @@ export default function ArticleEditor() {
     const hours = Math.floor(minutes / 60);
     return `${hours} hour${hours > 1 ? "s" : ""} ago`;
   };
-
-  if (loadingArticle && id) {
-    return (
-      <div className="flex min-h-screen bg-background items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-      </div>
-    );
-  }
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -554,16 +473,16 @@ export default function ArticleEditor() {
             {/* Title Input */}
             <div className="space-y-2">
               <Input
-                value={article.title}
-                onChange={(e) => setArticle(prev => ({ ...prev, title: e.target.value }))}
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
                 placeholder="Enter article title..."
                 className="text-4xl font-bold border-0 px-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                 maxLength={100}
                 autoFocus
               />
-              {article.title.length >= 80 && (
+              {title.length >= 80 && (
                 <p className="text-sm text-muted-foreground text-right">
-                  {article.title.length}/100 characters
+                  {title.length}/100 characters
                 </p>
               )}
             </div>
@@ -580,9 +499,9 @@ export default function ArticleEditor() {
                   </span>
                   <Input
                     id="slug"
-                    value={article.slug}
+                    value={slug}
                     onChange={(e) => {
-                      setArticle(prev => ({ ...prev, slug: generateSlug(e.target.value) }));
+                      setSlug(generateSlug(e.target.value));
                       setSlugLocked(true);
                     }}
                     className="border-0 bg-transparent px-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-sm"
@@ -602,7 +521,7 @@ export default function ArticleEditor() {
                   )}
                 </Button>
               </div>
-              {article.slug && (
+              {slug && (
                 <div className="flex items-center gap-2 text-sm">
                   <Check className="h-3 w-3 text-green-500" />
                   <span className="text-muted-foreground">Available</span>
@@ -613,8 +532,8 @@ export default function ArticleEditor() {
             {/* Rich Text Editor */}
             <div className="space-y-2">
               <RichTextEditor
-                content={article.content}
-                onChange={(content) => setArticle(prev => ({ ...prev, content }))}
+                content={content}
+                onChange={setContent}
                 placeholder="Start writing your article..."
               />
 
