@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Shield } from "lucide-react";
 
 interface BrandedLoaderProps {
@@ -6,56 +5,36 @@ interface BrandedLoaderProps {
   fullScreen?: boolean;
 }
 
+// Pure CSS loader - no framer-motion overhead
 export const BrandedLoader = ({ 
-  message = "System Initializing", 
+  message = "Loading", 
   fullScreen = true 
 }: BrandedLoaderProps) => {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-      className={`flex items-center justify-center bg-white/80 backdrop-blur-md transition-all duration-500 ${
+    <div
+      className={`flex items-center justify-center bg-background/95 animate-fade-in ${
         fullScreen ? "fixed inset-0 z-[9999]" : "py-10"
       }`}
     >
-      {/* Animation Wrapper */}
       <div className="relative flex flex-col items-center justify-center">
+        {/* Outer ring */}
+        <div className="absolute h-20 w-20 rounded-full border border-primary/20 animate-spin-slow" />
         
-        {/* Outer Orbit Ring (Spinning slowly) */}
-        <div className="absolute h-32 w-32 rounded-full border border-primary/20 animate-[spin_3s_linear_infinite]" />
+        {/* Inner ring */}
+        <div className="absolute h-14 w-14 rounded-full border-2 border-t-primary border-r-transparent border-b-primary border-l-transparent animate-spin" />
         
-        {/* Middle Pulsing Ring (The "Oval" effect) */}
-        <div className="absolute h-24 w-24 rounded-full border-2 border-t-primary border-r-transparent border-b-primary border-l-transparent animate-[spin_1.5s_ease-in-out_infinite]" />
-        
-        {/* Inner Glowing Core (The "AI Bubble") */}
-        <motion.div 
-          className="h-16 w-16 rounded-full bg-gradient-to-tr from-primary to-accent flex items-center justify-center"
-          animate={{
-            boxShadow: [
-              '0 0 20px hsl(var(--primary) / 0.4)',
-              '0 0 40px hsl(var(--primary) / 0.6)',
-              '0 0 20px hsl(var(--primary) / 0.4)',
-            ]
-          }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        {/* Core */}
+        <div 
+          className="h-10 w-10 rounded-full bg-gradient-to-tr from-primary to-accent flex items-center justify-center animate-pulse"
         >
-          <Shield className="w-8 h-8 text-white" strokeWidth={1.5} />
-        </motion.div>
-
-        {/* Professional Loading Text */}
-        <div className="mt-24 text-center">
-          <motion.p 
-            className="text-sm font-medium tracking-[0.2em] text-primary uppercase"
-            animate={{ opacity: [0.5, 1, 0.5] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          >
-            {message}
-          </motion.p>
+          <Shield className="w-5 h-5 text-white" strokeWidth={2} />
         </div>
-        
+
+        {/* Text */}
+        <p className="mt-16 text-xs font-medium tracking-widest text-primary uppercase animate-pulse">
+          {message}
+        </p>
       </div>
-    </motion.div>
+    </div>
   );
 };

@@ -1,6 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { motion, AnimatePresence } from "framer-motion";
 
 interface ProgressiveImageProps {
   src: string;
@@ -8,11 +7,9 @@ interface ProgressiveImageProps {
   className?: string;
   containerClassName?: string;
   priority?: boolean;
-  blurAmount?: number;
-  transitionDuration?: number;
 }
 
-// Global cache for loaded images
+// Global cache
 const loadedImages = new Set<string>();
 
 export function ProgressiveImage({
@@ -21,91 +18,45 @@ export function ProgressiveImage({
   className,
   containerClassName,
   priority = false,
-  blurAmount = 20,
-  transitionDuration = 0.6,
 }: ProgressiveImageProps) {
-  const [loadState, setLoadState] = useState<'loading' | 'loaded' | 'error'>(() => 
-    loadedImages.has(src) ? 'loaded' : 'loading'
-  );
-  const imgRef = useRef<HTMLImageElement>(null);
+  const [loaded, setLoaded] = useState(() => loadedImages.has(src));
 
   useEffect(() => {
-    // Already loaded from cache
     if (loadedImages.has(src)) {
-      setLoadState('loaded');
+      setLoaded(true);
       return;
     }
-
-    // Reset state for new src
-    setLoadState('loading');
 
     const img = new Image();
     img.onload = () => {
       loadedImages.add(src);
-      setLoadState('loaded');
+      setLoaded(true);
     };
-    img.onerror = () => {
-      setLoadState('error');
-    };
-    
-    // High priority for visible images
-    if (priority) {
-      img.fetchPriority = 'high';
-      img.decoding = 'sync';
-    } else {
-      img.fetchPriority = 'auto';
-      img.decoding = 'async';
-    }
-    
+    img.onerror = () => setLoaded(true);
     img.src = src;
 
     return () => {
       img.onload = null;
       img.onerror = null;
     };
-  }, [src, priority]);
+  }, [src]);
 
   return (
     <div className={cn("relative overflow-hidden", containerClassName)}>
-      {/* Placeholder shimmer while loading */}
-      <AnimatePresence>
-        {loadState === 'loading' && (
-          <motion.div
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="absolute inset-0 bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 animate-shimmer"
-            style={{
-              backgroundSize: '200% 100%',
-            }}
-          />
-        )}
-      </AnimatePresence>
+      {/* Shimmer placeholder */}
+      {!loaded && (
+        <div className="absolute inset-0 bg-muted animate-pulse" />
+      )}
 
-      {/* Main image with blur-to-sharp transition */}
-      <motion.img
-        ref={imgRef}
+      {/* Image with CSS transition */}
+      <img
         src={src}
         alt={alt}
         loading={priority ? "eager" : "lazy"}
-        decoding={priority ? "sync" : "async"}
-        initial={{ 
-          filter: `blur(${blurAmount}px)`,
-          scale: 1.1,
-          opacity: 0 
-        }}
-        animate={{ 
-          filter: loadState === 'loaded' ? 'blur(0px)' : `blur(${blurAmount}px)`,
-          scale: loadState === 'loaded' ? 1 : 1.1,
-          opacity: loadState === 'loading' ? 0 : 1
-        }}
-        transition={{ 
-          duration: transitionDuration,
-          ease: [0.4, 0, 0.2, 1]
-        }}
+        decoding="async"
         className={cn(
-          "w-full h-full object-cover",
-          loadState === 'error' && "bg-muted",
+          "w-full h-full object-cover transition-opacity duration-200",
+          loaded ? "opacity-100" : "opacity-0",
           className
         )}
       />
@@ -113,17 +64,16 @@ export function ProgressiveImage({
   );
 }
 
-// Preload critical images for instant display
+// Preload critical images
 export const preloadCriticalImages = (urls: string[]) => {
   urls.forEach(url => {
     if (!loadedImages.has(url)) {
       const img = new Image();
       img.onload = () => loadedImages.add(url);
-      img.fetchPriority = 'high';
       img.src = url;
     }
   });
 };
 
-// Check if image is already cached
+// Check if cached
 export const isImageCached = (url: string) => loadedImages.has(url);

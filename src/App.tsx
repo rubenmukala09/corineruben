@@ -1,9 +1,8 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense, useEffect, useState } from "react";
-import { AnimatePresence } from "framer-motion";
 import { SplashScreen } from "./components/SplashScreen";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AIChat } from "./components/AIChat";
@@ -18,7 +17,6 @@ import { ErrorBoundary } from "./components/ErrorBoundary";
 import { RouteTracker } from "./components/RouteTracker";
 import { DraggablePerformanceMonitor } from "./components/DraggablePerformanceMonitor";
 import { useAnalyticsTracking } from "./hooks/useAnalyticsTracking";
-
 import { PageTransition } from "./components/PageTransition";
 
 import { NavigationProgress } from "./components/NavigationProgress";
@@ -128,12 +126,10 @@ import { AIPulseLoader } from "./components/AIPulseLoader";
 const PageLoader = () => <AIPulseLoader message="Loading..." fullScreen={true} />;
 const queryClient = new QueryClient();
 
+// Direct routes without AnimatePresence - instant transitions
 function PublicRoutes() {
-  const location = useLocation();
-
   return (
-    <AnimatePresence mode="wait" initial={false}>
-      <Routes location={location} key={location.pathname}>
+    <Routes>
         <Route path="/" element={<PageTransition variant="auto"><Index /></PageTransition>} />
         <Route path="/training" element={<PageTransition variant="auto"><Training /></PageTransition>} />
         <Route path="/business" element={<PageTransition variant="auto"><Business /></PageTransition>} />
@@ -231,9 +227,8 @@ function PublicRoutes() {
           <Route path="job-applications" element={<JobApplicationsList />} />
         </Route>
         
-        <Route path="*" element={<PageTransition variant="fade"><NotFound /></PageTransition>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
-    </AnimatePresence>
   );
 }
 

@@ -5,11 +5,7 @@ interface PageTransitionProps {
   variant?: "fade" | "slide" | "scale" | "slideUp" | "crossfade" | "auto";
 }
 
-// Simple page wrapper - no animations for fast loading
-export const PageTransition = ({ children }: PageTransitionProps) => {
-  return (
-    <div className="min-h-screen">
-      {children}
-    </div>
-  );
-};
+// Zero-overhead page wrapper
+export const PageTransition = ({ children }: PageTransitionProps) => (
+  <>{children}</>
+);
