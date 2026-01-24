@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Shield, ArrowRight, Lock, Eye, Fingerprint, ShieldCheck, Zap, Globe } from "lucide-react";
-import { useRef } from "react";
-import heroVideo from "@/assets/hero-video.mp4";
-import heroVideoPoster from "@/assets/hero-homepage.jpg";
+
 const securityFeatures = [{
   icon: Lock,
   label: "End-to-End Encryption"
@@ -18,30 +16,20 @@ const securityFeatures = [{
   label: "AI Protection"
 }];
 export const HeroHomepage = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
   return <section className="relative min-h-[100vh] lg:min-h-[110vh] overflow-hidden" style={{
     backgroundColor: '#1a1625'
   }}>
-      {/* Static gradient background */}
+      {/* Static gradient background - no video/photos */}
       <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0" style={{
+          background: 'linear-gradient(135deg, hsl(var(--primary) / 0.15) 0%, hsl(var(--background)) 50%, hsl(var(--accent) / 0.1) 100%)'
+        }} />
+        <div className="absolute inset-0 opacity-40" style={{
+          background: 'radial-gradient(circle at 20% 30%, hsl(var(--primary) / 0.3) 0%, transparent 40%)'
+        }} />
         <div className="absolute inset-0 opacity-30" style={{
-        background: 'radial-gradient(circle at 0% 0%, hsl(var(--primary) / 0.3) 0%, transparent 50%)'
-      }} />
-      </div>
-
-      {/* Video Background with poster for instant display */}
-      <div className="absolute inset-0" style={{
-      backgroundColor: '#F3F0FF'
-    }}>
-        {/* Poster image shows instantly while video loads */}
-        <img src={heroVideoPoster} alt="Hero background" fetchPriority="high" loading="eager" decoding="sync" className="absolute inset-0 w-full h-full object-cover" />
-        {/* Video loads on top and plays when ready */}
-        <video ref={videoRef} autoPlay loop muted playsInline preload="auto" poster={heroVideoPoster} className="absolute inset-0 w-full h-full object-cover">
-          <source src={heroVideo} type="video/mp4" />
-        </video>
-        
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/40" />
+          background: 'radial-gradient(circle at 80% 70%, hsl(var(--accent) / 0.25) 0%, transparent 40%)'
+        }} />
       </div>
 
       {/* Grid pattern */}
