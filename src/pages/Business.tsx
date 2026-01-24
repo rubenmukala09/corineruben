@@ -26,10 +26,7 @@ import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield, Lock
 import { ExpandableServiceCard } from "@/components/ExpandableServiceCard";
 import { Badge } from "@/components/ui/badge";
 
-// Decorative images for Business page
-import securityExpert from "@/assets/security-expert.jpg";
-import teamCollaboration from "@/assets/team-collaboration.jpg";
-import businessTeamOffice from "@/assets/business-team-office.jpg";
+// No decorative images - clean layout
 
 // Rotating hero headlines for Business page
 const businessHeadlines = [
@@ -262,15 +259,6 @@ function Business() {
       <section className="py-14 bg-background relative">
         <FlowingWaves variant="full" opacity={0.12} />
         
-        {/* Decorative Image - Right side accent */}
-        <div className="hidden lg:block absolute right-8 top-1/4 w-64 h-64 rounded-2xl overflow-hidden opacity-20 pointer-events-none z-0">
-          <img 
-            src={teamCollaboration} 
-            alt="" 
-            className="w-full h-full object-cover"
-            aria-hidden="true"
-          />
-        </div>
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-8">
@@ -873,25 +861,6 @@ function Business() {
       <section id="website-insurance" className="py-20 bg-muted relative overflow-hidden">
         <FlowingWaves variant="full" opacity={0.08} />
         
-        {/* Decorative Image - Left side accent */}
-        <div className="hidden lg:block absolute left-8 top-1/3 w-56 h-56 rounded-2xl overflow-hidden opacity-15 pointer-events-none z-0">
-          <img 
-            src={securityExpert} 
-            alt="" 
-            className="w-full h-full object-cover"
-            aria-hidden="true"
-          />
-        </div>
-        
-        {/* Decorative Image - Bottom right */}
-        <div className="hidden lg:block absolute right-12 bottom-32 w-48 h-48 rounded-2xl overflow-hidden opacity-15 pointer-events-none z-0">
-          <img 
-            src={businessTeamOffice} 
-            alt="" 
-            className="w-full h-full object-cover"
-            aria-hidden="true"
-          />
-        </div>
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
