@@ -1,92 +1,179 @@
 
-
-# Hero Image Branding Update Plan
+# Business Page Visual & Accessibility Enhancement Plan
 
 ## Overview
-Update 4 hero images across the website to include professional InVision Network branding and improve their visual quality.
+Enhance the Business page to have uniform pricing card heights, improved text readability following the elderly accessibility standard, and professional decorative images throughout.
 
-## Pages Requiring Hero Image Updates
+---
 
-| Page | Current Image | Requested Change |
-|------|---------------|------------------|
-| **Contact** | Woman with curly hair, "Network" text visible on wall | Keep same person, add clear "InVision Network" branding on the wall |
-| **Careers** | Team meeting scene | Generate new professional branded image |
-| **Resources** | Library/study setting | Generate new professional branded image |
-| **Business** | Nature sunrise scene | Generate new professional AI/business themed image |
+## Issues to Fix
 
-## Implementation Approach
+### 1. Website Insurance Cards - Unequal Heights
+**Location:** Lines 877-1060 in `src/pages/Business.tsx`
 
-### Phase 1: Create Image Generation Edge Function
-Create a new edge function `generate-hero-image` that uses Lovable AI's image generation capability to create branded hero images.
+**Problem:** The 4 cards (Essential, Professional, Enterprise, Custom) have different numbers of features causing uneven heights.
 
-**Files to create:**
-- `supabase/functions/generate-hero-image/index.ts`
+**Solution:**
+- Add `min-h-[520px]` to all card containers for consistent sizing
+- Ensure all cards have the same number of feature items (pad with whitespace if needed)
+- Use `flex-1` on the feature list to push buttons to the bottom
 
-**Image generation specs for each page:**
+### 2. AI Services Insurance Cards - Unequal Heights
+**Location:** Lines 1339-1558 in `src/pages/Business.tsx`
 
-1. **Contact Page** - Edit existing image to add wall branding:
-   - Prompt: "Add subtle 'InVision Network' logo/text on the glass wall in the background of this professional office photo. Keep the woman as the main subject. Make branding look natural and architectural."
+**Problem:** The 4 insurance tiers (Basic, Standard, Premium, Enterprise) have varying content lengths.
 
-2. **Careers Page** - Generate new image:
-   - Prompt: "Photorealistic diverse professional team collaborating in a modern bright office, standing around a whiteboard with visible 'InVision Network' branding on the wall, warm natural lighting, candid genuine smiles, DSLR quality"
+**Solution:**
+- Add `min-h-[480px]` to all AI insurance card containers
+- Standardize padding and spacing across all cards
 
-3. **Resources Page** - Generate new image:
-   - Prompt: "Modern digital knowledge center with security books and learning materials, professional study environment, warm lighting, subtle 'InVision Network' branded signage visible, photorealistic, high resolution"
+### 3. Text Too Small - Accessibility Fix
+**Current State:** Many sections use `text-sm` (14px) and `text-xs` (12px) which violates the 22px/20px accessibility standard.
 
-4. **Business Page** - Generate new image:
-   - Prompt: "Diverse business professionals reviewing AI analytics on screens in modern office, technology-forward environment, visible 'InVision Network' branding on glass wall, golden hour lighting through windows, photorealistic DSLR quality"
+**Changes:**
+| Element | Current | New |
+|---------|---------|-----|
+| Feature list items | `text-sm` | `text-base` |
+| Card descriptions | `text-xs` | `text-sm` |
+| Trust badges | `text-xs` | `text-sm` |
+| Section descriptions | `text-base` | `text-lg` |
+| Card titles | `text-lg` | `text-xl` |
+| Price labels | `text-sm` | `text-base` |
 
-### Phase 2: Admin Interface for Image Generation
-Add an admin-only page or component to trigger image generation and preview results before saving.
+### 4. Footer Text Visibility
+**Location:** `src/components/Footer.tsx`
 
-**Files to create:**
-- `src/pages/admin/HeroImageGenerator.tsx` - Admin UI to generate and preview images
+**Changes:**
+- Navigation links: `text-sm` to `text-base`
+- Category headers: `text-sm` to `text-base font-bold`
+- Brand description: `text-sm` to `text-base`
+- Legal disclaimer: `text-xs` to `text-sm`
+- Copyright: `text-sm` to `text-base`
 
-### Phase 3: Update Image Assets
-Once images are generated and approved:
-1. Save generated images to Supabase storage
-2. Update `src/config/professionalHeroImages.ts` to reference new images
-3. Update alt text descriptions for SEO
+### 5. Add Decorative Professional Images
+**Locations to add images:**
 
-## Technical Details
+| Section | Image Asset | Placement |
+|---------|-------------|-----------|
+| What We Build | `business-professionals-office.jpg` | Right side accent |
+| Website Insurance | `security-expert.jpg` | Left floating decoration |
+| AI Agents Pricing | `ai-automation-tech.jpg` | Background accent |
+| AI Services Insurance | `ai-business-promo.jpg` | Section divider |
+| AI Consulting | `team-collaboration.jpg` | Within toggle panel |
 
-### Edge Function Structure
-```typescript
-// supabase/functions/generate-hero-image/index.ts
-// Uses Lovable AI (google/gemini-2.5-flash-image-preview) for image generation
-// Accepts page name and returns base64 image
-// Uploads to Supabase storage bucket
+---
+
+## Implementation Details
+
+### File 1: `src/pages/Business.tsx`
+
+**Website Insurance Cards (lines 877-1060):**
+```tsx
+// Add consistent min-height to each card wrapper
+<div className="relative pt-5 min-h-[520px]">
+  ...
+  <Card className="p-6 rounded-2xl ... min-h-[480px]">
 ```
 
-### Storage Bucket
-Create `hero-images` storage bucket for generated images with public read access.
+**AI Services Insurance Cards (lines 1339-1558):**
+```tsx
+// Standardize card heights
+<div className="relative h-full min-h-[480px]">
+  <Card className="p-6 rounded-2xl ... min-h-[440px]">
+```
 
-### Image Specifications
-- **Format:** JPEG (high quality)
-- **Dimensions:** 1920x1080 (16:9 hero format)
-- **Style:** Photorealistic, DSLR quality, natural lighting
-- **Branding:** "InVision Network" subtly integrated into environment (walls, signage, screens)
+**Text Size Increases:**
+```tsx
+// Feature lists
+<ul className="space-y-3 mb-6 text-base text-left flex-1">
 
-## File Changes Summary
+// Card titles
+<h3 className="text-xl font-bold mb-3">Essential</h3>
 
-| File | Action |
-|------|--------|
-| `supabase/functions/generate-hero-image/index.ts` | Create |
-| `src/pages/admin/HeroImageGenerator.tsx` | Create |
-| `src/config/professionalHeroImages.ts` | Update (after images generated) |
-| `src/App.tsx` | Add route for admin image generator |
-| Storage bucket `hero-images` | Create |
+// Price display
+<p className="text-4xl font-bold text-primary mb-2">$29
+  <span className="text-base text-muted-foreground font-normal">/mo</span>
+</p>
 
-## Workflow
+// Descriptions
+<p className="text-sm text-muted-foreground mb-5">Basic protection</p>
+```
 
-1. Create the edge function for AI image generation
-2. Create admin page to generate and preview images
-3. Generate images one at a time, review quality
-4. If satisfied, save to storage and update config
-5. Images automatically used by Hero components on each page
+**Add Decorative Images:**
+```tsx
+// After Website Insurance section header (around line 874)
+<div className="hidden lg:block absolute right-8 top-1/2 -translate-y-1/2 w-64 h-64 rounded-2xl overflow-hidden opacity-20">
+  <img 
+    src={securityExpert} 
+    alt="" 
+    className="w-full h-full object-cover"
+    aria-hidden="true"
+  />
+</div>
 
-## Estimated Changes
-- 2 new files (edge function + admin page)
-- 2 modified files (professionalHeroImages.ts + App.tsx routes)
-- 1 storage bucket creation
+// Import at top
+import securityExpert from "@/assets/security-expert.jpg";
+import aiAutomationTech from "@/assets/ai-automation-tech.jpg";
+import teamCollaboration from "@/assets/team-collaboration.jpg";
+```
 
+### File 2: `src/components/Footer.tsx`
+
+**Navigation Links:**
+```tsx
+// Line 143 - change text-sm to text-base
+<Link to={link.to} className="text-base text-white/60 hover:text-white transition-colors">
+
+// Line 132 - change text-sm to text-base
+<h4 className="font-bold text-base mb-4 text-white/90">Navigation</h4>
+```
+
+**Brand Description (line 88):**
+```tsx
+<p className="text-base text-white/60 max-w-md leading-relaxed">
+```
+
+**Legal Disclaimer (line 251):**
+```tsx
+<p className="text-white/40 text-sm text-center leading-relaxed max-w-4xl mx-auto">
+```
+
+---
+
+## Visual Enhancements Summary
+
+### Card Height Standardization
+- All Website Insurance cards: `min-h-[520px]`
+- All AI Insurance cards: `min-h-[480px]`
+- Consistent padding: `p-6` on all cards
+- Button alignment: `mt-auto` ensures buttons align at bottom
+
+### Typography Scale Increase
+- Body text minimum: `text-base` (16px)
+- Feature lists: `text-base` with `space-y-3`
+- Card titles: `text-xl` (20px)
+- Section headers: Already good at `text-4xl md:text-5xl`
+
+### Decorative Images
+- Use `opacity-20` for subtle background accents
+- Place in `hidden lg:block` to show only on desktop
+- Use `aria-hidden="true"` for accessibility
+- Position with `absolute` within section containers
+
+---
+
+## Files to Modify
+
+| File | Changes |
+|------|---------|
+| `src/pages/Business.tsx` | Card heights, text sizes, decorative images |
+| `src/components/Footer.tsx` | Text size increases for readability |
+
+---
+
+## Expected Outcome
+- All pricing cards will have uniform heights and professional appearance
+- Text will be easily readable for elderly users (meeting WCAG accessibility)
+- Decorative images will add visual interest without distracting
+- Footer will be more legible with larger text
+- Overall professional and operational feel maintained
