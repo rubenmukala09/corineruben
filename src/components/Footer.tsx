@@ -85,9 +85,9 @@ const Footer = () => {
                   <p className="text-xs text-white/50">AI Security & Protection</p>
                 </div>
               </div>
-              <p className="text-sm text-white/60 max-w-md leading-relaxed">
-                Protecting families and businesses from AI-powered scams with cutting-edge technology and expert training.
-              </p>
+            <p className="text-base text-white/60 max-w-md leading-relaxed">
+              Protecting families and businesses from AI-powered scams with cutting-edge technology and expert training.
+            </p>
               <div className="flex flex-wrap gap-4">
                 <span className="flex items-center gap-2 text-sm text-white/50">
                   <MapPin className="w-4 h-4" />Serving the Greater Dayton Area
@@ -129,8 +129,8 @@ const Footer = () => {
           {/* Navigation Links */}
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-10">
             <div>
-              <h4 className="font-semibold text-sm mb-4 text-white/90">Navigation</h4>
-              <ul className="space-y-2">
+              <h4 className="font-bold text-base mb-4 text-white/90">Navigation</h4>
+              <ul className="space-y-3">
                 {[
                   { to: "/", label: "Home" },
                   { to: "/services", label: "Services" },
@@ -140,7 +140,7 @@ const Footer = () => {
                   { to: "/about", label: "About" },
                 ].map((link) => (
                   <li key={link.to}>
-                    <Link to={link.to} className="text-sm text-white/50 hover:text-white transition-colors">
+                    <Link to={link.to} className="text-base text-white/60 hover:text-white transition-colors">
                       {link.label}
                     </Link>
                   </li>
@@ -149,11 +149,11 @@ const Footer = () => {
             </div>
 
             <div>
-              <h4 className="font-semibold text-sm mb-4 text-white/90">Services</h4>
-              <ul className="space-y-2">
+              <h4 className="font-bold text-base mb-4 text-white/90">Services</h4>
+              <ul className="space-y-3">
                 {["ScamShield Protection", "Safety Audit", "Web Design", "AI Automation"].map((label, i) => (
                   <li key={i}>
-                    <Link to="/services" className="text-sm text-white/50 hover:text-white transition-colors">
+                    <Link to="/services" className="text-base text-white/60 hover:text-white transition-colors">
                       {label}
                     </Link>
                   </li>
@@ -162,11 +162,11 @@ const Footer = () => {
             </div>
 
             <div>
-              <h4 className="font-semibold text-sm mb-4 text-white/90">Training</h4>
-              <ul className="space-y-2">
+              <h4 className="font-bold text-base mb-4 text-white/90">Training</h4>
+              <ul className="space-y-3">
                 {["Zoom Classes", "In-Person", "Group Bookings", "Gift Certificates"].map((label, i) => (
                   <li key={i}>
-                    <Link to="/training" className="text-sm text-white/50 hover:text-white transition-colors">
+                    <Link to="/training" className="text-base text-white/60 hover:text-white transition-colors">
                       {label}
                     </Link>
                   </li>
@@ -175,20 +175,20 @@ const Footer = () => {
             </div>
 
             <div>
-              <h4 className="font-semibold text-sm mb-4 text-white/90">Support</h4>
-              <ul className="space-y-2">
-                <li><Link to="/faq" className="text-sm text-white/50 hover:text-white transition-colors">FAQ</Link></li>
-                <li><Link to="/contact" className="text-sm text-white/50 hover:text-white transition-colors">Contact Us</Link></li>
-                <li><Link to="/contact" className="text-sm text-white/50 hover:text-white transition-colors">Emergency Help</Link></li>
+              <h4 className="font-bold text-base mb-4 text-white/90">Support</h4>
+              <ul className="space-y-3">
+                <li><Link to="/faq" className="text-base text-white/60 hover:text-white transition-colors">FAQ</Link></li>
+                <li><Link to="/contact" className="text-base text-white/60 hover:text-white transition-colors">Contact Us</Link></li>
+                <li><Link to="/contact" className="text-base text-white/60 hover:text-white transition-colors">Emergency Help</Link></li>
                 <li>
                   <button 
                     onClick={() => {
                       toast.info("Clearing cache...", { duration: 1500 });
                       setTimeout(() => clearAllCachesAndReload(), 300);
                     }}
-                    className="flex items-center gap-1.5 text-sm text-white/50 hover:text-white transition-colors"
+                    className="flex items-center gap-1.5 text-base text-white/60 hover:text-white transition-colors"
                   >
-                    <RefreshCw className="w-3.5 h-3.5" />
+                    <RefreshCw className="w-4 h-4" />
                     Clear Cache & Refresh
                   </button>
                 </li>
@@ -196,14 +196,14 @@ const Footer = () => {
             </div>
 
             <div>
-              <h4 className="font-semibold text-sm mb-4 text-white/90">Legal</h4>
-              <ul className="space-y-2">
-                <li><Link to="/privacy-policy" className="text-sm text-white/50 hover:text-white transition-colors">Privacy Policy</Link></li>
-                <li><Link to="/terms-of-service" className="text-sm text-white/50 hover:text-white transition-colors">Terms of Service</Link></li>
-                <li><Link to="/refund-policy" className="text-sm text-white/50 hover:text-white transition-colors">Refund Policy</Link></li>
-                <li><Link to="/cookie-policy" className="text-sm text-white/50 hover:text-white transition-colors">Cookie Policy</Link></li>
-                <li><Link to="/acceptable-use" className="text-sm text-white/50 hover:text-white transition-colors">Acceptable Use</Link></li>
-                <li><Link to="/disclaimer" className="text-sm text-white/50 hover:text-white transition-colors">Disclaimer</Link></li>
+              <h4 className="font-bold text-base mb-4 text-white/90">Legal</h4>
+              <ul className="space-y-3">
+                <li><Link to="/privacy-policy" className="text-base text-white/60 hover:text-white transition-colors">Privacy Policy</Link></li>
+                <li><Link to="/terms-of-service" className="text-base text-white/60 hover:text-white transition-colors">Terms of Service</Link></li>
+                <li><Link to="/refund-policy" className="text-base text-white/60 hover:text-white transition-colors">Refund Policy</Link></li>
+                <li><Link to="/cookie-policy" className="text-base text-white/60 hover:text-white transition-colors">Cookie Policy</Link></li>
+                <li><Link to="/acceptable-use" className="text-base text-white/60 hover:text-white transition-colors">Acceptable Use</Link></li>
+                <li><Link to="/disclaimer" className="text-base text-white/60 hover:text-white transition-colors">Disclaimer</Link></li>
               </ul>
             </div>
           </div>
@@ -212,15 +212,15 @@ const Footer = () => {
           <div className="pt-6 border-t border-white/10">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-4">
               <div className="flex flex-wrap items-center justify-center gap-4">
-                <p className="text-sm text-white/40">
+                <p className="text-base text-white/50">
                   © {new Date().getFullYear()} InVision Network. All rights reserved.
                 </p>
                 <div className="flex items-center gap-4">
-                  <span className="flex items-center gap-1.5 text-xs text-white/50">
-                    <Shield className="w-4 h-4 text-emerald-500/80" />BBB Accredited
+                  <span className="flex items-center gap-1.5 text-sm text-white/60">
+                    <Shield className="w-5 h-5 text-emerald-500/80" />BBB Accredited
                   </span>
-                  <span className="flex items-center gap-1.5 text-xs text-white/50">
-                    <Shield className="w-4 h-4 text-amber-500/80" />Supports Veterans
+                  <span className="flex items-center gap-1.5 text-sm text-white/60">
+                    <Shield className="w-5 h-5 text-amber-500/80" />Supports Veterans
                   </span>
                 </div>
               </div>
@@ -248,7 +248,7 @@ const Footer = () => {
             </div>
 
             {/* Legal Disclaimer */}
-            <p className="text-white/30 text-xs text-center leading-relaxed max-w-4xl mx-auto">
+            <p className="text-white/40 text-sm text-center leading-relaxed max-w-4xl mx-auto">
               InVision Network provides educational services only. We are not legal, financial, tax, or licensed cybersecurity professionals. In case of active fraud, identity theft, or criminal activity, contact local law enforcement (911), your bank's fraud department immediately using official phone numbers, and report to FTC at IdentityTheft.gov. We never request passwords, 2FA codes, bank account information, or Social Security numbers.
             </p>
           </div>

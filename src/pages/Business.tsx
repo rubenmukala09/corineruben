@@ -876,36 +876,40 @@ function Business() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto pt-10">
             {/* Essential Plan */}
             <ScrollReveal animation="fade-up" delay={0}>
-              <div className="relative pt-5">
-                <div className="absolute -top-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-5 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg whitespace-nowrap z-20">
+              <div className="relative pt-5 min-h-[520px]">
+                <div className="absolute -top-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-5 py-2 rounded-full text-sm font-bold tracking-wider shadow-lg whitespace-nowrap z-20">
                   ESSENTIAL
                 </div>
-                <Card className="p-5 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1 h-full flex flex-col pt-6">
+                <Card className="p-6 rounded-2xl hover:shadow-medium transition-all hover:-translate-y-1 h-full flex flex-col pt-8 min-h-[480px]">
                   <div className="text-center flex-1 flex flex-col">
-                    <h3 className="text-lg font-bold mb-2">Essential</h3>
-                    <p className="text-3xl font-bold text-primary mb-1">$29<span className="text-sm text-muted-foreground font-normal">/mo</span></p>
-                    <p className="text-xs text-muted-foreground mb-4">Basic protection</p>
-                    <ul className="space-y-2 mb-6 text-sm text-left flex-1">
+                    <h3 className="text-xl font-bold mb-3">Essential</h3>
+                    <p className="text-4xl font-bold text-primary mb-2">$29<span className="text-base text-muted-foreground font-normal">/mo</span></p>
+                    <p className="text-sm text-muted-foreground mb-5">Basic protection</p>
+                    <ul className="space-y-3 mb-6 text-base text-left flex-1">
                       <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
                         <span>SSL Management</span>
                       </li>
                       <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
                         <span>Weekly Backups</span>
                       </li>
                       <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
                         <span>Email Support</span>
                       </li>
                       <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
                         <span>Basic Monitoring</span>
+                      </li>
+                      <li className="flex items-center gap-2 opacity-0">
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
+                        <span>Placeholder</span>
                       </li>
                     </ul>
                     <Button 
                       variant="outline" 
-                      className="w-full mt-auto"
+                      className="w-full mt-auto h-12 text-base"
                       onClick={() => {
                         trackButtonClick('Subscribe Now - Website Insurance Essential', 'Website Insurance');
                         setWebsiteInsuranceOpen(true);
@@ -920,40 +924,40 @@ function Business() {
 
             {/* Professional Plan */}
             <ScrollReveal animation="fade-up" delay={100}>
-              <div className="relative pt-5">
-                <div className="absolute -top-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-white px-5 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg animate-pulse whitespace-nowrap z-20" style={{ animationDuration: '3s' }}>
+              <div className="relative pt-5 min-h-[520px]">
+                <div className="absolute -top-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-white px-5 py-2 rounded-full text-sm font-bold tracking-wider shadow-lg animate-pulse whitespace-nowrap z-20" style={{ animationDuration: '3s' }}>
                   ⭐ MOST POPULAR
                 </div>
-                <Card className="p-5 rounded-2xl border-2 border-primary shadow-[0_8px_30px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)] transition-all h-full flex flex-col pt-6">
+                <Card className="p-6 rounded-2xl border-2 border-primary shadow-[0_8px_30px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)] transition-all h-full flex flex-col pt-8 min-h-[480px]">
                   <div className="text-center flex-1 flex flex-col">
-                    <h3 className="text-lg font-bold mb-2">Professional</h3>
-                    <p className="text-3xl font-bold text-primary mb-1">$49<span className="text-sm text-muted-foreground font-normal">/mo</span></p>
-                    <p className="text-xs text-muted-foreground mb-4">Complete protection</p>
-                    <ul className="space-y-2 mb-6 text-sm text-left flex-1">
+                    <h3 className="text-xl font-bold mb-3">Professional</h3>
+                    <p className="text-4xl font-bold text-primary mb-2">$49<span className="text-base text-muted-foreground font-normal">/mo</span></p>
+                    <p className="text-sm text-muted-foreground mb-5">Complete protection</p>
+                    <ul className="space-y-3 mb-6 text-base text-left flex-1">
                       <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
                         <span>All Essential features</span>
                       </li>
                       <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
                         <span>24/7 Monitoring</span>
                       </li>
                       <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
                         <span>Daily Backups</span>
                       </li>
                       <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
                         <span>Priority Support</span>
                       </li>
                       <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
                         <span>Malware Scanning</span>
                       </li>
                     </ul>
                     <Button 
                       variant="default" 
-                      className="w-full mt-auto"
+                      className="w-full mt-auto h-12 text-base"
                       onClick={() => {
                         trackButtonClick('Subscribe Now - Website Insurance Professional', 'Website Insurance');
                         setWebsiteInsuranceOpen(true);
@@ -968,40 +972,40 @@ function Business() {
 
             {/* Enterprise Plan */}
             <ScrollReveal animation="fade-up" delay={200}>
-              <div className="relative pt-5">
-                <div className="absolute -top-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-5 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg whitespace-nowrap z-20">
+              <div className="relative pt-5 min-h-[520px]">
+                <div className="absolute -top-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-5 py-2 rounded-full text-sm font-bold tracking-wider shadow-lg whitespace-nowrap z-20">
                   👑 ENTERPRISE
                 </div>
-                <Card className="p-5 rounded-2xl border-2 border-amber-500/50 hover:shadow-medium transition-all hover:-translate-y-1 h-full flex flex-col pt-6">
+                <Card className="p-6 rounded-2xl border-2 border-amber-500/50 hover:shadow-medium transition-all hover:-translate-y-1 h-full flex flex-col pt-8 min-h-[480px]">
                   <div className="text-center flex-1 flex flex-col">
-                    <h3 className="text-lg font-bold mb-2">Enterprise</h3>
-                    <p className="text-3xl font-bold text-primary mb-1">$99<span className="text-sm text-muted-foreground font-normal">/mo</span></p>
-                    <p className="text-xs text-muted-foreground mb-4">Maximum protection</p>
-                    <ul className="space-y-2 mb-6 text-sm text-left flex-1">
+                    <h3 className="text-xl font-bold mb-3">Enterprise</h3>
+                    <p className="text-4xl font-bold text-primary mb-2">$99<span className="text-base text-muted-foreground font-normal">/mo</span></p>
+                    <p className="text-sm text-muted-foreground mb-5">Maximum protection</p>
+                    <ul className="space-y-3 mb-6 text-base text-left flex-1">
                       <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
                         <span>All Professional</span>
                       </li>
                       <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
                         <span>Real-Time Backups</span>
                       </li>
                       <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
                         <span>DDoS Protection</span>
                       </li>
                       <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
                         <span>24/7 Dedicated Support</span>
                       </li>
                       <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
                         <span>Global CDN</span>
                       </li>
                     </ul>
                     <Button 
                       variant="default" 
-                      className="w-full mt-auto"
+                      className="w-full mt-auto h-12 text-base"
                       onClick={() => {
                         trackButtonClick('Subscribe Now - Website Insurance Enterprise', 'Website Insurance');
                         setWebsiteInsuranceOpen(true);
@@ -1016,36 +1020,40 @@ function Business() {
 
             {/* Custom Plan */}
             <ScrollReveal animation="fade-up" delay={300}>
-              <div className="relative pt-5">
-                <div className="absolute -top-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary via-accent to-primary text-white px-5 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg whitespace-nowrap z-20">
+              <div className="relative pt-5 min-h-[520px]">
+                <div className="absolute -top-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary via-accent to-primary text-white px-5 py-2 rounded-full text-sm font-bold tracking-wider shadow-lg whitespace-nowrap z-20">
                   ✨ CUSTOM
                 </div>
-                <Card className="p-5 rounded-2xl border-2 border-dashed border-primary/40 hover:border-primary transition-all hover:-translate-y-1 h-full flex flex-col bg-gradient-to-br from-background to-primary/5 pt-6">
+                <Card className="p-6 rounded-2xl border-2 border-dashed border-primary/40 hover:border-primary transition-all hover:-translate-y-1 h-full flex flex-col bg-gradient-to-br from-background to-primary/5 pt-8 min-h-[480px]">
                   <div className="text-center flex-1 flex flex-col">
-                    <h3 className="text-lg font-bold mb-2">Customizable</h3>
-                    <p className="text-3xl font-bold text-primary mb-1">$29-500<span className="text-sm text-muted-foreground font-normal">/mo</span></p>
-                    <p className="text-xs text-muted-foreground mb-4">Build your own</p>
-                    <ul className="space-y-2 mb-6 text-sm text-left flex-1">
+                    <h3 className="text-xl font-bold mb-3">Customizable</h3>
+                    <p className="text-4xl font-bold text-primary mb-2">$29-500<span className="text-base text-muted-foreground font-normal">/mo</span></p>
+                    <p className="text-sm text-muted-foreground mb-5">Build your own</p>
+                    <ul className="space-y-3 mb-6 text-base text-left flex-1">
                       <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
                         <span>Choose features</span>
                       </li>
                       <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
                         <span>Flexible pricing</span>
                       </li>
                       <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
                         <span>Custom support</span>
                       </li>
                       <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
                         <span>Upgrade anytime</span>
+                      </li>
+                      <li className="flex items-center gap-2 opacity-0">
+                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
+                        <span>Placeholder</span>
                       </li>
                     </ul>
                     <Button 
                       variant="default" 
-                      className="w-full mt-auto bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90"
+                      className="w-full mt-auto bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 h-12 text-base"
                       onClick={() => {
                         trackButtonClick('Subscribe Now - Website Insurance Custom', 'Website Insurance');
                         setWebsiteInsuranceOpen(true);
@@ -1062,12 +1070,12 @@ function Business() {
           {/* Trust Badges */}
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <div className="flex items-center gap-2 px-4 py-2 bg-background/80 rounded-full border">
-              <Lock className="w-4 h-4 text-success" />
-              <span className="text-sm font-medium">Secure Payment</span>
+              <Lock className="w-5 h-5 text-success" />
+              <span className="text-base font-medium">Secure Payment</span>
             </div>
             <div className="flex items-center gap-2 px-4 py-2 bg-background/80 rounded-full border">
-              <Shield className="w-4 h-4 text-success" />
-              <span className="text-sm font-medium">30-Day Guarantee</span>
+              <Shield className="w-5 h-5 text-success" />
+              <span className="text-base font-medium">30-Day Guarantee</span>
             </div>
             <div className="flex items-center gap-2 px-4 py-2 bg-background/80 rounded-full border">
               <CheckCircle className="w-4 h-4 text-success" />
@@ -1338,44 +1346,44 @@ function Business() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 items-stretch">
             {/* Basic Care */}
-            <div className="relative h-full">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-slate-500 to-slate-600 text-white px-4 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 whitespace-nowrap">
+            <div className="relative h-full min-h-[480px]">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-slate-500 to-slate-600 text-white px-4 py-2 rounded-full text-sm font-bold tracking-wider shadow-lg z-20 whitespace-nowrap">
                 🛡️ STARTER
               </div>
-              <Card className="p-5 rounded-2xl border-border/50 hover:shadow-medium transition-all hover:-translate-y-1 h-full flex flex-col">
-                <div className="flex items-center justify-center gap-1.5 mb-3 text-xs text-success pt-3">
-                  <CheckCircle className="w-3.5 h-3.5" />
+              <Card className="p-6 rounded-2xl border-border/50 hover:shadow-medium transition-all hover:-translate-y-1 h-full flex flex-col min-h-[440px]">
+                <div className="flex items-center justify-center gap-1.5 mb-3 text-sm text-success pt-3">
+                  <CheckCircle className="w-4 h-4" />
                   <span className="font-medium">Essential Coverage</span>
                 </div>
-                <h3 className="text-lg font-bold mb-2">Basic Care</h3>
-                <p key={isYearly ? 'yearly-199' : 'monthly-199'} className="text-2xl font-bold gradient-text-primary mb-1 price-flip">
-                  {getInsurancePrice(199).display}<span className="text-sm text-muted-foreground">{getInsurancePrice(199).period}</span>
+                <h3 className="text-xl font-bold mb-3">Basic Care</h3>
+                <p key={isYearly ? 'yearly-199' : 'monthly-199'} className="text-3xl font-bold gradient-text-primary mb-2 price-flip">
+                  {getInsurancePrice(199).display}<span className="text-base text-muted-foreground">{getInsurancePrice(199).period}</span>
                 </p>
                 {isYearly && (
-                  <p className="text-xs text-success mb-3 animate-fade-in">
+                  <p className="text-sm text-success mb-3 animate-fade-in">
                     {getInsurancePrice(199).savings}
                   </p>
                 )}
-                {!isYearly && <div className="h-5 mb-3" />}
-                <ul className="space-y-2 mb-5 text-sm flex-1">
+                {!isYearly && <div className="h-6 mb-3" />}
+                <ul className="space-y-3 mb-6 text-base flex-1">
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                     <span>Monthly health checks</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                     <span>Security patch updates</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                     <span>Performance monitoring</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                     <span>Email support (48hr)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                     <span>Quarterly reports</span>
                   </li>
                 </ul>
@@ -1386,7 +1394,7 @@ function Business() {
                     handleSubscribe('price_1SjwUMJ8osfwYbX7hBE9RiPI', 'AI Service Insurance', 'Basic Care', 19900, 'default');
                   }}
                   variant="outline" 
-                  className="w-full mt-auto transition-all duration-300 hover:-translate-y-1"
+                  className="w-full mt-auto transition-all duration-300 hover:-translate-y-1 h-12 text-base"
                 >
                   Subscribe Now
                 </Button>
@@ -1394,44 +1402,44 @@ function Business() {
             </div>
 
             {/* Standard Care - Featured */}
-            <div className="relative h-full">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-4 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 whitespace-nowrap animate-pulse" style={{ animationDuration: '3s' }}>
+            <div className="relative h-full min-h-[480px]">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground px-4 py-2 rounded-full text-sm font-bold tracking-wider shadow-lg z-20 whitespace-nowrap animate-pulse" style={{ animationDuration: '3s' }}>
                 ⭐ MOST POPULAR
               </div>
-              <Card className="p-5 border-2 border-primary rounded-2xl shadow-[0_8px_30px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)] transition-all h-full flex flex-col">
-                <div className="flex items-center justify-center gap-1.5 mb-3 text-xs text-success pt-3">
-                  <CheckCircle className="w-3.5 h-3.5" />
+              <Card className="p-6 border-2 border-primary rounded-2xl shadow-[0_8px_30px_rgba(139,92,246,0.15)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)] transition-all h-full flex flex-col min-h-[440px]">
+                <div className="flex items-center justify-center gap-1.5 mb-3 text-sm text-success pt-3">
+                  <CheckCircle className="w-4 h-4" />
                   <span className="font-medium">Best Value</span>
                 </div>
-                <h3 className="text-lg font-bold mb-2">Standard Care</h3>
-                <p key={isYearly ? 'yearly-399' : 'monthly-399'} className="text-2xl font-bold gradient-text-primary mb-1 price-flip">
-                  {getInsurancePrice(399).display}<span className="text-sm text-muted-foreground">{getInsurancePrice(399).period}</span>
+                <h3 className="text-xl font-bold mb-3">Standard Care</h3>
+                <p key={isYearly ? 'yearly-399' : 'monthly-399'} className="text-3xl font-bold gradient-text-primary mb-2 price-flip">
+                  {getInsurancePrice(399).display}<span className="text-base text-muted-foreground">{getInsurancePrice(399).period}</span>
                 </p>
                 {isYearly && (
-                  <p className="text-xs text-success mb-3 animate-fade-in">
+                  <p className="text-sm text-success mb-3 animate-fade-in">
                     {getInsurancePrice(399).savings}
                   </p>
                 )}
-                {!isYearly && <div className="h-5 mb-3" />}
-                <ul className="space-y-2 mb-5 text-sm flex-1">
+                {!isYearly && <div className="h-6 mb-3" />}
+                <ul className="space-y-3 mb-6 text-base flex-1">
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                     <span>Everything in Basic</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                     <span>Weekly health checks</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                     <span>Priority bug fixes (24hr)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                     <span>Phone + email support</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                     <span>4 hours repair/month</span>
                   </li>
                 </ul>
@@ -1442,7 +1450,7 @@ function Business() {
                     handleSubscribe('price_1SjwUOJ8osfwYbX7uyyCGLES', 'AI Service Insurance', 'Standard Care', 39900, 'default');
                   }}
                   variant="default" 
-                  className="w-full mt-auto transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)]"
+                  className="w-full mt-auto transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(109,40,217,0.2)] h-12 text-base"
                 >
                   Subscribe Now
                 </Button>
@@ -1450,44 +1458,44 @@ function Business() {
             </div>
 
             {/* Premium Care */}
-            <div className="relative h-full">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 whitespace-nowrap">
+            <div className="relative h-full min-h-[480px]">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold tracking-wider shadow-lg z-20 whitespace-nowrap">
                 👑 PREMIUM
               </div>
-              <Card className="p-5 rounded-2xl border-amber-500/30 hover:shadow-medium transition-all hover:-translate-y-1 h-full flex flex-col">
-                <div className="flex items-center justify-center gap-1.5 mb-3 text-xs text-success pt-3">
-                  <CheckCircle className="w-3.5 h-3.5" />
+              <Card className="p-6 rounded-2xl border-amber-500/30 hover:shadow-medium transition-all hover:-translate-y-1 h-full flex flex-col min-h-[440px]">
+                <div className="flex items-center justify-center gap-1.5 mb-3 text-sm text-success pt-3">
+                  <CheckCircle className="w-4 h-4" />
                   <span className="font-medium">24/7 Coverage</span>
                 </div>
-                <h3 className="text-lg font-bold mb-2">Premium Care</h3>
-                <p key={isYearly ? 'yearly-799' : 'monthly-799'} className="text-2xl font-bold gradient-text-primary mb-1 price-flip">
-                  {getInsurancePrice(799).display}<span className="text-sm text-muted-foreground">{getInsurancePrice(799).period}</span>
+                <h3 className="text-xl font-bold mb-3">Premium Care</h3>
+                <p key={isYearly ? 'yearly-799' : 'monthly-799'} className="text-3xl font-bold gradient-text-primary mb-2 price-flip">
+                  {getInsurancePrice(799).display}<span className="text-base text-muted-foreground">{getInsurancePrice(799).period}</span>
                 </p>
                 {isYearly && (
-                  <p className="text-xs text-success mb-3 animate-fade-in">
+                  <p className="text-sm text-success mb-3 animate-fade-in">
                     {getInsurancePrice(799).savings}
                   </p>
                 )}
-                {!isYearly && <div className="h-5 mb-3" />}
-                <ul className="space-y-2 mb-5 text-sm flex-1">
+                {!isYearly && <div className="h-6 mb-3" />}
+                <ul className="space-y-3 mb-6 text-base flex-1">
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                     <span>Everything in Standard</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                     <span>24/7 monitoring</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                     <span>Critical response (4hr)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                     <span>12 hours repair/month</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                     <span>Dedicated engineer</span>
                   </li>
                 </ul>
@@ -1498,7 +1506,7 @@ function Business() {
                     handleSubscribe('price_1SjwUQJ8osfwYbX7Q5jRWQEt', 'AI Service Insurance', 'Premium Care', 79900, 'default');
                   }}
                   variant="default" 
-                  className="w-full mt-auto bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 transition-all duration-300 hover:-translate-y-1"
+                  className="w-full mt-auto bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 transition-all duration-300 hover:-translate-y-1 h-12 text-base"
                 >
                   Subscribe Now
                 </Button>
@@ -1506,48 +1514,48 @@ function Business() {
             </div>
 
             {/* Customized Insurance */}
-            <div className="relative h-full">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-violet-600 to-purple-600 text-white px-4 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 whitespace-nowrap">
+            <div className="relative h-full min-h-[480px]">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-violet-600 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-bold tracking-wider shadow-lg z-20 whitespace-nowrap">
                 🏢 ENTERPRISE
               </div>
-              <Card className="p-5 rounded-2xl border-violet-500/30 hover:shadow-medium transition-all hover:-translate-y-1 bg-gradient-to-br from-violet-500/5 to-purple-500/5 h-full flex flex-col">
-                <div className="flex items-center justify-center gap-1.5 mb-3 text-xs text-success pt-3">
-                  <CheckCircle className="w-3.5 h-3.5" />
+              <Card className="p-6 rounded-2xl border-violet-500/30 hover:shadow-medium transition-all hover:-translate-y-1 bg-gradient-to-br from-violet-500/5 to-purple-500/5 h-full flex flex-col min-h-[440px]">
+                <div className="flex items-center justify-center gap-1.5 mb-3 text-sm text-success pt-3">
+                  <CheckCircle className="w-4 h-4" />
                   <span className="font-medium">Custom SLA</span>
                 </div>
-                <h3 className="text-lg font-bold mb-2">Customized</h3>
-                <p className="text-2xl font-bold gradient-text-primary mb-1">
-                  Custom<span className="text-sm text-muted-foreground"> pricing</span>
+                <h3 className="text-xl font-bold mb-3">Customized</h3>
+                <p className="text-3xl font-bold gradient-text-primary mb-2">
+                  Custom<span className="text-base text-muted-foreground"> pricing</span>
                 </p>
-                <p className="text-xs text-muted-foreground mb-3">
+                <p className="text-sm text-muted-foreground mb-3">
                   Tailored for your needs
                 </p>
-                <ul className="space-y-2 mb-5 text-sm flex-1">
+                <ul className="space-y-3 mb-6 text-base flex-1">
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                     <span>Custom SLA agreements</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                     <span>Multi-location support</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                     <span>Unlimited repair hours</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                     <span>Dedicated manager</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                     <span>Custom integrations</span>
                   </li>
                 </ul>
                 <Button 
                   asChild
                   variant="outline" 
-                  className="w-full mt-auto border-violet-500/50 hover:bg-violet-500/10 transition-all duration-300 hover:-translate-y-1"
+                  className="w-full mt-auto border-violet-500/50 hover:bg-violet-500/10 transition-all duration-300 hover:-translate-y-1 h-12 text-base"
                 >
                   <Link to="/contact?service=ai-insurance&plan=custom">
                     Request Quote
