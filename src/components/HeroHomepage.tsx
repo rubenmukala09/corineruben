@@ -28,7 +28,7 @@ export const HeroHomepage = () => {
   return <section className="relative min-h-[100vh] lg:min-h-[110vh] overflow-hidden" style={{
     backgroundColor: '#1a1625'
   }}>
-      {/* Video Background */}
+      {/* Video Background - lazy preload for faster initial paint */}
       <div className="absolute inset-0">
         <video 
           ref={videoRef} 
@@ -36,12 +36,12 @@ export const HeroHomepage = () => {
           loop 
           muted 
           playsInline 
-          preload="auto"
+          preload="none"
           className="absolute inset-0 w-full h-full object-cover"
         >
           <source src={selectedVideo} type="video/mp4" />
         </video>
-        {/* Gradient overlay for text readability */}
+        {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/40" />
       </div>
 

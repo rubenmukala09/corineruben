@@ -1,151 +1,64 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 
-// Global cache for hero images - persists across components
-const heroImageCache = new Map<string, HTMLImageElement>();
-const loadingPromises = new Map<string, Promise<void>>();
+// Lightweight URL tracker
+const loadedHeroUrls = new Set<string>();
 
 /**
- * Aggressively preload images with high priority
+ * Simple non-blocking preload
  */
-export const preloadHeroImage = (src: string, priority: 'high' | 'low' = 'high'): Promise<void> => {
-  if (heroImageCache.has(src)) {
-    return Promise.resolve();
-  }
-  
-  if (loadingPromises.has(src)) {
-    return loadingPromises.get(src)!;
-  }
-  
-  const promise = new Promise<void>((resolve) => {
-    const img = new Image();
-    img.onload = () => {
-      heroImageCache.set(src, img);
-      loadingPromises.delete(src);
-      resolve();
-    };
-    img.onerror = () => {
-      loadingPromises.delete(src);
-      resolve(); // Resolve even on error to not block
-    };
-    
-    // Set high priority loading
-    if (priority === 'high') {
-      img.fetchPriority = 'high';
-      img.loading = 'eager';
-    }
-    img.decoding = 'async';
-    img.src = src;
-  });
-  
-  loadingPromises.set(src, promise);
-  return promise;
+export const preloadHeroImage = (src: string): void => {
+  if (loadedHeroUrls.has(src)) return;
+  loadedHeroUrls.add(src);
+  const img = new Image();
+  img.src = src;
 };
 
 /**
- * Preload multiple hero images in parallel with priority ordering
+ * Preload multiple images
  */
-export const preloadHeroImages = async (images: string[]): Promise<void> => {
-  if (images.length === 0) return;
-  
-  // First image gets high priority, rest get low
-  const [first, ...rest] = images;
-  
-  // Start loading first image with high priority
-  await preloadHeroImage(first, 'high');
-  
-  // Load rest in parallel with low priority
-  await Promise.all(rest.map(src => preloadHeroImage(src, 'low')));
+export const preloadHeroImages = (images: string[]): void => {
+  images.forEach(preloadHeroImage);
 };
 
 /**
- * Check if image is already cached
+ * Check if cached
  */
-export const isHeroImageCached = (src: string): boolean => {
-  return heroImageCache.has(src);
-};
+export const isHeroImageCached = (src: string): boolean => loadedHeroUrls.has(src);
 
 /**
- * Hook to preload hero images and track loading state
+ * Hook for hero image preloading
  */
 export const useHeroImagePreload = (imageSources: string[]) => {
-  const [isLoaded, setIsLoaded] = useState(() => {
-    // Check if all images are already cached
-    return imageSources.every(src => heroImageCache.has(src));
-  });
-  const [progress, setProgress] = useState(isLoaded ? 100 : 0);
-  
+  const [isLoaded, setIsLoaded] = useState(() => 
+    imageSources.length === 0 || imageSources.every(s => loadedHeroUrls.has(s))
+  );
+
   useEffect(() => {
-    if (imageSources.length === 0) {
+    if (isLoaded || imageSources.length === 0) return;
+    
+    const first = imageSources[0];
+    if (loadedHeroUrls.has(first)) {
       setIsLoaded(true);
-      setProgress(100);
+      imageSources.slice(1).forEach(preloadHeroImage);
       return;
     }
     
-    // If already loaded, skip
-    if (imageSources.every(src => heroImageCache.has(src))) {
+    const img = new Image();
+    img.onload = () => {
+      loadedHeroUrls.add(first);
       setIsLoaded(true);
-      setProgress(100);
-      return;
-    }
-    
-    let mounted = true;
-    let loadedCount = imageSources.filter(src => heroImageCache.has(src)).length;
-    
-    const loadImages = async () => {
-      const [first, ...rest] = imageSources;
-      
-      // Load first image with high priority
-      if (!heroImageCache.has(first)) {
-        await preloadHeroImage(first, 'high');
-        if (!mounted) return;
-        loadedCount++;
-        setProgress(Math.round((loadedCount / imageSources.length) * 100));
-      }
-      
-      // After first image loads, we can show content
-      if (mounted) {
-        setIsLoaded(true);
-      }
-      
-      // Continue loading rest in background
-      for (const src of rest) {
-        if (!heroImageCache.has(src)) {
-          await preloadHeroImage(src, 'low');
-          if (!mounted) return;
-          loadedCount++;
-          setProgress(Math.round((loadedCount / imageSources.length) * 100));
-        }
-      }
+      imageSources.slice(1).forEach(preloadHeroImage);
     };
-    
-    loadImages();
-    
-    return () => {
-      mounted = false;
-    };
-  }, [imageSources.join(',')]);
-  
-  return { isLoaded, progress };
+    img.onerror = () => setIsLoaded(true);
+    img.src = first;
+  }, [imageSources.join(','), isLoaded]);
+
+  return { isLoaded, progress: isLoaded ? 100 : 0 };
 };
 
 /**
- * Preload critical page images before navigation
+ * Preload page hero images
  */
 export const preloadPageHeroImages = (pagePath: string) => {
-  // Map of page paths to their hero images
-  const pageHeroImages: Record<string, string[]> = {
-    '/': [],  // Homepage uses video
-    '/about': [],
-    '/resources': [],
-    '/training': [],
-    '/business': [],
-    '/services': [],
-    '/contact': [],
-  };
-  
-  const images = pageHeroImages[pagePath];
-  if (images && images.length > 0) {
-    // Start preloading in background
-    preloadHeroImages(images);
-  }
+  // No-op - images load on demand now
 };

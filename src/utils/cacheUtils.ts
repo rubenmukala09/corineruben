@@ -1,28 +1,28 @@
 /**
- * Clears all browser caches and performs a hard refresh
- * Used when clicking the brand logo to ensure a fresh, lightweight load
+ * Lightweight cache clear and reload - optimized for speed
  */
 export async function clearAllCachesAndReload(): Promise<void> {
+  // Fast path: just reload with cache bust
+  sessionStorage.clear();
+  window.location.href = '/?r=' + Date.now();
+}
+
+/**
+ * Full cache clear (only when needed)
+ */
+export async function deepCacheClear(): Promise<void> {
   try {
-    // 1. Clear all service worker caches
+    // Clear service worker caches
     if ('caches' in window) {
-      const cacheNames = await caches.keys();
-      await Promise.all(cacheNames.map(name => caches.delete(name)));
+      const keys = await caches.keys();
+      await Promise.all(keys.map(k => caches.delete(k)));
     }
-
-    // 2. Clear sessionStorage (preserve localStorage for user preferences)
-    sessionStorage.clear();
-
-    // 3. Unregister all service workers
+    // Unregister service workers
     if ('serviceWorker' in navigator) {
-      const registrations = await navigator.serviceWorker.getRegistrations();
-      await Promise.all(registrations.map(reg => reg.unregister()));
+      const regs = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(r => r.unregister()));
     }
-
-    // 4. Hard reload with cache-bust parameter
-    window.location.href = '/?refresh=' + Date.now();
-  } catch (error) {
-    // Fallback to simple hard reload if cache clearing fails
-    window.location.reload();
-  }
+  } catch {}
+  sessionStorage.clear();
+  window.location.href = '/?r=' + Date.now();
 }

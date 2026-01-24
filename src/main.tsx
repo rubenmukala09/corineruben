@@ -2,39 +2,20 @@ import './dev-refresh-guard';
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
-import { initPerformanceOptimizations } from "./utils/performanceOptimization";
 
-// Clean up refresh parameter from URL after cache-bust reload
-if (typeof window !== 'undefined' && window.location.search.includes('refresh=')) {
-  const cleanUrl = window.location.pathname;
-  window.history.replaceState({}, '', cleanUrl);
+// Clean refresh param from URL
+if (window.location.search.includes('r=')) {
+  window.history.replaceState({}, '', window.location.pathname);
 }
 
-// Initialize performance optimizations
-if (typeof window !== 'undefined') {
-  initPerformanceOptimizations();
-}
+// Lazy load performance optimizations
+import("./utils/performanceOptimization").then(m => m.initPerformanceOptimizations?.());
 
-// Register service worker only in production
-if ('serviceWorker' in navigator) {
-  if (import.meta.env.PROD) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js').catch(() => {
-        // Silently fail if service worker registration fails
-      });
-    });
-  } else {
-    // Unregister service workers in development to prevent interference
-    navigator.serviceWorker.getRegistrations().then((registrations) => {
-      registrations.forEach((registration) => registration.unregister());
-    });
-    // Clear all caches in development
-    if ('caches' in window) {
-      caches.keys().then((keys) => {
-        keys.forEach((key) => caches.delete(key));
-      });
-    }
-  }
+// Service worker: production only, deferred
+if ('serviceWorker' in navigator && import.meta.env.PROD) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
 }
 
 createRoot(document.getElementById("root")!).render(<App />);
