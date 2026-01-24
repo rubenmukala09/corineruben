@@ -38,6 +38,17 @@ import bookSmartHome from "@/assets/book-smart-home.jpg";
 import bookPhishingDefense from "@/assets/book-phishing-defense.jpg";
 import bookBankingSafety from "@/assets/book-banking-safety.jpg";
 import bookMobileSecurity from "@/assets/book-mobile-security.jpg";
+// New book covers (10 additional books)
+import bookCryptoDefense from "@/assets/book-crypto-defense.jpg";
+import bookRomanceScam from "@/assets/book-romance-scam.jpg";
+import bookVoiceClone from "@/assets/book-voice-clone.jpg";
+import bookMedicareFraud from "@/assets/book-medicare-fraud.jpg";
+import bookEmailSafety from "@/assets/book-email-safety.jpg";
+import bookTaxScam from "@/assets/book-tax-scam.jpg";
+import bookTechSupport from "@/assets/book-tech-support.jpg";
+import bookGrandparentScam from "@/assets/book-grandparent-scam.jpg";
+import bookInvestmentFraud from "@/assets/book-investment-fraud.jpg";
+import bookCharityScam from "@/assets/book-charity-scam.jpg";
 // Product images
 import productUsbKey from "@/assets/product-usb-key.jpg";
 import productPrivacyScreen from "@/assets/product-privacy-screen.jpg";
@@ -221,6 +232,86 @@ const staticBooks = [{
   image: bookMobileSecurity,
   tag: 'Mobile',
   stripe_price_id: 'price_1SjwOmJ8osfwYbX7mo35N9ap'
+}, {
+  id: 'book-crypto-defense',
+  name: 'Crypto Scam Defense',
+  description: 'Protect your digital assets from fraud',
+  price: 34.99,
+  image: bookCryptoDefense,
+  tag: 'Crypto',
+  stripe_price_id: 'price_1SjwPnJ8osfwYbX7crypto01'
+}, {
+  id: 'book-romance-scam',
+  name: 'Romance Scam Awareness',
+  description: 'Protect your heart and wallet',
+  price: 28.99,
+  image: bookRomanceScam,
+  tag: 'Relationships',
+  stripe_price_id: 'price_1SjwPnJ8osfwYbX7romance02'
+}, {
+  id: 'book-voice-clone',
+  name: 'Voice Clone Detection',
+  description: 'Spot AI fake calls instantly',
+  price: 31.99,
+  image: bookVoiceClone,
+  tag: 'AI Safety',
+  stripe_price_id: 'price_1SjwPnJ8osfwYbX7voice03'
+}, {
+  id: 'book-medicare-fraud',
+  name: 'Medicare Fraud Protection',
+  description: 'Complete senior healthcare safety',
+  price: 26.99,
+  image: bookMedicareFraud,
+  tag: 'Healthcare',
+  stripe_price_id: 'price_1SjwPnJ8osfwYbX7medicare04'
+}, {
+  id: 'book-email-safety',
+  name: 'Email Safety Essentials',
+  description: 'Stop inbox threats forever',
+  price: 22.99,
+  image: bookEmailSafety,
+  tag: 'Email',
+  stripe_price_id: 'price_1SjwPnJ8osfwYbX7email05'
+}, {
+  id: 'book-tax-scam',
+  name: 'Tax Scam Prevention',
+  description: 'Avoid IRS imposter schemes',
+  price: 29.99,
+  image: bookTaxScam,
+  tag: 'Finance',
+  stripe_price_id: 'price_1SjwPnJ8osfwYbX7tax06'
+}, {
+  id: 'book-tech-support',
+  name: 'Tech Support Fraud Defense',
+  description: 'Never get fooled by fake support',
+  price: 25.99,
+  image: bookTechSupport,
+  tag: 'Tech',
+  stripe_price_id: 'price_1SjwPnJ8osfwYbX7tech07'
+}, {
+  id: 'book-grandparent-scam',
+  name: 'Grandparent Scam Defense',
+  description: 'Protecting family bonds from scammers',
+  price: 24.99,
+  image: bookGrandparentScam,
+  tag: 'Family',
+  stripe_price_id: 'price_1SjwPnJ8osfwYbX7grandp08'
+}, {
+  id: 'book-investment-fraud',
+  name: 'Investment Fraud Guide',
+  description: 'Spot Ponzi schemes fast',
+  price: 36.99,
+  image: bookInvestmentFraud,
+  tag: 'Investing',
+  stripe_price_id: 'price_1SjwPnJ8osfwYbX7invest09'
+}, {
+  id: 'book-charity-scam',
+  name: 'Charity Scam Awareness',
+  description: 'Give safely to real causes',
+  price: 21.99,
+  image: bookCharityScam,
+  tag: 'Giving',
+  stripe_price_id: 'price_1SjwPnJ8osfwYbX7charity10'
 }];
 
 // Static physical products (15 products) with real images
