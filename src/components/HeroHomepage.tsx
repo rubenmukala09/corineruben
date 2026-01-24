@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Shield, ArrowRight, Lock, Eye, Fingerprint, ShieldCheck, Zap, Globe } from "lucide-react";
+import { useRef } from "react";
+import heroVideo from "@/assets/hero-video-new.mp4";
 
 const securityFeatures = [{
   icon: Lock,
@@ -16,20 +18,25 @@ const securityFeatures = [{
   label: "AI Protection"
 }];
 export const HeroHomepage = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
   return <section className="relative min-h-[100vh] lg:min-h-[110vh] overflow-hidden" style={{
     backgroundColor: '#1a1625'
   }}>
-      {/* Static gradient background - no video/photos */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0" style={{
-          background: 'linear-gradient(135deg, hsl(var(--primary) / 0.15) 0%, hsl(var(--background)) 50%, hsl(var(--accent) / 0.1) 100%)'
-        }} />
-        <div className="absolute inset-0 opacity-40" style={{
-          background: 'radial-gradient(circle at 20% 30%, hsl(var(--primary) / 0.3) 0%, transparent 40%)'
-        }} />
-        <div className="absolute inset-0 opacity-30" style={{
-          background: 'radial-gradient(circle at 80% 70%, hsl(var(--accent) / 0.25) 0%, transparent 40%)'
-        }} />
+      {/* Video Background */}
+      <div className="absolute inset-0">
+        <video 
+          ref={videoRef} 
+          autoPlay 
+          loop 
+          muted 
+          playsInline 
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src={heroVideo} type="video/mp4" />
+        </video>
+        {/* Gradient overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/40" />
       </div>
 
       {/* Grid pattern */}
