@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Shield, ArrowRight, Lock, Eye, Fingerprint, ShieldCheck, Zap, Globe } from "lucide-react";
-import { useRef } from "react";
-import heroVideo from "@/assets/hero-video-family.mp4";
+import { useRef, useMemo } from "react";
+import heroVideoFamily from "@/assets/hero-video-family.mp4";
+import heroVideoCybersecurity from "@/assets/hero-video-cybersecurity.mp4";
+
+// Randomly select a video on each page load
+const heroVideos = [heroVideoFamily, heroVideoCybersecurity];
 
 const securityFeatures = [{
   icon: Lock,
@@ -19,6 +23,8 @@ const securityFeatures = [{
 }];
 export const HeroHomepage = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const selectedVideo = useMemo(() => heroVideos[Math.floor(Math.random() * heroVideos.length)], []);
+  
   return <section className="relative min-h-[100vh] lg:min-h-[110vh] overflow-hidden" style={{
     backgroundColor: '#1a1625'
   }}>
@@ -33,7 +39,7 @@ export const HeroHomepage = () => {
           preload="auto"
           className="absolute inset-0 w-full h-full object-cover"
         >
-          <source src={heroVideo} type="video/mp4" />
+          <source src={selectedVideo} type="video/mp4" />
         </video>
         {/* Gradient overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/40" />
