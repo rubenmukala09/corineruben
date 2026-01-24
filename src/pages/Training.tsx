@@ -53,6 +53,12 @@ import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
 import HeroFloatingStats from "@/components/business/HeroFloatingStats";
 import heroVault from "@/assets/hero-vault-1.jpg";
 
+// Decorative images for Training page
+import communityTraining from "@/assets/community-training.jpg";
+import workshopInstructor from "@/assets/workshop-instructor.jpg";
+import seniorLearning from "@/assets/senior-learning.jpg";
+import workshopSeniorsLearning from "@/assets/workshop-seniors-learning.jpg";
+
 // Rotating hero headlines for Training page
 const trainingHeadlines = [
   "Learn How to Recognize and Stop Scams",
@@ -425,6 +431,17 @@ function LearnAndTrain() {
       {/* Why Families Trust InVision Network Section */}
       <section className="py-16 bg-muted relative overflow-hidden">
         <FlowingWaves variant="full" opacity={0.08} />
+        
+        {/* Decorative Image - Right side accent */}
+        <div className="hidden lg:block absolute right-8 top-1/4 w-64 h-64 rounded-2xl overflow-hidden opacity-20 pointer-events-none z-0">
+          <img 
+            src={communityTraining} 
+            alt="" 
+            className="w-full h-full object-cover"
+            aria-hidden="true"
+          />
+        </div>
+        
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-10">
             <Badge className="mb-4 bg-gradient-to-r from-primary to-accent text-white text-base md:text-lg px-5 py-2">
@@ -631,6 +648,27 @@ function LearnAndTrain() {
       {/* Training Section */}
       <section id="training" className="py-16 bg-background relative overflow-hidden">
         <FlowingWaves variant="full" opacity={0.12} />
+        
+        {/* Decorative Image - Left side accent */}
+        <div className="hidden lg:block absolute left-8 top-1/3 w-56 h-56 rounded-2xl overflow-hidden opacity-15 pointer-events-none z-0">
+          <img 
+            src={workshopSeniorsLearning} 
+            alt="" 
+            className="w-full h-full object-cover"
+            aria-hidden="true"
+          />
+        </div>
+        
+        {/* Decorative Image - Right side bottom */}
+        <div className="hidden lg:block absolute right-12 bottom-24 w-48 h-48 rounded-2xl overflow-hidden opacity-15 pointer-events-none z-0">
+          <img 
+            src={seniorLearning} 
+            alt="" 
+            className="w-full h-full object-cover"
+            aria-hidden="true"
+          />
+        </div>
+        
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-10">
             <Badge className="mb-4 bg-gradient-to-r from-primary to-accent text-white text-lg px-6 py-2.5">

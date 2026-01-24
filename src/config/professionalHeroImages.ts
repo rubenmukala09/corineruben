@@ -17,10 +17,10 @@ export interface HeroImage {
 // Professional branded hero images for each page - InVision Network integrated
 export const PROFESSIONAL_HERO_IMAGES: Record<string, HeroImage[]> = {
   business: [
-    { src: heroBrandedBusiness, alt: "Diverse business professionals reviewing AI analytics on screens in modern InVision Network tech office with golden hour lighting" },
+    { src: heroBrandedBusiness, alt: "Diverse business professionals collaborating around conference table with InVision Network branding in modern bright office" },
   ],
   training: [
-    { src: heroBrandedTraining, alt: "Seniors joyfully learning together in sunlit community center, empowered by hope and lifelong growth with InVision Network" },
+    { src: heroBrandedTraining, alt: "Seniors joyfully learning together in sunlit community center with InVision Network banner, warm hopeful atmosphere" },
   ],
   resources: [
     { src: heroBrandedResources, alt: "InVision Network digital knowledge center with security resources, learning materials, and modern study environment" },
@@ -35,7 +35,7 @@ export const PROFESSIONAL_HERO_IMAGES: Record<string, HeroImage[]> = {
     { src: heroBrandedFaq, alt: "InVision Network friendly customer support team ready to answer your questions" },
   ],
   contact: [
-    { src: heroBrandedContact, alt: "Welcoming InVision Network team member ready to help protect your family at branded reception" },
+    { src: heroBrandedContact, alt: "Welcoming InVision Network receptionist at branded reception desk with prominent logo on frosted glass wall" },
   ],
 };
 

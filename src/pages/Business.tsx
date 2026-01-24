@@ -26,6 +26,11 @@ import { Phone, Mail, MessageSquare, Calendar, CheckCircle, Search, Shield, Lock
 import { ExpandableServiceCard } from "@/components/ExpandableServiceCard";
 import { Badge } from "@/components/ui/badge";
 
+// Decorative images for Business page
+import securityExpert from "@/assets/security-expert.jpg";
+import teamCollaboration from "@/assets/team-collaboration.jpg";
+import businessTeamOffice from "@/assets/business-team-office.jpg";
+
 // Rotating hero headlines for Business page
 const businessHeadlines = [
   "Grow Your Business with Secure AI Solutions",
@@ -256,6 +261,17 @@ function Business() {
       {/* What We Build - Expandable Cards with Full Content */}
       <section className="py-14 bg-background relative">
         <FlowingWaves variant="full" opacity={0.12} />
+        
+        {/* Decorative Image - Right side accent */}
+        <div className="hidden lg:block absolute right-8 top-1/4 w-64 h-64 rounded-2xl overflow-hidden opacity-20 pointer-events-none z-0">
+          <img 
+            src={teamCollaboration} 
+            alt="" 
+            className="w-full h-full object-cover"
+            aria-hidden="true"
+          />
+        </div>
+        
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-8">
             <div className="inline-block px-6 py-2 bg-primary/10 rounded-full text-sm font-bold text-primary mb-3 uppercase tracking-wider">
@@ -856,6 +872,27 @@ function Business() {
       {/* Website Insurance Section */}
       <section id="website-insurance" className="py-20 bg-muted relative overflow-hidden">
         <FlowingWaves variant="full" opacity={0.08} />
+        
+        {/* Decorative Image - Left side accent */}
+        <div className="hidden lg:block absolute left-8 top-1/3 w-56 h-56 rounded-2xl overflow-hidden opacity-15 pointer-events-none z-0">
+          <img 
+            src={securityExpert} 
+            alt="" 
+            className="w-full h-full object-cover"
+            aria-hidden="true"
+          />
+        </div>
+        
+        {/* Decorative Image - Bottom right */}
+        <div className="hidden lg:block absolute right-12 bottom-32 w-48 h-48 rounded-2xl overflow-hidden opacity-15 pointer-events-none z-0">
+          <img 
+            src={businessTeamOffice} 
+            alt="" 
+            className="w-full h-full object-cover"
+            aria-hidden="true"
+          />
+        </div>
+        
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-success/10 text-success border border-success/20 rounded-full text-sm font-medium mb-4">
