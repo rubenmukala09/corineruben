@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
 import { preloadRouteImages } from "./useImagePreload";
-import { PAGE_NATURE_IMAGES } from "@/config/natureHeroImages";
+import { PROFESSIONAL_HERO_IMAGES } from "@/config/professionalHeroImages";
 
 const prefetchedRoutes = new Set<string>();
 
-// Map routes to their page keys for nature images
+// Map routes to their page keys for hero images
 const routeToPageKey: Record<string, string> = {
   "/about": "about",
   "/business": "business",
@@ -23,10 +23,10 @@ export const usePrefetchRoute = (path: string) => {
     if (prefetchedRoutes.has(path)) return;
 
     prefetchTimerRef.current = setTimeout(() => {
-      // Preload nature hero images for the route
+      // Preload professional hero images for the route
       const pageKey = routeToPageKey[path];
-      if (pageKey && PAGE_NATURE_IMAGES[pageKey]) {
-        const heroImages = PAGE_NATURE_IMAGES[pageKey].map(img => img.src);
+      if (pageKey && PROFESSIONAL_HERO_IMAGES[pageKey]) {
+        const heroImages = PROFESSIONAL_HERO_IMAGES[pageKey].map(img => img.src);
         preloadRouteImages(heroImages);
       }
 
