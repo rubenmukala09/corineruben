@@ -239,7 +239,7 @@ const staticBooks = [{
   price: 34.99,
   image: bookCryptoDefense,
   tag: 'Crypto',
-  stripe_price_id: 'price_1SjwPnJ8osfwYbX7crypto01'
+  stripe_price_id: 'price_1StJmsJ8osfwYbX7ioMIlJB0'
 }, {
   id: 'book-romance-scam',
   name: 'Romance Scam Awareness',
@@ -247,7 +247,7 @@ const staticBooks = [{
   price: 28.99,
   image: bookRomanceScam,
   tag: 'Relationships',
-  stripe_price_id: 'price_1SjwPnJ8osfwYbX7romance02'
+  stripe_price_id: 'price_1StJmtJ8osfwYbX7cCVawnfv'
 }, {
   id: 'book-voice-clone',
   name: 'Voice Clone Detection',
@@ -255,7 +255,7 @@ const staticBooks = [{
   price: 31.99,
   image: bookVoiceClone,
   tag: 'AI Safety',
-  stripe_price_id: 'price_1SjwPnJ8osfwYbX7voice03'
+  stripe_price_id: 'price_1StJmuJ8osfwYbX7s4o4JB2a'
 }, {
   id: 'book-medicare-fraud',
   name: 'Medicare Fraud Protection',
@@ -263,7 +263,7 @@ const staticBooks = [{
   price: 26.99,
   image: bookMedicareFraud,
   tag: 'Healthcare',
-  stripe_price_id: 'price_1SjwPnJ8osfwYbX7medicare04'
+  stripe_price_id: 'price_1StJmvJ8osfwYbX7NqgadyPs'
 }, {
   id: 'book-email-safety',
   name: 'Email Safety Essentials',
@@ -271,7 +271,7 @@ const staticBooks = [{
   price: 22.99,
   image: bookEmailSafety,
   tag: 'Email',
-  stripe_price_id: 'price_1SjwPnJ8osfwYbX7email05'
+  stripe_price_id: 'price_1StJmxJ8osfwYbX7UPSnS1v8'
 }, {
   id: 'book-tax-scam',
   name: 'Tax Scam Prevention',
@@ -279,7 +279,7 @@ const staticBooks = [{
   price: 29.99,
   image: bookTaxScam,
   tag: 'Finance',
-  stripe_price_id: 'price_1SjwPnJ8osfwYbX7tax06'
+  stripe_price_id: 'price_1StJmyJ8osfwYbX7tb11WOIS'
 }, {
   id: 'book-tech-support',
   name: 'Tech Support Fraud Defense',
@@ -287,7 +287,7 @@ const staticBooks = [{
   price: 25.99,
   image: bookTechSupport,
   tag: 'Tech',
-  stripe_price_id: 'price_1SjwPnJ8osfwYbX7tech07'
+  stripe_price_id: 'price_1StJmzJ8osfwYbX7SE1V5Dnn'
 }, {
   id: 'book-grandparent-scam',
   name: 'Grandparent Scam Defense',
@@ -295,7 +295,7 @@ const staticBooks = [{
   price: 24.99,
   image: bookGrandparentScam,
   tag: 'Family',
-  stripe_price_id: 'price_1SjwPnJ8osfwYbX7grandp08'
+  stripe_price_id: 'price_1StJn0J8osfwYbX7t2Ta3TxZ'
 }, {
   id: 'book-investment-fraud',
   name: 'Investment Fraud Guide',
@@ -303,7 +303,7 @@ const staticBooks = [{
   price: 36.99,
   image: bookInvestmentFraud,
   tag: 'Investing',
-  stripe_price_id: 'price_1SjwPnJ8osfwYbX7invest09'
+  stripe_price_id: 'price_1StJn1J8osfwYbX77tR8VN6p'
 }, {
   id: 'book-charity-scam',
   name: 'Charity Scam Awareness',
@@ -311,7 +311,7 @@ const staticBooks = [{
   price: 21.99,
   image: bookCharityScam,
   tag: 'Giving',
-  stripe_price_id: 'price_1SjwPnJ8osfwYbX7charity10'
+  stripe_price_id: 'price_1StJn2J8osfwYbX7i25vJA5t'
 }];
 
 // Static physical products (15 products) with real images

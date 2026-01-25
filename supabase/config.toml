@@ -101,3 +101,6 @@ verify_jwt = false
 
 [functions.heartbeat-watchdog]
 verify_jwt = false
+
+[functions.create-cart-checkout]
+verify_jwt = false

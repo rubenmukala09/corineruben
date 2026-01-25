@@ -280,7 +280,7 @@ export const DIGITAL_BOOKS: Product[] = [
     description: 'Easy-to-understand guide for staying safe online',
     category: 'digital-book',
     paymentType: 'one-time',
-    stripePriceId: 'price_1SjwOgJ8osfwYbX7BFT7VyBl', // Cyber Awareness for Kids
+    stripePriceId: 'price_1SjwOgJ8osfwYbX7BFT7VyBl',
     price: 19.99,
     isDigital: true,
     imageUrl: '/placeholder.svg'
@@ -291,8 +291,118 @@ export const DIGITAL_BOOKS: Product[] = [
     description: 'Protect your identity in the digital age',
     category: 'digital-book',
     paymentType: 'one-time',
-    stripePriceId: 'price_1SjwOdJ8osfwYbX7MPe7VAm2', // Auth of Personalities
+    stripePriceId: 'price_1SjwOdJ8osfwYbX7MPe7VAm2',
     price: 32.99,
+    isDigital: true,
+    imageUrl: '/placeholder.svg'
+  },
+  {
+    id: 'book-crypto-defense',
+    name: 'Crypto Scam Defense',
+    description: 'Protect your digital assets from fraud',
+    category: 'digital-book',
+    paymentType: 'one-time',
+    stripePriceId: 'price_1StJmsJ8osfwYbX7ioMIlJB0',
+    price: 34.99,
+    isDigital: true,
+    imageUrl: '/placeholder.svg'
+  },
+  {
+    id: 'book-romance-scam',
+    name: 'Romance Scam Awareness',
+    description: 'Protect your heart and wallet',
+    category: 'digital-book',
+    paymentType: 'one-time',
+    stripePriceId: 'price_1StJmtJ8osfwYbX7cCVawnfv',
+    price: 28.99,
+    isDigital: true,
+    imageUrl: '/placeholder.svg'
+  },
+  {
+    id: 'book-voice-clone',
+    name: 'Voice Clone Detection',
+    description: 'Spot AI fake calls instantly',
+    category: 'digital-book',
+    paymentType: 'one-time',
+    stripePriceId: 'price_1StJmuJ8osfwYbX7s4o4JB2a',
+    price: 31.99,
+    isDigital: true,
+    imageUrl: '/placeholder.svg'
+  },
+  {
+    id: 'book-medicare-fraud',
+    name: 'Medicare Fraud Protection',
+    description: 'Complete senior healthcare safety',
+    category: 'digital-book',
+    paymentType: 'one-time',
+    stripePriceId: 'price_1StJmvJ8osfwYbX7NqgadyPs',
+    price: 26.99,
+    isDigital: true,
+    imageUrl: '/placeholder.svg'
+  },
+  {
+    id: 'book-email-safety',
+    name: 'Email Safety Essentials',
+    description: 'Stop inbox threats forever',
+    category: 'digital-book',
+    paymentType: 'one-time',
+    stripePriceId: 'price_1StJmxJ8osfwYbX7UPSnS1v8',
+    price: 22.99,
+    isDigital: true,
+    imageUrl: '/placeholder.svg'
+  },
+  {
+    id: 'book-tax-scam',
+    name: 'Tax Scam Prevention',
+    description: 'Avoid IRS imposter schemes',
+    category: 'digital-book',
+    paymentType: 'one-time',
+    stripePriceId: 'price_1StJmyJ8osfwYbX7tb11WOIS',
+    price: 29.99,
+    isDigital: true,
+    imageUrl: '/placeholder.svg'
+  },
+  {
+    id: 'book-tech-support',
+    name: 'Tech Support Fraud Defense',
+    description: 'Never get fooled by fake support',
+    category: 'digital-book',
+    paymentType: 'one-time',
+    stripePriceId: 'price_1StJmzJ8osfwYbX7SE1V5Dnn',
+    price: 25.99,
+    isDigital: true,
+    imageUrl: '/placeholder.svg'
+  },
+  {
+    id: 'book-grandparent-scam',
+    name: 'Grandparent Scam Defense',
+    description: 'Protecting family bonds from scammers',
+    category: 'digital-book',
+    paymentType: 'one-time',
+    stripePriceId: 'price_1StJn0J8osfwYbX7t2Ta3TxZ',
+    price: 24.99,
+    isDigital: true,
+    imageUrl: '/placeholder.svg'
+  },
+  {
+    id: 'book-investment-fraud',
+    name: 'Investment Fraud Guide',
+    description: 'Spot Ponzi schemes fast',
+    category: 'digital-book',
+    paymentType: 'one-time',
+    stripePriceId: 'price_1StJn1J8osfwYbX77tR8VN6p',
+    price: 36.99,
+    isDigital: true,
+    imageUrl: '/placeholder.svg'
+  },
+  {
+    id: 'book-charity-scam',
+    name: 'Charity Scam Awareness',
+    description: 'Give safely to real causes',
+    category: 'digital-book',
+    paymentType: 'one-time',
+    stripePriceId: 'price_1StJn2J8osfwYbX7i25vJA5t',
+    price: 21.99,
     isDigital: true,
     imageUrl: '/placeholder.svg'
   }
