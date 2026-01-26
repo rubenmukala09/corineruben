@@ -28,9 +28,9 @@ export const HeroHomepage = () => {
   const [videoFailed, setVideoFailed] = useState(false);
   const [videoMounted, setVideoMounted] = useState(false);
 
-  // Defer video mount to avoid console errors during initial render/Lighthouse
+  // Defer video mount significantly to ensure LCP text paints first
   useEffect(() => {
-    const timer = setTimeout(() => setVideoMounted(true), 100);
+    const timer = setTimeout(() => setVideoMounted(true), 2000);
     return () => clearTimeout(timer);
   }, []);
 
