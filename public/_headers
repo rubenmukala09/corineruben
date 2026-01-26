@@ -1,49 +1,11 @@
-# Cache static assets for 1 year (immutable since filenames contain hashes)
+# All hashed assets - cache for 1 year (immutable since filenames contain hashes)
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
 
-# Cache JavaScript files for 1 year
-/assets/*.js
-  Cache-Control: public, max-age=31536000, immutable
-
-# Cache CSS files for 1 year
-/assets/*.css
-  Cache-Control: public, max-age=31536000, immutable
-
-# Cache images for 1 year
-/assets/*.jpg
-  Cache-Control: public, max-age=31536000, immutable
-/assets/*.jpeg
-  Cache-Control: public, max-age=31536000, immutable
-/assets/*.png
-  Cache-Control: public, max-age=31536000, immutable
-/assets/*.webp
-  Cache-Control: public, max-age=31536000, immutable
-/assets/*.avif
-  Cache-Control: public, max-age=31536000, immutable
-/assets/*.gif
-  Cache-Control: public, max-age=31536000, immutable
-/assets/*.svg
-  Cache-Control: public, max-age=31536000, immutable
-
-# Cache videos for 1 year
-/assets/*.mp4
-  Cache-Control: public, max-age=31536000, immutable
-/assets/*.webm
-  Cache-Control: public, max-age=31536000, immutable
-
-# Cache fonts for 1 year
-/assets/*.woff
-  Cache-Control: public, max-age=31536000, immutable
-/assets/*.woff2
-  Cache-Control: public, max-age=31536000, immutable
-/assets/*.ttf
-  Cache-Control: public, max-age=31536000, immutable
-/assets/*.otf
-  Cache-Control: public, max-age=31536000, immutable
-
-# HTML files should not be cached long-term
+# HTML files should not be cached long-term (SPA routing)
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
+
+# Root document
 /
   Cache-Control: public, max-age=0, must-revalidate
