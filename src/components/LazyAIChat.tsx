@@ -1,17 +1,28 @@
 import { lazy, Suspense, useState, useEffect } from "react";
+import lauraAvatar from "@/assets/laura-avatar-new.png";
 
 const AIChat = lazy(() => import("./AIChat").then(m => ({ default: m.AIChat })));
 
 /**
  * Placeholder FAB that reserves space to prevent CLS while AIChat loads
- * Matches exact dimensions and position of the real button
+ * Uses the actual avatar image to prevent layout shift when component mounts
  */
 const ChatFABPlaceholder = () => (
   <div className="fixed bottom-6 right-6 z-[9998]">
     <div 
-      className="relative w-14 h-14 rounded-full shadow-lg overflow-hidden ring-2 ring-primary/20 bg-muted animate-pulse"
+      className="relative w-14 h-14 rounded-full shadow-lg overflow-hidden ring-2 ring-primary/20"
       aria-hidden="true"
-    />
+    >
+      <img 
+        src={lauraAvatar}
+        alt=""
+        width={56}
+        height={56}
+        loading="eager"
+        fetchPriority="high"
+        className="w-full h-full object-cover object-top"
+      />
+    </div>
   </div>
 );
 
