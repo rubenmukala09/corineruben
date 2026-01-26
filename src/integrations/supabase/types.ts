@@ -356,6 +356,7 @@ export type Database = {
           status: Database["public"]["Enums"]["appointment_status"] | null
           title: string
           updated_at: string
+          user_id: string | null
           worker_id: string | null
           zoom_link: string | null
         }
@@ -379,6 +380,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["appointment_status"] | null
           title: string
           updated_at?: string
+          user_id?: string | null
           worker_id?: string | null
           zoom_link?: string | null
         }
@@ -402,6 +404,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["appointment_status"] | null
           title?: string
           updated_at?: string
+          user_id?: string | null
           worker_id?: string | null
           zoom_link?: string | null
         }
