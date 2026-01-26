@@ -80,7 +80,7 @@ export const HeroHomepage = () => {
       }} />
       </div>
       
-      <div className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10 hero-instant" style={{ contain: 'strict', contentVisibility: 'auto', minHeight: 'calc(100vh - 64px)', height: 'calc(100vh - 64px)' }}>
+      <div className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10 hero-instant" style={{ contain: 'layout style paint', minHeight: 'calc(100vh - 64px)', height: 'calc(100vh - 64px)' }}>
         <div className="flex flex-col lg:grid lg:grid-cols-5 gap-8 lg:gap-20 xl:gap-28 items-center min-h-[calc(100vh-64px)] py-16 sm:py-20 lg:py-0" style={{ contain: 'strict' }}>
           
           {/* Left Content - Instant render, no animation delay - LCP element */}
