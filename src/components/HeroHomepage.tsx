@@ -26,6 +26,13 @@ export const HeroHomepage = () => {
   const selectedVideo = useMemo(() => heroVideos[Math.floor(Math.random() * heroVideos.length)], []);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
+  const [videoMounted, setVideoMounted] = useState(false);
+
+  // Defer video mount to avoid console errors during initial render/Lighthouse
+  useEffect(() => {
+    const timer = setTimeout(() => setVideoMounted(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -39,7 +46,7 @@ export const HeroHomepage = () => {
   }}>
       {/* Video Background - lazy preload for faster initial paint */}
       <div className="absolute inset-0">
-        {!videoFailed && (
+        {videoMounted && !videoFailed && (
           <video 
             ref={videoRef} 
             autoPlay 
