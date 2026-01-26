@@ -14,10 +14,11 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Download, Shield, ShoppingCart, Star, Loader2, Zap, Award, CheckCircle, Gift, BookOpen, Package, Sparkles, Users, TrendingUp, Heart, Headphones, Clock, Lock, FileText, Video, Podcast, Globe } from "lucide-react";
+import { Download, Shield, ShoppingCart, Star, Loader2, Zap, Award, CheckCircle, Gift, BookOpen, Package, Sparkles, Users, TrendingUp, Heart, Headphones, Clock, Lock, FileText, Video, Podcast, Globe, Library } from "lucide-react";
 import { EmbeddedPaymentModal } from "@/components/payment/EmbeddedPaymentModal";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { PROFESSIONAL_HERO_IMAGES } from "@/config/professionalHeroImages";
+import BookCoverModal from "@/components/resources/BookCoverModal";
 import bookAiFundamentals from "@/assets/book-ai-fundamentals.jpg";
 import bookBeingRealAi from "@/assets/book-being-real-ai.jpg";
 import bookAuthPersonalities from "@/assets/book-auth-personalities.jpg";
@@ -72,247 +73,323 @@ import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
 import HeroFloatingStats from "@/components/business/HeroFloatingStats";
 
 // Static book products with covers (20 books)
-const staticBooks = [{
-  id: 'book-ai-fundamentals',
-  name: 'AI Fundamentals',
-  description: 'Master AI basics and protection strategies',
-  price: 29.99,
-  image: bookAiFundamentals,
-  tag: 'Best Seller',
-  stripe_price_id: 'price_1SjwOGJ8osfwYbX7UnEPLRMz'
-}, {
-  id: 'book-scam-prevention',
-  name: 'Scam Prevention Guide',
-  description: 'Comprehensive guide to avoiding scams',
-  price: 39.99,
-  image: bookScamPrevention,
-  tag: 'Featured',
-  stripe_price_id: 'price_1SjwOIJ8osfwYbX74jTfNxcW'
-}, {
-  id: 'book-family-safety',
-  name: 'Family Safety Toolkit',
-  description: 'Practical family safety protocols',
-  price: 24.99,
-  image: bookFamilySafety,
-  tag: 'Family',
-  stripe_price_id: 'price_1SjwOKJ8osfwYbX7GcmhErnQ'
-}, {
-  id: 'book-senior-tech',
-  name: 'Senior Tech Handbook',
-  description: 'Tech safety for seniors',
-  price: 27.99,
-  image: bookSeniorTechSafety,
-  tag: 'Seniors',
-  stripe_price_id: 'price_1SjwOLJ8osfwYbX7mV3J5LtX'
-}, {
-  id: 'book-digital-privacy',
-  name: 'Digital Privacy Mastery',
-  description: 'Protect your online privacy',
-  price: 34.99,
-  image: bookDigitalPrivacy,
-  tag: 'Popular',
-  stripe_price_id: 'price_1SjwOMJ8osfwYbX7ExCFG5R9'
-}, {
-  id: 'book-deepfake',
-  name: 'Deepfake Detection',
-  description: 'Spot AI fakes and imposters',
-  price: 32.99,
-  image: bookDeepfakeDetection,
-  tag: 'New',
-  stripe_price_id: 'price_1SjwOOJ8osfwYbX7HUJrBIas'
-}, {
-  id: 'book-password',
-  name: 'Password Security',
-  description: 'Secure all your accounts',
-  price: 22.99,
-  image: bookPasswordSecurity,
-  tag: 'Essential',
-  stripe_price_id: 'price_1SjwOPJ8osfwYbX7meUEbp3H'
-}, {
-  id: 'book-social-media',
-  name: 'Social Media Safety',
-  description: 'Stay safe on social platforms',
-  price: 26.99,
-  image: bookSocialMediaSafety,
-  tag: 'Trending',
-  stripe_price_id: 'price_1SjwORJ8osfwYbX7e2gUB45e'
-}, {
-  id: 'book-online-shopping',
-  name: 'Online Shopping Guide',
-  description: 'Shop safely anywhere',
-  price: 24.99,
-  image: bookOnlineShopping,
-  tag: 'Practical',
-  stripe_price_id: 'price_1SjwOTJ8osfwYbX7lPLOGwFE'
-}, {
-  id: 'book-identity-theft',
-  name: 'Identity Theft Prevention',
-  description: 'Protect your identity',
-  price: 36.99,
-  image: bookIdentityTheft,
-  tag: 'Critical',
-  stripe_price_id: 'price_1SjwOUJ8osfwYbX7qlhBavay'
-}, {
-  id: 'book-business-cyber',
-  name: 'Business Cybersecurity',
-  description: 'Enterprise security strategies',
-  price: 49.99,
-  image: bookBusinessCyber,
-  tag: 'Professional',
-  stripe_price_id: 'price_1SjwOYJ8osfwYbX7yBrF06h5'
-}, {
-  id: 'book-ai-management',
-  name: 'AI Management Guide',
-  description: 'Manage AI tools securely',
-  price: 34.99,
-  image: bookAiManagement,
-  tag: 'Business',
-  stripe_price_id: 'price_1SjwOaJ8osfwYbX7hc4XzTHo'
-}, {
-  id: 'book-being-real-ai',
-  name: 'Being Real in AI World',
-  description: 'Authenticity in the AI age',
-  price: 27.99,
-  image: bookBeingRealAi,
-  tag: 'Philosophy',
-  stripe_price_id: 'price_1SjwObJ8osfwYbX7SMFj8psB'
-}, {
-  id: 'book-auth-personalities',
-  name: 'Auth of Personalities',
-  description: 'Advanced identity verification',
-  price: 32.99,
-  image: bookAuthPersonalities,
-  tag: 'Advanced',
-  stripe_price_id: 'price_1SjwOdJ8osfwYbX7MPe7VAm2'
-}, {
-  id: 'book-auth-friendship-v2',
-  name: 'Auth of Friendship V2',
-  description: 'Verify social connections',
-  price: 29.99,
-  image: bookAuthFriendshipV2,
-  tag: 'Volume 2',
-  stripe_price_id: 'price_1SjwOfJ8osfwYbX7WKUTFPZz'
-}, {
-  id: 'book-cyber-kids',
-  name: 'Cyber Awareness for Kids',
-  description: 'Teach children internet safety',
-  price: 19.99,
-  image: bookCyberKids,
-  tag: 'Kids',
-  stripe_price_id: 'price_1SjwOgJ8osfwYbX7BFT7VyBl'
-}, {
-  id: 'book-smart-home',
-  name: 'Smart Home Security',
-  description: 'Protect IoT devices at home',
-  price: 28.99,
-  image: bookSmartHome,
-  tag: 'IoT',
-  stripe_price_id: 'price_1SjwOiJ8osfwYbX7crdnnxDP'
-}, {
-  id: 'book-phishing-defense',
-  name: 'Email Phishing Defense',
-  description: 'Recognize and block phishing',
-  price: 25.99,
-  image: bookPhishingDefense,
-  tag: 'Email',
-  stripe_price_id: 'price_1SjwOjJ8osfwYbX7QoqGc9FQ'
-}, {
-  id: 'book-banking-safety',
-  name: 'Banking & Financial Safety',
-  description: 'Secure your finances online',
-  price: 31.99,
-  image: bookBankingSafety,
-  tag: 'Finance',
-  stripe_price_id: 'price_1SjwOlJ8osfwYbX7jMwpmurh'
-}, {
-  id: 'book-mobile-security',
-  name: 'Mobile Phone Security',
-  description: 'Keep your smartphone safe',
-  price: 23.99,
-  image: bookMobileSecurity,
-  tag: 'Mobile',
-  stripe_price_id: 'price_1SjwOmJ8osfwYbX7mo35N9ap'
-}, {
-  id: 'book-crypto-defense',
-  name: 'Crypto Scam Defense',
-  description: 'Protect your digital assets from fraud',
-  price: 34.99,
-  image: bookCryptoDefense,
-  tag: 'Crypto',
-  stripe_price_id: 'price_1StJmsJ8osfwYbX7ioMIlJB0'
-}, {
-  id: 'book-romance-scam',
-  name: 'Romance Scam Awareness',
-  description: 'Protect your heart and wallet',
-  price: 28.99,
-  image: bookRomanceScam,
-  tag: 'Relationships',
-  stripe_price_id: 'price_1StJmtJ8osfwYbX7cCVawnfv'
-}, {
-  id: 'book-voice-clone',
-  name: 'Voice Clone Detection',
-  description: 'Spot AI fake calls instantly',
-  price: 31.99,
-  image: bookVoiceClone,
-  tag: 'AI Safety',
-  stripe_price_id: 'price_1StJmuJ8osfwYbX7s4o4JB2a'
-}, {
-  id: 'book-medicare-fraud',
-  name: 'Medicare Fraud Protection',
-  description: 'Complete senior healthcare safety',
-  price: 26.99,
-  image: bookMedicareFraud,
-  tag: 'Healthcare',
-  stripe_price_id: 'price_1StJmvJ8osfwYbX7NqgadyPs'
-}, {
-  id: 'book-email-safety',
-  name: 'Email Safety Essentials',
-  description: 'Stop inbox threats forever',
-  price: 22.99,
-  image: bookEmailSafety,
-  tag: 'Email',
-  stripe_price_id: 'price_1StJmxJ8osfwYbX7UPSnS1v8'
-}, {
-  id: 'book-tax-scam',
-  name: 'Tax Scam Prevention',
-  description: 'Avoid IRS imposter schemes',
-  price: 29.99,
-  image: bookTaxScam,
-  tag: 'Finance',
-  stripe_price_id: 'price_1StJmyJ8osfwYbX7tb11WOIS'
-}, {
-  id: 'book-tech-support',
-  name: 'Tech Support Fraud Defense',
-  description: 'Never get fooled by fake support',
-  price: 25.99,
-  image: bookTechSupport,
-  tag: 'Tech',
-  stripe_price_id: 'price_1StJmzJ8osfwYbX7SE1V5Dnn'
-}, {
-  id: 'book-grandparent-scam',
-  name: 'Grandparent Scam Defense',
-  description: 'Protecting family bonds from scammers',
-  price: 24.99,
-  image: bookGrandparentScam,
-  tag: 'Family',
-  stripe_price_id: 'price_1StJn0J8osfwYbX7t2Ta3TxZ'
-}, {
-  id: 'book-investment-fraud',
-  name: 'Investment Fraud Guide',
-  description: 'Spot Ponzi schemes fast',
-  price: 36.99,
-  image: bookInvestmentFraud,
-  tag: 'Investing',
-  stripe_price_id: 'price_1StJn1J8osfwYbX77tR8VN6p'
-}, {
-  id: 'book-charity-scam',
-  name: 'Charity Scam Awareness',
-  description: 'Give safely to real causes',
-  price: 21.99,
-  image: bookCharityScam,
-  tag: 'Giving',
-  stripe_price_id: 'price_1StJn2J8osfwYbX7i25vJA5t'
-}];
+// Author constant for all books
+const BOOK_AUTHOR = "InVision Network • Department of Literature";
+
+// Define book type for consistency
+type BookItem = {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  tag: string;
+  stripe_price_id: string;
+  author: string;
+};
+
+const staticBooks: BookItem[] = [
+  {
+    id: 'book-ai-fundamentals',
+    name: 'AI Fundamentals',
+    description: 'Master AI basics and protection strategies',
+    price: 29.99,
+    image: bookAiFundamentals,
+    tag: 'Best Seller',
+    stripe_price_id: 'price_1SjwOGJ8osfwYbX7UnEPLRMz',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-scam-prevention',
+    name: 'Scam Prevention Guide',
+    description: 'Comprehensive guide to avoiding scams',
+    price: 39.99,
+    image: bookScamPrevention,
+    tag: 'Featured',
+    stripe_price_id: 'price_1SjwOIJ8osfwYbX74jTfNxcW',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-family-safety',
+    name: 'Family Safety Toolkit',
+    description: 'Practical family safety protocols',
+    price: 24.99,
+    image: bookFamilySafety,
+    tag: 'Family',
+    stripe_price_id: 'price_1SjwOKJ8osfwYbX7GcmhErnQ',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-senior-tech',
+    name: 'Senior Tech Handbook',
+    description: 'Tech safety for seniors',
+    price: 27.99,
+    image: bookSeniorTechSafety,
+    tag: 'Seniors',
+    stripe_price_id: 'price_1SjwOLJ8osfwYbX7mV3J5LtX',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-digital-privacy',
+    name: 'Digital Privacy Mastery',
+    description: 'Protect your online privacy',
+    price: 34.99,
+    image: bookDigitalPrivacy,
+    tag: 'Popular',
+    stripe_price_id: 'price_1SjwOMJ8osfwYbX7ExCFG5R9',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-deepfake',
+    name: 'Deepfake Detection',
+    description: 'Spot AI fakes and imposters',
+    price: 32.99,
+    image: bookDeepfakeDetection,
+    tag: 'New',
+    stripe_price_id: 'price_1SjwOOJ8osfwYbX7HUJrBIas',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-password',
+    name: 'Password Security',
+    description: 'Secure all your accounts',
+    price: 22.99,
+    image: bookPasswordSecurity,
+    tag: 'Essential',
+    stripe_price_id: 'price_1SjwOPJ8osfwYbX7meUEbp3H',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-social-media',
+    name: 'Social Media Safety',
+    description: 'Stay safe on social platforms',
+    price: 26.99,
+    image: bookSocialMediaSafety,
+    tag: 'Trending',
+    stripe_price_id: 'price_1SjwORJ8osfwYbX7e2gUB45e',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-online-shopping',
+    name: 'Online Shopping Guide',
+    description: 'Shop safely anywhere',
+    price: 24.99,
+    image: bookOnlineShopping,
+    tag: 'Practical',
+    stripe_price_id: 'price_1SjwOTJ8osfwYbX7lPLOGwFE',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-identity-theft',
+    name: 'Identity Theft Prevention',
+    description: 'Protect your identity',
+    price: 36.99,
+    image: bookIdentityTheft,
+    tag: 'Critical',
+    stripe_price_id: 'price_1SjwOUJ8osfwYbX7qlhBavay',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-business-cyber',
+    name: 'Business Cybersecurity',
+    description: 'Enterprise security strategies',
+    price: 49.99,
+    image: bookBusinessCyber,
+    tag: 'Professional',
+    stripe_price_id: 'price_1SjwOYJ8osfwYbX7yBrF06h5',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-ai-management',
+    name: 'AI Management Guide',
+    description: 'Manage AI tools securely',
+    price: 34.99,
+    image: bookAiManagement,
+    tag: 'Business',
+    stripe_price_id: 'price_1SjwOaJ8osfwYbX7hc4XzTHo',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-being-real-ai',
+    name: 'Being Real in AI World',
+    description: 'Authenticity in the AI age',
+    price: 27.99,
+    image: bookBeingRealAi,
+    tag: 'Philosophy',
+    stripe_price_id: 'price_1SjwObJ8osfwYbX7SMFj8psB',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-auth-personalities',
+    name: 'Auth of Personalities',
+    description: 'Advanced identity verification',
+    price: 32.99,
+    image: bookAuthPersonalities,
+    tag: 'Advanced',
+    stripe_price_id: 'price_1SjwOdJ8osfwYbX7MPe7VAm2',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-auth-friendship-v2',
+    name: 'Auth of Friendship V2',
+    description: 'Verify social connections',
+    price: 29.99,
+    image: bookAuthFriendshipV2,
+    tag: 'Volume 2',
+    stripe_price_id: 'price_1SjwOfJ8osfwYbX7WKUTFPZz',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-cyber-kids',
+    name: 'Cyber Awareness for Kids',
+    description: 'Teach children internet safety',
+    price: 19.99,
+    image: bookCyberKids,
+    tag: 'Kids',
+    stripe_price_id: 'price_1SjwOgJ8osfwYbX7BFT7VyBl',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-smart-home',
+    name: 'Smart Home Security',
+    description: 'Protect IoT devices at home',
+    price: 28.99,
+    image: bookSmartHome,
+    tag: 'IoT',
+    stripe_price_id: 'price_1SjwOiJ8osfwYbX7crdnnxDP',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-phishing-defense',
+    name: 'Email Phishing Defense',
+    description: 'Recognize and block phishing',
+    price: 25.99,
+    image: bookPhishingDefense,
+    tag: 'Email',
+    stripe_price_id: 'price_1SjwOjJ8osfwYbX7QoqGc9FQ',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-banking-safety',
+    name: 'Banking & Financial Safety',
+    description: 'Secure your finances online',
+    price: 31.99,
+    image: bookBankingSafety,
+    tag: 'Finance',
+    stripe_price_id: 'price_1SjwOlJ8osfwYbX7jMwpmurh',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-mobile-security',
+    name: 'Mobile Phone Security',
+    description: 'Keep your smartphone safe',
+    price: 23.99,
+    image: bookMobileSecurity,
+    tag: 'Mobile',
+    stripe_price_id: 'price_1SjwOmJ8osfwYbX7mo35N9ap',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-crypto-defense',
+    name: 'Crypto Scam Defense',
+    description: 'Protect your digital assets from fraud',
+    price: 34.99,
+    image: bookCryptoDefense,
+    tag: 'Crypto',
+    stripe_price_id: 'price_1StJmsJ8osfwYbX7ioMIlJB0',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-romance-scam',
+    name: 'Romance Scam Awareness',
+    description: 'Protect your heart and wallet',
+    price: 28.99,
+    image: bookRomanceScam,
+    tag: 'Relationships',
+    stripe_price_id: 'price_1StJmtJ8osfwYbX7cCVawnfv',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-voice-clone',
+    name: 'Voice Clone Detection',
+    description: 'Spot AI fake calls instantly',
+    price: 31.99,
+    image: bookVoiceClone,
+    tag: 'AI Safety',
+    stripe_price_id: 'price_1StJmuJ8osfwYbX7s4o4JB2a',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-medicare-fraud',
+    name: 'Medicare Fraud Protection',
+    description: 'Complete senior healthcare safety',
+    price: 26.99,
+    image: bookMedicareFraud,
+    tag: 'Healthcare',
+    stripe_price_id: 'price_1StJmvJ8osfwYbX7NqgadyPs',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-email-safety',
+    name: 'Email Safety Essentials',
+    description: 'Stop inbox threats forever',
+    price: 22.99,
+    image: bookEmailSafety,
+    tag: 'Email',
+    stripe_price_id: 'price_1StJmxJ8osfwYbX7UPSnS1v8',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-tax-scam',
+    name: 'Tax Scam Prevention',
+    description: 'Avoid IRS imposter schemes',
+    price: 29.99,
+    image: bookTaxScam,
+    tag: 'Finance',
+    stripe_price_id: 'price_1StJmyJ8osfwYbX7tb11WOIS',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-tech-support',
+    name: 'Tech Support Fraud Defense',
+    description: 'Never get fooled by fake support',
+    price: 25.99,
+    image: bookTechSupport,
+    tag: 'Tech',
+    stripe_price_id: 'price_1StJmzJ8osfwYbX7SE1V5Dnn',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-grandparent-scam',
+    name: 'Grandparent Scam Defense',
+    description: 'Protecting family bonds from scammers',
+    price: 24.99,
+    image: bookGrandparentScam,
+    tag: 'Family',
+    stripe_price_id: 'price_1StJn0J8osfwYbX7t2Ta3TxZ',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-investment-fraud',
+    name: 'Investment Fraud Guide',
+    description: 'Spot Ponzi schemes fast',
+    price: 36.99,
+    image: bookInvestmentFraud,
+    tag: 'Investing',
+    stripe_price_id: 'price_1StJn1J8osfwYbX77tR8VN6p',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-charity-scam',
+    name: 'Charity Scam Awareness',
+    description: 'Give safely to real causes',
+    price: 21.99,
+    image: bookCharityScam,
+    tag: 'Giving',
+    stripe_price_id: 'price_1StJn2J8osfwYbX7i25vJA5t',
+    author: BOOK_AUTHOR
+  }
+];
 
 // Static physical products (15 products) with real images
 const staticPhysicalProducts = [{
@@ -470,6 +547,38 @@ function Resources() {
     amount: number;
     description?: string;
   } | null>(null);
+  
+  // Book cover modal state
+  const [selectedBook, setSelectedBook] = useState<BookItem | null>(null);
+  const [bookModalOpen, setBookModalOpen] = useState(false);
+
+  const handleBookClick = (book: BookItem) => {
+    setSelectedBook(book);
+    setBookModalOpen(true);
+  };
+
+  // Calculate batch purchase total
+  const totalBooksPrice = staticBooks.reduce((sum, book) => sum + book.price, 0);
+  const batchDiscount = 0.25; // 25% off for complete library
+  const batchPrice = totalBooksPrice * (1 - batchDiscount);
+
+  const handleBatchPurchase = () => {
+    // Add all books to cart
+    staticBooks.forEach(book => {
+      addItem({
+        id: book.id,
+        productId: book.id,
+        name: book.name,
+        price: book.price * (1 - batchDiscount), // Apply discount
+        image: book.image,
+        stripe_price_id: book.stripe_price_id
+      });
+    });
+    toast({
+      title: "Complete Library Added!",
+      description: `All ${staticBooks.length} e-books added to cart with 25% discount.`
+    });
+  };
 
   // Track when cart is manually emptied to show help
   useEffect(() => {
@@ -654,32 +763,82 @@ function Resources() {
             </div>
           </ScrollReveal>
 
+          {/* Batch Purchase Banner */}
+          <ScrollReveal>
+            <div className="mb-6 p-4 bg-gradient-to-r from-primary/15 via-accent/10 to-primary/15 rounded-xl border-2 border-primary/30">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="text-center md:text-left">
+                  <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
+                    <Library className="w-5 h-5 text-primary" />
+                    <h3 className="font-bold text-lg">Complete E-Book Library</h3>
+                    <Badge className="bg-gradient-to-r from-primary to-accent text-primary-foreground">25% OFF</Badge>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Get all {staticBooks.length} e-books for <span className="line-through">${totalBooksPrice.toFixed(2)}</span>{" "}
+                    <span className="text-primary font-bold text-lg">${batchPrice.toFixed(2)}</span>
+                  </p>
+                </div>
+                <Button 
+                  size="lg" 
+                  onClick={handleBatchPurchase}
+                  className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground shadow-lg"
+                >
+                  <ShoppingCart className="w-4 h-4 mr-2" />
+                  Add All to Cart
+                </Button>
+              </div>
+            </div>
+          </ScrollReveal>
+
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-3">
-            {staticBooks.map((book, index) => <ScrollReveal key={book.id} delay={index * 50}>
+            {staticBooks.map((book, index) => (
+              <ScrollReveal key={book.id} delay={index * 50}>
                 <Card className="group p-3 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-border/50 hover:border-primary/30 relative overflow-hidden bg-card h-full flex flex-col">
                   {/* Tag Badge */}
-                  <Badge className="absolute top-2 right-2 text-[9px] px-1.5 py-0.5 bg-gradient-to-r from-primary to-accent text-white z-10">
+                  <Badge className="absolute top-2 right-2 text-[9px] px-1.5 py-0.5 bg-gradient-to-r from-primary to-accent text-primary-foreground z-10">
                     {book.tag}
                   </Badge>
 
-                  {/* Book Cover Image */}
-                  <div className="relative mb-3 rounded-lg overflow-hidden bg-secondary/30">
+                  {/* Book Cover Image - Clickable */}
+                  <button
+                    onClick={() => handleBookClick(book)}
+                    className="relative mb-3 rounded-lg overflow-hidden bg-secondary/30 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 hover:ring-2 hover:ring-primary/50"
+                    aria-label={`View ${book.name} details`}
+                  >
                     <div className="aspect-[3/4]">
-                      <img src={book.image} alt={book.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <img 
+                        src={book.image} 
+                        alt={book.name} 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                      />
                     </div>
-                  </div>
+                    {/* Hover overlay */}
+                    <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-300 flex items-center justify-center">
+                      <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-background/90 text-foreground text-xs px-3 py-1.5 rounded-full font-medium shadow-lg">
+                        Click to Enlarge
+                      </span>
+                    </div>
+                  </button>
                   
                   {/* Content */}
-                  <h3 className="text-xs md:text-sm font-bold mb-1 text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-tight">
+                  <h3 className="text-xs md:text-sm font-bold mb-0.5 text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-tight">
                     {book.name}
                   </h3>
+                  
+                  {/* Author */}
+                  <p className="text-[8px] text-muted-foreground mb-1 truncate">
+                    {book.author}
+                  </p>
+                  
                   <p className="text-[10px] text-muted-foreground mb-2 line-clamp-2 flex-1">
                     {book.description}
                   </p>
                   
                   {/* Rating */}
                   <div className="flex items-center gap-1 mb-2">
-                    {[...Array(5)].map((_, i) => <Star key={i} className="w-2.5 h-2.5 fill-amber-400 text-amber-400" />)}
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-2.5 h-2.5 fill-chart-4 text-chart-4" />
+                    ))}
                     <span className="text-[9px] text-muted-foreground ml-1">5.0</span>
                   </div>
 
@@ -690,28 +849,38 @@ function Resources() {
                       <span className="text-[8px] text-success font-medium">🎖️ Vets 10% OFF</span>
                     </div>
                     <div className="grid grid-cols-2 gap-1.5">
-                      <Button variant="outline" size="sm" onClick={() => handleAddToCart(book)} className="text-[10px] h-7 px-2">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => handleAddToCart(book)} 
+                        className="text-[10px] h-7 px-2"
+                      >
                         <ShoppingCart className="w-3 h-3 mr-1" />
                         Cart
                       </Button>
-                      <Button size="sm" onClick={() => handleBuyNow(book)} className="text-[10px] h-7 px-2">
+                      <Button 
+                        size="sm" 
+                        onClick={() => handleBuyNow(book)} 
+                        className="text-[10px] h-7 px-2"
+                      >
                         <Zap className="w-3 h-3 mr-1" />
                         Buy
                       </Button>
                     </div>
                   </div>
                 </Card>
-              </ScrollReveal>)}
+              </ScrollReveal>
+            ))}
           </div>
 
-          {/* Upsell Banner */}
+          {/* Bundle Info Banner */}
           <ScrollReveal>
             <div className="mt-8 p-4 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 rounded-xl border border-primary/20 text-center">
               <p className="text-sm font-medium mb-2">
-                📦 <strong>Bundle & Save!</strong> Purchase 3+ books and get 15% off your entire order.
+                📖 <strong>Click any book cover</strong> to view full details and enlarged cover image
               </p>
               <p className="text-xs text-muted-foreground">
-                All digital products are delivered instantly to your email. Files can be uploaded from admin dashboard.
+                All digital products are delivered instantly to your email. Written by InVision Network experts.
               </p>
             </div>
           </ScrollReveal>
@@ -728,7 +897,7 @@ function Resources() {
         <div className="container mx-auto px-4">
           <ScrollReveal>
             <div className="text-center mb-10">
-              <Badge className="mb-3 text-sm px-4 py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white">
+              <Badge className="mb-3 text-sm px-4 py-1.5 bg-gradient-to-r from-chart-4 to-chart-5 text-primary-foreground">
                 <FileText className="w-3.5 h-3.5 mr-1.5" />
                 Free Downloads
               </Badge>
@@ -835,7 +1004,7 @@ function Resources() {
                     </p>
                     
                     <div className="flex gap-1 mb-1 flex-wrap">
-                      <span className="text-[7px] px-1 py-0.5 bg-blue-500/10 text-blue-600 rounded-full">
+                      <span className="text-[7px] px-1 py-0.5 bg-primary/10 text-primary rounded-full">
                         🚚 Free Ship
                       </span>
                       <span className="text-[7px] px-1 py-0.5 bg-success/10 text-success rounded-full">
@@ -845,7 +1014,7 @@ function Resources() {
                     
                     {/* Rating */}
                     <div className="flex items-center gap-0.5 mb-1">
-                      {[...Array(5)].map((_, i) => <Star key={i} className="w-2 h-2 fill-amber-400 text-amber-400" />)}
+                      {[...Array(5)].map((_, i) => <Star key={i} className="w-2 h-2 fill-chart-4 text-chart-4" />)}
                       <span className="text-[7px] text-muted-foreground ml-1">5.0</span>
                     </div>
 
@@ -885,12 +1054,32 @@ function Resources() {
       <CartAbandonmentNotification />
       
       {/* Embedded Payment Modal */}
-      {embeddedPaymentConfig && <EmbeddedPaymentModal open={embeddedPaymentOpen} onOpenChange={setEmbeddedPaymentOpen} mode={embeddedPaymentConfig.mode} priceId={embeddedPaymentConfig.priceId} productName={embeddedPaymentConfig.productName} amount={embeddedPaymentConfig.amount} description={embeddedPaymentConfig.description} onSuccess={() => {
-      toast({
-        title: "Purchase Complete!",
-        description: "Check your email for your download link."
-      });
-    }} />}
+      {embeddedPaymentConfig && (
+        <EmbeddedPaymentModal 
+          open={embeddedPaymentOpen} 
+          onOpenChange={setEmbeddedPaymentOpen} 
+          mode={embeddedPaymentConfig.mode} 
+          priceId={embeddedPaymentConfig.priceId} 
+          productName={embeddedPaymentConfig.productName} 
+          amount={embeddedPaymentConfig.amount} 
+          description={embeddedPaymentConfig.description} 
+          onSuccess={() => {
+            toast({
+              title: "Purchase Complete!",
+              description: "Check your email for your download link."
+            });
+          }} 
+        />
+      )}
+      
+      {/* Book Cover Modal */}
+      <BookCoverModal
+        isOpen={bookModalOpen}
+        onClose={() => setBookModalOpen(false)}
+        book={selectedBook}
+        onAddToCart={handleAddToCart}
+        onBuyNow={handleBuyNow}
+      />
       
       <Footer />
     </PageTransition>;
