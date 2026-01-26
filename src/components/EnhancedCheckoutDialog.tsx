@@ -436,7 +436,7 @@ function CardPaymentWrapper({
           </div>
 
           <div className="p-3 bg-muted/50 rounded-lg text-sm flex items-center gap-2">
-            <CheckCircle className="w-4 h-4 text-green-500" />
+            <CheckCircle className="w-4 h-4 text-success" />
             <span>Paying as <strong>{formData.email}</strong></span>
           </div>
 
@@ -496,11 +496,11 @@ export function EnhancedCheckoutDialog({ open, onOpenChange }: EnhancedCheckoutD
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[95vh] overflow-y-auto p-0">
+      <DialogContent className="max-w-2xl p-0">
         {/* Header */}
-        <div className="bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 p-6 border-b">
+        <div className="bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 p-4 border-b">
           <DialogHeader>
-            <div className="flex items-center gap-3 mb-2">
+            <div className="flex items-center gap-3 mb-1">
               <div className="p-2 bg-primary/20 rounded-lg">
                 <Package className="w-5 h-5 text-primary" />
               </div>
@@ -508,19 +508,19 @@ export function EnhancedCheckoutDialog({ open, onOpenChange }: EnhancedCheckoutD
                 {items.length} {items.length === 1 ? 'item' : 'items'}
               </Badge>
             </div>
-            <DialogTitle className="text-2xl font-bold">Checkout</DialogTitle>
+            <DialogTitle className="text-xl font-bold">Checkout</DialogTitle>
           </DialogHeader>
 
           {/* Delivery Info */}
-          <div className="flex flex-wrap gap-3 mt-4 text-sm">
+          <div className="flex flex-wrap gap-2 mt-3 text-sm">
             {hasDigitalItems && (
-              <Badge variant="outline" className="gap-1">
+              <Badge variant="outline" className="gap-1 text-xs">
                 <Zap className="w-3 h-3" />
                 Instant digital delivery
               </Badge>
             )}
             {hasPhysicalItems && (
-              <Badge variant="outline" className="gap-1">
+              <Badge variant="outline" className="gap-1 text-xs">
                 <Package className="w-3 h-3" />
                 Ships in 2-3 days
               </Badge>
@@ -528,11 +528,11 @@ export function EnhancedCheckoutDialog({ open, onOpenChange }: EnhancedCheckoutD
           </div>
         </div>
 
-        <div className="p-6 grid md:grid-cols-5 gap-6">
+        <div className="p-4 grid md:grid-cols-5 gap-4">
           {/* Main Form */}
           <div className="md:col-span-3">
             <Tabs value={paymentMethod} onValueChange={(v) => setPaymentMethod(v as 'card' | 'qr')} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-6">
+              <TabsList className="grid w-full grid-cols-2 mb-4">
                 <TabsTrigger value="card" className="gap-2">
                   <CreditCard className="w-4 h-4" />
                   Card
@@ -559,20 +559,23 @@ export function EnhancedCheckoutDialog({ open, onOpenChange }: EnhancedCheckoutD
             </Tabs>
           </div>
 
-          {/* Order Summary Sidebar */}
+          {/* Order Summary Sidebar - Compact */}
           <div className="md:col-span-2">
-            <div className="sticky top-4 space-y-4">
-              <div className="p-4 bg-muted/50 rounded-xl border">
-                <h4 className="font-semibold mb-3">Order Summary</h4>
-                <div className="space-y-2 mb-4 max-h-40 overflow-y-auto">
-                  {items.map(item => (
-                    <div key={item.id} className="flex justify-between text-sm">
-                      <span className="text-muted-foreground truncate max-w-[150px]">
+            <div className="space-y-3">
+              <div className="p-3 bg-muted/50 rounded-xl border">
+                <h4 className="font-semibold text-sm mb-2">Order Summary</h4>
+                <div className="space-y-1 mb-3">
+                  {items.slice(0, 3).map(item => (
+                    <div key={item.id} className="flex justify-between text-xs">
+                      <span className="text-muted-foreground truncate max-w-[120px]">
                         {item.name} × {item.quantity}
                       </span>
                       <span className="font-medium">${(item.price * item.quantity).toFixed(2)}</span>
                     </div>
                   ))}
+                  {items.length > 3 && (
+                    <p className="text-xs text-muted-foreground">+{items.length - 3} more items</p>
+                  )}
                 </div>
 
                 <QuickVeteranToggle
@@ -581,14 +584,14 @@ export function EnhancedCheckoutDialog({ open, onOpenChange }: EnhancedCheckoutD
                   discountPercent={10}
                 />
 
-                <div className="border-t pt-3 mt-3">
+                <div className="border-t pt-2 mt-2">
                   {veteranDiscount > 0 && (
-                    <div className="flex justify-between text-sm text-green-600 mb-1">
+                    <div className="flex justify-between text-xs text-success mb-1">
                       <span>Veteran Discount</span>
                       <span>-${veteranDiscount.toFixed(2)}</span>
                     </div>
                   )}
-                  <div className="flex justify-between font-bold text-lg">
+                  <div className="flex justify-between font-bold">
                     <span>Total</span>
                     <span className="text-primary">${finalTotal.toFixed(2)}</span>
                   </div>

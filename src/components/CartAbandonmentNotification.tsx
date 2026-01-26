@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
@@ -7,63 +7,55 @@ import { Textarea } from "@/components/ui/textarea";
 import { ShoppingCart, X, MessageCircle, Send } from "lucide-react";
 import { toast } from "sonner";
 
+const SESSION_KEY = 'cart_notification_dismissed';
+
 export const CartAbandonmentNotification = () => {
   const { items, itemCount } = useCart();
   const [showNotification, setShowNotification] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
   const [feedback, setFeedback] = useState("");
-  const [dismissed, setDismissed] = useState(false);
-  const [lastItemCount, setLastItemCount] = useState(0);
+  const [hasShownOnce, setHasShownOnce] = useState(false);
+
+  // Check if already dismissed this session
+  const isDismissedThisSession = useCallback(() => {
+    return sessionStorage.getItem(SESSION_KEY) === 'true';
+  }, []);
 
   useEffect(() => {
-    // Trigger notification when user has items in cart and hasn't purchased
+    // Don't show if already dismissed or already shown once
+    if (isDismissedThisSession() || hasShownOnce) return;
+    
     let timer: NodeJS.Timeout;
     
-    if (itemCount > 0 && !dismissed) {
-      // If items were added, start timer
-      if (itemCount > lastItemCount) {
-        timer = setTimeout(() => {
+    if (itemCount > 0) {
+      // Show after 2 minutes of having items (longer delay, less intrusive)
+      timer = setTimeout(() => {
+        if (!isDismissedThisSession() && !hasShownOnce) {
           setShowNotification(true);
-        }, 60000); // Show after 1 minute of inactivity with items in cart
-      }
+          setHasShownOnce(true);
+        }
+      }, 120000); // 2 minutes
     }
-    
-    setLastItemCount(itemCount);
     
     return () => {
       if (timer) clearTimeout(timer);
     };
-  }, [itemCount, dismissed, lastItemCount]);
-
-  // Also trigger when user tries to leave the page
-  useEffect(() => {
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (itemCount > 0 && !dismissed) {
-        setShowNotification(true);
-        e.preventDefault();
-        e.returnValue = "";
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-  }, [itemCount, dismissed]);
+  }, [itemCount, isDismissedThisSession, hasShownOnce]);
 
   const handleSubmitFeedback = () => {
     if (feedback.trim()) {
-      toast.success("Thank you for your feedback! We'll work to improve.");
+      toast.success("Thank you for your feedback!");
     }
-    setShowFeedback(false);
-    setShowNotification(false);
-    setDismissed(true);
+    handleDismiss();
     setFeedback("");
   };
 
   const handleDismiss = () => {
     setShowNotification(false);
-    setDismissed(true);
+    sessionStorage.setItem(SESSION_KEY, 'true');
   };
 
+  // Don't show if no items or already dismissed
   if (!showNotification || itemCount === 0) return null;
 
   return (
@@ -89,15 +81,17 @@ export const CartAbandonmentNotification = () => {
                   <ShoppingCart className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="font-semibold text-sm">Items in your cart!</p>
+                  <p className="font-semibold text-sm">Your cart is ready!</p>
                   <p className="text-xs text-muted-foreground">
-                    You have {itemCount} item{itemCount > 1 ? "s" : ""} waiting
+                    {itemCount === 1 
+                      ? `1 item - $${items[0]?.price?.toFixed(2) || '0.00'}` 
+                      : `${itemCount} items waiting for you`}
                   </p>
                 </div>
               </div>
 
               <p className="text-sm text-muted-foreground mb-3">
-                Is there anything preventing you from completing your purchase?
+                Need any help completing your order?
               </p>
 
               <div className="flex gap-2">
