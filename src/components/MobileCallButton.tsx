@@ -13,7 +13,7 @@ const MobileCallButton = () => {
       aria-label="Call Now: (937) 301-8749"
     >
       <Phone className="w-6 h-6" />
-      <span>Call Now: (937) 301-8749</span>
+      <span className="text-white">Call Now: (937) 301-8749</span>
     </a>
   );
 };
