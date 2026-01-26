@@ -79,7 +79,7 @@ const BookCoverModal = ({ isOpen, onClose, book, onAddToCart, onBuyNow }: BookCo
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl p-0 overflow-hidden bg-gradient-to-br from-card via-card to-secondary/20 border-primary/20">
+      <DialogContent className="max-w-3xl p-0 overflow-hidden bg-gradient-to-br from-card via-card to-secondary/20 border-primary/20">
         <DialogTitle className="sr-only">{book.name} - Book Details</DialogTitle>
         
         {/* Close button */}
@@ -96,9 +96,9 @@ const BookCoverModal = ({ isOpen, onClose, book, onAddToCart, onBuyNow }: BookCo
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3 }}
-            className="relative bg-gradient-to-br from-secondary/50 to-secondary/30 p-6 md:p-8 flex items-center justify-center min-h-[400px] md:min-h-[500px]"
+            className="relative bg-gradient-to-br from-secondary/50 to-secondary/30 p-4 md:p-6 flex items-center justify-center"
           >
-            <div className="relative w-full max-w-[280px] md:max-w-[320px] shadow-2xl rounded-lg overflow-hidden transform hover:scale-[1.02] transition-transform duration-300">
+            <div className="relative w-full max-w-[220px] md:max-w-[260px] shadow-2xl rounded-lg overflow-hidden transform hover:scale-[1.02] transition-transform duration-300">
               <div className="aspect-[3/4]">
                 <img 
                   src={book.image} 
@@ -108,12 +108,12 @@ const BookCoverModal = ({ isOpen, onClose, book, onAddToCart, onBuyNow }: BookCo
               </div>
               
               {/* eBook Badge on Cover */}
-              <Badge className="absolute top-3 left-3 text-xs px-2 py-1 bg-primary/90 text-primary-foreground shadow-lg">
+              <Badge className="absolute top-2 left-2 text-xs px-2 py-0.5 bg-primary/90 text-primary-foreground shadow-lg">
                 📘 eBook
               </Badge>
               
               {/* Tag Badge on Cover */}
-              <Badge className="absolute top-3 right-3 text-xs px-2 py-1 bg-gradient-to-r from-primary to-accent text-white shadow-lg">
+              <Badge className="absolute top-2 right-2 text-xs px-2 py-0.5 bg-gradient-to-r from-primary to-accent text-white shadow-lg">
                 {book.tag}
               </Badge>
             </div>
@@ -124,24 +124,22 @@ const BookCoverModal = ({ isOpen, onClose, book, onAddToCart, onBuyNow }: BookCo
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
-            className="p-6 md:p-8 flex flex-col justify-center overflow-y-auto max-h-[600px]"
+            className="p-4 md:p-6 flex flex-col justify-center"
           >
             {/* Title */}
-            <h2 className="text-2xl md:text-3xl font-bold mb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            <h2 className="text-xl md:text-2xl font-bold mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent leading-tight">
               {book.name}
             </h2>
 
             {/* Author */}
-            <div className="flex items-center gap-2 mb-4 text-muted-foreground">
-              <Building2 className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium">InVision Network</span>
-              <span className="text-xs">•</span>
-              <span className="text-xs">Department of Literature</span>
+            <div className="flex items-center gap-1.5 mb-3 text-muted-foreground">
+              <Building2 className="w-3.5 h-3.5 text-primary" />
+              <span className="text-xs font-medium">InVision Network • Department of Literature</span>
             </div>
 
-            {/* Interactive Rating */}
-            <div className="mb-4">
-              <div className="flex items-center gap-2 mb-1">
+            {/* Interactive Rating - Compact */}
+            <div className="flex items-center gap-2 mb-3">
+              <div className="flex items-center gap-1">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <button
                     key={star}
@@ -152,7 +150,7 @@ const BookCoverModal = ({ isOpen, onClose, book, onAddToCart, onBuyNow }: BookCo
                     aria-label={`Rate ${star} stars`}
                   >
                     <Star 
-                      className={`w-5 h-5 transition-colors ${
+                      className={`w-4 h-4 transition-colors ${
                         star <= (hoveredStar || userRating || 5) 
                           ? "fill-chart-4 text-chart-4" 
                           : "text-muted-foreground/30"
@@ -160,81 +158,70 @@ const BookCoverModal = ({ isOpen, onClose, book, onAddToCart, onBuyNow }: BookCo
                     />
                   </button>
                 ))}
-                <span className="text-sm text-muted-foreground ml-2">
-                  {avgRating} ({ratingCount} reviews)
-                </span>
               </div>
-              {hasRated && (
-                <p className="text-xs text-success">Thank you for your rating!</p>
-              )}
-              <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
-                <Users className="w-3 h-3" />
-                <span>{viewCount} people viewed this book</span>
-              </div>
+              <span className="text-xs text-muted-foreground">
+                {avgRating} ({ratingCount} reviews) • {viewCount} views
+              </span>
+              {hasRated && <span className="text-xs text-success">✓ Rated</span>}
             </div>
 
-            {/* Extended Description */}
-            <div className="mb-6">
-              <h3 className="text-sm font-semibold mb-2 text-foreground">About This Book</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {getExtendedDescription()}
-              </p>
+            {/* Short Description */}
+            <p className="text-sm text-muted-foreground leading-relaxed mb-3 line-clamp-3">
+              {getExtendedDescription()}
+            </p>
+
+            {/* Features - Inline */}
+            <div className="flex flex-wrap gap-2 mb-3">
+              <Badge variant="secondary" className="text-xs">
+                <BookOpen className="w-3 h-3 mr-1" />
+                Instant Download
+              </Badge>
+              <Badge variant="secondary" className="text-xs">
+                <BookOpen className="w-3 h-3 mr-1" />
+                Print-Ready
+              </Badge>
+              <Badge variant="secondary" className="text-xs">
+                <BookOpen className="w-3 h-3 mr-1" />
+                Lifetime Access
+              </Badge>
             </div>
 
-            {/* Features */}
-            <div className="space-y-2 mb-6">
-              <div className="flex items-center gap-2 text-sm">
-                <BookOpen className="w-4 h-4 text-primary" />
-                <span>Instant PDF Download</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <BookOpen className="w-4 h-4 text-primary" />
-                <span>Print-Ready Format</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <BookOpen className="w-4 h-4 text-primary" />
-                <span>Lifetime Access</span>
-              </div>
-            </div>
-
-            {/* Price */}
-            <div className="flex items-center gap-3 mb-6">
-              <span className="text-3xl font-bold text-primary">${book.price}</span>
-              <Badge variant="outline" className="text-success border-success/30 bg-success/10">
-                🎖️ Veterans Save 10%
+            {/* Price & Discount */}
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-2xl font-bold text-primary">${book.price}</span>
+              <Badge variant="outline" className="text-xs text-success border-success/30 bg-success/10">
+                🎖️ Veterans -10%
               </Badge>
             </div>
 
             {/* Action Buttons */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2">
               <Button 
                 variant="outline" 
-                size="lg"
                 onClick={() => {
                   onAddToCart(book);
                   onClose();
                 }}
-                className="h-12"
+                className="h-10"
               >
-                <ShoppingCart className="w-4 h-4 mr-2" />
+                <ShoppingCart className="w-4 h-4 mr-1.5" />
                 Add to Cart
               </Button>
               <Button 
-                size="lg"
                 onClick={() => {
                   onBuyNow(book);
                   onClose();
                 }}
-                className="h-12 bg-gradient-to-r from-primary to-accent hover:opacity-90"
+                className="h-10 bg-gradient-to-r from-primary to-accent hover:opacity-90"
               >
-                <Zap className="w-4 h-4 mr-2" />
+                <Zap className="w-4 h-4 mr-1.5" />
                 Buy Now
               </Button>
             </div>
 
             {/* Trust Badge */}
-            <p className="text-xs text-muted-foreground text-center mt-4">
-              🔒 Secure checkout powered by Stripe • 30-day money-back guarantee
+            <p className="text-xs text-muted-foreground text-center mt-3">
+              🔒 Secure checkout • 30-day money-back guarantee
             </p>
           </motion.div>
         </div>
