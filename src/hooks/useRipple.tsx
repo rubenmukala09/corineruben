@@ -9,28 +9,34 @@ export const useRipple = () => {
 
     const createRipple = (event: MouseEvent) => {
       const button = event.currentTarget as HTMLElement;
-      const ripple = document.createElement('span');
-      ripple.classList.add('ripple');
+      const clientX = event.clientX;
+      const clientY = event.clientY;
+      
+      // Use rAF to avoid forced reflow
+      requestAnimationFrame(() => {
+        const ripple = document.createElement('span');
+        ripple.classList.add('ripple');
 
-      // Calculate position relative to button
-      const rect = button.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
+        // Calculate position relative to button
+        const rect = button.getBoundingClientRect();
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
 
-      // Calculate size (diameter should be the larger dimension)
-      const size = Math.max(rect.width, rect.height);
+        // Calculate size (diameter should be the larger dimension)
+        const size = Math.max(rect.width, rect.height);
 
-      ripple.style.width = `${size}px`;
-      ripple.style.height = `${size}px`;
-      ripple.style.left = `${x - size / 2}px`;
-      ripple.style.top = `${y - size / 2}px`;
+        ripple.style.width = `${size}px`;
+        ripple.style.height = `${size}px`;
+        ripple.style.left = `${x - size / 2}px`;
+        ripple.style.top = `${y - size / 2}px`;
 
-      button.appendChild(ripple);
+        button.appendChild(ripple);
 
-      // Remove ripple after animation
-      setTimeout(() => {
-        ripple.remove();
-      }, 600);
+        // Remove ripple after animation
+        setTimeout(() => {
+          ripple.remove();
+        }, 600);
+      });
     };
 
     element.addEventListener('click', createRipple as EventListener);
