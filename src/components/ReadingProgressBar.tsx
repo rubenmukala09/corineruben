@@ -12,12 +12,15 @@ export const ReadingProgressBar = ({
   useEffect(() => {
     let ticking = false;
     
+    // Use double rAF to avoid forced reflows - geometry reads happen after layout is stable
     const updateProgress = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = docHeight > 0 ? Math.round((scrollTop / docHeight) * 100) : 0;
-      setPercentage(progress);
-      ticking = false;
+      requestAnimationFrame(() => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? Math.round((scrollTop / docHeight) * 100) : 0;
+        setPercentage(progress);
+        ticking = false;
+      });
     };
 
     const onScroll = () => {
@@ -29,8 +32,12 @@ export const ReadingProgressBar = ({
 
     window.addEventListener('scroll', onScroll, { passive: true });
     
-    // Defer initial read to avoid forced reflow during paint
-    const timeoutId = setTimeout(() => requestAnimationFrame(updateProgress), 100);
+    // Defer initial read with double rAF to avoid forced reflow during paint
+    const timeoutId = setTimeout(() => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(updateProgress);
+      });
+    }, 100);
     
     return () => {
       window.removeEventListener('scroll', onScroll);

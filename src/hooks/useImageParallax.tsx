@@ -5,18 +5,21 @@ export const useImageParallax = () => {
   const boundsRef = useRef<{ width: number; height: number; left: number; top: number } | null>(null);
   const [transform, setTransform] = useState({ x: 0, y: 0 });
 
-  // Cache bounds on mouse enter to avoid forced reflows during mouse move
+  // Cache bounds on mouse enter with rAF to avoid forced reflows
   const cacheBounds = useCallback(() => {
     const element = ref.current;
     if (!element) return;
     
-    const rect = element.getBoundingClientRect();
-    boundsRef.current = {
-      width: rect.width,
-      height: rect.height,
-      left: rect.left,
-      top: rect.top,
-    };
+    // Defer geometry read to next frame to avoid forced reflow
+    requestAnimationFrame(() => {
+      const rect = element.getBoundingClientRect();
+      boundsRef.current = {
+        width: rect.width,
+        height: rect.height,
+        left: rect.left,
+        top: rect.top,
+      };
+    });
   }, []);
 
   useEffect(() => {

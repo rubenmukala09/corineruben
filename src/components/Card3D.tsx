@@ -15,18 +15,23 @@ const Card3D = ({ children, className = "", intensity = 10 }: Card3DProps) => {
   const [rotateY, setRotateY] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
 
-  // Cache bounds on mouse enter to avoid forced reflows during mouse move
+  // Cache bounds on mouse enter with rAF to avoid forced reflows
   const handleMouseEnter = useCallback(() => {
     if (!ref.current) return;
     
-    const rect = ref.current.getBoundingClientRect();
-    boundsRef.current = {
-      width: rect.width,
-      height: rect.height,
-      left: rect.left,
-      top: rect.top,
-    };
+    const element = ref.current;
     setIsHovering(true);
+    
+    // Defer geometry read to next frame to avoid forced reflow
+    requestAnimationFrame(() => {
+      const rect = element.getBoundingClientRect();
+      boundsRef.current = {
+        width: rect.width,
+        height: rect.height,
+        left: rect.left,
+        top: rect.top,
+      };
+    });
   }, []);
 
   // Use cached bounds - no layout reads during mouse move

@@ -21,14 +21,18 @@ export const useParallax = ({ speed = 0.5, offset = 0 }: UseParallaxOptions = {}
   useEffect(() => {
     let ticking = false;
     
-    // Cache bounds on mount/resize - only time we read from DOM
+    // Cache bounds on mount/resize with rAF - avoids forced reflow
     const cacheBounds = () => {
       if (!ref.current) return;
-      const rect = ref.current.getBoundingClientRect();
-      boundsRef.current = {
-        top: rect.top + window.scrollY,
-        height: rect.height
-      };
+      const element = ref.current;
+      // Defer geometry read to next frame to avoid forced reflow
+      requestAnimationFrame(() => {
+        const rect = element.getBoundingClientRect();
+        boundsRef.current = {
+          top: rect.top + window.scrollY,
+          height: rect.height
+        };
+      });
     };
     
     // Use cached bounds + scrollY to calculate parallax without reflow
