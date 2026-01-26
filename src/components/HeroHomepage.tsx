@@ -80,11 +80,11 @@ export const HeroHomepage = () => {
       }} />
       </div>
       
-      <div className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10 hero-instant" style={{ contain: 'layout style paint', contentVisibility: 'auto', minHeight: 'calc(100vh - 50px)' }}>
-        <div className="flex flex-col lg:grid lg:grid-cols-5 gap-8 lg:gap-20 xl:gap-28 items-center min-h-[calc(100vh-50px)] py-16 sm:py-20 lg:py-0" style={{ contain: 'layout style' }}>
+      <div className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10 hero-instant" style={{ contain: 'strict', contentVisibility: 'auto', minHeight: 'calc(100vh - 56px)', height: 'calc(100vh - 56px)' }}>
+        <div className="flex flex-col lg:grid lg:grid-cols-5 gap-8 lg:gap-20 xl:gap-28 items-center min-h-[calc(100vh-56px)] py-16 sm:py-20 lg:py-0" style={{ contain: 'layout style paint' }}>
           
           {/* Left Content - Instant render, no animation delay - LCP element */}
-          <div className="lg:col-span-3 order-2 lg:order-1 w-full min-h-[350px] sm:min-h-[400px]" style={{ contain: 'layout style' }}>
+          <div className="lg:col-span-3 order-2 lg:order-1 w-full min-h-[400px] sm:min-h-[450px] lg:min-h-[500px]" style={{ contain: 'layout style paint' }}>
             {/* Premium Badge */}
             <div className="inline-flex items-center gap-2 sm:gap-3 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 mb-6 sm:mb-10 shadow-sm">
               <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-gradient-to-r from-primary to-accent shadow-sm" />
