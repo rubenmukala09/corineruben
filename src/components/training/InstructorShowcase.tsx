@@ -1,11 +1,18 @@
 import { useState } from "react";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Award, BookOpen, Users, GraduationCap, X, Star, Briefcase } from "lucide-react";
 import { motion } from "framer-motion";
+
+// Import instructor images
+import instructorMichael from "@/assets/instructor-michael.jpg";
+import instructorSarah from "@/assets/instructor-sarah.jpg";
+import instructorJames from "@/assets/instructor-james.jpg";
+import instructorPriya from "@/assets/instructor-priya.jpg";
+import instructorAlex from "@/assets/instructor-alex.jpg";
 
 interface Instructor {
   id: string;
@@ -26,8 +33,8 @@ const instructors: Instructor[] = [
     name: "Dr. Michael Thompson",
     title: "Senior Cybersecurity Instructor",
     specialty: "AI & Deepfake Detection",
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=face",
-    shortBio: "Former FBI cyber analyst with 20+ years protecting families from digital threats.",
+    image: instructorMichael,
+    shortBio: "Former FBI cyber analyst with 25+ years protecting families from digital threats.",
     fullBio: "Dr. Michael Thompson spent over two decades with the FBI's Cyber Division, specializing in fraud prevention and digital forensics. After retiring, he dedicated his career to educating families about emerging cyber threats. His approachable teaching style makes complex security concepts easy to understand for people of all ages. He's passionate about protecting seniors from scams and has developed several of our most popular training programs.",
     achievements: [
       "FBI Distinguished Service Medal",
@@ -40,63 +47,63 @@ const instructors: Instructor[] = [
   },
   {
     id: "instructor-2",
-    name: "Sarah Chen",
+    name: "Margaret Stevens",
     title: "Family Safety Specialist",
     specialty: "Senior & Family Protection",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&crop=face",
+    image: instructorSarah,
     shortBio: "Dedicated to making cybersecurity accessible for seniors and multi-generational families.",
-    fullBio: "Sarah Chen brings warmth and patience to every classroom. With a background in social work and technology education, she understands the unique challenges that seniors face in the digital world. Her programs are designed with empathy, ensuring everyone feels comfortable asking questions and learning at their own pace. Sarah has been instrumental in developing our senior-focused curriculum and family workshop series.",
+    fullBio: "Margaret Stevens brings warmth and patience to every classroom. With a background in social work and technology education, she understands the unique challenges that seniors face in the digital world. Her programs are designed with empathy, ensuring everyone feels comfortable asking questions and learning at their own pace. Margaret has been instrumental in developing our senior-focused curriculum and family workshop series.",
     achievements: [
       "AARP Cybersecurity Educator of the Year",
       "Masters in Gerontology Technology",
       "Created 'Scam-Proof Seniors' program",
       "Featured in NBC News safety segment"
     ],
-    yearsExperience: 15,
+    yearsExperience: 20,
     studentsHelped: "30,000+"
   },
   {
     id: "instructor-3",
-    name: "James Rodriguez",
+    name: "Robert Mitchell",
     title: "Corporate Security Trainer",
     specialty: "Business & Enterprise Security",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
+    image: instructorJames,
     shortBio: "Fortune 500 security consultant helping businesses protect their teams and data.",
-    fullBio: "James Rodriguez has consulted for some of the world's largest corporations on cybersecurity training and awareness programs. His engaging presentation style and real-world case studies make security training memorable and actionable. He specializes in helping organizations build a culture of security awareness, from the C-suite to front-line employees. His business protection workshops are trusted by companies nationwide.",
+    fullBio: "Robert Mitchell has consulted for some of the world's largest corporations on cybersecurity training and awareness programs. His engaging presentation style and real-world case studies make security training memorable and actionable. He specializes in helping organizations build a culture of security awareness, from the C-suite to front-line employees. His business protection workshops are trusted by companies nationwide.",
     achievements: [
       "CISSP & CISM Certified",
       "Consulted for Fortune 500 companies",
       "Keynote speaker at DEF CON",
       "MBA, Stanford University"
     ],
-    yearsExperience: 18,
+    yearsExperience: 22,
     studentsHelped: "25,000+"
   },
   {
     id: "instructor-4",
-    name: "Dr. Priya Patel",
+    name: "Dr. Catherine Brooks",
     title: "Digital Wellness Expert",
     specialty: "Privacy & Social Media Safety",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop&crop=face",
+    image: instructorPriya,
     shortBio: "Helping families navigate social media, privacy settings, and online reputation safely.",
-    fullBio: "Dr. Priya Patel combines her psychology background with deep technical knowledge to help families understand the emotional and practical aspects of online safety. Her research on social engineering and manipulation tactics has been published in leading journals. Priya is especially passionate about helping parents protect their children online while maintaining healthy digital relationships.",
+    fullBio: "Dr. Catherine Brooks combines her psychology background with deep technical knowledge to help families understand the emotional and practical aspects of online safety. Her research on social engineering and manipulation tactics has been published in leading journals. Catherine is especially passionate about helping parents protect their children online while maintaining healthy digital relationships.",
     achievements: [
       "Published researcher in Cyber Psychology",
       "TEDx Speaker on Digital Wellness",
       "Author of 'Connected & Protected'",
       "PhD in Behavioral Science"
     ],
-    yearsExperience: 12,
+    yearsExperience: 15,
     studentsHelped: "20,000+"
   },
   {
     id: "instructor-5",
-    name: "Alex Rivera",
+    name: "David Anderson",
     title: "Emerging Threats Analyst",
     specialty: "AI Scams & Modern Threats",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=400&fit=crop&crop=face",
-    shortBio: "Young expert on cutting-edge AI scams, voice cloning, and next-generation threats.",
-    fullBio: "At 35, Alex Rivera represents the next generation of cybersecurity educators. With hands-on experience tracking emerging threats and a finger on the pulse of new scam tactics, Alex brings fresh perspectives to our training programs. Having grown up in the digital age, he uniquely understands both the opportunities and risks of modern technology. His workshops on AI-powered scams, voice cloning detection, and cryptocurrency fraud are among our most requested sessions.",
+    image: instructorAlex,
+    shortBio: "Expert on cutting-edge AI scams, voice cloning, and next-generation threats.",
+    fullBio: "At 35, David Anderson represents the next generation of cybersecurity educators. With hands-on experience tracking emerging threats and a finger on the pulse of new scam tactics, David brings fresh perspectives to our training programs. Having grown up in the digital age, he uniquely understands both the opportunities and risks of modern technology. His workshops on AI-powered scams, voice cloning detection, and cryptocurrency fraud are among our most requested sessions.",
     achievements: [
       "Certified Ethical Hacker (CEH)",
       "Contributor to WIRED Magazine",
@@ -187,6 +194,9 @@ export const InstructorShowcase = () => {
       <Dialog open={!!selectedInstructor} onOpenChange={() => setSelectedInstructor(null)}>
         <DialogContent className="max-w-lg p-0 overflow-hidden bg-card">
           <DialogTitle className="sr-only">{selectedInstructor?.name} - Instructor Profile</DialogTitle>
+          <DialogDescription className="sr-only">
+            View the biography, achievements, and experience of {selectedInstructor?.name}
+          </DialogDescription>
           
           {/* Close button */}
           <button

@@ -12,6 +12,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -307,6 +308,9 @@ export function TrainingPaymentModal({
             <DialogTitle className="text-xl font-bold">
               {serviceName}
             </DialogTitle>
+            <DialogDescription className="sr-only">
+              Complete the payment for {serviceName} training
+            </DialogDescription>
             {duration && (
               <p className="text-sm text-muted-foreground">{duration}</p>
             )}
