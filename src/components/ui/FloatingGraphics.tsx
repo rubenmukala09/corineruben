@@ -258,20 +258,23 @@ export const FloatingGraphics = ({ variant = "orbs", className = "", intensity =
   }
 
   if (variant === "circuits") {
+    // Use CSS animations instead of framer-motion pathLength to avoid SVG d attribute errors
     return (
       <div className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}>
-        {/* Circuit lines */}
+        {/* Circuit lines - using CSS stroke-dashoffset animation */}
         <svg className={`absolute inset-0 w-full h-full ${baseOpacity}`}>
-          {/* Horizontal circuit line */}
-          <motion.path
+          {/* Horizontal circuit line with CSS animation */}
+          <path
             d="M0 100 L100 100 L120 80 L200 80 L220 100 L350 100"
             stroke="hsl(var(--primary))"
             strokeWidth="1.5"
             fill="none"
             opacity="0.3"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+            className="animate-circuit-draw"
+            style={{
+              strokeDasharray: 500,
+              strokeDashoffset: 500,
+            }}
           />
           {/* Nodes */}
           <circle cx="100" cy="100" r="4" fill="hsl(var(--primary))" opacity="0.4" />

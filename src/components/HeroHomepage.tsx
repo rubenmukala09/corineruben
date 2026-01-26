@@ -25,6 +25,7 @@ export const HeroHomepage = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const selectedVideo = useMemo(() => heroVideos[Math.floor(Math.random() * heroVideos.length)], []);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
+  const [videoFailed, setVideoFailed] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -38,18 +39,20 @@ export const HeroHomepage = () => {
   }}>
       {/* Video Background - lazy preload for faster initial paint */}
       <div className="absolute inset-0">
-        <video 
-          ref={videoRef} 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-          preload="none"
-          className="absolute inset-0 w-full h-full object-cover"
-          onError={() => {/* Silently handle video load failures */}}
-        >
-          <source src={selectedVideo} type="video/mp4" />
-        </video>
+        {!videoFailed && (
+          <video 
+            ref={videoRef} 
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            preload="none"
+            className="absolute inset-0 w-full h-full object-cover"
+            onError={() => setVideoFailed(true)}
+          >
+            <source src={selectedVideo} type="video/mp4" />
+          </video>
+        )}
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/40" />
       </div>

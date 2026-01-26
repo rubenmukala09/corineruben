@@ -162,6 +162,13 @@ html {
   50% { transform: translateX(2%) scaleY(0.95); }
 }
 
+/* Circuit drawing animation for FloatingGraphics */
+@keyframes circuit-draw {
+  0% { stroke-dashoffset: 500; }
+  50% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 500; }
+}
+
 /* ===== UTILITY CLASSES ===== */
 
 .animate-fade-in { animation: fade-in 0.2s ease-out forwards; }
@@ -169,6 +176,7 @@ html {
 .accordion-up { animation: accordion-collapse 0.15s ease-out; }
 .animate-wave-slow { animation: wave-slow 10s ease-in-out infinite; }
 .animate-wave-medium { animation: wave-medium 8s ease-in-out infinite 1s; }
+.animate-circuit-draw { animation: circuit-draw 3s linear infinite; }
 
 .skeleton {
   background: linear-gradient(90deg, hsl(var(--muted)) 0%, hsl(var(--muted-foreground) / 0.15) 50%, hsl(var(--muted)) 100%);
