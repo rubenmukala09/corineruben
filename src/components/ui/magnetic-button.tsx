@@ -23,16 +23,19 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
   const boundsRef = useRef<{ centerX: number; centerY: number } | null>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  // Cache bounds on mouse enter to avoid forced reflows during mouse move
+  // Cache bounds on mouse enter with rAF to avoid forced reflows
   const handleMouseEnter = useCallback(() => {
     const button = buttonRef.current;
     if (!button || disabled) return;
     
-    const rect = button.getBoundingClientRect();
-    boundsRef.current = {
-      centerX: rect.left + rect.width / 2,
-      centerY: rect.top + rect.height / 2,
-    };
+    // Defer geometry read to next frame to avoid forced reflow
+    requestAnimationFrame(() => {
+      const rect = button.getBoundingClientRect();
+      boundsRef.current = {
+        centerX: rect.left + rect.width / 2,
+        centerY: rect.top + rect.height / 2,
+      };
+    });
   }, [disabled]);
 
   // Use cached bounds - no layout reads during mouse move
@@ -85,16 +88,19 @@ export const MagneticWrapper: React.FC<MagneticWrapperProps> = ({
   const boundsRef = useRef<{ centerX: number; centerY: number } | null>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  // Cache bounds on mouse enter to avoid forced reflows during mouse move
+  // Cache bounds on mouse enter with rAF to avoid forced reflows
   const handleMouseEnter = useCallback(() => {
     const wrapper = wrapperRef.current;
     if (!wrapper) return;
     
-    const rect = wrapper.getBoundingClientRect();
-    boundsRef.current = {
-      centerX: rect.left + rect.width / 2,
-      centerY: rect.top + rect.height / 2,
-    };
+    // Defer geometry read to next frame to avoid forced reflow
+    requestAnimationFrame(() => {
+      const rect = wrapper.getBoundingClientRect();
+      boundsRef.current = {
+        centerX: rect.left + rect.width / 2,
+        centerY: rect.top + rect.height / 2,
+      };
+    });
   }, []);
 
   // Use cached bounds - no layout reads during mouse move
