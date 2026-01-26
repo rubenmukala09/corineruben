@@ -26,6 +26,13 @@
 /assets/*.svg
   Cache-Control: public, max-age=31536000, immutable
 
+# Video files in assets
+/assets/*.mp4
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*.webm
+  Cache-Control: public, max-age=31536000, immutable
+
 # Font files
 /assets/*.woff
   Cache-Control: public, max-age=31536000, immutable
