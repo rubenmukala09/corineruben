@@ -4,7 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
     
-    <!-- CRITICAL: CSS async loader MUST be first to intercept Vite-injected CSS before render-blocking -->
+    <!-- Preconnect hints FIRST for earliest possible connection establishment -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://avoafweoebstkgjnbadv.supabase.co" crossorigin>
+    <link rel="dns-prefetch" href="https://js.stripe.com">
+    <link rel="dns-prefetch" href="https://m.stripe.network">
+    
+    <!-- CSS async loader to prevent render-blocking -->
     <script>
       (function(){
         function makeAsync(link){
@@ -24,11 +31,6 @@
         document.querySelectorAll('link[rel="stylesheet"]').forEach(makeAsync);
       })();
     </script>
-    
-    <!-- Preconnect hints for early connection establishment -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://avoafweoebstkgjnbadv.supabase.co" crossorigin>
     
     <!-- Load Google Fonts via stylesheet instead of preload to avoid 404s from outdated URLs -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -56,10 +58,6 @@
       @media(min-width:1024px){h1{font-size:3.75rem}}
       .lcp-text{font-size:clamp(1rem,2vw,1.5rem);color:#64748b;line-height:1.6;margin:0 0 2rem}
     </style>
-    
-    <!-- DNS prefetch for other origins -->
-    <link rel="dns-prefetch" href="https://js.stripe.com">
-    <link rel="dns-prefetch" href="https://m.stripe.network">
     
     <!-- Google Analytics - deferred to reduce main-thread impact -->
     <script>
