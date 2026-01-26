@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -209,6 +209,9 @@ export const BookingModal = ({
             <DialogTitle className="text-2xl font-bold">
               Book: {serviceName}
             </DialogTitle>
+            <DialogDescription className="sr-only">
+              Complete the booking form for {serviceName} service
+            </DialogDescription>
             {serviceTier && (
               <Badge className="w-fit mt-1">{serviceTier}</Badge>
             )}
