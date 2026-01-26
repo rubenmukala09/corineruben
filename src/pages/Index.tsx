@@ -27,8 +27,9 @@ const AccentDecoration = lazy(() => import("@/components/ui/AccentDecoration").t
 
 // Loading placeholders with reserved height to prevent CLS
 // Heights match actual section heights to prevent layout shifts
-const SectionLoader = () => <div className="min-h-[600px]" aria-hidden="true" />;
-const LargeSectionLoader = () => <div className="min-h-[900px]" aria-hidden="true" />;
+const SectionLoader = () => <div className="min-h-[600px]" aria-hidden="true" style={{ contain: 'layout' }} />;
+// WorkshopsPromo section is ~4900px on desktop - reserve space to prevent massive CLS
+const LargeSectionLoader = () => <div className="min-h-[4000px] lg:min-h-[4800px]" aria-hidden="true" style={{ contain: 'layout' }} />;
 const Index = () => {
   const [scamShieldOpen, setScamShieldOpen] = useState(false);
   
@@ -49,7 +50,7 @@ const Index = () => {
           
           {/* Workshops Promo - Learn & Train Introduction */}
           <Suspense fallback={<LargeSectionLoader />}>
-            <section id="workshops" className="relative">
+            <section id="workshops" className="relative" style={{ contain: 'layout style', contentVisibility: 'auto', containIntrinsicSize: 'auto 4800px' }}>
               <FloatingGraphics variant="shields" intensity="light" />
               <AccentDecoration variant="shield3d" position="top-right" className="opacity-40" />
               <WorkshopsPromo />
