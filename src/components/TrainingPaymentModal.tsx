@@ -1,11 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Elements,
-  PaymentElement,
-  useStripe,
-  useElements,
-} from "@stripe/react-stripe-js";
+// Stripe Elements are lazy-loaded to prevent 155KB SDK from loading on initial page visit
 import {
   Dialog,
   DialogContent,
@@ -44,6 +39,9 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { US_STATES, formatPhoneNumber } from "@/utils/formValidation";
 
+// Lazy load Stripe payment form to prevent SDK from loading until payment step
+const LazyTrainingPaymentForm = lazy(() => import("@/components/payment/LazyTrainingPaymentForm"));
+
 interface TrainingPaymentModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -54,134 +52,6 @@ interface TrainingPaymentModalProps {
   features?: string[];
   duration?: string;
   onSuccess?: () => void;
-}
-
-function PaymentFormContent({
-  clientSecret,
-  onSuccess,
-  onClose,
-  customerEmail,
-  customerName,
-  serviceName,
-  serviceTier,
-  preferredDate,
-  isVeteran,
-  finalAmount,
-}: {
-  clientSecret: string;
-  onSuccess?: () => void;
-  onClose: () => void;
-  customerEmail: string;
-  customerName: string;
-  serviceName: string;
-  serviceTier?: string;
-  preferredDate?: string;
-  isVeteran: boolean;
-  finalAmount: number;
-}) {
-  const stripe = useStripe();
-  const elements = useElements();
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [paymentReady, setPaymentReady] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleSubmit = async () => {
-    if (!stripe || !elements) return;
-
-    setIsProcessing(true);
-    setError(null);
-
-    try {
-      const { error: submitError } = await elements.submit();
-      if (submitError) {
-        setError(submitError.message || "Payment submission failed");
-        setIsProcessing(false);
-        return;
-      }
-
-      const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          return_url: `${window.location.origin}/training?payment=success`,
-          receipt_email: customerEmail,
-        },
-        redirect: "if_required",
-      });
-
-      if (confirmError) {
-        setError(confirmError.message || "Payment confirmation failed");
-        setIsProcessing(false);
-        return;
-      }
-
-      if (paymentIntent?.status === "succeeded") {
-        // Call complete-payment to create booking and send email
-        await supabase.functions.invoke('complete-payment', {
-          body: {
-            paymentType: 'training',
-            paymentIntentId: paymentIntent.id,
-            customerEmail,
-            customerName,
-            amount: finalAmount * 100, // Convert to cents
-            productName: serviceName,
-            serviceTier,
-            preferredDate,
-            isVeteran,
-          }
-        });
-
-        toast.success("Payment Confirmed! Check your email for details.");
-        onSuccess?.();
-        onClose();
-      }
-    } catch (err) {
-      console.error("Payment error:", err);
-      setError("An unexpected error occurred. Please try again.");
-    } finally {
-      setIsProcessing(false);
-    }
-  };
-
-  return (
-    <div className="space-y-4">
-      <PaymentElement 
-        onReady={() => setPaymentReady(true)}
-        options={{
-          layout: "tabs",
-        }}
-      />
-      
-      {error && (
-        <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm">
-          {error}
-        </div>
-      )}
-
-      <Button
-        onClick={handleSubmit}
-        disabled={!stripe || !paymentReady || isProcessing}
-        className="w-full h-12 text-base font-semibold"
-        size="lg"
-      >
-        {isProcessing ? (
-          <>
-            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-            Processing...
-          </>
-        ) : (
-          <>
-            <Lock className="mr-2 h-5 w-5" />
-            Pay ${finalAmount.toFixed(2)} Now
-          </>
-        )}
-      </Button>
-
-      <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
-        <Shield className="w-4 h-4" />
-        <span>Secure payment powered by Stripe</span>
-      </div>
-    </div>
-  );
 }
 
 export function TrainingPaymentModal({
@@ -553,19 +423,13 @@ export function TrainingPaymentModal({
                   </TabsList>
 
                   <TabsContent value="card">
-                    <Elements
-                      stripe={stripePromise}
-                      options={{
-                        clientSecret,
-                        appearance: {
-                          theme: "stripe",
-                          variables: {
-                            colorPrimary: "#6D28D9",
-                          },
-                        },
-                      }}
-                    >
-                      <PaymentFormContent
+                    <Suspense fallback={
+                      <div className="flex items-center justify-center py-8">
+                        <Loader2 className="w-6 h-6 animate-spin text-primary" />
+                      </div>
+                    }>
+                      <LazyTrainingPaymentForm
+                        stripePromise={stripePromise}
                         clientSecret={clientSecret}
                         onSuccess={onSuccess}
                         onClose={handleClose}
@@ -577,7 +441,7 @@ export function TrainingPaymentModal({
                         isVeteran={isVeteran}
                         finalAmount={finalAmount}
                       />
-                    </Elements>
+                    </Suspense>
                   </TabsContent>
 
                   <TabsContent value="qr">

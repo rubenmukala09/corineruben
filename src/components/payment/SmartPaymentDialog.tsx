@@ -1,11 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Elements,
-  PaymentElement,
-  useStripe,
-  useElements,
-} from "@stripe/react-stripe-js";
+// Stripe Elements are lazy-loaded to prevent 155KB SDK from loading on initial page visit
 import {
   Dialog,
   DialogContent,
@@ -34,6 +29,9 @@ import { toast } from "sonner";
 import { QuickVeteranToggle } from "./QuickVeteranToggle";
 import { TrustIndicators } from "./TrustIndicators";
 import { useStripeKey } from "@/hooks/useStripeKey";
+
+// Lazy load Stripe payment elements to prevent SDK from loading until payment step
+const LazySmartPaymentElements = lazy(() => import("./LazySmartPaymentElements"));
 
 export interface PaymentItem {
   id: string;
@@ -358,26 +356,20 @@ function SmartPaymentForm({ items, onSuccess, onClose }: PaymentFormProps) {
                   </Button>
                 </div>
               ) : (
-                <Elements
-                  stripe={stripePromise}
-                  options={{
-                    clientSecret,
-                    appearance: {
-                      theme: "stripe",
-                      variables: {
-                        borderRadius: "8px",
-                        colorPrimary: "#6D28D9",
-                      },
-                    },
-                  }}
-                >
-                  <PaymentElementWrapper
+                <Suspense fallback={
+                  <div className="flex items-center justify-center py-8">
+                    <Loader2 className="w-6 h-6 animate-spin text-primary" />
+                  </div>
+                }>
+                  <LazySmartPaymentElements
+                    stripePromise={stripePromise}
+                    clientSecret={clientSecret}
                     onSuccess={handlePaymentSuccess}
                     amount={finalAmount}
                     email={email}
                     onBack={() => setStep("info")}
                   />
-                </Elements>
+                </Suspense>
               )}
             </div>
 
@@ -434,109 +426,6 @@ function SmartPaymentForm({ items, onSuccess, onClose }: PaymentFormProps) {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
-  );
-}
-
-// Wrapper component to use hooks inside Elements provider
-function PaymentElementWrapper({
-  onSuccess,
-  amount,
-  email,
-  onBack,
-}: {
-  onSuccess: () => void;
-  amount: number;
-  email: string;
-  onBack: () => void;
-}) {
-  const stripe = useStripe();
-  const elements = useElements();
-  const [isLoading, setIsLoading] = useState(false);
-  const [isReady, setIsReady] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleSubmit = async () => {
-    if (!stripe || !elements) return;
-
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const { error: submitError } = await elements.submit();
-      if (submitError) throw submitError;
-
-      const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          return_url: `${window.location.origin}/payment-success`,
-          receipt_email: email,
-        },
-        redirect: "if_required",
-      });
-
-      if (confirmError) throw confirmError;
-
-      if (paymentIntent?.status === "succeeded" || paymentIntent?.status === "processing") {
-        onSuccess();
-      }
-    } catch (err: any) {
-      console.error("Payment error:", err);
-      setError(err.message || "Payment failed");
-      toast.error(err.message || "Payment failed. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return (
-    <div className="space-y-4">
-      {!isReady && (
-        <div className="flex items-center justify-center py-8">
-          <Loader2 className="w-6 h-6 animate-spin text-primary" />
-          <span className="ml-2 text-sm text-muted-foreground">Loading payment form...</span>
-        </div>
-      )}
-      <div className={!isReady ? "opacity-0 h-0 overflow-hidden" : ""}>
-        <PaymentElement
-          onReady={() => setIsReady(true)}
-          options={{
-            layout: "tabs",
-            paymentMethodOrder: ["card", "apple_pay", "google_pay"],
-          }}
-        />
-      </div>
-
-      {error && (
-        <div className="p-3 bg-destructive/10 text-destructive rounded-lg text-sm">
-          {error}
-        </div>
-      )}
-
-      <div className="flex gap-3">
-        <Button variant="outline" onClick={onBack} disabled={isLoading} className="flex-1">
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back
-        </Button>
-        <Button
-          onClick={handleSubmit}
-          disabled={isLoading || !stripe || !elements || !isReady}
-          className="flex-1"
-          size="lg"
-        >
-          {isLoading ? (
-            <>
-              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              Processing...
-            </>
-          ) : (
-            <>
-              <Lock className="w-4 h-4 mr-2" />
-              Pay ${amount.toFixed(2)}
-            </>
-          )}
-        </Button>
-      </div>
     </div>
   );
 }
