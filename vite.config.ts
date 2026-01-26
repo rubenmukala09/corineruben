@@ -53,16 +53,19 @@ export default defineConfig(({ mode }) => ({
     },
     ViteImageOptimizer({
       jpg: {
-        quality: 80,
+        quality: 75,
+        progressive: true,
       },
       jpeg: {
-        quality: 80,
+        quality: 75,
+        progressive: true,
       },
       png: {
-        quality: 80,
+        quality: 70,
+        compressionLevel: 9,
       },
       webp: {
-        quality: 80,
+        quality: 75,
       },
     }),
   ].filter(Boolean),
