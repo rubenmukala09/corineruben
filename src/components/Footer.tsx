@@ -130,7 +130,7 @@ const Footer = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-10">
             <div>
               <h4 className="font-bold text-base mb-4 text-white/90">Navigation</h4>
-              <ul className="space-y-1">
+              <ul className="space-y-0.5">
                 {[
                   { to: "/", label: "Home" },
                   { to: "/services", label: "Services" },
@@ -140,7 +140,7 @@ const Footer = () => {
                   { to: "/about", label: "About" },
                 ].map((link) => (
                   <li key={link.to}>
-                    <Link to={link.to} className="inline-block min-h-[28px] py-1 text-base text-white/60 hover:text-white transition-colors">
+                    <Link to={link.to} className="inline-block min-h-[28px] py-1.5 text-base text-white/60 hover:text-white transition-colors">
                       {link.label}
                     </Link>
                   </li>
@@ -150,10 +150,10 @@ const Footer = () => {
 
             <div>
               <h4 className="font-bold text-base mb-4 text-white/90">Services</h4>
-              <ul className="space-y-1">
+              <ul className="space-y-0.5">
                 {["ScamShield Protection", "Safety Audit", "Web Design", "AI Automation"].map((label, i) => (
                   <li key={i}>
-                    <Link to="/services" className="inline-block min-h-[28px] py-1 text-base text-white/60 hover:text-white transition-colors">
+                    <Link to="/services" className="inline-block min-h-[28px] py-1.5 text-base text-white/60 hover:text-white transition-colors">
                       {label}
                     </Link>
                   </li>
@@ -163,10 +163,10 @@ const Footer = () => {
 
             <div>
               <h4 className="font-bold text-base mb-4 text-white/90">Training</h4>
-              <ul className="space-y-1">
+              <ul className="space-y-0.5">
                 {["Zoom Classes", "In-Person", "Group Bookings", "Gift Certificates"].map((label, i) => (
                   <li key={i}>
-                    <Link to="/training" className="inline-block min-h-[28px] py-1 text-base text-white/60 hover:text-white transition-colors">
+                    <Link to="/training" className="inline-block min-h-[28px] py-1.5 text-base text-white/60 hover:text-white transition-colors">
                       {label}
                     </Link>
                   </li>
@@ -176,17 +176,17 @@ const Footer = () => {
 
             <div>
               <h4 className="font-bold text-base mb-4 text-white/90">Support</h4>
-              <ul className="space-y-1">
-                <li><Link to="/faq" className="inline-block min-h-[28px] py-1 text-base text-white/60 hover:text-white transition-colors">FAQ</Link></li>
-                <li><Link to="/contact" className="inline-block min-h-[28px] py-1 text-base text-white/60 hover:text-white transition-colors">Contact Us</Link></li>
-                <li><Link to="/contact" className="inline-block min-h-[28px] py-1 text-base text-white/60 hover:text-white transition-colors">Emergency Help</Link></li>
+              <ul className="space-y-0.5">
+                <li><Link to="/faq" className="inline-block min-h-[28px] py-1.5 text-base text-white/60 hover:text-white transition-colors">FAQ</Link></li>
+                <li><Link to="/contact" className="inline-block min-h-[28px] py-1.5 text-base text-white/60 hover:text-white transition-colors">Contact Us</Link></li>
+                <li><Link to="/contact" className="inline-block min-h-[28px] py-1.5 text-base text-white/60 hover:text-white transition-colors">Emergency Help</Link></li>
                 <li>
                   <button 
                     onClick={() => {
                       toast.info("Clearing cache...", { duration: 1500 });
                       setTimeout(() => clearAllCachesAndReload(), 300);
                     }}
-                    className="flex items-center gap-1.5 min-h-[28px] py-1 text-base text-white/60 hover:text-white transition-colors"
+                    className="flex items-center gap-1.5 min-h-[28px] py-1.5 text-base text-white/60 hover:text-white transition-colors"
                   >
                     <RefreshCw className="w-4 h-4" />
                     Clear Cache & Refresh
@@ -197,13 +197,13 @@ const Footer = () => {
 
             <div>
               <h4 className="font-bold text-base mb-4 text-white/90">Legal</h4>
-              <ul className="space-y-1">
-                <li><Link to="/privacy-policy" className="inline-block min-h-[28px] py-1 text-base text-white/60 hover:text-white transition-colors">Privacy Policy</Link></li>
-                <li><Link to="/terms-of-service" className="inline-block min-h-[28px] py-1 text-base text-white/60 hover:text-white transition-colors">Terms of Service</Link></li>
-                <li><Link to="/refund-policy" className="inline-block min-h-[28px] py-1 text-base text-white/60 hover:text-white transition-colors">Refund Policy</Link></li>
-                <li><Link to="/cookie-policy" className="inline-block min-h-[28px] py-1 text-base text-white/60 hover:text-white transition-colors">Cookie Policy</Link></li>
-                <li><Link to="/acceptable-use" className="inline-block min-h-[28px] py-1 text-base text-white/60 hover:text-white transition-colors">Acceptable Use</Link></li>
-                <li><Link to="/disclaimer" className="inline-block min-h-[28px] py-1 text-base text-white/60 hover:text-white transition-colors">Disclaimer</Link></li>
+              <ul className="space-y-0.5">
+                <li><Link to="/privacy-policy" className="inline-block min-h-[28px] py-1.5 text-base text-white/60 hover:text-white transition-colors">Privacy Policy</Link></li>
+                <li><Link to="/terms-of-service" className="inline-block min-h-[28px] py-1.5 text-base text-white/60 hover:text-white transition-colors">Terms of Service</Link></li>
+                <li><Link to="/refund-policy" className="inline-block min-h-[28px] py-1.5 text-base text-white/60 hover:text-white transition-colors">Refund Policy</Link></li>
+                <li><Link to="/cookie-policy" className="inline-block min-h-[28px] py-1.5 text-base text-white/60 hover:text-white transition-colors">Cookie Policy</Link></li>
+                <li><Link to="/acceptable-use" className="inline-block min-h-[28px] py-1.5 text-base text-white/60 hover:text-white transition-colors">Acceptable Use</Link></li>
+                <li><Link to="/disclaimer" className="inline-block min-h-[28px] py-1.5 text-base text-white/60 hover:text-white transition-colors">Disclaimer</Link></li>
               </ul>
             </div>
           </div>
