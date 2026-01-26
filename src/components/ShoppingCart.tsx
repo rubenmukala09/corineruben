@@ -2,9 +2,11 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { Button } from '@/components/ui/button';
 import { ShoppingCart as CartIcon, Trash2, Plus, Minus, Sparkles } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
-import { useState } from 'react';
-import { EnhancedCheckoutDialog } from './EnhancedCheckoutDialog';
+import { useState, lazy, Suspense } from 'react';
 import { Badge } from '@/components/ui/badge';
+
+// Lazy load checkout dialog to prevent 155KB Stripe SDK from loading on initial page visit
+const EnhancedCheckoutDialog = lazy(() => import('./EnhancedCheckoutDialog').then(m => ({ default: m.EnhancedCheckoutDialog })));
 
 export function ShoppingCart() {
   const { items, removeItem, updateQuantity, total, itemCount } = useCart();
@@ -102,7 +104,12 @@ export function ShoppingCart() {
         </SheetContent>
       </Sheet>
 
-      <EnhancedCheckoutDialog open={checkoutOpen} onOpenChange={setCheckoutOpen} />
+      {/* Only mount checkout dialog when opened to defer Stripe SDK loading */}
+      {checkoutOpen && (
+        <Suspense fallback={null}>
+          <EnhancedCheckoutDialog open={checkoutOpen} onOpenChange={setCheckoutOpen} />
+        </Suspense>
+      )}
     </>
   );
 }

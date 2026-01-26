@@ -72,7 +72,7 @@
       .hero-instant{contain:strict;content-visibility:auto}
     </style>
     
-    <!-- Google Analytics - deferred to reduce main-thread impact -->
+    <!-- Google Analytics - heavily deferred to reduce TTI impact -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -85,10 +85,11 @@
         gtag('js', new Date());
         gtag('config', 'G-B1MKM2FPV7', {send_page_view: false});
       }
+      // Defer GA to after page is fully interactive (longer timeout)
       if ('requestIdleCallback' in window) {
-        requestIdleCallback(loadGA, {timeout: 4000});
+        requestIdleCallback(loadGA, {timeout: 8000});
       } else {
-        setTimeout(loadGA, 2000);
+        setTimeout(loadGA, 5000);
       }
     </script>
     
