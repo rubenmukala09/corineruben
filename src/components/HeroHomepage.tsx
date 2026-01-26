@@ -42,7 +42,8 @@ export const HeroHomepage = () => {
   }, []);
   
   return <section className="relative min-h-[100vh] lg:min-h-[110vh] overflow-hidden" style={{
-    backgroundColor: '#1a1625'
+    backgroundColor: '#1a1625',
+    contain: 'layout style paint'
   }}>
       {/* Video Background - lazy preload for faster initial paint */}
       <div className="absolute inset-0">
@@ -72,11 +73,11 @@ export const HeroHomepage = () => {
       }} />
       </div>
       
-      <div className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10 hero-instant" style={{ contain: 'layout style' }}>
+      <div className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10 hero-instant" style={{ contain: 'layout style', contentVisibility: 'auto' }}>
         <div className="flex flex-col lg:grid lg:grid-cols-5 gap-8 lg:gap-20 xl:gap-28 items-center min-h-[100vh] py-16 sm:py-20 lg:py-0" style={{ contain: 'layout' }}>
           
-          {/* Left Content - Instant render, no animation delay */}
-          <div className="lg:col-span-3 order-2 lg:order-1 w-full">
+          {/* Left Content - Instant render, no animation delay - LCP element */}
+          <div className="lg:col-span-3 order-2 lg:order-1 w-full" style={{ contain: 'layout' }}>
             {/* Premium Badge */}
             <div className="inline-flex items-center gap-2 sm:gap-3 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 mb-6 sm:mb-10 shadow-sm">
               <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-gradient-to-r from-primary to-accent shadow-sm" />

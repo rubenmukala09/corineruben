@@ -26,8 +26,9 @@ const FloatingGraphics = lazy(() => import("@/components/ui/FloatingGraphics").t
 const AccentDecoration = lazy(() => import("@/components/ui/AccentDecoration").then(m => ({ default: m.AccentDecoration })));
 
 // Loading placeholders with reserved height to prevent CLS
-const SectionLoader = () => <div className="min-h-[600px]" />;
-const LargeSectionLoader = () => <div className="min-h-[800px]" />;
+// Heights match actual section heights to prevent layout shifts
+const SectionLoader = () => <div className="min-h-[600px]" aria-hidden="true" />;
+const LargeSectionLoader = () => <div className="min-h-[900px]" aria-hidden="true" />;
 const Index = () => {
   const [scamShieldOpen, setScamShieldOpen] = useState(false);
   
