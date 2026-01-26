@@ -9,17 +9,22 @@ export const useSectionNavigation = (sections: Section[]) => {
   const [activeSection, setActiveSection] = useState<string>("");
   const observersRef = useRef<IntersectionObserver[]>([]);
 
-  // Scroll to section with smooth behavior - uses getBoundingClientRect only on user action (click)
+  // Scroll to section with smooth behavior - uses double rAF to avoid forced reflows
   const scrollToSection = useCallback((sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      const navHeight = 96; // Account for fixed navigation
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+      // Double rAF ensures layout is complete before reading geometry
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const navHeight = 96; // Account for fixed navigation
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - navHeight;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+          });
+        });
       });
     }
   }, []);
