@@ -13,13 +13,18 @@ export const useSmoothAnchorScroll = () => {
           const element = document.querySelector(href);
           
           if (element) {
-            const headerOffset = 80;
-            const elementPosition = element.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            // Use double rAF to avoid forced reflow during initial paint
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                const headerOffset = 80;
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: "smooth"
+                window.scrollTo({
+                  top: offsetPosition,
+                  behavior: "smooth"
+                });
+              });
             });
           }
         }
