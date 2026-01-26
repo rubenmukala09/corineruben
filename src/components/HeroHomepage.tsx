@@ -26,13 +26,27 @@ export const HeroHomepage = () => {
   const selectedVideo = useMemo(() => heroVideos[Math.floor(Math.random() * heroVideos.length)], []);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
-  const [videoMounted, setVideoMounted] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
 
-  // Defer video mount significantly to ensure LCP text paints first
+  // Pre-validate video URL before mounting to prevent console errors
   useEffect(() => {
-    const timer = setTimeout(() => setVideoMounted(true), 2000);
+    const timer = setTimeout(() => {
+      // Use HEAD request to validate video exists without downloading it
+      fetch(selectedVideo, { method: 'HEAD', mode: 'cors' })
+        .then(response => {
+          if (response.ok) {
+            setVideoReady(true);
+          } else {
+            setVideoFailed(true);
+          }
+        })
+        .catch(() => {
+          // Silently fail - no video will be shown, no console error
+          setVideoFailed(true);
+        });
+    }, 2000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [selectedVideo]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -47,7 +61,7 @@ export const HeroHomepage = () => {
   }}>
       {/* Video Background - lazy preload for faster initial paint */}
       <div className="absolute inset-0">
-        {videoMounted && !videoFailed && (
+        {videoReady && !videoFailed && (
           <video 
             ref={videoRef} 
             autoPlay 
