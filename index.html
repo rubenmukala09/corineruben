@@ -56,7 +56,9 @@
       /* LCP element - gradient text for nav brand */
       .gradient-text-primary{background:linear-gradient(135deg,hsl(260,70%,35%),hsl(260,60%,55%));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
       .sticky{position:sticky}.top-0{top:0}.bg-card{background-color:#fff}.border-b{border-bottom-width:1px}.border-border{border-color:#e2e8f0}.shadow-lg{box-shadow:0 10px 15px -3px rgba(0,0,0,.1)}
-      nav{z-index:9999}
+      nav{z-index:9999;height:64px}
+      @media(min-width:768px){nav{height:80px}}
+      @media(min-width:1024px){nav{height:96px}}
       /* LCP h1 - immediate paint with font-display:swap fallback */
       h1{font-weight:700;line-height:.95;letter-spacing:-.025em;font-size:2.25rem;contain:layout style}
       @media(min-width:640px){h1{font-size:3rem}}
@@ -66,6 +68,8 @@
       .lcp-text{font-size:clamp(1rem,2vw,1.5rem);color:#64748b;line-height:1.6;margin:0 0 2rem}
       /* Prevent CLS from lazy sections */
       section{contain:layout style}
+      /* Hero content stability */
+      .hero-instant{contain:strict;content-visibility:auto}
     </style>
     
     <!-- Google Analytics - deferred to reduce main-thread impact -->
