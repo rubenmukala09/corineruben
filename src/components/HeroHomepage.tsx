@@ -72,8 +72,8 @@ export const HeroHomepage = () => {
       }} />
       </div>
       
-      <div className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10 hero-instant">
-        <div className="flex flex-col lg:grid lg:grid-cols-5 gap-8 lg:gap-20 xl:gap-28 items-center min-h-[100vh] py-16 sm:py-20 lg:py-0">
+      <div className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10 hero-instant" style={{ contain: 'layout style' }}>
+        <div className="flex flex-col lg:grid lg:grid-cols-5 gap-8 lg:gap-20 xl:gap-28 items-center min-h-[100vh] py-16 sm:py-20 lg:py-0" style={{ contain: 'layout' }}>
           
           {/* Left Content - Instant render, no animation delay */}
           <div className="lg:col-span-3 order-2 lg:order-1 w-full">
@@ -216,8 +216,8 @@ export const HeroHomepage = () => {
 
       {/* AI Image Disclaimer - fades in after 7 seconds */}
       <div 
-        className={`absolute bottom-4 left-1/2 -translate-x-1/2 z-20 transition-all duration-1000 ${
-          showDisclaimer ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+        className={`absolute bottom-4 left-1/2 -translate-x-1/2 z-20 transition-opacity duration-1000 ${
+          showDisclaimer ? 'opacity-100' : 'opacity-0'
         }`}
       >
         <div className="flex items-center gap-2 px-4 py-2 bg-card/90 backdrop-blur-sm rounded-full border border-primary/20 shadow-lg">
