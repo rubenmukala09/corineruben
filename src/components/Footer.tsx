@@ -130,7 +130,7 @@ const Footer = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-10">
             <div>
               <h4 className="font-bold text-base mb-4 text-white/90">Navigation</h4>
-              <ul className="space-y-0.5">
+              <ul className="space-y-1">
                 {[
                   { to: "/", label: "Home" },
                   { to: "/services", label: "Services" },
@@ -150,7 +150,7 @@ const Footer = () => {
 
             <div>
               <h4 className="font-bold text-base mb-4 text-white/90">Services</h4>
-              <ul className="space-y-0.5">
+              <ul className="space-y-1">
                 {["ScamShield Protection", "Safety Audit", "Web Design", "AI Automation"].map((label, i) => (
                   <li key={i}>
                     <Link to="/services" className="inline-block min-h-[28px] py-1.5 text-base text-white/60 hover:text-white transition-colors">
@@ -163,7 +163,7 @@ const Footer = () => {
 
             <div>
               <h4 className="font-bold text-base mb-4 text-white/90">Training</h4>
-              <ul className="space-y-0.5">
+              <ul className="space-y-1">
                 {["Zoom Classes", "In-Person", "Group Bookings", "Gift Certificates"].map((label, i) => (
                   <li key={i}>
                     <Link to="/training" className="inline-block min-h-[28px] py-1.5 text-base text-white/60 hover:text-white transition-colors">
@@ -176,7 +176,7 @@ const Footer = () => {
 
             <div>
               <h4 className="font-bold text-base mb-4 text-white/90">Support</h4>
-              <ul className="space-y-0.5">
+              <ul className="space-y-1">
                 <li><Link to="/faq" className="inline-block min-h-[28px] py-1.5 text-base text-white/60 hover:text-white transition-colors">FAQ</Link></li>
                 <li><Link to="/contact" className="inline-block min-h-[28px] py-1.5 text-base text-white/60 hover:text-white transition-colors">Contact Us</Link></li>
                 <li><Link to="/contact" className="inline-block min-h-[28px] py-1.5 text-base text-white/60 hover:text-white transition-colors">Emergency Help</Link></li>
@@ -197,7 +197,7 @@ const Footer = () => {
 
             <div>
               <h4 className="font-bold text-base mb-4 text-white/90">Legal</h4>
-              <ul className="space-y-0.5">
+              <ul className="space-y-1">
                 <li><Link to="/privacy-policy" className="inline-block min-h-[28px] py-1.5 text-base text-white/60 hover:text-white transition-colors">Privacy Policy</Link></li>
                 <li><Link to="/terms-of-service" className="inline-block min-h-[28px] py-1.5 text-base text-white/60 hover:text-white transition-colors">Terms of Service</Link></li>
                 <li><Link to="/refund-policy" className="inline-block min-h-[28px] py-1.5 text-base text-white/60 hover:text-white transition-colors">Refund Policy</Link></li>
