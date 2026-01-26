@@ -10,7 +10,8 @@ const AIChat = lazy(() => import("./AIChat").then(m => ({ default: m.AIChat })))
 const ChatFABPlaceholder = () => (
   <div className="fixed bottom-6 right-6 z-[9998]">
     <div 
-      className="relative w-14 h-14 rounded-full shadow-lg overflow-hidden ring-2 ring-primary/20"
+      className="relative rounded-full shadow-lg overflow-hidden ring-2 ring-primary/20"
+      style={{ width: 56, height: 56, contain: 'strict' }}
       aria-hidden="true"
     >
       <img 
@@ -20,7 +21,7 @@ const ChatFABPlaceholder = () => (
         height={56}
         loading="eager"
         fetchPriority="high"
-        className="w-full h-full object-cover object-top"
+        style={{ width: 56, height: 56, objectFit: 'cover', objectPosition: 'top' }}
       />
     </div>
   </div>
