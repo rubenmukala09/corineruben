@@ -74,11 +74,38 @@ export const SubscriptionProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    refreshSubscriptions();
-
-    // Refresh every minute
-    const interval = setInterval(refreshSubscriptions, 60000);
-    return () => clearInterval(interval);
+    // Defer initial subscription check to reduce main-thread work during initial load
+    // This is non-critical data that can wait until browser is idle
+    let cancelled = false;
+    let intervalId: ReturnType<typeof setInterval> | undefined;
+    
+    const startSubscriptionChecks = () => {
+      if (cancelled) return;
+      refreshSubscriptions();
+      // Refresh every minute after initial load
+      intervalId = setInterval(refreshSubscriptions, 60000);
+    };
+    
+    // Use requestIdleCallback for non-critical initial data fetch
+    if ('requestIdleCallback' in window) {
+      const idleId = (window as Window & { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => number }).requestIdleCallback(
+        startSubscriptionChecks, 
+        { timeout: 5000 }
+      );
+      return () => {
+        cancelled = true;
+        (window as Window & { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(idleId);
+        if (intervalId) clearInterval(intervalId);
+      };
+    } else {
+      // Fallback: defer with setTimeout
+      const timeoutId = setTimeout(startSubscriptionChecks, 2000);
+      return () => {
+        cancelled = true;
+        clearTimeout(timeoutId);
+        if (intervalId) clearInterval(intervalId);
+      };
+    }
   }, []);
 
   return (
