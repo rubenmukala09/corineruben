@@ -17,6 +17,11 @@ export default defineConfig(({ mode }) => ({
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom'],
+          motion: ['framer-motion'],
+          supabase: ['@supabase/supabase-js'],
+          stripe: ['@stripe/react-stripe-js', '@stripe/stripe-js'],
+          query: ['@tanstack/react-query'],
+          ui: ['sonner', 'lucide-react'],
         },
       },
     },
