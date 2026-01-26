@@ -37,8 +37,8 @@
       })();
     </script>
     
-    <!-- Load Google Fonts via stylesheet instead of preload to avoid 404s from outdated URLs -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Load Google Fonts async to avoid render-blocking -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'" data-critical>
     
     <!-- Critical CSS inlined for FCP/LCP -->
     <style>
