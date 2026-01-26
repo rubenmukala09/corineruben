@@ -12,7 +12,8 @@ import { CartProvider } from "./contexts/CartContext";
 import { CartFeedbackProvider, CartFeedbackNotifications } from "./components/CartFeedbackNotifications";
 import { SubscriptionProvider } from "./contexts/SubscriptionContext";
 import { CheckoutProvider } from "./contexts/CheckoutContext";
-const UnifiedCheckoutDialog = lazy(() => import("./components/payment/UnifiedCheckoutDialog"));
+// Checkout dialog uses a conditional loader to prevent Stripe SDK from loading until needed
+import { CheckoutDialogLoader } from "./components/payment/CheckoutDialogLoader";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { RouteTracker } from "./components/RouteTracker";
 import { DraggablePerformanceMonitor } from "./components/DraggablePerformanceMonitor";
@@ -289,9 +290,7 @@ function App() {
                       <AIChat />
                       <CookieConsent />
                       <CartFeedbackNotifications />
-                      <Suspense fallback={null}>
-                        <UnifiedCheckoutDialog />
-                      </Suspense>
+                      <CheckoutDialogLoader />
                       <DraggablePerformanceMonitor />
                     </BrowserRouter>
                   </AIChatProvider>
