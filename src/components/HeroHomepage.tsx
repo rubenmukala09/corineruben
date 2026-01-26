@@ -58,7 +58,14 @@ export const HeroHomepage = () => {
             className="absolute inset-0 w-full h-full object-cover"
             onError={() => setVideoFailed(true)}
           >
-            <source src={selectedVideo} type="video/mp4" />
+            <source 
+              src={selectedVideo} 
+              type="video/mp4" 
+              onError={(e) => {
+                e.stopPropagation();
+                setVideoFailed(true);
+              }}
+            />
           </video>
         )}
         {/* Gradient overlay */}
