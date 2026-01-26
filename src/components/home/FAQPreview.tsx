@@ -46,7 +46,7 @@ export const FAQPreview = () => {
           <div className="lg:sticky lg:top-24 space-y-8">
             <div>
               <div 
-                className="inline-flex items-center gap-2 px-6 py-2.5 bg-primary text-primary-foreground text-base font-bold uppercase tracking-wider mb-6"
+                className="inline-flex items-center gap-2 px-6 py-2.5 bg-primary text-white text-base font-bold uppercase tracking-wider mb-6"
                 style={{ clipPath: "polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%)" }}
               >
                 FAQ
