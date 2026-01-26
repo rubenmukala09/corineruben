@@ -46,6 +46,7 @@ export const HeroHomepage = () => {
           playsInline 
           preload="none"
           className="absolute inset-0 w-full h-full object-cover"
+          onError={() => {/* Silently handle video load failures */}}
         >
           <source src={selectedVideo} type="video/mp4" />
         </video>

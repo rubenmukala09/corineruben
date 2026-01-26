@@ -151,11 +151,24 @@ html {
   to { height: 0; opacity: 0; }
 }
 
+/* Wave animations for FloatingGraphics */
+@keyframes wave-slow {
+  0%, 100% { transform: translateX(0) scaleY(1); }
+  50% { transform: translateX(-2%) scaleY(1.05); }
+}
+
+@keyframes wave-medium {
+  0%, 100% { transform: translateX(0) scaleY(1); }
+  50% { transform: translateX(2%) scaleY(0.95); }
+}
+
 /* ===== UTILITY CLASSES ===== */
 
 .animate-fade-in { animation: fade-in 0.2s ease-out forwards; }
 .accordion-down { animation: accordion-expand 0.2s ease-out; }
 .accordion-up { animation: accordion-collapse 0.15s ease-out; }
+.animate-wave-slow { animation: wave-slow 10s ease-in-out infinite; }
+.animate-wave-medium { animation: wave-medium 8s ease-in-out infinite 1s; }
 
 .skeleton {
   background: linear-gradient(90deg, hsl(var(--muted)) 0%, hsl(var(--muted-foreground) / 0.15) 50%, hsl(var(--muted)) 100%);

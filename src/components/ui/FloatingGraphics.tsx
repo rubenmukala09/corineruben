@@ -307,32 +307,23 @@ export const FloatingGraphics = ({ variant = "orbs", className = "", intensity =
   }
 
   if (variant === "waves") {
+    // Use CSS animations instead of framer-motion path morphing to avoid SVG d attribute errors
     return (
       <div className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}>
         <svg className={`absolute bottom-0 left-0 w-full h-40 ${baseOpacity}`} viewBox="0 0 1200 120" preserveAspectRatio="none">
-          <motion.path
+          <path
             d="M0,60 C200,100 400,20 600,60 C800,100 1000,20 1200,60 L1200,120 L0,120 Z"
             fill="hsl(var(--primary))"
             opacity="0.1"
-            animate={{ d: [
-              "M0,60 C200,100 400,20 600,60 C800,100 1000,20 1200,60 L1200,120 L0,120 Z",
-              "M0,60 C200,20 400,100 600,60 C800,20 1000,100 1200,60 L1200,120 L0,120 Z",
-              "M0,60 C200,100 400,20 600,60 C800,100 1000,20 1200,60 L1200,120 L0,120 Z",
-            ]}}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            className="animate-wave-slow"
           />
         </svg>
         <svg className={`absolute bottom-0 left-0 w-full h-32 ${baseOpacity}`} viewBox="0 0 1200 100" preserveAspectRatio="none">
-          <motion.path
+          <path
             d="M0,50 C150,80 350,20 500,50 C650,80 850,20 1000,50 C1100,70 1150,40 1200,50 L1200,100 L0,100 Z"
             fill="hsl(var(--accent))"
             opacity="0.08"
-            animate={{ d: [
-              "M0,50 C150,80 350,20 500,50 C650,80 850,20 1000,50 C1100,70 1150,40 1200,50 L1200,100 L0,100 Z",
-              "M0,50 C150,20 350,80 500,50 C650,20 850,80 1000,50 C1100,30 1150,60 1200,50 L1200,100 L0,100 Z",
-              "M0,50 C150,80 350,20 500,50 C650,80 850,20 1000,50 C1100,70 1150,40 1200,50 L1200,100 L0,100 Z",
-            ]}}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="animate-wave-medium"
           />
         </svg>
       </div>
