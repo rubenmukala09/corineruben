@@ -1,7 +1,6 @@
 import React, { useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { throttle } from "@/utils/performanceOptimization";
 
 interface MagneticButtonProps {
   children: React.ReactNode;
@@ -21,31 +20,38 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
   type = "button",
 }) => {
   const buttonRef = useRef<HTMLDivElement>(null);
+  const boundsRef = useRef<{ centerX: number; centerY: number } | null>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  // Throttled mouse move handler to reduce forced reflows
+  // Cache bounds on mouse enter to avoid forced reflows during mouse move
+  const handleMouseEnter = useCallback(() => {
+    const button = buttonRef.current;
+    if (!button || disabled) return;
+    
+    const rect = button.getBoundingClientRect();
+    boundsRef.current = {
+      centerX: rect.left + rect.width / 2,
+      centerY: rect.top + rect.height / 2,
+    };
+  }, [disabled]);
+
+  // Use cached bounds - no layout reads during mouse move
   const handleMouseMove = useCallback(
-    throttle((e: React.MouseEvent<HTMLDivElement>) => {
-      const button = buttonRef.current;
-      if (!button || disabled) return;
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (!boundsRef.current || disabled) return;
 
-      requestAnimationFrame(() => {
-        const rect = button.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
+      const distanceX = (e.clientX - boundsRef.current.centerX) * strength;
+      const distanceY = (e.clientY - boundsRef.current.centerY) * strength;
 
-        const distanceX = (e.clientX - centerX) * strength;
-        const distanceY = (e.clientY - centerY) * strength;
-
-        setPosition({ x: distanceX, y: distanceY });
-      });
-    }, 16),
+      setPosition({ x: distanceX, y: distanceY });
+    },
     [disabled, strength]
   );
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = useCallback(() => {
     setPosition({ x: 0, y: 0 });
-  };
+    boundsRef.current = null;
+  }, []);
 
   return (
     <motion.div
@@ -53,6 +59,7 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
       className={cn("inline-block cursor-pointer", className)}
       animate={{ x: position.x, y: position.y }}
       transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+      onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={disabled ? undefined : onClick}
@@ -75,31 +82,38 @@ export const MagneticWrapper: React.FC<MagneticWrapperProps> = ({
   strength = 0.3,
 }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const boundsRef = useRef<{ centerX: number; centerY: number } | null>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  // Throttled mouse move handler to reduce forced reflows
+  // Cache bounds on mouse enter to avoid forced reflows during mouse move
+  const handleMouseEnter = useCallback(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+    
+    const rect = wrapper.getBoundingClientRect();
+    boundsRef.current = {
+      centerX: rect.left + rect.width / 2,
+      centerY: rect.top + rect.height / 2,
+    };
+  }, []);
+
+  // Use cached bounds - no layout reads during mouse move
   const handleMouseMove = useCallback(
-    throttle((e: React.MouseEvent<HTMLDivElement>) => {
-      const wrapper = wrapperRef.current;
-      if (!wrapper) return;
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (!boundsRef.current) return;
 
-      requestAnimationFrame(() => {
-        const rect = wrapper.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
+      const distanceX = (e.clientX - boundsRef.current.centerX) * strength;
+      const distanceY = (e.clientY - boundsRef.current.centerY) * strength;
 
-        const distanceX = (e.clientX - centerX) * strength;
-        const distanceY = (e.clientY - centerY) * strength;
-
-        setPosition({ x: distanceX, y: distanceY });
-      });
-    }, 16),
+      setPosition({ x: distanceX, y: distanceY });
+    },
     [strength]
   );
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = useCallback(() => {
     setPosition({ x: 0, y: 0 });
-  };
+    boundsRef.current = null;
+  }, []);
 
   return (
     <motion.div
@@ -107,6 +121,7 @@ export const MagneticWrapper: React.FC<MagneticWrapperProps> = ({
       className={cn("inline-block", className)}
       animate={{ x: position.x, y: position.y }}
       transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+      onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
