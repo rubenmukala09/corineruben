@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Shield, ArrowRight, Lock, Eye, Fingerprint, ShieldCheck, Zap, Globe } from "lucide-react";
-import { useRef, useMemo } from "react";
+import { Shield, ArrowRight, Lock, Eye, Fingerprint, ShieldCheck, Zap, Globe, Camera } from "lucide-react";
+import { useRef, useMemo, useState, useEffect } from "react";
 import heroVideoFamily from "@/assets/hero-video-family.mp4";
 import heroVideoCybersecurity from "@/assets/hero-video-cybersecurity.mp4";
 
@@ -24,6 +24,14 @@ const securityFeatures = [{
 export const HeroHomepage = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const selectedVideo = useMemo(() => heroVideos[Math.floor(Math.random() * heroVideos.length)], []);
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowDisclaimer(true);
+    }, 7000);
+    return () => clearTimeout(timer);
+  }, []);
   
   return <section className="relative min-h-[100vh] lg:min-h-[110vh] overflow-hidden" style={{
     backgroundColor: '#1a1625'
@@ -194,6 +202,20 @@ export const HeroHomepage = () => {
 
       {/* Bottom gradient fade */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
+
+      {/* AI Image Disclaimer - fades in after 7 seconds */}
+      <div 
+        className={`absolute bottom-4 left-1/2 -translate-x-1/2 z-20 transition-all duration-1000 ${
+          showDisclaimer ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+        }`}
+      >
+        <div className="flex items-center gap-2 px-4 py-2 bg-card/90 backdrop-blur-sm rounded-full border border-primary/20 shadow-lg">
+          <Camera className="w-3.5 h-3.5 text-primary" />
+          <span className="text-xs text-muted-foreground">
+            <strong className="text-foreground">Privacy Notice:</strong> Images are AI-generated to protect member identities
+          </span>
+        </div>
+      </div>
     </section>;
 };
 export default HeroHomepage;

@@ -34,15 +34,15 @@ const instructors: Instructor[] = [
     title: "Senior Cybersecurity Instructor",
     specialty: "AI & Deepfake Detection",
     image: instructorMichael,
-    shortBio: "Former FBI cyber analyst with 25+ years protecting families from digital threats.",
-    fullBio: "Dr. Michael Thompson spent over two decades with the FBI's Cyber Division, specializing in fraud prevention and digital forensics. After retiring, he dedicated his career to educating families about emerging cyber threats. His approachable teaching style makes complex security concepts easy to understand for people of all ages. He's passionate about protecting seniors from scams and has developed several of our most popular workshop programs.",
+    shortBio: "At 45, a dynamic FBI cyber analyst veteran with 20+ years protecting families from digital threats.",
+    fullBio: "At 45, Dr. Michael Thompson brings two decades of FBI Cyber Division experience to his teaching. Specializing in fraud prevention and digital forensics, he's dedicated his career to educating families about emerging cyber threats. His approachable teaching style makes complex security concepts easy to understand for people of all ages. He's passionate about protecting seniors from scams and has developed several of our most popular workshop programs.",
     achievements: [
       "FBI Distinguished Service Medal",
       "Author of 'Digital Defense for Families'",
       "Trained 50,000+ individuals nationwide",
       "PhD in Computer Science, MIT"
     ],
-    yearsExperience: 25,
+    yearsExperience: 20,
     studentsHelped: "50,000+"
   },
   {
@@ -68,15 +68,15 @@ const instructors: Instructor[] = [
     title: "Corporate Security Trainer",
     specialty: "Business & Enterprise Security",
     image: instructorJames,
-    shortBio: "Fortune 500 security consultant helping businesses protect their teams and data.",
-    fullBio: "Robert Mitchell has consulted for some of the world's largest corporations on cybersecurity training and awareness programs. His engaging presentation style and real-world case studies make security training memorable and actionable. He specializes in helping organizations build a culture of security awareness, from the C-suite to front-line employees. His business protection workshops are trusted by companies nationwide.",
+    shortBio: "At 45, a Fortune 500 security consultant helping businesses protect their teams and data.",
+    fullBio: "At 45, Robert Mitchell has consulted for some of the world's largest corporations on cybersecurity training and awareness programs. His engaging presentation style and real-world case studies make security training memorable and actionable. He specializes in helping organizations build a culture of security awareness, from the C-suite to front-line employees. His business protection workshops are trusted by companies nationwide.",
     achievements: [
       "CISSP & CISM Certified",
       "Consulted for Fortune 500 companies",
       "Keynote speaker at DEF CON",
       "MBA, Stanford University"
     ],
-    yearsExperience: 22,
+    yearsExperience: 20,
     studentsHelped: "25,000+"
   },
   {
@@ -102,16 +102,16 @@ const instructors: Instructor[] = [
     title: "Emerging Threats Analyst",
     specialty: "AI Scams & Modern Threats",
     image: instructorAlex,
-    shortBio: "Expert on cutting-edge AI scams, voice cloning, and next-generation threats.",
-    fullBio: "At 35, David Anderson represents the next generation of cybersecurity educators. With hands-on experience tracking emerging threats and a finger on the pulse of new scam tactics, David brings fresh perspectives to our workshop programs. Having grown up in the digital age, he uniquely understands both the opportunities and risks of modern technology. His workshops on AI-powered scams, voice cloning detection, and cryptocurrency fraud are among our most requested sessions.",
+    shortBio: "At 55, a seasoned expert on cutting-edge AI scams, voice cloning, and next-generation threats.",
+    fullBio: "At 55, David Anderson represents experienced leadership in cybersecurity education. With extensive hands-on experience tracking emerging threats and a finger on the pulse of new scam tactics, David brings seasoned perspectives to our workshop programs. His deep understanding of both traditional and modern technology makes him uniquely qualified to teach about evolving threats. His workshops on AI-powered scams, voice cloning detection, and cryptocurrency fraud are among our most requested sessions.",
     achievements: [
       "Certified Ethical Hacker (CEH)",
       "Contributor to WIRED Magazine",
       "Developed AI scam detection tools",
       "BS Computer Science, Carnegie Mellon"
     ],
-    yearsExperience: 10,
-    studentsHelped: "15,000+"
+    yearsExperience: 25,
+    studentsHelped: "35,000+"
   }
 ];
 
