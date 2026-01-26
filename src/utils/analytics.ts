@@ -12,7 +12,20 @@ export function isTrackingEnabled(): boolean {
 export function initGA(measurementId: string) {
   if (!isTrackingEnabled()) return;
 
-  // Load gtag.js script
+  // Check if GA is already loaded (from index.html)
+  const existingScript = document.querySelector(`script[src*="googletagmanager.com/gtag/js"]`);
+  if (existingScript) {
+    // GA already loaded via index.html, just ensure gtag function exists
+    if (!window.gtag) {
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function gtag() {
+        window.dataLayer.push(arguments);
+      };
+    }
+    return;
+  }
+
+  // Load gtag.js script only if not already present
   const script = document.createElement("script");
   script.async = true;
   script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
