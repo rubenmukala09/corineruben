@@ -333,7 +333,8 @@ export const AIChat = () => {
       <div className="fixed bottom-6 right-6 z-[9998] group">
         <button
           onClick={openChat}
-          className="relative w-14 h-14 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 overflow-hidden ring-2 ring-primary/20"
+          className="relative rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 overflow-hidden ring-2 ring-primary/20"
+          style={{ width: 56, height: 56, contain: 'strict' }}
         >
           <img 
             src={lauraAvatar} 
@@ -344,7 +345,7 @@ export const AIChat = () => {
             loading="eager"
             decoding="async"
             fetchPriority="high"
-            className="w-full h-full object-cover object-top"
+            style={{ width: 56, height: 56, objectFit: 'cover', objectPosition: 'top' }}
           />
           <div className="absolute bottom-0.5 right-0.5 w-3 h-3 rounded-full bg-green-500 border-2 border-white" />
         </button>
