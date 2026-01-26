@@ -81,6 +81,7 @@ const Navigation = () => {
               alt="InVision Network Shield Logo" 
               width={56}
               height={56}
+              sizes="(max-width: 640px) 32px, (max-width: 768px) 40px, (max-width: 1024px) 48px, 56px"
               loading="eager"
               decoding="async"
               fetchPriority="high"
