@@ -49,6 +49,9 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   }
 
   :root {
+    /* Navigation height - matches Navigation component heights for CLS prevention */
+    --nav-height: 64px;
+    
     /* Base colors - Soft Modern off-white background */
     --background: 220 14% 96%;
     --foreground: 260 45% 12%;
@@ -215,9 +218,18 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   }
   
   @media (min-width: 768px) {
+    :root {
+      --nav-height: 80px;
+    }
     body {
       font-size: 22px;
       line-height: 1.8;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    :root {
+      --nav-height: 96px;
     }
   }
 
