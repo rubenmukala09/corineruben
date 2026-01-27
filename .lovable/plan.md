@@ -1,227 +1,128 @@
 
-# Comprehensive Website Audit & Optimization Plan
+# Website Restoration & Professional Cleanup Plan
 
-## Executive Summary
+## Overview
 
-After a thorough analysis of your entire website, I've identified **23 issues** across the homepage, AI & Business, Learn & Train, Resources, About, Careers, FAQ, Contact, and Dashboard pages. This plan addresses broken code, console errors, unnecessary spacing, performance issues, and ensures smooth, fluent operation across all pages.
-
----
-
-## Part 1: Console Errors & React Warnings (Critical)
-
-### Issue 1: `fetchPriority` React Warning
-**Location:** `src/components/LazyAIChat.tsx` (line 23)
-**Problem:** React shows warning "React does not recognize the `fetchPriority` prop on a DOM element"
-**Solution:** Change `fetchPriority="high"` to the lowercase HTML attribute `fetchpriority="high"`
-
-### Issue 2: React Router v7 Deprecation Warnings
-**Location:** Console shows deprecation warnings for `v7_startTransition` and `v7_relativeSplatPath`
-**Problem:** React Router v6 showing upgrade warnings
-**Solution:** Add future flags to BrowserRouter in `src/App.tsx` to suppress warnings
+Based on my investigation, I've identified all the issues you reported and have a comprehensive plan to fix them:
 
 ---
 
-## Part 2: Production Console Logs Cleanup
+## Part 1: Remove the Splash Screen (The Screen You Showed in Screenshot)
 
-### Issue 3: Debug Logs in Payment Flow
-**Locations:**
-- `src/components/payment/UnifiedCheckoutDialog.tsx` (lines 180, 213, 216)
-**Solution:** Remove or conditionally hide console.log/console.error statements in production
+### What's Happening
+There are **TWO splash screens** that show sequentially when you reload:
+1. **HTML Splash** (in `index.html`, lines 253-270): A hardcoded splash with "InVision Network" and a simple shield SVG icon
+2. **React Splash** (`SplashScreen.tsx`): A second animated splash with spinning rings that shows for 400ms
 
-### Issue 4: Performance Monitor Logs
-**Location:** `src/utils/performanceMonitor.ts` (lines 75-80)
-**Solution:** Wrap performance summary logs in development-only check
+This creates the "appears, then effect appears" unprofessional sequence you described.
 
----
-
-## Part 3: Homepage Optimizations
-
-### Issue 5: Hero Section CLS Prevention
-**Location:** `src/components/HeroHomepage.tsx`
-**Status:** Already fixed with `contain: strict` and explicit heights
-**Verification:** Confirm `index.html` pre-rendered HTML matches React exactly
-
-### Issue 6: Suspense Fallback Heights
-**Location:** `src/pages/Index.tsx`
-**Problem:** `LargeSectionLoader` reserves 4899px height but section content may vary
-**Solution:** Use CSS `contain: layout style paint` consistently with minimum heights
+### Fix
+1. **Delete the HTML splash** from `index.html` (lines 253-270)
+2. **Remove the React SplashScreen** entirely:
+   - Delete `src/components/SplashScreen.tsx`
+   - Remove the import and usage from `src/App.tsx`
+3. Clean up related unused loaders:
+   - `src/components/InitialLoader.tsx` (unused)
+   - `src/components/EnhancedPageLoader.tsx` (unused)
+   - `src/components/UnifiedPageLoader.tsx` (unused)
 
 ---
 
-## Part 4: Page-by-Page Spacing & Layout Fixes
+## Part 2: Replace the Logo with Your Correct Logo
 
-### Issue 7: Redundant Spacer Divs
-**Locations:** Multiple pages have `<div className="h-12" />` spacers after `HeroFloatingStats`
-- `src/pages/Business.tsx` (line 254)
-- `src/pages/Training.tsx` (line 426)
-- `src/pages/About.tsx` (line 122)
-- `src/pages/FAQ.tsx` (line 390)
-- `src/pages/Careers.tsx` (line 185)
-- `src/pages/Contact.tsx` (line 168)
-**Solution:** Consolidate floating stats bar positioning to eliminate redundant spacers
+### Current State
+- The **favicon** (`public/favicon.png`) ✓ Already has your correct purple/gray shield
+- The **navigation logo** (`shield-logo-sm.webp`) ✗ Shows wrong logo (solid purple shield with gradient border)
 
-### Issue 8: Inconsistent Section Padding
-**Problem:** Mixed usage of `py-10`, `py-14`, `py-16`, `section-spacing`
-**Solution:** Standardize section padding using the `section-spacing` CSS class consistently
+### Fix
+1. Copy your uploaded logo (`shield_purple-4.png`) to replace:
+   - `src/assets/shield-logo-sm.webp` (used in Navigation)
+   - `src/assets/shield-logo.png` (backup reference)
 
----
-
-## Part 5: Image Optimization Verification
-
-### Issue 9: Missing Image Dimensions
-**Locations:**
-- `src/pages/About.tsx` - Team photos missing explicit dimensions
-- `src/pages/Careers.tsx` - Culture photos missing explicit dimensions
-**Solution:** Add `width` and `height` attributes with `decoding="async"` and `loading="lazy"`
-
-### Issue 10: Team Photos in About Page
-**Location:** `src/pages/About.tsx` (line 157)
-**Problem:** Team image doesn't have explicit dimensions
-**Solution:** Add `width={600} height={400}` to prevent layout shift
+2. Verify the logo is applied consistently in:
+   - Navigation component
+   - Footer (if applicable)
+   - Any admin dashboard headers
 
 ---
 
-## Part 6: Dashboard Performance
+## Part 3: Restore Laura (AI Assistant)
 
-### Issue 11: SeniorDashboard Loading State
-**Location:** `src/pages/portal/SeniorDashboard.tsx`
-**Status:** Well-structured with proper loading indicators
-**Improvement:** Add skeleton loaders for individual cards instead of full-page loader
+### Current State
+Laura's component exists and is correctly imported via `LazyAIChat` in `App.tsx` (line 295). The avatar image (`laura-avatar-sm.webp`) also exists and shows a professional woman.
 
-### Issue 12: BusinessDashboard Loading State
-**Location:** `src/pages/portal/BusinessDashboard.tsx`
-**Status:** Uses Framer Motion for staggered animations
-**Improvement:** Ensure initial render doesn't cause CLS with motion animations
+### Potential Issues
+1. The `LazyAIChat` uses `requestIdleCallback` with a 2-second timeout - she may appear delayed
+2. If there was a JavaScript error, Laura might fail to render silently
 
----
-
-## Part 7: Navigation & Footer
-
-### Issue 13: Navigation Logo Image Optimization
-**Location:** `src/components/Navigation.tsx`
-**Status:** Already uses optimized WebP and proper loading attributes
-**Verification:** Confirm `fetchPriority="high"` is lowercase
-
-### Issue 14: Footer Newsletter Form
-**Location:** `src/components/Footer.tsx`
-**Status:** Properly validated with Zod schema
-**Improvement:** Already well-implemented
+### Fix
+1. Ensure `LazyAIChat` renders immediately without excessive delay
+2. Check for any console errors affecting her rendering
+3. Verify the `AIChatContext` is properly providing state
 
 ---
 
-## Part 8: Code Quality Improvements
+## Part 4: Debug & Clean Up Unprofessional Elements
 
-### Issue 15: Unused Code Prevention
-**Location:** `eslint.config.js` (line 23) and `tsconfig.json` (lines 10, 13)
-**Problem:** Unused variables and parameters checks are disabled
-**Note:** These are intentional for flexibility but should be audited periodically
+### Console Errors to Fix
+1. The `cdn.tailwindcss.com` warning (not a real issue - development only)
+2. Any remaining `fetchPriority` warnings
 
-### Issue 16: TypeScript Ignore Comments
-**Locations:**
-- `supabase/functions/verify-2fa/index.ts` (line 69) - Legitimate use for bitwise operations
-- `src/utils/imageOptimization.ts` (line 124) - Experimental API check
-**Status:** These are valid exceptions for browser API compatibility
+### Code Cleanup
+1. Remove the splash-related CSS from `index.html` (line 268-270)
+2. Remove the splash-removal JavaScript from `App.tsx` (lines 244-254)
+3. Clean up duplicate/unused loader components
 
----
-
-## Part 9: Contact Form Enhancements
-
-### Issue 17: Contact Form Validation
-**Location:** `src/pages/Contact.tsx`
-**Status:** Uses proper form validation with Zod
-**Enhancement:** Already has real-time character counter and validation
+### Cache Optimization
+1. The `cacheUtils.ts` already has functions for clearing caches
+2. Users should use the brand click handler (already implemented) or manual browser cache clear
 
 ---
 
-## Part 10: Resources Page
+## Files to Modify
 
-### Issue 18: Product Card Loading
-**Location:** `src/pages/Resources.tsx`
-**Status:** Uses static arrays with proper image imports
-**Enhancement:** Images should have explicit dimensions
-
----
-
-## Implementation Sequence
-
-### Phase 1: Critical Fixes (Immediate)
-1. Fix `fetchPriority` warning in LazyAIChat.tsx
-2. Add React Router future flags to App.tsx
-3. Remove/conditionally hide production console logs
-
-### Phase 2: Layout Consistency
-4. Standardize section padding across all pages
-5. Review and optimize spacer divs
-6. Add missing image dimensions to About and Careers pages
-
-### Phase 3: Performance Polish
-7. Verify all images have explicit width/height
-8. Confirm skeleton loaders in dashboards
-9. Test CLS with Lighthouse after publishing
-
-### Phase 4: Code Cleanup
-10. Audit and clean unused imports
-11. Standardize error handling patterns
-12. Document remaining @ts-ignore comments
+| File | Action | Purpose |
+|------|--------|---------|
+| `index.html` | Edit | Remove hardcoded splash screen (lines 253-270) |
+| `src/App.tsx` | Edit | Remove SplashScreen import/usage, simplify mount |
+| `src/components/SplashScreen.tsx` | Delete | No longer needed |
+| `src/components/InitialLoader.tsx` | Delete | Unused component |
+| `src/components/EnhancedPageLoader.tsx` | Delete | Unused component |
+| `src/components/UnifiedPageLoader.tsx` | Delete | Unused component |
+| `src/assets/shield-logo-sm.webp` | Replace | Use your correct purple/gray shield logo |
+| `src/assets/shield-logo.png` | Replace | Use your correct logo as backup |
+| `src/components/LazyAIChat.tsx` | Review | Ensure Laura loads properly |
 
 ---
 
-## Technical Details
+## Technical Implementation
 
-### Fix 1: LazyAIChat.tsx (fetchPriority)
+### Step 1: Clean index.html
+Remove the entire splash block (lines 253-270) and its CSS.
+
+### Step 2: Simplify App.tsx
 ```tsx
-// Change line 23 from:
-fetchPriority="high"
-// To:
-fetchpriority="high"
+// Remove these:
+import { SplashScreen } from "./components/SplashScreen";
+const [showSplash, setShowSplash] = useState(true);
+// And all the splash-related useEffect code
+
+// Keep the app rendering directly without splash wrapper
 ```
 
-### Fix 2: App.tsx (React Router Flags)
-```tsx
-// Update BrowserRouter with future flags:
-<BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-```
+### Step 3: Replace Logo Assets
+Copy your correct logo to both asset locations to ensure consistent branding everywhere.
 
-### Fix 3: Production Console Logs
-```tsx
-// Wrap in development check:
-if (import.meta.env.DEV) {
-  console.log('...');
-}
-```
-
-### Fix 4: Image Dimensions (About.tsx example)
-```tsx
-<img 
-  src={teamDiverse1} 
-  alt="InVision Network team"
-  width={600}
-  height={400}
-  loading="lazy"
-  decoding="async"
-  className="rounded-2xl shadow-2xl w-full h-auto"
-/>
-```
+### Step 4: Verify Laura
+Confirm the LazyAIChat component is rendering the floating button with Laura's avatar in the bottom-right corner.
 
 ---
 
-## Expected Outcomes
+## Expected Outcome
 
-After implementing all fixes:
-- Console errors reduced from 3 to 0
-- CLS score improved to < 0.1
-- Consistent spacing across all pages
-- No React warnings in development
-- Smoother navigation transitions
-- Faster perceived load times
-
----
-
-## Files To Be Modified
-
-1. `src/components/LazyAIChat.tsx` - Fix fetchPriority
-2. `src/App.tsx` - Add React Router future flags
-3. `src/pages/About.tsx` - Add image dimensions
-4. `src/pages/Careers.tsx` - Add image dimensions
-5. `src/components/payment/UnifiedCheckoutDialog.tsx` - Remove debug logs
-6. `src/utils/performanceMonitor.ts` - Wrap logs in DEV check
+After these changes:
+- Website loads instantly without any splash/loading screen
+- Your correct purple/gray shield logo appears in navigation
+- Laura (AI Assistant) appears as a floating button in bottom-right corner
+- No console errors or warnings
+- Clean, professional appearance from first frame
