@@ -67,7 +67,7 @@ class PerformanceMonitor {
   }
 
   printSummary() {
-    if (!this.enabled) return;
+    if (!this.enabled || !import.meta.env.DEV) return;
     
     const summary = this.getSummary();
     if (!summary) return;

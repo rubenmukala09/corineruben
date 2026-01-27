@@ -20,7 +20,6 @@ const ChatFABPlaceholder = () => (
         width={56}
         height={56}
         loading="eager"
-        fetchPriority="high"
         style={{ width: 56, height: 56, objectFit: 'cover', objectPosition: 'top' }}
       />
     </div>

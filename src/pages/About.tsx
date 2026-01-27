@@ -153,6 +153,10 @@ function About() {
                 <img 
                   src={teamDiverse1} 
                   alt="InVision Network team working together"
+                  width={600}
+                  height={400}
+                  loading="lazy"
+                  decoding="async"
                   className="rounded-2xl shadow-2xl w-full h-auto border-4 border-primary/20"
                 />
                 <div className="absolute -bottom-4 sm:-bottom-6 -right-4 sm:-right-6 bg-primary text-primary-foreground p-4 sm:p-6 md:p-8 rounded-xl shadow-xl">

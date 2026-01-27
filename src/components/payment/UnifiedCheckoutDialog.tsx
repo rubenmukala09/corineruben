@@ -177,7 +177,7 @@ const QRCodePaymentStep: React.FC<{
           onSuccess();
         }
       } catch (err) {
-        console.log('Payment check:', err);
+        if (import.meta.env.DEV) console.log('Payment check:', err);
       } finally {
         setChecking(false);
       }
@@ -210,10 +210,10 @@ const QRCodePaymentStep: React.FC<{
         setQrCodeUrl(qrUrl);
         setPaymentLinkId(data.id);
         setTimeLeft(240);
-        console.log('[QR Payment] Generated:', { id: data.id, requestId: data.requestId });
+        if (import.meta.env.DEV) console.log('[QR Payment] Generated:', { id: data.id, requestId: data.requestId });
       }
     } catch (error: any) {
-      console.error('[QR Payment] Error:', error);
+      if (import.meta.env.DEV) console.error('[QR Payment] Error:', error);
       toast.error('Failed to generate QR code');
     } finally {
       setLoading(false);
