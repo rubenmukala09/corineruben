@@ -112,7 +112,15 @@ export const CompanyIntroSection = () => {
 
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="relative rounded-3xl overflow-hidden">
           <div className="absolute inset-0">
-            <img src={securityTeamStatsBg} alt="" className="w-full h-full object-cover" />
+            <img 
+              src={securityTeamStatsBg} 
+              alt="" 
+              width={1200}
+              height={600}
+              className="w-full h-full object-cover" 
+              loading="lazy"
+              decoding="async"
+            />
             <div className="absolute inset-0 backdrop-blur-md bg-black/50" />
           </div>
           
