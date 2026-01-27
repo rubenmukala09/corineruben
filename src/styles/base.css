@@ -20,15 +20,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     scroll-behavior: smooth;
   }
 
-  /* Prevent FOUC */
-  body:not(.loaded) {
-    opacity: 0;
-  }
-
-  body.loaded {
-    opacity: 1;
-    transition: opacity 0.3s ease-out;
-  }
+  /* Body is always visible - FOUC prevention removed to fix broken page on publish */
 
   /* Instant button feedback */
   button.active-press,
