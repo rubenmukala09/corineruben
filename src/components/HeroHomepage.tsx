@@ -55,11 +55,13 @@ export const HeroHomepage = () => {
     return () => clearTimeout(timer);
   }, []);
   
+  // Use CSS custom properties for consistent height calculation that accounts for navigation
+  // This prevents CLS by ensuring the hero has a stable size from first paint
   return <section className="relative overflow-hidden" style={{
     backgroundColor: '#1a1625',
     contain: 'strict',
-    height: '100vh',
-    minHeight: '100vh'
+    height: 'calc(100vh - var(--nav-height, 64px))',
+    minHeight: 'calc(100vh - var(--nav-height, 64px))'
   }}>
       {/* Video Background - lazy preload for faster initial paint */}
       <div className="absolute inset-0">
@@ -96,8 +98,8 @@ export const HeroHomepage = () => {
       }} />
       </div>
       
-      <div className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10 hero-instant" style={{ contain: 'strict', height: 'calc(100vh - 64px)', minHeight: 'calc(100vh - 64px)' }}>
-        <div className="grid lg:grid-cols-5 gap-8 lg:gap-20 xl:gap-28 items-center" style={{ contain: 'strict', height: 'calc(100vh - 64px)', minHeight: 'calc(100vh - 64px)' }}>
+      <div className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10 hero-instant" style={{ contain: 'strict', height: '100%', minHeight: '100%' }}>
+        <div className="grid lg:grid-cols-5 gap-8 lg:gap-20 xl:gap-28 items-center" style={{ contain: 'strict', height: '100%', minHeight: '100%' }}>
           
           {/* Left Content - Instant render, no animation delay - LCP element */}
           <div className="lg:col-span-3 order-2 lg:order-1 w-full" style={{ contain: 'layout style paint' }}>

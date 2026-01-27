@@ -70,6 +70,10 @@ export const FAQPreview = () => {
                     <img
                       src={supportAgent}
                       alt="Support specialist"
+                      width={80}
+                      height={80}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover"
                     />
                   </div>
