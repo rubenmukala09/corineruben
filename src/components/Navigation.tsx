@@ -8,7 +8,7 @@ import { ShoppingCart } from "@/components/ShoppingCart";
 import { useAuth } from "@/contexts/AuthContext";
 import { clearAllCachesAndReload } from "@/utils/cacheUtils";
 import { toast } from "sonner";
-import invisionLogo from "@/assets/shield-logo-sm.webp";
+import invisionLogo from "@/assets/shield-logo-nav.webp";
 
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

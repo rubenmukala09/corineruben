@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import invisionLogo from "@/assets/shield-logo-sm.webp";
+import invisionLogo from "@/assets/shield-logo-nav.webp";
 import { NotificationBell } from "@/components/NotificationBell";
 
 interface AdminTopBarProps {

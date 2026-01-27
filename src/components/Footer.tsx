@@ -4,7 +4,7 @@ import { Facebook, Linkedin, Youtube, Instagram, Shield, Mail, MapPin, ArrowRigh
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import TrustedTechLogos from "./TrustedTechLogos";
-import invisionLogo from "@/assets/shield-logo-sm.webp";
+import invisionLogo from "@/assets/shield-logo-nav.webp";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useConfetti } from "@/hooks/useConfetti";
