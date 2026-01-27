@@ -145,7 +145,11 @@ export const FAQPreview = () => {
             <img 
               src={natureCTABg} 
               alt="Beautiful nature landscape" 
+              width={1920}
+              height={1080}
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
           </div>

@@ -154,8 +154,11 @@ export const ResourcesPromo = () => {
                   <img 
                     src={productRfidWallet}
                     alt="InVision Network RFID protection wallet"
+                    width={200}
+                    height={96}
                     className="w-full h-24 object-cover"
                     loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-2 py-1">
                     <span className="text-white text-xs font-medium">RFID Wallets</span>
@@ -165,8 +168,11 @@ export const ResourcesPromo = () => {
                   <img 
                     src={productUsbKey}
                     alt="InVision Network Security USB key"
+                    width={200}
+                    height={96}
                     className="w-full h-24 object-cover"
                     loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-2 py-1">
                     <span className="text-white text-xs font-medium">Security USB Keys</span>
@@ -205,8 +211,11 @@ export const ResourcesPromo = () => {
               <img 
                 src={libraryLearning}
                 alt="InVision Network learning resources and guides"
+                width={800}
+                height={192}
                 className="w-full h-48 object-cover"
                 loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4 text-white">

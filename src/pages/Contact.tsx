@@ -532,8 +532,12 @@ function Contact() {
                   <div className="relative rounded-xl overflow-hidden mb-4 group">
                     <img 
                       src={supportAgentPhoto} 
-                      alt="Our friendly support team member" 
+                      alt="Our friendly support team member"
+                      width={400}
+                      height={160}
                       className="w-full h-40 object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                      decoding="async"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent" />
                     <div className="absolute bottom-2 left-3 text-white">

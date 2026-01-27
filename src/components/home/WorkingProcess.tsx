@@ -104,8 +104,11 @@ export const WorkingProcess = () => {
                   <img 
                     src={workingProcessScreenshot}
                     alt="InVision Network training platform interface"
+                    width={600}
+                    height={280}
                     className="w-full h-full object-cover object-top"
                     loading="lazy"
+                    decoding="async"
                   />
                   {/* Subtle ambient glow overlay */}
                   <motion.div 

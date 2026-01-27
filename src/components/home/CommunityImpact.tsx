@@ -102,8 +102,11 @@ export const CommunityImpact = () => {
             <img
               src={veteranSupport}
               alt="InVision Network supporting veterans"
+              width={400}
+              height={192}
               className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
               loading="lazy"
+              decoding="async"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
             <div className="absolute bottom-3 left-3 right-3">
@@ -122,8 +125,11 @@ export const CommunityImpact = () => {
             <img
               src={communityGivingAbstract}
               alt="InVision Network community giving and support"
+              width={400}
+              height={192}
               className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
               loading="lazy"
+              decoding="async"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
             <div className="absolute bottom-3 left-3 right-3">
@@ -142,8 +148,11 @@ export const CommunityImpact = () => {
             <img
               src={paidWorkshopTraining}
               alt="InVision Network professional training workshops"
+              width={400}
+              height={192}
               className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
               loading="lazy"
+              decoding="async"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
             <div className="absolute bottom-3 left-3 right-3">

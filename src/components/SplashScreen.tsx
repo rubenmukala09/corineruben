@@ -13,12 +13,11 @@ export const SplashScreen = ({ isVisible }: SplashScreenProps) => {
   useEffect(() => {
     // Detect when isVisible changes from true to false
     if (wasVisible.current && !isVisible) {
-      // Start fade out
       setIsFadingOut(true);
-      // Remove from DOM after 500ms fade animation completes
+      // Remove from DOM after 300ms fade animation completes
       const timer = setTimeout(() => {
         setShouldRender(false);
-      }, 500);
+      }, 300);
       return () => clearTimeout(timer);
     }
     wasVisible.current = isVisible;
@@ -39,8 +38,10 @@ export const SplashScreen = ({ isVisible }: SplashScreenProps) => {
       className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-md"
       style={{ 
         opacity: isFadingOut ? 0 : 1,
-        transition: 'opacity 500ms ease-out',
+        transition: 'opacity 300ms ease-out',
         pointerEvents: isFadingOut ? 'none' : 'auto',
+        contain: 'strict',
+        willChange: 'opacity',
       }}
     >
       {/* Animation Wrapper */}

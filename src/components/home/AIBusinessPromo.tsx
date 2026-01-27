@@ -277,8 +277,11 @@ export const AIBusinessPromo = () => {
                 <img 
                   src={aiReceptionistTech}
                   alt="AI receptionist technology concept"
+                  width={400}
+                  height={128}
                   className="w-full h-32 object-cover transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                 <div className="absolute bottom-2 left-2 right-2">
@@ -292,8 +295,11 @@ export const AIBusinessPromo = () => {
                 <img 
                   src={aiAutomationTech}
                   alt="AI automation technology concept"
+                  width={400}
+                  height={128}
                   className="w-full h-32 object-cover transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                 <div className="absolute bottom-2 left-2 right-2">

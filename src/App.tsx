@@ -241,17 +241,22 @@ function App() {
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
     
+    // Remove initial splash immediately to prevent CLS
     const initialSplash = document.getElementById('initial-splash');
     if (initialSplash) {
       initialSplash.classList.add('fade-out');
-      setTimeout(() => {
-        initialSplash.remove();
-      }, 500);
+      // Use requestAnimationFrame for smooth removal without CLS
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          initialSplash.remove();
+        }, 300);
+      });
     }
     
+    // Hide React splash faster
     const timer = setTimeout(() => {
       setShowSplash(false);
-    }, 800);
+    }, 400);
     
     return () => {
       document.documentElement.style.scrollBehavior = "auto";
