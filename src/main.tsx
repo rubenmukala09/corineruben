@@ -7,6 +7,9 @@ if (window.location.search.includes('r=')) {
   window.history.replaceState({}, '', window.location.pathname);
 }
 
+// Add loaded class immediately to prevent FOUC
+document.body.classList.add('loaded');
+
 // Mount immediately
 createRoot(document.getElementById("root")!).render(<App />);
 

@@ -20,26 +20,6 @@
     
     <!-- Entry module preloading handled automatically by Vite in production -->
     
-    <!-- CSS async loader to prevent render-blocking -->
-    <script>
-      (function(){
-        function makeAsync(link){
-          if(link.rel==='stylesheet'&&link.href&&!link.dataset.critical){
-            link.media='print';
-            link.onload=function(){this.media='all';this.onload=null};
-          }
-        }
-        var obs=new MutationObserver(function(m){
-          m.forEach(function(mut){
-            mut.addedNodes.forEach(function(n){
-              if(n.tagName==='LINK')makeAsync(n);
-            });
-          });
-        });
-        obs.observe(document.documentElement,{childList:true,subtree:true});
-        document.querySelectorAll('link[rel="stylesheet"]').forEach(makeAsync);
-      })();
-    </script>
     
     <!-- Load Google Fonts async to avoid render-blocking -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'" data-critical>
