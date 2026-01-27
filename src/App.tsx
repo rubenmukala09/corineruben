@@ -122,8 +122,7 @@ const Maintenance = lazy(() => import("./pages/Maintenance"));
 const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess"));
 const PaymentCanceled = lazy(() => import("./pages/PaymentCanceled"));
 
-import { AIPulseLoader } from "./components/AIPulseLoader";
-const PageLoader = () => <AIPulseLoader message="Loading..." fullScreen={true} />;
+// No full-screen loader - pages render instantly
 const queryClient = new QueryClient();
 
 // Direct routes without AnimatePresence - instant transitions
@@ -263,7 +262,7 @@ function App() {
                       <RouteTracker />
                       <AnalyticsTracker />
                       <ErrorBoundary>
-                        <Suspense fallback={<PageLoader />}>
+                        <Suspense fallback={null}>
                           <PublicRoutes />
                         </Suspense>
                       </ErrorBoundary>

@@ -35,17 +35,8 @@ export const LazyAIChat = () => {
   const [shouldLoad, setShouldLoad] = useState(false);
 
   useEffect(() => {
-    // Defer loading until browser is idle or after 2 seconds
-    if ('requestIdleCallback' in window) {
-      const idleId = (window as any).requestIdleCallback(
-        () => setShouldLoad(true),
-        { timeout: 2000 }
-      );
-      return () => (window as any).cancelIdleCallback(idleId);
-    } else {
-      const timeoutId = setTimeout(() => setShouldLoad(true), 1000);
-      return () => clearTimeout(timeoutId);
-    }
+    // Load immediately - no delay
+    setShouldLoad(true);
   }, []);
 
   // Show placeholder with reserved space to prevent CLS
