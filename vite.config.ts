@@ -42,15 +42,6 @@ export default defineConfig(({ mode }) => ({
     react(),
     mode === "development" && componentTagger(),
     // Make CSS non-render-blocking in production
-    mode === "production" && {
-      name: 'async-css-plugin',
-      transformIndexHtml(html: string) {
-        return html.replace(
-          /<link rel="stylesheet"([^>]*) href="([^"]*\.css[^"]*)"([^>]*)>/g,
-          '<link rel="stylesheet"$1 href="$2"$3 media="print" onload="this.media=\'all\'">'
-        );
-      }
-    },
     ViteImageOptimizer({
       jpg: {
         quality: 75,
