@@ -111,7 +111,11 @@ export const ServicesShowcase = () => {
                         <img
                           src={service.image}
                           alt={service.title}
+                          width={300}
+                          height={300}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          loading="lazy"
+                          decoding="async"
                         />
                       </div>
                       <div className="absolute -inset-2 border-2 border-dashed border-primary/20 rounded-2xl" />
