@@ -6,8 +6,15 @@ import "./index.css";
 if (window.location.search.includes('r=')) {
   window.history.replaceState({}, '', window.location.pathname);
 }
-// Mount immediately
-createRoot(document.getElementById("root")!).render(<App />);
+
+// Ensure CSS is applied before render
+const root = document.getElementById("root")!;
+
+// Force a style recalc to ensure CSS is ready
+document.documentElement.offsetHeight;
+
+// Mount app
+createRoot(root).render(<App />);
 
 // Defer non-critical initialization
 if ('requestIdleCallback' in window) {

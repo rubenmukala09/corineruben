@@ -21,8 +21,8 @@
     <!-- Entry module preloading handled automatically by Vite in production -->
     
     
-    <!-- Load Google Fonts async to avoid render-blocking -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'" data-critical>
+    <!-- Load Google Fonts - render-blocking for consistent initial paint -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap">
     
     <!-- Critical CSS inlined for FCP/LCP -->
     <style>
