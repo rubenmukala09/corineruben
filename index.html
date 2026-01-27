@@ -101,8 +101,10 @@
     <title>InVision Network | Cybersecurity & AI Protection in Ohio</title>
     <meta name="description" content="InVision Network provides expert cybersecurity training and AI protection for Ohio families and businesses. Protect your identity and data from online scams.">
     <meta name="author" content="InVision Network" />
-    <meta name="keywords" content="AI scam protection, deepfake detection, senior scam training, family cybersecurity, phishing defense, Dayton Ohio">
+    <meta name="keywords" content="AI scam protection, deepfake detection, senior scam training, family cybersecurity, phishing defense, Dayton Ohio, cybersecurity training">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     
     <!-- Google Site Verification -->
     <meta name="google-site-verification" content="google7d90b5b18423192a.html" />
@@ -111,11 +113,18 @@
     
     <!-- Open Graph Tags -->
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="InVision Network" />
     <meta property="og:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/UpYpYr7MTVdr1jgHmL94ALNUlk93/social-images/social-1761862743436-shield_purpleb.png">
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="InVision Network - AI Scam Protection" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@invisionnetwork" />
+    <meta name="twitter:creator" content="@invisionnetwork" />
     <meta name="twitter:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/UpYpYr7MTVdr1jgHmL94ALNUlk93/social-images/social-1761862743436-shield_purpleb.png">
+    <meta name="twitter:image:alt" content="InVision Network - AI Scam Protection" />
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://invisionnetwork.org" />
@@ -127,15 +136,21 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="InVision" />
 
-    <!-- Structured Data (JSON-LD) -->
+    <!-- Structured Data (JSON-LD) - Organization -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Organization",
+      "@id": "https://invisionnetwork.org/#organization",
       "name": "InVision Network",
       "description": "AI Scam Protection Training for Families & Seniors",
-      "url": "https://invisionnetwork.com",
-      "logo": "https://invisionnetwork.com/logo.png",
+      "url": "https://invisionnetwork.org",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://invisionnetwork.org/logo.png",
+        "width": 512,
+        "height": 512
+      },
       "foundingDate": "2024",
       "founder": {
         "@type": "Person",
@@ -145,29 +160,84 @@
         "@type": "PostalAddress",
         "addressLocality": "Dayton",
         "addressRegion": "OH",
+        "postalCode": "45402",
         "addressCountry": "US"
       },
       "contactPoint": {
         "@type": "ContactPoint",
         "telephone": "+1-937-301-8749",
         "contactType": "Customer Service",
-        "availableLanguage": ["English", "French", "Spanish"]
+        "availableLanguage": ["English", "French", "Spanish"],
+        "areaServed": ["US"]
       },
       "sameAs": [
         "https://twitter.com/invisionnetwork",
         "https://facebook.com/invisionnetwork",
         "https://linkedin.com/company/invisionnetwork"
       ],
-      "offers": {
-        "@type": "Offer",
-        "category": "Training & Consulting",
-        "description": "AI Scam Protection Training and Consultation Services"
-      },
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "4.9",
         "bestRating": "5",
+        "worstRating": "1",
         "ratingCount": "500"
+      }
+    }
+    </script>
+
+    <!-- Structured Data (JSON-LD) - LocalBusiness -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://invisionnetwork.org/#localbusiness",
+      "name": "InVision Network",
+      "description": "Expert cybersecurity training and AI protection services in Ohio",
+      "url": "https://invisionnetwork.org",
+      "telephone": "+1-937-301-8749",
+      "email": "hello@invisionnetwork.org",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Dayton",
+        "addressRegion": "OH",
+        "postalCode": "45402",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "39.7589",
+        "longitude": "-84.1916"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "17:00"
+        }
+      ],
+      "priceRange": "$$"
+    }
+    </script>
+
+    <!-- Structured Data (JSON-LD) - WebSite with SearchAction -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://invisionnetwork.org/#website",
+      "name": "InVision Network",
+      "url": "https://invisionnetwork.org",
+      "publisher": {
+        "@id": "https://invisionnetwork.org/#organization"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://invisionnetwork.org/resources?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
       }
     }
     </script>
