@@ -107,22 +107,22 @@ export const HeroHomepage = () => {
           {/* Left Content - Instant render, no animation delay - LCP element */}
           <div className="lg:col-span-3 order-2 lg:order-1 w-full" style={{ contain: 'layout style paint' }}>
             {/* Premium Badge */}
-            <div className="inline-flex items-center gap-2 sm:gap-3 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 mb-6 sm:mb-10 shadow-sm">
-              <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-gradient-to-r from-primary to-accent shadow-sm" />
-              <span className="text-xs sm:text-sm font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Veteran-Supporting • Ohio-Based</span>
+            <div className="inline-flex items-center gap-2 sm:gap-3 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white/10 border border-white/20 mb-6 sm:mb-10 shadow-sm">
+              <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-gradient-to-r from-purple-400 to-teal-400 shadow-sm" />
+              <span className="text-xs sm:text-sm font-semibold text-white/90">Veteran-Supporting • Ohio-Based</span>
             </div>
             
             {/* Headline - Renders immediately - LARGE for elderly readability */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-bold leading-[0.95] mb-6 sm:mb-8 tracking-tight">
-              <span className="block text-foreground">InVision</span>
-              <span className="block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">Network</span>
-              <span className="block font-medium text-muted-foreground text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mt-2 sm:mt-3">
+              <span className="block text-white">InVision</span>
+              <span className="block bg-gradient-to-r from-purple-400 via-teal-400 to-purple-400 bg-clip-text text-transparent">Network</span>
+              <span className="block font-medium text-gray-300 text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mt-2 sm:mt-3">
                 Protection • Education • Innovation
               </span>
             </h1>
             
             {/* Description - Larger for readability */}
-            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-foreground/80 max-w-2xl mb-8 sm:mb-12 leading-relaxed font-medium">
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/80 max-w-2xl mb-8 sm:mb-12 leading-relaxed font-medium">
               Empowering families with AI scam protection. Transforming businesses with cutting-edge automation solutions.
             </p>
             
@@ -152,26 +152,26 @@ export const HeroHomepage = () => {
               <div className="relative">
                 {/* Outer glow ring */}
                 <div className="absolute inset-0 rounded-full hidden sm:block" style={{
-                background: 'radial-gradient(circle at center, hsl(var(--primary) / 0.2) 0%, hsl(var(--accent) / 0.1) 50%, transparent 70%)'
+                background: 'radial-gradient(circle at center, rgba(124, 58, 237, 0.2) 0%, rgba(20, 184, 166, 0.1) 50%, transparent 70%)'
               }} />
 
                 {/* Central Shield Container */}
                 <div className="relative mx-auto w-40 h-40 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72">
                   {/* Outer ring */}
-                  <div className="absolute inset-0 rounded-full hidden sm:block border border-dashed border-primary/40" />
+                  <div className="absolute inset-0 rounded-full hidden sm:block border border-dashed border-purple-400/40" />
                   
                   {/* Second ring */}
-                  <div className="absolute inset-4 sm:inset-6 rounded-full border border-accent/25 hidden sm:block" />
+                  <div className="absolute inset-4 sm:inset-6 rounded-full border border-teal-400/25 hidden sm:block" />
                   
                   {/* Pulsing glow */}
                   
                   
                   {/* Inner solid circle */}
-                  <div className="absolute inset-10 sm:inset-16 rounded-full bg-gradient-to-br from-primary via-primary to-accent/80 shadow-2xl shadow-primary/40" />
+                  <div className="absolute inset-10 sm:inset-16 rounded-full bg-gradient-to-br from-purple-600 via-purple-600 to-teal-500/80 shadow-2xl shadow-purple-600/40" />
                   
                   {/* Shield icon center */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <Shield className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 text-primary-foreground drop-shadow-lg" strokeWidth={1.5} />
+                    <Shield className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 text-white drop-shadow-lg" strokeWidth={1.5} />
                   </div>
                 </div>
 
@@ -197,11 +197,11 @@ export const HeroHomepage = () => {
                   }];
                   const pos = positions[index];
                   return <div key={feature.label} className="absolute" style={pos}>
-                        <div className="flex items-center gap-2.5 px-4 py-2.5 bg-card/95 rounded-full border border-primary/15 shadow-lg shadow-primary/10 hover:scale-105 transition-transform duration-200">
-                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/15 to-accent/15 flex items-center justify-center">
-                            <feature.icon className="w-4 h-4 text-primary" />
+                        <div className="flex items-center gap-2.5 px-4 py-2.5 bg-white/95 rounded-full border border-purple-200 shadow-lg shadow-purple-500/10 hover:scale-105 transition-transform duration-200">
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-100 to-teal-100 flex items-center justify-center">
+                            <feature.icon className="w-4 h-4 text-purple-600" />
                           </div>
-                          <span className="text-sm text-foreground font-medium whitespace-nowrap">{feature.label}</span>
+                          <span className="text-sm text-gray-800 font-medium whitespace-nowrap">{feature.label}</span>
                         </div>
                       </div>;
                 })}
@@ -210,11 +210,11 @@ export const HeroHomepage = () => {
 
               {/* Feature badges grid - Mobile only */}
               <div className="grid grid-cols-2 gap-2 mt-6 md:hidden">
-                {securityFeatures.map(feature => <div key={feature.label} className="flex items-center gap-2 px-3 py-2 bg-card/90 rounded-lg border border-primary/10 shadow-sm">
-                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary/15 to-accent/15 flex items-center justify-center flex-shrink-0">
-                      <feature.icon className="w-3 h-3 text-primary" />
+                {securityFeatures.map(feature => <div key={feature.label} className="flex items-center gap-2 px-3 py-2 bg-white/90 rounded-lg border border-purple-200 shadow-sm">
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-100 to-teal-100 flex items-center justify-center flex-shrink-0">
+                      <feature.icon className="w-3 h-3 text-purple-600" />
                     </div>
-                    <span className="text-xs text-foreground font-medium leading-tight">{feature.label}</span>
+                    <span className="text-xs text-gray-800 font-medium leading-tight">{feature.label}</span>
                   </div>)}
               </div>
 
@@ -229,9 +229,9 @@ export const HeroHomepage = () => {
               }, {
                 icon: ShieldCheck,
                 label: "Veteran-Supporting"
-              }].map(stat => <div key={stat.label} className="text-center p-2 sm:p-4 bg-card/60 rounded-xl sm:rounded-2xl border border-primary/10 hover:border-primary/25 transition-colors duration-200">
-                    <stat.icon className="w-4 h-4 sm:w-5 sm:h-5 text-accent mx-auto mb-1 sm:mb-2" />
-                    <div className="text-[10px] sm:text-xs text-muted-foreground font-medium">{stat.label}</div>
+              }].map(stat => <div key={stat.label} className="text-center p-2 sm:p-4 bg-white/10 rounded-xl sm:rounded-2xl border border-white/20 hover:border-white/40 transition-colors duration-200">
+                    <stat.icon className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400 mx-auto mb-1 sm:mb-2" />
+                    <div className="text-[10px] sm:text-xs text-gray-300 font-medium">{stat.label}</div>
                   </div>)}
               </div>
             </div>
@@ -249,10 +249,10 @@ export const HeroHomepage = () => {
           showDisclaimer ? 'opacity-100' : 'opacity-0'
         }`}
       >
-        <div className="flex items-center gap-2 px-4 py-2 bg-card/90 backdrop-blur-sm rounded-full border border-primary/20 shadow-lg">
-          <Camera className="w-3.5 h-3.5 text-primary" />
-          <span className="text-xs text-muted-foreground">
-            <strong className="text-foreground">Privacy Notice:</strong> Images are AI-generated to protect member identities
+        <div className="flex items-center gap-2 px-4 py-2 bg-white/90 backdrop-blur-sm rounded-full border border-purple-200 shadow-lg">
+          <Camera className="w-3.5 h-3.5 text-purple-600" />
+          <span className="text-xs text-gray-600">
+            <strong className="text-gray-800">Privacy Notice:</strong> Images are AI-generated to protect member identities
           </span>
         </div>
       </div>
