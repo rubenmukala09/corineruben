@@ -62,9 +62,9 @@ export const HeroHomepage = () => {
     id="hero"
     className="relative overflow-hidden bg-background"
     style={{
-      minHeight: 'max(600px, calc(100svh - 96px))',
+      minHeight: 'max(600px, calc(100vh - 96px))',
       height: 'auto',
-      contain: 'layout style'
+      contain: 'layout style paint'
     }}
   >
       {/* Video Background - lazy preload for faster initial paint */}
@@ -102,8 +102,8 @@ export const HeroHomepage = () => {
       }} />
       </div>
       
-      <div className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10 hero-instant flex items-center py-8 md:py-12 lg:py-16" style={{ minHeight: 'max(500px, calc(100svh - 160px))', contain: 'layout style' }}>
-        <div className="grid lg:grid-cols-5 gap-8 lg:gap-20 xl:gap-28 items-center w-full" style={{ contain: 'layout style' }}>
+      <div className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10 hero-instant flex items-center py-8 md:py-12 lg:py-16" style={{ minHeight: 'max(500px, calc(100vh - 160px))', contain: 'layout style paint' }}>
+        <div className="grid lg:grid-cols-5 gap-8 lg:gap-20 xl:gap-28 items-center w-full" style={{ contain: 'layout style paint' }}>
           
           {/* Left Content - Instant render, no animation delay - LCP element */}
           <div className="lg:col-span-3 order-2 lg:order-1 w-full">
