@@ -126,9 +126,9 @@ export const WorkshopsPromo = () => {
                   loading="lazy"
                   decoding="async"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                 <div className="absolute bottom-2 left-2 right-2">
-                  <span className="text-white text-xs font-semibold">One-on-One Training</span>
+                  <span className="text-white text-xs font-semibold drop-shadow-md">One-on-One Training</span>
                 </div>
               </div>
               <div className="relative rounded-2xl overflow-hidden shadow-lg">
@@ -141,9 +141,9 @@ export const WorkshopsPromo = () => {
                   loading="lazy"
                   decoding="async"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                 <div className="absolute bottom-2 left-2 right-2">
-                  <span className="text-white text-xs font-semibold">Group Workshops</span>
+                  <span className="text-white text-xs font-semibold drop-shadow-md">Group Workshops</span>
                 </div>
               </div>
             </div>
@@ -186,13 +186,13 @@ export const WorkshopsPromo = () => {
               {howItWorks.map((item, index) => (
                 <div 
                   key={index}
-                  className={`bg-gradient-to-br ${item.color} rounded-2xl p-4 text-center text-white hover:scale-105 hover:-translate-y-1 transition-all duration-300 shadow-lg`}
+                  className={`bg-gradient-to-br ${item.color} rounded-2xl p-4 text-center hover:scale-105 hover:-translate-y-1 transition-all duration-300 shadow-lg`}
                 >
                   <div className="w-10 h-10 mx-auto mb-2 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                    <item.icon className="w-5 h-5" />
+                    <item.icon className="w-5 h-5 text-white" />
                   </div>
-                  <div className="text-base font-bold">{item.title}</div>
-                  <div className="text-xs opacity-80">{item.desc}</div>
+                  <div className="text-base font-bold text-white drop-shadow-sm">{item.title}</div>
+                  <div className="text-xs text-white/90 drop-shadow-sm">{item.desc}</div>
                 </div>
               ))}
             </div>
@@ -236,7 +236,7 @@ export const WorkshopsPromo = () => {
                   className="relative bg-card/70 backdrop-blur-md rounded-2xl p-4 border border-border/30 shadow-[0_8px_30px_-10px_rgba(0,0,0,0.08)] text-center cursor-pointer hover:scale-105 hover:-translate-y-2 hover:shadow-[0_15px_40px_-10px_rgba(0,0,0,0.12)] transition-all duration-300"
                 >
                   {format.badge && (
-                    <span className="absolute -top-2 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-gradient-to-r from-primary to-accent text-white text-[10px] font-bold rounded-full whitespace-nowrap shadow-lg">
+                    <span className="absolute -top-2 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-gradient-to-r from-primary to-accent text-primary-foreground text-[10px] font-bold rounded-full whitespace-nowrap shadow-lg drop-shadow-sm">
                       {format.badge}
                     </span>
                   )}

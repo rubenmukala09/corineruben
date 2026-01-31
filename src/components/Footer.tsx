@@ -81,18 +81,18 @@ const Footer = () => {
                   <img src={invisionLogo} alt="InVision Network" width={32} height={32} loading="lazy" decoding="async" style={{ width: 32, height: 32 }} className="h-8 w-8 object-contain brightness-0 invert" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold">InVision Network</h2>
-                  <p className="text-xs text-white/50">AI Security & Protection</p>
+                  <h2 className="text-xl font-bold text-white drop-shadow-sm">InVision Network</h2>
+                  <p className="text-xs text-white/60 drop-shadow-sm">AI Security & Protection</p>
                 </div>
               </div>
-            <p className="text-base text-white/60 max-w-md leading-relaxed">
+            <p className="text-base text-white/70 max-w-md leading-relaxed drop-shadow-sm">
               Protecting families and businesses from AI-powered scams with cutting-edge technology and expert training.
             </p>
               <div className="flex flex-wrap gap-4">
-                <span className="flex items-center gap-2 text-sm text-white/50">
+                <span className="flex items-center gap-2 text-sm text-white/60 drop-shadow-sm">
                   <MapPin className="w-4 h-4" />Serving the Greater Dayton Area
                 </span>
-                <span className="flex items-center gap-2 text-sm text-white/50">
+                <span className="flex items-center gap-2 text-sm text-white/60 drop-shadow-sm">
                   <Mail className="w-4 h-4" />hello@invisionnetwork.org
                 </span>
               </div>
@@ -100,8 +100,8 @@ const Footer = () => {
 
             {/* Newsletter */}
             <div className="lg:pl-8">
-              <h3 className="text-lg font-semibold mb-2">Stay Protected</h3>
-              <p className="text-sm text-white/60 mb-4">
+              <h3 className="text-lg font-semibold mb-2 text-white drop-shadow-sm">Stay Protected</h3>
+              <p className="text-sm text-white/70 mb-4 drop-shadow-sm">
                 Get monthly AI safety tips and scam alerts delivered to your inbox.
               </p>
               <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
@@ -129,7 +129,7 @@ const Footer = () => {
           {/* Navigation Links */}
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-10">
             <div>
-              <h4 className="font-bold text-base mb-4 text-white/90">Navigation</h4>
+              <h4 className="font-bold text-base mb-4 text-white drop-shadow-sm">Navigation</h4>
               <ul className="space-y-2">
                 {[
                   { to: "/", label: "Home" },
@@ -149,7 +149,7 @@ const Footer = () => {
             </div>
 
             <div>
-              <h4 className="font-bold text-base mb-4 text-white/90">Services</h4>
+              <h4 className="font-bold text-base mb-4 text-white drop-shadow-sm">Services</h4>
               <ul className="space-y-2">
                 {["ScamShield Protection", "Safety Audit", "Web Design", "AI Automation"].map((label, i) => (
                   <li key={i}>
@@ -162,7 +162,7 @@ const Footer = () => {
             </div>
 
             <div>
-              <h4 className="font-bold text-base mb-4 text-white/90">Training</h4>
+              <h4 className="font-bold text-base mb-4 text-white drop-shadow-sm">Training</h4>
               <ul className="space-y-2">
                 {["Zoom Classes", "In-Person", "Group Bookings", "Gift Certificates"].map((label, i) => (
                   <li key={i}>
@@ -175,7 +175,7 @@ const Footer = () => {
             </div>
 
             <div>
-              <h4 className="font-bold text-base mb-4 text-white/90">Support</h4>
+              <h4 className="font-bold text-base mb-4 text-white drop-shadow-sm">Support</h4>
               <ul className="space-y-2">
                 <li><Link to="/faq" className="inline-block min-h-[24px] py-2 text-base text-white/60 hover:text-white transition-colors">FAQ</Link></li>
                 <li><Link to="/contact" className="inline-block min-h-[24px] py-2 text-base text-white/60 hover:text-white transition-colors">Contact Us</Link></li>
@@ -196,7 +196,7 @@ const Footer = () => {
             </div>
 
             <div>
-              <h4 className="font-bold text-base mb-4 text-white/90">Legal</h4>
+              <h4 className="font-bold text-base mb-4 text-white drop-shadow-sm">Legal</h4>
               <ul className="space-y-2">
                 <li><Link to="/privacy-policy" className="inline-block min-h-[24px] py-2 text-base text-white/60 hover:text-white transition-colors">Privacy Policy</Link></li>
                 <li><Link to="/terms-of-service" className="inline-block min-h-[24px] py-2 text-base text-white/60 hover:text-white transition-colors">Terms of Service</Link></li>
@@ -212,14 +212,14 @@ const Footer = () => {
           <div className="pt-6 border-t border-white/10">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-4">
               <div className="flex flex-wrap items-center justify-center gap-4">
-                <p className="text-base text-white/50">
+                <p className="text-base text-white/60 drop-shadow-sm">
                   © {new Date().getFullYear()} InVision Network. All rights reserved.
                 </p>
                 <div className="flex items-center gap-4">
-                  <span className="flex items-center gap-1.5 text-sm text-white/60">
+                  <span className="flex items-center gap-1.5 text-sm text-white/70 drop-shadow-sm">
                     <Shield className="w-5 h-5 text-emerald-500/80" />BBB Accredited
                   </span>
-                  <span className="flex items-center gap-1.5 text-sm text-white/60">
+                  <span className="flex items-center gap-1.5 text-sm text-white/70 drop-shadow-sm">
                     <Shield className="w-5 h-5 text-amber-500/80" />Supports Veterans
                   </span>
                 </div>
@@ -248,7 +248,7 @@ const Footer = () => {
             </div>
 
             {/* Legal Disclaimer */}
-            <p className="text-white/40 text-sm text-center leading-relaxed max-w-4xl mx-auto">
+            <p className="text-white/50 text-sm text-center leading-relaxed max-w-4xl mx-auto drop-shadow-sm">
               InVision Network provides educational services only. We are not legal, financial, tax, or licensed cybersecurity professionals. In case of active fraud, identity theft, or criminal activity, contact local law enforcement (911), your bank's fraud department immediately using official phone numbers, and report to FTC at IdentityTheft.gov. We never request passwords, 2FA codes, bank account information, or Social Security numbers.
             </p>
           </div>

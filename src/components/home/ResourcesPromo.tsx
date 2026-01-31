@@ -160,8 +160,8 @@ export const ResourcesPromo = () => {
                     loading="lazy"
                     decoding="async"
                   />
-                  <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-2 py-1">
-                    <span className="text-white text-xs font-medium">RFID Wallets</span>
+                  <div className="absolute bottom-0 left-0 right-0 bg-slate-900/80 px-2 py-1">
+                    <span className="text-white text-xs font-medium drop-shadow-sm">RFID Wallets</span>
                   </div>
                 </div>
                 <div className="relative rounded-xl overflow-hidden shadow-md hover:scale-[1.02] transition-transform duration-200">
@@ -174,8 +174,8 @@ export const ResourcesPromo = () => {
                     loading="lazy"
                     decoding="async"
                   />
-                  <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-2 py-1">
-                    <span className="text-white text-xs font-medium">Security USB Keys</span>
+                  <div className="absolute bottom-0 left-0 right-0 bg-slate-900/80 px-2 py-1">
+                    <span className="text-white text-xs font-medium drop-shadow-sm">Security USB Keys</span>
                   </div>
                 </div>
               </div>
@@ -217,13 +217,13 @@ export const ResourcesPromo = () => {
                 loading="lazy"
                 decoding="async"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4 text-white">
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/85 via-slate-900/40 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
                 <div className="flex items-center gap-2 mb-1">
-                  <BookOpen className="w-5 h-5" />
-                  <span className="text-lg font-bold">Educational Resources</span>
+                  <BookOpen className="w-5 h-5 text-white" />
+                  <span className="text-lg font-bold text-white drop-shadow-md">Educational Resources</span>
                 </div>
-                <p className="text-sm text-white/80">20+ guides, scripts, and tools for complete protection</p>
+                <p className="text-sm text-white/90 drop-shadow-sm">20+ guides, scripts, and tools for complete protection</p>
               </div>
             </div>
 
@@ -263,16 +263,16 @@ export const ResourcesPromo = () => {
             ))}
 
             {/* Free Resources Banner */}
-            <div className="bg-gradient-to-r from-primary to-accent rounded-3xl p-6 text-white">
+            <div className="bg-gradient-to-r from-primary to-accent rounded-3xl p-6">
               <div className="flex items-center gap-4">
                 <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center">
-                  <Download className="w-7 h-7" />
+                  <Download className="w-7 h-7 text-white" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-bold text-lg">Free Emergency Anti-Scam Scripts</h3>
-                  <p className="text-white/80 text-sm">IRS • Tech Support • Grandparent • Bank Fraud</p>
+                  <h3 className="font-bold text-lg text-white drop-shadow-md">Free Emergency Anti-Scam Scripts</h3>
+                  <p className="text-white/90 text-sm drop-shadow-sm">IRS • Tech Support • Grandparent • Bank Fraud</p>
                 </div>
-                <Link to="/resources" className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-full text-sm font-bold transition-colors duration-200">
+                <Link to="/resources" className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-full text-sm font-bold text-white transition-colors duration-200 drop-shadow-sm">
                   Get Free →
                 </Link>
               </div>

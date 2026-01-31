@@ -132,7 +132,7 @@ const Index = () => {
           {/* Final CTA with Senior Couple Image */}
           <Suspense fallback={<SectionLoader />}>
             <CTASection headline="Join Our Protected Community" variant="image" backgroundImage={seniorCoupleActive}>
-              <p className="text-xl text-white/90 mb-8">Join families across Ohio who live confidently, knowing they're protected from AI scams.</p>
+              <p className="text-xl text-white/95 mb-8 drop-shadow-md">Join families across Ohio who live confidently, knowing they're protected from AI scams.</p>
               <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center">
                 <Button asChild variant="gold" size="xl" className="w-full sm:w-auto">
                   <Link to="/training#pricing">Get Protected Today</Link>
@@ -141,7 +141,7 @@ const Index = () => {
                   <Link to="/business">Business Solutions</Link>
                 </Button>
               </div>
-              <p className="text-white/80 mt-6 text-sm">
+              <p className="text-white/90 mt-6 text-sm drop-shadow-sm">
                 ✓ 10% Veteran Discount ✓ HIPAA Compliant ✓ 30-Day Money-Back Guarantee
               </p>
             </CTASection>

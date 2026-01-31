@@ -2115,7 +2115,7 @@ function Business() {
             <Link to="/faq">View Frequently Asked Questions</Link>
           </Button>
         </div>
-        <p className="text-white/80 text-sm mt-4">15-minute call to discuss your needs - no sales pressure.</p>
+        <p className="text-white/90 text-sm mt-4 drop-shadow-sm">15-minute call to discuss your needs - no sales pressure.</p>
       </CTASection>
 
       <Footer />

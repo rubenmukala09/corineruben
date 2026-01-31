@@ -125,7 +125,7 @@ const AIReceptionist = () => {
                 </a>
               </Button>
             </div>
-            <p className="text-sm text-white/80 mt-6">
+            <p className="text-sm text-white/90 mt-6 drop-shadow-sm">
               ✓ Setup in 48 hours ✓ No contracts ✓ Cancel anytime
             </p>
           </Hero>

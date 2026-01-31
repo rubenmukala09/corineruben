@@ -77,8 +77,8 @@ export const FAQPreview = () => {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-green-900 rounded-full border-2 border-background flex items-center justify-center">
-                    <span className="text-[11px] text-white font-bold">ON</span>
+                  <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-emerald-600 rounded-full border-2 border-background flex items-center justify-center shadow-md">
+                    <span className="text-[11px] text-white font-bold drop-shadow-sm">ON</span>
                   </div>
                 </div>
                 <div>
@@ -155,7 +155,7 @@ export const FAQPreview = () => {
               loading="lazy"
               decoding="async"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/40 to-transparent" />
           </div>
           
           <div className="relative z-10 p-12 md:p-20 text-center">
@@ -173,7 +173,7 @@ export const FAQPreview = () => {
                   <ArrowRight className="ml-2 w-6 h-6" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="h-16 px-10 text-xl font-bold rounded-full bg-white/10 border-2 border-white/40 text-white hover:bg-white/20">
+              <Button asChild variant="outline" size="lg" className="h-16 px-10 text-xl font-bold rounded-full bg-white/15 border-2 border-white/50 text-white hover:bg-white/25 drop-shadow-md">
                 <Link to="/contact">
                   Talk to an Expert
                 </Link>

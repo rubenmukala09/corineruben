@@ -90,17 +90,17 @@ export const AIBusinessPromo = () => {
             {/* Combined ROI + Premium Section - Glass cards */}
             <div className="grid grid-cols-2 gap-4">
               {/* ROI Card */}
-              <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-3xl p-5 text-white relative overflow-hidden hover:scale-[1.02] transition-all duration-300 shadow-[0_15px_40px_-10px_rgba(16,185,129,0.35)]">
+              <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-3xl p-5 relative overflow-hidden hover:scale-[1.02] transition-all duration-300 shadow-[0_15px_40px_-10px_rgba(16,185,129,0.35)]">
                 <div className="absolute -top-6 -right-6 w-24 h-24 border-2 border-white/10 rounded-full animate-spin" style={{ animationDuration: "20s" }} />
                 <div className="relative z-10">
                   <div className="flex items-center gap-2 mb-3">
                     <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                      <TrendingUp className="w-5 h-5" />
+                      <TrendingUp className="w-5 h-5 text-white" />
                     </div>
-                    <span className="text-base font-semibold opacity-90">Average ROI</span>
+                    <span className="text-base font-semibold text-white/90 drop-shadow-sm">Average ROI</span>
                   </div>
-                  <div className="text-5xl font-black mb-1">340%</div>
-                  <div className="flex items-center gap-1.5 text-sm opacity-80">
+                  <div className="text-5xl font-black text-white mb-1 drop-shadow-sm">340%</div>
+                  <div className="flex items-center gap-1.5 text-sm text-white/90 drop-shadow-sm">
                     <Rocket className="w-4 h-4" />
                     <span>Within 6 months</span>
                   </div>
@@ -108,12 +108,12 @@ export const AIBusinessPromo = () => {
               </div>
 
               {/* Premium Services Card */}
-              <div className="bg-gradient-to-br from-violet-500 to-purple-600 rounded-3xl p-5 text-white shadow-[0_15px_40px_-10px_rgba(139,92,246,0.35)]">
+              <div className="bg-gradient-to-br from-violet-500 to-purple-600 rounded-3xl p-5 shadow-[0_15px_40px_-10px_rgba(139,92,246,0.35)]">
                 <div className="flex items-center gap-2 mb-3">
                   <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                    <Zap className="w-5 h-5" />
+                    <Zap className="w-5 h-5 text-white" />
                   </div>
-                  <span className="text-base font-bold">Premium</span>
+                  <span className="text-base font-bold text-white drop-shadow-sm">Premium</span>
                 </div>
                 <div className="space-y-2">
                   {premiumAddons.map((addon, i) => (
@@ -121,8 +121,8 @@ export const AIBusinessPromo = () => {
                       key={i}
                       className="flex items-center gap-2.5 text-sm bg-white/15 backdrop-blur-sm rounded-xl px-3 py-2"
                     >
-                      <addon.icon className="w-4 h-4" />
-                      <span className="font-medium">{addon.name}</span>
+                      <addon.icon className="w-4 h-4 text-white" />
+                      <span className="font-medium text-white drop-shadow-sm">{addon.name}</span>
                     </div>
                   ))}
                 </div>
@@ -248,26 +248,26 @@ export const AIBusinessPromo = () => {
 
             {/* Feature Highlights Bar - Premium gradient cards */}
             <div className="grid grid-cols-3 gap-3">
-              <div className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-4 text-white text-center hover:scale-[1.03] hover:-translate-y-1 transition-all duration-300 shadow-lg">
+              <div className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-4 text-center hover:scale-[1.03] hover:-translate-y-1 transition-all duration-300 shadow-lg">
                 <div className="w-10 h-10 mx-auto mb-2 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                  <Clock className="w-5 h-5" />
+                  <Clock className="w-5 h-5 text-white" />
                 </div>
-                <div className="text-base font-bold">24/7</div>
-                <div className="text-xs opacity-80">Always On</div>
+                <div className="text-base font-bold text-white drop-shadow-sm">24/7</div>
+                <div className="text-xs text-white/90 drop-shadow-sm">Always On</div>
               </div>
-              <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-4 text-white text-center hover:scale-[1.03] hover:-translate-y-1 transition-all duration-300 shadow-lg">
+              <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-4 text-center hover:scale-[1.03] hover:-translate-y-1 transition-all duration-300 shadow-lg">
                 <div className="w-10 h-10 mx-auto mb-2 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                  <Shield className="w-5 h-5" />
+                  <Shield className="w-5 h-5 text-white" />
                 </div>
-                <div className="text-base font-bold">HIPAA</div>
-                <div className="text-xs opacity-80">Compliant</div>
+                <div className="text-base font-bold text-white drop-shadow-sm">HIPAA</div>
+                <div className="text-xs text-white/90 drop-shadow-sm">Compliant</div>
               </div>
-              <div className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl p-4 text-white text-center hover:scale-[1.03] hover:-translate-y-1 transition-all duration-300 shadow-lg">
+              <div className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl p-4 text-center hover:scale-[1.03] hover:-translate-y-1 transition-all duration-300 shadow-lg">
                 <div className="w-10 h-10 mx-auto mb-2 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                  <Award className="w-5 h-5" />
+                  <Award className="w-5 h-5 text-white" />
                 </div>
-                <div className="text-base font-bold">Veteran</div>
-                <div className="text-xs opacity-80">10% Off</div>
+                <div className="text-base font-bold text-white drop-shadow-sm">Veteran</div>
+                <div className="text-xs text-white/90 drop-shadow-sm">10% Off</div>
               </div>
             </div>
 
@@ -283,10 +283,10 @@ export const AIBusinessPromo = () => {
                   loading="lazy"
                   decoding="async"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent" />
                 <div className="absolute bottom-2 left-2 right-2">
-                  <span className="text-white text-sm font-bold">AI Receptionist</span>
-                  <p className="text-white/70 text-xs">24/7 Intelligent Calls</p>
+                  <span className="text-white text-sm font-bold drop-shadow-md">AI Receptionist</span>
+                  <p className="text-white/80 text-xs drop-shadow-sm">24/7 Intelligent Calls</p>
                 </div>
                 {/* Animated glow */}
                 <div className="absolute top-2 right-2 w-2 h-2 bg-blue-400 rounded-full shadow-lg shadow-blue-400/50 animate-pulse" />
@@ -301,10 +301,10 @@ export const AIBusinessPromo = () => {
                   loading="lazy"
                   decoding="async"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent" />
                 <div className="absolute bottom-2 left-2 right-2">
-                  <span className="text-white text-sm font-bold">AI Automation</span>
-                  <p className="text-white/70 text-xs">Custom Workflows</p>
+                  <span className="text-white text-sm font-bold drop-shadow-md">AI Automation</span>
+                  <p className="text-white/80 text-xs drop-shadow-sm">Custom Workflows</p>
                 </div>
                 <div className="absolute top-2 right-2 w-2 h-2 bg-violet-400 rounded-full shadow-lg shadow-violet-400/50 animate-pulse" />
               </div>
