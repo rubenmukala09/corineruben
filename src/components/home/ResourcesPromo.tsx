@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { FileText, Shield, BookOpen, ArrowRight, Sparkles, Download, Lock, Gift, ShoppingBag, Usb, CreditCard, Phone, Package, Star, Percent, CheckCircle, Eye, AlertTriangle } from "lucide-react";
+import { FileText, Shield, BookOpen, ArrowRight, Sparkles, Download, Lock, Gift, Phone, Star, CheckCircle, AlertTriangle, CreditCard } from "lucide-react";
 import libraryLearning from "@/assets/library-learning.jpg";
-import productRfidWallet from "@/assets/product-rfid-wallet.jpg";
-import productUsbKey from "@/assets/product-usb-key.jpg";
 
 const resources = [
   {
@@ -30,13 +28,6 @@ const resources = [
     color: "from-amber-500 to-orange-500",
     badge: "New",
   },
-];
-
-const products = [
-  { icon: Usb, name: "Security USB Keys", price: "$49.99" },
-  { icon: CreditCard, name: "RFID Wallets", price: "$24.99" },
-  { icon: Phone, name: "Faraday Bags", price: "$19.99" },
-  { icon: ShoppingBag, name: "Privacy Screens", price: "$39.99" },
 ];
 
 const bookCategories = [
@@ -72,9 +63,9 @@ export const ResourcesPromo = () => {
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Content Side */}
           <div className="space-y-8 animate-fade-in">
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-50 rounded-2xl border border-emerald-200">
-              <Sparkles className="w-5 h-5 text-emerald-800" />
-              <span className="font-bold text-emerald-800">Resources & Tools</span>
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent/10 rounded-2xl border border-accent/20">
+              <Sparkles className="w-5 h-5 text-accent" />
+              <span className="font-bold text-accent">Resources & Tools</span>
             </div>
             
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
@@ -84,13 +75,13 @@ export const ResourcesPromo = () => {
             
             <p className="text-xl text-muted-foreground leading-relaxed">
               Beyond training, we provide the tools you need to stay protected. From insurance coverage to free educational materials, 
-              we've got you covered. Browse our digital guides, physical products, and free emergency scripts.
+              we've got you covered. Browse our digital guides and free emergency scripts.
             </p>
 
             {/* Quick features */}
             <div className="flex flex-wrap gap-4">
               {features.map((feature, index) => (
-                <div key={index} className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border/50 shadow-sm">
+                <div key={index} className="flex items-center gap-2 px-4 py-2 bg-card rounded-full border border-border/50 shadow-sm">
                   <feature.icon className="w-4 h-4 text-primary" />
                   <span className="text-sm font-medium">{feature.text}</span>
                 </div>
@@ -98,10 +89,10 @@ export const ResourcesPromo = () => {
             </div>
 
             {/* Free Emergency Scripts Highlight */}
-            <div className="bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-emerald-500/20 rounded-2xl p-5">
+            <div className="bg-gradient-to-r from-accent/10 to-primary/10 border border-accent/20 rounded-2xl p-5">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
-                  <FileText className="w-5 h-5 text-white" />
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-primary flex items-center justify-center">
+                  <FileText className="w-5 h-5 text-primary-foreground" />
                 </div>
                 <div>
                   <h3 className="font-bold text-foreground text-base">Free Emergency Anti-Scam Scripts</h3>
@@ -110,8 +101,8 @@ export const ResourcesPromo = () => {
               </div>
               <div className="flex flex-wrap gap-2">
                 {scriptTypes.map((script, index) => (
-                  <div key={index} className="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full border border-emerald-500/20">
-                    <script.icon className="w-3 h-3 text-emerald-600" />
+                  <div key={index} className="flex items-center gap-1.5 px-3 py-1.5 bg-card rounded-full border border-accent/20">
+                    <script.icon className="w-3 h-3 text-accent" />
                     <span className="text-sm font-medium text-foreground">{script.name}</span>
                   </div>
                 ))}
@@ -119,7 +110,7 @@ export const ResourcesPromo = () => {
             </div>
 
             {/* Book Categories */}
-            <div className="bg-white rounded-3xl p-5 border border-border/50 shadow-sm">
+            <div className="bg-card rounded-3xl p-5 border border-border/50 shadow-sm">
               <h3 className="font-bold text-foreground mb-3 flex items-center gap-2 text-base">
                 <BookOpen className="w-5 h-5 text-primary" />
                 Digital Guide Categories
@@ -136,54 +127,6 @@ export const ResourcesPromo = () => {
               </div>
               <p className="text-sm text-muted-foreground mt-3">
                 Books from <span className="font-bold text-foreground">$19.99 - $49.99</span>
-              </p>
-            </div>
-
-            {/* Physical Products Preview */}
-            <div className="bg-white rounded-3xl p-5 border border-border/50 shadow-sm">
-              <h3 className="font-bold text-foreground mb-4 flex items-center gap-2 text-base">
-                <ShoppingBag className="w-5 h-5 text-primary" />
-                Physical Security Products
-                <span className="ml-auto px-2 py-0.5 bg-emerald-50 text-emerald-800 text-xs font-bold rounded-full flex items-center gap-1">
-                  <Percent className="w-3 h-3" /> Bundle & Save 15%
-                </span>
-              </h3>
-              {/* Product Photos */}
-              <div className="grid grid-cols-2 gap-3 mb-4">
-                <div className="relative rounded-xl overflow-hidden shadow-md hover:scale-[1.02] transition-transform duration-200">
-                  <img 
-                    src={productRfidWallet}
-                    alt="InVision Network RFID protection wallet"
-                    className="w-full h-24 object-cover"
-                    loading="lazy"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-2 py-1">
-                    <span className="text-white text-xs font-medium">RFID Wallets</span>
-                  </div>
-                </div>
-                <div className="relative rounded-xl overflow-hidden shadow-md hover:scale-[1.02] transition-transform duration-200">
-                  <img 
-                    src={productUsbKey}
-                    alt="InVision Network Security USB key"
-                    className="w-full h-24 object-cover"
-                    loading="lazy"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-2 py-1">
-                    <span className="text-white text-xs font-medium">Security USB Keys</span>
-                  </div>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                {products.map((product, index) => (
-                  <div key={index} className="flex items-center gap-2 text-sm">
-                    <product.icon className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-foreground">{product.name}</span>
-                    <span className="text-muted-foreground ml-auto">{product.price}</span>
-                  </div>
-                ))}
-              </div>
-              <p className="text-xs text-muted-foreground mt-3">
-                15+ products from <span className="font-bold text-foreground">$7.99 - $149.99</span>
               </p>
             </div>
 
@@ -271,16 +214,16 @@ export const ResourcesPromo = () => {
 
             {/* Trust Badges */}
             <div className="flex flex-wrap gap-3 justify-center pt-4">
-              <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border/50 shadow-sm">
+              <div className="flex items-center gap-2 px-4 py-2 bg-card rounded-full border border-border/50 shadow-sm">
                 <Shield className="w-4 h-4 text-primary" />
                 <span className="text-sm font-medium">HIPAA Protected</span>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border/50 shadow-sm">
-                <Star className="w-4 h-4 text-amber-500" />
+              <div className="flex items-center gap-2 px-4 py-2 bg-card rounded-full border border-border/50 shadow-sm">
+                <Star className="w-4 h-4 text-chart-4" />
                 <span className="text-sm font-medium">10% Veteran Discount</span>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border/50 shadow-sm">
-                <CheckCircle className="w-4 h-4 text-green-600" />
+              <div className="flex items-center gap-2 px-4 py-2 bg-card rounded-full border border-border/50 shadow-sm">
+                <CheckCircle className="w-4 h-4 text-success" />
                 <span className="text-sm font-medium">30-Day Guarantee</span>
               </div>
             </div>
