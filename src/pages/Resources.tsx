@@ -19,6 +19,7 @@ import { EmbeddedPaymentModal } from "@/components/payment/EmbeddedPaymentModal"
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { PROFESSIONAL_HERO_IMAGES } from "@/config/professionalHeroImages";
 import BookCoverModal from "@/components/resources/BookCoverModal";
+import { BookCard } from "@/components/resources/BookCard";
 import bookAiFundamentals from "@/assets/book-ai-fundamentals.jpg";
 import bookBeingRealAi from "@/assets/book-being-real-ai.jpg";
 import bookAuthPersonalities from "@/assets/book-auth-personalities.jpg";
@@ -59,6 +60,11 @@ import bookCryptoVibesGenz from "@/assets/book-crypto-vibes-genz.jpg";
 import bookCyberbullyShield from "@/assets/book-cyberbully-shield.jpg";
 import bookDmDangers from "@/assets/book-dm-dangers.jpg";
 import bookSafeSurfingSafari from "@/assets/book-safe-surfing-safari.jpg";
+// New educational book covers
+import bookAiScamTactics from "@/assets/book-ai-scam-tactics.jpg";
+import bookWorkplaceSecurity from "@/assets/book-workplace-security.jpg";
+import bookTravelSafety from "@/assets/book-travel-safety.jpg";
+import bookDatingAppSafety from "@/assets/book-dating-app-safety.jpg";
 import { SEO } from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
@@ -462,6 +468,47 @@ const staticBooks: BookItem[] = [
     tag: 'Teens',
     stripe_price_id: 'price_1StGenzJ8osfwYbX7dmdang04',
     author: BOOK_AUTHOR
+  },
+  // New Educational Books
+  {
+    id: 'book-ai-scam-tactics',
+    name: 'AI Scam Tactics Revealed',
+    description: 'Understand how criminals use AI to deceive',
+    price: 32.99,
+    image: bookAiScamTactics,
+    tag: 'Hot Topic',
+    stripe_price_id: 'price_1StNewJ8osfwYbX7aiscam01',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-workplace-security',
+    name: 'Workplace Security Essentials',
+    description: 'Protect your business and employees',
+    price: 44.99,
+    image: bookWorkplaceSecurity,
+    tag: 'Business',
+    stripe_price_id: 'price_1StNewJ8osfwYbX7workplace02',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-travel-safety',
+    name: 'Travel Safety Guide',
+    description: 'Stay secure while exploring the world',
+    price: 26.99,
+    image: bookTravelSafety,
+    tag: 'Travel',
+    stripe_price_id: 'price_1StNewJ8osfwYbX7travel03',
+    author: BOOK_AUTHOR
+  },
+  {
+    id: 'book-dating-app-safety',
+    name: 'Dating App Safety',
+    description: 'Navigate online dating without risks',
+    price: 23.99,
+    image: bookDatingAppSafety,
+    tag: 'Relationships',
+    stripe_price_id: 'price_1StNewJ8osfwYbX7dating04',
+    author: BOOK_AUTHOR
   }
 ];
 
@@ -640,12 +687,12 @@ function Resources() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             {[{
-            value: "20+",
+            value: "40+",
             label: "Digital Guides",
             icon: BookOpen
           }, {
-            value: "15+",
-            label: "Security Products",
+            value: "All Ages",
+            label: "Kids to Seniors",
             icon: Shield
           }, {
             value: "100+",
@@ -683,178 +730,21 @@ function Resources() {
           </ScrollReveal>
 
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
             {staticBooks.map((book, index) => (
-              <ScrollReveal key={book.id} delay={index * 30}>
-                <div className="group h-full">
-                  {/* 3D Book Display */}
-                  <button
-                    onClick={() => handleBookClick(book)}
-                    className="relative w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg"
-                    aria-label={`View ${book.name} details`}
-                  >
-                    {/* 3D Book Container */}
-                    <div 
-                      className="relative mx-auto transition-transform duration-500 group-hover:scale-105"
-                      style={{ 
-                        transformStyle: 'preserve-3d',
-                        perspective: '1000px'
-                      }}
-                    >
-                      {/* Main Book Structure */}
-                      <div 
-                        className="relative"
-                        style={{
-                          transform: 'rotateY(-12deg)',
-                          transformStyle: 'preserve-3d'
-                        }}
-                      >
-                        {/* Book Spine - Left Side */}
-                        <div 
-                          className="absolute left-0 top-0 bottom-0 w-5 bg-gradient-to-b from-primary via-primary/90 to-primary/80 rounded-l-sm shadow-lg z-10"
-                          style={{ 
-                            transform: 'translateX(-18px) rotateY(90deg)',
-                            transformOrigin: 'right center',
-                          }}
-                        >
-                          {/* Spine Content */}
-                          <div 
-                            className="h-full flex flex-col items-center justify-between py-3 px-0.5"
-                            style={{ 
-                              writingMode: 'vertical-rl',
-                              textOrientation: 'mixed'
-                            }}
-                          >
-                            {/* InVision Logo/Mark */}
-                            <div className="text-[6px] font-bold text-white/80 tracking-widest rotate-180">
-                              IN
-                            </div>
-                            
-                            {/* Title on Spine */}
-                            <div className="flex-1 flex items-center justify-center overflow-hidden">
-                              <span 
-                                className="text-[7px] font-bold text-white tracking-wide text-center rotate-180 leading-tight"
-                                style={{ 
-                                  writingMode: 'vertical-rl',
-                                  textOrientation: 'mixed',
-                                  maxHeight: '80%',
-                                  overflow: 'hidden',
-                                  textOverflow: 'ellipsis'
-                                }}
-                              >
-                                {book.name.split(' ').slice(0, 3).join(' ')}
-                              </span>
-                            </div>
-                            
-                            {/* Bottom Decoration */}
-                            <div className="w-1 h-1 bg-white/40 rounded-full rotate-180" />
-                          </div>
-                        </div>
-
-                        {/* Front Cover */}
-                        <div className="relative w-full aspect-[3/4] overflow-hidden rounded-r-sm rounded-l-[2px] shadow-2xl bg-gradient-to-br from-secondary to-secondary/80">
-                          {/* Cover Image */}
-                          <img 
-                            src={book.image} 
-                            alt={book.name}
-                            width={260}
-                            height={347}
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                            decoding="async"
-                          />
-                          
-                          {/* Title Overlay at Bottom */}
-                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-foreground/95 via-foreground/70 to-transparent p-2.5 pt-8">
-                            <h4 className="text-[11px] font-bold text-background leading-tight line-clamp-2 drop-shadow-lg">
-                              {book.name}
-                            </h4>
-                            <p className="text-[8px] text-background/80 mt-0.5 font-medium">
-                              InVision Network
-                            </p>
-                          </div>
-
-                          {/* Tag Badge */}
-                          <div className="absolute top-2 right-2 px-1.5 py-0.5 bg-gradient-to-r from-primary to-accent text-white text-[8px] font-bold rounded-sm shadow-lg">
-                            {book.tag}
-                          </div>
-
-                          {/* eBook Badge */}
-                          <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-primary/90 text-white text-[8px] font-bold rounded-sm shadow-lg flex items-center gap-0.5">
-                            📘 eBook
-                          </div>
-
-                          {/* Hover overlay */}
-                          <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-300 flex items-center justify-center">
-                            <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-background/95 text-foreground text-xs px-3 py-1.5 rounded-full font-medium shadow-lg">
-                              👁️ View Details
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Top Edge - Page Effect */}
-                        <div 
-                          className="absolute -top-2 left-0 right-0 h-2 bg-gradient-to-r from-muted via-muted/80 to-muted rounded-t-sm"
-                          style={{
-                            transform: 'rotateX(90deg)',
-                            transformOrigin: 'bottom center'
-                          }}
-                        >
-                          <div className="w-full h-full flex gap-px px-1">
-                            {Array.from({ length: 6 }).map((_, i) => (
-                              <div key={i} className="flex-1 bg-muted-foreground/20 rounded-full" />
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Book Shadow */}
-                        <div className="absolute -bottom-3 left-2 right-0 h-4 bg-gradient-to-r from-foreground/25 to-transparent blur-md rounded-full opacity-60 group-hover:opacity-80 transition-opacity" />
-                      </div>
-                    </div>
-                  </button>
-
-                  {/* Book Info Below */}
-                  <div className="mt-3 px-1">
-                    {/* Rating */}
-                    <div className="flex items-center gap-1 mb-1">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-2.5 h-2.5 fill-chart-4 text-chart-4" />
-                      ))}
-                      <span className="text-[9px] text-muted-foreground ml-1">5.0</span>
-                    </div>
-
-                    {/* Price and Actions */}
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-base font-bold text-primary">${book.price}</span>
-                      <span className="text-[8px] text-success font-medium">🎖️ Vets 10%</span>
-                    </div>
-                    <div className="grid grid-cols-2 gap-1.5">
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleAddToCart(book);
-                        }} 
-                        className="text-[10px] h-7 px-2"
-                      >
-                        <ShoppingCart className="w-3 h-3 mr-1" />
-                        Cart
-                      </Button>
-                      <Button 
-                        size="sm" 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleBuyNow(book);
-                        }} 
-                        className="text-[10px] h-7 px-2"
-                      >
-                        <Zap className="w-3 h-3 mr-1" />
-                        Buy
-                      </Button>
-                    </div>
-                  </div>
-                </div>
+              <ScrollReveal key={book.id} delay={Math.min(index * 20, 200)}>
+                <BookCard
+                  id={book.id}
+                  name={book.name}
+                  description={book.description}
+                  price={book.price}
+                  image={book.image}
+                  tag={book.tag}
+                  author={book.author}
+                  onAddToCart={() => handleAddToCart(book)}
+                  onBuyNow={() => handleBuyNow(book)}
+                  onClick={() => handleBookClick(book)}
+                />
               </ScrollReveal>
             ))}
           </div>
