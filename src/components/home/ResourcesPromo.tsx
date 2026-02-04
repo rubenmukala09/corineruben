@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { FileText, Shield, BookOpen, ArrowRight, Sparkles, Download, Lock, Gift, ShoppingBag, Usb, CreditCard, Phone, Package, Star, Percent, CheckCircle, Eye, AlertTriangle } from "lucide-react";
+import { FileText, Shield, BookOpen, ArrowRight, Sparkles, Download, Lock, Gift, Star, CheckCircle, Eye, AlertTriangle, Phone, CreditCard } from "lucide-react";
 import libraryLearning from "@/assets/library-learning.jpg";
-import productRfidWallet from "@/assets/product-rfid-wallet.jpg";
-import productUsbKey from "@/assets/product-usb-key.jpg";
 
 const resources = [
   {
@@ -25,18 +23,11 @@ const resources = [
   {
     icon: BookOpen,
     title: "Digital Guides",
-    description: "20+ specialized books including AI Fundamentals, Scam Prevention, Senior Tech Handbook, and Identity Theft Prevention.",
+    description: "30+ specialized books including AI Fundamentals, Scam Prevention, Senior Tech Handbook, and Identity Theft Prevention.",
     tag: "eBooks",
     color: "from-amber-500 to-orange-500",
     badge: "New",
   },
-];
-
-const products = [
-  { icon: Usb, name: "Security USB Keys", price: "$49.99" },
-  { icon: CreditCard, name: "RFID Wallets", price: "$24.99" },
-  { icon: Phone, name: "Faraday Bags", price: "$19.99" },
-  { icon: ShoppingBag, name: "Privacy Screens", price: "$39.99" },
 ];
 
 const bookCategories = [
@@ -139,51 +130,19 @@ export const ResourcesPromo = () => {
               </p>
             </div>
 
-            {/* Physical Products Preview */}
-            <div className="bg-white rounded-3xl p-5 border border-border/50 shadow-sm">
-              <h3 className="font-bold text-foreground mb-4 flex items-center gap-2 text-base">
-                <ShoppingBag className="w-5 h-5 text-primary" />
-                Physical Security Products
-                <span className="ml-auto px-2 py-0.5 bg-emerald-50 text-emerald-800 text-xs font-bold rounded-full flex items-center gap-1">
-                  <Percent className="w-3 h-3" /> Bundle & Save 15%
-                </span>
-              </h3>
-              {/* Product Photos */}
-              <div className="grid grid-cols-2 gap-3 mb-4">
-                <div className="relative rounded-xl overflow-hidden shadow-md hover:scale-[1.02] transition-transform duration-200">
-                  <img 
-                    src={productRfidWallet}
-                    alt="InVision Network RFID protection wallet"
-                    className="w-full h-24 object-cover"
-                    loading="lazy"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-2 py-1">
-                    <span className="text-white text-xs font-medium">RFID Wallets</span>
-                  </div>
+            {/* All Digital Resources */}
+            <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-2xl p-5">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+                  <BookOpen className="w-5 h-5 text-white" />
                 </div>
-                <div className="relative rounded-xl overflow-hidden shadow-md hover:scale-[1.02] transition-transform duration-200">
-                  <img 
-                    src={productUsbKey}
-                    alt="InVision Network Security USB key"
-                    className="w-full h-24 object-cover"
-                    loading="lazy"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-2 py-1">
-                    <span className="text-white text-xs font-medium">Security USB Keys</span>
-                  </div>
+                <div>
+                  <h3 className="font-bold text-foreground text-base">30+ Digital Security Guides</h3>
+                  <p className="text-sm text-muted-foreground">Comprehensive protection resources at your fingertips</p>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-3">
-                {products.map((product, index) => (
-                  <div key={index} className="flex items-center gap-2 text-sm">
-                    <product.icon className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-foreground">{product.name}</span>
-                    <span className="text-muted-foreground ml-auto">{product.price}</span>
-                  </div>
-                ))}
-              </div>
-              <p className="text-xs text-muted-foreground mt-3">
-                15+ products from <span className="font-bold text-foreground">$7.99 - $149.99</span>
+              <p className="text-sm text-muted-foreground">
+                From <span className="font-bold text-foreground">$19.99 - $49.99</span> • Instant digital delivery
               </p>
             </div>
 

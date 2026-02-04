@@ -356,6 +356,7 @@ export type Database = {
           status: Database["public"]["Enums"]["appointment_status"] | null
           title: string
           updated_at: string
+          user_id: string | null
           worker_id: string | null
           zoom_link: string | null
         }
@@ -379,6 +380,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["appointment_status"] | null
           title: string
           updated_at?: string
+          user_id?: string | null
           worker_id?: string | null
           zoom_link?: string | null
         }
@@ -402,6 +404,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["appointment_status"] | null
           title?: string
           updated_at?: string
+          user_id?: string | null
           worker_id?: string | null
           zoom_link?: string | null
         }
@@ -425,6 +428,13 @@ export type Database = {
             columns: ["worker_id"]
             isOneToOne: false
             referencedRelation: "workers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "appointments_worker_id_fkey"
+            columns: ["worker_id"]
+            isOneToOne: false
+            referencedRelation: "workers_safe"
             referencedColumns: ["id"]
           },
         ]
@@ -1034,6 +1044,13 @@ export type Database = {
             columns: ["assigned_worker_id"]
             isOneToOne: false
             referencedRelation: "workers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "client_requests_assigned_worker_id_fkey"
+            columns: ["assigned_worker_id"]
+            isOneToOne: false
+            referencedRelation: "workers_safe"
             referencedColumns: ["id"]
           },
           {
@@ -4111,6 +4128,13 @@ export type Database = {
             referencedRelation: "workers"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "time_off_requests_worker_id_fkey"
+            columns: ["worker_id"]
+            isOneToOne: false
+            referencedRelation: "workers_safe"
+            referencedColumns: ["id"]
+          },
         ]
       }
       traffic_sources: {
@@ -4499,6 +4523,13 @@ export type Database = {
             columns: ["worker_id"]
             isOneToOne: false
             referencedRelation: "workers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "worker_availability_worker_id_fkey"
+            columns: ["worker_id"]
+            isOneToOne: false
+            referencedRelation: "workers_safe"
             referencedColumns: ["id"]
           },
         ]
@@ -4898,9 +4929,11 @@ export type Database = {
       testimonials_staff: {
         Row: {
           approved_at: string | null
+          approved_by: string | null
           created_at: string | null
           display_location: string | null
           display_order: number | null
+          email: string | null
           featured: boolean | null
           has_image: boolean | null
           has_video: boolean | null
@@ -4916,9 +4949,11 @@ export type Database = {
         }
         Insert: {
           approved_at?: string | null
+          approved_by?: string | null
           created_at?: string | null
           display_location?: string | null
           display_order?: number | null
+          email?: string | null
           featured?: boolean | null
           has_image?: boolean | null
           has_video?: boolean | null
@@ -4934,9 +4969,11 @@ export type Database = {
         }
         Update: {
           approved_at?: string | null
+          approved_by?: string | null
           created_at?: string | null
           display_location?: string | null
           display_order?: number | null
+          email?: string | null
           featured?: boolean | null
           has_image?: boolean | null
           has_video?: boolean | null
@@ -4994,6 +5031,54 @@ export type Database = {
           service_type?: string | null
           status?: string | null
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      workers_safe: {
+        Row: {
+          certifications: string[] | null
+          created_at: string | null
+          current_status: Database["public"]["Enums"]["worker_status"] | null
+          email: string | null
+          first_name: string | null
+          id: string | null
+          last_name: string | null
+          phone: string | null
+          position: string | null
+          profile_photo_url: string | null
+          skills: string[] | null
+          updated_at: string | null
+          worker_id: string | null
+        }
+        Insert: {
+          certifications?: string[] | null
+          created_at?: string | null
+          current_status?: Database["public"]["Enums"]["worker_status"] | null
+          email?: string | null
+          first_name?: string | null
+          id?: string | null
+          last_name?: string | null
+          phone?: string | null
+          position?: string | null
+          profile_photo_url?: string | null
+          skills?: string[] | null
+          updated_at?: string | null
+          worker_id?: string | null
+        }
+        Update: {
+          certifications?: string[] | null
+          created_at?: string | null
+          current_status?: Database["public"]["Enums"]["worker_status"] | null
+          email?: string | null
+          first_name?: string | null
+          id?: string | null
+          last_name?: string | null
+          phone?: string | null
+          position?: string | null
+          profile_photo_url?: string | null
+          skills?: string[] | null
+          updated_at?: string | null
+          worker_id?: string | null
         }
         Relationships: []
       }

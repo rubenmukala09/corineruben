@@ -50,23 +50,7 @@ import bookTechSupport from "@/assets/book-tech-support.jpg";
 import bookGrandparentScam from "@/assets/book-grandparent-scam.jpg";
 import bookInvestmentFraud from "@/assets/book-investment-fraud.jpg";
 import bookCharityScam from "@/assets/book-charity-scam.jpg";
-// Product images
-import productUsbKey from "@/assets/product-usb-key.jpg";
-import productPrivacyScreen from "@/assets/product-privacy-screen.jpg";
-import productWebcamCover from "@/assets/product-webcam-cover.jpg";
-import productRfidWallet from "@/assets/product-rfid-wallet.jpg";
-import productFaradayBag from "@/assets/product-faraday-bag.jpg";
-import productPasswordBook from "@/assets/product-password-book.jpg";
-import productShredder from "@/assets/product-shredder.jpg";
-import productSafeBox from "@/assets/product-safe-box.jpg";
-import productCableLock from "@/assets/product-cable-lock.jpg";
-import productVpnRouter from "@/assets/product-vpn-router.jpg";
-import productPhonePrivacy from "@/assets/product-phone-privacy.jpg";
-import productUsbBlocker from "@/assets/product-usb-blocker.jpg";
-import productTrackerDetector from "@/assets/product-tracker-detector.jpg";
-import productRfidSleeves from "@/assets/product-rfid-sleeves.jpg";
-import productSecurityCam from "@/assets/product-security-cam.jpg";
-import productWifiExtender from "@/assets/product-wifi-extender.jpg";
+// Product images removed - focusing on digital resources only
 import { SEO } from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
@@ -391,136 +375,7 @@ const staticBooks: BookItem[] = [
   }
 ];
 
-// Static physical products (15 products) with real images
-const staticPhysicalProducts = [{
-  id: 'prod-usb-key',
-  name: 'Security USB Key',
-  description: 'Hardware 2FA authentication device',
-  price: 49.99,
-  image: productUsbKey,
-  tag: 'Best Seller',
-  stripe_price_id: 'price_1SjwOrJ8osfwYbX7oO8UOr4W'
-}, {
-  id: 'prod-privacy-screen',
-  name: 'Privacy Screen 15"',
-  description: 'Anti-spy screen protector for laptops',
-  price: 39.99,
-  image: productPrivacyScreen,
-  tag: 'Popular',
-  stripe_price_id: 'price_1SjwOtJ8osfwYbX7spllhrec'
-}, {
-  id: 'prod-webcam-cover',
-  name: 'Webcam Cover Pack (6)',
-  description: 'Sliding webcam privacy covers',
-  price: 9.99,
-  image: productWebcamCover,
-  tag: 'Essential',
-  stripe_price_id: 'price_1SjwOvJ8osfwYbX7W5QIZvWH'
-}, {
-  id: 'prod-rfid-wallet',
-  name: 'RFID Blocking Wallet',
-  description: 'Protect cards from wireless theft',
-  price: 24.99,
-  image: productRfidWallet,
-  tag: 'Protection',
-  stripe_price_id: 'price_1SjwOwJ8osfwYbX7vhgkd632'
-}, {
-  id: 'prod-faraday-bag',
-  name: 'Faraday Phone Bag',
-  description: 'Block all signals to your phone',
-  price: 19.99,
-  image: productFaradayBag,
-  tag: 'Privacy',
-  stripe_price_id: 'price_1SjwOyJ8osfwYbX7SXOyTNh8'
-}, {
-  id: 'prod-password-book',
-  name: 'Password Organizer',
-  description: 'Secure offline password storage',
-  price: 14.99,
-  image: productPasswordBook,
-  tag: 'Practical',
-  stripe_price_id: 'price_1SjwP0J8osfwYbX7S24wIUAP'
-}, {
-  id: 'prod-shredder',
-  name: 'Document Shredder Mini',
-  description: 'Compact cross-cut shredder',
-  price: 69.99,
-  image: productShredder,
-  tag: 'Office',
-  stripe_price_id: 'price_1SjwP2J8osfwYbX7BA1stBmY'
-}, {
-  id: 'prod-safe-box',
-  name: 'Fireproof Document Safe',
-  description: 'Protect important documents',
-  price: 99.99,
-  image: productSafeBox,
-  tag: 'Premium',
-  stripe_price_id: 'price_1SjwP4J8osfwYbX7gQDVgihH'
-}, {
-  id: 'prod-cable-lock',
-  name: 'Laptop Cable Lock',
-  description: 'Secure your laptop anywhere',
-  price: 18.99,
-  image: productCableLock,
-  tag: 'Travel',
-  stripe_price_id: 'price_1SjwP6J8osfwYbX7e9ZikXHu'
-}, {
-  id: 'prod-vpn-router',
-  name: 'VPN Home Router',
-  description: 'Whole-home privacy protection',
-  price: 149.99,
-  image: productVpnRouter,
-  tag: 'Advanced',
-  stripe_price_id: 'price_1SjwP8J8osfwYbX7y81Bmklz'
-}, {
-  id: 'prod-privacy-filter',
-  name: 'Phone Privacy Filter',
-  description: 'Anti-spy screen for phones',
-  price: 12.99,
-  image: productPhonePrivacy,
-  tag: 'Mobile',
-  stripe_price_id: 'price_1SjwPCJ8osfwYbX7VAzAQrH3'
-}, {
-  id: 'prod-usb-blocker',
-  name: 'USB Data Blocker',
-  description: 'Safe charging, no data theft',
-  price: 8.99,
-  image: productUsbBlocker,
-  tag: 'Charging',
-  stripe_price_id: 'price_1SjwPEJ8osfwYbX7iIQpVXm3'
-}, {
-  id: 'prod-tracker-detector',
-  name: 'GPS Tracker Detector',
-  description: 'Find hidden tracking devices',
-  price: 34.99,
-  image: productTrackerDetector,
-  tag: 'Detection',
-  stripe_price_id: 'price_1SjwPFJ8osfwYbX7KmSpLGIU'
-}, {
-  id: 'prod-rfid-sleeves',
-  name: 'RFID Card Sleeves (10)',
-  description: 'Credit card protection sleeves',
-  price: 7.99,
-  image: productRfidSleeves,
-  tag: 'Budget',
-  stripe_price_id: 'price_1SjwPHJ8osfwYbX7Gefquqfa'
-}, {
-  id: 'prod-security-cam',
-  name: 'Indoor Security Camera',
-  description: 'WiFi camera with encryption',
-  price: 59.99,
-  image: productSecurityCam,
-  tag: 'Monitoring',
-  stripe_price_id: 'price_1SjwPJJ8osfwYbX7vEPLPml1'
-}, {
-  id: 'prod-wifi-extender',
-  name: 'WiFi Signal Extender',
-  description: 'Extend secure WiFi coverage',
-  price: 44.99,
-  image: productWifiExtender,
-  tag: 'Coverage',
-  stripe_price_id: 'price_1SjwPJJ8osfwYbX7vEPLPml1'
-}];
+// Physical products removed - focusing on digital resources only
 
 // Rotating hero headlines
 const heroHeadlines = ["Your Digital Safety Arsenal", "Premium Guides & Resources", "Expert Security Tools", "Products to Protect What Matters Most"];
@@ -600,7 +455,7 @@ function Resources() {
 
   // Separate physical products
   const physicalProducts = products?.filter(p => p.tags?.some((tag: string) => ['physical', 'device', 'hardware', 'kit', 'equipment'].includes(tag.toLowerCase()))) || [];
-  const handleBuyNow = (product: typeof staticBooks[0] | typeof staticPhysicalProducts[0]) => {
+  const handleBuyNow = (product: typeof staticBooks[0]) => {
     // Use embedded payment modal instead of redirect
     setEmbeddedPaymentConfig({
       mode: "payment",
@@ -942,89 +797,7 @@ function Resources() {
       </section>
 
 
-      <section id="products" className="py-10 bg-background">
-        <div className="container mx-auto px-4">
-          <ScrollReveal>
-            <div className="text-center mb-8">
-              <Badge className="mb-3 text-sm px-4 py-1.5" variant="secondary">
-                <Shield className="w-3.5 h-3.5 mr-1.5" />
-                Ships Within 2-3 Business Days
-              </Badge>
-              <h2 className="text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Physical Security Products
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto text-sm">
-                Carefully curated hardware to enhance your digital safety
-              </p>
-            </div>
-          </ScrollReveal>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
-            {staticPhysicalProducts.map((product, index) => <ScrollReveal key={product.id} delay={index * 50}>
-                <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-border/50 hover:border-primary/30 overflow-hidden h-full flex flex-col">
-                  {/* Tag Badge */}
-                  <Badge className="absolute top-2 right-2 text-[9px] px-1.5 py-0.5 bg-gradient-to-r from-primary to-accent text-white z-10">
-                    {product.tag}
-                  </Badge>
-                  
-                  {/* Image */}
-                  <div className="aspect-square bg-gradient-to-br from-secondary/50 to-secondary/20 relative overflow-hidden">
-                    <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
-                  </div>
-                  
-                  {/* Content */}
-                  <div className="p-2 flex-1 flex flex-col">
-                    <h3 className="text-[10px] md:text-xs font-bold mb-1 text-foreground group-hover:text-primary transition-colors line-clamp-1">
-                      {product.name}
-                    </h3>
-                    <p className="text-[8px] text-muted-foreground mb-1 line-clamp-2 flex-1">
-                      {product.description}
-                    </p>
-                    
-                    <div className="flex gap-1 mb-1 flex-wrap">
-                      <span className="text-[7px] px-1 py-0.5 bg-primary/10 text-primary rounded-full">
-                        🚚 Free Ship
-                      </span>
-                      <span className="text-[7px] px-1 py-0.5 bg-success/10 text-success rounded-full">
-                        ✓ Warranty
-                      </span>
-                    </div>
-                    
-                    {/* Rating */}
-                    <div className="flex items-center gap-0.5 mb-1">
-                      {[...Array(5)].map((_, i) => <Star key={i} className="w-2 h-2 fill-chart-4 text-chart-4" />)}
-                      <span className="text-[7px] text-muted-foreground ml-1">5.0</span>
-                    </div>
-
-                    {/* Price and Action */}
-                    <div className="mt-auto pt-1 border-t border-border/50">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm font-bold text-primary">${product.price}</span>
-                        <span className="text-[7px] text-success">🎖️ Vets 10%</span>
-                      </div>
-                      <Button size="sm" className="w-full text-[9px] h-6" onClick={() => {
-                    addItem({
-                      id: product.id,
-                      productId: product.id,
-                      name: product.name,
-                      price: product.price,
-                      image: product.image
-                    });
-                    toast({
-                      title: "Added to Cart",
-                      description: `${product.name} has been added to your cart.`
-                    });
-                  }}>
-                        <ShoppingCart className="w-2.5 h-2.5 mr-1" />
-                        Add to Cart
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
-              </ScrollReveal>)}
-          </div>
-        </div>
-      </section>
+      {/* Physical products section removed - focusing on digital resources */}
 
       {/* Why Shop With Us - Final Section */}
       
