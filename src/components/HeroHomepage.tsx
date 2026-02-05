@@ -1,35 +1,23 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Shield, ArrowRight, Lock, Eye, Fingerprint, ShieldCheck, Zap, Globe, Camera, TrendingUp, Users, Award, Check } from "lucide-react";
+import { Shield, ArrowRight, Lock, Eye, Fingerprint, ShieldCheck, Zap, Globe, Camera, TrendingUp, Users, Award, Sparkles, Star } from "lucide-react";
 import { useRef, useMemo, useState, useEffect } from "react";
 import heroVideoFamily from "@/assets/hero-video-family.mp4";
 import heroVideoCybersecurity from "@/assets/hero-video-cybersecurity.mp4";
 
-// Randomly select a video on each page load
 const heroVideos = [heroVideoFamily, heroVideoCybersecurity];
 
-const securityFeatures = [{
-  icon: Lock,
-  label: "End-to-End Encryption",
-  stat: "256-bit"
-}, {
-  icon: Eye,
-  label: "24/7 Monitoring",
-  stat: "Always On"
-}, {
-  icon: Fingerprint,
-  label: "Identity Shield",
-  stat: "100% Safe"
-}, {
-  icon: ShieldCheck,
-  label: "AI Protection",
-  stat: "Real-time"
-}];
+const securityFeatures = [
+  { icon: Lock, label: "256-bit Encryption", stat: "Military Grade" },
+  { icon: Eye, label: "24/7 Monitoring", stat: "Always Active" },
+  { icon: Fingerprint, label: "Identity Shield", stat: "100% Protected" },
+  { icon: ShieldCheck, label: "AI Defense", stat: "Real-time" },
+];
 
 const stats = [
-  { value: "500+", label: "Families Protected", icon: Users },
-  { value: "99.8%", label: "Success Rate", icon: TrendingUp },
-  { value: "24/7", label: "Support", icon: Shield },
+  { value: "500+", label: "Families Protected", icon: Users, progress: 85 },
+  { value: "99.8%", label: "Success Rate", icon: TrendingUp, progress: 99 },
+  { value: "24/7", label: "Active Support", icon: Shield, progress: 100 },
 ];
 
 export const HeroHomepage = () => {
@@ -38,230 +26,270 @@ export const HeroHomepage = () => {
   const [showDisclaimer, setShowDisclaimer] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowDisclaimer(true);
-    }, 7000);
+    const timer = setTimeout(() => setShowDisclaimer(true), 7000);
     return () => clearTimeout(timer);
   }, []);
   
-  return <section className="relative min-h-[100vh] lg:min-h-[110vh] overflow-hidden bg-gradient-to-br from-navy-900 via-navy-800 to-lavender-700">
-      {/* Video Background - lazy preload for faster initial paint */}
+  return (
+    <section className="relative min-h-[100vh] lg:min-h-[110vh] overflow-hidden bg-[#050508]">
+      {/* Cinematic Video Background */}
       <div className="absolute inset-0">
         <video 
           ref={videoRef} 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-          preload="none"
-          className="absolute inset-0 w-full h-full object-cover opacity-40"
+          autoPlay loop muted playsInline preload="none"
+          className="absolute inset-0 w-full h-full object-cover opacity-30"
         >
           <source src={selectedVideo} type="video/mp4" />
         </video>
-        {/* Premium gradient overlays */}
-        <div className="absolute inset-0 bg-gradient-to-br from-navy-900/95 via-navy-800/85 to-lavender-700/70" />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-900/80 via-transparent to-transparent" />
-        {/* Decorative orbs */}
-        <div className="absolute top-20 right-1/4 w-96 h-96 bg-coral-400/20 rounded-full blur-[120px] animate-float-slow" />
-        <div className="absolute bottom-40 left-1/4 w-80 h-80 bg-lavender-500/15 rounded-full blur-[100px] animate-float" />
+        
+        {/* Multi-layer cinematic gradients */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#050508] via-[#0a0a12]/90 to-[#12081a]/80" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050508] via-transparent to-[#050508]/50" />
+        
+        {/* Color Dodge Light Leaks */}
+        <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] rounded-full opacity-40" 
+          style={{ background: 'radial-gradient(circle, rgba(248,146,106,0.4) 0%, rgba(187,129,181,0.2) 40%, transparent 70%)', filter: 'blur(80px)' }} />
+        <div className="absolute bottom-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full opacity-30"
+          style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.35) 0%, rgba(6,182,212,0.15) 50%, transparent 70%)', filter: 'blur(100px)' }} />
+        <div className="absolute top-[40%] left-[30%] w-[400px] h-[400px] rounded-full opacity-20"
+          style={{ background: 'radial-gradient(circle, rgba(248,146,106,0.5) 0%, transparent 60%)', filter: 'blur(60px)' }} />
       </div>
 
-      {/* Premium grid pattern */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.04]">
+      {/* Premium Grid Pattern with Color Dodge */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.03]">
         <div className="absolute inset-0" style={{
-        backgroundImage: `linear-gradient(rgba(248,146,106,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(248,146,106,0.3) 1px, transparent 1px)`,
-        backgroundSize: '80px 80px'
-      }} />
+          backgroundImage: `linear-gradient(rgba(248,146,106,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(248,146,106,0.5) 1px, transparent 1px)`,
+          backgroundSize: '100px 100px'
+        }} />
       </div>
+
+      {/* Floating 3D Glass Shapes */}
+      <div className="absolute top-20 right-20 w-32 h-32 rounded-3xl rotate-12 border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl hidden lg:block" 
+        style={{ boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.1), 0 20px 40px rgba(0,0,0,0.3)' }} />
+      <div className="absolute bottom-40 left-16 w-24 h-24 rounded-2xl -rotate-6 border border-white/[0.06] bg-white/[0.015] backdrop-blur-lg hidden lg:block"
+        style={{ boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.08)' }} />
       
-      <div className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10 hero-instant">
-        <div className="flex flex-col lg:grid lg:grid-cols-5 gap-8 lg:gap-20 xl:gap-28 items-center min-h-[100vh] py-16 sm:py-20 lg:py-0">
+      <div className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 relative z-10">
+        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-8 lg:gap-12 items-center min-h-[100vh] py-20 lg:py-0">
           
-          {/* Left Content - Instant render, no animation delay */}
-          <div className="lg:col-span-3 order-2 lg:order-1 w-full">
-            {/* Premium Badge */}
-            <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-coral-400/20 to-lavender-500/20 border border-coral-400/30 mb-6 sm:mb-10 shadow-glow-coral backdrop-blur-sm">
-              <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-gradient-to-r from-coral-400 to-coral-500 animate-pulse" />
-              <span className="text-sm sm:text-base font-bold text-white">Veteran-Supporting • Ohio-Based</span>
+          {/* Left Content - 7 cols */}
+          <div className="lg:col-span-7 order-2 lg:order-1 w-full">
+            {/* Premium Floating Badge */}
+            <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full mb-8 relative group cursor-default"
+              style={{ 
+                background: 'linear-gradient(135deg, rgba(248,146,106,0.15) 0%, rgba(139,92,246,0.1) 100%)',
+                border: '1px solid rgba(248,146,106,0.3)',
+                boxShadow: '0 0 40px rgba(248,146,106,0.15), inset 0 1px 0 rgba(255,255,255,0.1)'
+              }}>
+              <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-coral-400 to-coral-500 animate-pulse shadow-lg shadow-coral-500/50" />
+              <span className="text-sm font-semibold text-white/90 tracking-wide">Veteran-Owned • Ohio-Based • Trusted Since 2020</span>
+              <Sparkles className="w-4 h-4 text-coral-400" />
             </div>
             
-            {/* Headline - Renders immediately - LARGE for elderly readability */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-bold leading-[0.95] mb-6 sm:mb-8 tracking-tight">
-              <span className="block text-white drop-shadow-lg">InVision</span>
-              <span className="block bg-gradient-to-r from-coral-400 via-blush-400 to-lavender-400 bg-clip-text text-transparent">Network</span>
-              <span className="block font-medium text-white/70 text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mt-2 sm:mt-3">
-                Protection • Education • Innovation
+            {/* Cinematic Headline */}
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[6.5rem] font-bold leading-[0.9] mb-8 tracking-tight">
+              <span className="block text-white" style={{ textShadow: '0 4px 30px rgba(0,0,0,0.5)' }}>InVision</span>
+              <span className="block relative">
+                <span className="bg-gradient-to-r from-coral-400 via-[#F6D7DD] to-lavender-400 bg-clip-text text-transparent"
+                  style={{ filter: 'drop-shadow(0 2px 20px rgba(248,146,106,0.4))' }}>Network</span>
               </span>
             </h1>
             
-            {/* Description - Larger for readability */}
-            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/85 max-w-2xl mb-8 sm:mb-12 leading-relaxed font-medium">
-              Empowering families with AI scam protection. Transforming businesses with cutting-edge automation solutions.
+            {/* Tagline with Editorial feel */}
+            <p className="text-xl md:text-2xl lg:text-3xl text-white/70 max-w-2xl mb-10 leading-relaxed font-light">
+              <span className="text-white font-medium">AI scam protection</span> for families. 
+              <span className="text-coral-300 font-medium"> Cutting-edge automation</span> for businesses.
             </p>
             
-            {/* CTAs - Larger, more prominent buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 relative z-30">
-              <Button asChild size="lg" className="group h-14 sm:h-16 px-8 sm:px-10 text-base sm:text-lg font-bold rounded-2xl bg-gradient-to-r from-coral-500 to-coral-400 hover:from-coral-400 hover:to-coral-300 text-navy-900 shadow-xl shadow-coral-500/40 hover:shadow-2xl hover:shadow-coral-400/50 transition-all duration-300 border-0 w-full sm:w-auto">
-                <Link to="/training">
-                  <Shield className="mr-2 w-5 h-5 sm:w-6 sm:h-6" />
+            {/* Premium CTAs with Spatial Design */}
+            <div className="flex flex-col sm:flex-row gap-4 mb-12">
+              <Button asChild size="lg" className="group relative h-16 px-10 text-lg font-semibold rounded-2xl overflow-hidden border-0"
+                style={{
+                  background: 'linear-gradient(135deg, #F8926A 0%, #F6D7DD 50%, #BB81B5 100%)',
+                  boxShadow: '0 0 50px rgba(248,146,106,0.4), 0 20px 40px -20px rgba(248,146,106,0.5), inset 0 1px 0 rgba(255,255,255,0.3)'
+                }}>
+                <Link to="/training" className="text-[#050508]">
+                  <Shield className="mr-2 w-5 h-5" />
                   Protect My Family
-                  <ArrowRight className="ml-2 w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
-              <Button asChild size="lg" className="group h-14 sm:h-16 px-8 sm:px-10 text-base sm:text-lg font-bold rounded-2xl bg-white/10 hover:bg-white/20 text-white border-2 border-white/30 hover:border-white/50 shadow-xl backdrop-blur-sm transition-all duration-300 w-full sm:w-auto">
+              <Button asChild size="lg" className="group h-16 px-10 text-lg font-semibold rounded-2xl text-white border-0"
+                style={{
+                  background: 'rgba(255,255,255,0.06)',
+                  backdropFilter: 'blur(20px)',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 10px 30px rgba(0,0,0,0.2)'
+                }}>
                 <Link to="/business">
-                  <Zap className="mr-2 w-5 h-5 sm:w-6 sm:h-6" />
-                  Automate My Business
-                  <ArrowRight className="ml-2 w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
+                  <Zap className="mr-2 w-5 h-5 text-violet-400" />
+                  Automate Business
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
             </div>
 
-            {/* Premium Stats Widget - like reference */}
-            <div className="mt-10 sm:mt-14 grid grid-cols-3 gap-3 sm:gap-4">
+            {/* Spatial Utility Stats Widgets */}
+            <div className="grid grid-cols-3 gap-4">
               {stats.map((stat, index) => (
-                <div 
-                  key={stat.label}
-                  className="relative bg-white/5 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/10 hover:border-coral-400/30 hover:bg-white/10 transition-all duration-300 group"
-                >
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-coral-400/20 to-lavender-500/20 flex items-center justify-center">
-                      <stat.icon className="w-4 h-4 sm:w-5 sm:h-5 text-coral-400" />
+                <div key={stat.label} className="relative group cursor-default"
+                  style={{
+                    background: 'rgba(255,255,255,0.04)',
+                    backdropFilter: 'blur(40px)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    borderRadius: '20px',
+                    boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06), 0 20px 40px -20px rgba(0,0,0,0.4)'
+                  }}>
+                  {/* Linear Dodge Highlight */}
+                  <div className="absolute top-0 left-0 right-0 h-[1px] rounded-t-[20px] opacity-50"
+                    style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(248,146,106,0.5) 50%, transparent 100%)' }} />
+                  
+                  <div className="p-5 relative z-10">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center"
+                        style={{ 
+                          background: 'linear-gradient(135deg, rgba(248,146,106,0.2) 0%, rgba(139,92,246,0.15) 100%)',
+                          boxShadow: '0 0 20px rgba(248,146,106,0.2)'
+                        }}>
+                        <stat.icon className="w-5 h-5 text-coral-400" />
+                      </div>
                     </div>
-                  </div>
-                  <div className="text-2xl sm:text-3xl font-black text-white group-hover:text-coral-300 transition-colors">{stat.value}</div>
-                  <div className="text-xs sm:text-sm text-white/60 font-medium">{stat.label}</div>
-                  {/* Progress bar decoration */}
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/5 rounded-b-2xl overflow-hidden">
-                    <div 
-                      className="h-full bg-gradient-to-r from-coral-400 to-lavender-500 transition-all duration-700"
-                      style={{ width: index === 0 ? '85%' : index === 1 ? '99%' : '100%' }}
-                    />
+                    <div className="text-3xl font-bold text-white mb-1 group-hover:text-coral-300 transition-colors">{stat.value}</div>
+                    <div className="text-sm text-white/50 font-medium">{stat.label}</div>
+                    
+                    {/* Glow Progress Bar */}
+                    <div className="mt-4 h-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
+                      <div className="h-full rounded-full transition-all duration-1000"
+                        style={{ 
+                          width: `${stat.progress}%`,
+                          background: 'linear-gradient(90deg, #F8926A 0%, #BB81B5 100%)',
+                          boxShadow: '0 0 10px rgba(248,146,106,0.5)'
+                        }} />
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
           
-          {/* Right Content - Security Visual */}
-          <div className="lg:col-span-2 order-1 lg:order-2 flex justify-center lg:justify-end w-full">
-            <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-xl xl:max-w-2xl">
-              {/* Main visual container */}
-              <div className="relative">
-                {/* Outer glow ring */}
-                <div className="absolute inset-0 rounded-full hidden sm:block" style={{
-                background: 'radial-gradient(circle at center, rgba(248,146,106,0.25) 0%, rgba(187,129,181,0.15) 50%, transparent 70%)'
-              }} />
-
-                {/* Central Shield Container */}
-                <div className="relative mx-auto w-40 h-40 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72">
-                  {/* Outer ring */}
-                  <div className="absolute inset-0 rounded-full hidden sm:block border border-dashed border-coral-400/40 animate-spin" style={{ animationDuration: '30s' }} />
-                  
-                  {/* Second ring */}
-                  <div className="absolute inset-4 sm:inset-6 rounded-full border border-lavender-400/30 hidden sm:block" />
-                  
-                  {/* Pulsing glow */}
-                  <div className="absolute inset-8 sm:inset-12 rounded-full bg-coral-400/20 blur-xl animate-pulse" />
-                  
-                  {/* Inner solid circle */}
-                  <div className="absolute inset-10 sm:inset-16 rounded-full bg-gradient-to-br from-coral-500 via-coral-400 to-lavender-500 shadow-2xl shadow-coral-400/50" />
-                  
-                  {/* Shield icon center */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Shield className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 text-navy-900 drop-shadow-lg" strokeWidth={1.5} />
-                  </div>
+          {/* Right Content - Security Visual - 5 cols */}
+          <div className="lg:col-span-5 order-1 lg:order-2 flex justify-center lg:justify-end w-full">
+            <div className="relative w-full max-w-lg">
+              {/* Main Glass Container */}
+              <div className="relative aspect-square max-w-md mx-auto">
+                {/* Outer Glow Rings */}
+                <div className="absolute inset-[-20%] rounded-full animate-spin" style={{ animationDuration: '40s' }}>
+                  <div className="absolute inset-0 rounded-full border border-dashed border-coral-400/20" />
+                </div>
+                <div className="absolute inset-[-10%] rounded-full border border-lavender-400/15" />
+                
+                {/* Central Glowing Orb */}
+                <div className="absolute inset-[15%] rounded-full"
+                  style={{
+                    background: 'radial-gradient(circle, rgba(248,146,106,0.3) 0%, rgba(139,92,246,0.15) 50%, transparent 70%)',
+                    filter: 'blur(40px)',
+                    animation: 'pulse 4s ease-in-out infinite'
+                  }} />
+                
+                {/* Main Shield Container - Glassmorphism */}
+                <div className="absolute inset-[25%] rounded-full flex items-center justify-center"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(248,146,106,0.9) 0%, rgba(246,215,221,0.8) 40%, rgba(187,129,181,0.9) 100%)',
+                    boxShadow: '0 0 80px rgba(248,146,106,0.5), 0 0 120px rgba(187,129,181,0.3), inset 0 2px 4px rgba(255,255,255,0.4)'
+                  }}>
+                  <Shield className="w-16 h-16 md:w-20 md:h-20 text-[#050508] drop-shadow-lg" strokeWidth={1.5} />
                 </div>
 
-                {/* Floating feature badges - Desktop only - Premium glass cards */}
-                <div className="hidden md:block">
-                  {securityFeatures.map((feature, index) => {
-                  const positions = [{
-                    top: '-12%',
-                    left: '50%',
-                    transform: 'translate(-50%, 0)'
-                  }, {
-                    top: '50%',
-                    right: '-20%',
-                    transform: 'translate(0, -50%)'
-                  }, {
-                    bottom: '-12%',
-                    left: '50%',
-                    transform: 'translate(-50%, 0)'
-                  }, {
-                    top: '50%',
-                    left: '-20%',
-                    transform: 'translate(0, -50%)'
-                  }];
-                  const pos = positions[index];
-                  return <div key={feature.label} className="absolute" style={pos}>
-                        <div className="flex items-center gap-3 px-4 py-3 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 shadow-lg hover:scale-105 hover:bg-white/15 transition-all duration-300">
-                          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-coral-400/30 to-lavender-500/30 flex items-center justify-center">
-                            <feature.icon className="w-5 h-5 text-coral-300" />
-                          </div>
-                          <div>
-                            <div className="text-sm text-white font-semibold whitespace-nowrap">{feature.label}</div>
-                            <div className="text-xs text-coral-300 font-bold">{feature.stat}</div>
-                          </div>
+                {/* Floating Feature Cards - Spatial Design */}
+                {securityFeatures.map((feature, index) => {
+                  const positions = [
+                    { top: '-5%', left: '50%', transform: 'translateX(-50%)' },
+                    { top: '50%', right: '-15%', transform: 'translateY(-50%)' },
+                    { bottom: '-5%', left: '50%', transform: 'translateX(-50%)' },
+                    { top: '50%', left: '-15%', transform: 'translateY(-50%)' },
+                  ];
+                  return (
+                    <div key={feature.label} className="absolute hidden md:flex" style={positions[index]}>
+                      <div className="flex items-center gap-3 px-4 py-3 rounded-2xl cursor-default group"
+                        style={{
+                          background: 'rgba(255,255,255,0.08)',
+                          backdropFilter: 'blur(20px)',
+                          border: '1px solid rgba(255,255,255,0.12)',
+                          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 15px 30px rgba(0,0,0,0.3)'
+                        }}>
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center"
+                          style={{ background: 'linear-gradient(135deg, rgba(248,146,106,0.3) 0%, rgba(139,92,246,0.2) 100%)' }}>
+                          <feature.icon className="w-5 h-5 text-coral-300" />
                         </div>
-                      </div>;
+                        <div>
+                          <div className="text-sm text-white font-medium whitespace-nowrap">{feature.label}</div>
+                          <div className="text-xs text-coral-300/80">{feature.stat}</div>
+                        </div>
+                      </div>
+                    </div>
+                  );
                 })}
-                </div>
               </div>
 
-              {/* Feature badges grid - Mobile only */}
-              <div className="grid grid-cols-2 gap-2 mt-6 md:hidden">
-                {securityFeatures.map(feature => <div key={feature.label} className="flex items-center gap-2 px-3 py-2.5 bg-white/10 backdrop-blur-md rounded-xl border border-white/15">
-                    <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-coral-400/30 to-lavender-500/30 flex items-center justify-center flex-shrink-0">
-                      <feature.icon className="w-3.5 h-3.5 text-coral-300" />
+              {/* Mobile Feature Grid */}
+              <div className="grid grid-cols-2 gap-3 mt-8 md:hidden">
+                {securityFeatures.map(feature => (
+                  <div key={feature.label} className="flex items-center gap-2 px-3 py-3 rounded-xl"
+                    style={{
+                      background: 'rgba(255,255,255,0.05)',
+                      backdropFilter: 'blur(10px)',
+                      border: '1px solid rgba(255,255,255,0.08)'
+                    }}>
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                      style={{ background: 'linear-gradient(135deg, rgba(248,146,106,0.25) 0%, rgba(139,92,246,0.15) 100%)' }}>
+                      <feature.icon className="w-4 h-4 text-coral-300" />
                     </div>
-                    <span className="text-xs text-white font-medium leading-tight">{feature.label}</span>
-                  </div>)}
+                    <span className="text-xs text-white/80 font-medium">{feature.label}</span>
+                  </div>
+                ))}
               </div>
 
-              {/* Quick Features Row */}
-              <div className="mt-8 sm:mt-12 lg:mt-16 grid grid-cols-3 gap-2 sm:gap-3">
-                {[{
-                icon: Globe,
-                label: "Ohio-Based",
-                color: "from-blue-400 to-cyan-400"
-              }, {
-                icon: Zap,
-                label: "24/7 Support",
-                color: "from-coral-400 to-coral-300"
-              }, {
-                icon: ShieldCheck,
-                label: "Veteran Owned",
-                color: "from-lavender-400 to-lavender-300"
-              }].map(stat => <div key={stat.label} className="text-center p-3 sm:p-4 bg-white/5 backdrop-blur-sm rounded-xl sm:rounded-2xl border border-white/10 hover:border-coral-400/30 hover:bg-white/10 transition-all duration-300">
-                    <div className={`w-8 h-8 sm:w-10 sm:h-10 mx-auto mb-2 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center`}>
-                      <stat.icon className="w-4 h-4 sm:w-5 sm:h-5 text-navy-900" />
-                    </div>
-                    <div className="text-[10px] sm:text-xs text-white/80 font-semibold">{stat.label}</div>
-                  </div>)}
+              {/* Bottom Trust Badges */}
+              <div className="flex justify-center gap-3 mt-8">
+                {[
+                  { icon: Globe, label: "Ohio-Based" },
+                  { icon: Star, label: "Top Rated" },
+                  { icon: Award, label: "Veteran Owned" },
+                ].map(item => (
+                  <div key={item.label} className="text-center px-4 py-3 rounded-xl"
+                    style={{
+                      background: 'rgba(255,255,255,0.04)',
+                      border: '1px solid rgba(255,255,255,0.06)'
+                    }}>
+                    <item.icon className="w-5 h-5 mx-auto mb-1.5 text-coral-400/80" />
+                    <div className="text-[10px] text-white/60 font-medium">{item.label}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-          
         </div>
       </div>
 
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background via-background/50 to-transparent pointer-events-none" />
+      {/* Bottom Gradient Fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none" />
 
-      {/* AI Image Disclaimer - fades in after 7 seconds */}
-      <div 
-        className={`absolute bottom-4 left-1/2 -translate-x-1/2 z-20 transition-all duration-1000 ${
-          showDisclaimer ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-        }`}
-      >
-        <div className="flex items-center gap-2 px-4 py-2.5 bg-navy-900/90 backdrop-blur-md rounded-full border border-coral-400/30 shadow-lg">
+      {/* AI Disclaimer */}
+      <div className={`absolute bottom-6 left-1/2 -translate-x-1/2 z-20 transition-all duration-1000 ${showDisclaimer ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+        <div className="flex items-center gap-2 px-4 py-2.5 rounded-full"
+          style={{
+            background: 'rgba(5,5,8,0.9)',
+            backdropFilter: 'blur(20px)',
+            border: '1px solid rgba(248,146,106,0.2)'
+          }}>
           <Camera className="w-3.5 h-3.5 text-coral-400" />
-          <span className="text-xs text-white/80">
-            <strong className="text-coral-300">Privacy Notice:</strong> Images are AI-generated to protect member identities
+          <span className="text-xs text-white/70">
+            <strong className="text-coral-300">Privacy Notice:</strong> Images are AI-generated
           </span>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default HeroHomepage;
