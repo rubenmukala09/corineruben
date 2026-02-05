@@ -29,7 +29,7 @@ const careerHighlights = [
 
 export const QuickLinksSection = () => {
   return (
-    <section className="py-16 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden">
+    <section className="py-10 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden">
       {/* Decorative Background Elements - CSS only */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Shield Icon - Top Left */}
@@ -54,8 +54,8 @@ export const QuickLinksSection = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-12 animate-fade-in">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+        <div className="text-center mb-8 animate-fade-in">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
             Ready to Get Started?
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">

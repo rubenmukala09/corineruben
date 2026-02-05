@@ -505,28 +505,28 @@ function Resources() {
       </div>
 
       {/* Spacer for floating stats bar */}
-      <div className="h-12" />
+      <div className="h-6" />
 
       <TrustBar />
 
       {/* Introduction Section */}
-      <section className="py-12 bg-gradient-to-b from-background to-secondary/10">
+      <section className="py-6 bg-gradient-to-b from-background to-secondary/10">
         <div className="container mx-auto px-4">
           <ScrollReveal>
             <div className="max-w-4xl mx-auto text-center">
-              <Badge className="mb-4 text-sm px-4 py-1.5 bg-gradient-to-r from-primary to-accent text-white">
+              <Badge className="mb-3 text-sm px-3 py-1 bg-gradient-to-r from-primary to-accent text-white">
                 <Sparkles className="w-3.5 h-3.5 mr-1.5" /> Trusted Resources
               </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">
                 Your One-Stop Security Shop
               </h2>
-              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+              <p className="text-base text-muted-foreground mb-4 leading-relaxed">
                 Welcome to InVision Network's resource center. Here you'll find carefully curated 
                 <strong className="text-foreground"> e-books, digital guides, softcover books, and security gadgets</strong> — 
                 all designed to help you and your family stay safe in the digital age. Every product 
                 is created by security experts with decades of experience protecting families from scams.
               </p>
-              <div className="flex flex-wrap gap-4 justify-center">
+              <div className="flex flex-wrap gap-3 justify-center">
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <BookOpen className="w-4 h-4 text-primary" />
                   <span>Digital & Print Books</span>

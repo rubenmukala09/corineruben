@@ -36,48 +36,48 @@
            </section>
            
            {/* Workshops Promo - Learn & Train Introduction */}
-           <section id="workshops">
+            <section id="workshops" className="pt-1">
              <WorkshopsPromo />
            </section>
            
            {/* AI & Business Promo */}
-           <section id="business">
+            <section id="business" className="pt-1">
              <AIBusinessPromo />
            </section>
            
            {/* Current Scam Alerts - Immediate Value */}
-           <section id="alerts">
+            <section id="alerts" className="pt-1">
              <ScamAlertsSection />
            </section>
            
            {/* Resources Promo */}
-           <section id="resources">
+            <section id="resources" className="pt-1">
              <ResourcesPromo />
            </section>
            
  
            {/* Premium Glassmorphism Widgets */}
-           <section id="trust-widgets">
+            <section id="trust-widgets" className="pt-1">
              <PremiumGlassmorphismWidgets />
            </section>
  
            {/* Community Impact - Veteran Support, Cancer Children, etc. */}
-           <section id="community">
+            <section id="community" className="pt-1">
              <CommunityImpact />
            </section>
  
            {/* Working Process - How It Works */}
-           <section id="process">
+            <section id="process" className="pt-1">
              <WorkingProcess />
            </section>
  
            {/* FAQ Section */}
-           <section id="faq">
+            <section id="faq" className="pt-1">
              <FAQPreview />
            </section>
  
            {/* Quick Links - FAQ, Contact, Careers */}
-           <section id="quick-links">
+            <section id="quick-links" className="pt-1">
              <QuickLinksSection />
            </section>
  

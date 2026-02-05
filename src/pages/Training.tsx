@@ -423,26 +423,26 @@ function LearnAndTrain() {
       </div>
 
       {/* Spacer for floating stats bar */}
-      <div className="h-12" />
+      <div className="h-6" />
 
       {/* Why Families Trust InVision Network Section */}
-      <section className="py-16 bg-muted relative overflow-hidden">
+      <section className="py-8 bg-muted relative overflow-hidden">
         <FlowingWaves variant="full" opacity={0.08} />
         
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-10">
-            <Badge className="mb-4 bg-gradient-to-r from-primary to-accent text-white text-base md:text-lg px-5 py-2">
+          <div className="text-center mb-6">
+            <Badge className="mb-3 bg-gradient-to-r from-primary to-accent text-white text-sm md:text-base px-4 py-1.5">
               <Shield className="w-5 h-5 mr-1.5" /> TRUSTED BY FAMILIES
             </Badge>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5">Why Families Trust InVision Network</h2>
-            <p className="text-lg md:text-xl lg:text-2xl text-foreground max-w-3xl mx-auto leading-relaxed">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3">Why Families Trust InVision Network</h2>
+            <p className="text-base md:text-lg text-foreground max-w-3xl mx-auto leading-relaxed">
               Clear teaching, privacy-first protocols, and real scripts your family can use in any emergency situation.
             </p>
           </div>
 
           {/* Trust Pillars */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto mb-8">
             {[
               {
                 icon: "📚",

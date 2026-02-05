@@ -31,7 +31,7 @@
  
  export const PremiumGlassmorphismWidgets = () => {
    return (
-     <section className="relative py-24 overflow-hidden" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #faf9f7 30%, #fff5f0 60%, #faf5fa 100%)' }}>
+    <section className="relative py-12 overflow-hidden" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #faf9f7 30%, #fff5f0 60%, #faf5fa 100%)' }}>
        {/* Decorative Gradient Orbs */}
        <motion.div 
          className="absolute top-20 right-[10%] w-[400px] h-[400px] opacity-40 pointer-events-none"

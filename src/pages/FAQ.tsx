@@ -387,22 +387,22 @@ export default function FAQ() {
           </div>
 
           {/* Spacer for floating stats bar */}
-          <div className="h-12" />
+          <div className="h-6" />
 
           <TrustBar />
 
         {/* Platform Guide Section */}
-        <section className="py-10 bg-gradient-to-b from-primary/5 to-background">
+        <section className="py-6 bg-gradient-to-b from-primary/5 to-background">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">
+              <Badge className="mb-3 bg-primary/10 text-primary border-primary/20">
                 <BookOpen className="w-3 h-3 mr-1" />
                 New to InVision?
               </Badge>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">
                 Learn How to Use Our Platform
               </h2>
-              <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+              <p className="text-muted-foreground mb-4 max-w-2xl mx-auto">
                 Get step-by-step guidance on purchasing, subscribing, submitting scam reports, and more
               </p>
               <PlatformGuide />
@@ -411,11 +411,11 @@ export default function FAQ() {
         </section>
 
         {/* Search & Filter Section - Redesigned */}
-        <section className="py-8 bg-gradient-to-b from-muted/30 to-background">
+        <section className="py-6 bg-gradient-to-b from-muted/30 to-background">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               {/* Search Bar - Enhanced */}
-              <div className="relative mb-8">
+              <div className="relative mb-6">
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl blur-xl opacity-50" />
                 <div className="relative">
                   <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
@@ -439,7 +439,7 @@ export default function FAQ() {
 
               {/* Results Count */}
               {searchQuery && (
-                <div className="text-center mb-6">
+                <div className="text-center mb-4">
                   <Badge variant="secondary" className="text-sm">
                     {filteredFAQs.length} {filteredFAQs.length === 1 ? 'result' : 'results'} found
                   </Badge>
@@ -450,15 +450,15 @@ export default function FAQ() {
         </section>
 
         {/* Category Tabs - Redesigned */}
-        <section className="py-6 border-y border-border/40 bg-muted/20">
+        <section className="py-4 border-y border-border/40 bg-muted/20">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
               <ScrollReveal animation="fade-up">
-                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4 text-center">
+                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3 text-center">
                   Filter by Category
                 </h3>
               </ScrollReveal>
-              <div className="flex flex-wrap gap-3 justify-center">
+              <div className="flex flex-wrap gap-2 justify-center">
                 {categories.map((category, index) => {
                   const count = faqs.filter(faq => faq.category === category).length;
                   return (
@@ -483,20 +483,20 @@ export default function FAQ() {
         </section>
 
         {/* FAQ Accordion */}
-        <section className="py-6 sm:py-8">
+        <section className="py-4 sm:py-6">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               {filteredFAQs.length > 0 ? (
-                <Accordion type="single" collapsible className="space-y-1.5">
+                <Accordion type="single" collapsible className="space-y-1">
                   {filteredFAQs.map((faq) => (
                     <ScrollRevealSection key={faq.id}>
                       <Card className="overflow-hidden">
                         <AccordionItem value={faq.id} className="border-none">
-                          <AccordionTrigger className="px-5 py-3 text-left hover:bg-muted/50 transition-colors text-lg font-semibold hover:no-underline">
+                          <AccordionTrigger className="px-4 py-2.5 text-left hover:bg-muted/50 transition-colors text-base font-semibold hover:no-underline">
                             <span className="pr-4">{faq.question}</span>
                           </AccordionTrigger>
-                          <AccordionContent className="px-6 pb-6">
-                            <div className="pt-2 space-y-4">
+                          <AccordionContent className="px-4 pb-4">
+                            <div className="pt-1 space-y-3">
                               <p className="text-base leading-relaxed whitespace-pre-line text-foreground/90">
                                 {faq.answer}
                               </p>

@@ -251,27 +251,27 @@ function Business() {
       </div>
 
       {/* Spacer to account for floating stats bar */}
-      <div className="h-12" />
+      <div className="h-6" />
 
       <TrustBar />
 
       {/* What We Build - Expandable Cards with Full Content */}
-      <section className="py-14 bg-background relative">
+      <section className="py-8 bg-background relative">
         <FlowingWaves variant="full" opacity={0.12} />
         
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-8">
-            <div className="inline-block px-6 py-2 bg-primary/10 rounded-full text-sm font-bold text-primary mb-3 uppercase tracking-wider">
+          <div className="text-center mb-6">
+            <div className="inline-block px-4 py-1.5 bg-primary/10 rounded-full text-sm font-bold text-primary mb-2 uppercase tracking-wider">
               Our Services
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-3">What We Build</h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold mb-2">What We Build</h2>
+            <p className="text-base text-muted-foreground max-w-3xl mx-auto">
               Click on any service to learn more about how we can help your business grow
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto">
             {/* AI Receptionist */}
             <ExpandableServiceCard
               icon={<Phone className="w-8 h-8 text-accent" />}

@@ -165,14 +165,14 @@ function Contact() {
       </div>
 
       {/* Spacer for floating stats bar */}
-      <div className="h-12" />
+      <div className="h-6" />
       
       <TrustBar />
 
       {/* Stats Section with AnimatedCounter */}
-      <section className="py-10 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 border-y border-primary/20">
+      <section className="py-6 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 border-y border-primary/20">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
             {[
               { icon: Users, end: 500, suffix: "+", label: "Families Helped" },
               { icon: Clock, end: 4, suffix: "hr", label: "Avg Response" },
@@ -200,7 +200,7 @@ function Contact() {
         
         <div className="container-padding relative z-10">
           {/* Contact Methods Grid with Premium Styling */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             {contactMethods.map((method, index) => {
               const IconComponent = method.icon;
               return (

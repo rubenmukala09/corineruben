@@ -32,7 +32,7 @@ import { FileText, Shield, BookOpen, ArrowRight, Download, Sparkles } from "luci
 
 export const ResourcesPromo = () => {
   return (
-    <section className="relative py-24 lg:py-32 overflow-hidden" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #faf9f7 30%, #fff5f0 60%, #faf5fa 100%)' }}>
+    <section className="relative py-12 lg:py-16 overflow-hidden" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #faf9f7 30%, #fff5f0 60%, #faf5fa 100%)' }}>
       {/* Premium decorative elements */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] opacity-30 pointer-events-none"
         style={{

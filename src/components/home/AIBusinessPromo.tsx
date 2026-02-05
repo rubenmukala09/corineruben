@@ -20,7 +20,7 @@ import businessTeam from "@/assets/business-team-office.jpg";
  
  export const AIBusinessPromo = () => {
    return (
-     <section className="relative py-24 lg:py-32 bg-gradient-to-br from-slate-50 via-white to-lavender-50/30 overflow-hidden">
+    <section className="relative py-12 lg:py-16 bg-gradient-to-br from-slate-50 via-white to-lavender-50/30 overflow-hidden">
        {/* Decorative Elements */}
        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] opacity-20 pointer-events-none"
          style={{
@@ -43,17 +43,17 @@ import businessTeam from "@/assets/business-team-office.jpg";
            whileInView={{ opacity: 1, y: 0 }}
            transition={{ duration: 0.6 }}
            viewport={{ once: true }}
-           className="text-center mb-16"
+          className="text-center mb-10"
          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-lavender-100 to-coral-100 border border-lavender-200/50 mb-6 shadow-sm">
+           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-lavender-100 to-coral-100 border border-lavender-200/50 mb-4 shadow-sm">
               <Sparkles className="w-4 h-4 text-lavender-500" />
               <span className="text-sm font-semibold text-[#18305A] uppercase tracking-wide">AI & Business</span>
            </div>
-           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-[#18305A] leading-tight mb-4"
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-[#18305A] leading-tight mb-3"
              style={{ fontFamily: "'Clash Display', 'DM Sans', sans-serif" }}>
              Choice Business <span className="bg-gradient-to-r from-lavender-500 to-coral-500 bg-clip-text text-transparent">Needs</span>
            </h2>
-           <p className="text-lg text-foreground/60 max-w-2xl mx-auto">
+          <p className="text-base text-foreground/60 max-w-2xl mx-auto">
              Transform your business with AI-powered automation. Solutions that work 24/7 so you never miss an opportunity.
            </p>
          </motion.div>

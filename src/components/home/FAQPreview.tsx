@@ -32,7 +32,7 @@ const faqs = [
 
 export const FAQPreview = () => {
   return (
-    <section className="py-16 relative overflow-hidden">
+    <section className="py-10 relative overflow-hidden">
       {/* Grid pattern */}
       <GridPattern />
       
@@ -41,23 +41,23 @@ export const FAQPreview = () => {
       <GeometricCorner position="bottom-left" variant="dots" />
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <div className="grid lg:grid-cols-2 gap-8 items-start">
           {/* Left - Header & Support Card */}
-          <div className="lg:sticky lg:top-24 space-y-8">
+          <div className="lg:sticky lg:top-24 space-y-6">
             <div>
               <div 
-                className="inline-flex items-center gap-2 px-6 py-2.5 bg-primary text-primary-foreground text-base font-bold uppercase tracking-wider mb-6"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-sm font-bold uppercase tracking-wider mb-4"
                 style={{ clipPath: "polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%)" }}
               >
                 FAQ
               </div>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
                 Got{" "}
                 <span className="text-primary">Questions?</span>
                 <br />
                 We've Got Answers
               </h2>
-              <p className="text-foreground/80 text-xl md:text-2xl leading-relaxed font-medium">
+              <p className="text-foreground/80 text-lg md:text-xl leading-relaxed font-medium">
                 Protecting your family from scams is a serious decision. Here's what you need to know.
               </p>
             </div>

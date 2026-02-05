@@ -14,7 +14,7 @@ import seniorLearning from "@/assets/senior-learning.jpg";
  
  export const WorkshopsPromo = () => {
    return (
-     <section className="relative py-24 lg:py-32 bg-white overflow-hidden">
+    <section className="relative py-12 lg:py-16 bg-white overflow-hidden">
        {/* Decorative Elements */}
        <div className="absolute top-0 left-0 w-[500px] h-[500px] opacity-30 pointer-events-none"
          style={{
@@ -37,7 +37,7 @@ import seniorLearning from "@/assets/senior-learning.jpg";
        />
  
        <div className="container mx-auto px-4 lg:px-8 relative z-10">
-         <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
            {/* Left - Image/Video Area */}
            <motion.div 
              initial={{ opacity: 0, x: -30 }}

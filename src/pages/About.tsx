@@ -119,23 +119,23 @@ function About() {
       </div>
 
       {/* Spacer for floating stats bar */}
-      <div className="h-12" />
+      <div className="h-6" />
 
       <TrustBar />
 
       {/* Our Story */}
-      <section className="py-10 md:py-14 bg-background">
+      <section className="py-6 md:py-8 bg-background">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-4 md:gap-6 lg:gap-8 items-center">
             <ScrollReveal>
               <div>
-                <Badge className="mb-3 sm:mb-4 text-sm sm:text-base md:text-lg px-3 sm:px-4 md:px-6 py-1.5 sm:py-2" variant="secondary">
+                <Badge className="mb-2 sm:mb-3 text-sm sm:text-base px-3 sm:px-4 py-1" variant="secondary">
                   Our Story
                 </Badge>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 md:mb-6">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-3">
                   It Started With a Breach
                 </h2>
-                <div className="space-y-3 sm:space-y-4 md:space-y-6 text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed">
+                <div className="space-y-2 sm:space-y-3 text-sm sm:text-base text-muted-foreground leading-relaxed">
                   <p>
                     When Ruben and Corine fell victim to a sophisticated data breach, their worst fears came true. All their passwords, emails, and personal information were exposed. Then came the chilling demand: pay thousands of dollars, or their private data would be sold on the dark web.
                   </p>
@@ -166,17 +166,17 @@ function About() {
       </section>
 
       {/* Timeline */}
-      <section className="py-10 md:py-14 bg-gradient-to-b from-secondary/20 to-background">
+      <section className="py-6 md:py-8 bg-gradient-to-b from-secondary/20 to-background">
         <div className="container mx-auto px-4">
           <ScrollReveal>
-            <div className="text-center mb-8">
-              <Badge className="mb-3 text-base md:text-lg px-4 md:px-6 py-2" variant="secondary">
+            <div className="text-center mb-6">
+              <Badge className="mb-2 text-sm md:text-base px-4 py-1" variant="secondary">
                 Our Journey
               </Badge>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">
                 Milestones That Matter
               </h2>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
+              <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto">
                 From a personal scare to protecting hundreds of families
               </p>
             </div>
@@ -187,14 +187,14 @@ function About() {
       </section>
 
       {/* Founders */}
-      <section id="founders" className="py-10 md:py-14 bg-background">
+      <section id="founders" className="py-6 md:py-8 bg-background">
         <div className="container mx-auto px-4">
           <ScrollReveal>
-            <div className="text-center mb-8">
-              <Badge className="mb-4 text-base md:text-lg px-4 md:px-6 py-2" variant="secondary">
+            <div className="text-center mb-6">
+              <Badge className="mb-2 text-sm md:text-base px-4 py-1" variant="secondary">
                 Meet Our Founders
               </Badge>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">
                 The People Behind the Mission
               </h2>
               <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">

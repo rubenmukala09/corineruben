@@ -49,7 +49,7 @@ export const ScamAlertsSection = () => {
   }, []);
 
   return (
-     <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #faf9f7 50%, #fff5f0 100%)' }}>
+     <section className="py-12 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #faf9f7 50%, #fff5f0 100%)' }}>
        {/* Decorative Gradient Orbs */}
        <div className="absolute top-32 left-[5%] w-[350px] h-[350px] opacity-25 pointer-events-none"
          style={{

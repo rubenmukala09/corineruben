@@ -19,7 +19,7 @@
  
  export const CommunityImpact = () => {
    return (
-     <section className="relative py-24 lg:py-32 overflow-hidden" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #faf9f7 50%, #fff5f0 100%)' }}>
+    <section className="relative py-12 lg:py-16 overflow-hidden" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #faf9f7 50%, #fff5f0 100%)' }}>
        {/* Decorative Gradient */}
        <div className="absolute top-0 left-0 w-[400px] h-[400px] opacity-20 pointer-events-none"
          style={{
@@ -36,20 +36,20 @@
            whileInView={{ opacity: 1, y: 0 }}
            transition={{ duration: 0.6 }}
            viewport={{ once: true }}
-           className="text-center mb-16"
+          className="text-center mb-10"
          >
-           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-coral-200/50 shadow-lg mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-coral-200/50 shadow-lg mb-4">
              <Sparkles className="w-4 h-4 text-coral-500" />
              <span className="text-sm font-semibold text-[#18305A] uppercase tracking-wide">Our Team</span>
            </div>
-           <h2 className="text-4xl md:text-5xl font-black text-[#18305A] leading-tight mb-4"
+          <h2 className="text-3xl md:text-4xl font-black text-[#18305A] leading-tight mb-3"
              style={{ fontFamily: "'Clash Display', 'DM Sans', sans-serif" }}>
              Dedicated Consulting <span className="bg-gradient-to-r from-coral-500 to-lavender-500 bg-clip-text text-transparent">Team</span>
            </h2>
          </motion.div>
  
          {/* Team Cards */}
-         <div className="grid md:grid-cols-3 gap-6 mb-24">
+        <div className="grid md:grid-cols-3 gap-4 mb-12">
            {teamMembers.map((member, i) => (
              <motion.div 
                key={member.name}
