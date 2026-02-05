@@ -55,6 +55,7 @@ import { SEO } from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
 import HeroFloatingStats from "@/components/business/HeroFloatingStats";
+import { GlassmorphismBackground } from "@/components/backgrounds/GlassmorphismBackground";
 
 // Static book products with covers (20 books)
 // Author constant for all books
@@ -509,74 +510,84 @@ function Resources() {
 
       <TrustBar />
 
-      {/* Introduction Section */}
-      <section className="py-6 bg-gradient-to-b from-background to-secondary/10">
-        <div className="container mx-auto px-4">
-          <ScrollReveal>
-            <div className="max-w-4xl mx-auto text-center">
-              <Badge className="mb-3 text-sm px-3 py-1 bg-gradient-to-r from-primary to-accent text-white">
-                <Sparkles className="w-3.5 h-3.5 mr-1.5" /> Trusted Resources
-              </Badge>
-              <h2 className="text-2xl md:text-3xl font-bold mb-3">
-                Your One-Stop Security Shop
-              </h2>
-              <p className="text-base text-muted-foreground mb-4 leading-relaxed">
-                Welcome to InVision Network's resource center. Here you'll find carefully curated 
-                <strong className="text-foreground"> e-books, digital guides, softcover books, and security gadgets</strong>. 
-                all designed to help you and your family stay safe in the digital age. Every product 
-                is created by security experts with decades of experience protecting families from scams.
-              </p>
-              <div className="flex flex-wrap gap-3 justify-center">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <BookOpen className="w-4 h-4 text-primary" />
-                  <span>Digital & Print Books</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Package className="w-4 h-4 text-primary" />
-                  <span>Security Gadgets</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Download className="w-4 h-4 text-primary" />
-                  <span>Instant Downloads</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Users className="w-4 h-4 text-primary" />
-                  <span>Family-Friendly</span>
+      {/* Glassmorphism Background Wrapper */}
+      <GlassmorphismBackground variant="mixed">
+        {/* Introduction Section */}
+        <section className="py-6">
+          <div className="container mx-auto px-4">
+            <ScrollReveal>
+              <div className="max-w-4xl mx-auto text-center backdrop-blur-sm bg-white/40 rounded-3xl p-8 border border-white/60 shadow-xl">
+                <Badge className="mb-3 text-sm px-3 py-1 bg-gradient-to-r from-primary to-accent text-white">
+                  <Sparkles className="w-3.5 h-3.5 mr-1.5" /> Trusted Resources
+                </Badge>
+                <h2 className="text-2xl md:text-3xl font-bold mb-3">
+                  Your One-Stop Security Shop
+                </h2>
+                <p className="text-base text-muted-foreground mb-4 leading-relaxed">
+                  Welcome to InVision Network's resource center. Here you'll find carefully curated 
+                  <strong className="text-foreground"> e-books, digital guides, softcover books, and security gadgets</strong>. 
+                  all designed to help you and your family stay safe in the digital age. Every product 
+                  is created by security experts with decades of experience protecting families from scams.
+                </p>
+                <div className="flex flex-wrap gap-3 justify-center">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground bg-white/50 px-3 py-1.5 rounded-full">
+                    <BookOpen className="w-4 h-4 text-primary" />
+                    <span>Digital & Print Books</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground bg-white/50 px-3 py-1.5 rounded-full">
+                    <Package className="w-4 h-4 text-primary" />
+                    <span>Security Gadgets</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground bg-white/50 px-3 py-1.5 rounded-full">
+                    <Download className="w-4 h-4 text-primary" />
+                    <span>Instant Downloads</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground bg-white/50 px-3 py-1.5 rounded-full">
+                    <Users className="w-4 h-4 text-primary" />
+                    <span>Family-Friendly</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* Quick Stats Banner */}
-      <section className="py-6 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 border-y border-primary/20">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            {[{
-            value: "20+",
-            label: "Digital Guides",
-            icon: BookOpen
-          }, {
-            value: "15+",
-            label: "Security Products",
-            icon: Shield
-          }, {
-            value: "100+",
-            label: "Happy Customers",
-            icon: Heart
-          }, {
-            value: "24/7",
-            label: "Support Available",
-            icon: Headphones
-          }].map((stat, index) => <div key={index} className="flex flex-col items-center gap-1">
-                <stat.icon className="w-5 h-5 text-primary mb-1" />
-                <span className="text-2xl font-bold text-foreground">{stat.value}</span>
-                <span className="text-xs text-muted-foreground">{stat.label}</span>
-              </div>)}
+            </ScrollReveal>
           </div>
-        </div>
-      </section>
+        </section>
+
+        {/* Quick Stats Banner */}
+        <section className="py-6">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              {[{
+                value: "20+",
+                label: "Digital Guides",
+                icon: BookOpen
+              }, {
+                value: "15+",
+                label: "Security Products",
+                icon: Shield
+              }, {
+                value: "100+",
+                label: "Happy Customers",
+                icon: Heart
+              }, {
+                value: "24/7",
+                label: "Support Available",
+                icon: Headphones
+              }].map((stat, index) => (
+                <div 
+                  key={index} 
+                  className="flex flex-col items-center gap-1 backdrop-blur-sm bg-white/50 rounded-2xl p-4 border border-white/60 shadow-lg hover:shadow-xl transition-shadow duration-300"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-coral-100 to-lavender-100 flex items-center justify-center mb-1">
+                    <stat.icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="text-2xl font-bold text-foreground">{stat.value}</span>
+                  <span className="text-xs text-muted-foreground">{stat.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </GlassmorphismBackground>
 
       {/* Digital Security Guides - Compact Cards */}
       <section id="guides" className="py-10 bg-gradient-to-b from-background to-secondary/20">
