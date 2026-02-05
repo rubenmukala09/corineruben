@@ -483,3 +483,131 @@ a[role="button"]:active {
 .value-card {
   transform-style: preserve-3d;
 }
+
+/* ===== NEUMORPHISM DESIGN SYSTEM ===== */
+
+/* Base neumorphism utility */
+.neumorphism-base {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Neumorphism card - raised */
+.neumorphism-card {
+  background: hsl(var(--background));
+  border-radius: 1.5rem;
+  box-shadow: 
+    8px 8px 16px rgba(0, 0, 0, 0.1),
+    -8px -8px 16px rgba(255, 255, 255, 0.95);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.neumorphism-card:hover {
+  box-shadow: 
+    10px 10px 20px rgba(0, 0, 0, 0.12),
+    -10px -10px 20px rgba(255, 255, 255, 1);
+  transform: translateY(-2px);
+}
+
+/* Neumorphism inset - pressed state */
+.neumorphism-inset {
+  background: hsl(var(--background));
+  border-radius: 1rem;
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.08),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.9);
+}
+
+/* Neumorphism button primary */
+.neumorphism-btn {
+  background: hsl(var(--background));
+  border-radius: 1rem;
+  box-shadow: 
+    6px 6px 12px rgba(0, 0, 0, 0.1),
+    -6px -6px 12px rgba(255, 255, 255, 0.95);
+  transition: all 0.2s ease-out;
+}
+
+.neumorphism-btn:hover {
+  box-shadow: 
+    8px 8px 16px rgba(0, 0, 0, 0.12),
+    -8px -8px 16px rgba(255, 255, 255, 1);
+  transform: translateY(-1px);
+}
+
+.neumorphism-btn:active {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.1),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.85);
+  transform: translateY(0);
+}
+
+/* Neumorphism widget - for floating elements */
+.neumorphism-widget {
+  background: hsl(var(--background));
+  border-radius: 1.25rem;
+  box-shadow: 
+    8px 8px 20px rgba(0, 0, 0, 0.12),
+    -8px -8px 20px rgba(255, 255, 255, 0.9),
+    0 4px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.neumorphism-widget:hover {
+  box-shadow: 
+    12px 12px 28px rgba(0, 0, 0, 0.15),
+    -12px -12px 28px rgba(255, 255, 255, 0.95),
+    0 8px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* Neumorphism circle - for icons/badges */
+.neumorphism-circle {
+  border-radius: 50%;
+  box-shadow: 
+    6px 6px 14px rgba(0, 0, 0, 0.12),
+    -6px -6px 14px rgba(255, 255, 255, 0.95);
+  transition: all 0.3s ease-out;
+}
+
+.neumorphism-circle:hover {
+  box-shadow: 
+    8px 8px 18px rgba(0, 0, 0, 0.15),
+    -8px -8px 18px rgba(255, 255, 255, 1);
+}
+
+/* Neumorphism input field */
+.neumorphism-input {
+  background: hsl(var(--background));
+  border-radius: 0.75rem;
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.06),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.9);
+  border: 1px solid transparent;
+  transition: all 0.25s ease-out;
+}
+
+.neumorphism-input:focus {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.08),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.95),
+    0 0 0 3px hsl(var(--primary) / 0.15);
+}
+
+/* Dark mode adjustments */
+.dark .neumorphism-card,
+.dark .neumorphism-btn,
+.dark .neumorphism-widget {
+  box-shadow: 
+    6px 6px 14px rgba(0, 0, 0, 0.4),
+    -6px -6px 14px rgba(255, 255, 255, 0.05);
+}
+
+.dark .neumorphism-inset,
+.dark .neumorphism-input {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.3),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.03);
+}
+
+/* ===== END NEUMORPHISM ===== */

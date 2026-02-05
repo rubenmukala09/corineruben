@@ -66,7 +66,7 @@ export const HeroHomepage = () => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ delay: 1.0, duration: 0.8 }}
             whileHover={{ scale: 1.1, y: -5 }}
-            className="absolute top-8 right-8 bg-white rounded-2xl p-4 shadow-2xl border border-border/20"
+            className="absolute top-8 right-8 neumorphism-widget bg-background rounded-2xl p-4"
           >
             <motion.div 
               animate={{ rotate: [0, 3, -3, 0] }}
@@ -93,7 +93,7 @@ export const HeroHomepage = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 1.4, duration: 0.7 }}
             whileHover={{ scale: 1.1, rotate: 3 }}
-            className="absolute top-10 left-8 bg-gradient-to-br from-primary to-accent rounded-xl p-4 shadow-2xl"
+            className="absolute top-10 left-8 neumorphism-widget bg-gradient-to-br from-primary to-accent rounded-xl p-4"
           >
             <motion.div 
               animate={{ y: [0, -3, 0] }}
@@ -112,7 +112,7 @@ export const HeroHomepage = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 1.7, duration: 0.7 }}
             whileHover={{ scale: 1.1, x: -5 }}
-            className="absolute top-[42%] right-6 bg-white rounded-xl p-3 shadow-2xl border border-border/20"
+            className="absolute top-[42%] right-6 neumorphism-widget bg-background rounded-xl p-3"
           >
             <motion.div 
               animate={{ scale: [1, 1.08, 1] }}
@@ -135,7 +135,7 @@ export const HeroHomepage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.0, duration: 0.6 }}
             whileHover={{ rotate: 15, scale: 1.2 }}
-            className="absolute bottom-[32%] left-6 bg-gradient-to-br from-primary to-accent rounded-full p-3 shadow-2xl"
+            className="absolute bottom-[32%] left-6 neumorphism-circle bg-gradient-to-br from-primary to-accent rounded-full p-3"
           >
             <motion.div
               animate={{ rotate: [0, 360] }}
@@ -151,7 +151,7 @@ export const HeroHomepage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.2, duration: 0.6 }}
             whileHover={{ scale: 1.1 }}
-            className="absolute bottom-[20%] right-10 bg-white rounded-xl p-3 shadow-2xl border border-border/20"
+            className="absolute bottom-[20%] right-10 neumorphism-widget bg-background rounded-xl p-3"
           >
             <motion.div 
               animate={{ opacity: [0.7, 1, 0.7] }}
@@ -172,7 +172,7 @@ export const HeroHomepage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.4, duration: 0.6 }}
             whileHover={{ scale: 1.15 }}
-            className="absolute top-[58%] left-5 bg-gradient-to-br from-pink-500 to-rose-500 rounded-xl p-2.5 shadow-2xl"
+            className="absolute top-[58%] left-5 neumorphism-widget bg-gradient-to-br from-pink-500 to-rose-500 rounded-xl p-2.5"
           >
             <motion.div 
               animate={{ scale: [1, 1.25, 1] }}
@@ -190,7 +190,7 @@ export const HeroHomepage = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 2.6, duration: 0.6 }}
             whileHover={{ scale: 1.15, y: -3 }}
-            className="absolute top-[28%] left-[38%] bg-gradient-to-br from-cyan-500 to-teal-500 rounded-full p-2.5 shadow-2xl"
+            className="absolute top-[28%] left-[38%] neumorphism-circle bg-gradient-to-br from-cyan-500 to-teal-500 rounded-full p-2.5"
           >
             <motion.div
               animate={{ rotate: [0, -360] }}
@@ -206,7 +206,7 @@ export const HeroHomepage = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 2.8, duration: 0.6 }}
             whileHover={{ scale: 1.15, rotate: -8 }}
-            className="absolute bottom-[28%] left-[32%] bg-white rounded-xl p-2.5 shadow-2xl border border-border/20"
+            className="absolute bottom-[28%] left-[32%] neumorphism-widget bg-background rounded-xl p-2.5"
           >
             <motion.div
               animate={{ rotate: [0, 360] }}
