@@ -67,6 +67,98 @@ export const HeroHomepage = () => {
             />
           </motion.div>
           
+          {/* Animated Vertical Neon Beams */}
+          {[...Array(5)].map((_, i) => (
+            <motion.div
+              key={`neon-${i}`}
+              animate={{
+                opacity: [0, 0.6, 0.8, 0.6, 0],
+                scaleY: [0.3, 1, 1, 1, 0.3],
+                y: ['-20%', '0%', '0%', '0%', '20%']
+              }}
+              transition={{
+                duration: 4 + i * 0.8,
+                repeat: Infinity,
+                delay: i * 1.2,
+                ease: "easeInOut"
+              }}
+              className="absolute top-0 bottom-0 w-[2px] pointer-events-none"
+              style={{
+                left: `${15 + i * 18}%`,
+                background: `linear-gradient(180deg, 
+                  transparent 0%, 
+                  hsl(var(--primary) / 0.3) 15%, 
+                  hsl(var(--primary) / 0.8) 30%, 
+                  hsl(var(--accent) / 0.9) 50%, 
+                  hsl(var(--primary) / 0.8) 70%, 
+                  hsl(var(--primary) / 0.3) 85%, 
+                  transparent 100%)`,
+                boxShadow: `0 0 20px 4px hsl(var(--primary) / 0.4), 
+                            0 0 40px 8px hsl(var(--accent) / 0.3), 
+                            0 0 60px 12px hsl(var(--primary) / 0.2)`,
+                filter: 'blur(1px)'
+              }}
+            />
+          ))}
+          
+          {/* Secondary Merging Neon Beams */}
+          {[...Array(3)].map((_, i) => (
+            <motion.div
+              key={`neon-merge-${i}`}
+              animate={{
+                opacity: [0, 0.5, 0.7, 0.5, 0],
+                scaleY: [0.5, 1.2, 1, 1.2, 0.5],
+                x: [i % 2 === 0 ? -30 : 30, 0, 0, 0, i % 2 === 0 ? 30 : -30]
+              }}
+              transition={{
+                duration: 6 + i * 1.5,
+                repeat: Infinity,
+                delay: 2 + i * 2,
+                ease: "easeInOut"
+              }}
+              className="absolute top-0 bottom-0 w-[3px] pointer-events-none"
+              style={{
+                left: `${25 + i * 25}%`,
+                background: `linear-gradient(180deg, 
+                  transparent 0%, 
+                  hsl(var(--accent) / 0.4) 20%, 
+                  hsl(265 55% 50% / 0.9) 50%, 
+                  hsl(var(--accent) / 0.4) 80%, 
+                  transparent 100%)`,
+                boxShadow: `0 0 25px 6px hsl(var(--accent) / 0.5), 
+                            0 0 50px 12px hsl(265 55% 50% / 0.3)`,
+                filter: 'blur(1.5px)'
+              }}
+            />
+          ))}
+          
+          {/* Thin Accent Neon Lines */}
+          {[...Array(4)].map((_, i) => (
+            <motion.div
+              key={`neon-thin-${i}`}
+              animate={{
+                opacity: [0, 0.4, 0.6, 0.4, 0],
+                scaleY: [0.2, 0.8, 1, 0.8, 0.2]
+              }}
+              transition={{
+                duration: 3 + i * 0.5,
+                repeat: Infinity,
+                delay: 0.5 + i * 0.8,
+                ease: "easeInOut"
+              }}
+              className="absolute top-0 bottom-0 w-px pointer-events-none"
+              style={{
+                left: `${10 + i * 22}%`,
+                background: `linear-gradient(180deg, 
+                  transparent 0%, 
+                  hsl(var(--primary) / 0.5) 40%, 
+                  hsl(var(--primary) / 0.5) 60%, 
+                  transparent 100%)`,
+                boxShadow: `0 0 10px 2px hsl(var(--primary) / 0.3)`
+              }}
+            />
+          ))}
+
           {/* Animated Gradient Overlay */}
           <motion.div 
             animate={{ 
