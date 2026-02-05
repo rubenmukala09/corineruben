@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ===== SKEUOMORPHISM 2.0 by Kolpikov - GLOBAL IMPLEMENTATION ===== */
+/* Premium tactile design with physical depth, realistic shadows, and material feel */
+
 /* ===== ZERO-DISTRACTION PROTOCOL - Dashboard Stability ===== */
 /* Force instant transitions - no animations anywhere in admin */
 .admin-no-animations,
@@ -200,10 +203,39 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --skeuo-shadow-floating: 
       0 2px 8px rgba(0,0,0,0.04),
       0 8px 24px rgba(0,0,0,0.06);
-    --skeuo-highlight: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+    --skeuo-highlight: linear-gradient(180deg, rgba(255,255,255,0.25) 0%, transparent 50%);
     --skeuo-inset: 
       inset 0 1px 2px rgba(0,0,0,0.06),
       inset 0 -1px 1px rgba(255,255,255,0.5);
+    
+    /* Skeuomorphic themed shadows with coral/lavender tints */
+    --skeuo-shadow-coral: 
+      0 2px 4px hsl(var(--coral-400) / 0.1),
+      0 4px 8px hsl(var(--coral-400) / 0.08),
+      0 8px 16px hsl(var(--coral-400) / 0.06);
+    --skeuo-shadow-lavender: 
+      0 2px 4px hsl(var(--lavender-400) / 0.1),
+      0 4px 8px hsl(var(--lavender-400) / 0.08),
+      0 8px 16px hsl(var(--lavender-400) / 0.06);
+    --skeuo-shadow-mixed: 
+      0 2px 4px hsl(var(--coral-400) / 0.08),
+      0 4px 8px hsl(var(--lavender-400) / 0.06),
+      0 8px 16px hsl(var(--coral-400) / 0.04);
+    
+    /* Glassmorphism + Skeuomorphism hybrid backgrounds */
+    --skeuo-glass-bg: linear-gradient(135deg, 
+      hsl(0 0% 100% / 0.9) 0%, 
+      hsl(0 0% 100% / 0.7) 50%,
+      hsl(0 0% 100% / 0.85) 100%);
+    --skeuo-glass-border: hsl(0 0% 100% / 0.6);
+    
+    /* Premium coral-lavender gradient for accents */
+    --skeuo-gradient-accent: linear-gradient(135deg, 
+      hsl(var(--coral-400)) 0%, 
+      hsl(var(--lavender-500)) 100%);
+    --skeuo-gradient-accent-soft: linear-gradient(135deg, 
+      hsl(var(--coral-100)) 0%, 
+      hsl(var(--lavender-100)) 100%);
   }
 
   html {
@@ -350,9 +382,296 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     min-height: 44px;
     min-width: 44px;
   }
+  
+  /* ===== SKEUOMORPHISM 2.0 GLOBAL EFFECTS ===== */
+  
+  /* All cards get subtle raised effect */
+  .rounded-xl, .rounded-2xl, .rounded-3xl {
+    box-shadow: var(--skeuo-shadow-raised);
+  }
+  
+  /* Premium section backgrounds with depth */
+  section {
+    position: relative;
+  }
+  
+  /* Ambient lighting effect for sections */
+  .skeuo-ambient-coral::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at 30% 20%, hsl(var(--coral-200) / 0.15) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  .skeuo-ambient-lavender::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at 70% 80%, hsl(var(--lavender-200) / 0.15) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  .skeuo-ambient-mixed::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(ellipse at 20% 30%, hsl(var(--coral-200) / 0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, hsl(var(--lavender-200) / 0.12) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
 }
 
 /* Global transition timing - fast and subtle */
 * {
   transition-timing-function: cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+/* ===== SKEUOMORPHISM 2.0 UTILITY CLASSES ===== */
+
+/* Raised surface with physical depth */
+.skeuo-raised {
+  background: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(0 0% 98%) 100%);
+  box-shadow: 
+    0 1px 1px rgba(0,0,0,0.02),
+    0 2px 2px rgba(0,0,0,0.02),
+    0 4px 4px rgba(0,0,0,0.03),
+    0 8px 8px rgba(0,0,0,0.04),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+  border: 1px solid hsl(0 0% 92%);
+}
+
+.skeuo-raised:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 2px 2px rgba(0,0,0,0.02),
+    0 4px 4px rgba(0,0,0,0.03),
+    0 8px 8px rgba(0,0,0,0.04),
+    0 16px 16px rgba(0,0,0,0.05),
+    inset 0 1px 0 rgba(255,255,255,1);
+}
+
+/* Inset/recessed surface */
+.skeuo-inset {
+  background: linear-gradient(180deg, hsl(0 0% 97%) 0%, hsl(0 0% 100%) 100%);
+  box-shadow: 
+    inset 0 1px 3px rgba(0,0,0,0.08),
+    inset 0 2px 6px rgba(0,0,0,0.04),
+    0 1px 0 rgba(255,255,255,0.8);
+  border: 1px solid hsl(0 0% 90%);
+}
+
+/* Floating element with premium shadow */
+.skeuo-floating {
+  box-shadow: 
+    0 4px 8px rgba(0,0,0,0.04),
+    0 8px 16px rgba(0,0,0,0.06),
+    0 16px 32px rgba(0,0,0,0.08);
+}
+
+/* Coral-tinted skeuomorphic surface */
+.skeuo-coral {
+  background: linear-gradient(135deg, 
+    hsl(var(--coral-100)) 0%, 
+    hsl(0 0% 100%) 50%,
+    hsl(var(--coral-50, 25 80% 98%)) 100%);
+  box-shadow: 
+    0 2px 4px hsl(var(--coral-400) / 0.08),
+    0 4px 8px hsl(var(--coral-400) / 0.06),
+    0 8px 16px rgba(0,0,0,0.04),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+  border: 1px solid hsl(var(--coral-200) / 0.5);
+}
+
+/* Lavender-tinted skeuomorphic surface */
+.skeuo-lavender {
+  background: linear-gradient(135deg, 
+    hsl(var(--lavender-100)) 0%, 
+    hsl(0 0% 100%) 50%,
+    hsl(var(--lavender-100)) 100%);
+  box-shadow: 
+    0 2px 4px hsl(var(--lavender-400) / 0.08),
+    0 4px 8px hsl(var(--lavender-400) / 0.06),
+    0 8px 16px rgba(0,0,0,0.04),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+  border: 1px solid hsl(var(--lavender-200) / 0.5);
+}
+
+/* Mixed coral-lavender gradient surface */
+.skeuo-gradient {
+  background: linear-gradient(135deg, 
+    hsl(var(--coral-100) / 0.5) 0%, 
+    hsl(0 0% 100%) 30%,
+    hsl(0 0% 100%) 70%,
+    hsl(var(--lavender-100) / 0.5) 100%);
+  box-shadow: var(--skeuo-shadow-mixed);
+  border: 1px solid hsl(0 0% 92%);
+}
+
+/* Premium glass with skeuomorphic depth */
+.skeuo-glass {
+  background: var(--skeuo-glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--skeuo-glass-border);
+  box-shadow: 
+    0 4px 8px rgba(0,0,0,0.04),
+    0 8px 16px rgba(0,0,0,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.8),
+    inset 0 -1px 0 rgba(0,0,0,0.02);
+}
+
+/* Tactile button base */
+.skeuo-button-primary {
+  background: linear-gradient(180deg, 
+    hsl(var(--coral-400)) 0%, 
+    hsl(var(--coral-500)) 100%);
+  color: white;
+  box-shadow: 
+    0 2px 4px hsl(var(--coral-600) / 0.25),
+    0 4px 8px hsl(var(--coral-600) / 0.15),
+    inset 0 1px 0 hsl(var(--coral-300) / 0.4),
+    inset 0 -1px 0 hsl(var(--coral-600) / 0.3);
+  border: none;
+  text-shadow: 0 1px 1px hsl(var(--coral-600) / 0.3);
+}
+
+.skeuo-button-primary:hover {
+  background: linear-gradient(180deg, 
+    hsl(var(--coral-300)) 0%, 
+    hsl(var(--coral-400)) 100%);
+  transform: translateY(-1px);
+  box-shadow: 
+    0 4px 8px hsl(var(--coral-600) / 0.3),
+    0 8px 16px hsl(var(--coral-600) / 0.2),
+    inset 0 1px 0 hsl(var(--coral-200) / 0.5),
+    inset 0 -1px 0 hsl(var(--coral-600) / 0.3);
+}
+
+.skeuo-button-primary:active {
+  transform: translateY(0);
+  box-shadow: 
+    inset 0 2px 4px hsl(var(--coral-600) / 0.3),
+    inset 0 1px 2px hsl(var(--coral-700) / 0.2);
+}
+
+/* Secondary/outline button with skeuomorphic feel */
+.skeuo-button-secondary {
+  background: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(0 0% 98%) 100%);
+  color: hsl(var(--foreground));
+  box-shadow: 
+    0 1px 2px rgba(0,0,0,0.06),
+    0 2px 4px rgba(0,0,0,0.04),
+    inset 0 1px 0 rgba(255,255,255,1),
+    inset 0 -1px 0 rgba(0,0,0,0.04);
+  border: 1px solid hsl(0 0% 88%);
+}
+
+.skeuo-button-secondary:hover {
+  background: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(0 0% 96%) 100%);
+  transform: translateY(-1px);
+  box-shadow: 
+    0 2px 4px rgba(0,0,0,0.08),
+    0 4px 8px rgba(0,0,0,0.06),
+    inset 0 1px 0 rgba(255,255,255,1),
+    inset 0 -1px 0 rgba(0,0,0,0.04);
+}
+
+/* Embossed text effect */
+.skeuo-embossed {
+  text-shadow: 
+    0 1px 0 rgba(255,255,255,0.8),
+    0 -1px 0 rgba(0,0,0,0.1);
+}
+
+/* Debossed/engraved text effect */
+.skeuo-debossed {
+  text-shadow: 
+    0 -1px 0 rgba(255,255,255,0.6),
+    0 1px 1px rgba(0,0,0,0.15);
+}
+
+/* Premium icon container */
+.skeuo-icon-container {
+  background: linear-gradient(135deg, 
+    hsl(var(--coral-100)) 0%, 
+    hsl(var(--lavender-100)) 100%);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 
+    0 2px 4px rgba(0,0,0,0.06),
+    0 4px 8px rgba(0,0,0,0.04),
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    inset 0 -1px 0 rgba(0,0,0,0.03);
+  border: 1px solid hsl(0 0% 92%);
+}
+
+/* Progress bar with depth */
+.skeuo-progress-track {
+  background: linear-gradient(180deg, hsl(0 0% 92%) 0%, hsl(0 0% 96%) 100%);
+  box-shadow: 
+    inset 0 1px 3px rgba(0,0,0,0.1),
+    inset 0 2px 6px rgba(0,0,0,0.05);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.skeuo-progress-fill {
+  background: linear-gradient(180deg, 
+    hsl(var(--coral-400)) 0%, 
+    hsl(var(--coral-500)) 100%);
+  box-shadow: 
+    inset 0 1px 0 hsl(var(--coral-300) / 0.5),
+    0 1px 2px hsl(var(--coral-600) / 0.3);
+  border-radius: 9999px;
+}
+
+/* Divider with embossed effect */
+.skeuo-divider {
+  height: 2px;
+  background: linear-gradient(180deg, 
+    rgba(0,0,0,0.06) 0%, 
+    rgba(0,0,0,0.02) 50%, 
+    rgba(255,255,255,0.8) 100%);
+  border: none;
+  margin: 2rem 0;
+}
+
+/* Pill/tag with tactile feel */
+.skeuo-pill {
+  background: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(0 0% 97%) 100%);
+  border-radius: 9999px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid hsl(0 0% 90%);
+  box-shadow: 
+    0 1px 2px rgba(0,0,0,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    inset 0 -1px 0 rgba(0,0,0,0.03);
+}
+
+.skeuo-pill-coral {
+  background: linear-gradient(180deg, hsl(var(--coral-100)) 0%, hsl(var(--coral-200)) 100%);
+  border-color: hsl(var(--coral-300) / 0.5);
+  color: hsl(var(--coral-600));
+}
+
+.skeuo-pill-lavender {
+  background: linear-gradient(180deg, hsl(var(--lavender-100)) 0%, hsl(var(--lavender-200)) 100%);
+  border-color: hsl(var(--lavender-300) / 0.5);
+  color: hsl(var(--lavender-600));
 }

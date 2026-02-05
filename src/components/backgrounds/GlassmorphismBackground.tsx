@@ -4,12 +4,14 @@
    children: React.ReactNode;
    className?: string;
    variant?: "default" | "coral" | "lavender" | "mixed";
+  skeuomorphic?: boolean;
  }
  
  export const GlassmorphismBackground = ({ 
    children, 
    className = "",
-   variant = "mixed"
+  variant = "mixed",
+  skeuomorphic = true
  }: GlassmorphismBackgroundProps) => {
    const getGradientColors = () => {
      switch (variant) {
@@ -122,12 +124,34 @@
        
        {/* Subtle noise texture */}
        <div 
-         className="absolute inset-0 pointer-events-none opacity-[0.015]"
+        className="absolute inset-0 pointer-events-none opacity-[0.02]"
          style={{
            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
          }}
        />
        
+      {/* Skeuomorphic ambient lighting */}
+      {skeuomorphic && (
+        <>
+          <div 
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: `
+                radial-gradient(ellipse 80% 50% at 20% 20%, hsl(var(--coral-200) / 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 80%, hsl(var(--lavender-200) / 0.12) 0%, transparent 50%)
+              `,
+            }}
+          />
+          {/* Top edge highlight for depth */}
+          <div 
+            className="absolute top-0 left-0 right-0 h-px pointer-events-none"
+            style={{
+              background: 'linear-gradient(90deg, transparent 10%, rgba(255,255,255,0.8) 50%, transparent 90%)',
+            }}
+          />
+        </>
+      )}
+      
        {/* Floating glass particles */}
        <div className="absolute inset-0 pointer-events-none overflow-hidden">
          {[...Array(6)].map((_, i) => (

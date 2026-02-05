@@ -19,6 +19,7 @@
  import { SectionNav } from "@/components/SectionNav";
  import seniorCoupleActive from "@/assets/senior-couple-active.jpg";
  import { PremiumGlassmorphismWidgets } from "@/components/home/PremiumGlassmorphismWidgets";
+import { SkeuomorphicSection } from "@/components/backgrounds/SkeuomorphicSection";
  
  const Index = () => {
    const [scamShieldOpen, setScamShieldOpen] = useState(false);
@@ -36,50 +37,50 @@
            </section>
            
            {/* Workshops Promo - Learn & Train Introduction */}
-            <section id="workshops" className="pt-1">
+          <SkeuomorphicSection id="workshops" className="pt-1" variant="coral">
              <WorkshopsPromo />
-           </section>
+          </SkeuomorphicSection>
            
            {/* AI & Business Promo */}
-            <section id="business" className="pt-1">
+          <SkeuomorphicSection id="business" className="pt-1" variant="lavender">
              <AIBusinessPromo />
-           </section>
+          </SkeuomorphicSection>
            
            {/* Current Scam Alerts - Immediate Value */}
-            <section id="alerts" className="pt-1">
+          <SkeuomorphicSection id="alerts" className="pt-1" variant="coral">
              <ScamAlertsSection />
-           </section>
+          </SkeuomorphicSection>
            
            {/* Resources Promo */}
-            <section id="resources" className="pt-1">
+          <SkeuomorphicSection id="resources" className="pt-1" variant="mixed">
              <ResourcesPromo />
-           </section>
+          </SkeuomorphicSection>
            
  
            {/* Premium Glassmorphism Widgets */}
-            <section id="trust-widgets" className="pt-1">
+          <SkeuomorphicSection id="trust-widgets" className="pt-1" variant="lavender">
              <PremiumGlassmorphismWidgets />
-           </section>
+          </SkeuomorphicSection>
  
            {/* Community Impact - Veteran Support, Cancer Children, etc. */}
-            <section id="community" className="pt-1">
+          <SkeuomorphicSection id="community" className="pt-1" variant="coral">
              <CommunityImpact />
-           </section>
+          </SkeuomorphicSection>
  
            {/* Working Process - How It Works */}
-            <section id="process" className="pt-1">
+          <SkeuomorphicSection id="process" className="pt-1" variant="mixed">
              <WorkingProcess />
-           </section>
+          </SkeuomorphicSection>
  
            {/* FAQ Section */}
-            <section id="faq" className="pt-1">
+          <SkeuomorphicSection id="faq" className="pt-1" variant="lavender">
              <FAQPreview />
-           </section>
+          </SkeuomorphicSection>
  
            {/* Quick Links - FAQ, Contact, Careers */}
-            <section id="quick-links" className="pt-1">
+          <SkeuomorphicSection id="quick-links" className="pt-1" variant="neutral">
              <QuickLinksSection />
-           </section>
+          </SkeuomorphicSection>
  
            {/* Final CTA with Senior Couple Image */}
            <CTASection headline="Join Our Protected Community" variant="image" backgroundImage={seniorCoupleActive}>
