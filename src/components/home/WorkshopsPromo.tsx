@@ -59,12 +59,12 @@ import seniorLearning from "@/assets/senior-learning.jpg";
         <div className="grid lg:grid-cols-2 gap-6 lg:gap-10 items-center">
            {/* Left - Image/Video Area */}
            <div className="relative">
-             {/* Main Visual Container */}
-             <div className="relative">
-                <div className="absolute -inset-4 rounded-2xl bg-white/40 backdrop-blur-xl border border-white/50 shadow-xl" aria-hidden="true" />
+             {/* Main Visual Container with 3D depth */}
+             <div className="relative depth-layers">
+                <div className="absolute -inset-4 rounded-2xl glass-light" aria-hidden="true" />
                
                 {/* Primary Photo - Workshop Training */}
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl border-2 border-white bg-gradient-to-br from-navy-800 to-navy-900">
+                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-3d-lg border-2 border-white bg-gradient-to-br from-navy-800 to-navy-900 hover-img-zoom">
                   {/* Fallback image while video loads */}
                   {!videoLoaded && (
                     <img 
@@ -94,17 +94,17 @@ import seniorLearning from "@/assets/senior-learning.jpg";
                       className="absolute inset-0 flex items-center justify-center bg-black/30"
                       aria-label="Play video"
                     >
-                      <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
+                      <div className="w-16 h-16 rounded-full glass-light flex items-center justify-center shadow-3d micro-pulse">
                         <Play className="w-6 h-6 text-coral-500 ml-1" fill="currentColor" />
                       </div>
                     </button>
                   )}
                </div>
 
-                {/* Glassmorphism Stats Badge */}
-                <div className="absolute -bottom-3 -right-3 bg-white/80 dark:bg-card/80 backdrop-blur-2xl rounded-xl shadow-xl p-3 border border-white/60 dark:border-border/60">
+                {/* Floating Stats Badge - Widget Premium Style */}
+                <div className="absolute -bottom-3 -right-3 widget-premium micro-scale">
                   <div className="flex items-center gap-2">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center shadow-sm bg-gradient-to-br from-primary to-accent" aria-hidden="true">
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center shadow-3d bg-gradient-to-br from-primary to-accent" aria-hidden="true">
                       <span className="text-white font-bold text-sm">99%</span>
                     </div>
                     <div>
@@ -118,7 +118,7 @@ import seniorLearning from "@/assets/senior-learning.jpg";
  
            {/* Right - Content */}
            <div className="space-y-5">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 dark:bg-card/70 backdrop-blur-2xl border border-white/60 dark:border-border/60 shadow-lg">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-light micro-bounce">
                 <Sparkles className="w-4 h-4 text-primary" aria-hidden="true" />
                 <span className="text-sm font-semibold text-foreground uppercase tracking-wide">Learn & Train</span>
               </div>

@@ -7,11 +7,10 @@ const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElemen
     ref={ref} 
     className={cn(
       "rounded-2xl text-card-foreground",
-      "bg-gradient-to-b from-white to-slate-50/80",
-      "border border-slate-200/80",
-      "shadow-[0_1px_1px_rgba(0,0,0,0.02),0_2px_2px_rgba(0,0,0,0.02),0_4px_4px_rgba(0,0,0,0.03),0_8px_8px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,0.9)]",
-      "transition-all duration-200 ease-out",
-      "hover:-translate-y-1 hover:shadow-[0_2px_2px_rgba(0,0,0,0.02),0_4px_4px_rgba(0,0,0,0.03),0_8px_8px_rgba(0,0,0,0.04),0_16px_16px_rgba(0,0,0,0.05),inset_0_1px_0_rgba(255,255,255,1)]",
+      // Glassmorphism with 3D depth
+      "glass-light widget-depth",
+      // Microinteraction
+      "micro-scale hover-depth",
       className
     )} 
     {...props} 

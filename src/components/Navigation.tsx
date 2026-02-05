@@ -61,7 +61,7 @@ const Navigation = () => {
         />
       )}
 
-      <nav className="sticky top-0 z-[9999] bg-white/95 backdrop-blur-sm border-b border-gray-100">
+      <nav className="sticky top-0 z-[9999] glass-heavy border-b border-white/20">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between h-14 md:h-16">
             {/* Logo */}

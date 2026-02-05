@@ -66,26 +66,28 @@ export const ResourcesPromo = () => {
 
         {/* Two Column Layout - Image + Resources */}
         <div className="grid lg:grid-cols-2 gap-8 mb-10">
-          {/* Left - Featured Image */}
-          <div className="relative">
-            <img 
-              src={securityProtectionTools}
-              alt="Digital security protection tools and software"
-              className="aspect-[4/3] shadow-xl border-3 border-white rounded-2xl w-full h-full object-cover"
-              width={600}
-              height={450}
-              loading="lazy"
-              decoding="async"
-            />
+          {/* Left - Featured Image with 3D depth */}
+          <div className="relative depth-layers">
+            <div className="hover-img-zoom rounded-2xl">
+              <img 
+                src={securityProtectionTools}
+                alt="Digital security protection tools and software"
+                className="aspect-[4/3] shadow-3d-lg border-3 border-white rounded-2xl w-full h-full object-cover"
+                width={600}
+                height={450}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
             
-            {/* Floating Badge */}
-            <div className="absolute bottom-4 left-4 right-4 bg-white/95 rounded-xl p-4 border border-coral-200/50 shadow-lg">
+            {/* Floating Badge - Widget Premium */}
+            <div className="absolute bottom-4 left-4 right-4 widget-premium micro-scale">
               <div className="flex items-center justify-between gap-3">
                 <div>
                   <div className="text-xs font-medium text-foreground/60 mb-0.5">Resources Available</div>
                   <div className="text-2xl font-black text-[#18305A]" style={{ fontFamily: "'Clash Display', sans-serif" }}>50+</div>
                 </div>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-md"
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-3d"
                   style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }} aria-hidden="true">
                   <Shield className="w-5 h-5 text-white" />
                 </div>
@@ -93,14 +95,14 @@ export const ResourcesPromo = () => {
             </div>
           </div>
           
-          {/* Right - Resources Grid */}
+          {/* Right - Resources Grid with Bento styling */}
           <div className="grid gap-4" role="list" aria-label="Available resources">
           {resources.map((resource, i) => (
             <Link key={resource.title} to="/resources" className="group block" role="listitem">
-              <div className="h-full p-4 rounded-xl border-2 shadow-md hover:shadow-lg transition-shadow flex items-center gap-4 bg-white"
-                style={{ borderColor: resource.color }}>
+              <div className="h-full p-4 rounded-xl glass-light shadow-3d hover-depth micro-scale flex items-center gap-4"
+                style={{ borderLeft: `4px solid ${resource.color}` }}>
                 <div className="flex-shrink-0">
-                  <div className="w-11 h-11 rounded-lg flex items-center justify-center shadow-sm"
+                  <div className="w-11 h-11 rounded-lg flex items-center justify-center shadow-3d float-3d"
                     style={{ background: `linear-gradient(135deg, ${resource.color} 0%, ${resource.color}dd 100%)` }} aria-hidden="true">
                     <resource.icon className="w-5 h-5 text-white" />
                  </div>
@@ -111,7 +113,7 @@ export const ResourcesPromo = () => {
                     <h3 className="text-base font-bold text-[#18305A]" style={{ fontFamily: "'Clash Display', sans-serif" }}>
                       {resource.title}
                     </h3>
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase"
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase glass-subtle"
                       style={{ background: `${resource.color}20`, color: resource.color }}>
                       {resource.tag}
                     </span>
@@ -119,7 +121,7 @@ export const ResourcesPromo = () => {
                   <p className="text-sm text-foreground/65">{resource.description}</p>
                 </div>
                 
-                <ArrowRight className="w-4 h-4 text-foreground/40 flex-shrink-0" aria-hidden="true" />
+                <ArrowRight className="w-4 h-4 text-foreground/40 flex-shrink-0 micro-rotate" aria-hidden="true" />
               </div>
             </Link>
           ))}
