@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Sparkles, Zap, Eye, Star, Shield, Award } from "lucide-react";
+import { ArrowRight, Sparkles, Zap, Eye, Star, Shield, Award, CheckCircle2, Crown } from "lucide-react";
 import { motion } from "framer-motion";
 import heroSeniorsProtected from "@/assets/hero-seniors-protected.jpg";
 
 export const HeroHomepage = () => {
   return (
-    <section className="relative min-h-[100vh] lg:min-h-[110vh] overflow-hidden bg-background">
+    <section className="relative min-h-[105vh] lg:min-h-[115vh] overflow-hidden bg-background">
       {/* Premium Background - NO Glassmorphism on photo */}
       <div className="absolute inset-0 grid lg:grid-cols-[45%_55%]">
         {/* Left - Premium Gradient Background */}
@@ -80,29 +80,68 @@ export const HeroHomepage = () => {
               transition={{ duration: 1 }}
               className="relative"
             >
-              {/* Prestige Marker */}
+              {/* Premium Header Graphic */}
               <motion.div 
-                initial={{ opacity: 0, x: -25 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.9 }}
-                className="flex items-center gap-3 mb-8"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="flex flex-wrap items-center gap-3 mb-10"
               >
-                <div className="flex items-center gap-2.5 px-4 py-2 bg-white/60 dark:bg-card/60 backdrop-blur-xl rounded-full border border-white/40 dark:border-border/40 shadow-lg">
-                  <motion.div
-                    animate={{ rotate: [0, 20, -20, 0], scale: [1, 1.15, 1] }}
-                    transition={{ duration: 5, repeat: Infinity }}
-                  >
-                    <Sparkles className="w-4 h-4 text-primary" />
-                  </motion.div>
+                {/* Main Badge */}
+                <div className="flex items-center gap-3 px-5 py-3 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 rounded-2xl border border-primary/20 shadow-[6px_6px_16px_rgba(0,0,0,0.1),-6px_-6px_16px_rgba(255,255,255,0.9)]">
                   <motion.div 
-                    animate={{ scaleX: [1, 1.3, 1] }}
-                    transition={{ duration: 4, repeat: Infinity }}
-                    className="w-14 h-1 rounded-full bg-gradient-to-r from-primary via-accent to-primary"
-                  />
-                  <span className="text-[11px] font-bold tracking-[0.2em] text-foreground/60 uppercase">
-                    Est. 2020 — Ohio
-                  </span>
+                    animate={{ rotate: [0, 360] }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className="relative"
+                  >
+                    <Crown className="w-6 h-6 text-primary" />
+                    <motion.div 
+                      animate={{ scale: [1, 1.3, 1], opacity: [0.5, 1, 0.5] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      className="absolute inset-0 bg-primary/20 rounded-full blur-md"
+                    />
+                  </motion.div>
+                  <div className="flex flex-col">
+                    <span className="text-xs font-bold tracking-[0.15em] text-primary uppercase">
+                      Trusted Since 2020
+                    </span>
+                    <span className="text-[10px] text-muted-foreground font-medium">
+                      Ohio's Premier Protection
+                    </span>
+                  </div>
                 </div>
+
+                {/* Verified Badge */}
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.3, duration: 0.5 }}
+                  className="flex items-center gap-2 px-4 py-2.5 bg-green-500/10 rounded-xl border border-green-500/20 shadow-[4px_4px_12px_rgba(0,0,0,0.08),-4px_-4px_12px_rgba(255,255,255,0.9)]"
+                >
+                  <motion.div
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <CheckCircle2 className="w-4 h-4 text-green-600" />
+                  </motion.div>
+                  <span className="text-xs font-semibold text-green-700 dark:text-green-500">
+                    Verified Experts
+                  </span>
+                </motion.div>
+
+                {/* Animated Accent Line */}
+                <motion.div 
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  transition={{ delay: 0.5, duration: 1.2, ease: "easeOut" }}
+                  className="hidden sm:block flex-1 max-w-[120px] h-1 rounded-full overflow-hidden"
+                >
+                  <motion.div 
+                    animate={{ x: ["-100%", "100%"] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    className="w-full h-full bg-gradient-to-r from-transparent via-primary to-transparent"
+                  />
+                </motion.div>
               </motion.div>
 
               {/* Monumental Headline */}
