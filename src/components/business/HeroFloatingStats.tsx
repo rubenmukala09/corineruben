@@ -28,51 +28,25 @@ const HeroFloatingStats = () => {
             delay: 0.6
           }
         }}
-        className="relative rounded-full py-5 px-12 md:px-16 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.4)] overflow-hidden"
+        className="relative rounded-full py-5 px-12 md:px-16 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.12)] overflow-hidden border border-coral-200/50"
         style={{
-          background: "linear-gradient(90deg, #5b21b6 0%, #7c3aed 25%, #06b6d4 75%, #22d3ee 100%)",
+          background: "linear-gradient(135deg, #ffffff 0%, #faf9f7 50%, #fff5f0 100%)",
         }}
       >
-        {/* Animated gradient overlay */}
-        <motion.div 
-          className="absolute inset-0 opacity-20"
-          animate={{
-            background: [
-              "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 25%, transparent 50%)",
-              "linear-gradient(90deg, transparent 50%, rgba(255,255,255,0.6) 75%, transparent 100%)",
-              "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 25%, transparent 50%)",
-            ]
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: "linear"
+        {/* Subtle gradient accent line at top */}
+        <div 
+          className="absolute top-0 left-0 right-0 h-[2px]"
+          style={{
+            background: "linear-gradient(90deg, transparent, hsl(var(--coral-400)), hsl(var(--lavender-500)), transparent)",
           }}
         />
         
         {/* Shimmer sweep effect */}
         <div 
-          className="absolute inset-0 opacity-40"
+          className="absolute inset-0 opacity-30"
           style={{
-            background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%)",
-            animation: "shimmer 2.5s ease-in-out infinite",
-          }}
-        />
-        
-        {/* Glow pulse effect */}
-        <motion.div 
-          className="absolute inset-0 rounded-full"
-          animate={{
-            boxShadow: [
-              "inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.1), 0 0 20px rgba(124,58,237,0.3)",
-              "inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(0,0,0,0.1), 0 0 40px rgba(6,182,212,0.4)",
-              "inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.1), 0 0 20px rgba(124,58,237,0.3)",
-            ]
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: "easeInOut"
+            background: "linear-gradient(90deg, transparent 0%, rgba(248,146,106,0.15) 50%, transparent 100%)",
+            animation: "shimmer 3s ease-in-out infinite",
           }}
         />
         
@@ -87,12 +61,11 @@ const HeroFloatingStats = () => {
                 delay: 0.15 * index + 0.4,
                 ease: "easeOut"
               }}
-              className="flex items-center gap-3 text-white"
+              className="flex items-center gap-3"
             >
               <motion.div
                 animate={{ 
-                  scale: [1, 1.15, 1],
-                  rotate: [0, 5, -5, 0],
+                  scale: [1, 1.1, 1],
                 }}
                 transition={{ 
                   duration: 3,
@@ -100,43 +73,24 @@ const HeroFloatingStats = () => {
                   delay: index * 0.7,
                   ease: "easeInOut"
                 }}
-              >
-                <motion.div
-                  animate={{
-                    filter: [
-                      "drop-shadow(0 0 2px rgba(255,255,255,0.3))",
-                      "drop-shadow(0 0 8px rgba(255,255,255,0.6))",
-                      "drop-shadow(0 0 2px rgba(255,255,255,0.3))",
-                    ]
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    delay: index * 0.5,
-                    ease: "easeInOut"
-                  }}
-                >
-                  <stat.icon className="w-6 h-6 flex-shrink-0" strokeWidth={1.5} />
-                </motion.div>
-              </motion.div>
-              <motion.span 
-                className="text-base font-medium whitespace-nowrap"
-                animate={{
-                  textShadow: [
-                    "0 0 4px rgba(255,255,255,0.2)",
-                    "0 0 12px rgba(255,255,255,0.4)",
-                    "0 0 4px rgba(255,255,255,0.2)",
-                  ]
+                className="w-10 h-10 rounded-xl flex items-center justify-center"
+                style={{
+                  background: "linear-gradient(135deg, hsl(var(--coral-100)) 0%, hsl(var(--lavender-100)) 100%)",
+                  border: "1px solid hsl(var(--coral-200))",
                 }}
-                transition={{
-                  duration: 2.5,
-                  repeat: Infinity,
-                  delay: index * 0.3,
-                  ease: "easeInOut"
+              >
+                <stat.icon className="w-5 h-5 text-coral-500 flex-shrink-0" strokeWidth={1.5} />
+              </motion.div>
+              <span 
+                className="text-sm font-semibold whitespace-nowrap"
+                style={{
+                  background: "linear-gradient(135deg, hsl(var(--navy-600)) 0%, hsl(var(--lavender-600)) 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
                 }}
               >
                 {stat.text}
-              </motion.span>
+              </span>
             </motion.div>
           ))}
         </div>
