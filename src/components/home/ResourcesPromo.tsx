@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { FileText, Shield, BookOpen, ArrowRight, Download, Sparkles } from "lucide-react";
+import { FileText, Shield, BookOpen, ArrowRight, Download, Sparkles, Home } from "lucide-react";
 import { motion } from "framer-motion";
 
 const resources = [
@@ -26,18 +26,18 @@ const resources = [
 
 export const ResourcesPromo = () => {
   return (
-    <section className="relative py-24 lg:py-32 bg-gradient-to-br from-white via-coral-50/30 to-lavender-50/40 overflow-hidden">
+    <section className="relative py-24 lg:py-32 overflow-hidden" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #faf9f7 30%, #fff5f0 60%, #faf5fa 100%)' }}>
       {/* Premium decorative elements */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] opacity-40 pointer-events-none"
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] opacity-30 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle at center, hsl(var(--coral-300)) 0%, transparent 60%)',
+          background: 'radial-gradient(circle at center, #F8926A 0%, transparent 60%)',
           filter: 'blur(100px)',
           transform: 'translate(20%, -30%)'
         }}
       />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] opacity-30 pointer-events-none"
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] opacity-25 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle at center, hsl(var(--lavender-300)) 0%, transparent 60%)',
+          background: 'radial-gradient(circle at center, #BB81B5 0%, transparent 60%)',
           filter: 'blur(80px)',
           transform: 'translate(-30%, 30%)'
         }}
@@ -45,16 +45,30 @@ export const ResourcesPromo = () => {
       
       {/* Floating accent circles */}
       <motion.div 
-        className="absolute top-20 right-[15%] w-16 h-16 rounded-full opacity-60"
-        style={{ background: 'linear-gradient(135deg, hsl(var(--coral-400)) 0%, hsl(var(--lavender-400)) 100%)' }}
+        className="absolute top-20 right-[15%] w-16 h-16 rounded-full opacity-50"
+        style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }}
         animate={{ y: [0, -15, 0] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div 
         className="absolute bottom-32 left-[8%] w-10 h-10 rounded-full opacity-40"
-        style={{ background: 'linear-gradient(135deg, hsl(var(--lavender-400)) 0%, hsl(var(--navy-400)) 100%)' }}
+        style={{ background: 'linear-gradient(135deg, #BB81B5 0%, #18305A 100%)' }}
         animate={{ y: [0, 12, 0] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+      />
+      
+      {/* Additional decorative elements */}
+      <motion.div 
+        className="absolute top-40 left-[20%] w-8 h-8 rounded-full opacity-30"
+        style={{ background: 'linear-gradient(135deg, #F8926A 0%, #FFB088 100%)' }}
+        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+      />
+      <motion.div 
+        className="absolute bottom-48 right-[10%] w-6 h-6 rounded-full opacity-35"
+        style={{ background: 'linear-gradient(135deg, #BB81B5 0%, #D4A5D1 100%)' }}
+        animate={{ y: [0, -8, 0], x: [0, 5, 0] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
       />
 
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
@@ -68,24 +82,33 @@ export const ResourcesPromo = () => {
         >
           <div className="max-w-2xl">
             {/* Premium badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-coral-100 to-lavender-100 border border-coral-200/50 mb-6">
-              <Sparkles className="w-4 h-4 text-coral-500" />
-              <span className="text-sm font-semibold text-foreground/80 uppercase tracking-wide">Resources</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-6 shadow-sm"
+              style={{ 
+                background: 'linear-gradient(135deg, #fff5f0 0%, #faf5fa 100%)',
+                borderColor: 'rgba(248, 146, 106, 0.3)'
+              }}>
+              <Sparkles className="w-4 h-4" style={{ color: '#F8926A' }} />
+              <span className="text-sm font-semibold uppercase tracking-wide" style={{ color: '#18305A' }}>Resources</span>
             </div>
             
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight mb-6"
               style={{ fontFamily: "'Clash Display', 'DM Sans', sans-serif" }}>
               <span className="text-[#18305A]">Tools For </span>
-              <span className="bg-gradient-to-r from-coral-500 to-lavender-500 bg-clip-text text-transparent">Protection</span>
+              <span style={{ 
+                background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text'
+              }}>Protection</span>
             </h2>
             
-            <p className="text-lg text-foreground/60 leading-relaxed">
+            <p className="text-lg leading-relaxed" style={{ color: 'rgba(24, 48, 90, 0.7)' }}>
               From insurance coverage to free educational materials—everything you need to stay protected.
             </p>
           </div>
           
           <Button asChild size="lg" 
-            className="group h-14 px-8 text-base font-bold rounded-full shadow-lg shadow-coral-400/30 hover:shadow-xl hover:shadow-coral-400/40 transition-all"
+            className="group h-14 px-8 text-base font-bold rounded-full shadow-lg hover:shadow-xl transition-all"
             style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }}>
             <Link to="/resources" className="text-white">
               Browse All
@@ -104,28 +127,41 @@ export const ResourcesPromo = () => {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               viewport={{ once: true }}
             >
-              <Link to="/resources" className="group block">
-                <div className="h-full p-8 bg-white/80 backdrop-blur-sm rounded-3xl border border-coral-200/30 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+              <Link to="/" className="group block">
+                <div className="h-full p-8 rounded-3xl border shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
+                  style={{ 
+                    background: 'linear-gradient(135deg, #ffffff 0%, #faf9f7 100%)',
+                    borderColor: 'rgba(248, 146, 106, 0.25)'
+                  }}>
                   <div className="flex items-start justify-between mb-6">
-                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg"
-                      style={{ background: 'linear-gradient(135deg, hsl(var(--coral-400)) 0%, hsl(var(--lavender-400)) 100%)' }}>
+                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg transition-transform group-hover:scale-110"
+                      style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }}>
                       <resource.icon className="w-7 h-7 text-white" />
                     </div>
-                    <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-coral-100 to-lavender-100 text-coral-600 border border-coral-200/50">
+                    <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border"
+                      style={{ 
+                        background: 'linear-gradient(135deg, #fff5f0 0%, #faf5fa 100%)',
+                        color: '#F8926A',
+                        borderColor: 'rgba(248, 146, 106, 0.3)'
+                      }}>
                       {resource.tag}
                     </span>
                   </div>
                   
-                  <h3 className="text-2xl font-black text-[#18305A] mb-3 group-hover:text-coral-500 transition-colors"
-                    style={{ fontFamily: "'Clash Display', sans-serif" }}>
+                  <h3 className="text-2xl font-black mb-3 transition-colors"
+                    style={{ fontFamily: "'Clash Display', sans-serif", color: '#18305A' }}>
                     {resource.title}
                   </h3>
                   
-                  <p className="text-foreground/60 leading-relaxed mb-6">{resource.description}</p>
+                  <p className="leading-relaxed mb-6" style={{ color: 'rgba(24, 48, 90, 0.6)' }}>{resource.description}</p>
                   
-                  <div className="flex items-center gap-2 text-coral-500 group-hover:text-lavender-500 transition-colors">
-                    <span className="text-sm font-semibold">Learn more</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                  <div className="flex items-center gap-2">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-white text-sm font-semibold transition-all group-hover:scale-105"
+                      style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }}>
+                      <Home className="w-4 h-4" />
+                      <span>Visit Home</span>
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
                   </div>
                 </div>
               </Link>
@@ -139,20 +175,24 @@ export const ResourcesPromo = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
-          className="mt-12 p-6 rounded-3xl bg-gradient-to-r from-white to-coral-50/50 border border-coral-200/40 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6"
+          className="mt-12 p-6 rounded-3xl border shadow-xl flex flex-col md:flex-row items-center justify-between gap-6"
+          style={{ 
+            background: 'linear-gradient(135deg, #ffffff 0%, #fff5f0 50%, #faf5fa 100%)',
+            borderColor: 'rgba(248, 146, 106, 0.3)'
+          }}
         >
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg"
-              style={{ background: 'linear-gradient(135deg, hsl(var(--coral-400)) 0%, hsl(var(--lavender-400)) 100%)' }}>
+            <div className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg transition-transform hover:scale-110"
+              style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }}>
               <Download className="w-7 h-7 text-white" />
             </div>
             <div>
               <div className="text-lg font-bold text-[#18305A]">Free Emergency Anti-Scam Scripts</div>
-              <div className="text-foreground/50 text-sm">IRS • Tech Support • Grandparent • Bank Fraud</div>
+              <div className="text-sm" style={{ color: 'rgba(24, 48, 90, 0.5)' }}>IRS • Tech Support • Grandparent • Bank Fraud</div>
             </div>
           </div>
           <Button asChild size="lg"
-            className="h-12 px-6 text-base font-bold rounded-full shadow-lg shadow-coral-400/30"
+            className="h-12 px-6 text-base font-bold rounded-full shadow-lg hover:scale-105 transition-transform"
             style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }}>
             <Link to="/resources" className="text-white">
               Download Free
