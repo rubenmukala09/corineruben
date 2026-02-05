@@ -11,25 +11,25 @@ const impacts = [
     icon: Shield,
     title: "Veteran Support",
     description: "We honor those who served with exclusive 17% discounts and priority support for veterans and first responders.",
-    color: "from-blue-500 to-indigo-500",
+    color: "from-navy-600 to-navy-500",
   },
   {
     icon: Ribbon,
     title: "Children with Cancer",
     description: "A portion of every purchase supports families with children battling cancer through our partner organizations.",
-    color: "from-rose-500 to-pink-500",
+    color: "from-coral-500 to-coral-400",
   },
   {
     icon: Users,
     title: "Senior Protection",
     description: "Free educational resources and discounted services for seniors on fixed incomes to stay safe online.",
-    color: "from-amber-500 to-orange-500",
+    color: "from-lavender-600 to-lavender-500",
   },
   {
     icon: Heart,
     title: "Community Education",
     description: "Affordable workshops at libraries, churches, and community centers across Ohio to spread digital safety awareness.",
-    color: "from-emerald-500 to-teal-500",
+    color: "from-teal-500 to-teal-400",
   },
 ];
 
@@ -41,42 +41,48 @@ const quickStats = [
 
 export const CommunityImpact = () => {
   return (
-    <section className="py-16 bg-background relative overflow-hidden">
+    <section className="py-16 bg-gradient-to-b from-background via-coral-50/20 to-background relative overflow-hidden">
       {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-[0.02]" style={{
-        backgroundImage: `radial-gradient(circle at 2px 2px, hsl(var(--primary)) 1px, transparent 0)`,
+        backgroundImage: `radial-gradient(circle at 2px 2px, hsl(var(--coral-400)) 1px, transparent 0)`,
         backgroundSize: '40px 40px'
       }} />
+      
+      {/* Premium gradient orbs */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-20 right-0 w-[400px] h-[400px] bg-coral-400/5 rounded-full blur-[100px]" />
+        <div className="absolute bottom-20 left-0 w-[350px] h-[350px] bg-lavender-400/5 rounded-full blur-[80px]" />
+      </div>
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <div className="text-center mb-10 animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-rose-500/10 rounded-2xl border border-rose-500/20 mb-5">
-            <Heart className="w-5 h-5 text-rose-500" />
-            <span className="font-bold text-rose-600">Giving Back</span>
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-coral-100 to-blush-400 rounded-2xl border border-coral-300/50 mb-5 shadow-sm">
+            <Heart className="w-5 h-5 text-coral-600" />
+            <span className="font-bold text-coral-700">Giving Back</span>
           </div>
           
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-navy-900 mb-4">
             More Than a Business—{" "}
-            <span className="bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent">A Mission</span>
+            <span className="bg-gradient-to-r from-coral-500 via-coral-400 to-lavender-500 bg-clip-text text-transparent">A Mission</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-lg text-navy-700/80 max-w-3xl mx-auto">
             We believe in building a safer community for everyone. Here's how we're making a difference.
           </p>
           
           {/* Quick stats badges */}
           <div className="flex flex-wrap justify-center gap-3 mt-6">
             {quickStats.map((stat, index) => (
-              <div key={index} className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-border/50 shadow-sm">
-                <stat.icon className="w-4 h-4 text-primary" />
-                <span className="text-sm font-medium">{stat.label}</span>
+              <div key={index} className="flex items-center gap-2 px-4 py-2.5 bg-white/90 rounded-full border border-coral-200/50 shadow-sm hover:shadow-md transition-shadow">
+                <stat.icon className="w-4 h-4 text-coral-500" />
+                <span className="text-sm font-semibold text-navy-700">{stat.label}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Main Image with overlay */}
-        <div className="relative rounded-3xl overflow-hidden mb-10 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] animate-fade-in">
+        <div className="relative rounded-3xl overflow-hidden mb-10 shadow-[0_20px_60px_-15px_rgba(24,48,90,0.2)] animate-fade-in ring-1 ring-coral-200/30">
           <img
             src={ohioNatureImpact}
             alt="InVision Network proudly serving Ohio communities"
@@ -164,31 +170,31 @@ export const CommunityImpact = () => {
           {impacts.map((impact, index) => (
             <div
               key={index}
-              className="bg-white rounded-2xl p-5 border border-border/50 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-200 animate-fade-in"
+              className="bg-white/90 rounded-2xl p-5 border border-coral-100/50 shadow-sm hover:shadow-lg hover:shadow-coral-200/20 hover:-translate-y-1 transition-all duration-300 animate-fade-in"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${impact.color} flex items-center justify-center mb-4 shadow-md`}>
                 <impact.icon className="w-6 h-6 text-white" />
               </div>
-              <h3 className="font-bold text-lg text-foreground mb-2">{impact.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{impact.description}</p>
+              <h3 className="font-bold text-lg text-navy-800 mb-2">{impact.title}</h3>
+              <p className="text-sm text-navy-600/70 leading-relaxed">{impact.description}</p>
             </div>
           ))}
         </div>
 
         {/* CTA */}
         <div className="text-center animate-fade-in">
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+          <p className="text-lg text-navy-700/80 mb-8 max-w-2xl mx-auto">
             Want to support our mission? Every purchase helps us protect more families and give back to those in need.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Button asChild size="xl" className="rounded-2xl px-10 shadow-lg shadow-primary/25">
+            <Button asChild size="xl" className="rounded-2xl px-10 bg-gradient-to-r from-coral-500 to-coral-400 text-white shadow-lg shadow-coral-300/30 hover:shadow-coral-400/40">
               <Link to="/resources">
                 Explore Resources
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </Button>
-            <Button asChild variant="outline" size="xl" className="rounded-2xl">
+            <Button asChild variant="outline" size="xl" className="rounded-2xl border-2 border-navy-300 text-navy-700 hover:bg-navy-50">
               <Link to="/about">Learn Our Story</Link>
             </Button>
           </div>

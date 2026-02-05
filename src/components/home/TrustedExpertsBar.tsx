@@ -1,4 +1,5 @@
 import { Star, Shield, Award } from "lucide-react";
+import { TrendingUp, Users, CheckCircle } from "lucide-react";
 
 const experts = [
   { name: "Security Expert", role: "Lead Trainer" },
@@ -8,24 +9,24 @@ const experts = [
 ];
 
 const avatarColors = [
-  "from-primary to-accent",
-  "from-emerald-500 to-teal-500", 
-  "from-amber-500 to-orange-500",
-  "from-rose-500 to-pink-500",
+  "from-coral-500 to-coral-400",
+  "from-lavender-500 to-lavender-400", 
+  "from-navy-500 to-navy-400",
+  "from-teal-500 to-teal-400",
 ];
 
 export const TrustedExpertsBar = () => {
   return (
-    <section className="py-10 bg-muted/30 border-y border-border/30">
+    <section className="py-12 bg-gradient-to-r from-coral-100/50 via-blush-300/30 to-lavender-100/50 border-y border-coral-200/50">
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
           {/* Left - Avatar Stack with Rating */}
-          <div className="flex items-center gap-5 animate-fade-in">
-            <div className="flex -space-x-3">
+          <div className="flex items-center gap-6 animate-fade-in">
+            <div className="flex -space-x-4">
               {experts.map((expert, index) => (
                 <div
                   key={index}
-                  className={`w-14 h-14 rounded-full bg-gradient-to-br ${avatarColors[index]} border-3 border-white shadow-lg flex items-center justify-center`}
+                  className={`w-14 h-14 rounded-full bg-gradient-to-br ${avatarColors[index]} border-[3px] border-white shadow-lg flex items-center justify-center ring-2 ring-coral-200/50`}
                   style={{ zIndex: experts.length - index }}
                 >
                   <span className="text-white font-bold text-lg">
@@ -35,43 +36,43 @@ export const TrustedExpertsBar = () => {
               ))}
             </div>
             <div>
-              <div className="flex items-center gap-1.5 mb-1">
+              <div className="flex items-center gap-1.5 mb-1.5">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-6 h-6 fill-amber-400 text-amber-400" />
+                  <Star key={i} className="w-6 h-6 fill-coral-500 text-coral-500" />
                 ))}
+                <span className="ml-2 text-sm font-bold text-coral-600">5.0</span>
               </div>
-              <p className="text-foreground/80 text-lg font-medium">Trusted by Ohio Families</p>
+              <p className="text-navy-700 text-lg font-semibold">Trusted by Ohio Families</p>
             </div>
           </div>
 
-          {/* Center - Feature Pills */}
+          {/* Center - Premium Feature Pills */}
           <div className="flex flex-wrap justify-center gap-3 animate-fade-in" style={{ animationDelay: "100ms" }}>
             {[
-              { icon: Shield, label: "Verified Experts", num: "01" },
-              { icon: Award, label: "Ohio Certified", num: "02" },
-              { icon: Star, label: "Top Rated", num: "03" },
+              { icon: Shield, label: "Verified Experts", num: "01", color: "bg-navy-600" },
+              { icon: Award, label: "Ohio Certified", num: "02", color: "bg-lavender-500" },
+              { icon: CheckCircle, label: "Top Rated", num: "03", color: "bg-coral-500" },
             ].map((item, index) => (
               <div
                 key={index}
-                className="flex items-center gap-3 px-6 py-3 bg-white rounded-full border border-border/50 shadow-sm hover:shadow-md transition-shadow"
+                className="flex items-center gap-3 px-6 py-3.5 bg-white rounded-2xl border border-coral-200/50 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
               >
-                <span className="text-sm font-bold text-primary bg-primary/10 w-7 h-7 rounded-full flex items-center justify-center">{item.num}</span>
-                <item.icon className="w-5 h-5 text-primary" />
-                <span className="font-semibold text-lg">{item.label}</span>
+                <span className={`text-xs font-bold text-white ${item.color} w-7 h-7 rounded-full flex items-center justify-center`}>{item.num}</span>
+                <item.icon className="w-5 h-5 text-navy-600" />
+                <span className="font-bold text-lg text-navy-800">{item.label}</span>
               </div>
             ))}
           </div>
 
-          {/* Right - Stats */}
-          <div className="flex items-center gap-10 animate-fade-in" style={{ animationDelay: "200ms" }}>
-            <div className="text-center">
-              <p className="text-4xl font-black text-primary">17%</p>
-              <p className="text-base text-foreground/70 font-medium">Veteran Discount</p>
+          {/* Right - Premium Stats Cards */}
+          <div className="flex items-center gap-6 animate-fade-in" style={{ animationDelay: "200ms" }}>
+            <div className="text-center p-4 bg-gradient-to-br from-coral-500 to-coral-400 rounded-2xl shadow-lg shadow-coral-300/30">
+              <p className="text-3xl font-black text-white">17%</p>
+              <p className="text-xs text-white/90 font-semibold">Veteran Discount</p>
             </div>
-            <div className="w-px h-14 bg-border" />
-            <div className="text-center">
-              <p className="text-4xl font-black text-foreground">60</p>
-              <p className="text-base text-foreground/70 font-medium">Day Guarantee</p>
+            <div className="text-center p-4 bg-gradient-to-br from-navy-600 to-navy-500 rounded-2xl shadow-lg shadow-navy-300/30">
+              <p className="text-3xl font-black text-white">60</p>
+              <p className="text-xs text-white/90 font-semibold">Day Guarantee</p>
             </div>
           </div>
         </div>
