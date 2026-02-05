@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Phone, Calendar, Bot, Globe, ArrowRight, TrendingUp, Zap, CheckCircle, Award, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
-import businessTeamMeeting from "@/assets/business-team-meeting.jpg";
-import teamCollaborationOffice from "@/assets/team-collaboration-office.jpg";
+import consultingTeamStrategy from "@/assets/consulting-team-strategy.jpg";
+import teamOfficeDiscussion from "@/assets/team-office-discussion.jpg";
  
  const services = [
    { icon: Phone, title: "AI Receptionist", desc: "Never miss a call", highlight: "24/7" },
@@ -167,8 +167,8 @@ import teamCollaborationOffice from "@/assets/team-collaboration-office.jpg";
              <div className="relative grid grid-cols-2 gap-3">
                  {/* Main Image - Strategy Meeting */}
                 <img 
-                 src={businessTeamMeeting}
-                 alt="Business team meeting in modern office"
+                src={consultingTeamStrategy}
+                alt="Professional consulting team strategy meeting"
                  className="col-span-2 aspect-[16/9] shadow-xl shadow-lavender-400/20 border-3 border-white rounded-2xl w-full h-full object-cover"
                  width={600}
                  height={338}
@@ -178,7 +178,7 @@ import teamCollaborationOffice from "@/assets/team-collaboration-office.jpg";
                
                  {/* Consulting Team Discussion */}
                 <img 
-                 src={teamCollaborationOffice}
+                src={teamOfficeDiscussion}
                   alt="Dedicated consulting team in modern office"
                  className="aspect-[4/3] shadow-lg border-2 border-white rounded-xl w-full h-full object-cover"
                  width={200}
@@ -189,7 +189,7 @@ import teamCollaborationOffice from "@/assets/team-collaboration-office.jpg";
                 
                  {/* Expert Team Working */}
                 <img 
-                 src={businessTeamMeeting}
+                src={consultingTeamStrategy}
                   alt="Expert team strategic planning"
                  className="aspect-[4/3] shadow-lg border-2 border-white rounded-xl w-full h-full object-cover"
                  width={200}

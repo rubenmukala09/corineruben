@@ -19,6 +19,7 @@
  import { SectionNav } from "@/components/SectionNav";
  import seniorCoupleActive from "@/assets/senior-couple-active.jpg";
 import { SkeuomorphicSection } from "@/components/backgrounds/SkeuomorphicSection";
+import { FamilyTrustSection } from "@/components/home/FamilyTrustSection";
  
  const Index = () => {
    const [scamShieldOpen, setScamShieldOpen] = useState(false);
@@ -54,6 +55,11 @@ import { SkeuomorphicSection } from "@/components/backgrounds/SkeuomorphicSectio
           <SkeuomorphicSection id="resources" className="py-0" variant="mixed">
              <ResourcesPromo />
           </SkeuomorphicSection>
+          
+          {/* Why Families Trust Us */}
+          <section id="trust">
+            <FamilyTrustSection />
+          </section>
            
            {/* Community Impact - Veteran Support, Cancer Children, etc. */}
           <SkeuomorphicSection id="community" className="py-0" variant="coral">

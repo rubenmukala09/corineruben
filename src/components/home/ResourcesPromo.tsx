@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { FileText, Shield, BookOpen, ArrowRight, Download, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
- import digitalSecurityTools from "@/assets/digital-security-tools.jpg";
+import securityProtectionTools from "@/assets/security-protection-tools.jpg";
 
  const resources = [
    {
@@ -135,7 +135,7 @@ export const ResourcesPromo = () => {
             className="relative"
           >
             <img 
-              src={digitalSecurityTools}
+              src={securityProtectionTools}
               alt="Digital security protection tools and software"
               className="aspect-[4/3] shadow-2xl shadow-coral-400/20 border-4 border-white rounded-[40px] w-full h-full object-cover"
               width={600}
