@@ -170,7 +170,7 @@ export const HeroHomepage = () => {
                 transition={{ duration: 0.9 }}
                 className="flex items-center gap-3 mb-8"
               >
-                <div className="flex items-center gap-2.5 px-4 py-2 bg-white/60 dark:bg-card/60 backdrop-blur-xl rounded-full border border-white/40 dark:border-border/40 shadow-lg">
+                <div className="flex items-center gap-2.5 px-4 py-2 glass-light rounded-full micro-bounce">
                   <motion.div
                     animate={{ rotate: [0, 20, -20, 0], scale: [1, 1.15, 1] }}
                     transition={{ duration: 5, repeat: Infinity }}
@@ -269,7 +269,7 @@ export const HeroHomepage = () => {
                 >
                   <Link 
                     to="/business"
-                    className="inline-flex items-center justify-center h-14 px-10 rounded-full border-2 border-border/50 text-foreground/70 font-bold text-base tracking-wide bg-white/50 dark:bg-card/50 backdrop-blur-xl hover:border-primary/50 hover:text-foreground hover:bg-white/70 dark:hover:bg-card/70 hover:shadow-lg transition-all duration-300"
+                    className="inline-flex items-center justify-center h-14 px-10 rounded-full border-2 border-border/50 text-foreground/70 font-bold text-base tracking-wide glass-light hover:border-primary/50 hover:text-foreground hover-depth transition-all duration-300"
                   >
                     For Businesses
                   </Link>
@@ -291,7 +291,7 @@ export const HeroHomepage = () => {
                 ].map((stat, i) => (
                   <motion.div 
                     key={i} 
-                    className="text-center px-3 py-2 bg-white/40 dark:bg-card/40 backdrop-blur-xl rounded-xl border border-white/30 dark:border-border/30"
+                    className="text-center px-3 py-2 glass-light rounded-xl micro-scale"
                     whileHover={{ scale: 1.15, y: -3 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
@@ -321,7 +321,7 @@ export const HeroHomepage = () => {
         whileHover={{ scale: 1.03 }}
         className="absolute top-6 left-1/2 -translate-x-1/2 z-20"
       >
-        <div className="flex items-center gap-2.5 px-5 py-2.5 bg-white/70 dark:bg-card/70 backdrop-blur-2xl rounded-full border border-white/40 dark:border-border/40 shadow-[0_8px_30px_rgba(0,0,0,0.1)]">
+        <div className="flex items-center gap-2.5 px-5 py-2.5 glass-heavy rounded-full shadow-3d">
           <motion.div
             animate={{ opacity: [0.6, 1, 0.6] }}
             transition={{ duration: 2.5, repeat: Infinity }}
@@ -341,7 +341,7 @@ export const HeroHomepage = () => {
         transition={{ duration: 0.9, delay: 1 }}
         className="absolute bottom-0 left-0 right-0 z-20"
       >
-        <div className="bg-white/75 dark:bg-card/75 backdrop-blur-2xl border-t border-white/30 dark:border-border/30 shadow-[0_-12px_40px_rgba(0,0,0,0.08)]">
+        <div className="glass-heavy border-t border-white/30 shadow-3d-lg">
           <div className="container mx-auto px-6 lg:px-8 py-5">
             <div className="flex flex-wrap items-center justify-between gap-8">
               

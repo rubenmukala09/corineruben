@@ -69,16 +69,16 @@ const Card3D = ({ children, className = "", intensity = 10 }: Card3DProps) => {
         transformStyle: "preserve-3d",
         transformPerspective: 1000
       }}
-      className={cn("relative", className)}
+      className={cn("relative card-3d", className)}
     >
       <motion.div
         animate={{
           boxShadow: isHovering 
-            ? "0 20px 60px -10px rgba(139, 92, 246, 0.5)"
-            : "0 10px 30px -10px rgba(139, 92, 246, 0.3)"
+            ? "0 20px 40px -15px hsl(220 20% 20% / 0.2), 0 10px 20px -10px hsl(220 20% 20% / 0.15)"
+            : "0 10px 30px -10px hsl(220 20% 20% / 0.1)"
         }}
         transition={{ duration: 0.3 }}
-        className="w-full h-full"
+        className="w-full h-full glass-light rounded-2xl"
       >
         {children}
       </motion.div>

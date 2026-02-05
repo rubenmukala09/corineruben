@@ -23,7 +23,7 @@ export const AIBusinessPromo = () => {
        <div className="container mx-auto px-4 lg:px-8 relative z-10">
          {/* Section Header */}
         <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 dark:bg-card/70 backdrop-blur-2xl border border-white/60 dark:border-border/60 shadow-lg mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-light mb-4 micro-bounce">
              <Sparkles className="w-4 h-4 text-primary" aria-hidden="true" />
               <span className="text-sm font-semibold text-foreground uppercase tracking-wide">AI & Business</span>
            </div>
@@ -42,7 +42,7 @@ export const AIBusinessPromo = () => {
             <div 
                key={service.title}
               role="listitem"
-              className="group relative bg-white/70 dark:bg-card/70 backdrop-blur-2xl rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-white/60 dark:border-border/60 hover:scale-[1.02]"
+              className="group relative glass-light rounded-2xl p-6 shadow-3d micro-scale hover-depth"
              >
                {/* Highlight Badge */}
               <div className="absolute -top-2 right-4 px-3 py-1 rounded-full bg-gradient-to-r from-primary to-accent text-xs font-bold text-white shadow-md">
@@ -162,7 +162,7 @@ export const AIBusinessPromo = () => {
              </div>
  
              {/* Floating ROI Card */}
-            <div className="absolute -bottom-2 -left-2 bg-white/95 rounded-lg shadow-lg p-2.5 border border-lavender-200/50">
+            <div className="absolute -bottom-2 -left-2 widget-premium micro-scale">
               <div className="text-xl font-black text-coral-500" style={{ fontFamily: "'Clash Display', sans-serif" }}>
                  340%
                </div>

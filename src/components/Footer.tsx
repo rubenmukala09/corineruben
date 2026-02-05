@@ -60,7 +60,7 @@ const Footer = () => {
       <TrustedTechLogos />
 
       {/* Main Footer */}
-      <div className="bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 text-white relative overflow-hidden">
+      <div className="bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 text-white relative overflow-hidden glass-dark">
         {/* Background */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute inset-0 opacity-[0.02]" style={{

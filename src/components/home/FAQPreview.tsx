@@ -47,7 +47,7 @@ export const FAQPreview = () => {
           <div className="lg:sticky lg:top-24 space-y-8">
             <div>
               <div 
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/70 dark:bg-card/70 backdrop-blur-2xl rounded-full border border-white/60 dark:border-border/60 shadow-lg text-sm font-bold uppercase tracking-wider mb-5"
+                className="inline-flex items-center gap-2 px-5 py-2.5 glass-light rounded-full text-sm font-bold uppercase tracking-wider mb-5 micro-bounce"
               >
                 <HelpCircle className="w-4 h-4 text-primary" />
                 <span className="text-foreground">FAQ</span>
@@ -64,7 +64,7 @@ export const FAQPreview = () => {
             </div>
 
             {/* Support Agent Card with Glassmorphism */}
-            <div className="bg-white/70 dark:bg-card/70 backdrop-blur-2xl rounded-3xl p-8 border border-white/60 dark:border-border/60 shadow-xl transition-all duration-400 ease-out hover:translate-y-[-8px] hover:scale-[1.02] hover:shadow-2xl overflow-hidden">
+            <div className="widget-premium hover-depth overflow-hidden">
               {/* Featured Support Image */}
               <div className="mb-6 -mx-8 -mt-8">
                 <img 
@@ -125,7 +125,7 @@ export const FAQPreview = () => {
                 <AccordionItem
                   key={index}
                   value={`item-${index}`}
-                  className="group border border-white/60 dark:border-border/60 rounded-2xl px-6 bg-white/70 dark:bg-card/70 backdrop-blur-2xl shadow-lg transition-all duration-400 ease-out hover:translate-y-[-4px] hover:shadow-xl data-[state=open]:shadow-xl"
+                  className="group glass-light rounded-2xl px-6 shadow-3d micro-scale data-[state=open]:shadow-3d-lg"
                 >
                   <AccordionTrigger className="text-left font-bold hover:no-underline py-6 text-lg text-foreground group-data-[state=open]:text-primary transition-colors">
                     <div className="flex items-center gap-4 pr-4">

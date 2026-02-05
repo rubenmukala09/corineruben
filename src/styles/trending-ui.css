@@ -1,0 +1,506 @@
+/* ===== TRENDING UI STYLES 2025 ===== */
+/* Glassmorphism, Bento Grids, Microinteractions, 3D Effects */
+
+/* ===== GLASSMORPHISM PRO ===== */
+
+/* Multi-layered frosted glass effect */
+.glass {
+  background: hsl(0 0% 100% / 0.65);
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  border: 1px solid hsl(0 0% 100% / 0.5);
+  box-shadow: 
+    0 4px 24px -4px hsl(220 20% 20% / 0.08),
+    inset 0 1px 0 hsl(0 0% 100% / 0.8);
+}
+
+.glass-light {
+  background: hsl(0 0% 100% / 0.75);
+  backdrop-filter: blur(24px) saturate(2);
+  -webkit-backdrop-filter: blur(24px) saturate(2);
+  border: 1px solid hsl(0 0% 100% / 0.6);
+  box-shadow: 
+    0 8px 32px -8px hsl(220 20% 20% / 0.1),
+    inset 0 1px 0 hsl(0 0% 100% / 0.9);
+}
+
+.glass-heavy {
+  background: hsl(0 0% 100% / 0.85);
+  backdrop-filter: blur(40px) saturate(2.2);
+  -webkit-backdrop-filter: blur(40px) saturate(2.2);
+  border: 1px solid hsl(0 0% 100% / 0.7);
+  box-shadow: 
+    0 12px 48px -12px hsl(220 20% 20% / 0.12),
+    inset 0 1px 0 hsl(0 0% 100%);
+}
+
+.glass-subtle {
+  background: hsl(0 0% 100% / 0.5);
+  backdrop-filter: blur(12px) saturate(1.5);
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+  border: 1px solid hsl(0 0% 100% / 0.35);
+}
+
+.glass-dark {
+  background: hsl(220 30% 10% / 0.75);
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  border: 1px solid hsl(0 0% 100% / 0.08);
+  box-shadow: 
+    0 8px 32px -8px hsl(0 0% 0% / 0.25),
+    inset 0 1px 0 hsl(0 0% 100% / 0.05);
+}
+
+.glass-colored {
+  background: linear-gradient(135deg, 
+    hsl(var(--coral-100) / 0.6) 0%, 
+    hsl(var(--lavender-100) / 0.6) 100%);
+  backdrop-filter: blur(24px) saturate(1.8);
+  -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  border: 1px solid hsl(0 0% 100% / 0.5);
+}
+
+/* ===== BENTO GRID SYSTEM ===== */
+
+.bento-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(120px, auto);
+}
+
+@media (max-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Bento cell sizes */
+.bento-span-1 { grid-column: span 1; }
+.bento-span-2 { grid-column: span 2; }
+.bento-span-3 { grid-column: span 3; }
+.bento-span-4 { grid-column: span 4; }
+.bento-row-2 { grid-row: span 2; }
+.bento-row-3 { grid-row: span 3; }
+
+@media (max-width: 1024px) {
+  .bento-span-3, .bento-span-4 { grid-column: span 2; }
+}
+
+@media (max-width: 640px) {
+  .bento-span-2, .bento-span-3, .bento-span-4 { grid-column: span 1; }
+  .bento-row-2, .bento-row-3 { grid-row: span 1; }
+}
+
+/* Bento cell styling */
+.bento-cell {
+  position: relative;
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bento-cell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(180deg, 
+    hsl(0 0% 100% / 0.08) 0%, 
+    transparent 50%);
+}
+
+/* ===== MICROINTERACTIONS ===== */
+
+/* Bouncy button */
+.micro-bounce {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.micro-bounce:hover {
+  transform: translateY(-2px);
+}
+
+.micro-bounce:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* Pulse glow on hover */
+.micro-pulse {
+  position: relative;
+}
+
+.micro-pulse::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  background: hsl(var(--primary) / 0.15);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.micro-pulse:hover::after {
+  opacity: 1;
+  animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+/* Magnetic hover */
+.micro-magnetic {
+  transition: transform 0.15s ease-out;
+}
+
+/* Scale with spring */
+.micro-scale {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.micro-scale:hover {
+  transform: scale(1.03);
+}
+
+.micro-scale:active {
+  transform: scale(0.97);
+}
+
+/* Tilt on hover */
+.micro-tilt {
+  transition: transform 0.2s ease-out;
+  transform-style: preserve-3d;
+}
+
+.micro-tilt:hover {
+  transform: perspective(1000px) rotateX(2deg) rotateY(-2deg);
+}
+
+/* Search box reveal */
+.micro-search-reveal {
+  overflow: hidden;
+  width: 48px;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.micro-search-reveal:focus-within {
+  width: 240px;
+}
+
+/* Toggle switch bounce */
+.micro-toggle {
+  transition: background-color 0.2s ease, 
+              transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.micro-toggle .toggle-thumb {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Icon rotation */
+.micro-rotate:hover svg,
+.micro-rotate:hover .icon {
+  transform: rotate(8deg);
+  transition: transform 0.2s ease;
+}
+
+/* ===== INTERACTIVE HOVER REVEALS ===== */
+
+/* Content reveal on hover */
+.hover-reveal {
+  position: relative;
+  overflow: hidden;
+}
+
+.hover-reveal .reveal-content {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.hover-reveal:hover .reveal-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Depth change on hover */
+.hover-depth {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-depth:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 20px 40px -15px hsl(220 20% 20% / 0.2),
+    0 10px 20px -10px hsl(220 20% 20% / 0.15);
+}
+
+/* Gradient shift on hover */
+.hover-gradient {
+  position: relative;
+  overflow: hidden;
+}
+
+.hover-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, 
+    hsl(var(--coral-200) / 0) 0%, 
+    hsl(var(--lavender-200) / 0) 100%);
+  transition: background 0.4s ease;
+  z-index: 0;
+}
+
+.hover-gradient:hover::before {
+  background: linear-gradient(135deg, 
+    hsl(var(--coral-200) / 0.3) 0%, 
+    hsl(var(--lavender-200) / 0.3) 100%);
+}
+
+/* Border glow on hover */
+.hover-border-glow {
+  position: relative;
+}
+
+.hover-border-glow::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, 
+    hsl(var(--primary)) 0%, 
+    hsl(var(--accent)) 100%);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease;
+}
+
+.hover-border-glow:hover::after {
+  opacity: 0.5;
+  filter: blur(8px);
+}
+
+/* Image zoom in card */
+.hover-img-zoom {
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.hover-img-zoom img {
+  transition: transform 0.4s ease;
+}
+
+.hover-img-zoom:hover img {
+  transform: scale(1.08);
+}
+
+/* ===== 3D VISUALIZATIONS & SHADOWS ===== */
+
+/* Multi-layered 3D shadow */
+.shadow-3d {
+  box-shadow: 
+    0 1px 1px hsl(220 20% 20% / 0.04),
+    0 2px 2px hsl(220 20% 20% / 0.04),
+    0 4px 4px hsl(220 20% 20% / 0.04),
+    0 8px 8px hsl(220 20% 20% / 0.04),
+    0 16px 16px hsl(220 20% 20% / 0.04);
+}
+
+.shadow-3d-lg {
+  box-shadow: 
+    0 2px 2px hsl(220 20% 20% / 0.03),
+    0 4px 4px hsl(220 20% 20% / 0.03),
+    0 8px 8px hsl(220 20% 20% / 0.04),
+    0 16px 16px hsl(220 20% 20% / 0.04),
+    0 32px 32px hsl(220 20% 20% / 0.05),
+    0 48px 48px hsl(220 20% 20% / 0.03);
+}
+
+.shadow-3d-colored {
+  box-shadow: 
+    0 2px 4px hsl(var(--primary) / 0.06),
+    0 4px 8px hsl(var(--primary) / 0.06),
+    0 8px 16px hsl(var(--primary) / 0.06),
+    0 16px 32px hsl(var(--accent) / 0.08);
+}
+
+/* 3D card with perspective */
+.card-3d {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.card-3d-inner {
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease;
+}
+
+.card-3d:hover .card-3d-inner {
+  transform: rotateX(3deg) rotateY(-3deg);
+}
+
+/* Floating 3D element */
+.float-3d {
+  animation: float-3d 6s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+@keyframes float-3d {
+  0%, 100% { 
+    transform: translateY(0) rotateX(0deg) rotateY(0deg); 
+  }
+  25% { 
+    transform: translateY(-10px) rotateX(2deg) rotateY(2deg); 
+  }
+  50% { 
+    transform: translateY(-5px) rotateX(-1deg) rotateY(1deg); 
+  }
+  75% { 
+    transform: translateY(-12px) rotateX(1deg) rotateY(-2deg); 
+  }
+}
+
+/* Layered depth effect */
+.depth-layers {
+  position: relative;
+}
+
+.depth-layers::before,
+.depth-layers::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.depth-layers::before {
+  background: inherit;
+  transform: translateY(4px) scale(0.98);
+  opacity: 0.4;
+  filter: blur(2px);
+  z-index: -1;
+}
+
+.depth-layers::after {
+  background: inherit;
+  transform: translateY(8px) scale(0.96);
+  opacity: 0.2;
+  filter: blur(4px);
+  z-index: -2;
+}
+
+/* Inner shadow for inset effect */
+.shadow-inset {
+  box-shadow: 
+    inset 0 2px 4px hsl(220 20% 20% / 0.08),
+    inset 0 4px 8px hsl(220 20% 20% / 0.04);
+}
+
+/* Emboss effect */
+.emboss {
+  box-shadow: 
+    inset 0 1px 0 hsl(0 0% 100% / 0.8),
+    inset 0 -1px 0 hsl(220 20% 20% / 0.1),
+    0 2px 4px hsl(220 20% 20% / 0.05);
+}
+
+/* Physical widget depth */
+.widget-depth {
+  background: linear-gradient(180deg, 
+    hsl(0 0% 100%) 0%, 
+    hsl(0 0% 98%) 100%);
+  border: 1px solid hsl(0 0% 92%);
+  box-shadow: 
+    0 1px 1px hsl(220 20% 20% / 0.02),
+    0 2px 2px hsl(220 20% 20% / 0.02),
+    0 4px 4px hsl(220 20% 20% / 0.03),
+    0 8px 8px hsl(220 20% 20% / 0.03),
+    0 16px 16px hsl(220 20% 20% / 0.02),
+    inset 0 1px 0 hsl(0 0% 100%);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.widget-depth:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 2px 2px hsl(220 20% 20% / 0.02),
+    0 4px 4px hsl(220 20% 20% / 0.03),
+    0 8px 8px hsl(220 20% 20% / 0.03),
+    0 16px 16px hsl(220 20% 20% / 0.04),
+    0 24px 24px hsl(220 20% 20% / 0.02),
+    0 32px 32px hsl(220 20% 20% / 0.01),
+    inset 0 1px 0 hsl(0 0% 100%);
+}
+
+/* ===== COMBINED EFFECTS ===== */
+
+/* Premium widget card */
+.widget-premium {
+  position: relative;
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  background: hsl(0 0% 100% / 0.8);
+  backdrop-filter: blur(24px) saturate(1.8);
+  -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  border: 1px solid hsl(0 0% 100% / 0.6);
+  box-shadow: 
+    0 4px 8px hsl(220 20% 20% / 0.04),
+    0 8px 16px hsl(220 20% 20% / 0.04),
+    0 16px 32px hsl(220 20% 20% / 0.02),
+    inset 0 1px 0 hsl(0 0% 100%);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.widget-premium:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 
+    0 8px 16px hsl(220 20% 20% / 0.06),
+    0 16px 32px hsl(220 20% 20% / 0.06),
+    0 24px 48px hsl(220 20% 20% / 0.04),
+    inset 0 1px 0 hsl(0 0% 100%);
+}
+
+/* Hero bento cell */
+.bento-hero {
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* Stats widget */
+.widget-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.widget-stat .stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  background: linear-gradient(135deg, 
+    hsl(var(--primary)) 0%, 
+    hsl(var(--accent)) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.widget-stat .stat-label {
+  font-size: 0.875rem;
+  color: hsl(var(--muted-foreground));
+}
