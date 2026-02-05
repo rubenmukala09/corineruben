@@ -1,12 +1,7 @@
  import { Link } from "react-router-dom";
  import { Button } from "@/components/ui/button";
- import { FileText, Shield, BookOpen, ArrowRight, Download, Sparkles } from "lucide-react";
+import { FileText, Shield, BookOpen, ArrowRight, Download, Sparkles } from "lucide-react";
  import { motion } from "framer-motion";
- 
- // Import book cover images
- import bookAiFundamentals from "@/assets/book-ai-fundamentals.jpg";
- import bookScamPrevention from "@/assets/book-scam-prevention.jpg";
- import bookFamilySafety from "@/assets/book-family-safety.jpg";
 
  const resources = [
    {
@@ -33,13 +28,6 @@
      color: "#18305A",
      bgGradient: "from-blue-50 to-indigo-100",
    },
- ];
- 
- // Featured book covers to display
- const featuredBooks = [
-   { image: bookAiFundamentals, title: "AI Fundamentals" },
-   { image: bookScamPrevention, title: "Scam Prevention Guide" },
-   { image: bookFamilySafety, title: "Family Safety Toolkit" },
  ];
 
 export const ResourcesPromo = () => {
@@ -134,65 +122,9 @@ export const ResourcesPromo = () => {
             </Link>
           </Button>
         </motion.div>
-        
-         {/* Featured Book Covers Row */}
-         <motion.div
-           initial={{ opacity: 0, y: 20 }}
-           whileInView={{ opacity: 1, y: 0 }}
-           transition={{ duration: 0.6 }}
-           viewport={{ once: true }}
-           className="mb-12"
-         >
-           <div className="flex items-center gap-2 mb-6">
-             <BookOpen className="w-5 h-5" style={{ color: '#F8926A' }} />
-             <span className="text-lg font-bold" style={{ color: '#18305A' }}>Featured eBooks</span>
-             <span className="text-sm px-3 py-1 rounded-full ml-2" 
-               style={{ background: 'linear-gradient(135deg, #fff5f0 0%, #faf5fa 100%)', color: '#F8926A' }}>
-               📘 30+ Titles
-             </span>
-           </div>
-           <div className="grid grid-cols-3 md:grid-cols-3 gap-4 md:gap-6">
-             {featuredBooks.map((book, i) => (
-               <motion.div
-                 key={book.title}
-                 initial={{ opacity: 0, scale: 0.9 }}
-                 whileInView={{ opacity: 1, scale: 1 }}
-                 transition={{ duration: 0.4, delay: i * 0.1 }}
-                 viewport={{ once: true }}
-                 className="group"
-               >
-                 <Link to="/resources" className="block">
-                   <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 group-hover:-translate-y-2 border-4 border-white">
-                     <img 
-                       src={book.image}
-                       alt={`${book.title} - InVision Network Literature Dep`}
-                       width={260}
-                       height={347}
-                       loading="lazy"
-                       decoding="async"
-                       className="w-full h-full object-cover"
-                     />
-                     {/* Hover overlay */}
-                     <div className="absolute inset-0 bg-gradient-to-t from-[#18305A]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
-                       <span className="text-white text-sm font-bold px-4 py-2 rounded-full"
-                         style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }}>
-                         View Details
-                       </span>
-                     </div>
-                     {/* eBook badge */}
-                     <div className="absolute top-2 left-2 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 text-xs font-bold" style={{ color: '#18305A' }}>
-                       📘 eBook
-                     </div>
-                   </div>
-                   <p className="mt-2 text-center text-sm font-semibold truncate" style={{ color: '#18305A' }}>{book.title}</p>
-                 </Link>
-               </motion.div>
-             ))}
-           </div>
-         </motion.div>
- 
-         {/* Resources Grid - Premium Button Cards */}
-         <div className="grid md:grid-cols-3 gap-6">
+
+        {/* Resources Grid - Premium Button Cards */}
+        <div className="grid md:grid-cols-3 gap-6">
           {resources.map((resource, i) => (
             <motion.div
               key={resource.title}

@@ -3,7 +3,6 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense, useEffect, useState } from "react";
-import { SplashScreen } from "./components/SplashScreen";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AIChat } from "./components/AIChat";
 import { AIChatProvider } from "./contexts/AIChatContext";
@@ -233,8 +232,6 @@ function PublicRoutes() {
 }
 
 function App() {
-  const [showSplash, setShowSplash] = useState(true);
-  
   useSmoothAnchorScroll();
   
   useEffect(() => {
@@ -248,20 +245,13 @@ function App() {
       }, 500);
     }
     
-    const timer = setTimeout(() => {
-      setShowSplash(false);
-    }, 800);
-    
     return () => {
       document.documentElement.style.scrollBehavior = "auto";
-      clearTimeout(timer);
     };
   }, []);
 
   return (
     <>
-      <SplashScreen isVisible={showSplash} />
-      
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <Toaster />
