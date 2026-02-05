@@ -57,7 +57,15 @@ import seniorLearning from "@/assets/senior-learning.jpg";
                     muted
                     loop
                     playsInline
+                   preload="auto"
+                   controls={false}
                     className="w-full h-full object-cover"
+                   ref={(el) => {
+                     if (el) {
+                       el.muted = true;
+                       el.play().catch(() => {});
+                     }
+                   }}
                   >
                     <source src="https://videos.pexels.com/video-files/7579962/7579962-uhd_2560_1440_25fps.mp4" type="video/mp4" />
                   </video>
