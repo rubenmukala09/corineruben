@@ -328,7 +328,7 @@ function Business() {
                 
                 <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-xl p-4">
                   <p className="text-sm leading-relaxed">
-                    <strong className="text-primary">The bottom line:</strong> Businesses miss up to 62% of calls outside business hours. Each missed call costs $200-$500 in potential revenue. With our AI Receptionist, you capture every opportunity.
+                   <strong className="text-primary">The bottom line:</strong> Many businesses miss valuable calls outside business hours. Each missed call represents potential lost revenue. With our AI Receptionist, you capture every opportunity.
                   </p>
                 </div>
               </div>
@@ -458,7 +458,7 @@ function Business() {
                 
                 <div className="bg-gradient-to-r from-success/10 to-emerald-500/10 border border-success/20 rounded-xl p-4">
                   <p className="text-sm leading-relaxed">
-                    <strong className="text-success">ROI Fact:</strong> It costs 5x more to acquire a new customer than retain an existing one. Businesses that actively follow up see <strong>25-95% higher customer lifetime value</strong>.
+                   <strong className="text-success">ROI Fact:</strong> Customer retention is significantly more cost-effective than acquisition. Businesses that actively follow up see <strong>substantially higher customer lifetime value</strong>.
                   </p>
                 </div>
               </div>
@@ -1998,7 +1998,7 @@ function Business() {
                   <p className="text-sm text-muted-foreground">Businesses Served</p>
                 </div>
                 <div>
-                  <p className="text-4xl font-black gradient-text-primary mb-1">99.9%</p>
+                 <p className="text-4xl font-black gradient-text-primary mb-1">99%+</p>
                   <p className="text-sm text-muted-foreground">Uptime Guarantee</p>
                 </div>
                 <div>
@@ -2006,8 +2006,8 @@ function Business() {
                   <p className="text-sm text-muted-foreground">Support Available</p>
                 </div>
                 <div>
-                  <p className="text-4xl font-black gradient-text-primary mb-1">∞</p>
-                  <p className="text-sm text-muted-foreground">Platforms Supported</p>
+                 <p className="text-4xl font-black gradient-text-primary mb-1">50+</p>
+                 <p className="text-sm text-muted-foreground">Integrations</p>
                 </div>
               </div>
             </Card>
