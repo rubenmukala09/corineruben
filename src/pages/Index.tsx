@@ -18,7 +18,6 @@
  import { SEO, PAGE_SEO } from "@/components/SEO";
  import { SectionNav } from "@/components/SectionNav";
  import seniorCoupleActive from "@/assets/senior-couple-active.jpg";
- import { PremiumGlassmorphismWidgets } from "@/components/home/PremiumGlassmorphismWidgets";
 import { SkeuomorphicSection } from "@/components/backgrounds/SkeuomorphicSection";
  
  const Index = () => {
@@ -56,12 +55,6 @@ import { SkeuomorphicSection } from "@/components/backgrounds/SkeuomorphicSectio
              <ResourcesPromo />
           </SkeuomorphicSection>
            
- 
-           {/* Premium Glassmorphism Widgets */}
-          <SkeuomorphicSection id="trust-widgets" className="py-0" variant="lavender">
-             <PremiumGlassmorphismWidgets />
-          </SkeuomorphicSection>
- 
            {/* Community Impact - Veteran Support, Cancer Children, etc. */}
           <SkeuomorphicSection id="community" className="py-0" variant="coral">
              <CommunityImpact />
