@@ -15,49 +15,54 @@ const trustPoints = [
 
 export const FamilyTrustSection = () => {
   return (
-    <section className="py-10 lg:py-14 bg-gradient-to-br from-white via-lavender-50/30 to-coral-50/20" aria-labelledby="trust-heading">
+    <section className="py-14 lg:py-20 bg-gradient-to-br from-background via-lavender-50/20 to-coral-50/15" aria-labelledby="trust-heading">
       <div className="container mx-auto px-6 lg:px-12">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <p className="text-lg md:text-xl font-bold text-coral-500 mb-2">Real Protection, Real Results</p>
-          <h2 id="trust-heading" className="text-3xl md:text-4xl font-black text-[#18305A] leading-tight mb-3"
+        {/* Header with Glassmorphism */}
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 mb-4 bg-white/70 dark:bg-card/70 backdrop-blur-xl rounded-full border border-white/50 dark:border-border/50 shadow-lg">
+            <Shield className="w-4 h-4 text-primary" />
+            <span className="text-sm font-bold text-primary uppercase tracking-wide">Real Protection, Real Results</span>
+          </div>
+          <h2 id="trust-heading" className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground leading-tight mb-4"
             style={{ fontFamily: "'Clash Display', 'DM Sans', sans-serif" }}>
             Why Families{" "}
-            <span className="bg-gradient-to-r from-coral-500 to-lavender-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               Trust Us
             </span>
           </h2>
-          <p className="text-base text-foreground/60 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Join thousands of Ohio families who trust us with their digital safety every day.
           </p>
         </div>
 
-        {/* Stats Row */}
-        <div className="grid md:grid-cols-3 gap-5 mb-8" role="list" aria-label="Trust statistics">
-          {stats.map((stat, i) => (
+        {/* Stats Row with Glassmorphism */}
+        <div className="grid md:grid-cols-3 gap-6 mb-10" role="list" aria-label="Trust statistics">
+          {stats.map((stat) => (
             <div
               key={stat.label}
               role="listitem"
-              className="bg-white rounded-xl p-5 shadow-md border border-gray-100 text-center hover:shadow-lg transition-shadow"
+              className="bg-white/70 dark:bg-card/70 backdrop-blur-xl rounded-2xl p-6 shadow-lg border border-white/50 dark:border-border/50 text-center hover:shadow-xl hover:scale-[1.02] transition-all duration-300"
             >
-              <div className="w-10 h-10 mx-auto mb-3 rounded-lg bg-gradient-to-br from-coral-100 to-lavender-100 flex items-center justify-center" aria-hidden="true">
-                <stat.icon className="w-5 h-5 text-coral-500" />
+              <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 backdrop-blur-sm flex items-center justify-center border border-white/30" aria-hidden="true">
+                <stat.icon className="w-6 h-6 text-primary" />
               </div>
-              <div className="text-2xl font-black text-[#18305A] mb-1" style={{ fontFamily: "'Clash Display', sans-serif" }}>
+              <div className="text-3xl font-black text-foreground mb-1" style={{ fontFamily: "'Clash Display', sans-serif" }}>
                 {stat.value}
               </div>
-              <div className="text-sm text-foreground/60" aria-label={`${stat.value} ${stat.label}`}>{stat.label}</div>
+              <div className="text-sm text-muted-foreground" aria-label={`${stat.value} ${stat.label}`}>{stat.label}</div>
             </div>
           ))}
         </div>
 
-        {/* Trust Points */}
-        <div className="bg-gradient-to-r from-[#18305A] to-[#2a4a7a] rounded-xl p-5 lg:p-6" role="list" aria-label="Trust guarantees">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        {/* Trust Points with Glassmorphism */}
+        <div className="bg-white/60 dark:bg-card/60 backdrop-blur-2xl rounded-2xl p-6 lg:p-8 border border-white/50 dark:border-border/50 shadow-xl" role="list" aria-label="Trust guarantees">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {trustPoints.map((point, i) => (
-              <div key={i} className="flex items-center gap-2" role="listitem">
-                <CheckCircle className="w-4 h-4 text-coral-400 flex-shrink-0" aria-hidden="true" />
-                <span className="text-white/90 text-sm font-medium">{point}</span>
+              <div key={i} className="flex items-center gap-3 p-3 bg-white/50 dark:bg-card/50 backdrop-blur-sm rounded-xl border border-white/40" role="listitem">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center flex-shrink-0">
+                  <CheckCircle className="w-4 h-4 text-primary" aria-hidden="true" />
+                </div>
+                <span className="text-foreground/90 text-sm font-medium">{point}</span>
               </div>
             ))}
           </div>

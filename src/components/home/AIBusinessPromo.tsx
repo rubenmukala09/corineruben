@@ -17,46 +17,46 @@ import teamOfficeDiscussion from "@/assets/team-office-discussion.jpg";
    "AI Consultation",
  ];
  
- export const AIBusinessPromo = () => {
+export const AIBusinessPromo = () => {
    return (
-   <section className="relative py-8 lg:py-12 bg-gradient-to-br from-slate-50 via-white to-lavender-50/30" aria-labelledby="business-heading">
+   <section className="relative py-12 lg:py-16 bg-gradient-to-br from-background via-white to-lavender-50/20" aria-labelledby="business-heading">
        <div className="container mx-auto px-4 lg:px-8 relative z-10">
          {/* Section Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-lavender-100 to-coral-100 border border-lavender-200/50 mb-3 shadow-sm">
-             <Sparkles className="w-4 h-4 text-lavender-500" aria-hidden="true" />
-              <span className="text-sm font-semibold text-[#18305A] uppercase tracking-wide">AI & Business</span>
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 dark:bg-card/70 backdrop-blur-2xl border border-white/60 dark:border-border/60 shadow-lg mb-4">
+             <Sparkles className="w-4 h-4 text-primary" aria-hidden="true" />
+              <span className="text-sm font-semibold text-foreground uppercase tracking-wide">AI & Business</span>
            </div>
-         <h2 id="business-heading" className="text-3xl md:text-4xl font-black text-[#18305A] leading-tight mb-2"
+         <h2 id="business-heading" className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground leading-tight mb-3"
              style={{ fontFamily: "'Clash Display', 'DM Sans', sans-serif" }}>
-             Choice Business <span className="bg-gradient-to-r from-lavender-500 to-coral-500 bg-clip-text text-transparent">Needs</span>
+             Choice Business <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Needs</span>
            </h2>
-         <p className="text-base text-foreground/60 max-w-xl mx-auto">
+         <p className="text-lg text-muted-foreground max-w-xl mx-auto">
              Transform your business with AI-powered automation. Solutions that work 24/7 so you never miss an opportunity.
            </p>
         </div>
  
-         {/* Services Cards Grid */}
-        <div className="grid md:grid-cols-3 gap-4 mb-10" role="list" aria-label="Business services">
-           {services.map((service, i) => (
+         {/* Services Cards Grid with Glassmorphism */}
+        <div className="grid md:grid-cols-3 gap-5 mb-12" role="list" aria-label="Business services">
+           {services.map((service) => (
             <div 
                key={service.title}
               role="listitem"
-              className="group relative bg-white rounded-xl p-5 shadow-md hover:shadow-lg transition-shadow border border-gray-100"
+              className="group relative bg-white/70 dark:bg-card/70 backdrop-blur-2xl rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-white/60 dark:border-border/60 hover:scale-[1.02]"
              >
                {/* Highlight Badge */}
-              <div className="absolute -top-2 right-4 px-2.5 py-0.5 rounded-full bg-gradient-to-r from-coral-400 to-lavender-500 text-xs font-bold text-white">
+              <div className="absolute -top-2 right-4 px-3 py-1 rounded-full bg-gradient-to-r from-primary to-accent text-xs font-bold text-white shadow-md">
                  {service.highlight}
                </div>
                
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-lavender-100 to-coral-50 flex items-center justify-center mb-3" aria-hidden="true">
-                <service.icon className="w-6 h-6 text-lavender-600" />
+              <div className="w-12 h-12 rounded-xl bg-white/60 dark:bg-card/60 backdrop-blur-sm flex items-center justify-center mb-4 border border-white/50" aria-hidden="true">
+                <service.icon className="w-6 h-6 text-primary" />
                </div>
                
-              <h3 className="text-base font-bold text-[#18305A] mb-1">{service.title}</h3>
-              <p className="text-foreground/60 text-sm mb-2">{service.desc}</p>
+              <h3 className="text-lg font-bold text-foreground mb-2">{service.title}</h3>
+              <p className="text-muted-foreground text-sm mb-3">{service.desc}</p>
                
-              <Link to="/business" className="inline-flex items-center text-coral-500 font-semibold text-sm hover:text-coral-600 transition-colors">
+              <Link to="/business" className="inline-flex items-center text-primary font-semibold text-sm hover:text-accent transition-colors">
                  Learn More
                 <ArrowRight className="w-3 h-3 ml-1" aria-hidden="true" />
                </Link>

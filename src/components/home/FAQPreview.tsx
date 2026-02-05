@@ -33,7 +33,7 @@ const faqs = [
 
 export const FAQPreview = () => {
   return (
-    <section className="py-10 relative overflow-hidden">
+    <section className="py-14 lg:py-20 relative overflow-hidden bg-gradient-to-br from-background via-white to-muted/20">
       {/* Grid pattern */}
       <GridPattern />
       
@@ -42,15 +42,15 @@ export const FAQPreview = () => {
       <GeometricCorner position="bottom-left" variant="dots" />
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-8 items-start">
+        <div className="grid lg:grid-cols-2 gap-10 items-start">
           {/* Left - Header & Support Card */}
-          <div className="lg:sticky lg:top-24 space-y-6">
+          <div className="lg:sticky lg:top-24 space-y-8">
             <div>
               <div 
-                className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-sm font-bold uppercase tracking-wider mb-4"
-                style={{ clipPath: "polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%)" }}
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/70 dark:bg-card/70 backdrop-blur-2xl rounded-full border border-white/60 dark:border-border/60 shadow-lg text-sm font-bold uppercase tracking-wider mb-5"
               >
-                FAQ
+                <HelpCircle className="w-4 h-4 text-primary" />
+                <span className="text-foreground">FAQ</span>
               </div>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
                 Got{" "}
@@ -58,13 +58,13 @@ export const FAQPreview = () => {
                 <br />
                 We've Got Answers
               </h2>
-              <p className="text-foreground/80 text-lg md:text-xl leading-relaxed font-medium">
+              <p className="text-muted-foreground text-lg md:text-xl leading-relaxed font-medium">
                 Protecting your family from scams is a serious decision. Here's what you need to know.
               </p>
             </div>
 
-            {/* Support Agent Card - Soft Modern */}
-            <div className="bg-white rounded-3xl p-8 border border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] transition-all duration-400 ease-out hover:translate-y-[-8px] hover:scale-[1.02] hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)] overflow-hidden">
+            {/* Support Agent Card with Glassmorphism */}
+            <div className="bg-white/70 dark:bg-card/70 backdrop-blur-2xl rounded-3xl p-8 border border-white/60 dark:border-border/60 shadow-xl transition-all duration-400 ease-out hover:translate-y-[-8px] hover:scale-[1.02] hover:shadow-2xl overflow-hidden">
               {/* Featured Support Image */}
               <div className="mb-6 -mx-8 -mt-8">
                 <img 
@@ -118,24 +118,24 @@ export const FAQPreview = () => {
             </div>
           </div>
 
-          {/* Right - FAQ Accordion */}
+          {/* Right - FAQ Accordion with Glassmorphism */}
           <div>
             <Accordion type="single" collapsible className="space-y-4">
               {faqs.map((faq, index) => (
                 <AccordionItem
                   key={index}
                   value={`item-${index}`}
-                  className="group border border-white/50 rounded-2xl px-6 bg-white shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] transition-all duration-400 ease-out hover:translate-y-[-4px] hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)] data-[state=open]:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]"
+                  className="group border border-white/60 dark:border-border/60 rounded-2xl px-6 bg-white/70 dark:bg-card/70 backdrop-blur-2xl shadow-lg transition-all duration-400 ease-out hover:translate-y-[-4px] hover:shadow-xl data-[state=open]:shadow-xl"
                 >
                   <AccordionTrigger className="text-left font-bold hover:no-underline py-6 text-lg text-foreground group-data-[state=open]:text-primary transition-colors">
                     <div className="flex items-center gap-4 pr-4">
-                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 group-data-[state=open]:bg-primary/20 transition-colors">
+                      <div className="w-10 h-10 rounded-full bg-white/60 dark:bg-card/60 backdrop-blur-sm flex items-center justify-center flex-shrink-0 group-data-[state=open]:bg-primary/20 transition-colors border border-white/50">
                         <span className="text-primary font-bold text-base">{index + 1}</span>
                       </div>
                       {faq.question}
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="text-foreground/70 pb-6 pl-14 text-lg leading-relaxed font-medium">
+                  <AccordionContent className="text-muted-foreground pb-6 pl-14 text-lg leading-relaxed font-medium">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>

@@ -53,7 +53,7 @@ import seniorLearning from "@/assets/senior-learning.jpg";
   };
 
    return (
-    <section className="relative py-10 lg:py-14 bg-white overflow-hidden" aria-labelledby="workshops-heading">
+    <section className="relative py-12 lg:py-16 bg-gradient-to-br from-background via-white to-lavender-50/20 overflow-hidden" aria-labelledby="workshops-heading">
  
        <div className="container mx-auto px-4 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-6 lg:gap-10 items-center">
@@ -61,7 +61,7 @@ import seniorLearning from "@/assets/senior-learning.jpg";
            <div className="relative">
              {/* Main Visual Container */}
              <div className="relative">
-                <div className="absolute -inset-4 rounded-2xl bg-gradient-to-br from-coral-200/40 via-lavender-100/30 to-white opacity-90" aria-hidden="true" />
+                <div className="absolute -inset-4 rounded-2xl bg-white/40 backdrop-blur-xl border border-white/50 shadow-xl" aria-hidden="true" />
                
                 {/* Primary Photo - Workshop Training */}
                 <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl border-2 border-white bg-gradient-to-br from-navy-800 to-navy-900">
@@ -102,15 +102,14 @@ import seniorLearning from "@/assets/senior-learning.jpg";
                </div>
 
                 {/* Glassmorphism Stats Badge */}
-                <div className="absolute -bottom-3 -right-3 bg-white/70 backdrop-blur-xl rounded-xl shadow-lg p-3 border border-white/50">
+                <div className="absolute -bottom-3 -right-3 bg-white/80 dark:bg-card/80 backdrop-blur-2xl rounded-xl shadow-xl p-3 border border-white/60 dark:border-border/60">
                   <div className="flex items-center gap-2">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center shadow-sm"
-                      style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }} aria-hidden="true">
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center shadow-sm bg-gradient-to-br from-primary to-accent" aria-hidden="true">
                       <span className="text-white font-bold text-sm">99%</span>
                     </div>
                     <div>
-                      <div className="text-sm font-bold text-[#18305A]">Success Rate</div>
-                      <div className="text-xs text-foreground/50">Satisfaction</div>
+                      <div className="text-sm font-bold text-foreground">Success Rate</div>
+                      <div className="text-xs text-muted-foreground">Satisfaction</div>
                     </div>
                   </div>
                 </div>
@@ -119,9 +118,9 @@ import seniorLearning from "@/assets/senior-learning.jpg";
  
            {/* Right - Content */}
            <div className="space-y-5">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/60 backdrop-blur-xl border border-white/40 shadow-md">
-                <Sparkles className="w-4 h-4 text-coral-500" aria-hidden="true" />
-                <span className="text-sm font-semibold text-[#18305A] uppercase tracking-wide">Learn & Train</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 dark:bg-card/70 backdrop-blur-2xl border border-white/60 dark:border-border/60 shadow-lg">
+                <Sparkles className="w-4 h-4 text-primary" aria-hidden="true" />
+                <span className="text-sm font-semibold text-foreground uppercase tracking-wide">Learn & Train</span>
               </div>
              
              {/* Headline */}

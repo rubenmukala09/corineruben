@@ -67,14 +67,14 @@ export const HeroHomepage = () => {
             />
           </motion.div>
           
-          {/* Animated Gradient Overlay */}
+          {/* Animated Gradient Overlay - Reduced for clearer photo */}
           <motion.div 
             animate={{ 
-              opacity: [0.3, 0.5, 0.3],
+              opacity: [0.15, 0.25, 0.15],
               backgroundPosition: ['0% 0%', '100% 100%', '0% 0%']
             }}
             transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/25"
+            className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/15"
             style={{ backgroundSize: '200% 200%' }}
           />
           
@@ -135,12 +135,12 @@ export const HeroHomepage = () => {
             className="absolute bottom-[30%] left-[10%] w-32 h-32 rounded-full bg-gradient-to-br from-accent/30 to-primary/30 blur-3xl pointer-events-none"
           />
           
-          {/* Edge Blending Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/20 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent" />
+          {/* Edge Blending Overlays - Reduced opacity */}
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/10 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-transparent" />
           
-          {/* Vignette Effect */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,hsl(var(--background)/0.4)_100%)] pointer-events-none" />
+          {/* Vignette Effect - Lighter */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_50%,hsl(var(--background)/0.2)_100%)] pointer-events-none" />
         </div>
       </div>
 
