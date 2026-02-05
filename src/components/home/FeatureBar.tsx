@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Lightbulb, Award, Shield, GraduationCap } from "lucide-react";
+import { GlassmorphismImage } from "@/components/GlassmorphismImage";
 import communityTraining from "@/assets/community-training.jpg";
 import workshopInstructor from "@/assets/workshop-instructor.jpg";
 import { HexagonIcon, GeometricCorner, DottedPattern, FloatingShapes, GridPattern } from "@/components/ui/GeometricDecorations";
@@ -89,9 +90,12 @@ export const FeatureBar = () => {
             <DottedPattern direction="diagonal" length={5} className="absolute -top-8 left-1/2 -translate-x-1/2" />
             
             <div className="relative flex-1">
-              <div className="rounded-2xl overflow-hidden shadow-xl border-2 border-primary/10">
-                <img src={communityTraining} alt="Community Training" className="w-full h-48 object-cover" />
-              </div>
+              <GlassmorphismImage 
+                src={communityTraining} 
+                alt="Community Training" 
+                className="h-48 shadow-xl border-2 border-primary/10 rounded-2xl"
+                overlayColor="coral"
+              />
               {/* Hexagon accent */}
               <div className="absolute -bottom-4 -right-4">
                 <HexagonIcon size="sm" gradient>
@@ -100,9 +104,12 @@ export const FeatureBar = () => {
               </div>
             </div>
             <div className="relative flex-1 mt-8">
-              <div className="rounded-2xl overflow-hidden shadow-xl border-2 border-accent/10">
-                <img src={workshopInstructor} alt="Workshop Instructor" className="w-full h-48 object-cover rounded" />
-              </div>
+              <GlassmorphismImage 
+                src={workshopInstructor} 
+                alt="Workshop Instructor" 
+                className="h-48 shadow-xl border-2 border-accent/10 rounded-2xl"
+                overlayColor="lavender"
+              />
               {/* Corner triangle accent */}
               <div className="absolute -top-2 -left-2 w-0 h-0" style={{
               borderTop: "24px solid hsl(var(--primary))",

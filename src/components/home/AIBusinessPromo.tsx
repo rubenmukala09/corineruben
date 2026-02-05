@@ -1,7 +1,8 @@
- import { Link } from "react-router-dom";
- import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import { Phone, Calendar, Bot, Globe, ArrowRight, TrendingUp, Zap, CheckCircle, Award, Sparkles } from "lucide-react";
- import { motion } from "framer-motion";
+import { motion } from "framer-motion";
+import { GlassmorphismImage } from "@/components/GlassmorphismImage";
  import businessStrategyMeeting from "@/assets/business-strategy-meeting.jpg";
  import consultingTeamDiscussion from "@/assets/consulting-team-discussion.jpg";
  import expertTeamWorking from "@/assets/expert-team-working.jpg";
@@ -167,45 +168,34 @@ import { Phone, Calendar, Bot, Globe, ArrowRight, TrendingUp, Zap, CheckCircle, 
               
               <div className="relative grid grid-cols-2 gap-4">
                  {/* Main Image - Strategy Meeting */}
-                <div className="col-span-2 rounded-3xl overflow-hidden aspect-[16/9] shadow-2xl shadow-lavender-400/20 border-4 border-white">
-                  <img 
-                     src={businessStrategyMeeting}
-                     alt="Business strategy meeting with team"
-                    width={600}
-                    height={338}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover"
-                  />
-                  {/* Premium overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#18305A]/30 via-transparent to-transparent" />
-               </div>
+                <GlassmorphismImage 
+                  src={businessStrategyMeeting}
+                  alt="Business strategy meeting with team"
+                  className="col-span-2 aspect-[16/9] shadow-2xl shadow-lavender-400/20 border-4 border-white rounded-3xl"
+                  overlayColor="lavender"
+                  width={600}
+                  height={338}
+                />
                
                  {/* Consulting Team Discussion */}
-                 <div className="rounded-2xl overflow-hidden aspect-[4/3] shadow-xl border-3 border-white">
-                  <img 
-                     src={consultingTeamDiscussion}
-                     alt="Consulting team in discussion"
-                    width={200}
-                     height={150}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover"
-                  />
-               </div>
+                <GlassmorphismImage 
+                  src={consultingTeamDiscussion}
+                  alt="Consulting team in discussion"
+                  className="aspect-[4/3] shadow-xl border-3 border-white rounded-2xl"
+                  overlayColor="coral"
+                  width={200}
+                  height={150}
+                />
                 
                  {/* Expert Team Working */}
-                 <div className="rounded-2xl overflow-hidden aspect-[4/3] shadow-xl border-3 border-white">
-                   <img 
-                     src={expertTeamWorking}
-                     alt="Expert consulting team at work"
-                     width={200}
-                     height={150}
-                     loading="lazy"
-                     decoding="async"
-                     className="w-full h-full object-cover"
-                   />
-               </div>
+                <GlassmorphismImage 
+                  src={expertTeamWorking}
+                  alt="Expert consulting team at work"
+                  className="aspect-[4/3] shadow-xl border-3 border-white rounded-2xl"
+                  overlayColor="mixed"
+                  width={200}
+                  height={150}
+                />
              </div>
  
              {/* Floating ROI Card */}

@@ -675,3 +675,124 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   border-color: hsl(var(--lavender-300) / 0.5);
   color: hsl(var(--lavender-600));
 }
+
+/* ===== THEME LAYER COLOR UTILITIES ===== */
+/* Section backgrounds with premium theme color overlays */
+
+.theme-layer-coral {
+  position: relative;
+}
+.theme-layer-coral::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, 
+    hsl(var(--coral-100) / 0.4) 0%, 
+    transparent 40%,
+    hsl(var(--coral-200) / 0.2) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.theme-layer-lavender {
+  position: relative;
+}
+.theme-layer-lavender::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, 
+    hsl(var(--lavender-100) / 0.4) 0%, 
+    transparent 40%,
+    hsl(var(--lavender-200) / 0.2) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.theme-layer-navy {
+  position: relative;
+}
+.theme-layer-navy::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, 
+    hsl(var(--navy-100) / 0.3) 0%, 
+    transparent 40%,
+    hsl(var(--navy-200) / 0.15) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.theme-layer-mixed {
+  position: relative;
+}
+.theme-layer-mixed::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at 20% 30%, hsl(var(--coral-200) / 0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, hsl(var(--lavender-200) / 0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, hsl(var(--navy-100) / 0.15) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Glassmorphism image overlay utilities */
+.glass-cursor-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-cursor-overlay::after {
+  content: '';
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+}
+
+.glass-cursor-overlay:hover::after {
+  opacity: 1;
+}
+
+/* Image hover glow effects */
+.image-glow-coral {
+  transition: box-shadow 0.3s ease;
+}
+.image-glow-coral:hover {
+  box-shadow: 0 0 30px hsl(var(--coral-400) / 0.3), 0 10px 40px hsl(var(--coral-400) / 0.2);
+}
+
+.image-glow-lavender {
+  transition: box-shadow 0.3s ease;
+}
+.image-glow-lavender:hover {
+  box-shadow: 0 0 30px hsl(var(--lavender-400) / 0.3), 0 10px 40px hsl(var(--lavender-400) / 0.2);
+}
+
+.image-glow-navy {
+  transition: box-shadow 0.3s ease;
+}
+.image-glow-navy:hover {
+  box-shadow: 0 0 30px hsl(var(--navy-300) / 0.3), 0 10px 40px hsl(var(--navy-300) / 0.2);
+}
+
+.image-glow-mixed {
+  transition: box-shadow 0.3s ease;
+}
+.image-glow-mixed:hover {
+  box-shadow: 
+    0 0 20px hsl(var(--coral-400) / 0.2), 
+    0 0 40px hsl(var(--lavender-400) / 0.15),
+    0 10px 40px rgba(0,0,0,0.1);
+}
