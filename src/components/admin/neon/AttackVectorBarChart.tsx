@@ -11,17 +11,47 @@ import {
   Cell,
 } from "recharts";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
-// Attack vector data with gradient colors
-const attackData = [
-  { name: "Phishing", value: 456 },
-  { name: "Deepfake Voice", value: 312 },
-  { name: "Smishing", value: 234 },
-  { name: "Malware", value: 189 },
-  { name: "Ransomware", value: 98 },
+// Empty state - will be populated from threat_events when available
+const emptyAttackData = [
+  { name: "Phishing", value: 0 },
+  { name: "Deepfake Voice", value: 0 },
+  { name: "Smishing", value: 0 },
+  { name: "Malware", value: 0 },
+  { name: "Ransomware", value: 0 },
 ];
 
 export function AttackVectorBarChart() {
+  const [attackData, setAttackData] = useState(emptyAttackData);
+  const [hasData, setHasData] = useState(false);
+  const [totalAttacks, setTotalAttacks] = useState(0);
+
+  useEffect(() => {
+    loadAttackData();
+  }, []);
+
+  const loadAttackData = async () => {
+    try {
+      const { count } = await supabase
+        .from("threat_events")
+        .select("*", { count: "exact", head: true });
+      
+      if (count && count > 0) {
+        setHasData(true);
+        setTotalAttacks(count);
+        // TODO: Group by threat_type when real data exists
+      } else {
+        setHasData(false);
+        setAttackData(emptyAttackData);
+        setTotalAttacks(0);
+      }
+    } catch (err) {
+      setHasData(false);
+    }
+  };
+
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
@@ -57,7 +87,15 @@ export function AttackVectorBarChart() {
         </div>
 
         {/* Vertical Bar Chart */}
-        <div className="h-64">
+        <div className="h-64 relative">
+          {!hasData && (
+            <div className="absolute inset-0 flex items-center justify-center z-10 bg-[#111827]/80 rounded-lg">
+              <div className="text-center p-4">
+                <p className="text-[#9CA3AF] text-sm">No attack data yet</p>
+                <p className="text-xs text-gray-500 mt-1">Threat data will populate automatically</p>
+              </div>
+            </div>
+          )}
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={attackData}
@@ -112,7 +150,7 @@ export function AttackVectorBarChart() {
         <div className="mt-4 pt-4 border-t border-gray-800 flex justify-between items-center">
           <span className="text-sm text-[#9CA3AF]">Total Attacks</span>
           <span className="text-xl font-bold bg-gradient-to-r from-[#F97316] to-[#EC4899] bg-clip-text text-transparent">
-            1,289
+            {hasData ? totalAttacks.toLocaleString() : "—"}
           </span>
         </div>
       </Card>

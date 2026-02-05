@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
@@ -12,22 +12,50 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { motion } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
 
-// Mock weekly data - Scams Blocked (Blue/High) vs New Threats (Orange/Lower)
-const weeklyData = [
-  { day: "Mon", scamsBlocked: 245, threatsDetected: 85 },
-  { day: "Tue", scamsBlocked: 268, threatsDetected: 92 },
-  { day: "Wed", scamsBlocked: 320, threatsDetected: 110 },
-  { day: "Thu", scamsBlocked: 295, threatsDetected: 88 },
-  { day: "Fri", scamsBlocked: 380, threatsDetected: 125 },
-  { day: "Sat", scamsBlocked: 310, threatsDetected: 95 },
-  { day: "Sun", scamsBlocked: 265, threatsDetected: 78 },
+// Empty state data - replace with real threat_events data when available
+const emptyWeeklyData = [
+  { day: "Mon", scamsBlocked: 0, threatsDetected: 0 },
+  { day: "Tue", scamsBlocked: 0, threatsDetected: 0 },
+  { day: "Wed", scamsBlocked: 0, threatsDetected: 0 },
+  { day: "Thu", scamsBlocked: 0, threatsDetected: 0 },
+  { day: "Fri", scamsBlocked: 0, threatsDetected: 0 },
+  { day: "Sat", scamsBlocked: 0, threatsDetected: 0 },
+  { day: "Sun", scamsBlocked: 0, threatsDetected: 0 },
 ];
 
 type TimeFrame = "7d" | "30d" | "90d";
 
 export function GlobalThreatActivityChart() {
   const [timeFrame, setTimeFrame] = useState<TimeFrame>("7d");
+  const [weeklyData, setWeeklyData] = useState(emptyWeeklyData);
+  const [hasData, setHasData] = useState(false);
+
+  useEffect(() => {
+    loadThreatData();
+  }, [timeFrame]);
+
+  const loadThreatData = async () => {
+    try {
+      // Check if threat_events table has data
+      const { count } = await supabase
+        .from("threat_events")
+        .select("*", { count: "exact", head: true });
+      
+      if (count && count > 0) {
+        // Load real data when available
+        setHasData(true);
+        // TODO: Aggregate threat_events by day when real data exists
+      } else {
+        setHasData(false);
+        setWeeklyData(emptyWeeklyData);
+      }
+    } catch (err) {
+      // Table may not exist, show empty state
+      setHasData(false);
+    }
+  };
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
@@ -101,7 +129,15 @@ export function GlobalThreatActivityChart() {
         </div>
 
         {/* Chart - The "Wave" Chart */}
-        <div className="h-80">
+        <div className="h-80 relative">
+          {!hasData && (
+            <div className="absolute inset-0 flex items-center justify-center z-10 bg-[#111827]/80 rounded-lg">
+              <div className="text-center p-6">
+                <p className="text-[#9CA3AF] text-sm mb-2">No threat data available yet</p>
+                <p className="text-xs text-gray-500">Data will appear here once threat monitoring is active</p>
+              </div>
+            </div>
+          )}
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={weeklyData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
               <defs>

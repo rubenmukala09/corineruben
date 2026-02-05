@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { LucideIcon, ShieldAlert, Ban, Users, Database } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import {
   BarChart,
   Bar,
@@ -123,11 +125,52 @@ function LiveMonitorCard({
 }
 
 export function CyberGuardianStats() {
+  const [stats, setStats] = useState({
+    activeSubscribers: 0,
+    threatsBlocked: 0,
+    newUsers: 0,
+    lastSync: "N/A"
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadStats();
+  }, []);
+
+  const loadStats = async () => {
+    try {
+      // Get active subscriptions count
+      const { count: subCount } = await supabase
+        .from("subscriptions")
+        .select("*", { count: "exact", head: true })
+        .eq("status", "active");
+
+      // Get new users in last 30 days
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      const { count: newUserCount } = await supabase
+        .from("profiles")
+        .select("*", { count: "exact", head: true })
+        .gte("created_at", thirtyDaysAgo.toISOString());
+
+      setStats({
+        activeSubscribers: subCount || 0,
+        threatsBlocked: 0, // No real threat data yet
+        newUsers: newUserCount || 0,
+        lastSync: "Just now"
+      });
+    } catch (err) {
+      console.error("Error loading stats:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const cards: LiveMonitorCardProps[] = [
     {
       icon: ShieldAlert,
       title: "Active Scanners",
-      value: "12,450",
+      value: loading ? "..." : stats.activeSubscribers > 0 ? stats.activeSubscribers.toLocaleString() : "—",
       chartType: "bar",
       chartData: [30, 50, 40, 70, 55, 80, 65, 90],
       accentColor: "blue",
@@ -136,7 +179,7 @@ export function CyberGuardianStats() {
     {
       icon: Ban,
       title: "Threats Stopped",
-      value: "98.2%",
+      value: loading ? "..." : stats.threatsBlocked > 0 ? `${stats.threatsBlocked}%` : "—",
       chartType: "line",
       chartData: [40, 55, 45, 60, 50, 75, 85, 95],
       accentColor: "red",
@@ -145,7 +188,7 @@ export function CyberGuardianStats() {
     {
       icon: Users,
       title: "New Family Members",
-      value: "1.2k",
+      value: loading ? "..." : stats.newUsers > 0 ? stats.newUsers.toLocaleString() : "—",
       chartType: "bar",
       chartData: [20, 35, 45, 30, 55, 40, 65, 50],
       accentColor: "green",
@@ -154,7 +197,7 @@ export function CyberGuardianStats() {
     {
       icon: Database,
       title: "Database Updates",
-      value: "32ms Ago",
+      value: loading ? "..." : stats.lastSync,
       chartType: "line",
       chartData: [60, 45, 55, 40, 50, 45, 55, 50],
       accentColor: "orange",
