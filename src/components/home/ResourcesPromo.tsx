@@ -1,7 +1,8 @@
- import { Link } from "react-router-dom";
- import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import { FileText, Shield, BookOpen, ArrowRight, Download, Sparkles } from "lucide-react";
- import { motion } from "framer-motion";
+import { motion } from "framer-motion";
+import { GlassmorphismImage } from "@/components/GlassmorphismImage";
  import cyberProtectionTools from "@/assets/cybersecurity-protection-tools.jpg";
 
  const resources = [
@@ -134,39 +135,34 @@ export const ResourcesPromo = () => {
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="relative rounded-[40px] overflow-hidden shadow-2xl shadow-coral-400/20 border-4 border-white">
-              <img 
-                src={cyberProtectionTools}
-                alt="Cybersecurity protection tools and resources"
-                width={600}
-                height={450}
-                loading="lazy"
-                decoding="async"
-                className="w-full h-full object-cover aspect-[4/3]"
-              />
-              {/* Premium Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#18305A]/40 via-transparent to-transparent" />
-              
-              {/* Floating Badge */}
-              <motion.div 
-                className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-xl rounded-2xl p-5 border border-coral-200/50 shadow-xl"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                viewport={{ once: true }}
-              >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-sm font-medium text-foreground/60 mb-1">Resources Available</div>
-                    <div className="text-3xl font-black text-[#18305A]" style={{ fontFamily: "'Clash Display', sans-serif" }}>50+</div>
-                  </div>
-                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg"
-                    style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }}>
-                    <Shield className="w-7 h-7 text-white" />
-                  </div>
+            <GlassmorphismImage 
+              src={cyberProtectionTools}
+              alt="Cybersecurity protection tools and resources"
+              className="aspect-[4/3] shadow-2xl shadow-coral-400/20 border-4 border-white rounded-[40px]"
+              overlayColor="coral"
+              width={600}
+              height={450}
+            />
+            
+            {/* Floating Badge */}
+            <motion.div 
+              className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-xl rounded-2xl p-5 border border-coral-200/50 shadow-xl z-20"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              viewport={{ once: true }}
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-sm font-medium text-foreground/60 mb-1">Resources Available</div>
+                  <div className="text-3xl font-black text-[#18305A]" style={{ fontFamily: "'Clash Display', sans-serif" }}>50+</div>
                 </div>
-              </motion.div>
-            </div>
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg"
+                  style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }}>
+                  <Shield className="w-7 h-7 text-white" />
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
           
           {/* Right - Resources Grid */}

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { GlassmorphismImage } from "@/components/GlassmorphismImage";
 import heroServices1 from "@/assets/hero-services-1.jpg";
 import heroServices2 from "@/assets/hero-services-2.jpg";
 import heroServices3 from "@/assets/hero-services-3.jpg";
@@ -14,6 +15,7 @@ const portfolioImages = [
   { src: communityTraining, alt: "Community Workshops", category: "Workshops" },
   { src: securityExpert, alt: "Expert Consultation", category: "Consultation" },
 ];
+const overlayColors: Array<'coral' | 'lavender' | 'navy' | 'mixed'> = ['coral', 'lavender', 'navy', 'mixed', 'coral', 'lavender'];
 
 import { LightOrbs, Sparkles, IllustrationLines } from "@/components/ui/GeometricDecorations";
 
@@ -74,15 +76,12 @@ export const SecuritySolutions = () => {
                   <div className="absolute -inset-3 rounded-2xl border-2 border-primary/20 group-hover:border-primary/40 transition-colors duration-300" />
                   
                   {/* Main image - Soft Modern */}
-                  <div className="w-36 h-36 md:w-44 md:h-44 rounded-2xl overflow-hidden border border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] transition-all duration-400 ease-out group-hover:translate-y-[-8px] group-hover:scale-[1.02] group-hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]">
-                    <img
-                      src={image.src}
-                      alt={image.alt}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
+                  <GlassmorphismImage 
+                    src={image.src}
+                    alt={image.alt}
+                    className="w-36 h-36 md:w-44 md:h-44 border border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] rounded-2xl"
+                    overlayColor={overlayColors[index % overlayColors.length]}
+                  />
                   
                   {/* Small decorative illustration */}
                   <svg className="absolute -bottom-1 -left-1 w-6 h-6 opacity-40 group-hover:opacity-70 transition-opacity" viewBox="0 0 24 24">

@@ -482,13 +482,11 @@ export const getOneTimeProducts = (): Product[] => {
 // Veteran Discount Configuration
 export const VETERAN_DISCOUNT = {
   percentage: 10,
-  trainingPercentage: 17,
+  trainingPercentage: 10,
   eligibleCategories: ['scamshield', 'ai-service', 'insurance', 'training', 'digital-book', 'physical-product'] as ProductCategory[]
 };
 
 export const calculateVeteranDiscount = (price: number, category: ProductCategory): number => {
-  const discountRate = category === 'training' 
-    ? VETERAN_DISCOUNT.trainingPercentage 
-    : VETERAN_DISCOUNT.percentage;
+  const discountRate = VETERAN_DISCOUNT.percentage;
   return price * (discountRate / 100);
 };
