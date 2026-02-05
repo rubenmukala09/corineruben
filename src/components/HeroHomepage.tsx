@@ -6,17 +6,15 @@ import heroSeniorsProtected from "@/assets/hero-seniors-protected.jpg";
 export const HeroHomepage = () => {
   return (
     <section className="relative min-h-[100vh] lg:min-h-[110vh] overflow-hidden bg-background">
-      {/* Premium Glassmorphism Background */}
+      {/* Premium Background - NO Glassmorphism on photo */}
       <div className="absolute inset-0 grid lg:grid-cols-[45%_55%]">
-        {/* Left - Glassmorphism Premium */}
+        {/* Left - Premium Gradient Background */}
         <div className="bg-gradient-to-br from-background via-muted/30 to-accent/10 relative overflow-hidden">
-          {/* Glassmorphism Overlay */}
-          <div className="absolute inset-0 bg-background/40 backdrop-blur-3xl" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_120%_at_0%_0%,hsl(var(--primary)/0.15),transparent)]" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_100%_at_100%_100%,hsl(var(--accent)/0.12),transparent)]" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,hsl(var(--primary)/0.06),transparent)]" />
           
-          {/* Animated Glass Orbs */}
+          {/* Animated Gradient Orbs - NO blur/glass on left */}
           <motion.div 
             animate={{ 
               y: [-30, 30, -30], 
@@ -24,7 +22,7 @@ export const HeroHomepage = () => {
               scale: [1, 1.15, 1]
             }}
             transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[5%] left-[-5%] w-80 h-80 rounded-full bg-gradient-to-br from-primary/15 to-accent/15 blur-3xl pointer-events-none"
+            className="absolute top-[5%] left-[-5%] w-80 h-80 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 blur-3xl pointer-events-none"
           />
           <motion.div 
             animate={{ 
@@ -33,7 +31,7 @@ export const HeroHomepage = () => {
               opacity: [0.5, 0.9, 0.5]
             }}
             transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-[10%] right-[-10%] w-72 h-72 rounded-full bg-gradient-to-br from-primary/12 to-accent/12 blur-3xl pointer-events-none"
+            className="absolute bottom-[10%] right-[-10%] w-72 h-72 rounded-full bg-gradient-to-br from-primary/15 to-accent/15 blur-3xl pointer-events-none"
           />
           <motion.div 
             animate={{ 
@@ -42,11 +40,11 @@ export const HeroHomepage = () => {
               rotate: [0, 8, 0]
             }}
             transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[50%] left-[20%] w-52 h-52 rounded-full bg-gradient-to-br from-green-500/10 to-primary/10 blur-3xl pointer-events-none"
+            className="absolute top-[50%] left-[20%] w-52 h-52 rounded-full bg-gradient-to-br from-green-500/15 to-primary/15 blur-3xl pointer-events-none"
           />
         </div>
         
-        {/* Right - Hero Image with Glassmorphism Overlay */}
+        {/* Right - CLEAN Hero Image - NO Glassmorphism Effects */}
         <div className="relative hidden lg:block overflow-hidden">
           <img 
             src={heroSeniorsProtected} 
@@ -57,30 +55,18 @@ export const HeroHomepage = () => {
             decoding="async"
             className="w-full h-full object-cover"
           />
-          {/* Premium Glassmorphism overlays */}
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/30 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
-          <motion.div 
-            animate={{ opacity: [0.2, 0.5, 0.2] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-accent/10 pointer-events-none backdrop-blur-[1px]"
-          />
-          {/* Decorative glass frame */}
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 1.2 }}
-            className="absolute inset-4 border border-white/20 rounded-2xl pointer-events-none backdrop-blur-sm" 
-          />
+          {/* Minimal blending overlays - NO blur/glass */}
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent" />
           
-          {/* Premium Glassmorphism Floating Widgets */}
-          {/* Widget 1 - Protected Families - Top Right */}
+          {/* Clean Floating Widgets - NO Glassmorphism on photo area */}
+          {/* Widget 1 - Protected Families */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8, y: -30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ delay: 1.0, duration: 0.8 }}
             whileHover={{ scale: 1.1, y: -5 }}
-            className="absolute top-8 right-8 bg-white/70 dark:bg-card/70 backdrop-blur-2xl rounded-2xl p-4 shadow-[0_12px_40px_rgba(0,0,0,0.15)] border border-white/40 dark:border-border/40"
+            className="absolute top-8 right-8 bg-white rounded-2xl p-4 shadow-2xl border border-border/20"
           >
             <motion.div 
               animate={{ rotate: [0, 3, -3, 0] }}
@@ -101,13 +87,13 @@ export const HeroHomepage = () => {
             </motion.div>
           </motion.div>
           
-          {/* Widget 2 - Success Rate - Top Left */}
+          {/* Widget 2 - Success Rate */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 1.4, duration: 0.7 }}
             whileHover={{ scale: 1.1, rotate: 3 }}
-            className="absolute top-10 left-8 bg-gradient-to-br from-primary/90 to-accent/90 backdrop-blur-xl rounded-xl p-4 shadow-[0_12px_40px_rgba(124,58,237,0.4)]"
+            className="absolute top-10 left-8 bg-gradient-to-br from-primary to-accent rounded-xl p-4 shadow-2xl"
           >
             <motion.div 
               animate={{ y: [0, -3, 0] }}
@@ -120,13 +106,13 @@ export const HeroHomepage = () => {
             </motion.div>
           </motion.div>
           
-          {/* Widget 3 - 24/7 Support - Middle Right */}
+          {/* Widget 3 - 24/7 Support */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 1.7, duration: 0.7 }}
             whileHover={{ scale: 1.1, x: -5 }}
-            className="absolute top-[42%] right-6 bg-white/75 dark:bg-card/75 backdrop-blur-2xl rounded-xl p-3 shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-white/50 dark:border-border/50"
+            className="absolute top-[42%] right-6 bg-white rounded-xl p-3 shadow-2xl border border-border/20"
           >
             <motion.div 
               animate={{ scale: [1, 1.08, 1] }}
@@ -143,13 +129,13 @@ export const HeroHomepage = () => {
             </motion.div>
           </motion.div>
           
-          {/* Widget 4 - Verified Badge - Bottom Left */}
+          {/* Widget 4 - Verified Badge */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.0, duration: 0.6 }}
             whileHover={{ rotate: 15, scale: 1.2 }}
-            className="absolute bottom-[32%] left-6 bg-gradient-to-br from-primary to-accent rounded-full p-3 shadow-[0_10px_30px_rgba(248,146,106,0.5)]"
+            className="absolute bottom-[32%] left-6 bg-gradient-to-br from-primary to-accent rounded-full p-3 shadow-2xl"
           >
             <motion.div
               animate={{ rotate: [0, 360] }}
@@ -159,13 +145,13 @@ export const HeroHomepage = () => {
             </motion.div>
           </motion.div>
           
-          {/* Widget 5 - Experience - Bottom Right */}
+          {/* Widget 5 - Experience */}
           <motion.div
             initial={{ opacity: 0, y: -25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.2, duration: 0.6 }}
             whileHover={{ scale: 1.1 }}
-            className="absolute bottom-[20%] right-10 bg-white/80 dark:bg-card/80 backdrop-blur-2xl rounded-xl p-3 shadow-[0_10px_30px_rgba(0,0,0,0.12)] border border-white/50 dark:border-border/50"
+            className="absolute bottom-[20%] right-10 bg-white rounded-xl p-3 shadow-2xl border border-border/20"
           >
             <motion.div 
               animate={{ opacity: [0.7, 1, 0.7] }}
@@ -180,13 +166,13 @@ export const HeroHomepage = () => {
             </motion.div>
           </motion.div>
           
-          {/* Widget 6 - Ohio Love - Middle Left */}
+          {/* Widget 6 - Ohio Love */}
           <motion.div
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.4, duration: 0.6 }}
             whileHover={{ scale: 1.15 }}
-            className="absolute top-[58%] left-5 bg-gradient-to-br from-pink-500/95 to-rose-500/95 backdrop-blur-xl rounded-xl p-2.5 shadow-[0_8px_25px_rgba(236,72,153,0.4)]"
+            className="absolute top-[58%] left-5 bg-gradient-to-br from-pink-500 to-rose-500 rounded-xl p-2.5 shadow-2xl"
           >
             <motion.div 
               animate={{ scale: [1, 1.25, 1] }}
@@ -198,13 +184,13 @@ export const HeroHomepage = () => {
             </motion.div>
           </motion.div>
           
-          {/* Widget 7 - Secure Badge - Center Area */}
+          {/* Widget 7 - Secure Badge */}
           <motion.div
             initial={{ opacity: 0, x: 35 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 2.6, duration: 0.6 }}
             whileHover={{ scale: 1.15, y: -3 }}
-            className="absolute top-[28%] left-[38%] bg-gradient-to-br from-cyan-500 to-teal-500 rounded-full p-2.5 shadow-[0_8px_25px_rgba(14,165,233,0.45)]"
+            className="absolute top-[28%] left-[38%] bg-gradient-to-br from-cyan-500 to-teal-500 rounded-full p-2.5 shadow-2xl"
           >
             <motion.div
               animate={{ rotate: [0, -360] }}
@@ -214,13 +200,13 @@ export const HeroHomepage = () => {
             </motion.div>
           </motion.div>
           
-          {/* Widget 8 - Globe - Bottom Center */}
+          {/* Widget 8 - Globe */}
           <motion.div
             initial={{ opacity: 0, scale: 0.7 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 2.8, duration: 0.6 }}
             whileHover={{ scale: 1.15, rotate: -8 }}
-            className="absolute bottom-[28%] left-[32%] bg-white/85 dark:bg-card/85 backdrop-blur-2xl rounded-xl p-2.5 shadow-lg border border-white/50 dark:border-border/50"
+            className="absolute bottom-[28%] left-[32%] bg-white rounded-xl p-2.5 shadow-2xl border border-border/20"
           >
             <motion.div
               animate={{ rotate: [0, 360] }}
