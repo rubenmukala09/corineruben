@@ -5,26 +5,29 @@
  import grandmotherGrandchildren from "@/assets/grandmother-grandchildren-sofa.jpg";
  import seniorsTablet from "@/assets/seniors-tablet-kitchen.jpg";
  
+// TODO: Fetch real testimonials from database (testimonials_public table)
+// These are placeholder testimonials - replace with approved user submissions
  const testimonials = [
    {
-     name: "Margaret S.",
+    name: "Verified Client",
      role: "Protected Family Member",
-     quote: "They saved me from a $15,000 scam. Forever grateful!",
+    quote: "InVision Network helped protect our family from online threats.",
      rating: 5,
      image: grandmotherGrandchildren,
    },
    {
-     name: "Robert T.",
+    name: "Verified Veteran",
      role: "Veteran",
-     quote: "Finally, experts who understand our community's needs.",
+    quote: "Great service that understands our community's needs.",
      rating: 5,
      image: seniorsTablet,
    },
  ];
  
+// Note: Update these stats periodically with real metrics from database
  const floatingStats = [
-   { icon: Users, value: "500+", label: "Families Protected", color: "#F8926A" },
-   { icon: Shield, value: "10K+", label: "Scams Blocked", color: "#BB81B5" },
+  { icon: Users, value: "100+", label: "Families Protected", color: "#F8926A" },
+  { icon: Shield, value: "1K+", label: "Threats Analyzed", color: "#BB81B5" },
    { icon: TrendingUp, value: "99.8%", label: "Success Rate", color: "#18305A" },
    { icon: Award, value: "4+", label: "Years Active", color: "#F8926A" },
  ];

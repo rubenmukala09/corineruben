@@ -1,9 +1,11 @@
 import { Shield, Star, Award, Lock } from "lucide-react";
 import { motion } from "framer-motion";
 
+// Note: These stats should be updated periodically with real metrics
+// Consider fetching from database for dynamic updates
 const HeroFloatingStats = () => {
   const stats = [
-    { icon: Shield, text: "500+ Families Protected" },
+    { icon: Shield, text: "100+ Families Protected" },
     { icon: Star, text: "4.9/5 Star Rating" },
     { icon: Award, text: "Cybersecurity Expert-Founded" },
     { icon: Lock, text: "Privacy-First" },

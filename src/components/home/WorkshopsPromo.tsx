@@ -163,7 +163,7 @@ import seniorLearning from "@/assets/senior-learning.jpg";
              {/* Stats Row */}
              <div className="flex items-center gap-8 py-4">
                <div className="text-center">
-                 <div className="text-4xl font-black text-[#18305A]" style={{ fontFamily: "'Clash Display', sans-serif" }}>500+</div>
+                  <div className="text-4xl font-black text-[#18305A]" style={{ fontFamily: "'Clash Display', sans-serif" }}>100+</div>
                  <div className="text-sm text-foreground/50">Families Protected</div>
                </div>
                <div className="h-12 w-px bg-gray-200" />

@@ -11,10 +11,12 @@
    { icon: Users, title: "Helping you solve problems" },
  ];
  
+// TODO: Replace with real team data from database
+// These are placeholder entries - update with actual team photos and info
  const teamMembers = [
-   { name: "Brandon Joe", role: "Founder & CEO", image: teamExpertsLobby },
-   { name: "Laura Wilson", role: "Security Lead", image: businessTeamMeeting },
-   { name: "Jackson Mills", role: "Training Director", image: teamExpertsLobby },
+  { name: "Ruben", role: "Co-Founder & CEO", image: teamExpertsLobby },
+  { name: "Corine", role: "Co-Founder & COO", image: businessTeamMeeting },
+  { name: "Team Member", role: "Security Specialist", image: teamExpertsLobby },
  ];
  
  export const CommunityImpact = () => {

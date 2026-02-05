@@ -1,10 +1,11 @@
 import { Users, ShieldCheck, Handshake, Award } from "lucide-react";
 
+// Note: Update these stats periodically with real metrics from database
 const stats = [
-  { icon: Users, label: "Families Protected", value: "500+" },
-  { icon: ShieldCheck, label: "Scams Blocked", value: "10K+" },
-  { icon: Handshake, label: "Local Partners", value: "25+" },
-  { icon: Award, label: "Expert Team", value: "15+" },
+  { icon: Users, label: "Families Protected", value: "100+" },
+  { icon: ShieldCheck, label: "Threats Analyzed", value: "1K+" },
+  { icon: Handshake, label: "Local Partners", value: "10+" },
+  { icon: Award, label: "Expert Team", value: "5+" },
 ];
 
 export const ImpactStatsRow = () => {

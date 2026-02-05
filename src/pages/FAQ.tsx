@@ -213,7 +213,7 @@ const faqs: FAQ[] = [
     id: "aa-1",
     category: "Account & Access",
     question: "How do I access my portal?",
-    answer: "Business clients: Log in at invisionnetwork.org/login with your email and password. Individual clients: Use your unique access link (sent via email).",
+    answer: "Business clients: Log in at invisionnetwork.org/auth with your email and password. Individual clients: Use your unique access link (sent via email).",
   },
   {
     id: "aa-2",
