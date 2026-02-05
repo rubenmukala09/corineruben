@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { Shield, Star, Zap, Award, CheckCircle, TrendingUp, Heart, Clock, Lock, Users } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface PricingBadgeProps {
   type: 'popular' | 'recommended' | 'best-value' | 'limited' | 'trusted' | 'secure' | 'fast' | 'guaranteed' | 'premium' | 'new' | 'hot' | 'save' | 'veteran';
@@ -99,18 +100,15 @@ export function PricingBadge({ type, className = "", size = 'md' }: PricingBadge
   };
   
   return (
-    <div 
-      className={`
-        inline-flex items-center gap-1.5 
-        bg-gradient-to-r ${config.gradient} 
-        text-white font-bold tracking-wider rounded-full 
-        shadow-lg
-        ${sizeClasses[size]}
-        ${className}
-      `}
-    >
+    <div className={cn(
+      "inline-flex items-center gap-1.5",
+      "bg-white/60 backdrop-blur-xl border border-white/40",
+      "font-bold tracking-wider rounded-full shadow-lg",
+      sizeClasses[size],
+      className
+    )}>
       <span className="text-sm">{config.emoji}</span>
-      <span>{config.label}</span>
+      <span className={`bg-gradient-to-r ${config.gradient} bg-clip-text text-transparent`}>{config.label}</span>
     </div>
   );
 }
@@ -126,7 +124,7 @@ export function TrustBadgeInline({ icon: Icon, label }: { icon: any; label: stri
 
 export function GuaranteeBadge() {
   return (
-    <div className="flex items-center justify-center gap-2 p-3 bg-gradient-to-r from-success/10 to-emerald-500/10 border border-success/30 rounded-xl">
+    <div className="flex items-center justify-center gap-2 p-3 bg-white/60 backdrop-blur-xl border border-white/40 rounded-xl shadow-md">
       <Shield className="w-5 h-5 text-success" />
       <span className="text-sm font-semibold text-success">30-Day Money-Back Guarantee</span>
       <CheckCircle className="w-4 h-4 text-success" />
@@ -137,15 +135,15 @@ export function GuaranteeBadge() {
 export function SecurityBadges() {
   return (
     <div className="flex flex-wrap items-center justify-center gap-3 mt-4">
-      <div className="flex items-center gap-1.5 px-3 py-1.5 bg-primary/5 border border-primary/20 rounded-full text-xs">
+      <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white/60 backdrop-blur-xl border border-white/40 rounded-full text-xs shadow-sm">
         <Lock className="w-3.5 h-3.5 text-primary" />
         <span className="text-primary font-medium">256-bit SSL</span>
       </div>
-      <div className="flex items-center gap-1.5 px-3 py-1.5 bg-success/5 border border-success/20 rounded-full text-xs">
+      <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white/60 backdrop-blur-xl border border-white/40 rounded-full text-xs shadow-sm">
         <Shield className="w-3.5 h-3.5 text-success" />
         <span className="text-success font-medium">HIPAA Compliant</span>
       </div>
-      <div className="flex items-center gap-1.5 px-3 py-1.5 bg-accent/5 border border-accent/20 rounded-full text-xs">
+      <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white/60 backdrop-blur-xl border border-white/40 rounded-full text-xs shadow-sm">
         <Users className="w-3.5 h-3.5 text-accent" />
         <span className="text-accent font-medium">100+ Protected</span>
       </div>
