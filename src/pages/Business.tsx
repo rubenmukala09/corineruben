@@ -41,10 +41,6 @@ import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
 import HeroFloatingStats from "@/components/business/HeroFloatingStats";
-import { DecorativeNatureAccent } from "@/components/business/DecorativeNatureAccent";
-import { PremiumSectionDivider } from "@/components/business/PremiumSectionDivider";
-import { PremiumStatsWidget } from "@/components/business/PremiumStatsWidget";
-import { NaturePhotoWidget } from "@/components/business/NaturePhotoWidget";
 
 function Business() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -259,36 +255,9 @@ function Business() {
 
       <TrustBar />
 
-      {/* Premium Stats Widget */}
-      <section className="py-12 bg-background relative overflow-hidden">
-        {/* Decorative gradient accents */}
-        <div 
-          className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-15 pointer-events-none"
-          style={{ 
-            background: 'radial-gradient(circle, hsl(var(--coral-400)) 0%, transparent 70%)',
-            filter: 'blur(60px)',
-            transform: 'translate(30%, -30%)'
-          }}
-        />
-        <div 
-          className="absolute bottom-0 left-0 w-80 h-80 rounded-full opacity-10 pointer-events-none"
-          style={{ 
-            background: 'radial-gradient(circle, hsl(var(--lavender-400)) 0%, transparent 70%)',
-            filter: 'blur(60px)',
-            transform: 'translate(-30%, 30%)'
-          }}
-        />
-        <div className="container mx-auto px-4 relative z-10">
-          <PremiumStatsWidget />
-        </div>
-      </section>
-
-      <PremiumSectionDivider />
-
       {/* What We Build - Expandable Cards with Full Content */}
       <section className="py-14 bg-background relative">
-        <FlowingWaves variant="full" opacity={0.12} theme="light" />
-        <DecorativeNatureAccent variant="right" />
+        <FlowingWaves variant="full" opacity={0.12} />
         
         
         <div className="container mx-auto px-4 relative z-10">
@@ -581,19 +550,7 @@ function Business() {
       </section>
 
       {/* Web Design Services */}
-      <section id="website-design" className="py-20 bg-background relative overflow-hidden">
-        {/* Decorative nature accent */}
-        <DecorativeNatureAccent variant="left" />
-        
-        {/* Soft gradient overlay */}
-        <div 
-          className="absolute top-1/4 right-0 w-72 h-72 rounded-full opacity-12 pointer-events-none"
-          style={{ 
-            background: 'radial-gradient(circle, hsl(var(--lavender-300)) 0%, transparent 70%)',
-            filter: 'blur(50px)',
-          }}
-        />
-        
+      <section id="website-design" className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <div className="inline-block px-6 py-2 bg-primary/10 rounded-full text-sm font-bold text-primary mb-4 uppercase tracking-wider">
@@ -901,8 +858,8 @@ function Business() {
       </section>
 
       {/* Website Insurance Section */}
-      <section id="website-insurance" className="py-20 relative overflow-hidden" style={{ background: 'linear-gradient(180deg, hsl(var(--muted)) 0%, hsl(var(--background)) 100%)' }}>
-        <FlowingWaves variant="full" opacity={0.08} theme="light" />
+      <section id="website-insurance" className="py-20 bg-muted relative overflow-hidden">
+        <FlowingWaves variant="full" opacity={0.08} />
         
         
         <div className="container mx-auto px-4 relative z-10">
@@ -2106,15 +2063,7 @@ function Business() {
 
       {/* Business Success Stories */}
       {businessTestimonials.length > 0 && (
-        <section className="py-20 relative overflow-hidden" style={{ background: 'linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--muted)) 50%, hsl(var(--background)) 100%)' }}>
-          {/* Decorative gradient accents */}
-          <div 
-            className="absolute top-0 left-1/3 w-64 h-64 rounded-full opacity-10 pointer-events-none"
-            style={{ 
-              background: 'radial-gradient(circle, hsl(var(--coral-400)) 0%, transparent 70%)',
-              filter: 'blur(50px)',
-            }}
-          />
+        <section className="py-20 bg-muted">
           <div className="container mx-auto px-4">
             <ScrollReveal>
               <h2 className="text-center mb-4">Client Success Stories</h2>
@@ -2146,9 +2095,6 @@ function Business() {
           </div>
         </section>
       )}
-
-      {/* Nature Photo Strip - Visual Break */}
-      <NaturePhotoWidget variant="strip" />
 
       {/* Final CTA with Park Image - Merged Sections */}
       <CTASection 
