@@ -1,58 +1,66 @@
-import { Star, Shield, Award, Users, Sparkles } from "lucide-react";
-
-const stats = [
-  { label: "Families Protected", value: "500+", icon: Users },
-  { label: "Success Rate", value: "99.8%", icon: Shield },
-  { label: "Client Rating", value: "5.0", icon: Star },
-  { label: "Years Active", value: "4+", icon: Award },
-];
-
-export const TrustedExpertsBar = () => {
-  return (
-    <section className="relative py-8 bg-[#0a0a0a] border-y border-white/5">
-      {/* Subtle gradient line */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-coral-400/30 to-transparent" />
-      
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="flex items-center justify-between">
-          {/* Stats Grid */}
-          <div className="flex items-center gap-8 lg:gap-16 overflow-x-auto pb-2 w-full justify-center lg:justify-start">
-            {stats.map((stat, i) => (
-              <div key={stat.label} className="flex items-center gap-4 flex-shrink-0">
-                <div className="w-10 h-10 rounded-none bg-white/5 flex items-center justify-center border border-white/10">
-                  <stat.icon className="w-5 h-5 text-coral-400" />
-                </div>
-                <div>
-                  <div className="text-2xl font-black text-white" style={{ fontFamily: "'Clash Display', sans-serif" }}>
-                    {stat.value}
-                  </div>
-                  <div className="text-xs text-white/40 font-medium">{stat.label}</div>
-                </div>
-                {i < stats.length - 1 && (
-                  <div className="hidden lg:block w-px h-12 bg-white/10 ml-8" />
-                )}
-              </div>
-            ))}
-          </div>
-
-          {/* CTA - Hidden on mobile */}
-          <div className="hidden lg:flex items-center gap-6 flex-shrink-0">
-            <div className="h-12 w-px bg-white/10" />
-            <div className="flex items-center gap-4">
-              <div className="text-right">
-                <div className="text-xs text-white/40 uppercase tracking-wider">Veteran Discount</div>
-                <div className="text-xl font-black text-coral-400">10% OFF</div>
-              </div>
-              <div className="w-12 h-12 bg-coral-400 flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-[#0a0a0a]" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      {/* Bottom gradient line */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-lavender-500/20 to-transparent" />
-    </section>
-  );
-};
+ import { motion } from "framer-motion";
+ import { Star, Shield, Award, Users, TrendingUp, CheckCircle } from "lucide-react";
+ 
+ const stats = [
+   { label: "Happy Clients", value: "500+", icon: Users },
+   { label: "Success Rate", value: "99.8%", icon: TrendingUp },
+   { label: "Years Active", value: "4+", icon: Award },
+   { label: "Expert Rating", value: "5.0", icon: Star },
+ ];
+ 
+ const logos = [
+   "TechGuard", "SecureOhio", "FamilySafe", "BizShield", "CyberWatch"
+ ];
+ 
+ export const TrustedExpertsBar = () => {
+   return (
+     <section className="py-12 bg-gradient-to-r from-slate-50 via-white to-slate-50 border-y border-gray-100">
+       <div className="container mx-auto px-4">
+         {/* Partner Logos */}
+         <div className="text-center mb-10">
+           <p className="text-sm font-medium text-foreground/40 uppercase tracking-wider mb-6">
+             Trusted by Leading Organizations
+           </p>
+           <div className="flex items-center justify-center gap-8 lg:gap-16 flex-wrap">
+             {logos.map((logo, i) => (
+               <motion.div 
+                 key={logo}
+                 initial={{ opacity: 0, y: 10 }}
+                 whileInView={{ opacity: 1, y: 0 }}
+                 transition={{ delay: i * 0.1 }}
+                 viewport={{ once: true }}
+                 className="text-xl font-bold text-foreground/20 hover:text-foreground/40 transition-colors cursor-default"
+                 style={{ fontFamily: "'DM Sans', sans-serif" }}
+               >
+                 {logo}
+               </motion.div>
+             ))}
+           </div>
+         </div>
+ 
+         {/* Stats Grid */}
+         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-12">
+           {stats.map((stat, i) => (
+             <motion.div 
+               key={stat.label}
+               initial={{ opacity: 0, y: 20 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               transition={{ delay: i * 0.1 }}
+               viewport={{ once: true }}
+               className="text-center group"
+             >
+               <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-coral-50 to-lavender-50 border border-coral-100/50 mb-3 group-hover:scale-110 transition-transform">
+                 <stat.icon className="w-6 h-6 text-coral-500" />
+               </div>
+               <div className="text-3xl lg:text-4xl font-black text-[#18305A] mb-1"
+                 style={{ fontFamily: "'Clash Display', 'DM Sans', sans-serif" }}>
+                 {stat.value}
+               </div>
+               <div className="text-sm text-foreground/50 font-medium">{stat.label}</div>
+             </motion.div>
+           ))}
+         </div>
+       </div>
+     </section>
+   );
+ };

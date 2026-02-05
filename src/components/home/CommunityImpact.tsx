@@ -1,205 +1,164 @@
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Heart, Shield, Users, Ribbon, ArrowRight, Award, MapPin, GraduationCap, DollarSign } from "lucide-react";
-import ohioNatureImpact from "@/assets/ohio-nature-impact.jpg";
-import veteranSupport from "@/assets/veteran-support.jpg";
-import communityGivingAbstract from "@/assets/community-giving-abstract.jpg";
-import paidWorkshopTraining from "@/assets/paid-workshop-training.jpg";
-
-const impacts = [
-  {
-    icon: Shield,
-    title: "Veteran Support",
-    description: "We honor those who served with exclusive 17% discounts and priority support for veterans and first responders.",
-    color: "from-navy-600 to-navy-500",
-  },
-  {
-    icon: Ribbon,
-    title: "Children with Cancer",
-    description: "A portion of every purchase supports families with children battling cancer through our partner organizations.",
-    color: "from-coral-500 to-coral-400",
-  },
-  {
-    icon: Users,
-    title: "Senior Protection",
-    description: "Free educational resources and discounted services for seniors on fixed incomes to stay safe online.",
-    color: "from-lavender-600 to-lavender-500",
-  },
-  {
-    icon: Heart,
-    title: "Community Education",
-    description: "Affordable workshops at libraries, churches, and community centers across Ohio to spread digital safety awareness.",
-    color: "from-teal-500 to-teal-400",
-  },
-];
-
-const quickStats = [
-  { label: "Ohio-Based", icon: MapPin },
-  { label: "Veteran-Supporting", icon: Shield },
-  { label: "Mission-Driven", icon: Heart },
-];
-
-export const CommunityImpact = () => {
-  return (
-    <section className="py-16 bg-gradient-to-b from-background via-coral-50/20 to-background relative overflow-hidden">
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-[0.02]" style={{
-        backgroundImage: `radial-gradient(circle at 2px 2px, hsl(var(--coral-400)) 1px, transparent 0)`,
-        backgroundSize: '40px 40px'
-      }} />
-      
-      {/* Premium gradient orbs */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 right-0 w-[400px] h-[400px] bg-coral-400/5 rounded-full blur-[100px]" />
-        <div className="absolute bottom-20 left-0 w-[350px] h-[350px] bg-lavender-400/5 rounded-full blur-[80px]" />
-      </div>
-      
-      <div className="container mx-auto px-4 relative z-10">
-        {/* Header */}
-        <div className="text-center mb-10 animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-coral-100 to-blush-400 rounded-2xl border border-coral-300/50 mb-5 shadow-sm">
-            <Heart className="w-5 h-5 text-coral-600" />
-            <span className="font-bold text-coral-700">Giving Back</span>
-          </div>
-          
-          <h2 className="text-4xl md:text-5xl font-bold text-navy-900 mb-4">
-            More Than a Business—{" "}
-            <span className="bg-gradient-to-r from-coral-500 via-coral-400 to-lavender-500 bg-clip-text text-transparent">A Mission</span>
-          </h2>
-          <p className="text-lg text-navy-700/80 max-w-3xl mx-auto">
-            We believe in building a safer community for everyone. Here's how we're making a difference.
-          </p>
-          
-          {/* Quick stats badges */}
-          <div className="flex flex-wrap justify-center gap-3 mt-6">
-            {quickStats.map((stat, index) => (
-              <div key={index} className="flex items-center gap-2 px-4 py-2.5 bg-white/90 rounded-full border border-coral-200/50 shadow-sm hover:shadow-md transition-shadow">
-                <stat.icon className="w-4 h-4 text-coral-500" />
-                <span className="text-sm font-semibold text-navy-700">{stat.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Main Image with overlay */}
-        <div className="relative rounded-3xl overflow-hidden mb-10 shadow-[0_20px_60px_-15px_rgba(24,48,90,0.2)] animate-fade-in ring-1 ring-coral-200/30">
-          <img
-            src={ohioNatureImpact}
-            alt="InVision Network proudly serving Ohio communities"
-            width={1310}
-            height={320}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
-            loading="lazy"
-            decoding="async"
-            className="w-full h-[320px] object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 p-8 text-center text-white">
-            <h3 className="text-2xl font-bold mb-2">Proudly Serving Ohio Communities</h3>
-            <p className="text-white/80 max-w-2xl mx-auto">
-              From Dayton to Columbus to Cincinnati—protecting families across the Buckeye State
-            </p>
-          </div>
-        </div>
-
-        {/* What We Do Photo Grid */}
-        <div className="grid grid-cols-3 gap-4 mb-10">
-          <div className="relative rounded-2xl overflow-hidden shadow-lg group animate-fade-in">
-            <img
-              src={veteranSupport}
-              alt="InVision Network supporting veterans"
-              className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-            <div className="absolute bottom-3 left-3 right-3">
-              <div className="flex items-center gap-2 text-white">
-                <Shield className="w-4 h-4" />
-                <span className="text-sm font-bold">Veteran Support</span>
-              </div>
-              <p className="text-white/80 text-xs mt-1">17% discount for those who served</p>
-            </div>
-          </div>
-          
-          <div
-            className="relative rounded-2xl overflow-hidden shadow-lg group animate-fade-in"
-            style={{ animationDelay: '0.1s' }}
-          >
-            <img
-              src={communityGivingAbstract}
-              alt="InVision Network community giving and support"
-              className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-            <div className="absolute bottom-3 left-3 right-3">
-              <div className="flex items-center gap-2 text-white">
-                <Heart className="w-4 h-4" />
-                <span className="text-sm font-bold">Giving Back</span>
-              </div>
-              <p className="text-white/80 text-xs mt-1">Supporting families in need</p>
-            </div>
-          </div>
-          
-          <div
-            className="relative rounded-2xl overflow-hidden shadow-lg group animate-fade-in"
-            style={{ animationDelay: '0.2s' }}
-          >
-            <img
-              src={paidWorkshopTraining}
-              alt="InVision Network professional training workshops"
-              className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-            <div className="absolute bottom-3 left-3 right-3">
-              <div className="flex items-center gap-2 text-white">
-                <GraduationCap className="w-4 h-4" />
-                <span className="text-sm font-bold">Professional Workshops</span>
-              </div>
-              <div className="flex items-center gap-2 mt-1">
-                <DollarSign className="w-3 h-3 text-emerald-400" />
-                <p className="text-white/80 text-xs">Affordable expert-led training</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Impact Cards Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-          {impacts.map((impact, index) => (
-            <div
-              key={index}
-              className="bg-white/90 rounded-2xl p-5 border border-coral-100/50 shadow-sm hover:shadow-lg hover:shadow-coral-200/20 hover:-translate-y-1 transition-all duration-300 animate-fade-in"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${impact.color} flex items-center justify-center mb-4 shadow-md`}>
-                <impact.icon className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="font-bold text-lg text-navy-800 mb-2">{impact.title}</h3>
-              <p className="text-sm text-navy-600/70 leading-relaxed">{impact.description}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* CTA */}
-        <div className="text-center animate-fade-in">
-          <p className="text-lg text-navy-700/80 mb-8 max-w-2xl mx-auto">
-            Want to support our mission? Every purchase helps us protect more families and give back to those in need.
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <Button asChild size="xl" className="rounded-2xl px-10 bg-gradient-to-r from-coral-500 to-coral-400 text-white shadow-lg shadow-coral-300/30 hover:shadow-coral-400/40">
-              <Link to="/resources">
-                Explore Resources
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" size="xl" className="rounded-2xl border-2 border-navy-300 text-navy-700 hover:bg-navy-50">
-              <Link to="/about">Learn Our Story</Link>
-            </Button>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
+ import { Link } from "react-router-dom";
+ import { Button } from "@/components/ui/button";
+ import { Heart, Shield, Users, Ribbon, ArrowRight, CheckCircle } from "lucide-react";
+ import { motion } from "framer-motion";
+ 
+ const values = [
+   { icon: Shield, title: "Treating you with respect and courtesy" },
+   { icon: Heart, title: "Explaining the concepts and options" },
+   { icon: Users, title: "Helping you solve problems" },
+ ];
+ 
+ const teamMembers = [
+   { name: "Brandon Joe", role: "Founder & CEO", color: "from-coral-400 to-lavender-500" },
+   { name: "Laura Wilson", role: "Security Lead", color: "from-lavender-500 to-[#18305A]" },
+   { name: "Jackson Mills", role: "Training Director", color: "from-[#18305A] to-coral-400" },
+ ];
+ 
+ export const CommunityImpact = () => {
+   return (
+     <section className="relative py-24 lg:py-32 bg-white overflow-hidden">
+       {/* Decorative Gradient */}
+       <div className="absolute top-0 left-0 w-[400px] h-[400px] opacity-20 pointer-events-none"
+         style={{
+           background: 'radial-gradient(circle at center, rgba(248,146,106,0.4) 0%, transparent 60%)',
+           filter: 'blur(80px)',
+           transform: 'translate(-30%, -30%)'
+         }}
+       />
+       
+       <div className="container mx-auto px-4 lg:px-8 relative z-10">
+         {/* Team Section */}
+         <motion.div 
+           initial={{ opacity: 0, y: 20 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           transition={{ duration: 0.6 }}
+           viewport={{ once: true }}
+           className="text-center mb-16"
+         >
+           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-coral-50 to-lavender-50 border border-coral-200/50 mb-6">
+             <span className="w-2 h-2 rounded-full bg-coral-400" />
+             <span className="text-sm font-semibold text-foreground/80 uppercase tracking-wide">Our Team</span>
+           </div>
+           <h2 className="text-4xl md:text-5xl font-black text-[#18305A] leading-tight mb-4"
+             style={{ fontFamily: "'Clash Display', 'DM Sans', sans-serif" }}>
+             Dedicated Consulting <span className="bg-gradient-to-r from-coral-500 to-lavender-500 bg-clip-text text-transparent">Team</span>
+           </h2>
+         </motion.div>
+ 
+         {/* Team Cards */}
+         <div className="grid md:grid-cols-3 gap-6 mb-24">
+           {teamMembers.map((member, i) => (
+             <motion.div 
+               key={member.name}
+               initial={{ opacity: 0, y: 20 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               transition={{ delay: i * 0.1 }}
+               viewport={{ once: true }}
+               className="group"
+             >
+               {/* Photo Placeholder */}
+               <div className={`relative aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-br ${member.color} mb-4 group-hover:scale-[1.02] transition-transform`}>
+                 <div className="absolute inset-0 flex items-center justify-center">
+                   <Users className="w-20 h-20 text-white/50" />
+                 </div>
+                 {/* Decorative Pattern */}
+                 <div className="absolute inset-0 opacity-10"
+                   style={{
+                     backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`,
+                     backgroundSize: '16px 16px'
+                   }}
+                 />
+               </div>
+               <h3 className="text-xl font-bold text-[#18305A]">{member.name}</h3>
+               <p className="text-foreground/50">{member.role}</p>
+             </motion.div>
+           ))}
+         </div>
+ 
+         {/* Values Section */}
+         <div className="grid lg:grid-cols-2 gap-16 items-center">
+           {/* Left - Image */}
+           <motion.div 
+             initial={{ opacity: 0, x: -30 }}
+             whileInView={{ opacity: 1, x: 0 }}
+             transition={{ duration: 0.6 }}
+             viewport={{ once: true }}
+             className="relative"
+           >
+             <div className="aspect-[4/3] rounded-3xl overflow-hidden bg-gradient-to-br from-coral-400 via-lavender-400 to-[#18305A] flex items-center justify-center">
+               <Heart className="w-24 h-24 text-white/70" />
+             </div>
+             
+             {/* Floating Badge */}
+             <motion.div 
+               className="absolute -bottom-4 -right-4 bg-[#18305A] rounded-2xl shadow-2xl px-6 py-4 text-white"
+               initial={{ opacity: 0, scale: 0.9 }}
+               whileInView={{ opacity: 1, scale: 1 }}
+               transition={{ delay: 0.4 }}
+               viewport={{ once: true }}
+             >
+               <div className="text-sm font-medium text-white/60">Veteran-Owned</div>
+               <div className="text-2xl font-black">Ohio Based</div>
+             </motion.div>
+           </motion.div>
+ 
+           {/* Right - Content */}
+           <motion.div 
+             initial={{ opacity: 0, x: 30 }}
+             whileInView={{ opacity: 1, x: 0 }}
+             transition={{ duration: 0.6, delay: 0.2 }}
+             viewport={{ once: true }}
+             className="space-y-6"
+           >
+             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-coral-50 to-lavender-50 border border-coral-200/50">
+               <span className="w-2 h-2 rounded-full bg-coral-400" />
+               <span className="text-sm font-semibold text-foreground/80 uppercase tracking-wide">Our Commitment</span>
+             </div>
+             
+             <h3 className="text-3xl md:text-4xl font-black text-[#18305A] leading-tight"
+               style={{ fontFamily: "'Clash Display', 'DM Sans', sans-serif" }}>
+               Committed to Giving you{" "}
+               <span className="bg-gradient-to-r from-coral-500 to-lavender-500 bg-clip-text text-transparent">True Value.</span>
+             </h3>
+             
+             <p className="text-foreground/60 leading-relaxed">
+               We craft unique digital experiences with more than 4 years of expertise in design and digital transformation, providing our customers with exceptional service.
+             </p>
+ 
+             {/* Values List */}
+             <div className="space-y-4 pt-4">
+               {values.map((value, i) => (
+                 <motion.div 
+                   key={value.title}
+                   initial={{ opacity: 0, x: -10 }}
+                   whileInView={{ opacity: 1, x: 0 }}
+                   transition={{ delay: 0.3 + i * 0.1 }}
+                   viewport={{ once: true }}
+                   className="flex items-center gap-4 group"
+                 >
+                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-coral-100 to-lavender-100 flex items-center justify-center group-hover:scale-110 transition-transform">
+                     <value.icon className="w-5 h-5 text-coral-500" />
+                   </div>
+                   <span className="font-medium text-[#18305A]">{value.title}</span>
+                 </motion.div>
+               ))}
+             </div>
+ 
+             {/* CTA */}
+             <div className="pt-6">
+               <Button asChild size="lg"
+                 className="h-14 px-8 text-base font-bold rounded-full shadow-lg shadow-coral-400/30 hover:shadow-xl hover:shadow-coral-400/40 transition-all"
+                 style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }}>
+                 <Link to="/about" className="text-white">
+                   Learn Our Story
+                   <ArrowRight className="ml-2 w-5 h-5" />
+                 </Link>
+               </Button>
+             </div>
+           </motion.div>
+         </div>
+       </div>
+     </section>
+   );
+ };
