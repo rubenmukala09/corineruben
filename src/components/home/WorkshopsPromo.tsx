@@ -1,7 +1,9 @@
  import { Link } from "react-router-dom";
  import { Button } from "@/components/ui/button";
- import { ArrowRight, Shield, Eye, AlertTriangle, Target, GraduationCap, CheckCircle, Play } from "lucide-react";
+import { ArrowRight, Shield, Eye, AlertTriangle, Target, GraduationCap, CheckCircle, Play, Sparkles } from "lucide-react";
  import { motion } from "framer-motion";
+import workshopTraining from "@/assets/workshop-training-session.jpg";
+import seniorLearning from "@/assets/senior-learning.jpg";
  
  const services = [
    { icon: AlertTriangle, title: "Scam Prevention", desc: "Identify AI-powered scams before they strike" },
@@ -46,55 +48,88 @@
            >
              {/* Main Visual Container */}
              <div className="relative">
-               {/* Background Shape */}
-               <div className="absolute -inset-4 rounded-[40px] bg-gradient-to-br from-coral-100 via-lavender-50 to-white opacity-80" />
+                {/* Background Shape with premium gradient */}
+                <div className="absolute -inset-6 rounded-[48px] bg-gradient-to-br from-coral-200/40 via-lavender-100/30 to-white opacity-90" />
                
-               {/* Image Placeholder */}
-               <div className="relative aspect-[4/3] rounded-3xl overflow-hidden bg-gradient-to-br from-[#18305A] to-[#2a4a7a] flex items-center justify-center shadow-2xl">
-                 <div className="text-center text-white/90 p-8">
-                   <GraduationCap className="w-20 h-20 mx-auto mb-4 opacity-80" />
-                   <h3 className="text-xl font-bold">Expert-Led Workshops</h3>
-                   <p className="text-white/60 mt-2">Protecting Ohio families since 2020</p>
-                 </div>
-                 
-                 {/* Pattern Overlay */}
-                 <div className="absolute inset-0 opacity-10"
-                   style={{
-                     backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`,
-                     backgroundSize: '20px 20px'
-                   }}
-                 />
+                {/* Primary Photo - Workshop Training */}
+                <div className="relative aspect-[4/3] rounded-[32px] overflow-hidden shadow-2xl shadow-coral-400/20 border-4 border-white">
+                  <img 
+                    src={workshopTraining} 
+                    alt="Expert-led workshop training session"
+                    width={600}
+                    height={450}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover"
+                  />
+                  {/* Premium overlay gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#18305A]/20 via-transparent to-transparent" />
                </div>
+
+                {/* Secondary Photo - Floating */}
+                <motion.div 
+                  className="absolute -bottom-6 -left-6 w-36 h-36 rounded-2xl overflow-hidden shadow-2xl border-4 border-white"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.3 }}
+                  viewport={{ once: true }}
+                >
+                  <img 
+                    src={seniorLearning} 
+                    alt="Senior learning digital safety"
+                    width={144}
+                    height={144}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
  
                {/* Video Play Button */}
                <motion.button 
-                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-white shadow-2xl flex items-center justify-center group hover:scale-110 transition-transform z-10"
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-white/90 backdrop-blur-sm shadow-2xl flex items-center justify-center group hover:scale-110 transition-transform z-10 border-2 border-coral-200/50"
                  whileHover={{ scale: 1.1 }}
                  whileTap={{ scale: 0.95 }}
                >
-                 <div className="w-14 h-14 rounded-full bg-gradient-to-br from-coral-400 to-lavender-500 flex items-center justify-center">
+                  <div className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg"
+                    style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }}>
                    <Play className="w-6 h-6 text-white fill-white ml-1" />
                  </div>
                </motion.button>
  
-               {/* Stats Card */}
+                {/* Stats Card - Premium */}
                <motion.div 
-                 className="absolute -bottom-6 -right-6 bg-white rounded-2xl shadow-2xl p-5 border border-gray-100"
+                  className="absolute -bottom-4 -right-4 bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-4 border border-coral-200/50"
                  initial={{ opacity: 0, y: 20 }}
                  whileInView={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.4 }}
                  viewport={{ once: true }}
                >
-                 <div className="flex items-center gap-4">
-                   <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-coral-400 to-coral-500 flex items-center justify-center shadow-lg">
-                     <span className="text-white font-black text-lg">99%</span>
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow-lg"
+                      style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }}>
+                      <span className="text-white font-black text-lg">99%</span>
                    </div>
                    <div>
                      <div className="text-lg font-black text-[#18305A]">Success Rate</div>
-                     <div className="text-sm text-foreground/50">Client Satisfaction</div>
+                      <div className="text-xs text-foreground/50">Client Satisfaction</div>
                    </div>
                  </div>
                </motion.div>
+                
+                {/* Premium Badge */}
+                <motion.div 
+                  className="absolute top-4 -right-2 bg-white/95 backdrop-blur-sm rounded-full shadow-xl px-3 py-1.5 border border-coral-200/50"
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.5 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-coral-500" />
+                    <span className="text-xs font-bold text-[#18305A]">Expert-Led</span>
+                  </div>
+                </motion.div>
              </div>
            </motion.div>
  
@@ -106,10 +141,10 @@
              viewport={{ once: true }}
              className="space-y-8"
            >
-             {/* Section label */}
-             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-coral-50 to-lavender-50 border border-coral-200/50">
-               <span className="w-2 h-2 rounded-full bg-coral-400" />
-               <span className="text-sm font-semibold text-foreground/80 uppercase tracking-wide">Learn & Train</span>
+              {/* Section label - Premium */}
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-coral-100 to-lavender-100 border border-coral-200/50 shadow-sm">
+                <Sparkles className="w-4 h-4 text-coral-500" />
+                <span className="text-sm font-semibold text-[#18305A] uppercase tracking-wide">Learn & Train</span>
              </div>
              
              {/* Headline */}

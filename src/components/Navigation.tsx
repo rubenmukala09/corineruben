@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Phone, LayoutDashboard } from "lucide-react";
+import { Menu, X, Phone, LayoutDashboard, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PrefetchLink } from "@/components/PrefetchLink";
 import { ShoppingCart } from "@/components/ShoppingCart";
@@ -69,9 +69,11 @@ const Navigation = () => {
         />
       )}
 
-      <nav className="sticky top-0 z-[9999] bg-card/80 backdrop-blur-xl border-b border-border/50 shadow-[0_4px_30px_-4px_rgba(0,0,0,0.1)]">
-        {/* Glassmorphism background layer */}
-        <div className="absolute inset-0 bg-gradient-to-r from-card/95 via-card/90 to-card/95 backdrop-blur-xl" />
+      <nav className="sticky top-0 z-[9999] bg-white/95 backdrop-blur-xl border-b border-coral-200/30 shadow-[0_4px_40px_-4px_rgba(248,146,106,0.15)]">
+        {/* Premium glassmorphism background layer with gradient accent */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white/98 via-coral-50/20 to-lavender-50/30 backdrop-blur-xl" />
+        {/* Subtle animated gradient line at top */}
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-coral-400 via-lavender-400 to-coral-400 opacity-60" />
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16 md:h-20 lg:h-24">
             {/* Logo */}
@@ -92,7 +94,7 @@ const Navigation = () => {
             </div>
           </a>
 
-          <div className="hidden lg:flex items-center gap-1 flex-1 justify-center max-w-3xl mx-auto bg-muted/30 rounded-2xl p-1.5 border border-border/30">
+          <div className="hidden lg:flex items-center gap-1 flex-1 justify-center max-w-3xl mx-auto bg-gradient-to-r from-coral-50/40 via-white to-lavender-50/40 rounded-2xl p-1.5 border border-coral-200/30 shadow-inner">
             {navLinks.map((link) => {
               const isActive = isActiveLink(link.href);
               return (
@@ -101,8 +103,8 @@ const Navigation = () => {
                   to={link.href}
                   className={`relative text-sm xl:text-base transition-all duration-300 font-semibold px-4 py-2.5 rounded-xl whitespace-nowrap ${
                     isActive 
-                      ? 'text-primary-foreground bg-gradient-to-r from-primary to-accent shadow-lg shadow-primary/25' 
-                      : 'text-muted-foreground hover:text-foreground hover:bg-card/80'
+                      ? 'text-white bg-gradient-to-r from-coral-500 to-lavender-500 shadow-lg shadow-coral-400/30' 
+                      : 'text-[#18305A]/70 hover:text-[#18305A] hover:bg-white/80'
                   }`}
                 >
                   {link.name}
@@ -118,28 +120,31 @@ const Navigation = () => {
             {/* Modern Phone Card */}
             <a
               href="tel:9373018749"
-              className="group hidden md:flex relative items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/5 to-accent/5 hover:from-primary/10 hover:to-accent/10 rounded-xl border border-primary/10 hover:border-primary/20 transition-all duration-300 no-underline overflow-hidden"
+              className="group hidden md:flex relative items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-coral-50 to-lavender-50 hover:from-coral-100 hover:to-lavender-100 rounded-full border border-coral-200/50 hover:border-coral-300/60 transition-all duration-300 no-underline overflow-hidden shadow-sm hover:shadow-md"
               aria-label="Call us at (937) 301-8749"
             >
-              {/* Gradient overlay on hover */}
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-accent/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              
-              {/* Modern phone icon with animation */}
-              <div className="relative z-10 bg-gradient-to-br from-primary to-accent p-2 rounded-lg group-hover:scale-110 transition-transform duration-300">
+              {/* Premium phone icon */}
+              <div className="relative z-10 bg-gradient-to-br from-coral-400 to-lavender-500 p-2 rounded-full group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-coral-400/30">
                 <Phone className="w-4 h-4 text-white" />
               </div>
               
-              {/* Phone number with gradient text */}
-              <span className="relative z-10 text-sm xl:text-base font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300">
+              {/* Phone number - single line gradient text */}
+              <span className="relative z-10 text-sm xl:text-base font-bold whitespace-nowrap"
+                style={{
+                  background: 'linear-gradient(135deg, #18305A 0%, #BB81B5 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}>
                 (937) 301-8749
               </span>
               
-              {/* Shine effect */}
-              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+              {/* Premium shine effect */}
+              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/40 to-transparent" />
             </a>
             <Button 
               asChild 
-              className="h-[44px] px-6 bg-gradient-to-r from-primary via-primary to-accent hover:from-primary/90 hover:via-accent/90 hover:to-primary/90 text-primary-foreground font-bold rounded-2xl shadow-[0_8px_30px_-6px_hsl(var(--primary)/0.4)] hover:shadow-[0_12px_40px_-8px_hsl(var(--primary)/0.5)] hover:-translate-y-0.5 transition-all duration-300 border border-primary-foreground/10"
+              className="h-[44px] px-6 text-white font-bold rounded-full shadow-[0_8px_30px_-6px_rgba(248,146,106,0.4)] hover:shadow-[0_12px_40px_-8px_rgba(248,146,106,0.5)] hover:-translate-y-0.5 transition-all duration-300 border-0"
+              style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }}
             >
               {isAdminOrStaff ? (
                 <Link to="/admin" aria-label="Go to Dashboard" className="flex items-center gap-2">

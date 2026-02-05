@@ -1,7 +1,9 @@
  import { Link } from "react-router-dom";
  import { Button } from "@/components/ui/button";
- import { Phone, Calendar, Bot, Globe, ArrowRight, TrendingUp, Zap, CheckCircle, Award } from "lucide-react";
+import { Phone, Calendar, Bot, Globe, ArrowRight, TrendingUp, Zap, CheckCircle, Award, Sparkles } from "lucide-react";
  import { motion } from "framer-motion";
+import aiBusinessPromo from "@/assets/ai-business-promo.jpg";
+import businessTeam from "@/assets/business-team-office.jpg";
  
  const services = [
    { icon: Phone, title: "AI Receptionist", desc: "Never miss a call", highlight: "24/7" },
@@ -43,9 +45,9 @@
            viewport={{ once: true }}
            className="text-center mb-16"
          >
-           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-lavender-50 to-coral-50 border border-lavender-200/50 mb-6">
-             <span className="w-2 h-2 rounded-full bg-lavender-500" />
-             <span className="text-sm font-semibold text-foreground/80 uppercase tracking-wide">AI & Business</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-lavender-100 to-coral-100 border border-lavender-200/50 mb-6 shadow-sm">
+              <Sparkles className="w-4 h-4 text-lavender-500" />
+              <span className="text-sm font-semibold text-[#18305A] uppercase tracking-wide">AI & Business</span>
            </div>
            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-[#18305A] leading-tight mb-4"
              style={{ fontFamily: "'Clash Display', 'DM Sans', sans-serif" }}>
@@ -159,27 +161,48 @@
              viewport={{ once: true }}
              className="relative"
            >
-             <div className="grid grid-cols-2 gap-4">
-               {/* Main Image */}
-               <div className="col-span-2 rounded-3xl overflow-hidden bg-gradient-to-br from-[#18305A] to-[#2a4a7a] aspect-[16/9] flex items-center justify-center">
-                 <div className="text-center text-white/80 p-6">
-                   <Bot className="w-16 h-16 mx-auto mb-3 opacity-80" />
-                   <p className="font-semibold">AI-Powered Solutions</p>
-                 </div>
+              {/* Background Shape */}
+              <div className="absolute -inset-4 rounded-[40px] bg-gradient-to-br from-lavender-200/40 via-coral-100/30 to-white opacity-90" />
+              
+              <div className="relative grid grid-cols-2 gap-4">
+                {/* Main Image - Natural Photo */}
+                <div className="col-span-2 rounded-3xl overflow-hidden aspect-[16/9] shadow-2xl shadow-lavender-400/20 border-4 border-white">
+                  <img 
+                    src={aiBusinessPromo}
+                    alt="AI-powered business automation"
+                    width={600}
+                    height={338}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover"
+                  />
+                  {/* Premium overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#18305A]/30 via-transparent to-transparent" />
                </div>
                
-               {/* Smaller Images */}
-               <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-coral-400 to-lavender-500 aspect-square flex items-center justify-center">
-                 <TrendingUp className="w-12 h-12 text-white" />
+                {/* Smaller Image - Natural Photo */}
+                <div className="rounded-2xl overflow-hidden aspect-square shadow-xl border-3 border-white">
+                  <img 
+                    src={businessTeam}
+                    alt="Business team collaboration"
+                    width={200}
+                    height={200}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover"
+                  />
                </div>
-               <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-lavender-400 to-[#18305A] aspect-square flex items-center justify-center">
+                
+                {/* Icon Card */}
+                <div className="rounded-2xl overflow-hidden aspect-square flex items-center justify-center shadow-xl border-3 border-white"
+                  style={{ background: 'linear-gradient(135deg, hsl(var(--lavender-400)) 0%, hsl(var(--coral-400)) 100%)' }}>
                  <Award className="w-12 h-12 text-white" />
                </div>
              </div>
  
              {/* Floating ROI Card */}
              <motion.div 
-               className="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow-2xl p-5 border border-gray-100"
+                className="absolute -bottom-4 -left-4 bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-4 border border-lavender-200/50"
                initial={{ opacity: 0, scale: 0.9 }}
                whileInView={{ opacity: 1, scale: 1 }}
                transition={{ delay: 0.5 }}
@@ -190,6 +213,20 @@
                </div>
                <div className="text-sm text-foreground/50 font-medium">Avg. ROI</div>
              </motion.div>
+              
+              {/* Premium Badge */}
+              <motion.div 
+                className="absolute top-2 right-2 bg-white/95 backdrop-blur-sm rounded-full shadow-xl px-3 py-1.5 border border-lavender-200/50"
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6 }}
+                viewport={{ once: true }}
+              >
+                <div className="flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-lavender-500" />
+                  <span className="text-xs font-bold text-[#18305A]">AI Powered</span>
+                </div>
+              </motion.div>
            </motion.div>
          </div>
        </div>
