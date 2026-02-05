@@ -20,76 +20,49 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     scroll-behavior: smooth;
   }
 
-  /* Prevent FOUC */
-  body:not(.loaded) {
-    opacity: 0;
-  }
-
-  body.loaded {
-    opacity: 1;
-    transition: opacity 0.3s ease-out;
-  }
-
-  /* Instant button feedback */
-  button.active-press,
-  a.active-press {
-    transform: scale(0.95);
-    transition: transform 0.1s ease-out;
-  }
-
-  /* Smooth GPU-accelerated animations */
-  .smooth-animation {
-    will-change: transform, opacity;
-    transform: translateZ(0);
-  }
-
-  /* Remove will-change after animation */
-  .smooth-animation:not(:hover):not(:focus) {
-    will-change: auto;
-  }
-
   :root {
     /* Base colors - Premium cream/warm off-white */
     --background: 30 25% 97%;
     --foreground: 230 35% 12%;
-    
+
     /* Deep Navy Primary - from #18305A palette */
     --primary: 220 58% 22%;
     --primary-foreground: 0 0% 100%;
-    
+
     /* Coral/Peach Accent - from #F8926A palette */
     --accent: 18 92% 69%;
     --accent-foreground: 0 0% 100%;
-    
+
     /* Success - refined emerald */
     --success: 152 58% 42%;
     --success-foreground: 0 0% 100%;
-    
+
     /* Destructive - warm coral-red */
     --destructive: 8 75% 52%;
     --destructive-foreground: 0 0% 100%;
-    
+
     /* Card & Surface - warm white */
     --card: 0 0% 100%;
     --card-foreground: 230 35% 12%;
-    
+
     --popover: 0 0% 100%;
     --popover-foreground: 230 35% 12%;
-    
+
     /* Secondary - soft lavender tint */
     --secondary: 270 20% 95%;
     --secondary-foreground: 220 58% 22%;
-    
+
     /* Muted - subtle warm gray */
     --muted: 30 15% 92%;
     --muted-foreground: 230 20% 42%;
-    
-    --border: 30 12% 88%;
+
+    --border: 30 10% 90%;
     --input: 30 15% 94%;
     --ring: 220 58% 22%;
-    
-    --radius: 0.625rem;
-    
+
+    /* Standardized radius - 8px base */
+    --radius: 0.5rem;
+
     /* Extended Color Palette - Deep Navy Spectrum (from #081433 to #18305A) */
     --navy-900: 225 65% 8%;
     --navy-800: 225 58% 12%;
@@ -159,20 +132,13 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --cyan-600: 188 65% 35%;
     --cyan-500: 188 60% 42%;
     --cyan-400: 188 55% 52%;
-    
-    /* Premium Shadows - warmer, more sophisticated */
-    --shadow-soft: 0 4px 20px -4px hsl(220 20% 20% / 0.06);
-    --shadow-medium: 0 10px 40px -10px hsl(220 20% 20% / 0.08);
-    --shadow-strong: 0 20px 60px -15px hsl(220 20% 20% / 0.1);
-    --shadow-float: 0 10px 40px -10px hsl(0 0% 0% / 0.08);
-    --shadow-float-hover: 0 20px 50px -10px hsl(0 0% 0% / 0.12);
-    --shadow-glow-primary: 0 0 40px hsl(220 58% 22% / 0.2);
-    --shadow-glow-accent: 0 0 40px hsl(18 92% 69% / 0.25);
-    --shadow-glow-coral: 0 0 50px hsl(18 92% 69% / 0.3);
-    
-    /* Radial gradients for background orbs */
-    --gradient-radial: radial-gradient(circle, var(--tw-gradient-stops));
-    
+
+    /* Refined Shadows - subtle, clean separation */
+    --shadow-xs: 0 1px 2px hsl(220 20% 20% / 0.04);
+    --shadow-sm: 0 1px 3px hsl(220 20% 20% / 0.05);
+    --shadow-md: 0 2px 8px -2px hsl(220 20% 20% / 0.06);
+    --shadow-lg: 0 4px 16px -4px hsl(220 20% 20% / 0.08);
+
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 230 35% 12%;
     --sidebar-primary: 220 58% 22%;
@@ -181,7 +147,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --sidebar-accent-foreground: 220 58% 22%;
     --sidebar-border: 30 12% 88%;
     --sidebar-ring: 220 58% 22%;
-    
+
     /* Global site scale for desktop browsers */
     --site-scale: 0.78;
   }
@@ -226,26 +192,18 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   :root {
     /* Skeuomorphic shadow layers for realistic depth */
     --skeuo-shadow-raised: 
-      0 1px 1px rgba(0,0,0,0.04),
-      0 2px 2px rgba(0,0,0,0.04),
-      0 4px 4px rgba(0,0,0,0.04),
-      0 8px 8px rgba(0,0,0,0.04),
-      0 16px 16px rgba(0,0,0,0.04);
+      0 1px 2px rgba(0,0,0,0.04),
+      0 2px 4px rgba(0,0,0,0.03),
+      0 4px 8px rgba(0,0,0,0.02);
     --skeuo-shadow-pressed: 
-      inset 0 2px 4px rgba(0,0,0,0.1),
-      inset 0 4px 8px rgba(0,0,0,0.06);
+      inset 0 1px 2px rgba(0,0,0,0.08);
     --skeuo-shadow-floating: 
-      0 2px 4px rgba(0,0,0,0.02),
-      0 4px 8px rgba(0,0,0,0.04),
-      0 8px 16px rgba(0,0,0,0.06),
-      0 16px 32px rgba(0,0,0,0.08),
-      0 32px 64px rgba(0,0,0,0.1);
+      0 2px 8px rgba(0,0,0,0.04),
+      0 8px 24px rgba(0,0,0,0.06);
     --skeuo-highlight: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 50%);
     --skeuo-inset: 
-      inset 0 1px 2px rgba(0,0,0,0.08),
+      inset 0 1px 2px rgba(0,0,0,0.06),
       inset 0 -1px 1px rgba(255,255,255,0.5);
-    --skeuo-border-light: 0 -1px 0 rgba(255,255,255,0.3), 0 1px 0 rgba(0,0,0,0.08);
-    --skeuo-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   }
 
   html {
@@ -259,26 +217,22 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'DM Sans', 'Outfit', sans-serif;
-    font-size: 20px;
-    line-height: 1.85;
+    font-size: 16px;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
     overflow-x: hidden;
     width: 100%;
     position: relative;
     /* Desktop zoom scaling */
     zoom: var(--site-scale);
-    /* Premium warm cream background with subtle gradients */
+    /* Clean warm cream background */
     background-color: hsl(30 25% 97%);
-    background-image: 
-      radial-gradient(ellipse at 20% 0%, hsl(18 92% 69% / 0.03) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 100%, hsl(308 28% 61% / 0.02) 0%, transparent 60%),
-      radial-gradient(ellipse at 50% 50%, hsl(220 58% 22% / 0.01) 0%, transparent 70%);
-    background-attachment: fixed;
   }
-  
+
   @media (min-width: 768px) {
     body {
-      font-size: 22px;
-      line-height: 1.8;
+      font-size: 17px;
+      line-height: 1.65;
     }
   }
 
@@ -297,7 +251,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
 
   /* Accessibility - Focus visible styles */
   *:focus-visible {
-    @apply outline-2 outline-offset-2 outline-primary ring-2 ring-accent;
+    @apply outline-2 outline-offset-2 outline-primary;
   }
 
   /* Accessibility - Reduced motion */
@@ -334,48 +288,32 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     clip: auto;
     white-space: normal;
   }
-  
+
   /* Custom scrollbar for activity feed and other scrollable elements */
   .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
   }
-  
+
   .custom-scrollbar::-webkit-scrollbar-track {
     background: hsl(var(--muted));
-    border-radius: 10px;
+    border-radius: 2px;
   }
-  
+
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: hsl(var(--muted-foreground) / 0.3);
-    border-radius: 10px;
+    background: hsl(var(--muted-foreground) / 0.25);
+    border-radius: 2px;
   }
-  
+
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--muted-foreground) / 0.5);
   }
-  
+
   #root {
     @apply min-h-screen;
     overflow-x: hidden;
     width: 100%;
   }
 
-  /* Skeuomorphic surface base - applies subtle texture */
-  .skeuo-surface {
-    position: relative;
-  }
-  
-  .skeuo-surface::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: var(--skeuo-texture);
-    opacity: 0.015;
-    pointer-events: none;
-    border-radius: inherit;
-    mix-blend-mode: overlay;
-  }
-  
   /* Fallback for browsers that don't support zoom */
   @supports not (zoom: 1) {
     body {
@@ -383,108 +321,38 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
       transform-origin: top left;
     }
   }
-  
+
   /* Prevent image flicker on load */
   img {
     @apply block;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold;
-    line-height: 1.2;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
   }
-  
+
   h1 {
     @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
   }
-  
+
   h2 {
     @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl;
   }
-  
+
   h3 {
     @apply text-xl sm:text-2xl md:text-3xl;
   }
-  
+
   /* Minimum tap targets for accessibility */
   button, a {
     min-height: 44px;
     min-width: 44px;
   }
-  
-  /* Focus indicators for accessibility */
-  *:focus-visible {
-    @apply outline-none ring-2 ring-accent ring-offset-2;
-  }
-
-  /* Performance: Enable GPU acceleration for animations */
-  .will-change-transform {
-    will-change: transform;
-  }
-
-  .will-change-opacity {
-    will-change: opacity;
-  }
-
-  /* GPU acceleration for smooth animations on login/auth pages */
-  .login-container,
-  .form-input,
-  .login-button,
-  button[type="button"],
-  a {
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-font-smoothing: antialiased;
-  }
 }
 
-/* ===== Premium Button Ripple Effect ===== */
-.ripple {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 70%);
-  transform: scale(0);
-  animation: ripple-effect 0.6s ease-out forwards;
-  pointer-events: none;
-}
-
-@keyframes ripple-effect {
-  0% {
-    transform: scale(0);
-    opacity: 0.6;
-  }
-  100% {
-    transform: scale(4);
-    opacity: 0;
-  }
-}
-
-/* ===== Enhanced Scale Animations ===== */
-@keyframes animate-scale-in {
-  0% {
-    opacity: 0;
-    transform: scale(0.9) translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-.animate-scale-in {
-  animation: animate-scale-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-/* ===== Premium Shimmer Animation ===== */
-@keyframes shimmer-move {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(200%);
-  }
-}
-
-.animate-shimmer {
-  animation: shimmer-move 1.5s ease-in-out infinite;
+/* Global transition timing - fast and subtle */
+* {
+  transition-timing-function: cubic-bezier(0.2, 0, 0.2, 1);
 }
