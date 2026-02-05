@@ -195,59 +195,29 @@ export const HeroHomepage = () => {
                 transition={{ duration: 1.1, delay: 0.3 }}
               >
                 <h1 className="mb-6">
-                  {/* Animated "Uncompromising" with letter stagger */}
-                  <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-foreground leading-[1.1] tracking-[-0.02em] mb-3 overflow-hidden"
+                  <motion.span 
+                    animate={{ opacity: [0.85, 1, 0.85] }}
+                    transition={{ duration: 4, repeat: Infinity }}
+                    className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-foreground leading-[1.1] tracking-[-0.02em] mb-3"
                     style={{ fontFamily: "'Clash Display', 'DM Sans', sans-serif" }}>
-                    {"Uncompromising".split("").map((letter, i) => (
-                      <motion.span
-                        key={i}
-                        initial={{ opacity: 0, y: 50, rotateX: -90 }}
-                        animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                        transition={{ 
-                          duration: 0.6, 
-                          delay: 0.5 + i * 0.04,
-                          ease: [0.22, 1, 0.36, 1]
-                        }}
-                        className="inline-block"
-                        style={{ transformOrigin: 'bottom' }}
-                      >
-                        {letter}
-                      </motion.span>
-                    ))}
-                  </span>
-                  
-                  {/* Animated "Protection" with gradient and letter stagger */}
-                  <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[0.95] tracking-[-0.02em] overflow-hidden"
-                    style={{ fontFamily: "'Clash Display', 'DM Sans', sans-serif" }}>
-                    {"Protection".split("").map((letter, i) => (
-                      <motion.span
-                        key={i}
-                        initial={{ opacity: 0, y: 80, scale: 0.5 }}
-                        animate={{ 
-                          opacity: 1, 
-                          y: 0, 
-                          scale: 1,
-                          backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
-                        }}
-                        transition={{ 
-                          opacity: { duration: 0.5, delay: 1.1 + i * 0.06 },
-                          y: { duration: 0.7, delay: 1.1 + i * 0.06, ease: [0.22, 1, 0.36, 1] },
-                          scale: { duration: 0.7, delay: 1.1 + i * 0.06, ease: [0.22, 1, 0.36, 1] },
-                          backgroundPosition: { duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }
-                        }}
-                        className="inline-block"
-                        style={{ 
-                          background: 'linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 25%, hsl(265 55% 42%) 50%, hsl(var(--primary)) 75%, hsl(var(--accent)) 100%)',
-                          backgroundSize: '200% 200%',
-                          WebkitBackgroundClip: 'text',
-                          WebkitTextFillColor: 'transparent',
-                          filter: 'drop-shadow(0 4px 20px hsl(var(--accent)/0.35))',
-                        }}
-                      >
-                        {letter}
-                      </motion.span>
-                    ))}
-                  </span>
+                    Uncompromising
+                  </motion.span>
+                  <motion.span 
+                    animate={{ 
+                      backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                    }}
+                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                    className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[0.95] tracking-[-0.02em]"
+                    style={{ 
+                      fontFamily: "'Clash Display', 'DM Sans', sans-serif",
+                      background: 'linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 25%, hsl(265 55% 42%) 50%, hsl(var(--primary)) 75%, hsl(var(--accent)) 100%)',
+                      backgroundSize: '200% 200%',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      filter: 'drop-shadow(0 4px 20px hsl(var(--accent)/0.35))',
+                    }}>
+                    Protection
+                  </motion.span>
                 </h1>
               </motion.div>
 
