@@ -1,6 +1,172 @@
 /* Component-Specific Styles */
 
-/* ===== SOFT MODERN DESIGN SYSTEM ===== */
+/* ===== SKEUOMORPHISM 2.0 DESIGN SYSTEM ===== */
+
+/* Skeuomorphic Card - Physical, tactile card with realistic depth */
+.skeuo-card {
+  background: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(0 0% 98%) 100%);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid hsl(0 0% 90%);
+  box-shadow: 
+    0 1px 1px rgba(0,0,0,0.02),
+    0 2px 2px rgba(0,0,0,0.02),
+    0 4px 4px rgba(0,0,0,0.03),
+    0 8px 8px rgba(0,0,0,0.04),
+    0 16px 16px rgba(0,0,0,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.skeuo-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 
+    0 2px 2px rgba(0,0,0,0.02),
+    0 4px 4px rgba(0,0,0,0.03),
+    0 8px 8px rgba(0,0,0,0.04),
+    0 16px 16px rgba(0,0,0,0.05),
+    0 32px 32px rgba(0,0,0,0.06),
+    inset 0 1px 0 rgba(255,255,255,1);
+}
+
+/* Skeuomorphic Button - Tactile, physical button */
+.skeuo-button {
+  background: linear-gradient(180deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.9) 100%);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  color: white;
+  border: none;
+  box-shadow: 
+    0 1px 2px rgba(0,0,0,0.07),
+    0 2px 4px rgba(0,0,0,0.07),
+    0 4px 8px rgba(0,0,0,0.07),
+    inset 0 1px 0 rgba(255,255,255,0.15),
+    inset 0 -1px 0 rgba(0,0,0,0.1);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.skeuo-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 2px 4px rgba(0,0,0,0.08),
+    0 4px 8px rgba(0,0,0,0.08),
+    0 8px 16px rgba(0,0,0,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.2),
+    inset 0 -1px 0 rgba(0,0,0,0.1);
+}
+
+.skeuo-button:active {
+  transform: translateY(0);
+  box-shadow: 
+    inset 0 2px 4px rgba(0,0,0,0.15),
+    inset 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Skeuomorphic Input - Inset, recessed input field */
+.skeuo-input {
+  background: linear-gradient(180deg, hsl(0 0% 97%) 0%, hsl(0 0% 100%) 100%);
+  border-radius: 0.625rem;
+  padding: 0.875rem 1rem;
+  border: 1px solid hsl(0 0% 88%);
+  box-shadow: 
+    inset 0 1px 3px rgba(0,0,0,0.08),
+    inset 0 2px 6px rgba(0,0,0,0.04),
+    0 1px 0 rgba(255,255,255,0.8);
+  transition: all 0.2s ease-out;
+}
+
+.skeuo-input:focus {
+  border-color: hsl(var(--primary) / 0.5);
+  box-shadow: 
+    inset 0 1px 3px rgba(0,0,0,0.08),
+    inset 0 2px 6px rgba(0,0,0,0.04),
+    0 0 0 3px hsl(var(--primary) / 0.1),
+    0 1px 0 rgba(255,255,255,0.8);
+  outline: none;
+}
+
+/* Skeuomorphic Panel - Raised container */
+.skeuo-panel {
+  background: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(0 0% 99%) 100%);
+  border-radius: 1.25rem;
+  padding: 2rem;
+  border: 1px solid hsl(0 0% 92%);
+  box-shadow: 
+    0 1px 1px rgba(0,0,0,0.015),
+    0 2px 2px rgba(0,0,0,0.015),
+    0 4px 4px rgba(0,0,0,0.02),
+    0 8px 8px rgba(0,0,0,0.025),
+    0 16px 16px rgba(0,0,0,0.03),
+    inset 0 1px 0 rgba(255,255,255,1);
+}
+
+/* Skeuomorphic Badge - Small raised element */
+.skeuo-badge {
+  background: linear-gradient(180deg, hsl(0 0% 98%) 0%, hsl(0 0% 95%) 100%);
+  border-radius: 9999px;
+  padding: 0.375rem 0.875rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid hsl(0 0% 88%);
+  box-shadow: 
+    0 1px 2px rgba(0,0,0,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    inset 0 -1px 0 rgba(0,0,0,0.03);
+}
+
+/* Skeuomorphic Toggle - Switch control */
+.skeuo-toggle-track {
+  background: linear-gradient(180deg, hsl(0 0% 90%) 0%, hsl(0 0% 85%) 100%);
+  border-radius: 9999px;
+  width: 3rem;
+  height: 1.75rem;
+  padding: 0.125rem;
+  box-shadow: 
+    inset 0 1px 3px rgba(0,0,0,0.15),
+    inset 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.2s ease-out;
+}
+
+.skeuo-toggle-track.active {
+  background: linear-gradient(180deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.85) 100%);
+}
+
+.skeuo-toggle-thumb {
+  background: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(0 0% 96%) 100%);
+  border-radius: 9999px;
+  width: 1.5rem;
+  height: 1.5rem;
+  box-shadow: 
+    0 1px 2px rgba(0,0,0,0.1),
+    0 2px 4px rgba(0,0,0,0.08),
+    inset 0 1px 0 rgba(255,255,255,1);
+  transition: transform 0.2s ease-out;
+}
+
+/* Skeuomorphic Divider - Embossed line */
+.skeuo-divider {
+  height: 2px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.02) 50%, rgba(255,255,255,0.8) 100%);
+  border: none;
+  margin: 1.5rem 0;
+}
+
+/* Skeuomorphic Icon Container */
+.skeuo-icon {
+  background: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(0 0% 96%) 100%);
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid hsl(0 0% 90%);
+  box-shadow: 
+    0 1px 2px rgba(0,0,0,0.05),
+    0 2px 4px rgba(0,0,0,0.04),
+    inset 0 1px 0 rgba(255,255,255,1),
+    inset 0 -1px 0 rgba(0,0,0,0.02);
+}
+
+/* ===== LEGACY SOFT MODERN (kept for compatibility) ===== */
 
 /* Floating Card - The core container style */
 .soft-card {
@@ -491,7 +657,7 @@ a[role="button"]:active {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Neumorphism card - raised */
+/* Neumorphism card - raised (legacy) */
 .neumorphism-card {
   background: hsl(var(--background));
   border-radius: 1.5rem;

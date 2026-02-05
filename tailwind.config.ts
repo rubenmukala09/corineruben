@@ -261,6 +261,17 @@ export default {
         "glow-coral": "0 0 30px rgba(248, 146, 106, 0.4)",
         "glow-navy": "0 0 25px rgba(24, 48, 90, 0.25)",
         "glow-lavender": "0 0 25px rgba(187, 129, 181, 0.3)",
+        // Skeuomorphism 2.0 shadows
+        "skeuo-raised": "0 1px 1px rgba(0,0,0,0.04), 0 2px 2px rgba(0,0,0,0.04), 0 4px 4px rgba(0,0,0,0.04), 0 8px 8px rgba(0,0,0,0.04), 0 16px 16px rgba(0,0,0,0.04)",
+        "skeuo-raised-lg": "0 2px 2px rgba(0,0,0,0.03), 0 4px 4px rgba(0,0,0,0.03), 0 8px 8px rgba(0,0,0,0.03), 0 16px 16px rgba(0,0,0,0.03), 0 32px 32px rgba(0,0,0,0.03)",
+        "skeuo-pressed": "inset 0 2px 4px rgba(0,0,0,0.1), inset 0 4px 8px rgba(0,0,0,0.06)",
+        "skeuo-floating": "0 2px 4px rgba(0,0,0,0.02), 0 4px 8px rgba(0,0,0,0.04), 0 8px 16px rgba(0,0,0,0.06), 0 16px 32px rgba(0,0,0,0.08), 0 32px 64px rgba(0,0,0,0.1)",
+        "skeuo-inset": "inset 0 1px 3px rgba(0,0,0,0.1), inset 0 -1px 2px rgba(255,255,255,0.5)",
+        "skeuo-button": "0 1px 2px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.07), 0 4px 8px rgba(0,0,0,0.07), inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(0,0,0,0.05)",
+        "skeuo-button-hover": "0 2px 4px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.08), 0 8px 16px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.05)",
+        "skeuo-button-active": "inset 0 2px 4px rgba(0,0,0,0.12), inset 0 1px 2px rgba(0,0,0,0.08), inset 0 -1px 1px rgba(255,255,255,0.5)",
+        "skeuo-card": "0 1px 1px rgba(0,0,0,0.02), 0 2px 2px rgba(0,0,0,0.02), 0 4px 4px rgba(0,0,0,0.03), 0 8px 8px rgba(0,0,0,0.04), 0 16px 16px rgba(0,0,0,0.05), 0 -1px 0 rgba(255,255,255,0.8)",
+        "skeuo-card-hover": "0 2px 2px rgba(0,0,0,0.02), 0 4px 4px rgba(0,0,0,0.03), 0 8px 8px rgba(0,0,0,0.04), 0 16px 16px rgba(0,0,0,0.05), 0 32px 32px rgba(0,0,0,0.06), 0 -1px 0 rgba(255,255,255,0.9)",
       },
       backdropBlur: {
         xs: "2px",
