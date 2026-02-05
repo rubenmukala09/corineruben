@@ -1,6 +1,7 @@
  import { motion } from "framer-motion";
- import { Star, Shield, Users, TrendingUp, Award, Heart, Quote, ArrowRight, CheckCircle, Sparkles, Lock, Eye, Bell, Zap, Target, Clock } from "lucide-react";
+ import { Star, Shield, Users, TrendingUp, Award, Heart, Quote, ArrowRight, CheckCircle, Sparkles, Lock, Eye, Bell, Zap, Target, Clock, Activity, ShieldCheck, Globe, Fingerprint } from "lucide-react";
  import { Link } from "react-router-dom";
+ import { GlassmorphismImage } from "@/components/GlassmorphismImage";
  import familyLivingRoom from "@/assets/family-living-room-natural.jpg";
  import grandmotherGrandchildren from "@/assets/grandmother-grandchildren-sofa.jpg";
  import seniorsTablet from "@/assets/seniors-tablet-kitchen.jpg";
@@ -33,9 +34,16 @@
  ];
  
  const securityFeatures = [
-   { icon: Lock, title: "End-to-End Protection", desc: "Comprehensive security", gradient: "from-coral-400 to-coral-600" },
-   { icon: Eye, title: "24/7 Monitoring", desc: "Always watching", gradient: "from-lavender-400 to-lavender-600" },
-   { icon: Bell, title: "Instant Alerts", desc: "Real-time notifications", gradient: "from-blue-400 to-blue-600" },
+   { icon: Lock, title: "End-to-End Protection", desc: "Bank-grade encryption", gradient: "from-coral-400 to-coral-600", stat: "256-bit" },
+   { icon: Eye, title: "24/7 Monitoring", desc: "Always vigilant", gradient: "from-lavender-400 to-lavender-600", stat: "Real-time" },
+   { icon: Bell, title: "Instant Alerts", desc: "Immediate response", gradient: "from-blue-400 to-blue-600", stat: "<1 sec" },
+   { icon: Fingerprint, title: "Identity Shield", desc: "Personal protection", gradient: "from-emerald-400 to-emerald-600", stat: "Active" },
+ ];
+ 
+ const liveMetrics = [
+   { icon: Activity, label: "Active Scans", value: "2.4K", color: "#F8926A", trend: "+12%" },
+   { icon: ShieldCheck, label: "Threats Blocked", value: "847", color: "#BB81B5", trend: "+8%" },
+   { icon: Globe, label: "Protected Devices", value: "1.2K", color: "#18305A", trend: "+15%" },
  ];
  
  export const PremiumGlassmorphismWidgets = () => {
@@ -167,24 +175,32 @@
                    whileInView={{ opacity: 1, y: 0 }}
                    transition={{ delay: i * 0.1 }}
                    viewport={{ once: true }}
-                   className="group relative bg-white/80 backdrop-blur-xl rounded-3xl p-6 border border-white/50 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 cursor-default overflow-hidden"
+                    className="group relative bg-white/90 backdrop-blur-xl rounded-3xl p-5 border border-white/60 shadow-lg hover:shadow-2xl hover:-translate-y-3 transition-all duration-400 cursor-default overflow-hidden"
                  >
                    {/* Glow Effect */}
                    <div 
-                     className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500"
+                      className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-500"
                      style={{ background: `radial-gradient(circle at center, ${stat.color} 0%, transparent 70%)` }}
                    />
+                    {/* Shine Effect */}
+                    <div 
+                      className="absolute -top-1/2 -left-1/2 w-full h-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+                      style={{ 
+                        background: 'linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 50%)',
+                        transform: 'rotate(-45deg)',
+                      }}
+                    />
                    <div className="relative z-10">
                      <div 
-                       className="w-12 h-12 rounded-2xl mb-4 flex items-center justify-center shadow-lg"
-                       style={{ background: `linear-gradient(135deg, ${stat.color}20 0%, ${stat.color}40 100%)` }}
+                        className="w-14 h-14 rounded-2xl mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300"
+                        style={{ background: `linear-gradient(135deg, ${stat.color}30 0%, ${stat.color}50 100%)` }}
                      >
-                       <stat.icon className="w-6 h-6" style={{ color: stat.color }} />
+                        <stat.icon className="w-7 h-7" style={{ color: stat.color }} />
                      </div>
-                     <div className="text-2xl font-black text-[#18305A] mb-1" style={{ fontFamily: "'Clash Display', sans-serif" }}>
+                      <div className="text-3xl font-black text-[#18305A] mb-1" style={{ fontFamily: "'Clash Display', sans-serif" }}>
                        {stat.value}
                      </div>
-                     <div className="text-xs text-foreground/50 font-medium">{stat.label}</div>
+                      <div className="text-xs text-foreground/60 font-semibold uppercase tracking-wide">{stat.label}</div>
                    </div>
                  </motion.div>
                ))}
@@ -192,7 +208,7 @@
  
              {/* Testimonials */}
              {/* Enhanced Security Feature Widgets */}
-             <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                {securityFeatures.map((feature, i) => (
                  <motion.div
                    key={feature.title}
@@ -200,20 +216,68 @@
                    whileInView={{ opacity: 1, scale: 1 }}
                    transition={{ delay: 0.1 + i * 0.1 }}
                    viewport={{ once: true }}
-                   className="group relative bg-white/80 backdrop-blur-xl rounded-2xl p-5 border border-white/50 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-center overflow-hidden"
+                    className="group relative bg-white/90 backdrop-blur-xl rounded-2xl p-4 border border-white/60 shadow-lg hover:shadow-2xl hover:-translate-y-3 transition-all duration-400 text-center overflow-hidden"
                  >
                    <motion.div 
                      className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
                    />
+                    {/* Stat Badge */}
+                    <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-white/80 backdrop-blur-sm border border-white/50 shadow-sm">
+                      <span className="text-[10px] font-bold text-foreground/70">{feature.stat}</span>
+                    </div>
                    
-                   <div className={`w-12 h-12 mx-auto rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center shadow-lg mb-3 group-hover:scale-110 transition-transform duration-300`}>
-                     <feature.icon className="w-6 h-6 text-white" />
+                    <div className={`w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center shadow-lg mb-3 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
+                      <feature.icon className="w-7 h-7 text-white" />
                    </div>
-                   <h4 className="font-bold text-sm text-[#18305A] mb-1">{feature.title}</h4>
+                    <h4 className="font-bold text-sm text-[#18305A] mb-0.5">{feature.title}</h4>
                    <p className="text-xs text-foreground/50">{feature.desc}</p>
                  </motion.div>
                ))}
              </div>
+              
+              {/* Live Metrics Dashboard Widget */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.25 }}
+                viewport={{ once: true }}
+                className="relative bg-gradient-to-br from-[#18305A] to-[#2a4a7a] rounded-3xl p-6 shadow-2xl overflow-hidden"
+              >
+                {/* Background Glow */}
+                <div className="absolute top-0 right-0 w-48 h-48 rounded-full bg-coral-400 blur-3xl opacity-20" />
+                <div className="absolute bottom-0 left-0 w-36 h-36 rounded-full bg-lavender-400 blur-3xl opacity-15" />
+                
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="flex items-center gap-2">
+                      <Activity className="w-5 h-5 text-coral-400" />
+                      <h4 className="font-bold text-white">Live Dashboard</h4>
+                    </div>
+                    <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                      <span className="text-xs font-medium text-white/80">Live</span>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-3 gap-4">
+                    {liveMetrics.map((metric, i) => (
+                      <div key={metric.label} className="text-center">
+                        <div className="w-12 h-12 mx-auto rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center mb-2 border border-white/20">
+                          <metric.icon className="w-6 h-6" style={{ color: metric.color }} />
+                        </div>
+                        <div className="text-2xl font-black text-white mb-0.5" style={{ fontFamily: "'Clash Display', sans-serif" }}>
+                          {metric.value}
+                        </div>
+                        <div className="text-[10px] text-white/60 uppercase tracking-wide mb-1">{metric.label}</div>
+                        <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/20">
+                          <TrendingUp className="w-3 h-3 text-emerald-400" />
+                          <span className="text-[10px] font-bold text-emerald-400">{metric.trend}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
  
              {/* Testimonials */}
              <div className="grid md:grid-cols-2 gap-6">

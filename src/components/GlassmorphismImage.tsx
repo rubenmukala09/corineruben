@@ -11,11 +11,12 @@
    height?: number;
    overlayColor?: 'coral' | 'lavender' | 'navy' | 'mixed';
    disabled?: boolean;
+   intensity?: 'subtle' | 'normal' | 'strong';
  }
  
  /**
-  * Image component with cursor-following glassmorphism overlay effect
-  * Premium interactive hover effect with theme layer colors
+  * Premium Image component with cursor-following glassmorphism spotlight effect
+  * Features: dynamic lighting, color-shifting overlay, and premium glass aesthetics
   */
  export function GlassmorphismImage({
    src,
@@ -26,44 +27,75 @@
    height,
    overlayColor = 'mixed',
    disabled = false,
+   intensity = 'normal',
  }: GlassmorphismImageProps) {
    const containerRef = useRef<HTMLDivElement>(null);
-   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
    const [isHovering, setIsHovering] = useState(false);
+   const [isLoaded, setIsLoaded] = useState(false);
  
    const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
      if (disabled || !containerRef.current) return;
-     
      const rect = containerRef.current.getBoundingClientRect();
      const x = ((e.clientX - rect.left) / rect.width) * 100;
      const y = ((e.clientY - rect.top) / rect.height) * 100;
      setMousePosition({ x, y });
    }, [disabled]);
  
-   const overlayGradients = {
-     coral: 'from-coral-400/30 via-coral-300/20 to-transparent',
-     lavender: 'from-lavender-400/30 via-lavender-300/20 to-transparent',
-     navy: 'from-navy-400/30 via-navy-300/20 to-transparent',
-     mixed: 'from-coral-400/25 via-lavender-400/20 to-navy-300/15',
+   const intensityConfig = {
+     subtle: { spotSize: 120, opacity: 0.6 },
+     normal: { spotSize: 180, opacity: 0.85 },
+     strong: { spotSize: 220, opacity: 1 },
+   };
+   
+   const config = intensityConfig[intensity];
+ 
+   const colorStyles = {
+     coral: {
+       gradient: 'linear-gradient(135deg, rgba(248,146,106,0.35) 0%, rgba(248,146,106,0.15) 50%, transparent 100%)',
+       spotColor: 'rgba(248,146,106,0.5)',
+       borderColor: 'rgba(248,146,106,0.6)',
+       glowColor: 'rgba(248,146,106,0.35)',
+     },
+     lavender: {
+       gradient: 'linear-gradient(135deg, rgba(187,129,181,0.35) 0%, rgba(187,129,181,0.15) 50%, transparent 100%)',
+       spotColor: 'rgba(187,129,181,0.5)',
+       borderColor: 'rgba(187,129,181,0.6)',
+       glowColor: 'rgba(187,129,181,0.35)',
+     },
+     navy: {
+       gradient: 'linear-gradient(135deg, rgba(24,48,90,0.35) 0%, rgba(24,48,90,0.15) 50%, transparent 100%)',
+       spotColor: 'rgba(24,48,90,0.5)',
+       borderColor: 'rgba(24,48,90,0.6)',
+       glowColor: 'rgba(24,48,90,0.35)',
+     },
+     mixed: {
+       gradient: 'linear-gradient(135deg, rgba(248,146,106,0.3) 0%, rgba(187,129,181,0.25) 50%, rgba(24,48,90,0.2) 100%)',
+       spotColor: 'rgba(255,255,255,0.6)',
+       borderColor: 'rgba(255,255,255,0.7)',
+       glowColor: 'rgba(248,146,106,0.3)',
+     },
    };
  
-   const borderGradients = {
-     coral: 'border-coral-300/40',
-     lavender: 'border-lavender-300/40',
-     navy: 'border-navy-300/40',
-     mixed: 'border-white/50',
-   };
+   const colors = colorStyles[overlayColor];
  
    return (
      <div
        ref={containerRef}
        className={cn(
-         'relative overflow-hidden rounded-2xl group cursor-pointer',
+         'relative overflow-hidden rounded-2xl group cursor-pointer transform-gpu',
          className
        )}
        onMouseMove={handleMouseMove}
        onMouseEnter={() => !disabled && setIsHovering(true)}
        onMouseLeave={() => setIsHovering(false)}
+       style={{
+         boxShadow: isHovering 
+           ? `0 25px 50px -12px ${colors.glowColor}, 0 0 0 1px ${colors.borderColor}`
+           : '0 10px 40px -10px rgba(0,0,0,0.1)',
+         transition: 'box-shadow 0.4s ease-out, transform 0.4s ease-out',
+         transform: isHovering ? 'translateY(-4px)' : 'translateY(0)',
+       }}
      >
        {/* Base Image */}
        <img
@@ -73,63 +105,122 @@
          height={height}
          loading="lazy"
          decoding="async"
+         onLoad={() => setIsLoaded(true)}
          className={cn(
-           'w-full h-full object-cover transition-transform duration-500',
-           isHovering && 'scale-105',
+           'w-full h-full object-cover transition-all duration-700 ease-out',
+           isHovering && 'scale-[1.06] brightness-105',
+           !isLoaded && 'opacity-0',
            imageClassName
          )}
        />
  
-       {/* Theme Layer Color Overlay */}
-       <div 
-         className={cn(
-           'absolute inset-0 bg-gradient-to-br opacity-0 transition-opacity duration-300',
-           overlayGradients[overlayColor],
-           isHovering && 'opacity-100'
-         )}
-       />
- 
-       {/* Cursor-following Glassmorphism Spotlight */}
-       {!disabled && (
-         <motion.div
-           className="absolute pointer-events-none"
-           animate={{
-             left: `${mousePosition.x}%`,
-             top: `${mousePosition.y}%`,
-             opacity: isHovering ? 1 : 0,
-           }}
-           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-           style={{
-             width: '180px',
-             height: '180px',
-             marginLeft: '-90px',
-             marginTop: '-90px',
-           }}
-         >
-           <div className="w-full h-full rounded-full bg-white/20 backdrop-blur-md border border-white/40 shadow-[0_8px_32px_rgba(255,255,255,0.25)]" />
-         </motion.div>
-       )}
- 
-       {/* Edge Glow Effect */}
-       <div 
-         className={cn(
-           'absolute inset-0 rounded-2xl border-2 transition-all duration-300',
-           borderGradients[overlayColor],
-           isHovering ? 'opacity-100 shadow-lg' : 'opacity-0'
-         )}
+       {/* Dynamic Color Wash Overlay */}
+       <motion.div 
+         className="absolute inset-0 pointer-events-none"
+         animate={{ opacity: isHovering ? 1 : 0 }}
+         transition={{ duration: 0.4 }}
          style={{
-           boxShadow: isHovering 
-             ? `inset 0 0 30px rgba(255,255,255,0.1), 0 0 20px rgba(248,146,106,0.15)` 
-             : 'none'
+           background: colors.gradient,
+           mixBlendMode: 'overlay',
          }}
        />
  
-       {/* Bottom Gradient Fade */}
+       {/* Premium Cursor-Following Glass Spotlight */}
+       {!disabled && (
+         <motion.div
+           className="absolute pointer-events-none z-10"
+           animate={{
+             left: `${mousePosition.x}%`,
+             top: `${mousePosition.y}%`,
+             opacity: isHovering ? config.opacity : 0,
+             scale: isHovering ? 1 : 0.5,
+           }}
+           transition={{ 
+             type: 'spring', 
+             stiffness: 180, 
+             damping: 22,
+             opacity: { duration: 0.3 },
+             scale: { duration: 0.4 },
+           }}
+           style={{
+             width: `${config.spotSize}px`,
+             height: `${config.spotSize}px`,
+             marginLeft: `-${config.spotSize / 2}px`,
+             marginTop: `-${config.spotSize / 2}px`,
+           }}
+         >
+           {/* Outer Glow Ring */}
+           <div 
+             className="absolute inset-0 rounded-full blur-2xl"
+             style={{
+               background: `radial-gradient(circle, ${colors.spotColor} 0%, transparent 70%)`,
+               transform: 'scale(1.6)',
+             }}
+           />
+           {/* Inner Glass Circle */}
+           <div 
+             className="absolute inset-3 rounded-full backdrop-blur-xl border-2"
+             style={{
+               background: 'linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.15) 100%)',
+               borderColor: 'rgba(255,255,255,0.7)',
+               boxShadow: `
+                 inset 0 2px 4px rgba(255,255,255,0.6),
+                 0 8px 32px rgba(0,0,0,0.12),
+                 0 0 80px ${colors.spotColor}
+               `,
+             }}
+           />
+           {/* Center Highlight */}
+           <div 
+             className="absolute inset-8 rounded-full"
+             style={{
+               background: 'radial-gradient(circle, rgba(255,255,255,0.9) 0%, transparent 70%)',
+             }}
+           />
+         </motion.div>
+       )}
+ 
+       {/* Premium Edge Frame */}
+       <motion.div 
+         className="absolute inset-0 rounded-2xl pointer-events-none"
+         animate={{ opacity: isHovering ? 1 : 0 }}
+         transition={{ duration: 0.3 }}
+         style={{
+           border: `2px solid ${colors.borderColor}`,
+           boxShadow: `inset 0 0 50px rgba(255,255,255,0.2)`,
+         }}
+       />
+ 
+       {/* Corner Shine Effects */}
+       {isHovering && (
+         <>
+           <motion.div 
+             className="absolute top-0 left-0 w-28 h-28 pointer-events-none"
+             initial={{ opacity: 0 }}
+             animate={{ opacity: 0.9 }}
+             transition={{ duration: 0.5 }}
+             style={{
+               background: 'linear-gradient(135deg, rgba(255,255,255,0.5) 0%, transparent 60%)',
+             }}
+           />
+           <motion.div 
+             className="absolute bottom-0 right-0 w-36 h-36 pointer-events-none"
+             initial={{ opacity: 0 }}
+             animate={{ opacity: 0.7 }}
+             transition={{ duration: 0.5, delay: 0.1 }}
+             style={{
+               background: 'linear-gradient(315deg, rgba(255,255,255,0.35) 0%, transparent 60%)',
+             }}
+           />
+         </>
+       )}
+ 
+       {/* Subtle Vignette */}
        <div 
-         className={cn(
-           'absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/30 to-transparent transition-opacity duration-300',
-           isHovering ? 'opacity-100' : 'opacity-0'
-         )}
+         className="absolute inset-0 pointer-events-none opacity-30"
+         style={{
+           background: 'radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.25) 100%)',
+         }}
        />
      </div>
    );

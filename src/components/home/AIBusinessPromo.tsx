@@ -3,9 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Phone, Calendar, Bot, Globe, ArrowRight, TrendingUp, Zap, CheckCircle, Award, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import { GlassmorphismImage } from "@/components/GlassmorphismImage";
- import businessStrategyMeeting from "@/assets/business-strategy-meeting.jpg";
- import consultingTeamDiscussion from "@/assets/consulting-team-discussion.jpg";
- import expertTeamWorking from "@/assets/expert-team-working.jpg";
+ import professionalTeam from "@/assets/professional-team-collaboration.jpg";
+ import consultingTeamOffice from "@/assets/consulting-team-office.jpg";
  
  const services = [
    { icon: Phone, title: "AI Receptionist", desc: "Never miss a call", highlight: "24/7" },
@@ -169,32 +168,35 @@ import { GlassmorphismImage } from "@/components/GlassmorphismImage";
               <div className="relative grid grid-cols-2 gap-4">
                  {/* Main Image - Strategy Meeting */}
                 <GlassmorphismImage 
-                  src={businessStrategyMeeting}
-                  alt="Business strategy meeting with team"
+                  src={professionalTeam}
+                  alt="Professional consulting team collaboration"
                   className="col-span-2 aspect-[16/9] shadow-2xl shadow-lavender-400/20 border-4 border-white rounded-3xl"
                   overlayColor="lavender"
                   width={600}
                   height={338}
+                  intensity="strong"
                 />
                
                  {/* Consulting Team Discussion */}
                 <GlassmorphismImage 
-                  src={consultingTeamDiscussion}
-                  alt="Consulting team in discussion"
+                  src={consultingTeamOffice}
+                  alt="Dedicated consulting team in modern office"
                   className="aspect-[4/3] shadow-xl border-3 border-white rounded-2xl"
                   overlayColor="coral"
                   width={200}
                   height={150}
+                  intensity="normal"
                 />
                 
                  {/* Expert Team Working */}
                 <GlassmorphismImage 
-                  src={expertTeamWorking}
-                  alt="Expert consulting team at work"
+                  src={professionalTeam}
+                  alt="Expert team strategic planning"
                   className="aspect-[4/3] shadow-xl border-3 border-white rounded-2xl"
                   overlayColor="mixed"
                   width={200}
                   height={150}
+                  intensity="normal"
                 />
              </div>
  
