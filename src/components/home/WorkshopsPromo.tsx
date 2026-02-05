@@ -1,8 +1,7 @@
- import { Link } from "react-router-dom";
- import { Button } from "@/components/ui/button";
-import { ArrowRight, Shield, Eye, AlertTriangle, Target, GraduationCap, CheckCircle, Play, Sparkles } from "lucide-react";
- import { motion } from "framer-motion";
-import workshopTraining from "@/assets/workshop-training-session.jpg";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Shield, Eye, AlertTriangle, Target, CheckCircle, Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
 import seniorLearning from "@/assets/senior-learning.jpg";
  
  const services = [
@@ -52,16 +51,16 @@ import seniorLearning from "@/assets/senior-learning.jpg";
                 <div className="absolute -inset-6 rounded-[48px] bg-gradient-to-br from-coral-200/40 via-lavender-100/30 to-white opacity-90" />
                
                 {/* Primary Photo - Workshop Training */}
-                <div className="relative aspect-[4/3] rounded-[32px] overflow-hidden shadow-2xl shadow-coral-400/20 border-4 border-white">
-                  <img 
-                    src={workshopTraining} 
-                    alt="Expert-led workshop training session"
-                    width={600}
-                    height={450}
-                    loading="lazy"
-                    decoding="async"
+                <div className="relative aspect-[4/3] rounded-[32px] overflow-hidden shadow-2xl shadow-coral-400/20 border-4 border-white bg-black">
+                  <video 
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
                     className="w-full h-full object-cover"
-                  />
+                  >
+                    <source src="https://videos.pexels.com/video-files/7579962/7579962-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+                  </video>
                   {/* Premium overlay gradient */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#18305A]/20 via-transparent to-transparent" />
                </div>
@@ -84,18 +83,6 @@ import seniorLearning from "@/assets/senior-learning.jpg";
                     className="w-full h-full object-cover"
                   />
                 </motion.div>
- 
-               {/* Video Play Button */}
-               <motion.button 
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-white/90 backdrop-blur-sm shadow-2xl flex items-center justify-center group hover:scale-110 transition-transform z-10 border-2 border-coral-200/50"
-                 whileHover={{ scale: 1.1 }}
-                 whileTap={{ scale: 0.95 }}
-               >
-                  <div className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg"
-                    style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }}>
-                   <Play className="w-6 h-6 text-white fill-white ml-1" />
-                 </div>
-               </motion.button>
  
                 {/* Stats Card - Premium */}
                <motion.div 
