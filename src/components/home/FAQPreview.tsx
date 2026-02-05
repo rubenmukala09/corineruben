@@ -10,7 +10,6 @@ import {
 import supportAgent from "@/assets/support-agent.jpg";
 import natureCTABg from "@/assets/nature-cta-bg.jpg";
 import { GeometricCorner, GridPattern } from "@/components/ui/GeometricDecorations";
- import { GlassmorphismImage } from "@/components/GlassmorphismImage";
  import customerSupportHeadset from "@/assets/customer-support-headset.jpg";
 
 const faqs = [
@@ -68,14 +67,14 @@ export const FAQPreview = () => {
             <div className="bg-white rounded-3xl p-8 border border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] transition-all duration-400 ease-out hover:translate-y-[-8px] hover:scale-[1.02] hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)] overflow-hidden">
               {/* Featured Support Image */}
               <div className="mb-6 -mx-8 -mt-8">
-                <GlassmorphismImage 
+                <img 
                   src={customerSupportHeadset}
                   alt="Professional customer support specialist"
-                  className="w-full aspect-[16/9] rounded-t-3xl"
-                  overlayColor="coral"
+                  className="w-full aspect-[16/9] rounded-t-3xl object-cover"
                   width={400}
                   height={225}
-                  intensity="normal"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
               

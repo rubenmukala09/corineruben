@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Phone, Calendar, Bot, Globe, ArrowRight, TrendingUp, Zap, CheckCircle, Award, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
-import { GlassmorphismImage } from "@/components/GlassmorphismImage";
  import professionalTeam from "@/assets/professional-team-collaboration.jpg";
  import consultingTeamOffice from "@/assets/consulting-team-office.jpg";
  
@@ -167,36 +166,36 @@ import { GlassmorphismImage } from "@/components/GlassmorphismImage";
               
               <div className="relative grid grid-cols-2 gap-4">
                  {/* Main Image - Strategy Meeting */}
-                <GlassmorphismImage 
+                <img 
                   src={professionalTeam}
                   alt="Professional consulting team collaboration"
-                  className="col-span-2 aspect-[16/9] shadow-2xl shadow-lavender-400/20 border-4 border-white rounded-3xl"
-                  overlayColor="lavender"
+                  className="col-span-2 aspect-[16/9] shadow-2xl shadow-lavender-400/20 border-4 border-white rounded-3xl w-full h-full object-cover"
                   width={600}
                   height={338}
-                  intensity="strong"
+                  loading="lazy"
+                  decoding="async"
                 />
                
                  {/* Consulting Team Discussion */}
-                <GlassmorphismImage 
+                <img 
                   src={consultingTeamOffice}
                   alt="Dedicated consulting team in modern office"
-                  className="aspect-[4/3] shadow-xl border-3 border-white rounded-2xl"
-                  overlayColor="coral"
+                  className="aspect-[4/3] shadow-xl border-3 border-white rounded-2xl w-full h-full object-cover"
                   width={200}
                   height={150}
-                  intensity="normal"
+                  loading="lazy"
+                  decoding="async"
                 />
                 
                  {/* Expert Team Working */}
-                <GlassmorphismImage 
+                <img 
                   src={professionalTeam}
                   alt="Expert team strategic planning"
-                  className="aspect-[4/3] shadow-xl border-3 border-white rounded-2xl"
-                  overlayColor="mixed"
+                  className="aspect-[4/3] shadow-xl border-3 border-white rounded-2xl w-full h-full object-cover"
                   width={200}
                   height={150}
-                  intensity="normal"
+                  loading="lazy"
+                  decoding="async"
                 />
              </div>
  

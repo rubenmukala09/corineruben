@@ -1,7 +1,6 @@
  import { motion } from "framer-motion";
  import { Star, Shield, Users, TrendingUp, Award, Heart, Quote, ArrowRight, CheckCircle, Sparkles, Lock, Eye, Bell, Zap, Target, Clock, Activity, ShieldCheck, Globe, Fingerprint } from "lucide-react";
  import { Link } from "react-router-dom";
- import { GlassmorphismImage } from "@/components/GlassmorphismImage";
  import familyLivingRoom from "@/assets/family-living-room-natural.jpg";
  import grandmotherGrandchildren from "@/assets/grandmother-grandchildren-sofa.jpg";
  import seniorsTablet from "@/assets/seniors-tablet-kitchen.jpg";

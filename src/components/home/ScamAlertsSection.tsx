@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { GlassmorphismImage } from "@/components/GlassmorphismImage";
 import { Shield, ArrowRight, TrendingUp, Phone, Mail, CreditCard, AlertTriangle, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -96,13 +95,14 @@ export const ScamAlertsSection = () => {
             viewport={{ once: true }}
             className="relative"
           >
-            <GlassmorphismImage 
+            <img 
               src={threatAnalysisScreen}
               alt="Threat analysis and monitoring"
-              className="h-64 shadow-2xl shadow-coral-400/20 border-4 border-white rounded-3xl"
-              overlayColor="coral"
+              className="h-64 shadow-2xl shadow-coral-400/20 border-4 border-white rounded-3xl w-full object-cover"
               width={600}
               height={400}
+              loading="lazy"
+              decoding="async"
             />
             <div className="absolute bottom-4 left-4 right-4 flex items-center gap-3 z-20">
               <div className="w-10 h-10 rounded-xl bg-coral-500 flex items-center justify-center">
@@ -122,13 +122,14 @@ export const ScamAlertsSection = () => {
             viewport={{ once: true }}
             className="relative"
           >
-            <GlassmorphismImage 
+            <img 
               src={seniorPhoneProtection}
               alt="Senior using phone safely"
-              className="h-64 shadow-2xl shadow-lavender-400/20 border-4 border-white rounded-3xl"
-              overlayColor="lavender"
+              className="h-64 shadow-2xl shadow-lavender-400/20 border-4 border-white rounded-3xl w-full object-cover"
               width={600}
               height={400}
+              loading="lazy"
+              decoding="async"
             />
             <div className="absolute bottom-4 left-4 right-4 flex items-center gap-3 z-20">
               <div className="w-10 h-10 rounded-xl bg-lavender-500 flex items-center justify-center">

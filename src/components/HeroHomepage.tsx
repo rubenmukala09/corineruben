@@ -284,7 +284,7 @@ export const HeroHomepage = () => {
                 className="flex flex-wrap gap-8 mt-10 pt-8 border-t border-border/30"
               >
                 {[
-                  { value: "17%", label: "Veteran Discount" },
+                  { value: "10%", label: "Veteran Discount" },
                   { value: "60", label: "Day Guarantee" },
                   { value: "24/7", label: "Support" },
                   { value: "100%", label: "Satisfaction" }

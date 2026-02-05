@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Lightbulb, Award, Shield, GraduationCap } from "lucide-react";
-import { GlassmorphismImage } from "@/components/GlassmorphismImage";
 import communityTraining from "@/assets/community-training.jpg";
 import workshopInstructor from "@/assets/workshop-instructor.jpg";
 import { HexagonIcon, GeometricCorner, DottedPattern, FloatingShapes, GridPattern } from "@/components/ui/GeometricDecorations";
@@ -90,11 +89,14 @@ export const FeatureBar = () => {
             <DottedPattern direction="diagonal" length={5} className="absolute -top-8 left-1/2 -translate-x-1/2" />
             
             <div className="relative flex-1">
-              <GlassmorphismImage 
+              <img 
                 src={communityTraining} 
                 alt="Community Training" 
-                className="h-48 shadow-xl border-2 border-primary/10 rounded-2xl"
-                overlayColor="coral"
+                className="h-48 shadow-xl border-2 border-primary/10 rounded-2xl w-full object-cover"
+                width={300}
+                height={192}
+                loading="lazy"
+                decoding="async"
               />
               {/* Hexagon accent */}
               <div className="absolute -bottom-4 -right-4">
@@ -104,11 +106,14 @@ export const FeatureBar = () => {
               </div>
             </div>
             <div className="relative flex-1 mt-8">
-              <GlassmorphismImage 
+              <img 
                 src={workshopInstructor} 
                 alt="Workshop Instructor" 
-                className="h-48 shadow-xl border-2 border-accent/10 rounded-2xl"
-                overlayColor="lavender"
+                className="h-48 shadow-xl border-2 border-accent/10 rounded-2xl w-full object-cover"
+                width={300}
+                height={192}
+                loading="lazy"
+                decoding="async"
               />
               {/* Corner triangle accent */}
               <div className="absolute -top-2 -left-2 w-0 h-0" style={{

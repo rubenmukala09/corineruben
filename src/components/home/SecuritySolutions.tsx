@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { GlassmorphismImage } from "@/components/GlassmorphismImage";
 import heroServices1 from "@/assets/hero-services-1.jpg";
 import heroServices2 from "@/assets/hero-services-2.jpg";
 import heroServices3 from "@/assets/hero-services-3.jpg";
@@ -15,7 +14,6 @@ const portfolioImages = [
   { src: communityTraining, alt: "Community Workshops", category: "Workshops" },
   { src: securityExpert, alt: "Expert Consultation", category: "Consultation" },
 ];
-const overlayColors: Array<'coral' | 'lavender' | 'navy' | 'mixed'> = ['coral', 'lavender', 'navy', 'mixed', 'coral', 'lavender'];
 
 import { LightOrbs, Sparkles, IllustrationLines } from "@/components/ui/GeometricDecorations";
 
@@ -76,11 +74,14 @@ export const SecuritySolutions = () => {
                   <div className="absolute -inset-3 rounded-2xl border-2 border-primary/20 group-hover:border-primary/40 transition-colors duration-300" />
                   
                   {/* Main image - Soft Modern */}
-                  <GlassmorphismImage 
+                  <img 
                     src={image.src}
                     alt={image.alt}
-                    className="w-36 h-36 md:w-44 md:h-44 border border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] rounded-2xl"
-                    overlayColor={overlayColors[index % overlayColors.length]}
+                    className="w-36 h-36 md:w-44 md:h-44 border border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] rounded-2xl object-cover"
+                    width={176}
+                    height={176}
+                    loading="lazy"
+                    decoding="async"
                   />
                   
                   {/* Small decorative illustration */}
