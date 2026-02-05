@@ -183,7 +183,7 @@ export const HeroHomepage = () => {
                     className="w-14 h-1 rounded-full bg-gradient-to-r from-primary via-accent to-primary"
                   />
                   <span className="text-[11px] font-bold tracking-[0.2em] text-foreground/60 uppercase">
-                    Est. 2020 — Ohio
+                    Est. 2020 | Ohio
                   </span>
                 </div>
               </motion.div>

@@ -522,7 +522,7 @@ function Resources() {
               </h2>
               <p className="text-base text-muted-foreground mb-4 leading-relaxed">
                 Welcome to InVision Network's resource center. Here you'll find carefully curated 
-                <strong className="text-foreground"> e-books, digital guides, softcover books, and security gadgets</strong> — 
+                <strong className="text-foreground"> e-books, digital guides, softcover books, and security gadgets</strong>. 
                 all designed to help you and your family stay safe in the digital age. Every product 
                 is created by security experts with decades of experience protecting families from scams.
               </p>

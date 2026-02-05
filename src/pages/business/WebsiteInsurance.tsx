@@ -91,7 +91,7 @@ const WebsiteInsurance = () => {
     {
       icon: HeadphonesIcon,
       title: "Expert Support",
-      description: "Real humans ready to help when something goes wrong—not bots."
+      description: "Real humans ready to help when something goes wrong. Not bots."
     },
     {
       icon: Server,
@@ -101,7 +101,7 @@ const WebsiteInsurance = () => {
     {
       icon: Shield,
       title: "Hack Recovery",
-      description: "If your site gets hacked, we clean it up and secure it—guaranteed."
+      description: "If your site gets hacked, we clean it up and secure it. Guaranteed."
     }
   ];
 
@@ -183,7 +183,7 @@ const WebsiteInsurance = () => {
                 </h1>
                 <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
                   Sleep soundly knowing your website is protected 24/7. Automatic backups, 
-                  security monitoring, and expert support—all in one plan.
+                  security monitoring, and expert support. All in one plan.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button asChild size="xl" variant="gold">

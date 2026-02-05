@@ -77,7 +77,7 @@ export const CompanyIntroSection = () => {
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             In today's world, scammers use AI to create convincing attacks that fool even the smartest people. 
-            <strong className="text-foreground"> Without protection, it's not if you'll be targeted—it's when.</strong>
+            <strong className="text-foreground"> Without protection, it's not if you'll be targeted. It's when.</strong>
           </p>
           <DottedPattern direction="horizontal" length={8} className="justify-center mt-6" />
         </motion.div>

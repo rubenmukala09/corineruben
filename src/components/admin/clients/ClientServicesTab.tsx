@@ -46,8 +46,8 @@ export function ClientServicesTab({ clientId }: ClientServicesTabProps) {
           status: sub.status || "active",
           plan: sub.plan_name,
           price: sub.amount,
-          startDate: sub.created_at ? new Date(sub.created_at).toLocaleDateString() : "—",
-          nextBilling: sub.current_period_end ? new Date(sub.current_period_end).toLocaleDateString() : "—",
+          startDate: sub.created_at ? new Date(sub.created_at).toLocaleDateString() : "-",
+          nextBilling: sub.current_period_end ? new Date(sub.current_period_end).toLocaleDateString() : "-",
         }));
         setServices(mappedServices);
       } else {

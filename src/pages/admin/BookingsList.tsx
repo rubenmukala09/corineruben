@@ -496,11 +496,11 @@ const BookingsList = () => {
                           )}
                         </div>
                       ) : (
-                        <span className="text-muted-foreground">—</span>
+                        <span className="text-muted-foreground">-</span>
                       )}
                     </TableCell>
                     <TableCell>
-                      <span className="text-sm">{booking.preferred_dates || "—"}</span>
+                      <span className="text-sm">{booking.preferred_dates || "-"}</span>
                     </TableCell>
                     <TableCell>{getStatusBadge(booking.status)}</TableCell>
                     <TableCell>

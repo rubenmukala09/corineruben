@@ -27,7 +27,7 @@ function MetricCard({ title, value, change, icon: Icon, color, isPlaceholder }: 
             <div className="text-xs text-muted-foreground">Setup Required</div>
           </div>
           <div className="mt-3">
-            <p className="text-lg font-medium text-muted-foreground">—</p>
+            <p className="text-lg font-medium text-muted-foreground">-</p>
             <p className="text-xs text-muted-foreground">{title}</p>
           </div>
         </CardContent>

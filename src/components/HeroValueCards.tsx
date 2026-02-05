@@ -56,7 +56,7 @@ const HeroValueCards = () => {
             Choose Your <span className="text-primary">Protection Level</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Whether you need personal protection, family training, or business security — we've got you covered
+            Whether you need personal protection, family training, or business security, we've got you covered
           </p>
         </div>
 

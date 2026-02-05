@@ -5,10 +5,10 @@ import { motion } from "framer-motion";
 // Consider fetching from database for dynamic updates
 const HeroFloatingStats = () => {
   const stats = [
-    { icon: Shield, text: "100+ Families Protected" },
-    { icon: Star, text: "4.9/5 Star Rating" },
-    { icon: Award, text: "Cybersecurity Expert-Founded" },
-    { icon: Lock, text: "Privacy-First" },
+    { icon: Shield, text: "100+ Families Protected", iconBg: "bg-emerald-100", iconColor: "text-emerald-600" },
+    { icon: Star, text: "4.9/5 Star Rating", iconBg: "bg-amber-100", iconColor: "text-amber-600" },
+    { icon: Award, text: "Cybersecurity Expert-Founded", iconBg: "bg-violet-100", iconColor: "text-violet-600" },
+    { icon: Lock, text: "Privacy-First", iconBg: "bg-sky-100", iconColor: "text-sky-600" },
   ];
 
   return (
@@ -30,29 +30,29 @@ const HeroFloatingStats = () => {
             delay: 0.6
           }
         }}
-        className="relative rounded-full py-5 px-12 md:px-16 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.12)] overflow-hidden border border-coral-200/50"
+        className="relative rounded-full py-6 px-14 md:px-20 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] overflow-hidden border-2 border-white/60"
         style={{
-          background: "linear-gradient(135deg, #ffffff 0%, #faf9f7 50%, #fff5f0 100%)",
+          background: "linear-gradient(135deg, #FFFBF5 0%, #FFF8F0 30%, #FFF5EB 60%, #FFFDF9 100%)",
         }}
       >
-        {/* Subtle gradient accent line at top */}
+        {/* Colorful gradient accent line at top */}
         <div 
-          className="absolute top-0 left-0 right-0 h-[2px]"
+          className="absolute top-0 left-0 right-0 h-[3px]"
           style={{
-            background: "linear-gradient(90deg, transparent, hsl(var(--coral-400)), hsl(var(--lavender-500)), transparent)",
+            background: "linear-gradient(90deg, #10B981, #F59E0B, #8B5CF6, #0EA5E9, #10B981)",
           }}
         />
         
         {/* Shimmer sweep effect */}
         <div 
-          className="absolute inset-0 opacity-30"
+          className="absolute inset-0 opacity-40"
           style={{
-            background: "linear-gradient(90deg, transparent 0%, rgba(248,146,106,0.15) 50%, transparent 100%)",
+            background: "linear-gradient(90deg, transparent 0%, rgba(251,191,36,0.2) 25%, rgba(139,92,246,0.15) 50%, rgba(14,165,233,0.2) 75%, transparent 100%)",
             animation: "shimmer 3s ease-in-out infinite",
           }}
         />
         
-        <div className="relative flex items-center gap-10 md:gap-14">
+        <div className="relative flex items-center gap-12 md:gap-16">
           {stats.map((stat, index) => (
             <motion.div 
               key={index} 
@@ -63,7 +63,7 @@ const HeroFloatingStats = () => {
                 delay: 0.15 * index + 0.4,
                 ease: "easeOut"
               }}
-              className="flex items-center gap-3"
+              className="flex items-center gap-4"
             >
               <motion.div
                 animate={{ 
@@ -75,18 +75,14 @@ const HeroFloatingStats = () => {
                   delay: index * 0.7,
                   ease: "easeInOut"
                 }}
-                className="w-10 h-10 rounded-xl flex items-center justify-center"
-                style={{
-                  background: "linear-gradient(135deg, hsl(var(--coral-100)) 0%, hsl(var(--lavender-100)) 100%)",
-                  border: "1px solid hsl(var(--coral-200))",
-                }}
+                className={`w-12 h-12 rounded-xl flex items-center justify-center ${stat.iconBg} shadow-sm`}
               >
-                <stat.icon className="w-5 h-5 text-coral-500 flex-shrink-0" strokeWidth={1.5} />
+                <stat.icon className={`w-6 h-6 ${stat.iconColor} flex-shrink-0`} strokeWidth={2} />
               </motion.div>
               <span 
-                className="text-sm font-semibold whitespace-nowrap"
+                className="text-base md:text-lg font-bold whitespace-nowrap"
                 style={{
-                  background: "linear-gradient(135deg, hsl(var(--navy-600)) 0%, hsl(var(--lavender-600)) 100%)",
+                  background: "linear-gradient(135deg, #1a1a2e 0%, #4a4a6a 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                 }}

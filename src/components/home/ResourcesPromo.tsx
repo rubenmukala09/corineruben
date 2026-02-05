@@ -109,7 +109,7 @@ export const ResourcesPromo = () => {
             </h2>
             
             <p className="text-lg leading-relaxed" style={{ color: 'rgba(24, 48, 90, 0.7)' }}>
-              From insurance coverage to free educational materials—everything you need to stay protected.
+              From insurance coverage to free educational materials. Everything you need to stay protected.
             </p>
           </div>
           

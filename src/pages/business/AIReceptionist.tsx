@@ -28,12 +28,12 @@ const AIReceptionist = () => {
     {
       icon: Phone,
       title: "Answers Calls 24/7",
-      description: "Your AI never sleeps. Every call gets answered professionally—nights, weekends, holidays. No more lost customers to voicemail."
+      description: "Your AI never sleeps. Every call gets answered professionally, nights, weekends, holidays. No more lost customers to voicemail."
     },
     {
       icon: Calendar,
       title: "Books Appointments Automatically",
-      description: "The AI checks your real-time availability, books directly into your calendar, and sends confirmation texts—all without you lifting a finger."
+      description: "The AI checks your real-time availability, books directly into your calendar, and sends confirmation texts. All without you lifting a finger."
     },
     {
       icon: MessageSquare,
@@ -61,7 +61,7 @@ const AIReceptionist = () => {
     "Save $3,000-5,000/month compared to a human receptionist",
     "Capture 40% more leads from after-hours calls you were missing",
     "Reduce no-shows by 60% with automated appointment reminders",
-    "Handle unlimited concurrent calls—no busy signals ever",
+    "Handle unlimited concurrent calls. No busy signals ever",
     "Project a Fortune 500 image on a small business budget"
   ];
 
@@ -108,7 +108,7 @@ const AIReceptionist = () => {
               { src: heroNatureAi2, alt: "Beautiful meadow with wildflowers at sunrise" }
             ]}
             headline="Stop Missing Calls. Let AI Run Your Front Desk."
-            subheadline="Our AI answers calls 24/7, sounds human, filters spam, and books appointments directly into your calendar—while you sleep. Never lose another customer to voicemail."
+            subheadline="Our AI answers calls 24/7, sounds human, filters spam, and books appointments directly into your calendar while you sleep. Never lose another customer to voicemail."
             showScrollIndicator={true}
           >
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -162,7 +162,7 @@ const AIReceptionist = () => {
                   Your AI Receptionist Does It All
                 </h2>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
-                  Everything a $50,000/year receptionist does—plus things they can't. 
+                  Everything a $50,000/year receptionist does, plus things they can't. 
                   Available 24/7, never calls in sick, never takes vacation.
                 </p>
               </div>

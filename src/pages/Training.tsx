@@ -648,7 +648,7 @@ function LearnAndTrain() {
               With the rise of AI, scammers have become more sophisticated than ever. Learn to spot AI-powered scams before they hurt you or your family.
             </p>
             <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Simple, friendly classes — no tech skills needed. Perfect for seniors, parents, and grandparents who want to stay safe in the digital age.
+              Simple, friendly classes. No tech skills needed. Perfect for seniors, parents, and grandparents who want to stay safe in the digital age.
             </p>
           </div>
 
@@ -703,7 +703,7 @@ function LearnAndTrain() {
                 priceNum: 399,
                 duration: "2 hours",
                 size: "5 Family Members",
-                description: "Parents, kids, grandparents — we come to you.",
+                description: "Parents, kids, grandparents. We come to you.",
                 features: [
                   "✓ Your family only (up to 5)",
                   "✓ In-person or video call",
@@ -782,12 +782,12 @@ function LearnAndTrain() {
                 {
                   step: "01",
                   title: "Something Suspicious?",
-                  desc: "Received a strange text, email, or call? AI scammers are getting smarter — trust your instincts!",
+                  desc: "Received a strange text, email, or call? AI scammers are getting smarter. Trust your instincts!",
                   color: "from-blue-500 to-cyan-500",
                   bgColor: "from-blue-500/10 to-cyan-500/10",
                   borderColor: "border-blue-500/30",
                   image: "📱",
-                  action: "Don't click — send it to us"
+                  action: "Don't click. Send it to us"
                 },
                 {
                   step: "02",
@@ -889,7 +889,7 @@ function LearnAndTrain() {
             <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-xl p-5 text-center">
               <div className="flex items-center justify-center gap-2 mb-3">
                 <Zap className="w-5 h-5 text-primary" />
-                <span className="font-semibold text-lg">Pay Per Use — How Credits Work</span>
+                <span className="font-semibold text-lg">Pay Per Use: How Credits Work</span>
               </div>
               <p className="text-base text-muted-foreground leading-relaxed">
                 Each plan includes monthly credits. 1 submission = 1 credit used. Credits reset monthly. The more you upload, the more credits consumed. Upgrade anytime for more capacity.
@@ -1218,7 +1218,7 @@ function LearnAndTrain() {
             </Badge>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5">We Analyze All Types of Threats</h2>
             <p className="text-lg md:text-xl lg:text-2xl text-foreground max-w-3xl mx-auto leading-relaxed">
-              Click on any threat type below to learn how we protect you. <strong>No threat is too small — if it feels suspicious, send it to us.</strong>
+              Click on any threat type below to learn how we protect you. <strong>No threat is too small. If it feels suspicious, send it to us.</strong>
             </p>
           </div>
 
@@ -1227,12 +1227,12 @@ function LearnAndTrain() {
               { 
                 icon: Mail, 
                 title: "Phishing Emails",
-                description: "Received a suspicious email? Forward it to us! We check sender authenticity, analyze links, and identify fake logos. Don't click any links — just forward and we'll tell you if it's safe."
+                description: "Received a suspicious email? Forward it to us! We check sender authenticity, analyze links, and identify fake logos. Don't click any links. Just forward and we'll tell you if it's safe."
               },
               { 
                 icon: MessageSquare, 
                 title: "SMS Scams",
-                description: "Any text message with suspicious links or urgent demands for money — screenshot it and send to us. We trace the sender and verify if the message is legitimate or a scam attempt."
+                description: "Any text message with suspicious links or urgent demands for money. Screenshot it and send to us. We trace the sender and verify if the message is legitimate or a scam attempt."
               },
               { 
                 icon: Phone, 
@@ -1257,12 +1257,12 @@ function LearnAndTrain() {
               { 
                 icon: FileCheck, 
                 title: "Documents",
-                description: "Suspicious PDFs, contracts, or attachments can contain malware or fake information. Upload them to us for safe analysis — we'll check for hidden threats."
+                description: "Suspicious PDFs, contracts, or attachments can contain malware or fake information. Upload them to us for safe analysis. We'll check for hidden threats."
               },
               { 
                 icon: ImageIcon, 
                 title: "Social Media",
-                description: "Fake profiles, suspicious friend requests, or scam messages on Facebook, Instagram, or other platforms — screenshot and send to us for verification."
+                description: "Fake profiles, suspicious friend requests, or scam messages on Facebook, Instagram, or other platforms. Screenshot and send to us for verification."
               },
             ].map((threat, index) => (
               <ScrollReveal key={index} animation="scale-in" delay={index * 50} threshold={0.2}>
@@ -1329,7 +1329,7 @@ function LearnAndTrain() {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5">AI Professional Training & Development</h2>
             <p className="text-lg md:text-xl lg:text-2xl text-foreground max-w-4xl mx-auto mb-5 leading-relaxed">
               <strong>This is the only place where you can get the best AI training.</strong> Whether you want to build an AI agency, 
-              create automation workflows, or design stunning websites with AI — we provide hands-on, expert-led training 
+              create automation workflows, or design stunning websites with AI, we provide hands-on, expert-led training 
               that will transform your business capabilities.
             </p>
             <p className="text-base md:text-lg text-accent font-semibold max-w-3xl mx-auto">
@@ -1492,7 +1492,7 @@ function LearnAndTrain() {
               <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
             </div>
             <span className="text-muted-foreground text-lg">•</span>
-            <span className="text-muted-foreground text-base md:text-lg">Military, Police, Fire, EMT — discount applied at checkout</span>
+            <span className="text-muted-foreground text-base md:text-lg">Military, Police, Fire, EMT. Discount applied at checkout</span>
           </div>
         </div>
       </section>
@@ -1514,9 +1514,9 @@ function LearnAndTrain() {
             <Badge className="mb-4 bg-gradient-to-r from-primary to-accent text-white text-base md:text-lg px-5 py-2">
               <Lock className="w-5 h-5 mr-1.5" /> FAMILY PROTECTION
             </Badge>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5">Secure Your Family — This Is Critical</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5">Secure Your Family. This Is Critical</h2>
             <p className="text-lg md:text-xl lg:text-2xl text-foreground max-w-3xl mx-auto leading-relaxed">
-              <strong>In today's digital world, AI-powered scammers don't just target you — they target your entire family.</strong> 
+              <strong>In today's digital world, AI-powered scammers don't just target you. They target your entire family.</strong> 
               Without proper protection, one mistake can cost your family thousands of dollars and endless stress.
             </p>
           </div>
@@ -1558,7 +1558,7 @@ function LearnAndTrain() {
                   <ul className="space-y-4">
                     {[
                       "Family safe words to verify real emergencies instantly",
-                      "24/7 expert analysis — just forward anything suspicious",
+                      "24/7 expert analysis. Just forward anything suspicious",
                       "Proactive alerts when new scam patterns emerge",
                       "Secure vault for important family documents"
                     ].map((item, idx) => (
@@ -1587,7 +1587,7 @@ function LearnAndTrain() {
                 </div>
               </div>
               <h3 className="text-2xl md:text-3xl font-bold mb-3 text-foreground">Family Safety Vault</h3>
-              <p className="text-muted-foreground mb-6 text-base md:text-lg font-medium">Included with Family & Premium Plans — keep everything secure</p>
+              <p className="text-muted-foreground mb-6 text-base md:text-lg font-medium">Included with Family & Premium Plans. Keep everything secure</p>
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8 text-left max-w-2xl mx-auto">
                 {[

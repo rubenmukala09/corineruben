@@ -360,7 +360,7 @@ function About() {
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
                   <h3 className="text-2xl font-bold mb-2">Family Protection</h3>
-                  <p className="text-white/90">Keeping your loved ones safe across all generations—from tech-savvy kids to treasured grandparents.</p>
+                  <p className="text-white/90">Keeping your loved ones safe across all generations, from tech-savvy kids to treasured grandparents.</p>
                 </div>
               </div>
             </ScrollReveal>
@@ -408,7 +408,7 @@ function About() {
             Ready to Join Our Protected Community?
           </h2>
           <p className="text-lg md:text-xl text-white/95 mb-8 max-w-2xl mx-auto drop-shadow-md">
-            Whether you're looking for personal training, business solutions, or want to support our mission—we'd love to connect.
+            Whether you're looking for personal training, business solutions, or want to support our mission, we'd love to connect.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white font-bold shadow-xl">

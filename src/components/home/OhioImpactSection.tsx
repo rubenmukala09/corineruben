@@ -67,7 +67,7 @@ export const OhioImpactSection = () => {
             <span className="text-primary">The Buckeye State</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            We're not a faceless corporation. We're your neighbors—veteran-supporting, Ohio-based, 
+            We're not a faceless corporation. We're your neighbors, veteran-supporting, Ohio-based, 
             and committed to protecting families across every county.
           </p>
         </div>

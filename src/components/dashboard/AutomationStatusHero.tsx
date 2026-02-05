@@ -65,7 +65,7 @@ export function AutomationStatusHero({
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground">Tasks Automated</p>
-                  <p className="font-bold text-lg text-muted-foreground">—</p>
+                  <p className="font-bold text-lg text-muted-foreground">-</p>
                 </div>
               </div>
               <div className="flex items-center gap-2 bg-card/80 rounded-lg p-3 border-dashed border">
@@ -74,7 +74,7 @@ export function AutomationStatusHero({
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground">Hours Saved</p>
-                  <p className="font-bold text-lg text-muted-foreground">—</p>
+                  <p className="font-bold text-lg text-muted-foreground">-</p>
                 </div>
               </div>
             </div>
@@ -165,7 +165,7 @@ export function AutomationStatusHero({
               <div>
                 <p className="text-xs text-muted-foreground">Tasks Automated</p>
                 <p className="font-bold text-lg">
-                  {tasksAutomated !== null ? tasksAutomated.toLocaleString() : "—"}
+                  {tasksAutomated !== null ? tasksAutomated.toLocaleString() : "-"}
                 </p>
               </div>
             </div>
@@ -176,7 +176,7 @@ export function AutomationStatusHero({
               <div>
                 <p className="text-xs text-muted-foreground">Hours Saved</p>
                 <p className="font-bold text-lg">
-                  {hoursSaved !== null ? `${hoursSaved}h` : "—"}
+                  {hoursSaved !== null ? `${hoursSaved}h` : "-"}
                 </p>
               </div>
             </div>

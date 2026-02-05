@@ -493,7 +493,7 @@ const WebsiteDesign = () => {
               >
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">Every Website Includes</h2>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
-                  Industry-standard features that come with every project—no extra cost.
+                  Industry-standard features that come with every project. No extra cost.
                 </p>
               </motion.div>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

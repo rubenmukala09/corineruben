@@ -281,7 +281,7 @@ function Business() {
             >
               <div className="space-y-6">
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  <strong className="text-foreground">Never miss another call.</strong> Our AI Receptionist answers every incoming call 24 hours a day, 7 days a week — including holidays, weekends, and after hours. It sounds natural, handles FAQs, and routes urgent calls to the right team member instantly.
+                  <strong className="text-foreground">Never miss another call.</strong> Our AI Receptionist answers every incoming call 24 hours a day, 7 days a week, including holidays, weekends, and after hours. It sounds natural, handles FAQs, and routes urgent calls to the right team member instantly.
                 </p>
                 
                 <div className="grid sm:grid-cols-2 gap-4">
@@ -291,7 +291,7 @@ function Business() {
                       24/7 Call Handling
                     </h4>
                     <p className="text-muted-foreground text-xs">
-                      Your AI receptionist never sleeps. Every call is answered professionally — whether it's 2pm or 2am.
+                      Your AI receptionist never sleeps. Every call is answered professionally, whether it's 2pm or 2am.
                     </p>
                   </Card>
                   
@@ -343,7 +343,7 @@ function Business() {
             >
               <div className="space-y-6">
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  <strong className="text-foreground">Eliminate the back-and-forth.</strong> Our Smart Scheduling system books appointments directly into your calendar — no human intervention required. Clients can book 24/7 through phone, chat, or web, and the AI handles rescheduling and reminders automatically.
+                  <strong className="text-foreground">Eliminate the back-and-forth.</strong> Our Smart Scheduling system books appointments directly into your calendar. No human intervention required. Clients can book 24/7 through phone, chat, or web, and the AI handles rescheduling and reminders automatically.
                 </p>
                 
                 <div className="grid sm:grid-cols-3 gap-4">
@@ -451,7 +451,7 @@ function Business() {
                       Multi-Channel Support
                     </h4>
                     <p className="text-muted-foreground text-xs">
-                      Reach customers via SMS, email, WhatsApp, or website chat — wherever they prefer.
+                      Reach customers via SMS, email, WhatsApp, or website chat. Wherever they prefer.
                     </p>
                   </div>
                 </div>
@@ -473,7 +473,7 @@ function Business() {
             >
               <div className="space-y-6">
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  <strong className="text-foreground">Streamline your client onboarding.</strong> Our intake system collects all necessary information before meetings, qualifies leads based on your criteria, and schedules appointments seamlessly — saving hours of administrative work every week.
+                  <strong className="text-foreground">Streamline your client onboarding.</strong> Our intake system collects all necessary information before meetings, qualifies leads based on your criteria, and schedules appointments seamlessly, saving hours of administrative work every week.
                 </p>
                 
                 <div className="grid sm:grid-cols-2 gap-4">
@@ -562,7 +562,7 @@ function Business() {
             </p>
             <div className="max-w-4xl mx-auto bg-gradient-to-r from-accent/10 via-primary/10 to-accent/10 border border-accent/20 rounded-2xl p-6">
               <p className="text-base text-foreground leading-relaxed">
-                <strong className="text-accent">First impressions matter — your website is often the first thing customers see.</strong> A slow, outdated, or insecure website drives customers away. With InVision, you get a <strong>stunning, fast, mobile-optimized website</strong> that builds trust and converts visitors into paying customers. Every site includes SSL security, SEO optimization, and ongoing support. <span className="text-primary font-semibold">In today's digital world, you can't succeed without a professional online presence — and with InVision, you won't have to.</span>
+                <strong className="text-accent">First impressions matter. Your website is often the first thing customers see.</strong> A slow, outdated, or insecure website drives customers away. With InVision, you get a <strong>stunning, fast, mobile-optimized website</strong> that builds trust and converts visitors into paying customers. Every site includes SSL security, SEO optimization, and ongoing support. <span className="text-primary font-semibold">In today's digital world, you can't succeed without a professional online presence. With InVision, you won't have to.</span>
               </p>
             </div>
           </div>
@@ -874,7 +874,7 @@ function Business() {
             </p>
             <div className="max-w-4xl mx-auto bg-gradient-to-r from-success/10 via-primary/10 to-success/10 border border-success/20 rounded-2xl p-6 mb-4">
               <p className="text-base text-foreground leading-relaxed">
-                <strong className="text-success">Your website is your most valuable digital asset.</strong> In today's world, cyber threats, data loss, and downtime can cost you thousands of dollars and irreparable damage to your reputation. With InVision Website Insurance, you get <strong>24/7 protection, instant backups, and expert support</strong> — so you can focus on growing your business while we keep your site safe, fast, and always online. <span className="text-primary font-semibold">Don't leave your investment unprotected — with InVision, you're never alone.</span>
+                <strong className="text-success">Your website is your most valuable digital asset.</strong> In today's world, cyber threats, data loss, and downtime can cost you thousands of dollars and irreparable damage to your reputation. With InVision Website Insurance, you get <strong>24/7 protection, instant backups, and expert support</strong> so you can focus on growing your business while we keep your site safe, fast, and always online. <span className="text-primary font-semibold">Don't leave your investment unprotected. With InVision, you're never alone.</span>
               </p>
             </div>
           </div>
@@ -1118,7 +1118,7 @@ function Business() {
             </div>
             <div className="max-w-4xl mx-auto bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 border border-primary/20 rounded-2xl p-6">
               <p className="text-base text-foreground leading-relaxed">
-                <strong className="text-primary">Stop losing customers to missed calls and slow follow-ups.</strong> Our AI agents work around the clock — answering calls, booking appointments, and following up with leads while you sleep. In today's competitive market, <strong>businesses that respond faster win more customers</strong>. With InVision AI, you never miss an opportunity. <span className="text-accent font-semibold">Your competitors are already using AI — can you afford to fall behind?</span>
+                <strong className="text-primary">Stop losing customers to missed calls and slow follow-ups.</strong> Our AI agents work around the clock, answering calls, booking appointments, and following up with leads while you sleep. In today's competitive market, <strong>businesses that respond faster win more customers</strong>. With InVision AI, you never miss an opportunity. <span className="text-accent font-semibold">Your competitors are already using AI. Can you afford to fall behind?</span>
               </p>
             </div>
           </div>
@@ -1329,7 +1329,7 @@ function Business() {
             </p>
             <div className="max-w-4xl mx-auto bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/10 border border-amber-500/20 rounded-2xl p-6">
               <p className="text-base text-foreground leading-relaxed">
-                <strong className="text-amber-600 dark:text-amber-400">AI technology evolves fast — without proper care, your investment becomes obsolete.</strong> Our AI Services Insurance ensures your agents stay <strong>updated, secure, and performing at peak efficiency</strong>. From security patches to performance optimization, we handle everything so your AI keeps delivering results. <span className="text-primary font-semibold">Don't let your AI investment go to waste — protect it with InVision, because success requires ongoing commitment.</span>
+                <strong className="text-amber-600 dark:text-amber-400">AI technology evolves fast. Without proper care, your investment becomes obsolete.</strong> Our AI Services Insurance ensures your agents stay <strong>updated, secure, and performing at peak efficiency</strong>. From security patches to performance optimization, we handle everything so your AI keeps delivering results. <span className="text-primary font-semibold">Don't let your AI investment go to waste. Protect it with InVision, because success requires ongoing commitment.</span>
               </p>
             </div>
           </div>
@@ -1703,7 +1703,7 @@ function Business() {
                     FREE Consultation
                   </div>
                   <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
-                    Not sure if AI is right for your business? We'll help you explore the possibilities, understand the costs, and see if AI can genuinely help you grow. No pressure, no sales pitch—just honest advice.
+                    Not sure if AI is right for your business? We'll help you explore the possibilities, understand the costs, and see if AI can genuinely help you grow. No pressure, no sales pitch. Just honest advice.
                   </p>
                   <ul className="text-left max-w-md mx-auto space-y-2 mb-8">
                     <li className="flex items-center gap-2 text-sm">

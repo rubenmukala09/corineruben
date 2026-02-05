@@ -50,7 +50,7 @@ function PrivacyPolicy() {
                   <h3 className="text-xl font-semibold mb-3 mt-6">Information You Provide Directly</h3>
                   <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4">
                     <li><strong>Contact Information:</strong> Name, email address, phone number (from contact forms, account registration, and purchases)</li>
-                    <li><strong>Billing Information:</strong> Credit/debit card details processed securely through Stripe—we never store your full card number</li>
+                    <li><strong>Billing Information:</strong> Credit/debit card details processed securely through Stripe. We never store your full card number</li>
                     <li><strong>Account Information:</strong> Username, password (encrypted), profile preferences, and communication settings</li>
                     <li><strong>Veteran Verification:</strong> Military ID, DD-214 form, or VA documentation to verify veteran status for discounts</li>
                     <li><strong>Service Requests:</strong> Information about suspicious items, scams you've encountered, or services you're requesting</li>
@@ -152,7 +152,7 @@ function PrivacyPolicy() {
                   </p>
                   <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4">
                     <li><strong>Encryption:</strong> All data transmitted between your browser and our servers is encrypted using TLS/SSL</li>
-                    <li><strong>Password Protection:</strong> Passwords are hashed using industry-standard algorithms—we never store plain-text passwords</li>
+                    <li><strong>Password Protection:</strong> Passwords are hashed using industry-standard algorithms. We never store plain-text passwords</li>
                     <li><strong>Access Controls:</strong> Employee access to personal data is limited and logged</li>
                     <li><strong>Regular Audits:</strong> We conduct regular security assessments and vulnerability testing</li>
                     <li><strong>Payment Security:</strong> Payment processing is handled by PCI-DSS compliant providers (Stripe)</li>

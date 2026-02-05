@@ -470,7 +470,7 @@ export const BookingModal = ({
                     </div>
                   </div>
                   <p className="text-xs text-muted-foreground mt-2">
-                    📋 This is a free consultation request — no payment required now
+                    📋 This is a free consultation request. No payment required now
                   </p>
                 </div>
               )}

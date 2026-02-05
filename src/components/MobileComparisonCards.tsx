@@ -44,7 +44,7 @@ export function MobileComparisonCards({ comparisons }: MobileComparisonCardsProp
                   {hasFeature ? (
                     <CheckCircle className="h-5 w-5 text-success flex-shrink-0" />
                   ) : (
-                    <span className="text-muted-foreground text-sm">—</span>
+                    <span className="text-muted-foreground text-sm">-</span>
                   )}
                 </div>
               );

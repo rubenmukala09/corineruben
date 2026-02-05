@@ -140,7 +140,7 @@ const faqs: FAQ[] = [
   {
     id: "ai-2",
     category: "AI Insurance",
-    question: "I already have AI—can you insure it?",
+    question: "I already have AI. Can you insure it?",
     answer: "Yes! We're vendor-agnostic. Whether you built it in-house, use ChatGPT, or bought from another provider, we can protect it.",
   },
   {
@@ -218,7 +218,7 @@ const faqs: FAQ[] = [
   {
     id: "aa-2",
     category: "Account & Access",
-    question: "I forgot my password—what do I do?",
+    question: "I forgot my password. What do I do?",
     answer: "Click 'Forgot Password' on the login page. We'll email you a reset link. For access link users: email us to resend your link.",
   },
   {

@@ -296,7 +296,7 @@ const DonationsList = () => {
                   <TableCell>{getStatusBadge(donation.payment_status)}</TableCell>
                   <TableCell>
                     <span className="text-sm text-slate-400 max-w-[200px] truncate block">
-                      {donation.message || "—"}
+                      {donation.message || "-"}
                     </span>
                   </TableCell>
                   <TableCell>

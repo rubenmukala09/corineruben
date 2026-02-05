@@ -14,7 +14,7 @@ import { GeometricCorner, GridPattern } from "@/components/ui/GeometricDecoratio
 const faqs = [
   {
     question: "How does ScamShield AI actually protect me?",
-    answer: "ScamShield uses advanced AI to analyze incoming calls, texts, and emails in real-time. When it detects suspicious patterns—like known scam phone numbers, phishing language, or AI-cloned voices—it immediately alerts you and blocks the threat.",
+    answer: "ScamShield uses advanced AI to analyze incoming calls, texts, and emails in real-time. When it detects suspicious patterns (like known scam phone numbers, phishing language, or AI-cloned voices), it immediately alerts you and blocks the threat.",
   },
   {
     question: "Is my personal data safe with InVision Network?",
@@ -22,7 +22,7 @@ const faqs = [
   },
   {
     question: "What makes you different from other companies?",
-    answer: "We're local (Ohio-based), veteran-supporting, and focused specifically on protecting families and seniors from AI-powered scams. We don't just provide software—we provide education, support, and a personal relationship with our clients.",
+    answer: "We're local (Ohio-based), veteran-supporting, and focused specifically on protecting families and seniors from AI-powered scams. We don't just provide software. We provide education, support, and a personal relationship with our clients.",
   },
   {
     question: "Can I protect my elderly parents who aren't tech-savvy?",

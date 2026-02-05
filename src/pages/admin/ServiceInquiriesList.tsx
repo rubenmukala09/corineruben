@@ -316,10 +316,10 @@ const ServiceInquiriesList = () => {
                     </TableCell>
                     <TableCell>{getServiceBadge(inquiry.service_type)}</TableCell>
                     <TableCell>
-                      <span className="font-medium">{inquiry.project_budget || "—"}</span>
+                      <span className="font-medium">{inquiry.project_budget || "-"}</span>
                     </TableCell>
                     <TableCell>
-                      <span className="text-sm">{inquiry.timeline || "—"}</span>
+                      <span className="text-sm">{inquiry.timeline || "-"}</span>
                     </TableCell>
                     <TableCell>{getStatusBadge(inquiry.status)}</TableCell>
                     <TableCell>
@@ -364,7 +364,7 @@ const ServiceInquiriesList = () => {
                                 </div>
                                 <div>
                                   <label className="text-sm font-medium">Company</label>
-                                  <p className="text-sm">{inquiry.company_name || "—"}</p>
+                                  <p className="text-sm">{inquiry.company_name || "-"}</p>
                                 </div>
                                 <div>
                                   <label className="text-sm font-medium">Service</label>
@@ -372,7 +372,7 @@ const ServiceInquiriesList = () => {
                                 </div>
                                 <div>
                                   <label className="text-sm font-medium">Budget</label>
-                                  <p className="text-sm">{inquiry.project_budget || "—"}</p>
+                                  <p className="text-sm">{inquiry.project_budget || "-"}</p>
                                 </div>
                               </div>
                               

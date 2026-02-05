@@ -207,7 +207,7 @@ function TermsOfService() {
                 <section id="tos-section-9">
                   <h2 className="text-2xl font-bold mb-4">9. Intellectual Property</h2>
                   <p className="text-muted-foreground mb-4">
-                    All content, features, and functionality of the Services—including but not limited to text, graphics, logos, icons, images, audio clips, video clips, data compilations, software, course materials, and training content—are the exclusive property of InVision Network or our licensors and are protected by United States and international copyright, trademark, patent, trade secret, and other intellectual property laws.
+                    All content, features, and functionality of the Services (including but not limited to text, graphics, logos, icons, images, audio clips, video clips, data compilations, software, course materials, and training content) are the exclusive property of InVision Network or our licensors and are protected by United States and international copyright, trademark, patent, trade secret, and other intellectual property laws.
                   </p>
                   <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4 mb-4">
                     <li>The "InVision Network" name, logo, and all related names, logos, product and service names, designs, and slogans are trademarks of InVision Network</li>
