@@ -1,7 +1,7 @@
  import { Link } from "react-router-dom";
  import { Button } from "@/components/ui/button";
  import { Shield, CheckCircle, ArrowRight } from "lucide-react";
- import heroImage from "@/assets/hero-family-protected.jpg";
+ import heroImage from "@/assets/hero-community-protected.jpg";
  
  export const HeroHomepage = () => {
    return (
