@@ -1,16 +1,18 @@
 import { motion } from "framer-motion";
 import { Star, Shield, Award, Users, TrendingUp, Sparkles, CheckCircle } from "lucide-react";
  
+// Note: Update these stats periodically with real metrics from database
  const stats = [
-   { label: "Happy Clients", value: "500+", icon: Users },
+   { label: "Happy Clients", value: "100+", icon: Users },
    { label: "Success Rate", value: "99.8%", icon: TrendingUp },
    { label: "Years Active", value: "4+", icon: Award },
    { label: "Expert Rating", value: "5.0", icon: Star },
  ];
  
- const logos = [
-   "TechGuard", "SecureOhio", "FamilySafe", "BizShield", "CyberWatch"
- ];
+// TODO: Replace with real partner logos when available
+const logos = [
+  "Partner 1", "Partner 2", "Partner 3", "Partner 4", "Partner 5"
+];
  
 const badges = [
   { num: "01", icon: Shield, label: "Verified Experts" },
