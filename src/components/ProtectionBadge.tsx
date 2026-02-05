@@ -20,16 +20,17 @@ export const ProtectionBadge = ({
 
   return (
     <div className={cn(
-      "inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 backdrop-blur-sm border border-primary/30",
+      "inline-flex items-center gap-2 rounded-full bg-white/60 backdrop-blur-xl border border-white/40 shadow-lg",
       sizeClasses[size],
       className
     )}>
       <Shield className={cn(
+        "text-primary",
         size === "sm" && "w-3 h-3",
         size === "md" && "w-4 h-4",
         size === "lg" && "w-5 h-5"
-      )} />
-      <span className="font-semibold">{text}</span>
+      )} aria-hidden="true" />
+      <span className="font-semibold text-[#18305A]">{text}</span>
     </div>
   );
 };
