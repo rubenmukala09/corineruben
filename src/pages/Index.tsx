@@ -37,48 +37,48 @@ import { SkeuomorphicSection } from "@/components/backgrounds/SkeuomorphicSectio
            </section>
            
            {/* Workshops Promo - Learn & Train Introduction */}
-          <SkeuomorphicSection id="workshops" className="pt-1" variant="coral">
+          <SkeuomorphicSection id="workshops" className="py-0" variant="coral">
              <WorkshopsPromo />
           </SkeuomorphicSection>
            
            {/* AI & Business Promo */}
-          <SkeuomorphicSection id="business" className="pt-1" variant="lavender">
+          <SkeuomorphicSection id="business" className="py-0" variant="lavender">
              <AIBusinessPromo />
           </SkeuomorphicSection>
            
            {/* Current Scam Alerts - Immediate Value */}
-          <SkeuomorphicSection id="alerts" className="pt-1" variant="coral">
+          <SkeuomorphicSection id="alerts" className="py-0" variant="coral">
              <ScamAlertsSection />
           </SkeuomorphicSection>
            
            {/* Resources Promo */}
-          <SkeuomorphicSection id="resources" className="pt-1" variant="mixed">
+          <SkeuomorphicSection id="resources" className="py-0" variant="mixed">
              <ResourcesPromo />
           </SkeuomorphicSection>
            
  
            {/* Premium Glassmorphism Widgets */}
-          <SkeuomorphicSection id="trust-widgets" className="pt-1" variant="lavender">
+          <SkeuomorphicSection id="trust-widgets" className="py-0" variant="lavender">
              <PremiumGlassmorphismWidgets />
           </SkeuomorphicSection>
  
            {/* Community Impact - Veteran Support, Cancer Children, etc. */}
-          <SkeuomorphicSection id="community" className="pt-1" variant="coral">
+          <SkeuomorphicSection id="community" className="py-0" variant="coral">
              <CommunityImpact />
           </SkeuomorphicSection>
  
            {/* Working Process - How It Works */}
-          <SkeuomorphicSection id="process" className="pt-1" variant="mixed">
+          <SkeuomorphicSection id="process" className="py-0" variant="mixed">
              <WorkingProcess />
           </SkeuomorphicSection>
  
            {/* FAQ Section */}
-          <SkeuomorphicSection id="faq" className="pt-1" variant="lavender">
+          <SkeuomorphicSection id="faq" className="py-0" variant="lavender">
              <FAQPreview />
           </SkeuomorphicSection>
  
            {/* Quick Links - FAQ, Contact, Careers */}
-          <SkeuomorphicSection id="quick-links" className="pt-1" variant="neutral">
+          <SkeuomorphicSection id="quick-links" className="py-0" variant="neutral">
              <QuickLinksSection />
           </SkeuomorphicSection>
  
