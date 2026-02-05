@@ -1,28 +1,46 @@
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { FileText, Shield, BookOpen, ArrowRight, Download, Sparkles, Home } from "lucide-react";
-import { motion } from "framer-motion";
+ import { Link } from "react-router-dom";
+ import { Button } from "@/components/ui/button";
+ import { FileText, Shield, BookOpen, ArrowRight, Download, Sparkles } from "lucide-react";
+ import { motion } from "framer-motion";
+ 
+ // Import book cover images
+ import bookAiFundamentals from "@/assets/book-ai-fundamentals.jpg";
+ import bookScamPrevention from "@/assets/book-scam-prevention.jpg";
+ import bookFamilySafety from "@/assets/book-family-safety.jpg";
 
-const resources = [
-  {
-    icon: Shield,
-    title: "Cyber Insurance",
-    description: "Coverage up to $1M for identity theft and cyber fraud.",
-    tag: "Popular",
-  },
-  {
-    icon: FileText,
-    title: "Emergency Scripts",
-    description: "Free PDF scripts for IRS, tech support, and bank scams.",
-    tag: "Free",
-  },
-  {
-    icon: BookOpen,
-    title: "Digital Guides",
-    description: "30+ guides on AI, scam prevention, and digital safety.",
-    tag: "New",
-  },
-];
+ const resources = [
+   {
+     icon: Shield,
+     title: "Cyber Insurance",
+     description: "Coverage up to $1M for identity theft and cyber fraud.",
+     tag: "Popular",
+     color: "#F8926A",
+     bgGradient: "from-coral-50 to-coral-100",
+   },
+   {
+     icon: FileText,
+     title: "Emergency Scripts",
+     description: "Free PDF scripts for IRS, tech support, and bank scams.",
+     tag: "Free",
+     color: "#BB81B5",
+     bgGradient: "from-lavender-50 to-lavender-100",
+   },
+   {
+     icon: BookOpen,
+     title: "Digital Guides",
+     description: "30+ guides on AI, scam prevention, and digital safety.",
+     tag: "New",
+     color: "#18305A",
+     bgGradient: "from-blue-50 to-indigo-100",
+   },
+ ];
+ 
+ // Featured book covers to display
+ const featuredBooks = [
+   { image: bookAiFundamentals, title: "AI Fundamentals" },
+   { image: bookScamPrevention, title: "Scam Prevention Guide" },
+   { image: bookFamilySafety, title: "Family Safety Toolkit" },
+ ];
 
 export const ResourcesPromo = () => {
   return (
@@ -117,8 +135,64 @@ export const ResourcesPromo = () => {
           </Button>
         </motion.div>
         
-        {/* Resources Grid - Premium Cards */}
-        <div className="grid md:grid-cols-3 gap-6">
+         {/* Featured Book Covers Row */}
+         <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           transition={{ duration: 0.6 }}
+           viewport={{ once: true }}
+           className="mb-12"
+         >
+           <div className="flex items-center gap-2 mb-6">
+             <BookOpen className="w-5 h-5" style={{ color: '#F8926A' }} />
+             <span className="text-lg font-bold" style={{ color: '#18305A' }}>Featured eBooks</span>
+             <span className="text-sm px-3 py-1 rounded-full ml-2" 
+               style={{ background: 'linear-gradient(135deg, #fff5f0 0%, #faf5fa 100%)', color: '#F8926A' }}>
+               📘 30+ Titles
+             </span>
+           </div>
+           <div className="grid grid-cols-3 md:grid-cols-3 gap-4 md:gap-6">
+             {featuredBooks.map((book, i) => (
+               <motion.div
+                 key={book.title}
+                 initial={{ opacity: 0, scale: 0.9 }}
+                 whileInView={{ opacity: 1, scale: 1 }}
+                 transition={{ duration: 0.4, delay: i * 0.1 }}
+                 viewport={{ once: true }}
+                 className="group"
+               >
+                 <Link to="/resources" className="block">
+                   <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 group-hover:-translate-y-2 border-4 border-white">
+                     <img 
+                       src={book.image}
+                       alt={`${book.title} - InVision Network Literature Dep`}
+                       width={260}
+                       height={347}
+                       loading="lazy"
+                       decoding="async"
+                       className="w-full h-full object-cover"
+                     />
+                     {/* Hover overlay */}
+                     <div className="absolute inset-0 bg-gradient-to-t from-[#18305A]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
+                       <span className="text-white text-sm font-bold px-4 py-2 rounded-full"
+                         style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }}>
+                         View Details
+                       </span>
+                     </div>
+                     {/* eBook badge */}
+                     <div className="absolute top-2 left-2 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 text-xs font-bold" style={{ color: '#18305A' }}>
+                       📘 eBook
+                     </div>
+                   </div>
+                   <p className="mt-2 text-center text-sm font-semibold truncate" style={{ color: '#18305A' }}>{book.title}</p>
+                 </Link>
+               </motion.div>
+             ))}
+           </div>
+         </motion.div>
+ 
+         {/* Resources Grid - Premium Button Cards */}
+         <div className="grid md:grid-cols-3 gap-6">
           {resources.map((resource, i) => (
             <motion.div
               key={resource.title}
@@ -127,44 +201,44 @@ export const ResourcesPromo = () => {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               viewport={{ once: true }}
             >
-              <Link to="/" className="group block">
-                <div className="h-full p-8 rounded-3xl border shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
-                  style={{ 
-                    background: 'linear-gradient(135deg, #ffffff 0%, #faf9f7 100%)',
-                    borderColor: 'rgba(248, 146, 106, 0.25)'
-                  }}>
-                  <div className="flex items-start justify-between mb-6">
-                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg transition-transform group-hover:scale-110"
-                      style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }}>
-                      <resource.icon className="w-7 h-7 text-white" />
-                    </div>
-                    <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border"
-                      style={{ 
-                        background: 'linear-gradient(135deg, #fff5f0 0%, #faf5fa 100%)',
-                        color: '#F8926A',
-                        borderColor: 'rgba(248, 146, 106, 0.3)'
-                      }}>
-                      {resource.tag}
-                    </span>
-                  </div>
-                  
-                  <h3 className="text-2xl font-black mb-3 transition-colors"
-                    style={{ fontFamily: "'Clash Display', sans-serif", color: '#18305A' }}>
-                    {resource.title}
-                  </h3>
-                  
-                  <p className="leading-relaxed mb-6" style={{ color: 'rgba(24, 48, 90, 0.6)' }}>{resource.description}</p>
-                  
-                  <div className="flex items-center gap-2">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-white text-sm font-semibold transition-all group-hover:scale-105"
-                      style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }}>
-                      <Home className="w-4 h-4" />
-                      <span>Visit Home</span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </div>
-                </div>
-              </Link>
+             <Link to="/resources" className="group block">
+                 <div className="h-full p-8 rounded-3xl border-2 shadow-lg hover:shadow-2xl hover:-translate-y-3 transition-all duration-300 cursor-pointer"
+                   style={{ 
+                     background: 'linear-gradient(135deg, #ffffff 0%, #faf9f7 100%)',
+                     borderColor: resource.color,
+                   }}>
+                   <div className="flex items-start justify-between mb-6">
+                     <div className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-xl transition-transform group-hover:scale-110 group-hover:rotate-3"
+                       style={{ background: `linear-gradient(135deg, ${resource.color} 0%, ${resource.color}dd 100%)` }}>
+                       <resource.icon className="w-8 h-8 text-white" />
+                     </div>
+                     <span className="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm"
+                       style={{ 
+                         background: `linear-gradient(135deg, ${resource.color}15 0%, ${resource.color}25 100%)`,
+                         color: resource.color,
+                         border: `2px solid ${resource.color}40`
+                       }}>
+                       {resource.tag}
+                     </span>
+                   </div>
+                   
+                   <h3 className="text-2xl font-black mb-3 transition-colors group-hover:text-coral-600"
+                     style={{ fontFamily: "'Clash Display', sans-serif", color: '#18305A' }}>
+                     {resource.title}
+                   </h3>
+                   
+                   <p className="leading-relaxed mb-6 text-base" style={{ color: 'rgba(24, 48, 90, 0.65)' }}>{resource.description}</p>
+                   
+                   {/* Button CTA */}
+                   <div className="flex items-center gap-2">
+                     <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white text-sm font-bold shadow-lg transition-all group-hover:scale-105 group-hover:shadow-xl"
+                       style={{ background: `linear-gradient(135deg, ${resource.color} 0%, ${resource.color}cc 100%)` }}>
+                       <span>Explore</span>
+                       <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                     </div>
+                   </div>
+                 </div>
+               </Link>
             </motion.div>
           ))}
         </div>
