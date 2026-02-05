@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Bell, ChevronRight, Shield, AlertTriangle, Wifi, Mail, Smartphone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { formatDistanceToNow } from "date-fns";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Alert {
   id: string;
@@ -12,49 +14,6 @@ interface Alert {
   severity: "low" | "medium" | "high" | "critical";
   timestamp: Date;
 }
-
-const alerts: Alert[] = [
-  {
-    id: "1",
-    type: "phishing",
-    title: "Phishing Email Blocked",
-    description: "Suspicious email from bank-verify@scam.com blocked",
-    severity: "high",
-    timestamp: new Date(Date.now() - 5 * 60 * 1000),
-  },
-  {
-    id: "2",
-    type: "deepfake",
-    title: "Deepfake Voice Detected",
-    description: "AI-generated voice call impersonating family member",
-    severity: "critical",
-    timestamp: new Date(Date.now() - 12 * 60 * 1000),
-  },
-  {
-    id: "3",
-    type: "network",
-    title: "Unusual Network Activity",
-    description: "Home Wi-Fi detected unknown device connection attempt",
-    severity: "medium",
-    timestamp: new Date(Date.now() - 25 * 60 * 1000),
-  },
-  {
-    id: "4",
-    type: "malware",
-    title: "Malicious URL Blocked",
-    description: "Kids' Tablet tried to access flagged website",
-    severity: "high",
-    timestamp: new Date(Date.now() - 45 * 60 * 1000),
-  },
-  {
-    id: "5",
-    type: "breach",
-    title: "Password Breach Alert",
-    description: "Email found in recent data breach - password change recommended",
-    severity: "critical",
-    timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
-  },
-];
 
 const severityConfig = {
   low: { 
@@ -92,6 +51,63 @@ const typeIcons = {
 };
 
 export function CyberRecentAlerts() {
+  const [alerts, setAlerts] = useState<Alert[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadAlerts();
+  }, []);
+
+  const loadAlerts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("threat_events")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(5);
+
+      if (data && data.length > 0) {
+        const mappedAlerts: Alert[] = data.map((event: any) => ({
+          id: event.id,
+          type: mapThreatType(event.threat_type),
+          title: event.threat_type || "Security Alert",
+          description: event.description || "Threat detected and logged",
+          severity: mapSeverity(event.severity),
+          timestamp: new Date(event.created_at),
+        }));
+        setAlerts(mappedAlerts);
+      } else {
+        setAlerts([]);
+      }
+    } catch (err) {
+      console.error("Error loading alerts:", err);
+      setAlerts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const mapThreatType = (type: string): Alert["type"] => {
+    const typeMap: Record<string, Alert["type"]> = {
+      phishing: "phishing",
+      deepfake: "deepfake",
+      malware: "malware",
+      network: "network",
+      breach: "breach",
+    };
+    return typeMap[type?.toLowerCase()] || "phishing";
+  };
+
+  const mapSeverity = (severity: string): Alert["severity"] => {
+    const sevMap: Record<string, Alert["severity"]> = {
+      low: "low",
+      medium: "medium",
+      high: "high",
+      critical: "critical",
+    };
+    return sevMap[severity?.toLowerCase()] || "medium";
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -124,6 +140,17 @@ export function CyberRecentAlerts() {
 
         {/* Alert List */}
         <div className="space-y-3 max-h-[400px] overflow-y-auto pr-1" style={{ scrollbarWidth: 'thin', scrollbarColor: '#374151 #111827' }}>
+          {loading ? (
+            <div className="text-center py-8">
+              <p className="text-[#9CA3AF] text-sm">Loading alerts...</p>
+            </div>
+          ) : alerts.length === 0 ? (
+            <div className="text-center py-8 px-4">
+              <Shield className="w-12 h-12 mx-auto text-[#10B981] mb-3 opacity-50" />
+              <p className="text-[#9CA3AF] text-sm mb-1">No security alerts</p>
+              <p className="text-xs text-gray-500">Your systems are running smoothly</p>
+            </div>
+          ) : (
           <AnimatePresence>
             {alerts.map((alert, index) => {
               const severity = severityConfig[alert.severity];
@@ -164,6 +191,7 @@ export function CyberRecentAlerts() {
               );
             })}
           </AnimatePresence>
+          )}
         </div>
       </Card>
     </motion.div>

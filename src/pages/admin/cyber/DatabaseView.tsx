@@ -2,16 +2,94 @@ import { Database, RefreshCw, Download, HardDrive } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
-const databases = [
-  { id: 1, name: "Threat Signatures", records: "2.4M", lastUpdate: "32ms ago", size: "1.2 GB", status: "Synced" },
-  { id: 2, name: "User Profiles", records: "1,234", lastUpdate: "5 mins ago", size: "45 MB", status: "Synced" },
-  { id: 3, name: "Device Registry", records: "5,678", lastUpdate: "10 mins ago", size: "120 MB", status: "Synced" },
-  { id: 4, name: "Activity Logs", records: "12.5M", lastUpdate: "Now", size: "2.8 GB", status: "Syncing" },
-  { id: 5, name: "Blocked URLs", records: "8.9M", lastUpdate: "1 hour ago", size: "890 MB", status: "Synced" },
-];
+interface DatabaseStat {
+  id: number;
+  name: string;
+  records: string;
+  lastUpdate: string;
+  size: string;
+  status: string;
+}
 
 export default function DatabaseView() {
+  const [databases, setDatabases] = useState<DatabaseStat[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [totals, setTotals] = useState({ records: 0, storage: "Calculating..." });
+
+  useEffect(() => {
+    loadDatabaseStats();
+  }, []);
+
+  const loadDatabaseStats = async () => {
+    try {
+      // Get actual counts from key tables
+      const [profiles, threats, activity, subscriptions, newsletters] = await Promise.all([
+        supabase.from("profiles").select("*", { count: "exact", head: true }),
+        supabase.from("threat_events").select("*", { count: "exact", head: true }),
+        supabase.from("activity_log").select("*", { count: "exact", head: true }),
+        supabase.from("subscriptions").select("*", { count: "exact", head: true }),
+        supabase.from("newsletter_subscribers").select("*", { count: "exact", head: true }),
+      ]);
+
+      const dbStats: DatabaseStat[] = [
+        { 
+          id: 1, 
+          name: "Threat Events", 
+          records: (threats.count || 0).toLocaleString(), 
+          lastUpdate: "Live", 
+          size: "—", 
+          status: "Synced" 
+        },
+        { 
+          id: 2, 
+          name: "User Profiles", 
+          records: (profiles.count || 0).toLocaleString(), 
+          lastUpdate: "Live", 
+          size: "—", 
+          status: "Synced" 
+        },
+        { 
+          id: 3, 
+          name: "Activity Logs", 
+          records: (activity.count || 0).toLocaleString(), 
+          lastUpdate: "Live", 
+          size: "—", 
+          status: "Synced" 
+        },
+        { 
+          id: 4, 
+          name: "Subscriptions", 
+          records: (subscriptions.count || 0).toLocaleString(), 
+          lastUpdate: "Live", 
+          size: "—", 
+          status: "Synced" 
+        },
+        { 
+          id: 5, 
+          name: "Newsletter Subscribers", 
+          records: (newsletters.count || 0).toLocaleString(), 
+          lastUpdate: "Live", 
+          size: "—", 
+          status: "Synced" 
+        },
+      ];
+
+      const totalRecords = (threats.count || 0) + (profiles.count || 0) + 
+        (activity.count || 0) + (subscriptions.count || 0) + (newsletters.count || 0);
+
+      setDatabases(dbStats);
+      setTotals({ records: totalRecords, storage: "Cloud-managed" });
+    } catch (err) {
+      console.error("Error loading database stats:", err);
+      setDatabases([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-6">
       <div className="flex items-center justify-between mb-6">
@@ -33,9 +111,8 @@ export default function DatabaseView() {
               <HardDrive className="h-5 w-5 text-[#06B6D4]" />
               <span className="text-[#9CA3AF]">Total Storage</span>
             </div>
-            <p className="text-3xl font-bold text-[#F9FAFB]">5.1 GB</p>
-            <Progress value={51} className="mt-2 h-2" />
-            <p className="text-xs text-[#9CA3AF] mt-1">51% of 10 GB used</p>
+            <p className="text-3xl font-bold text-[#F9FAFB]">{totals.storage}</p>
+            <p className="text-xs text-[#9CA3AF] mt-1">Managed by Lovable Cloud</p>
           </CardContent>
         </Card>
         <Card className="bg-[#111827] border-gray-800">
@@ -44,7 +121,9 @@ export default function DatabaseView() {
               <Database className="h-5 w-5 text-[#10B981]" />
               <span className="text-[#9CA3AF]">Total Records</span>
             </div>
-            <p className="text-3xl font-bold text-[#F9FAFB]">24.5M</p>
+            <p className="text-3xl font-bold text-[#F9FAFB]">
+              {loading ? "..." : totals.records.toLocaleString()}
+            </p>
           </CardContent>
         </Card>
         <Card className="bg-[#111827] border-gray-800">
@@ -53,8 +132,8 @@ export default function DatabaseView() {
               <RefreshCw className="h-5 w-5 text-[#F59E0B]" />
               <span className="text-[#9CA3AF]">Last Full Sync</span>
             </div>
-            <p className="text-3xl font-bold text-[#F9FAFB]">32ms</p>
-            <p className="text-xs text-[#9CA3AF] mt-1">ago</p>
+            <p className="text-3xl font-bold text-[#F9FAFB]">Live</p>
+            <p className="text-xs text-[#9CA3AF] mt-1">Real-time sync</p>
           </CardContent>
         </Card>
       </div>
