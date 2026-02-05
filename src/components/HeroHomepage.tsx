@@ -5,7 +5,7 @@ import heroSeniorsProtected from "@/assets/hero-seniors-protected.jpg";
 
 export const HeroHomepage = () => {
   return (
-    <section className="relative min-h-[100vh] lg:min-h-[110vh] overflow-hidden bg-background">
+    <section className="relative min-h-[110vh] lg:min-h-[121vh] overflow-hidden bg-background">
       {/* Premium Background - NO Glassmorphism on photo */}
       <div className="absolute inset-0 grid lg:grid-cols-[45%_55%]">
         {/* Left - Premium Gradient Background */}
@@ -69,9 +69,9 @@ export const HeroHomepage = () => {
       />
 
       {/* Main Content with Glassmorphism Card */}
-      <div className="relative z-10 min-h-[85vh] flex items-center">
+      <div className="relative z-10 min-h-[93.5vh] flex items-center">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="max-w-xl py-24 lg:py-0 pb-32">
+          <div className="max-w-xl py-28 lg:py-0 pb-36">
             
             {/* Glassmorphism Content Card */}
             <motion.div
