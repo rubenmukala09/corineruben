@@ -8,7 +8,7 @@ const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElemen
     className={cn(
       "rounded-2xl text-card-foreground",
       // Glassmorphism with 3D depth
-      "glass-light widget-depth",
+      "glass-light premium-shadow-depth premium-shine-sweep",
       // Microinteraction
       "micro-scale hover-depth",
       className

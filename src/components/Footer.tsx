@@ -60,7 +60,7 @@ const Footer = () => {
       <TrustedTechLogos />
 
       {/* Main Footer */}
-      <div className="bg-[#1a1a2e] text-white relative overflow-hidden">
+      <div className="bg-[#1a1a2e] text-white relative overflow-hidden premium-aurora">
         {/* Subtle Background Pattern */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute inset-0 opacity-[0.015]" style={{
@@ -76,7 +76,7 @@ const Footer = () => {
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <div className="p-2 rounded-xl bg-white/10 border border-white/10">
-                  <img src={invisionLogo} alt="InVision Network" className="h-8 w-8 object-contain brightness-0 invert" />
+                  <img src={invisionLogo} alt="InVision Network" className="h-8 w-8 object-contain brightness-0 invert premium-4k-image" />
                 </div>
                 <div>
                   <h2 className="text-xl font-bold">InVision Network</h2>
@@ -236,7 +236,7 @@ const Footer = () => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/5 transition-all"
+                    className="p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/5 transition-all premium-3d-icon"
                     aria-label={social.label}
                   >
                     <social.icon className="w-4 h-4 text-white/60" />

@@ -61,7 +61,7 @@ const Navigation = () => {
         />
       )}
 
-      <nav className="sticky top-0 z-[9999] glass-heavy border-b border-white/20">
+      <nav className="sticky top-0 z-[9999] relative glass-heavy border-b border-white/20 premium-shadow-depth premium-shine-sweep">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between h-14 md:h-16">
             {/* Logo */}
@@ -77,7 +77,7 @@ const Navigation = () => {
                 height={44}
                 loading="eager"
                 decoding="async"
-                className="w-10 h-10 md:w-11 md:h-11 object-contain flex-shrink-0"
+                className="w-10 h-10 md:w-11 md:h-11 object-contain flex-shrink-0 premium-4k-image"
               />
               <div className="flex flex-col leading-tight min-w-0">
                 <span 
@@ -104,7 +104,7 @@ const Navigation = () => {
                   <PrefetchLink
                     key={link.name}
                     to={link.href}
-                    className={`relative text-[13px] transition-colors duration-150 font-medium px-3 py-2 rounded-md whitespace-nowrap ${
+                    className={`relative text-[13px] transition-colors duration-150 font-medium px-3 py-2 rounded-md whitespace-nowrap animated-underline ${
                       isActive 
                         ? 'text-primary font-semibold' 
                         : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
@@ -168,7 +168,7 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden fixed top-14 md:top-16 left-0 right-0 bottom-0 bg-background border-t border-border z-[9999] overflow-y-auto">
+          <div className="lg:hidden fixed top-14 md:top-16 left-0 right-0 bottom-0 bg-background/80 backdrop-blur-2xl border-t border-border z-[9999] overflow-y-auto">
             <div className="container mx-auto px-4 py-6 space-y-2">
               {navLinks.map((link) => {
                 const isActive = isActiveLink(link.href);
@@ -176,7 +176,7 @@ const Navigation = () => {
                   <Link
                     key={link.name}
                     to={link.href}
-                    className={`block text-base transition-colors duration-150 font-medium px-4 py-3 rounded-lg ${
+                    className={`block text-base transition-colors duration-150 font-medium px-4 py-3 rounded-lg animated-underline ${
                       isActive 
                         ? 'text-primary bg-primary/5 font-semibold' 
                         : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
@@ -222,6 +222,8 @@ const Navigation = () => {
             </div>
           </div>
         )}
+
+        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent pointer-events-none" />
       </nav>
     </>
   );

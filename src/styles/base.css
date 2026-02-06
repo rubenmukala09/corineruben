@@ -252,6 +252,8 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     font-size: 16px;
     line-height: 1.55;
     letter-spacing: -0.01em;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
     overflow-x: hidden;
     width: 100%;
     position: relative;
@@ -259,6 +261,11 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     zoom: var(--site-scale);
     /* Clean warm cream background */
     background-color: hsl(30 25% 97%);
+    background-image:
+      radial-gradient(ellipse 60% 40% at 10% 5%, hsl(var(--coral-200) / 0.35) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 35% at 90% 0%, hsl(var(--lavender-200) / 0.3) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 50% 100%, hsl(var(--navy-100) / 0.35) 0%, transparent 65%);
+    background-repeat: no-repeat;
   }
 
   @media (min-width: 768px) {
@@ -357,6 +364,20 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   /* Prevent image flicker on load */
   img {
     @apply block;
+    image-rendering: -webkit-optimize-contrast;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  a {
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px;
+    text-decoration-skip-ink: auto;
+  }
+
+  ::selection {
+    background: hsl(var(--accent) / 0.25);
+    color: hsl(var(--foreground));
   }
 
   h1, h2, h3, h4, h5, h6 {
