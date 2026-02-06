@@ -52,7 +52,7 @@ const Careers = lazy(() => import("./pages/Careers"));
 const Auth = lazy(() => import("./pages/Auth"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const ApplicationPending = lazy(() => import("./pages/ApplicationPending"));
-const GuestScanner = lazy(() => import("./pages/GuestScanner"));
+
 
 // Admin pages - content only (shell is handled by AdminShell)
 const AdminDashboardContent = lazy(() => import("./pages/admin/AdminDashboardContent"));
@@ -154,7 +154,7 @@ function PublicRoutes() {
         <Route path="/application-pending" element={<PageTransition><ApplicationPending /></PageTransition>} />
         <Route path="/maintenance" element={<PageTransition><Maintenance /></PageTransition>} />
         <Route path="/reset-password" element={<PageTransition><ResetPassword /></PageTransition>} />
-        <Route path="/guest-scanner" element={<Navigate to="/training#guest-scanner" replace />} />
+        <Route path="/guest-scanner" element={<Navigate to="/training" replace />} />
         
         {/* Portal Routes */}
         <Route path="/portal" element={<PageTransition><ProtectedRoute><Portal /></ProtectedRoute></PageTransition>} />

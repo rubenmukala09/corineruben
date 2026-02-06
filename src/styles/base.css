@@ -439,9 +439,15 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   }
 }
 
-/* Global transition timing - fast and subtle */
-* {
+/* Global transition timing - only apply to interactive elements */
+button, a, input, select, textarea, [role="button"] {
   transition-timing-function: cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+/* Content visibility for below-fold sections - massive perf win */
+section:not(:first-child) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
 }
 
 /* ===== SKEUOMORPHISM 2.0 UTILITY CLASSES ===== */
