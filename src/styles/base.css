@@ -154,7 +154,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     /* Global site scale for desktop browsers */
     --site-scale: 0.8;
     /* Global text scale (rem-based) */
-    --text-scale: 1.06;
+    --text-scale: 1.1;
   }
 
   .dark {

@@ -9,6 +9,7 @@ import { CartProvider } from "./contexts/CartContext";
 import { CartFeedbackProvider } from "./components/CartFeedbackNotifications";
 import { SubscriptionProvider } from "./contexts/SubscriptionContext";
 import { CheckoutProvider } from "./contexts/CheckoutContext";
+import { GlassmorphismLoader } from "./components/GlassmorphismLoader";
 const UnifiedCheckoutDialog = lazy(() => import("./components/payment/UnifiedCheckoutDialog"));
 const LauraAIAssistant = lazy(() => import("./components/chat/LauraAIAssistant"));
 const CartFeedbackNotifications = lazy(() =>
@@ -124,7 +125,7 @@ const Maintenance = lazy(() => import("./pages/Maintenance"));
 const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess"));
 const PaymentCanceled = lazy(() => import("./pages/PaymentCanceled"));
 
-const PageLoader = () => null;
+const PageLoader = () => <GlassmorphismLoader message="Loading" fullScreen={true} />;
 const queryClient = new QueryClient();
 
 // Direct routes without AnimatePresence - instant transitions
