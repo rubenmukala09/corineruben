@@ -12,14 +12,14 @@ const HeroFloatingStats = () => {
 
   return (
     <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-20 pointer-events-none">
-      <div className="relative rounded-full py-5 px-12 md:px-16 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.12)] overflow-hidden border border-coral-200/50 bg-white">
+      <div className="premium-3d-card premium-shadow-depth premium-glass-refraction premium-shine-sweep relative rounded-full py-5 px-12 md:px-16 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.12)] overflow-hidden border border-coral-200/50 bg-white">
         <div className="relative flex items-center gap-10 md:gap-14">
           {stats.map((stat, index) => (
             <div 
               key={index} 
               className="flex items-center gap-3"
             >
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${stat.iconBg}`}>
+              <div className={`premium-3d-icon w-10 h-10 rounded-xl flex items-center justify-center ${stat.iconBg}`}>
                 <stat.icon className={`w-5 h-5 ${stat.iconColor} flex-shrink-0`} strokeWidth={1.5} />
               </div>
               <span className="text-sm font-semibold text-[#18305A] whitespace-nowrap">

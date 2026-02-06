@@ -57,6 +57,7 @@ import TestimonialCard from "@/components/TestimonialCard";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { InstructorShowcase } from "@/components/training/InstructorShowcase";
 import { GuestScannerSection } from "@/components/training/GuestScannerSection";
+import PremiumMeshBackground from "@/components/backgrounds/PremiumMeshBackground";
 
 import { SEO } from "@/components/SEO";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
@@ -98,7 +99,7 @@ const PremiumTrainingCard = ({ plan, index, onBook }: { plan: any; index: number
           </div>
         )}
 
-        <Card className={`relative h-full overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-2 ${
+        <Card className={`premium-3d-card premium-shadow-depth premium-shine-sweep relative h-full overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-2 ${
           plan.popular
             ? "bg-gradient-to-br from-primary/10 via-card to-accent/10 border-2 border-primary/50 shadow-2xl shadow-primary/20"
             : "bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-white/50 hover:shadow-2xl hover:border-primary/30"
@@ -111,7 +112,7 @@ const PremiumTrainingCard = ({ plan, index, onBook }: { plan: any; index: number
             <img
               src={plan.image}
               alt={plan.name}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 premium-4k-image"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
             <div className="absolute bottom-4 left-4 right-4">
@@ -192,7 +193,7 @@ const ScamExampleCard = ({ example, index }: { example: any; index: number }) =>
 
   return (
     <ScrollReveal animation="scale-in" delay={index * 100} threshold={0.2}>
-      <Card className="group h-full overflow-hidden rounded-3xl bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-white/50 hover:shadow-2xl hover:border-primary/30 transition-all duration-500 hover:-translate-y-1">
+      <Card className="premium-3d-card premium-shadow-depth premium-shine-sweep group h-full overflow-hidden rounded-3xl bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-white/50 hover:shadow-2xl hover:border-primary/30 transition-all duration-500 hover:-translate-y-1">
         {/* Colored top accent */}
         <div className={`h-2 bg-gradient-to-r ${example.gradient}`} />
 
@@ -496,7 +497,15 @@ function LearnAndTrain() {
 
   return (
     <PageTransition variant="fade">
-      <div className="min-h-screen">
+      <PremiumMeshBackground
+        variant="training"
+        intensity="medium"
+        showGrid
+        showOrbs
+        showParticles
+        className="min-h-screen premium-hd-text"
+      >
+        <div className="min-h-screen">
         <SEO
           title="AI Scam Protection Training"
           description="Comprehensive AI scam protection training for families and seniors. Learn to spot deepfakes, phishing, and AI-powered scams. Zoom and in-person classes available in Dayton, Ohio."
@@ -543,7 +552,7 @@ function LearnAndTrain() {
             showScrollIndicator={true}
           >
             <div className="text-center md:text-left mb-6">
-              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-3">
+              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-3 glow-text">
                 <RotatingHeadlines headlines={trainingHeadlines} className="" />
               </h1>
               <p className="text-lg md:text-xl text-white/90 max-w-3xl">
@@ -583,7 +592,7 @@ function LearnAndTrain() {
         {/* ═══════════════════════════════════════════════════════════════════════════
             SECTION 1: WHY FAMILIES TRUST US - Premium Split Layout with Image
         ═══════════════════════════════════════════════════════════════════════════ */}
-        <section className="py-24 bg-gradient-to-b from-background via-muted/50 to-background relative overflow-hidden">
+        <section className="py-24 bg-gradient-to-b from-background via-muted/50 to-background relative overflow-hidden premium-section-bg">
           {/* Decorative elements */}
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-primary/10 to-transparent rounded-full blur-3xl" />
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-accent/10 to-transparent rounded-full blur-3xl" />
@@ -614,13 +623,13 @@ function LearnAndTrain() {
                     <img
                       src={seniorLearning}
                       alt="Senior learning on tablet"
-                      className="w-full h-[500px] object-cover"
+                      className="w-full h-[500px] object-cover premium-4k-image"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   </div>
 
                   {/* Floating stat cards */}
-                  <div className="absolute -bottom-6 -right-6 bg-white dark:bg-card rounded-2xl p-5 shadow-2xl border border-border/50">
+                  <div className="premium-3d-card premium-shadow-depth premium-glass-refraction premium-shine-sweep absolute -bottom-6 -right-6 bg-white dark:bg-card rounded-2xl p-5 shadow-2xl border border-border/50">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
                         <Shield className="w-6 h-6 text-white" />
@@ -632,7 +641,7 @@ function LearnAndTrain() {
                     </div>
                   </div>
 
-                  <div className="absolute -top-6 -left-6 bg-white dark:bg-card rounded-2xl p-5 shadow-2xl border border-border/50">
+                  <div className="premium-3d-card premium-shadow-depth premium-glass-refraction premium-shine-sweep absolute -top-6 -left-6 bg-white dark:bg-card rounded-2xl p-5 shadow-2xl border border-border/50">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
                         <GraduationCap className="w-6 h-6 text-white" />
@@ -677,7 +686,7 @@ function LearnAndTrain() {
                   ].map((item, index) => (
                     <div
                       key={index}
-                      className="group flex gap-5 p-5 rounded-2xl bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-white/50 hover:shadow-xl hover:border-primary/30 transition-all duration-300"
+                      className="premium-3d-card premium-shadow-depth premium-shine-sweep group flex gap-5 p-5 rounded-2xl bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-white/50 hover:shadow-xl hover:border-primary/30 transition-all duration-300"
                     >
                       <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
                         <item.icon className="w-7 h-7 text-white" />
@@ -696,7 +705,7 @@ function LearnAndTrain() {
             <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
               {/* Emergency Pause Protocol */}
               <ScrollReveal animation="scale-in">
-                <Card className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-red-500/10 via-card to-orange-500/10 border-red-500/30 p-8">
+                <Card className="premium-3d-card premium-shadow-depth premium-shine-sweep relative overflow-hidden rounded-3xl bg-gradient-to-br from-red-500/10 via-card to-orange-500/10 border-red-500/30 p-8">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-red-500/20 to-transparent rounded-full blur-2xl" />
 
                   <div className="flex items-center gap-4 mb-6">
@@ -730,7 +739,7 @@ function LearnAndTrain() {
 
               {/* Identity Verification Script */}
               <ScrollReveal animation="scale-in" delay={100}>
-                <Card className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-500/10 via-card to-cyan-500/10 border-blue-500/30 p-8">
+                <Card className="premium-3d-card premium-shadow-depth premium-shine-sweep relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-500/10 via-card to-cyan-500/10 border-blue-500/30 p-8">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-blue-500/20 to-transparent rounded-full blur-2xl" />
 
                   <div className="flex items-center gap-4 mb-6">
@@ -767,7 +776,7 @@ function LearnAndTrain() {
         {/* ═══════════════════════════════════════════════════════════════════════════
             SECTION 2: HOW IT WORKS - 3 Steps with Premium Cards
         ═══════════════════════════════════════════════════════════════════════════ */}
-        <section className="py-24 relative overflow-hidden">
+        <section className="py-24 relative overflow-hidden premium-section-bg premium-grid-dots">
           {/* Background image */}
           <div
             className="absolute inset-0 bg-cover bg-center opacity-5"
@@ -819,7 +828,7 @@ function LearnAndTrain() {
                 },
               ].map((item, index) => (
                 <ScrollReveal key={index} animation="scale-in" delay={index * 150}>
-                  <Card className="group relative h-full overflow-hidden rounded-3xl bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-white/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                  <Card className="premium-3d-card premium-shadow-depth premium-shine-sweep group relative h-full overflow-hidden rounded-3xl bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-white/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
                     {/* Step number */}
                     <div className={`absolute top-4 right-4 w-14 h-14 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center z-10`}>
                       <span className="text-white font-black text-xl">{item.step}</span>
@@ -830,7 +839,7 @@ function LearnAndTrain() {
                       <img
                         src={item.image}
                         alt={item.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 premium-4k-image"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                     </div>
@@ -864,7 +873,7 @@ function LearnAndTrain() {
         {/* ═══════════════════════════════════════════════════════════════════════════
             SECTION 3: SCAM PREVENTION WORKSHOPS - Premium Cards with Images
         ═══════════════════════════════════════════════════════════════════════════ */}
-        <section id="training" className="py-24 bg-gradient-to-b from-muted/50 via-background to-muted/50 relative overflow-hidden">
+        <section id="training" className="py-24 bg-gradient-to-b from-muted/50 via-background to-muted/50 relative overflow-hidden premium-section-bg">
           <FlowingWaves variant="full" opacity={0.08} />
 
           <div className="container mx-auto px-4 relative z-10">
@@ -889,7 +898,7 @@ function LearnAndTrain() {
             {/* Veterans discount banner */}
             <ScrollReveal>
               <div className="flex justify-center mb-12">
-                <div className="inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-blue-900/20 via-white/80 to-red-900/20 dark:from-blue-900/30 dark:via-card/80 dark:to-red-900/30 backdrop-blur-xl border-2 border-blue-500/30 rounded-2xl shadow-xl">
+                <div className="premium-3d-card premium-shadow-depth premium-glass-refraction premium-border-glow inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-blue-900/20 via-white/80 to-red-900/20 dark:from-blue-900/30 dark:via-card/80 dark:to-red-900/30 backdrop-blur-xl border-2 border-blue-500/30 rounded-2xl shadow-xl">
                   <span className="text-3xl">🇺🇸</span>
                   <div className="flex items-center gap-2">
                     <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
@@ -934,7 +943,7 @@ function LearnAndTrain() {
         {/* ═══════════════════════════════════════════════════════════════════════════
             SECTION 4: SIMPLE PROTECTION IN 4 STEPS
         ═══════════════════════════════════════════════════════════════════════════ */}
-        <section className="py-24 relative overflow-hidden">
+        <section className="py-24 relative overflow-hidden premium-section-bg premium-grid-dots">
           <div
             className="absolute inset-0 bg-cover bg-center opacity-5"
             style={{ backgroundImage: `url(${securityTools})` }}
@@ -993,7 +1002,7 @@ function LearnAndTrain() {
                 },
               ].map((step, index) => (
                 <ScrollReveal key={index} animation="scale-in" delay={index * 100}>
-                  <Card className="group relative h-full overflow-hidden rounded-3xl bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-white/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 p-6">
+                  <Card className="premium-3d-card premium-shadow-depth premium-shine-sweep group relative h-full overflow-hidden rounded-3xl bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-white/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 p-6">
                     {/* Step badge */}
                     <div className={`absolute top-4 right-4 w-12 h-12 rounded-xl bg-gradient-to-br ${step.color} flex items-center justify-center shadow-lg`}>
                       <span className="text-white font-black">{step.step}</span>
@@ -1023,7 +1032,7 @@ function LearnAndTrain() {
         {/* ═══════════════════════════════════════════════════════════════════════════
             SECTION 5: WHAT WE ANALYZE - Interactive Threat Cards
         ═══════════════════════════════════════════════════════════════════════════ */}
-        <section className="py-24 bg-muted/50 relative overflow-hidden">
+        <section className="py-24 bg-muted/50 relative overflow-hidden premium-section-bg premium-grid-dots">
           <div className="container mx-auto px-4 relative z-10">
             <div className="text-center mb-16">
               <ScrollReveal>
@@ -1052,7 +1061,7 @@ function LearnAndTrain() {
                 <ScrollReveal key={index} animation="scale-in" delay={index * 50}>
                   <Card
                     onClick={() => setExpandedThreat(expandedThreat === threat.title ? null : threat.title)}
-                    className={`group cursor-pointer p-6 rounded-3xl transition-all duration-300 bg-white/80 dark:bg-card/80 backdrop-blur-xl border hover:shadow-xl hover:-translate-y-1 ${
+                    className={`premium-3d-card premium-shadow-depth premium-shine-sweep group cursor-pointer p-6 rounded-3xl transition-all duration-300 bg-white/80 dark:bg-card/80 backdrop-blur-xl border hover:shadow-xl hover:-translate-y-1 ${
                       expandedThreat === threat.title
                         ? 'border-primary shadow-lg ring-2 ring-primary/20'
                         : 'border-white/50 hover:border-primary/30'
@@ -1085,7 +1094,7 @@ function LearnAndTrain() {
         {/* ═══════════════════════════════════════════════════════════════════════════
             SECTION 6: AI PROFESSIONAL TRAINING
         ═══════════════════════════════════════════════════════════════════════════ */}
-        <section id="ai-pro-training" className="py-24 relative overflow-hidden">
+        <section id="ai-pro-training" className="py-24 relative overflow-hidden premium-aurora premium-grid-dots">
           <div
             className="absolute inset-0 bg-cover bg-center opacity-10"
             style={{ backgroundImage: `url(${expertTeam})` }}
@@ -1135,7 +1144,7 @@ function LearnAndTrain() {
 
             <ScrollReveal>
               <div className="text-center mt-12">
-                <div className="inline-flex items-center gap-3 bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-white/50 rounded-2xl px-8 py-4 shadow-xl">
+                <div className="premium-3d-card premium-shadow-depth premium-glass-refraction premium-border-glow inline-flex items-center gap-3 bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-white/50 rounded-2xl px-8 py-4 shadow-xl">
                   <Lock className="w-5 h-5 text-primary" />
                   <p className="text-muted-foreground">
                     💳 Secure payment required • 10% veteran discount available
@@ -1164,7 +1173,7 @@ function LearnAndTrain() {
         {/* ═══════════════════════════════════════════════════════════════════════════
             SECTION 7: SECURE YOUR FAMILY - Split Layout
         ═══════════════════════════════════════════════════════════════════════════ */}
-        <section className="py-24 bg-gradient-to-b from-muted/50 to-background relative overflow-hidden">
+        <section className="py-24 bg-gradient-to-b from-muted/50 to-background relative overflow-hidden premium-section-bg">
           <div className="container mx-auto px-4 relative z-10">
             <div className="text-center mb-16">
               <ScrollReveal>
@@ -1185,7 +1194,7 @@ function LearnAndTrain() {
             <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto mb-16">
               {/* Without Protection */}
               <ScrollReveal animation="fade-right">
-                <Card className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-red-500/10 via-card to-orange-500/10 border-red-500/30 p-8 h-full">
+                <Card className="premium-3d-card premium-shadow-depth premium-shine-sweep relative overflow-hidden rounded-3xl bg-gradient-to-br from-red-500/10 via-card to-orange-500/10 border-red-500/30 p-8 h-full">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-red-500/20 to-transparent rounded-full blur-2xl" />
 
                   <div className="flex items-center gap-4 mb-8">
@@ -1213,7 +1222,7 @@ function LearnAndTrain() {
 
               {/* With Protection */}
               <ScrollReveal animation="fade-left">
-                <Card className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-500/10 via-card to-teal-500/10 border-emerald-500/30 p-8 h-full">
+                <Card className="premium-3d-card premium-shadow-depth premium-shine-sweep relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-500/10 via-card to-teal-500/10 border-emerald-500/30 p-8 h-full">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-emerald-500/20 to-transparent rounded-full blur-2xl" />
 
                   <div className="flex items-center gap-4 mb-8">
@@ -1242,7 +1251,7 @@ function LearnAndTrain() {
 
             {/* Family Safety Vault */}
             <ScrollReveal>
-              <Card className="max-w-4xl mx-auto overflow-hidden rounded-3xl bg-gradient-to-br from-primary/10 via-white/90 dark:via-card/90 to-accent/10 border-primary/30 shadow-2xl">
+              <Card className="premium-3d-card premium-shadow-depth premium-border-glow premium-shine-sweep max-w-4xl mx-auto overflow-hidden rounded-3xl bg-gradient-to-br from-primary/10 via-white/90 dark:via-card/90 to-accent/10 border-primary/30 shadow-2xl">
                 <div className="relative p-8 md:p-12">
                   <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-primary/20 to-transparent rounded-full blur-3xl" />
 
@@ -1263,7 +1272,7 @@ function LearnAndTrain() {
                         { icon: "🔐", feature: "Account recovery" },
                         { icon: "✈️", feature: "Travel itineraries" },
                       ].map((item, index) => (
-                        <div key={index} className="flex items-center gap-3 p-4 bg-white/80 dark:bg-card/80 backdrop-blur-xl rounded-xl border border-border/50 shadow-lg">
+                        <div key={index} className="premium-3d-card premium-shadow-depth flex items-center gap-3 p-4 bg-white/80 dark:bg-card/80 backdrop-blur-xl rounded-xl border border-border/50 shadow-lg">
                           <span className="text-2xl">{item.icon}</span>
                           <span className="font-semibold text-sm">{item.feature}</span>
                         </div>
@@ -1279,7 +1288,7 @@ function LearnAndTrain() {
         {/* ═══════════════════════════════════════════════════════════════════════════
             SECTION 8: SCAMS WE'VE CAUGHT - Premium Example Cards
         ═══════════════════════════════════════════════════════════════════════════ */}
-        <section className="py-24 relative overflow-hidden">
+        <section className="py-24 relative overflow-hidden premium-section-bg premium-grid-dots">
           <div
             className="absolute inset-0 bg-cover bg-center opacity-5"
             style={{ backgroundImage: `url(${threatAnalysis})` }}
@@ -1313,7 +1322,7 @@ function LearnAndTrain() {
                 <h3 className="text-2xl font-bold text-center mb-8">Video Testimonials</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
                   {[1, 2, 3].map((i) => (
-                    <Card key={i} className="p-6 text-center border-2 border-dashed border-primary/30 hover:border-primary/50 transition-all rounded-2xl bg-white/80 dark:bg-card/80 backdrop-blur-xl">
+                    <Card key={i} className="premium-3d-card premium-shadow-depth premium-shine-sweep p-6 text-center border-2 border-dashed border-primary/30 hover:border-primary/50 transition-all rounded-2xl bg-white/80 dark:bg-card/80 backdrop-blur-xl">
                       <div className="aspect-video bg-muted/30 rounded-xl mb-4 flex flex-col items-center justify-center gap-3">
                         <Video className="w-12 h-12 text-primary/50" />
                         <p className="text-sm font-semibold text-muted-foreground">Upload Success Stories</p>
@@ -1332,7 +1341,7 @@ function LearnAndTrain() {
 
         {/* Training Success Stories */}
         {trainingTestimonials.length > 0 && (
-          <section className="py-24 bg-muted/50">
+          <section className="py-24 bg-muted/50 premium-section-bg premium-grid-dots">
             <div className="container mx-auto px-4">
               <ScrollReveal>
                 <h2 className="text-4xl font-black text-center mb-4">Workshop Success Stories</h2>
@@ -1368,7 +1377,7 @@ function LearnAndTrain() {
         {/* ═══════════════════════════════════════════════════════════════════════════
             FINAL CTA SECTION
         ═══════════════════════════════════════════════════════════════════════════ */}
-        <section className="py-24 relative overflow-hidden">
+        <section className="py-24 relative overflow-hidden premium-aurora">
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url(${seniorCouple})` }}
@@ -1460,7 +1469,8 @@ function LearnAndTrain() {
             }}
           />
         )}
-      </div>
+        </div>
+      </PremiumMeshBackground>
     </PageTransition>
   );
 }

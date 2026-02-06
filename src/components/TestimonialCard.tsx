@@ -13,7 +13,7 @@ interface TestimonialCardProps {
 
 const TestimonialCard = ({ name, age, location, quote, image, rating = 5, videoUrl, onVideoClick }: TestimonialCardProps) => {
   return (
-    <div className="bg-gradient-card rounded-2xl p-8 shadow-soft relative overflow-hidden border-none group card-enhanced">
+    <div className="premium-3d-card premium-shadow-depth premium-shine-sweep bg-gradient-card rounded-2xl p-8 shadow-soft relative overflow-hidden border-none group card-enhanced">
       {/* Large gradient quote mark background */}
       <div className="absolute -top-4 left-6 text-[120px] font-bold gradient-text-primary opacity-10 leading-none pointer-events-none select-none group-hover:opacity-20 transition-opacity duration-500">
         "
@@ -35,7 +35,7 @@ const TestimonialCard = ({ name, age, location, quote, image, rating = 5, videoU
             <img
               src={image}
               alt={`${name}'s testimonial`}
-              className="w-16 h-16 rounded-full object-cover ring-4 ring-accent/20 group-hover:ring-accent/40 transition-all duration-500"
+              className="w-16 h-16 rounded-full object-cover ring-4 ring-accent/20 group-hover:ring-accent/40 transition-all duration-500 premium-4k-image"
               loading="lazy"
               decoding="async"
             />

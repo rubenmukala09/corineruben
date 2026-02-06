@@ -120,8 +120,8 @@ export const InstructorShowcase = () => {
 
   return (
     <>
-      <section className="py-16 bg-gradient-to-b from-background to-secondary/20">
-        <div className="container mx-auto px-4">
+      <section className="py-16 bg-gradient-to-b from-background to-secondary/20 relative overflow-hidden premium-section-bg">
+        <div className="container mx-auto px-4 relative z-10">
           <ScrollReveal>
             <div className="text-center mb-10">
               <Badge className="mb-4 bg-gradient-to-r from-primary to-accent text-white text-base px-5 py-2">
@@ -141,7 +141,7 @@ export const InstructorShowcase = () => {
             {instructors.map((instructor, index) => (
               <ScrollReveal key={instructor.id} delay={index * 100}>
                 <Card 
-                  className="group p-4 text-center cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-border/50 hover:border-primary/30 bg-card"
+                  className="premium-3d-card premium-shadow-depth premium-shine-sweep premium-glass-refraction group p-4 text-center cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-border/50 hover:border-primary/30 bg-card"
                   onClick={() => setSelectedInstructor(instructor)}
                 >
                   {/* Photo */}
@@ -149,7 +149,7 @@ export const InstructorShowcase = () => {
                     <img 
                       src={instructor.image} 
                       alt={instructor.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 premium-4k-image"
                     />
                   </div>
                   
@@ -192,7 +192,7 @@ export const InstructorShowcase = () => {
 
       {/* Instructor Detail Modal */}
       <Dialog open={!!selectedInstructor} onOpenChange={() => setSelectedInstructor(null)}>
-        <DialogContent className="max-w-lg p-0 overflow-hidden bg-card">
+        <DialogContent className="premium-crystal premium-shadow-depth premium-border-glow max-w-lg p-0 overflow-hidden bg-card">
           <DialogTitle className="sr-only">{selectedInstructor?.name} - Instructor Profile</DialogTitle>
           <DialogDescription className="sr-only">
             View the biography, achievements, and experience of {selectedInstructor?.name}
@@ -218,7 +218,7 @@ export const InstructorShowcase = () => {
                   <img 
                     src={selectedInstructor.image} 
                     alt={selectedInstructor.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover premium-4k-image"
                   />
                 </div>
                 <h2 className="text-xl font-bold mb-1">{selectedInstructor.name}</h2>
@@ -232,14 +232,14 @@ export const InstructorShowcase = () => {
               <div className="p-5 space-y-4">
                 {/* Stats Row */}
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg">
+                  <div className="premium-3d-card premium-shadow-depth flex items-center gap-2 p-2 bg-muted/50 rounded-lg">
                     <Briefcase className="w-4 h-4 text-primary" />
                     <div>
                       <p className="text-xs text-muted-foreground">Experience</p>
                       <p className="font-bold text-sm">{selectedInstructor.yearsExperience} Years</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg">
+                  <div className="premium-3d-card premium-shadow-depth flex items-center gap-2 p-2 bg-muted/50 rounded-lg">
                     <Users className="w-4 h-4 text-primary" />
                     <div>
                       <p className="text-xs text-muted-foreground">Students</p>

@@ -37,12 +37,12 @@ export const GuestScannerSection = () => {
 
   return (
     <>
-      <section id="guest-scanner" className="py-12 relative overflow-hidden">
+      <section id="guest-scanner" className="py-12 relative overflow-hidden premium-section-bg premium-grid-dots">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5 pointer-events-none" />
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-light micro-bounce mb-4">
+            <div className="premium-3d-card premium-shadow-depth premium-glass-refraction inline-flex items-center gap-2 px-4 py-2 rounded-full glass-light micro-bounce mb-4">
               <Sparkles className="w-4 h-4 text-primary" />
               <span className="text-sm font-semibold text-foreground">Quick File Scanner · No Login Required</span>
             </div>
@@ -57,7 +57,7 @@ export const GuestScannerSection = () => {
           <div className="max-w-4xl mx-auto grid gap-6 lg:grid-cols-[1.5fr_1fr]">
             <GuestScanUpload file={file} onFileSelect={prepareFile} onClear={clearFile} />
 
-            <Card className="p-6 glass-light shadow-3d-lg border border-border/60">
+            <Card className="premium-3d-card premium-shadow-depth premium-shine-sweep p-6 glass-light shadow-3d-lg border border-border/60">
               <h3 className="text-lg font-semibold text-foreground mb-2">Pricing</h3>
               <p className="text-sm text-muted-foreground mb-4">
                 ${GUEST_SCAN_PRICING.ratePerMb.toFixed(2)} per MB · minimum ${GUEST_SCAN_PRICING.minimumCharge.toFixed(2)}
@@ -87,7 +87,7 @@ export const GuestScannerSection = () => {
           </div>
 
           {isProcessing && (
-            <Card className="max-w-4xl mx-auto mt-6 p-6 glass-light">
+            <Card className="premium-3d-card premium-shadow-depth max-w-4xl mx-auto mt-6 p-6 glass-light">
               <div className="flex items-center gap-3 mb-4">
                 <Loader2 className="w-5 h-5 text-primary animate-spin" />
                 <div>
@@ -100,7 +100,7 @@ export const GuestScannerSection = () => {
           )}
 
           {error && (
-            <Card className="max-w-4xl mx-auto mt-6 p-6 border border-destructive/30 bg-destructive/5 space-y-3">
+            <Card className="premium-3d-card premium-shadow-depth max-w-4xl mx-auto mt-6 p-6 border border-destructive/30 bg-destructive/5 space-y-3">
               <p className="text-sm text-destructive">{error}</p>
               <Button variant="outline" onClick={restartScan} className="w-fit">Try again</Button>
             </Card>
@@ -119,12 +119,12 @@ export const GuestScannerSection = () => {
           )}
 
           {status === "expired" && (
-            <Card className="max-w-4xl mx-auto mt-6 p-6 border border-emerald-200 bg-emerald-50/60 text-emerald-700">
+            <Card className="premium-3d-card premium-shadow-depth max-w-4xl mx-auto mt-6 p-6 border border-emerald-200 bg-emerald-50/60 text-emerald-700">
               Your data has been permanently deleted. We do not store your files or results.
             </Card>
           )}
 
-          <div className="max-w-4xl mx-auto mt-4 rounded-xl glass-light p-4 text-sm text-muted-foreground text-center">
+          <div className="premium-3d-card premium-shadow-depth premium-glass-refraction max-w-4xl mx-auto mt-4 rounded-xl glass-light p-4 text-sm text-muted-foreground text-center">
             <ShieldCheck className="w-4 h-4 inline mr-1.5 text-primary" />
             Your file is analyzed and permanently deleted within 10 minutes. Guest scans are anonymous.
           </div>
