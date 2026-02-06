@@ -4,26 +4,28 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { ProtectedRoute } from "./components/ProtectedRoute";
-import { LauraAIAssistant } from "./components/chat/LauraAIAssistant";
 import { AuthProvider } from "./contexts/AuthContext";
 import { CartProvider } from "./contexts/CartContext";
-import { CartFeedbackProvider, CartFeedbackNotifications } from "./components/CartFeedbackNotifications";
+import { CartFeedbackProvider } from "./components/CartFeedbackNotifications";
 import { SubscriptionProvider } from "./contexts/SubscriptionContext";
 import { CheckoutProvider } from "./contexts/CheckoutContext";
 const UnifiedCheckoutDialog = lazy(() => import("./components/payment/UnifiedCheckoutDialog"));
+const LauraAIAssistant = lazy(() => import("./components/chat/LauraAIAssistant"));
+const CartFeedbackNotifications = lazy(() =>
+  import("./components/CartFeedbackNotifications").then((mod) => ({
+    default: mod.CartFeedbackNotifications,
+  }))
+);
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { RouteTracker } from "./components/RouteTracker";
 import { DraggablePerformanceMonitor } from "./components/DraggablePerformanceMonitor";
-import { useAnalyticsTracking } from "./hooks/useAnalyticsTracking";
 import { PageTransition } from "./components/PageTransition";
 import { MotionConfig } from "framer-motion";
 
-import { NavigationProgress } from "./components/NavigationProgress";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { useSmoothAnchorScroll } from "./hooks/useSmoothAnchorScroll";
 import { CookieConsent } from "./components/CookieConsent";
 import { SkipToContent } from "./components/SkipToContent";
-import ScrollProgressBar from "./components/ScrollProgressBar";
 import BackToTop from "./components/BackToTop";
 import MobileCallButton from "./components/MobileCallButton";
 import { AnalyticsTracker } from "./components/AnalyticsTracker";
@@ -234,12 +236,26 @@ function PublicRoutes() {
 
 function App() {
   useSmoothAnchorScroll();
+  const [showDeferredUI, setShowDeferredUI] = useState(false);
   
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
+    const enableDeferredUI = () => setShowDeferredUI(true);
+    let idleId: number | ReturnType<typeof setTimeout>;
+
+    if ("requestIdleCallback" in window) {
+      idleId = (window as any).requestIdleCallback(enableDeferredUI, { timeout: 2000 });
+    } else {
+      idleId = setTimeout(enableDeferredUI, 1500);
+    }
     
     return () => {
       document.documentElement.style.scrollBehavior = "auto";
+      if ("cancelIdleCallback" in window && typeof idleId === "number") {
+        (window as any).cancelIdleCallback(idleId);
+      } else {
+        clearTimeout(idleId as ReturnType<typeof setTimeout>);
+      }
     };
   }, []);
 
@@ -256,8 +272,6 @@ function App() {
                   <CartFeedbackProvider>
                     <BrowserRouter>
                       <SkipToContent />
-                      <ScrollProgressBar />
-                      <NavigationProgress />
                       <ScrollToTop />
                       <BackToTop />
                       <MobileCallButton />
@@ -269,9 +283,17 @@ function App() {
                           <PublicRoutes />
                         </Suspense>
                       </ErrorBoundary>
-                      <LauraAIAssistant />
+                      {showDeferredUI && (
+                        <Suspense fallback={null}>
+                          <LauraAIAssistant />
+                        </Suspense>
+                      )}
                       <CookieConsent />
-                      <CartFeedbackNotifications />
+                      {showDeferredUI && (
+                        <Suspense fallback={null}>
+                          <CartFeedbackNotifications />
+                        </Suspense>
+                      )}
                       <Suspense fallback={null}>
                         <UnifiedCheckoutDialog />
                       </Suspense>
