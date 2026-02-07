@@ -152,7 +152,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --sidebar-ring: 220 58% 22%;
 
     /* Global site scale for desktop browsers */
-    --site-scale: 1;
+    --site-scale: 0.8;
     /* Global text scale (rem-based) */
     --text-scale: 1.12;
   }

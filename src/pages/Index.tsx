@@ -21,7 +21,6 @@ import seniorCoupleActive from "@/assets/senior-couple-active.jpg";
 import { FamilyTrustSection } from "@/components/home/FamilyTrustSection";
 import { SITE } from "@/config/site";
 const LiveSecurityStats = lazy(() => import("@/components/home/LiveSecurityStats"));
-const LiveProtectionStatus = lazy(() => import("@/components/LiveProtectionStatus"));
 const SocialProofTicker = lazy(() => import("@/components/SocialProofTicker"));
 const PremiumGlassmorphismWidgets = lazy(() => import("@/components/home/PremiumGlassmorphismWidgets"));
 const Index = () => {
@@ -82,9 +81,6 @@ const Index = () => {
         <SectionNav />
 
         {/* Floating widgets */}
-        {enableLiveWidgets && <Suspense fallback={null}>
-            <LiveProtectionStatus />
-          </Suspense>}
         {enableLiveWidgets && <Suspense fallback={null}>
             <SocialProofTicker />
           </Suspense>}
