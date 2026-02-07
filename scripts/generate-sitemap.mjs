@@ -8,6 +8,7 @@ const ENV_PATH = path.resolve(process.cwd(), ".env");
 const BASE_PAGES = [
   { path: "/", priority: 1.0, changefreq: "daily" },
   { path: "/training", priority: 0.9, changefreq: "weekly" },
+  { path: "/training/ai-analysis", priority: 0.85, changefreq: "weekly" },
   { path: "/business", priority: 0.9, changefreq: "weekly" },
   { path: "/business/ai-receptionist", priority: 0.85, changefreq: "weekly" },
   { path: "/business/ai-automation", priority: 0.85, changefreq: "weekly" },

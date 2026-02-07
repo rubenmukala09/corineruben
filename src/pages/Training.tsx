@@ -57,7 +57,6 @@ import { PROFESSIONAL_HERO_IMAGES } from "@/config/professionalHeroImages";
 import TestimonialCard from "@/components/TestimonialCard";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { InstructorShowcase } from "@/components/training/InstructorShowcase";
-import { GuestScannerSection } from "@/components/training/GuestScannerSection";
 import PremiumMeshBackground from "@/components/backgrounds/PremiumMeshBackground";
 
 import { SEO } from "@/components/SEO";
@@ -587,17 +586,17 @@ function LearnAndTrain() {
                 Learn & Train Workshops
               </Button>
 
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
                 className="bg-white/15 backdrop-blur-md text-white border-white/30 hover:bg-white/25 text-base px-6 py-5"
-              >
-                <Link to="/business">
-                  <Zap className="w-5 h-5 mr-2" />
-                  AI & Business Solutions
-                </Link>
-              </Button>
+                >
+                  <Link to="/training/ai-analysis">
+                    <FileCheck className="w-5 h-5 mr-2" />
+                    AI Analysis & Secure Scan
+                  </Link>
+                </Button>
             </div>
           </Hero>
 
@@ -961,7 +960,65 @@ function LearnAndTrain() {
         <InstructorShowcase />
 
         {/* Guest Scanner Section */}
-        <GuestScannerSection />
+        <section id="scamshield" className="py-16 relative overflow-hidden premium-section-bg premium-grid-dots">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5 pointer-events-none" />
+
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center mb-10">
+              <div className="premium-3d-card premium-shadow-depth premium-glass-refraction inline-flex items-center gap-2 px-4 py-2 rounded-full glass-light micro-bounce mb-4">
+                <Sparkles className="w-4 h-4 text-primary" />
+                <span className="text-sm font-semibold text-foreground">AI File Scan Agent</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
+                Scan Files with the AI Analysis Console
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                We moved the instant file scanner to a dedicated AI analysis page so it can run faster, with a full console and
+                secure deletion workflow.
+              </p>
+            </div>
+
+            <div className="max-w-4xl mx-auto">
+              <Card className="premium-3d-card premium-shadow-depth premium-shine-sweep glass-light border border-white/30 p-6">
+                <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr] items-center">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-2xl bg-primary/15 flex items-center justify-center">
+                        <FileCheck className="w-5 h-5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-foreground">Instant AI file analysis</p>
+                        <p className="text-sm text-muted-foreground">Upload a file, receive a clear risk summary, and delete it automatically.</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-2xl bg-emerald-500/15 flex items-center justify-center">
+                        <Shield className="w-5 h-5 text-emerald-500" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-foreground">Secure deletion in 10 minutes</p>
+                        <p className="text-sm text-muted-foreground">Anonymous scans with privacy-first storage controls.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-center lg:justify-end">
+                    <Button
+                      asChild
+                      size="lg"
+                      className="bg-gradient-to-r from-primary to-accent text-white px-6"
+                    >
+                      <Link to="/training/ai-analysis">
+                        Open AI Analysis Console
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
+        </section>
 
         {/* ═══════════════════════════════════════════════════════════════════════════
             SECTION 4: SIMPLE PROTECTION IN 4 STEPS

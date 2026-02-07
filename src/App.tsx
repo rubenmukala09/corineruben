@@ -39,6 +39,7 @@ import { AdminShell } from "./components/admin/AdminShell";
 // Lazy load all pages
 const Index = lazy(() => import("./pages/Index"));
 const Training = lazy(() => import("./pages/Training"));
+const TrainingAiAnalysis = lazy(() => import("./pages/TrainingAiAnalysis"));
 const Business = lazy(() => import("./pages/Business"));
 const AIReceptionist = lazy(() => import("./pages/business/AIReceptionist"));
 const AIAutomation = lazy(() => import("./pages/business/AIAutomation"));
@@ -147,6 +148,7 @@ function PublicRoutes() {
     <Routes>
         <Route path="/" element={<PageTransition variant="auto"><Index /></PageTransition>} />
         <Route path="/training" element={<PageTransition variant="auto"><Training /></PageTransition>} />
+        <Route path="/training/ai-analysis" element={<PageTransition variant="auto"><TrainingAiAnalysis /></PageTransition>} />
         <Route path="/business" element={<PageTransition variant="auto"><Business /></PageTransition>} />
         <Route path="/business/ai-receptionist" element={<PageTransition variant="auto"><AIReceptionist /></PageTransition>} />
         <Route path="/business/ai-automation" element={<PageTransition variant="auto"><AIAutomation /></PageTransition>} />
@@ -171,7 +173,7 @@ function PublicRoutes() {
         <Route path="/application-pending" element={<PageTransition><ApplicationPending /></PageTransition>} />
         <Route path="/maintenance" element={<PageTransition><Maintenance /></PageTransition>} />
         <Route path="/reset-password" element={<PageTransition><ResetPassword /></PageTransition>} />
-        <Route path="/guest-scanner" element={<Navigate to="/training" replace />} />
+        <Route path="/guest-scanner" element={<Navigate to="/training/ai-analysis" replace />} />
         
         {/* Portal Routes */}
         <Route path="/portal" element={<PageTransition><ProtectedRoute><Portal /></ProtectedRoute></PageTransition>} />

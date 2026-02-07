@@ -49,7 +49,7 @@ const GuestPaymentForm = ({ amount, disabled, onSuccess }: GuestPaymentFormProps
       const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: `${window.location.origin}/guest-scanner`,
+          return_url: `${window.location.origin}/training/ai-analysis#guest-scanner`,
         },
         redirect: "if_required",
       });
