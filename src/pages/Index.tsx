@@ -31,7 +31,8 @@ const Index = () => {
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) return;
+    const saveData = "connection" in navigator && (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
+    if (prefersReducedMotion || saveData) return;
 
     const enableWidgets = () => setEnableLiveWidgets(true);
     let idleId: number | ReturnType<typeof setTimeout>;
@@ -52,6 +53,9 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const saveData = "connection" in navigator && (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
+    if (prefersReducedMotion || saveData) return;
     const element = statsRef.current;
     if (!element) return;
 
@@ -117,7 +121,7 @@ const Index = () => {
 
           {/* Current Scam Alerts - Immediate Value */}
           <section id="alerts">
-            <ScamAlertsSection />
+            <ScamAlertsSection onSubmitThreat={() => setScamShieldOpen(true)} />
           </section>
 
           {/* Resources Promo */}

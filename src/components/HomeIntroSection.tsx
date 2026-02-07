@@ -55,7 +55,7 @@ export const HomeIntroSection = () => {
   ];
 
   const quickLinks = [
-    { label: "ScamShield Protection", href: "/training#pricing", icon: Shield, desc: "Get protected now" },
+    { label: "ScamShield Protection", href: "/training#scamshield", icon: Shield, desc: "Get protected now" },
     { label: "Learn & Train", href: "/training", icon: GraduationCap, desc: "Prevention training" },
     { label: "AI for Business", href: "/business", icon: Building2, desc: "Business solutions" },
     { label: "Resources", href: "/resources", icon: Sparkles, desc: "Tools & guides" }

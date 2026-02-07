@@ -112,6 +112,10 @@ const PremiumTrainingCard = ({ plan, index, onBook }: { plan: any; index: number
             <img
               src={plan.image}
               alt={plan.name}
+              width={800}
+              height={400}
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 premium-4k-image"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
@@ -623,6 +627,10 @@ function LearnAndTrain() {
                     <img
                       src={seniorLearning}
                       alt="Senior learning on tablet"
+                      width={1200}
+                      height={800}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-[500px] object-cover premium-4k-image"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
@@ -776,7 +784,7 @@ function LearnAndTrain() {
         {/* ═══════════════════════════════════════════════════════════════════════════
             SECTION 2: HOW IT WORKS - 3 Steps with Premium Cards
         ═══════════════════════════════════════════════════════════════════════════ */}
-        <section className="py-24 relative overflow-hidden premium-section-bg premium-grid-dots">
+        <section id="book" className="py-24 relative overflow-hidden premium-section-bg premium-grid-dots">
           {/* Background image */}
           <div
             className="absolute inset-0 bg-cover bg-center opacity-5"
@@ -839,6 +847,10 @@ function LearnAndTrain() {
                       <img
                         src={item.image}
                         alt={item.title}
+                        width={800}
+                        height={400}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 premium-4k-image"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -911,7 +923,7 @@ function LearnAndTrain() {
             </ScrollReveal>
 
             {/* Training cards grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-[1400px] mx-auto">
+            <div id="pricing" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-[1400px] mx-auto">
               {trainingPlans.map((plan, index) => (
                 <PremiumTrainingCard
                   key={index}

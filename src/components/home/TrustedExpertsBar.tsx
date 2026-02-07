@@ -109,7 +109,7 @@ const badges = [
               <div className="text-[10px] text-[#1a1a2e]/50 uppercase tracking-wider font-semibold">Veteran Discount</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-black text-[#1a1a2e]">60</div>
+              <div className="text-3xl font-black text-[#1a1a2e]">30</div>
               <div className="text-[10px] text-[#1a1a2e]/50 uppercase tracking-wider font-semibold">Day Guarantee</div>
             </div>
           </div>

@@ -63,6 +63,8 @@ export const HeroHomepage = () => {
               height={600}
               loading="eager"
               decoding="async"
+              fetchpriority="high"
+              sizes="(min-width: 1024px) 55vw, 100vw"
               className="w-full h-full object-cover scale-110"
             />
           </motion.div>
@@ -285,7 +287,7 @@ export const HeroHomepage = () => {
               >
                 {[
                   { value: "10%", label: "Veteran Discount" },
-                  { value: "60", label: "Day Guarantee" },
+                  { value: "30", label: "Day Guarantee" },
                   { value: "24/7", label: "Support" },
                   { value: "100%", label: "Satisfaction" }
                 ].map((stat, i) => (
@@ -406,7 +408,7 @@ export const HeroHomepage = () => {
               <div className="hidden xl:flex items-center gap-8">
                 {[
                   { value: "10%", label: "Veteran Discount", gradient: true },
-                  { value: "60", label: "Day Guarantee", gradient: false }
+                  { value: "30", label: "Day Guarantee", gradient: false }
                 ].map((stat, i) => (
                   <motion.div 
                     key={i}

@@ -41,7 +41,7 @@ const whyUsPoints = [
   "Veteran-supporting, Ohio-based company",
   "Enterprise AI technology made simple",
   "Personal support, not chatbots",
-  "60-day money-back guarantee",
+  "30-day money-back guarantee",
   "Trusted by Ohio families",
 ];
 
@@ -127,7 +127,7 @@ export const CompanyIntroSection = () => {
                   The Threats Are Real.<br /><span className="text-amber-300">Your Defense Should Be Too.</span>
                 </h3>
                 <p className="text-white/90 mb-6 leading-relaxed" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.4)' }}>
-                  Only 1 in 44 seniors report fraud due to shame. AI-powered scams are growing 300% year over year. Don't become a statistic.
+                  Many fraud cases go unreported, and AI-powered scams are rising quickly. Don't become a statistic.
                 </p>
                 <div className="grid grid-cols-2 gap-3 mb-8">
                   {whyUsPoints.map((point, index) => (
@@ -140,6 +140,9 @@ export const CompanyIntroSection = () => {
                 <Button asChild size="lg" className="rounded-full bg-white text-foreground hover:bg-white/90">
                   <Link to="/services">Start Your Protection<ArrowRight className="ml-2 w-4 h-4" /></Link>
                 </Button>
+              </div>
+              <div className="text-center text-xs text-white/70 uppercase tracking-wider mb-3">
+                Sample metrics
               </div>
               <div className="grid grid-cols-2 gap-4">
                 {[

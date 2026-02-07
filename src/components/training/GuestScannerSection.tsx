@@ -37,7 +37,8 @@ export const GuestScannerSection = () => {
 
   return (
     <>
-      <section id="guest-scanner" className="py-12 relative overflow-hidden premium-section-bg premium-grid-dots">
+      <section id="scamshield" className="py-12 relative overflow-hidden premium-section-bg premium-grid-dots">
+        <div id="guest-scanner" aria-hidden="true" />
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5 pointer-events-none" />
 
         <div className="container mx-auto px-4 relative z-10">

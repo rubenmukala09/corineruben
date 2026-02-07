@@ -40,7 +40,11 @@ const quickTips = [
   "Trust your instincts - if it feels wrong, it is",
 ];
 
-export const ScamAlertsSection = () => {
+interface ScamAlertsSectionProps {
+  onSubmitThreat?: () => void;
+}
+
+export const ScamAlertsSection = ({ onSubmitThreat }: ScamAlertsSectionProps) => {
   const [activeAlert, setActiveAlert] = useState(0);
 
   useEffect(() => {
@@ -205,12 +209,25 @@ export const ScamAlertsSection = () => {
                 <p className="text-white/90 mb-4 text-sm">
                   Get protected before scammers find you
                 </p>
-                <Button asChild variant="secondary" size="lg" className="h-10 px-5 text-sm font-bold rounded-full">
-                  <Link to="/training#pricing">
-                    Get Protected Now
-                    <ArrowRight className="ml-2 w-4 h-4" aria-hidden="true" />
-                  </Link>
-                </Button>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <Button asChild variant="secondary" size="lg" className="h-10 px-5 text-sm font-bold rounded-full">
+                    <Link to="/training#pricing">
+                      Get Protected Now
+                      <ArrowRight className="ml-2 w-4 h-4" aria-hidden="true" />
+                    </Link>
+                  </Button>
+                  {onSubmitThreat && (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="lg"
+                      onClick={onSubmitThreat}
+                      className="h-10 px-5 text-sm font-bold rounded-full bg-white/10 border-white/40 text-white hover:bg-white/20"
+                    >
+                      Analyze a Message
+                    </Button>
+                  )}
+                </div>
               </div>
             </div>
           </div>

@@ -125,7 +125,17 @@ const Maintenance = lazy(() => import("./pages/Maintenance"));
 const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess"));
 const PaymentCanceled = lazy(() => import("./pages/PaymentCanceled"));
 
-const PageLoader = () => <GlassmorphismLoader message="Loading" fullScreen={true} />;
+const PageLoader = () => {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShow(true), 250);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!show) return null;
+  return <GlassmorphismLoader message="Loading" fullScreen={true} />;
+};
 const queryClient = new QueryClient();
 
 // Direct routes without AnimatePresence - instant transitions

@@ -177,7 +177,7 @@ export const ProtectionComparison = () => {
           <div className="inline-flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
             <span className="flex items-center gap-2">
               <Check className="w-4 h-4 text-green-500" />
-              60-day money-back guarantee
+              30-day money-back guarantee
             </span>
             <span className="flex items-center gap-2">
               <Check className="w-4 h-4 text-green-500" />

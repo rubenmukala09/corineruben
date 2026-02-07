@@ -167,21 +167,21 @@ export const LiveSecurityStats = () => {
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 glass-light rounded-full mb-6">
             <span className="live-indicator">
-              LIVE
+              DEMO
             </span>
             <span className="text-sm text-muted-foreground">
-              Last updated: {lastUpdate.toLocaleTimeString()}
+              Simulated updates • Last updated: {lastUpdate.toLocaleTimeString()}
             </span>
           </div>
 
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-            <span className="text-foreground">Real-Time </span>
+            <span className="text-foreground">Sample </span>
             <span className="text-gradient-animate">Protection Stats</span>
           </h2>
 
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Watch our AI-powered security system protect Ohio families around the clock.
-            These numbers update live.
+            Preview of how real-time monitoring could look.
+            Data shown here is simulated for demo purposes.
           </p>
         </motion.div>
 

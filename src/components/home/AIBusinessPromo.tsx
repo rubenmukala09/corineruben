@@ -117,7 +117,7 @@ export const AIBusinessPromo = () => {
                  </Link>
                </Button>
                <div className="text-foreground/50 text-sm">
-                 <span className="font-medium text-[#18305A]">+1 (937) 974-5682</span>
+                 <span className="font-medium text-[#18305A]">+1 (937) 301-8749</span>
                </div>
              </div>
           </div>

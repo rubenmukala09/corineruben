@@ -98,7 +98,10 @@ export const LiveProtectionStatus = () => {
                     transition={{ duration: 2, repeat: Infinity }}
                     className="w-2 h-2 rounded-full bg-green-500"
                   />
-                  <span className="text-sm font-semibold text-foreground">Live Protection</span>
+                  <span className="text-sm font-semibold text-foreground">Sample Protection</span>
+                  <span className="rounded-full bg-white/70 px-2 py-0.5 text-[10px] font-semibold text-foreground/70">
+                    Demo
+                  </span>
                 </div>
                 <div className="flex items-center gap-1">
                   <button
@@ -172,7 +175,7 @@ export const LiveProtectionStatus = () => {
             {/* Footer */}
             <div className="px-4 py-2 bg-gradient-to-r from-primary/5 to-accent/5 border-t border-white/10">
               <p className="text-[10px] text-center text-muted-foreground">
-                Protecting Ohio families 24/7
+                Sample activity for demo purposes
               </p>
             </div>
           </motion.div>
@@ -204,14 +207,14 @@ export const LiveProtectionStatus = () => {
             </div>
 
             <div className="text-left">
-              <div className="text-xs font-semibold text-foreground">Live Protection</div>
+              <div className="text-xs font-semibold text-foreground">Sample Activity</div>
               <motion.div
                 key={stats.threatsBlocked}
                 initial={{ opacity: 0.5 }}
                 animate={{ opacity: 1 }}
                 className="text-[10px] text-muted-foreground"
               >
-                {stats.threatsBlocked.toLocaleString()} threats blocked
+                {stats.threatsBlocked.toLocaleString()} sample updates
               </motion.div>
             </div>
           </motion.button>

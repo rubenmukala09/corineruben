@@ -5,24 +5,23 @@
  import grandmotherGrandchildren from "@/assets/grandmother-grandchildren-sofa.jpg";
  import seniorsTablet from "@/assets/seniors-tablet-kitchen.jpg";
  
-// TODO: Fetch real testimonials from database (testimonials_public table)
-// These are placeholder testimonials - replace with approved user submissions
- const testimonials = [
-   {
-    name: "Verified Client",
-     role: "Protected Family Member",
-    quote: "InVision Network helped protect our family from online threats.",
-     rating: 5,
-     image: grandmotherGrandchildren,
-   },
-   {
-    name: "Verified Veteran",
-     role: "Veteran",
-    quote: "Great service that understands our community's needs.",
-     rating: 5,
-     image: seniorsTablet,
-   },
- ];
+// Sample testimonials for design preview only.
+const testimonials = [
+  {
+    name: "Sample Client",
+    role: "Family Member (Sample)",
+    quote: "Clear guidance and calm, respectful support throughout the process.",
+    rating: 5,
+    image: grandmotherGrandchildren,
+  },
+  {
+    name: "Sample Veteran",
+    role: "Veteran (Sample)",
+    quote: "Helpful, patient, and focused on practical next steps.",
+    rating: 5,
+    image: seniorsTablet,
+  },
+];
  
 // Note: Update these stats periodically with real metrics from database
  const floatingStats = [
@@ -250,11 +249,11 @@
                   <div className="flex items-center justify-between mb-5">
                     <div className="flex items-center gap-2">
                       <Activity className="w-5 h-5 text-coral-400" />
-                      <h4 className="font-bold text-white">Live Dashboard</h4>
+                      <h4 className="font-bold text-white">Sample Dashboard</h4>
                     </div>
                     <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm">
                       <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                      <span className="text-xs font-medium text-white/80">Live</span>
+                      <span className="text-xs font-medium text-white/80">Demo</span>
                     </div>
                   </div>
                   
@@ -294,11 +293,15 @@
                      <Quote className="w-5 h-5 text-coral-500" />
                    </div>
                    
-                   {/* Stars */}
-                   <div className="flex gap-1 mb-4">
-                     {[...Array(testimonial.rating)].map((_, j) => (
-                       <Star key={j} className="w-4 h-4 text-amber-400 fill-amber-400" />
-                     ))}
+                   <div className="flex items-center justify-between mb-4">
+                     <span className="rounded-full bg-white/70 px-2 py-0.5 text-[10px] font-semibold text-foreground/70">
+                       Sample
+                     </span>
+                     <div className="flex gap-1">
+                       {[...Array(testimonial.rating)].map((_, j) => (
+                         <Star key={j} className="w-4 h-4 text-amber-400 fill-amber-400" />
+                       ))}
+                     </div>
                    </div>
                    
                    {/* Quote */}
@@ -337,7 +340,7 @@
                className="relative bg-white/80 backdrop-blur-xl rounded-3xl p-6 border border-white/50 shadow-lg overflow-hidden"
              >
                <div className="flex items-center justify-between mb-4">
-                 <h4 className="font-bold text-lg text-[#18305A]">Live Protection Status</h4>
+                 <h4 className="font-bold text-lg text-[#18305A]">Sample Protection Status</h4>
                  <div className="flex items-center gap-2">
                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                    <span className="text-xs font-medium text-emerald-600">Active</span>

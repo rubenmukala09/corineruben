@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- High Priority Pages -->
   <url>
     <loc>https://invisionnetwork.org/</loc>
     <lastmod>2026-02-07</lastmod>
     <changefreq>daily</changefreq>
-    <priority>1.0</priority>
+    <priority>1</priority>
   </url>
   <url>
     <loc>https://invisionnetwork.org/training</loc>
@@ -19,8 +18,6 @@
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-  
-  <!-- Business Service Sub-Pages (SEO Critical) -->
   <url>
     <loc>https://invisionnetwork.org/business/ai-receptionist</loc>
     <lastmod>2026-02-07</lastmod>
@@ -45,16 +42,8 @@
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
-  
-  <!-- Medium Priority Pages -->
   <url>
     <loc>https://invisionnetwork.org/resources</loc>
-    <lastmod>2026-02-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://invisionnetwork.org/services</loc>
     <lastmod>2026-02-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -69,6 +58,12 @@
     <loc>https://invisionnetwork.org/about</loc>
     <lastmod>2026-02-07</lastmod>
     <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://invisionnetwork.org/services</loc>
+    <lastmod>2026-02-07</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
@@ -89,8 +84,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-  
-  <!-- Legal Pages -->
   <url>
     <loc>https://invisionnetwork.org/privacy-policy</loc>
     <lastmod>2026-02-07</lastmod>
@@ -126,5 +119,29 @@
     <lastmod>2026-02-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://invisionnetwork.org/articles/ohio-scam-trends-2024</loc>
+    <lastmod>2025-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://invisionnetwork.org/articles/emergency-response-scammed</loc>
+    <lastmod>2025-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://invisionnetwork.org/articles/tech-support-scam-red-flags</loc>
+    <lastmod>2025-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://invisionnetwork.org/articles/romance-scams-protection-guide</loc>
+    <lastmod>2025-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

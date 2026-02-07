@@ -11,16 +11,16 @@ interface ProofItem {
 }
 
 const proofData: Omit<ProofItem, "id">[] = [
-  { type: "signup", location: "Columbus, OH", message: "Sarah M. just enrolled in GUARD plan", time: "2 min ago" },
-  { type: "review", location: "Cleveland, OH", message: '"Best investment for my parents\' safety"', time: "5 min ago" },
-  { type: "protection", location: "Cincinnati, OH", message: "Blocked suspicious call for Thompson family", time: "8 min ago" },
+  { type: "signup", location: "Columbus, OH", message: "Family in Columbus enrolled in GUARD plan", time: "Moments ago" },
+  { type: "review", location: "Cleveland, OH", message: "Sample review: \"Clear, patient guidance\"", time: "5 min ago" },
+  { type: "protection", location: "Cincinnati, OH", message: "Sample: Suspicious call flagged for review", time: "8 min ago" },
   { type: "signup", location: "Toledo, OH", message: "Veteran family joined with 10% discount", time: "12 min ago" },
-  { type: "milestone", location: "Ohio", message: "100+ families now protected statewide!", time: "Just now" },
-  { type: "review", location: "Akron, OH", message: '"My mom feels so much safer now"', time: "15 min ago" },
-  { type: "protection", location: "Dayton, OH", message: "AI scam attempt neutralized automatically", time: "18 min ago" },
+  { type: "milestone", location: "Ohio", message: "100+ families now protected statewide", time: "Just now" },
+  { type: "review", location: "Akron, OH", message: "Sample review: \"We feel safer and prepared\"", time: "15 min ago" },
+  { type: "protection", location: "Dayton, OH", message: "Sample: Scam attempt neutralized", time: "18 min ago" },
   { type: "signup", location: "Canton, OH", message: "Business upgraded to SENTINEL tier", time: "22 min ago" },
-  { type: "review", location: "Youngstown, OH", message: '"Worth every penny - 5 stars!"', time: "25 min ago" },
-  { type: "protection", location: "Springfield, OH", message: "Protected grandma from gift card scam", time: "30 min ago" },
+  { type: "review", location: "Youngstown, OH", message: "Sample review: \"Helpful and respectful\"", time: "25 min ago" },
+  { type: "protection", location: "Springfield, OH", message: "Sample: Gift card scam blocked", time: "30 min ago" },
 ];
 
 const typeConfig = {
@@ -72,6 +72,9 @@ export const SocialProofTicker = () => {
           >
             {/* Main Card */}
             <div className={`glass-heavy rounded-2xl p-4 shadow-3d border border-white/20 bg-gradient-to-br ${typeConfig[currentItem.type].bg}`}>
+              <span className="absolute top-2 left-2 rounded-full bg-white/70 px-2 py-0.5 text-[10px] font-semibold text-foreground/70">
+                Sample activity
+              </span>
               {/* Close button */}
               <button
                 onClick={() => setIsVisible(false)}

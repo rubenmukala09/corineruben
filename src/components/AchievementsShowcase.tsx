@@ -51,6 +51,10 @@ export const AchievementsShowcase = () => {
             );
           })}
         </motion.div>
+
+        <p className="text-xs text-muted-foreground text-center mt-6">
+          Metrics are updated periodically and reflect internal tracking.
+        </p>
       </div>
     </section>
   );

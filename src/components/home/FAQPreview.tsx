@@ -144,7 +144,7 @@ export const FAQPreview = () => {
 
             <div className="mt-8 text-center">
               <Button asChild variant="ghost" size="lg" className="rounded-2xl">
-                <Link to="/resources#faq">
+                <Link to="/faq">
                   View All FAQs
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Link>
