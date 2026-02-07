@@ -13,6 +13,7 @@ import heroResources from "@/assets/hero-resources.jpg";
 import heroResourcesMarketplace from "@/assets/hero-resources-marketplace.jpg";
 import { useArticles } from "@/hooks/useArticles";
 import { SEO } from "@/components/SEO";
+import { usePrerenderBlocker } from "@/contexts/PrerenderContext";
 
 function Articles() {
   const [page, setPage] = useState(0);
@@ -23,6 +24,7 @@ function Articles() {
     limit: pageSize,
     offset: page * pageSize
   });
+  usePrerenderBlocker(isLoading);
 
   const articlesHeroImages = [
     { src: heroResourcesNew, alt: "Educational resources and learning materials" },

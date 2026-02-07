@@ -63,6 +63,7 @@ import PremiumMeshBackground from "@/components/backgrounds/PremiumMeshBackgroun
 import { SEO } from "@/components/SEO";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
 import HeroFloatingStats from "@/components/business/HeroFloatingStats";
+import { usePrerenderBlocker } from "@/contexts/PrerenderContext";
 
 // Import training page images
 import seniorLearning from "@/assets/senior-learning.jpg";
@@ -268,6 +269,7 @@ function LearnAndTrain() {
     duration?: string;
   } | null>(null);
   const [trainingTestimonials, setTrainingTestimonials] = useState<any[]>([]);
+  const [isTestimonialsLoading, setIsTestimonialsLoading] = useState(true);
   const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string } | null>(null);
   const [expandedThreat, setExpandedThreat] = useState<string | null>(null);
 
@@ -276,18 +278,26 @@ function LearnAndTrain() {
   }, []);
 
   const fetchTrainingTestimonials = async () => {
-    const { data } = await supabase
-      .from("testimonials_public")
-      .select(`
-        *,
-        testimonial_media (*)
-      `)
-      .eq("has_video", true)
-      .order("created_at", { ascending: false })
-      .limit(3);
+    try {
+      setIsTestimonialsLoading(true);
+      const { data } = await supabase
+        .from("testimonials_public")
+        .select(`
+          *,
+          testimonial_media (*)
+        `)
+        .eq("has_video", true)
+        .order("created_at", { ascending: false })
+        .limit(3);
 
-    setTrainingTestimonials(data || []);
+      setTrainingTestimonials(data || []);
+    } catch (error) {
+      console.error("Error fetching training testimonials:", error);
+    } finally {
+      setIsTestimonialsLoading(false);
+    }
   };
+  usePrerenderBlocker(isTestimonialsLoading);
 
   const handleSubscribe = (priceId: string, serviceName: string, planTier: string, amount: number, features?: string[]) => {
     trackButtonClick(`Subscribe ${planTier} Plan`, 'Training Page');

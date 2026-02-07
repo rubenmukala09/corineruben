@@ -56,6 +56,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
 import HeroFloatingStats from "@/components/business/HeroFloatingStats";
 import { GlassmorphismBackground } from "@/components/backgrounds/GlassmorphismBackground";
+import { usePrerenderBlocker } from "@/contexts/PrerenderContext";
 
 // Static book products with covers (20 books)
 // Author constant for all books
@@ -453,6 +454,7 @@ function Resources() {
       return data || [];
     }
   });
+  usePrerenderBlocker(isLoading);
 
   // Separate physical products
   const physicalProducts = products?.filter(p => p.tags?.some((tag: string) => ['physical', 'device', 'hardware', 'kit', 'equipment'].includes(tag.toLowerCase()))) || [];

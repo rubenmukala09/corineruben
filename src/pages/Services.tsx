@@ -16,6 +16,7 @@ import { MobileComparisonCards } from "@/components/MobileComparisonCards";
 import { SEO } from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
 import { trackButtonClick } from "@/utils/analyticsTracker";
+import { usePrerenderBlocker } from "@/contexts/PrerenderContext";
 import {
   Shield,
   Bot,
@@ -45,6 +46,7 @@ import heroServices5 from "@/assets/hero-services-5.jpg";
 const Services = () => {
   const [isMonthly, setIsMonthly] = useState(true);
   const [testimonials, setTestimonials] = useState<any[]>([]);
+  const [isTestimonialsLoading, setIsTestimonialsLoading] = useState(true);
 
   useEffect(() => {
     fetchTestimonials();
@@ -52,6 +54,7 @@ const Services = () => {
 
   const fetchTestimonials = async () => {
     try {
+      setIsTestimonialsLoading(true);
       const { data, error } = await supabase
         .from("testimonials_public")
         .select("*")
@@ -63,8 +66,11 @@ const Services = () => {
       setTestimonials(data || []);
     } catch (error) {
       console.error("Error fetching testimonials:", error);
+    } finally {
+      setIsTestimonialsLoading(false);
     }
   };
+  usePrerenderBlocker(isTestimonialsLoading);
 
   const services = [
     {

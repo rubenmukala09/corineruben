@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useArticleBySlug, useFeaturedArticles } from "@/hooks/useArticles";
+import { usePrerenderBlocker } from "@/contexts/PrerenderContext";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -14,7 +15,8 @@ import { SEO } from "@/components/SEO";
 function ArticleDetail() {
   const { slug } = useParams<{ slug: string }>();
   const { data: article, isLoading, error } = useArticleBySlug(slug || "");
-  const { data: relatedArticles } = useFeaturedArticles(3);
+  const { data: relatedArticles, isLoading: relatedLoading } = useFeaturedArticles(3);
+  usePrerenderBlocker(isLoading || relatedLoading);
 
   useEffect(() => {
     window.scrollTo(0, 0);

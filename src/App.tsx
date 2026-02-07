@@ -31,6 +31,7 @@ import BackToTop from "./components/BackToTop";
 import MobileCallButton from "./components/MobileCallButton";
 import { AnalyticsTracker } from "./components/AnalyticsTracker";
 import GlassQuickMenu from "./components/GlassQuickMenu";
+import { PrerenderProvider } from "./contexts/PrerenderContext";
 
 // Admin Shell - persistent layout wrapper
 import { AdminShell } from "./components/admin/AdminShell";
@@ -271,38 +272,6 @@ function App() {
     };
   }, []);
 
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-
-    let cancelled = false;
-    const firePrerenderReady = () => {
-      if (cancelled) return;
-      document.dispatchEvent(new Event("prerender-ready"));
-    };
-
-    const onReady = () => {
-      const fonts = (document as Document & { fonts?: FontFaceSet }).fonts;
-      if (fonts?.ready) {
-        fonts.ready.then(firePrerenderReady).catch(firePrerenderReady);
-      } else {
-        firePrerenderReady();
-      }
-    };
-
-    if (document.readyState === "complete") {
-      onReady();
-      return () => {
-        cancelled = true;
-      };
-    }
-
-    window.addEventListener("load", onReady, { once: true });
-    return () => {
-      cancelled = true;
-      window.removeEventListener("load", onReady);
-    };
-  }, []);
-
   return (
     <>
       <QueryClientProvider client={queryClient}>
@@ -315,36 +284,38 @@ function App() {
                 <CheckoutProvider>
                   <CartFeedbackProvider>
                     <BrowserRouter>
-                      <SkipToContent />
-                      <ScrollToTop />
-                      <BackToTop />
-                      <GlassQuickMenu />
-                      <MobileCallButton />
-                      
-                      <RouteTracker />
-                      <AnalyticsTracker />
-                      <ErrorBoundary>
-                        <Suspense fallback={<PageLoader />}>
-                          <div id="main-content" tabIndex={-1} role="main">
-                            <PublicRoutes />
-                          </div>
-                        </Suspense>
-                      </ErrorBoundary>
-                      {showDeferredUI && (
+                      <PrerenderProvider>
+                        <SkipToContent />
+                        <ScrollToTop />
+                        <BackToTop />
+                        <GlassQuickMenu />
+                        <MobileCallButton />
+                        
+                        <RouteTracker />
+                        <AnalyticsTracker />
+                        <ErrorBoundary>
+                          <Suspense fallback={<PageLoader />}>
+                            <div id="main-content" tabIndex={-1} role="main">
+                              <PublicRoutes />
+                            </div>
+                          </Suspense>
+                        </ErrorBoundary>
+                        {showDeferredUI && (
+                          <Suspense fallback={null}>
+                            <LauraAIAssistant />
+                          </Suspense>
+                        )}
+                        <CookieConsent />
+                        {showDeferredUI && (
+                          <Suspense fallback={null}>
+                            <CartFeedbackNotifications />
+                          </Suspense>
+                        )}
                         <Suspense fallback={null}>
-                          <LauraAIAssistant />
+                          <UnifiedCheckoutDialog />
                         </Suspense>
-                      )}
-                      <CookieConsent />
-                      {showDeferredUI && (
-                        <Suspense fallback={null}>
-                          <CartFeedbackNotifications />
-                        </Suspense>
-                      )}
-                      <Suspense fallback={null}>
-                        <UnifiedCheckoutDialog />
-                      </Suspense>
-                      <DraggablePerformanceMonitor />
+                        <DraggablePerformanceMonitor />
+                      </PrerenderProvider>
                     </BrowserRouter>
                   </CartFeedbackProvider>
                 </CheckoutProvider>
