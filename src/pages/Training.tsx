@@ -58,6 +58,9 @@ import TestimonialCard from "@/components/TestimonialCard";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { InstructorShowcase } from "@/components/training/InstructorShowcase";
 import PremiumMeshBackground from "@/components/backgrounds/PremiumMeshBackground";
+import { PremiumStatsWidget } from "@/components/training/PremiumStatsWidget";
+import { PremiumFeatureShowcase } from "@/components/training/PremiumFeatureShowcase";
+import { Premium3DHolographicSection } from "@/components/training/Premium3DHolographicSection";
 
 import { SEO } from "@/components/SEO";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
@@ -602,6 +605,93 @@ function LearnAndTrain() {
 
           <HeroFloatingStats />
         </div>
+
+        {/* ═══════════════════════════════════════════════════════════════════════════
+            PREMIUM STATS SECTION - 3D Animated Widgets with Micro-Interactions
+        ═══════════════════════════════════════════════════════════════════════════ */}
+        <Premium3DHolographicSection
+          title="Real Impact, Real Protection"
+          subtitle="See how we're making a difference in families' lives across the nation"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            <PremiumStatsWidget
+              icon={Users}
+              value={500}
+              suffix="+"
+              label="Families Protected"
+              gradient="from-primary to-accent"
+              delay={0}
+            />
+            <PremiumStatsWidget
+              icon={Shield}
+              value={98}
+              suffix="%"
+              label="Scams Prevented"
+              gradient="from-emerald-500 to-teal-500"
+              delay={0.1}
+            />
+            <PremiumStatsWidget
+              icon={TrendingUp}
+              prefix="$"
+              value={2.4}
+              suffix="M"
+              label="Total Savings"
+              gradient="from-amber-500 to-orange-500"
+              delay={0.2}
+            />
+            <PremiumStatsWidget
+              icon={Star}
+              value={4.9}
+              suffix="/5"
+              label="Satisfaction Rate"
+              gradient="from-pink-500 to-rose-500"
+              delay={0.3}
+            />
+          </div>
+
+          {/* Premium Feature Showcases */}
+          <div className="grid md:grid-cols-3 gap-8">
+            <PremiumFeatureShowcase
+              icon={GraduationCap}
+              title="Expert Training"
+              description="Learn from certified professionals with years of cybersecurity experience"
+              features={[
+                "Real-world case studies",
+                "Hands-on practice sessions",
+                "Personalized guidance",
+                "Certificate of completion"
+              ]}
+              gradient="from-blue-500 to-cyan-500"
+              delay={0}
+            />
+            <PremiumFeatureShowcase
+              icon={Headphones}
+              title="24/7 Support"
+              description="Get help whenever you need it with our dedicated support team"
+              features={[
+                "Round-the-clock availability",
+                "Expert consultations",
+                "Emergency response",
+                "Follow-up guidance"
+              ]}
+              gradient="from-purple-500 to-pink-500"
+              delay={0.1}
+            />
+            <PremiumFeatureShowcase
+              icon={Zap}
+              title="Instant Results"
+              description="See immediate improvements in your scam detection abilities"
+              features={[
+                "Immediate skill application",
+                "Real-time feedback",
+                "Progress tracking",
+                "Continuous updates"
+              ]}
+              gradient="from-emerald-500 to-teal-500"
+              delay={0.2}
+            />
+          </div>
+        </Premium3DHolographicSection>
 
         {/* ═══════════════════════════════════════════════════════════════════════════
             SECTION 1: WHY FAMILIES TRUST US - Premium Split Layout with Image
