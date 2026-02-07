@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useCart } from "@/contexts/CartContext";
@@ -482,9 +482,53 @@ function Resources() {
       description: `${book.name} has been added to your cart.`
     });
   };
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const resourceStructuredData = useMemo(() => {
+    const toAbsoluteUrl = (url: string) => {
+      if (url.startsWith("http")) return url;
+      return `https://invisionnetwork.org${url.startsWith("/") ? url : `/${url}`}`;
+    };
+
+    return {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Scam Protection Resource Library",
+      "itemListElement": staticBooks.slice(0, 8).map((book, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "item": {
+          "@type": "Product",
+          "name": book.name,
+          "description": book.description,
+          "image": [toAbsoluteUrl(book.image)],
+          "brand": {
+            "@type": "Brand",
+            "name": "InVision Network"
+          },
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "USD",
+            "price": book.price.toFixed(2),
+            "availability": "https://schema.org/InStock",
+            "url": "https://invisionnetwork.org/resources"
+          }
+        }
+      }))
+    };
+  }, []);
   const resourcesHeroImages = PROFESSIONAL_HERO_IMAGES.resources;
   return <PageTransition variant="fade">
-      <SEO title="Resources & Marketplace - Digital Guides & Security Products" description="Browse our curated collection of scam prevention guides and physical security products. Everything you need to protect yourself and your loved ones." />
+      <SEO
+        title="Resources & Marketplace - Digital Guides & Security Products"
+        description="Browse our curated collection of scam prevention guides and physical security products. Everything you need to protect yourself and your loved ones."
+        structuredData={resourceStructuredData}
+      />
       <Navigation />
       
       {/* Hero wrapper for floating stats */}
@@ -498,6 +542,23 @@ function Resources() {
             <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
               Expert-curated guides, tools, and products designed to keep you and your family safe
             </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              size="xl"
+              onClick={() => scrollToSection("guides")}
+              className="transition-all duration-300 hover:scale-[1.03]"
+            >
+              Shop Digital Guides
+            </Button>
+            <Button
+              size="xl"
+              variant="outlineLight"
+              asChild
+              className="transition-all duration-300 hover:scale-[1.03]"
+            >
+              <Link to="/training#pricing">Get Protection Plan</Link>
+            </Button>
           </div>
         </Hero>
         
@@ -632,6 +693,8 @@ function Resources() {
                       <img 
                         src={book.image} 
                         alt={book.name} 
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                       />
                     </div>

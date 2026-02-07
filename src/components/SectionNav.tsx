@@ -2,6 +2,7 @@ import { useSectionNavigation } from "@/hooks/useSectionNavigation";
 
 const sections = [
   { id: "hero", label: "Home" },
+  { id: "get-protected", label: "Get Protected" },
   { id: "stats", label: "Stats" },
   { id: "workshops", label: "Workshops" },
   { id: "business", label: "Business" },

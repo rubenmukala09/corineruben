@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Sparkles, Zap, Eye, Star, Shield, Award } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import heroSeniorsProtected from "@/assets/hero-seniors-protected.jpg";
+import { SITE } from "@/config/site";
 
 export const HeroHomepage = () => {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section className="relative min-h-[110vh] lg:min-h-[121vh] overflow-hidden bg-background">
       {/* Premium Background - NO Glassmorphism on photo */}
@@ -16,30 +19,30 @@ export const HeroHomepage = () => {
           
           {/* Animated Gradient Orbs - NO blur/glass on left */}
           <motion.div 
-            animate={{ 
+            animate={reduceMotion ? { opacity: 0.6 } : { 
               y: [-30, 30, -30], 
               x: [-15, 15, -15],
               scale: [1, 1.15, 1]
             }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 10, repeat: Infinity, ease: "easeInOut" }}
             className="absolute top-[5%] left-[-5%] w-80 h-80 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 blur-3xl pointer-events-none"
           />
           <motion.div 
-            animate={{ 
+            animate={reduceMotion ? { opacity: 0.5 } : { 
               y: [30, -30, 30], 
               x: [15, -15, 15],
               opacity: [0.5, 0.9, 0.5]
             }}
-            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 12, repeat: Infinity, ease: "easeInOut" }}
             className="absolute bottom-[10%] right-[-10%] w-72 h-72 rounded-full bg-gradient-to-br from-primary/15 to-accent/15 blur-3xl pointer-events-none"
           />
           <motion.div 
-            animate={{ 
+            animate={reduceMotion ? { opacity: 0.5 } : { 
               y: [-20, 20, -20], 
               scale: [1, 1.25, 1],
               rotate: [0, 8, 0]
             }}
-            transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 14, repeat: Infinity, ease: "easeInOut" }}
             className="absolute top-[50%] left-[20%] w-52 h-52 rounded-full bg-gradient-to-br from-green-500/15 to-primary/15 blur-3xl pointer-events-none"
           />
         </div>
@@ -48,12 +51,12 @@ export const HeroHomepage = () => {
         <div className="relative hidden lg:block overflow-hidden">
           {/* Ken Burns Animated Photo */}
           <motion.div
-            animate={{ 
+            animate={reduceMotion ? { scale: 1, x: 0, y: 0 } : { 
               scale: [1, 1.08, 1.04, 1.1, 1],
               x: [0, -15, 10, -5, 0],
               y: [0, -10, 5, -8, 0]
             }}
-            transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 30, repeat: Infinity, ease: "easeInOut" }}
             className="absolute inset-0"
           >
             <img 
@@ -71,11 +74,11 @@ export const HeroHomepage = () => {
           
           {/* Animated Gradient Overlay - Reduced for clearer photo */}
           <motion.div 
-            animate={{ 
+            animate={reduceMotion ? { opacity: 0.2 } : { 
               opacity: [0.15, 0.25, 0.15],
               backgroundPosition: ['0% 0%', '100% 100%', '0% 0%']
             }}
-            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 12, repeat: Infinity, ease: "easeInOut" }}
             className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/15"
             style={{ backgroundSize: '200% 200%' }}
           />
@@ -84,13 +87,13 @@ export const HeroHomepage = () => {
           {[...Array(6)].map((_, i) => (
             <motion.div
               key={i}
-              animate={{
+              animate={reduceMotion ? { opacity: 0 } : {
                 y: [-20, -100, -20],
                 x: [0, (i % 2 === 0 ? 30 : -30), 0],
                 opacity: [0, 0.8, 0],
                 scale: [0.5, 1, 0.5]
               }}
-              transition={{
+              transition={reduceMotion ? { duration: 0 } : {
                 duration: 6 + i * 1.5,
                 repeat: Infinity,
                 delay: i * 1.2,
@@ -106,11 +109,11 @@ export const HeroHomepage = () => {
           
           {/* Premium Shimmer Effect */}
           <motion.div
-            animate={{
+            animate={reduceMotion ? { opacity: 0 } : {
               x: ['-100%', '200%'],
               opacity: [0, 0.4, 0]
             }}
-            transition={{
+            transition={reduceMotion ? { duration: 0 } : {
               duration: 4,
               repeat: Infinity,
               repeatDelay: 5,
@@ -121,19 +124,19 @@ export const HeroHomepage = () => {
           
           {/* Ambient Glow Orbs */}
           <motion.div
-            animate={{
+            animate={reduceMotion ? { opacity: 0.25 } : {
               scale: [1, 1.3, 1],
               opacity: [0.15, 0.35, 0.15]
             }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 8, repeat: Infinity, ease: "easeInOut" }}
             className="absolute top-[20%] right-[20%] w-40 h-40 rounded-full bg-gradient-to-br from-primary/40 to-accent/40 blur-3xl pointer-events-none"
           />
           <motion.div
-            animate={{
+            animate={reduceMotion ? { opacity: 0.25 } : {
               scale: [1.2, 1, 1.2],
               opacity: [0.2, 0.4, 0.2]
             }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
             className="absolute bottom-[30%] left-[10%] w-32 h-32 rounded-full bg-gradient-to-br from-accent/30 to-primary/30 blur-3xl pointer-events-none"
           />
           
@@ -148,8 +151,8 @@ export const HeroHomepage = () => {
 
       {/* Decorative Accent Lines */}
       <motion.div 
-        animate={{ opacity: [0.15, 0.4, 0.15] }}
-        transition={{ duration: 5, repeat: Infinity }}
+        animate={reduceMotion ? { opacity: 0.15 } : { opacity: [0.15, 0.4, 0.15] }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 5, repeat: Infinity }}
         className="absolute top-0 left-[45%] w-px h-full bg-gradient-to-b from-transparent via-primary/30 to-transparent hidden lg:block pointer-events-none"
       />
 
@@ -174,14 +177,14 @@ export const HeroHomepage = () => {
               >
                 <div className="flex items-center gap-2.5 px-4 py-2 glass-light rounded-full micro-bounce">
                   <motion.div
-                    animate={{ rotate: [0, 20, -20, 0], scale: [1, 1.15, 1] }}
-                    transition={{ duration: 5, repeat: Infinity }}
+                    animate={reduceMotion ? { rotate: 0, scale: 1 } : { rotate: [0, 20, -20, 0], scale: [1, 1.15, 1] }}
+                    transition={reduceMotion ? { duration: 0 } : { duration: 5, repeat: Infinity }}
                   >
                     <Sparkles className="w-4 h-4 text-primary" />
                   </motion.div>
                   <motion.div 
-                    animate={{ scaleX: [1, 1.3, 1] }}
-                    transition={{ duration: 4, repeat: Infinity }}
+                    animate={reduceMotion ? { scaleX: 1 } : { scaleX: [1, 1.3, 1] }}
+                    transition={reduceMotion ? { duration: 0 } : { duration: 4, repeat: Infinity }}
                     className="w-14 h-1 rounded-full bg-gradient-to-r from-primary via-accent to-primary"
                   />
                   <span className="text-[11px] font-bold tracking-[0.2em] text-foreground/60 uppercase">
@@ -198,17 +201,17 @@ export const HeroHomepage = () => {
               >
                 <h1 className="mb-6">
                   <motion.span 
-                    animate={{ opacity: [0.85, 1, 0.85] }}
-                    transition={{ duration: 4, repeat: Infinity }}
+                    animate={reduceMotion ? { opacity: 1 } : { opacity: [0.85, 1, 0.85] }}
+                    transition={reduceMotion ? { duration: 0 } : { duration: 4, repeat: Infinity }}
                     className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-foreground leading-[1.1] tracking-[-0.02em] mb-3"
                     style={{ fontFamily: "'Clash Display', 'DM Sans', sans-serif" }}>
                     Uncompromising
                   </motion.span>
                   <motion.span 
-                    animate={{ 
+                    animate={reduceMotion ? { backgroundPosition: '0% 50%' } : { 
                       backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
                     }}
-                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                    transition={reduceMotion ? { duration: 0 } : { duration: 6, repeat: Infinity, ease: "easeInOut" }}
                     className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[0.95] tracking-[-0.02em]"
                     style={{ 
                       fontFamily: "'Clash Display', 'DM Sans', sans-serif",
@@ -233,8 +236,8 @@ export const HeroHomepage = () => {
                 <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-md font-light">
                   Veteran-supporting. Enterprise-caliber AI security safeguarding 
                   <motion.span 
-                    animate={{ opacity: [0.75, 1, 0.75] }}
-                    transition={{ duration: 2.5, repeat: Infinity }}
+                    animate={reduceMotion ? { opacity: 1 } : { opacity: [0.75, 1, 0.75] }}
+                    transition={reduceMotion ? { duration: 0 } : { duration: 2.5, repeat: Infinity }}
                     className="text-foreground font-medium bg-gradient-to-r from-primary/15 to-accent/15 px-2 py-1 rounded-lg mx-1 backdrop-blur-sm"
                   >over 100 families</motion.span>
                   and businesses from evolving digital threats.
@@ -252,17 +255,17 @@ export const HeroHomepage = () => {
                   whileHover={{ scale: 1.06, y: -2 }}
                   whileTap={{ scale: 0.97 }}
                 >
-                  <Link 
-                    to="/training"
+                  <a 
+                    href="#get-protected"
                     className="group inline-flex items-center justify-center gap-2.5 h-14 px-10 rounded-full font-bold text-base tracking-wide text-white shadow-[0_10px_30px_-8px_hsl(var(--primary)/0.5)] hover:shadow-[0_16px_45px_-8px_hsl(var(--primary)/0.65)] transition-all duration-300"
                     style={{ 
                       background: 'linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%)',
                     }}
                   >
                     <Zap className="w-5 h-5" />
-                    Begin Protection
+                    Get Protected
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
-                  </Link>
+                  </a>
                 </motion.div>
                 
                 <motion.div
@@ -286,8 +289,8 @@ export const HeroHomepage = () => {
                 className="flex flex-wrap gap-8 mt-10 pt-8 border-t border-border/30"
               >
                 {[
-                  { value: "10%", label: "Veteran Discount" },
-                  { value: "30", label: "Day Guarantee" },
+                  { value: `${SITE.veteranDiscountPercent}%`, label: "Veteran Discount" },
+                  { value: `${SITE.moneyBackGuaranteeDays}`, label: "Day Guarantee" },
                   { value: "24/7", label: "Support" },
                   { value: "100%", label: "Satisfaction" }
                 ].map((stat, i) => (
@@ -298,8 +301,8 @@ export const HeroHomepage = () => {
                     transition={{ type: "spring", stiffness: 300 }}
                   >
                     <motion.div 
-                      animate={{ opacity: [0.8, 1, 0.8] }}
-                      transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+                      animate={reduceMotion ? { opacity: 1 } : { opacity: [0.8, 1, 0.8] }}
+                      transition={reduceMotion ? { duration: 0 } : { duration: 2, repeat: Infinity, delay: i * 0.3 }}
                       className="text-2xl lg:text-3xl font-black"
                       style={{
                         background: 'linear-gradient(135deg, hsl(var(--foreground)) 0%, hsl(var(--primary)) 50%, hsl(var(--accent)) 100%)',
@@ -325,8 +328,8 @@ export const HeroHomepage = () => {
       >
         <div className="flex items-center gap-2.5 px-5 py-2.5 glass-heavy rounded-full shadow-3d">
           <motion.div
-            animate={{ opacity: [0.6, 1, 0.6] }}
-            transition={{ duration: 2.5, repeat: Infinity }}
+            animate={reduceMotion ? { opacity: 1 } : { opacity: [0.6, 1, 0.6] }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 2.5, repeat: Infinity }}
           >
             <Eye className="w-4 h-4 text-accent" />
           </motion.div>
@@ -374,8 +377,8 @@ export const HeroHomepage = () => {
                     {[...Array(5)].map((_, i) => (
                       <motion.div
                         key={i}
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{ duration: 1.8, repeat: Infinity, delay: i * 0.12 }}
+                        animate={reduceMotion ? { scale: 1 } : { scale: [1, 1.2, 1] }}
+                        transition={reduceMotion ? { duration: 0 } : { duration: 1.8, repeat: Infinity, delay: i * 0.12 }}
                       >
                         <Star className="w-3.5 h-3.5 fill-yellow-500 text-yellow-500" />
                       </motion.div>

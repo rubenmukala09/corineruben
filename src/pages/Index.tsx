@@ -10,6 +10,7 @@ import { WorkingProcess } from "@/components/home/WorkingProcess";
 import { ScamAlertsSection } from "@/components/home/ScamAlertsSection";
 import { FAQPreview } from "@/components/home/FAQPreview";
 import { QuickLinksSection } from "@/components/home/QuickLinksSection";
+import { ProtectionPathSection } from "@/components/home/ProtectionPathSection";
 import CTASection from "@/components/CTASection";
 import { ScamShieldSubmission } from "@/components/ScamShieldSubmission";
 import { PageTransition } from "@/components/PageTransition";
@@ -18,6 +19,7 @@ import { SEO, PAGE_SEO } from "@/components/SEO";
 import { SectionNav } from "@/components/SectionNav";
 import seniorCoupleActive from "@/assets/senior-couple-active.jpg";
 import { FamilyTrustSection } from "@/components/home/FamilyTrustSection";
+import { SITE } from "@/config/site";
 
 const LiveSecurityStats = lazy(() => import("@/components/home/LiveSecurityStats"));
 const LiveProtectionStatus = lazy(() => import("@/components/LiveProtectionStatus"));
@@ -98,6 +100,8 @@ const Index = () => {
           <section id="hero">
             <HeroHomepage />
           </section>
+
+          <ProtectionPathSection />
 
           {/* Live Security Stats - NEW */}
           <section id="stats" ref={statsRef}>
@@ -191,7 +195,7 @@ const Index = () => {
               </Button>
             </div>
             <p className="text-white/80 mt-4 text-sm">
-              ✓ 10% Veteran Discount ✓ Privacy-First Practices ✓ 30-Day Money-Back Guarantee
+              ✓ {SITE.veteranDiscountPercent}% Veteran Discount ✓ Privacy-First Practices ✓ {SITE.moneyBackGuaranteeDays}-Day Money-Back Guarantee
             </p>
           </CTASection>
 

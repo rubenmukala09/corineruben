@@ -127,6 +127,17 @@ function Business() {
     };
   };
 
+  const openStrategyCall = () => {
+    setSelectedInquiry({
+      name: "Business Strategy Call",
+      price: 0,
+      tier: "Consultation",
+      description: "Book a free strategy call. We will map your goals, recommend the right AI automation, and outline a clear build plan."
+    });
+    setInquiryDialogOpen(true);
+    trackButtonClick("Book Strategy Call", "Business Hero");
+  };
+
   const handleSubscribe = (priceId: string, serviceName: string, planTier: string, amount: number, variant?: 'default' | 'buying' | 'existing', features?: string[]) => {
     // Use embedded payment modal for subscriptions
     setEmbeddedPaymentConfig({
@@ -204,44 +215,24 @@ function Business() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button 
-              asChild
-              variant="default" 
+            <Button
+              variant="default"
               size="xl"
+              onClick={openStrategyCall}
               className="transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:brightness-110"
             >
-              <Link 
-                to="/contact?service=ai-automation"
-                onClick={() => trackButtonClick('Build AI Automation', 'Business Hero')}
-              >
-                Build AI Automation
-              </Link>
+              Book Strategy Call
             </Button>
-            <Button 
-              asChild
-              variant="outlineLight" 
+            <Button
+              variant="outlineLight"
               size="xl"
+              onClick={() => {
+                scrollToSection("services");
+                trackButtonClick("Explore Services", "Business Hero");
+              }}
               className="transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:brightness-110"
             >
-              <Link 
-                to="/contact?service=web-design"
-                onClick={() => trackButtonClick('Design My Website', 'Business Hero')}
-              >
-                Design My Website
-              </Link>
-            </Button>
-            <Button 
-              asChild
-              variant="outlineLight" 
-              size="xl"
-              className="transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:brightness-110"
-            >
-              <Link 
-                to="/contact?service=ai-insurance"
-                onClick={() => trackButtonClick('Get AI Insurance', 'Business Hero')}
-              >
-                Get AI Insurance
-              </Link>
+              Explore Services
             </Button>
           </div>
         </Hero>
@@ -256,7 +247,7 @@ function Business() {
       <TrustBar />
 
       {/* What We Build - Expandable Cards with Full Content */}
-      <section className="py-8 bg-background relative">
+      <section id="services" className="py-8 bg-background relative">
         <FlowingWaves variant="full" opacity={0.12} />
         
         

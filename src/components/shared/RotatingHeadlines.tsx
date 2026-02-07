@@ -14,8 +14,18 @@ export const RotatingHeadlines = ({
 }: RotatingHeadlinesProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
+  const [reduceMotion, setReduceMotion] = useState(false);
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handleChange = () => setReduceMotion(mediaQuery.matches);
+    handleChange();
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
+  useEffect(() => {
+    if (reduceMotion) return;
     const timer = setInterval(() => {
       setIsVisible(false);
       setTimeout(() => {
@@ -24,14 +34,14 @@ export const RotatingHeadlines = ({
       }, 300);
     }, interval);
     return () => clearInterval(timer);
-  }, [headlines.length, interval]);
+  }, [headlines.length, interval, reduceMotion]);
 
   // Returns a span, not h1 - parent should wrap in h1
   return (
     <span
       className={`${className} transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
     >
-      {headlines[currentIndex]}
+      {headlines[reduceMotion ? 0 : currentIndex]}
     </span>
   );
 };

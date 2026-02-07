@@ -361,6 +361,18 @@ export default function FAQ() {
   };
 
   const faqHeroImages = PROFESSIONAL_HERO_IMAGES.faq;
+  const faqStructuredData = useMemo(() => ({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.slice(0, 8).map((faq) => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer,
+      },
+    })),
+  }), []);
 
   return (
     <PageTransition variant="fade">
@@ -369,6 +381,7 @@ export default function FAQ() {
           title="Frequently Asked Questions"
           description="Find answers to common questions about InVision Network's AI scam protection, business services, billing, and technical support."
           keywords="FAQ, questions, support, help, InVision Network"
+          structuredData={faqStructuredData}
         />
         <Navigation />
 
