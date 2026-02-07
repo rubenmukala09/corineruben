@@ -49,6 +49,10 @@ const fetchArticleRoutes = async (env: Record<string, string>) => {
 // https://vitejs.dev/config/
 export default defineConfig(async ({ mode, command }) => {
   const env = loadEnv(mode, process.cwd(), "");
+  const previewFlag = (env.VITE_PREVIEW_MODE || env.LOVABLE_PREVIEW || env.PREVIEW || "").toLowerCase();
+  const isPreviewBuild = previewFlag === "true" || previewFlag === "1" || previewFlag === "yes";
+  const disablePrerender = (env.VITE_DISABLE_PRERENDER || env.PRERENDER_DISABLE || "").toLowerCase() === "true";
+  const disableImageOptimizer = (env.VITE_DISABLE_IMAGE_OPTIMIZER || "").toLowerCase() === "true";
   const articleRoutes = command === "build" ? await fetchArticleRoutes(env) : [];
   const prerenderRoutes = [
     "/",
@@ -103,21 +107,25 @@ export default defineConfig(async ({ mode, command }) => {
     plugins: [
       react(),
       mode === "development" && componentTagger(),
-      ViteImageOptimizer({
-        jpg: {
-          quality: 80,
-        },
-        jpeg: {
-          quality: 80,
-        },
-        png: {
-          quality: 80,
-        },
-        webp: {
-          quality: 80,
-        },
-      }),
+      !isPreviewBuild &&
+        !disableImageOptimizer &&
+        ViteImageOptimizer({
+          jpg: {
+            quality: 80,
+          },
+          jpeg: {
+            quality: 80,
+          },
+          png: {
+            quality: 80,
+          },
+          webp: {
+            quality: 80,
+          },
+        }),
       command === "build" &&
+        !isPreviewBuild &&
+        !disablePrerender &&
         prerender({
           routes: uniquePrerenderRoutes,
           renderer: "@prerenderer/renderer-puppeteer",
