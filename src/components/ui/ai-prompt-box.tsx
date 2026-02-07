@@ -188,7 +188,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
   visualizerBars = 32,
 }) => {
   const [time, setTime] = React.useState(0);
-  const timerRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
+  const timerRef = React.useRef<number | null>(null);
   const timeRef = React.useRef(0);
   const wasRecordingRef = React.useRef(false);
 
