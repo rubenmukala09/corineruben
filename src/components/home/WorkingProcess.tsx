@@ -33,11 +33,11 @@ const steps = [
 
 export const WorkingProcess = () => {
   return (
-    <section className="py-10 lg:py-14" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #faf9f7 50%, #fff5f0 100%)' }} aria-labelledby="process-heading">
+    <section className="py-10 lg:py-14 dynamic-gradient-overlay" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #faf9f7 50%, #fff5f0 100%)' }} aria-labelledby="process-heading">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-xl border border-white/40 shadow-lg text-sm font-semibold uppercase tracking-wider mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-xl border border-white/40 shadow-lg text-sm font-semibold uppercase tracking-wider mb-4 skeuo-badge">
             <span className="w-2 h-2 rounded-full bg-gradient-to-r from-coral-400 to-lavender-500" aria-hidden="true" />
             <span className="text-[#18305A]">How It Works</span>
           </div>
@@ -56,7 +56,7 @@ export const WorkingProcess = () => {
             <div 
               key={index} 
               role="listitem"
-              className="relative text-center bg-white/60 backdrop-blur-xl border border-white/40 rounded-xl p-5 shadow-md hover:shadow-lg transition-shadow"
+              className="relative text-center bg-white/60 backdrop-blur-xl border border-white/40 rounded-xl p-5 shadow-md hover:shadow-lg transition-shadow micro-tilt-3d subtle-3d-surface"
             >
               {/* Step number badge */}
               <div className={`absolute -top-2 -right-2 w-7 h-7 bg-gradient-to-br ${step.gradient} text-white rounded-lg flex items-center justify-center font-bold text-xs shadow-md`}>

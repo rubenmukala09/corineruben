@@ -32,13 +32,13 @@ import securityProtectionTools from "@/assets/security-protection-tools.jpg";
 
 export const ResourcesPromo = () => {
   return (
-    <section className="relative py-10 lg:py-14 overflow-hidden" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #faf9f7 50%, #fff5f0 100%)' }} aria-labelledby="resources-heading">
+    <section className="relative py-10 lg:py-14 overflow-hidden dynamic-gradient-overlay" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #faf9f7 50%, #fff5f0 100%)' }} aria-labelledby="resources-heading">
 
       <div className="container mx-auto px-6 lg:px-12">
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
           <div className="max-w-xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border mb-4 shadow-sm bg-coral-50/50 border-coral-200/50">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border mb-4 shadow-sm bg-coral-50/50 border-coral-200/50 skeuo-badge">
               <Sparkles className="w-4 h-4 text-coral-500" aria-hidden="true" />
               <span className="text-sm font-semibold uppercase tracking-wide text-[#18305A]">Resources</span>
             </div>
@@ -55,7 +55,7 @@ export const ResourcesPromo = () => {
           </div>
           
           <Button asChild size="lg" 
-            className="group h-12 px-6 text-sm font-bold rounded-full shadow-md hover:shadow-lg transition-shadow"
+            className="group h-12 px-6 text-sm font-bold rounded-full shadow-md hover:shadow-lg transition-shadow tactile-button"
             style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }}>
             <Link to="/resources" className="text-white">
               Browse All
@@ -67,7 +67,7 @@ export const ResourcesPromo = () => {
         {/* Two Column Layout - Image + Resources */}
         <div className="grid lg:grid-cols-2 gap-8 mb-10">
           {/* Left - Featured Image with 3D depth */}
-          <div className="relative depth-layers">
+          <div className="relative depth-layers micro-tilt-3d subtle-3d-surface">
             <div className="hover-img-zoom rounded-2xl">
               <img 
                 src={securityProtectionTools}
@@ -99,7 +99,7 @@ export const ResourcesPromo = () => {
           <div className="grid gap-4" role="list" aria-label="Available resources">
           {resources.map((resource, i) => (
             <Link key={resource.title} to="/resources" className="group block" role="listitem">
-              <div className="h-full p-4 rounded-xl glass-light shadow-3d hover-depth micro-scale flex items-center gap-4"
+              <div className="h-full p-4 rounded-xl glass-light shadow-3d hover-depth micro-scale flex items-center gap-4 micro-tilt-3d subtle-3d-surface"
                 style={{ borderLeft: `4px solid ${resource.color}` }}>
                 <div className="flex-shrink-0">
                   <div className="w-11 h-11 rounded-lg flex items-center justify-center shadow-3d float-3d"
@@ -129,7 +129,7 @@ export const ResourcesPromo = () => {
         </div>
         
         {/* Free download banner - Premium */}
-        <div className="p-5 rounded-xl border shadow-md flex flex-col md:flex-row items-center justify-between gap-4 bg-gradient-to-r from-white to-coral-50/50 border-coral-200/30">
+        <div className="p-5 rounded-xl border shadow-md flex flex-col md:flex-row items-center justify-between gap-4 bg-gradient-to-r from-white to-coral-50/50 border-coral-200/30 subtle-3d-surface">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg flex items-center justify-center shadow-sm"
               style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }} aria-hidden="true">
@@ -141,7 +141,7 @@ export const ResourcesPromo = () => {
             </div>
           </div>
           <Button asChild size="lg"
-            className="h-10 px-5 text-sm font-bold rounded-full shadow-md"
+            className="h-10 px-5 text-sm font-bold rounded-full shadow-md tactile-button"
             style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }}>
             <Link to="/resources" className="text-white">
               Download Free

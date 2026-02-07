@@ -20,7 +20,7 @@ import teamOfficeDiscussion from "@/assets/team-office-discussion.jpg";
  
 export const AIBusinessPromo = () => {
    return (
-   <section className="relative py-12 lg:py-16 bg-gradient-to-br from-background via-white to-lavender-50/20" aria-labelledby="business-heading">
+   <section className="relative py-12 lg:py-16 bg-gradient-to-br from-background via-white to-lavender-50/20 dynamic-gradient-overlay" aria-labelledby="business-heading">
        <div className="container mx-auto px-4 lg:px-8 relative z-10">
          {/* Section Header */}
         <div className="text-center mb-10">
@@ -43,7 +43,7 @@ export const AIBusinessPromo = () => {
             <div 
                key={service.title}
               role="listitem"
-              className="group relative glass-light rounded-2xl p-6 shadow-3d micro-scale hover-depth"
+              className="group relative glass-light rounded-2xl p-6 shadow-3d micro-scale hover-depth micro-tilt-3d subtle-3d-surface"
              >
                {/* Highlight Badge */}
               <div className="absolute -top-2 right-4 px-3 py-1 rounded-full bg-gradient-to-r from-primary to-accent text-xs font-bold text-white shadow-md">
@@ -109,8 +109,8 @@ export const AIBusinessPromo = () => {
  
              {/* CTA and Contact */}
             <div className="flex flex-wrap items-center gap-4 pt-2">
-               <Button asChild size="lg"
-                className="h-12 px-6 text-sm font-bold rounded-full shadow-lg shadow-lavender-400/30 hover:shadow-xl hover:shadow-lavender-400/40 transition-all"
+              <Button asChild size="lg"
+                className="h-12 px-6 text-sm font-bold rounded-full shadow-lg shadow-lavender-400/30 hover:shadow-xl hover:shadow-lavender-400/40 transition-all tactile-button"
                  style={{ background: 'linear-gradient(135deg, #BB81B5 0%, #F8926A 100%)' }}>
                  <Link to="/business" className="text-white">
                    Discover More

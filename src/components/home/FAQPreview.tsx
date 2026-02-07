@@ -34,7 +34,7 @@ const faqs = [
 
 export const FAQPreview = () => {
   return (
-    <section className="py-14 lg:py-20 relative overflow-hidden bg-gradient-to-br from-background via-white to-muted/20">
+    <section className="py-14 lg:py-20 relative overflow-hidden bg-gradient-to-br from-background via-white to-muted/20 dynamic-gradient-overlay">
       {/* Grid pattern */}
       <GridPattern />
       
@@ -48,7 +48,7 @@ export const FAQPreview = () => {
           <div className="lg:sticky lg:top-24 space-y-8">
             <div>
               <div 
-                className="inline-flex items-center gap-2 px-5 py-2.5 glass-light rounded-full text-sm font-bold uppercase tracking-wider mb-5 micro-bounce"
+                className="inline-flex items-center gap-2 px-5 py-2.5 glass-light rounded-full text-sm font-bold uppercase tracking-wider mb-5 micro-bounce skeuo-badge"
               >
                 <HelpCircle className="w-4 h-4 text-primary" />
                 <span className="text-foreground">FAQ</span>
@@ -65,7 +65,7 @@ export const FAQPreview = () => {
             </div>
 
             {/* Support Agent Card with Glassmorphism */}
-            <div className="widget-premium hover-depth overflow-hidden">
+            <div className="widget-premium hover-depth overflow-hidden micro-tilt-3d subtle-3d-surface">
               {/* Featured Support Image */}
               <div className="mb-6 -mx-8 -mt-8">
                 <img 
@@ -103,13 +103,13 @@ export const FAQPreview = () => {
               </p>
 
               <div className="flex flex-col gap-3">
-                <Button asChild size="lg" className="w-full h-14 text-lg font-bold rounded-2xl">
+                <Button asChild size="lg" className="w-full h-14 text-lg font-bold rounded-2xl tactile-button">
                   <Link to="/contact">
                     <MessageCircle className="mr-2 w-5 h-5" />
                     Chat With Expert
                   </Link>
                 </Button>
-                <Button asChild variant="outline" size="lg" className="w-full h-14 text-lg font-bold rounded-2xl border-2">
+                <Button asChild variant="outline" size="lg" className="w-full h-14 text-lg font-bold rounded-2xl border-2 tactile-button">
                   <a href={SITE.phone.tel}>
                     <Phone className="mr-2 w-5 h-5" />
                     Call Now
@@ -126,7 +126,7 @@ export const FAQPreview = () => {
                 <AccordionItem
                   key={index}
                   value={`item-${index}`}
-                  className="group glass-light rounded-2xl px-6 shadow-3d micro-scale data-[state=open]:shadow-3d-lg"
+                  className="group glass-light rounded-2xl px-6 shadow-3d micro-scale data-[state=open]:shadow-3d-lg micro-tilt-3d subtle-3d-surface"
                 >
                   <AccordionTrigger className="text-left font-bold hover:no-underline py-6 text-lg text-foreground group-data-[state=open]:text-primary transition-colors">
                     <div className="flex items-center gap-4 pr-4">
@@ -144,7 +144,7 @@ export const FAQPreview = () => {
             </Accordion>
 
             <div className="mt-8 text-center">
-              <Button asChild variant="ghost" size="lg" className="rounded-2xl">
+              <Button asChild variant="ghost" size="lg" className="rounded-2xl tactile-button">
                 <Link to="/faq">
                   View All FAQs
                   <ArrowRight className="ml-2 w-4 h-4" />

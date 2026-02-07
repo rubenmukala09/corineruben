@@ -15,7 +15,7 @@ const trustPoints = [
 
 export const FamilyTrustSection = () => {
   return (
-    <section className="py-14 lg:py-20 bg-gradient-to-br from-background via-lavender-50/20 to-coral-50/15" aria-labelledby="trust-heading">
+    <section className="py-14 lg:py-20 bg-gradient-to-br from-background via-lavender-50/20 to-coral-50/15 dynamic-gradient-overlay" aria-labelledby="trust-heading">
       <div className="container mx-auto px-6 lg:px-12">
         {/* Header with Glassmorphism */}
         <div className="text-center mb-10">
@@ -40,7 +40,7 @@ export const FamilyTrustSection = () => {
           {/* Large hero stat */}
           <div
             role="listitem"
-            className="bento-cell bento-span-2 bento-row-2 glass-heavy hover-depth widget-premium text-center flex flex-col justify-center items-center"
+            className="bento-cell bento-span-2 bento-row-2 glass-heavy hover-depth widget-premium text-center flex flex-col justify-center items-center micro-tilt-3d subtle-3d-surface"
           >
             <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center shadow-3d" aria-hidden="true">
               <TrendingUp className="w-8 h-8 text-primary" />
@@ -59,7 +59,7 @@ export const FamilyTrustSection = () => {
             <div
               key={stat.label}
               role="listitem"
-              className="bento-cell glass-light hover-depth micro-scale text-center flex flex-col justify-center"
+              className="bento-cell glass-light hover-depth micro-scale text-center flex flex-col justify-center micro-tilt-3d subtle-3d-surface"
             >
               <div className={`w-12 h-12 mx-auto mb-3 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center shadow-3d`} aria-hidden="true">
                 <stat.icon className="w-6 h-6 text-primary" />
@@ -73,12 +73,12 @@ export const FamilyTrustSection = () => {
         </div>
 
         {/* Trust Points - Bento Style with Interactive Reveals */}
-        <div className="glass-heavy rounded-2xl p-6 lg:p-8 shadow-3d-lg" role="list" aria-label="Trust guarantees">
+        <div className="glass-heavy rounded-2xl p-6 lg:p-8 shadow-3d-lg subtle-3d-surface" role="list" aria-label="Trust guarantees">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {trustPoints.map((point, i) => (
               <div 
                 key={i} 
-                className="glass-light rounded-xl p-4 micro-scale hover-reveal hover-gradient" 
+                className="glass-light rounded-xl p-4 micro-scale hover-reveal hover-gradient micro-tilt-3d subtle-3d-surface" 
                 role="listitem"
               >
                 <div className="flex items-center gap-3">

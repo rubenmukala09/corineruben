@@ -88,14 +88,14 @@ export const WorkshopsPromo = () => {
   };
 
    return (
-    <section className="relative py-12 lg:py-16 bg-gradient-to-br from-background via-white to-lavender-50/20 overflow-hidden" aria-labelledby="workshops-heading">
+    <section className="relative py-12 lg:py-16 bg-gradient-to-br from-background via-white to-lavender-50/20 overflow-hidden dynamic-gradient-overlay" aria-labelledby="workshops-heading">
  
        <div className="container mx-auto px-4 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-6 lg:gap-10 items-center">
            {/* Left - Image/Video Area */}
            <div className="relative" ref={mediaRef}>
              {/* Main Visual Container with 3D depth */}
-             <div className="relative depth-layers">
+             <div className="relative depth-layers micro-tilt-3d subtle-3d-surface">
                 <div className="absolute -inset-4 rounded-2xl glass-light" aria-hidden="true" />
                
                 {/* Primary Photo - Workshop Training */}
@@ -158,7 +158,7 @@ export const WorkshopsPromo = () => {
  
            {/* Right - Content */}
            <div className="space-y-5">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-light micro-bounce">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-light micro-bounce skeuo-badge">
                 <Sparkles className="w-4 h-4 text-primary" aria-hidden="true" />
                 <span className="text-sm font-semibold text-foreground uppercase tracking-wide">Learn & Train</span>
               </div>
@@ -206,7 +206,7 @@ export const WorkshopsPromo = () => {
              {/* CTA */}
              <div className="pt-2">
                <Button asChild size="lg"
-                 className="h-12 px-6 text-sm font-bold rounded-full shadow-md"
+                 className="h-12 px-6 text-sm font-bold rounded-full shadow-md tactile-button"
                  style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }}>
                  <Link to="/training" className="text-white">
                    Discover More
