@@ -621,7 +621,7 @@ function LearnAndTrain() {
             {/* Split layout: Image + Content */}
             <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto mb-20">
               {/* Left: Image with overlay cards */}
-              <ScrollReveal animation="fade-right">
+              <ScrollReveal animation="slide-right">
                 <div className="relative">
                   <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                     <img
@@ -664,7 +664,7 @@ function LearnAndTrain() {
               </ScrollReveal>
 
               {/* Right: Trust pillars */}
-              <ScrollReveal animation="fade-left">
+              <ScrollReveal animation="slide-left">
                 <div className="space-y-6">
                   {[
                     {
@@ -1205,7 +1205,7 @@ function LearnAndTrain() {
             {/* Split comparison */}
             <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto mb-16">
               {/* Without Protection */}
-              <ScrollReveal animation="fade-right">
+              <ScrollReveal animation="slide-right">
                 <Card className="premium-3d-card premium-shadow-depth premium-shine-sweep relative overflow-hidden rounded-3xl bg-gradient-to-br from-red-500/10 via-card to-orange-500/10 border-red-500/30 p-8 h-full">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-red-500/20 to-transparent rounded-full blur-2xl" />
 
@@ -1233,7 +1233,7 @@ function LearnAndTrain() {
               </ScrollReveal>
 
               {/* With Protection */}
-              <ScrollReveal animation="fade-left">
+              <ScrollReveal animation="slide-left">
                 <Card className="premium-3d-card premium-shadow-depth premium-shine-sweep relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-500/10 via-card to-teal-500/10 border-emerald-500/30 p-8 h-full">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-emerald-500/20 to-transparent rounded-full blur-2xl" />
 

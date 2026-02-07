@@ -63,7 +63,7 @@ export const HeroHomepage = () => {
               height={600}
               loading="eager"
               decoding="async"
-              fetchpriority="high"
+              fetchPriority="high"
               sizes="(min-width: 1024px) 55vw, 100vw"
               className="w-full h-full object-cover scale-110"
             />
