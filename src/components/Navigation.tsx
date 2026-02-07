@@ -105,10 +105,10 @@ const Navigation = () => {
                   <PrefetchLink
                     key={link.name}
                     to={link.href}
-                    className={`relative text-[13px] transition-colors duration-150 font-medium px-3 py-2 rounded-md whitespace-nowrap animated-underline ${
+                    className={`relative text-sm transition-colors duration-150 font-semibold px-3 py-2 rounded-md whitespace-nowrap animated-underline tracking-tight ${
                       isActive 
-                        ? 'text-primary font-semibold' 
-                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                        ? 'text-primary font-bold' 
+                        : 'text-foreground/80 hover:text-foreground hover:bg-muted/50'
                     }`}
                   >
                     {link.name}
