@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { PageTransition } from "@/components/PageTransition";
 import { PaymentDialog } from "@/components/scanner/PaymentDialog";
@@ -118,6 +117,7 @@ export default function TrainingAiAnalysis() {
                     <LayoutGrid className="h-4 w-4" />
                   </Link>
                   <button
+                    type="button"
                     onClick={toggleDarkMode}
                     className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition"
                     title="Toggle dark mode"
@@ -125,6 +125,7 @@ export default function TrainingAiAnalysis() {
                     <Moon className="h-4 w-4" />
                   </button>
                   <button
+                    type="button"
                     onClick={handleRefresh}
                     className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition"
                     title="Refresh page"
@@ -142,6 +143,7 @@ export default function TrainingAiAnalysis() {
 
               <div className="flex items-center gap-2 rounded-full bg-black/45 backdrop-blur-md border border-white/10 px-3 py-2 shadow-xl">
                 <button
+                  type="button"
                   onClick={clearChat}
                   className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition disabled:opacity-40 disabled:cursor-not-allowed"
                   title="Clear chat history"
@@ -150,6 +152,7 @@ export default function TrainingAiAnalysis() {
                   <Trash2 className="h-4 w-4" />
                 </button>
                 <button
+                  type="button"
                   onClick={toggleBookmarks}
                   className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition"
                   title="Bookmarks"
@@ -230,7 +233,6 @@ export default function TrainingAiAnalysis() {
                 </div>
               </div>
             </section>
-            <Footer />
           </div>
         </main>
       </div>
