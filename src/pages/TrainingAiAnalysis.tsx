@@ -3,19 +3,14 @@ import { Link } from "react-router-dom";
 import { SEO } from "@/components/SEO";
 import { PageTransition } from "@/components/PageTransition";
 import { PaymentDialog } from "@/components/scanner/PaymentDialog";
-import { ScanResults } from "@/components/scanner/ScanResults";
-import { SmartCommandCenter } from "@/components/training/SmartCommandCenter";
 import { EnhancedPromptInputBox } from "@/components/ui/ai-prompt-box-enhanced";
 import { PremiumChatHistory } from "@/components/training/PremiumChatHistory";
-import { AIFooter } from "@/components/training/AIFooter";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
+
 import { usePrerenderReady } from "@/contexts/PrerenderContext";
 import { useGuestScanner } from "@/hooks/useGuestScanner";
 import { useAiChat } from "@/hooks/useAiChat";
 import { SITE } from "@/config/site";
-import { Bookmark, Download, Home, Loader2, Moon, MoreHorizontal, RefreshCw, Sun, Trash2, X } from "lucide-react";
+import { Download, Home, Moon, RefreshCw, Sun, Trash2, X } from "lucide-react";
 export default function TrainingAiAnalysis() {
   usePrerenderReady(true);
   const [paymentOpen, setPaymentOpen] = useState(false);
@@ -209,44 +204,6 @@ export default function TrainingAiAnalysis() {
               </div>
             </div>
 
-          </div>
-
-          {/* Footer at the very bottom */}
-          <div className="relative mt-auto">
-            <AIFooter />
-          </div>
-
-          <div className={`transition-colors duration-300 ${darkMode ? 'bg-[#1a1a2e]' : 'bg-[#B8B9D1]'}`}>
-            <section className="py-16">
-              <div id="guest-scanner" aria-hidden="true" />
-              <div className="container mx-auto px-6">
-                <div className="space-y-6">
-                  {isProcessing && <Card className="premium-3d-card premium-shadow-depth max-w-6xl mx-auto p-6 glass-light">
-                      <div className="flex items-center gap-3 mb-4">
-                        <Loader2 className="w-5 h-5 text-primary animate-spin" />
-                        <div>
-                          <p className="font-semibold text-foreground">Analyzing your file...</p>
-                          <p className="text-sm text-muted-foreground">This usually takes less than 60 seconds.</p>
-                        </div>
-                      </div>
-                      <Progress value={progress} className="h-2" />
-                    </Card>}
-
-                  {error && <Card className="premium-3d-card premium-shadow-depth max-w-6xl mx-auto p-6 border border-destructive/30 bg-destructive/5 space-y-3">
-                      <p className="text-sm text-destructive">{error}</p>
-                      <Button variant="outline" onClick={restartScan} className="w-fit">Try again</Button>
-                    </Card>}
-
-                  {analysis && file && status === "completed" && expiresAt && <div className="max-w-6xl mx-auto">
-                      <ScanResults analysis={analysis} file={file} expiresAt={expiresAt} onExpired={markExpired} onRestart={restartScan} />
-                    </div>}
-
-                  {status === "expired" && <Card className="premium-3d-card premium-shadow-depth max-w-6xl mx-auto p-6 border border-emerald-200 bg-emerald-50/60 text-emerald-700">
-                      Your data has been permanently deleted. We do not store your files or results.
-                    </Card>}
-                </div>
-              </div>
-            </section>
           </div>
         </main>
       </div>

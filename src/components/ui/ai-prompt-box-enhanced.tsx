@@ -1,7 +1,7 @@
 import React from "react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { ArrowUp, Paperclip, Square, X, StopCircle, Mic, MicOff, Globe, Settings, ShieldCheck } from "lucide-react";
+import { ArrowUp, Paperclip, Square, X, StopCircle, Mic, Globe, Settings, ShieldCheck } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -87,55 +87,96 @@ const DialogTitle = React.forwardRef<React.ElementRef<typeof DialogPrimitive.Tit
 }, ref) => <DialogPrimitive.Title ref={ref} className={cn("text-lg font-semibold leading-none tracking-tight text-gray-100", className)} {...props} />);
 DialogTitle.displayName = DialogPrimitive.Title.displayName;
 
-// Voice Recorder Component
-interface VoiceRecorderProps {
+// Voice Listening Indicator Component
+interface VoiceListeningIndicatorProps {
   isRecording: boolean;
-  onStartRecording: () => void;
-  onStopRecording: (duration: number) => void;
-  visualizerBars?: number;
+  interimText: string;
 }
-const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
+const VoiceListeningIndicator: React.FC<VoiceListeningIndicatorProps> = ({
   isRecording,
-  onStartRecording,
-  onStopRecording,
-  visualizerBars = 32
+  interimText
 }) => {
   const [time, setTime] = React.useState(0);
   const timerRef = React.useRef<NodeJS.Timeout | null>(null);
   React.useEffect(() => {
     if (isRecording) {
-      onStartRecording();
+      setTime(0);
       timerRef.current = setInterval(() => setTime(t => t + 1), 1000);
     } else {
       if (timerRef.current) {
         clearInterval(timerRef.current);
         timerRef.current = null;
       }
-      onStopRecording(time);
       setTime(0);
     }
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [isRecording, time, onStartRecording, onStopRecording]);
+  }, [isRecording]);
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
-  return <div className={cn("flex flex-col items-center justify-center w-full transition-all duration-300 py-3", isRecording ? "opacity-100" : "opacity-0 h-0")}>
-      <div className="flex items-center gap-2 mb-3">
-        <div className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
-        <span className="font-mono text-sm text-white/80">{formatTime(time)}</span>
-      </div>
-      <div className="w-full h-10 flex items-center justify-center gap-0.5 px-4">
-        {[...Array(visualizerBars)].map((_, i) => <div key={i} className="w-0.5 rounded-full bg-white/50 animate-pulse" style={{
-        height: `${Math.max(15, Math.random() * 100)}%`,
-        animationDelay: `${i * 0.05}s`,
-        animationDuration: `${0.5 + Math.random() * 0.5}s`
-      }} />)}
-      </div>
-    </div>;
+  return <AnimatePresence>
+    {isRecording && (
+      <motion.div
+        initial={{ opacity: 0, height: 0 }}
+        animate={{ opacity: 1, height: "auto" }}
+        exit={{ opacity: 0, height: 0 }}
+        className="flex flex-col items-center justify-center w-full py-3 gap-3"
+      >
+        {/* Listening pulse animation */}
+        <div className="flex items-center gap-3">
+          <div className="relative flex items-center justify-center">
+            <motion.div
+              className="absolute w-10 h-10 rounded-full bg-red-500/20"
+              animate={{ scale: [1, 1.8, 1], opacity: [0.6, 0, 0.6] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              className="absolute w-7 h-7 rounded-full bg-red-500/30"
+              animate={{ scale: [1, 1.5, 1], opacity: [0.8, 0.2, 0.8] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+            />
+            <div className="relative w-4 h-4 rounded-full bg-red-500 z-10" />
+          </div>
+          <span className="text-sm text-white/80 font-medium">Listening...</span>
+          <span className="font-mono text-xs text-white/50">{formatTime(time)}</span>
+        </div>
+
+        {/* Sound wave bars */}
+        <div className="w-full h-8 flex items-center justify-center gap-[3px] px-8">
+          {[...Array(24)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="w-[3px] rounded-full bg-gradient-to-t from-red-500/60 to-red-400/90"
+              animate={{
+                height: ["8px", `${12 + Math.random() * 20}px`, "8px"],
+              }}
+              transition={{
+                duration: 0.6 + Math.random() * 0.4,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.04,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Live transcription preview */}
+        {interimText && (
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-sm text-white/60 italic px-4 text-center max-w-full truncate"
+          >
+            "{interimText}"
+          </motion.p>
+        )}
+      </motion.div>
+    )}
+  </AnimatePresence>;
 };
 
 // Image View Dialog Component
@@ -338,35 +379,63 @@ export const EnhancedPromptInputBox = React.forwardRef<HTMLDivElement, EnhancedP
   }>({});
   const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
   const [isRecording, setIsRecording] = React.useState(false);
+  const [interimTranscript, setInterimTranscript] = React.useState("");
   const uploadInputRef = React.useRef<HTMLInputElement>(null);
   const recognitionRef = React.useRef<any>(null);
 
-  // Initialize speech recognition
+  // Initialize speech recognition with continuous + interim results
   React.useEffect(() => {
     if (typeof window !== "undefined" && ("webkitSpeechRecognition" in window || "SpeechRecognition" in window)) {
       const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
       const recognition = new SpeechRecognition();
-      recognition.continuous = false;
-      recognition.interimResults = false;
+      recognition.continuous = true;
+      recognition.interimResults = true;
       recognition.lang = "en-US";
       recognition.onresult = (event: any) => {
-        const transcript = event.results[0][0].transcript;
-        setInput(transcript);
-        setIsRecording(false);
-        toast.success("Voice captured successfully!");
+        let interim = "";
+        let final = "";
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            final += transcript;
+          } else {
+            interim += transcript;
+          }
+        }
+        if (final) {
+          setInput(prev => (prev ? prev + " " : "") + final.trim());
+          setInterimTranscript("");
+        } else {
+          setInterimTranscript(interim);
+        }
       };
       recognition.onerror = (event: any) => {
         console.error("Speech recognition error:", event.error);
-        setIsRecording(false);
-        toast.error("Voice recognition failed. Please try again.");
+        if (event.error !== "aborted") {
+          setIsRecording(false);
+          setInterimTranscript("");
+          toast.error("Voice recognition failed. Please try again.");
+        }
       };
       recognition.onend = () => {
-        setIsRecording(false);
+        // If still supposed to be recording, restart (browser auto-stops sometimes)
+        if (recognitionRef.current?._shouldBeRecording) {
+          try {
+            recognition.start();
+          } catch (e) {
+            setIsRecording(false);
+            setInterimTranscript("");
+          }
+        } else {
+          setIsRecording(false);
+          setInterimTranscript("");
+        }
       };
       recognitionRef.current = recognition;
     }
     return () => {
       if (recognitionRef.current) {
+        recognitionRef.current._shouldBeRecording = false;
         recognitionRef.current.stop();
       }
     };
@@ -377,13 +446,16 @@ export const EnhancedPromptInputBox = React.forwardRef<HTMLDivElement, EnhancedP
       return;
     }
     if (isRecording) {
+      recognitionRef.current._shouldBeRecording = false;
       recognitionRef.current.stop();
       setIsRecording(false);
+      setInterimTranscript("");
     } else {
       try {
+        recognitionRef.current._shouldBeRecording = true;
         recognitionRef.current.start();
         setIsRecording(true);
-        toast.info("Listening... Speak now!");
+        setInterimTranscript("");
       } catch (error) {
         console.error("Failed to start recognition:", error);
         toast.error("Failed to start voice recognition.");
@@ -462,15 +534,9 @@ export const EnhancedPromptInputBox = React.forwardRef<HTMLDivElement, EnhancedP
       setFilePreviews({});
     }
   };
-  const handleStartRecording = () => console.log("Started recording");
-  const handleStopRecording = (duration: number) => {
-    console.log(`Stopped recording after ${duration} seconds`);
-    setIsRecording(false);
-    onSend(`[Voice message - ${duration} seconds]`, []);
-  };
   const hasContent = input.trim() !== "" || files.length > 0 || hasFile;
   return <>
-        <PromptInput value={input} onValueChange={setInput} isLoading={isLoading} onSubmit={handleSubmit} className={cn("w-full max-w-[600px] bg-[#121212] border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-all duration-300 ease-in-out", isRecording && "border-red-500/70", className)} disabled={isLoading || isRecording} ref={ref} onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop}>
+        <PromptInput value={input} onValueChange={setInput} isLoading={isLoading} onSubmit={handleSubmit} className={cn("w-full max-w-[600px] bg-[#121212] border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-all duration-300 ease-in-out", isRecording && "border-red-500/70", className)} disabled={isLoading} ref={ref} onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop}>
           {files.length > 0 && !isRecording && <div className="flex flex-wrap gap-2 p-0 pb-1 transition-all duration-300">
               {files.map((file, index) => <div key={index} className="relative group">
                   {file.type.startsWith("image/") && filePreviews[file.name] && <div className="w-16 h-16 rounded-xl overflow-hidden cursor-pointer transition-all duration-300" onClick={() => openImageModal(filePreviews[file.name])}>
@@ -489,17 +555,10 @@ export const EnhancedPromptInputBox = React.forwardRef<HTMLDivElement, EnhancedP
             <PromptInputTextarea placeholder={placeholder} className="text-base" />
           </div>
 
-          {isRecording && <VoiceRecorder isRecording={isRecording} onStartRecording={handleStartRecording} onStopRecording={handleStopRecording} />}
+          <VoiceListeningIndicator isRecording={isRecording} interimText={interimTranscript} />
 
           <PromptInputActions className="flex items-center justify-between gap-2 p-0 pt-2">
-            <div className={cn("flex items-center gap-1 transition-opacity duration-300", isRecording ? "opacity-0 invisible h-0" : "opacity-100 visible")}>
-              {/* Mic Button */}
-              <PromptInputAction tooltip={isRecording ? "Stop listening" : "Voice input"}>
-                <button type="button" onClick={toggleVoiceInput} className="flex h-8 w-8 text-white/60 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-white/10 hover:text-white/90" disabled={isLoading}>
-                  {isRecording ? <MicOff className="h-[18px] w-[18px] text-red-400" /> : <Mic className="h-[18px] w-[18px]" />}
-                </button>
-              </PromptInputAction>
-
+            <div className={cn("flex items-center gap-1 transition-all duration-300", isRecording ? "opacity-40 pointer-events-none" : "opacity-100")}>
               {/* File Upload */}
               <PromptInputAction tooltip="Attach file">
                 <button onClick={() => uploadInputRef.current?.click()} className="flex h-8 w-8 text-white/60 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-white/10 hover:text-white/90" disabled={isRecording} type="button">
@@ -526,13 +585,30 @@ export const EnhancedPromptInputBox = React.forwardRef<HTMLDivElement, EnhancedP
               </PromptInputAction>
             </div>
 
-            <PromptInputAction tooltip={isLoading ? "Stop generation" : isRecording ? "Stop recording" : hasFile && canAnalyze ? "Scan file" : hasContent ? "Send message" : "Send"}>
-              <button type="button" onClick={() => {
-            if (isRecording) setIsRecording(false);else if (hasContent) handleSubmit();
-          }} disabled={(isLoading && !hasContent) || !hasContent} className={cn("h-9 w-9 rounded-full transition-all duration-200 flex items-center justify-center", isRecording ? "bg-transparent hover:bg-white/10 text-red-500 hover:text-red-400" : hasContent ? "bg-[#4ADE80] text-[#121212] shadow-[0_0_18px_rgba(74,222,128,0.55)]" : "bg-transparent text-white/30 cursor-not-allowed")}>
-                {isLoading ? <Square className="h-4 w-4 fill-current animate-pulse" /> : isRecording ? <StopCircle className="h-5 w-5" /> : hasFile && canAnalyze ? <ShieldCheck className="h-4 w-4" /> : <ArrowUp className="h-4 w-4" />}
-              </button>
-            </PromptInputAction>
+            <div className="flex items-center gap-2">
+              {/* Mic / Stop Button */}
+              <PromptInputAction tooltip={isRecording ? "Stop listening" : "Voice input"}>
+                <button type="button" onClick={toggleVoiceInput} className={cn(
+                  "flex h-9 w-9 cursor-pointer items-center justify-center rounded-full transition-all duration-200",
+                  isRecording
+                    ? "bg-red-500/20 text-red-400 hover:bg-red-500/30 ring-2 ring-red-500/50"
+                    : "text-white/60 hover:bg-white/10 hover:text-white/90"
+                )} disabled={isLoading}>
+                  {isRecording ? <StopCircle className="h-5 w-5" /> : <Mic className="h-[18px] w-[18px]" />}
+                </button>
+              </PromptInputAction>
+
+              {/* Send Button */}
+              {!isRecording && (
+                <PromptInputAction tooltip={isLoading ? "Stop generation" : hasFile && canAnalyze ? "Scan file" : hasContent ? "Send message" : "Send"}>
+                  <button type="button" onClick={() => {
+                    if (hasContent) handleSubmit();
+                  }} disabled={!hasContent && !isLoading} className={cn("h-9 w-9 rounded-full transition-all duration-200 flex items-center justify-center", hasContent ? "bg-[#4ADE80] text-[#121212] shadow-[0_0_18px_rgba(74,222,128,0.55)]" : "bg-transparent text-white/30 cursor-not-allowed")}>
+                    {isLoading ? <Square className="h-4 w-4 fill-current animate-pulse" /> : hasFile && canAnalyze ? <ShieldCheck className="h-4 w-4" /> : <ArrowUp className="h-4 w-4" />}
+                  </button>
+                </PromptInputAction>
+              )}
+            </div>
           </PromptInputActions>
         </PromptInput>
 
