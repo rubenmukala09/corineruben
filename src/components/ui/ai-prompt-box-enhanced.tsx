@@ -284,6 +284,7 @@ interface PromptInputActionProps extends React.ComponentProps<typeof Tooltip> {
   tooltip: React.ReactNode;
   children: React.ReactNode;
   side?: "top" | "bottom" | "left" | "right";
+  className?: string;
 }
 const PromptInputAction: React.FC<PromptInputActionProps> = ({
   tooltip,
@@ -494,7 +495,9 @@ export const EnhancedPromptInputBox = React.forwardRef<HTMLDivElement, EnhancedP
             <div className={cn("flex items-center gap-1 transition-opacity duration-300", isRecording ? "opacity-0 invisible h-0" : "opacity-100 visible")}>
               {/* Mic Button */}
               <PromptInputAction tooltip={isRecording ? "Stop listening" : "Voice input"}>
-                
+                <button type="button" onClick={toggleVoiceInput} className="flex h-8 w-8 text-white/60 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-white/10 hover:text-white/90" disabled={isLoading}>
+                  {isRecording ? <MicOff className="h-[18px] w-[18px] text-red-400" /> : <Mic className="h-[18px] w-[18px]" />}
+                </button>
               </PromptInputAction>
 
               {/* File Upload */}
@@ -504,7 +507,7 @@ export const EnhancedPromptInputBox = React.forwardRef<HTMLDivElement, EnhancedP
                   <input ref={uploadInputRef} type="file" className="hidden" onChange={e => {
                 if (e.target.files && e.target.files.length > 0) processFile(e.target.files[0]);
                 if (e.target) e.target.value = "";
-              }} accept=".pdf,.jpg,.jpeg,.png,.mp4,.mp3,.wav,image/*,video/*,audio/*" />
+              }} accept="*/*" />
                 </button>
               </PromptInputAction>
 

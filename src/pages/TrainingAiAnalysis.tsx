@@ -15,7 +15,7 @@ import { usePrerenderReady } from "@/contexts/PrerenderContext";
 import { useGuestScanner } from "@/hooks/useGuestScanner";
 import { useAiChat } from "@/hooks/useAiChat";
 import { SITE } from "@/config/site";
-import { Bookmark, LayoutGrid, Loader2, Moon, MoreHorizontal, RefreshCw, Trash2, X } from "lucide-react";
+import { Bookmark, Download, Home, Loader2, Moon, MoreHorizontal, RefreshCw, Sun, Trash2, X } from "lucide-react";
 
 export default function TrainingAiAnalysis() {
   usePrerenderReady(true);
@@ -111,8 +111,12 @@ export default function TrainingAiAnalysis() {
   };
 
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle("dark");
+    const next = !darkMode;
+    setDarkMode(next);
+    document.documentElement.classList.toggle("dark", next);
+    const bg = next ? "#1a1a2e" : "#B8B9D1";
+    document.body.style.backgroundColor = bg;
+    document.documentElement.style.backgroundColor = bg;
   };
 
   const handleRefresh = () => {
@@ -152,11 +156,11 @@ export default function TrainingAiAnalysis() {
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2 rounded-full bg-black/45 backdrop-blur-md border border-white/10 px-3 py-2 shadow-xl">
                   <Link
-                    to="/training"
+                    to="/"
                     className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition"
-                    title="View grid layout"
+                    title="Go home"
                   >
-                    <LayoutGrid className="h-4 w-4" />
+                    <Home className="h-4 w-4" />
                   </Link>
                   <button
                     type="button"
@@ -164,7 +168,7 @@ export default function TrainingAiAnalysis() {
                     className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition"
                     title="Toggle dark mode"
                   >
-                    <Moon className="h-4 w-4" />
+                    {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
                   </button>
                   <button
                     type="button"
@@ -175,23 +179,38 @@ export default function TrainingAiAnalysis() {
                     <RefreshCw className="h-4 w-4" />
                   </button>
                 </div>
-                <Link
-                  to="/training"
-                  className="hidden sm:inline-flex text-sm font-semibold text-white/95 hover:text-white transition-colors px-3 py-1.5 rounded-lg hover:bg-white/10"
-                >
-                  Back to Learn & Train
-                </Link>
               </div>
 
               <div className="flex items-center gap-2 rounded-full bg-black/45 backdrop-blur-md border border-white/10 px-3 py-2 shadow-xl">
                 <button
                   type="button"
-                  onClick={clearChat}
+                  onClick={() => {
+                    clearChat();
+                    clearFile();
+                  }}
                   className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition disabled:opacity-40 disabled:cursor-not-allowed"
-                  title="Clear chat history"
-                  disabled={messages.length === 0}
+                  title="Delete data"
+                  disabled={messages.length === 0 && !file}
                 >
                   <Trash2 className="h-4 w-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const chatText = messages.map(m => `[${m.role}]: ${m.content}`).join("\n\n");
+                    const blob = new Blob([chatText || "No data to download."], { type: "text/plain" });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = `ai-analysis-${Date.now()}.txt`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                  }}
+                  className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition disabled:opacity-40 disabled:cursor-not-allowed"
+                  title="Download data"
+                  disabled={messages.length === 0}
+                >
+                  <Download className="h-4 w-4" />
                 </button>
                 <button
                   type="button"
@@ -201,13 +220,6 @@ export default function TrainingAiAnalysis() {
                 >
                   <Bookmark className="h-4 w-4" />
                 </button>
-                <Link
-                  to="/training"
-                  className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition"
-                  title="More options"
-                >
-                  <MoreHorizontal className="h-4 w-4" />
-                </Link>
               </div>
             </div>
 
