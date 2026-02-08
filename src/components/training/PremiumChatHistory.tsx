@@ -23,7 +23,7 @@ export const PremiumChatHistory = ({ messages, status }: PremiumChatHistoryProps
   return (
     <div
       ref={containerRef}
-      className="relative w-full max-w-4xl mx-auto h-[500px] overflow-y-auto px-4 py-6 space-y-6 scroll-smooth premium-custom-scrollbar"
+      className="relative w-full max-w-6xl mx-auto h-[700px] overflow-y-auto px-4 py-6 space-y-6 scroll-smooth premium-custom-scrollbar"
     >
       {messages.length === 0 && !isThinking && (
         <motion.div

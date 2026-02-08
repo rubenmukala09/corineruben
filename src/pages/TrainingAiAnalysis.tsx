@@ -19,6 +19,8 @@ import { Bookmark, Code2, LayoutGrid, Loader2, Moon, MoreHorizontal, RefreshCw, 
 export default function TrainingAiAnalysis() {
   usePrerenderReady(true);
   const [paymentOpen, setPaymentOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+  const [showBookmarks, setShowBookmarks] = useState(false);
 
   const {
     file,
@@ -66,6 +68,19 @@ export default function TrainingAiAnalysis() {
     }
   };
 
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    document.documentElement.classList.toggle("dark");
+  };
+
+  const handleRefresh = () => {
+    window.location.reload();
+  };
+
+  const toggleBookmarks = () => {
+    setShowBookmarks(!showBookmarks);
+  };
+
   return (
     <PageTransition variant="fade">
       <div className="min-h-screen">
@@ -90,47 +105,69 @@ export default function TrainingAiAnalysis() {
         <main className="relative min-h-screen overflow-hidden">
           <div className="absolute inset-0 bg-[linear-gradient(180deg,#B8B9D1_0%,#FFFFFF_100%)]" />
 
-          <div className="relative min-h-[80vh] flex items-center justify-center px-6">
-            <div className="absolute top-6 left-6 flex items-center gap-3">
-              <div className="flex items-center gap-2 rounded-full bg-black/45 backdrop-blur-md border border-white/10 px-3 py-2 shadow-xl">
-                <button className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition">
-                  <LayoutGrid className="h-4 w-4" />
-                </button>
-                <button className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition">
-                  <Moon className="h-4 w-4" />
-                </button>
-                <button className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition">
-                  <RefreshCw className="h-4 w-4" />
-                </button>
+          <div className="relative min-h-screen flex flex-col px-6 py-6">
+            {/* Top Navigation Bar */}
+            <div className="w-full flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 rounded-full bg-black/45 backdrop-blur-md border border-white/10 px-3 py-2 shadow-xl">
+                  <Link
+                    to="/training"
+                    className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition"
+                    title="View grid layout"
+                  >
+                    <LayoutGrid className="h-4 w-4" />
+                  </Link>
+                  <button
+                    onClick={toggleDarkMode}
+                    className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition"
+                    title="Toggle dark mode"
+                  >
+                    <Moon className="h-4 w-4" />
+                  </button>
+                  <button
+                    onClick={handleRefresh}
+                    className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition"
+                    title="Refresh page"
+                  >
+                    <RefreshCw className="h-4 w-4" />
+                  </button>
+                </div>
+                <Link
+                  to="/training"
+                  className="hidden sm:inline-flex text-xs font-medium text-white/70 hover:text-white transition"
+                >
+                  Back to Learn & Train
+                </Link>
               </div>
-              <Link
-                to="/training"
-                className="hidden sm:inline-flex text-xs font-medium text-white/70 hover:text-white transition"
-              >
-                Back to Learn & Train
-              </Link>
-            </div>
 
-            <div className="absolute top-6 right-6">
               <div className="flex items-center gap-2 rounded-full bg-black/45 backdrop-blur-md border border-white/10 px-3 py-2 shadow-xl">
                 <button
                   onClick={clearChat}
-                  className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition"
+                  className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition disabled:opacity-40 disabled:cursor-not-allowed"
                   title="Clear chat history"
                   disabled={messages.length === 0}
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
-                <button className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition">
+                <button
+                  onClick={toggleBookmarks}
+                  className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition"
+                  title="Bookmarks"
+                >
                   <Bookmark className="h-4 w-4" />
                 </button>
-                <button className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition">
+                <Link
+                  to="/training"
+                  className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition"
+                  title="More options"
+                >
                   <MoreHorizontal className="h-4 w-4" />
-                </button>
+                </Link>
               </div>
             </div>
 
-            <div className="w-full flex flex-col items-center gap-8">
+            {/* Main Chat Area - Expanded */}
+            <div className="flex-1 w-full flex flex-col items-center justify-center gap-8 max-w-7xl mx-auto">
               {/* AI Chat History */}
               {messages.length > 0 && (
                 <PremiumChatHistory messages={messages} status={chatStatus} />
