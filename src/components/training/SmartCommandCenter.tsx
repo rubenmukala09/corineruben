@@ -283,8 +283,10 @@ export const SmartCommandCenter = ({
             <button
               type="button"
               className="text-white/60 hover:text-white transition"
-              aria-label="Web"
+              aria-label="Web search"
+              onClick={() => toast.info("Web search feature coming soon!")}
               disabled={isBusy}
+              title="Web search (coming soon)"
             >
               <Globe className="h-[18px] w-[18px]" />
             </button>
@@ -292,7 +294,9 @@ export const SmartCommandCenter = ({
               type="button"
               className="text-white/60 hover:text-white transition"
               aria-label="Settings"
+              onClick={() => toast.info("Settings panel coming soon!")}
               disabled={isBusy}
+              title="Settings (coming soon)"
             >
               <Settings className="h-[18px] w-[18px]" />
             </button>
@@ -325,11 +329,13 @@ export const SmartCommandCenter = ({
           className="hidden"
           accept={ACCEPTED_FILE_TYPES}
           onChange={handleBrowse}
+          aria-label="File upload input"
+          title="Upload file for scanning"
         />
       </div>
 
       <div className="mt-3 flex flex-col items-center gap-2">
-        <p className="text-[14px] text-[#555555] tracking-[0.5px] text-center">
+        <p className="text-[14px] text-white/90 font-medium tracking-[0.5px] text-center">
           Anonymous Scan • ${GUEST_SCAN_PRICING.minimumCharge.toFixed(2)} Minimum • Auto-deleted in 10m
         </p>
 

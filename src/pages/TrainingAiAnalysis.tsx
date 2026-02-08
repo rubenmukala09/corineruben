@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { SEO } from "@/components/SEO";
 import { PageTransition } from "@/components/PageTransition";
 import { PaymentDialog } from "@/components/scanner/PaymentDialog";
 import { ScanResults } from "@/components/scanner/ScanResults";
 import { SmartCommandCenter } from "@/components/training/SmartCommandCenter";
+import { EnhancedPromptInputBox } from "@/components/ui/ai-prompt-box-enhanced";
 import { PremiumChatHistory } from "@/components/training/PremiumChatHistory";
 import { AIFooter } from "@/components/training/AIFooter";
 import { Button } from "@/components/ui/button";
@@ -14,7 +15,7 @@ import { usePrerenderReady } from "@/contexts/PrerenderContext";
 import { useGuestScanner } from "@/hooks/useGuestScanner";
 import { useAiChat } from "@/hooks/useAiChat";
 import { SITE } from "@/config/site";
-import { Bookmark, Code2, LayoutGrid, Loader2, Moon, MoreHorizontal, RefreshCw, Trash2 } from "lucide-react";
+import { Bookmark, LayoutGrid, Loader2, Moon, MoreHorizontal, RefreshCw, Trash2, X } from "lucide-react";
 
 export default function TrainingAiAnalysis() {
   usePrerenderReady(true);
@@ -22,9 +23,40 @@ export default function TrainingAiAnalysis() {
   const [darkMode, setDarkMode] = useState(false);
   const [showBookmarks, setShowBookmarks] = useState(false);
 
+  // Set uniform background for this page
+  useEffect(() => {
+    const originalBodyBg = document.body.style.backgroundColor;
+    const originalBodyBgImage = document.body.style.backgroundImage;
+    const originalHtmlBg = document.documentElement.style.backgroundColor;
+    const originalBodyMargin = document.body.style.margin;
+    const originalBodyPadding = document.body.style.padding;
+    const originalHtmlMargin = document.documentElement.style.margin;
+    const originalHtmlPadding = document.documentElement.style.padding;
+
+    // Apply uniform background
+    document.body.style.backgroundColor = "#B8B9D1";
+    document.body.style.backgroundImage = "none";
+    document.documentElement.style.backgroundColor = "#B8B9D1";
+    document.body.style.margin = "0";
+    document.body.style.padding = "0";
+    document.documentElement.style.margin = "0";
+    document.documentElement.style.padding = "0";
+
+    return () => {
+      // Restore original styles on unmount
+      document.body.style.backgroundColor = originalBodyBg;
+      document.body.style.backgroundImage = originalBodyBgImage;
+      document.documentElement.style.backgroundColor = originalHtmlBg;
+      document.body.style.margin = originalBodyMargin;
+      document.body.style.padding = originalBodyPadding;
+      document.documentElement.style.margin = originalHtmlMargin;
+      document.documentElement.style.padding = originalHtmlPadding;
+    };
+  }, []);
+
   const {
     file,
-    cost,
+    cost: costNumber,
     analysis,
     status,
     error,
@@ -37,6 +69,16 @@ export default function TrainingAiAnalysis() {
     markExpired,
     setStatus,
   } = useGuestScanner();
+
+  // Calculate full cost object with formatting
+  const cost = useMemo(() => {
+    if (!file) return { cost: 0.50, formatted: "$0.50", minimumCharge: 0.50 };
+    return {
+      cost: costNumber,
+      formatted: `$${costNumber.toFixed(2)}`,
+      minimumCharge: 0.50,
+    };
+  }, [file, costNumber]);
 
   const {
     messages,
@@ -83,7 +125,7 @@ export default function TrainingAiAnalysis() {
 
   return (
     <PageTransition variant="fade">
-      <div className="min-h-screen">
+      <div className="min-h-screen bg-[#B8B9D1]">
         <SEO
           title="AI Analysis & Secure File Scan"
           description="Run instant AI analysis on suspicious files, messages, and screenshots. Secure guest scan workflow with automatic deletion in 10 minutes."
@@ -102,8 +144,7 @@ export default function TrainingAiAnalysis() {
           }}
         />
 
-        <main className="relative min-h-screen overflow-hidden flex flex-col">
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,#B8B9D1_0%,#FFFFFF_100%)]" />
+        <main className="relative min-h-screen overflow-hidden flex flex-col bg-[#B8B9D1]">
 
           <div className="relative flex-1 flex flex-col px-6 py-6">
             {/* Top Navigation Bar */}
@@ -136,7 +177,7 @@ export default function TrainingAiAnalysis() {
                 </div>
                 <Link
                   to="/training"
-                  className="hidden sm:inline-flex text-xs font-medium text-white/70 hover:text-white transition"
+                  className="hidden sm:inline-flex text-sm font-semibold text-white/95 hover:text-white transition-colors px-3 py-1.5 rounded-lg hover:bg-white/10"
                 >
                   Back to Learn & Train
                 </Link>
@@ -177,15 +218,37 @@ export default function TrainingAiAnalysis() {
                 <PremiumChatHistory messages={messages} status={chatStatus} />
               )}
 
-              {/* Command Center */}
-              <SmartCommandCenter
-                file={file}
-                status={status}
-                onFileSelect={prepareFile}
-                onClearFile={clearFile}
-                onRequestPayment={handleRequestPayment}
-                onSendText={sendMessage}
-              />
+              {/* Enhanced AI Command Center */}
+              <div className="w-full flex flex-col items-center gap-3">
+                <EnhancedPromptInputBox
+                  onSend={sendMessage}
+                  onFileSelect={prepareFile}
+                  isLoading={status === "uploading" || status === "analyzing"}
+                  placeholder="Drop file to scan or type a message..."
+                  hasFile={!!file}
+                  onClearFile={clearFile}
+                  onRequestPayment={handleRequestPayment}
+                  canAnalyze={file && status === "ready"}
+                />
+                {file && (
+                  <div className="flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-2 shadow-xl">
+                    <span className="text-sm text-white/90 font-medium truncate max-w-[200px]">{file.name}</span>
+                    <span className="text-white/60">•</span>
+                    <span className="text-sm text-white/80 whitespace-nowrap">{cost.formatted}</span>
+                    <button
+                      type="button"
+                      onClick={clearFile}
+                      className="ml-2 rounded-full p-1 text-white/60 hover:text-white hover:bg-white/10 transition"
+                      aria-label="Remove file"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                )}
+                <p className="text-sm font-medium text-white/90 tracking-wide text-center">
+                  Anonymous Scan • ${cost.minimumCharge.toFixed(2)} Minimum • Auto-deleted in 10m
+                </p>
+              </div>
             </div>
 
           </div>
@@ -195,7 +258,7 @@ export default function TrainingAiAnalysis() {
             <AIFooter />
           </div>
 
-          <div className="bg-background">
+          <div className="bg-[#B8B9D1]">
             <section className="py-16">
               <div id="guest-scanner" aria-hidden="true" />
               <div className="container mx-auto px-6">
@@ -248,7 +311,7 @@ export default function TrainingAiAnalysis() {
         open={paymentOpen}
         onOpenChange={handlePaymentOpenChange}
         file={file}
-        amount={cost}
+        amount={cost.cost}
         onPaymentSuccess={handlePaymentSuccess}
       />
     </PageTransition>
