@@ -243,15 +243,24 @@ export const SmartCommandCenter = ({
             <button
               type="button"
               className={cn(
-                "text-white/60 hover:text-white transition",
-                isListening && "text-[#4ADE80] animate-pulse"
+                "relative h-10 w-10 rounded-full flex items-center justify-center transition-all duration-300",
+                isListening
+                  ? "bg-gradient-to-br from-red-500 to-rose-600 shadow-[0_0_20px_rgba(239,68,68,0.6)] animate-pulse scale-110"
+                  : "bg-gradient-to-br from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 shadow-[0_0_15px_rgba(16,185,129,0.4)] hover:shadow-[0_0_25px_rgba(16,185,129,0.6)] hover:scale-105"
               )}
               onClick={toggleVoiceInput}
               aria-label={isListening ? "Stop listening" : "Voice input"}
               disabled={isBusy}
-              title={isListening ? "Stop listening" : "Voice input"}
+              title={isListening ? "Stop listening - Click to stop" : "Voice input - Click to speak"}
             >
-              {isListening ? <MicOff className="h-[18px] w-[18px]" /> : <Mic className="h-[18px] w-[18px]" />}
+              {isListening ? (
+                <div className="relative">
+                  <MicOff className="h-5 w-5 text-white relative z-10" />
+                  <div className="absolute inset-0 rounded-full bg-white/20 animate-ping" />
+                </div>
+              ) : (
+                <Mic className="h-5 w-5 text-white" />
+              )}
             </button>
             <button
               type="button"
@@ -319,9 +328,18 @@ export const SmartCommandCenter = ({
         />
       </div>
 
-      <p className="mt-3 text-[14px] text-[#555555] tracking-[0.5px] text-center">
-        Anonymous Scan • ${GUEST_SCAN_PRICING.minimumCharge.toFixed(2)} Minimum • Auto-deleted in 10m
-      </p>
+      <div className="mt-3 flex flex-col items-center gap-2">
+        <p className="text-[14px] text-[#555555] tracking-[0.5px] text-center">
+          Anonymous Scan • ${GUEST_SCAN_PRICING.minimumCharge.toFixed(2)} Minimum • Auto-deleted in 10m
+        </p>
+
+        {isListening && (
+          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30">
+            <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+            <span className="text-xs text-red-600 font-medium">Recording... Click mic to stop</span>
+          </div>
+        )}
+      </div>
 
       {validationError && (
         <p className="mt-2 text-xs text-rose-600">{validationError}</p>

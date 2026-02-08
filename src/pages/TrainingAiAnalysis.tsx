@@ -102,10 +102,10 @@ export default function TrainingAiAnalysis() {
           }}
         />
 
-        <main className="relative min-h-screen overflow-hidden">
+        <main className="relative min-h-screen overflow-hidden flex flex-col">
           <div className="absolute inset-0 bg-[linear-gradient(180deg,#B8B9D1_0%,#FFFFFF_100%)]" />
 
-          <div className="relative min-h-screen flex flex-col px-6 py-6">
+          <div className="relative flex-1 flex flex-col px-6 py-6">
             {/* Top Navigation Bar */}
             <div className="w-full flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
@@ -188,7 +188,10 @@ export default function TrainingAiAnalysis() {
               />
             </div>
 
-            {/* Footer with Anthropic and Malwarebytes signatures */}
+          </div>
+
+          {/* Footer at the very bottom */}
+          <div className="relative mt-auto">
             <AIFooter />
           </div>
 
