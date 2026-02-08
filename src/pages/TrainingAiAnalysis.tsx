@@ -5,7 +5,7 @@ import { SEO } from "@/components/SEO";
 import { PageTransition } from "@/components/PageTransition";
 import { PaymentDialog } from "@/components/scanner/PaymentDialog";
 import { ScanResults } from "@/components/scanner/ScanResults";
-import { SmartScanConsole } from "@/components/training/SmartScanConsole";
+import { SmartCommandCenter } from "@/components/training/SmartCommandCenter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -31,6 +31,7 @@ export default function TrainingAiAnalysis() {
     startScan,
     restartScan,
     markExpired,
+    setStatus,
   } = useGuestScanner();
 
   const isProcessing = status === "uploading" || status === "analyzing";
@@ -38,12 +39,21 @@ export default function TrainingAiAnalysis() {
 
   const handlePaymentSuccess = (payload: { scanId: string; filePath: string; paymentIntentId: string }) => {
     setPaymentOpen(false);
+    setStatus("uploading");
     startScan({ scanId: payload.scanId, filePath: payload.filePath });
   };
 
   const handleRequestPayment = () => {
     if (!canPay || isProcessing) return;
+    setStatus("paying");
     setPaymentOpen(true);
+  };
+
+  const handlePaymentOpenChange = (open: boolean) => {
+    setPaymentOpen(open);
+    if (!open && status === "paying" && !isProcessing) {
+      setStatus(file ? "ready" : "idle");
+    }
   };
 
   return (
@@ -68,10 +78,9 @@ export default function TrainingAiAnalysis() {
         />
 
         <main className="relative min-h-screen overflow-hidden">
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,#b9c8ea_0%,#c9c3e3_30%,#d8b8d6_55%,#e5b7b4_70%,#f0b36e_85%,#e59f5a_100%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(235,134,60,0.45)_0%,rgba(0,0,0,0)_65%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,#B8B9D1_0%,#FFFFFF_100%)]" />
 
-          <div className="relative min-h-[88vh] flex items-center justify-center px-8">
+          <div className="relative min-h-[80vh] flex items-center justify-center px-6">
             <div className="absolute top-6 left-6 flex items-center gap-3">
               <div className="flex items-center gap-2 rounded-full bg-black/45 backdrop-blur-md border border-white/10 px-3 py-2 shadow-xl">
                 <button className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition">
@@ -106,8 +115,8 @@ export default function TrainingAiAnalysis() {
               </div>
             </div>
 
-            <div className="w-full max-w-6xl">
-              <SmartScanConsole
+            <div className="w-full">
+              <SmartCommandCenter
                 file={file}
                 status={status}
                 onFileSelect={prepareFile}
@@ -170,7 +179,7 @@ export default function TrainingAiAnalysis() {
 
       <PaymentDialog
         open={paymentOpen}
-        onOpenChange={setPaymentOpen}
+        onOpenChange={handlePaymentOpenChange}
         file={file}
         amount={cost}
         onPaymentSuccess={handlePaymentSuccess}
