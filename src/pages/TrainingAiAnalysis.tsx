@@ -6,13 +6,15 @@ import { PageTransition } from "@/components/PageTransition";
 import { PaymentDialog } from "@/components/scanner/PaymentDialog";
 import { ScanResults } from "@/components/scanner/ScanResults";
 import { SmartCommandCenter } from "@/components/training/SmartCommandCenter";
+import { PremiumChatHistory } from "@/components/training/PremiumChatHistory";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { usePrerenderReady } from "@/contexts/PrerenderContext";
 import { useGuestScanner } from "@/hooks/useGuestScanner";
+import { useAiChat } from "@/hooks/useAiChat";
 import { SITE } from "@/config/site";
-import { Bookmark, Code2, LayoutGrid, Loader2, Moon, MoreHorizontal, RefreshCw } from "lucide-react";
+import { Bookmark, Code2, LayoutGrid, Loader2, Moon, MoreHorizontal, RefreshCw, Trash2 } from "lucide-react";
 
 export default function TrainingAiAnalysis() {
   usePrerenderReady(true);
@@ -33,6 +35,14 @@ export default function TrainingAiAnalysis() {
     markExpired,
     setStatus,
   } = useGuestScanner();
+
+  const {
+    messages,
+    status: chatStatus,
+    error: chatError,
+    sendMessage,
+    clearChat,
+  } = useAiChat();
 
   const isProcessing = status === "uploading" || status === "analyzing";
   const canPay = file && status === "ready";
@@ -103,8 +113,13 @@ export default function TrainingAiAnalysis() {
 
             <div className="absolute top-6 right-6">
               <div className="flex items-center gap-2 rounded-full bg-black/45 backdrop-blur-md border border-white/10 px-3 py-2 shadow-xl">
-                <button className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition">
-                  <Code2 className="h-4 w-4" />
+                <button
+                  onClick={clearChat}
+                  className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition"
+                  title="Clear chat history"
+                  disabled={messages.length === 0}
+                >
+                  <Trash2 className="h-4 w-4" />
                 </button>
                 <button className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition">
                   <Bookmark className="h-4 w-4" />
@@ -115,14 +130,20 @@ export default function TrainingAiAnalysis() {
               </div>
             </div>
 
-            <div className="w-full">
+            <div className="w-full flex flex-col items-center gap-8">
+              {/* AI Chat History */}
+              {messages.length > 0 && (
+                <PremiumChatHistory messages={messages} status={chatStatus} />
+              )}
+
+              {/* Command Center */}
               <SmartCommandCenter
                 file={file}
                 status={status}
                 onFileSelect={prepareFile}
                 onClearFile={clearFile}
                 onRequestPayment={handleRequestPayment}
-                onSendText={(message) => console.log("AI prompt:", message)}
+                onSendText={sendMessage}
               />
             </div>
           </div>
