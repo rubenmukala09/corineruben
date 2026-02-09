@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { useCounterAnimation } from "@/hooks/useCounterAnimation";
+
 import { useAdminStatus } from "@/hooks/useAdminStatus";
 import { useCheckout } from "@/contexts/CheckoutContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -83,127 +83,73 @@ const trainingHeadlines = [
   "Protection Services for Real-World Safety"
 ];
 
-// Premium Training Card Component
+// Premium Training Card Component — clean style matching Business page
 const PremiumTrainingCard = ({ plan, index, onBook }: { plan: any; index: number; onBook: (plan: any) => void }) => {
-  const { count, ref } = useCounterAnimation({ end: plan.priceNum, duration: 1000 });
-
   return (
-    <ScrollReveal animation="scale-in" delay={index * 100} threshold={0.2}>
-      <div className="relative h-full group">
-        {/* Popular badge */}
+    <ScrollReveal animation="fade-up" delay={index * 100} threshold={0.2}>
+      <div className="relative h-full pt-5">
         {plan.popular && (
-          <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
-            <div className="bg-gradient-to-r from-primary to-accent text-white px-6 py-2 rounded-full text-sm font-bold shadow-xl border-2 border-white/20 flex items-center gap-2">
-              <Sparkles className="w-4 h-4" />
-              BEST VALUE
-            </div>
+          <div className="absolute -top-1 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-white px-5 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 whitespace-nowrap">
+            ⭐ BEST VALUE
           </div>
         )}
-
-        <Card className={`premium-3d-card premium-shadow-depth premium-shine-sweep relative h-full overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-2 ${
+        <Card className={`p-6 pt-8 rounded-2xl transition-all hover:-translate-y-1 h-full flex flex-col ${
           plan.popular
-            ? "bg-gradient-to-br from-primary/10 via-card to-accent/10 border-2 border-primary/50 shadow-2xl shadow-primary/20"
-            : "bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-white/50 hover:shadow-2xl hover:border-primary/30"
+            ? "shadow-[0_8px_30px_hsl(var(--primary)/0.15)] hover:shadow-[0_12px_40px_hsl(var(--primary)/0.2)] border-2 border-primary"
+            : "hover:shadow-medium border-2 border-transparent hover:border-primary/20"
         }`}>
-          {/* Glassmorphism overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-white/20 pointer-events-none" />
-
-          {/* Image header */}
-          <div className="relative h-48 overflow-hidden">
-            <img
-              src={plan.image}
-              alt={plan.name}
-              width={800}
-              height={400}
-              loading="lazy"
-              decoding="async"
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 premium-4k-image"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-            <div className="absolute bottom-4 left-4 right-4">
-              <Badge className={`mb-2 ${plan.badgeClass || 'bg-white/20 text-white backdrop-blur-sm'}`}>
-                {plan.badge}
-              </Badge>
-              <h3 className="text-2xl font-bold text-white drop-shadow-lg">{plan.name}</h3>
-            </div>
+          <div className="flex items-center justify-center gap-1.5 mb-4 text-xs text-muted-foreground pt-2">
+            <ClockIcon className="w-3.5 h-3.5" />
+            <span className="font-medium">{plan.duration}</span>
+            <span className="mx-1">•</span>
+            <Users className="w-3.5 h-3.5" />
+            <span className="font-medium">{plan.size}</span>
           </div>
-
-          <div className="p-6 relative z-10">
-            {/* Price */}
-            <div className="text-center mb-4" ref={ref}>
-              <span className="text-5xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                ${Math.round(count)}{plan.pricePrefix || ''}
-              </span>
-              <span className="text-muted-foreground text-lg ml-2">/session</span>
-            </div>
-
-            {/* Duration & Size */}
-            <div className="flex justify-center gap-4 mb-4 text-sm">
-              <div className="flex items-center gap-1.5 bg-primary/10 px-3 py-1.5 rounded-full">
-                <ClockIcon className="w-4 h-4 text-primary" />
-                <span className="font-semibold">{plan.duration}</span>
-              </div>
-              <div className="flex items-center gap-1.5 bg-accent/10 px-3 py-1.5 rounded-full">
-                <Users className="w-4 h-4 text-accent" />
-                <span className="font-semibold">{plan.size}</span>
-              </div>
-            </div>
-
-            {/* Description */}
-            <p className="text-center text-muted-foreground mb-6 leading-relaxed">
-              {plan.description}
-            </p>
-
-            {/* Features */}
-            <div className="space-y-3 mb-6">
-              {plan.features.slice(0, 4).map((feature: string, idx: number) => (
-                <div key={idx} className="flex items-start gap-3">
-                  <div className="w-5 h-5 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <CheckCircle className="w-3 h-3 text-white" />
-                  </div>
-                  <span className="text-foreground">{feature.replace('✓ ', '')}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* CTA Button */}
-            <Button
-              onClick={() => onBook(plan)}
-              size="lg"
-              className={`w-full rounded-xl py-6 text-lg font-bold transition-all duration-300 ${
-                plan.popular
-                  ? 'bg-gradient-to-r from-primary to-accent hover:shadow-lg hover:shadow-primary/30 text-white'
-                  : 'bg-foreground/10 hover:bg-primary hover:text-white'
-              }`}
-            >
-              Book Now
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
+          <h3 className="text-2xl font-bold mb-3 text-center">{plan.name}</h3>
+          <p className="text-muted-foreground mb-4 text-sm text-center">{plan.description}</p>
+          <p className="text-3xl font-bold text-accent mb-4 text-center">
+            {plan.price}{plan.pricePrefix || ''}<span className="text-base font-normal text-muted-foreground ml-1">/session</span>
+          </p>
+          <div className="flex flex-wrap gap-2 justify-center mb-4">
+            <Badge className={`${plan.badgeClass || 'bg-muted text-muted-foreground'}`}>
+              {plan.badge}
+            </Badge>
           </div>
+          <ul className="space-y-2 mb-6 text-sm flex-1">
+            {plan.features.slice(0, 4).map((feature: string, idx: number) => (
+              <li key={idx} className="flex items-start gap-2">
+                <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                <span>{feature.replace('✓ ', '')}</span>
+              </li>
+            ))}
+          </ul>
+          <Button
+            onClick={() => onBook(plan)}
+            variant="default"
+            className={`w-full mt-auto transition-all duration-300 ${
+              plan.popular
+                ? 'bg-gradient-to-r from-primary to-accent hover:shadow-lg hover:shadow-primary/30 text-white'
+                : 'hover:bg-primary/90 hover:shadow-[0_12px_28px_rgba(109,40,217,0.25)]'
+            }`}
+          >
+            Book Now
+            <ArrowRight className="w-5 h-5 ml-2" />
+          </Button>
         </Card>
       </div>
     </ScrollReveal>
   );
 };
 
-// Scam Example Card with premium styling
+// Scam Example Card — clean style, no animated counter
 const ScamExampleCard = ({ example, index }: { example: any; index: number }) => {
-  const savedAmount = example.saved.replace(/[^0-9]/g, '');
-  const isNumeric = savedAmount !== '';
-
-  const { count, ref } = useCounterAnimation({
-    end: isNumeric ? parseInt(savedAmount) : 0,
-    duration: 2000
-  });
-
   return (
-    <ScrollReveal animation="scale-in" delay={index * 100} threshold={0.2}>
-      <Card className="premium-3d-card premium-shadow-depth premium-shine-sweep group h-full overflow-hidden rounded-3xl bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-white/50 hover:shadow-2xl hover:border-primary/30 transition-all duration-500 hover:-translate-y-1">
+    <ScrollReveal animation="fade-up" delay={index * 100} threshold={0.2}>
+      <Card className="group h-full overflow-hidden rounded-2xl border-2 border-transparent hover:border-primary/20 hover:shadow-medium transition-all hover:-translate-y-1">
         {/* Colored top accent */}
-        <div className={`h-2 bg-gradient-to-r ${example.gradient}`} />
+        <div className={`h-1.5 bg-gradient-to-r ${example.gradient}`} />
 
         <div className="p-6">
-          {/* Badge */}
           <Badge className={`mb-4 ${example.badgeClass}`}>
             {example.badge}
           </Badge>
@@ -219,17 +165,11 @@ const ScamExampleCard = ({ example, index }: { example: any; index: number }) =>
               <p className="text-foreground leading-relaxed">{example.analysis}</p>
             </div>
 
-            <div ref={ref} className="pt-4 border-t border-border/50">
+            <div className="pt-4 border-t border-border/50">
               <p className="text-xs uppercase tracking-wider text-muted-foreground font-bold mb-2">Amount Saved</p>
-              {isNumeric ? (
-                <p className="text-4xl font-black bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">
-                  ${Math.round(count).toLocaleString()}
-                </p>
-              ) : (
-                <p className="text-4xl font-black bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">
-                  {example.saved}
-                </p>
-              )}
+              <p className="text-3xl font-black bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">
+                {example.saved}
+              </p>
             </div>
           </div>
         </div>
@@ -647,7 +587,7 @@ function LearnAndTrain() {
                   </div>
 
                   {/* Floating stat cards */}
-                  <div className="premium-3d-card premium-shadow-depth premium-glass-refraction premium-shine-sweep absolute -bottom-6 -right-6 bg-white dark:bg-card rounded-2xl p-5 shadow-2xl border border-border/50">
+                  <div className="absolute -bottom-6 -right-6 bg-white dark:bg-card rounded-2xl p-5 shadow-2xl border border-border/50">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
                         <Shield className="w-6 h-6 text-white" />
@@ -659,7 +599,7 @@ function LearnAndTrain() {
                     </div>
                   </div>
 
-                  <div className="premium-3d-card premium-shadow-depth premium-glass-refraction premium-shine-sweep absolute -top-6 -left-6 bg-white dark:bg-card rounded-2xl p-5 shadow-2xl border border-border/50">
+                  <div className="absolute -top-6 -left-6 bg-white dark:bg-card rounded-2xl p-5 shadow-2xl border border-border/50">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
                         <GraduationCap className="w-6 h-6 text-white" />
@@ -704,7 +644,7 @@ function LearnAndTrain() {
                   ].map((item, index) => (
                     <div
                       key={index}
-                      className="premium-3d-card premium-shadow-depth premium-shine-sweep group flex gap-5 p-5 rounded-2xl bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-white/50 hover:shadow-xl hover:border-primary/30 transition-all duration-300"
+                      className="group flex gap-5 p-5 rounded-2xl bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-border/50 hover:shadow-xl hover:border-primary/30 transition-all duration-300"
                     >
                       <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
                         <item.icon className="w-7 h-7 text-white" />
@@ -723,7 +663,7 @@ function LearnAndTrain() {
             <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
               {/* Emergency Pause Protocol */}
               <ScrollReveal animation="scale-in">
-                <Card className="premium-3d-card premium-shadow-depth premium-shine-sweep relative overflow-hidden rounded-3xl bg-gradient-to-br from-red-500/10 via-card to-orange-500/10 border-red-500/30 p-8">
+                <Card className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-red-500/10 via-card to-orange-500/10 border-red-500/30 p-8">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-red-500/20 to-transparent rounded-full blur-2xl" />
 
                   <div className="flex items-center gap-4 mb-6">
@@ -757,7 +697,7 @@ function LearnAndTrain() {
 
               {/* Identity Verification Script */}
               <ScrollReveal animation="scale-in" delay={100}>
-                <Card className="premium-3d-card premium-shadow-depth premium-shine-sweep relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-500/10 via-card to-cyan-500/10 border-blue-500/30 p-8">
+                <Card className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-500/10 via-card to-cyan-500/10 border-blue-500/30 p-8">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-blue-500/20 to-transparent rounded-full blur-2xl" />
 
                   <div className="flex items-center gap-4 mb-6">
@@ -846,7 +786,7 @@ function LearnAndTrain() {
                 },
               ].map((item, index) => (
                 <ScrollReveal key={index} animation="scale-in" delay={index * 150}>
-                  <Card className="premium-3d-card premium-shadow-depth premium-shine-sweep group relative h-full overflow-hidden rounded-3xl bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-white/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                  <Card className="group relative h-full overflow-hidden rounded-2xl border-2 border-transparent hover:border-primary/20 hover:shadow-medium transition-all hover:-translate-y-1">
                     {/* Step number */}
                     <div className={`absolute top-4 right-4 w-14 h-14 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center z-10`}>
                       <span className="text-white font-black text-xl">{item.step}</span>
@@ -920,7 +860,7 @@ function LearnAndTrain() {
             {/* Veterans discount banner */}
             <ScrollReveal>
               <div className="flex justify-center mb-12">
-                <div className="premium-3d-card premium-shadow-depth premium-glass-refraction premium-border-glow inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-blue-900/20 via-white/80 to-red-900/20 dark:from-blue-900/30 dark:via-card/80 dark:to-red-900/30 backdrop-blur-xl border-2 border-blue-500/30 rounded-2xl shadow-xl">
+                <div className="inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-blue-900/20 via-white/80 to-red-900/20 dark:from-blue-900/30 dark:via-card/80 dark:to-red-900/30 backdrop-blur-xl border-2 border-blue-500/30 rounded-2xl shadow-xl">
                   <span className="text-3xl">🇺🇸</span>
                   <div className="flex items-center gap-2">
                     <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
@@ -959,66 +899,6 @@ function LearnAndTrain() {
         {/* Instructor Showcase */}
         <InstructorShowcase />
 
-        {/* Guest Scanner Section */}
-        <section id="scamshield" className="py-16 relative overflow-hidden premium-section-bg premium-grid-dots">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5 pointer-events-none" />
-
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="text-center mb-10">
-              <div className="premium-3d-card premium-shadow-depth premium-glass-refraction inline-flex items-center gap-2 px-4 py-2 rounded-full glass-light micro-bounce mb-4">
-                <Sparkles className="w-4 h-4 text-primary" />
-                <span className="text-sm font-semibold text-foreground">AI File Scan Agent</span>
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-                Scan Files with the AI Analysis Console
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                We moved the instant file scanner to a dedicated AI analysis page so it can run faster, with a full console and
-                secure deletion workflow.
-              </p>
-            </div>
-
-            <div className="max-w-4xl mx-auto">
-              <Card className="premium-3d-card premium-shadow-depth premium-shine-sweep glass-light border border-white/30 p-6">
-                <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr] items-center">
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-2xl bg-primary/15 flex items-center justify-center">
-                        <FileCheck className="w-5 h-5 text-primary" />
-                      </div>
-                      <div>
-                        <p className="font-semibold text-foreground">Instant AI file analysis</p>
-                        <p className="text-sm text-muted-foreground">Upload a file, receive a clear risk summary, and delete it automatically.</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-2xl bg-emerald-500/15 flex items-center justify-center">
-                        <Shield className="w-5 h-5 text-emerald-500" />
-                      </div>
-                      <div>
-                        <p className="font-semibold text-foreground">Secure deletion in 10 minutes</p>
-                        <p className="text-sm text-muted-foreground">Anonymous scans with privacy-first storage controls.</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex justify-center lg:justify-end">
-                    <Button
-                      asChild
-                      size="lg"
-                      className="bg-gradient-to-r from-primary to-accent text-white px-6"
-                    >
-                      <Link to="/training/ai-analysis">
-                        Open AI Analysis Console
-                        <ArrowRight className="w-4 h-4 ml-2" />
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            </div>
-          </div>
-        </section>
 
         {/* ═══════════════════════════════════════════════════════════════════════════
             SECTION 4: SIMPLE PROTECTION IN 4 STEPS
@@ -1082,7 +962,7 @@ function LearnAndTrain() {
                 },
               ].map((step, index) => (
                 <ScrollReveal key={index} animation="scale-in" delay={index * 100}>
-                  <Card className="premium-3d-card premium-shadow-depth premium-shine-sweep group relative h-full overflow-hidden rounded-3xl bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-white/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 p-6">
+                  <Card className="group relative h-full overflow-hidden rounded-2xl border-2 border-transparent hover:border-primary/20 hover:shadow-medium transition-all hover:-translate-y-1 p-6">
                     {/* Step badge */}
                     <div className={`absolute top-4 right-4 w-12 h-12 rounded-xl bg-gradient-to-br ${step.color} flex items-center justify-center shadow-lg`}>
                       <span className="text-white font-black">{step.step}</span>
@@ -1141,10 +1021,10 @@ function LearnAndTrain() {
                 <ScrollReveal key={index} animation="scale-in" delay={index * 50}>
                   <Card
                     onClick={() => setExpandedThreat(expandedThreat === threat.title ? null : threat.title)}
-                    className={`premium-3d-card premium-shadow-depth premium-shine-sweep group cursor-pointer p-6 rounded-3xl transition-all duration-300 bg-white/80 dark:bg-card/80 backdrop-blur-xl border hover:shadow-xl hover:-translate-y-1 ${
+                    className={`group cursor-pointer p-6 rounded-2xl transition-all duration-300 border-2 hover:shadow-medium hover:-translate-y-1 ${
                       expandedThreat === threat.title
                         ? 'border-primary shadow-lg ring-2 ring-primary/20'
-                        : 'border-white/50 hover:border-primary/30'
+                        : 'border-transparent hover:border-primary/20'
                     }`}
                   >
                     <div className="flex flex-col items-center text-center">
@@ -1224,7 +1104,7 @@ function LearnAndTrain() {
 
             <ScrollReveal>
               <div className="text-center mt-12">
-                <div className="premium-3d-card premium-shadow-depth premium-glass-refraction premium-border-glow inline-flex items-center gap-3 bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-white/50 rounded-2xl px-8 py-4 shadow-xl">
+                <div className="inline-flex items-center gap-3 bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-border/50 rounded-2xl px-8 py-4 shadow-xl">
                   <Lock className="w-5 h-5 text-primary" />
                   <p className="text-muted-foreground">
                     💳 Secure payment required • 10% veteran discount available
@@ -1274,7 +1154,7 @@ function LearnAndTrain() {
             <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto mb-16">
               {/* Without Protection */}
               <ScrollReveal animation="slide-right">
-                <Card className="premium-3d-card premium-shadow-depth premium-shine-sweep relative overflow-hidden rounded-3xl bg-gradient-to-br from-red-500/10 via-card to-orange-500/10 border-red-500/30 p-8 h-full">
+                <Card className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-red-500/10 via-card to-orange-500/10 border-red-500/30 p-8 h-full">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-red-500/20 to-transparent rounded-full blur-2xl" />
 
                   <div className="flex items-center gap-4 mb-8">
@@ -1302,7 +1182,7 @@ function LearnAndTrain() {
 
               {/* With Protection */}
               <ScrollReveal animation="slide-left">
-                <Card className="premium-3d-card premium-shadow-depth premium-shine-sweep relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-500/10 via-card to-teal-500/10 border-emerald-500/30 p-8 h-full">
+                <Card className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-500/10 via-card to-teal-500/10 border-emerald-500/30 p-8 h-full">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-emerald-500/20 to-transparent rounded-full blur-2xl" />
 
                   <div className="flex items-center gap-4 mb-8">
@@ -1331,7 +1211,7 @@ function LearnAndTrain() {
 
             {/* Family Safety Vault */}
             <ScrollReveal>
-              <Card className="premium-3d-card premium-shadow-depth premium-border-glow premium-shine-sweep max-w-4xl mx-auto overflow-hidden rounded-3xl bg-gradient-to-br from-primary/10 via-white/90 dark:via-card/90 to-accent/10 border-primary/30 shadow-2xl">
+              <Card className="max-w-4xl mx-auto overflow-hidden rounded-3xl bg-gradient-to-br from-primary/10 via-white/90 dark:via-card/90 to-accent/10 border-primary/30 shadow-2xl">
                 <div className="relative p-8 md:p-12">
                   <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-primary/20 to-transparent rounded-full blur-3xl" />
 
@@ -1352,7 +1232,7 @@ function LearnAndTrain() {
                         { icon: "🔐", feature: "Account recovery" },
                         { icon: "✈️", feature: "Travel itineraries" },
                       ].map((item, index) => (
-                        <div key={index} className="premium-3d-card premium-shadow-depth flex items-center gap-3 p-4 bg-white/80 dark:bg-card/80 backdrop-blur-xl rounded-xl border border-border/50 shadow-lg">
+                        <div key={index} className="flex items-center gap-3 p-4 bg-white/80 dark:bg-card/80 backdrop-blur-xl rounded-xl border border-border/50 shadow-sm">
                           <span className="text-2xl">{item.icon}</span>
                           <span className="font-semibold text-sm">{item.feature}</span>
                         </div>
@@ -1402,7 +1282,7 @@ function LearnAndTrain() {
                 <h3 className="text-2xl font-bold text-center mb-8">Video Testimonials</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
                   {[1, 2, 3].map((i) => (
-                    <Card key={i} className="premium-3d-card premium-shadow-depth premium-shine-sweep p-6 text-center border-2 border-dashed border-primary/30 hover:border-primary/50 transition-all rounded-2xl bg-white/80 dark:bg-card/80 backdrop-blur-xl">
+                    <Card key={i} className="p-6 text-center border-2 border-dashed border-primary/30 hover:border-primary/50 transition-all rounded-2xl">
                       <div className="aspect-video bg-muted/30 rounded-xl mb-4 flex flex-col items-center justify-center gap-3">
                         <Video className="w-12 h-12 text-primary/50" />
                         <p className="text-sm font-semibold text-muted-foreground">Upload Success Stories</p>
