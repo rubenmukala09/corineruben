@@ -57,7 +57,6 @@ export default defineConfig(async ({ mode, command }) => {
   const prerenderRoutes = [
     "/",
     "/training",
-    "/training/ai-analysis",
     "/business",
     "/business/ai-receptionist",
     "/business/ai-automation",
