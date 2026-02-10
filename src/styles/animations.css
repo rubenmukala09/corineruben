@@ -279,6 +279,131 @@
   transform: translateY(0);
 }
 
+/* ===== ANIMATED BACKGROUND GRADIENT MESH ===== */
+
+/* Gradient mesh animations for dynamic background */
+@keyframes mesh-gradient-1 {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes mesh-gradient-2 {
+  0%, 100% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 0% 100%;
+  }
+}
+
+@keyframes mesh-gradient-3 {
+  0%, 100% {
+    background-position: 50% 100%;
+  }
+  50% {
+    background-position: 50% 0%;
+  }
+}
+
+/* Floating orb animation for background elements */
+@keyframes orb-float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.35;
+  }
+  33% {
+    transform: translate(30px, -20px) scale(1.1);
+    opacity: 0.45;
+  }
+  66% {
+    transform: translate(-20px, 15px) scale(0.95);
+    opacity: 0.3;
+  }
+}
+
+/* 3D Floating orb animation with depth and parallax */
+@keyframes orb-float-3d {
+  0%, 100% {
+    transform: translate3d(0, 0, 50px) scale(1) rotate(0deg);
+    opacity: 0.5;
+  }
+  25% {
+    transform: translate3d(40px, -30px, 80px) scale(1.15) rotate(5deg);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate3d(-20px, 25px, 60px) scale(0.95) rotate(-3deg);
+    opacity: 0.45;
+  }
+  75% {
+    transform: translate3d(30px, 15px, 90px) scale(1.08) rotate(4deg);
+    opacity: 0.55;
+  }
+}
+
+/* Premium shimmer effect for glass surfaces */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) rotate(25deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateX(100%) rotate(25deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(100%) rotate(25deg);
+    opacity: 0;
+  }
+}
+
+/* Animated gradient for premium buttons and CTAs */
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Gentle glow pulse for interactive elements */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(248, 146, 106, 0.3),
+                0 0 40px rgba(187, 129, 181, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(248, 146, 106, 0.5),
+                0 0 60px rgba(187, 129, 181, 0.3);
+  }
+}
+
+/* Floating particles effect */
+@keyframes float-particle {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(20px) scale(0.5);
+    opacity: 0;
+  }
+}
+
 /* ===== REDUCED MOTION ===== */
 
 @media (prefers-reduced-motion: reduce) {

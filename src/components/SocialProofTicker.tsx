@@ -64,21 +64,22 @@ export const SocialProofTicker = () => {
         >
           <motion.div
             key={currentIndex}
-            initial={{ opacity: 0, scale: 0.9, x: -20 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            exit={{ opacity: 0, scale: 0.9, x: 20 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.4 }}
             className="relative overflow-hidden"
           >
             {/* Main Card */}
-            <div className={`glass-heavy rounded-2xl p-4 shadow-3d border border-white/20 bg-gradient-to-br ${typeConfig[currentItem.type].bg}`}>
-              <span className="absolute top-2 left-2 rounded-full bg-white/70 px-2 py-0.5 text-[10px] font-semibold text-foreground/70">
+            <div className="glass-enhanced rounded-2xl p-4 shadow-float">
+              <span className="absolute top-2 left-2 rounded-full bg-white/80 backdrop-blur-sm px-2 py-0.5 text-[10px] font-semibold text-foreground/70 border border-white/50">
                 Sample activity
               </span>
               {/* Close button */}
               <button
                 onClick={() => setIsVisible(false)}
-                className="absolute top-2 right-2 p-1 rounded-full hover:bg-white/20 transition-colors opacity-50 hover:opacity-100"
+                className="absolute top-2 right-2 p-1 rounded-full hover:bg-white/30 transition-colors opacity-50 hover:opacity-100"
+                aria-label="Close"
               >
                 <span className="sr-only">Close</span>
                 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -114,31 +115,15 @@ export const SocialProofTicker = () => {
                 </div>
               </div>
 
-              {/* Progress bar */}
+              {/* Simplified progress bar */}
               <div className="mt-3 h-1 bg-white/20 rounded-full overflow-hidden">
                 <motion.div
                   initial={{ width: "0%" }}
                   animate={{ width: "100%" }}
                   transition={{ duration: 5, ease: "linear" }}
-                  className="h-full bg-gradient-to-r from-primary to-accent rounded-full"
+                  className="h-full bg-coral-400 rounded-full"
                 />
               </div>
-            </div>
-
-            {/* Notification dots */}
-            <div className="flex justify-center gap-1 mt-2">
-              {proofData.slice(0, 5).map((_, i) => (
-                <motion.div
-                  key={i}
-                  animate={{
-                    scale: i === currentIndex % 5 ? 1.2 : 1,
-                    opacity: i === currentIndex % 5 ? 1 : 0.4,
-                  }}
-                  className={`w-1.5 h-1.5 rounded-full ${
-                    i === currentIndex % 5 ? "bg-primary" : "bg-muted-foreground"
-                  }`}
-                />
-              ))}
             </div>
           </motion.div>
         </motion.div>

@@ -264,13 +264,81 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     position: relative;
     /* Desktop zoom scaling */
     zoom: var(--site-scale);
-    /* Clean warm cream background */
+    /* Ultra-Premium 3D Layered Gradient Mesh Background with Depth */
     background-color: hsl(30 25% 97%);
     background-image:
-      radial-gradient(ellipse 60% 40% at 10% 5%, hsl(var(--coral-200) / 0.35) 0%, transparent 55%),
-      radial-gradient(ellipse 50% 35% at 90% 0%, hsl(var(--lavender-200) / 0.3) 0%, transparent 60%),
-      radial-gradient(ellipse 50% 40% at 50% 100%, hsl(var(--navy-100) / 0.35) 0%, transparent 65%);
+      /* Layer 1: Deep background foundation */
+      radial-gradient(ellipse 90% 70% at 15% 8%, hsl(var(--coral-200) / 0.45) 0%, transparent 48%),
+      radial-gradient(ellipse 80% 60% at 85% 3%, hsl(var(--lavender-200) / 0.4) 0%, transparent 52%),
+      /* Layer 2: Mid-depth atmospheric layer */
+      radial-gradient(circle at 65% 35%, hsl(var(--navy-100) / 0.3) 0%, transparent 42%),
+      radial-gradient(ellipse 70% 50% at 25% 65%, hsl(var(--coral-100) / 0.35) 0%, transparent 48%),
+      radial-gradient(circle at 50% 50%, hsl(var(--lavender-100) / 0.2) 0%, transparent 40%),
+      /* Layer 3: Top highlights and accents */
+      radial-gradient(ellipse 60% 45% at 92% 82%, hsl(var(--lavender-100) / 0.45) 0%, transparent 58%),
+      radial-gradient(circle at 8% 92%, hsl(var(--coral-200) / 0.25) 0%, transparent 48%),
+      radial-gradient(ellipse 55% 40% at 40% 15%, hsl(var(--coral-100) / 0.2) 0%, transparent 45%),
+      /* Layer 4: Ultra-fine details for 4K depth */
+      radial-gradient(circle at 75% 60%, hsl(var(--lavender-50) / 0.3) 0%, transparent 35%);
+    background-size:
+      280% 280%, 250% 250%,
+      200% 200%, 220% 220%, 180% 180%,
+      170% 170%, 200% 200%, 160% 160%,
+      150% 150%;
     background-repeat: no-repeat;
+    animation:
+      mesh-gradient-1 18s ease-in-out infinite,
+      mesh-gradient-2 22s ease-in-out infinite reverse,
+      mesh-gradient-3 16s ease-in-out infinite,
+      mesh-gradient-1 26s ease-in-out infinite reverse,
+      mesh-gradient-2 20s ease-in-out infinite,
+      mesh-gradient-3 28s ease-in-out infinite reverse,
+      mesh-gradient-1 23s ease-in-out infinite reverse,
+      mesh-gradient-2 24s ease-in-out infinite,
+      mesh-gradient-3 17s ease-in-out infinite reverse;
+    will-change: background-position;
+    transform-style: preserve-3d;
+    perspective: 1200px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* 3D Floating orbs with parallax depth */
+  body::before,
+  body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(120px);
+    opacity: 0.5;
+    will-change: transform, opacity;
+  }
+
+  body::before {
+    top: 3%;
+    right: 8%;
+    width: 900px;
+    height: 900px;
+    background:
+      radial-gradient(circle at 28% 28%, hsl(var(--coral-500) / 0.85) 0%, hsl(var(--coral-400) / 0.5) 25%, hsl(var(--coral-300) / 0.3) 45%, transparent 70%);
+    animation: orb-float-3d 22s ease-in-out infinite;
+    transform: translateZ(60px);
+    mix-blend-mode: normal;
+  }
+
+  body::after {
+    bottom: 8%;
+    left: 3%;
+    width: 800px;
+    height: 800px;
+    background:
+      radial-gradient(circle at 35% 35%, hsl(var(--lavender-500) / 0.8) 0%, hsl(var(--lavender-400) / 0.5) 28%, hsl(var(--lavender-300) / 0.35) 50%, transparent 72%);
+    animation: orb-float-3d 20s ease-in-out infinite reverse;
+    animation-delay: 4s;
+    transform: translateZ(40px);
+    mix-blend-mode: normal;
   }
 
   @media (min-width: 768px) {
@@ -283,6 +351,72 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   @media (max-width: 768px) {
     :root {
       --text-scale: 1.02;
+    }
+
+    /* Optimize background for mobile performance */
+    body {
+      /* Reduce gradient complexity on mobile - 4 layers instead of 9 */
+      background-image:
+        radial-gradient(ellipse 100% 80% at 15% 8%, hsl(var(--coral-200) / 0.4) 0%, transparent 50%),
+        radial-gradient(ellipse 90% 70% at 85% 3%, hsl(var(--lavender-200) / 0.35) 0%, transparent 55%),
+        radial-gradient(circle at 50% 50%, hsl(var(--navy-100) / 0.25) 0%, transparent 45%),
+        radial-gradient(ellipse 70% 60% at 25% 75%, hsl(var(--coral-100) / 0.3) 0%, transparent 50%);
+      background-size:
+        250% 250%, 220% 220%,
+        180% 180%, 200% 200%;
+      /* Reduce to 4 animations for performance */
+      animation:
+        mesh-gradient-1 20s ease-in-out infinite,
+        mesh-gradient-2 24s ease-in-out infinite reverse,
+        mesh-gradient-3 18s ease-in-out infinite,
+        mesh-gradient-1 28s ease-in-out infinite reverse;
+      transform-style: flat;
+      perspective: none;
+    }
+
+    /* Reduce orb sizes and complexity on mobile */
+    body::before {
+      width: 500px;
+      height: 500px;
+      filter: blur(80px);
+      opacity: 0.4;
+      animation: orb-float 24s ease-in-out infinite;
+      transform: none;
+    }
+
+    body::after {
+      width: 450px;
+      height: 450px;
+      filter: blur(80px);
+      opacity: 0.4;
+      animation: orb-float 22s ease-in-out infinite reverse;
+      transform: none;
+    }
+  }
+
+  /* Extra optimization for small mobile devices */
+  @media (max-width: 420px) {
+    body {
+      /* Further simplify on small screens - 2 layers only */
+      background-image:
+        radial-gradient(ellipse 120% 90% at 20% 10%, hsl(var(--coral-200) / 0.35) 0%, transparent 55%),
+        radial-gradient(ellipse 110% 80% at 80% 90%, hsl(var(--lavender-200) / 0.3) 0%, transparent 60%);
+      background-size: 200% 200%, 200% 200%;
+      animation:
+        mesh-gradient-1 22s ease-in-out infinite,
+        mesh-gradient-2 26s ease-in-out infinite reverse;
+    }
+
+    /* Hide one orb on very small screens for performance */
+    body::after {
+      display: none;
+    }
+
+    body::before {
+      width: 400px;
+      height: 400px;
+      filter: blur(60px);
+      opacity: 0.35;
     }
   }
 
@@ -299,9 +433,35 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     top: 1rem;
   }
 
-  /* Accessibility - Focus visible styles */
+  /* Accessibility - Enhanced Focus visible styles */
   *:focus-visible {
-    @apply outline-2 outline-offset-2 outline-primary;
+    outline: 3px solid hsl(var(--coral-500));
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Interactive elements get enhanced focus with shadow */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [role="button"]:focus-visible,
+  [role="link"]:focus-visible {
+    outline: 3px solid hsl(var(--coral-500));
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px hsl(var(--coral-500) / 0.2);
+  }
+
+  /* Glass elements focus state */
+  .glass-enhanced:focus-visible,
+  .glass-heavy:focus-visible,
+  .glass-premium:focus-visible {
+    outline: 3px solid hsl(var(--coral-500));
+    outline-offset: 3px;
+    box-shadow:
+      0 0 0 4px hsl(var(--coral-500) / 0.2),
+      0 20px 60px rgba(0, 0, 0, 0.12);
   }
 
   /* Accessibility - Reduced motion */
@@ -313,6 +473,17 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
+    }
+
+    body {
+      animation: none !important;
+      background-size: 100% 100%, 100% 100%, 100% 100%;
+    }
+
+    body::before,
+    body::after {
+      animation: none !important;
+      opacity: 0.2 !important;
     }
   }
 
