@@ -33,7 +33,7 @@ export const QuickLinksSection = () => {
   const [checklistOpen, setChecklistOpen] = useState(false);
 
   return (
-    <section className="py-10 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden dynamic-gradient-overlay">
+    <section className="py-6 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden dynamic-gradient-overlay">
       {/* Decorative Background Elements - CSS only */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Shield Icon - Top Left */}

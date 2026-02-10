@@ -55,7 +55,7 @@ const securityFeatures = [{
   gradient: "from-emerald-400 to-emerald-600"
 }];
 export const PremiumGlassmorphismWidgets = () => {
-  return <section className="relative py-16 md:py-24 overflow-hidden">
+  return <section className="relative py-10 md:py-14 overflow-hidden">
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
 
         {/* Section Header - Mobile Optimized */}

@@ -33,7 +33,7 @@ const steps = [
 
 export const WorkingProcess = () => {
   return (
-    <section className="py-10 lg:py-14 dynamic-gradient-overlay" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #faf9f7 50%, #fff5f0 100%)' }} aria-labelledby="process-heading">
+    <section className="py-8 lg:py-10 dynamic-gradient-overlay" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #faf9f7 50%, #fff5f0 100%)' }} aria-labelledby="process-heading">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-10">

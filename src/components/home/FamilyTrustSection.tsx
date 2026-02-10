@@ -12,7 +12,7 @@ const trustPoints = [
 
 export const FamilyTrustSection = () => {
   return (
-    <section className="py-14 lg:py-20 bg-gradient-to-br from-background via-lavender-50/20 to-coral-50/15 dynamic-gradient-overlay" aria-labelledby="trust-heading">
+    <section className="py-8 lg:py-12 bg-gradient-to-br from-background via-lavender-50/20 to-coral-50/15 dynamic-gradient-overlay" aria-labelledby="trust-heading">
       <div className="container mx-auto px-6 lg:px-12">
         {/* Header */}
         <div className="text-center mb-10">
