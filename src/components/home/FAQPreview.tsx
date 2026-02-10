@@ -34,7 +34,7 @@ const faqs = [
 
 export const FAQPreview = () => {
   return (
-    <section className="py-14 lg:py-20 relative overflow-hidden bg-gradient-to-br from-background via-white to-muted/20 dynamic-gradient-overlay">
+    <section className="py-8 lg:py-12 relative overflow-hidden bg-gradient-to-br from-background via-white to-muted/20 dynamic-gradient-overlay">
       {/* Grid pattern */}
       <GridPattern />
       
@@ -155,7 +155,7 @@ export const FAQPreview = () => {
         </div>
 
         {/* Ready to Get Protected */}
-        <div className="mt-20 relative rounded-3xl overflow-hidden">
+        <div className="mt-10 relative rounded-3xl overflow-hidden">
           <div className="absolute inset-0">
             <img 
               src={natureCTABg} 
