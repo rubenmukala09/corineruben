@@ -542,6 +542,12 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     width: 100%;
   }
 
+  /* Keep Radix portals above high z-index UI (nav, floating widgets) */
+  [data-radix-portal] {
+    position: relative;
+    z-index: 10000;
+  }
+
   /* Fallback for browsers that don't support zoom */
   @supports not (zoom: 1) {
     body {
