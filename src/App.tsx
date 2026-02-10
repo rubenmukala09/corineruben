@@ -41,6 +41,10 @@ const Index = lazy(() => import("./pages/Index"));
 const Training = lazy(() => import("./pages/Training"));
 const TrainingAiAnalysis = lazy(() => import("./pages/TrainingAiAnalysis"));
 const Business = lazy(() => import("./pages/Business"));
+const Home01 = lazy(() => import("./pages/Home01"));
+const Home02 = lazy(() => import("./pages/Home02"));
+const Home03 = lazy(() => import("./pages/Home03"));
+const Home04 = lazy(() => import("./pages/Home04"));
 const AIReceptionist = lazy(() => import("./pages/business/AIReceptionist"));
 const AIAutomation = lazy(() => import("./pages/business/AIAutomation"));
 const WebsiteDesign = lazy(() => import("./pages/business/WebsiteDesign"));
@@ -150,6 +154,10 @@ function PublicRoutes() {
         <Route path="/training" element={<PageTransition variant="auto"><Training /></PageTransition>} />
         <Route path="/training/ai-analysis" element={<PageTransition variant="auto"><TrainingAiAnalysis /></PageTransition>} />
         <Route path="/business" element={<PageTransition variant="auto"><Business /></PageTransition>} />
+        <Route path="/home-01" element={<PageTransition variant="auto"><Home01 /></PageTransition>} />
+        <Route path="/home-02" element={<PageTransition variant="auto"><Home02 /></PageTransition>} />
+        <Route path="/home-03" element={<PageTransition variant="auto"><Home03 /></PageTransition>} />
+        <Route path="/home-04" element={<PageTransition variant="auto"><Home04 /></PageTransition>} />
         <Route path="/business/ai-receptionist" element={<PageTransition variant="auto"><AIReceptionist /></PageTransition>} />
         <Route path="/business/ai-automation" element={<PageTransition variant="auto"><AIAutomation /></PageTransition>} />
         <Route path="/business/website-design" element={<PageTransition variant="auto"><WebsiteDesign /></PageTransition>} />
