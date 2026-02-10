@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Calendar, AlertTriangle, User, Bell, CheckCircle2, Eye, Edit, Trash2, Clock, Plus, ArrowUpDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
@@ -53,18 +53,7 @@ export function UpcomingTasks() {
   const [completingTasks, setCompletingTasks] = useState<Set<string>>(new Set());
   const { toast } = useToast();
 
-  useEffect(() => {
-    fetchTasks();
-
-    // Auto-refresh every 60 seconds
-    const interval = setInterval(() => {
-      fetchTasks();
-    }, 60000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const fetchTasks = async () => {
+  const fetchTasks = useCallback(async () => {
     try {
       setLoading(true);
       const allTasks: Task[] = [];
@@ -154,7 +143,18 @@ export function UpcomingTasks() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    fetchTasks();
+
+    // Auto-refresh every 60 seconds
+    const interval = setInterval(() => {
+      fetchTasks();
+    }, 60000);
+
+    return () => clearInterval(interval);
+  }, [fetchTasks]);
 
   const handleApprove = async (task: Task) => {
     try {

@@ -49,7 +49,7 @@ const applicationSchema = z.object({
     .trim()
     .min(10, { message: "Phone number must be at least 10 digits" })
     .max(20, { message: "Phone number must be less than 20 characters" })
-    .regex(/^[0-9\s\-\+\(\)]+$/, { message: "Invalid phone number format" }),
+    .regex(/^[0-9\s()+-]+$/, { message: "Invalid phone number format" }),
   position: z
     .string()
     .min(1, { message: "Please select a position" }),

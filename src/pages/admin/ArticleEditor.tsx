@@ -78,14 +78,14 @@ export default function ArticleEditor() {
   const [articleId, setArticleId] = useState<string | null>(id || null);
 
   // Validation for required fields
-  const requiredFieldsComplete = () => {
+  const requiredFieldsComplete = useCallback(() => {
     return !!(
       article.title &&
       article.content &&
       article.categories.length > 0 &&
       article.author
     );
-  };
+  }, [article]);
 
   const getPublishingChecklist = () => {
     const checks = [
@@ -114,14 +114,14 @@ export default function ArticleEditor() {
     return Math.round((earnedWeight / totalWeight) * 100);
   };
 
-  const getMissingFields = () => {
+  const getMissingFields = useCallback(() => {
     const missing: string[] = [];
     if (!article.title) missing.push("Title");
     if (!article.content) missing.push("Content");
     if (article.categories.length === 0) missing.push("Category");
     if (!article.author) missing.push("Author");
     return missing;
-  };
+  }, [article]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -147,7 +147,7 @@ export default function ArticleEditor() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [article, wordCount]);
+  }, [handlePreview, handlePublish, handleSave, requiredFieldsComplete]);
 
   // Exit warning for unsaved changes
   useEffect(() => {
@@ -206,7 +206,7 @@ export default function ArticleEditor() {
     }, 30000);
 
     return () => clearInterval(autoSaveInterval);
-  }, [title, content]);
+  }, [content, handleSave, title]);
 
   // Save to localStorage for offline support
   useEffect(() => {
@@ -236,9 +236,9 @@ export default function ArticleEditor() {
         console.error("Failed to restore draft:", error);
       }
     }
-  }, [id]);
+  }, [id, toast]);
 
-  const handleSave = async (silent = false) => {
+  const handleSave = useCallback(async (silent = false) => {
     try {
       setSaving(true);
 
@@ -264,9 +264,9 @@ export default function ArticleEditor() {
     } finally {
       setSaving(false);
     }
-  };
+  }, [toast]);
 
-  const handlePublish = async () => {
+  const handlePublish = useCallback(async () => {
     if (!requiredFieldsComplete()) {
       toast({
         title: "Cannot Publish",
@@ -277,7 +277,7 @@ export default function ArticleEditor() {
     }
 
     setShowPublishModal(true);
-  };
+  }, [getMissingFields, requiredFieldsComplete, toast]);
 
   const confirmPublish = async (options?: { sendNewsletter?: boolean; shareOnSocial?: boolean }) => {
     try {
@@ -333,7 +333,7 @@ export default function ArticleEditor() {
     }
   };
 
-  const handlePreview = async () => {
+  const handlePreview = useCallback(async () => {
     // Auto-save before preview
     await handleSave(true);
 
@@ -349,7 +349,7 @@ export default function ArticleEditor() {
 
     // Open preview in new tab
     window.open("/admin/articles/preview", "_blank");
-  };
+  }, [article, handleSave, wordCount]);
 
   const getTimeSinceLastSave = () => {
     if (!lastSaved) return null;

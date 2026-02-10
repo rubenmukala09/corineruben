@@ -100,7 +100,7 @@ export const ScamShieldSubmission = ({ open, onOpenChange }: ScamShieldSubmissio
       setAnalysisResult(analysis);
 
       // Upload attachments if any
-      let attachmentUrls: string[] = [];
+      const attachmentUrls: string[] = [];
       if (attachments.length > 0 && user) {
         for (const file of attachments) {
           const fileExt = file.name.split('.').pop();

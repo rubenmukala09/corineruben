@@ -46,10 +46,12 @@ export const RippleButton = forwardRef<HTMLButtonElement, RippleButtonProps>(
     return (
       <button
         ref={(node) => {
-          // @ts-ignore
           btnRef.current = node;
-          if (typeof ref === 'function') ref(node);
-          else if (ref) ref.current = node;
+          if (typeof ref === "function") {
+            ref(node);
+          } else if (ref && "current" in ref) {
+            ref.current = node;
+          }
         }}
         onClick={handleClick}
         className={cn(

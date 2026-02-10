@@ -121,8 +121,12 @@ export function generateAltText(
  * Get optimal image quality based on network speed
  */
 export function getOptimalQuality(): number {
-  // @ts-ignore - navigator.connection is experimental
-  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const nav = navigator as Navigator & {
+    connection?: { effectiveType?: string };
+    mozConnection?: { effectiveType?: string };
+    webkitConnection?: { effectiveType?: string };
+  };
+  const connection = nav.connection || nav.mozConnection || nav.webkitConnection;
   
   if (!connection) return 85; // Default quality
   

@@ -32,7 +32,7 @@ export const useImagePreload = (imageUrls: string[]) => {
     
     // Queue rest in background
     imageUrls.slice(1).forEach(preloadImage);
-  }, [imageUrls.join(','), ready]);
+  }, [imageUrls, ready]);
 
   return ready;
 };

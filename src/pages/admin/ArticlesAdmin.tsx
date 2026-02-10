@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery } from "@tanstack/react-query";
@@ -161,11 +161,7 @@ export default function ArticlesAdmin() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
 
-  useEffect(() => {
-    applyFiltersAndSort();
-  }, [articles, searchQuery, categoryFilter, statusFilter, dateFilter, sortBy]);
-
-  const applyFiltersAndSort = () => {
+  const applyFiltersAndSort = useCallback(() => {
     let filtered = [...articles];
 
     // Apply search
@@ -229,7 +225,11 @@ export default function ArticlesAdmin() {
     }
 
     setFilteredArticles(filtered);
-  };
+  }, [articles, searchQuery, categoryFilter, statusFilter, dateFilter, sortBy]);
+
+  useEffect(() => {
+    applyFiltersAndSort();
+  }, [applyFiltersAndSort]);
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {

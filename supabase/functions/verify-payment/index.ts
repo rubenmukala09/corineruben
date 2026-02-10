@@ -72,7 +72,7 @@ serve(async (req) => {
     const lineItems = session.line_items?.data || [];
     let hasDigital = false;
     let hasPhysical = false;
-    let isSubscription = session.mode === 'subscription';
+    const isSubscription = session.mode === 'subscription';
     const productNames: string[] = [];
 
     for (const item of lineItems) {

@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -29,11 +29,7 @@ export default function IndividualClientDetail() {
   const [client, setClient] = useState<Client | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (id) fetchClient();
-  }, [id]);
-
-  const fetchClient = async () => {
+  const fetchClient = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from("clients")
@@ -52,7 +48,11 @@ export default function IndividualClientDetail() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id, toast]);
+
+  useEffect(() => {
+    if (id) fetchClient();
+  }, [fetchClient, id]);
 
   const getInitials = (firstName: string, lastName: string) => {
     return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();

@@ -313,7 +313,7 @@ const PromptInputTextarea: React.FC<PromptInputTextareaProps & React.ComponentPr
   };
   return <Textarea ref={textareaRef} value={value} onChange={e => setValue(e.target.value)} onKeyDown={handleKeyDown} className={cn("text-base", className)} disabled={disabled} placeholder={placeholder} {...props} />;
 };
-interface PromptInputActionsProps extends React.HTMLAttributes<HTMLDivElement> {}
+type PromptInputActionsProps = React.HTMLAttributes<HTMLDivElement>;
 const PromptInputActions: React.FC<PromptInputActionsProps> = ({
   children,
   className,
@@ -463,7 +463,7 @@ export const EnhancedPromptInputBox = React.forwardRef<HTMLDivElement, EnhancedP
     }
   };
   const isImageFile = (file: File) => file.type.startsWith("image/");
-  const processFile = (file: File) => {
+  const processFile = React.useCallback((file: File) => {
     if (onFileSelect) {
       onFileSelect(file);
       return;
@@ -482,7 +482,7 @@ export const EnhancedPromptInputBox = React.forwardRef<HTMLDivElement, EnhancedP
       [file.name]: e.target?.result as string
     });
     reader.readAsDataURL(file);
-  };
+  }, [onFileSelect]);
   const handleDragOver = React.useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -496,7 +496,7 @@ export const EnhancedPromptInputBox = React.forwardRef<HTMLDivElement, EnhancedP
     e.stopPropagation();
     const droppedFiles = Array.from(e.dataTransfer.files);
     if (droppedFiles.length > 0) processFile(droppedFiles[0]);
-  }, []);
+  }, [processFile]);
   const handleRemoveFile = (index: number) => {
     const fileToRemove = files[index];
     if (fileToRemove && filePreviews[fileToRemove.name]) setFilePreviews({});
@@ -517,7 +517,7 @@ export const EnhancedPromptInputBox = React.forwardRef<HTMLDivElement, EnhancedP
         }
       }
     }
-  }, []);
+  }, [processFile]);
   React.useEffect(() => {
     document.addEventListener("paste", handlePaste);
     return () => document.removeEventListener("paste", handlePaste);

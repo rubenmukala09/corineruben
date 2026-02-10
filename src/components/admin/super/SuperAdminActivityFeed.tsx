@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import {
   Card,
@@ -37,36 +37,57 @@ interface ActivityLogEntry {
   created_at: string;
 }
 
+// Filter function to exclude healthy heartbeats and only show errors/warnings
+const shouldShowActivity = (activity: ActivityLogEntry): boolean => {
+  // If it's a system alert, check the status in details
+  if (activity.action === 'SYSTEM_ALERT' && activity.details) {
+    const details = activity.details as Record<string, unknown>;
+    const alertType = details.alert_type as string;
+    // Only show if it's an actual error/warning, not healthy status
+    if (alertType === 'service_healthy' || alertType === 'all_healthy') {
+      return false;
+    }
+    return true;
+  }
+  
+  // Check for status field in details
+  if (activity.details) {
+    const details = activity.details as Record<string, unknown>;
+    const status = (details.status as string)?.toLowerCase();
+    if (status === 'healthy' || status === 'success' || status === 'ok') {
+      return false;
+    }
+  }
+  
+  // Show all other activities
+  return true;
+};
+
 export default function SuperAdminActivityFeed() {
   const [activities, setActivities] = useState<ActivityLogEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [autoRefresh, setAutoRefresh] = useState(true);
 
-  // Filter function to exclude healthy heartbeats and only show errors/warnings
-  const shouldShowActivity = (activity: ActivityLogEntry): boolean => {
-    // If it's a system alert, check the status in details
-    if (activity.action === 'SYSTEM_ALERT' && activity.details) {
-      const details = activity.details as Record<string, unknown>;
-      const alertType = details.alert_type as string;
-      // Only show if it's an actual error/warning, not healthy status
-      if (alertType === 'service_healthy' || alertType === 'all_healthy') {
-        return false;
-      }
-      return true;
+  const fetchActivities = useCallback(async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('activity_log')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(100); // Fetch more to filter
+
+      if (error) throw error;
+      
+      // Filter out healthy heartbeats
+      const filteredActivities = (data || []).filter(shouldShowActivity).slice(0, 50);
+      setActivities(filteredActivities);
+    } catch (error) {
+      console.error('Error fetching activities:', error);
+    } finally {
+      setLoading(false);
     }
-    
-    // Check for status field in details
-    if (activity.details) {
-      const details = activity.details as Record<string, unknown>;
-      const status = (details.status as string)?.toLowerCase();
-      if (status === 'healthy' || status === 'success' || status === 'ok') {
-        return false;
-      }
-    }
-    
-    // Show all other activities
-    return true;
-  };
+  }, []);
 
   useEffect(() => {
     fetchActivities();
@@ -101,28 +122,7 @@ export default function SuperAdminActivityFeed() {
       channel.unsubscribe();
       clearInterval(interval);
     };
-  }, [autoRefresh]);
-
-  const fetchActivities = async () => {
-    try {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from('activity_log')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .limit(100); // Fetch more to filter
-
-      if (error) throw error;
-      
-      // Filter out healthy heartbeats
-      const filteredActivities = (data || []).filter(shouldShowActivity).slice(0, 50);
-      setActivities(filteredActivities);
-    } catch (error) {
-      console.error('Error fetching activities:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [autoRefresh, fetchActivities]);
 
   const getActivityIcon = (action: string, entityType: string | null) => {
     const iconMap: Record<string, React.ReactNode> = {

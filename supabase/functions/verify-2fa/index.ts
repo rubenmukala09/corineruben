@@ -66,8 +66,7 @@ async function generateTOTP(secret: string, timeStep = 30, digits = 6): Promise<
   const timeBytes = new Uint8Array(8);
   for (let i = 7; i >= 0; i--) {
     timeBytes[i] = time & 0xff;
-    // @ts-ignore
-    time >>= 8;
+    time = Math.floor(time / 256);
   }
   
   const hmac = await hmacSha1(key, timeBytes);

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -12,23 +12,7 @@ export const JobApplicationsTable = () => {
   const [loading, setLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
 
-  useEffect(() => {
-    loadApplications();
-
-    const channel = supabase
-      .channel('job_applications_changes')
-      .on('postgres_changes', 
-        { event: '*', schema: 'public', table: 'job_applications' },
-        () => loadApplications()
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, []);
-
-  const loadApplications = async () => {
+  const loadApplications = useCallback(async () => {
     setLoading(true);
     const { data, error } = await supabase
       .from("job_applications")
@@ -47,7 +31,23 @@ export const JobApplicationsTable = () => {
       setApplications(data || []);
     }
     setLoading(false);
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    loadApplications();
+
+    const channel = supabase
+      .channel('job_applications_changes')
+      .on('postgres_changes', 
+        { event: '*', schema: 'public', table: 'job_applications' },
+        () => loadApplications()
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [loadApplications]);
 
   const updateStatus = async (id: string, status: string) => {
     setUpdatingId(id);

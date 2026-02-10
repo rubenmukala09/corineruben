@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Wrench, Mail, Phone, Clock } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -17,19 +17,21 @@ function Maintenance() {
   const [email, setEmail] = useState("");
   const [timeRemaining, setTimeRemaining] = useState("");
   
-  // Dynamic maintenance data - dates calculated relative to now
-  const now = new Date();
-  const startTime = new Date(now.getTime() - 60 * 60 * 1000); // Started 1 hour ago
-  const expectedCompletion = new Date(now.getTime() + 2 * 60 * 60 * 1000); // 2 hours from now
-  
-  const maintenanceData: MaintenanceData = {
-    expectedCompletion,
-    startTime,
-    reason: "System upgrades and performance improvements",
-    updates: [
-      { time: startTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }), message: "Beginning scheduled maintenance" }
-    ]
-  };
+  const maintenanceData = useMemo<MaintenanceData>(() => {
+    // Dynamic maintenance data - dates calculated relative to now
+    const now = new Date();
+    const startTime = new Date(now.getTime() - 60 * 60 * 1000); // Started 1 hour ago
+    const expectedCompletion = new Date(now.getTime() + 2 * 60 * 60 * 1000); // 2 hours from now
+
+    return {
+      expectedCompletion,
+      startTime,
+      reason: "System upgrades and performance improvements",
+      updates: [
+        { time: startTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }), message: "Beginning scheduled maintenance" }
+      ]
+    };
+  }, []);
 
   useEffect(() => {
     // Auto-refresh every 5 minutes
@@ -56,7 +58,7 @@ function Maintenance() {
       clearInterval(refreshInterval);
       clearInterval(timerInterval);
     };
-  }, []);
+  }, [maintenanceData.expectedCompletion]);
 
   const handleNotifyMe = (e: React.FormEvent) => {
     e.preventDefault();

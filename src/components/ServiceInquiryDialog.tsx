@@ -111,7 +111,7 @@ export const ServiceInquiryDialog = ({
     const savedName = localStorage.getItem('checkout_name');
     if (savedEmail) form.setValue('email', savedEmail);
     if (savedName) form.setValue('fullName', savedName);
-  }, [open]);
+  }, [open, form]);
 
   const discountAmount = isVeteran ? Math.round(servicePrice * 0.1) : 0;
   const finalPrice = servicePrice - discountAmount;

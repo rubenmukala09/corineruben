@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { GeometricCorner, GridPattern } from "@/components/ui/GeometricDecorations";
 import { useTestimonials } from "@/hooks/useTestimonials";
@@ -8,23 +8,23 @@ export const TestimonialQuote = () => {
   const { data: testimonials, isLoading, error } = useTestimonials(5);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const next = () => {
+  const next = useCallback(() => {
     if (testimonials && testimonials.length > 0) {
       setCurrentIndex((prev) => (prev + 1) % testimonials.length);
     }
-  };
+  }, [testimonials]);
   
-  const prev = () => {
+  const prev = useCallback(() => {
     if (testimonials && testimonials.length > 0) {
       setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
     }
-  };
+  }, [testimonials]);
 
   useEffect(() => {
     if (!testimonials || testimonials.length === 0) return;
     const timer = setInterval(next, 6000);
     return () => clearInterval(timer);
-  }, [testimonials]);
+  }, [next, testimonials]);
 
   // Loading state
   if (isLoading) {

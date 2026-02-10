@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Eye, EyeOff, Lock, CheckCircle, X } from "lucide-react";
@@ -46,20 +46,7 @@ export default function ResetPassword() {
 
   const strength = getPasswordStrength();
 
-  useEffect(() => {
-    validateToken();
-  }, [token]);
-
-  useEffect(() => {
-    if (success && countdown > 0) {
-      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
-      return () => clearTimeout(timer);
-    } else if (success && countdown === 0) {
-      navigate("/auth");
-    }
-  }, [success, countdown, navigate]);
-
-  const validateToken = async () => {
+  const validateToken = useCallback(async () => {
     if (!token) {
       toast.error("Invalid reset link");
       setIsValidating(false);
@@ -88,7 +75,20 @@ export default function ResetPassword() {
 
     setIsTokenValid(true);
     setIsValidating(false);
-  };
+  }, [token]);
+
+  useEffect(() => {
+    validateToken();
+  }, [validateToken]);
+
+  useEffect(() => {
+    if (success && countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    } else if (success && countdown === 0) {
+      navigate("/auth");
+    }
+  }, [success, countdown, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

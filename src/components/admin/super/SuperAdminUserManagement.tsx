@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useAdminAudit } from '@/hooks/useAdminAudit';
@@ -84,11 +84,7 @@ export default function SuperAdminUserManagement() {
   const { toast } = useToast();
   const { logAction } = useAdminAudit();
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       setLoading(true);
       
@@ -139,7 +135,11 @@ export default function SuperAdminUserManagement() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [logAction, toast]);
+
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
 
   const handleSendPasswordReset = async (user: UserWithRole) => {
     try {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -25,15 +25,24 @@ interface PendingItem {
   priority?: boolean;
 }
 
+const formatTimeAgo = (dateString: string) => {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMins / 60);
+  const diffDays = Math.floor(diffHours / 24);
+
+  if (diffMins < 60) return `${diffMins}m ago`;
+  if (diffHours < 24) return `${diffHours}h ago`;
+  return `${diffDays}d ago`;
+};
+
 export function NeonPendingRequests() {
   const [items, setItems] = useState<PendingItem[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchPendingItems();
-  }, []);
-
-  const fetchPendingItems = async () => {
+  const fetchPendingItems = useCallback(async () => {
     try {
       const allItems: PendingItem[] = [];
 
@@ -109,20 +118,11 @@ export function NeonPendingRequests() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const formatTimeAgo = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
-    const diffMins = Math.floor(diffMs / 60000);
-    const diffHours = Math.floor(diffMins / 60);
-    const diffDays = Math.floor(diffHours / 24);
-
-    if (diffMins < 60) return `${diffMins}m ago`;
-    if (diffHours < 24) return `${diffHours}h ago`;
-    return `${diffDays}d ago`;
-  };
+  useEffect(() => {
+    fetchPendingItems();
+  }, [fetchPendingItems]);
 
   const getTypeConfig = (type: string) => {
     const configs = {

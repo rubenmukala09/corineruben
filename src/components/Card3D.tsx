@@ -1,4 +1,4 @@
-import { ReactNode, useRef, useState, useCallback } from "react";
+import { ReactNode, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { throttle } from "@/utils/performanceOptimization";
@@ -16,26 +16,27 @@ const Card3D = ({ children, className = "", intensity = 10 }: Card3DProps) => {
   const [isHovering, setIsHovering] = useState(false);
 
   // Throttled mouse move handler to reduce forced reflows
-  const handleMouseMove = useCallback(
-    throttle((e: React.MouseEvent<HTMLDivElement>) => {
-      if (!ref.current) return;
-
-      requestAnimationFrame(() => {
+  const handleMouseMove = useMemo(
+    () =>
+      throttle((e: React.MouseEvent<HTMLDivElement>) => {
         if (!ref.current) return;
-        const rect = ref.current.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
 
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
+        requestAnimationFrame(() => {
+          if (!ref.current) return;
+          const rect = ref.current.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
 
-        const rotateXValue = ((y - centerY) / centerY) * -intensity;
-        const rotateYValue = ((x - centerX) / centerX) * intensity;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
 
-        setRotateX(rotateXValue);
-        setRotateY(rotateYValue);
-      });
-    }, 16),
+          const rotateXValue = ((y - centerY) / centerY) * -intensity;
+          const rotateYValue = ((x - centerX) / centerX) * intensity;
+
+          setRotateX(rotateXValue);
+          setRotateY(rotateYValue);
+        });
+      }, 16),
     [intensity]
   );
 
