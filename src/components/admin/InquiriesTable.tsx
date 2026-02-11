@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -12,7 +12,23 @@ export const InquiriesTable = () => {
   const [loading, setLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
 
-  const loadInquiries = useCallback(async () => {
+  useEffect(() => {
+    loadInquiries();
+
+    const channel = supabase
+      .channel('website_inquiries_changes')
+      .on('postgres_changes', 
+        { event: '*', schema: 'public', table: 'website_inquiries' },
+        () => loadInquiries()
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  const loadInquiries = async () => {
     setLoading(true);
     const { data, error } = await supabase
       .from("website_inquiries")
@@ -31,23 +47,7 @@ export const InquiriesTable = () => {
       setInquiries(data || []);
     }
     setLoading(false);
-  }, [toast]);
-
-  useEffect(() => {
-    loadInquiries();
-
-    const channel = supabase
-      .channel('website_inquiries_changes')
-      .on('postgres_changes', 
-        { event: '*', schema: 'public', table: 'website_inquiries' },
-        () => loadInquiries()
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [loadInquiries]);
+  };
 
   const updateStatus = async (id: string, status: string) => {
     setUpdatingId(id);

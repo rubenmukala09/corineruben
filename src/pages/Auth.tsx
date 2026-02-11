@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -63,7 +63,41 @@ function Auth() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const handlePostLoginRedirect = useCallback(async (userId: string) => {
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, currentSession) => {
+        setSession(currentSession);
+        setUser(currentSession?.user ?? null);
+        
+        if (event === 'SIGNED_IN' && currentSession?.user) {
+          setTimeout(() => {
+            handlePostLoginRedirect(currentSession.user.id);
+          }, 0);
+        }
+      }
+    );
+
+    supabase.auth.getSession().then(({ data: { session: existingSession } }) => {
+      setSession(existingSession);
+      setUser(existingSession?.user ?? null);
+      if (existingSession?.user) {
+        handlePostLoginRedirect(existingSession.user.id);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  // Password validation
+  useEffect(() => {
+    setPasswordHasLength(password.length >= 8);
+    setPasswordHasUppercase(/[A-Z]/.test(password));
+    setPasswordHasNumber(/[0-9]/.test(password));
+    setPasswordHasSpecial(/[^A-Za-z0-9]/.test(password));
+    setPasswordsMatch(password.length > 0 && password === confirmPassword);
+  }, [password, confirmPassword]);
+
+  const handlePostLoginRedirect = async (userId: string) => {
     try {
       const { data: profileData } = await supabase
         .from("profiles")
@@ -136,41 +170,7 @@ function Auth() {
       console.error("Redirect error:", error);
       navigate("/portal");
     }
-  }, [navigate, toast]);
-
-  useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, currentSession) => {
-        setSession(currentSession);
-        setUser(currentSession?.user ?? null);
-        
-        if (event === 'SIGNED_IN' && currentSession?.user) {
-          setTimeout(() => {
-            handlePostLoginRedirect(currentSession.user.id);
-          }, 0);
-        }
-      }
-    );
-
-    supabase.auth.getSession().then(({ data: { session: existingSession } }) => {
-      setSession(existingSession);
-      setUser(existingSession?.user ?? null);
-      if (existingSession?.user) {
-        handlePostLoginRedirect(existingSession.user.id);
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, [handlePostLoginRedirect]);
-
-  // Password validation
-  useEffect(() => {
-    setPasswordHasLength(password.length >= 8);
-    setPasswordHasUppercase(/[A-Z]/.test(password));
-    setPasswordHasNumber(/[0-9]/.test(password));
-    setPasswordHasSpecial(/[^A-Za-z0-9]/.test(password));
-    setPasswordsMatch(password.length > 0 && password === confirmPassword);
-  }, [password, confirmPassword]);
+  };
 
   const validateLoginForm = (): boolean => {
     let isValid = true;

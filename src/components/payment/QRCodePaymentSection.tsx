@@ -155,7 +155,7 @@ export function QRCodePaymentSection({
     }, 4000);
 
     return () => clearInterval(pollInterval);
-  }, [amount, customerEmail, customerName, isPaid, onSuccess, paymentLinkId, productName]);
+  }, [paymentLinkId, isPaid, onSuccess]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);

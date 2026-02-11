@@ -122,18 +122,17 @@ export default defineConfig(async ({ mode, command }) => {
             quality: 80,
           },
         }),
-      // Prerender disabled - causes build failures in Cloud environment
-      // command === "build" &&
-      //   mode === "production" &&
-      //   !isPreviewBuild &&
-      //   !disablePrerender &&
-      //   prerender({
-      //     routes: uniquePrerenderRoutes,
-      //     renderer: "@prerenderer/renderer-puppeteer",
-      //     rendererOptions: {
-      //       renderAfterDocumentEvent: "prerender-ready",
-      //     },
-      //   }),
+      command === "build" &&
+        mode === "production" &&
+        !isPreviewBuild &&
+        !disablePrerender &&
+        prerender({
+          routes: uniquePrerenderRoutes,
+          renderer: "@prerenderer/renderer-puppeteer",
+          rendererOptions: {
+            renderAfterDocumentEvent: "prerender-ready",
+          },
+        }),
     ].filter(Boolean),
     resolve: {
       alias: {

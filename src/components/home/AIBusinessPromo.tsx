@@ -20,7 +20,7 @@ import teamOfficeDiscussion from "@/assets/team-office-discussion.jpg";
  
 export const AIBusinessPromo = () => {
    return (
-   <section className="relative py-8 lg:py-10 bg-gradient-to-br from-background via-white to-lavender-50/20 dynamic-gradient-overlay" aria-labelledby="business-heading">
+   <section className="relative py-12 lg:py-16 bg-gradient-to-br from-background via-white to-lavender-50/20 dynamic-gradient-overlay" aria-labelledby="business-heading">
        <div className="container mx-auto px-4 lg:px-8 relative z-10">
          {/* Section Header */}
         <div className="text-center mb-10">

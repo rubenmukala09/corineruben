@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
@@ -36,7 +36,11 @@ export function RevenueChart() {
   });
   const { toast } = useToast();
 
-  const fetchRevenueData = useCallback(async () => {
+  useEffect(() => {
+    fetchRevenueData();
+  }, [timeFrame]);
+
+  const fetchRevenueData = async () => {
     try {
       setLoading(true);
 
@@ -118,11 +122,7 @@ export function RevenueChart() {
     } finally {
       setLoading(false);
     }
-  }, [timeFrame, toast]);
-
-  useEffect(() => {
-    fetchRevenueData();
-  }, [fetchRevenueData]);
+  };
 
   const exportChart = () => {
     // Create a CSV export

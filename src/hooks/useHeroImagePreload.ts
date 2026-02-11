@@ -51,7 +51,7 @@ export const useHeroImagePreload = (imageSources: string[]) => {
     };
     img.onerror = () => setIsLoaded(true);
     img.src = first;
-  }, [imageSources, isLoaded]);
+  }, [imageSources.join(','), isLoaded]);
 
   return { isLoaded, progress: isLoaded ? 100 : 0 };
 };

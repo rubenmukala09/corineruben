@@ -74,47 +74,45 @@ export const LiveProtectionStatus = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 2 }}
-      className="fixed bottom-20 sm:bottom-24 right-3 sm:right-6 z-50 max-w-[calc(100vw-1.5rem)] sm:max-w-none"
+      initial={{ opacity: 0, x: 100 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.5, delay: 2 }}
+      className="fixed bottom-24 right-6 z-50"
     >
       <AnimatePresence mode="wait">
         {isExpanded ? (
           <motion.div
             key="expanded"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ duration: 0.3 }}
-            className="w-72 sm:w-80 glass-enhanced rounded-2xl sm:rounded-[24px] shadow-float overflow-hidden"
+            className="w-80 glass-heavy rounded-2xl shadow-3d-lg overflow-hidden"
           >
             {/* Header */}
-            <div className="px-4 py-3 border-b border-white/20">
+            <div className="px-4 py-3 bg-gradient-to-r from-primary/10 to-accent/10 border-b border-white/20">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <motion.div
                     animate={{ scale: [1, 1.2, 1] }}
                     transition={{ duration: 2, repeat: Infinity }}
-                    className="w-2 h-2 rounded-full bg-emerald-500"
+                    className="w-2 h-2 rounded-full bg-green-500"
                   />
                   <span className="text-sm font-semibold text-foreground">Sample Protection</span>
-                  <span className="rounded-full bg-white/80 backdrop-blur-sm px-2 py-0.5 text-[10px] font-semibold text-foreground/70 border border-white/50">
+                  <span className="rounded-full bg-white/70 px-2 py-0.5 text-[10px] font-semibold text-foreground/70">
                     Demo
                   </span>
                 </div>
                 <div className="flex items-center gap-1">
                   <button
                     onClick={() => setIsExpanded(false)}
-                    className="p-1 hover:bg-white/30 rounded-lg transition-colors"
-                    aria-label="Minimize"
+                    className="p-1 hover:bg-white/20 rounded-lg transition-colors"
                   >
                     <ChevronUp className="w-4 h-4 text-muted-foreground" />
                   </button>
                   <button
                     onClick={() => setIsVisible(false)}
-                    className="p-1 hover:bg-white/30 rounded-lg transition-colors"
-                    aria-label="Close"
+                    className="p-1 hover:bg-white/20 rounded-lg transition-colors"
                   >
                     <X className="w-4 h-4 text-muted-foreground" />
                   </button>
@@ -127,21 +125,21 @@ export const LiveProtectionStatus = () => {
               <div className="text-center">
                 <motion.div
                   key={stats.threatsBlocked}
-                  initial={{ scale: 1.1 }}
-                  animate={{ scale: 1 }}
-                  className="text-lg font-bold text-coral-500"
+                  initial={{ scale: 1.2, color: "hsl(var(--primary))" }}
+                  animate={{ scale: 1, color: "hsl(var(--foreground))" }}
+                  className="text-lg font-bold"
                 >
                   {stats.threatsBlocked.toLocaleString()}
                 </motion.div>
-                <div className="text-[10px] text-muted-foreground uppercase font-medium">Threats Blocked</div>
+                <div className="text-[10px] text-muted-foreground">Threats Blocked</div>
               </div>
               <div className="text-center">
-                <div className="text-lg font-bold text-lavender-500">{stats.familiesProtected}</div>
-                <div className="text-[10px] text-muted-foreground uppercase font-medium">Families Safe</div>
+                <div className="text-lg font-bold text-foreground">{stats.familiesProtected}</div>
+                <div className="text-[10px] text-muted-foreground">Families Safe</div>
               </div>
               <div className="text-center">
-                <div className="text-lg font-bold text-emerald-500">{stats.activeMonitoring}%</div>
-                <div className="text-[10px] text-muted-foreground uppercase font-medium">Uptime</div>
+                <div className="text-lg font-bold text-green-500">{stats.activeMonitoring}%</div>
+                <div className="text-[10px] text-muted-foreground">Uptime</div>
               </div>
             </div>
 
@@ -175,7 +173,7 @@ export const LiveProtectionStatus = () => {
             </div>
 
             {/* Footer */}
-            <div className="px-4 py-2 border-t border-white/10">
+            <div className="px-4 py-2 bg-gradient-to-r from-primary/5 to-accent/5 border-t border-white/10">
               <p className="text-[10px] text-center text-muted-foreground">
                 Sample activity for demo purposes
               </p>
@@ -184,29 +182,28 @@ export const LiveProtectionStatus = () => {
         ) : (
           <motion.button
             key="collapsed"
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            whileHover={{ scale: 1.02, y: -2 }}
-            whileTap={{ scale: 0.98 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => setIsExpanded(true)}
-            className="relative flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 glass-enhanced rounded-full shadow-float transition-all min-h-[48px]"
-            aria-label="Expand protection status"
+            className="relative flex items-center gap-3 px-4 py-3 glass-heavy rounded-full shadow-3d hover:shadow-3d-lg transition-all"
           >
             {/* Pulse ring */}
             <motion.div
               animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="absolute left-4 w-3 h-3 rounded-full bg-emerald-500"
+              className="absolute left-4 w-3 h-3 rounded-full bg-green-500"
             />
 
             <div className="flex items-center gap-2">
               <motion.div
                 animate={{ scale: [1, 1.1, 1] }}
                 transition={{ duration: 1.5, repeat: Infinity }}
-                className="w-3 h-3 rounded-full bg-emerald-500"
+                className="w-3 h-3 rounded-full bg-green-500"
               />
-              <Activity className="w-4 h-4 text-coral-500" />
+              <Activity className="w-4 h-4 text-primary" />
             </div>
 
             <div className="text-left">

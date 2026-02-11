@@ -427,7 +427,7 @@ const PromptInputTextarea: React.FC<PromptInputTextareaProps & React.ComponentPr
   );
 };
 
-type PromptInputActionsProps = React.HTMLAttributes<HTMLDivElement>;
+interface PromptInputActionsProps extends React.HTMLAttributes<HTMLDivElement> {}
 const PromptInputActions: React.FC<PromptInputActionsProps> = ({ children, className, ...props }) => (
   <div className={cn("flex items-center gap-2", className)} {...props}>
     {children}
@@ -514,8 +514,10 @@ export const PromptInputBox = React.forwardRef((props: PromptInputBoxProps, ref:
 
   const handleCanvasToggle = () => setShowCanvas((prev) => !prev);
 
-  const processFile = React.useCallback((file: File) => {
-    if (!file.type.startsWith("image/")) {
+  const isImageFile = (file: File) => file.type.startsWith("image/");
+
+  const processFile = (file: File) => {
+    if (!isImageFile(file)) {
       console.log("Only image files are allowed");
       return;
     }
@@ -527,7 +529,7 @@ export const PromptInputBox = React.forwardRef((props: PromptInputBoxProps, ref:
     const reader = new FileReader();
     reader.onload = (e) => setFilePreviews({ [file.name]: e.target?.result as string });
     reader.readAsDataURL(file);
-  }, []);
+  };
 
   const handleDragOver = React.useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -543,8 +545,9 @@ export const PromptInputBox = React.forwardRef((props: PromptInputBoxProps, ref:
     e.preventDefault();
     e.stopPropagation();
     const nextFiles = Array.from(e.dataTransfer.files);
-    if (nextFiles.length > 0) processFile(nextFiles[0]);
-  }, [processFile]);
+    const imageFiles = nextFiles.filter((file) => isImageFile(file));
+    if (imageFiles.length > 0) processFile(imageFiles[0]);
+  }, []);
 
   const handleRemoveFile = (index: number) => {
     const fileToRemove = files[index];
@@ -567,7 +570,7 @@ export const PromptInputBox = React.forwardRef((props: PromptInputBoxProps, ref:
         }
       }
     }
-  }, [processFile]);
+  }, []);
 
   React.useEffect(() => {
     if (typeof document === "undefined") return;

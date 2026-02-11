@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useAdminAudit } from '@/hooks/useAdminAudit';
@@ -77,7 +77,11 @@ export default function SuperAdminProductManager() {
   const [productFile, setProductFile] = useState<File | null>(null);
   const [coverImage, setCoverImage] = useState<File | null>(null);
 
-  const fetchProducts = useCallback(async () => {
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
     try {
       setLoading(true);
       const { data, error } = await supabase
@@ -97,11 +101,7 @@ export default function SuperAdminProductManager() {
     } finally {
       setLoading(false);
     }
-  }, [toast]);
-
-  useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
+  };
 
   const generateSku = () => {
     return `PROD-${Date.now().toString(36).toUpperCase()}`;

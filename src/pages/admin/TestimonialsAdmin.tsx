@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -83,7 +83,15 @@ export default function TestimonialsAdmin() {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const fetchTestimonials = useCallback(async () => {
+  useEffect(() => {
+    fetchTestimonials();
+  }, []);
+
+  useEffect(() => {
+    applyFiltersAndSort();
+  }, [testimonials, searchQuery, filterStatus, sortBy]);
+
+  const fetchTestimonials = async () => {
     try {
       setLoading(true);
       const { data, error } = await supabase
@@ -103,9 +111,9 @@ export default function TestimonialsAdmin() {
     } finally {
       setLoading(false);
     }
-  }, [toast]);
+  };
 
-  const applyFiltersAndSort = useCallback(() => {
+  const applyFiltersAndSort = () => {
     let filtered = [...testimonials];
 
     // Apply search
@@ -132,15 +140,7 @@ export default function TestimonialsAdmin() {
     }
 
     setFilteredTestimonials(filtered);
-  }, [filterStatus, searchQuery, sortBy, testimonials]);
-
-  useEffect(() => {
-    fetchTestimonials();
-  }, [fetchTestimonials]);
-
-  useEffect(() => {
-    applyFiltersAndSort();
-  }, [applyFiltersAndSort]);
+  };
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {

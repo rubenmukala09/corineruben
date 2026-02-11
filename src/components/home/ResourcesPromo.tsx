@@ -32,7 +32,7 @@ import securityProtectionTools from "@/assets/security-protection-tools.jpg";
 
 export const ResourcesPromo = () => {
   return (
-    <section className="relative py-6 lg:py-8 overflow-hidden dynamic-gradient-overlay" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #faf9f7 50%, #fff5f0 100%)' }} aria-labelledby="resources-heading">
+    <section className="relative py-10 lg:py-14 overflow-hidden dynamic-gradient-overlay" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #faf9f7 50%, #fff5f0 100%)' }} aria-labelledby="resources-heading">
 
       <div className="container mx-auto px-6 lg:px-12">
         {/* Header */}

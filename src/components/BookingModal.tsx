@@ -111,7 +111,7 @@ export const BookingModal = ({
     const savedName = localStorage.getItem('checkout_name');
     if (savedEmail) form.setValue('email', savedEmail);
     if (savedName) form.setValue('fullName', savedName);
-  }, [open, form]);
+  }, [open]);
 
   const discountAmount = isVeteran && basePrice > 0 
     ? (basePrice * veteranDiscountPercent) / 100 

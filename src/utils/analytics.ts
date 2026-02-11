@@ -20,8 +20,8 @@ export function initGA(measurementId: string) {
 
   // Initialize dataLayer
   window.dataLayer = window.dataLayer || [];
-  window.gtag = (...args: unknown[]) => {
-    window.dataLayer?.push(args);
+  window.gtag = function gtag() {
+    window.dataLayer.push(arguments);
   };
 
   // Default consent mode (denied until user accepts)
@@ -51,7 +51,7 @@ export function trackPageView(path: string, title: string) {
 // Track custom event
 export function trackEvent(
   eventName: string,
-  eventParams?: Record<string, unknown>
+  eventParams?: Record<string, any>
 ) {
   if (!window.gtag || !isTrackingEnabled()) return;
 
@@ -62,7 +62,7 @@ export function trackEvent(
 export function trackButtonClick(
   buttonName: string,
   location: string,
-  additionalData?: Record<string, unknown>
+  additionalData?: Record<string, any>
 ) {
   trackEvent("button_click", {
     button_name: buttonName,
@@ -224,7 +224,7 @@ export function trackTiming(
 // Type definitions
 declare global {
   interface Window {
-    gtag?: (...args: unknown[]) => void;
-    dataLayer?: unknown[];
+    gtag?: (...args: any[]) => void;
+    dataLayer?: any[];
   }
 }

@@ -14,20 +14,14 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let resolved = false;
-    const resolveLoading = () => {
-      if (!resolved) {
-        resolved = true;
-        setLoading(false);
-      }
-    };
+    let timeout: NodeJS.Timeout;
     
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
-        resolveLoading();
+        setLoading(false);
       }
     );
 
@@ -35,23 +29,23 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
-      resolveLoading();
+      setLoading(false);
     }).catch((error) => {
       console.error("Auth error:", error);
-      resolveLoading();
+      setLoading(false);
     });
 
     // Timeout fallback to prevent infinite loading
-    const timeoutId = setTimeout(() => {
-      if (!resolved) {
+    timeout = setTimeout(() => {
+      if (loading) {
         console.error("Auth check timeout - forcing loading to false");
-        resolveLoading();
+        setLoading(false);
       }
     }, 5000);
 
     return () => {
       subscription.unsubscribe();
-      clearTimeout(timeoutId);
+      clearTimeout(timeout);
     };
   }, []);
 

@@ -302,13 +302,9 @@ function CardPaymentWrapper({
   useEffect(() => {
     const savedEmail = localStorage.getItem('checkout_email');
     const savedName = localStorage.getItem('checkout_name');
-    if (savedEmail) {
-      setFormData(prev => ({ ...prev, email: savedEmail }));
-    }
-    if (savedName) {
-      setFormData(prev => ({ ...prev, name: savedName }));
-    }
-  }, [setFormData]);
+    if (savedEmail) setFormData({ ...formData, email: savedEmail });
+    if (savedName) setFormData({ ...formData, name: savedName });
+  }, []);
 
   const handleContinue = async () => {
     if (!formData.name || !formData.email) {

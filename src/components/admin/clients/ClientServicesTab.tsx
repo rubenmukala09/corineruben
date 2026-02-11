@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -23,7 +23,13 @@ export function ClientServicesTab({ clientId }: ClientServicesTabProps) {
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchClientServices = useCallback(async () => {
+  useEffect(() => {
+    if (clientId) {
+      fetchClientServices();
+    }
+  }, [clientId]);
+
+  const fetchClientServices = async () => {
     try {
       setLoading(true);
       
@@ -53,13 +59,7 @@ export function ClientServicesTab({ clientId }: ClientServicesTabProps) {
     } finally {
       setLoading(false);
     }
-  }, [clientId]);
-
-  useEffect(() => {
-    if (clientId) {
-      fetchClientServices();
-    }
-  }, [clientId, fetchClientServices]);
+  };
 
   if (loading) {
     return (

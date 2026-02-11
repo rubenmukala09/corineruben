@@ -88,7 +88,7 @@ export const WorkshopsPromo = () => {
   };
 
    return (
-    <section className="relative py-8 lg:py-10 bg-gradient-to-br from-background via-white to-lavender-50/20 overflow-hidden dynamic-gradient-overlay" aria-labelledby="workshops-heading">
+    <section className="relative py-12 lg:py-16 bg-gradient-to-br from-background via-white to-lavender-50/20 overflow-hidden dynamic-gradient-overlay" aria-labelledby="workshops-heading">
  
        <div className="container mx-auto px-4 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-6 lg:gap-10 items-center">

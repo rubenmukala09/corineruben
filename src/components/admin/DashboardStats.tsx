@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { DashboardStatCard } from "./DashboardStatCard";
 import { Users, DollarSign, RefreshCw, AlertTriangle } from "lucide-react";
@@ -27,7 +27,25 @@ export function DashboardStats() {
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  const fetchDashboardData = useCallback(async () => {
+  useEffect(() => {
+    fetchDashboardData();
+
+    // Set up realtime subscriptions
+    const channel = supabase
+      .channel('dashboard-updates')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'testimonials' }, fetchDashboardData)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'booking_requests' }, fetchDashboardData)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'website_inquiries' }, fetchDashboardData)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'partner_orders' }, fetchDashboardData)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'clients' }, fetchDashboardData)
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  const fetchDashboardData = async () => {
     try {
       setLoading(true);
 
@@ -129,25 +147,7 @@ export function DashboardStats() {
     } finally {
       setLoading(false);
     }
-  }, [toast]);
-
-  useEffect(() => {
-    fetchDashboardData();
-
-    // Set up realtime subscriptions
-    const channel = supabase
-      .channel('dashboard-updates')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'testimonials' }, fetchDashboardData)
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'booking_requests' }, fetchDashboardData)
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'website_inquiries' }, fetchDashboardData)
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'partner_orders' }, fetchDashboardData)
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'clients' }, fetchDashboardData)
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [fetchDashboardData]);
+  };
 
   if (loading) {
     return (
