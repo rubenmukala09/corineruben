@@ -1,180 +1,91 @@
 
-# Payment System Audit & Connection Plan
 
-## Executive Summary
+# Full Website Audit: Out-of-Context and Missing Items
 
-After analyzing your Stripe account and codebase, I found that **your core payment infrastructure is already well-connected**, but there are several issues that need to be fixed to ensure all payments work without errors.
+## 1. Broken Links / Dead Routes
 
----
+### CRITICAL: `/safety-vault` Route Does Not Exist
+- **Services.tsx (line 148)**: The "Safety Vault" service card links to `/safety-vault`, but there is NO route for this in `App.tsx` and the `SafetyVault.tsx` page was previously deleted.
+- **BreadcrumbNav.tsx (line 20)**: Also references `/safety-vault`.
+- **Fix**: Either remove the Safety Vault card from the Services page or redirect `/safety-vault` to an appropriate page (e.g., `/training`).
 
-## Current Stripe Account Status ✅
-
-Your Stripe account has **46 products** and **47 prices** properly configured, including:
-
-| Category | Products | Status |
-|----------|----------|--------|
-| ScamShield Plans | 3 (Starter, Family, Premium) | ✅ Connected |
-| AI Business Services | 3 (Receptionist, Follow-Up, Custom) | ✅ Connected |
-| AI Service Insurance | 3 (Basic, Standard, Premium) | ✅ Connected |
-| Digital Books | 20+ E-Books | ⚠️ 10 have invalid IDs |
-| Physical Products | 16 Products | ✅ Connected |
+### Orphaned Page: `GuestScanner.tsx`
+- `src/pages/GuestScanner.tsx` still exists as a full page file (206 lines) with its own Navigation/Footer, but it is NOT routed in `App.tsx`. The route `/guest-scanner` redirects to `/training/ai-analysis`. This file is dead code.
+- **Fix**: Delete `GuestScanner.tsx`.
 
 ---
 
-## Issues Found
+## 2. PremiumGlassmorphismWidgets Still on Homepage
+- Per project memory, the "PremiumGlassmorphismWidgets" block was supposed to be removed from the homepage. However, it is still imported and rendered on `Index.tsx` (lines 25, 119-123).
+- **Fix**: Remove the import and the `<section id="widgets">` block from `Index.tsx`.
 
-### 1. Invalid Stripe Price IDs (10 Books)
+---
 
-The Resources page has **10 books** with placeholder/invalid Stripe price IDs that will cause payment failures:
+## 3. ProtectionPathSection Imported but Never Rendered
+- `Index.tsx` (line 13) imports `ProtectionPathSection` but it is NEVER used anywhere in the JSX.
+- **Fix**: Remove the unused import.
 
-```
-- book-crypto-defense: price_1SjwPnJ8osfwYbX7crypto01 ❌
-- book-romance-scam: price_1SjwPnJ8osfwYbX7romance02 ❌
-- book-voice-clone: price_1SjwPnJ8osfwYbX7voice03 ❌
-- book-medicare-fraud: price_1SjwPnJ8osfwYbX7medicare04 ❌
-- book-email-safety: price_1SjwPnJ8osfwYbX7email05 ❌
-- book-tax-scam: price_1SjwPnJ8osfwYbX7tax06 ❌
-- book-tech-support: price_1SjwPnJ8osfwYbX7tech07 ❌
-- book-grandparent-scam: price_1SjwPnJ8osfwYbX7grandp08 ❌
-- book-investment-fraud: price_1SjwPnJ8osfwYbX7invest09 ❌
-- book-charity-scam: price_1SjwPnJ8osfwYbX7charity10 ❌
-```
+---
 
-These IDs follow a fake pattern (crypto01, romance02, etc.) and will fail when processed.
+## 4. Money Counter Animation Still on Business Page
+- Per project memory, the "money counting effect" should be removed. However, `Business.tsx` still uses `useCounterAnimation` (lines 85-87) with animated counters for pricing cards (`price1Counter`, `price2Counter`, `price3Counter`).
+- **Fix**: Replace animated counters with static price text, matching the approach already applied to the Training page.
 
-### 2. Edge Function Config Missing
+---
 
-The `create-cart-checkout` edge function is not listed in `supabase/config.toml`, which may prevent it from being deployed properly.
+## 5. Inconsistencies Between Pages
 
-### 3. Training Payment Modal Uses Wrong Edge Function
+### Services Page Out of Sync
+- **Safety Vault** is listed as a standalone service with its own pricing ($19/mo) on the Services page, but it actually exists only as a feature within the Training page's "Family Safety Vault" section (included with Family & Premium Plans). These are contradictory.
+- **ScamShield pricing** on Services ($29/mo) doesn't match any plan on the Training page (Training shows $79-$510 per session, not monthly subscriptions).
+- **Fix**: Align Services page offerings with actual available products on Training and Business pages, or clearly differentiate them.
 
-The training payment flow uses `create-training-payment` but some training products share price IDs with other product categories, which could cause confusion.
+### Duplicate "How It Works" Sections on Training
+- The Training page has TWO "How It Works" sections:
+  1. Section 2 (line 737): "How It Works" - 3 steps (Book, Learn, Get Support)
+  2. Section 4 (line 906): "Simple Protection in 4 Steps" - 4 steps (Suspicious? Forward, Analysis, Guidance)
+- These are confusingly similar and could be consolidated.
+
+---
+
+## 6. Missing Functionality
+
+### No Scam Prevention Workshop card (`$49`)
+- The structured data in Training SEO references an "Individual Training Session" at $89, but the cheapest displayed plan is Group Class at $79. The earlier "Scam Prevention Workshop" card mentioned in the user request is not present. This may be intentional but should be verified.
+
+### AI Analysis Page: No Actual AI Processing
+- The `TrainingAiAnalysis.tsx` page has a chat interface using `useAiChat()` and a file scan workflow using `useGuestScanner()`. The file scan requires payment. However, the chat/AI analysis itself does not appear to connect to any actual AI model for free text queries -- it depends on the `useAiChat` hook implementation, which should be verified.
+
+---
+
+## 7. Stale/Unused Imports
+
+- **Training.tsx**: Imports `Video` from lucide (line 43) and `Upload` (line 27) but only uses them in admin-only conditional block. Not critical but adds bundle weight.
+- **Business.tsx**: The `useCounterAnimation` import and usage should be removed if counter effects are being eliminated.
 
 ---
 
 ## Implementation Plan
 
-### Phase 1: Create Missing Stripe Products (10 Books)
+### Step 1: Fix Broken `/safety-vault` Link
+- Remove the "Safety Vault" card from `Services.tsx` or redirect the link to `/training`
+- Clean up `BreadcrumbNav.tsx` reference
 
-Create the 10 missing book products in Stripe with proper prices:
+### Step 2: Delete Orphaned `GuestScanner.tsx`
+- Delete `src/pages/GuestScanner.tsx`
 
-| Book Name | Price | To Create |
-|-----------|-------|-----------|
-| Crypto Scam Defense | $34.99 | Product + Price |
-| Romance Scam Awareness | $28.99 | Product + Price |
-| Voice Clone Detection | $31.99 | Product + Price |
-| Medicare Fraud Protection | $26.99 | Product + Price |
-| Email Safety Essentials | $22.99 | Product + Price |
-| Tax Scam Prevention | $29.99 | Product + Price |
-| Tech Support Fraud Defense | $25.99 | Product + Price |
-| Grandparent Scam Defense | $24.99 | Product + Price |
-| Investment Fraud Guide | $36.99 | Product + Price |
-| Charity Scam Awareness | $21.99 | Product + Price |
+### Step 3: Clean Homepage (Index.tsx)
+- Remove `PremiumGlassmorphismWidgets` import and section
+- Remove unused `ProtectionPathSection` import
 
-### Phase 2: Update Resources.tsx with New Price IDs
+### Step 4: Remove Counter Animation from Business Page
+- Replace `useCounterAnimation` with static text in `Business.tsx`
+- Remove the hook import
 
-Replace the placeholder price IDs in `src/pages/Resources.tsx` with the newly created valid Stripe price IDs.
+### Step 5: Align Services Page
+- Update or remove the Safety Vault card on Services page
+- Review and correct pricing discrepancies so they match actual offerings
 
-### Phase 3: Add Missing Edge Function Config
-
-Add `create-cart-checkout` to `supabase/config.toml`:
-
-```toml
-[functions.create-cart-checkout]
-verify_jwt = false
-```
-
-### Phase 4: Payment Flow Validation
-
-Verify all payment edge functions are properly configured:
-
-- `create-payment-intent` ✅
-- `create-cart-payment-intent` ✅
-- `create-subscription-checkout` ✅
-- `create-training-payment` ✅
-- `create-product-payment` ✅
-- `process-donation` ✅
-- `generate-payment-link` ✅
-- `verify-payment` ✅
-- `complete-payment` ✅
-- `create-cart-checkout` ⚠️ (needs config)
-
-### Phase 5: Update products.ts Config
-
-Sync the centralized product config (`src/config/products.ts`) with all valid Stripe price IDs for consistency.
-
----
-
-## Technical Details
-
-### Files to Modify
-
-1. **`src/pages/Resources.tsx`** (lines 240-315)
-   - Replace 10 invalid `stripe_price_id` values with real Stripe price IDs
-
-2. **`supabase/config.toml`**
-   - Add `create-cart-checkout` function configuration
-
-3. **`src/config/products.ts`**
-   - Update TRAINING_PROGRAMS to use unique price IDs (currently shares IDs with books)
-   - Add new books to DIGITAL_BOOKS array for consistency
-
-### Payment Flow Architecture
-
-```text
-┌─────────────────────────────────────────────────────────────────┐
-│                      FRONTEND COMPONENTS                         │
-├─────────────────────────────────────────────────────────────────┤
-│ EmbeddedPaymentModal ──► create-payment-intent ──► Stripe       │
-│ SubscriptionDialog ──► create-payment-intent ──► Stripe         │
-│ TrainingPaymentModal ──► create-training-payment ──► Stripe     │
-│ CheckoutDialog ──► create-cart-payment-intent ──► Stripe        │
-│ QRCodePaymentSection ──► generate-payment-link ──► Stripe       │
-│ DonationModal ──► process-donation ──► Stripe                   │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                      POST-PAYMENT FLOW                           │
-├─────────────────────────────────────────────────────────────────┤
-│ verify-payment ──► Update order status                          │
-│ complete-payment ──► Send confirmation emails                   │
-│ send-digital-download ──► Deliver digital products              │
-└─────────────────────────────────────────────────────────────────┘
-```
-
----
-
-## Verification Steps After Implementation
-
-1. Test each ScamShield subscription tier purchase
-2. Test AI Service one-time payments
-3. Test Insurance subscription purchases
-4. Test all 30 digital book purchases
-5. Test all 16 physical product purchases
-6. Test training session bookings
-7. Test donation flows (one-time and monthly)
-8. Verify QR code payment flow works
-
----
-
-## Risk Assessment
-
-| Risk | Severity | Mitigation |
-|------|----------|------------|
-| Creating wrong Stripe products | Low | Use Stripe tools to create products with exact names/prices |
-| Missing price ID updates | Medium | Double-check all 10 books are updated |
-| Edge function deployment | Low | Config.toml update is straightforward |
-
----
-
-## Estimated Work
-
-- Create 10 Stripe products: 10 tool calls
-- Update Resources.tsx: 1 file edit (10 price IDs)
-- Update config.toml: 1 line addition
-- Update products.ts: 1 file edit for consistency
-- Deploy edge functions: Automatic
-
-**Total: ~15-20 minutes of implementation**
+### Step 6: Consolidate Training Page
+- Consider merging the two "How It Works" sections into one clear flow
 
