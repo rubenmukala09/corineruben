@@ -7,7 +7,6 @@ interface ComparisonRow {
   scamshield: boolean;
   business: boolean;
   training: boolean;
-  vault: boolean;
 }
 
 interface MobileComparisonCardsProps {
@@ -18,7 +17,6 @@ const serviceConfigs = [
   { key: 'scamshield', label: 'ScamShield', gradient: 'from-primary to-primary/80' },
   { key: 'business', label: 'AI Business', gradient: 'from-accent to-accent/80' },
   { key: 'training', label: 'Training', gradient: 'from-success to-success/80' },
-  { key: 'vault', label: 'Vault', gradient: 'from-warning to-warning/80' },
 ] as const;
 
 export function MobileComparisonCards({ comparisons }: MobileComparisonCardsProps) {

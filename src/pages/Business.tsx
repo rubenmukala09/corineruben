@@ -18,7 +18,7 @@ import { BookingModal } from "@/components/BookingModal";
 import { ServiceInquiryDialog } from "@/components/ServiceInquiryDialog";
 import { WebsiteInsuranceDialog } from "@/components/WebsiteInsuranceDialog";
 import { EmbeddedPaymentModal } from "@/components/payment/EmbeddedPaymentModal";
-import { useCounterAnimation } from "@/hooks/useCounterAnimation";
+
 import { useAdminStatus } from "@/hooks/useAdminStatus";
 import { trackButtonClick, trackConversion } from "@/utils/analyticsTracker";
 import { AI_SERVICES, AI_INSURANCE_PLANS } from "@/config/products";
@@ -81,10 +81,6 @@ function Business() {
   const [businessTestimonials, setBusinessTestimonials] = useState<any[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<{ src: string; title: string } | null>(null);
 
-  // Counter animations for pricing cards
-  const price1Counter = useCounterAnimation({ end: 9500, duration: 1500, prefix: '$' });
-  const price2Counter = useCounterAnimation({ end: 12500, duration: 1500, prefix: '$' });
-  const price3Counter = useCounterAnimation({ end: 25000, duration: 1500, prefix: '$', suffix: '+' });
 
   useEffect(() => {
     fetchBusinessTestimonials();
@@ -1127,8 +1123,8 @@ function Business() {
                   </div>
                   <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">AI Receptionist & Intake Agent</h3>
                   <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">Answer calls/chats 24/7, book appointments, route leads to the right person</p>
-                  <p ref={price1Counter.ref} className="text-3xl md:text-4xl font-bold text-accent mb-4 md:mb-6">
-                    {price1Counter.displayValue}
+                  <p className="text-3xl md:text-4xl font-bold text-accent mb-4 md:mb-6">
+                    $9,500
                   </p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-medium rounded-full">
@@ -1184,8 +1180,8 @@ function Business() {
                   </div>
                   <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 mt-2">Follow-Up Automation System</h3>
                   <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">Automated email/SMS campaigns, lead nurturing to convert more prospects</p>
-                  <p ref={price2Counter.ref} className="text-3xl md:text-4xl font-bold text-accent mb-4 md:mb-6">
-                    {price2Counter.displayValue}
+                  <p className="text-3xl md:text-4xl font-bold text-accent mb-4 md:mb-6">
+                    $12,500
                   </p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-medium rounded-full">
@@ -1241,8 +1237,8 @@ function Business() {
                   </div>
                   <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">Custom Automation Suite</h3>
                   <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">Multi-system operations with enterprise-grade integrations</p>
-                  <p ref={price3Counter.ref} className="text-3xl md:text-4xl font-bold text-accent mb-4 md:mb-6">
-                    {price3Counter.displayValue}
+                  <p className="text-3xl md:text-4xl font-bold text-accent mb-4 md:mb-6">
+                    $25,000+
                   </p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-accent/10 text-emerald-900 text-[10px] font-medium rounded-full">
