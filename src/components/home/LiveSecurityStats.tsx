@@ -132,7 +132,7 @@ export const LiveSecurityStats = () => {
   }, []);
 
   return (
-    <section className="relative py-8 lg:py-10 overflow-hidden">
+    <section className="relative py-20 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 mesh-gradient opacity-50" />
       <div className="absolute inset-0 noise-overlay" />
@@ -163,7 +163,7 @@ export const LiveSecurityStats = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-8"
+          className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 glass-light rounded-full mb-6">
             <span className="live-indicator">

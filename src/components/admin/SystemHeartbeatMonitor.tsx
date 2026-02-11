@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -22,7 +22,7 @@ export function SystemHeartbeatMonitor() {
   const [refreshing, setRefreshing] = useState(false);
   const { toast } = useToast();
 
-  const fetchHeartbeats = useCallback(async () => {
+  const fetchHeartbeats = async () => {
     try {
       const { data, error } = await supabase
         .from("system_heartbeats")
@@ -46,7 +46,7 @@ export function SystemHeartbeatMonitor() {
       setLoading(false);
       setRefreshing(false);
     }
-  }, [toast]);
+  };
 
   useEffect(() => {
     fetchHeartbeats();
@@ -54,7 +54,7 @@ export function SystemHeartbeatMonitor() {
     // Refresh every 30 seconds
     const interval = setInterval(fetchHeartbeats, 30000);
     return () => clearInterval(interval);
-  }, [fetchHeartbeats]);
+  }, []);
 
   const handleRefresh = () => {
     setRefreshing(true);

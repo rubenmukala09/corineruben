@@ -39,14 +39,14 @@ export const useGuestScanner = () => {
     return calculateScanCost(file.size).cost;
   }, [file]);
 
-  const resetProgressTimer = useCallback(() => {
+  const resetProgressTimer = () => {
     if (progressTimerRef.current) {
       window.clearInterval(progressTimerRef.current);
       progressTimerRef.current = null;
     }
-  }, []);
+  };
 
-  const startProgress = useCallback((start: number, cap: number) => {
+  const startProgress = (start: number, cap: number) => {
     resetProgressTimer();
     setProgress(start);
     progressTimerRef.current = window.setInterval(() => {
@@ -56,7 +56,7 @@ export const useGuestScanner = () => {
         return next;
       });
     }, 900);
-  }, [resetProgressTimer]);
+  };
 
   const clearFile = useCallback(() => {
     setFile(null);
@@ -131,7 +131,7 @@ export const useGuestScanner = () => {
         toast.error(message);
       }
     },
-    [file, resetProgressTimer, startProgress]
+    [file]
   );
 
   const markExpired = useCallback(() => {

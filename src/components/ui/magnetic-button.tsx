@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { throttle } from "@/utils/performanceOptimization";
@@ -24,23 +24,22 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   // Throttled mouse move handler to reduce forced reflows
-  const handleMouseMove = useMemo(
-    () =>
-      throttle((e: React.MouseEvent<HTMLDivElement>) => {
-        const button = buttonRef.current;
-        if (!button || disabled) return;
+  const handleMouseMove = useCallback(
+    throttle((e: React.MouseEvent<HTMLDivElement>) => {
+      const button = buttonRef.current;
+      if (!button || disabled) return;
 
-        requestAnimationFrame(() => {
-          const rect = button.getBoundingClientRect();
-          const centerX = rect.left + rect.width / 2;
-          const centerY = rect.top + rect.height / 2;
+      requestAnimationFrame(() => {
+        const rect = button.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
 
-          const distanceX = (e.clientX - centerX) * strength;
-          const distanceY = (e.clientY - centerY) * strength;
+        const distanceX = (e.clientX - centerX) * strength;
+        const distanceY = (e.clientY - centerY) * strength;
 
-          setPosition({ x: distanceX, y: distanceY });
-        });
-      }, 16),
+        setPosition({ x: distanceX, y: distanceY });
+      });
+    }, 16),
     [disabled, strength]
   );
 
@@ -79,23 +78,22 @@ export const MagneticWrapper: React.FC<MagneticWrapperProps> = ({
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   // Throttled mouse move handler to reduce forced reflows
-  const handleMouseMove = useMemo(
-    () =>
-      throttle((e: React.MouseEvent<HTMLDivElement>) => {
-        const wrapper = wrapperRef.current;
-        if (!wrapper) return;
+  const handleMouseMove = useCallback(
+    throttle((e: React.MouseEvent<HTMLDivElement>) => {
+      const wrapper = wrapperRef.current;
+      if (!wrapper) return;
 
-        requestAnimationFrame(() => {
-          const rect = wrapper.getBoundingClientRect();
-          const centerX = rect.left + rect.width / 2;
-          const centerY = rect.top + rect.height / 2;
+      requestAnimationFrame(() => {
+        const rect = wrapper.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
 
-          const distanceX = (e.clientX - centerX) * strength;
-          const distanceY = (e.clientY - centerY) * strength;
+        const distanceX = (e.clientX - centerX) * strength;
+        const distanceY = (e.clientY - centerY) * strength;
 
-          setPosition({ x: distanceX, y: distanceY });
-        });
-      }, 16),
+        setPosition({ x: distanceX, y: distanceY });
+      });
+    }, 16),
     [strength]
   );
 

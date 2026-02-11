@@ -55,7 +55,7 @@ export const ScamAlertsSection = ({ onSubmitThreat }: ScamAlertsSectionProps) =>
   }, []);
 
   return (
-     <section className="py-6 lg:py-8" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #faf9f7 50%, #fff5f0 100%)' }} aria-labelledby="alerts-heading">
+     <section className="py-10 lg:py-14" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #faf9f7 50%, #fff5f0 100%)' }} aria-labelledby="alerts-heading">
       
       <div className="container mx-auto px-4">
         {/* Header */}

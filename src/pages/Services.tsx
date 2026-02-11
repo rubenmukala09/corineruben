@@ -21,7 +21,7 @@ import {
   Shield,
   Bot,
   GraduationCap,
-  Lock,
+  
   CheckCircle,
   Users,
   Building2,
@@ -130,37 +130,17 @@ const Services = () => {
       color: "from-primary to-primary",
       popular: false,
     },
-    {
-      icon: Lock,
-      title: "Safety Vault",
-      subtitle: "Secure Password Management",
-      description: "Military-grade encrypted password storage with family sharing and emergency access features.",
-      features: [
-        "Encrypted password storage",
-        "Secure data vault",
-        "Family sharing options",
-        "Emergency access protocols",
-        "Multi-device sync",
-        "Biometric authentication",
-      ],
-      priceMonthly: 19,
-      priceAnnual: 190,
-      link: "/safety-vault",
-      color: "from-accent to-accent",
-      popular: false,
-    },
   ];
 
   const comparisons = [
-    { feature: "Scam Detection & Alerts", scamshield: true, business: true, training: true, vault: false },
-    { feature: "AI-Powered Protection", scamshield: true, business: true, training: false, vault: false },
-    { feature: "24/7 Monitoring", scamshield: true, business: true, training: false, vault: true },
-    { feature: "Custom Integration", scamshield: false, business: true, training: false, vault: false },
-    { feature: "Workflow Automation", scamshield: false, business: true, training: false, vault: false },
-    { feature: "Training & Workshops", scamshield: true, business: true, training: true, vault: false },
-    { feature: "Password Management", scamshield: false, business: false, training: false, vault: true },
-    { feature: "Family Sharing", scamshield: true, business: false, training: false, vault: true },
-    { feature: "Dedicated Support", scamshield: false, business: true, training: false, vault: false },
+    { feature: "Scam Detection & Alerts", scamshield: true, business: true, training: true },
+    { feature: "AI-Powered Protection", scamshield: true, business: true, training: false },
+    { feature: "24/7 Monitoring", scamshield: true, business: true, training: false },
+    { feature: "Custom Integration", scamshield: false, business: true, training: false },
+    { feature: "Workflow Automation", scamshield: false, business: true, training: false },
+    { feature: "Training & Workshops", scamshield: true, business: true, training: true },
+    { feature: "Family Sharing", scamshield: true, business: false, training: false },
+    { feature: "Dedicated Support", scamshield: false, business: true, training: false },
   ];
 
   const faqs = [
@@ -431,7 +411,7 @@ const Services = () => {
                       <th className="text-center py-4 px-4 font-semibold">ScamShield</th>
                       <th className="text-center py-4 px-4 font-semibold">AI Business</th>
                       <th className="text-center py-4 px-4 font-semibold">Training</th>
-                      <th className="text-center py-4 px-4 font-semibold">Vault</th>
+                      
                     </tr>
                   </thead>
                   <tbody>
@@ -454,13 +434,6 @@ const Services = () => {
                         </td>
                         <td className="text-center py-4 px-4">
                           {row.training ? (
-                            <CheckCircle className="h-5 w-5 text-success mx-auto" />
-                          ) : (
-                            <span className="text-muted-foreground"></span>
-                          )}
-                        </td>
-                        <td className="text-center py-4 px-4">
-                          {row.vault ? (
                             <CheckCircle className="h-5 w-5 text-success mx-auto" />
                           ) : (
                             <span className="text-muted-foreground"></span>

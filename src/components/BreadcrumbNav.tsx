@@ -17,7 +17,7 @@ const routeNameMap: Record<string, string> = {
   "/about": "About",
   "/careers": "Careers",
   "/contact": "Contact",
-  "/safety-vault": "Safety Vault",
+  
   "/articles": "Articles",
   "/portal": "Portal",
   "/portal/admin": "Admin Dashboard",

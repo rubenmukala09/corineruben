@@ -10,7 +10,7 @@ import { WorkingProcess } from "@/components/home/WorkingProcess";
 import { ScamAlertsSection } from "@/components/home/ScamAlertsSection";
 import { FAQPreview } from "@/components/home/FAQPreview";
 import { QuickLinksSection } from "@/components/home/QuickLinksSection";
-import { ProtectionPathSection } from "@/components/home/ProtectionPathSection";
+
 import CTASection from "@/components/CTASection";
 import { ScamShieldSubmission } from "@/components/ScamShieldSubmission";
 import { PageTransition } from "@/components/PageTransition";
@@ -23,8 +23,6 @@ import { SITE } from "@/config/site";
 const LiveSecurityStats = lazy(() => import("@/components/home/LiveSecurityStats"));
 const SocialProofTicker = lazy(() => import("@/components/SocialProofTicker"));
 const PremiumGlassmorphismWidgets = lazy(() => import("@/components/home/PremiumGlassmorphismWidgets"));
-const ProfessionalShowcase = lazy(() => import("@/components/home/ProfessionalShowcase"));
-const ProfessionalHero = lazy(() => import("@/components/home/ProfessionalHero"));
 const Index = () => {
   const [scamShieldOpen, setScamShieldOpen] = useState(false);
   const [enableLiveWidgets, setEnableLiveWidgets] = useState(false);
@@ -117,12 +115,6 @@ const Index = () => {
             <ScamAlertsSection onSubmitThreat={() => setScamShieldOpen(true)} />
           </section>
 
-          {/* Premium Glass Widgets */}
-          <section id="widgets">
-            {enableLiveWidgets ? <Suspense fallback={<div className="min-h-[420px]" aria-hidden="true" />}>
-                <PremiumGlassmorphismWidgets />
-              </Suspense> : <div className="min-h-[420px]" aria-hidden="true" />}
-          </section>
 
           {/* Resources Promo */}
           <section id="resources">

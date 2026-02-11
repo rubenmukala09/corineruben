@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { BookingModal } from "@/components/BookingModal";
@@ -25,7 +25,12 @@ function SeniorDashboard() {
   const { subscriptions } = useSubscription();
   const { data: metrics } = useDashboardMetrics();
 
-  const loadProfile = useCallback(async () => {
+  useEffect(() => {
+    loadProfile();
+    loadAppointments();
+  }, []);
+
+  const loadProfile = async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
@@ -51,9 +56,9 @@ function SeniorDashboard() {
     } finally {
       setLoading(false);
     }
-  }, [navigate]);
+  };
 
-  const loadAppointments = useCallback(async () => {
+  const loadAppointments = async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
@@ -71,12 +76,7 @@ function SeniorDashboard() {
     } catch (error: any) {
       console.error("Error loading appointments:", error);
     }
-  }, []);
-
-  useEffect(() => {
-    loadProfile();
-    loadAppointments();
-  }, [loadAppointments, loadProfile]);
+  };
 
   const handleSignOut = async () => {
     try {

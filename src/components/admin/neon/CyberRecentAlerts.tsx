@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Bell, ChevronRight, Shield, AlertTriangle, Wifi, Mail, Smartphone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { formatDistanceToNow } from "date-fns";
-import { useCallback, useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Alert {
@@ -50,32 +50,15 @@ const typeIcons = {
   deepfake: Smartphone,
 };
 
-const mapThreatType = (type: string): Alert["type"] => {
-  const typeMap: Record<string, Alert["type"]> = {
-    phishing: "phishing",
-    deepfake: "deepfake",
-    malware: "malware",
-    network: "network",
-    breach: "breach",
-  };
-  return typeMap[type?.toLowerCase()] || "phishing";
-};
-
-const mapSeverity = (severity: string): Alert["severity"] => {
-  const sevMap: Record<string, Alert["severity"]> = {
-    low: "low",
-    medium: "medium",
-    high: "high",
-    critical: "critical",
-  };
-  return sevMap[severity?.toLowerCase()] || "medium";
-};
-
 export function CyberRecentAlerts() {
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const loadAlerts = useCallback(async () => {
+  useEffect(() => {
+    loadAlerts();
+  }, []);
+
+  const loadAlerts = async () => {
     try {
       const { data, error } = await supabase
         .from("threat_events")
@@ -102,11 +85,28 @@ export function CyberRecentAlerts() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  };
 
-  useEffect(() => {
-    loadAlerts();
-  }, [loadAlerts]);
+  const mapThreatType = (type: string): Alert["type"] => {
+    const typeMap: Record<string, Alert["type"]> = {
+      phishing: "phishing",
+      deepfake: "deepfake",
+      malware: "malware",
+      network: "network",
+      breach: "breach",
+    };
+    return typeMap[type?.toLowerCase()] || "phishing";
+  };
+
+  const mapSeverity = (severity: string): Alert["severity"] => {
+    const sevMap: Record<string, Alert["severity"]> = {
+      low: "low",
+      medium: "medium",
+      high: "high",
+      critical: "critical",
+    };
+    return sevMap[severity?.toLowerCase()] || "medium";
+  };
 
   return (
     <motion.div

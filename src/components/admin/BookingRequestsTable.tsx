@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -13,7 +13,24 @@ export const BookingRequestsTable = () => {
   const [loading, setLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
 
-  const loadRequests = useCallback(async () => {
+  useEffect(() => {
+    loadRequests();
+
+    // Subscribe to realtime updates
+    const channel = supabase
+      .channel('booking_requests_changes')
+      .on('postgres_changes', 
+        { event: '*', schema: 'public', table: 'booking_requests' },
+        () => loadRequests()
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  const loadRequests = async () => {
     setLoading(true);
     const { data, error } = await supabase
       .from("booking_requests")
@@ -32,24 +49,7 @@ export const BookingRequestsTable = () => {
       setRequests(data || []);
     }
     setLoading(false);
-  }, [toast]);
-
-  useEffect(() => {
-    loadRequests();
-
-    // Subscribe to realtime updates
-    const channel = supabase
-      .channel('booking_requests_changes')
-      .on('postgres_changes', 
-        { event: '*', schema: 'public', table: 'booking_requests' },
-        () => loadRequests()
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [loadRequests]);
+  };
 
   const updateStatus = async (id: string, status: string) => {
     setUpdatingId(id);

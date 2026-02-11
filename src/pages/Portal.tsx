@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -29,15 +29,23 @@ function Portal() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [roles, setRoles] = useState<UserRole[]>([]);
   const [loading, setLoading] = useState(true);
-  const loadingRef = useRef(true);
   const navigate = useNavigate();
   const { toast } = useToast();
 
   useEffect(() => {
-    loadingRef.current = loading;
-  }, [loading]);
+    const timeout = setTimeout(() => {
+      if (loading) {
+        console.error("Portal loading timeout - forcing completion");
+        setLoading(false);
+      }
+    }, 5000);
 
-  const loadUserData = useCallback(async () => {
+    loadUserData();
+
+    return () => clearTimeout(timeout);
+  }, []);
+
+  const loadUserData = async () => {
     console.log("Portal: Starting to load user data");
     try {
       const { data: { user }, error: userError } = await supabase.auth.getUser();
@@ -133,20 +141,7 @@ function Portal() {
       console.log("Portal: Setting loading to false");
       setLoading(false);
     }
-  }, [navigate, toast]);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (loadingRef.current) {
-        console.error("Portal loading timeout - forcing completion");
-        setLoading(false);
-      }
-    }, 5000);
-
-    loadUserData();
-
-    return () => clearTimeout(timeout);
-  }, [loadUserData]);
+  };
 
   const handleSignOut = async () => {
     try {

@@ -36,7 +36,6 @@ export const AIChat = () => {
   const [showScrollButton, setShowScrollButton] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const messagesRef = useRef<Message[]>([]);
   const recognitionRef = useRef<any>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
   const { toast } = useToast();
@@ -119,7 +118,7 @@ export const AIChat = () => {
         abortControllerRef.current.abort();
       }
     };
-  }, [stopSpeaking, streamChat, toast]);
+  }, [toast]);
 
   // Immediate stop speaking - cancel all speech
   const stopSpeaking = useCallback(() => {
@@ -127,11 +126,6 @@ export const AIChat = () => {
       window.speechSynthesis.cancel();
     }
     setIsSpeaking(false);
-  }, []);
-
-  const updateMessages = useCallback((nextMessages: Message[]) => {
-    messagesRef.current = nextMessages;
-    setMessages(nextMessages);
   }, []);
 
   // Speak text using browser synthesis
@@ -181,7 +175,7 @@ export const AIChat = () => {
     stopSpeaking();
   }, [stopSpeaking]);
 
-  const streamChat = useCallback(async (userMessage: string) => {
+  const streamChat = async (userMessage: string) => {
     // Cancel any ongoing request
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
@@ -191,8 +185,8 @@ export const AIChat = () => {
     abortControllerRef.current = new AbortController();
     
     try {
-      const newMessages = [...messagesRef.current, { role: "user" as const, content: userMessage }];
-      updateMessages(newMessages);
+      const newMessages = [...messages, { role: "user" as const, content: userMessage }];
+      setMessages(newMessages);
       setIsLoading(true);
       stopSpeaking();
 
@@ -250,7 +244,7 @@ export const AIChat = () => {
             const content = parsed.choices?.[0]?.delta?.content;
             if (content) {
               assistantMessage += content;
-              updateMessages([...newMessages, { role: "assistant", content: assistantMessage }]);
+              setMessages([...newMessages, { role: "assistant", content: assistantMessage }]);
             }
           } catch {
             // Partial JSON, wait for more data
@@ -273,7 +267,7 @@ export const AIChat = () => {
           } catch { /* ignore */ }
         }
         if (assistantMessage) {
-          updateMessages([...newMessages, { role: "assistant", content: assistantMessage }]);
+          setMessages([...newMessages, { role: "assistant", content: assistantMessage }]);
         }
       }
 
@@ -281,7 +275,7 @@ export const AIChat = () => {
       abortControllerRef.current = null;
       
       // Auto-speak the response
-      if (assistantMessage) {
+      if (assistantMessage && autoSpeak) {
         await speakText(assistantMessage);
       }
     } catch (error: any) {
@@ -297,7 +291,7 @@ export const AIChat = () => {
         variant: "destructive",
       });
     }
-  }, [CHAT_URL, speakText, stopSpeaking, toast, updateMessages, mode]);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RefreshCw, ExternalLink } from "lucide-react";
@@ -23,11 +23,21 @@ export function RecentActivity() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [newActivityIds, setNewActivityIds] = useState<Set<string>>(new Set());
-  const activitiesRef = useRef<Activity[]>([]);
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const fetchActivities = useCallback(async (silent = false) => {
+  useEffect(() => {
+    fetchActivities();
+
+    // Auto-refresh every 30 seconds
+    const interval = setInterval(() => {
+      fetchActivities(true);
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const fetchActivities = async (silent = false) => {
     try {
       if (!silent) {
         setLoading(true);
@@ -133,18 +143,16 @@ export function RecentActivity() {
       });
 
       // Sort by timestamp and take top 20
-      const previousActivities = activitiesRef.current;
       const sortedActivities = allActivities
         .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
         .slice(0, 20);
 
       setActivities(sortedActivities);
-      activitiesRef.current = sortedActivities;
 
       if (silent) {
         // Show a subtle notification for new activities and highlight them
         const newActivities = sortedActivities.filter(
-          (activity) => !previousActivities.find((a) => a.id === activity.id)
+          (activity) => !activities.find((a) => a.id === activity.id)
         );
         
         if (newActivities.length > 0) {
@@ -175,18 +183,7 @@ export function RecentActivity() {
       setLoading(false);
       setRefreshing(false);
     }
-  }, [toast]);
-
-  useEffect(() => {
-    fetchActivities();
-
-    // Auto-refresh every 30 seconds
-    const interval = setInterval(() => {
-      fetchActivities(true);
-    }, 30000);
-
-    return () => clearInterval(interval);
-  }, [fetchActivities]);
+  };
 
   const handleActivityClick = (activity: Activity) => {
     if (activity.link) {
