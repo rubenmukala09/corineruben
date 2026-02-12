@@ -225,7 +225,7 @@ export function QRCodePaymentSection({
               onClick={() => window.open(paymentUrl, "_blank")}
               className="text-xs"
             >
-              Or click here to pay in browser
+              Or open payment page in browser
             </Button>
           )}
 

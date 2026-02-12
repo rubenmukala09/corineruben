@@ -131,8 +131,8 @@ export const InstructorShowcase = () => {
                 Learn From Industry Experts
               </h2>
               <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-                Our instructors combine decades of real-world experience with a passion for teaching. 
-                Click on any instructor to learn more about their background and expertise.
+                Our instructors combine decades of real-world experience with a passion for teaching.
+                Select an instructor to view their background and expertise.
               </p>
             </div>
           </ScrollReveal>

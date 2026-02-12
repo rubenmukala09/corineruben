@@ -944,7 +944,7 @@ function LearnAndTrain() {
                         <threat.icon className="w-8 h-8 text-white" />
                       </div>
                       <h3 className="font-bold mb-2 group-hover:text-primary transition-colors">{threat.title}</h3>
-                      <p className="text-sm text-muted-foreground">Click to learn more</p>
+                      <p className="text-sm text-muted-foreground">View protection details</p>
                     </div>
 
                     {expandedThreat === threat.title && (

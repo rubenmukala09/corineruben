@@ -254,7 +254,7 @@ function Business() {
             </div>
             <h2 className="text-2xl md:text-3xl font-bold mb-2">What We Build</h2>
             <p className="text-base text-muted-foreground max-w-3xl mx-auto">
-              Click on any service to learn more about how we can help your business grow
+              Select a service to view details and benefits for your business
             </p>
           </div>
 
