@@ -112,6 +112,7 @@ export const SearchBar = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search InVision Network..."
+          aria-label="Search InVision Network"
           className="w-full h-11 pl-4 pr-24 rounded-full border-2 border-border bg-background/80 backdrop-blur-sm
                      focus:border-primary focus:ring-2 focus:ring-primary/20 focus:scale-[1.02]
                      transition-all duration-300 text-sm"

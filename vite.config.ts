@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => {
       port: 8080,
     },
     build: {
-      sourcemap: true,
+      sourcemap: mode === 'development',
       cssCodeSplit: true,
       minify: 'esbuild',
       target: 'es2015',
@@ -29,6 +29,8 @@ export default defineConfig(({ mode }) => {
             'router': ['react-router-dom'],
             'animation': ['framer-motion'],
             'ui': ['lucide-react', '@radix-ui/react-dialog', '@radix-ui/react-slot'],
+            'stripe': ['@stripe/react-stripe-js', '@stripe/stripe-js'],
+            'query': ['@tanstack/react-query'],
           },
           // Optimize chunk file names for caching
           chunkFileNames: 'assets/js/[name]-[hash].js',
@@ -38,6 +40,9 @@ export default defineConfig(({ mode }) => {
       },
       // Enable chunk size warnings
       chunkSizeWarningLimit: 1000,
+    },
+    esbuild: {
+      drop: mode === 'production' ? ['console', 'debugger'] : [],
     },
     css: {
       devSourcemap: true,
