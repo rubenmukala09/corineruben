@@ -24,10 +24,10 @@ export const MagnificentDonateButton = () => {
         onClick={() => setOpen(true)}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="fixed bottom-20 md:bottom-28 left-4 right-4 md:left-auto md:right-6 md:w-auto max-w-[calc(100vw-2rem)] z-fab flex items-center justify-center gap-2 md:gap-2 py-3.5 md:py-0 px-6 md:px-0 rounded-full shadow-3d-colored hover:shadow-3d-lg transition-all duration-300 border border-white/30 md:border-white/30 micro-tilt-3d tactile-button overflow-hidden group bg-gradient-to-br from-coral-400 to-lavender-500"
+        className="fixed bottom-28 md:bottom-28 left-4 right-4 md:left-auto md:right-6 md:w-auto max-w-[calc(100vw-2rem)] z-fab flex items-center justify-center gap-2 md:gap-2 py-3 md:py-0 px-6 md:px-0 rounded-full shadow-3d-colored hover:shadow-3d-lg transition-all duration-300 border border-white/30 md:border-white/30 micro-tilt-3d tactile-button overflow-hidden group bg-gradient-to-br from-coral-400 to-lavender-500"
         style={{
           width: isHovered ? '140px' : undefined,
-          height: '60px',
+          height: '56px',
         }}
         whileHover={{ scale: 1.05, y: -2 }}
         whileTap={{ scale: 0.95 }}

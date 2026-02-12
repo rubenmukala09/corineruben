@@ -169,8 +169,18 @@
   .fixed.bottom-4,
   .fixed.bottom-6,
   .fixed.bottom-8,
-  .fixed.bottom-20 {
-    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  .fixed.bottom-20,
+  .fixed.bottom-24,
+  .fixed.bottom-28,
+  .fixed.bottom-48 {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Fixed right elements need safe area padding for landscape */
+  .fixed.right-4,
+  .fixed.right-6,
+  .fixed.right-8 {
+    padding-right: env(safe-area-inset-right);
   }
 
   /* Adjust specific bottom values to account for safe area */

@@ -182,7 +182,7 @@ export const LauraAIAssistant = () => {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 z-fab w-[360px] sm:w-[400px]">
+    <div className="fixed bottom-4 right-4 z-fab w-[calc(100vw-2rem)] max-w-[360px] sm:max-w-[400px]">
       <div className="rounded-3xl border border-border/60 glass-heavy card-shine shadow-2xl overflow-hidden">
         <div className="flex items-center justify-between p-4 border-b border-white/40 bg-white/70 backdrop-blur-xl">
           <div className="flex items-center gap-3">

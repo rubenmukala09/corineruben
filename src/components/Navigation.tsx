@@ -126,13 +126,13 @@ const Navigation = () => {
               {/* Phone */}
               <a
                 href={SITE.phone.tel}
-                className="hidden md:flex items-center gap-2 text-foreground hover:text-primary transition-colors duration-150 no-underline"
+                className="flex md:flex items-center gap-2 text-foreground hover:text-primary transition-colors duration-150 no-underline"
                 aria-label={`Call us at ${SITE.phone.display}`}
               >
-                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <div className="w-8 h-8 md:w-8 md:h-8 rounded-full bg-primary/10 flex items-center justify-center">
                   <Phone className="w-4 h-4 text-primary" fill="currentColor" />
                 </div>
-                <span className="text-sm font-semibold whitespace-nowrap text-foreground">
+                <span className="hidden md:inline text-sm font-semibold whitespace-nowrap text-foreground">
                   {SITE.phone.display}
                 </span>
               </a>

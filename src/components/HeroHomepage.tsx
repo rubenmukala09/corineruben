@@ -48,7 +48,7 @@ export const HeroHomepage = () => {
         </div>
         
         {/* Right - PREMIUM Animated Hero Image */}
-        <div className="relative hidden lg:block overflow-hidden">
+        <div className="relative hidden md:block overflow-hidden">
           {/* Ken Burns Animated Photo */}
           <motion.div
             animate={reduceMotion ? { scale: 1, x: 0, y: 0 } : { 
