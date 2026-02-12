@@ -272,7 +272,7 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <MotionConfig reducedMotion="always">
+          <MotionConfig reducedMotion="user">
             <Toaster />
             <Sonner />
             <SubscriptionProvider>
