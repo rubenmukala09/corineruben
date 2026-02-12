@@ -69,10 +69,12 @@ const impactInfo: Record<string, {
     icon: <Gift className="w-6 h-6" />,
     title: "Make a Difference",
     impacts: [
-      { amount: 25, description: "Helps protect 1 senior from scams" },
-      { amount: 50, description: "Funds security awareness materials" },
-      { amount: 100, description: "Supports family protection services" },
-      { amount: 250, description: "Sponsors community outreach" },
+      { amount: 1, description: "Every dollar helps protect a senior" },
+      { amount: 5, description: "Helps protect 1 senior from scams" },
+      { amount: 10, description: "Provides security awareness materials" },
+      { amount: 25, description: "Funds family protection consultations" },
+      { amount: 50, description: "Supports community education events" },
+      { amount: 100, description: "Sponsors comprehensive protection services" },
     ],
     color: "from-purple-500/20 to-violet-500/20"
   }
@@ -117,10 +119,10 @@ export const DonationModal = ({ open, onOpenChange, type = 'general', cause }: D
   };
 
   const handleSubmit = async (data: DonationFormData) => {
-    if (finalAmount < 5) {
+    if (finalAmount < 1) {
       toast({
-        title: "Minimum $5",
-        description: "Please enter a donation of at least $5.",
+        title: "Minimum $1",
+        description: "Please enter a donation of at least $1.",
         variant: "destructive",
       });
       return;
@@ -250,7 +252,7 @@ export const DonationModal = ({ open, onOpenChange, type = 'general', cause }: D
                 value={customAmount}
                 onChange={(e) => handleCustomAmount(e.target.value)}
                 className="pl-10 h-12 text-lg"
-                min={5}
+                min={1}
               />
             </div>
           </div>
@@ -329,7 +331,7 @@ export const DonationModal = ({ open, onOpenChange, type = 'general', cause }: D
 
               <Button
                 type="submit"
-                disabled={loading || finalAmount < 5}
+                disabled={loading || finalAmount < 1}
                 className="w-full h-12 text-base font-semibold"
                 size="lg"
               >

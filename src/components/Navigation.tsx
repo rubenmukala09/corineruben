@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Phone, LayoutDashboard, ShoppingCart as CartIcon } from "lucide-react";
+import { Menu, X, Phone, LayoutDashboard, ShoppingCart as CartIcon, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PrefetchLink } from "@/components/PrefetchLink";
 import { ShoppingCart } from "@/components/ShoppingCart";
@@ -10,9 +10,11 @@ import { SITE } from "@/config/site";
 import { clearAllCachesAndReload } from "@/utils/cacheUtils";
 import { toast } from "sonner";
 import invisionLogo from "@/assets/shield-logo.png";
+import { DonationModal } from "@/components/DonationModal";
 
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [donateOpen, setDonateOpen] = useState(false);
   const location = useLocation();
   const { user, roleConfig } = useAuth();
 
@@ -135,6 +137,17 @@ const Navigation = () => {
                 </span>
               </a>
 
+              {/* Donate Button */}
+              <button
+                type="button"
+                onClick={() => setDonateOpen(true)}
+                className="hidden lg:flex items-center gap-1.5 text-sm font-semibold px-3 py-2 rounded-md text-coral-600 hover:bg-coral-50 dark:hover:bg-coral-950/20 transition-colors"
+                aria-label="Donate"
+              >
+                <Heart className="w-4 h-4" fill="currentColor" />
+                <span className="hidden xl:inline">Donate</span>
+              </button>
+
               {/* Login/Dashboard Button */}
               <Button 
                 asChild 
@@ -226,6 +239,9 @@ const Navigation = () => {
 
         <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent pointer-events-none" />
       </nav>
+
+      {/* Donation Modal */}
+      <DonationModal open={donateOpen} onOpenChange={setDonateOpen} type="general" />
     </>
   );
 };

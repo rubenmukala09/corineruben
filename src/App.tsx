@@ -31,6 +31,7 @@ import BackToTop from "./components/BackToTop";
 import MobileCallButton from "./components/MobileCallButton";
 import { AnalyticsTracker } from "./components/AnalyticsTracker";
 import GlassQuickMenu from "./components/GlassQuickMenu";
+import { MagnificentDonateButton } from "./components/MagnificentDonateButton";
 import { PrerenderProvider } from "./contexts/PrerenderContext";
 
 // Admin Shell - persistent layout wrapper
@@ -130,14 +131,6 @@ const PaymentCanceled = lazy(() => import("./pages/PaymentCanceled"));
 const GlassmorphismTrustHeroDemo = lazy(() => import("./pages/GlassmorphismTrustHeroDemo"));
 
 const PageLoader = () => {
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setShow(true), 250);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (!show) return null;
   return <GlassmorphismLoader message="Loading" fullScreen={true} />;
 };
 const queryClient = new QueryClient();
@@ -293,6 +286,7 @@ function App() {
                         <ScrollToTop />
                         <BackToTop />
                         <GlassQuickMenu />
+                        <MagnificentDonateButton />
                         <MobileCallButton />
                         
                         <RouteTracker />

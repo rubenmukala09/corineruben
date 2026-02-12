@@ -316,13 +316,6 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     }
   }
 
-  /* Disable keyframe animations sitewide (loading effects + motion cues) */
-  *,
-  *::before,
-  *::after {
-    animation: none !important;
-  }
-
   /* Screen reader only content */
   .sr-only {
     position: absolute;

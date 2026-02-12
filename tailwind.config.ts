@@ -152,6 +152,15 @@ export default {
         '150': '150ms',
         '200': '200ms',
       },
+      zIndex: {
+        'navigation': '100',
+        'fab': '90',
+        'toast': '85',
+        'modal-overlay': '80',
+        'modal-content': '81',
+        'drawer': '75',
+        'dropdown': '70',
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

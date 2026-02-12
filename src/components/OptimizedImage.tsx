@@ -67,7 +67,7 @@ export function OptimizedImage({
       {!isLoaded && !hasError && (
         <div
           className={cn(
-            "absolute inset-0 bg-muted animate-pulse",
+            "absolute inset-0 bg-muted",
             className
           )}
           style={{ width, height }}

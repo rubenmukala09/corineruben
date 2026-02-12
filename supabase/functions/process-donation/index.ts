@@ -80,8 +80,8 @@ serve(async (req) => {
 
     logStep("Request data", { donorName, email, amount, donationType, donationId });
 
-    if (!email || !amount || amount < 5) {
-      throw new Error("Email and amount (minimum $5) are required");
+    if (!email || !amount || amount < 1) {
+      throw new Error("Email and amount (minimum $1) are required");
     }
 
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {

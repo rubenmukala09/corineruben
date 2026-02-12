@@ -80,7 +80,7 @@ export const locationSchema = z.string()
 
 // Amount validation
 export const amountSchema = z.number()
-  .min(5, "Minimum amount is $5")
+  .min(1, "Minimum amount is $1")
   .max(1000000, "Maximum amount is $1,000,000");
 
 // Veteran ID last 4 digits

@@ -29,7 +29,7 @@ export function OptimizedImagePicture({
     <div className={cn('relative overflow-hidden', className)}>
       {/* Placeholder */}
       {!loaded && (
-        <div className="absolute inset-0 bg-muted animate-pulse" />
+        <div className="absolute inset-0 bg-muted" />
       )}
 
       {/* Image with CSS transition */}

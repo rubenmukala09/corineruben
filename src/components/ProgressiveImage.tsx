@@ -45,7 +45,7 @@ export function ProgressiveImage({
     <div className={cn("relative overflow-hidden", containerClassName)}>
       {/* Shimmer placeholder */}
       {!loaded && (
-        <div className="absolute inset-0 bg-muted animate-pulse" />
+        <div className="absolute inset-0 bg-muted" />
       )}
 
       {/* Image with CSS transition */}
