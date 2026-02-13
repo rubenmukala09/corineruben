@@ -33,6 +33,11 @@ import { AnalyticsTracker } from "./components/AnalyticsTracker";
 import { MagnificentDonateButton } from "./components/MagnificentDonateButton";
 import { PrerenderProvider } from "./contexts/PrerenderContext";
 
+interface IdleWindow extends Window {
+  requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
+  cancelIdleCallback?: (handle: number) => void;
+}
+
 // Admin Shell - persistent layout wrapper
 import { AdminShell } from "./components/admin/AdminShell";
 
@@ -250,20 +255,23 @@ function App() {
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
     const enableDeferredUI = () => setShowDeferredUI(true);
-    let idleId: number | ReturnType<typeof setTimeout>;
+    const idleWindow = window as IdleWindow;
+    let idleCallbackId: number | null = null;
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
-    if ("requestIdleCallback" in window) {
-      idleId = (window as any).requestIdleCallback(enableDeferredUI, { timeout: 2000 });
+    if (idleWindow.requestIdleCallback) {
+      idleCallbackId = idleWindow.requestIdleCallback(enableDeferredUI, { timeout: 2000 });
     } else {
-      idleId = setTimeout(enableDeferredUI, 1500);
+      timeoutId = setTimeout(enableDeferredUI, 1500);
     }
     
     return () => {
       document.documentElement.style.scrollBehavior = "auto";
-      if ("cancelIdleCallback" in window && typeof idleId === "number") {
-        (window as any).cancelIdleCallback(idleId);
-      } else {
-        clearTimeout(idleId as ReturnType<typeof setTimeout>);
+      if (idleWindow.cancelIdleCallback && idleCallbackId !== null) {
+        idleWindow.cancelIdleCallback(idleCallbackId);
+      }
+      if (timeoutId !== null) {
+        clearTimeout(timeoutId);
       }
     };
   }, []);

@@ -36,7 +36,7 @@ export const phoneSchema = z.string()
   .trim()
   .min(10, "Phone number must be at least 10 digits")
   .max(20, "Phone number is too long")
-  .regex(/^[\d\s\-\(\)\+\.]+$/, "Invalid phone number format")
+  .regex(/^[-\d\s()+.]+$/, "Invalid phone number format")
   .transform(sanitizeString);
 
 // Email validation with sanitization
@@ -53,7 +53,7 @@ export const nameSchema = z.string()
   .trim()
   .min(2, "Name must be at least 2 characters")
   .max(100, "Name must be less than 100 characters")
-  .regex(/^[a-zA-Z\s\-'\.]+$/, "Name can only contain letters, spaces, hyphens, apostrophes, and periods")
+  .regex(/^[a-zA-Z\s'.-]+$/, "Name can only contain letters, spaces, hyphens, apostrophes, and periods")
   .transform(sanitizeString);
 
 // Message/textarea validation

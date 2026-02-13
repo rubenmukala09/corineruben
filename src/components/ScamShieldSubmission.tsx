@@ -100,7 +100,7 @@ export const ScamShieldSubmission = ({ open, onOpenChange }: ScamShieldSubmissio
       setAnalysisResult(analysis);
 
       // Upload attachments if any
-      let attachmentUrls: string[] = [];
+      const attachmentUrls: string[] = [];
       if (attachments.length > 0 && user) {
         for (const file of attachments) {
           const fileExt = file.name.split('.').pop();
@@ -153,11 +153,12 @@ export const ScamShieldSubmission = ({ open, onOpenChange }: ScamShieldSubmissio
       });
       trackConversion("scam_analysis", 0);
 
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "Please try again or contact support";
       console.error('Submission error:', error);
       toast({
         title: "Submission Failed",
-        description: error.message || "Please try again or contact support",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {

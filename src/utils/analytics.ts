@@ -3,6 +3,8 @@
  * Supports Google Analytics 4 and custom events
  */
 
+type AnalyticsEventParams = Record<string, unknown>;
+
 // Check if user has Do Not Track enabled
 export function isTrackingEnabled(): boolean {
   return navigator.doNotTrack !== "1";
@@ -20,8 +22,8 @@ export function initGA(measurementId: string) {
 
   // Initialize dataLayer
   window.dataLayer = window.dataLayer || [];
-  window.gtag = function gtag() {
-    window.dataLayer.push(arguments);
+  window.gtag = function gtag(...args: unknown[]) {
+    window.dataLayer?.push(args);
   };
 
   // Default consent mode (denied until user accepts)
@@ -51,7 +53,7 @@ export function trackPageView(path: string, title: string) {
 // Track custom event
 export function trackEvent(
   eventName: string,
-  eventParams?: Record<string, any>
+  eventParams?: AnalyticsEventParams
 ) {
   if (!window.gtag || !isTrackingEnabled()) return;
 
@@ -62,7 +64,7 @@ export function trackEvent(
 export function trackButtonClick(
   buttonName: string,
   location: string,
-  additionalData?: Record<string, any>
+  additionalData?: AnalyticsEventParams
 ) {
   trackEvent("button_click", {
     button_name: buttonName,
@@ -224,7 +226,7 @@ export function trackTiming(
 // Type definitions
 declare global {
   interface Window {
-    gtag?: (...args: any[]) => void;
-    dataLayer?: any[];
+    gtag?: (...args: unknown[]) => void;
+    dataLayer?: unknown[][];
   }
 }

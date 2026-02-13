@@ -61,13 +61,12 @@ async function hmacSha1(key: Uint8Array, message: Uint8Array): Promise<Uint8Arra
 // Generate TOTP
 async function generateTOTP(secret: string, timeStep = 30, digits = 6): Promise<string> {
   const key = base32Decode(secret);
-  const time = Math.floor(Date.now() / 1000 / timeStep);
+  let time = Math.floor(Date.now() / 1000 / timeStep);
   
   const timeBytes = new Uint8Array(8);
   for (let i = 7; i >= 0; i--) {
     timeBytes[i] = time & 0xff;
-    // @ts-ignore
-    time >>= 8;
+    time = Math.floor(time / 256);
   }
   
   const hmac = await hmacSha1(key, timeBytes);
@@ -167,7 +166,11 @@ serve(async (req) => {
     }
 
     // Update last used and optionally enable 2FA
-    const updateData: any = {
+    const updateData: {
+      last_used_at: string;
+      updated_at: string;
+      is_enabled?: boolean;
+    } = {
       last_used_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };
@@ -190,10 +193,11 @@ serve(async (req) => {
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
     console.error("[VERIFY-2FA] Error:", error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: errorMessage }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }

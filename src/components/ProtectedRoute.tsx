@@ -14,8 +14,6 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
-    
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
@@ -36,7 +34,7 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     });
 
     // Timeout fallback to prevent infinite loading
-    timeout = setTimeout(() => {
+    const timeout = setTimeout(() => {
       if (loading) {
         console.error("Auth check timeout - forcing loading to false");
         setLoading(false);

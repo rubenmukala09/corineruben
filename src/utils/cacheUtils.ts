@@ -22,7 +22,9 @@ export async function deepCacheClear(): Promise<void> {
       const regs = await navigator.serviceWorker.getRegistrations();
       await Promise.all(regs.map(r => r.unregister()));
     }
-  } catch {}
+  } catch {
+    // Ignore cleanup errors and proceed with hard refresh.
+  }
   sessionStorage.clear();
   window.location.href = '/?r=' + Date.now();
 }

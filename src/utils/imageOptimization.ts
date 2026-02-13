@@ -9,6 +9,16 @@ export interface ResponsiveImageSizes {
   large?: number;
 }
 
+interface NetworkConnectionLike {
+  effectiveType?: string;
+}
+
+interface NavigatorWithConnection extends Navigator {
+  connection?: NetworkConnectionLike;
+  mozConnection?: NetworkConnectionLike;
+  webkitConnection?: NetworkConnectionLike;
+}
+
 const DEFAULT_SIZES: ResponsiveImageSizes = {
   mobile: 480,
   tablet: 768,
@@ -121,8 +131,8 @@ export function generateAltText(
  * Get optimal image quality based on network speed
  */
 export function getOptimalQuality(): number {
-  // @ts-ignore - navigator.connection is experimental
-  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const nav = navigator as NavigatorWithConnection;
+  const connection = nav.connection || nav.mozConnection || nav.webkitConnection;
   
   if (!connection) return 85; // Default quality
   

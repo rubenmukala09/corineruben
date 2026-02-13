@@ -37,7 +37,7 @@ export const getSessionId = (): string => {
 interface TrackEventParams {
   eventName: string;
   eventCategory?: string;
-  eventData?: Record<string, any>;
+  eventData?: Record<string, unknown>;
   pageUrl?: string;
   pageTitle?: string;
 }
@@ -104,7 +104,7 @@ export const trackButtonClick = (buttonName: string, location: string) => {
   });
 };
 
-export const trackFormSubmit = (formName: string, formData?: Record<string, any>) => {
+export const trackFormSubmit = (formName: string, formData?: Record<string, unknown>) => {
   trackEvent({
     eventName: "form_submit",
     eventCategory: "conversion",

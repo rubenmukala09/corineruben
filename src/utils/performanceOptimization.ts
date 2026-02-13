@@ -2,8 +2,16 @@
  * Lightweight performance utilities - minimal overhead
  */
 
+interface NetworkConnectionLike {
+  effectiveType?: string;
+}
+
+interface NavigatorWithConnection extends Navigator {
+  connection?: NetworkConnectionLike;
+}
+
 // Simple debounce
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
@@ -15,7 +23,7 @@ export function debounce<T extends (...args: any[]) => any>(
 }
 
 // Simple throttle
-export function throttle<T extends (...args: any[]) => any>(
+export function throttle<T extends (...args: unknown[]) => unknown>(
   func: T,
   limit: number
 ): (...args: Parameters<T>) => void {
@@ -40,7 +48,7 @@ export function runWhenIdle(callback: () => void, options?: { timeout?: number }
 
 // Check slow connection
 export function hasSlowConnection(): boolean {
-  const conn = (navigator as any).connection;
+  const conn = (navigator as NavigatorWithConnection).connection;
   if (!conn) return false;
   const type = conn.effectiveType;
   return type === "slow-2g" || type === "2g" || type === "3g";
