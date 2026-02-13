@@ -59,7 +59,7 @@ const testimonialSchema = z
     {
       message: "Testimonial text is required",
       path: ["story"],
-    }
+    },
   )
   .refine(
     (data) => {
@@ -71,7 +71,7 @@ const testimonialSchema = z
     {
       message: "Testimonial must be less than 500 characters",
       path: ["story"],
-    }
+    },
   );
 
 type TestimonialFormData = z.infer<typeof testimonialSchema>;
@@ -275,10 +275,17 @@ export function AddTestimonialModal({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.4, type: "spring", damping: 25, stiffness: 300 }}
+          transition={{
+            duration: 0.4,
+            type: "spring",
+            damping: 25,
+            stiffness: 300,
+          }}
         >
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold">Add New Testimonial</DialogTitle>
+            <DialogTitle className="text-2xl font-bold">
+              Add New Testimonial
+            </DialogTitle>
           </DialogHeader>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 mt-6">
@@ -293,7 +300,7 @@ export function AddTestimonialModal({
                 {...register("name")}
                 className={cn(
                   "transition-all duration-200",
-                  errors.name && "border-red-500 animate-shake"
+                  errors.name && "border-red-500 animate-shake",
                 )}
               />
               {errors.name && (
@@ -319,7 +326,7 @@ export function AddTestimonialModal({
                 {...register("email")}
                 className={cn(
                   "transition-all duration-200",
-                  errors.email && "border-red-500 animate-shake"
+                  errors.email && "border-red-500 animate-shake",
                 )}
               />
               {errors.email && (
@@ -344,7 +351,9 @@ export function AddTestimonialModal({
                 {...register("location")}
                 className="transition-all duration-200"
               />
-              <p className="text-xs text-muted-foreground">Format: City, State</p>
+              <p className="text-xs text-muted-foreground">
+                Format: City, State
+              </p>
             </div>
 
             {/* Testimonial Type */}
@@ -352,45 +361,65 @@ export function AddTestimonialModal({
               <Label className="text-sm font-medium">Testimonial Type</Label>
               <RadioGroup
                 value={testimonialType}
-                onValueChange={(value) => setValue("type", value as "text" | "video")}
+                onValueChange={(value) =>
+                  setValue("type", value as "text" | "video")
+                }
                 className="grid grid-cols-2 gap-4"
               >
-                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
                   <Label
                     htmlFor="text"
                     className={cn(
                       "flex flex-col items-center justify-center gap-3 p-6 border-2 rounded-xl cursor-pointer transition-all duration-200",
                       testimonialType === "text"
                         ? "border-primary bg-primary/10"
-                        : "border-border hover:border-primary/50"
+                        : "border-border hover:border-primary/50",
                     )}
                   >
-                    <RadioGroupItem value="text" id="text" className="sr-only" />
+                    <RadioGroupItem
+                      value="text"
+                      id="text"
+                      className="sr-only"
+                    />
                     <FileText
                       className={cn(
                         "h-8 w-8 transition-colors",
-                        testimonialType === "text" ? "text-primary" : "text-muted-foreground"
+                        testimonialType === "text"
+                          ? "text-primary"
+                          : "text-muted-foreground",
                       )}
                     />
                     <span className="font-medium">Text Testimonial</span>
                   </Label>
                 </motion.div>
 
-                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
                   <Label
                     htmlFor="video"
                     className={cn(
                       "flex flex-col items-center justify-center gap-3 p-6 border-2 rounded-xl cursor-pointer transition-all duration-200",
                       testimonialType === "video"
                         ? "border-primary bg-primary/10"
-                        : "border-border hover:border-primary/50"
+                        : "border-border hover:border-primary/50",
                     )}
                   >
-                    <RadioGroupItem value="video" id="video" className="sr-only" />
+                    <RadioGroupItem
+                      value="video"
+                      id="video"
+                      className="sr-only"
+                    />
                     <Video
                       className={cn(
                         "h-8 w-8 transition-colors",
-                        testimonialType === "video" ? "text-primary" : "text-muted-foreground"
+                        testimonialType === "video"
+                          ? "text-primary"
+                          : "text-muted-foreground",
                       )}
                     />
                     <span className="font-medium">Video Testimonial</span>
@@ -421,18 +450,22 @@ export function AddTestimonialModal({
                       {...register("story")}
                       className={cn(
                         "min-h-[120px] resize-none transition-all duration-200",
-                        errors.story && "border-red-500 animate-shake"
+                        errors.story && "border-red-500 animate-shake",
                       )}
                       maxLength={500}
                     />
                     <div className="flex items-center justify-between text-xs">
                       {errors.story && (
-                        <span className="text-red-500">{errors.story.message}</span>
+                        <span className="text-red-500">
+                          {errors.story.message}
+                        </span>
                       )}
                       <span
                         className={cn(
                           "ml-auto",
-                          story.length > 450 ? "text-orange-500" : "text-muted-foreground"
+                          story.length > 450
+                            ? "text-orange-500"
+                            : "text-muted-foreground",
                         )}
                       >
                         {story.length}/500
@@ -464,7 +497,7 @@ export function AddTestimonialModal({
                                 "h-8 w-8 transition-all duration-200",
                                 star <= (hoverRating || rating)
                                   ? "fill-yellow-400 text-yellow-400"
-                                  : "text-gray-300"
+                                  : "text-gray-300",
                               )}
                             />
                           </motion.button>
@@ -496,13 +529,15 @@ export function AddTestimonialModal({
                         "border-2 border-dashed rounded-xl p-8 text-center transition-all duration-200",
                         videoFile
                           ? "border-primary bg-primary/5"
-                          : "border-border hover:border-primary/50"
+                          : "border-border hover:border-primary/50",
                       )}
                     >
                       {videoFile ? (
                         <div className="space-y-3">
                           <Check className="h-12 w-12 text-green-500 mx-auto" />
-                          <p className="text-sm font-medium">{videoFile.name}</p>
+                          <p className="text-sm font-medium">
+                            {videoFile.name}
+                          </p>
                           <Button
                             type="button"
                             variant="outline"
@@ -595,7 +630,9 @@ export function AddTestimonialModal({
                   </Button>
                 </label>
               </div>
-              <p className="text-xs text-muted-foreground">JPG or PNG • Max 2MB</p>
+              <p className="text-xs text-muted-foreground">
+                JPG or PNG • Max 2MB
+              </p>
             </div>
 
             {/* Status */}
@@ -629,10 +666,15 @@ export function AddTestimonialModal({
                   <Checkbox
                     id="featured"
                     checked={watch("featured")}
-                    onCheckedChange={(checked) => setValue("featured", checked as boolean)}
+                    onCheckedChange={(checked) =>
+                      setValue("featured", checked as boolean)
+                    }
                   />
                   <div className="space-y-1">
-                    <Label htmlFor="featured" className="text-sm font-medium cursor-pointer">
+                    <Label
+                      htmlFor="featured"
+                      className="text-sm font-medium cursor-pointer"
+                    >
                       Featured on Homepage
                     </Label>
                     <p className="text-xs text-muted-foreground">

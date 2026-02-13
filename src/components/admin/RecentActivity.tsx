@@ -152,21 +152,21 @@ export function RecentActivity() {
       if (silent) {
         // Show a subtle notification for new activities and highlight them
         const newActivities = sortedActivities.filter(
-          (activity) => !activities.find((a) => a.id === activity.id)
+          (activity) => !activities.find((a) => a.id === activity.id),
         );
-        
+
         if (newActivities.length > 0) {
-          const newIds = new Set(newActivities.map(a => a.id));
+          const newIds = new Set(newActivities.map((a) => a.id));
           setNewActivityIds(newIds);
-          
+
           // Remove highlight after 3 seconds
           setTimeout(() => {
             setNewActivityIds(new Set());
           }, 3000);
-          
+
           toast({
             title: "New Activity",
-            description: `${newActivities.length} new ${newActivities.length === 1 ? 'activity' : 'activities'}`,
+            description: `${newActivities.length} new ${newActivities.length === 1 ? "activity" : "activities"}`,
           });
         }
       }
@@ -210,7 +210,9 @@ export function RecentActivity() {
               disabled={refreshing}
               className="text-muted-foreground hover:text-foreground"
             >
-              <RefreshCw className={`h-4 w-4 ${refreshing ? "animate-spin" : ""}`} />
+              <RefreshCw
+                className={`h-4 w-4 ${refreshing ? "animate-spin" : ""}`}
+              />
             </Button>
             <Button
               variant="link"
@@ -229,7 +231,10 @@ export function RecentActivity() {
             // Loading skeleton with shimmer
             <div className="space-y-0">
               {[...Array(5)].map((_, i) => (
-                <div key={i} className="flex items-start gap-3 py-3 border-b border-border">
+                <div
+                  key={i}
+                  className="flex items-start gap-3 py-3 border-b border-border"
+                >
                   <div className="w-10 h-10 rounded-full bg-muted shimmer" />
                   <div className="flex-1 space-y-2">
                     <div className="h-4 bg-muted rounded w-3/4 shimmer" />
@@ -246,16 +251,18 @@ export function RecentActivity() {
                   <motion.div
                     key={activity.id}
                     initial={{ opacity: 0, x: -20 }}
-                    animate={{ 
-                      opacity: 1, 
+                    animate={{
+                      opacity: 1,
                       x: 0,
-                      backgroundColor: isNew ? "hsl(var(--accent) / 0.2)" : "transparent"
+                      backgroundColor: isNew
+                        ? "hsl(var(--accent) / 0.2)"
+                        : "transparent",
                     }}
                     exit={{ opacity: 0, x: 20 }}
-                    transition={{ 
-                      duration: 0.3, 
+                    transition={{
+                      duration: 0.3,
                       delay: index * 0.05,
-                      backgroundColor: { duration: 3, ease: "easeOut" }
+                      backgroundColor: { duration: 3, ease: "easeOut" },
                     }}
                     onClick={() => handleActivityClick(activity)}
                     className={`flex items-start gap-3 py-3 px-3 border-b border-border transition-all duration-200 ${
@@ -275,7 +282,9 @@ export function RecentActivity() {
                         {activity.description}
                       </p>
                       <p className="text-xs text-muted-foreground mt-1">
-                        {formatDistanceToNow(activity.timestamp, { addSuffix: true })}
+                        {formatDistanceToNow(activity.timestamp, {
+                          addSuffix: true,
+                        })}
                       </p>
                     </div>
 
@@ -293,9 +302,7 @@ export function RecentActivity() {
               <p className="text-sm font-medium text-muted-foreground mb-1">
                 No recent activity
               </p>
-              <p className="text-sm text-muted-foreground">
-                All caught up! 🎉
-              </p>
+              <p className="text-sm text-muted-foreground">All caught up! 🎉</p>
             </div>
           )}
         </div>

@@ -20,7 +20,9 @@ export function useScamSubmissions() {
   return useQuery({
     queryKey: ["scam-submissions"],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return [];
 
       const { data, error } = await supabase

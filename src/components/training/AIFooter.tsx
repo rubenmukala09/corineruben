@@ -15,8 +15,9 @@ export const AIFooter = () => {
             Privacy Notice
           </p>
           <p className="text-xs text-white/80 leading-relaxed">
-            We do not save your data after chat sessions. Please download your conversation in PDF format before closing.
-            Audio messages will be converted to text format for download.
+            We do not save your data after chat sessions. Please download your
+            conversation in PDF format before closing. Audio messages will be
+            converted to text format for download.
           </p>
         </div>
 
@@ -31,7 +32,8 @@ export const AIFooter = () => {
                 <span className="text-white text-xs font-bold">A</span>
               </div>
               <span className="text-sm font-medium text-white/90">
-                Powered by <span className="text-white font-semibold">Anthropic</span>
+                Powered by{" "}
+                <span className="text-white font-semibold">Anthropic</span>
               </span>
             </div>
           </motion.div>
@@ -49,7 +51,8 @@ export const AIFooter = () => {
                 <span className="text-white text-xs font-bold">M</span>
               </div>
               <span className="text-sm font-medium text-white/90">
-                Secured by <span className="text-white font-semibold">Malwarebytes</span>
+                Secured by{" "}
+                <span className="text-white font-semibold">Malwarebytes</span>
               </span>
             </div>
           </motion.div>

@@ -1,6 +1,17 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
-import { CheckCircle, Package, Home, ShoppingBag, Mail, Download, Truck, Loader2, LogIn, ArrowRight } from "lucide-react";
+import {
+  CheckCircle,
+  Package,
+  Home,
+  ShoppingBag,
+  Mail,
+  Download,
+  Truck,
+  Loader2,
+  LogIn,
+  ArrowRight,
+} from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -15,7 +26,7 @@ interface PaymentVerification {
   status: string;
   mode?: string;
   customer_email?: string;
-  product_type?: 'digital' | 'physical' | 'mixed' | 'subscription';
+  product_type?: "digital" | "physical" | "mixed" | "subscription";
   is_subscription?: boolean;
   products?: string[];
   amount_total?: number;
@@ -41,10 +52,14 @@ export default function PaymentSuccess() {
   const sessionId = searchParams.get("session_id");
   const orderNumber = searchParams.get("order");
   const paymentType = searchParams.get("type");
-  
+
   const [verifying, setVerifying] = useState(true);
-  const [verification, setVerification] = useState<PaymentVerification | null>(null);
-  const [postPurchase, setPostPurchase] = useState<PostPurchaseSession | null>(null);
+  const [verification, setVerification] = useState<PaymentVerification | null>(
+    null,
+  );
+  const [postPurchase, setPostPurchase] = useState<PostPurchaseSession | null>(
+    null,
+  );
   const [error, setError] = useState<string | null>(null);
   const [autoLoginCountdown, setAutoLoginCountdown] = useState(5);
   const [showAutoLogin, setShowAutoLogin] = useState(false);
@@ -53,43 +68,70 @@ export default function PaymentSuccess() {
     const verifyPayment = async () => {
       if (!sessionId) {
         setVerifying(false);
-        setVerification({ verified: true, status: 'paid', product_type: 'physical' });
+        setVerification({
+          verified: true,
+          status: "paid",
+          product_type: "physical",
+        });
         return;
       }
 
       try {
         // First verify the payment
-        const { data, error: invokeError } = await supabase.functions.invoke('verify-payment', {
-          body: { session_id: sessionId }
-        });
+        const { data, error: invokeError } = await supabase.functions.invoke(
+          "verify-payment",
+          {
+            body: { session_id: sessionId },
+          },
+        );
 
         if (invokeError) {
-          console.error('Verification error:', invokeError);
-          setError('Unable to verify payment. Please contact support if you need assistance.');
-          setVerification({ verified: true, status: 'paid', product_type: 'physical' });
+          console.error("Verification error:", invokeError);
+          setError(
+            "Unable to verify payment. Please contact support if you need assistance.",
+          );
+          setVerification({
+            verified: true,
+            status: "paid",
+            product_type: "physical",
+          });
         } else {
           setVerification(data);
-          
+
           // For subscriptions, create post-purchase session for auto-login
-          if (data?.verified && (data?.is_subscription || paymentType === 'subscription')) {
+          if (
+            data?.verified &&
+            (data?.is_subscription || paymentType === "subscription")
+          ) {
             try {
-              const { data: sessionData, error: sessionError } = await supabase.functions.invoke('create-post-purchase-session', {
-                body: { session_id: sessionId }
-              });
-              
+              const { data: sessionData, error: sessionError } =
+                await supabase.functions.invoke(
+                  "create-post-purchase-session",
+                  {
+                    body: { session_id: sessionId },
+                  },
+                );
+
               if (!sessionError && sessionData?.success) {
                 setPostPurchase(sessionData);
                 setShowAutoLogin(true);
               }
             } catch (sessionErr) {
-              console.error('Post-purchase session creation failed:', sessionErr);
+              console.error(
+                "Post-purchase session creation failed:",
+                sessionErr,
+              );
               // Non-fatal - user can still manually login
             }
           }
         }
       } catch (err) {
-        console.error('Payment verification failed:', err);
-        setVerification({ verified: true, status: 'paid', product_type: 'physical' });
+        console.error("Payment verification failed:", err);
+        setVerification({
+          verified: true,
+          status: "paid",
+          product_type: "physical",
+        });
       } finally {
         setVerifying(false);
       }
@@ -102,10 +144,14 @@ export default function PaymentSuccess() {
   useEffect(() => {
     if (showAutoLogin && postPurchase?.magic_link && autoLoginCountdown > 0) {
       const timer = setTimeout(() => {
-        setAutoLoginCountdown(prev => prev - 1);
+        setAutoLoginCountdown((prev) => prev - 1);
       }, 1000);
       return () => clearTimeout(timer);
-    } else if (showAutoLogin && postPurchase?.magic_link && autoLoginCountdown === 0) {
+    } else if (
+      showAutoLogin &&
+      postPurchase?.magic_link &&
+      autoLoginCountdown === 0
+    ) {
       // Redirect to magic link for auto-login
       window.location.href = postPurchase.magic_link;
     }
@@ -118,7 +164,8 @@ export default function PaymentSuccess() {
       const animationEnd = Date.now() + duration;
       const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
 
-      const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
+      const randomInRange = (min: number, max: number) =>
+        Math.random() * (max - min) + min;
 
       const interval = window.setInterval(() => {
         const timeLeft = animationEnd - Date.now();
@@ -148,7 +195,7 @@ export default function PaymentSuccess() {
     if (postPurchase?.magic_link) {
       window.location.href = postPurchase.magic_link;
     } else {
-      navigate('/auth');
+      navigate("/auth");
     }
   };
 
@@ -174,11 +221,16 @@ export default function PaymentSuccess() {
               </li>
               <li className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                <span>You'll receive a confirmation email at <strong>{verification.customer_email}</strong></span>
+                <span>
+                  You'll receive a confirmation email at{" "}
+                  <strong>{verification.customer_email}</strong>
+                </span>
               </li>
               <li className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                <span>Access your benefits immediately through your dashboard</span>
+                <span>
+                  Access your benefits immediately through your dashboard
+                </span>
               </li>
             </ul>
           </div>
@@ -187,7 +239,7 @@ export default function PaymentSuccess() {
     }
 
     switch (verification.product_type) {
-      case 'digital':
+      case "digital":
         return (
           <div className="flex items-start gap-4">
             <div className="w-12 h-12 rounded-lg bg-success/10 flex items-center justify-center flex-shrink-0">
@@ -202,7 +254,9 @@ export default function PaymentSuccess() {
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  <span>Sent to: <strong>{verification.customer_email}</strong></span>
+                  <span>
+                    Sent to: <strong>{verification.customer_email}</strong>
+                  </span>
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-primary" />
@@ -216,7 +270,7 @@ export default function PaymentSuccess() {
             </div>
           </div>
         );
-      case 'physical':
+      case "physical":
         return (
           <div className="flex items-start gap-4">
             <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
@@ -227,11 +281,15 @@ export default function PaymentSuccess() {
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  <span>You'll receive an order confirmation email shortly</span>
+                  <span>
+                    You'll receive an order confirmation email shortly
+                  </span>
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  <span>Your order will be processed within 1-2 business days</span>
+                  <span>
+                    Your order will be processed within 1-2 business days
+                  </span>
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-primary" />
@@ -245,7 +303,7 @@ export default function PaymentSuccess() {
             </div>
           </div>
         );
-      case 'mixed':
+      case "mixed":
         return (
           <div className="space-y-6">
             <div className="flex items-start gap-4">
@@ -257,7 +315,9 @@ export default function PaymentSuccess() {
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex items-center gap-2">
                     <Mail className="w-4 h-4 text-primary" />
-                    <span>Check your email for download links (within 2-5 minutes)</span>
+                    <span>
+                      Check your email for download links (within 2-5 minutes)
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -289,11 +349,15 @@ export default function PaymentSuccess() {
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  <span>You'll receive an order confirmation email shortly</span>
+                  <span>
+                    You'll receive an order confirmation email shortly
+                  </span>
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  <span>Your order will be processed within 1-2 business days</span>
+                  <span>
+                    Your order will be processed within 1-2 business days
+                  </span>
                 </li>
               </ul>
             </div>
@@ -304,19 +368,21 @@ export default function PaymentSuccess() {
 
   return (
     <>
-      <SEO 
+      <SEO
         title="Order Confirmed - Thank You!"
         description="Your order has been successfully placed. We'll send you a confirmation email shortly."
       />
       <Navigation />
-      
+
       <div className="min-h-screen bg-gradient-to-b from-background via-secondary/20 to-background">
         <div className="container mx-auto px-4 py-20">
           <div className="max-w-2xl mx-auto">
             {verifying ? (
               <div className="text-center py-20">
                 <Loader2 className="w-12 h-12 animate-spin text-primary mx-auto mb-4" />
-                <p className="text-lg text-muted-foreground">Verifying your payment...</p>
+                <p className="text-lg text-muted-foreground">
+                  Verifying your payment...
+                </p>
               </div>
             ) : (
               <>
@@ -326,12 +392,15 @@ export default function PaymentSuccess() {
                     <CheckCircle className="w-12 h-12 text-success" />
                   </div>
                   <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent animate-in slide-in-from-bottom duration-500">
-                    {verification?.is_subscription ? 'Subscription Confirmed!' : 'Order Confirmed!'}
+                    {verification?.is_subscription
+                      ? "Subscription Confirmed!"
+                      : "Order Confirmed!"}
                   </h1>
                   <p className="text-lg text-muted-foreground animate-in slide-in-from-bottom duration-500 delay-100">
-                    Thank you for your purchase. {verification?.is_subscription 
-                      ? 'Your subscription is now active.' 
-                      : 'Your order has been successfully placed.'}
+                    Thank you for your purchase.{" "}
+                    {verification?.is_subscription
+                      ? "Your subscription is now active."
+                      : "Your order has been successfully placed."}
                   </p>
                 </div>
 
@@ -340,21 +409,30 @@ export default function PaymentSuccess() {
                   <div className="space-y-6">
                     {orderNumber && (
                       <div>
-                        <h3 className="text-sm font-medium text-muted-foreground mb-2">Order Number</h3>
-                        <p className="text-2xl font-bold text-primary">{orderNumber}</p>
+                        <h3 className="text-sm font-medium text-muted-foreground mb-2">
+                          Order Number
+                        </h3>
+                        <p className="text-2xl font-bold text-primary">
+                          {orderNumber}
+                        </p>
                       </div>
                     )}
 
-                    {verification?.products && verification.products.length > 0 && (
-                      <div>
-                        <h3 className="text-sm font-medium text-muted-foreground mb-2">Items Purchased</h3>
-                        <ul className="space-y-1">
-                          {verification.products.map((product, i) => (
-                            <li key={i} className="text-foreground">{product}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
+                    {verification?.products &&
+                      verification.products.length > 0 && (
+                        <div>
+                          <h3 className="text-sm font-medium text-muted-foreground mb-2">
+                            Items Purchased
+                          </h3>
+                          <ul className="space-y-1">
+                            {verification.products.map((product, i) => (
+                              <li key={i} className="text-foreground">
+                                {product}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
 
                     <div className="border-t pt-6">
                       {getProductTypeMessage()}
@@ -369,7 +447,10 @@ export default function PaymentSuccess() {
                     <div className="border-t pt-6">
                       <p className="text-sm text-muted-foreground">
                         Questions about your order? Contact us at{" "}
-                        <a href={`mailto:${SITE.emails.hello}`} className="text-primary hover:underline">
+                        <a
+                          href={`mailto:${SITE.emails.hello}`}
+                          className="text-primary hover:underline"
+                        >
                           {SITE.emails.hello}
                         </a>
                       </p>
@@ -387,10 +468,15 @@ export default function PaymentSuccess() {
                         </div>
                         <div>
                           <h3 className="font-semibold text-lg">
-                            {postPurchase.is_new_user ? 'Account Created!' : 'Welcome Back!'}
+                            {postPurchase.is_new_user
+                              ? "Account Created!"
+                              : "Welcome Back!"}
                           </h3>
                           <p className="text-sm text-muted-foreground">
-                            Redirecting to your dashboard in <strong className="text-primary">{autoLoginCountdown}s</strong>
+                            Redirecting to your dashboard in{" "}
+                            <strong className="text-primary">
+                              {autoLoginCountdown}s
+                            </strong>
                           </p>
                         </div>
                       </div>
@@ -411,11 +497,20 @@ export default function PaymentSuccess() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 animate-in slide-in-from-bottom duration-500 delay-300">
                   {showAutoLogin && postPurchase ? (
                     <>
-                      <Button onClick={handleManualLogin} size="lg" className="w-full">
+                      <Button
+                        onClick={handleManualLogin}
+                        size="lg"
+                        className="w-full"
+                      >
                         <LogIn className="w-4 h-4 mr-2" />
                         Go to Dashboard
                       </Button>
-                      <Button asChild size="lg" variant="outline" className="w-full">
+                      <Button
+                        asChild
+                        size="lg"
+                        variant="outline"
+                        className="w-full"
+                      >
                         <Link to="/">
                           <Home className="w-4 h-4 mr-2" />
                           Return Home
@@ -430,7 +525,12 @@ export default function PaymentSuccess() {
                           Return Home
                         </Link>
                       </Button>
-                      <Button asChild size="lg" variant="outline" className="w-full">
+                      <Button
+                        asChild
+                        size="lg"
+                        variant="outline"
+                        className="w-full"
+                      >
                         <Link to="/resources">
                           <ShoppingBag className="w-4 h-4 mr-2" />
                           Continue Shopping

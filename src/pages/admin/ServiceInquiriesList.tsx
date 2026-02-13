@@ -19,8 +19,6 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -72,10 +70,16 @@ const ServiceInquiriesList = () => {
   const queryClient = useQueryClient();
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-  const [selectedInquiry, setSelectedInquiry] = useState<ServiceInquiry | null>(null);
+  const [selectedInquiry, setSelectedInquiry] = useState<ServiceInquiry | null>(
+    null,
+  );
   const [adminNotes, setAdminNotes] = useState("");
 
-  const { data: inquiries = [], isLoading, refetch } = useQuery({
+  const {
+    data: inquiries = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["service-inquiries", statusFilter],
     queryFn: async () => {
       let query = supabase
@@ -94,17 +98,25 @@ const ServiceInquiriesList = () => {
   });
 
   const updateStatusMutation = useMutation({
-    mutationFn: async ({ id, status, notes }: { id: string; status: string; notes?: string }) => {
+    mutationFn: async ({
+      id,
+      status,
+      notes,
+    }: {
+      id: string;
+      status: string;
+      notes?: string;
+    }) => {
       const updates: any = { status };
       if (notes !== undefined) {
         updates.admin_notes = notes;
       }
-      
+
       const { error } = await supabase
         .from("service_inquiries")
         .update(updates)
         .eq("id", id);
-      
+
       if (error) throw error;
     },
     onSuccess: () => {
@@ -125,28 +137,46 @@ const ServiceInquiriesList = () => {
   });
 
   // Calculate stats
-  const newCount = inquiries.filter(i => i.status === "new").length;
-  const inProgressCount = inquiries.filter(i => i.status === "in_progress").length;
-  const quotedCount = inquiries.filter(i => i.status === "quoted").length;
-  const convertedCount = inquiries.filter(i => i.status === "converted").length;
+  const newCount = inquiries.filter((i) => i.status === "new").length;
+  const inProgressCount = inquiries.filter(
+    (i) => i.status === "in_progress",
+  ).length;
+  const quotedCount = inquiries.filter((i) => i.status === "quoted").length;
+  const convertedCount = inquiries.filter(
+    (i) => i.status === "converted",
+  ).length;
 
   const filteredInquiries = inquiries.filter((inquiry) => {
     const matchesSearch =
       inquiry.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       inquiry.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      inquiry.inquiry_number.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (inquiry.company_name?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false);
+      inquiry.inquiry_number
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      (inquiry.company_name
+        ?.toLowerCase()
+        .includes(searchQuery.toLowerCase()) ??
+        false);
     return matchesSearch;
   });
 
   const getStatusBadge = (status: string) => {
-    const variants: Record<string, { variant: any; label: string; icon: any }> = {
-      new: { variant: "default", label: "New", icon: Clock },
-      in_progress: { variant: "outline", label: "In Progress", icon: RefreshCw },
-      quoted: { variant: "secondary", label: "Quoted", icon: DollarSign },
-      converted: { variant: "success", label: "Converted", icon: CheckCircle },
-      closed: { variant: "destructive", label: "Closed", icon: XCircle },
-    };
+    const variants: Record<string, { variant: any; label: string; icon: any }> =
+      {
+        new: { variant: "default", label: "New", icon: Clock },
+        in_progress: {
+          variant: "outline",
+          label: "In Progress",
+          icon: RefreshCw,
+        },
+        quoted: { variant: "secondary", label: "Quoted", icon: DollarSign },
+        converted: {
+          variant: "success",
+          label: "Converted",
+          icon: CheckCircle,
+        },
+        closed: { variant: "destructive", label: "Closed", icon: XCircle },
+      };
     const config = variants[status] || variants.new;
     const Icon = config.icon;
     return (
@@ -165,8 +195,10 @@ const ServiceInquiriesList = () => {
       "ai-receptionist": "bg-orange-100 text-orange-800",
     };
     return (
-      <span className={`px-2 py-1 rounded-full text-xs font-medium ${colors[service] || "bg-gray-100 text-gray-800"}`}>
-        {service.replace("-", " ").replace(/\b\w/g, c => c.toUpperCase())}
+      <span
+        className={`px-2 py-1 rounded-full text-xs font-medium ${colors[service] || "bg-gray-100 text-gray-800"}`}
+      >
+        {service.replace("-", " ").replace(/\b\w/g, (c) => c.toUpperCase())}
       </span>
     );
   };
@@ -179,10 +211,18 @@ const ServiceInquiriesList = () => {
     <div className="p-6 max-w-7xl mx-auto space-y-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-[#F9FAFB]">Service Inquiries</h1>
-          <p className="text-[#9CA3AF]">Manage B2B service leads and custom projects</p>
+          <h1 className="text-2xl font-bold text-[#F9FAFB]">
+            Service Inquiries
+          </h1>
+          <p className="text-[#9CA3AF]">
+            Manage B2B service leads and custom projects
+          </p>
         </div>
-        <Button variant="outline" onClick={() => refetch()} className="border-gray-700 hover:bg-gray-800">
+        <Button
+          variant="outline"
+          onClick={() => refetch()}
+          className="border-gray-700 hover:bg-gray-800"
+        >
           <RefreshCw className="mr-2 h-4 w-4" />
           Refresh
         </Button>
@@ -290,7 +330,10 @@ const ServiceInquiriesList = () => {
                 </TableRow>
               ) : filteredInquiries.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={8} className="text-center py-8 text-muted-foreground">
+                  <TableCell
+                    colSpan={8}
+                    className="text-center py-8 text-muted-foreground"
+                  >
                     No service inquiries found
                   </TableCell>
                 </TableRow>
@@ -311,12 +354,18 @@ const ServiceInquiriesList = () => {
                             {inquiry.company_name}
                           </div>
                         )}
-                        <div className="text-xs text-muted-foreground">{inquiry.email}</div>
+                        <div className="text-xs text-muted-foreground">
+                          {inquiry.email}
+                        </div>
                       </div>
                     </TableCell>
-                    <TableCell>{getServiceBadge(inquiry.service_type)}</TableCell>
                     <TableCell>
-                      <span className="font-medium">{inquiry.project_budget || "-"}</span>
+                      {getServiceBadge(inquiry.service_type)}
+                    </TableCell>
+                    <TableCell>
+                      <span className="font-medium">
+                        {inquiry.project_budget || "-"}
+                      </span>
                     </TableCell>
                     <TableCell>
                       <span className="text-sm">{inquiry.timeline || "-"}</span>
@@ -347,7 +396,9 @@ const ServiceInquiriesList = () => {
                           </DialogTrigger>
                           <DialogContent className="max-w-2xl">
                             <DialogHeader>
-                              <DialogTitle>Inquiry Details - {inquiry.inquiry_number}</DialogTitle>
+                              <DialogTitle>
+                                Inquiry Details - {inquiry.inquiry_number}
+                              </DialogTitle>
                               <DialogDescription>
                                 Review and update the inquiry status
                               </DialogDescription>
@@ -355,30 +406,50 @@ const ServiceInquiriesList = () => {
                             <div className="space-y-4 mt-4">
                               <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                  <label className="text-sm font-medium">Contact</label>
+                                  <label className="text-sm font-medium">
+                                    Contact
+                                  </label>
                                   <p className="text-sm">{inquiry.full_name}</p>
-                                  <p className="text-xs text-muted-foreground">{inquiry.email}</p>
+                                  <p className="text-xs text-muted-foreground">
+                                    {inquiry.email}
+                                  </p>
                                   {inquiry.phone && (
-                                    <p className="text-xs text-muted-foreground">{inquiry.phone}</p>
+                                    <p className="text-xs text-muted-foreground">
+                                      {inquiry.phone}
+                                    </p>
                                   )}
                                 </div>
                                 <div>
-                                  <label className="text-sm font-medium">Company</label>
-                                  <p className="text-sm">{inquiry.company_name || "-"}</p>
+                                  <label className="text-sm font-medium">
+                                    Company
+                                  </label>
+                                  <p className="text-sm">
+                                    {inquiry.company_name || "-"}
+                                  </p>
                                 </div>
                                 <div>
-                                  <label className="text-sm font-medium">Service</label>
-                                  <p className="text-sm">{inquiry.service_type}</p>
+                                  <label className="text-sm font-medium">
+                                    Service
+                                  </label>
+                                  <p className="text-sm">
+                                    {inquiry.service_type}
+                                  </p>
                                 </div>
                                 <div>
-                                  <label className="text-sm font-medium">Budget</label>
-                                  <p className="text-sm">{inquiry.project_budget || "-"}</p>
+                                  <label className="text-sm font-medium">
+                                    Budget
+                                  </label>
+                                  <p className="text-sm">
+                                    {inquiry.project_budget || "-"}
+                                  </p>
                                 </div>
                               </div>
-                              
+
                               {inquiry.requirements && (
                                 <div>
-                                  <label className="text-sm font-medium">Requirements</label>
+                                  <label className="text-sm font-medium">
+                                    Requirements
+                                  </label>
                                   <p className="text-sm bg-muted p-3 rounded-lg mt-1">
                                     {inquiry.requirements}
                                   </p>
@@ -386,22 +457,37 @@ const ServiceInquiriesList = () => {
                               )}
 
                               <div>
-                                <label className="text-sm font-medium">Admin Notes</label>
+                                <label className="text-sm font-medium">
+                                  Admin Notes
+                                </label>
                                 <Textarea
                                   value={adminNotes}
-                                  onChange={(e) => setAdminNotes(e.target.value)}
+                                  onChange={(e) =>
+                                    setAdminNotes(e.target.value)
+                                  }
                                   placeholder="Add internal notes about this inquiry..."
                                   className="mt-1"
                                 />
                               </div>
 
                               <div>
-                                <label className="text-sm font-medium mb-2 block">Update Status</label>
+                                <label className="text-sm font-medium mb-2 block">
+                                  Update Status
+                                </label>
                                 <div className="flex gap-2 flex-wrap">
                                   <Button
                                     size="sm"
-                                    variant={inquiry.status === "in_progress" ? "default" : "outline"}
-                                    onClick={() => handleStatusUpdate(inquiry.id, "in_progress")}
+                                    variant={
+                                      inquiry.status === "in_progress"
+                                        ? "default"
+                                        : "outline"
+                                    }
+                                    onClick={() =>
+                                      handleStatusUpdate(
+                                        inquiry.id,
+                                        "in_progress",
+                                      )
+                                    }
                                     disabled={updateStatusMutation.isPending}
                                   >
                                     <ArrowRight className="h-4 w-4 mr-1" />
@@ -409,8 +495,14 @@ const ServiceInquiriesList = () => {
                                   </Button>
                                   <Button
                                     size="sm"
-                                    variant={inquiry.status === "quoted" ? "default" : "outline"}
-                                    onClick={() => handleStatusUpdate(inquiry.id, "quoted")}
+                                    variant={
+                                      inquiry.status === "quoted"
+                                        ? "default"
+                                        : "outline"
+                                    }
+                                    onClick={() =>
+                                      handleStatusUpdate(inquiry.id, "quoted")
+                                    }
                                     disabled={updateStatusMutation.isPending}
                                   >
                                     <DollarSign className="h-4 w-4 mr-1" />
@@ -418,8 +510,17 @@ const ServiceInquiriesList = () => {
                                   </Button>
                                   <Button
                                     size="sm"
-                                    variant={inquiry.status === "converted" ? "default" : "outline"}
-                                    onClick={() => handleStatusUpdate(inquiry.id, "converted")}
+                                    variant={
+                                      inquiry.status === "converted"
+                                        ? "default"
+                                        : "outline"
+                                    }
+                                    onClick={() =>
+                                      handleStatusUpdate(
+                                        inquiry.id,
+                                        "converted",
+                                      )
+                                    }
                                     disabled={updateStatusMutation.isPending}
                                   >
                                     <CheckCircle className="h-4 w-4 mr-1" />
@@ -428,7 +529,9 @@ const ServiceInquiriesList = () => {
                                   <Button
                                     size="sm"
                                     variant="destructive"
-                                    onClick={() => handleStatusUpdate(inquiry.id, "closed")}
+                                    onClick={() =>
+                                      handleStatusUpdate(inquiry.id, "closed")
+                                    }
                                     disabled={updateStatusMutation.isPending}
                                   >
                                     <XCircle className="h-4 w-4 mr-1" />
@@ -440,7 +543,12 @@ const ServiceInquiriesList = () => {
                               <div className="flex gap-2 pt-4 border-t">
                                 <Button
                                   variant="outline"
-                                  onClick={() => window.open(`mailto:${inquiry.email}`, "_blank")}
+                                  onClick={() =>
+                                    window.open(
+                                      `mailto:${inquiry.email}`,
+                                      "_blank",
+                                    )
+                                  }
                                 >
                                   <Mail className="h-4 w-4 mr-2" />
                                   Email
@@ -448,7 +556,12 @@ const ServiceInquiriesList = () => {
                                 {inquiry.phone && (
                                   <Button
                                     variant="outline"
-                                    onClick={() => window.open(`tel:${inquiry.phone}`, "_blank")}
+                                    onClick={() =>
+                                      window.open(
+                                        `tel:${inquiry.phone}`,
+                                        "_blank",
+                                      )
+                                    }
                                   >
                                     <Phone className="h-4 w-4 mr-2" />
                                     Call
@@ -461,7 +574,9 @@ const ServiceInquiriesList = () => {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => window.open(`mailto:${inquiry.email}`, "_blank")}
+                          onClick={() =>
+                            window.open(`mailto:${inquiry.email}`, "_blank")
+                          }
                         >
                           <Mail className="h-4 w-4" />
                         </Button>

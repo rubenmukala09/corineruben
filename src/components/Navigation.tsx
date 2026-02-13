@@ -1,7 +1,14 @@
 import * as React from "react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Phone, LayoutDashboard, ShoppingCart as CartIcon, Heart } from "lucide-react";
+import {
+  Menu,
+  X,
+  Phone,
+  LayoutDashboard,
+  ShoppingCart as CartIcon,
+  Heart,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PrefetchLink } from "@/components/PrefetchLink";
 import { ShoppingCart } from "@/components/ShoppingCart";
@@ -23,12 +30,12 @@ const Navigation = React.memo(() => {
 
   React.useEffect(() => {
     if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [mobileMenuOpen]);
 
@@ -43,16 +50,18 @@ const Navigation = React.memo(() => {
   ];
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleBrandClick = async (e: React.MouseEvent) => {
     e.preventDefault();
-    window.location.href = '/';
+    window.location.href = "/";
   };
 
   const isActiveLink = (href: string) => {
-    return location.pathname === href || location.pathname.startsWith(href + '/');
+    return (
+      location.pathname === href || location.pathname.startsWith(href + "/")
+    );
   };
 
   return (
@@ -69,14 +78,14 @@ const Navigation = React.memo(() => {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between h-14 md:h-16">
             {/* Logo */}
-            <a 
-              href="/" 
-              className="flex items-center gap-3 hover:opacity-90 transition-opacity duration-150 flex-shrink-0 no-underline" 
+            <a
+              href="/"
+              className="flex items-center gap-3 hover:opacity-90 transition-opacity duration-150 flex-shrink-0 no-underline"
               onClick={handleBrandClick}
             >
-              <img 
-                src={invisionLogo} 
-                alt="InVision Network Shield Logo" 
+              <img
+                src={invisionLogo}
+                alt="InVision Network Shield Logo"
                 width={44}
                 height={44}
                 loading="eager"
@@ -84,12 +93,13 @@ const Navigation = React.memo(() => {
                 className="w-10 h-10 md:w-11 md:h-11 object-contain flex-shrink-0 premium-4k-image"
               />
               <div className="flex flex-col leading-tight min-w-0">
-                <span 
+                <span
                   className="text-lg md:text-xl font-bold tracking-tight"
                   style={{
-                    background: 'linear-gradient(135deg, #18305A 0%, #BB81B5 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
+                    background:
+                      "linear-gradient(135deg, #18305A 0%, #BB81B5 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
                   }}
                 >
                   InVision Network
@@ -109,9 +119,9 @@ const Navigation = React.memo(() => {
                     key={link.name}
                     to={link.href}
                     className={`relative text-sm transition-colors duration-150 font-semibold px-3 py-2 rounded-md whitespace-nowrap animated-underline tracking-tight ${
-                      isActive 
-                        ? 'text-primary font-bold' 
-                        : 'text-foreground/80 hover:text-foreground hover:bg-muted/50'
+                      isActive
+                        ? "text-primary font-bold"
+                        : "text-foreground/80 hover:text-foreground hover:bg-muted/50"
                     }`}
                   >
                     {link.name}
@@ -150,18 +160,27 @@ const Navigation = React.memo(() => {
               </button>
 
               {/* Login/Dashboard Button */}
-              <Button 
-                asChild 
+              <Button
+                asChild
                 className="h-9 px-5 text-white font-semibold rounded-full shadow-sm"
-                style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }}
+                style={{
+                  background:
+                    "linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)",
+                }}
               >
                 {isAdminOrStaff ? (
-                  <Link to="/admin" aria-label="Go to Dashboard" className="flex items-center gap-2">
+                  <Link
+                    to="/admin"
+                    aria-label="Go to Dashboard"
+                    className="flex items-center gap-2"
+                  >
                     <LayoutDashboard className="h-4 w-4" />
                     Dashboard
                   </Link>
                 ) : (
-                  <Link to="/portal" aria-label="Login to your account">Login</Link>
+                  <Link to="/portal" aria-label="Login to your account">
+                    Login
+                  </Link>
                 )}
               </Button>
 
@@ -192,9 +211,9 @@ const Navigation = React.memo(() => {
                     key={link.name}
                     to={link.href}
                     className={`block text-base transition-colors duration-150 font-medium px-4 py-3 rounded-lg animated-underline ${
-                      isActive 
-                        ? 'text-primary bg-primary/5 font-semibold' 
-                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                      isActive
+                        ? "text-primary bg-primary/5 font-semibold"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                     }`}
                     onClick={() => {
                       setMobileMenuOpen(false);
@@ -210,17 +229,26 @@ const Navigation = React.memo(() => {
               <div className="pt-4 border-t border-border mt-4 space-y-3">
                 {/* Mobile Login/Dashboard Button */}
                 <Button
-                  asChild 
+                  asChild
                   className="w-full h-11 text-base font-semibold text-white rounded-full"
-                  style={{ background: 'linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)' }}
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)",
+                  }}
                 >
                   {isAdminOrStaff ? (
-                    <Link to="/admin" onClick={() => setMobileMenuOpen(false)} className="flex items-center justify-center gap-2">
+                    <Link
+                      to="/admin"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center justify-center gap-2"
+                    >
                       <LayoutDashboard className="h-5 w-5" />
                       Dashboard
                     </Link>
                   ) : (
-                    <Link to="/portal" onClick={() => setMobileMenuOpen(false)}>Login</Link>
+                    <Link to="/portal" onClick={() => setMobileMenuOpen(false)}>
+                      Login
+                    </Link>
                   )}
                 </Button>
 
@@ -242,7 +270,11 @@ const Navigation = React.memo(() => {
       </nav>
 
       {/* Donation Modal */}
-      <DonationModal open={donateOpen} onOpenChange={setDonateOpen} type="general" />
+      <DonationModal
+        open={donateOpen}
+        onOpenChange={setDonateOpen}
+        type="general"
+      />
     </>
   );
 });

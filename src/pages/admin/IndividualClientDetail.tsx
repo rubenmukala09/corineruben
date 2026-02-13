@@ -7,7 +7,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ArrowLeft, Mail, Phone, MapPin, Calendar, Shield, Edit } from "lucide-react";
+import {
+  ArrowLeft,
+  Mail,
+  Phone,
+  MapPin,
+  Calendar,
+  Shield,
+  Edit,
+} from "lucide-react";
 import { format } from "date-fns";
 
 interface Client {
@@ -67,7 +75,10 @@ export default function IndividualClientDetail() {
             <Skeleton className="h-4 w-64 mt-2 bg-gray-800" />
           </div>
           <Link to="/admin/clients/individuals">
-            <Button variant="outline" className="border-gray-700 text-gray-300 hover:bg-gray-800">
+            <Button
+              variant="outline"
+              className="border-gray-700 text-gray-300 hover:bg-gray-800"
+            >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Clients
             </Button>
@@ -100,18 +111,27 @@ export default function IndividualClientDetail() {
       <div className="p-6 max-w-7xl mx-auto space-y-6">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-[#F9FAFB]">Client Not Found</h1>
-            <p className="text-[#9CA3AF]">The requested client could not be found</p>
+            <h1 className="text-2xl font-bold text-[#F9FAFB]">
+              Client Not Found
+            </h1>
+            <p className="text-[#9CA3AF]">
+              The requested client could not be found
+            </p>
           </div>
           <Link to="/admin/clients/individuals">
-            <Button variant="outline" className="border-gray-700 text-gray-300 hover:bg-gray-800">
+            <Button
+              variant="outline"
+              className="border-gray-700 text-gray-300 hover:bg-gray-800"
+            >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Clients
             </Button>
           </Link>
         </div>
         <Card className="bg-[#111827] border-gray-800 p-8 text-center">
-          <p className="text-gray-400">This client does not exist or has been removed.</p>
+          <p className="text-gray-400">
+            This client does not exist or has been removed.
+          </p>
         </Card>
       </div>
     );
@@ -121,12 +141,19 @@ export default function IndividualClientDetail() {
     <div className="p-6 max-w-7xl mx-auto space-y-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-[#F9FAFB]">{client.first_name} {client.last_name}</h1>
-          <p className="text-[#9CA3AF]">Individual client details and activity</p>
+          <h1 className="text-2xl font-bold text-[#F9FAFB]">
+            {client.first_name} {client.last_name}
+          </h1>
+          <p className="text-[#9CA3AF]">
+            Individual client details and activity
+          </p>
         </div>
         <div className="flex gap-2">
           <Link to="/admin/clients/individuals">
-            <Button variant="outline" className="border-gray-700 text-gray-300 hover:bg-gray-800">
+            <Button
+              variant="outline"
+              className="border-gray-700 text-gray-300 hover:bg-gray-800"
+            >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Button>
@@ -137,7 +164,7 @@ export default function IndividualClientDetail() {
           </Button>
         </div>
       </div>
-      
+
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Profile Card */}
         <Card className="lg:col-span-1 bg-[#111827] border-gray-800">
@@ -152,7 +179,7 @@ export default function IndividualClientDetail() {
                 {client.first_name} {client.last_name}
               </h2>
               <p className="text-gray-400">{client.email}</p>
-              
+
               <div className="mt-4 flex flex-wrap justify-center gap-2">
                 <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
                   <Shield className="w-3 h-3 mr-1" />
@@ -163,7 +190,11 @@ export default function IndividualClientDetail() {
               {client.tags && client.tags.length > 0 && (
                 <div className="mt-4 flex flex-wrap justify-center gap-1">
                   {client.tags.map((tag, i) => (
-                    <Badge key={i} variant="outline" className="text-gray-400 border-gray-700">
+                    <Badge
+                      key={i}
+                      variant="outline"
+                      className="text-gray-400 border-gray-700"
+                    >
                       {tag}
                     </Badge>
                   ))}
@@ -187,7 +218,7 @@ export default function IndividualClientDetail() {
                   <p className="text-white">{client.email}</p>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg">
                 <Phone className="w-5 h-5 text-green-400" />
                 <div>
@@ -195,20 +226,24 @@ export default function IndividualClientDetail() {
                   <p className="text-white">{client.phone || "Not provided"}</p>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg">
                 <MapPin className="w-5 h-5 text-orange-400" />
                 <div>
                   <p className="text-xs text-gray-500">Address</p>
-                  <p className="text-white">{client.address || "Not provided"}</p>
+                  <p className="text-white">
+                    {client.address || "Not provided"}
+                  </p>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg">
                 <Calendar className="w-5 h-5 text-purple-400" />
                 <div>
                   <p className="text-xs text-gray-500">Member Since</p>
-                  <p className="text-white">{format(new Date(client.created_at), "MMM d, yyyy")}</p>
+                  <p className="text-white">
+                    {format(new Date(client.created_at), "MMM d, yyyy")}
+                  </p>
                 </div>
               </div>
             </div>
@@ -223,7 +258,10 @@ export default function IndividualClientDetail() {
             <div className="p-4 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-lg border border-cyan-500/20">
               <p className="text-xs text-gray-500 mb-1">Total Spent</p>
               <p className="text-2xl font-bold text-cyan-400">
-                ${(client.total_spent || 0).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                $
+                {(client.total_spent || 0).toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                })}
               </p>
             </div>
           </CardContent>

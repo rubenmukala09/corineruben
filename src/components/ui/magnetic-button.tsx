@@ -40,7 +40,7 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
         setPosition({ x: distanceX, y: distanceY });
       });
     }, 16),
-    [disabled, strength]
+    [disabled, strength],
   );
 
   const handleMouseLeave = () => {
@@ -94,7 +94,7 @@ export const MagneticWrapper: React.FC<MagneticWrapperProps> = ({
         setPosition({ x: distanceX, y: distanceY });
       });
     }, 16),
-    [strength]
+    [strength],
   );
 
   const handleMouseLeave = () => {

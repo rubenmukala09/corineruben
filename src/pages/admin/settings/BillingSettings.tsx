@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -34,9 +40,14 @@ export default function BillingSettings() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-xl font-bold text-[#F9FAFB]">Billing Settings</h2>
-          <p className="text-[#9CA3AF]">Configure your business billing and payment settings</p>
+          <p className="text-[#9CA3AF]">
+            Configure your business billing and payment settings
+          </p>
         </div>
-        <Button onClick={handleSave} className="bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white">
+        <Button
+          onClick={handleSave}
+          className="bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white"
+        >
           <Save className="h-4 w-4 mr-2" />
           Save Changes
         </Button>
@@ -60,7 +71,9 @@ export default function BillingSettings() {
                 <Label className="text-[#9CA3AF]">Company Name</Label>
                 <Input
                   value={settings.companyName}
-                  onChange={(e) => setSettings({ ...settings, companyName: e.target.value })}
+                  onChange={(e) =>
+                    setSettings({ ...settings, companyName: e.target.value })
+                  }
                   placeholder="Your Company LLC"
                   className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
                 />
@@ -69,7 +82,9 @@ export default function BillingSettings() {
                 <Label className="text-[#9CA3AF]">Tax ID / EIN</Label>
                 <Input
                   value={settings.taxId}
-                  onChange={(e) => setSettings({ ...settings, taxId: e.target.value })}
+                  onChange={(e) =>
+                    setSettings({ ...settings, taxId: e.target.value })
+                  }
                   placeholder="XX-XXXXXXX"
                   className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
                 />
@@ -79,7 +94,9 @@ export default function BillingSettings() {
               <Label className="text-[#9CA3AF]">Business Address</Label>
               <Textarea
                 value={settings.companyAddress}
-                onChange={(e) => setSettings({ ...settings, companyAddress: e.target.value })}
+                onChange={(e) =>
+                  setSettings({ ...settings, companyAddress: e.target.value })
+                }
                 placeholder="123 Main St, City, State ZIP"
                 rows={3}
                 className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
@@ -90,7 +107,9 @@ export default function BillingSettings() {
                 <Label className="text-[#9CA3AF]">Phone Number</Label>
                 <Input
                   value={settings.companyPhone}
-                  onChange={(e) => setSettings({ ...settings, companyPhone: e.target.value })}
+                  onChange={(e) =>
+                    setSettings({ ...settings, companyPhone: e.target.value })
+                  }
                   placeholder="(937) 000-0000"
                   className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
                 />
@@ -100,7 +119,9 @@ export default function BillingSettings() {
                 <Input
                   type="email"
                   value={settings.companyEmail}
-                  onChange={(e) => setSettings({ ...settings, companyEmail: e.target.value })}
+                  onChange={(e) =>
+                    setSettings({ ...settings, companyEmail: e.target.value })
+                  }
                   placeholder="billing@company.com"
                   className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
                 />
@@ -126,7 +147,9 @@ export default function BillingSettings() {
                 <Label className="text-[#9CA3AF]">Invoice Number Prefix</Label>
                 <Input
                   value={settings.invoicePrefix}
-                  onChange={(e) => setSettings({ ...settings, invoicePrefix: e.target.value })}
+                  onChange={(e) =>
+                    setSettings({ ...settings, invoicePrefix: e.target.value })
+                  }
                   placeholder="INV-"
                   className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
                 />
@@ -136,7 +159,12 @@ export default function BillingSettings() {
                 <Input
                   type="number"
                   value={settings.invoiceStartNumber}
-                  onChange={(e) => setSettings({ ...settings, invoiceStartNumber: e.target.value })}
+                  onChange={(e) =>
+                    setSettings({
+                      ...settings,
+                      invoiceStartNumber: e.target.value,
+                    })
+                  }
                   placeholder="1000"
                   className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
                 />
@@ -148,7 +176,9 @@ export default function BillingSettings() {
                 <Input
                   type="number"
                   value={settings.paymentTerms}
-                  onChange={(e) => setSettings({ ...settings, paymentTerms: e.target.value })}
+                  onChange={(e) =>
+                    setSettings({ ...settings, paymentTerms: e.target.value })
+                  }
                   placeholder="30"
                   className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
                 />
@@ -158,7 +188,9 @@ export default function BillingSettings() {
                 <Input
                   type="number"
                   value={settings.latePaymentFee}
-                  onChange={(e) => setSettings({ ...settings, latePaymentFee: e.target.value })}
+                  onChange={(e) =>
+                    setSettings({ ...settings, latePaymentFee: e.target.value })
+                  }
                   placeholder="5"
                   className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
                 />
@@ -173,7 +205,9 @@ export default function BillingSettings() {
               </div>
               <Switch
                 checked={settings.autoInvoicing}
-                onCheckedChange={(checked) => setSettings({ ...settings, autoInvoicing: checked })}
+                onCheckedChange={(checked) =>
+                  setSettings({ ...settings, autoInvoicing: checked })
+                }
               />
             </div>
           </CardContent>
@@ -195,7 +229,12 @@ export default function BillingSettings() {
               <Label className="text-[#9CA3AF]">Stripe Publishable Key</Label>
               <Input
                 value={settings.stripePublishableKey}
-                onChange={(e) => setSettings({ ...settings, stripePublishableKey: e.target.value })}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    stripePublishableKey: e.target.value,
+                  })
+                }
                 placeholder="pk_test_..."
                 className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
               />
@@ -205,7 +244,9 @@ export default function BillingSettings() {
               <Input
                 type="password"
                 value={settings.stripeSecretKey}
-                onChange={(e) => setSettings({ ...settings, stripeSecretKey: e.target.value })}
+                onChange={(e) =>
+                  setSettings({ ...settings, stripeSecretKey: e.target.value })
+                }
                 placeholder="sk_test_..."
                 className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
               />
@@ -230,7 +271,9 @@ export default function BillingSettings() {
               <Input
                 type="number"
                 value={settings.taxRate}
-                onChange={(e) => setSettings({ ...settings, taxRate: e.target.value })}
+                onChange={(e) =>
+                  setSettings({ ...settings, taxRate: e.target.value })
+                }
                 placeholder="8.5"
                 className="bg-[#111827] border-gray-600 text-[#F9FAFB]"
               />

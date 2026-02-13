@@ -6,7 +6,8 @@ const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
 serve(async (req) => {
@@ -28,7 +29,7 @@ serve(async (req) => {
     if (!activeCampaigns || activeCampaigns.length === 0) {
       return new Response(
         JSON.stringify({ message: "No active campaigns", processed: 0 }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
 
@@ -43,19 +44,22 @@ serve(async (req) => {
           // Check if it's time to send based on schedule_config
           const scheduleConfig = campaign.schedule_config || {};
           const now = new Date();
-          
+
           // Example: Monthly newsletter on 1st of month
           if (scheduleConfig.frequency === "monthly") {
             const dayOfMonth = now.getDate();
             const scheduledDay = scheduleConfig.day_of_month || 1;
-            
+
             if (dayOfMonth === scheduledDay) {
               // Check if already sent this month
               const { data: recentSends } = await supabase
                 .from("scheduled_emails")
                 .select("id")
                 .eq("campaign_id", campaign.id)
-                .gte("created_at", new Date(now.getFullYear(), now.getMonth(), 1).toISOString())
+                .gte(
+                  "created_at",
+                  new Date(now.getFullYear(), now.getMonth(), 1).toISOString(),
+                )
                 .limit(1);
 
               if (!recentSends || recentSends.length === 0) {
@@ -106,13 +110,16 @@ serve(async (req) => {
         campaigns_processed: activeCampaigns.length,
         emails_scheduled: scheduledCount,
       }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      { headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
   } catch (error: any) {
     console.error("Error in schedule-campaign-emails:", error);
     return new Response(
       JSON.stringify({ error: error.message || "Unknown error" }),
-      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      },
     );
   }
 });
@@ -130,7 +137,10 @@ async function scheduleForCampaign(supabase: any, campaign: any) {
     const { data: newCustomers } = await supabase
       .from("booking_requests")
       .select("email")
-      .gte("created_at", new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString());
+      .gte(
+        "created_at",
+        new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+      );
     recipients = newCustomers?.map((c: any) => c.email) || [];
   }
 

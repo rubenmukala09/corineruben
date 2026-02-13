@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Hook for instant page navigation
@@ -22,13 +22,13 @@ export function useInstantNavigation() {
         // Prefetch the route
         if (!prefetchedRoutes.has(path)) {
           // Create invisible link to trigger route prefetch
-          const prefetchLink = document.createElement('link');
-          prefetchLink.rel = 'prefetch';
+          const prefetchLink = document.createElement("link");
+          prefetchLink.rel = "prefetch";
           prefetchLink.href = path;
           document.head.appendChild(prefetchLink);
-          
+
           prefetchedRoutes.add(path);
-          
+
           // Clean up after 5 seconds
           setTimeout(() => {
             document.head.removeChild(prefetchLink);
@@ -38,13 +38,13 @@ export function useInstantNavigation() {
     };
 
     // Listen for all mouseenter events on links
-    document.addEventListener('mouseover', handleMouseEnter, { 
+    document.addEventListener("mouseover", handleMouseEnter, {
       passive: true,
-      capture: true 
+      capture: true,
     });
 
     return () => {
-      document.removeEventListener('mouseover', handleMouseEnter);
+      document.removeEventListener("mouseover", handleMouseEnter);
     };
   }, []);
 

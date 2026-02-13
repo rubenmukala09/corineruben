@@ -27,9 +27,7 @@ export const GlassmorphismLoader = ({
           <span />
         </div>
 
-        {message ? (
-          <p className="glassy-loader-text">{message}</p>
-        ) : null}
+        {message ? <p className="glassy-loader-text">{message}</p> : null}
       </div>
     </div>
   );

@@ -6,8 +6,10 @@ import { cn } from "@/lib/utils";
 
 export default function ArticlePreview() {
   const [searchParams] = useSearchParams();
-  const [viewMode, setViewMode] = useState<"desktop" | "mobile" | "tablet">("desktop");
-  
+  const [viewMode, setViewMode] = useState<"desktop" | "mobile" | "tablet">(
+    "desktop",
+  );
+
   // Get article data from localStorage (set by editor)
   const [articleData, setArticleData] = useState<any>(null);
 
@@ -34,7 +36,9 @@ export default function ArticlePreview() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-2">No preview available</h2>
-          <p className="text-muted-foreground mb-4">Please save your article first</p>
+          <p className="text-muted-foreground mb-4">
+            Please save your article first
+          </p>
           <Link to="/admin/content/articles/new">
             <Button>Back to Editor</Button>
           </Link>
@@ -50,9 +54,11 @@ export default function ArticlePreview() {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
             <span className="font-semibold text-yellow-900">Preview Mode</span>
-            <span className="text-sm text-yellow-700">You're viewing a draft</span>
+            <span className="text-sm text-yellow-700">
+              You're viewing a draft
+            </span>
           </div>
-          
+
           {/* Device Toggle */}
           <div className="flex items-center gap-2">
             <Button
@@ -92,11 +98,11 @@ export default function ArticlePreview() {
 
       {/* Preview Content */}
       <div className="py-8 flex justify-center">
-        <div 
+        <div
           className={cn(
             "bg-white shadow-lg transition-all duration-300",
             viewMode === "mobile" && "rounded-3xl border-8 border-gray-800",
-            viewMode === "tablet" && "rounded-xl border-4 border-gray-600"
+            viewMode === "tablet" && "rounded-xl border-4 border-gray-600",
           )}
           style={{ width: getViewportWidth() }}
         >
@@ -149,7 +155,7 @@ export default function ArticlePreview() {
             )}
 
             {/* Article Content */}
-            <article 
+            <article
               className="prose prose-lg max-w-none"
               dangerouslySetInnerHTML={{ __html: articleData.content }}
             />

@@ -28,21 +28,45 @@ export interface HeroImage {
 
 // All 10 nature images in seasonal order
 export const NATURE_HERO_IMAGES: HeroImage[] = [
-  { src: natureSpring1, alt: "Cherry blossoms in spring morning with rolling hills and mountains" },
-  { src: natureSummer1, alt: "Lavender fields stretching to the horizon under blue sky" },
+  {
+    src: natureSpring1,
+    alt: "Cherry blossoms in spring morning with rolling hills and mountains",
+  },
+  {
+    src: natureSummer1,
+    alt: "Lavender fields stretching to the horizon under blue sky",
+  },
   { src: natureAutumn1, alt: "Autumn forest path with red and gold foliage" },
-  { src: natureWinter1, alt: "Serene winter forest with snow-covered pine trees" },
-  { src: natureSpring2, alt: "Spring lake reflection with blooming trees and mountains" },
+  {
+    src: natureWinter1,
+    alt: "Serene winter forest with snow-covered pine trees",
+  },
+  {
+    src: natureSpring2,
+    alt: "Spring lake reflection with blooming trees and mountains",
+  },
   { src: natureSummer2, alt: "Dramatic summer sunset over coastal cliffs" },
   { src: natureAutumn2, alt: "Golden autumn vineyard in Tuscan countryside" },
-  { src: natureWinter2, alt: "Northern lights aurora over snowy winter landscape" },
-  { src: natureSpring3, alt: "English countryside with yellow rapeseed fields" },
-  { src: natureSummer3, alt: "Tropical paradise beach with turquoise water and palm trees" },
+  {
+    src: natureWinter2,
+    alt: "Northern lights aurora over snowy winter landscape",
+  },
+  {
+    src: natureSpring3,
+    alt: "English countryside with yellow rapeseed fields",
+  },
+  {
+    src: natureSummer3,
+    alt: "Tropical paradise beach with turquoise water and palm trees",
+  },
 ];
 
 // Additional images for variety
 export const NATURE_BONUS_IMAGES: HeroImage[] = [
-  { src: natureAutumn3, alt: "Japanese garden with red maples and koi pond in autumn" },
+  {
+    src: natureAutumn3,
+    alt: "Japanese garden with red maples and koi pond in autumn",
+  },
   { src: natureWinter3, alt: "Cozy winter cabin in snowy mountain forest" },
 ];
 
@@ -56,27 +80,51 @@ export const ALL_NATURE_IMAGES: HeroImage[] = [
 // Each page gets 2 unique images that no other page uses
 export const PAGE_NATURE_IMAGES: Record<string, HeroImage[]> = {
   business: [
-    { src: natureSpring1, alt: "Cherry blossoms in spring morning with rolling hills and mountains" },
-    { src: natureSummer1, alt: "Lavender fields stretching to the horizon under blue sky" },
+    {
+      src: natureSpring1,
+      alt: "Cherry blossoms in spring morning with rolling hills and mountains",
+    },
+    {
+      src: natureSummer1,
+      alt: "Lavender fields stretching to the horizon under blue sky",
+    },
   ],
   training: [
     { src: natureAutumn1, alt: "Autumn forest path with red and gold foliage" },
-    { src: natureWinter1, alt: "Serene winter forest with snow-covered pine trees" },
+    {
+      src: natureWinter1,
+      alt: "Serene winter forest with snow-covered pine trees",
+    },
   ],
   resources: [
-    { src: natureSpring2, alt: "Spring lake reflection with blooming trees and mountains" },
+    {
+      src: natureSpring2,
+      alt: "Spring lake reflection with blooming trees and mountains",
+    },
     { src: natureSummer2, alt: "Dramatic summer sunset over coastal cliffs" },
   ],
   about: [
     { src: natureAutumn2, alt: "Golden autumn vineyard in Tuscan countryside" },
-    { src: natureWinter2, alt: "Northern lights aurora over snowy winter landscape" },
+    {
+      src: natureWinter2,
+      alt: "Northern lights aurora over snowy winter landscape",
+    },
   ],
   careers: [
-    { src: natureSpring3, alt: "English countryside with yellow rapeseed fields" },
-    { src: natureSummer3, alt: "Tropical paradise beach with turquoise water and palm trees" },
+    {
+      src: natureSpring3,
+      alt: "English countryside with yellow rapeseed fields",
+    },
+    {
+      src: natureSummer3,
+      alt: "Tropical paradise beach with turquoise water and palm trees",
+    },
   ],
   faq: [
-    { src: natureAutumn3, alt: "Japanese garden with red maples and koi pond in autumn" },
+    {
+      src: natureAutumn3,
+      alt: "Japanese garden with red maples and koi pond in autumn",
+    },
     { src: natureWinter3, alt: "Cozy winter cabin in snowy mountain forest" },
   ],
   contact: [
@@ -86,7 +134,9 @@ export const PAGE_NATURE_IMAGES: Record<string, HeroImage[]> = {
 };
 
 // Helper to get page images as array
-export const getPageNatureImages = (page: keyof typeof PAGE_NATURE_IMAGES): HeroImage[] => {
+export const getPageNatureImages = (
+  page: keyof typeof PAGE_NATURE_IMAGES,
+): HeroImage[] => {
   return PAGE_NATURE_IMAGES[page] || [];
 };
 

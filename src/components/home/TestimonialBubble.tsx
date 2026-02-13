@@ -9,12 +9,12 @@ interface TestimonialBubbleProps {
   className?: string;
 }
 
-export const TestimonialBubble = ({ 
-  quote, 
-  author, 
-  location, 
+export const TestimonialBubble = ({
+  quote,
+  author,
+  location,
   rating = 5,
-  className = "" 
+  className = "",
 }: TestimonialBubbleProps) => {
   return (
     <motion.div
@@ -30,20 +30,22 @@ export const TestimonialBubble = ({
           <Star key={i} className="w-4 h-4 text-amber-400 fill-amber-400" />
         ))}
       </div>
-      
+
       {/* Quote */}
-      <p className="text-sm text-foreground leading-relaxed mb-3">
-        "{quote}"
-      </p>
-      
+      <p className="text-sm text-foreground leading-relaxed mb-3">"{quote}"</p>
+
       {/* Author */}
       <div className="flex items-center gap-2">
         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-          <span className="text-white text-xs font-bold">{author.charAt(0)}</span>
+          <span className="text-white text-xs font-bold">
+            {author.charAt(0)}
+          </span>
         </div>
         <div>
           <p className="text-sm font-semibold text-foreground">{author}</p>
-          {location && <p className="text-xs text-muted-foreground">{location}</p>}
+          {location && (
+            <p className="text-xs text-muted-foreground">{location}</p>
+          )}
         </div>
       </div>
     </motion.div>

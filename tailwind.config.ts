@@ -3,7 +3,12 @@ import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
-  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -15,9 +20,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        outfit: ['Rubik', 'sans-serif'],
-        sans: ['Rubik', 'sans-serif'],
-        display: ['Lora', 'Rubik', 'serif'],
+        outfit: ["Rubik", "sans-serif"],
+        sans: ["Rubik", "sans-serif"],
+        display: ["Lora", "Rubik", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -150,17 +155,17 @@ export default {
         "3xl": "1.25rem",
       },
       transitionDuration: {
-        '150': '150ms',
-        '200': '200ms',
+        "150": "150ms",
+        "200": "200ms",
       },
       zIndex: {
-        'navigation': '100',
-        'fab': '90',
-        'toast': '85',
-        'modal-overlay': '80',
-        'modal-content': '81',
-        'drawer': '75',
-        'dropdown': '70',
+        navigation: "100",
+        fab: "90",
+        toast: "85",
+        "modal-overlay": "80",
+        "modal-content": "81",
+        drawer: "75",
+        dropdown: "70",
       },
       keyframes: {
         "accordion-down": {

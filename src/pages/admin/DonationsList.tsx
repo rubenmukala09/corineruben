@@ -14,7 +14,6 @@ import {
   ExternalLink,
 } from "lucide-react";
 
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -54,7 +53,11 @@ const DonationsList = () => {
   const [typeFilter, setTypeFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
 
-  const { data: donations = [], isLoading, refetch } = useQuery({
+  const {
+    data: donations = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["donations", typeFilter, statusFilter],
     queryFn: async () => {
       let query = supabase
@@ -76,10 +79,20 @@ const DonationsList = () => {
   });
 
   // Calculate stats
-  const totalDonations = donations.filter(d => d.payment_status === "completed").reduce((sum, d) => sum + d.amount, 0);
-  const monthlyDonors = donations.filter(d => d.donation_type === "monthly" && d.payment_status === "completed").length;
-  const oneTimeDonors = donations.filter(d => d.donation_type === "one-time" && d.payment_status === "completed").length;
-  const avgDonation = donations.length > 0 ? totalDonations / donations.filter(d => d.payment_status === "completed").length : 0;
+  const totalDonations = donations
+    .filter((d) => d.payment_status === "completed")
+    .reduce((sum, d) => sum + d.amount, 0);
+  const monthlyDonors = donations.filter(
+    (d) => d.donation_type === "monthly" && d.payment_status === "completed",
+  ).length;
+  const oneTimeDonors = donations.filter(
+    (d) => d.donation_type === "one-time" && d.payment_status === "completed",
+  ).length;
+  const avgDonation =
+    donations.length > 0
+      ? totalDonations /
+        donations.filter((d) => d.payment_status === "completed").length
+      : 0;
 
   const filteredDonations = donations.filter((donation) => {
     const matchesSearch =
@@ -107,25 +120,35 @@ const DonationsList = () => {
   };
 
   const exportToCSV = () => {
-    const headers = ["Date", "Donor Name", "Email", "Amount", "Type", "Status", "Message"];
-    const rows = filteredDonations.map(d => [
+    const headers = [
+      "Date",
+      "Donor Name",
+      "Email",
+      "Amount",
+      "Type",
+      "Status",
+      "Message",
+    ];
+    const rows = filteredDonations.map((d) => [
       format(new Date(d.created_at), "yyyy-MM-dd"),
       d.donor_name,
       d.email,
       d.amount.toFixed(2),
       d.donation_type,
       d.payment_status,
-      d.message || ""
+      d.message || "",
     ]);
 
-    const csvContent = [headers, ...rows].map(row => row.join(",")).join("\n");
+    const csvContent = [headers, ...rows]
+      .map((row) => row.join(","))
+      .join("\n");
     const blob = new Blob([csvContent], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
     a.download = `donations-${format(new Date(), "yyyy-MM-dd")}.csv`;
     a.click();
-    
+
     toast({
       title: "Export Complete",
       description: `Exported ${filteredDonations.length} donations to CSV`,
@@ -140,11 +163,19 @@ const DonationsList = () => {
           <p className="text-[#9CA3AF]">Manage and track all donations</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" onClick={() => refetch()} className="border-gray-700 hover:bg-gray-800">
+          <Button
+            variant="outline"
+            onClick={() => refetch()}
+            className="border-gray-700 hover:bg-gray-800"
+          >
             <RefreshCw className="mr-2 h-4 w-4" />
             Refresh
           </Button>
-          <Button variant="outline" onClick={exportToCSV} className="border-gray-700 hover:bg-gray-800">
+          <Button
+            variant="outline"
+            onClick={exportToCSV}
+            className="border-gray-700 hover:bg-gray-800"
+          >
             <Download className="mr-2 h-4 w-4" />
             Export CSV
           </Button>
@@ -157,7 +188,9 @@ const DonationsList = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-400">Total Raised</p>
-                <p className="text-2xl font-bold text-green-400">${totalDonations.toFixed(2)}</p>
+                <p className="text-2xl font-bold text-green-400">
+                  ${totalDonations.toFixed(2)}
+                </p>
               </div>
               <DollarSign className="h-8 w-8 text-green-400" />
             </div>
@@ -190,7 +223,9 @@ const DonationsList = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-400">Avg Donation</p>
-                <p className="text-2xl font-bold text-white">${avgDonation.toFixed(2)}</p>
+                <p className="text-2xl font-bold text-white">
+                  ${avgDonation.toFixed(2)}
+                </p>
               </div>
               <TrendingUp className="h-8 w-8 text-blue-400" />
             </div>
@@ -260,14 +295,20 @@ const DonationsList = () => {
               </TableRow>
             ) : filteredDonations.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7} className="text-center py-8 text-slate-400">
+                <TableCell
+                  colSpan={7}
+                  className="text-center py-8 text-slate-400"
+                >
                   <Heart className="h-12 w-12 mx-auto mb-2 opacity-50" />
                   No donations found
                 </TableCell>
               </TableRow>
             ) : (
               filteredDonations.map((donation) => (
-                <TableRow key={donation.id} className="border-slate-700 hover:bg-slate-800/50">
+                <TableRow
+                  key={donation.id}
+                  className="border-slate-700 hover:bg-slate-800/50"
+                >
                   <TableCell>
                     <div className="flex items-center gap-2">
                       <Calendar className="h-4 w-4 text-slate-400" />
@@ -283,8 +324,12 @@ const DonationsList = () => {
                   </TableCell>
                   <TableCell>
                     <div>
-                      <div className="font-medium text-white">{donation.donor_name}</div>
-                      <div className="text-sm text-slate-400">{donation.email}</div>
+                      <div className="font-medium text-white">
+                        {donation.donor_name}
+                      </div>
+                      <div className="text-sm text-slate-400">
+                        {donation.email}
+                      </div>
                     </div>
                   </TableCell>
                   <TableCell>
@@ -293,7 +338,9 @@ const DonationsList = () => {
                     </span>
                   </TableCell>
                   <TableCell>{getTypeBadge(donation.donation_type)}</TableCell>
-                  <TableCell>{getStatusBadge(donation.payment_status)}</TableCell>
+                  <TableCell>
+                    {getStatusBadge(donation.payment_status)}
+                  </TableCell>
                   <TableCell>
                     <span className="text-sm text-slate-400 max-w-[200px] truncate block">
                       {donation.message || "-"}
@@ -307,7 +354,7 @@ const DonationsList = () => {
                         onClick={() => {
                           window.open(
                             `https://dashboard.stripe.com/payments/${donation.stripe_payment_id}`,
-                            "_blank"
+                            "_blank",
                           );
                         }}
                         className="text-slate-400 hover:text-white"

@@ -16,8 +16,7 @@ import {
   Activity,
 } from "lucide-react";
 
-type HealthcareProfile =
-  Database["public"]["Views"]["profiles_safe"]["Row"] &
+type HealthcareProfile = Database["public"]["Views"]["profiles_safe"]["Row"] &
   Partial<Database["public"]["Views"]["healthcare_profiles_safe"]["Row"]>;
 
 const getErrorMessage = (error: unknown): string =>
@@ -35,7 +34,9 @@ function HealthcareDashboard() {
 
   const loadProfile = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         navigate("/auth");
         return;
@@ -68,9 +69,9 @@ function HealthcareDashboard() {
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut();
-      toast({ 
+      toast({
         title: "👋 Signed Out Successfully",
-        description: "You've been securely logged out. See you next time!"
+        description: "You've been securely logged out. See you next time!",
       });
       navigate("/auth");
     } catch (error: unknown) {
@@ -83,7 +84,11 @@ function HealthcareDashboard() {
   };
 
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        Loading...
+      </div>
+    );
   }
 
   return (
@@ -97,7 +102,9 @@ function HealthcareDashboard() {
                 <Stethoscope className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold">Healthcare Professional Portal</h1>
+                <h1 className="text-xl font-bold">
+                  Healthcare Professional Portal
+                </h1>
                 <p className="text-sm text-muted-foreground">
                   Dr. {profile?.first_name} {profile?.last_name}
                 </p>
@@ -128,13 +135,23 @@ function HealthcareDashboard() {
               </div>
               <div>
                 <h3 className="font-semibold">Professional Credentials</h3>
-                <p className="text-sm text-muted-foreground">License information</p>
+                <p className="text-sm text-muted-foreground">
+                  License information
+                </p>
               </div>
             </div>
             <div className="space-y-2 text-sm">
-              <p><strong>License Type:</strong> {profile?.license_type || "N/A"}</p>
-              <p><strong>Specialty:</strong> {profile?.medical_specialty || "N/A"}</p>
-              <p><strong>Experience:</strong> {profile?.years_in_practice || 0} years</p>
+              <p>
+                <strong>License Type:</strong> {profile?.license_type || "N/A"}
+              </p>
+              <p>
+                <strong>Specialty:</strong>{" "}
+                {profile?.medical_specialty || "N/A"}
+              </p>
+              <p>
+                <strong>Experience:</strong> {profile?.years_in_practice || 0}{" "}
+                years
+              </p>
             </div>
           </Card>
 
@@ -146,10 +163,14 @@ function HealthcareDashboard() {
               </div>
               <div>
                 <h3 className="font-semibold">Appointments</h3>
-                <p className="text-sm text-muted-foreground">Today's schedule</p>
+                <p className="text-sm text-muted-foreground">
+                  Today's schedule
+                </p>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground mb-3">No appointments today</p>
+            <p className="text-sm text-muted-foreground mb-3">
+              No appointments today
+            </p>
             <Button size="sm" className="w-full" variant="default">
               <Calendar className="w-4 h-4 mr-2" />
               View Schedule
@@ -167,7 +188,9 @@ function HealthcareDashboard() {
                 <p className="text-sm text-muted-foreground">Active patients</p>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground mb-3">0 active patients</p>
+            <p className="text-sm text-muted-foreground mb-3">
+              0 active patients
+            </p>
             <Button size="sm" className="w-full" variant="outline">
               <Users className="w-4 h-4 mr-2" />
               View Patient List
@@ -182,7 +205,9 @@ function HealthcareDashboard() {
               </div>
               <div>
                 <h3 className="font-semibold">Medical Records</h3>
-                <p className="text-sm text-muted-foreground">Patient documentation</p>
+                <p className="text-sm text-muted-foreground">
+                  Patient documentation
+                </p>
               </div>
             </div>
             <Button size="sm" className="w-full" variant="outline">
@@ -199,7 +224,9 @@ function HealthcareDashboard() {
               </div>
               <div>
                 <h3 className="font-semibold">Telehealth</h3>
-                <p className="text-sm text-muted-foreground">Virtual consultations</p>
+                <p className="text-sm text-muted-foreground">
+                  Virtual consultations
+                </p>
               </div>
             </div>
             <Button size="sm" className="w-full" variant="default">
@@ -216,7 +243,9 @@ function HealthcareDashboard() {
               </div>
               <div>
                 <h3 className="font-semibold">Hospital Affiliation</h3>
-                <p className="text-sm text-muted-foreground">Network information</p>
+                <p className="text-sm text-muted-foreground">
+                  Network information
+                </p>
               </div>
             </div>
             <p className="text-sm">
@@ -227,6 +256,6 @@ function HealthcareDashboard() {
       </main>
     </div>
   );
-};
+}
 
 export default HealthcareDashboard;

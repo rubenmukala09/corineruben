@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback } from "react";
 
 interface UseScrollRevealOptions {
   threshold?: number;
@@ -10,7 +10,7 @@ interface UseScrollRevealOptions {
 export const useScrollReveal = (options: UseScrollRevealOptions = {}) => {
   const {
     threshold = 0.1,
-    rootMargin = '100px 0px 0px 0px',
+    rootMargin = "100px 0px 0px 0px",
     triggerOnce = true,
   } = options;
 
@@ -21,22 +21,25 @@ export const useScrollReveal = (options: UseScrollRevealOptions = {}) => {
   // Rely solely on IntersectionObserver - no synchronous layout reads
   // This eliminates forced reflows during initial page load
 
-  const handleIntersection = useCallback(([entry]: IntersectionObserverEntry[]) => {
-    if (entry.isIntersecting && !hasTriggered.current) {
-      setIsVisible(true);
-      if (triggerOnce) hasTriggered.current = true;
-    } else if (!triggerOnce && !entry.isIntersecting) {
-      setIsVisible(false);
-    }
-  }, [triggerOnce]);
+  const handleIntersection = useCallback(
+    ([entry]: IntersectionObserverEntry[]) => {
+      if (entry.isIntersecting && !hasTriggered.current) {
+        setIsVisible(true);
+        if (triggerOnce) hasTriggered.current = true;
+      } else if (!triggerOnce && !entry.isIntersecting) {
+        setIsVisible(false);
+      }
+    },
+    [triggerOnce],
+  );
 
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
 
-    const observer = new IntersectionObserver(handleIntersection, { 
-      threshold, 
-      rootMargin 
+    const observer = new IntersectionObserver(handleIntersection, {
+      threshold,
+      rootMargin,
     });
 
     observer.observe(element);

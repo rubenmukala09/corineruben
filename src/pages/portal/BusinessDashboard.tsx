@@ -31,7 +31,9 @@ function BusinessDashboard() {
 
   const loadProfile = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         navigate("/auth");
         return;
@@ -54,9 +56,9 @@ function BusinessDashboard() {
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut();
-      toast({ 
+      toast({
         title: "👋 Signed Out Successfully",
-        description: "You've been securely logged out. See you next time!"
+        description: "You've been securely logged out. See you next time!",
       });
       navigate("/auth");
     } catch (error: unknown) {
@@ -100,7 +102,7 @@ function BusinessDashboard() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <AutomationStatusHero 
+          <AutomationStatusHero
             planName="AI Automation Suite"
             status="none"
             automationScore={null}

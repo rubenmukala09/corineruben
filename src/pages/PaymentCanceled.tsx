@@ -10,12 +10,12 @@ import { SITE } from "@/config/site";
 export default function PaymentCanceled() {
   return (
     <>
-      <SEO 
+      <SEO
         title="Payment Canceled"
         description="Your payment was canceled. Your cart items have been saved."
       />
       <Navigation />
-      
+
       <div className="min-h-screen bg-gradient-to-b from-background via-secondary/20 to-background">
         <div className="container mx-auto px-4 py-20">
           <div className="max-w-2xl mx-auto">
@@ -28,7 +28,8 @@ export default function PaymentCanceled() {
                 Payment Canceled
               </h1>
               <p className="text-lg text-muted-foreground animate-in slide-in-from-bottom duration-500 delay-100">
-                Your payment was canceled. Don't worry - your cart items have been saved.
+                Your payment was canceled. Don't worry - your cart items have
+                been saved.
               </p>
             </div>
 
@@ -41,27 +42,55 @@ export default function PaymentCanceled() {
                     What happened?
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    You chose to cancel the payment process. No charges were made to your card,
-                    and your shopping cart items are still saved.
+                    You chose to cancel the payment process. No charges were
+                    made to your card, and your shopping cart items are still
+                    saved.
                   </p>
                 </div>
 
                 <div className="border-t pt-6">
                   <h3 className="font-semibold mb-3">Need help?</h3>
                   <div className="space-y-2 text-sm text-muted-foreground">
-                    <p>If you encountered any issues during checkout, we're here to help:</p>
+                    <p>
+                      If you encountered any issues during checkout, we're here
+                      to help:
+                    </p>
                     <ul className="space-y-2 ml-4">
                       <li className="flex items-center gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                        <span>Email us at <a href={`mailto:${SITE.emails.hello}`} className="text-primary hover:underline">{SITE.emails.hello}</a></span>
+                        <span>
+                          Email us at{" "}
+                          <a
+                            href={`mailto:${SITE.emails.hello}`}
+                            className="text-primary hover:underline"
+                          >
+                            {SITE.emails.hello}
+                          </a>
+                        </span>
                       </li>
                       <li className="flex items-center gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                        <span>Call us at <a href={SITE.phone.tel} className="text-primary hover:underline">{SITE.phone.display}</a></span>
+                        <span>
+                          Call us at{" "}
+                          <a
+                            href={SITE.phone.tel}
+                            className="text-primary hover:underline"
+                          >
+                            {SITE.phone.display}
+                          </a>
+                        </span>
                       </li>
                       <li className="flex items-center gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                        <span>Visit our <Link to="/faq" className="text-primary hover:underline">FAQ page</Link></span>
+                        <span>
+                          Visit our{" "}
+                          <Link
+                            to="/faq"
+                            className="text-primary hover:underline"
+                          >
+                            FAQ page
+                          </Link>
+                        </span>
                       </li>
                     </ul>
                   </div>

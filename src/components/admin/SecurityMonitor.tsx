@@ -3,7 +3,16 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, Shield, Activity, Users, Lock, Eye, Database, UserCheck } from "lucide-react";
+import {
+  AlertTriangle,
+  Shield,
+  Activity,
+  Users,
+  Lock,
+  Eye,
+  Database,
+  UserCheck,
+} from "lucide-react";
 import { toast } from "sonner";
 
 interface SecurityEvent {
@@ -50,7 +59,9 @@ interface SecurityStats {
 export const SecurityMonitor = () => {
   const [authEvents, setAuthEvents] = useState<SecurityEvent[]>([]);
   const [activityLogs, setActivityLogs] = useState<ActivityLog[]>([]);
-  const [contactAccessLogs, setContactAccessLogs] = useState<ContactAccessLog[]>([]);
+  const [contactAccessLogs, setContactAccessLogs] = useState<
+    ContactAccessLog[]
+  >([]);
   const [stats, setStats] = useState<SecurityStats>({
     totalAuthEvents: 0,
     failedLogins: 0,
@@ -63,28 +74,36 @@ export const SecurityMonitor = () => {
 
   useEffect(() => {
     fetchSecurityData();
-    
+
     // Subscribe to real-time updates
     const authChannel = supabase
-      .channel('auth-events')
-      .on('postgres_changes', {
-        event: '*',
-        schema: 'public',
-        table: 'auth_audit_logs'
-      }, () => {
-        fetchSecurityData();
-      })
+      .channel("auth-events")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "auth_audit_logs",
+        },
+        () => {
+          fetchSecurityData();
+        },
+      )
       .subscribe();
 
     const activityChannel = supabase
-      .channel('activity-logs')
-      .on('postgres_changes', {
-        event: '*',
-        schema: 'public',
-        table: 'activity_log'
-      }, () => {
-        fetchSecurityData();
-      })
+      .channel("activity-logs")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "activity_log",
+        },
+        () => {
+          fetchSecurityData();
+        },
+      )
       .subscribe();
 
     return () => {
@@ -97,32 +116,38 @@ export const SecurityMonitor = () => {
     try {
       // Fetch recent auth events (last 24 hours)
       const { data: authData, error: authError } = await supabase
-        .from('auth_audit_logs')
-        .select('*')
-        .gte('created_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString())
-        .order('created_at', { ascending: false })
+        .from("auth_audit_logs")
+        .select("*")
+        .gte(
+          "created_at",
+          new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+        )
+        .order("created_at", { ascending: false })
         .limit(20);
 
       if (authError) throw authError;
 
       // Fetch recent activity logs (last 24 hours)
       const { data: activityData, error: activityError } = await supabase
-        .from('activity_log')
-        .select('*')
-        .gte('created_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString())
-        .order('created_at', { ascending: false })
+        .from("activity_log")
+        .select("*")
+        .gte(
+          "created_at",
+          new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+        )
+        .order("created_at", { ascending: false })
         .limit(50);
 
       if (activityError) throw activityError;
 
       // Filter contact access logs separately
       const contactLogs = (activityData || []).filter(
-        log => log.entity_type === 'contacts'
+        (log) => log.entity_type === "contacts",
       ) as unknown as ContactAccessLog[];
-      
+
       // Filter sensitive profile access logs
       const sensitiveProfileLogs = (activityData || []).filter(
-        log => log.action === 'VIEW_SENSITIVE_PROFILE'
+        (log) => log.action === "VIEW_SENSITIVE_PROFILE",
       );
 
       setAuthEvents(authData || []);
@@ -131,21 +156,23 @@ export const SecurityMonitor = () => {
 
       // Calculate stats
       const failedLogins = (authData || []).filter(
-        e => e.event_type === 'login' && !e.success
+        (e) => e.event_type === "login" && !e.success,
       ).length;
 
       // Detect suspicious activity (multiple failed logins from same IP)
       const ipFailures = new Map<string, number>();
-      (authData || []).forEach(e => {
+      (authData || []).forEach((e) => {
         if (!e.success && e.ip_address) {
           ipFailures.set(e.ip_address, (ipFailures.get(e.ip_address) || 0) + 1);
         }
       });
-      const suspiciousActivity = Array.from(ipFailures.values()).filter(count => count >= 3).length;
+      const suspiciousActivity = Array.from(ipFailures.values()).filter(
+        (count) => count >= 3,
+      ).length;
 
       // Get active users count (unique user_ids in activity logs)
       const activeUsers = new Set(
-        (activityData || []).map(a => a.user_id).filter(Boolean)
+        (activityData || []).map((a) => a.user_id).filter(Boolean),
       ).size;
 
       setStats({
@@ -159,17 +186,20 @@ export const SecurityMonitor = () => {
 
       // Alert if suspicious activity detected
       if (suspiciousActivity > 0) {
-        toast.error(`⚠️ ${suspiciousActivity} suspicious IP(s) detected with multiple failed logins!`);
-      }
-      
-      // Alert if high contact access detected (potential harvesting)
-      if (contactLogs.length > 30) {
-        toast.warning(`⚠️ High contact access volume: ${contactLogs.length} accesses in 24h`);
+        toast.error(
+          `⚠️ ${suspiciousActivity} suspicious IP(s) detected with multiple failed logins!`,
+        );
       }
 
+      // Alert if high contact access detected (potential harvesting)
+      if (contactLogs.length > 30) {
+        toast.warning(
+          `⚠️ High contact access volume: ${contactLogs.length} accesses in 24h`,
+        );
+      }
     } catch (error) {
-      console.error('Error fetching security data:', error);
-      toast.error('Failed to load security data');
+      console.error("Error fetching security data:", error);
+      toast.error("Failed to load security data");
     } finally {
       setLoading(false);
     }
@@ -179,8 +209,11 @@ export const SecurityMonitor = () => {
     if (!success) {
       return <Badge variant="destructive">Failed</Badge>;
     }
-    
-    const badges: Record<string, { label: string; variant: "default" | "secondary" | "outline" }> = {
+
+    const badges: Record<
+      string,
+      { label: string; variant: "default" | "secondary" | "outline" }
+    > = {
       login: { label: "Login", variant: "default" },
       logout: { label: "Logout", variant: "secondary" },
       signup: { label: "Signup", variant: "default" },
@@ -189,16 +222,19 @@ export const SecurityMonitor = () => {
       role_change: { label: "Role Changed", variant: "outline" },
     };
 
-    const badge = badges[eventType] || { label: eventType, variant: "secondary" as const };
+    const badge = badges[eventType] || {
+      label: eventType,
+      variant: "secondary" as const,
+    };
     return <Badge variant={badge.variant}>{badge.label}</Badge>;
   };
 
   const getActionIcon = (action: string) => {
-    if (action.includes('INSERT')) return '➕';
-    if (action.includes('UPDATE')) return '✏️';
-    if (action.includes('DELETE')) return '🗑️';
-    if (action.includes('SELECT')) return '👁️';
-    return '📝';
+    if (action.includes("INSERT")) return "➕";
+    if (action.includes("UPDATE")) return "✏️";
+    if (action.includes("DELETE")) return "🗑️";
+    if (action.includes("SELECT")) return "👁️";
+    return "📝";
   };
 
   if (loading) {
@@ -220,7 +256,9 @@ export const SecurityMonitor = () => {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Auth Events</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Total Auth Events
+            </CardTitle>
             <Shield className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -235,19 +273,29 @@ export const SecurityMonitor = () => {
             <Lock className="h-4 w-4 text-destructive" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-destructive">{stats.failedLogins}</div>
-            <p className="text-xs text-muted-foreground">Authentication failures</p>
+            <div className="text-2xl font-bold text-destructive">
+              {stats.failedLogins}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Authentication failures
+            </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Suspicious Activity</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Suspicious Activity
+            </CardTitle>
             <AlertTriangle className="h-4 w-4 text-yellow-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-yellow-500">{stats.suspiciousActivity}</div>
-            <p className="text-xs text-muted-foreground">IPs with multiple failures</p>
+            <div className="text-2xl font-bold text-yellow-500">
+              {stats.suspiciousActivity}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              IPs with multiple failures
+            </p>
           </CardContent>
         </Card>
 
@@ -257,29 +305,39 @@ export const SecurityMonitor = () => {
             <Users className="h-4 w-4 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-primary">{stats.activeUsers}</div>
+            <div className="text-2xl font-bold text-primary">
+              {stats.activeUsers}
+            </div>
             <p className="text-xs text-muted-foreground">Unique users today</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Contact Accesses</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Contact Accesses
+            </CardTitle>
             <Database className="h-4 w-4 text-blue-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-500">{stats.contactAccesses}</div>
+            <div className="text-2xl font-bold text-blue-500">
+              {stats.contactAccesses}
+            </div>
             <p className="text-xs text-muted-foreground">CRM data operations</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Sensitive Profile Access</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Sensitive Profile Access
+            </CardTitle>
             <UserCheck className="h-4 w-4 text-orange-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-orange-500">{stats.sensitiveProfileAccesses}</div>
+            <div className="text-2xl font-bold text-orange-500">
+              {stats.sensitiveProfileAccesses}
+            </div>
             <p className="text-xs text-muted-foreground">PII data requests</p>
           </CardContent>
         </Card>
@@ -301,7 +359,9 @@ export const SecurityMonitor = () => {
         <CardContent>
           <div className="space-y-3">
             {authEvents.length === 0 ? (
-              <p className="text-center text-muted-foreground py-4">No authentication events in the last 24 hours</p>
+              <p className="text-center text-muted-foreground py-4">
+                No authentication events in the last 24 hours
+              </p>
             ) : (
               authEvents.map((event) => (
                 <div
@@ -311,15 +371,19 @@ export const SecurityMonitor = () => {
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       {getEventBadge(event.event_type, event.success)}
-                      <span className="font-medium">{event.email || 'Unknown user'}</span>
+                      <span className="font-medium">
+                        {event.email || "Unknown user"}
+                      </span>
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <span>{event.ip_address || 'Unknown IP'}</span>
+                      <span>{event.ip_address || "Unknown IP"}</span>
                       <span>•</span>
                       <span>{new Date(event.created_at).toLocaleString()}</span>
                     </div>
                     {event.reason && (
-                      <p className="text-xs text-destructive mt-1">{event.reason}</p>
+                      <p className="text-xs text-destructive mt-1">
+                        {event.reason}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -336,14 +400,18 @@ export const SecurityMonitor = () => {
             <Database className="h-5 w-5" />
             Contact Data Access Log
             {contactAccessLogs.length > 20 && (
-              <Badge variant="destructive" className="ml-2">High Volume</Badge>
+              <Badge variant="destructive" className="ml-2">
+                High Volume
+              </Badge>
             )}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
             {contactAccessLogs.length === 0 ? (
-              <p className="text-center text-muted-foreground py-4">No contact access logged in the last 24 hours</p>
+              <p className="text-center text-muted-foreground py-4">
+                No contact access logged in the last 24 hours
+              </p>
             ) : (
               contactAccessLogs.slice(0, 15).map((log) => (
                 <div
@@ -352,16 +420,26 @@ export const SecurityMonitor = () => {
                 >
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-lg">{getActionIcon(log.action)}</span>
-                      <Badge variant={log.action === 'DELETE' ? 'destructive' : 'outline'}>
+                      <span className="text-lg">
+                        {getActionIcon(log.action)}
+                      </span>
+                      <Badge
+                        variant={
+                          log.action === "DELETE" ? "destructive" : "outline"
+                        }
+                      >
                         {log.action}
                       </Badge>
                       {log.details?.contact_name && (
-                        <span className="font-medium">{log.details.contact_name}</span>
+                        <span className="font-medium">
+                          {log.details.contact_name}
+                        </span>
                       )}
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <span>By: {log.user_id?.substring(0, 8) || 'System'}</span>
+                      <span>
+                        By: {log.user_id?.substring(0, 8) || "System"}
+                      </span>
                       <span>•</span>
                       <span>{new Date(log.created_at).toLocaleString()}</span>
                       {log.details?.contact_email && (
@@ -390,7 +468,9 @@ export const SecurityMonitor = () => {
         <CardContent>
           <div className="space-y-3">
             {activityLogs.length === 0 ? (
-              <p className="text-center text-muted-foreground py-4">No activity logged in the last 24 hours</p>
+              <p className="text-center text-muted-foreground py-4">
+                No activity logged in the last 24 hours
+              </p>
             ) : (
               activityLogs.slice(0, 20).map((log) => (
                 <div
@@ -399,7 +479,9 @@ export const SecurityMonitor = () => {
                 >
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-lg">{getActionIcon(log.action)}</span>
+                      <span className="text-lg">
+                        {getActionIcon(log.action)}
+                      </span>
                       <span className="font-medium">{log.action}</span>
                       {log.entity_type && (
                         <>
@@ -409,9 +491,11 @@ export const SecurityMonitor = () => {
                       )}
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <span>User: {log.user_id?.substring(0, 8) || 'System'}</span>
+                      <span>
+                        User: {log.user_id?.substring(0, 8) || "System"}
+                      </span>
                       <span>•</span>
-                      <span>{log.ip_address || 'Unknown IP'}</span>
+                      <span>{log.ip_address || "Unknown IP"}</span>
                       <span>•</span>
                       <span>{new Date(log.created_at).toLocaleString()}</span>
                     </div>

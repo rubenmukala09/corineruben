@@ -14,20 +14,26 @@ export function NewsletterSignup({ compact = false }: { compact?: boolean }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate email using Zod
     const validation = newsletterSchema.safeParse({ email: email.trim() });
     if (!validation.success) {
-      toast.error(validation.error.errors[0]?.message || "Please enter a valid email address");
+      toast.error(
+        validation.error.errors[0]?.message ||
+          "Please enter a valid email address",
+      );
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke('newsletter-signup', {
-        body: { email: validation.data.email }
-      });
+      const { data, error } = await supabase.functions.invoke(
+        "newsletter-signup",
+        {
+          body: { email: validation.data.email },
+        },
+      );
 
       if (error) throw error;
 
@@ -37,7 +43,7 @@ export function NewsletterSignup({ compact = false }: { compact?: boolean }) {
         fireSuccess();
         toast.success("✓ Subscribed! Check your email.");
       }
-      
+
       setEmail("");
     } catch (error: any) {
       console.error("Newsletter signup error:", error);
@@ -58,18 +64,24 @@ export function NewsletterSignup({ compact = false }: { compact?: boolean }) {
         required
         className="bg-primary-foreground/20 border-primary-foreground/30 text-primary-foreground placeholder:text-primary-foreground/50 h-6 text-[9px]"
       />
-      <Button 
-        variant="default" 
+      <Button
+        variant="default"
         className="bg-accent hover:bg-accent/90 h-6 whitespace-nowrap text-[9px] font-semibold px-2"
         type="submit"
         disabled={isSubmitting}
       >
-        {isSubmitting ? <Loader2 className="h-3 w-3 animate-spin" /> : "Subscribe"}
+        {isSubmitting ? (
+          <Loader2 className="h-3 w-3 animate-spin" />
+        ) : (
+          "Subscribe"
+        )}
       </Button>
     </form>
   ) : (
     <div className="bg-primary-foreground/10 rounded-xl p-4 md:p-5 mb-3 md:mb-4">
-      <h3 className="font-bold text-base md:text-lg mb-1">Monthly AI Safety Tips</h3>
+      <h3 className="font-bold text-base md:text-lg mb-1">
+        Monthly AI Safety Tips
+      </h3>
       <p className="text-primary-foreground/80 mb-3 text-sm md:text-base leading-relaxed">
         Stay informed about the latest scams and protection strategies.
       </p>
@@ -83,9 +95,9 @@ export function NewsletterSignup({ compact = false }: { compact?: boolean }) {
           required
           className="bg-primary-foreground/20 border-primary-foreground/30 text-primary-foreground placeholder:text-primary-foreground/50 h-12 md:h-12 text-base"
         />
-        <Button 
-          variant="default" 
-          className="bg-accent hover:bg-accent/90 h-12 md:h-12 whitespace-nowrap text-base font-bold px-6" 
+        <Button
+          variant="default"
+          className="bg-accent hover:bg-accent/90 h-12 md:h-12 whitespace-nowrap text-base font-bold px-6"
           type="submit"
           disabled={isSubmitting}
         >

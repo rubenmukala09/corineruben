@@ -16,12 +16,12 @@ interface OrderSummaryProps {
   className?: string;
 }
 
-export const OrderSummary = ({ 
-  items, 
-  subtotal, 
-  discount = 0, 
+export const OrderSummary = ({
+  items,
+  subtotal,
+  discount = 0,
   total,
-  className 
+  className,
 }: OrderSummaryProps) => {
   return (
     <Card className={className}>
@@ -38,9 +38,13 @@ export const OrderSummary = ({
             <div key={index} className="flex justify-between items-start">
               <div className="flex-1">
                 <p className="font-medium text-sm">{item.name}</p>
-                <p className="text-xs text-muted-foreground">Qty: {item.quantity}</p>
+                <p className="text-xs text-muted-foreground">
+                  Qty: {item.quantity}
+                </p>
               </div>
-              <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+              <p className="font-medium">
+                ${(item.price * item.quantity).toFixed(2)}
+              </p>
             </div>
           ))}
         </div>

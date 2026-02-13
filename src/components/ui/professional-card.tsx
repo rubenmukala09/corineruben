@@ -46,8 +46,10 @@ export const ProfessionalCard = ({
 }: ProfessionalCardProps) => {
   const cardVariants = {
     default: "bg-white border border-gray-200 shadow-sm hover:shadow-lg",
-    feature: "bg-white border border-gray-100 shadow-md hover:shadow-xl hover:-translate-y-1",
-    pricing: "bg-white border-2 border-gray-200 shadow-lg hover:shadow-2xl hover:border-coral-400",
+    feature:
+      "bg-white border border-gray-100 shadow-md hover:shadow-xl hover:-translate-y-1",
+    pricing:
+      "bg-white border-2 border-gray-200 shadow-lg hover:shadow-2xl hover:border-coral-400",
     testimonial: "bg-white border border-gray-100 shadow-sm",
   };
 
@@ -64,7 +66,7 @@ export const ProfessionalCard = ({
       className={cn(
         "relative rounded-2xl p-6 md:p-8 transition-all duration-300",
         cardVariants[variant],
-        className
+        className,
       )}
     >
       {/* Badge (Optional) */}
@@ -204,7 +206,7 @@ export const SectionContainer = ({
         backgrounds[background],
         paddings[padding],
         "relative overflow-hidden",
-        className
+        className,
       )}
     >
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl">

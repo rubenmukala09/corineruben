@@ -27,7 +27,8 @@ export const ScrollProgressIndicator = () => {
         className="fixed top-0 left-0 right-0 h-1 z-[100] origin-left"
         style={{
           scaleX,
-          background: "linear-gradient(90deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 50%, hsl(265 55% 42%) 100%)",
+          background:
+            "linear-gradient(90deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 50%, hsl(265 55% 42%) 100%)",
         }}
       />
 
@@ -36,7 +37,8 @@ export const ScrollProgressIndicator = () => {
         className="fixed top-0 left-0 right-0 h-2 z-[99] origin-left blur-sm opacity-50"
         style={{
           scaleX,
-          background: "linear-gradient(90deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%)",
+          background:
+            "linear-gradient(90deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%)",
         }}
       />
 
@@ -70,7 +72,13 @@ export const ScrollProgressIndicator = () => {
             className="opacity-80"
           />
           <defs>
-            <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <linearGradient
+              id="progressGradient"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="0%"
+            >
               <stop offset="0%" stopColor="hsl(var(--primary))" />
               <stop offset="100%" stopColor="hsl(var(--accent))" />
             </linearGradient>

@@ -1,6 +1,12 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import { toast } from 'sonner';
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 interface Subscription {
   id: string;
@@ -17,7 +23,9 @@ interface SubscriptionContextType {
   refreshSubscriptions: () => Promise<void>;
 }
 
-const SubscriptionContext = createContext<SubscriptionContextType | undefined>(undefined);
+const SubscriptionContext = createContext<SubscriptionContextType | undefined>(
+  undefined,
+);
 
 export const SubscriptionProvider = ({ children }: { children: ReactNode }) => {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
@@ -25,8 +33,10 @@ export const SubscriptionProvider = ({ children }: { children: ReactNode }) => {
 
   const refreshSubscriptions = async () => {
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
       if (!session) {
         setSubscriptions([]);
         setLoading(false);
@@ -34,39 +44,46 @@ export const SubscriptionProvider = ({ children }: { children: ReactNode }) => {
       }
 
       // Extra safety: ensure the current token maps to a valid user before invoking function
-      const { data: userData, error: userError } = await supabase.auth.getUser();
+      const { data: userData, error: userError } =
+        await supabase.auth.getUser();
       if (userError || !userData?.user) {
-        console.warn('Invalid session token detected, signing out before calling edge function.');
-        toast.error('Your session expired. Please sign in again.');
+        console.warn(
+          "Invalid session token detected, signing out before calling edge function.",
+        );
+        toast.error("Your session expired. Please sign in again.");
         await supabase.auth.signOut();
-        window.location.href = '/login';
+        window.location.href = "/login";
         setSubscriptions([]);
         setLoading(false);
         return;
       }
 
-      const { data, error } = await supabase.functions.invoke('check-subscription-status');
-      
+      const { data, error } = await supabase.functions.invoke(
+        "check-subscription-status",
+      );
+
       if (error) {
-        console.error('Error checking subscriptions:', error);
-        
+        console.error("Error checking subscriptions:", error);
+
         // If authentication error (user deleted), sign out
         const errorMessage = error.message || String(error);
-        if (errorMessage.includes('Authentication error') || 
-            errorMessage.includes('does not exist') ||
-            errorMessage.includes('not authenticated')) {
-          console.log('User no longer exists, signing out...');
-          toast.error('Your session is no longer valid. Please sign in again.');
+        if (
+          errorMessage.includes("Authentication error") ||
+          errorMessage.includes("does not exist") ||
+          errorMessage.includes("not authenticated")
+        ) {
+          console.log("User no longer exists, signing out...");
+          toast.error("Your session is no longer valid. Please sign in again.");
           await supabase.auth.signOut();
-          window.location.href = '/login';
+          window.location.href = "/login";
         }
-        
+
         setSubscriptions([]);
       } else if (data?.subscriptions) {
         setSubscriptions(data.subscriptions);
       }
     } catch (error) {
-      console.error('Error refreshing subscriptions:', error);
+      console.error("Error refreshing subscriptions:", error);
       setSubscriptions([]);
     } finally {
       setLoading(false);
@@ -82,7 +99,9 @@ export const SubscriptionProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <SubscriptionContext.Provider value={{ subscriptions, loading, refreshSubscriptions }}>
+    <SubscriptionContext.Provider
+      value={{ subscriptions, loading, refreshSubscriptions }}
+    >
       {children}
     </SubscriptionContext.Provider>
   );
@@ -91,7 +110,9 @@ export const SubscriptionProvider = ({ children }: { children: ReactNode }) => {
 export const useSubscription = () => {
   const context = useContext(SubscriptionContext);
   if (context === undefined) {
-    throw new Error('useSubscription must be used within a SubscriptionProvider');
+    throw new Error(
+      "useSubscription must be used within a SubscriptionProvider",
+    );
   }
   return context;
 };

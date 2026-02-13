@@ -1,7 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Shield } from "lucide-react";
@@ -15,7 +21,12 @@ interface VerificationCodeModalProps {
   rememberMe: boolean;
 }
 
-export function VerificationCodeModal({ open, onClose, email, rememberMe }: VerificationCodeModalProps) {
+export function VerificationCodeModal({
+  open,
+  onClose,
+  email,
+  rememberMe,
+}: VerificationCodeModalProps) {
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const [isVerifying, setIsVerifying] = useState(false);
   const [countdown, setCountdown] = useState(600); // 10 minutes
@@ -40,7 +51,10 @@ export function VerificationCodeModal({ open, onClose, email, rememberMe }: Veri
 
   useEffect(() => {
     if (resendCountdown > 0) {
-      const timer = setTimeout(() => setResendCountdown(resendCountdown - 1), 1000);
+      const timer = setTimeout(
+        () => setResendCountdown(resendCountdown - 1),
+        1000,
+      );
       return () => clearTimeout(timer);
     } else {
       setCanResend(true);
@@ -58,9 +72,9 @@ export function VerificationCodeModal({ open, onClose, email, rememberMe }: Veri
         }
       });
       setCode(newCode);
-      
+
       // Auto-submit if complete
-      if (newCode.every(d => d !== "")) {
+      if (newCode.every((d) => d !== "")) {
         handleVerify(newCode.join(""));
       }
       return;
@@ -76,7 +90,7 @@ export function VerificationCodeModal({ open, onClose, email, rememberMe }: Veri
     }
 
     // Auto-submit if complete
-    if (newCode.every(d => d !== "")) {
+    if (newCode.every((d) => d !== "")) {
       handleVerify(newCode.join(""));
     }
   };
@@ -89,7 +103,7 @@ export function VerificationCodeModal({ open, onClose, email, rememberMe }: Veri
 
   const handleVerify = async (codeString?: string) => {
     const verificationCode = codeString || code.join("");
-    
+
     if (verificationCode.length !== 6) {
       toast.error("Please enter the complete 6-digit code");
       return;
@@ -123,15 +137,15 @@ export function VerificationCodeModal({ open, onClose, email, rememberMe }: Veri
 
       // Step 4: Query user_roles table to get their role
       const { data: roleData, error: roleError } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', userId)
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", userId)
         .single();
 
       if (roleError || !roleData) {
         // No role assigned yet - redirect to pending approval page
         toast.success("Verification successful!");
-        navigate('/application-pending');
+        navigate("/application-pending");
         onClose();
         setIsVerifying(false);
         return;
@@ -140,11 +154,11 @@ export function VerificationCodeModal({ open, onClose, email, rememberMe }: Veri
       // Step 5: Get redirect path from ROLE_CONFIGS
       const userRole = roleData.role;
       const roleConfig = ROLE_CONFIGS[userRole];
-      
+
       if (!roleConfig) {
         // Fallback if role not found in configs
         toast.warning("Role configuration not found. Redirecting to home.");
-        navigate('/');
+        navigate("/");
         onClose();
         setIsVerifying(false);
         return;
@@ -152,15 +166,16 @@ export function VerificationCodeModal({ open, onClose, email, rememberMe }: Veri
 
       // Step 6: Redirect to role-specific dashboard
       const redirectPath = roleConfig.redirectTo;
-      toast.success(`Welcome! Redirecting to your ${roleConfig.displayName} dashboard...`);
-      
+      toast.success(
+        `Welcome! Redirecting to your ${roleConfig.displayName} dashboard...`,
+      );
+
       // Small delay to show the success message
       setTimeout(() => {
         navigate(redirectPath);
         onClose();
         setIsVerifying(false);
       }, 500);
-
     } catch (error: any) {
       console.error("Verification error:", error);
       toast.error("An unexpected error occurred. Please try again.");
@@ -172,9 +187,12 @@ export function VerificationCodeModal({ open, onClose, email, rememberMe }: Veri
     if (!canResend) return;
 
     try {
-      const { error } = await supabase.functions.invoke("send-verification-code", {
-        body: { email },
-      });
+      const { error } = await supabase.functions.invoke(
+        "send-verification-code",
+        {
+          body: { email },
+        },
+      );
 
       if (error) {
         toast.error("Failed to resend code. Please try again.");
@@ -199,7 +217,8 @@ export function VerificationCodeModal({ open, onClose, email, rememberMe }: Veri
     return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
-  const maskedEmail = email.slice(0, 2) + "***" + email.slice(email.indexOf("@"));
+  const maskedEmail =
+    email.slice(0, 2) + "***" + email.slice(email.indexOf("@"));
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
@@ -210,7 +229,8 @@ export function VerificationCodeModal({ open, onClose, email, rememberMe }: Veri
             Two-Factor Authentication
           </DialogTitle>
           <DialogDescription className="text-base">
-            We sent a 6-digit code to <span className="font-semibold text-foreground">{email}</span>
+            We sent a 6-digit code to{" "}
+            <span className="font-semibold text-foreground">{email}</span>
           </DialogDescription>
         </DialogHeader>
 
@@ -240,7 +260,7 @@ export function VerificationCodeModal({ open, onClose, email, rememberMe }: Veri
                   "focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary",
                   "bg-background",
                   digit ? "border-primary bg-primary/5" : "border-input",
-                  "touch-manipulation min-h-[48px] min-w-[48px]"
+                  "touch-manipulation min-h-[48px] min-w-[48px]",
                 )}
                 disabled={isVerifying}
                 aria-label={`Digit ${index + 1}`}
@@ -251,7 +271,10 @@ export function VerificationCodeModal({ open, onClose, email, rememberMe }: Veri
           {/* Timer */}
           <div className="text-center">
             <p className="text-sm text-muted-foreground">
-              Code expires in: <span className="font-semibold text-foreground">{formatTime(countdown)}</span>
+              Code expires in:{" "}
+              <span className="font-semibold text-foreground">
+                {formatTime(countdown)}
+              </span>
             </p>
           </div>
 
@@ -267,18 +290,16 @@ export function VerificationCodeModal({ open, onClose, email, rememberMe }: Veri
               disabled={!canResend || resendCountdown > 0}
               className="min-h-[48px] px-6"
             >
-              {resendCountdown > 0 ? (
-                `Resend in ${resendCountdown}s`
-              ) : (
-                "Resend Code"
-              )}
+              {resendCountdown > 0
+                ? `Resend in ${resendCountdown}s`
+                : "Resend Code"}
             </Button>
           </div>
 
           {/* Verify Button */}
           <Button
             onClick={() => handleVerify()}
-            disabled={isVerifying || code.some(d => !d)}
+            disabled={isVerifying || code.some((d) => !d)}
             className="w-full min-h-[52px] text-base font-semibold bg-gradient-to-r from-primary to-accent"
           >
             {isVerifying ? (

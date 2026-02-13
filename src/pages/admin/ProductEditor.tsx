@@ -78,7 +78,9 @@ const ProductEditor = () => {
     const files = e.target.files;
     if (files) {
       // Handle file upload
-      const newImages = Array.from(files).map((file) => URL.createObjectURL(file));
+      const newImages = Array.from(files).map((file) =>
+        URL.createObjectURL(file),
+      );
       setImages([...images, ...newImages]);
     }
   };
@@ -100,11 +102,17 @@ const ProductEditor = () => {
         <div className="container mx-auto px-6 py-4">
           <div className="mt-4 flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon" onClick={() => navigate("/admin/ecommerce/products")}>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => navigate("/admin/ecommerce/products")}
+              >
                 <ArrowLeft className="h-5 w-5" />
               </Button>
               <div>
-                <h1 className="text-2xl font-bold">{isNew ? "New Product" : "Edit Product"}</h1>
+                <h1 className="text-2xl font-bold">
+                  {isNew ? "New Product" : "Edit Product"}
+                </h1>
                 <p className="text-sm text-muted-foreground">
                   Last saved: {new Date().toLocaleTimeString()}
                 </p>
@@ -132,7 +140,9 @@ const ProductEditor = () => {
             <div className="space-y-6">
               {/* Basic Information */}
               <Card className="p-6">
-                <h2 className="mb-4 text-xl font-semibold">Basic Information</h2>
+                <h2 className="mb-4 text-xl font-semibold">
+                  Basic Information
+                </h2>
                 <div className="space-y-4">
                   <div>
                     <Label htmlFor="name">Product Name *</Label>
@@ -140,7 +150,9 @@ const ProductEditor = () => {
                       id="name"
                       placeholder="USB Data Blocker - 2 Pack"
                       value={productData.name}
-                      onChange={(e) => setProductData({ ...productData, name: e.target.value })}
+                      onChange={(e) =>
+                        setProductData({ ...productData, name: e.target.value })
+                      }
                       maxLength={100}
                     />
                     <p className="mt-1 text-xs text-muted-foreground">
@@ -154,7 +166,12 @@ const ProductEditor = () => {
                       id="shortDescription"
                       placeholder="Brief description for product cards..."
                       value={productData.shortDescription}
-                      onChange={(e) => setProductData({ ...productData, shortDescription: e.target.value })}
+                      onChange={(e) =>
+                        setProductData({
+                          ...productData,
+                          shortDescription: e.target.value,
+                        })
+                      }
                       maxLength={150}
                       rows={2}
                     />
@@ -167,7 +184,9 @@ const ProductEditor = () => {
                     <Label htmlFor="description">Product Description</Label>
                     <RichTextEditor
                       content={productData.description}
-                      onChange={(value) => setProductData({ ...productData, description: value })}
+                      onChange={(value) =>
+                        setProductData({ ...productData, description: value })
+                      }
                     />
                     <p className="mt-1 text-xs text-muted-foreground">
                       Recommended: 100-300 words
@@ -182,8 +201,15 @@ const ProductEditor = () => {
                 <div className="space-y-4">
                   <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
                     {images.map((image, index) => (
-                      <div key={index} className="group relative aspect-square overflow-hidden rounded-lg border">
-                        <img src={image} alt={`Product ${index + 1}`} className="h-full w-full object-cover" />
+                      <div
+                        key={index}
+                        className="group relative aspect-square overflow-hidden rounded-lg border"
+                      >
+                        <img
+                          src={image}
+                          alt={`Product ${index + 1}`}
+                          className="h-full w-full object-cover"
+                        />
                         {index === 0 && (
                           <Badge className="absolute left-2 top-2">Main</Badge>
                         )}
@@ -200,7 +226,9 @@ const ProductEditor = () => {
                     {images.length < 5 && (
                       <label className="flex aspect-square cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed hover:border-primary">
                         <Upload className="mb-2 h-8 w-8 text-muted-foreground" />
-                        <span className="text-sm text-muted-foreground">Upload Image</span>
+                        <span className="text-sm text-muted-foreground">
+                          Upload Image
+                        </span>
                         <input
                           type="file"
                           accept="image/*"
@@ -212,7 +240,8 @@ const ProductEditor = () => {
                     )}
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    Upload up to 5 images. First image will be the main product image. Max 2MB each.
+                    Upload up to 5 images. First image will be the main product
+                    image. Max 2MB each.
                   </p>
                 </div>
               </Card>
@@ -228,11 +257,18 @@ const ProductEditor = () => {
                         name="productType"
                         value="physical"
                         checked={productData.productType === "physical"}
-                        onChange={(e) => setProductData({ ...productData, productType: e.target.value })}
+                        onChange={(e) =>
+                          setProductData({
+                            ...productData,
+                            productType: e.target.value,
+                          })
+                        }
                       />
                       <div>
                         <div className="font-medium">Physical Product</div>
-                        <div className="text-sm text-muted-foreground">Requires shipping</div>
+                        <div className="text-sm text-muted-foreground">
+                          Requires shipping
+                        </div>
                       </div>
                     </label>
                     <label className="flex flex-1 cursor-pointer items-center gap-3 rounded-lg border p-4 transition-colors hover:border-primary">
@@ -241,11 +277,18 @@ const ProductEditor = () => {
                         name="productType"
                         value="digital"
                         checked={productData.productType === "digital"}
-                        onChange={(e) => setProductData({ ...productData, productType: e.target.value })}
+                        onChange={(e) =>
+                          setProductData({
+                            ...productData,
+                            productType: e.target.value,
+                          })
+                        }
                       />
                       <div>
                         <div className="font-medium">Digital Product</div>
-                        <div className="text-sm text-muted-foreground">Instant download</div>
+                        <div className="text-sm text-muted-foreground">
+                          Instant download
+                        </div>
                       </div>
                     </label>
                   </div>
@@ -254,7 +297,9 @@ const ProductEditor = () => {
 
               {/* Pricing & Inventory */}
               <Card className="p-6">
-                <h2 className="mb-4 text-xl font-semibold">Pricing & Inventory</h2>
+                <h2 className="mb-4 text-xl font-semibold">
+                  Pricing & Inventory
+                </h2>
                 <div className="space-y-4">
                   <div className="grid gap-4 sm:grid-cols-3">
                     <div>
@@ -265,7 +310,10 @@ const ProductEditor = () => {
                         placeholder="12.99"
                         value={productData.price}
                         onChange={(e) => {
-                          setProductData({ ...productData, price: e.target.value });
+                          setProductData({
+                            ...productData,
+                            price: e.target.value,
+                          });
                           calculateProfitMargin();
                         }}
                         onBlur={calculateProfitMargin}
@@ -278,7 +326,12 @@ const ProductEditor = () => {
                         type="number"
                         placeholder="19.99"
                         value={productData.compareAtPrice}
-                        onChange={(e) => setProductData({ ...productData, compareAtPrice: e.target.value })}
+                        onChange={(e) =>
+                          setProductData({
+                            ...productData,
+                            compareAtPrice: e.target.value,
+                          })
+                        }
                       />
                     </div>
                     <div>
@@ -289,7 +342,10 @@ const ProductEditor = () => {
                         placeholder="6.50"
                         value={productData.cost}
                         onChange={(e) => {
-                          setProductData({ ...productData, cost: e.target.value });
+                          setProductData({
+                            ...productData,
+                            cost: e.target.value,
+                          });
                           calculateProfitMargin();
                         }}
                         onBlur={calculateProfitMargin}
@@ -300,7 +356,9 @@ const ProductEditor = () => {
                   {productData.price && productData.cost && (
                     <div className="rounded-lg border p-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-muted-foreground">Profit Margin:</span>
+                        <span className="text-sm text-muted-foreground">
+                          Profit Margin:
+                        </span>
                         <span className={`font-semibold ${getMarginColor()}`}>
                           {profitMargin.toFixed(1)}%
                         </span>
@@ -317,19 +375,29 @@ const ProductEditor = () => {
                           id="sku"
                           placeholder="PROD-001"
                           value={productData.sku}
-                          onChange={(e) => setProductData({ ...productData, sku: e.target.value })}
+                          onChange={(e) =>
+                            setProductData({
+                              ...productData,
+                              sku: e.target.value,
+                            })
+                          }
                         />
                       </div>
 
                       <div className="flex items-center justify-between">
                         <div>
                           <Label>Track Inventory</Label>
-                          <p className="text-sm text-muted-foreground">Monitor stock levels</p>
+                          <p className="text-sm text-muted-foreground">
+                            Monitor stock levels
+                          </p>
                         </div>
                         <Switch
                           checked={productData.trackInventory}
                           onCheckedChange={(checked) =>
-                            setProductData({ ...productData, trackInventory: checked })
+                            setProductData({
+                              ...productData,
+                              trackInventory: checked,
+                            })
                           }
                         />
                       </div>
@@ -338,23 +406,37 @@ const ProductEditor = () => {
                         <div className="space-y-4 rounded-lg border p-4">
                           <div className="grid gap-4 sm:grid-cols-2">
                             <div>
-                              <Label htmlFor="stockQuantity">Quantity in Stock</Label>
+                              <Label htmlFor="stockQuantity">
+                                Quantity in Stock
+                              </Label>
                               <Input
                                 id="stockQuantity"
                                 type="number"
                                 placeholder="45"
                                 value={productData.stockQuantity}
-                                onChange={(e) => setProductData({ ...productData, stockQuantity: e.target.value })}
+                                onChange={(e) =>
+                                  setProductData({
+                                    ...productData,
+                                    stockQuantity: e.target.value,
+                                  })
+                                }
                               />
                             </div>
                             <div>
-                              <Label htmlFor="lowStockThreshold">Low Stock Threshold</Label>
+                              <Label htmlFor="lowStockThreshold">
+                                Low Stock Threshold
+                              </Label>
                               <Input
                                 id="lowStockThreshold"
                                 type="number"
                                 placeholder="10"
                                 value={productData.lowStockThreshold}
-                                onChange={(e) => setProductData({ ...productData, lowStockThreshold: e.target.value })}
+                                onChange={(e) =>
+                                  setProductData({
+                                    ...productData,
+                                    lowStockThreshold: e.target.value,
+                                  })
+                                }
                               />
                             </div>
                           </div>
@@ -363,10 +445,16 @@ const ProductEditor = () => {
                               id="allowOverselling"
                               checked={productData.allowOverselling}
                               onCheckedChange={(checked) =>
-                                setProductData({ ...productData, allowOverselling: checked as boolean })
+                                setProductData({
+                                  ...productData,
+                                  allowOverselling: checked as boolean,
+                                })
                               }
                             />
-                            <Label htmlFor="allowOverselling" className="font-normal">
+                            <Label
+                              htmlFor="allowOverselling"
+                              className="font-normal"
+                            >
                               Allow selling when out of stock
                             </Label>
                           </div>
@@ -384,14 +472,24 @@ const ProductEditor = () => {
                               type="number"
                               placeholder="2.4"
                               value={productData.weight}
-                              onChange={(e) => setProductData({ ...productData, weight: e.target.value })}
+                              onChange={(e) =>
+                                setProductData({
+                                  ...productData,
+                                  weight: e.target.value,
+                                })
+                              }
                             />
                           </div>
                           <div className="w-24">
                             <Label htmlFor="weightUnit">Unit</Label>
                             <Select
                               value={productData.weightUnit}
-                              onValueChange={(value) => setProductData({ ...productData, weightUnit: value })}
+                              onValueChange={(value) =>
+                                setProductData({
+                                  ...productData,
+                                  weightUnit: value,
+                                })
+                              }
                             >
                               <SelectTrigger id="weightUnit">
                                 <SelectValue />
@@ -414,7 +512,12 @@ const ProductEditor = () => {
                             type="number"
                             placeholder="6"
                             value={productData.length}
-                            onChange={(e) => setProductData({ ...productData, length: e.target.value })}
+                            onChange={(e) =>
+                              setProductData({
+                                ...productData,
+                                length: e.target.value,
+                              })
+                            }
                           />
                         </div>
                         <div>
@@ -424,7 +527,12 @@ const ProductEditor = () => {
                             type="number"
                             placeholder="4"
                             value={productData.width}
-                            onChange={(e) => setProductData({ ...productData, width: e.target.value })}
+                            onChange={(e) =>
+                              setProductData({
+                                ...productData,
+                                width: e.target.value,
+                              })
+                            }
                           />
                         </div>
                         <div>
@@ -434,7 +542,12 @@ const ProductEditor = () => {
                             type="number"
                             placeholder="2"
                             value={productData.height}
-                            onChange={(e) => setProductData({ ...productData, height: e.target.value })}
+                            onChange={(e) =>
+                              setProductData({
+                                ...productData,
+                                height: e.target.value,
+                              })
+                            }
                           />
                         </div>
                       </div>
@@ -442,7 +555,12 @@ const ProductEditor = () => {
                         <Label htmlFor="shippingClass">Shipping Class</Label>
                         <Select
                           value={productData.shippingClass}
-                          onValueChange={(value) => setProductData({ ...productData, shippingClass: value })}
+                          onValueChange={(value) =>
+                            setProductData({
+                              ...productData,
+                              shippingClass: value,
+                            })
+                          }
                         >
                           <SelectTrigger id="shippingClass">
                             <SelectValue />
@@ -469,10 +587,14 @@ const ProductEditor = () => {
                             <span>Upload File or Click to Browse</span>
                             <input type="file" className="hidden" />
                           </label>
-                          <span className="text-center text-sm text-muted-foreground">OR</span>
+                          <span className="text-center text-sm text-muted-foreground">
+                            OR
+                          </span>
                           <Input placeholder="Paste external URL (Google Drive, Dropbox, etc.)" />
                         </div>
-                        <p className="mt-1 text-xs text-muted-foreground">Max 50MB. Accepts: PDF, ZIP, DOC, XLS, etc.</p>
+                        <p className="mt-1 text-xs text-muted-foreground">
+                          Max 50MB. Accepts: PDF, ZIP, DOC, XLS, etc.
+                        </p>
                       </div>
                       <div>
                         <Label htmlFor="downloadLimit">Download Limit</Label>
@@ -481,9 +603,16 @@ const ProductEditor = () => {
                           type="number"
                           placeholder="Unlimited (leave empty)"
                           value={productData.downloadLimit}
-                          onChange={(e) => setProductData({ ...productData, downloadLimit: e.target.value })}
+                          onChange={(e) =>
+                            setProductData({
+                              ...productData,
+                              downloadLimit: e.target.value,
+                            })
+                          }
                         />
-                        <p className="mt-1 text-xs text-muted-foreground">Number of downloads allowed per purchase</p>
+                        <p className="mt-1 text-xs text-muted-foreground">
+                          Number of downloads allowed per purchase
+                        </p>
                       </div>
                     </>
                   )}
@@ -501,7 +630,9 @@ const ProductEditor = () => {
                   <Label htmlFor="status">Status</Label>
                   <Select
                     value={productData.status}
-                    onValueChange={(value) => setProductData({ ...productData, status: value })}
+                    onValueChange={(value) =>
+                      setProductData({ ...productData, status: value })
+                    }
                   >
                     <SelectTrigger id="status">
                       <SelectValue />
@@ -517,7 +648,9 @@ const ProductEditor = () => {
                   <Label htmlFor="visibility">Visibility</Label>
                   <Select
                     value={productData.visibility}
-                    onValueChange={(value) => setProductData({ ...productData, visibility: value })}
+                    onValueChange={(value) =>
+                      setProductData({ ...productData, visibility: value })
+                    }
                   >
                     <SelectTrigger id="visibility">
                       <SelectValue />
@@ -525,7 +658,9 @@ const ProductEditor = () => {
                     <SelectContent>
                       <SelectItem value="public">Public</SelectItem>
                       <SelectItem value="hidden">Hidden</SelectItem>
-                      <SelectItem value="password">Password Protected</SelectItem>
+                      <SelectItem value="password">
+                        Password Protected
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -538,7 +673,13 @@ const ProductEditor = () => {
                 <div>
                   <Label>Categories</Label>
                   <div className="mt-2 space-y-2">
-                    {["Security Tools", "Educational", "Training", "Bundles", "Accessories"].map((cat) => (
+                    {[
+                      "Security Tools",
+                      "Educational",
+                      "Training",
+                      "Bundles",
+                      "Accessories",
+                    ].map((cat) => (
                       <div key={cat} className="flex items-center gap-2">
                         <Checkbox id={cat} />
                         <Label htmlFor={cat} className="font-normal">
@@ -554,15 +695,24 @@ const ProductEditor = () => {
                     id="tags"
                     placeholder="security, USB, protection"
                     value={productData.tags}
-                    onChange={(e) => setProductData({ ...productData, tags: e.target.value })}
+                    onChange={(e) =>
+                      setProductData({ ...productData, tags: e.target.value })
+                    }
                   />
-                  <p className="mt-1 text-xs text-muted-foreground">Comma-separated</p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    Comma-separated
+                  </p>
                 </div>
                 <div className="flex items-center gap-2">
                   <Checkbox
                     id="featured"
                     checked={productData.featured}
-                    onCheckedChange={(checked) => setProductData({ ...productData, featured: checked as boolean })}
+                    onCheckedChange={(checked) =>
+                      setProductData({
+                        ...productData,
+                        featured: checked as boolean,
+                      })
+                    }
                   />
                   <Label htmlFor="featured" className="font-normal">
                     Featured Product
@@ -573,7 +723,10 @@ const ProductEditor = () => {
                     id="veteranDiscount"
                     checked={productData.veteranDiscount}
                     onCheckedChange={(checked) =>
-                      setProductData({ ...productData, veteranDiscount: checked as boolean })
+                      setProductData({
+                        ...productData,
+                        veteranDiscount: checked as boolean,
+                      })
                     }
                   />
                   <Label htmlFor="veteranDiscount" className="font-normal">
@@ -592,10 +745,17 @@ const ProductEditor = () => {
                     id="seoTitle"
                     placeholder={productData.name || "Product name"}
                     value={productData.seoTitle}
-                    onChange={(e) => setProductData({ ...productData, seoTitle: e.target.value })}
+                    onChange={(e) =>
+                      setProductData({
+                        ...productData,
+                        seoTitle: e.target.value,
+                      })
+                    }
                     maxLength={60}
                   />
-                  <p className="mt-1 text-xs text-muted-foreground">{productData.seoTitle.length}/60 characters</p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    {productData.seoTitle.length}/60 characters
+                  </p>
                 </div>
                 <div>
                   <Label htmlFor="metaDescription">Meta Description</Label>
@@ -603,11 +763,18 @@ const ProductEditor = () => {
                     id="metaDescription"
                     placeholder="Brief description for search engines"
                     value={productData.metaDescription}
-                    onChange={(e) => setProductData({ ...productData, metaDescription: e.target.value })}
+                    onChange={(e) =>
+                      setProductData({
+                        ...productData,
+                        metaDescription: e.target.value,
+                      })
+                    }
                     maxLength={160}
                     rows={3}
                   />
-                  <p className="mt-1 text-xs text-muted-foreground">{productData.metaDescription.length}/160 characters</p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    {productData.metaDescription.length}/160 characters
+                  </p>
                 </div>
                 <div>
                   <Label htmlFor="urlSlug">URL Slug</Label>
@@ -615,31 +782,78 @@ const ProductEditor = () => {
                     id="urlSlug"
                     placeholder="auto-generated-from-name"
                     value={productData.urlSlug}
-                    onChange={(e) => setProductData({ ...productData, urlSlug: e.target.value })}
+                    onChange={(e) =>
+                      setProductData({
+                        ...productData,
+                        urlSlug: e.target.value,
+                      })
+                    }
                   />
-                  <p className="mt-1 text-xs text-muted-foreground">/shop/{productData.urlSlug || "product-url"}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    /shop/{productData.urlSlug || "product-url"}
+                  </p>
                 </div>
               </div>
             </Card>
 
             <Card className="p-6">
-              <h2 className="mb-4 text-lg font-semibold">Publishing Checklist</h2>
+              <h2 className="mb-4 text-lg font-semibold">
+                Publishing Checklist
+              </h2>
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-sm">
-                  <div className={`h-2 w-2 rounded-full ${productData.name ? "bg-success" : "bg-muted"}`} />
-                  <span className={productData.name ? "text-foreground" : "text-muted-foreground"}>Product name</span>
+                  <div
+                    className={`h-2 w-2 rounded-full ${productData.name ? "bg-success" : "bg-muted"}`}
+                  />
+                  <span
+                    className={
+                      productData.name
+                        ? "text-foreground"
+                        : "text-muted-foreground"
+                    }
+                  >
+                    Product name
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
-                  <div className={`h-2 w-2 rounded-full ${productData.price ? "bg-success" : "bg-muted"}`} />
-                  <span className={productData.price ? "text-foreground" : "text-muted-foreground"}>Price set</span>
+                  <div
+                    className={`h-2 w-2 rounded-full ${productData.price ? "bg-success" : "bg-muted"}`}
+                  />
+                  <span
+                    className={
+                      productData.price
+                        ? "text-foreground"
+                        : "text-muted-foreground"
+                    }
+                  >
+                    Price set
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
-                  <div className={`h-2 w-2 rounded-full ${images.length > 0 ? "bg-success" : "bg-muted"}`} />
-                  <span className={images.length > 0 ? "text-foreground" : "text-muted-foreground"}>Image uploaded</span>
+                  <div
+                    className={`h-2 w-2 rounded-full ${images.length > 0 ? "bg-success" : "bg-muted"}`}
+                  />
+                  <span
+                    className={
+                      images.length > 0
+                        ? "text-foreground"
+                        : "text-muted-foreground"
+                    }
+                  >
+                    Image uploaded
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
-                  <div className={`h-2 w-2 rounded-full ${productData.description ? "bg-success" : "bg-muted"}`} />
-                  <span className={productData.description ? "text-foreground" : "text-muted-foreground"}>
+                  <div
+                    className={`h-2 w-2 rounded-full ${productData.description ? "bg-success" : "bg-muted"}`}
+                  />
+                  <span
+                    className={
+                      productData.description
+                        ? "text-foreground"
+                        : "text-muted-foreground"
+                    }
+                  >
                     Description added
                   </span>
                 </div>

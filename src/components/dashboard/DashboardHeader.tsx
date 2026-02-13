@@ -12,16 +12,17 @@ interface DashboardHeaderProps {
   onSignOut: () => void;
 }
 
-export function DashboardHeader({ 
-  firstName, 
-  lastName, 
+export function DashboardHeader({
+  firstName,
+  lastName,
   avatarUrl,
   title,
   subtitle,
-  onSignOut 
+  onSignOut,
 }: DashboardHeaderProps) {
   const navigate = useNavigate();
-  const initials = `${firstName?.[0] || ""}${lastName?.[0] || ""}`.toUpperCase() || "U";
+  const initials =
+    `${firstName?.[0] || ""}${lastName?.[0] || ""}`.toUpperCase() || "U";
 
   return (
     <header className="border-b bg-card/80 backdrop-blur-md sticky top-0 z-20">

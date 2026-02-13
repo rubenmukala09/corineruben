@@ -4,11 +4,12 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
 const logStep = (step: string, details?: any) => {
-  const detailsStr = details ? ` - ${JSON.stringify(details)}` : '';
+  const detailsStr = details ? ` - ${JSON.stringify(details)}` : "";
   console.log(`[SEND-DIGITAL-DOWNLOAD] ${step}${detailsStr}`);
 };
 
@@ -34,37 +35,48 @@ serve(async (req) => {
     const resendKey = Deno.env.get("RESEND_API_KEY");
     if (!resendKey) throw new Error("RESEND_API_KEY is not set");
 
-    const { customer_email, customer_name, products, order_id }: DownloadRequest = await req.json();
-    
-    if (!customer_email) throw new Error("customer_email is required");
-    if (!products || products.length === 0) throw new Error("products array is required");
+    const {
+      customer_email,
+      customer_name,
+      products,
+      order_id,
+    }: DownloadRequest = await req.json();
 
-    logStep("Processing download request", { customer_email, productCount: products.length });
+    if (!customer_email) throw new Error("customer_email is required");
+    if (!products || products.length === 0)
+      throw new Error("products array is required");
+
+    logStep("Processing download request", {
+      customer_email,
+      productCount: products.length,
+    });
 
     const resend = new Resend(resendKey);
 
     // Initialize Supabase client
     const supabaseClient = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
     );
 
     // Generate download links with 24-hour expiry
     const expiryTime = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
-    
+
     // Build product list HTML for email
-    const productListHtml = products.map(product => {
-      const downloadButton = product.download_url 
-        ? `<a href="${product.download_url}" style="display: inline-block; background: linear-gradient(135deg, #9333ea 0%, #06b6d4 100%); color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; margin: 8px 0;">Download ${product.name}</a>`
-        : `<p style="color: #666;">Download link will be sent separately for: ${product.name}</p>`;
-      
-      return `
+    const productListHtml = products
+      .map((product) => {
+        const downloadButton = product.download_url
+          ? `<a href="${product.download_url}" style="display: inline-block; background: linear-gradient(135deg, #9333ea 0%, #06b6d4 100%); color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; margin: 8px 0;">Download ${product.name}</a>`
+          : `<p style="color: #666;">Download link will be sent separately for: ${product.name}</p>`;
+
+        return `
         <div style="background: #f8f9fa; border-radius: 12px; padding: 20px; margin: 16px 0; border-left: 4px solid #9333ea;">
           <h3 style="margin: 0 0 12px 0; color: #1a1a2e;">${product.name}</h3>
           ${downloadButton}
         </div>
       `;
-    }).join('');
+      })
+      .join("");
 
     // Send email with download links
     const emailResponse = await resend.emails.send({
@@ -86,7 +98,7 @@ serve(async (req) => {
             </div>
           </div>
           
-          <p style="font-size: 16px;">Hi ${customer_name || 'there'},</p>
+          <p style="font-size: 16px;">Hi ${customer_name || "there"},</p>
           
           <p style="font-size: 16px;">Great news! Your digital products are ready for download. Click the buttons below to access your purchases:</p>
           
@@ -98,7 +110,7 @@ serve(async (req) => {
             </p>
           </div>
           
-          ${order_id ? `<p style="font-size: 14px; color: #666;">Order Reference: ${order_id}</p>` : ''}
+          ${order_id ? `<p style="font-size: 14px; color: #666;">Order Reference: ${order_id}</p>` : ""}
           
           <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 32px 0;">
           
@@ -123,34 +135,41 @@ serve(async (req) => {
     // Log the delivery in database if order_id provided
     if (order_id) {
       const { error: updateError } = await supabaseClient
-        .from('partner_orders')
-        .update({ 
-          status: 'completed',
-          notes: `Digital products delivered via email at ${new Date().toISOString()}`
+        .from("partner_orders")
+        .update({
+          status: "completed",
+          notes: `Digital products delivered via email at ${new Date().toISOString()}`,
         })
-        .eq('id', order_id);
-      
+        .eq("id", order_id);
+
       if (updateError) {
-        logStep("Warning: Could not update order status", { error: updateError.message });
+        logStep("Warning: Could not update order status", {
+          error: updateError.message,
+        });
       } else {
         logStep("Order status updated to completed", { order_id });
       }
     }
 
-    return new Response(JSON.stringify({ 
-      success: true, 
-      expiresAt: expiryTime
-    }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 200,
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        expiresAt: expiryTime,
+      }),
+      {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      },
+    );
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     logStep("ERROR", { message: errorMessage });
-    return new Response(JSON.stringify({ error: errorMessage, success: false }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 500,
-    });
+    return new Response(
+      JSON.stringify({ error: errorMessage, success: false }),
+      {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 500,
+      },
+    );
   }
 });

@@ -29,7 +29,13 @@ export interface ArticleFilters {
 }
 
 export function useArticles(filters: ArticleFilters = {}) {
-  const { category, status = "published", search, limit = 20, offset = 0 } = filters;
+  const {
+    category,
+    status = "published",
+    search,
+    limit = 20,
+    offset = 0,
+  } = filters;
 
   return useQuery({
     queryKey: ["articles", { category, status, search, limit, offset }],
@@ -107,7 +113,9 @@ export function useArticleCategories() {
       }
 
       // Get unique categories
-      const categories = [...new Set(data?.map((a) => a.category))].filter(Boolean);
+      const categories = [...new Set(data?.map((a) => a.category))].filter(
+        Boolean,
+      );
       return categories;
     },
   });

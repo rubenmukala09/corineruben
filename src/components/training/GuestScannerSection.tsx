@@ -30,14 +30,21 @@ export const GuestScannerSection = () => {
   const isProcessing = status === "uploading" || status === "analyzing";
   const canPay = file && status === "ready";
 
-  const handlePaymentSuccess = (payload: { scanId: string; filePath: string; paymentIntentId: string }) => {
+  const handlePaymentSuccess = (payload: {
+    scanId: string;
+    filePath: string;
+    paymentIntentId: string;
+  }) => {
     setPaymentOpen(false);
     startScan({ scanId: payload.scanId, filePath: payload.filePath });
   };
 
   return (
     <>
-      <section id="scamshield" className="py-12 relative overflow-hidden premium-section-bg premium-grid-dots">
+      <section
+        id="scamshield"
+        className="py-12 relative overflow-hidden premium-section-bg premium-grid-dots"
+      >
         <div id="guest-scanner" aria-hidden="true" />
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5 pointer-events-none" />
 
@@ -45,29 +52,40 @@ export const GuestScannerSection = () => {
           <div className="text-center mb-8">
             <div className="premium-3d-card premium-shadow-depth premium-glass-refraction inline-flex items-center gap-2 px-4 py-2 rounded-full glass-light micro-bounce mb-4">
               <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-sm font-semibold text-foreground">Quick File Scanner · No Login Required</span>
+              <span className="text-sm font-semibold text-foreground">
+                Quick File Scanner · No Login Required
+              </span>
             </div>
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
               Scan a File for Threats Instantly
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto">
-              Upload a file, pay securely with Stripe, and get instant AI analysis. Files are deleted within 10 minutes.
+              Upload a file, pay securely with Stripe, and get instant AI
+              analysis. Files are deleted within 10 minutes.
             </p>
           </div>
 
           <div className="max-w-4xl mx-auto grid gap-6 lg:grid-cols-[1.5fr_1fr]">
-            <GuestScanUpload file={file} onFileSelect={prepareFile} onClear={clearFile} />
+            <GuestScanUpload
+              file={file}
+              onFileSelect={prepareFile}
+              onClear={clearFile}
+            />
 
             <Card className="premium-3d-card premium-shadow-depth premium-shine-sweep p-6 glass-light shadow-3d-lg border border-border/60">
-              <h3 className="text-lg font-semibold text-foreground mb-2">Pricing</h3>
+              <h3 className="text-lg font-semibold text-foreground mb-2">
+                Pricing
+              </h3>
               <p className="text-sm text-muted-foreground mb-4">
-                ${GUEST_SCAN_PRICING.ratePerMb.toFixed(2)} per MB · minimum ${GUEST_SCAN_PRICING.minimumCharge.toFixed(2)}
+                ${GUEST_SCAN_PRICING.ratePerMb.toFixed(2)} per MB · minimum $
+                {GUEST_SCAN_PRICING.minimumCharge.toFixed(2)}
               </p>
 
               {file ? (
                 <div className="space-y-3">
                   <div className="text-sm text-muted-foreground">
-                    File size: {calculateScanCost(file.size).sizeMb.toFixed(2)} MB
+                    File size: {calculateScanCost(file.size).sizeMb.toFixed(2)}{" "}
+                    MB
                   </div>
                   <div className="text-3xl font-bold text-foreground">
                     {calculateScanCost(file.size).formatted}
@@ -78,11 +96,15 @@ export const GuestScannerSection = () => {
                     onClick={() => setPaymentOpen(true)}
                     disabled={!canPay || isProcessing}
                   >
-                    {isProcessing ? "Processing..." : "Proceed to Secure Payment"}
+                    {isProcessing
+                      ? "Processing..."
+                      : "Proceed to Secure Payment"}
                   </Button>
                 </div>
               ) : (
-                <p className="text-sm text-muted-foreground">Select a file to see your exact cost.</p>
+                <p className="text-sm text-muted-foreground">
+                  Select a file to see your exact cost.
+                </p>
               )}
             </Card>
           </div>
@@ -92,8 +114,12 @@ export const GuestScannerSection = () => {
               <div className="flex items-center gap-3 mb-4">
                 <Loader2 className="w-5 h-5 text-primary animate-spin" />
                 <div>
-                  <p className="font-semibold text-foreground">Analyzing your file...</p>
-                  <p className="text-sm text-muted-foreground">This usually takes less than 60 seconds.</p>
+                  <p className="font-semibold text-foreground">
+                    Analyzing your file...
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    This usually takes less than 60 seconds.
+                  </p>
                 </div>
               </div>
               <Progress value={progress} className="h-2" />
@@ -103,7 +129,9 @@ export const GuestScannerSection = () => {
           {error && (
             <Card className="premium-3d-card premium-shadow-depth max-w-4xl mx-auto mt-6 p-6 border border-destructive/30 bg-destructive/5 space-y-3">
               <p className="text-sm text-destructive">{error}</p>
-              <Button variant="outline" onClick={restartScan} className="w-fit">Try again</Button>
+              <Button variant="outline" onClick={restartScan} className="w-fit">
+                Try again
+              </Button>
             </Card>
           )}
 
@@ -121,13 +149,15 @@ export const GuestScannerSection = () => {
 
           {status === "expired" && (
             <Card className="premium-3d-card premium-shadow-depth max-w-4xl mx-auto mt-6 p-6 border border-emerald-200 bg-emerald-50/60 text-emerald-700">
-              Your data has been permanently deleted. We do not store your files or results.
+              Your data has been permanently deleted. We do not store your files
+              or results.
             </Card>
           )}
 
           <div className="premium-3d-card premium-shadow-depth premium-glass-refraction max-w-4xl mx-auto mt-4 rounded-xl glass-light p-4 text-sm text-muted-foreground text-center">
             <ShieldCheck className="w-4 h-4 inline mr-1.5 text-primary" />
-            Your file is analyzed and permanently deleted within 10 minutes. Guest scans are anonymous.
+            Your file is analyzed and permanently deleted within 10 minutes.
+            Guest scans are anonymous.
           </div>
         </div>
       </section>

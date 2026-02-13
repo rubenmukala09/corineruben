@@ -6,32 +6,68 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { toast } from "sonner";
-import { RefreshCw, Send, Mail, MailOpen, MessageSquare, Users, Clock } from "lucide-react";
+import {
+  RefreshCw,
+  Send,
+  Mail,
+  MailOpen,
+  MessageSquare,
+  Users,
+  Clock,
+} from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
-
 
 export default function ClientMessages() {
   const [selectedMessage, setSelectedMessage] = useState<any>(null);
-  const [newMessage, setNewMessage] = useState({ clientId: "", subject: "", body: "" });
+  const [newMessage, setNewMessage] = useState({
+    clientId: "",
+    subject: "",
+    body: "",
+  });
 
-  const { data: messages, isLoading, refetch } = useQuery({
+  const {
+    data: messages,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["client-communications"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("client_communications")
-        .select(`
+        .select(
+          `
           *,
           clients (
             first_name,
             last_name,
             email
           )
-        `)
+        `,
+        )
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data;
@@ -96,14 +132,18 @@ export default function ClientMessages() {
           </DialogTrigger>
           <DialogContent className="max-w-2xl bg-[#111827] border-gray-800">
             <DialogHeader>
-              <DialogTitle className="text-[#F9FAFB]">Send Message to Client</DialogTitle>
+              <DialogTitle className="text-[#F9FAFB]">
+                Send Message to Client
+              </DialogTitle>
             </DialogHeader>
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label className="text-[#9CA3AF]">Select Client</Label>
                 <Select
                   value={newMessage.clientId}
-                  onValueChange={(value) => setNewMessage({ ...newMessage, clientId: value })}
+                  onValueChange={(value) =>
+                    setNewMessage({ ...newMessage, clientId: value })
+                  }
                 >
                   <SelectTrigger className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]">
                     <SelectValue placeholder="Choose a client..." />
@@ -121,7 +161,9 @@ export default function ClientMessages() {
                 <Label className="text-[#9CA3AF]">Subject</Label>
                 <Input
                   value={newMessage.subject}
-                  onChange={(e) => setNewMessage({ ...newMessage, subject: e.target.value })}
+                  onChange={(e) =>
+                    setNewMessage({ ...newMessage, subject: e.target.value })
+                  }
                   placeholder="Message subject"
                   className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
                 />
@@ -130,13 +172,18 @@ export default function ClientMessages() {
                 <Label className="text-[#9CA3AF]">Message</Label>
                 <Textarea
                   value={newMessage.body}
-                  onChange={(e) => setNewMessage({ ...newMessage, body: e.target.value })}
+                  onChange={(e) =>
+                    setNewMessage({ ...newMessage, body: e.target.value })
+                  }
                   placeholder="Type your message..."
                   rows={6}
                   className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
                 />
               </div>
-              <Button onClick={handleSendMessage} className="w-full bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white">
+              <Button
+                onClick={handleSendMessage}
+                className="w-full bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white"
+              >
                 <Send className="h-4 w-4 mr-2" />
                 Send Message
               </Button>
@@ -153,7 +200,9 @@ export default function ClientMessages() {
                 <MessageSquare className="h-6 w-6 text-[#06B6D4]" />
               </div>
               <div>
-                <p className="text-3xl font-bold text-[#F9FAFB]">{stats.total}</p>
+                <p className="text-3xl font-bold text-[#F9FAFB]">
+                  {stats.total}
+                </p>
                 <p className="text-sm text-[#9CA3AF]">Total Messages</p>
               </div>
             </div>
@@ -166,7 +215,9 @@ export default function ClientMessages() {
                 <Users className="h-6 w-6 text-[#10B981]" />
               </div>
               <div>
-                <p className="text-3xl font-bold text-[#F9FAFB]">{stats.fromClients}</p>
+                <p className="text-3xl font-bold text-[#F9FAFB]">
+                  {stats.fromClients}
+                </p>
                 <p className="text-sm text-[#9CA3AF]">From Clients</p>
               </div>
             </div>
@@ -179,7 +230,9 @@ export default function ClientMessages() {
                 <Send className="h-6 w-6 text-[#8B5CF6]" />
               </div>
               <div>
-                <p className="text-3xl font-bold text-[#F9FAFB]">{stats.sent}</p>
+                <p className="text-3xl font-bold text-[#F9FAFB]">
+                  {stats.sent}
+                </p>
                 <p className="text-sm text-[#9CA3AF]">Sent by Staff</p>
               </div>
             </div>
@@ -190,14 +243,18 @@ export default function ClientMessages() {
       {/* Messages Table */}
       <Card className="bg-[#111827] border-gray-800">
         <div className="p-4 border-b border-gray-800 flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-[#F9FAFB]">Message History</h3>
+          <h3 className="text-lg font-semibold text-[#F9FAFB]">
+            Message History
+          </h3>
           <Button
             variant="ghost"
             size="sm"
             onClick={() => refetch()}
             className="text-[#9CA3AF] hover:text-white"
           >
-            <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+            <RefreshCw
+              className={`h-4 w-4 mr-2 ${isLoading ? "animate-spin" : ""}`}
+            />
             Refresh
           </Button>
         </div>
@@ -209,8 +266,12 @@ export default function ClientMessages() {
           ) : !messages || messages.length === 0 ? (
             <div className="text-center py-12">
               <MessageSquare className="h-16 w-16 mx-auto text-[#3B82F6]/50 mb-4" />
-              <h3 className="text-xl font-semibold text-[#F9FAFB] mb-2">No Messages Yet</h3>
-              <p className="text-[#9CA3AF]">Start a conversation with a client</p>
+              <h3 className="text-xl font-semibold text-[#F9FAFB] mb-2">
+                No Messages Yet
+              </h3>
+              <p className="text-[#9CA3AF]">
+                Start a conversation with a client
+              </p>
             </div>
           ) : (
             <Table>
@@ -225,18 +286,29 @@ export default function ClientMessages() {
               </TableHeader>
               <TableBody>
                 {messages.map((message) => (
-                  <TableRow key={message.id} className="border-gray-800 hover:bg-[#1F2937]">
+                  <TableRow
+                    key={message.id}
+                    className="border-gray-800 hover:bg-[#1F2937]"
+                  >
                     <TableCell className="font-medium text-[#F9FAFB]">
-                      {message.clients ? `${message.clients.first_name} ${message.clients.last_name}` : "Unknown"}
+                      {message.clients
+                        ? `${message.clients.first_name} ${message.clients.last_name}`
+                        : "Unknown"}
                     </TableCell>
-                    <TableCell className="text-[#9CA3AF]">{message.subject || "No subject"}</TableCell>
+                    <TableCell className="text-[#9CA3AF]">
+                      {message.subject || "No subject"}
+                    </TableCell>
                     <TableCell>
-                      <Badge className={`border-0 ${message.is_from_client ? "bg-[#10B981]/20 text-[#10B981]" : "bg-[#3B82F6]/20 text-[#3B82F6]"}`}>
+                      <Badge
+                        className={`border-0 ${message.is_from_client ? "bg-[#10B981]/20 text-[#10B981]" : "bg-[#3B82F6]/20 text-[#3B82F6]"}`}
+                      >
                         {message.is_from_client ? "Received" : "Sent"}
                       </Badge>
                     </TableCell>
                     <TableCell className="text-[#9CA3AF]">
-                      {formatDistanceToNow(new Date(message.created_at), { addSuffix: true })}
+                      {formatDistanceToNow(new Date(message.created_at), {
+                        addSuffix: true,
+                      })}
                     </TableCell>
                     <TableCell>
                       <Dialog>
@@ -247,25 +319,39 @@ export default function ClientMessages() {
                             onClick={() => setSelectedMessage(message)}
                             className="text-[#06B6D4] hover:text-white hover:bg-[#06B6D4]/20"
                           >
-                            {message.is_from_client ? <Mail className="h-4 w-4" /> : <MailOpen className="h-4 w-4" />}
+                            {message.is_from_client ? (
+                              <Mail className="h-4 w-4" />
+                            ) : (
+                              <MailOpen className="h-4 w-4" />
+                            )}
                           </Button>
                         </DialogTrigger>
                         <DialogContent className="bg-[#111827] border-gray-800">
                           <DialogHeader>
-                            <DialogTitle className="text-[#F9FAFB]">{message.subject || "No subject"}</DialogTitle>
+                            <DialogTitle className="text-[#F9FAFB]">
+                              {message.subject || "No subject"}
+                            </DialogTitle>
                           </DialogHeader>
                           <div className="space-y-4">
                             <div>
                               <p className="text-sm text-[#9CA3AF]">
                                 {message.is_from_client ? "From" : "To"}:{" "}
-                                {message.clients ? `${message.clients.first_name} ${message.clients.last_name}` : "Unknown"}
+                                {message.clients
+                                  ? `${message.clients.first_name} ${message.clients.last_name}`
+                                  : "Unknown"}
                               </p>
                               <p className="text-sm text-[#9CA3AF]">
-                                Date: {format(new Date(message.created_at), "MMM dd, yyyy HH:mm")}
+                                Date:{" "}
+                                {format(
+                                  new Date(message.created_at),
+                                  "MMM dd, yyyy HH:mm",
+                                )}
                               </p>
                             </div>
                             <div className="p-4 bg-[#1F2937] rounded-lg border border-gray-700">
-                              <p className="whitespace-pre-wrap text-[#F9FAFB]">{message.body}</p>
+                              <p className="whitespace-pre-wrap text-[#F9FAFB]">
+                                {message.body}
+                              </p>
                             </div>
                           </div>
                         </DialogContent>

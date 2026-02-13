@@ -67,7 +67,11 @@ const menuItems: MenuItem[] = [
     children: [
       { title: "Pages", href: "/admin/content/pages", icon: FileEdit },
       { title: "Articles", href: "/admin/content/articles", icon: FileText },
-      { title: "Testimonials", href: "/admin/content/testimonials", icon: Quote },
+      {
+        title: "Testimonials",
+        href: "/admin/content/testimonials",
+        icon: Quote,
+      },
       { title: "Team", href: "/admin/content/team", icon: UsersRound },
     ],
   },
@@ -75,8 +79,16 @@ const menuItems: MenuItem[] = [
     title: "Clients",
     icon: Building2,
     children: [
-      { title: "All Clients", href: "/admin/clients/businesses", icon: Building2 },
-      { title: "Messages", href: "/admin/clients/messages", icon: MessageSquare },
+      {
+        title: "All Clients",
+        href: "/admin/clients/businesses",
+        icon: Building2,
+      },
+      {
+        title: "Messages",
+        href: "/admin/clients/messages",
+        icon: MessageSquare,
+      },
     ],
   },
   {
@@ -93,9 +105,17 @@ const menuItems: MenuItem[] = [
     title: "Requests",
     icon: ClipboardList,
     children: [
-      { title: "Service Inquiries", href: "/admin/service-inquiries", icon: ClipboardList },
+      {
+        title: "Service Inquiries",
+        href: "/admin/service-inquiries",
+        icon: ClipboardList,
+      },
       { title: "Bookings", href: "/admin/bookings", icon: Calendar },
-      { title: "Job Applications", href: "/admin/job-applications", icon: Briefcase },
+      {
+        title: "Job Applications",
+        href: "/admin/job-applications",
+        icon: Briefcase,
+      },
     ],
   },
   {
@@ -104,7 +124,11 @@ const menuItems: MenuItem[] = [
     children: [
       { title: "Email Campaigns", href: "/admin/email-campaigns", icon: Mail },
       { title: "Inbox", href: "/admin/communications/inbox", icon: Inbox },
-      { title: "Newsletter", href: "/admin/communications/newsletter", icon: Newspaper },
+      {
+        title: "Newsletter",
+        href: "/admin/communications/newsletter",
+        icon: Newspaper,
+      },
     ],
   },
   {
@@ -121,7 +145,11 @@ const menuItems: MenuItem[] = [
     icon: TestTube,
     children: [
       { title: "System Health", href: "/admin/testing", icon: HeartHandshake },
-      { title: "Launch Checklist", href: "/admin/testing/checklist", icon: Rocket },
+      {
+        title: "Launch Checklist",
+        href: "/admin/testing/checklist",
+        icon: Rocket,
+      },
     ],
   },
 ];
@@ -132,15 +160,17 @@ interface CyberSidebarProps {
   onMobileClose?: () => void;
 }
 
-export function CyberSidebar({ isOpen, isMobileOpen, onMobileClose }: CyberSidebarProps) {
+export function CyberSidebar({
+  isOpen,
+  isMobileOpen,
+  onMobileClose,
+}: CyberSidebarProps) {
   const location = useLocation();
   const [expandedMenus, setExpandedMenus] = useState<string[]>(["Dashboard"]);
 
   const toggleMenu = (title: string) => {
     setExpandedMenus((prev) =>
-      prev.includes(title)
-        ? prev.filter((t) => t !== title)
-        : [...prev, title]
+      prev.includes(title) ? prev.filter((t) => t !== title) : [...prev, title],
     );
   };
 
@@ -199,7 +229,9 @@ export function CyberSidebar({ isOpen, isMobileOpen, onMobileClose }: CyberSideb
                   <Icon className="h-5 w-5 flex-shrink-0" />
                   {isOpen && (
                     <>
-                      <span className="flex-1 text-left text-sm font-medium">{item.title}</span>
+                      <span className="flex-1 text-left text-sm font-medium">
+                        {item.title}
+                      </span>
                       <ChevronDown
                         className={`h-4 w-4 transition-transform ${expanded ? "rotate-180" : ""}`}
                       />
@@ -210,16 +242,19 @@ export function CyberSidebar({ isOpen, isMobileOpen, onMobileClose }: CyberSideb
                 <Link
                   to={item.href || "#"}
                   className={`relative flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all
-                    ${active 
-                      ? "bg-gray-800 text-[#F9FAFB]" 
-                      : "text-[#9CA3AF] hover:text-[#F9FAFB] hover:bg-gray-800/50"
+                    ${
+                      active
+                        ? "bg-gray-800 text-[#F9FAFB]"
+                        : "text-[#9CA3AF] hover:text-[#F9FAFB] hover:bg-gray-800/50"
                     }`}
                 >
                   {active && (
                     <div className="absolute left-0 w-1 h-8 bg-gradient-to-b from-[#3B82F6] to-[#06B6D4] rounded-r" />
                   )}
                   <Icon className="h-5 w-5 flex-shrink-0" />
-                  {isOpen && <span className="text-sm font-medium">{item.title}</span>}
+                  {isOpen && (
+                    <span className="text-sm font-medium">{item.title}</span>
+                  )}
                 </Link>
               )}
 
@@ -240,9 +275,10 @@ export function CyberSidebar({ isOpen, isMobileOpen, onMobileClose }: CyberSideb
                           to={child.href}
                           onClick={onMobileClose}
                           className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-all
-                            ${location.pathname === child.href
-                              ? "text-[#06B6D4] bg-[#06B6D4]/10"
-                              : "text-[#9CA3AF] hover:text-[#F9FAFB] hover:bg-gray-800/50"
+                            ${
+                              location.pathname === child.href
+                                ? "text-[#06B6D4] bg-[#06B6D4]/10"
+                                : "text-[#9CA3AF] hover:text-[#F9FAFB] hover:bg-gray-800/50"
                             }`}
                         >
                           {ChildIcon && <ChildIcon className="h-4 w-4" />}

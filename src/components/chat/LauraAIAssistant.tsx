@@ -99,9 +99,11 @@ export const LauraAIAssistant = () => {
   }, [messages, isLoading]);
 
   useEffect(() => {
-    if (!("webkitSpeechRecognition" in window || "SpeechRecognition" in window)) return;
+    if (!("webkitSpeechRecognition" in window || "SpeechRecognition" in window))
+      return;
     const SpeechRecognition =
-      (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
+      (window as any).webkitSpeechRecognition ||
+      (window as any).SpeechRecognition;
     recognitionRef.current = new SpeechRecognition();
     recognitionRef.current.continuous = false;
     recognitionRef.current.interimResults = false;
@@ -151,10 +153,13 @@ export const LauraAIAssistant = () => {
           onClick={() => setIsOpen(true)}
           className="group relative flex items-center gap-3 px-4 py-3 rounded-2xl bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-white/50 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:-translate-y-1"
           aria-label="Open Laura AI Assistant"
-          style={{ contain: 'layout' }}
+          style={{ contain: "layout" }}
         >
           {/* Avatar */}
-          <div className="relative w-14 h-14 rounded-xl overflow-hidden flex-shrink-0" style={{ contain: 'strict' }}>
+          <div
+            className="relative w-14 h-14 rounded-xl overflow-hidden flex-shrink-0"
+            style={{ contain: "strict" }}
+          >
             <img
               src={lauraAvatar}
               alt="Laura"
@@ -166,7 +171,9 @@ export const LauraAIAssistant = () => {
           </div>
 
           {/* Label */}
-          <span className="text-sm font-bold text-foreground tracking-wide">LAURA</span>
+          <span className="text-sm font-bold text-foreground tracking-wide">
+            LAURA
+          </span>
 
           {/* Online pulse */}
           <span className="absolute top-2 right-2 flex h-3 w-3">
@@ -184,7 +191,11 @@ export const LauraAIAssistant = () => {
         <div className="flex items-center justify-between p-4 border-b border-white/40 bg-white/70 backdrop-blur-xl">
           <div className="flex items-center gap-3">
             <div className="relative w-10 h-10 rounded-full overflow-hidden">
-              <img src={lauraAvatar} alt="Laura" className="w-full h-full object-cover object-top" />
+              <img
+                src={lauraAvatar}
+                alt="Laura"
+                className="w-full h-full object-cover object-top"
+              />
               <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-white" />
             </div>
             <div>
@@ -196,7 +207,9 @@ export const LauraAIAssistant = () => {
             <button
               onClick={() => setMode("chat")}
               className={`px-3 py-1.5 rounded-full text-xs font-semibold transition ${
-                mode === "chat" ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"
+                mode === "chat"
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-muted text-foreground"
               }`}
             >
               Chat
@@ -204,7 +217,9 @@ export const LauraAIAssistant = () => {
             <button
               onClick={() => setMode("help")}
               className={`px-3 py-1.5 rounded-full text-xs font-semibold transition ${
-                mode === "help" ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"
+                mode === "help"
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-muted text-foreground"
               }`}
             >
               Quick Help
@@ -221,16 +236,22 @@ export const LauraAIAssistant = () => {
 
         {mode === "chat" ? (
           <>
-            <div ref={scrollRef} className="max-h-[420px] overflow-y-auto p-4 space-y-4">
+            <div
+              ref={scrollRef}
+              className="max-h-[420px] overflow-y-auto p-4 space-y-4"
+            >
               {messages.length === 0 && (
                 <div className="space-y-4 text-center">
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mx-auto">
                     <Sparkles className="w-6 h-6 text-primary" />
                   </div>
                   <div className="space-y-2">
-                    <p className="text-base font-semibold text-foreground">Hi, I’m Laura.</p>
+                    <p className="text-base font-semibold text-foreground">
+                      Hi, I’m Laura.
+                    </p>
                     <p className="text-sm text-muted-foreground">
-                      I can help with scanning, pricing, privacy, and how to use InVision Network.
+                      I can help with scanning, pricing, privacy, and how to use
+                      InVision Network.
                     </p>
                   </div>
                   <div className="flex flex-wrap justify-center gap-2">
@@ -273,16 +294,25 @@ export const LauraAIAssistant = () => {
               )}
             </div>
 
-            <form onSubmit={handleSubmit} className="p-4 border-t border-white/40 flex gap-2 bg-white/70 backdrop-blur-xl">
+            <form
+              onSubmit={handleSubmit}
+              className="p-4 border-t border-white/40 flex gap-2 bg-white/70 backdrop-blur-xl"
+            >
               <button
                 type="button"
                 onClick={toggleRecording}
                 className={`w-11 h-11 rounded-full flex items-center justify-center transition ${
-                  isRecording ? "bg-rose-500 text-white" : "bg-muted text-foreground"
+                  isRecording
+                    ? "bg-rose-500 text-white"
+                    : "bg-muted text-foreground"
                 }`}
                 aria-label="Voice input"
               >
-                {isRecording ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+                {isRecording ? (
+                  <MicOff className="w-5 h-5" />
+                ) : (
+                  <Mic className="w-5 h-5" />
+                )}
               </button>
               <input
                 value={input}
@@ -290,7 +320,11 @@ export const LauraAIAssistant = () => {
                 placeholder="Ask Laura a question..."
                 className="flex-1 rounded-full bg-muted px-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
               />
-              <Button type="submit" size="icon" disabled={!input.trim() || isLoading}>
+              <Button
+                type="submit"
+                size="icon"
+                disabled={!input.trim() || isLoading}
+              >
                 <Send className="w-4 h-4" />
               </Button>
             </form>
@@ -299,7 +333,9 @@ export const LauraAIAssistant = () => {
           <div className="p-4 space-y-4">
             <div className="flex items-center gap-2">
               <Shield className="w-4 h-4 text-primary" />
-              <p className="text-sm font-semibold text-foreground">Quick Help</p>
+              <p className="text-sm font-semibold text-foreground">
+                Quick Help
+              </p>
             </div>
             <p className="text-xs text-muted-foreground">
               Fast paths to support, reporting, and learning resources.
@@ -327,7 +363,9 @@ export const LauraAIAssistant = () => {
                     >
                       <ActionIcon className="w-4 h-4 text-white" />
                     </div>
-                    <div className="text-xs font-medium text-foreground">{action.label}</div>
+                    <div className="text-xs font-medium text-foreground">
+                      {action.label}
+                    </div>
                     <div className="text-[10px] text-muted-foreground leading-tight mt-0.5">
                       {action.description}
                     </div>
@@ -336,7 +374,11 @@ export const LauraAIAssistant = () => {
 
                 if (action.href) {
                   return (
-                    <Link key={action.label} to={action.href} onClick={() => setIsOpen(false)}>
+                    <Link
+                      key={action.label}
+                      to={action.href}
+                      onClick={() => setIsOpen(false)}
+                    >
                       {content}
                     </Link>
                   );

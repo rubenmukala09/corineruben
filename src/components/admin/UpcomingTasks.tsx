@@ -1,5 +1,17 @@
 import { useState, useEffect } from "react";
-import { Calendar, AlertTriangle, User, Bell, CheckCircle2, Eye, Edit, Trash2, Clock, Plus, ArrowUpDown } from "lucide-react";
+import {
+  Calendar,
+  AlertTriangle,
+  User,
+  Bell,
+  CheckCircle2,
+  Eye,
+  Edit,
+  Trash2,
+  Clock,
+  Plus,
+  ArrowUpDown,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -19,7 +31,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { formatDistanceToNow, addDays, isToday, isThisWeek, isPast, isFuture } from "date-fns";
+import {
+  formatDistanceToNow,
+  addDays,
+  isToday,
+  isThisWeek,
+  isPast,
+  isFuture,
+} from "date-fns";
 
 type TaskStatus = "scheduled" | "expiring" | "pending" | "urgent";
 type TaskPriority = "high" | "medium" | "low";
@@ -50,7 +69,9 @@ export function UpcomingTasks() {
   const [filter, setFilter] = useState<"all" | "today" | "week">("all");
   const [sortBy, setSortBy] = useState<SortOption>("date");
   const [loading, setLoading] = useState(true);
-  const [completingTasks, setCompletingTasks] = useState<Set<string>>(new Set());
+  const [completingTasks, setCompletingTasks] = useState<Set<string>>(
+    new Set(),
+  );
   const { toast } = useToast();
 
   useEffect(() => {
@@ -142,7 +163,9 @@ export function UpcomingTasks() {
       // No mock data needed - real tasks come from database
 
       // Sort by date
-      const sortedTasks = allTasks.sort((a, b) => a.date.getTime() - b.date.getTime());
+      const sortedTasks = allTasks.sort(
+        (a, b) => a.date.getTime() - b.date.getTime(),
+      );
       setTasks(sortedTasks);
     } catch (error) {
       console.error("Error fetching tasks:", error);
@@ -169,7 +192,10 @@ export function UpcomingTasks() {
           // It's a testimonial
           await supabase
             .from("testimonials")
-            .update({ status: "approved", approved_at: new Date().toISOString() })
+            .update({
+              status: "approved",
+              approved_at: new Date().toISOString(),
+            })
             .eq("id", task.metadata.id);
         }
 
@@ -260,8 +286,8 @@ export function UpcomingTasks() {
     // Update task date to tomorrow
     setTasks((prev) =>
       prev.map((t) =>
-        t.id === task.id ? { ...t, date: addDays(new Date(), 1) } : t
-      )
+        t.id === task.id ? { ...t, date: addDays(new Date(), 1) } : t,
+      ),
     );
     toast({
       title: "Task snoozed",
@@ -362,7 +388,10 @@ export function UpcomingTasks() {
           </DropdownMenu>
 
           {/* Filter Dropdown */}
-          <Select value={filter} onValueChange={(value: any) => setFilter(value)}>
+          <Select
+            value={filter}
+            onValueChange={(value: any) => setFilter(value)}
+          >
             <SelectTrigger className="w-[130px] h-9">
               <SelectValue />
             </SelectTrigger>
@@ -381,7 +410,10 @@ export function UpcomingTasks() {
           // Loading skeleton
           <div className="space-y-0">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="flex items-start gap-3 py-3 border-b border-border">
+              <div
+                key={i}
+                className="flex items-start gap-3 py-3 border-b border-border"
+              >
                 <div className="w-8 h-8 rounded-full bg-muted shimmer" />
                 <div className="flex-1 space-y-2">
                   <div className="h-4 bg-muted rounded w-3/4 shimmer" />
@@ -401,8 +433,8 @@ export function UpcomingTasks() {
                 <motion.div
                   key={task.id}
                   initial={{ opacity: 0, x: -20 }}
-                  animate={{ 
-                    opacity: isCompleting ? 0.5 : 1, 
+                  animate={{
+                    opacity: isCompleting ? 0.5 : 1,
                     x: 0,
                     scale: isCompleting ? 0.98 : 1,
                   }}
@@ -418,22 +450,31 @@ export function UpcomingTasks() {
                   />
 
                   {/* Icon */}
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${getIconColor(task.date)}`}>
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${getIconColor(task.date)}`}
+                  >
                     <Icon className="h-4 w-4" />
                   </div>
 
                   {/* Content */}
                   <div className="flex-1 min-w-0">
-                    <p className={`text-sm font-medium mb-1 ${
-                      isCompleting ? "line-through text-muted-foreground" : "text-foreground"
-                    }`}>
+                    <p
+                      className={`text-sm font-medium mb-1 ${
+                        isCompleting
+                          ? "line-through text-muted-foreground"
+                          : "text-foreground"
+                      }`}
+                    >
                       {task.text}
                     </p>
                     <div className="flex items-center gap-2 flex-wrap">
                       <p className={`text-xs ${getDateColor(task.date)}`}>
                         {getDateDisplay(task.date)}
                       </p>
-                      <Badge variant="secondary" className={`text-xs ${statusInfo.color}`}>
+                      <Badge
+                        variant="secondary"
+                        className={`text-xs ${statusInfo.color}`}
+                      >
                         {statusInfo.label}
                       </Badge>
                     </div>
@@ -471,7 +512,9 @@ export function UpcomingTasks() {
                         onClick={() => {}}
                       >
                         <Eye className="h-3.5 w-3.5" />
-                        <span className="hidden md:inline ml-1 text-xs">View</span>
+                        <span className="hidden md:inline ml-1 text-xs">
+                          View
+                        </span>
                       </Button>
                       <Button
                         variant="ghost"
@@ -480,7 +523,9 @@ export function UpcomingTasks() {
                         onClick={() => {}}
                       >
                         <Edit className="h-3.5 w-3.5" />
-                        <span className="hidden md:inline ml-1 text-xs">Edit</span>
+                        <span className="hidden md:inline ml-1 text-xs">
+                          Edit
+                        </span>
                       </Button>
                       <Button
                         variant="ghost"
@@ -489,7 +534,9 @@ export function UpcomingTasks() {
                         onClick={() => handleSnooze(task)}
                       >
                         <Clock className="h-3.5 w-3.5" />
-                        <span className="hidden md:inline ml-1 text-xs">Snooze</span>
+                        <span className="hidden md:inline ml-1 text-xs">
+                          Snooze
+                        </span>
                       </Button>
                       <Button
                         variant="ghost"
@@ -498,7 +545,9 @@ export function UpcomingTasks() {
                         onClick={() => handleDelete(task)}
                       >
                         <Trash2 className="h-3.5 w-3.5" />
-                        <span className="hidden md:inline ml-1 text-xs">Delete</span>
+                        <span className="hidden md:inline ml-1 text-xs">
+                          Delete
+                        </span>
                       </Button>
                     </div>
                   )}
@@ -512,9 +561,7 @@ export function UpcomingTasks() {
             <p className="text-sm font-medium text-foreground mb-1">
               All done!
             </p>
-            <p className="text-sm text-muted-foreground">
-              No upcoming tasks
-            </p>
+            <p className="text-sm text-muted-foreground">No upcoming tasks</p>
           </div>
         )}
       </div>

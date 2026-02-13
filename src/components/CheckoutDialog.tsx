@@ -45,7 +45,12 @@ interface CheckoutDialogProps {
 
 function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
   const { items, total, clearCart } = useCart();
-  const { stripePromise, loading: stripeLoading, error: stripeError, initializeStripe } = useStripeKey();
+  const {
+    stripePromise,
+    loading: stripeLoading,
+    error: stripeError,
+    initializeStripe,
+  } = useStripeKey();
 
   const [step, setStep] = useState<"info" | "payment" | "success">("info");
   const [isLoading, setIsLoading] = useState(false);
@@ -73,9 +78,15 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
 
   // Auto-fill from localStorage
   useEffect(() => {
-    const savedEmail = localStorage.getItem("user_email") || localStorage.getItem("checkout_email");
-    const savedName = localStorage.getItem("user_name") || localStorage.getItem("checkout_name");
-    const savedVeteran = localStorage.getItem("is_veteran") || localStorage.getItem("checkout_veteran");
+    const savedEmail =
+      localStorage.getItem("user_email") ||
+      localStorage.getItem("checkout_email");
+    const savedName =
+      localStorage.getItem("user_name") ||
+      localStorage.getItem("checkout_name");
+    const savedVeteran =
+      localStorage.getItem("is_veteran") ||
+      localStorage.getItem("checkout_veteran");
     if (savedEmail) setEmail(savedEmail);
     if (savedName) setName(savedName);
     if (savedVeteran === "true") setIsVeteran(true);
@@ -104,7 +115,10 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
       return;
     }
 
-    if (needsShipping && (!address.line1 || !address.city || !address.state || !address.zip)) {
+    if (
+      needsShipping &&
+      (!address.line1 || !address.city || !address.state || !address.zip)
+    ) {
       toast.error("Please enter your shipping address");
       return;
     }
@@ -122,26 +136,29 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
       localStorage.setItem("checkout_veteran", isVeteran.toString());
 
       // Call edge function to create payment intent
-      const { data, error: fnError } = await supabase.functions.invoke("create-cart-payment-intent", {
-        body: {
-          amount: amountInCents,
-          customerEmail: email,
-          customerName: name,
-          isVeteran,
-          items: items.map((item) => ({
-            id: item.id,
-            name: item.name,
-            price: item.price,
-            quantity: item.quantity,
-          })),
-          metadata: {
-            source: "cart_checkout",
-            shippingAddress: needsShipping
-              ? `${address.line1}, ${address.city}, ${address.state} ${address.zip}`
-              : undefined,
+      const { data, error: fnError } = await supabase.functions.invoke(
+        "create-cart-payment-intent",
+        {
+          body: {
+            amount: amountInCents,
+            customerEmail: email,
+            customerName: name,
+            isVeteran,
+            items: items.map((item) => ({
+              id: item.id,
+              name: item.name,
+              price: item.price,
+              quantity: item.quantity,
+            })),
+            metadata: {
+              source: "cart_checkout",
+              shippingAddress: needsShipping
+                ? `${address.line1}, ${address.city}, ${address.state} ${address.zip}`
+                : undefined,
+            },
           },
         },
-      });
+      );
 
       if (fnError) throw fnError;
       if (data?.error) throw new Error(data.error);
@@ -178,8 +195,8 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
                 step === s
                   ? "bg-primary text-primary-foreground"
                   : ["info", "payment", "success"].indexOf(step) > i
-                  ? "bg-primary/20 text-primary"
-                  : "bg-muted text-muted-foreground"
+                    ? "bg-primary/20 text-primary"
+                    : "bg-muted text-muted-foreground"
               }`}
             >
               {["info", "payment", "success"].indexOf(step) > i ? (
@@ -191,7 +208,9 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
             {i < 2 && (
               <div
                 className={`w-12 h-1 rounded ${
-                  ["info", "payment", "success"].indexOf(step) > i ? "bg-primary" : "bg-muted"
+                  ["info", "payment", "success"].indexOf(step) > i
+                    ? "bg-primary"
+                    : "bg-muted"
                 }`}
               />
             )}
@@ -235,7 +254,9 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
                     <span className="text-muted-foreground truncate max-w-[180px]">
                       {item.name} × {item.quantity}
                     </span>
-                    <span className="font-medium">${(item.price * item.quantity).toFixed(2)}</span>
+                    <span className="font-medium">
+                      ${(item.price * item.quantity).toFixed(2)}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -287,24 +308,38 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
                   <Input
                     placeholder="Street Address *"
                     value={address.line1}
-                    onChange={(e) => setAddress((prev) => ({ ...prev, line1: e.target.value }))}
+                    onChange={(e) =>
+                      setAddress((prev) => ({ ...prev, line1: e.target.value }))
+                    }
                   />
                   <div className="grid grid-cols-3 gap-2">
                     <Input
                       placeholder="City *"
                       value={address.city}
-                      onChange={(e) => setAddress((prev) => ({ ...prev, city: e.target.value }))}
+                      onChange={(e) =>
+                        setAddress((prev) => ({
+                          ...prev,
+                          city: e.target.value,
+                        }))
+                      }
                     />
                     <Input
                       placeholder="State *"
                       value={address.state}
-                      onChange={(e) => setAddress((prev) => ({ ...prev, state: e.target.value }))}
+                      onChange={(e) =>
+                        setAddress((prev) => ({
+                          ...prev,
+                          state: e.target.value,
+                        }))
+                      }
                       maxLength={2}
                     />
                     <Input
                       placeholder="ZIP *"
                       value={address.zip}
-                      onChange={(e) => setAddress((prev) => ({ ...prev, zip: e.target.value }))}
+                      onChange={(e) =>
+                        setAddress((prev) => ({ ...prev, zip: e.target.value }))
+                      }
                       maxLength={5}
                     />
                   </div>
@@ -312,17 +347,26 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
               )}
 
               {/* Veteran Discount Toggle */}
-              <QuickVeteranToggle isVeteran={isVeteran} onVeteranChange={setIsVeteran} discountPercent={10} />
+              <QuickVeteranToggle
+                isVeteran={isVeteran}
+                onVeteranChange={setIsVeteran}
+                discountPercent={10}
+              />
 
               {/* Terms Checkbox */}
               <div className="flex items-start gap-3">
                 <Checkbox
                   id="terms"
                   checked={termsAccepted}
-                  onCheckedChange={(checked) => setTermsAccepted(checked === true)}
+                  onCheckedChange={(checked) =>
+                    setTermsAccepted(checked === true)
+                  }
                   className="mt-1"
                 />
-                <Label htmlFor="terms" className="text-sm text-muted-foreground">
+                <Label
+                  htmlFor="terms"
+                  className="text-sm text-muted-foreground"
+                >
                   I agree to the{" "}
                   <a href="/terms" className="text-primary hover:underline">
                     Terms of Service
@@ -335,7 +379,11 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
               </div>
             </div>
 
-            {error && <div className="p-3 bg-destructive/10 text-destructive rounded-lg text-sm">{error}</div>}
+            {error && (
+              <div className="p-3 bg-destructive/10 text-destructive rounded-lg text-sm">
+                {error}
+              </div>
+            )}
 
             <Button
               onClick={handleInfoSubmit}
@@ -364,8 +412,12 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
             {/* Order Summary */}
             <div className="bg-muted/50 rounded-xl p-4 border">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-muted-foreground">Order Total:</span>
-                <span className="text-xl font-bold text-primary">${finalAmount.toFixed(2)}</span>
+                <span className="text-sm text-muted-foreground">
+                  Order Total:
+                </span>
+                <span className="text-xl font-bold text-primary">
+                  ${finalAmount.toFixed(2)}
+                </span>
               </div>
               {isVeteran && (
                 <Badge className="bg-green-500/20 text-green-600 text-xs">
@@ -380,14 +432,23 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
               {stripeLoading ? (
                 <div className="flex items-center justify-center py-8">
                   <Loader2 className="w-6 h-6 animate-spin text-primary" />
-                  <span className="ml-2 text-sm text-muted-foreground">Initializing payment...</span>
+                  <span className="ml-2 text-sm text-muted-foreground">
+                    Initializing payment...
+                  </span>
                 </div>
               ) : !stripePromise || stripeError ? (
                 <div className="p-4 bg-destructive/10 text-destructive rounded-lg text-center">
                   <CreditCard className="w-8 h-8 mx-auto mb-2 opacity-50" />
                   <p className="font-medium">Payment system unavailable</p>
-                  <p className="text-sm mt-1">{stripeError || "Please refresh the page and try again."}</p>
-                  <Button variant="outline" size="sm" className="mt-3" onClick={() => window.location.reload()}>
+                  <p className="text-sm mt-1">
+                    {stripeError || "Please refresh the page and try again."}
+                  </p>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="mt-3"
+                    onClick={() => window.location.reload()}
+                  >
                     <RefreshCw className="w-4 h-4 mr-2" />
                     Refresh Page
                   </Button>
@@ -447,7 +508,9 @@ function CheckoutForm({ onSuccess }: { onSuccess: () => void }) {
               {isDigital && (
                 <div className="bg-green-500/10 text-green-600 p-4 rounded-xl text-sm">
                   <Sparkles className="w-5 h-5 mx-auto mb-2" />
-                  <p className="font-medium">Check your email for download links</p>
+                  <p className="font-medium">
+                    Check your email for download links
+                  </p>
                   <p className="text-xs mt-1">Expected delivery: 2-5 minutes</p>
                 </div>
               )}
@@ -499,18 +562,22 @@ function PaymentElementWrapper({
       const { error: submitError } = await elements.submit();
       if (submitError) throw submitError;
 
-      const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          return_url: `${window.location.origin}/payment-success`,
-          receipt_email: email,
-        },
-        redirect: "if_required",
-      });
+      const { error: confirmError, paymentIntent } =
+        await stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            return_url: `${window.location.origin}/payment-success`,
+            receipt_email: email,
+          },
+          redirect: "if_required",
+        });
 
       if (confirmError) throw confirmError;
 
-      if (paymentIntent?.status === "succeeded" || paymentIntent?.status === "processing") {
+      if (
+        paymentIntent?.status === "succeeded" ||
+        paymentIntent?.status === "processing"
+      ) {
         onSuccess();
       }
     } catch (err: any) {
@@ -527,7 +594,9 @@ function PaymentElementWrapper({
       {!isReady && (
         <div className="flex items-center justify-center py-8">
           <Loader2 className="w-6 h-6 animate-spin text-primary" />
-          <span className="ml-2 text-sm text-muted-foreground">Loading payment form...</span>
+          <span className="ml-2 text-sm text-muted-foreground">
+            Loading payment form...
+          </span>
         </div>
       )}
       <div className={!isReady ? "opacity-0 h-0 overflow-hidden" : ""}>
@@ -540,14 +609,28 @@ function PaymentElementWrapper({
         />
       </div>
 
-      {error && <div className="p-3 bg-destructive/10 text-destructive rounded-lg text-sm">{error}</div>}
+      {error && (
+        <div className="p-3 bg-destructive/10 text-destructive rounded-lg text-sm">
+          {error}
+        </div>
+      )}
 
       <div className="flex gap-3">
-        <Button variant="outline" onClick={onBack} disabled={isLoading} className="flex-1">
+        <Button
+          variant="outline"
+          onClick={onBack}
+          disabled={isLoading}
+          className="flex-1"
+        >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back
         </Button>
-        <Button onClick={handleSubmit} disabled={isLoading || !stripe || !elements || !isReady} className="flex-1" size="lg">
+        <Button
+          onClick={handleSubmit}
+          disabled={isLoading || !stripe || !elements || !isReady}
+          className="flex-1"
+          size="lg"
+        >
           {isLoading ? (
             <>
               <Loader2 className="w-4 h-4 mr-2 animate-spin" />

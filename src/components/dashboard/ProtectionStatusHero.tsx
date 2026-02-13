@@ -11,21 +11,27 @@ interface ProtectionStatusHeroProps {
   daysProtected?: number;
 }
 
-export function ProtectionStatusHero({ 
-  planName = "ScamShield", 
+export function ProtectionStatusHero({
+  planName = "ScamShield",
   status = "active",
   protectionScore = 0,
   threatsBlocked = 0,
-  daysProtected = 0
+  daysProtected = 0,
 }: ProtectionStatusHeroProps) {
   const isActive = status === "active";
   const isPending = status === "pending";
 
   // Calculate a meaningful protection score based on real data
-  const calculatedScore = isActive 
-    ? Math.min(100, 50 + (threatsBlocked > 0 ? 20 : 0) + (daysProtected > 7 ? 20 : daysProtected * 2) + 10)
+  const calculatedScore = isActive
+    ? Math.min(
+        100,
+        50 +
+          (threatsBlocked > 0 ? 20 : 0) +
+          (daysProtected > 7 ? 20 : daysProtected * 2) +
+          10,
+      )
     : 0;
-  
+
   const displayScore = protectionScore > 0 ? protectionScore : calculatedScore;
 
   return (
@@ -38,15 +44,15 @@ export function ProtectionStatusHero({
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         />
       )}
-      
+
       <div className="relative p-6 md:p-8">
         <div className="flex flex-col md:flex-row md:items-center gap-6">
           {/* Shield Icon with Status Ring */}
           <div className="relative">
             <motion.div
               className={`w-20 h-20 rounded-full flex items-center justify-center ${
-                isActive 
-                  ? "bg-gradient-to-br from-green-500 to-emerald-600" 
+                isActive
+                  ? "bg-gradient-to-br from-green-500 to-emerald-600"
                   : isPending
                     ? "bg-gradient-to-br from-yellow-500 to-orange-500"
                     : "bg-muted"
@@ -82,19 +88,25 @@ export function ProtectionStatusHero({
           <div className="flex-1 space-y-3">
             <div className="flex items-center gap-2">
               <h2 className="text-2xl font-bold">{planName}</h2>
-              <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                isActive 
-                  ? "bg-green-500/20 text-green-600" 
+              <span
+                className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                  isActive
+                    ? "bg-green-500/20 text-green-600"
+                    : isPending
+                      ? "bg-yellow-500/20 text-yellow-600"
+                      : "bg-muted text-muted-foreground"
+                }`}
+              >
+                {isActive
+                  ? "Active Protection"
                   : isPending
-                    ? "bg-yellow-500/20 text-yellow-600"
-                    : "bg-muted text-muted-foreground"
-              }`}>
-                {isActive ? "Active Protection" : isPending ? "Setup Required" : "Inactive"}
+                    ? "Setup Required"
+                    : "Inactive"}
               </span>
             </div>
-            
+
             <p className="text-muted-foreground">
-              {isActive 
+              {isActive
                 ? "Your family is protected from AI-powered scams, phishing, and fraud attempts."
                 : isPending
                   ? "Complete your profile setup to activate full protection."
@@ -108,7 +120,9 @@ export function ProtectionStatusHero({
                   <Activity className="w-4 h-4 text-primary" />
                   Protection Score
                 </span>
-                <span className="font-semibold text-primary">{displayScore}%</span>
+                <span className="font-semibold text-primary">
+                  {displayScore}%
+                </span>
               </div>
               <Progress value={displayScore} className="h-2" />
             </div>

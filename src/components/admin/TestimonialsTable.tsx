@@ -36,7 +36,8 @@ interface Testimonial {
 }
 
 export const TestimonialsTable = () => {
-  const [selectedTestimonial, setSelectedTestimonial] = useState<Testimonial | null>(null);
+  const [selectedTestimonial, setSelectedTestimonial] =
+    useState<Testimonial | null>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -54,9 +55,17 @@ export const TestimonialsTable = () => {
   });
 
   const updateStatusMutation = useMutation({
-    mutationFn: async ({ id, status }: { id: string; status: "approved" | "rejected" }) => {
-      const { data: { user } } = await supabase.auth.getUser();
-      
+    mutationFn: async ({
+      id,
+      status,
+    }: {
+      id: string;
+      status: "approved" | "rejected";
+    }) => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
       const { error } = await supabase
         .from("testimonials")
         .update({
@@ -119,20 +128,30 @@ export const TestimonialsTable = () => {
           <TableBody>
             {testimonials?.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="text-center text-muted-foreground py-8">
+                <TableCell
+                  colSpan={6}
+                  className="text-center text-muted-foreground py-8"
+                >
                   No testimonials found
                 </TableCell>
               </TableRow>
             ) : (
               testimonials?.map((testimonial) => (
                 <TableRow key={testimonial.id}>
-                  <TableCell className="font-medium">{testimonial.name}</TableCell>
+                  <TableCell className="font-medium">
+                    {testimonial.name}
+                  </TableCell>
                   <TableCell>{testimonial.location}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      {Array.from({ length: testimonial.rating }).map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-primary text-primary" />
-                      ))}
+                      {Array.from({ length: testimonial.rating }).map(
+                        (_, i) => (
+                          <Star
+                            key={i}
+                            className="w-4 h-4 fill-primary text-primary"
+                          />
+                        ),
+                      )}
                     </div>
                   </TableCell>
                   <TableCell>{getStatusBadge(testimonial.status)}</TableCell>
@@ -154,7 +173,10 @@ export const TestimonialsTable = () => {
                             variant="ghost"
                             size="sm"
                             onClick={() =>
-                              updateStatusMutation.mutate({ id: testimonial.id, status: "approved" })
+                              updateStatusMutation.mutate({
+                                id: testimonial.id,
+                                status: "approved",
+                              })
                             }
                           >
                             <CheckCircle className="w-4 h-4 text-green-600" />
@@ -163,7 +185,10 @@ export const TestimonialsTable = () => {
                             variant="ghost"
                             size="sm"
                             onClick={() =>
-                              updateStatusMutation.mutate({ id: testimonial.id, status: "rejected" })
+                              updateStatusMutation.mutate({
+                                id: testimonial.id,
+                                status: "rejected",
+                              })
                             }
                           >
                             <XCircle className="w-4 h-4 text-red-600" />
@@ -179,7 +204,10 @@ export const TestimonialsTable = () => {
         </Table>
       </div>
 
-      <Dialog open={!!selectedTestimonial} onOpenChange={() => setSelectedTestimonial(null)}>
+      <Dialog
+        open={!!selectedTestimonial}
+        onOpenChange={() => setSelectedTestimonial(null)}
+      >
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>Testimonial Details</DialogTitle>
@@ -209,9 +237,14 @@ export const TestimonialsTable = () => {
                   <div className="flex items-center gap-2">
                     <span className="font-medium">Rating:</span>
                     <div className="flex gap-1">
-                      {Array.from({ length: selectedTestimonial.rating }).map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-primary text-primary" />
-                      ))}
+                      {Array.from({ length: selectedTestimonial.rating }).map(
+                        (_, i) => (
+                          <Star
+                            key={i}
+                            className="w-4 h-4 fill-primary text-primary"
+                          />
+                        ),
+                      )}
                     </div>
                   </div>
                 </div>

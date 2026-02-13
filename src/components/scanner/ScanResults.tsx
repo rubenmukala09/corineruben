@@ -12,7 +12,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { AutoDeleteTimer } from "@/components/scanner/AutoDeleteTimer";
-import { GuestScanAnalysis, buildReportText, formatFileSize, getFileTypeLabel } from "@/lib/guestScannerUtils";
+import {
+  GuestScanAnalysis,
+  buildReportText,
+  formatFileSize,
+  getFileTypeLabel,
+} from "@/lib/guestScannerUtils";
 import { toast } from "sonner";
 
 interface ScanResultsProps {
@@ -47,14 +52,20 @@ const threatConfig = {
   },
 };
 
-export const ScanResults = ({ analysis, file, expiresAt, onExpired, onRestart }: ScanResultsProps) => {
+export const ScanResults = ({
+  analysis,
+  file,
+  expiresAt,
+  onExpired,
+  onRestart,
+}: ScanResultsProps) => {
   const config = threatConfig[analysis.threatLevel];
   const ThreatIcon = config.icon;
 
-  const reportText = useMemo(() => buildReportText(analysis, file, new Date().toLocaleString()), [
-    analysis,
-    file,
-  ]);
+  const reportText = useMemo(
+    () => buildReportText(analysis, file, new Date().toLocaleString()),
+    [analysis, file],
+  );
 
   const downloadReport = () => {
     const reportHtml = `
@@ -135,8 +146,12 @@ export const ScanResults = ({ analysis, file, expiresAt, onExpired, onRestart }:
                 <ThreatIcon className={`w-6 h-6 ${config.color}`} />
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-foreground">Threat Level: {config.label}</h3>
-                <p className="text-sm text-muted-foreground mt-1">{analysis.summary}</p>
+                <h3 className="text-xl font-semibold text-foreground">
+                  Threat Level: {config.label}
+                </h3>
+                <p className="text-sm text-muted-foreground mt-1">
+                  {analysis.summary}
+                </p>
               </div>
             </div>
             <Badge variant="outline" className={`${config.badge} text-sm`}>
@@ -163,7 +178,9 @@ export const ScanResults = ({ analysis, file, expiresAt, onExpired, onRestart }:
             </div>
             <ul className="space-y-2 text-sm text-muted-foreground">
               {analysis.findings.length ? (
-                analysis.findings.map((item, index) => <li key={index}>• {item}</li>)
+                analysis.findings.map((item, index) => (
+                  <li key={index}>• {item}</li>
+                ))
               ) : (
                 <li>• No immediate threats detected.</li>
               )}
@@ -186,7 +203,9 @@ export const ScanResults = ({ analysis, file, expiresAt, onExpired, onRestart }:
         <div className="grid gap-4 md:grid-cols-2">
           {analysis.indicators.phishing.length > 0 && (
             <div className="rounded-2xl border border-border/60 p-4 bg-muted/40">
-              <p className="text-sm font-semibold text-foreground mb-2">Phishing Indicators</p>
+              <p className="text-sm font-semibold text-foreground mb-2">
+                Phishing Indicators
+              </p>
               <ul className="space-y-1 text-sm text-muted-foreground">
                 {analysis.indicators.phishing.map((item, index) => (
                   <li key={index}>• {item}</li>
@@ -197,7 +216,9 @@ export const ScanResults = ({ analysis, file, expiresAt, onExpired, onRestart }:
 
           {analysis.indicators.malware.length > 0 && (
             <div className="rounded-2xl border border-border/60 p-4 bg-muted/40">
-              <p className="text-sm font-semibold text-foreground mb-2">Malware Signals</p>
+              <p className="text-sm font-semibold text-foreground mb-2">
+                Malware Signals
+              </p>
               <ul className="space-y-1 text-sm text-muted-foreground">
                 {analysis.indicators.malware.map((item, index) => (
                   <li key={index}>• {item}</li>
@@ -208,7 +229,9 @@ export const ScanResults = ({ analysis, file, expiresAt, onExpired, onRestart }:
 
           {analysis.indicators.deepfake.length > 0 && (
             <div className="rounded-2xl border border-border/60 p-4 bg-muted/40">
-              <p className="text-sm font-semibold text-foreground mb-2">Deepfake Indicators</p>
+              <p className="text-sm font-semibold text-foreground mb-2">
+                Deepfake Indicators
+              </p>
               <ul className="space-y-1 text-sm text-muted-foreground">
                 {analysis.indicators.deepfake.map((item, index) => (
                   <li key={index}>• {item}</li>
@@ -219,7 +242,9 @@ export const ScanResults = ({ analysis, file, expiresAt, onExpired, onRestart }:
 
           {analysis.indicators.voiceClone.length > 0 && (
             <div className="rounded-2xl border border-border/60 p-4 bg-muted/40">
-              <p className="text-sm font-semibold text-foreground mb-2">Voice Clone Indicators</p>
+              <p className="text-sm font-semibold text-foreground mb-2">
+                Voice Clone Indicators
+              </p>
               <ul className="space-y-1 text-sm text-muted-foreground">
                 {analysis.indicators.voiceClone.map((item, index) => (
                   <li key={index}>• {item}</li>
@@ -231,7 +256,9 @@ export const ScanResults = ({ analysis, file, expiresAt, onExpired, onRestart }:
 
         {analysis.indicators.suspiciousLinks.length > 0 && (
           <div className="rounded-2xl border border-border/60 p-4 bg-muted/40">
-            <p className="text-sm font-semibold text-foreground mb-2">Suspicious Links</p>
+            <p className="text-sm font-semibold text-foreground mb-2">
+              Suspicious Links
+            </p>
             <ul className="space-y-1 text-sm text-muted-foreground">
               {analysis.indicators.suspiciousLinks.map((link, index) => (
                 <li key={index}>{link}</li>
@@ -245,7 +272,12 @@ export const ScanResults = ({ analysis, file, expiresAt, onExpired, onRestart }:
             <Download className="w-4 h-4 mr-2" />
             Download Report (PDF)
           </Button>
-          <Button size="lg" variant="outline" className="flex-1" onClick={copyReport}>
+          <Button
+            size="lg"
+            variant="outline"
+            className="flex-1"
+            onClick={copyReport}
+          >
             <Copy className="w-4 h-4 mr-2" />
             Copy Results
           </Button>

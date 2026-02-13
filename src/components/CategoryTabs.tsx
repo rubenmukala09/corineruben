@@ -20,7 +20,11 @@ export function CategoryTabs({
   onCategoryChange,
 }: CategoryTabsProps) {
   return (
-    <Tabs value={activeCategory} onValueChange={onCategoryChange} className="w-full">
+    <Tabs
+      value={activeCategory}
+      onValueChange={onCategoryChange}
+      className="w-full"
+    >
       <TabsList className="w-full justify-start flex-wrap h-auto gap-2 bg-muted/50 p-2">
         {categories.map((category) => {
           const Icon = category.icon;
@@ -33,7 +37,9 @@ export function CategoryTabs({
               {Icon && <Icon className="h-4 w-4 mr-2" />}
               {category.label}
               {category.count !== undefined && (
-                <span className="ml-2 text-xs opacity-70">({category.count})</span>
+                <span className="ml-2 text-xs opacity-70">
+                  ({category.count})
+                </span>
               )}
             </TabsTrigger>
           );

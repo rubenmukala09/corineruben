@@ -59,7 +59,12 @@ interface PaymentFormProps {
 }
 
 function SmartPaymentForm({ items, onSuccess, onClose }: PaymentFormProps) {
-  const { stripePromise, loading: stripeLoading, error: stripeError, initializeStripe } = useStripeKey();
+  const {
+    stripePromise,
+    loading: stripeLoading,
+    error: stripeError,
+    initializeStripe,
+  } = useStripeKey();
   const [step, setStep] = useState<"info" | "payment" | "success">("info");
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -76,9 +81,15 @@ function SmartPaymentForm({ items, onSuccess, onClose }: PaymentFormProps) {
 
   // Auto-fill from localStorage
   useEffect(() => {
-    const savedEmail = localStorage.getItem("user_email") || localStorage.getItem("checkout_email");
-    const savedName = localStorage.getItem("user_name") || localStorage.getItem("checkout_name");
-    const savedVeteran = localStorage.getItem("is_veteran") || localStorage.getItem("checkout_veteran");
+    const savedEmail =
+      localStorage.getItem("user_email") ||
+      localStorage.getItem("checkout_email");
+    const savedName =
+      localStorage.getItem("user_name") ||
+      localStorage.getItem("checkout_name");
+    const savedVeteran =
+      localStorage.getItem("is_veteran") ||
+      localStorage.getItem("checkout_veteran");
     if (savedEmail) setEmail(savedEmail);
     if (savedName) setName(savedName);
     if (savedVeteran === "true") setIsVeteran(true);
@@ -92,7 +103,10 @@ function SmartPaymentForm({ items, onSuccess, onClose }: PaymentFormProps) {
   }, []);
 
   // Calculate pricing with veteran discount
-  const subtotal = items.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
+  const subtotal = items.reduce(
+    (sum, item) => sum + item.price * (item.quantity || 1),
+    0,
+  );
   const veteranDiscount = isVeteran ? subtotal * 0.1 : 0;
   const finalAmount = subtotal - veteranDiscount;
   const amountInCents = Math.round(finalAmount * 100);
@@ -121,21 +135,24 @@ function SmartPaymentForm({ items, onSuccess, onClose }: PaymentFormProps) {
       localStorage.setItem("checkout_veteran", isVeteran.toString());
 
       // Call edge function to create payment intent
-      const { data, error: fnError } = await supabase.functions.invoke("create-cart-payment-intent", {
-        body: {
-          amount: amountInCents,
-          customerEmail: email,
-          customerName: name,
-          isVeteran,
-          items: items.map((item) => ({
-            id: item.id,
-            name: item.name,
-            price: item.price,
-            quantity: item.quantity || 1,
-          })),
-          metadata: { source: "smart_payment" },
+      const { data, error: fnError } = await supabase.functions.invoke(
+        "create-cart-payment-intent",
+        {
+          body: {
+            amount: amountInCents,
+            customerEmail: email,
+            customerName: name,
+            isVeteran,
+            items: items.map((item) => ({
+              id: item.id,
+              name: item.name,
+              price: item.price,
+              quantity: item.quantity || 1,
+            })),
+            metadata: { source: "smart_payment" },
+          },
         },
-      });
+      );
 
       if (fnError) throw fnError;
       if (data?.error) throw new Error(data.error);
@@ -174,8 +191,8 @@ function SmartPaymentForm({ items, onSuccess, onClose }: PaymentFormProps) {
                 step === s
                   ? "bg-primary text-primary-foreground"
                   : ["info", "payment", "success"].indexOf(step) > i
-                  ? "bg-primary/20 text-primary"
-                  : "bg-muted text-muted-foreground"
+                    ? "bg-primary/20 text-primary"
+                    : "bg-muted text-muted-foreground"
               }`}
             >
               {["info", "payment", "success"].indexOf(step) > i ? (
@@ -214,7 +231,10 @@ function SmartPaymentForm({ items, onSuccess, onClose }: PaymentFormProps) {
                 {items.map((item) => (
                   <div key={item.id} className="flex justify-between text-sm">
                     <span className="text-muted-foreground">
-                      {item.name} {item.quantity && item.quantity > 1 && `× ${item.quantity}`}
+                      {item.name}{" "}
+                      {item.quantity &&
+                        item.quantity > 1 &&
+                        `× ${item.quantity}`}
                     </span>
                     <span className="font-medium">
                       ${(item.price * (item.quantity || 1)).toFixed(2)}
@@ -272,10 +292,15 @@ function SmartPaymentForm({ items, onSuccess, onClose }: PaymentFormProps) {
                 <Checkbox
                   id="terms"
                   checked={termsAccepted}
-                  onCheckedChange={(checked) => setTermsAccepted(checked === true)}
+                  onCheckedChange={(checked) =>
+                    setTermsAccepted(checked === true)
+                  }
                   className="mt-1"
                 />
-                <Label htmlFor="terms" className="text-sm text-muted-foreground">
+                <Label
+                  htmlFor="terms"
+                  className="text-sm text-muted-foreground"
+                >
                   I agree to the{" "}
                   <a href="/terms" className="text-primary hover:underline">
                     Terms of Service
@@ -327,7 +352,9 @@ function SmartPaymentForm({ items, onSuccess, onClose }: PaymentFormProps) {
             {/* Order Summary */}
             <div className="bg-muted/50 rounded-xl p-4 border">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-muted-foreground">Order Total:</span>
+                <span className="text-sm text-muted-foreground">
+                  Order Total:
+                </span>
                 <span className="text-xl font-bold text-primary">
                   ${finalAmount.toFixed(2)}
                 </span>
@@ -345,14 +372,23 @@ function SmartPaymentForm({ items, onSuccess, onClose }: PaymentFormProps) {
               {stripeLoading ? (
                 <div className="flex items-center justify-center py-8">
                   <Loader2 className="w-6 h-6 animate-spin text-primary" />
-                  <span className="ml-2 text-sm text-muted-foreground">Initializing payment...</span>
+                  <span className="ml-2 text-sm text-muted-foreground">
+                    Initializing payment...
+                  </span>
                 </div>
               ) : !stripePromise || stripeError ? (
                 <div className="p-4 bg-destructive/10 text-destructive rounded-lg text-center">
                   <CreditCard className="w-8 h-8 mx-auto mb-2 opacity-50" />
                   <p className="font-medium">Payment system unavailable</p>
-                  <p className="text-sm mt-1">{stripeError || "Please refresh the page and try again."}</p>
-                  <Button variant="outline" size="sm" className="mt-3" onClick={() => window.location.reload()}>
+                  <p className="text-sm mt-1">
+                    {stripeError || "Please refresh the page and try again."}
+                  </p>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="mt-3"
+                    onClick={() => window.location.reload()}
+                  >
                     <RefreshCw className="w-4 h-4 mr-2" />
                     Refresh Page
                   </Button>
@@ -416,14 +452,15 @@ function SmartPaymentForm({ items, onSuccess, onClose }: PaymentFormProps) {
             <h3 className="text-2xl font-bold mb-2">Payment Successful!</h3>
             <p className="text-muted-foreground mb-6">
               Thank you for your purchase!
-              <br />
-              A confirmation email has been sent to {email}.
+              <br />A confirmation email has been sent to {email}.
             </p>
 
             {isDigital && (
               <div className="bg-green-500/10 text-green-600 p-4 rounded-xl text-sm mb-4">
                 <Sparkles className="w-5 h-5 mx-auto mb-2" />
-                <p className="font-medium">Check your email for download links</p>
+                <p className="font-medium">
+                  Check your email for download links
+                </p>
                 <p className="text-xs mt-1">Expected delivery: 2-5 minutes</p>
               </div>
             )}
@@ -466,18 +503,22 @@ function PaymentElementWrapper({
       const { error: submitError } = await elements.submit();
       if (submitError) throw submitError;
 
-      const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          return_url: `${window.location.origin}/payment-success`,
-          receipt_email: email,
-        },
-        redirect: "if_required",
-      });
+      const { error: confirmError, paymentIntent } =
+        await stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            return_url: `${window.location.origin}/payment-success`,
+            receipt_email: email,
+          },
+          redirect: "if_required",
+        });
 
       if (confirmError) throw confirmError;
 
-      if (paymentIntent?.status === "succeeded" || paymentIntent?.status === "processing") {
+      if (
+        paymentIntent?.status === "succeeded" ||
+        paymentIntent?.status === "processing"
+      ) {
         onSuccess();
       }
     } catch (err: any) {
@@ -494,7 +535,9 @@ function PaymentElementWrapper({
       {!isReady && (
         <div className="flex items-center justify-center py-8">
           <Loader2 className="w-6 h-6 animate-spin text-primary" />
-          <span className="ml-2 text-sm text-muted-foreground">Loading payment form...</span>
+          <span className="ml-2 text-sm text-muted-foreground">
+            Loading payment form...
+          </span>
         </div>
       )}
       <div className={!isReady ? "opacity-0 h-0 overflow-hidden" : ""}>
@@ -514,7 +557,12 @@ function PaymentElementWrapper({
       )}
 
       <div className="flex gap-3">
-        <Button variant="outline" onClick={onBack} disabled={isLoading} className="flex-1">
+        <Button
+          variant="outline"
+          onClick={onBack}
+          disabled={isLoading}
+          className="flex-1"
+        >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back
         </Button>
@@ -572,7 +620,8 @@ export function SmartPaymentDialog({
             </div>
           </DialogTitle>
           <DialogDescription>
-            {description || `${itemCount} ${itemCount === 1 ? "item" : "items"} in your order`}
+            {description ||
+              `${itemCount} ${itemCount === 1 ? "item" : "items"} in your order`}
           </DialogDescription>
         </DialogHeader>
 

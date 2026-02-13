@@ -67,7 +67,7 @@ export const useLauraChat = () => {
 
   const CHAT_URL = useMemo(
     () => `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-chat`,
-    []
+    [],
   );
 
   const sendMessage = useCallback(
@@ -84,7 +84,10 @@ export const useLauraChat = () => {
         return;
       }
 
-      const updated: LauraMessage[] = [...messages, { role: "user" as const, content: trimmed }];
+      const updated: LauraMessage[] = [
+        ...messages,
+        { role: "user" as const, content: trimmed },
+      ];
       setMessages(updated);
       setIsLoading(true);
 
@@ -101,7 +104,10 @@ export const useLauraChat = () => {
             apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
           },
           body: JSON.stringify({
-            messages: updated.map((msg) => ({ role: msg.role, content: msg.content })),
+            messages: updated.map((msg) => ({
+              role: msg.role,
+              content: msg.content,
+            })),
             type: "laura",
           }),
           signal: abortControllerRef.current.signal,
@@ -136,7 +142,10 @@ export const useLauraChat = () => {
               const delta = parsed.choices?.[0]?.delta?.content;
               if (delta) {
                 assistantMessage += delta;
-                setMessages([...updated, { role: "assistant" as const, content: assistantMessage }]);
+                setMessages([
+                  ...updated,
+                  { role: "assistant" as const, content: assistantMessage },
+                ]);
               }
             } catch {
               // Ignore partial chunks
@@ -145,16 +154,22 @@ export const useLauraChat = () => {
         }
 
         if (!assistantMessage) {
-          setMessages([...updated, { role: "assistant" as const, content: fallbackResponse }]);
+          setMessages([
+            ...updated,
+            { role: "assistant" as const, content: fallbackResponse },
+          ]);
         }
       } catch (err: any) {
         if (err?.name === "AbortError") return;
-        setMessages([...updated, { role: "assistant" as const, content: fallbackResponse }]);
+        setMessages([
+          ...updated,
+          { role: "assistant" as const, content: fallbackResponse },
+        ]);
       } finally {
         setIsLoading(false);
       }
     },
-    [CHAT_URL, messages]
+    [CHAT_URL, messages],
   );
 
   const resetChat = useCallback(() => {

@@ -82,7 +82,7 @@ export const SmartScanConsole = ({
       setValidationError(null);
       onFileSelect(nextFile);
     },
-    [onFileSelect]
+    [onFileSelect],
   );
 
   const handleDrop = useCallback(
@@ -92,7 +92,7 @@ export const SmartScanConsole = ({
       const dropped = event.dataTransfer.files?.[0];
       if (dropped) handleFile(dropped);
     },
-    [handleFile]
+    [handleFile],
   );
 
   const handleBrowse = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -133,7 +133,7 @@ export const SmartScanConsole = ({
       <div
         className={cn(
           "relative premium-frosted-dark rounded-[28px] border border-white/10 p-4 md:p-6 shadow-[0_35px_80px_rgba(3,8,20,0.55)]",
-          isDragging && "ring-2 ring-cyan-300/60"
+          isDragging && "ring-2 ring-cyan-300/60",
         )}
         onDragOver={(event) => {
           event.preventDefault();
@@ -160,14 +160,22 @@ export const SmartScanConsole = ({
                 <ShieldCheck className="h-5 w-5 text-emerald-300" />
               </div>
               <div>
-                <p className="text-[11px] uppercase tracking-[0.35em] text-white/50">Smart Hub</p>
-                <p className="text-lg font-semibold text-white">Secure Threat Command Console</p>
+                <p className="text-[11px] uppercase tracking-[0.35em] text-white/50">
+                  Smart Hub
+                </p>
+                <p className="text-lg font-semibold text-white">
+                  Secure Threat Command Console
+                </p>
               </div>
             </div>
 
             <div className="hidden lg:flex items-center gap-2">
-              <Badge className="bg-white/10 text-white/70 border border-white/10">Anonymous Guest Session</Badge>
-              <Badge className="bg-white/10 text-white/70 border border-white/10">10-Minute TTL Auto-Deletion</Badge>
+              <Badge className="bg-white/10 text-white/70 border border-white/10">
+                Anonymous Guest Session
+              </Badge>
+              <Badge className="bg-white/10 text-white/70 border border-white/10">
+                10-Minute TTL Auto-Deletion
+              </Badge>
             </div>
           </div>
 
@@ -189,7 +197,9 @@ export const SmartScanConsole = ({
                 <FileText className="h-5 w-5 text-white/70" />
               </div>
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold text-white truncate">{file.name}</p>
+                <p className="text-sm font-semibold text-white truncate">
+                  {file.name}
+                </p>
                 <p className="text-xs text-white/50">
                   {fileMeta.type} | {fileMeta.size.formatted}
                 </p>
@@ -212,11 +222,13 @@ export const SmartScanConsole = ({
           <div className="mt-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div className="flex flex-wrap items-center gap-2 text-xs text-white/55">
               <span>
-                PDF, JPG, PNG, MP4, MP3, WAV up to {GUEST_SCAN_PRICING.maxFileSizeMb}MB
+                PDF, JPG, PNG, MP4, MP3, WAV up to{" "}
+                {GUEST_SCAN_PRICING.maxFileSizeMb}MB
               </span>
               <span className="hidden sm:inline">|</span>
               <span>
-                ${GUEST_SCAN_PRICING.ratePerMb.toFixed(2)}/MB with ${GUEST_SCAN_PRICING.minimumCharge.toFixed(2)} minimum
+                ${GUEST_SCAN_PRICING.ratePerMb.toFixed(2)}/MB with $
+                {GUEST_SCAN_PRICING.minimumCharge.toFixed(2)} minimum
               </span>
             </div>
 
@@ -246,10 +258,13 @@ export const SmartScanConsole = ({
                   "h-10 px-4 text-slate-950 shadow-[0_10px_25px_rgba(8,15,35,0.35)]",
                   file
                     ? "bg-emerald-300 hover:bg-emerald-200"
-                    : "bg-white hover:bg-white/90"
+                    : "bg-white hover:bg-white/90",
                 )}
                 onClick={handlePrimaryAction}
-                disabled={isProcessing || (file ? !canAnalyze : input.trim().length === 0)}
+                disabled={
+                  isProcessing ||
+                  (file ? !canAnalyze : input.trim().length === 0)
+                }
               >
                 {isProcessing ? (
                   <>
@@ -272,8 +287,12 @@ export const SmartScanConsole = ({
           </div>
 
           <div className="mt-4 flex flex-wrap items-center gap-2 lg:hidden">
-            <Badge className="bg-white/10 text-white/70 border border-white/10">Anonymous Guest Session</Badge>
-            <Badge className="bg-white/10 text-white/70 border border-white/10">10-Minute TTL Auto-Deletion</Badge>
+            <Badge className="bg-white/10 text-white/70 border border-white/10">
+              Anonymous Guest Session
+            </Badge>
+            <Badge className="bg-white/10 text-white/70 border border-white/10">
+              10-Minute TTL Auto-Deletion
+            </Badge>
           </div>
 
           <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-xs text-white/50">
@@ -293,11 +312,17 @@ export const SmartScanConsole = ({
             <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-xl shadow-[0_18px_40px_rgba(3,8,20,0.4)]">
               <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.18em] text-white/50">
                 <span>Stripe Preview</span>
-                <Badge className="bg-emerald-400/20 text-emerald-100 border border-emerald-300/30">Live</Badge>
+                <Badge className="bg-emerald-400/20 text-emerald-100 border border-emerald-300/30">
+                  Live
+                </Badge>
               </div>
-              <div className="mt-3 text-3xl font-semibold text-white">{fileMeta.cost.formatted}</div>
+              <div className="mt-3 text-3xl font-semibold text-white">
+                {fileMeta.cost.formatted}
+              </div>
               <p className="mt-1 text-xs text-white/60">
-                Size {fileMeta.cost.sizeMb.toFixed(2)} MB | ${GUEST_SCAN_PRICING.ratePerMb.toFixed(2)}/MB min ${GUEST_SCAN_PRICING.minimumCharge.toFixed(2)}
+                Size {fileMeta.cost.sizeMb.toFixed(2)} MB | $
+                {GUEST_SCAN_PRICING.ratePerMb.toFixed(2)}/MB min $
+                {GUEST_SCAN_PRICING.minimumCharge.toFixed(2)}
               </p>
               <div className="mt-3 flex items-center gap-2 text-xs text-white/55">
                 <ShieldCheck className="h-3 w-3 text-emerald-200" />

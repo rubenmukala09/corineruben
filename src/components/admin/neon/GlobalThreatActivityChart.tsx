@@ -42,7 +42,7 @@ export function GlobalThreatActivityChart() {
       const { count } = await supabase
         .from("threat_events")
         .select("*", { count: "exact", head: true });
-      
+
       if (count && count > 0) {
         // Load real data when available
         setHasData(true);
@@ -64,7 +64,8 @@ export function GlobalThreatActivityChart() {
           <p className="text-sm font-medium text-[#F9FAFB] mb-2">{label}</p>
           {payload.map((entry: any, index: number) => (
             <p key={index} className="text-sm" style={{ color: entry.color }}>
-              {entry.name}: <span className="font-bold">{entry.value.toLocaleString()}</span>
+              {entry.name}:{" "}
+              <span className="font-bold">{entry.value.toLocaleString()}</span>
             </p>
           ))}
         </div>
@@ -89,8 +90,12 @@ export function GlobalThreatActivityChart() {
               <span className="text-xs font-medium text-[#10B981]">LIVE</span>
             </div>
             <div>
-              <h2 className="text-xl font-bold text-[#F9FAFB]">Global Threat Activity</h2>
-              <p className="text-sm text-[#9CA3AF]">Threat Neutralization History</p>
+              <h2 className="text-xl font-bold text-[#F9FAFB]">
+                Global Threat Activity
+              </h2>
+              <p className="text-sm text-[#9CA3AF]">
+                Threat Neutralization History
+              </p>
             </div>
           </div>
 
@@ -133,13 +138,20 @@ export function GlobalThreatActivityChart() {
           {!hasData && (
             <div className="absolute inset-0 flex items-center justify-center z-10 bg-[#111827]/80 rounded-lg">
               <div className="text-center p-6">
-                <p className="text-[#9CA3AF] text-sm mb-2">No threat data available yet</p>
-                <p className="text-xs text-gray-500">Data will appear here once threat monitoring is active</p>
+                <p className="text-[#9CA3AF] text-sm mb-2">
+                  No threat data available yet
+                </p>
+                <p className="text-xs text-gray-500">
+                  Data will appear here once threat monitoring is active
+                </p>
               </div>
             </div>
           )}
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={weeklyData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+            <AreaChart
+              data={weeklyData}
+              margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
+            >
               <defs>
                 {/* Blue Gradient (Scams Blocked - High curve) */}
                 <linearGradient id="blueGradient" x1="0" y1="0" x2="0" y2="1">
@@ -152,7 +164,12 @@ export function GlobalThreatActivityChart() {
                   <stop offset="100%" stopColor="#F97316" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.3} vertical={false} />
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="#374151"
+                opacity={0.3}
+                vertical={false}
+              />
               <XAxis
                 dataKey="day"
                 stroke="#9CA3AF"
@@ -168,7 +185,7 @@ export function GlobalThreatActivityChart() {
                 tickFormatter={(value) => `${value}`}
               />
               <Tooltip content={<CustomTooltip />} />
-              
+
               {/* Scams Blocked - Blue (High curve) */}
               <Area
                 type="monotone"
@@ -178,9 +195,14 @@ export function GlobalThreatActivityChart() {
                 strokeWidth={3}
                 fill="url(#blueGradient)"
                 dot={false}
-                activeDot={{ r: 6, fill: "#06B6D4", stroke: "#0B0F19", strokeWidth: 2 }}
+                activeDot={{
+                  r: 6,
+                  fill: "#06B6D4",
+                  stroke: "#0B0F19",
+                  strokeWidth: 2,
+                }}
               />
-              
+
               {/* New Threats Detected - Orange (Lower curve) */}
               <Area
                 type="monotone"
@@ -190,7 +212,12 @@ export function GlobalThreatActivityChart() {
                 strokeWidth={3}
                 fill="url(#orangeGradient)"
                 dot={false}
-                activeDot={{ r: 6, fill: "#F97316", stroke: "#0B0F19", strokeWidth: 2 }}
+                activeDot={{
+                  r: 6,
+                  fill: "#F97316",
+                  stroke: "#0B0F19",
+                  strokeWidth: 2,
+                }}
               />
             </AreaChart>
           </ResponsiveContainer>

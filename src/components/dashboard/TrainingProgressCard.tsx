@@ -1,4 +1,10 @@
-import { GraduationCap, Trophy, Star, ChevronRight, BookOpen } from "lucide-react";
+import {
+  GraduationCap,
+  Trophy,
+  Star,
+  ChevronRight,
+  BookOpen,
+} from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
@@ -55,7 +61,7 @@ export function TrainingProgressCard({ userId }: TrainingProgressCardProps) {
         }
 
         // Get course titles for each enrollment
-        const courseIds = enrollmentData.map(e => e.course_id);
+        const courseIds = enrollmentData.map((e) => e.course_id);
         const { data: coursesData, error: coursesError } = await supabase
           .from("courses")
           .select("id, title")
@@ -66,16 +72,20 @@ export function TrainingProgressCard({ userId }: TrainingProgressCardProps) {
         }
 
         // Map enrollments with course titles
-        const mappedEnrollments: Enrollment[] = enrollmentData.map(enrollment => {
-          const course = coursesData?.find(c => c.id === enrollment.course_id);
-          return {
-            id: enrollment.id,
-            course_id: enrollment.course_id,
-            progress_percentage: enrollment.progress_percentage,
-            status: enrollment.status,
-            course_title: course?.title || null
-          };
-        });
+        const mappedEnrollments: Enrollment[] = enrollmentData.map(
+          (enrollment) => {
+            const course = coursesData?.find(
+              (c) => c.id === enrollment.course_id,
+            );
+            return {
+              id: enrollment.id,
+              course_id: enrollment.course_id,
+              progress_percentage: enrollment.progress_percentage,
+              status: enrollment.status,
+              course_title: course?.title || null,
+            };
+          },
+        );
 
         setEnrollments(mappedEnrollments);
       } catch (err) {
@@ -89,10 +99,18 @@ export function TrainingProgressCard({ userId }: TrainingProgressCardProps) {
     fetchEnrollments();
   }, [userId]);
 
-  const completedModules = enrollments.filter(e => e.progress_percentage === 100).length;
-  const overallProgress = enrollments.length > 0
-    ? Math.round(enrollments.reduce((acc, e) => acc + (e.progress_percentage || 0), 0) / enrollments.length)
-    : 0;
+  const completedModules = enrollments.filter(
+    (e) => e.progress_percentage === 100,
+  ).length;
+  const overallProgress =
+    enrollments.length > 0
+      ? Math.round(
+          enrollments.reduce(
+            (acc, e) => acc + (e.progress_percentage || 0),
+            0,
+          ) / enrollments.length,
+        )
+      : 0;
 
   return (
     <Card className="h-full">
@@ -115,7 +133,10 @@ export function TrainingProgressCard({ userId }: TrainingProgressCardProps) {
           <div className="space-y-3">
             <div className="p-4 rounded-xl bg-muted animate-pulse h-16" />
             {[1, 2, 3].map((i) => (
-              <div key={i} className="flex items-center gap-3 p-3 animate-pulse">
+              <div
+                key={i}
+                className="flex items-center gap-3 p-3 animate-pulse"
+              >
                 <div className="w-8 h-8 rounded-full bg-muted" />
                 <div className="flex-1 space-y-2">
                   <div className="h-4 bg-muted rounded w-3/4" />
@@ -133,8 +154,8 @@ export function TrainingProgressCard({ userId }: TrainingProgressCardProps) {
             <p className="text-xs text-muted-foreground mb-4">
               Start your cybersecurity training journey
             </p>
-            <Button 
-              variant="default" 
+            <Button
+              variant="default"
               size="sm"
               onClick={() => navigate("/portal/my-courses")}
             >
@@ -148,7 +169,9 @@ export function TrainingProgressCard({ userId }: TrainingProgressCardProps) {
             <div className="p-4 rounded-xl bg-gradient-to-r from-primary/10 to-primary/5 space-y-2">
               <div className="flex justify-between text-sm">
                 <span className="font-medium">Overall Mastery</span>
-                <span className="text-primary font-bold">{overallProgress}%</span>
+                <span className="text-primary font-bold">
+                  {overallProgress}%
+                </span>
               </div>
               <Progress value={overallProgress} className="h-3" />
             </div>
@@ -164,27 +187,36 @@ export function TrainingProgressCard({ userId }: TrainingProgressCardProps) {
                   className="flex items-center gap-3 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors cursor-pointer group"
                   onClick={() => navigate("/portal/my-courses")}
                 >
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${
-                    enrollment.progress_percentage === 100 
-                      ? "bg-green-500/20 text-green-600" 
-                      : (enrollment.progress_percentage || 0) > 0 
-                        ? "bg-blue-500/20 text-blue-600"
-                        : "bg-muted text-muted-foreground"
-                  }`}>
-                    {enrollment.progress_percentage === 100 ? "✓" : `${enrollment.progress_percentage || 0}%`}
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${
+                      enrollment.progress_percentage === 100
+                        ? "bg-green-500/20 text-green-600"
+                        : (enrollment.progress_percentage || 0) > 0
+                          ? "bg-blue-500/20 text-blue-600"
+                          : "bg-muted text-muted-foreground"
+                    }`}
+                  >
+                    {enrollment.progress_percentage === 100
+                      ? "✓"
+                      : `${enrollment.progress_percentage || 0}%`}
                   </div>
                   <div className="flex-1">
-                    <p className="font-medium text-sm">{enrollment.course_title || "Course"}</p>
-                    <Progress value={enrollment.progress_percentage || 0} className="h-1 mt-1" />
+                    <p className="font-medium text-sm">
+                      {enrollment.course_title || "Course"}
+                    </p>
+                    <Progress
+                      value={enrollment.progress_percentage || 0}
+                      className="h-1 mt-1"
+                    />
                   </div>
                   <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
                 </motion.div>
               ))}
             </div>
 
-            <Button 
-              variant="outline" 
-              className="w-full" 
+            <Button
+              variant="outline"
+              className="w-full"
               onClick={() => navigate("/portal/my-courses")}
             >
               <Star className="w-4 h-4 mr-2" />

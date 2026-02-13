@@ -1,15 +1,20 @@
 interface FlowingWavesProps {
-  variant?: 'top' | 'bottom' | 'full';
+  variant?: "top" | "bottom" | "full";
   opacity?: number;
 }
 
-const FlowingWaves = ({ variant = 'full', opacity = 0.15 }: FlowingWavesProps) => {
+const FlowingWaves = ({
+  variant = "full",
+  opacity = 0.15,
+}: FlowingWavesProps) => {
   return (
-    <div 
+    <div
       className={`absolute inset-0 overflow-hidden pointer-events-none ${
-        variant === 'top' ? 'bottom-auto h-1/2' : 
-        variant === 'bottom' ? 'top-auto h-1/2' : 
-        'h-full'
+        variant === "top"
+          ? "bottom-auto h-1/2"
+          : variant === "bottom"
+            ? "top-auto h-1/2"
+            : "h-full"
       }`}
       style={{ opacity }}
     >
@@ -18,7 +23,7 @@ const FlowingWaves = ({ variant = 'full', opacity = 0.15 }: FlowingWavesProps) =
         {/* Wave 1 - Purple */}
         <svg
           className="absolute w-full h-full animate-[float_20s_ease-in-out_infinite]"
-          style={{ top: '10%', left: '-10%' }}
+          style={{ top: "10%", left: "-10%" }}
           viewBox="0 0 1200 600"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -27,9 +32,23 @@ const FlowingWaves = ({ variant = 'full', opacity = 0.15 }: FlowingWavesProps) =
             fill="url(#gradient-purple)"
           />
           <defs>
-            <linearGradient id="gradient-purple" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" className="text-purple-500" style={{ stopColor: 'currentColor', stopOpacity: 0.3 }} />
-              <stop offset="100%" className="text-purple-500" style={{ stopColor: 'currentColor', stopOpacity: 0.1 }} />
+            <linearGradient
+              id="gradient-purple"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                className="text-purple-500"
+                style={{ stopColor: "currentColor", stopOpacity: 0.3 }}
+              />
+              <stop
+                offset="100%"
+                className="text-purple-500"
+                style={{ stopColor: "currentColor", stopOpacity: 0.1 }}
+              />
             </linearGradient>
           </defs>
         </svg>
@@ -37,7 +56,7 @@ const FlowingWaves = ({ variant = 'full', opacity = 0.15 }: FlowingWavesProps) =
         {/* Wave 2 - Teal */}
         <svg
           className="absolute w-full h-full animate-[float_25s_ease-in-out_infinite_reverse]"
-          style={{ top: '20%', left: '10%' }}
+          style={{ top: "20%", left: "10%" }}
           viewBox="0 0 1200 600"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -46,9 +65,23 @@ const FlowingWaves = ({ variant = 'full', opacity = 0.15 }: FlowingWavesProps) =
             fill="url(#gradient-teal)"
           />
           <defs>
-            <linearGradient id="gradient-teal" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" className="text-teal-500" style={{ stopColor: 'currentColor', stopOpacity: 0.3 }} />
-              <stop offset="100%" className="text-teal-400" style={{ stopColor: 'currentColor', stopOpacity: 0.1 }} />
+            <linearGradient
+              id="gradient-teal"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                className="text-teal-500"
+                style={{ stopColor: "currentColor", stopOpacity: 0.3 }}
+              />
+              <stop
+                offset="100%"
+                className="text-teal-400"
+                style={{ stopColor: "currentColor", stopOpacity: 0.1 }}
+              />
             </linearGradient>
           </defs>
         </svg>
@@ -56,7 +89,7 @@ const FlowingWaves = ({ variant = 'full', opacity = 0.15 }: FlowingWavesProps) =
         {/* Wave 3 - Cyan accent */}
         <svg
           className="absolute w-full h-full animate-[float_30s_ease-in-out_infinite]"
-          style={{ top: '30%', left: '-5%' }}
+          style={{ top: "30%", left: "-5%" }}
           viewBox="0 0 1200 600"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -65,30 +98,44 @@ const FlowingWaves = ({ variant = 'full', opacity = 0.15 }: FlowingWavesProps) =
             fill="url(#gradient-cyan)"
           />
           <defs>
-            <linearGradient id="gradient-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" className="text-cyan-500" style={{ stopColor: 'currentColor', stopOpacity: 0.25 }} />
-              <stop offset="100%" className="text-cyan-400" style={{ stopColor: 'currentColor', stopOpacity: 0.1 }} />
+            <linearGradient
+              id="gradient-cyan"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                className="text-cyan-500"
+                style={{ stopColor: "currentColor", stopOpacity: 0.25 }}
+              />
+              <stop
+                offset="100%"
+                className="text-cyan-400"
+                style={{ stopColor: "currentColor", stopOpacity: 0.1 }}
+              />
             </linearGradient>
           </defs>
         </svg>
 
         {/* Flowing particles/dots */}
         <div className="absolute inset-0">
-          <div 
+          <div
             className="absolute w-2 h-2 rounded-full bg-primary/20 animate-[float_15s_ease-in-out_infinite]"
-            style={{ top: '20%', left: '15%' }}
+            style={{ top: "20%", left: "15%" }}
           />
-          <div 
+          <div
             className="absolute w-3 h-3 rounded-full bg-accent-teal/20 animate-[float_18s_ease-in-out_infinite_reverse]"
-            style={{ top: '40%', left: '75%' }}
+            style={{ top: "40%", left: "75%" }}
           />
-          <div 
+          <div
             className="absolute w-2 h-2 rounded-full bg-accent-cyan/20 animate-[float_22s_ease-in-out_infinite]"
-            style={{ top: '60%', left: '40%' }}
+            style={{ top: "60%", left: "40%" }}
           />
-          <div 
+          <div
             className="absolute w-4 h-4 rounded-full bg-primary/15 animate-[float_20s_ease-in-out_infinite_reverse]"
-            style={{ top: '80%', left: '80%' }}
+            style={{ top: "80%", left: "80%" }}
           />
         </div>
       </div>

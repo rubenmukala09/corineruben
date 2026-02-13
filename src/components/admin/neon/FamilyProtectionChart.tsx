@@ -13,7 +13,14 @@ interface Device {
   protection_level: number;
 }
 
-const COLORS = ["#10b981", "#06b6d4", "#8b5cf6", "#f97316", "#3b82f6", "#ec4899"];
+const COLORS = [
+  "#10b981",
+  "#06b6d4",
+  "#8b5cf6",
+  "#f97316",
+  "#3b82f6",
+  "#ec4899",
+];
 
 export function FamilyProtectionChart() {
   const { data: devices = [], isLoading } = useQuery({
@@ -31,20 +38,20 @@ export function FamilyProtectionChart() {
   });
 
   // Transform real data into chart format
-  const chartData = devices.length > 0
-    ? devices.map((device, index) => ({
-        name: device.device_name,
-        value: device.protection_level,
-        status: device.status === "protected" ? "safe" : "needs-update",
-        color: COLORS[index % COLORS.length],
-      }))
-    : [
-        { name: "No devices", value: 100, status: "none", color: "#374151" },
-      ];
+  const chartData =
+    devices.length > 0
+      ? devices.map((device, index) => ({
+          name: device.device_name,
+          value: device.protection_level,
+          status: device.status === "protected" ? "safe" : "needs-update",
+          color: COLORS[index % COLORS.length],
+        }))
+      : [{ name: "No devices", value: 100, status: "none", color: "#374151" }];
 
   const totalDevices = devices.length;
-  const safeDevices = devices.filter(d => d.status === "protected").length;
-  const securityScore = totalDevices > 0 ? Math.round((safeDevices / totalDevices) * 100) : 0;
+  const safeDevices = devices.filter((d) => d.status === "protected").length;
+  const securityScore =
+    totalDevices > 0 ? Math.round((safeDevices / totalDevices) * 100) : 0;
 
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
@@ -53,10 +60,14 @@ export function FamilyProtectionChart() {
       return (
         <div className="bg-[#1F2937] border border-cyan-500/30 rounded-lg shadow-lg shadow-cyan-500/10 p-3">
           <p className="text-sm font-medium text-white">{data.name}</p>
-          <p className={`text-sm font-bold ${data.status === "safe" ? "text-emerald-400" : "text-orange-400"}`}>
+          <p
+            className={`text-sm font-bold ${data.status === "safe" ? "text-emerald-400" : "text-orange-400"}`}
+          >
             {data.status === "safe" ? "✓ Protected" : "⚠ Needs Update"}
           </p>
-          <p className="text-xs text-gray-400 mt-1">Protection: {data.value}%</p>
+          <p className="text-xs text-gray-400 mt-1">
+            Protection: {data.value}%
+          </p>
         </div>
       );
     }
@@ -86,7 +97,9 @@ export function FamilyProtectionChart() {
           <div>
             <h2 className="text-lg font-bold text-white">Family Protection</h2>
             <p className="text-sm text-gray-400">
-              {totalDevices > 0 ? `${totalDevices} device${totalDevices > 1 ? 's' : ''} connected` : 'No devices connected'}
+              {totalDevices > 0
+                ? `${totalDevices} device${totalDevices > 1 ? "s" : ""} connected`
+                : "No devices connected"}
             </p>
           </div>
         </div>
@@ -97,7 +110,14 @@ export function FamilyProtectionChart() {
             <PieChart>
               <defs>
                 {chartData.map((entry, index) => (
-                  <filter key={`glow-${index}`} id={`glow-${index}`} x="-50%" y="-50%" width="200%" height="200%">
+                  <filter
+                    key={`glow-${index}`}
+                    id={`glow-${index}`}
+                    x="-50%"
+                    y="-50%"
+                    width="200%"
+                    height="200%"
+                  >
                     <feGaussianBlur stdDeviation="3" result="coloredBlur" />
                     <feMerge>
                       <feMergeNode in="coloredBlur" />
@@ -121,7 +141,10 @@ export function FamilyProtectionChart() {
                     key={`cell-${index}`}
                     fill={entry.color}
                     style={{
-                      filter: entry.status !== "none" ? `drop-shadow(0 0 6px ${entry.color})` : undefined,
+                      filter:
+                        entry.status !== "none"
+                          ? `drop-shadow(0 0 6px ${entry.color})`
+                          : undefined,
                     }}
                   />
                 ))}
@@ -148,7 +171,9 @@ export function FamilyProtectionChart() {
         <div className="mt-4 space-y-2">
           {devices.length === 0 ? (
             <div className="text-center py-4">
-              <p className="text-sm text-gray-400">Add devices to see protection status</p>
+              <p className="text-sm text-gray-400">
+                Add devices to see protection status
+              </p>
             </div>
           ) : (
             devices.slice(0, 5).map((device, index) => (
@@ -167,10 +192,18 @@ export function FamilyProtectionChart() {
                       boxShadow: `0 0 8px ${COLORS[index % COLORS.length]}`,
                     }}
                   />
-                  <span className="text-sm text-gray-300">{device.device_name}</span>
+                  <span className="text-sm text-gray-300">
+                    {device.device_name}
+                  </span>
                 </div>
-                <span className={`text-xs font-medium ${device.status === "protected" ? "text-emerald-400" : device.status === "warning" ? "text-orange-400" : "text-red-400"}`}>
-                  {device.status === "protected" ? "Safe" : device.status === "warning" ? "Update" : "At Risk"}
+                <span
+                  className={`text-xs font-medium ${device.status === "protected" ? "text-emerald-400" : device.status === "warning" ? "text-orange-400" : "text-red-400"}`}
+                >
+                  {device.status === "protected"
+                    ? "Safe"
+                    : device.status === "warning"
+                      ? "Update"
+                      : "At Risk"}
                 </span>
               </motion.div>
             ))

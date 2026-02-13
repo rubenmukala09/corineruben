@@ -140,9 +140,13 @@ export function NeonAdminModules({ stats }: NeonAdminModulesProps) {
               transition={{ delay: 0.3 + index * 0.05, duration: 0.3 }}
             >
               <Link to={module.href}>
-                <Card className={`relative overflow-hidden bg-[#1F2937] border-gray-800/50 p-4 hover:border-gray-700/50 transition-all duration-300 group cursor-pointer shadow-lg ${module.glow} hover:scale-[1.02]`}>
+                <Card
+                  className={`relative overflow-hidden bg-[#1F2937] border-gray-800/50 p-4 hover:border-gray-700/50 transition-all duration-300 group cursor-pointer shadow-lg ${module.glow} hover:scale-[1.02]`}
+                >
                   {/* Background glow */}
-                  <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${module.gradient} opacity-0 group-hover:opacity-10 blur-2xl rounded-full -translate-y-1/2 translate-x-1/2 transition-opacity duration-500`} />
+                  <div
+                    className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${module.gradient} opacity-0 group-hover:opacity-10 blur-2xl rounded-full -translate-y-1/2 translate-x-1/2 transition-opacity duration-500`}
+                  />
 
                   {/* Badge */}
                   {badgeValue && (
@@ -152,7 +156,9 @@ export function NeonAdminModules({ stats }: NeonAdminModulesProps) {
                   )}
 
                   <div className="relative z-10">
-                    <div className={`w-10 h-10 mb-3 bg-gradient-to-br ${module.gradient} rounded-lg flex items-center justify-center shadow-lg ${module.glow} group-hover:scale-110 transition-transform duration-300`}>
+                    <div
+                      className={`w-10 h-10 mb-3 bg-gradient-to-br ${module.gradient} rounded-lg flex items-center justify-center shadow-lg ${module.glow} group-hover:scale-110 transition-transform duration-300`}
+                    >
                       <Icon className="w-5 h-5 text-white" />
                     </div>
                     <h3 className="font-medium text-white text-sm group-hover:text-cyan-400 transition-colors">

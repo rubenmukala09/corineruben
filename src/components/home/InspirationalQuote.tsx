@@ -8,7 +8,12 @@ interface InspirationalQuoteProps {
   variant?: "light" | "dark" | "accent";
 }
 
-export const InspirationalQuote = ({ quote, author, role, variant = "light" }: InspirationalQuoteProps) => {
+export const InspirationalQuote = ({
+  quote,
+  author,
+  role,
+  variant = "light",
+}: InspirationalQuoteProps) => {
   const variants = {
     light: {
       bg: "bg-white/80 backdrop-blur-sm",

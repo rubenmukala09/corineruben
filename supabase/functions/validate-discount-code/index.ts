@@ -3,7 +3,8 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
 // Rate limiting: 10 requests per minute per IP
@@ -22,7 +23,9 @@ function checkRateLimit(ip: string): { allowed: boolean; retryAfter?: number } {
 
   if (record.count >= RATE_LIMIT) {
     const retryAfter = Math.ceil((record.resetTime - now) / 1000);
-    console.log(`[RATE LIMIT] IP ${ip} exceeded limit. Retry after ${retryAfter}s`);
+    console.log(
+      `[RATE LIMIT] IP ${ip} exceeded limit. Retry after ${retryAfter}s`,
+    );
     return { allowed: false, retryAfter };
   }
 
@@ -36,22 +39,26 @@ serve(async (req) => {
   }
 
   // Rate limiting check
-  const clientIP = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || 
-                   req.headers.get("x-real-ip") || 
-                   "unknown";
-  
+  const clientIP =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-real-ip") ||
+    "unknown";
+
   const rateCheck = checkRateLimit(clientIP);
   if (!rateCheck.allowed) {
     return new Response(
-      JSON.stringify({ valid: false, error: "Too many requests. Please try again later." }),
+      JSON.stringify({
+        valid: false,
+        error: "Too many requests. Please try again later.",
+      }),
       {
         status: 429,
-        headers: { 
-          ...corsHeaders, 
+        headers: {
+          ...corsHeaders,
           "Content-Type": "application/json",
-          "Retry-After": String(rateCheck.retryAfter)
+          "Retry-After": String(rateCheck.retryAfter),
         },
-      }
+      },
     );
   }
 
@@ -60,20 +67,23 @@ serve(async (req) => {
 
     const supabaseClient = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_ANON_KEY") ?? ""
+      Deno.env.get("SUPABASE_ANON_KEY") ?? "",
     );
 
     const { data: discountData, error } = await supabaseClient
-      .from('discount_codes')
-      .select('*')
-      .eq('code', code.toUpperCase())
-      .eq('is_active', true)
+      .from("discount_codes")
+      .select("*")
+      .eq("code", code.toUpperCase())
+      .eq("is_active", true)
       .single();
 
     if (error || !discountData) {
       return new Response(
         JSON.stringify({ valid: false, error: "Invalid discount code" }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 400 }
+        {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 400,
+        },
       );
     }
 
@@ -82,31 +92,48 @@ serve(async (req) => {
 
     const now = new Date();
     const validFrom = new Date(discountData.valid_from);
-    const validUntil = discountData.valid_until ? new Date(discountData.valid_until) : null;
+    const validUntil = discountData.valid_until
+      ? new Date(discountData.valid_until)
+      : null;
 
     if (now < validFrom) {
       return new Response(
         JSON.stringify({ valid: false, error: "Discount code not yet valid" }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 400 }
+        {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 400,
+        },
       );
     }
 
     if (validUntil && now > validUntil) {
       return new Response(
         JSON.stringify({ valid: false, error: "Discount code has expired" }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 400 }
+        {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 400,
+        },
       );
     }
 
-    if (discountData.max_uses && discountData.current_uses >= discountData.max_uses) {
+    if (
+      discountData.max_uses &&
+      discountData.current_uses >= discountData.max_uses
+    ) {
       return new Response(
-        JSON.stringify({ valid: false, error: "Discount code has reached maximum uses" }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 400 }
+        JSON.stringify({
+          valid: false,
+          error: "Discount code has reached maximum uses",
+        }),
+        {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 400,
+        },
       );
     }
 
     let discountAmount = 0;
-    if (discountData.type === 'percentage') {
+    if (discountData.type === "percentage") {
       discountAmount = Math.round((amount * discountData.value) / 100);
     } else {
       discountAmount = discountData.value;
@@ -122,13 +149,16 @@ serve(async (req) => {
           discountAmount,
         },
       }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
+      {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      },
     );
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-    return new Response(
-      JSON.stringify({ valid: false, error: errorMessage }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 500 }
-    );
+    return new Response(JSON.stringify({ valid: false, error: errorMessage }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      status: 500,
+    });
   }
 });

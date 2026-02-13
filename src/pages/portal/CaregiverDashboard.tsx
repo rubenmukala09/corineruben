@@ -16,8 +16,7 @@ import {
   FileText,
 } from "lucide-react";
 
-type CaregiverProfile =
-  Database["public"]["Views"]["profiles_safe"]["Row"] &
+type CaregiverProfile = Database["public"]["Views"]["profiles_safe"]["Row"] &
   Partial<Database["public"]["Tables"]["caregiver_profiles"]["Row"]>;
 
 const getErrorMessage = (error: unknown): string =>
@@ -35,7 +34,9 @@ function CaregiverDashboard() {
 
   const loadProfile = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         navigate("/auth");
         return;
@@ -67,9 +68,9 @@ function CaregiverDashboard() {
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut();
-      toast({ 
+      toast({
         title: "👋 Signed Out Successfully",
-        description: "You've been securely logged out. See you next time!"
+        description: "You've been securely logged out. See you next time!",
       });
       navigate("/auth");
     } catch (error: unknown) {
@@ -82,7 +83,11 @@ function CaregiverDashboard() {
   };
 
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        Loading...
+      </div>
+    );
   }
 
   return (
@@ -127,13 +132,24 @@ function CaregiverDashboard() {
               </div>
               <div>
                 <h3 className="font-semibold">My Credentials</h3>
-                <p className="text-sm text-muted-foreground">Professional info</p>
+                <p className="text-sm text-muted-foreground">
+                  Professional info
+                </p>
               </div>
             </div>
             <div className="space-y-2 text-sm">
-              <p><strong>Cert Type:</strong> {profile?.certification_type || "N/A"}</p>
-              <p><strong>Cert #:</strong> {profile?.certification_number || "N/A"}</p>
-              <p><strong>Experience:</strong> {profile?.years_experience || 0} years</p>
+              <p>
+                <strong>Cert Type:</strong>{" "}
+                {profile?.certification_type || "N/A"}
+              </p>
+              <p>
+                <strong>Cert #:</strong>{" "}
+                {profile?.certification_number || "N/A"}
+              </p>
+              <p>
+                <strong>Experience:</strong> {profile?.years_experience || 0}{" "}
+                years
+              </p>
             </div>
           </Card>
 
@@ -148,7 +164,9 @@ function CaregiverDashboard() {
                 <p className="text-sm text-muted-foreground">Appointments</p>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground mb-3">No upcoming appointments</p>
+            <p className="text-sm text-muted-foreground mb-3">
+              No upcoming appointments
+            </p>
             <Button size="sm" className="w-full" variant="default">
               <Calendar className="w-4 h-4 mr-2" />
               View Full Schedule
@@ -167,12 +185,31 @@ function CaregiverDashboard() {
               </div>
             </div>
             <div className="space-y-2 text-sm">
-              <p><strong>Available:</strong> {profile?.available_hours_per_week || 0} hrs/week</p>
+              <p>
+                <strong>Available:</strong>{" "}
+                {profile?.available_hours_per_week || 0} hrs/week
+              </p>
               <div className="flex flex-wrap gap-1 mt-2">
-                {profile?.availability_mornings && <span className="px-2 py-1 bg-primary/10 rounded text-xs">Mornings</span>}
-                {profile?.availability_afternoons && <span className="px-2 py-1 bg-primary/10 rounded text-xs">Afternoons</span>}
-                {profile?.availability_evenings && <span className="px-2 py-1 bg-primary/10 rounded text-xs">Evenings</span>}
-                {profile?.availability_weekends && <span className="px-2 py-1 bg-primary/10 rounded text-xs">Weekends</span>}
+                {profile?.availability_mornings && (
+                  <span className="px-2 py-1 bg-primary/10 rounded text-xs">
+                    Mornings
+                  </span>
+                )}
+                {profile?.availability_afternoons && (
+                  <span className="px-2 py-1 bg-primary/10 rounded text-xs">
+                    Afternoons
+                  </span>
+                )}
+                {profile?.availability_evenings && (
+                  <span className="px-2 py-1 bg-primary/10 rounded text-xs">
+                    Evenings
+                  </span>
+                )}
+                {profile?.availability_weekends && (
+                  <span className="px-2 py-1 bg-primary/10 rounded text-xs">
+                    Weekends
+                  </span>
+                )}
               </div>
             </div>
           </Card>
@@ -185,10 +222,14 @@ function CaregiverDashboard() {
               </div>
               <div>
                 <h3 className="font-semibold">My Clients</h3>
-                <p className="text-sm text-muted-foreground">Active assignments</p>
+                <p className="text-sm text-muted-foreground">
+                  Active assignments
+                </p>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground mb-3">No active clients</p>
+            <p className="text-sm text-muted-foreground mb-3">
+              No active clients
+            </p>
             <Button size="sm" className="w-full" variant="outline">
               <Users className="w-4 h-4 mr-2" />
               View All Clients
@@ -206,7 +247,12 @@ function CaregiverDashboard() {
                 <p className="text-sm text-muted-foreground">Courses & certs</p>
               </div>
             </div>
-            <Button size="sm" className="w-full" variant="outline" onClick={() => navigate("/training")}>
+            <Button
+              size="sm"
+              className="w-full"
+              variant="outline"
+              onClick={() => navigate("/training")}
+            >
               <FileText className="w-4 h-4 mr-2" />
               View Training
             </Button>
@@ -232,6 +278,6 @@ function CaregiverDashboard() {
       </main>
     </div>
   );
-};
+}
 
 export default CaregiverDashboard;

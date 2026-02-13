@@ -40,7 +40,7 @@ export const useSectionNavigation = (sections: Section[]) => {
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     }
   }, []);
@@ -48,17 +48,20 @@ export const useSectionNavigation = (sections: Section[]) => {
   // Track active section based on scroll position using cached bounds
   useEffect(() => {
     let ticking = false;
-    
+
     const handleScroll = () => {
       if (ticking) return;
-      
+
       ticking = true;
       requestAnimationFrame(() => {
         const scrollPosition = window.scrollY + 150; // Offset for detection
         const bounds = sectionBoundsRef.current;
 
         for (const section of bounds) {
-          if (scrollPosition >= section.top && scrollPosition < section.bottom) {
+          if (
+            scrollPosition >= section.top &&
+            scrollPosition < section.bottom
+          ) {
             setActiveSection(section.id);
             break;
           }
@@ -76,7 +79,7 @@ export const useSectionNavigation = (sections: Section[]) => {
     // Defer initial calculation to avoid forced reflow during paint
     // Using longer delay ensures layout is fully stable
     const timeoutId = setTimeout(() => {
-      if ('requestIdleCallback' in window) {
+      if ("requestIdleCallback" in window) {
         requestIdleCallback(updateAndScroll, { timeout: 500 });
       } else {
         requestAnimationFrame(updateAndScroll);

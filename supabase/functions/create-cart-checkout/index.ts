@@ -4,7 +4,8 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
 interface CartItem {
@@ -23,14 +24,18 @@ serve(async (req) => {
 
   const supabaseClient = createClient(
     Deno.env.get("SUPABASE_URL") ?? "",
-    Deno.env.get("SUPABASE_ANON_KEY") ?? ""
+    Deno.env.get("SUPABASE_ANON_KEY") ?? "",
   );
 
   try {
     // Support both authenticated and guest checkout
     let user = null;
     const authHeader = req.headers.get("Authorization");
-    if (authHeader && authHeader !== "Bearer null" && authHeader !== "Bearer undefined") {
+    if (
+      authHeader &&
+      authHeader !== "Bearer null" &&
+      authHeader !== "Bearer undefined"
+    ) {
       const token = authHeader.replace("Bearer ", "");
       if (token && token !== "null" && token !== "undefined") {
         const { data } = await supabaseClient.auth.getUser(token);
@@ -39,12 +44,17 @@ serve(async (req) => {
     }
 
     const { items, customerEmail } = await req.json();
-    
+
     if (!items || items.length === 0) {
       throw new Error("Cart is empty");
     }
-    
-    console.log("Processing cart checkout:", items.length, "items. User:", user?.email || customerEmail || "Guest");
+
+    console.log(
+      "Processing cart checkout:",
+      items.length,
+      "items. User:",
+      user?.email || customerEmail || "Guest",
+    );
 
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
       apiVersion: "2024-11-20.acacia",
@@ -63,7 +73,9 @@ serve(async (req) => {
     // Build line items - prefer stripe_price_id when available
     const lineItems = items.map((item: CartItem) => {
       if (item.stripe_price_id) {
-        console.log(`Using Stripe price ID for ${item.name}: ${item.stripe_price_id}`);
+        console.log(
+          `Using Stripe price ID for ${item.name}: ${item.stripe_price_id}`,
+        );
         return {
           price: item.stripe_price_id,
           quantity: item.quantity,
@@ -72,7 +84,7 @@ serve(async (req) => {
         console.log(`Using price_data for ${item.name}: $${item.price}`);
         return {
           price_data: {
-            currency: 'usd',
+            currency: "usd",
             product_data: {
               name: item.name,
             },
@@ -92,22 +104,30 @@ serve(async (req) => {
       success_url: `${req.headers.get("origin")}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.get("origin")}/cart`,
       metadata: {
-        user_id: user?.id || '',
+        user_id: user?.id || "",
         item_count: items.length.toString(),
       },
     });
 
     console.log("Cart checkout session created:", session.id);
 
-    return new Response(JSON.stringify({ url: session.url, sessionId: session.id }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 200,
-    });
+    return new Response(
+      JSON.stringify({ url: session.url, sessionId: session.id }),
+      {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      },
+    );
   } catch (error) {
     console.error("Error creating cart checkout:", error);
-    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 500,
-    });
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : "Unknown error",
+      }),
+      {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 500,
+      },
+    );
   }
 });

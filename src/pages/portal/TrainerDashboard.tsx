@@ -16,7 +16,10 @@ import {
   LogOut,
 } from "lucide-react";
 
-type DashboardTask = Pick<Database["public"]["Tables"]["tasks"]["Row"], "id" | "title" | "description" | "status">;
+type DashboardTask = Pick<
+  Database["public"]["Tables"]["tasks"]["Row"],
+  "id" | "title" | "description" | "status"
+>;
 type DashboardEvent = {
   id: string;
   title: string;
@@ -41,9 +44,9 @@ function TrainerDashboard() {
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut();
-      toast({ 
+      toast({
         title: "👋 Signed Out Successfully",
-        description: "You've been securely logged out. See you next time!"
+        description: "You've been securely logged out. See you next time!",
       });
       navigate("/auth");
     } catch (error: unknown) {
@@ -62,7 +65,9 @@ function TrainerDashboard() {
   });
 
   const loadData = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return;
 
     const { data: tasksData } = await supabase
@@ -127,7 +132,9 @@ function TrainerDashboard() {
               </Button>
               <div>
                 <h1 className="text-2xl font-bold">Trainer Dashboard</h1>
-                <p className="text-sm text-muted-foreground">Training sessions and student management</p>
+                <p className="text-sm text-muted-foreground">
+                  Training sessions and student management
+                </p>
               </div>
             </div>
             <Button variant="outline" size="sm" onClick={handleSignOut}>
@@ -141,15 +148,32 @@ function TrainerDashboard() {
       <main className="container mx-auto px-4 py-8">
         <div className="grid md:grid-cols-3 gap-6 mb-8">
           {[
-            { label: "Upcoming Sessions", value: stats.upcomingSessions, icon: CalendarIcon, color: "text-blue-600" },
-            { label: "Total Students", value: stats.totalStudents, icon: Users, color: "text-green-600" },
-            { label: "Active Courses", value: stats.activeCourses, icon: GraduationCap, color: "text-purple-600" },
+            {
+              label: "Upcoming Sessions",
+              value: stats.upcomingSessions,
+              icon: CalendarIcon,
+              color: "text-blue-600",
+            },
+            {
+              label: "Total Students",
+              value: stats.totalStudents,
+              icon: Users,
+              color: "text-green-600",
+            },
+            {
+              label: "Active Courses",
+              value: stats.activeCourses,
+              icon: GraduationCap,
+              color: "text-purple-600",
+            },
           ].map((stat) => {
             const Icon = stat.icon;
             return (
               <Card key={stat.label} className="p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <div className={`w-12 h-12 ${stat.color} bg-primary/10 rounded-lg flex items-center justify-center`}>
+                  <div
+                    className={`w-12 h-12 ${stat.color} bg-primary/10 rounded-lg flex items-center justify-center`}
+                  >
                     <Icon className="w-6 h-6" />
                   </div>
                   <span className="text-3xl font-bold">{stat.value}</span>
@@ -163,13 +187,20 @@ function TrainerDashboard() {
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
             <Card className="p-6">
-              <h2 className="text-xl font-bold mb-6">Upcoming Training Sessions</h2>
+              <h2 className="text-xl font-bold mb-6">
+                Upcoming Training Sessions
+              </h2>
               <div className="space-y-3">
                 {events.length === 0 ? (
-                  <p className="text-center text-muted-foreground py-8">No upcoming sessions</p>
+                  <p className="text-center text-muted-foreground py-8">
+                    No upcoming sessions
+                  </p>
                 ) : (
                   events.map((event) => (
-                    <div key={event.id} className="flex items-start gap-4 p-4 bg-muted/50 rounded-lg">
+                    <div
+                      key={event.id}
+                      className="flex items-start gap-4 p-4 bg-muted/50 rounded-lg"
+                    >
                       <GraduationCap className="w-5 h-5 text-primary mt-0.5" />
                       <div className="flex-1">
                         <p className="font-medium">{event.title}</p>
@@ -188,13 +219,22 @@ function TrainerDashboard() {
               <h2 className="text-xl font-bold mb-6">My Tasks</h2>
               <div className="space-y-3">
                 {tasks.length === 0 ? (
-                  <p className="text-center text-muted-foreground py-8">No tasks yet</p>
+                  <p className="text-center text-muted-foreground py-8">
+                    No tasks yet
+                  </p>
                 ) : (
                   tasks.map((task) => (
-                    <div key={task.id} className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
+                    <div
+                      key={task.id}
+                      className="flex items-center justify-between p-4 bg-muted/50 rounded-lg"
+                    >
                       <div>
                         <p className="font-medium">{task.title}</p>
-                        {task.description && <p className="text-sm text-muted-foreground">{task.description}</p>}
+                        {task.description && (
+                          <p className="text-sm text-muted-foreground">
+                            {task.description}
+                          </p>
+                        )}
                       </div>
                       <Badge>{task.status}</Badge>
                     </div>
@@ -219,6 +259,6 @@ function TrainerDashboard() {
       </main>
     </div>
   );
-};
+}
 
 export default TrainerDashboard;

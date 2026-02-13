@@ -7,7 +7,10 @@ interface SkeletonCardProps {
   className?: string;
 }
 
-export function SkeletonCard({ variant = "product", className }: SkeletonCardProps) {
+export function SkeletonCard({
+  variant = "product",
+  className,
+}: SkeletonCardProps) {
   if (variant === "product") {
     return (
       <Card className={cn("p-4 space-y-3", className)}>
@@ -97,7 +100,11 @@ interface SkeletonTableProps {
   className?: string;
 }
 
-export function SkeletonTable({ rows = 5, columns = 6, className }: SkeletonTableProps) {
+export function SkeletonTable({
+  rows = 5,
+  columns = 6,
+  className,
+}: SkeletonTableProps) {
   return (
     <div className={cn("space-y-3", className)}>
       {/* Header */}
@@ -118,9 +125,22 @@ export function SkeletonTable({ rows = 5, columns = 6, className }: SkeletonTabl
   );
 }
 
-export function SkeletonGrid({ count = 6, variant = "product", className }: { count?: number; variant?: SkeletonCardProps["variant"]; className?: string }) {
+export function SkeletonGrid({
+  count = 6,
+  variant = "product",
+  className,
+}: {
+  count?: number;
+  variant?: SkeletonCardProps["variant"];
+  className?: string;
+}) {
   return (
-    <div className={cn("grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6", className)}>
+    <div
+      className={cn(
+        "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6",
+        className,
+      )}
+    >
       {Array.from({ length: count }).map((_, i) => (
         <SkeletonCard key={i} variant={variant} />
       ))}

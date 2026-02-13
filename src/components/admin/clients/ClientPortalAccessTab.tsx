@@ -3,7 +3,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { AlertCircle, Eye, LogOut, RotateCcw } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
@@ -11,7 +18,9 @@ interface ClientPortalAccessTabProps {
   clientId: number;
 }
 
-export function ClientPortalAccessTab({ clientId }: ClientPortalAccessTabProps) {
+export function ClientPortalAccessTab({
+  clientId,
+}: ClientPortalAccessTabProps) {
   const [portalStatus, setPortalStatus] = useState("active");
   const [features, setFeatures] = useState({
     dashboard: true,
@@ -25,19 +34,56 @@ export function ClientPortalAccessTab({ clientId }: ClientPortalAccessTabProps) 
   });
 
   const activityLog = [
-    { action: "Login", page: "Dashboard", date: "Jan 15, 2025 2:30 PM", device: "Chrome on Windows", ip: "192.168.1.1" },
-    { action: "Viewed", page: "Billing", date: "Jan 15, 2025 2:32 PM", device: "Chrome on Windows", ip: "192.168.1.1" },
-    { action: "Downloaded", page: "Invoice #2045", date: "Jan 14, 2025 10:15 AM", device: "Safari on Mac", ip: "192.168.1.5" },
-    { action: "Logout", page: "-", date: "Jan 14, 2025 10:20 AM", device: "Safari on Mac", ip: "192.168.1.5" },
+    {
+      action: "Login",
+      page: "Dashboard",
+      date: "Jan 15, 2025 2:30 PM",
+      device: "Chrome on Windows",
+      ip: "192.168.1.1",
+    },
+    {
+      action: "Viewed",
+      page: "Billing",
+      date: "Jan 15, 2025 2:32 PM",
+      device: "Chrome on Windows",
+      ip: "192.168.1.1",
+    },
+    {
+      action: "Downloaded",
+      page: "Invoice #2045",
+      date: "Jan 14, 2025 10:15 AM",
+      device: "Safari on Mac",
+      ip: "192.168.1.5",
+    },
+    {
+      action: "Logout",
+      page: "-",
+      date: "Jan 14, 2025 10:20 AM",
+      device: "Safari on Mac",
+      ip: "192.168.1.5",
+    },
   ];
 
   const activeSessions = [
-    { device: "Chrome on Windows", location: "Dayton, OH", time: "Active now", id: 1 },
-    { device: "Safari on iPhone", location: "Columbus, OH", time: "2 hours ago", id: 2 },
+    {
+      device: "Chrome on Windows",
+      location: "Dayton, OH",
+      time: "Active now",
+      id: 1,
+    },
+    {
+      device: "Safari on iPhone",
+      location: "Columbus, OH",
+      time: "2 hours ago",
+      id: 2,
+    },
   ];
 
   const toggleFeature = (feature: string) => {
-    setFeatures(prev => ({ ...prev, [feature]: !prev[feature as keyof typeof features] }));
+    setFeatures((prev) => ({
+      ...prev,
+      [feature]: !prev[feature as keyof typeof features],
+    }));
   };
 
   return (
@@ -49,11 +95,17 @@ export function ClientPortalAccessTab({ clientId }: ClientPortalAccessTabProps) 
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <label className="text-sm font-medium text-muted-foreground">Username/Email</label>
-              <p className="text-base font-medium text-muted-foreground">Not configured</p>
+              <label className="text-sm font-medium text-muted-foreground">
+                Username/Email
+              </label>
+              <p className="text-base font-medium text-muted-foreground">
+                Not configured
+              </p>
             </div>
             <div>
-              <label className="text-sm font-medium text-muted-foreground">Password</label>
+              <label className="text-sm font-medium text-muted-foreground">
+                Password
+              </label>
               <p className="text-base font-mono">••••••••••</p>
             </div>
             <div className="flex gap-2 pt-2">
@@ -74,11 +126,15 @@ export function ClientPortalAccessTab({ clientId }: ClientPortalAccessTabProps) 
           </CardHeader>
           <CardContent className="space-y-3">
             <div>
-              <label className="text-sm text-muted-foreground">Last Login</label>
+              <label className="text-sm text-muted-foreground">
+                Last Login
+              </label>
               <p className="font-medium">January 15, 2025 at 2:30 PM</p>
             </div>
             <div>
-              <label className="text-sm text-muted-foreground">Total Logins</label>
+              <label className="text-sm text-muted-foreground">
+                Total Logins
+              </label>
               <p className="font-medium">47</p>
             </div>
             <div>
@@ -86,7 +142,9 @@ export function ClientPortalAccessTab({ clientId }: ClientPortalAccessTabProps) 
               <p className="font-medium">Chrome on Windows</p>
             </div>
             <div>
-              <label className="text-sm text-muted-foreground">IP Address</label>
+              <label className="text-sm text-muted-foreground">
+                IP Address
+              </label>
               <p className="font-medium font-mono">192.168.1.1</p>
             </div>
             <div>
@@ -105,9 +163,13 @@ export function ClientPortalAccessTab({ clientId }: ClientPortalAccessTabProps) 
           <div className="flex items-center justify-between">
             <div>
               <p className="font-medium">Portal Status</p>
-              <p className="text-sm text-muted-foreground">Client can currently access the portal</p>
+              <p className="text-sm text-muted-foreground">
+                Client can currently access the portal
+              </p>
             </div>
-            <Badge variant={portalStatus === "active" ? "success" : "destructive"}>
+            <Badge
+              variant={portalStatus === "active" ? "success" : "destructive"}
+            >
               {portalStatus === "active" ? "● Active" : "● Suspended"}
             </Badge>
           </div>
@@ -128,7 +190,10 @@ export function ClientPortalAccessTab({ clientId }: ClientPortalAccessTabProps) 
                 <label className="text-sm font-medium capitalize">
                   {key.replace(/([A-Z])/g, " $1").trim()}
                 </label>
-                <Switch checked={value} onCheckedChange={() => toggleFeature(key)} />
+                <Switch
+                  checked={value}
+                  onCheckedChange={() => toggleFeature(key)}
+                />
               </div>
             ))}
           </div>
@@ -145,7 +210,8 @@ export function ClientPortalAccessTab({ clientId }: ClientPortalAccessTabProps) 
           <Alert className="mb-4">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription>
-              This allows you to see their portal. All actions are logged. Use responsibly.
+              This allows you to see their portal. All actions are logged. Use
+              responsibly.
             </AlertDescription>
           </Alert>
           <Button variant="outline">
@@ -162,10 +228,15 @@ export function ClientPortalAccessTab({ clientId }: ClientPortalAccessTabProps) 
         <CardContent>
           <div className="space-y-3">
             {activeSessions.map((session) => (
-              <div key={session.id} className="flex items-center justify-between p-3 border rounded-lg">
+              <div
+                key={session.id}
+                className="flex items-center justify-between p-3 border rounded-lg"
+              >
                 <div>
                   <p className="font-medium">{session.device}</p>
-                  <p className="text-sm text-muted-foreground">{session.location} • {session.time}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {session.location} • {session.time}
+                  </p>
                 </div>
                 <Button variant="ghost" size="sm">
                   <LogOut className="mr-2 h-4 w-4" />

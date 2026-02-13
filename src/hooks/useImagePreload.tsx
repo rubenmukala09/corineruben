@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from "react";
 
 // Lightweight global cache - just tracks loaded URLs
 const loadedUrls = new Set<string>();
@@ -12,11 +12,13 @@ const preloadImage = (url: string): void => {
 };
 
 export const useImagePreload = (imageUrls: string[]) => {
-  const [ready, setReady] = useState(() => imageUrls.every(u => loadedUrls.has(u)));
+  const [ready, setReady] = useState(() =>
+    imageUrls.every((u) => loadedUrls.has(u)),
+  );
 
   useEffect(() => {
     if (ready || imageUrls.length === 0) return;
-    
+
     // Load first image, mark ready immediately
     if (imageUrls[0] && !loadedUrls.has(imageUrls[0])) {
       const img = new Image();
@@ -29,10 +31,10 @@ export const useImagePreload = (imageUrls: string[]) => {
     } else {
       setReady(true);
     }
-    
+
     // Queue rest in background
     imageUrls.slice(1).forEach(preloadImage);
-  }, [imageUrls.join(','), ready]);
+  }, [imageUrls.join(","), ready]);
 
   return ready;
 };
@@ -47,11 +49,11 @@ export const preloadRouteImages = (urls: string[]) => {
 
 // Critical images (eager)
 export const preloadCriticalImages = (urls: string[]) => {
-  urls.forEach(url => {
+  urls.forEach((url) => {
     if (loadedUrls.has(url)) return;
     loadedUrls.add(url);
     const img = new Image();
-    img.fetchPriority = 'high';
+    img.fetchPriority = "high";
     img.src = url;
   });
 };

@@ -4,7 +4,8 @@ const resendApiKey = Deno.env.get("RESEND_API_KEY")!;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
 serve(async (req) => {
@@ -18,7 +19,10 @@ serve(async (req) => {
     if (!email || !firstName) {
       return new Response(
         JSON.stringify({ error: "Email and firstName are required" }),
-        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        },
       );
     }
 
@@ -46,7 +50,7 @@ serve(async (req) => {
             
             <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
               <p style="margin: 0; color: #6b7280; font-size: 14px;"><strong>Your Role:</strong></p>
-              <p style="margin: 5px 0 0 0; color: #111827; font-size: 16px; font-weight: 600;">${roleDisplayName || 'Staff Member'}</p>
+              <p style="margin: 5px 0 0 0; color: #111827; font-size: 16px; font-weight: 600;">${roleDisplayName || "Staff Member"}</p>
               
               <p style="margin: 15px 0 0 0; color: #6b7280; font-size: 14px;"><strong>Email:</strong></p>
               <p style="margin: 5px 0 0 0; color: #111827; font-size: 16px;">${email}</p>
@@ -91,8 +95,8 @@ serve(async (req) => {
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${resendApiKey}`,
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${resendApiKey}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         from: "InVision Network <hello@invisionnetwork.org>",
@@ -104,22 +108,21 @@ serve(async (req) => {
 
     if (!response.ok) {
       const error = await response.text();
-      console.error('Resend API error:', error);
+      console.error("Resend API error:", error);
       throw new Error(`Failed to send email: ${error}`);
     }
 
     const data = await response.json();
-    console.log('Welcome email sent successfully:', data);
+    console.log("Welcome email sent successfully:", data);
 
-    return new Response(
-      JSON.stringify({ success: true, messageId: data.id }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
-    );
+    return new Response(JSON.stringify({ success: true, messageId: data.id }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
   } catch (error: any) {
-    console.error('Error sending welcome email:', error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-    );
+    console.error("Error sending welcome email:", error);
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
   }
 });

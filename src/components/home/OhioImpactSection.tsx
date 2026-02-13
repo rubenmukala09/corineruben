@@ -1,8 +1,20 @@
-import { MapPin, Users, Shield, Heart, Building2, Star, CheckCircle } from "lucide-react";
+import {
+  MapPin,
+  Users,
+  Shield,
+  Heart,
+  Building2,
+  Star,
+  CheckCircle,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import ohioCountrysideBg from "@/assets/ohio-countryside-sunrise.jpg";
-import { HexagonIcon, GeometricCorner, GridPattern } from "@/components/ui/GeometricDecorations";
+import {
+  HexagonIcon,
+  GeometricCorner,
+  GridPattern,
+} from "@/components/ui/GeometricDecorations";
 import { useTestimonials } from "@/hooks/useTestimonials";
 import { useState, useEffect } from "react";
 
@@ -37,38 +49,40 @@ export const OhioImpactSection = () => {
   return (
     <section className="py-24 relative overflow-hidden">
       {/* Background Image */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat animate-slow-zoom"
         style={{ backgroundImage: `url(${ohioCountrysideBg})` }}
       />
       {/* Soft warm overlay for text readability */}
       <div className="absolute inset-0 bg-gradient-to-br from-background/90 via-background/85 to-primary/20" />
-      
+
       {/* Grid pattern */}
       <GridPattern />
-      
+
       {/* Geometric corner accents */}
       <GeometricCorner position="top-right" variant="dots" />
       <GeometricCorner position="bottom-left" variant="lines" />
-      
+
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <div className="text-center mb-16">
-          <div 
+          <div
             className="inline-flex items-center gap-2 px-5 py-2 bg-primary/10 border border-primary/20 mb-6"
             style={{ clipPath: "polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%)" }}
           >
             <MapPin className="w-4 h-4 text-primary" />
-            <span className="text-sm font-bold text-primary uppercase tracking-wider">Ohio Proud</span>
+            <span className="text-sm font-bold text-primary uppercase tracking-wider">
+              Ohio Proud
+            </span>
           </div>
-          
+
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Protecting{" "}
-            <span className="text-primary">The Buckeye State</span>
+            Protecting <span className="text-primary">The Buckeye State</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            We're not a faceless corporation. We're your neighbors, veteran-supporting, Ohio-based, 
-            and committed to protecting families across every county.
+            We're not a faceless corporation. We're your neighbors,
+            veteran-supporting, Ohio-based, and committed to protecting families
+            across every county.
           </p>
         </div>
 
@@ -97,11 +111,15 @@ export const OhioImpactSection = () => {
                 <MapPin className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-foreground">Communities We Serve</h3>
-                <p className="text-sm text-muted-foreground">Protecting families across Ohio</p>
+                <h3 className="text-xl font-bold text-foreground">
+                  Communities We Serve
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Protecting families across Ohio
+                </p>
               </div>
             </div>
-            
+
             <div className="grid grid-cols-2 gap-3">
               {ohioCities.map((city, index) => (
                 <div
@@ -116,23 +134,32 @@ export const OhioImpactSection = () => {
               ))}
             </div>
 
-            <p className="text-sm text-muted-foreground mt-4 text-center">+ Many more communities</p>
+            <p className="text-sm text-muted-foreground mt-4 text-center">
+              + Many more communities
+            </p>
           </div>
 
           {/* Testimonial - Database Driven */}
           <div className="bg-white rounded-3xl p-8 border border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] h-full relative">
             <div className="flex items-center gap-2 mb-6">
               <Star className="w-5 h-5 text-accent fill-accent" />
-              <span className="text-sm font-semibold text-accent">Community Voices</span>
+              <span className="text-sm font-semibold text-accent">
+                Community Voices
+              </span>
             </div>
 
             {testimonials && testimonials.length > 0 ? (
               <>
                 {/* Stars */}
                 <div className="flex gap-1 mb-4">
-                  {[...Array(testimonials[activeTestimonial]?.rating || 5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-accent text-accent" />
-                  ))}
+                  {[...Array(testimonials[activeTestimonial]?.rating || 5)].map(
+                    (_, i) => (
+                      <Star
+                        key={i}
+                        className="w-5 h-5 fill-accent text-accent"
+                      />
+                    ),
+                  )}
                 </div>
 
                 <blockquote className="text-lg font-medium text-foreground leading-relaxed mb-6 min-h-[80px]">
@@ -144,8 +171,12 @@ export const OhioImpactSection = () => {
                     {testimonials[activeTestimonial]?.name?.charAt(0) || "?"}
                   </div>
                   <div>
-                    <div className="font-bold text-foreground">{testimonials[activeTestimonial]?.name}</div>
-                    <div className="text-sm text-muted-foreground">{testimonials[activeTestimonial]?.location || "Ohio"}</div>
+                    <div className="font-bold text-foreground">
+                      {testimonials[activeTestimonial]?.name}
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      {testimonials[activeTestimonial]?.location || "Ohio"}
+                    </div>
                   </div>
                 </div>
 
@@ -178,9 +209,7 @@ export const OhioImpactSection = () => {
         {/* CTA */}
         <div className="mt-12 text-center">
           <Button asChild size="lg" className="rounded-2xl px-8">
-            <Link to="/training#pricing">
-              Get Started Today
-            </Link>
+            <Link to="/training#pricing">Get Started Today</Link>
           </Button>
         </div>
       </div>

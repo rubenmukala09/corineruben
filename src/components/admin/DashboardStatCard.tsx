@@ -105,7 +105,9 @@ export function DashboardStatCard({
         <div className="text-base text-muted-foreground mb-2">{title}</div>
 
         {/* Subtitle */}
-        <div className={`text-sm font-medium flex items-center gap-1 ${subtitleColorClass}`}>
+        <div
+          className={`text-sm font-medium flex items-center gap-1 ${subtitleColorClass}`}
+        >
           {subtitle}
         </div>
 

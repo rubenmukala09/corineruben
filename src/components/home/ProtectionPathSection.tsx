@@ -7,13 +7,18 @@ import { SCAMSHIELD_PLANS } from "@/config/products";
 import { SITE } from "@/config/site";
 
 const formatPrice = (price: number, interval?: string) => {
-  const formatted = price.toLocaleString(undefined, { minimumFractionDigits: 0 });
+  const formatted = price.toLocaleString(undefined, {
+    minimumFractionDigits: 0,
+  });
   return interval ? `$${formatted}/${interval}` : `$${formatted}`;
 };
 
 export const ProtectionPathSection = () => {
   return (
-    <section id="get-protected" className="py-16 lg:py-20 bg-gradient-to-b from-background via-background to-muted/30 dynamic-gradient-overlay">
+    <section
+      id="get-protected"
+      className="py-16 lg:py-20 bg-gradient-to-b from-background via-background to-muted/30 dynamic-gradient-overlay"
+    >
       <div className="absolute -top-16 right-10 w-40 h-40 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 blur-3xl opacity-60 fluid-motion" />
       <div className="absolute bottom-0 left-16 w-32 h-32 rounded-full bg-gradient-to-br from-accent/20 to-primary/20 blur-3xl opacity-50 fluid-motion" />
       <div className="container mx-auto px-4">
@@ -26,7 +31,9 @@ export const ProtectionPathSection = () => {
             Start Safe in Minutes
           </h2>
           <p className="text-muted-foreground text-base md:text-lg">
-            Pick the protection plan that matches your family or business. Upgrade anytime. {SITE.moneyBackGuaranteeDays}-day guarantee included.
+            Pick the protection plan that matches your family or business.
+            Upgrade anytime. {SITE.moneyBackGuaranteeDays}-day guarantee
+            included.
           </p>
         </div>
 
@@ -48,7 +55,9 @@ export const ProtectionPathSection = () => {
               )}
 
               <div className="p-6 flex flex-col h-full">
-                <p className="text-sm text-muted-foreground mb-1">{plan.description}</p>
+                <p className="text-sm text-muted-foreground mb-1">
+                  {plan.description}
+                </p>
                 <h3 className="text-xl font-bold mb-3">{plan.name}</h3>
                 <div className="text-3xl font-black text-foreground mb-4">
                   {formatPrice(plan.price, plan.billingInterval)}
@@ -64,11 +73,18 @@ export const ProtectionPathSection = () => {
                 </ul>
 
                 <div className="mt-auto flex flex-col gap-3">
-                  <Button asChild size="lg" className="rounded-full tactile-button">
-                    <Link to="/training#pricing">Choose {plan.name.split(" ")[1]}</Link>
+                  <Button
+                    asChild
+                    size="lg"
+                    className="rounded-full tactile-button"
+                  >
+                    <Link to="/training#pricing">
+                      Choose {plan.name.split(" ")[1]}
+                    </Link>
                   </Button>
                   <p className="text-xs text-muted-foreground text-center">
-                    {SITE.veteranDiscountPercent}% veteran discount • Cancel anytime
+                    {SITE.veteranDiscountPercent}% veteran discount • Cancel
+                    anytime
                   </p>
                 </div>
               </div>
@@ -77,7 +93,11 @@ export const ProtectionPathSection = () => {
         </div>
 
         <div className="text-center mt-8">
-          <Button variant="outline" asChild className="rounded-full tactile-button">
+          <Button
+            variant="outline"
+            asChild
+            className="rounded-full tactile-button"
+          >
             <Link to="/contact">Not sure? Talk to an expert</Link>
           </Button>
         </div>

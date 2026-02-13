@@ -29,7 +29,7 @@ export class ProviderHealthCheck extends Component<Props, State> {
       console.warn(
         `[ProviderHealthCheck] Provider "${this.props.providerName}" caused a render crash:`,
         error,
-        errorInfo
+        errorInfo,
       );
     }
   }

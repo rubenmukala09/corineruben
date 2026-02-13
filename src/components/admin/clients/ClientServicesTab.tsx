@@ -32,7 +32,7 @@ export function ClientServicesTab({ clientId }: ClientServicesTabProps) {
   const fetchClientServices = async () => {
     try {
       setLoading(true);
-      
+
       // Fetch subscriptions for this client
       const { data: subscriptions, error } = await supabase
         .from("subscriptions")
@@ -46,8 +46,12 @@ export function ClientServicesTab({ clientId }: ClientServicesTabProps) {
           status: sub.status || "active",
           plan: sub.plan_name,
           price: sub.amount,
-          startDate: sub.created_at ? new Date(sub.created_at).toLocaleDateString() : "-",
-          nextBilling: sub.current_period_end ? new Date(sub.current_period_end).toLocaleDateString() : "-",
+          startDate: sub.created_at
+            ? new Date(sub.created_at).toLocaleDateString()
+            : "-",
+          nextBilling: sub.current_period_end
+            ? new Date(sub.current_period_end).toLocaleDateString()
+            : "-",
         }));
         setServices(mappedServices);
       } else {
@@ -103,8 +107,10 @@ export function ClientServicesTab({ clientId }: ClientServicesTabProps) {
                 <span className="text-3xl">📦</span>
                 <div>
                   <CardTitle className="text-lg">{service.name}</CardTitle>
-                  <Badge 
-                    variant={service.status === "active" ? "success" : "secondary"} 
+                  <Badge
+                    variant={
+                      service.status === "active" ? "success" : "secondary"
+                    }
                     className="mt-1"
                   >
                     {service.status === "active" ? "● Active" : service.status}
@@ -117,7 +123,8 @@ export function ClientServicesTab({ clientId }: ClientServicesTabProps) {
                 <div>
                   <p className="text-sm text-muted-foreground">Plan</p>
                   <p className="font-semibold">
-                    {service.plan} {service.price ? `($${service.price}/month)` : ""}
+                    {service.plan}{" "}
+                    {service.price ? `($${service.price}/month)` : ""}
                   </p>
                 </div>
               )}
@@ -134,8 +141,12 @@ export function ClientServicesTab({ clientId }: ClientServicesTabProps) {
                 </div>
               )}
               <div className="flex gap-2 pt-2">
-                <Button variant="outline" size="sm" className="flex-1">Manage</Button>
-                <Button variant="outline" size="sm" className="flex-1">Details</Button>
+                <Button variant="outline" size="sm" className="flex-1">
+                  Manage
+                </Button>
+                <Button variant="outline" size="sm" className="flex-1">
+                  Details
+                </Button>
               </div>
             </CardContent>
           </Card>

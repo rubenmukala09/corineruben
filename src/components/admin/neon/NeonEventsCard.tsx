@@ -17,18 +17,28 @@ interface NeonEventsCardProps {
 }
 
 const eventTypeConfig: Record<string, string> = {
-  meeting: "bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-400 border-blue-500/30",
-  training: "bg-gradient-to-r from-green-500/20 to-emerald-500/20 text-green-400 border-green-500/30",
-  deadline: "bg-gradient-to-r from-red-500/20 to-orange-500/20 text-red-400 border-red-500/30",
-  review: "bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-400 border-purple-500/30",
+  meeting:
+    "bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-400 border-blue-500/30",
+  training:
+    "bg-gradient-to-r from-green-500/20 to-emerald-500/20 text-green-400 border-green-500/30",
+  deadline:
+    "bg-gradient-to-r from-red-500/20 to-orange-500/20 text-red-400 border-red-500/30",
+  review:
+    "bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-400 border-purple-500/30",
 };
 
 export function NeonEventsCard({ events }: NeonEventsCardProps) {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return {
-      date: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-      time: date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }),
+      date: date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      }),
+      time: date.toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "2-digit",
+      }),
     };
   };
 
@@ -52,7 +62,7 @@ export function NeonEventsCard({ events }: NeonEventsCardProps) {
             Add Event
           </Button>
         </div>
-        
+
         <div className="space-y-3">
           {events.length === 0 ? (
             <div className="text-center py-12">
@@ -65,8 +75,10 @@ export function NeonEventsCard({ events }: NeonEventsCardProps) {
           ) : (
             events.map((event, index) => {
               const { date, time } = formatDate(event.start_time);
-              const typeStyle = eventTypeConfig[event.event_type?.toLowerCase() || ''] || eventTypeConfig.meeting;
-              
+              const typeStyle =
+                eventTypeConfig[event.event_type?.toLowerCase() || ""] ||
+                eventTypeConfig.meeting;
+
               return (
                 <motion.div
                   key={event.id}
@@ -77,10 +89,14 @@ export function NeonEventsCard({ events }: NeonEventsCardProps) {
                 >
                   {/* Date indicator */}
                   <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-lg flex flex-col items-center justify-center border border-purple-500/20">
-                    <span className="text-xs text-purple-400 uppercase">{date.split(' ')[0]}</span>
-                    <span className="text-lg font-bold text-white">{date.split(' ')[1]}</span>
+                    <span className="text-xs text-purple-400 uppercase">
+                      {date.split(" ")[0]}
+                    </span>
+                    <span className="text-lg font-bold text-white">
+                      {date.split(" ")[1]}
+                    </span>
                   </div>
-                  
+
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-white group-hover:text-purple-400 transition-colors truncate">
                       {event.title}
@@ -98,7 +114,7 @@ export function NeonEventsCard({ events }: NeonEventsCardProps) {
                       )}
                     </div>
                   </div>
-                  
+
                   {event.event_type && (
                     <Badge className={`border flex-shrink-0 ${typeStyle}`}>
                       {event.event_type}

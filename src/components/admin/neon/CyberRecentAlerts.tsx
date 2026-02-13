@@ -1,6 +1,14 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Bell, ChevronRight, Shield, AlertTriangle, Wifi, Mail, Smartphone } from "lucide-react";
+import {
+  Bell,
+  ChevronRight,
+  Shield,
+  AlertTriangle,
+  Wifi,
+  Mail,
+  Smartphone,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { formatDistanceToNow } from "date-fns";
 import { useState, useEffect } from "react";
@@ -16,29 +24,29 @@ interface Alert {
 }
 
 const severityConfig = {
-  low: { 
-    color: "text-[#9CA3AF]", 
-    bg: "bg-gray-500/10", 
-    border: "border-gray-700", 
-    pulse: false 
+  low: {
+    color: "text-[#9CA3AF]",
+    bg: "bg-gray-500/10",
+    border: "border-gray-700",
+    pulse: false,
   },
-  medium: { 
-    color: "text-[#FBBF24]", 
-    bg: "bg-[#FBBF24]/10", 
-    border: "border-[#FBBF24]/30", 
-    pulse: false 
+  medium: {
+    color: "text-[#FBBF24]",
+    bg: "bg-[#FBBF24]/10",
+    border: "border-[#FBBF24]/30",
+    pulse: false,
   },
-  high: { 
-    color: "text-[#F97316]", 
-    bg: "bg-[#F97316]/10", 
-    border: "border-[#F97316]/30", 
-    pulse: false 
+  high: {
+    color: "text-[#F97316]",
+    bg: "bg-[#F97316]/10",
+    border: "border-[#F97316]/30",
+    pulse: false,
   },
-  critical: { 
-    color: "text-[#EF4444]", 
-    bg: "bg-[#EF4444]/10", 
-    border: "border-[#EF4444]/30", 
-    pulse: true 
+  critical: {
+    color: "text-[#EF4444]",
+    bg: "bg-[#EF4444]/10",
+    border: "border-[#EF4444]/30",
+    pulse: true,
   },
 };
 
@@ -125,7 +133,9 @@ export function CyberRecentAlerts() {
               </span>
             </div>
             <div>
-              <h2 className="text-lg font-bold text-[#F9FAFB]">Security Alerts</h2>
+              <h2 className="text-lg font-bold text-[#F9FAFB]">
+                Security Alerts
+              </h2>
               <p className="text-sm text-[#9CA3AF]">Real-time notifications</p>
             </div>
           </div>
@@ -139,7 +149,10 @@ export function CyberRecentAlerts() {
         </div>
 
         {/* Alert List */}
-        <div className="space-y-3 max-h-[400px] overflow-y-auto pr-1" style={{ scrollbarWidth: 'thin', scrollbarColor: '#374151 #111827' }}>
+        <div
+          className="space-y-3 max-h-[400px] overflow-y-auto pr-1"
+          style={{ scrollbarWidth: "thin", scrollbarColor: "#374151 #111827" }}
+        >
           {loading ? (
             <div className="text-center py-8">
               <p className="text-[#9CA3AF] text-sm">Loading alerts...</p>
@@ -148,49 +161,57 @@ export function CyberRecentAlerts() {
             <div className="text-center py-8 px-4">
               <Shield className="w-12 h-12 mx-auto text-[#10B981] mb-3 opacity-50" />
               <p className="text-[#9CA3AF] text-sm mb-1">No security alerts</p>
-              <p className="text-xs text-gray-500">Your systems are running smoothly</p>
+              <p className="text-xs text-gray-500">
+                Your systems are running smoothly
+              </p>
             </div>
           ) : (
-          <AnimatePresence>
-            {alerts.map((alert, index) => {
-              const severity = severityConfig[alert.severity];
-              const Icon = typeIcons[alert.type];
+            <AnimatePresence>
+              {alerts.map((alert, index) => {
+                const severity = severityConfig[alert.severity];
+                const Icon = typeIcons[alert.type];
 
-              return (
-                <motion.div
-                  key={alert.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.08 }}
-                  className={`p-4 rounded-lg ${severity.bg} border ${severity.border} 
+                return (
+                  <motion.div
+                    key={alert.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.08 }}
+                    className={`p-4 rounded-lg ${severity.bg} border ${severity.border} 
                     hover:border-opacity-100 transition-all cursor-pointer group`}
-                >
-                  <div className="flex items-start gap-3">
-                    <div className={`w-8 h-8 rounded-lg ${severity.bg} flex items-center justify-center flex-shrink-0
-                      ${severity.pulse ? 'animate-pulse' : ''}`}>
-                      <Icon className={`h-4 w-4 ${severity.color}`} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-2 mb-1">
-                        <h3 className="text-sm font-semibold text-[#F9FAFB] truncate">
-                          {alert.title}
-                        </h3>
-                        <span className={`text-xs px-2 py-0.5 rounded-full ${severity.bg} ${severity.color} font-medium uppercase border ${severity.border}`}>
-                          {alert.severity}
-                        </span>
+                  >
+                    <div className="flex items-start gap-3">
+                      <div
+                        className={`w-8 h-8 rounded-lg ${severity.bg} flex items-center justify-center flex-shrink-0
+                      ${severity.pulse ? "animate-pulse" : ""}`}
+                      >
+                        <Icon className={`h-4 w-4 ${severity.color}`} />
                       </div>
-                      <p className="text-xs text-[#9CA3AF] line-clamp-1 mb-2">
-                        {alert.description}
-                      </p>
-                      <p className="text-xs text-gray-600">
-                        {formatDistanceToNow(alert.timestamp, { addSuffix: true })}
-                      </p>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <h3 className="text-sm font-semibold text-[#F9FAFB] truncate">
+                            {alert.title}
+                          </h3>
+                          <span
+                            className={`text-xs px-2 py-0.5 rounded-full ${severity.bg} ${severity.color} font-medium uppercase border ${severity.border}`}
+                          >
+                            {alert.severity}
+                          </span>
+                        </div>
+                        <p className="text-xs text-[#9CA3AF] line-clamp-1 mb-2">
+                          {alert.description}
+                        </p>
+                        <p className="text-xs text-gray-600">
+                          {formatDistanceToNow(alert.timestamp, {
+                            addSuffix: true,
+                          })}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </AnimatePresence>
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
           )}
         </div>
       </Card>

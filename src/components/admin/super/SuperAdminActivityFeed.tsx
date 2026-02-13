@@ -1,15 +1,15 @@
-import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Button } from '@/components/ui/button';
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
 import {
   Activity,
   User,
@@ -23,8 +23,8 @@ import {
   AlertTriangle,
   CheckCircle,
   Clock,
-} from 'lucide-react';
-import { format, formatDistanceToNow } from 'date-fns';
+} from "lucide-react";
+import { format, formatDistanceToNow } from "date-fns";
 
 interface ActivityLogEntry {
   id: string;
@@ -45,25 +45,25 @@ export default function SuperAdminActivityFeed() {
   // Filter function to exclude healthy heartbeats and only show errors/warnings
   const shouldShowActivity = (activity: ActivityLogEntry): boolean => {
     // If it's a system alert, check the status in details
-    if (activity.action === 'SYSTEM_ALERT' && activity.details) {
+    if (activity.action === "SYSTEM_ALERT" && activity.details) {
       const details = activity.details as Record<string, unknown>;
       const alertType = details.alert_type as string;
       // Only show if it's an actual error/warning, not healthy status
-      if (alertType === 'service_healthy' || alertType === 'all_healthy') {
+      if (alertType === "service_healthy" || alertType === "all_healthy") {
         return false;
       }
       return true;
     }
-    
+
     // Check for status field in details
     if (activity.details) {
       const details = activity.details as Record<string, unknown>;
       const status = (details.status as string)?.toLowerCase();
-      if (status === 'healthy' || status === 'success' || status === 'ok') {
+      if (status === "healthy" || status === "success" || status === "ok") {
         return false;
       }
     }
-    
+
     // Show all other activities
     return true;
   };
@@ -73,20 +73,20 @@ export default function SuperAdminActivityFeed() {
 
     // Set up realtime subscription
     const channel = supabase
-      .channel('activity-log-changes')
+      .channel("activity-log-changes")
       .on(
-        'postgres_changes',
+        "postgres_changes",
         {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'activity_log',
+          event: "INSERT",
+          schema: "public",
+          table: "activity_log",
         },
         (payload) => {
           const newActivity = payload.new as ActivityLogEntry;
           if (shouldShowActivity(newActivity)) {
-            setActivities(prev => [newActivity, ...prev].slice(0, 50));
+            setActivities((prev) => [newActivity, ...prev].slice(0, 50));
           }
-        }
+        },
       )
       .subscribe();
 
@@ -107,18 +107,20 @@ export default function SuperAdminActivityFeed() {
     try {
       setLoading(true);
       const { data, error } = await supabase
-        .from('activity_log')
-        .select('*')
-        .order('created_at', { ascending: false })
+        .from("activity_log")
+        .select("*")
+        .order("created_at", { ascending: false })
         .limit(100); // Fetch more to filter
 
       if (error) throw error;
-      
+
       // Filter out healthy heartbeats
-      const filteredActivities = (data || []).filter(shouldShowActivity).slice(0, 50);
+      const filteredActivities = (data || [])
+        .filter(shouldShowActivity)
+        .slice(0, 50);
       setActivities(filteredActivities);
     } catch (error) {
-      console.error('Error fetching activities:', error);
+      console.error("Error fetching activities:", error);
     } finally {
       setLoading(false);
     }
@@ -126,74 +128,81 @@ export default function SuperAdminActivityFeed() {
 
   const getActivityIcon = (action: string, entityType: string | null) => {
     const iconMap: Record<string, React.ReactNode> = {
-      'LOGIN': <LogIn className="w-4 h-4" />,
-      'LOGOUT': <LogIn className="w-4 h-4" />,
-      'VIEW_SENSITIVE_PROFILE': <User className="w-4 h-4" />,
-      'INSERT': <FileText className="w-4 h-4" />,
-      'UPDATE': <Settings className="w-4 h-4" />,
-      'DELETE': <AlertTriangle className="w-4 h-4" />,
-      'purchase': <ShoppingCart className="w-4 h-4" />,
-      'security': <Shield className="w-4 h-4" />,
+      LOGIN: <LogIn className="w-4 h-4" />,
+      LOGOUT: <LogIn className="w-4 h-4" />,
+      VIEW_SENSITIVE_PROFILE: <User className="w-4 h-4" />,
+      INSERT: <FileText className="w-4 h-4" />,
+      UPDATE: <Settings className="w-4 h-4" />,
+      DELETE: <AlertTriangle className="w-4 h-4" />,
+      purchase: <ShoppingCart className="w-4 h-4" />,
+      security: <Shield className="w-4 h-4" />,
     };
 
     return iconMap[action] || <Activity className="w-4 h-4" />;
   };
 
-  const getActivityColor = (action: string, details?: Record<string, unknown> | null) => {
+  const getActivityColor = (
+    action: string,
+    details?: Record<string, unknown> | null,
+  ) => {
     // Check for status-based colors (Error=Red, Warning=Orange, Success=Green)
     if (details) {
       const status = (details.status as string)?.toLowerCase();
       const alertType = (details.alert_type as string)?.toLowerCase();
-      
-      if (status === 'error' || status === 'failed' || alertType === 'service_dead') {
-        return 'from-red-500 to-red-600';
+
+      if (
+        status === "error" ||
+        status === "failed" ||
+        alertType === "service_dead"
+      ) {
+        return "from-red-500 to-red-600";
       }
-      if (status === 'warning' || alertType === 'service_struggling') {
-        return 'from-orange-500 to-amber-500';
+      if (status === "warning" || alertType === "service_struggling") {
+        return "from-orange-500 to-amber-500";
       }
-      if (status === 'success' || status === 'healthy') {
-        return 'from-green-500 to-emerald-500';
+      if (status === "success" || status === "healthy") {
+        return "from-green-500 to-emerald-500";
       }
     }
-    
+
     // System alerts default to warning/error colors
-    if (action === 'SYSTEM_ALERT') {
-      return 'from-red-500 to-orange-500';
+    if (action === "SYSTEM_ALERT") {
+      return "from-red-500 to-orange-500";
     }
 
     const colorMap: Record<string, string> = {
-      'LOGIN': 'from-green-500 to-emerald-500',
-      'LOGOUT': 'from-gray-500 to-gray-600',
-      'INSERT': 'from-blue-500 to-cyan-500',
-      'UPDATE': 'from-yellow-500 to-orange-500',
-      'DELETE': 'from-red-500 to-pink-500',
-      'VIEW_SENSITIVE_PROFILE': 'from-purple-500 to-pink-500',
+      LOGIN: "from-green-500 to-emerald-500",
+      LOGOUT: "from-gray-500 to-gray-600",
+      INSERT: "from-blue-500 to-cyan-500",
+      UPDATE: "from-yellow-500 to-orange-500",
+      DELETE: "from-red-500 to-pink-500",
+      VIEW_SENSITIVE_PROFILE: "from-purple-500 to-pink-500",
     };
 
-    return colorMap[action] || 'from-gray-500 to-gray-600';
+    return colorMap[action] || "from-gray-500 to-gray-600";
   };
 
   const formatAction = (activity: ActivityLogEntry) => {
     const { action, entity_type, details } = activity;
-    
+
     // Format based on action type
-    if (action.includes('VIEW_SENSITIVE')) {
+    if (action.includes("VIEW_SENSITIVE")) {
       return `Viewed sensitive ${entity_type} data`;
     }
-    
-    if (action === 'INSERT') {
+
+    if (action === "INSERT") {
       return `Created new ${entity_type}`;
     }
-    
-    if (action === 'UPDATE') {
+
+    if (action === "UPDATE") {
       return `Updated ${entity_type}`;
     }
-    
-    if (action === 'DELETE') {
+
+    if (action === "DELETE") {
       return `Deleted ${entity_type}`;
     }
 
-    return action.replace(/_/g, ' ').toLowerCase();
+    return action.replace(/_/g, " ").toLowerCase();
   };
 
   return (
@@ -211,10 +220,14 @@ export default function SuperAdminActivityFeed() {
           </div>
           <div className="flex items-center gap-2">
             <Button
-              variant={autoRefresh ? 'default' : 'outline'}
+              variant={autoRefresh ? "default" : "outline"}
               size="sm"
               onClick={() => setAutoRefresh(!autoRefresh)}
-              className={autoRefresh ? 'bg-green-600 hover:bg-green-700' : 'border-gray-700'}
+              className={
+                autoRefresh
+                  ? "bg-green-600 hover:bg-green-700"
+                  : "border-gray-700"
+              }
             >
               {autoRefresh ? (
                 <>
@@ -228,13 +241,15 @@ export default function SuperAdminActivityFeed() {
                 </>
               )}
             </Button>
-            <Button 
-              variant="outline" 
-              size="sm" 
+            <Button
+              variant="outline"
+              size="sm"
               onClick={fetchActivities}
               className="border-gray-700 text-gray-300 hover:bg-gray-800"
             >
-              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+              <RefreshCw
+                className={`w-4 h-4 ${loading ? "animate-spin" : ""}`}
+              />
             </Button>
           </div>
         </div>
@@ -257,7 +272,9 @@ export default function SuperAdminActivityFeed() {
                   key={activity.id}
                   className="flex items-start gap-3 p-3 rounded-lg bg-gray-800/50 hover:bg-gray-800 transition-colors"
                 >
-                  <div className={`p-2 rounded-lg bg-gradient-to-br ${getActivityColor(activity.action, activity.details)}`}>
+                  <div
+                    className={`p-2 rounded-lg bg-gradient-to-br ${getActivityColor(activity.action, activity.details)}`}
+                  >
                     {getActivityIcon(activity.action, activity.entity_type)}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -266,18 +283,26 @@ export default function SuperAdminActivityFeed() {
                         {formatAction(activity)}
                       </p>
                       {activity.entity_type && (
-                        <Badge variant="outline" className="text-xs border-gray-600 text-gray-400">
+                        <Badge
+                          variant="outline"
+                          className="text-xs border-gray-600 text-gray-400"
+                        >
                           {activity.entity_type}
                         </Badge>
                       )}
                     </div>
-                    {activity.details && Object.keys(activity.details).length > 0 && (
-                      <p className="text-sm text-gray-400 truncate">
-                        {JSON.stringify(activity.details).slice(0, 100)}...
-                      </p>
-                    )}
+                    {activity.details &&
+                      Object.keys(activity.details).length > 0 && (
+                        <p className="text-sm text-gray-400 truncate">
+                          {JSON.stringify(activity.details).slice(0, 100)}...
+                        </p>
+                      )}
                     <div className="flex items-center gap-2 mt-1 text-xs text-gray-500">
-                      <span>{formatDistanceToNow(new Date(activity.created_at), { addSuffix: true })}</span>
+                      <span>
+                        {formatDistanceToNow(new Date(activity.created_at), {
+                          addSuffix: true,
+                        })}
+                      </span>
                       {activity.ip_address && (
                         <>
                           <span>•</span>

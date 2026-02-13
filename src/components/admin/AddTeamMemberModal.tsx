@@ -140,7 +140,7 @@ export function AddTeamMemberModal({
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
-    
+
     const file = e.dataTransfer.files[0];
     if (file) {
       processFile(file);
@@ -176,7 +176,10 @@ export function AddTeamMemberModal({
     }
 
     // LinkedIn validation
-    if (formData.linkedin && !formData.linkedin.match(/^https?:\/\/(www\.)?linkedin\.com\//)) {
+    if (
+      formData.linkedin &&
+      !formData.linkedin.match(/^https?:\/\/(www\.)?linkedin\.com\//)
+    ) {
       newErrors.linkedin = "Please enter a valid LinkedIn URL";
     }
 
@@ -316,16 +319,19 @@ export function AddTeamMemberModal({
                     onClick={() => !photo && fileInputRef.current?.click()}
                     className={cn(
                       "relative cursor-pointer transition-all duration-300",
-                      isDragging && "scale-105"
+                      isDragging && "scale-105",
                     )}
                   >
-                    <Avatar className={cn(
-                      "h-[200px] w-[200px] border-4 transition-all",
-                      photo 
-                        ? "border-background ring-2 ring-border" 
-                        : "border-dashed border-muted-foreground/50 hover:border-primary",
-                      isDragging && "border-primary border-solid ring-4 ring-primary/20"
-                    )}>
+                    <Avatar
+                      className={cn(
+                        "h-[200px] w-[200px] border-4 transition-all",
+                        photo
+                          ? "border-background ring-2 ring-border"
+                          : "border-dashed border-muted-foreground/50 hover:border-primary",
+                        isDragging &&
+                          "border-primary border-solid ring-4 ring-primary/20",
+                      )}
+                    >
                       {photo ? (
                         <AvatarImage
                           src={photo}
@@ -333,10 +339,12 @@ export function AddTeamMemberModal({
                           className="transition-transform"
                         />
                       ) : (
-                        <AvatarFallback className={cn(
-                          "bg-muted transition-colors",
-                          isDragging && "bg-primary/10"
-                        )}>
+                        <AvatarFallback
+                          className={cn(
+                            "bg-muted transition-colors",
+                            isDragging && "bg-primary/10",
+                          )}
+                        >
                           <div className="flex flex-col items-center gap-2 text-center">
                             <Camera className="h-16 w-16 text-muted-foreground" />
                             <div className="text-xs text-muted-foreground px-4">
@@ -486,7 +494,7 @@ export function AddTeamMemberModal({
                       "text-xs",
                       formData.bio.length > 450
                         ? "text-destructive font-semibold"
-                        : "text-muted-foreground"
+                        : "text-muted-foreground",
                     )}
                   >
                     {formData.bio.length}/500
@@ -502,16 +510,22 @@ export function AddTeamMemberModal({
                     id="linkedin"
                     value={formData.linkedin}
                     onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, linkedin: e.target.value }))
+                      setFormData((prev) => ({
+                        ...prev,
+                        linkedin: e.target.value,
+                      }))
                     }
                     placeholder="https://linkedin.com/in/..."
                     className={cn(
                       errors.linkedin && "border-destructive",
-                      formData.linkedin.match(/^https?:\/\/(www\.)?linkedin\.com\//) &&
-                        "pr-10"
+                      formData.linkedin.match(
+                        /^https?:\/\/(www\.)?linkedin\.com\//,
+                      ) && "pr-10",
                     )}
                   />
-                  {formData.linkedin.match(/^https?:\/\/(www\.)?linkedin\.com\//) && (
+                  {formData.linkedin.match(
+                    /^https?:\/\/(www\.)?linkedin\.com\//,
+                  ) && (
                     <Linkedin className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-blue-600" />
                   )}
                 </div>
@@ -544,7 +558,10 @@ export function AddTeamMemberModal({
                     id="displayEmail"
                     checked={formData.displayEmail}
                     onCheckedChange={(checked) =>
-                      setFormData((prev) => ({ ...prev, displayEmail: checked }))
+                      setFormData((prev) => ({
+                        ...prev,
+                        displayEmail: checked,
+                      }))
                     }
                   />
                 </div>
@@ -568,7 +585,10 @@ export function AddTeamMemberModal({
                     id="displayPhone"
                     checked={formData.displayPhone}
                     onCheckedChange={(checked) =>
-                      setFormData((prev) => ({ ...prev, displayPhone: checked }))
+                      setFormData((prev) => ({
+                        ...prev,
+                        displayPhone: checked,
+                      }))
                     }
                   />
                 </div>
@@ -577,7 +597,10 @@ export function AddTeamMemberModal({
               {/* Display on About Page */}
               <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
                 <div>
-                  <Label htmlFor="displayOnAbout" className="text-base font-semibold">
+                  <Label
+                    htmlFor="displayOnAbout"
+                    className="text-base font-semibold"
+                  >
                     Display on About Page?
                   </Label>
                   <p className="text-sm text-muted-foreground mt-1">
@@ -588,7 +611,10 @@ export function AddTeamMemberModal({
                   id="displayOnAbout"
                   checked={formData.displayOnAbout}
                   onCheckedChange={(checked) =>
-                    setFormData((prev) => ({ ...prev, displayOnAbout: checked }))
+                    setFormData((prev) => ({
+                      ...prev,
+                      displayOnAbout: checked,
+                    }))
                   }
                 />
               </div>
@@ -697,7 +723,9 @@ export function AddTeamMemberModal({
 
                       {/* Visibility Badge */}
                       {!formData.displayOnAbout && (
-                        <Badge variant="secondary">Hidden from About page</Badge>
+                        <Badge variant="secondary">
+                          Hidden from About page
+                        </Badge>
                       )}
                     </div>
                   </CardContent>
@@ -712,7 +740,11 @@ export function AddTeamMemberModal({
           <Button variant="outline" onClick={handleClose} disabled={isSaving}>
             Cancel
           </Button>
-          <Button onClick={handleSubmit} disabled={isSaving} className="min-w-[160px]">
+          <Button
+            onClick={handleSubmit}
+            disabled={isSaving}
+            className="min-w-[160px]"
+          >
             {showSuccess ? (
               <span className="flex items-center gap-2">
                 <span className="animate-scale-in">✓</span>

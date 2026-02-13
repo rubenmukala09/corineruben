@@ -1,10 +1,10 @@
-import { 
-  Phone, 
-  MessageSquare, 
-  Mail, 
+import {
+  Phone,
+  MessageSquare,
+  Mail,
   Calendar,
   Settings,
-  MoreVertical
+  MoreVertical,
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -27,7 +27,7 @@ const mockAutomations: Automation[] = [
     type: "receptionist",
     status: "active",
     tasksToday: 47,
-    successRate: 98
+    successRate: 98,
   },
   {
     id: "2",
@@ -35,7 +35,7 @@ const mockAutomations: Automation[] = [
     type: "followup",
     status: "active",
     tasksToday: 23,
-    successRate: 95
+    successRate: 95,
   },
   {
     id: "3",
@@ -43,7 +43,7 @@ const mockAutomations: Automation[] = [
     type: "scheduling",
     status: "active",
     tasksToday: 12,
-    successRate: 100
+    successRate: 100,
   },
   {
     id: "4",
@@ -51,27 +51,37 @@ const mockAutomations: Automation[] = [
     type: "support",
     status: "paused",
     tasksToday: 0,
-    successRate: 92
+    successRate: 92,
   },
 ];
 
 const getIcon = (type: string) => {
   switch (type) {
-    case "receptionist": return Phone;
-    case "followup": return Mail;
-    case "scheduling": return Calendar;
-    case "support": return MessageSquare;
-    default: return Phone;
+    case "receptionist":
+      return Phone;
+    case "followup":
+      return Mail;
+    case "scheduling":
+      return Calendar;
+    case "support":
+      return MessageSquare;
+    default:
+      return Phone;
   }
 };
 
 const getGradient = (type: string) => {
   switch (type) {
-    case "receptionist": return "from-blue-500 to-cyan-500";
-    case "followup": return "from-orange-500 to-amber-500";
-    case "scheduling": return "from-green-500 to-emerald-500";
-    case "support": return "from-purple-500 to-violet-500";
-    default: return "from-gray-500 to-gray-600";
+    case "receptionist":
+      return "from-blue-500 to-cyan-500";
+    case "followup":
+      return "from-orange-500 to-amber-500";
+    case "scheduling":
+      return "from-green-500 to-emerald-500";
+    case "support":
+      return "from-purple-500 to-violet-500";
+    default:
+      return "from-gray-500 to-gray-600";
   }
 };
 
@@ -85,7 +95,8 @@ export function ActiveAutomationsCard() {
             Active Automations
           </CardTitle>
           <Badge variant="secondary" className="bg-green-500/10 text-green-600">
-            {mockAutomations.filter(a => a.status === "active").length} Running
+            {mockAutomations.filter((a) => a.status === "active").length}{" "}
+            Running
           </Badge>
         </div>
       </CardHeader>
@@ -93,7 +104,7 @@ export function ActiveAutomationsCard() {
         {mockAutomations.map((automation, index) => {
           const Icon = getIcon(automation.type);
           const isActive = automation.status === "active";
-          
+
           return (
             <div
               key={automation.id}
@@ -103,21 +114,31 @@ export function ActiveAutomationsCard() {
               style={{ animationDelay: `${index * 50}ms` }}
             >
               <div className="flex items-center gap-4">
-                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${getGradient(automation.type)} flex items-center justify-center`}>
+                <div
+                  className={`w-10 h-10 rounded-xl bg-gradient-to-br ${getGradient(automation.type)} flex items-center justify-center`}
+                >
                   <Icon className="w-5 h-5 text-white" />
                 </div>
-                
+
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
                     <p className="font-semibold">{automation.name}</p>
                     {automation.status === "error" && (
-                      <Badge variant="destructive" className="text-xs">Error</Badge>
+                      <Badge variant="destructive" className="text-xs">
+                        Error
+                      </Badge>
                     )}
                   </div>
                   <div className="flex items-center gap-3 text-xs text-muted-foreground mt-1">
                     <span>{automation.tasksToday} tasks today</span>
                     <span>•</span>
-                    <span className={automation.successRate >= 95 ? "text-green-600" : "text-yellow-600"}>
+                    <span
+                      className={
+                        automation.successRate >= 95
+                          ? "text-green-600"
+                          : "text-yellow-600"
+                      }
+                    >
                       {automation.successRate}% success
                     </span>
                   </div>

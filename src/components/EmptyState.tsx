@@ -26,11 +26,7 @@ export function EmptyState({
   return (
     <Card className={cn("py-16", className)}>
       <div className="text-center px-4">
-        {emoji && (
-          <div className="text-6xl mb-4 animate-bounce">
-            {emoji}
-          </div>
-        )}
+        {emoji && <div className="text-6xl mb-4 animate-bounce">{emoji}</div>}
         {icon && (
           <div className="flex justify-center mb-4 text-muted-foreground">
             {icon}
@@ -42,11 +38,7 @@ export function EmptyState({
             {description}
           </p>
         )}
-        {action && (
-          <Button onClick={action.onClick}>
-            {action.label}
-          </Button>
-        )}
+        {action && <Button onClick={action.onClick}>{action.label}</Button>}
       </div>
     </Card>
   );

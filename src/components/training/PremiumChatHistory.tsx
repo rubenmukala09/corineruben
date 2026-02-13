@@ -9,7 +9,10 @@ interface PremiumChatHistoryProps {
   status: AiChatStatus;
 }
 
-export const PremiumChatHistory = ({ messages, status }: PremiumChatHistoryProps) => {
+export const PremiumChatHistory = ({
+  messages,
+  status,
+}: PremiumChatHistoryProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -50,8 +53,8 @@ export const PremiumChatHistory = ({ messages, status }: PremiumChatHistoryProps
               AI Scam Prevention Assistant
             </h3>
             <p className="text-sm text-muted-foreground max-w-md">
-              Ask me anything about scam detection, suspicious messages, or file security.
-              I'm here to help protect you and your loved ones.
+              Ask me anything about scam detection, suspicious messages, or file
+              security. I'm here to help protect you and your loved ones.
             </p>
           </div>
         </motion.div>
@@ -59,7 +62,11 @@ export const PremiumChatHistory = ({ messages, status }: PremiumChatHistoryProps
 
       <AnimatePresence mode="popLayout">
         {messages.map((message, index) => (
-          <PremiumChatMessage key={message.id} message={message} index={index} />
+          <PremiumChatMessage
+            key={message.id}
+            message={message}
+            index={index}
+          />
         ))}
       </AnimatePresence>
 
@@ -115,7 +122,9 @@ export const PremiumChatHistory = ({ messages, status }: PremiumChatHistoryProps
                 />
               </div>
               <span className="text-xs text-muted-foreground ml-2">
-                {status === "thinking" ? "Thinking..." : "Generating response..."}
+                {status === "thinking"
+                  ? "Thinking..."
+                  : "Generating response..."}
               </span>
             </div>
           </div>

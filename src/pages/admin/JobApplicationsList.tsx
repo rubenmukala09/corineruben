@@ -19,7 +19,6 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -75,9 +74,14 @@ const JobApplicationsList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [positionFilter, setPositionFilter] = useState("all");
-  const [selectedApplication, setSelectedApplication] = useState<JobApplication | null>(null);
+  const [selectedApplication, setSelectedApplication] =
+    useState<JobApplication | null>(null);
 
-  const { data: applications = [], isLoading, refetch } = useQuery({
+  const {
+    data: applications = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["job-applications", statusFilter, positionFilter],
     queryFn: async () => {
       let query = supabase
@@ -105,17 +109,26 @@ const JobApplicationsList = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["job-applications"] });
-      toast({ title: "Status Updated", description: "Application status has been updated." });
+      toast({
+        title: "Status Updated",
+        description: "Application status has been updated.",
+      });
     },
     onError: () => {
-      toast({ title: "Error", description: "Failed to update status.", variant: "destructive" });
+      toast({
+        title: "Error",
+        description: "Failed to update status.",
+        variant: "destructive",
+      });
     },
   });
 
   // Calculate stats
   const stats = {
     total: applications.length,
-    new: applications.filter((a) => a.status === "new" || a.status === "pending").length,
+    new: applications.filter(
+      (a) => a.status === "new" || a.status === "pending",
+    ).length,
     reviewing: applications.filter((a) => a.status === "reviewing").length,
     interviewed: applications.filter((a) => a.status === "interviewed").length,
     hired: applications.filter((a) => a.status === "hired").length,
@@ -130,16 +143,24 @@ const JobApplicationsList = () => {
       app.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       app.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
       app.position.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesPosition = positionFilter === "all" || app.position === positionFilter;
+    const matchesPosition =
+      positionFilter === "all" || app.position === positionFilter;
     return matchesSearch && matchesPosition;
   });
 
   const getStatusBadge = (status: string) => {
-    const configs: Record<string, { variant: any; icon: React.ElementType; label: string }> = {
+    const configs: Record<
+      string,
+      { variant: any; icon: React.ElementType; label: string }
+    > = {
       new: { variant: "default", icon: Star, label: "New" },
       pending: { variant: "outline", icon: Clock, label: "Pending" },
       reviewing: { variant: "secondary", icon: Eye, label: "Reviewing" },
-      interviewed: { variant: "default", icon: CheckCircle, label: "Interviewed" },
+      interviewed: {
+        variant: "default",
+        icon: CheckCircle,
+        label: "Interviewed",
+      },
       hired: { variant: "success", icon: CheckCircle, label: "Hired" },
       rejected: { variant: "destructive", icon: XCircle, label: "Rejected" },
     };
@@ -154,7 +175,15 @@ const JobApplicationsList = () => {
   };
 
   const exportToCSV = () => {
-    const headers = ["Date", "Name", "Email", "Phone", "Position", "Status", "Veteran"];
+    const headers = [
+      "Date",
+      "Name",
+      "Email",
+      "Phone",
+      "Position",
+      "Status",
+      "Veteran",
+    ];
     const rows = filteredApplications.map((a) => [
       format(new Date(a.created_at), "yyyy-MM-dd"),
       a.name,
@@ -165,7 +194,9 @@ const JobApplicationsList = () => {
       a.is_veteran ? "Yes" : "No",
     ]);
 
-    const csvContent = [headers, ...rows].map((row) => row.join(",")).join("\n");
+    const csvContent = [headers, ...rows]
+      .map((row) => row.join(","))
+      .join("\n");
     const blob = new Blob([csvContent], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -173,7 +204,10 @@ const JobApplicationsList = () => {
     a.download = `job-applications-${format(new Date(), "yyyy-MM-dd")}.csv`;
     a.click();
 
-    toast({ title: "Export Complete", description: `Exported ${filteredApplications.length} applications.` });
+    toast({
+      title: "Export Complete",
+      description: `Exported ${filteredApplications.length} applications.`,
+    });
   };
 
   return (
@@ -200,7 +234,9 @@ const JobApplicationsList = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-400">New</p>
-                <p className="text-2xl font-bold text-yellow-400">{stats.new}</p>
+                <p className="text-2xl font-bold text-yellow-400">
+                  {stats.new}
+                </p>
               </div>
               <Star className="h-8 w-8 text-yellow-400" />
             </div>
@@ -211,7 +247,9 @@ const JobApplicationsList = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-400">Reviewing</p>
-                <p className="text-2xl font-bold text-blue-400">{stats.reviewing}</p>
+                <p className="text-2xl font-bold text-blue-400">
+                  {stats.reviewing}
+                </p>
               </div>
               <Eye className="h-8 w-8 text-blue-400" />
             </div>
@@ -222,7 +260,9 @@ const JobApplicationsList = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-400">Interviewed</p>
-                <p className="text-2xl font-bold text-purple-400">{stats.interviewed}</p>
+                <p className="text-2xl font-bold text-purple-400">
+                  {stats.interviewed}
+                </p>
               </div>
               <CheckCircle className="h-8 w-8 text-purple-400" />
             </div>
@@ -233,7 +273,9 @@ const JobApplicationsList = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-400">Hired</p>
-                <p className="text-2xl font-bold text-green-400">{stats.hired}</p>
+                <p className="text-2xl font-bold text-green-400">
+                  {stats.hired}
+                </p>
               </div>
               <CheckCircle className="h-8 w-8 text-green-400" />
             </div>
@@ -244,7 +286,9 @@ const JobApplicationsList = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-400">Rejected</p>
-                <p className="text-2xl font-bold text-red-400">{stats.rejected}</p>
+                <p className="text-2xl font-bold text-red-400">
+                  {stats.rejected}
+                </p>
               </div>
               <XCircle className="h-8 w-8 text-red-400" />
             </div>
@@ -294,12 +338,20 @@ const JobApplicationsList = () => {
           </SelectContent>
         </Select>
 
-        <Button variant="outline" onClick={() => refetch()} className="border-slate-700">
+        <Button
+          variant="outline"
+          onClick={() => refetch()}
+          className="border-slate-700"
+        >
           <RefreshCw className="mr-2 h-4 w-4" />
           Refresh
         </Button>
 
-        <Button variant="outline" onClick={exportToCSV} className="border-slate-700">
+        <Button
+          variant="outline"
+          onClick={exportToCSV}
+          className="border-slate-700"
+        >
           <Download className="mr-2 h-4 w-4" />
           Export CSV
         </Button>
@@ -315,7 +367,9 @@ const JobApplicationsList = () => {
               <TableHead className="text-slate-300">Position</TableHead>
               <TableHead className="text-slate-300">Status</TableHead>
               <TableHead className="text-slate-300">Veteran</TableHead>
-              <TableHead className="text-slate-300 text-right">Actions</TableHead>
+              <TableHead className="text-slate-300 text-right">
+                Actions
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -323,19 +377,27 @@ const JobApplicationsList = () => {
               <TableRow>
                 <TableCell colSpan={6} className="text-center py-8">
                   <RefreshCw className="h-6 w-6 animate-spin mx-auto mb-2 text-cyan-400" />
-                  <span className="text-slate-400">Loading applications...</span>
+                  <span className="text-slate-400">
+                    Loading applications...
+                  </span>
                 </TableCell>
               </TableRow>
             ) : filteredApplications.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="text-center py-8 text-slate-400">
+                <TableCell
+                  colSpan={6}
+                  className="text-center py-8 text-slate-400"
+                >
                   <Briefcase className="h-12 w-12 mx-auto mb-2 opacity-50" />
                   No applications found
                 </TableCell>
               </TableRow>
             ) : (
               filteredApplications.map((app) => (
-                <TableRow key={app.id} className="border-slate-700 hover:bg-slate-800/50">
+                <TableRow
+                  key={app.id}
+                  className="border-slate-700 hover:bg-slate-800/50"
+                >
                   <TableCell>
                     <div className="flex items-center gap-2">
                       <Calendar className="h-4 w-4 text-slate-400" />
@@ -356,14 +418,20 @@ const JobApplicationsList = () => {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Badge variant="outline" className="border-cyan-500/50 text-cyan-400">
+                    <Badge
+                      variant="outline"
+                      className="border-cyan-500/50 text-cyan-400"
+                    >
                       {app.position}
                     </Badge>
                   </TableCell>
                   <TableCell>{getStatusBadge(app.status)}</TableCell>
                   <TableCell>
                     {app.is_veteran && (
-                      <Badge variant="outline" className="border-green-500/50 text-green-400">
+                      <Badge
+                        variant="outline"
+                        className="border-green-500/50 text-green-400"
+                      >
                         🎖️ Veteran
                       </Badge>
                     )}
@@ -388,21 +456,54 @@ const JobApplicationsList = () => {
                       </Button>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="sm" className="text-slate-400 hover:text-white">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-slate-400 hover:text-white"
+                          >
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem onClick={() => updateStatusMutation.mutate({ id: app.id, status: "reviewing" })}>
+                          <DropdownMenuItem
+                            onClick={() =>
+                              updateStatusMutation.mutate({
+                                id: app.id,
+                                status: "reviewing",
+                              })
+                            }
+                          >
                             Mark as Reviewing
                           </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => updateStatusMutation.mutate({ id: app.id, status: "interviewed" })}>
+                          <DropdownMenuItem
+                            onClick={() =>
+                              updateStatusMutation.mutate({
+                                id: app.id,
+                                status: "interviewed",
+                              })
+                            }
+                          >
                             Mark as Interviewed
                           </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => updateStatusMutation.mutate({ id: app.id, status: "hired" })}>
+                          <DropdownMenuItem
+                            onClick={() =>
+                              updateStatusMutation.mutate({
+                                id: app.id,
+                                status: "hired",
+                              })
+                            }
+                          >
                             Mark as Hired
                           </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => updateStatusMutation.mutate({ id: app.id, status: "rejected" })} className="text-red-500">
+                          <DropdownMenuItem
+                            onClick={() =>
+                              updateStatusMutation.mutate({
+                                id: app.id,
+                                status: "rejected",
+                              })
+                            }
+                            className="text-red-500"
+                          >
                             Reject Application
                           </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -417,10 +518,15 @@ const JobApplicationsList = () => {
       </Card>
 
       {/* Application Detail Dialog */}
-      <Dialog open={!!selectedApplication} onOpenChange={() => setSelectedApplication(null)}>
+      <Dialog
+        open={!!selectedApplication}
+        onOpenChange={() => setSelectedApplication(null)}
+      >
         <DialogContent className="max-w-2xl bg-slate-900 border-slate-700">
           <DialogHeader>
-            <DialogTitle className="text-white">Application Details</DialogTitle>
+            <DialogTitle className="text-white">
+              Application Details
+            </DialogTitle>
             <DialogDescription className="text-slate-400">
               Review the full application from {selectedApplication?.name}
             </DialogDescription>
@@ -429,45 +535,69 @@ const JobApplicationsList = () => {
             <div className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium text-slate-400">Name</label>
+                  <label className="text-sm font-medium text-slate-400">
+                    Name
+                  </label>
                   <p className="text-white">{selectedApplication.name}</p>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-slate-400">Position</label>
+                  <label className="text-sm font-medium text-slate-400">
+                    Position
+                  </label>
                   <p className="text-white">{selectedApplication.position}</p>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-slate-400">Email</label>
+                  <label className="text-sm font-medium text-slate-400">
+                    Email
+                  </label>
                   <p className="text-cyan-400">{selectedApplication.email}</p>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-slate-400">Phone</label>
+                  <label className="text-sm font-medium text-slate-400">
+                    Phone
+                  </label>
                   <p className="text-white">{selectedApplication.phone}</p>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-slate-400">Applied</label>
-                  <p className="text-white">{format(new Date(selectedApplication.created_at), "PPP")}</p>
+                  <label className="text-sm font-medium text-slate-400">
+                    Applied
+                  </label>
+                  <p className="text-white">
+                    {format(new Date(selectedApplication.created_at), "PPP")}
+                  </p>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-slate-400">Availability</label>
-                  <p className="text-white">{selectedApplication.availability || "Not specified"}</p>
+                  <label className="text-sm font-medium text-slate-400">
+                    Availability
+                  </label>
+                  <p className="text-white">
+                    {selectedApplication.availability || "Not specified"}
+                  </p>
                 </div>
               </div>
 
               <div>
-                <label className="text-sm font-medium text-slate-400">Cover Letter</label>
+                <label className="text-sm font-medium text-slate-400">
+                  Cover Letter
+                </label>
                 <div className="mt-2 p-4 rounded-lg bg-slate-800 border border-slate-700">
-                  <p className="text-white whitespace-pre-wrap">{selectedApplication.cover_letter}</p>
+                  <p className="text-white whitespace-pre-wrap">
+                    {selectedApplication.cover_letter}
+                  </p>
                 </div>
               </div>
 
               {selectedApplication.resume_url && (
                 <div>
-                  <label className="text-sm font-medium text-slate-400">Resume</label>
+                  <label className="text-sm font-medium text-slate-400">
+                    Resume
+                  </label>
                   <Button
                     variant="outline"
                     className="mt-2 border-slate-700"
-                    onClick={() => window.open(selectedApplication.resume_url!, "_blank")}
+                    onClick={() =>
+                      window.open(selectedApplication.resume_url!, "_blank")
+                    }
                   >
                     <FileText className="mr-2 h-4 w-4" />
                     View Resume
@@ -478,7 +608,12 @@ const JobApplicationsList = () => {
               <div className="flex gap-2 pt-4 border-t border-slate-700">
                 <Select
                   defaultValue={selectedApplication.status}
-                  onValueChange={(value) => updateStatusMutation.mutate({ id: selectedApplication.id, status: value })}
+                  onValueChange={(value) =>
+                    updateStatusMutation.mutate({
+                      id: selectedApplication.id,
+                      status: value,
+                    })
+                  }
                 >
                   <SelectTrigger className="w-[180px] bg-slate-800 border-slate-700">
                     <SelectValue />
@@ -491,11 +626,22 @@ const JobApplicationsList = () => {
                     <SelectItem value="rejected">Rejected</SelectItem>
                   </SelectContent>
                 </Select>
-                <Button onClick={() => window.open(`mailto:${selectedApplication.email}`)} className="bg-cyan-600 hover:bg-cyan-700">
+                <Button
+                  onClick={() =>
+                    window.open(`mailto:${selectedApplication.email}`)
+                  }
+                  className="bg-cyan-600 hover:bg-cyan-700"
+                >
                   <Mail className="mr-2 h-4 w-4" />
                   Send Email
                 </Button>
-                <Button variant="outline" onClick={() => window.open(`tel:${selectedApplication.phone}`)} className="border-slate-700">
+                <Button
+                  variant="outline"
+                  onClick={() =>
+                    window.open(`tel:${selectedApplication.phone}`)
+                  }
+                  className="border-slate-700"
+                >
                   <Phone className="mr-2 h-4 w-4" />
                   Call
                 </Button>

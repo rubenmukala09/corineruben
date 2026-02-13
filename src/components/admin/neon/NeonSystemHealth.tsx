@@ -25,10 +25,30 @@ interface ServiceStatus {
 
 export function NeonSystemHealth() {
   const [services, setServices] = useState<ServiceStatus[]>([
-    { name: "Database", status: "healthy", lastChecked: "Just now", icon: Database },
-    { name: "Auth Service", status: "healthy", lastChecked: "Just now", icon: Shield },
-    { name: "Email Service", status: "healthy", lastChecked: "Just now", icon: Mail },
-    { name: "API Gateway", status: "healthy", lastChecked: "Just now", icon: Server },
+    {
+      name: "Database",
+      status: "healthy",
+      lastChecked: "Just now",
+      icon: Database,
+    },
+    {
+      name: "Auth Service",
+      status: "healthy",
+      lastChecked: "Just now",
+      icon: Shield,
+    },
+    {
+      name: "Email Service",
+      status: "healthy",
+      lastChecked: "Just now",
+      icon: Mail,
+    },
+    {
+      name: "API Gateway",
+      status: "healthy",
+      lastChecked: "Just now",
+      icon: Server,
+    },
   ]);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -36,35 +56,38 @@ export function NeonSystemHealth() {
     setRefreshing(true);
     try {
       // Check database connectivity
-      const { error: dbError } = await supabase.from("profiles").select("id").limit(1);
-      
+      const { error: dbError } = await supabase
+        .from("profiles")
+        .select("id")
+        .limit(1);
+
       // Check auth service
       const { data: session } = await supabase.auth.getSession();
-      
+
       setServices([
-        { 
-          name: "Database", 
-          status: dbError ? "struggling" : "healthy", 
-          lastChecked: "Just now", 
-          icon: Database 
+        {
+          name: "Database",
+          status: dbError ? "struggling" : "healthy",
+          lastChecked: "Just now",
+          icon: Database,
         },
-        { 
-          name: "Auth Service", 
-          status: session ? "healthy" : "struggling", 
-          lastChecked: "Just now", 
-          icon: Shield 
+        {
+          name: "Auth Service",
+          status: session ? "healthy" : "struggling",
+          lastChecked: "Just now",
+          icon: Shield,
         },
-        { 
-          name: "Email Service", 
-          status: "healthy", 
-          lastChecked: "Just now", 
-          icon: Mail 
+        {
+          name: "Email Service",
+          status: "healthy",
+          lastChecked: "Just now",
+          icon: Mail,
         },
-        { 
-          name: "API Gateway", 
-          status: "healthy", 
-          lastChecked: "Just now", 
-          icon: Server 
+        {
+          name: "API Gateway",
+          status: "healthy",
+          lastChecked: "Just now",
+          icon: Server,
         },
       ]);
     } catch (err) {
@@ -103,8 +126,9 @@ export function NeonSystemHealth() {
     return config[status as keyof typeof config] || config.unknown;
   };
 
-  const healthyCount = services.filter(s => s.status === "healthy").length;
-  const overallHealth = services.length > 0 ? (healthyCount / services.length) * 100 : 0;
+  const healthyCount = services.filter((s) => s.status === "healthy").length;
+  const overallHealth =
+    services.length > 0 ? (healthyCount / services.length) * 100 : 0;
 
   return (
     <motion.div
@@ -125,7 +149,9 @@ export function NeonSystemHealth() {
             disabled={refreshing}
             className="text-[#D1D5DB] hover:text-[#F9FAFB] hover:bg-gray-800/50"
           >
-            <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
+            <RefreshCw
+              className={`w-4 h-4 ${refreshing ? "animate-spin" : ""}`}
+            />
           </Button>
         </div>
 
@@ -133,7 +159,11 @@ export function NeonSystemHealth() {
         <div className="mb-4">
           <div className="flex items-center justify-between text-sm mb-1">
             <span className="text-[#D1D5DB]">Overall Status</span>
-            <span className={overallHealth === 100 ? "text-[#10B981]" : "text-[#FBBF24]"}>
+            <span
+              className={
+                overallHealth === 100 ? "text-[#10B981]" : "text-[#FBBF24]"
+              }
+            >
               {(overallHealth ?? 0).toFixed(0)}% Operational
             </span>
           </div>
@@ -142,7 +172,7 @@ export function NeonSystemHealth() {
               initial={{ width: 0 }}
               animate={{ width: `${overallHealth}%` }}
               transition={{ duration: 0.5, delay: 0.6 }}
-              className={`h-full rounded-full ${overallHealth === 100 ? 'bg-gradient-to-r from-green-500 to-emerald-500' : 'bg-gradient-to-r from-amber-500 to-orange-500'}`}
+              className={`h-full rounded-full ${overallHealth === 100 ? "bg-gradient-to-r from-green-500 to-emerald-500" : "bg-gradient-to-r from-amber-500 to-orange-500"}`}
             />
           </div>
         </div>
@@ -159,20 +189,34 @@ export function NeonSystemHealth() {
                 transition={{ delay: 0.6 + index * 0.1, duration: 0.3 }}
                 className="flex items-center gap-2 p-2 bg-[#111827] rounded-lg border border-gray-800/50"
               >
-                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                  service.status === "healthy" ? "bg-green-500/10" : 
-                  service.status === "struggling" ? "bg-amber-500/10" : "bg-red-500/10"
-                }`}>
-                  <Icon className={`w-4 h-4 ${
-                    service.status === "healthy" ? "text-green-400" : 
-                    service.status === "struggling" ? "text-amber-400" : "text-red-400"
-                  }`} />
+                <div
+                  className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                    service.status === "healthy"
+                      ? "bg-green-500/10"
+                      : service.status === "struggling"
+                        ? "bg-amber-500/10"
+                        : "bg-red-500/10"
+                  }`}
+                >
+                  <Icon
+                    className={`w-4 h-4 ${
+                      service.status === "healthy"
+                        ? "text-green-400"
+                        : service.status === "struggling"
+                          ? "text-amber-400"
+                          : "text-red-400"
+                    }`}
+                  />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-medium text-[#F9FAFB] truncate">{service.name}</p>
+                  <p className="text-xs font-medium text-[#F9FAFB] truncate">
+                    {service.name}
+                  </p>
                   <div className="flex items-center gap-1">
                     {getStatusIcon(service.status)}
-                    <span className="text-xs text-[#9CA3AF] capitalize">{service.status}</span>
+                    <span className="text-xs text-[#9CA3AF] capitalize">
+                      {service.status}
+                    </span>
                   </div>
                 </div>
               </motion.div>

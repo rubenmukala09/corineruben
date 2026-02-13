@@ -2,20 +2,34 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 
-export interface FloatingTextareaProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+export interface FloatingTextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label: string;
   error?: string;
   showCharCount?: boolean;
 }
 
-const FloatingTextarea = React.forwardRef<HTMLTextAreaElement, FloatingTextareaProps>(
-  ({ className, label, error, showCharCount, maxLength, value, onChange, ...props }, ref) => {
+const FloatingTextarea = React.forwardRef<
+  HTMLTextAreaElement,
+  FloatingTextareaProps
+>(
+  (
+    {
+      className,
+      label,
+      error,
+      showCharCount,
+      maxLength,
+      value,
+      onChange,
+      ...props
+    },
+    ref,
+  ) => {
     const [charCount, setCharCount] = React.useState(0);
     const [hasValue, setHasValue] = React.useState(false);
 
     React.useEffect(() => {
-      const currentValue = value?.toString() || '';
+      const currentValue = value?.toString() || "";
       setCharCount(currentValue.length);
       setHasValue(currentValue.length > 0);
     }, [value]);
@@ -27,11 +41,11 @@ const FloatingTextarea = React.forwardRef<HTMLTextAreaElement, FloatingTextareaP
     };
 
     const getCharCountClass = () => {
-      if (!maxLength) return '';
+      if (!maxLength) return "";
       const percentage = (charCount / maxLength) * 100;
-      if (percentage >= 100) return 'danger';
-      if (percentage >= 80) return 'warning';
-      return '';
+      if (percentage >= 100) return "danger";
+      if (percentage >= 80) return "warning";
+      return "";
     };
 
     return (
@@ -44,7 +58,7 @@ const FloatingTextarea = React.forwardRef<HTMLTextAreaElement, FloatingTextareaP
             "focus-visible:outline-none focus-visible:border-2 focus-visible:border-primary focus-visible:shadow-[0_0_0_3px_hsl(var(--primary)/0.1)]",
             error && "error",
             hasValue && "has-value",
-            className
+            className,
           )}
           placeholder=" "
           value={value}
@@ -53,19 +67,16 @@ const FloatingTextarea = React.forwardRef<HTMLTextAreaElement, FloatingTextareaP
           aria-invalid={error ? "true" : "false"}
           {...props}
         />
-        <Label
-          className="floating-label"
-          htmlFor={props.id}
-        >
+        <Label className="floating-label" htmlFor={props.id}>
           {label}
         </Label>
-        
+
         {error && (
           <p className="text-sm text-destructive mt-1 animate-fade-in-up">
             {error}
           </p>
         )}
-        
+
         {showCharCount && maxLength && (
           <p className={cn("character-counter", getCharCountClass())}>
             {charCount} / {maxLength}
@@ -73,7 +84,7 @@ const FloatingTextarea = React.forwardRef<HTMLTextAreaElement, FloatingTextareaP
         )}
       </div>
     );
-  }
+  },
 );
 
 FloatingTextarea.displayName = "FloatingTextarea";

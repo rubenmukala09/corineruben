@@ -19,55 +19,9 @@ export const MagnificentDonateButton = () => {
   return (
     <>
       {/* Unified Donate Button - Desktop & Mobile */}
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       {/* Donation Modal */}
-      <DonationModal
-        open={open}
-        onOpenChange={setOpen}
-        type="general" />
-
-    </>);
-
+      <DonationModal open={open} onOpenChange={setOpen} type="general" />
+    </>
+  );
 };

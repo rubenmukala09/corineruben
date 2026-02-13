@@ -35,12 +35,13 @@ export function CookieConsent() {
 
   useEffect(() => {
     const consent = localStorage.getItem(COOKIE_CONSENT_KEY);
-    
+
     if (!consent) {
       // Track page visits and only show after threshold
-      const visitCount = parseInt(localStorage.getItem(PAGE_VISIT_COUNT_KEY) || "0", 10) + 1;
+      const visitCount =
+        parseInt(localStorage.getItem(PAGE_VISIT_COUNT_KEY) || "0", 10) + 1;
       localStorage.setItem(PAGE_VISIT_COUNT_KEY, visitCount.toString());
-      
+
       if (visitCount >= VISIT_THRESHOLD) {
         setShowBanner(true);
       }
@@ -133,10 +134,13 @@ export function CookieConsent() {
         <Card className="max-w-4xl mx-auto p-4 sm:p-6 shadow-2xl border-2 border-border">
           <div className="flex flex-col sm:flex-row items-start gap-4">
             <div className="flex-1">
-              <h3 className="text-lg font-bold mb-2">🍪 We Value Your Privacy</h3>
+              <h3 className="text-lg font-bold mb-2">
+                🍪 We Value Your Privacy
+              </h3>
               <p className="text-sm text-muted-foreground mb-4">
-                We use cookies to improve your experience, analyze site traffic, and provide
-                personalized content. You can customize your preferences or accept all cookies.
+                We use cookies to improve your experience, analyze site traffic,
+                and provide personalized content. You can customize your
+                preferences or accept all cookies.
               </p>
               <div className="flex flex-col sm:flex-row gap-2">
                 <Button onClick={acceptAll} size="sm" variant="default">
@@ -174,8 +178,8 @@ export function CookieConsent() {
           <DialogHeader>
             <DialogTitle>Cookie Preferences</DialogTitle>
             <DialogDescription>
-              Manage your cookie preferences. Essential cookies are required for the site to
-              function and cannot be disabled.
+              Manage your cookie preferences. Essential cookies are required for
+              the site to function and cannot be disabled.
             </DialogDescription>
           </DialogHeader>
 

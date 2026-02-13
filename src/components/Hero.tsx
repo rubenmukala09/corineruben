@@ -28,37 +28,37 @@ interface HeroProps {
   disablePurpleOverlay?: boolean;
 }
 
-const Hero = ({ 
-  backgroundImage, 
-  backgroundImages, 
-  backgroundVideo, 
-  headline, 
-  subheadline, 
-  children, 
-  className, 
-  overlay = false, 
-  showScrollIndicator = false, 
-  showProtectionBadge = false, 
+const Hero = ({
+  backgroundImage,
+  backgroundImages,
+  backgroundVideo,
+  headline,
+  subheadline,
+  children,
+  className,
+  overlay = false,
+  showScrollIndicator = false,
+  showProtectionBadge = false,
   badgeText,
   disablePurpleOverlay = false,
 }: HeroProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoLoaded, setVideoLoaded] = useState(false);
-  
+
   // No loading states for images - show immediately for instant page transitions
   const useCarousel = backgroundImages && backgroundImages.length > 0;
   const useVideo = !!backgroundVideo;
 
   return (
-    <div 
+    <div
       className={cn(
-        "relative w-full min-h-[800px] sm:min-h-[900px] md:min-h-screen lg:min-h-[105vh] xl:min-h-[110vh] flex items-center overflow-hidden hero-mobile", 
-        className
+        "relative w-full min-h-[800px] sm:min-h-[900px] md:min-h-screen lg:min-h-[105vh] xl:min-h-[110vh] flex items-center overflow-hidden hero-mobile",
+        className,
       )}
     >
       {/* Transparent fallback - no color flash */}
       <div className="absolute inset-0 bg-transparent" />
-      
+
       {/* Background */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Video Background */}
@@ -66,7 +66,7 @@ const Hero = ({
           <div
             className={cn(
               "absolute inset-0 transition-opacity duration-300",
-              videoLoaded ? "opacity-100" : "opacity-0"
+              videoLoaded ? "opacity-100" : "opacity-0",
             )}
           >
             <video
@@ -87,13 +87,16 @@ const Hero = ({
         {/* Image Carousel (if no video) */}
         {!useVideo && useCarousel ? (
           <HeroCarousel images={backgroundImages} />
-        ) : !useVideo && backgroundImage && (
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url(${backgroundImage})` }}
-          />
+        ) : (
+          !useVideo &&
+          backgroundImage && (
+            <div
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+              style={{ backgroundImage: `url(${backgroundImage})` }}
+            />
+          )
         )}
-        
+
         {/* Simple dark tint for text readability on inner pages */}
         {!disablePurpleOverlay && <HeroPurpleOverlay />}
       </div>
@@ -104,7 +107,7 @@ const Hero = ({
           <ProtectionBadge text={badgeText || "Family Protected"} size="md" />
         </div>
       )}
-      
+
       {/* Content - CSS animations instead of framer-motion */}
       <div className="w-full max-w-[1920px] mx-auto px-6 sm:px-10 md:px-16 lg:px-20 xl:px-32 py-20 sm:py-24 md:py-28 lg:py-32 relative z-10">
         <div className="max-w-6xl animate-fade-in">
@@ -125,13 +128,13 @@ const Hero = ({
                   <MagneticWrapper strength={0.3}>{child}</MagneticWrapper>
                 ) : (
                   child
-                )
+                ),
               )}
             </div>
           )}
         </div>
       </div>
-      
+
       {/* Scroll Indicator */}
       {showScrollIndicator && <ScrollIndicator />}
     </div>

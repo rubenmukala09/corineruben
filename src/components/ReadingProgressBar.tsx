@@ -4,18 +4,20 @@ interface ReadingProgressBarProps {
   showPercentage?: boolean;
 }
 
-export const ReadingProgressBar = ({ 
-  showPercentage = true 
+export const ReadingProgressBar = ({
+  showPercentage = true,
 }: ReadingProgressBarProps) => {
   const [percentage, setPercentage] = useState(0);
 
   useEffect(() => {
     let ticking = false;
-    
+
     const updateProgress = () => {
       const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = docHeight > 0 ? Math.round((scrollTop / docHeight) * 100) : 0;
+      const docHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const progress =
+        docHeight > 0 ? Math.round((scrollTop / docHeight) * 100) : 0;
       setPercentage(progress);
       ticking = false;
     };
@@ -27,13 +29,16 @@ export const ReadingProgressBar = ({
       }
     };
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    
+    window.addEventListener("scroll", onScroll, { passive: true });
+
     // Defer initial read to avoid forced reflow during paint
-    const timeoutId = setTimeout(() => requestAnimationFrame(updateProgress), 100);
-    
+    const timeoutId = setTimeout(
+      () => requestAnimationFrame(updateProgress),
+      100,
+    );
+
     return () => {
-      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener("scroll", onScroll);
       clearTimeout(timeoutId);
     };
   }, []);

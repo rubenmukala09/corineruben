@@ -16,8 +16,7 @@ import { TrainingProgressCard } from "@/components/dashboard/TrainingProgressCar
 import { UpcomingAppointmentsCard } from "@/components/dashboard/UpcomingAppointmentsCard";
 import { SubscriptionStatus } from "@/components/SubscriptionStatus";
 
-type SeniorProfile =
-  Database["public"]["Views"]["profiles_safe"]["Row"] &
+type SeniorProfile = Database["public"]["Views"]["profiles_safe"]["Row"] &
   Partial<Database["public"]["Views"]["senior_profiles_safe"]["Row"]>;
 
 type DashboardAppointment = Pick<
@@ -45,7 +44,9 @@ function SeniorDashboard() {
 
   const loadProfile = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         navigate("/auth");
         return;
@@ -76,7 +77,9 @@ function SeniorDashboard() {
 
   const loadAppointments = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data, error } = await supabase
@@ -97,9 +100,9 @@ function SeniorDashboard() {
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut();
-      toast({ 
+      toast({
         title: "👋 Signed Out Successfully",
-        description: "You've been securely logged out. See you next time!"
+        description: "You've been securely logged out. See you next time!",
       });
       navigate("/auth");
     } catch (error: unknown) {
@@ -112,7 +115,7 @@ function SeniorDashboard() {
   };
 
   // Get active subscription info
-  const activeSubscription = subscriptions.find(s => s.status === "active");
+  const activeSubscription = subscriptions.find((s) => s.status === "active");
   const planName = activeSubscription?.plan_name || "ScamShield Starter";
   const protectionStatus = activeSubscription ? "active" : "pending";
 
@@ -139,7 +142,7 @@ function SeniorDashboard() {
       <main className="container mx-auto px-4 py-6 space-y-6">
         {/* Hero Protection Status */}
         <div>
-          <ProtectionStatusHero 
+          <ProtectionStatusHero
             planName={planName}
             status={protectionStatus}
             protectionScore={metrics?.protectionScore || 0}
@@ -163,14 +166,16 @@ function SeniorDashboard() {
 
         {/* Quick Actions */}
         <div>
-          <QuickActionsGrid onBookAppointment={() => setBookingModalOpen(true)} />
+          <QuickActionsGrid
+            onBookAppointment={() => setBookingModalOpen(true)}
+          />
         </div>
 
         {/* Bottom Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Appointments */}
           <div>
-            <UpcomingAppointmentsCard 
+            <UpcomingAppointmentsCard
               appointments={appointments}
               onBookAppointment={() => setBookingModalOpen(true)}
             />

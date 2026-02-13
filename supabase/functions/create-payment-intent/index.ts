@@ -3,11 +3,12 @@ import Stripe from "https://esm.sh/stripe@18.5.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
 const logStep = (step: string, details?: any) => {
-  const detailsStr = details ? ` - ${JSON.stringify(details)}` : '';
+  const detailsStr = details ? ` - ${JSON.stringify(details)}` : "";
   console.log(`[CREATE-PAYMENT-INTENT] ${step}${detailsStr}`);
 };
 
@@ -29,13 +30,13 @@ serve(async (req) => {
     const stripe = new Stripe(stripeKey, { apiVersion: "2024-11-20.acacia" });
 
     const body = await req.json();
-    const { 
-      priceId, 
+    const {
+      priceId,
       mode, // 'payment' or 'subscription'
-      customerEmail, 
+      customerEmail,
       customerName,
       isVeteran = false,
-      metadata = {}
+      metadata = {},
     } = body;
 
     logStep("Request body parsed", { priceId, mode, customerEmail, isVeteran });
@@ -45,7 +46,10 @@ serve(async (req) => {
     }
 
     // Check if customer already exists
-    const customers = await stripe.customers.list({ email: customerEmail, limit: 1 });
+    const customers = await stripe.customers.list({
+      email: customerEmail,
+      limit: 1,
+    });
     let customerId: string;
 
     if (customers.data.length > 0) {
@@ -57,9 +61,9 @@ serve(async (req) => {
         email: customerEmail,
         name: customerName,
         metadata: {
-          isVeteran: isVeteran ? 'true' : 'false',
-          ...metadata
-        }
+          isVeteran: isVeteran ? "true" : "false",
+          ...metadata,
+        },
       });
       customerId = newCustomer.id;
       logStep("Created new customer", { customerId });
@@ -75,15 +79,15 @@ serve(async (req) => {
         customer: customerId,
         items: [{ price: priceId }],
         payment_behavior: "default_incomplete",
-        payment_settings: { 
+        payment_settings: {
           save_default_payment_method: "on_subscription",
         },
         expand: ["latest_invoice.payment_intent", "pending_setup_intent"],
         metadata: {
-          isVeteran: isVeteran ? 'true' : 'false',
-          customerName: customerName || '',
-          ...metadata
-        }
+          isVeteran: isVeteran ? "true" : "false",
+          customerName: customerName || "",
+          ...metadata,
+        },
       });
 
       logStep("Subscription created", { subscriptionId: subscription.id });
@@ -93,42 +97,57 @@ serve(async (req) => {
       const invoice = subscription.latest_invoice as Stripe.Invoice | null;
 
       // Strategy 1: Try to get client_secret from invoice's payment_intent
-      if (invoice?.payment_intent && typeof invoice.payment_intent !== 'string') {
+      if (
+        invoice?.payment_intent &&
+        typeof invoice.payment_intent !== "string"
+      ) {
         const pi = invoice.payment_intent as Stripe.PaymentIntent;
         if (pi.client_secret) {
           clientSecret = pi.client_secret;
           paymentIntentId = pi.id;
-          logStep("Got client_secret from invoice payment_intent", { paymentIntentId });
+          logStep("Got client_secret from invoice payment_intent", {
+            paymentIntentId,
+          });
         }
       }
 
       // Strategy 2: Try pending_setup_intent (for $0 trials or setup-only flows)
       if (!clientSecret && subscription.pending_setup_intent) {
-        const setupIntent = typeof subscription.pending_setup_intent === 'string'
-          ? await stripe.setupIntents.retrieve(subscription.pending_setup_intent)
-          : subscription.pending_setup_intent as Stripe.SetupIntent;
-        
+        const setupIntent =
+          typeof subscription.pending_setup_intent === "string"
+            ? await stripe.setupIntents.retrieve(
+                subscription.pending_setup_intent,
+              )
+            : (subscription.pending_setup_intent as Stripe.SetupIntent);
+
         if (setupIntent.client_secret) {
           clientSecret = setupIntent.client_secret;
-          logStep("Got client_secret from pending_setup_intent", { setupIntentId: setupIntent.id });
-          
-          return new Response(JSON.stringify({
-            clientSecret,
-            subscriptionId: subscription.id,
-            customerId,
-            amount: price.unit_amount,
-            type: "setup" // Different type for frontend to handle
-          }), {
-            headers: { ...corsHeaders, "Content-Type": "application/json" },
-            status: 200,
+          logStep("Got client_secret from pending_setup_intent", {
+            setupIntentId: setupIntent.id,
           });
+
+          return new Response(
+            JSON.stringify({
+              clientSecret,
+              subscriptionId: subscription.id,
+              customerId,
+              amount: price.unit_amount,
+              type: "setup", // Different type for frontend to handle
+            }),
+            {
+              headers: { ...corsHeaders, "Content-Type": "application/json" },
+              status: 200,
+            },
+          );
         }
       }
 
       // Strategy 3: Manually create a PaymentIntent for the subscription's first invoice
       if (!clientSecret && invoice) {
-        logStep("Creating manual PaymentIntent for subscription invoice", { invoiceId: invoice.id });
-        
+        logStep("Creating manual PaymentIntent for subscription invoice", {
+          invoiceId: invoice.id,
+        });
+
         const manualPaymentIntent = await stripe.paymentIntents.create({
           customer: customerId,
           amount: price.unit_amount!,
@@ -138,9 +157,9 @@ serve(async (req) => {
             subscriptionId: subscription.id,
             invoiceId: invoice.id,
             priceId,
-            isVeteran: isVeteran ? 'true' : 'false',
-            customerName: customerName || '',
-          }
+            isVeteran: isVeteran ? "true" : "false",
+            customerName: customerName || "",
+          },
         });
 
         clientSecret = manualPaymentIntent.client_secret;
@@ -153,28 +172,30 @@ serve(async (req) => {
         logStep("ERROR: Could not obtain client_secret after all strategies", {
           subscriptionId: subscription.id,
           invoiceId: invoice?.id,
-          invoiceStatus: invoice?.status
+          invoiceStatus: invoice?.status,
         });
         throw new Error("Failed to create payment intent for subscription");
       }
 
-      logStep("Returning subscription response", { 
-        subscriptionId: subscription.id, 
-        paymentIntentId,
-        clientSecret: "present" 
-      });
-
-      return new Response(JSON.stringify({
-        clientSecret,
+      logStep("Returning subscription response", {
         subscriptionId: subscription.id,
-        customerId,
-        amount: price.unit_amount,
-        type: "subscription"
-      }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 200,
+        paymentIntentId,
+        clientSecret: "present",
       });
 
+      return new Response(
+        JSON.stringify({
+          clientSecret,
+          subscriptionId: subscription.id,
+          customerId,
+          amount: price.unit_amount,
+          type: "subscription",
+        }),
+        {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 200,
+        },
+      );
     } else {
       // One-time payment - create PaymentIntent
       const paymentIntent = await stripe.paymentIntents.create({
@@ -184,29 +205,31 @@ serve(async (req) => {
         automatic_payment_methods: { enabled: true },
         metadata: {
           priceId,
-          isVeteran: isVeteran ? 'true' : 'false',
-          customerName: customerName || '',
-          ...metadata
-        }
+          isVeteran: isVeteran ? "true" : "false",
+          customerName: customerName || "",
+          ...metadata,
+        },
       });
 
-      logStep("PaymentIntent created", { 
+      logStep("PaymentIntent created", {
         paymentIntentId: paymentIntent.id,
-        clientSecret: paymentIntent.client_secret ? "present" : "missing"
+        clientSecret: paymentIntent.client_secret ? "present" : "missing",
       });
 
-      return new Response(JSON.stringify({
-        clientSecret: paymentIntent.client_secret,
-        paymentIntentId: paymentIntent.id,
-        customerId,
-        amount: price.unit_amount,
-        type: "payment"
-      }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 200,
-      });
+      return new Response(
+        JSON.stringify({
+          clientSecret: paymentIntent.client_secret,
+          paymentIntentId: paymentIntent.id,
+          customerId,
+          amount: price.unit_amount,
+          type: "payment",
+        }),
+        {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 200,
+        },
+      );
     }
-
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     logStep("ERROR", { message: errorMessage });

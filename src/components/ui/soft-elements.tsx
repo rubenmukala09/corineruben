@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * Soft Modern Design System Components
- * 
+ *
  * These components implement the "Soft Modern" aesthetic:
  * - Floating cards with pure white backgrounds
  * - Heavy rounded corners (rounded-3xl)
@@ -29,7 +29,7 @@ const SoftCard = React.forwardRef<
         "hover:translate-y-[-8px] hover:scale-[1.02]",
         "hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]",
       ],
-      className
+      className,
     )}
     {...props}
   />
@@ -54,7 +54,7 @@ const SoftImage = React.forwardRef<
         "hover:translate-y-[-8px] hover:scale-[1.02]",
         "hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]",
       ],
-      className
+      className,
     )}
     {...props}
   >
@@ -73,7 +73,7 @@ const SoftSection = React.forwardRef<
     className={cn(
       "bg-white rounded-3xl p-8 md:p-10",
       "shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)]",
-      className
+      className,
     )}
     {...props}
   />
@@ -91,7 +91,7 @@ const SoftButton = React.forwardRef<
       "inline-block transition-all duration-300 ease-out",
       "hover:translate-y-[-4px]",
       "hover:shadow-[0_12px_30px_-8px_rgba(0,0,0,0.1)]",
-      className
+      className,
     )}
     {...props}
   >

@@ -15,9 +15,24 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Calendar as CalendarIcon, Upload, X, ChevronDown, ChevronUp, Lock, Globe, Eye, Search, Edit } from "lucide-react";
+import {
+  Calendar as CalendarIcon,
+  Upload,
+  X,
+  ChevronDown,
+  ChevronUp,
+  Lock,
+  Globe,
+  Eye,
+  Search,
+  Edit,
+} from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 
@@ -60,7 +75,12 @@ const AVAILABLE_CATEGORIES = [
 
 const AVAILABLE_AUTHORS = [
   { id: "1", name: "Ruben Nkulu", avatar: "/placeholder.svg", role: "Admin" },
-  { id: "2", name: "Corine Miller", avatar: "/placeholder.svg", role: "Editor" },
+  {
+    id: "2",
+    name: "Corine Miller",
+    avatar: "/placeholder.svg",
+    role: "Editor",
+  },
 ];
 
 export function ArticlePublishingSidebar({
@@ -83,12 +103,20 @@ export function ArticlePublishingSidebar({
 
   const [tagInput, setTagInput] = useState("");
   const [existingTags] = useState([
-    "AI", "Machine Learning", "Security", "Privacy", "Technology",
-    "Business", "Family", "Safety", "Scams", "Protection"
+    "AI",
+    "Machine Learning",
+    "Security",
+    "Privacy",
+    "Technology",
+    "Business",
+    "Family",
+    "Safety",
+    "Scams",
+    "Protection",
   ]);
 
   const toggleSection = (section: keyof typeof sectionsOpen) => {
-    setSectionsOpen(prev => ({ ...prev, [section]: !prev[section] }));
+    setSectionsOpen((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
   const handleChange = (field: keyof ArticleData, value: any) => {
@@ -106,14 +134,14 @@ export function ArticlePublishingSidebar({
   const handleRemoveTag = (tag: string) => {
     handleChange(
       "tags",
-      article.tags.filter((t) => t !== tag)
+      article.tags.filter((t) => t !== tag),
     );
   };
 
   const handleCategoryToggle = (categoryId: string) => {
     const currentCategories = article.categories || [];
     const newCategories = currentCategories.includes(categoryId)
-      ? currentCategories.filter(c => c !== categoryId)
+      ? currentCategories.filter((c) => c !== categoryId)
       : [...currentCategories, categoryId];
     handleChange("categories", newCategories);
   };
@@ -121,38 +149,42 @@ export function ArticlePublishingSidebar({
   // Calculate keyword density
   const keywordDensity = useMemo(() => {
     if (!article.focusKeyword || !article.content) return 0;
-    
+
     const keyword = article.focusKeyword.toLowerCase();
     const content = article.content.toLowerCase();
     const words = content.split(/\s+/).length;
-    
+
     if (words === 0) return 0;
-    
+
     const matches = (content.match(new RegExp(keyword, "g")) || []).length;
     return (matches / words) * 100;
   }, [article.focusKeyword, article.content]);
 
   const getKeywordDensityColor = (density: number) => {
     if (density >= 1 && density <= 2) return "text-green-600";
-    if ((density >= 0.5 && density < 1) || (density > 2 && density <= 3)) return "text-yellow-600";
+    if ((density >= 0.5 && density < 1) || (density > 2 && density <= 3))
+      return "text-yellow-600";
     return "text-red-600";
   };
 
   const getKeywordDensityStatus = (density: number) => {
     if (density >= 1 && density <= 2) return "Good";
-    if ((density >= 0.5 && density < 1) || (density > 2 && density <= 3)) return "Okay";
+    if ((density >= 0.5 && density < 1) || (density > 2 && density <= 3))
+      return "Okay";
     return "Improve";
   };
 
   const getSeoTitleColor = (length: number) => {
     if (length >= 50 && length <= 60) return "text-green-600";
-    if ((length >= 45 && length < 50) || (length > 60 && length <= 70)) return "text-yellow-600";
+    if ((length >= 45 && length < 50) || (length > 60 && length <= 70))
+      return "text-yellow-600";
     return "text-red-600";
   };
 
   const getSeoTitleStatus = (length: number) => {
     if (length >= 50 && length <= 60) return "Good";
-    if ((length >= 45 && length < 50) || (length > 60 && length <= 70)) return "Okay";
+    if ((length >= 45 && length < 50) || (length > 60 && length <= 70))
+      return "Okay";
     if (length < 45) return "Too short";
     return "Too long";
   };
@@ -160,7 +192,8 @@ export function ArticlePublishingSidebar({
   // Calculate word count
   const wordCount = useMemo(() => {
     if (!article.content) return 0;
-    return article.content.split(/\s+/).filter(word => word.length > 0).length;
+    return article.content.split(/\s+/).filter((word) => word.length > 0)
+      .length;
   }, [article.content]);
 
   // Calculate SEO score
@@ -169,59 +202,76 @@ export function ArticlePublishingSidebar({
       {
         id: "title-keyword",
         label: "Title contains keyword",
-        completed: article.focusKeyword && article.title.toLowerCase().includes(article.focusKeyword.toLowerCase()),
+        completed:
+          article.focusKeyword &&
+          article.title
+            .toLowerCase()
+            .includes(article.focusKeyword.toLowerCase()),
         tip: "Include your focus keyword in the article title for better SEO.",
-        weight: 15
+        weight: 15,
       },
       {
         id: "url-keyword",
         label: "URL contains keyword",
-        completed: article.focusKeyword && article.slug.toLowerCase().includes(article.focusKeyword.toLowerCase()),
+        completed:
+          article.focusKeyword &&
+          article.slug
+            .toLowerCase()
+            .includes(article.focusKeyword.toLowerCase()),
         tip: "Add your focus keyword to the URL slug for improved search rankings.",
-        weight: 15
+        weight: 15,
       },
       {
         id: "word-count",
         label: "Content is over 300 words",
         completed: wordCount >= 300,
         tip: "Write at least 300 words. Longer content tends to rank better in search engines.",
-        weight: 20
+        weight: 20,
       },
       {
         id: "meta-description",
         label: "Meta description added",
-        completed: !!(article.seoDescription && article.seoDescription.length >= 120),
+        completed: !!(
+          article.seoDescription && article.seoDescription.length >= 120
+        ),
         tip: "Write a compelling meta description (120-160 characters) to improve click-through rates.",
-        weight: 15
+        weight: 15,
       },
       {
         id: "featured-image",
         label: "Featured image set",
         completed: !!article.featuredImage,
         tip: "Add a featured image to make your article more shareable and visually appealing.",
-        weight: 15
+        weight: 15,
       },
       {
         id: "keyword-density",
         label: "Good keyword density",
         completed: keywordDensity >= 0.5 && keywordDensity <= 2.5,
         tip: "Aim for 0.5-2.5% keyword density. Too much can be seen as keyword stuffing.",
-        weight: 10
+        weight: 10,
       },
       {
         id: "seo-title",
         label: "SEO title optimized",
-        completed: (article.seoTitle || article.title || "").length >= 50 && (article.seoTitle || article.title || "").length <= 60,
+        completed:
+          (article.seoTitle || article.title || "").length >= 50 &&
+          (article.seoTitle || article.title || "").length <= 60,
         tip: "Keep your SEO title between 50-60 characters for optimal display in search results.",
-        weight: 10
-      }
+        weight: 10,
+      },
     ];
     return checks;
   }, [article, wordCount, keywordDensity]);
 
   const seoScore = useMemo(() => {
-    const totalWeight = seoChecklist.reduce((sum, check) => sum + check.weight, 0);
-    const earnedWeight = seoChecklist.filter(check => check.completed).reduce((sum, check) => sum + check.weight, 0);
+    const totalWeight = seoChecklist.reduce(
+      (sum, check) => sum + check.weight,
+      0,
+    );
+    const earnedWeight = seoChecklist
+      .filter((check) => check.completed)
+      .reduce((sum, check) => sum + check.weight, 0);
     return Math.round((earnedWeight / totalWeight) * 100);
   }, [seoChecklist]);
 
@@ -247,8 +297,15 @@ export function ArticlePublishingSidebar({
           <CardHeader>
             <CardTitle className="text-base flex items-center gap-2">
               Publishing Checklist
-              <Badge variant={publishingChecklist.every(c => c.completed) ? "default" : "secondary"}>
-                {publishingChecklist.filter(c => c.completed).length}/{publishingChecklist.length}
+              <Badge
+                variant={
+                  publishingChecklist.every((c) => c.completed)
+                    ? "default"
+                    : "secondary"
+                }
+              >
+                {publishingChecklist.filter((c) => c.completed).length}/
+                {publishingChecklist.length}
               </Badge>
             </CardTitle>
           </CardHeader>
@@ -258,7 +315,9 @@ export function ArticlePublishingSidebar({
                 <div
                   className={cn(
                     "w-4 h-4 rounded-sm flex items-center justify-center text-xs transition-colors",
-                    check.completed ? "bg-green-500 text-white" : "bg-muted border border-border"
+                    check.completed
+                      ? "bg-green-500 text-white"
+                      : "bg-muted border border-border",
                   )}
                 >
                   {check.completed && "✓"}
@@ -266,7 +325,9 @@ export function ArticlePublishingSidebar({
                 <span
                   className={cn(
                     "text-sm",
-                    check.completed ? "text-foreground" : "text-muted-foreground"
+                    check.completed
+                      ? "text-foreground"
+                      : "text-muted-foreground",
                   )}
                 >
                   {check.label}
@@ -278,13 +339,17 @@ export function ArticlePublishingSidebar({
       )}
       {/* Status & Visibility */}
       <Card>
-        <CardHeader 
+        <CardHeader
           className="cursor-pointer hover:bg-muted/50 transition-colors"
           onClick={() => toggleSection("status")}
         >
           <div className="flex items-center justify-between">
             <CardTitle className="text-base">Status & Visibility</CardTitle>
-            {sectionsOpen.status ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            {sectionsOpen.status ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
           </div>
         </CardHeader>
         {sectionsOpen.status && (
@@ -330,12 +395,15 @@ export function ArticlePublishingSidebar({
                       variant="outline"
                       className={cn(
                         "w-full justify-start text-left font-normal",
-                        !article.scheduledDate && "text-muted-foreground"
+                        !article.scheduledDate && "text-muted-foreground",
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
                       {article.scheduledDate
-                        ? format(new Date(article.scheduledDate), "PPP 'at' h:mm a")
+                        ? format(
+                            new Date(article.scheduledDate),
+                            "PPP 'at' h:mm a",
+                          )
                         : "Pick a date"}
                     </Button>
                   </PopoverTrigger>
@@ -343,7 +411,9 @@ export function ArticlePublishingSidebar({
                     <Calendar
                       mode="single"
                       selected={
-                        article.scheduledDate ? new Date(article.scheduledDate) : undefined
+                        article.scheduledDate
+                          ? new Date(article.scheduledDate)
+                          : undefined
                       }
                       onSelect={(date) =>
                         handleChange("scheduledDate", date?.toISOString())
@@ -352,32 +422,46 @@ export function ArticlePublishingSidebar({
                     />
                   </PopoverContent>
                 </Popover>
-                <p className="text-xs text-muted-foreground">Timezone: EST (auto-detect)</p>
+                <p className="text-xs text-muted-foreground">
+                  Timezone: EST (auto-detect)
+                </p>
               </div>
             )}
 
             {article.status === "published" && article.scheduledDate && (
               <div className="text-sm text-muted-foreground">
-                Published on {format(new Date(article.scheduledDate), "MMM d, yyyy 'at' h:mm a")}
+                Published on{" "}
+                {format(
+                  new Date(article.scheduledDate),
+                  "MMM d, yyyy 'at' h:mm a",
+                )}
               </div>
             )}
 
             <div className="space-y-3">
               <Label>Visibility</Label>
-              <RadioGroup 
-                value={article.visibility || "public"} 
-                onValueChange={(value: any) => handleChange("visibility", value)}
+              <RadioGroup
+                value={article.visibility || "public"}
+                onValueChange={(value: any) =>
+                  handleChange("visibility", value)
+                }
               >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="public" id="public" />
-                  <Label htmlFor="public" className="flex items-center gap-2 font-normal cursor-pointer">
+                  <Label
+                    htmlFor="public"
+                    className="flex items-center gap-2 font-normal cursor-pointer"
+                  >
                     <Globe className="h-4 w-4" />
                     Public (everyone can see)
                   </Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="password" id="password" />
-                  <Label htmlFor="password" className="flex items-center gap-2 font-normal cursor-pointer">
+                  <Label
+                    htmlFor="password"
+                    className="flex items-center gap-2 font-normal cursor-pointer"
+                  >
                     <Lock className="h-4 w-4" />
                     Password Protected
                   </Label>
@@ -393,7 +477,10 @@ export function ArticlePublishingSidebar({
                 )}
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="private" id="private" />
-                  <Label htmlFor="private" className="flex items-center gap-2 font-normal cursor-pointer">
+                  <Label
+                    htmlFor="private"
+                    className="flex items-center gap-2 font-normal cursor-pointer"
+                  >
                     <Eye className="h-4 w-4" />
                     Private (only admins)
                   </Label>
@@ -406,13 +493,17 @@ export function ArticlePublishingSidebar({
 
       {/* Author */}
       <Card>
-        <CardHeader 
+        <CardHeader
           className="cursor-pointer hover:bg-muted/50 transition-colors"
           onClick={() => toggleSection("author")}
         >
           <div className="flex items-center justify-between">
             <CardTitle className="text-base">Author</CardTitle>
-            {sectionsOpen.author ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            {sectionsOpen.author ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
           </div>
         </CardHeader>
         {sectionsOpen.author && (
@@ -430,11 +521,18 @@ export function ArticlePublishingSidebar({
                     <div className="flex items-center gap-2">
                       <Avatar className="h-6 w-6">
                         <AvatarImage src={author.avatar} />
-                        <AvatarFallback>{author.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                        <AvatarFallback>
+                          {author.name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")}
+                        </AvatarFallback>
                       </Avatar>
                       <div className="flex flex-col">
                         <span className="text-sm">{author.name}</span>
-                        <span className="text-xs text-muted-foreground">{author.role}</span>
+                        <span className="text-xs text-muted-foreground">
+                          {author.role}
+                        </span>
                       </div>
                     </div>
                   </SelectItem>
@@ -447,13 +545,17 @@ export function ArticlePublishingSidebar({
 
       {/* Categories */}
       <Card>
-        <CardHeader 
+        <CardHeader
           className="cursor-pointer hover:bg-muted/50 transition-colors"
           onClick={() => toggleSection("categories")}
         >
           <div className="flex items-center justify-between">
             <CardTitle className="text-base">Categories</CardTitle>
-            {sectionsOpen.categories ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            {sectionsOpen.categories ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
           </div>
         </CardHeader>
         {sectionsOpen.categories && (
@@ -482,13 +584,17 @@ export function ArticlePublishingSidebar({
 
       {/* Featured Image */}
       <Card>
-        <CardHeader 
+        <CardHeader
           className="cursor-pointer hover:bg-muted/50 transition-colors"
           onClick={() => toggleSection("image")}
         >
           <div className="flex items-center justify-between">
             <CardTitle className="text-base">Featured Image</CardTitle>
-            {sectionsOpen.image ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            {sectionsOpen.image ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
           </div>
         </CardHeader>
         {sectionsOpen.image && (
@@ -514,9 +620,9 @@ export function ArticlePublishingSidebar({
                   <Button variant="outline" size="sm" className="flex-1">
                     Change
                   </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
+                  <Button
+                    variant="outline"
+                    size="sm"
                     className="flex-1"
                     onClick={() => handleChange("featuredImage", undefined)}
                   >
@@ -544,13 +650,17 @@ export function ArticlePublishingSidebar({
 
       {/* Excerpt */}
       <Card>
-        <CardHeader 
+        <CardHeader
           className="cursor-pointer hover:bg-muted/50 transition-colors"
           onClick={() => toggleSection("excerpt")}
         >
           <div className="flex items-center justify-between">
             <CardTitle className="text-base">Excerpt</CardTitle>
-            {sectionsOpen.excerpt ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            {sectionsOpen.excerpt ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
           </div>
         </CardHeader>
         {sectionsOpen.excerpt && (
@@ -577,22 +687,26 @@ export function ArticlePublishingSidebar({
 
       {/* Tags */}
       <Card>
-        <CardHeader 
+        <CardHeader
           className="cursor-pointer hover:bg-muted/50 transition-colors"
           onClick={() => toggleSection("tags")}
         >
           <div className="flex items-center justify-between">
             <CardTitle className="text-base">Tags</CardTitle>
-            {sectionsOpen.tags ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            {sectionsOpen.tags ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
           </div>
         </CardHeader>
         {sectionsOpen.tags && (
           <CardContent className="space-y-3">
             <div className="flex flex-wrap gap-2 min-h-[32px]">
               {article.tags.map((tag) => (
-                <Badge 
-                  key={tag} 
-                  variant="secondary" 
+                <Badge
+                  key={tag}
+                  variant="secondary"
                   className="gap-1 cursor-pointer hover:bg-destructive/10"
                 >
                   {tag}
@@ -620,12 +734,13 @@ export function ArticlePublishingSidebar({
               {tagInput && (
                 <div className="absolute z-10 w-full mt-1 bg-popover border rounded-md shadow-md">
                   {existingTags
-                    .filter(tag => 
-                      tag.toLowerCase().includes(tagInput.toLowerCase()) && 
-                      !article.tags.includes(tag)
+                    .filter(
+                      (tag) =>
+                        tag.toLowerCase().includes(tagInput.toLowerCase()) &&
+                        !article.tags.includes(tag),
                     )
                     .slice(0, 5)
-                    .map(tag => (
+                    .map((tag) => (
                       <button
                         key={tag}
                         onClick={() => handleAddTag(tag)}
@@ -646,7 +761,7 @@ export function ArticlePublishingSidebar({
 
       {/* SEO */}
       <Card>
-        <CardHeader 
+        <CardHeader
           className="cursor-pointer hover:bg-muted/50 transition-colors"
           onClick={() => toggleSection("seo")}
         >
@@ -655,15 +770,26 @@ export function ArticlePublishingSidebar({
               <Search className="h-4 w-4" />
               Search Engine Optimization
             </CardTitle>
-            {sectionsOpen.seo ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            {sectionsOpen.seo ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
           </div>
         </CardHeader>
         {sectionsOpen.seo && (
           <CardContent className="space-y-5">
             {/* SEO Score */}
-            <div className={cn("border-2 rounded-lg p-4 text-center transition-colors", getSeoScoreColor(seoScore))}>
+            <div
+              className={cn(
+                "border-2 rounded-lg p-4 text-center transition-colors",
+                getSeoScoreColor(seoScore),
+              )}
+            >
               <div className="text-4xl font-bold mb-1">{seoScore}</div>
-              <div className="text-sm font-medium">{getSeoScoreLabel(seoScore)}</div>
+              <div className="text-sm font-medium">
+                {getSeoScoreLabel(seoScore)}
+              </div>
               <div className="text-xs mt-1">SEO Score</div>
             </div>
 
@@ -674,16 +800,24 @@ export function ArticlePublishingSidebar({
                 <Popover key={check.id}>
                   <PopoverTrigger asChild>
                     <div className="flex items-center gap-2 p-2 rounded hover:bg-muted/50 cursor-pointer transition-colors">
-                      <div className={cn(
-                        "w-4 h-4 rounded-sm flex items-center justify-center text-xs",
-                        check.completed ? "bg-green-500 text-white" : "bg-muted"
-                      )}>
+                      <div
+                        className={cn(
+                          "w-4 h-4 rounded-sm flex items-center justify-center text-xs",
+                          check.completed
+                            ? "bg-green-500 text-white"
+                            : "bg-muted",
+                        )}
+                      >
                         {check.completed && "✓"}
                       </div>
-                      <span className={cn(
-                        "text-sm flex-1",
-                        check.completed ? "text-foreground" : "text-muted-foreground"
-                      )}>
+                      <span
+                        className={cn(
+                          "text-sm flex-1",
+                          check.completed
+                            ? "text-foreground"
+                            : "text-muted-foreground",
+                        )}
+                      >
                         {check.label}
                       </span>
                     </div>
@@ -691,7 +825,9 @@ export function ArticlePublishingSidebar({
                   <PopoverContent className="w-80" side="left">
                     <div className="space-y-2">
                       <h4 className="font-semibold text-sm">{check.label}</h4>
-                      <p className="text-sm text-muted-foreground">{check.tip}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {check.tip}
+                      </p>
                     </div>
                   </PopoverContent>
                 </Popover>
@@ -707,11 +843,19 @@ export function ArticlePublishingSidebar({
                 onChange={(e) => handleChange("focusKeyword", e.target.value)}
                 placeholder="AI scam protection"
               />
-              <p className="text-xs text-muted-foreground">Main keyword for this article</p>
-              
+              <p className="text-xs text-muted-foreground">
+                Main keyword for this article
+              </p>
+
               {article.focusKeyword && article.content && (
-                <div className={cn("text-xs font-medium", getKeywordDensityColor(keywordDensity))}>
-                  Keyword density: {keywordDensity.toFixed(2)}% - {getKeywordDensityStatus(keywordDensity)}
+                <div
+                  className={cn(
+                    "text-xs font-medium",
+                    getKeywordDensityColor(keywordDensity),
+                  )}
+                >
+                  Keyword density: {keywordDensity.toFixed(2)}% -{" "}
+                  {getKeywordDensityStatus(keywordDensity)}
                 </div>
               )}
             </div>
@@ -728,12 +872,25 @@ export function ArticlePublishingSidebar({
               />
               <div className="flex justify-between items-center">
                 <p className="text-xs text-muted-foreground">
-                  {(article.seoTitle || article.title || "").length < 45 && "Too short"}
-                  {(article.seoTitle || article.title || "").length >= 45 && (article.seoTitle || article.title || "").length <= 50 && "Good length"}
-                  {(article.seoTitle || article.title || "").length > 50 && (article.seoTitle || article.title || "").length <= 60 && "Optimal"}
-                  {(article.seoTitle || article.title || "").length > 60 && "Consider shortening"}
+                  {(article.seoTitle || article.title || "").length < 45 &&
+                    "Too short"}
+                  {(article.seoTitle || article.title || "").length >= 45 &&
+                    (article.seoTitle || article.title || "").length <= 50 &&
+                    "Good length"}
+                  {(article.seoTitle || article.title || "").length > 50 &&
+                    (article.seoTitle || article.title || "").length <= 60 &&
+                    "Optimal"}
+                  {(article.seoTitle || article.title || "").length > 60 &&
+                    "Consider shortening"}
                 </p>
-                <p className={cn("text-xs font-medium", getSeoTitleColor((article.seoTitle || article.title || "").length))}>
+                <p
+                  className={cn(
+                    "text-xs font-medium",
+                    getSeoTitleColor(
+                      (article.seoTitle || article.title || "").length,
+                    ),
+                  )}
+                >
                   {(article.seoTitle || article.title || "").length}/60
                 </p>
               </div>
@@ -765,11 +922,7 @@ export function ArticlePublishingSidebar({
             <div className="space-y-2">
               <Label>URL Slug</Label>
               <div className="flex gap-2">
-                <Input
-                  value={article.slug}
-                  readOnly
-                  className="bg-muted"
-                />
+                <Input value={article.slug} readOnly className="bg-muted" />
                 <Button variant="outline" size="icon">
                   <Edit className="h-4 w-4" />
                 </Button>
@@ -781,7 +934,9 @@ export function ArticlePublishingSidebar({
 
             {/* Google Preview */}
             <div className="space-y-2">
-              <Label className="text-xs font-semibold text-muted-foreground">GOOGLE PREVIEW</Label>
+              <Label className="text-xs font-semibold text-muted-foreground">
+                GOOGLE PREVIEW
+              </Label>
               <div className="border rounded-lg p-4 bg-white space-y-1">
                 <div className="text-xs text-green-700">
                   invisionnetwork.org › blog › {article.slug || "article"}
@@ -790,7 +945,9 @@ export function ArticlePublishingSidebar({
                   {article.seoTitle || article.title || "Your Article Title"}
                 </div>
                 <div className="text-sm text-gray-600 line-clamp-2">
-                  {article.seoDescription || article.excerpt || "Your article description will appear here. Write a compelling meta description to improve click-through rates from search results."}
+                  {article.seoDescription ||
+                    article.excerpt ||
+                    "Your article description will appear here. Write a compelling meta description to improve click-through rates from search results."}
                 </div>
               </div>
             </div>
@@ -800,35 +957,45 @@ export function ArticlePublishingSidebar({
 
       {/* Social Sharing Preview */}
       <Card>
-        <CardHeader 
+        <CardHeader
           className="cursor-pointer hover:bg-muted/50 transition-colors"
           onClick={() => toggleSection("socialPreview")}
         >
           <div className="flex items-center justify-between">
             <CardTitle className="text-base">Social Sharing Preview</CardTitle>
-            {sectionsOpen.socialPreview ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            {sectionsOpen.socialPreview ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
           </div>
         </CardHeader>
         {sectionsOpen.socialPreview && (
           <CardContent className="space-y-4">
             {/* Facebook Preview */}
             <div className="space-y-2">
-              <Label className="text-xs font-semibold text-muted-foreground">FACEBOOK</Label>
+              <Label className="text-xs font-semibold text-muted-foreground">
+                FACEBOOK
+              </Label>
               <div className="border rounded-lg overflow-hidden bg-white">
                 {article.featuredImage && (
-                  <img 
-                    src={article.featuredImage} 
-                    alt="Preview" 
+                  <img
+                    src={article.featuredImage}
+                    alt="Preview"
                     className="w-full h-40 object-cover"
                   />
                 )}
                 <div className="p-3 space-y-1 bg-gray-50">
-                  <div className="text-xs text-gray-500 uppercase">invisionnetwork.org</div>
+                  <div className="text-xs text-gray-500 uppercase">
+                    invisionnetwork.org
+                  </div>
                   <div className="font-semibold text-sm line-clamp-1">
                     {article.seoTitle || article.title || "Your Article Title"}
                   </div>
                   <div className="text-xs text-gray-600 line-clamp-2">
-                    {article.seoDescription || article.excerpt || "Your description here"}
+                    {article.seoDescription ||
+                      article.excerpt ||
+                      "Your description here"}
                   </div>
                 </div>
               </div>
@@ -836,12 +1003,14 @@ export function ArticlePublishingSidebar({
 
             {/* Twitter Preview */}
             <div className="space-y-2">
-              <Label className="text-xs font-semibold text-muted-foreground">TWITTER (X)</Label>
+              <Label className="text-xs font-semibold text-muted-foreground">
+                TWITTER (X)
+              </Label>
               <div className="border rounded-2xl overflow-hidden bg-white">
                 {article.featuredImage && (
-                  <img 
-                    src={article.featuredImage} 
-                    alt="Preview" 
+                  <img
+                    src={article.featuredImage}
+                    alt="Preview"
                     className="w-full h-48 object-cover"
                   />
                 )}
@@ -850,21 +1019,27 @@ export function ArticlePublishingSidebar({
                     {article.seoTitle || article.title || "Your Article Title"}
                   </div>
                   <div className="text-xs text-gray-600 line-clamp-1">
-                    {article.seoDescription || article.excerpt || "Your description"}
+                    {article.seoDescription ||
+                      article.excerpt ||
+                      "Your description"}
                   </div>
-                  <div className="text-xs text-gray-500 mt-1">invisionnetwork.org</div>
+                  <div className="text-xs text-gray-500 mt-1">
+                    invisionnetwork.org
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* LinkedIn Preview */}
             <div className="space-y-2">
-              <Label className="text-xs font-semibold text-muted-foreground">LINKEDIN</Label>
+              <Label className="text-xs font-semibold text-muted-foreground">
+                LINKEDIN
+              </Label>
               <div className="border rounded overflow-hidden bg-white">
                 {article.featuredImage && (
-                  <img 
-                    src={article.featuredImage} 
-                    alt="Preview" 
+                  <img
+                    src={article.featuredImage}
+                    alt="Preview"
                     className="w-full h-32 object-cover"
                   />
                 )}
@@ -872,7 +1047,9 @@ export function ArticlePublishingSidebar({
                   <div className="font-semibold text-sm line-clamp-1">
                     {article.seoTitle || article.title || "Your Article Title"}
                   </div>
-                  <div className="text-xs text-gray-500">invisionnetwork.org</div>
+                  <div className="text-xs text-gray-500">
+                    invisionnetwork.org
+                  </div>
                 </div>
               </div>
             </div>
@@ -888,13 +1065,17 @@ export function ArticlePublishingSidebar({
 
       {/* Advanced Options */}
       <Card>
-        <CardHeader 
+        <CardHeader
           className="cursor-pointer hover:bg-muted/50 transition-colors"
           onClick={() => toggleSection("advanced")}
         >
           <div className="flex items-center justify-between">
             <CardTitle className="text-base">Advanced Options</CardTitle>
-            {sectionsOpen.advanced ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            {sectionsOpen.advanced ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
           </div>
         </CardHeader>
         {sectionsOpen.advanced && (
@@ -918,10 +1099,18 @@ export function ArticlePublishingSidebar({
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="index-follow">Index, Follow (default)</SelectItem>
-                  <SelectItem value="noindex-follow">No Index, Follow</SelectItem>
-                  <SelectItem value="index-nofollow">Index, No Follow</SelectItem>
-                  <SelectItem value="noindex-nofollow">No Index, No Follow</SelectItem>
+                  <SelectItem value="index-follow">
+                    Index, Follow (default)
+                  </SelectItem>
+                  <SelectItem value="noindex-follow">
+                    No Index, Follow
+                  </SelectItem>
+                  <SelectItem value="index-nofollow">
+                    Index, No Follow
+                  </SelectItem>
+                  <SelectItem value="noindex-nofollow">
+                    No Index, No Follow
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>

@@ -6,7 +6,14 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, ExternalLink, Share2, Copy, Edit, Plus } from "lucide-react";
+import {
+  CheckCircle,
+  ExternalLink,
+  Share2,
+  Copy,
+  Edit,
+  Plus,
+} from "lucide-react";
 import confetti from "canvas-confetti";
 import { useToast } from "@/hooks/use-toast";
 
@@ -36,7 +43,12 @@ export function PublishSuccessModal({
       // Trigger confetti animation
       const duration = 3000;
       const animationEnd = Date.now() + duration;
-      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
+      const defaults = {
+        startVelocity: 30,
+        spread: 360,
+        ticks: 60,
+        zIndex: 9999,
+      };
 
       const randomInRange = (min: number, max: number) => {
         return Math.random() * (max - min) + min;
@@ -116,7 +128,11 @@ export function PublishSuccessModal({
               <ExternalLink className="h-4 w-4 mr-2" />
               View Article
             </Button>
-            <Button onClick={handleCopyLink} variant="outline" className="w-full">
+            <Button
+              onClick={handleCopyLink}
+              variant="outline"
+              className="w-full"
+            >
               <Copy className="h-4 w-4 mr-2" />
               Copy Link
             </Button>
@@ -124,7 +140,9 @@ export function PublishSuccessModal({
 
           {/* Share Buttons */}
           <div className="space-y-2">
-            <p className="text-sm font-medium text-center">Share on social media</p>
+            <p className="text-sm font-medium text-center">
+              Share on social media
+            </p>
             <div className="grid grid-cols-3 gap-2">
               <Button
                 onClick={shareToTwitter}

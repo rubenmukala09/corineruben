@@ -6,16 +6,17 @@ const resendApiKey = Deno.env.get("RESEND_API_KEY")!;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
 const logStep = (step: string, details?: any) => {
-  const detailsStr = details ? ` - ${JSON.stringify(details)}` : '';
+  const detailsStr = details ? ` - ${JSON.stringify(details)}` : "";
   console.log(`[COMPLETE-PAYMENT] ${step}${detailsStr}`);
 };
 
 interface CompletePaymentRequest {
-  paymentType: 'donation' | 'subscription' | 'product' | 'service' | 'training';
+  paymentType: "donation" | "subscription" | "product" | "service" | "training";
   paymentIntentId?: string;
   sessionId?: string;
   recordId?: string;
@@ -29,28 +30,33 @@ interface CompletePaymentRequest {
   metadata?: Record<string, any>;
 }
 
-async function verifyStripePayment(stripeKey: string, paymentIntentId?: string, sessionId?: string): Promise<{ verified: boolean; amount?: number }> {
+async function verifyStripePayment(
+  stripeKey: string,
+  paymentIntentId?: string,
+  sessionId?: string,
+): Promise<{ verified: boolean; amount?: number }> {
   if (!paymentIntentId && !sessionId) {
     return { verified: false };
   }
 
   try {
     const stripe = new Stripe(stripeKey, { apiVersion: "2024-11-20.acacia" });
-    
+
     if (sessionId) {
       const session = await stripe.checkout.sessions.retrieve(sessionId);
-      if (session.payment_status === 'paid') {
+      if (session.payment_status === "paid") {
         return { verified: true, amount: session.amount_total || undefined };
       }
     }
-    
+
     if (paymentIntentId) {
-      const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
-      if (paymentIntent.status === 'succeeded') {
+      const paymentIntent =
+        await stripe.paymentIntents.retrieve(paymentIntentId);
+      if (paymentIntent.status === "succeeded") {
         return { verified: true, amount: paymentIntent.amount };
       }
     }
-    
+
     return { verified: false };
   } catch (error) {
     logStep("Stripe verification error", { error: String(error) });
@@ -62,8 +68,8 @@ async function sendEmail(to: string, subject: string, html: string) {
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
-      "Authorization": `Bearer ${resendApiKey}`,
-      "Content-Type": "application/json"
+      Authorization: `Bearer ${resendApiKey}`,
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       from: "InVision Network <hello@invisionnetwork.org>",
@@ -78,7 +84,7 @@ async function sendEmail(to: string, subject: string, html: string) {
     console.error("Email send failed:", error);
     throw new Error("Failed to send email");
   }
-  
+
   return response.json();
 }
 
@@ -87,8 +93,8 @@ async function sendAdminNotification(subject: string, html: string) {
     await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${resendApiKey}`,
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${resendApiKey}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         from: "InVision Network <hello@invisionnetwork.org>",
@@ -110,15 +116,15 @@ serve(async (req) => {
 
   const supabaseClient = createClient(
     Deno.env.get("SUPABASE_URL") ?? "",
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
   );
 
   try {
     logStep("Function started");
-    
+
     const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
     if (!stripeKey) throw new Error("STRIPE_SECRET_KEY is not set");
-    
+
     const {
       paymentType,
       paymentIntentId,
@@ -131,42 +137,55 @@ serve(async (req) => {
       serviceTier,
       preferredDate,
       isVeteran,
-      metadata
+      metadata,
     }: CompletePaymentRequest = await req.json();
 
-    logStep("Request data", { paymentType, paymentIntentId, sessionId, recordId, customerEmail });
+    logStep("Request data", {
+      paymentType,
+      paymentIntentId,
+      sessionId,
+      recordId,
+      customerEmail,
+    });
 
     // CRITICAL: Verify payment with Stripe before processing
-    const { verified, amount: stripeAmount } = await verifyStripePayment(stripeKey, paymentIntentId, sessionId);
-    
+    const { verified, amount: stripeAmount } = await verifyStripePayment(
+      stripeKey,
+      paymentIntentId,
+      sessionId,
+    );
+
     if (!verified) {
       logStep("Payment verification failed - rejecting request");
       return new Response(
-        JSON.stringify({ error: "Payment could not be verified with Stripe. Please contact support." }),
+        JSON.stringify({
+          error:
+            "Payment could not be verified with Stripe. Please contact support.",
+        }),
         {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
           status: 400,
-        }
+        },
       );
     }
-    
+
     logStep("Payment verified with Stripe", { verified: true, stripeAmount });
 
     const formattedAmount = `$${(amount / 100).toFixed(2)}`;
     const requestNumber = `TRN-${Date.now().toString().slice(-8)}`;
 
     switch (paymentType) {
-      case 'donation': {
+      case "donation": {
         // Update donation status
         if (recordId) {
           await supabaseClient
-            .from('donations')
-            .update({ 
-              payment_status: 'completed',
+            .from("donations")
+            .update({
+              payment_status: "completed",
               stripe_payment_id: paymentIntentId || sessionId,
-              updated_at: new Date().toISOString()
+              updated_at: new Date().toISOString(),
             })
-            .eq('id', recordId);
+            .eq("id", recordId);
           logStep("Updated donation record", { recordId });
         }
 
@@ -187,8 +206,8 @@ serve(async (req) => {
               <div style="background: linear-gradient(135deg, #f0fdf4, #dcfce7); padding: 25px; border-radius: 12px; margin: 25px 0; border: 1px solid #bbf7d0;">
                 <h2 style="color: #16a34a; margin-top: 0;">✓ Payment Confirmed</h2>
                 <p><strong>Amount:</strong> ${formattedAmount}</p>
-                <p><strong>Date:</strong> ${new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
-                <p><strong>Transaction ID:</strong> ${paymentIntentId || sessionId || 'N/A'}</p>
+                <p><strong>Date:</strong> ${new Date().toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</p>
+                <p><strong>Transaction ID:</strong> ${paymentIntentId || sessionId || "N/A"}</p>
               </div>
               
               <div style="background: #faf5ff; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e9d5ff;">
@@ -212,17 +231,17 @@ serve(async (req) => {
               
               <p style="margin-top: 30px;">With heartfelt gratitude,<br><strong>The InVision Network Team</strong></p>
             </div>
-          `
+          `,
         );
         logStep("Sent donation thank-you email");
         break;
       }
 
-      case 'subscription': {
+      case "subscription": {
         // Send welcome email with trust messaging
         await sendEmail(
           customerEmail,
-          `Payment Confirmed - Welcome to ${productName || 'Your Subscription'}! 🛡️ - InVision Network`,
+          `Payment Confirmed - Welcome to ${productName || "Your Subscription"}! 🛡️ - InVision Network`,
           `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
               <div style="text-align: center; padding: 20px 0;">
@@ -256,49 +275,54 @@ serve(async (req) => {
               
               <p style="margin-top: 30px;">Welcome aboard!<br><strong>The InVision Network Team</strong></p>
             </div>
-          `
+          `,
         );
         logStep("Sent subscription welcome email");
         break;
       }
 
-      case 'product': {
+      case "product": {
         // Product payments are handled by process-payment edge function
         logStep("Product payment - handled separately");
         break;
       }
 
-      case 'training': {
+      case "training": {
         // Create booking record with paid status
         const { data: bookingData, error: bookingError } = await supabaseClient
-          .from('booking_requests')
-          .insert([{
-            full_name: customerName,
-            email: customerEmail,
-            service_type: 'training',
-            service_name: productName || 'Training Session',
-            service_tier: serviceTier || null,
-            preferred_dates: preferredDate || null,
-            is_veteran: isVeteran || false,
-            request_number: requestNumber,
-            status: 'paid',
-            base_price: amount / 100,
-            final_price: amount / 100,
-            metadata: metadata || {}
-          }])
+          .from("booking_requests")
+          .insert([
+            {
+              full_name: customerName,
+              email: customerEmail,
+              service_type: "training",
+              service_name: productName || "Training Session",
+              service_tier: serviceTier || null,
+              preferred_dates: preferredDate || null,
+              is_veteran: isVeteran || false,
+              request_number: requestNumber,
+              status: "paid",
+              base_price: amount / 100,
+              final_price: amount / 100,
+              metadata: metadata || {},
+            },
+          ])
           .select()
           .single();
 
         if (bookingError) {
           console.error("Failed to create booking record:", bookingError);
         } else {
-          logStep("Created paid booking record", { bookingId: bookingData?.id, requestNumber });
+          logStep("Created paid booking record", {
+            bookingId: bookingData?.id,
+            requestNumber,
+          });
         }
 
         // Send payment confirmation email with trust messaging
         await sendEmail(
           customerEmail,
-          `Payment Confirmed - ${productName || 'Training Session'} | InVision Network`,
+          `Payment Confirmed - ${productName || "Training Session"} | InVision Network`,
           `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
               <div style="text-align: center; padding: 20px 0;">
@@ -312,10 +336,10 @@ serve(async (req) => {
               <div style="background: linear-gradient(135deg, #f0fdf4, #dcfce7); padding: 25px; border-radius: 12px; margin: 25px 0; border: 1px solid #bbf7d0;">
                 <h2 style="color: #16a34a; margin-top: 0;">✓ Payment Confirmed</h2>
                 <p><strong>Reference Number:</strong> ${requestNumber}</p>
-                <p><strong>Training:</strong> ${productName || 'Training Session'}${serviceTier ? ` (${serviceTier})` : ''}</p>
+                <p><strong>Training:</strong> ${productName || "Training Session"}${serviceTier ? ` (${serviceTier})` : ""}</p>
                 <p><strong>Amount Paid:</strong> ${formattedAmount}</p>
-                ${isVeteran ? '<p><strong>Veteran Discount Applied:</strong> 10% off ✓</p>' : ''}
-                ${preferredDate ? `<p><strong>Preferred Date:</strong> ${preferredDate}</p>` : ''}
+                ${isVeteran ? "<p><strong>Veteran Discount Applied:</strong> 10% off ✓</p>" : ""}
+                ${preferredDate ? `<p><strong>Preferred Date:</strong> ${preferredDate}</p>` : ""}
               </div>
               
               <h3 style="color: #6D28D9;">What Happens Next?</h3>
@@ -340,7 +364,7 @@ serve(async (req) => {
               
               <p style="margin-top: 30px;">We look forward to training you!<br><strong>The InVision Network Team</strong></p>
             </div>
-          `
+          `,
         );
         logStep("Sent training payment confirmation email");
 
@@ -355,33 +379,33 @@ serve(async (req) => {
             <p><strong>Reference:</strong> ${requestNumber}</p>
             <p><strong>Name:</strong> ${customerName}</p>
             <p><strong>Email:</strong> ${customerEmail}</p>
-            <p><strong>Training:</strong> ${productName || 'Training Session'}${serviceTier ? ` (${serviceTier})` : ''}</p>
+            <p><strong>Training:</strong> ${productName || "Training Session"}${serviceTier ? ` (${serviceTier})` : ""}</p>
             <p><strong>Amount:</strong> ${formattedAmount}</p>
-            <p><strong>Veteran:</strong> ${isVeteran ? 'Yes (10% discount applied)' : 'No'}</p>
-            ${preferredDate ? `<p><strong>Preferred Date:</strong> ${preferredDate}</p>` : ''}
+            <p><strong>Veteran:</strong> ${isVeteran ? "Yes (10% discount applied)" : "No"}</p>
+            ${preferredDate ? `<p><strong>Preferred Date:</strong> ${preferredDate}</p>` : ""}
             <hr>
             <p><strong>Action Required:</strong> Contact customer within 24 hours to confirm session time.</p>
-          `
+          `,
         );
         logStep("Sent admin notification");
         break;
       }
 
-      case 'service': {
+      case "service": {
         // Update service booking/inquiry status if applicable
         if (recordId) {
           await supabaseClient
-            .from('booking_requests')
-            .update({ 
-              status: 'paid',
-              updated_at: new Date().toISOString()
+            .from("booking_requests")
+            .update({
+              status: "paid",
+              updated_at: new Date().toISOString(),
             })
-            .eq('id', recordId);
+            .eq("id", recordId);
         }
 
         await sendEmail(
           customerEmail,
-          `Payment Confirmed - ${productName || 'Service'} | InVision Network`,
+          `Payment Confirmed - ${productName || "Service"} | InVision Network`,
           `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
               <div style="text-align: center; padding: 20px 0;">
@@ -390,7 +414,7 @@ serve(async (req) => {
               
               <p style="font-size: 16px;">Dear ${customerName},</p>
               
-              <p>Your payment of <strong>${formattedAmount}</strong> for <strong>${productName || 'your service'}</strong> has been confirmed.</p>
+              <p>Your payment of <strong>${formattedAmount}</strong> for <strong>${productName || "your service"}</strong> has been confirmed.</p>
               
               <div style="background: linear-gradient(135deg, #f0fdf4, #dcfce7); padding: 25px; border-radius: 12px; margin: 25px 0; border: 1px solid #bbf7d0;">
                 <h2 style="color: #16a34a; margin-top: 0;">✓ Payment Confirmed</h2>
@@ -411,7 +435,7 @@ serve(async (req) => {
               
               <p style="margin-top: 30px;">Thank you for choosing InVision Network!<br><strong>The InVision Network Team</strong></p>
             </div>
-          `
+          `,
         );
         logStep("Sent service payment confirmation email");
         break;
@@ -419,21 +443,22 @@ serve(async (req) => {
     }
 
     return new Response(
-      JSON.stringify({ success: true, message: "Payment completed successfully", requestNumber }),
+      JSON.stringify({
+        success: true,
+        message: "Payment completed successfully",
+        requestNumber,
+      }),
       {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 200,
-      }
+      },
     );
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     logStep("ERROR", { message: errorMessage });
-    return new Response(
-      JSON.stringify({ error: errorMessage }),
-      {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 500,
-      }
-    );
+    return new Response(JSON.stringify({ error: errorMessage }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      status: 500,
+    });
   }
 });

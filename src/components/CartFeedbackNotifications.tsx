@@ -3,9 +3,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { 
-  X, MessageCircle, Send, CheckCircle, 
-  Heart, HelpCircle, ArrowRight, Package
+import {
+  X,
+  MessageCircle,
+  Send,
+  CheckCircle,
+  Heart,
+  HelpCircle,
+  ArrowRight,
+  Package,
 } from "lucide-react";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
@@ -28,7 +34,7 @@ export const PurchaseThankYouNotification = () => {
         <Card className="p-5 shadow-xl border-success/30 bg-card/95 backdrop-blur-sm overflow-hidden">
           {/* Decorative gradient top */}
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-success via-primary to-accent" />
-          
+
           <button
             onClick={dismissAll}
             className="absolute top-3 right-3 p-1 text-muted-foreground hover:text-foreground transition-colors"
@@ -37,7 +43,7 @@ export const PurchaseThankYouNotification = () => {
           </button>
 
           <div className="flex items-start gap-4">
-            <motion.div 
+            <motion.div
               className="w-12 h-12 rounded-full bg-success/10 flex items-center justify-center flex-shrink-0"
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
@@ -45,9 +51,9 @@ export const PurchaseThankYouNotification = () => {
             >
               <CheckCircle className="w-6 h-6 text-success" />
             </motion.div>
-            
+
             <div className="flex-1">
-              <motion.h3 
+              <motion.h3
                 className="font-bold text-lg mb-1"
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -55,15 +61,16 @@ export const PurchaseThankYouNotification = () => {
               >
                 Thank You! 🎉
               </motion.h3>
-              <motion.p 
+              <motion.p
                 className="text-sm text-muted-foreground mb-3"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
               >
-                Your order is being processed. Check your email for confirmation and details.
+                Your order is being processed. Check your email for confirmation
+                and details.
               </motion.p>
-              
+
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -76,13 +83,18 @@ export const PurchaseThankYouNotification = () => {
             </div>
           </div>
 
-          <motion.div 
+          <motion.div
             className="mt-4 pt-3 border-t border-border/50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
           >
-            <Button asChild size="sm" className="w-full text-xs" variant="outline">
+            <Button
+              asChild
+              size="sm"
+              className="w-full text-xs"
+              variant="outline"
+            >
               <Link to="/resources">
                 <Package className="w-3 h-3 mr-1.5" />
                 Continue Shopping
@@ -144,7 +156,8 @@ export const CartEmptyHelpNotification = () => {
               </div>
 
               <p className="text-sm text-muted-foreground mb-4">
-                Is everything okay? Let us know if you need any assistance or have questions about our products.
+                Is everything okay? Let us know if you need any assistance or
+                have questions about our products.
               </p>
 
               <div className="space-y-2">
@@ -179,9 +192,7 @@ export const CartEmptyHelpNotification = () => {
             </div>
           ) : (
             <div className="pr-6">
-              <p className="font-semibold text-sm mb-2">
-                How can we improve?
-              </p>
+              <p className="font-semibold text-sm mb-2">How can we improve?</p>
               <Textarea
                 value={feedback}
                 onChange={(e) => setFeedback(e.target.value)}

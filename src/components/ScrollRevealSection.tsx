@@ -6,17 +6,13 @@ interface ScrollRevealSectionProps {
   className?: string;
   staggerChildren?: boolean;
   threshold?: number;
-  animation?: 'fade' | 'blur' | 'sweep' | 'cascade';
+  animation?: "fade" | "blur" | "sweep" | "cascade";
 }
 
 // Simplified - no animations, just render children
-export const ScrollRevealSection = ({ 
-  children, 
+export const ScrollRevealSection = ({
+  children,
   className = "",
 }: ScrollRevealSectionProps) => {
-  return (
-    <div className={cn(className)}>
-      {children}
-    </div>
-  );
+  return <div className={cn(className)}>{children}</div>;
 };

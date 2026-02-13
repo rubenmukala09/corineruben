@@ -25,7 +25,9 @@ function checkRateLimit(ip: string): { allowed: boolean; retryAfter?: number } {
 
   if (record.count >= RATE_LIMIT) {
     const retryAfter = Math.ceil((record.resetTime - now) / 1000);
-    console.log(`[RATE LIMIT] IP ${ip} exceeded limit. Retry after ${retryAfter}s`);
+    console.log(
+      `[RATE LIMIT] IP ${ip} exceeded limit. Retry after ${retryAfter}s`,
+    );
     return { allowed: false, retryAfter };
   }
 
@@ -49,27 +51,36 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   // Rate limiting check
-  const clientIP = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || 
-                   req.headers.get("x-real-ip") || 
-                   "unknown";
-  
+  const clientIP =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-real-ip") ||
+    "unknown";
+
   const rateCheck = checkRateLimit(clientIP);
   if (!rateCheck.allowed) {
     return new Response(
       JSON.stringify({ error: "Too many requests. Please try again later." }),
       {
         status: 429,
-        headers: { 
-          ...corsHeaders, 
+        headers: {
+          ...corsHeaders,
           "Content-Type": "application/json",
-          "Retry-After": String(rateCheck.retryAfter)
+          "Retry-After": String(rateCheck.retryAfter),
         },
-      }
+      },
     );
   }
 
   try {
-    const { name, email, phone, interest, message, language, preferredDate }: ContactEmailRequest = await req.json();
+    const {
+      name,
+      email,
+      phone,
+      interest,
+      message,
+      language,
+      preferredDate,
+    }: ContactEmailRequest = await req.json();
 
     console.log("Sending contact form email:", { name, email, interest });
 
@@ -78,7 +89,7 @@ const handler = async (req: Request): Promise<Response> => {
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     const { data: inquiry, error: dbError } = await supabase
-      .from('website_inquiries')
+      .from("website_inquiries")
       .insert({
         name,
         email,
@@ -87,22 +98,22 @@ const handler = async (req: Request): Promise<Response> => {
         subject: interest,
         message,
         metadata: { language, preferredDate },
-        status: 'new'
+        status: "new",
       })
       .select()
       .single();
 
     if (dbError) {
-      console.error('Database insertion error:', dbError);
+      console.error("Database insertion error:", dbError);
     } else {
-      console.log('Inquiry saved to database:', inquiry.id);
+      console.log("Inquiry saved to database:", inquiry.id);
     }
 
     const adminEmailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${resendApiKey}`,
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${resendApiKey}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         from: "InVision Network <hello@invisionnetwork.org>",
@@ -113,13 +124,13 @@ const handler = async (req: Request): Promise<Response> => {
           <h2>Contact Information:</h2>
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Email:</strong> ${email}</p>
-          ${phone ? `<p><strong>Phone:</strong> ${phone}</p>` : ''}
+          ${phone ? `<p><strong>Phone:</strong> ${phone}</p>` : ""}
           <p><strong>Service Interest:</strong> ${interest}</p>
-          ${language ? `<p><strong>Preferred Language:</strong> ${language}</p>` : ''}
-          ${preferredDate ? `<p><strong>Preferred Date:</strong> ${preferredDate}</p>` : ''}
+          ${language ? `<p><strong>Preferred Language:</strong> ${language}</p>` : ""}
+          ${preferredDate ? `<p><strong>Preferred Date:</strong> ${preferredDate}</p>` : ""}
           
           <h2>Message:</h2>
-          <p>${message.replace(/\n/g, '<br>')}</p>
+          <p>${message.replace(/\n/g, "<br>")}</p>
           
           <hr>
           <p><small>Submitted from InVision Network Contact Form</small></p>
@@ -138,8 +149,8 @@ const handler = async (req: Request): Promise<Response> => {
     const userEmailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${resendApiKey}`,
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${resendApiKey}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         from: "InVision Network <hello@invisionnetwork.org>",
@@ -153,7 +164,7 @@ const handler = async (req: Request): Promise<Response> => {
             
             <h2 style="color: #6D28D9;">What you submitted:</h2>
             <p><strong>Interest:</strong> ${interest}</p>
-            <p><strong>Message:</strong><br>${message.replace(/\n/g, '<br>')}</p>
+            <p><strong>Message:</strong><br>${message.replace(/\n/g, "<br>")}</p>
             
             <hr style="border: 1px solid #e5e5e5; margin: 20px 0;">
             
@@ -178,9 +189,9 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         success: true,
-        message: "Emails sent successfully"
+        message: "Emails sent successfully",
       }),
       {
         status: 200,
@@ -188,19 +199,19 @@ const handler = async (req: Request): Promise<Response> => {
           "Content-Type": "application/json",
           ...corsHeaders,
         },
-      }
+      },
     );
   } catch (error: any) {
     console.error("Error in send-contact-email function:", error);
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         error: error.message,
-        details: "Failed to send contact form email"
+        details: "Failed to send contact form email",
       }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },
-      }
+      },
     );
   }
 };

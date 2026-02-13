@@ -46,7 +46,7 @@ export function NeonPendingRequests() {
         .limit(3);
 
       if (bookings) {
-        bookings.forEach(b => {
+        bookings.forEach((b) => {
           allItems.push({
             id: b.id,
             type: "booking",
@@ -66,7 +66,7 @@ export function NeonPendingRequests() {
         .limit(2);
 
       if (applications) {
-        applications.forEach(a => {
+        applications.forEach((a) => {
           allItems.push({
             id: a.id,
             type: "application",
@@ -86,7 +86,7 @@ export function NeonPendingRequests() {
         .limit(2);
 
       if (testimonials) {
-        testimonials.forEach(t => {
+        testimonials.forEach((t) => {
           allItems.push({
             id: t.id,
             type: "testimonial",
@@ -127,10 +127,26 @@ export function NeonPendingRequests() {
   const getTypeConfig = (type: string) => {
     const configs = {
       booking: { icon: BookOpen, color: "text-blue-400", bg: "bg-blue-500/10" },
-      inquiry: { icon: MessageSquare, color: "text-green-400", bg: "bg-green-500/10" },
-      application: { icon: Briefcase, color: "text-purple-400", bg: "bg-purple-500/10" },
-      testimonial: { icon: Star, color: "text-amber-400", bg: "bg-amber-500/10" },
-      order: { icon: ShoppingCart, color: "text-pink-400", bg: "bg-pink-500/10" },
+      inquiry: {
+        icon: MessageSquare,
+        color: "text-green-400",
+        bg: "bg-green-500/10",
+      },
+      application: {
+        icon: Briefcase,
+        color: "text-purple-400",
+        bg: "bg-purple-500/10",
+      },
+      testimonial: {
+        icon: Star,
+        color: "text-amber-400",
+        bg: "bg-amber-500/10",
+      },
+      order: {
+        icon: ShoppingCart,
+        color: "text-pink-400",
+        bg: "bg-pink-500/10",
+      },
     };
     return configs[type as keyof typeof configs] || configs.booking;
   };
@@ -168,7 +184,10 @@ export function NeonPendingRequests() {
         {loading ? (
           <div className="space-y-2">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="h-14 bg-gray-800/50 rounded-lg animate-pulse" />
+              <div
+                key={i}
+                className="h-14 bg-gray-800/50 rounded-lg animate-pulse"
+              />
             ))}
           </div>
         ) : items.length === 0 ? (
@@ -194,17 +213,23 @@ export function NeonPendingRequests() {
                 >
                   <Link to={getTypeLink(item.type)}>
                     <div className="flex items-center gap-3 p-3 bg-[#111827] rounded-lg border border-gray-800/50 hover:border-gray-700/50 transition-all duration-300 group cursor-pointer">
-                      <div className={`w-9 h-9 ${config.bg} rounded-lg flex items-center justify-center`}>
+                      <div
+                        className={`w-9 h-9 ${config.bg} rounded-lg flex items-center justify-center`}
+                      >
                         <Icon className={`w-4 h-4 ${config.color}`} />
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-white truncate group-hover:text-cyan-400 transition-colors">
                           {item.title}
                         </p>
-                        <p className="text-xs text-gray-500 truncate">{item.subtitle}</p>
+                        <p className="text-xs text-gray-500 truncate">
+                          {item.subtitle}
+                        </p>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs text-gray-500">{item.time}</span>
+                        <span className="text-xs text-gray-500">
+                          {item.time}
+                        </span>
                         <ChevronRight className="w-4 h-4 text-gray-600 group-hover:text-cyan-400 transition-colors" />
                       </div>
                     </div>

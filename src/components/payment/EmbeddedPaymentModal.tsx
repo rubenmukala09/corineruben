@@ -72,7 +72,12 @@ function PaymentForm({
   onSuccess,
   onClose,
 }: PaymentFormProps) {
-  const { stripePromise, loading: stripeLoading, error: stripeError, initializeStripe } = useStripeKey();
+  const {
+    stripePromise,
+    loading: stripeLoading,
+    error: stripeError,
+    initializeStripe,
+  } = useStripeKey();
   const [step, setStep] = useState<"info" | "payment" | "success">("info");
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -122,16 +127,19 @@ function PaymentForm({
       localStorage.setItem("is_veteran", isVeteran.toString());
 
       // Call edge function to create payment intent
-      const { data, error: fnError } = await supabase.functions.invoke("create-payment-intent", {
-        body: {
-          priceId,
-          mode,
-          customerEmail: email,
-          customerName: name,
-          isVeteran,
-          metadata: { productName }
-        }
-      });
+      const { data, error: fnError } = await supabase.functions.invoke(
+        "create-payment-intent",
+        {
+          body: {
+            priceId,
+            mode,
+            customerEmail: email,
+            customerName: name,
+            isVeteran,
+            metadata: { productName },
+          },
+        },
+      );
 
       if (fnError) throw fnError;
       if (data.error) throw new Error(data.error);
@@ -150,22 +158,22 @@ function PaymentForm({
   const handlePaymentSuccess = async () => {
     setStep("success");
     toast.success("Payment successful!");
-    
+
     // Call complete-payment to update records and send emails
     try {
-      await supabase.functions.invoke('complete-payment', {
+      await supabase.functions.invoke("complete-payment", {
         body: {
-          paymentType: mode === 'subscription' ? 'subscription' : 'product',
+          paymentType: mode === "subscription" ? "subscription" : "product",
           customerEmail: email,
           customerName: name,
           amount: finalAmount,
           productName,
-        }
+        },
       });
     } catch (err) {
-      console.error('Failed to complete payment processing:', err);
+      console.error("Failed to complete payment processing:", err);
     }
-    
+
     onSuccess?.();
   };
 
@@ -180,8 +188,8 @@ function PaymentForm({
                 step === s
                   ? "bg-primary text-primary-foreground"
                   : ["info", "payment", "success"].indexOf(step) > i
-                  ? "bg-primary/20 text-primary"
-                  : "bg-muted text-muted-foreground"
+                    ? "bg-primary/20 text-primary"
+                    : "bg-muted text-muted-foreground"
               }`}
             >
               {["info", "payment", "success"].indexOf(step) > i ? (
@@ -219,7 +227,9 @@ function PaymentForm({
                 <div>
                   <h3 className="font-bold text-lg">{productName}</h3>
                   {description && (
-                    <p className="text-sm text-muted-foreground">{description}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {description}
+                    </p>
                   )}
                 </div>
                 <div className="text-right">
@@ -227,7 +237,9 @@ function PaymentForm({
                     ${(finalAmount / 100).toFixed(2)}
                   </div>
                   {mode === "subscription" && (
-                    <span className="text-xs text-muted-foreground">/month</span>
+                    <span className="text-xs text-muted-foreground">
+                      /month
+                    </span>
                   )}
                 </div>
               </div>
@@ -290,10 +302,7 @@ function PaymentForm({
                     </p>
                   </div>
                 </div>
-                <Switch
-                  checked={isVeteran}
-                  onCheckedChange={setIsVeteran}
-                />
+                <Switch checked={isVeteran} onCheckedChange={setIsVeteran} />
               </div>
 
               {/* Terms Checkbox */}
@@ -301,10 +310,15 @@ function PaymentForm({
                 <Checkbox
                   id="terms"
                   checked={termsAccepted}
-                  onCheckedChange={(checked) => setTermsAccepted(checked === true)}
+                  onCheckedChange={(checked) =>
+                    setTermsAccepted(checked === true)
+                  }
                   className="mt-1"
                 />
-                <Label htmlFor="terms" className="text-sm text-muted-foreground">
+                <Label
+                  htmlFor="terms"
+                  className="text-sm text-muted-foreground"
+                >
                   I agree to the{" "}
                   <a href="/terms" className="text-primary hover:underline">
                     Terms of Service
@@ -356,10 +370,14 @@ function PaymentForm({
             {/* Order Summary */}
             <div className="bg-muted/50 rounded-xl p-4 border">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-muted-foreground">Order Total:</span>
+                <span className="text-sm text-muted-foreground">
+                  Order Total:
+                </span>
                 <span className="text-xl font-bold text-primary">
                   ${(finalAmount / 100).toFixed(2)}
-                  {mode === "subscription" && <span className="text-sm font-normal">/mo</span>}
+                  {mode === "subscription" && (
+                    <span className="text-sm font-normal">/mo</span>
+                  )}
                 </span>
               </div>
               {isVeteran && (
@@ -389,14 +407,24 @@ function PaymentForm({
                   {stripeLoading ? (
                     <div className="flex items-center justify-center py-8">
                       <Loader2 className="w-6 h-6 animate-spin text-primary" />
-                      <span className="ml-2 text-sm text-muted-foreground">Initializing payment...</span>
+                      <span className="ml-2 text-sm text-muted-foreground">
+                        Initializing payment...
+                      </span>
                     </div>
                   ) : !stripePromise || stripeError ? (
                     <div className="p-4 bg-destructive/10 text-destructive rounded-lg text-center">
                       <CreditCard className="w-8 h-8 mx-auto mb-2 opacity-50" />
                       <p className="font-medium">Payment system unavailable</p>
-                      <p className="text-sm mt-1">{stripeError || "Please refresh the page and try again."}</p>
-                      <Button variant="outline" size="sm" className="mt-3" onClick={() => window.location.reload()}>
+                      <p className="text-sm mt-1">
+                        {stripeError ||
+                          "Please refresh the page and try again."}
+                      </p>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="mt-3"
+                        onClick={() => window.location.reload()}
+                      >
                         <RefreshCw className="w-4 h-4 mr-2" />
                         Refresh Page
                       </Button>
@@ -475,15 +503,17 @@ function PaymentForm({
 
             <h3 className="text-2xl font-bold mb-2">Payment Successful!</h3>
             <p className="text-muted-foreground mb-6">
-              Thank you for your {mode === "subscription" ? "subscription" : "purchase"}!
-              <br />
-              A confirmation email has been sent to {email}.
+              Thank you for your{" "}
+              {mode === "subscription" ? "subscription" : "purchase"}!
+              <br />A confirmation email has been sent to {email}.
             </p>
 
             <div className="space-y-3">
               <div className="bg-success/10 text-success p-4 rounded-xl text-sm">
                 <Sparkles className="w-5 h-5 mx-auto mb-2" />
-                <p className="font-medium">You now have access to {productName}</p>
+                <p className="font-medium">
+                  You now have access to {productName}
+                </p>
               </div>
 
               <Button onClick={onClose} className="w-full">
@@ -525,18 +555,22 @@ function PaymentElementWrapper({
       const { error: submitError } = await elements.submit();
       if (submitError) throw submitError;
 
-      const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          return_url: `${window.location.origin}/payment-success`,
-          receipt_email: email,
-        },
-        redirect: "if_required",
-      });
+      const { error: confirmError, paymentIntent } =
+        await stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            return_url: `${window.location.origin}/payment-success`,
+            receipt_email: email,
+          },
+          redirect: "if_required",
+        });
 
       if (confirmError) throw confirmError;
 
-      if (paymentIntent?.status === "succeeded" || paymentIntent?.status === "processing") {
+      if (
+        paymentIntent?.status === "succeeded" ||
+        paymentIntent?.status === "processing"
+      ) {
         onSuccess();
       }
     } catch (err: any) {
@@ -553,7 +587,9 @@ function PaymentElementWrapper({
       {!isReady && (
         <div className="flex items-center justify-center py-8">
           <Loader2 className="w-6 h-6 animate-spin text-primary" />
-          <span className="ml-2 text-sm text-muted-foreground">Loading payment form...</span>
+          <span className="ml-2 text-sm text-muted-foreground">
+            Loading payment form...
+          </span>
         </div>
       )}
       <div className={!isReady ? "opacity-0 h-0 overflow-hidden" : ""}>
@@ -573,11 +609,21 @@ function PaymentElementWrapper({
       )}
 
       <div className="flex gap-3">
-        <Button variant="outline" onClick={onBack} disabled={isLoading} className="flex-1">
+        <Button
+          variant="outline"
+          onClick={onBack}
+          disabled={isLoading}
+          className="flex-1"
+        >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back
         </Button>
-        <Button onClick={handleSubmit} disabled={isLoading || !stripe || !elements || !isReady} className="flex-1" size="lg">
+        <Button
+          onClick={handleSubmit}
+          disabled={isLoading || !stripe || !elements || !isReady}
+          className="flex-1"
+          size="lg"
+        >
           {isLoading ? (
             <>
               <Loader2 className="w-4 h-4 mr-2 animate-spin" />
@@ -627,7 +673,8 @@ export function EmbeddedPaymentModal({
             </div>
           </DialogTitle>
           <DialogDescription>
-            Complete your {mode === "subscription" ? "subscription" : "purchase"} securely
+            Complete your{" "}
+            {mode === "subscription" ? "subscription" : "purchase"} securely
           </DialogDescription>
         </DialogHeader>
 

@@ -8,7 +8,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
 import { ArticlePublishingSidebar } from "@/components/admin/ArticlePublishingSidebar";
 import { PublishConfirmationModal } from "@/components/admin/PublishConfirmationModal";
@@ -50,7 +55,7 @@ export default function ArticleEditor() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  
+
   const [article, setArticle] = useState<ArticleData>({
     title: "",
     slug: "",
@@ -90,11 +95,27 @@ export default function ArticleEditor() {
   const getPublishingChecklist = () => {
     const checks = [
       { id: "title", label: "Title entered", completed: !!article.title },
-      { id: "content", label: "Content added (min 300 words)", completed: wordCount >= 300 },
-      { id: "image", label: "Featured image set", completed: !!article.featuredImage },
-      { id: "category", label: "Category selected", completed: article.categories.length > 0 },
+      {
+        id: "content",
+        label: "Content added (min 300 words)",
+        completed: wordCount >= 300,
+      },
+      {
+        id: "image",
+        label: "Featured image set",
+        completed: !!article.featuredImage,
+      },
+      {
+        id: "category",
+        label: "Category selected",
+        completed: article.categories.length > 0,
+      },
       { id: "excerpt", label: "Excerpt added", completed: !!article.excerpt },
-      { id: "seo", label: "SEO title and description", completed: !!(article.seoTitle && article.seoDescription) },
+      {
+        id: "seo",
+        label: "SEO title and description",
+        completed: !!(article.seoTitle && article.seoDescription),
+      },
     ];
     return checks;
   };
@@ -104,13 +125,44 @@ export default function ArticleEditor() {
       { completed: !!article.title, weight: 15 },
       { completed: wordCount >= 300, weight: 20 },
       { completed: !!article.focusKeyword, weight: 15 },
-      { completed: !!article.seoTitle && article.seoTitle.length >= 50 && article.seoTitle.length <= 60, weight: 10 },
-      { completed: !!article.seoDescription && article.seoDescription.length >= 120 && article.seoDescription.length <= 160, weight: 15 },
+      {
+        completed:
+          !!article.seoTitle &&
+          article.seoTitle.length >= 50 &&
+          article.seoTitle.length <= 60,
+        weight: 10,
+      },
+      {
+        completed:
+          !!article.seoDescription &&
+          article.seoDescription.length >= 120 &&
+          article.seoDescription.length <= 160,
+        weight: 15,
+      },
       { completed: !!article.featuredImage, weight: 15 },
-      { completed: article.focusKeyword && content ? (content.toLowerCase().split(article.focusKeyword.toLowerCase()).length - 1) / content.split(/\s+/).length * 100 >= 0.5 && (content.toLowerCase().split(article.focusKeyword.toLowerCase()).length - 1) / content.split(/\s+/).length * 100 <= 2.5 : false, weight: 10 },
+      {
+        completed:
+          article.focusKeyword && content
+            ? ((content.toLowerCase().split(article.focusKeyword.toLowerCase())
+                .length -
+                1) /
+                content.split(/\s+/).length) *
+                100 >=
+                0.5 &&
+              ((content.toLowerCase().split(article.focusKeyword.toLowerCase())
+                .length -
+                1) /
+                content.split(/\s+/).length) *
+                100 <=
+                2.5
+            : false,
+        weight: 10,
+      },
     ];
     const totalWeight = checks.reduce((sum, check) => sum + check.weight, 0);
-    const earnedWeight = checks.filter(check => check.completed).reduce((sum, check) => sum + check.weight, 0);
+    const earnedWeight = checks
+      .filter((check) => check.completed)
+      .reduce((sum, check) => sum + check.weight, 0);
     return Math.round((earnedWeight / totalWeight) * 100);
   };
 
@@ -154,7 +206,8 @@ export default function ArticleEditor() {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (hasUnsavedChanges) {
         e.preventDefault();
-        e.returnValue = "You have unsaved changes. Are you sure you want to leave?";
+        e.returnValue =
+          "You have unsaved changes. Are you sure you want to leave?";
         return e.returnValue;
       }
     };
@@ -279,7 +332,10 @@ export default function ArticleEditor() {
     setShowPublishModal(true);
   };
 
-  const confirmPublish = async (options?: { sendNewsletter?: boolean; shareOnSocial?: boolean }) => {
+  const confirmPublish = async (options?: {
+    sendNewsletter?: boolean;
+    shareOnSocial?: boolean;
+  }) => {
     try {
       setPublishing(true);
       setShowPublishModal(false);
@@ -377,7 +433,6 @@ export default function ArticleEditor() {
         {/* Top Action Bar */}
         <div className="sticky top-16 z-10 bg-background border-b px-8 py-4">
           <div className="flex items-center justify-between">
-
             <div className="flex items-center gap-4">
               {/* Auto-save Indicator */}
               <AnimatePresence mode="wait">
@@ -406,12 +461,20 @@ export default function ArticleEditor() {
                 ) : null}
               </AnimatePresence>
 
-              <Button variant="outline" onClick={() => handleSave(false)} disabled={saving}>
+              <Button
+                variant="outline"
+                onClick={() => handleSave(false)}
+                disabled={saving}
+              >
                 <Save className="h-4 w-4 mr-2" />
                 Save Draft
               </Button>
 
-              <Button variant="outline" onClick={handlePreview} disabled={!article.title || !article.content}>
+              <Button
+                variant="outline"
+                onClick={handlePreview}
+                disabled={!article.title || !article.content}
+              >
                 <Eye className="h-4 w-4 mr-2" />
                 Preview
               </Button>
@@ -422,7 +485,9 @@ export default function ArticleEditor() {
                     <div>
                       <Button
                         onClick={handlePublish}
-                        disabled={!requiredFieldsComplete() || saving || publishing}
+                        disabled={
+                          !requiredFieldsComplete() || saving || publishing
+                        }
                         className="relative min-w-[120px]"
                       >
                         {publishing ? (
@@ -512,7 +577,11 @@ export default function ArticleEditor() {
                   variant="ghost"
                   size="icon"
                   onClick={() => setSlugLocked(!slugLocked)}
-                  title={slugLocked ? "Unlock to auto-generate" : "Lock to prevent auto-generation"}
+                  title={
+                    slugLocked
+                      ? "Unlock to auto-generate"
+                      : "Lock to prevent auto-generation"
+                  }
                 >
                   {slugLocked ? (
                     <Lock className="h-4 w-4" />

@@ -18,8 +18,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Shield,
@@ -100,14 +110,15 @@ function PaymentFormContent({
         return;
       }
 
-      const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          return_url: `${window.location.origin}/training?payment=success`,
-          receipt_email: customerEmail,
-        },
-        redirect: "if_required",
-      });
+      const { error: confirmError, paymentIntent } =
+        await stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            return_url: `${window.location.origin}/training?payment=success`,
+            receipt_email: customerEmail,
+          },
+          redirect: "if_required",
+        });
 
       if (confirmError) {
         setError(confirmError.message || "Payment confirmation failed");
@@ -117,9 +128,9 @@ function PaymentFormContent({
 
       if (paymentIntent?.status === "succeeded") {
         // Call complete-payment to create booking and send email
-        await supabase.functions.invoke('complete-payment', {
+        await supabase.functions.invoke("complete-payment", {
           body: {
-            paymentType: 'training',
+            paymentType: "training",
             paymentIntentId: paymentIntent.id,
             customerEmail,
             customerName,
@@ -128,7 +139,7 @@ function PaymentFormContent({
             serviceTier,
             preferredDate,
             isVeteran,
-          }
+          },
         });
 
         toast.success("Payment Confirmed! Check your email for details.");
@@ -145,13 +156,13 @@ function PaymentFormContent({
 
   return (
     <div className="space-y-4">
-      <PaymentElement 
+      <PaymentElement
         onReady={() => setPaymentReady(true)}
         options={{
           layout: "tabs",
         }}
       />
-      
+
       {error && (
         <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm">
           {error}
@@ -196,7 +207,11 @@ export function TrainingPaymentModal({
   duration,
   onSuccess,
 }: TrainingPaymentModalProps) {
-  const { stripePromise, loading: stripeLoading, initializeStripe } = useStripeKey();
+  const {
+    stripePromise,
+    loading: stripeLoading,
+    initializeStripe,
+  } = useStripeKey();
   const [step, setStep] = useState<"info" | "payment" | "success">("info");
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -227,7 +242,7 @@ export function TrainingPaymentModal({
   }, [open]);
 
   // Calculate pricing with veteran discount
-  const veteranDiscount = isVeteran ? basePrice * 0.10 : 0;
+  const veteranDiscount = isVeteran ? basePrice * 0.1 : 0;
   const finalAmount = basePrice - veteranDiscount;
 
   const handleInfoSubmit = async () => {
@@ -247,20 +262,25 @@ export function TrainingPaymentModal({
         localStorage.setItem("is_veteran", "true");
       }
 
-      const { data, error: fnError } = await supabase.functions.invoke('create-training-payment', {
-        body: {
-          serviceType,
-          serviceName,
-          serviceTier,
-          amount: basePrice, // Send in dollars, function handles conversion
-          customerEmail: email,
-          customerName: name,
-          isVeteran,
-          preferredDate: selectedDate ? format(selectedDate, "PPP") : undefined,
-          phone: phone ? formatPhoneNumber(phone) : undefined,
-          state,
-        }
-      });
+      const { data, error: fnError } = await supabase.functions.invoke(
+        "create-training-payment",
+        {
+          body: {
+            serviceType,
+            serviceName,
+            serviceTier,
+            amount: basePrice, // Send in dollars, function handles conversion
+            customerEmail: email,
+            customerName: name,
+            isVeteran,
+            preferredDate: selectedDate
+              ? format(selectedDate, "PPP")
+              : undefined,
+            phone: phone ? formatPhoneNumber(phone) : undefined,
+            state,
+          },
+        },
+      );
 
       if (fnError) throw new Error(fnError.message);
       if (!data?.clientSecret) throw new Error("No client secret received");
@@ -269,7 +289,9 @@ export function TrainingPaymentModal({
       setStep("payment");
     } catch (err) {
       console.error("Payment initialization error:", err);
-      setError(err instanceof Error ? err.message : "Failed to initialize payment");
+      setError(
+        err instanceof Error ? err.message : "Failed to initialize payment",
+      );
       toast.error("Failed to initialize payment. Please try again.");
     } finally {
       setIsLoading(false);
@@ -286,7 +308,7 @@ export function TrainingPaymentModal({
   const steps = [
     { num: 1, label: "Details" },
     { num: 2, label: "Payment" },
-    { num: 3, label: "Confirmed" }
+    { num: 3, label: "Confirmed" },
   ];
 
   return (
@@ -320,30 +342,42 @@ export function TrainingPaymentModal({
           <div className="flex items-center justify-between mt-6 max-w-xs">
             {steps.map((s, i) => (
               <div key={s.num} className="flex items-center">
-                <div className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold transition-colors ${
-                  (step === "info" && s.num === 1) || 
-                  (step === "payment" && s.num <= 2) || 
-                  (step === "success" && s.num <= 3)
-                    ? 'bg-primary text-primary-foreground' 
-                    : 'bg-muted text-muted-foreground'
-                }`}>
-                  {((step === "payment" && s.num === 1) || (step === "success" && s.num <= 2)) 
-                    ? <CheckCircle className="w-5 h-5" /> 
-                    : s.num}
+                <div
+                  className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold transition-colors ${
+                    (step === "info" && s.num === 1) ||
+                    (step === "payment" && s.num <= 2) ||
+                    (step === "success" && s.num <= 3)
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted text-muted-foreground"
+                  }`}
+                >
+                  {(step === "payment" && s.num === 1) ||
+                  (step === "success" && s.num <= 2) ? (
+                    <CheckCircle className="w-5 h-5" />
+                  ) : (
+                    s.num
+                  )}
                 </div>
-                <span className={`ml-2 text-xs font-medium hidden sm:block ${
-                  (step === "info" && s.num === 1) || 
-                  (step === "payment" && s.num <= 2) || 
-                  (step === "success")
-                    ? 'text-primary' : 'text-muted-foreground'
-                }`}>
+                <span
+                  className={`ml-2 text-xs font-medium hidden sm:block ${
+                    (step === "info" && s.num === 1) ||
+                    (step === "payment" && s.num <= 2) ||
+                    step === "success"
+                      ? "text-primary"
+                      : "text-muted-foreground"
+                  }`}
+                >
                   {s.label}
                 </span>
                 {i < steps.length - 1 && (
-                  <div className={`w-8 sm:w-12 h-0.5 mx-2 ${
-                    (step === "payment" && s.num === 1) || (step === "success" && s.num <= 2)
-                      ? 'bg-primary' : 'bg-muted'
-                  }`} />
+                  <div
+                    className={`w-8 sm:w-12 h-0.5 mx-2 ${
+                      (step === "payment" && s.num === 1) ||
+                      (step === "success" && s.num <= 2)
+                        ? "bg-primary"
+                        : "bg-muted"
+                    }`}
+                  />
                 )}
               </div>
             ))}
@@ -363,10 +397,15 @@ export function TrainingPaymentModal({
                 {/* Features */}
                 {features.length > 0 && (
                   <div className="p-4 bg-muted/50 rounded-xl">
-                    <h4 className="font-semibold mb-3 text-sm">What's Included</h4>
+                    <h4 className="font-semibold mb-3 text-sm">
+                      What's Included
+                    </h4>
                     <div className="grid grid-cols-1 gap-2">
                       {features.slice(0, 4).map((feature, i) => (
-                        <div key={i} className="flex items-center gap-2 text-sm">
+                        <div
+                          key={i}
+                          className="flex items-center gap-2 text-sm"
+                        >
                           <CheckCircle className="w-4 h-4 text-green-500 shrink-0" />
                           <span>{feature}</span>
                         </div>
@@ -408,7 +447,9 @@ export function TrainingPaymentModal({
                       </SelectTrigger>
                       <SelectContent className="max-h-[200px]">
                         {US_STATES.map((s) => (
-                          <SelectItem key={s} value={s}>{s}</SelectItem>
+                          <SelectItem key={s} value={s}>
+                            {s}
+                          </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
@@ -422,14 +463,19 @@ export function TrainingPaymentModal({
                       variant="outline"
                       className={cn(
                         "w-full h-11 justify-start text-left font-normal",
-                        !selectedDate && "text-muted-foreground"
+                        !selectedDate && "text-muted-foreground",
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {selectedDate ? format(selectedDate, "PPP") : "Preferred date (optional)"}
+                      {selectedDate
+                        ? format(selectedDate, "PPP")
+                        : "Preferred date (optional)"}
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0 bg-background" align="start">
+                  <PopoverContent
+                    className="w-auto p-0 bg-background"
+                    align="start"
+                  >
                     <Calendar
                       mode="single"
                       selected={selectedDate}
@@ -470,7 +516,10 @@ export function TrainingPaymentModal({
                   </div>
                   {isVeteran && (
                     <div className="text-right mt-1">
-                      <Badge variant="outline" className="text-xs text-green-600 border-green-600">
+                      <Badge
+                        variant="outline"
+                        className="text-xs text-green-600 border-green-600"
+                      >
                         Veteran discount: -${veteranDiscount.toFixed(2)}
                       </Badge>
                     </div>
@@ -531,9 +580,14 @@ export function TrainingPaymentModal({
                       <p className="text-sm text-muted-foreground">{email}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-xl font-bold text-primary">${finalAmount.toFixed(2)}</p>
+                      <p className="text-xl font-bold text-primary">
+                        ${finalAmount.toFixed(2)}
+                      </p>
                       {isVeteran && (
-                        <Badge variant="outline" className="text-xs text-green-600 border-green-600">
+                        <Badge
+                          variant="outline"
+                          className="text-xs text-green-600 border-green-600"
+                        >
                           10% Veteran Discount
                         </Badge>
                       )}
@@ -543,7 +597,10 @@ export function TrainingPaymentModal({
 
                 <Tabs defaultValue="card" className="w-full">
                   <TabsList className="grid w-full grid-cols-2 mb-4">
-                    <TabsTrigger value="card" className="flex items-center gap-2">
+                    <TabsTrigger
+                      value="card"
+                      className="flex items-center gap-2"
+                    >
                       <CreditCard className="w-4 h-4" />
                       Card
                     </TabsTrigger>
@@ -574,7 +631,9 @@ export function TrainingPaymentModal({
                         customerName={name}
                         serviceName={serviceName}
                         serviceTier={serviceTier}
-                        preferredDate={selectedDate ? format(selectedDate, "PPP") : undefined}
+                        preferredDate={
+                          selectedDate ? format(selectedDate, "PPP") : undefined
+                        }
                         isVeteran={isVeteran}
                         finalAmount={finalAmount}
                       />
@@ -588,7 +647,9 @@ export function TrainingPaymentModal({
                       customerEmail={email}
                       customerName={name}
                       onSuccess={() => {
-                        toast.success("Payment Confirmed! Check your email for booking details.");
+                        toast.success(
+                          "Payment Confirmed! Check your email for booking details.",
+                        );
                         onSuccess?.();
                         handleClose();
                       }}

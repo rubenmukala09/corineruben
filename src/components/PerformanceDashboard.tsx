@@ -49,8 +49,12 @@ export function PerformanceDashboard() {
                   <TrendingUp className="w-3 h-3" />
                   <span>Avg Load</span>
                 </div>
-                <Badge 
-                  variant={parseFloat(summary.avgDuration) < 100 ? "default" : "destructive"}
+                <Badge
+                  variant={
+                    parseFloat(summary.avgDuration) < 100
+                      ? "default"
+                      : "destructive"
+                  }
                   className="font-mono"
                 >
                   {summary.avgDuration}ms
@@ -62,19 +66,33 @@ export function PerformanceDashboard() {
               <div className="space-y-1">
                 <p className="text-xs text-muted-foreground">Recent Loads:</p>
                 <div className="space-y-1 max-h-32 overflow-y-auto">
-                  {metrics.slice(-5).reverse().map((metric, idx) => (
-                    <div key={idx} className="flex items-center justify-between text-xs">
-                      <span className="truncate flex-1">{metric.component}</span>
-                      {metric.duration !== undefined && (
-                        <Badge 
-                          variant={metric.duration < 100 ? "default" : metric.duration < 500 ? "secondary" : "destructive"}
-                          className="ml-2 font-mono text-xs"
-                        >
-                          {metric.duration.toFixed(0)}ms
-                        </Badge>
-                      )}
-                    </div>
-                  ))}
+                  {metrics
+                    .slice(-5)
+                    .reverse()
+                    .map((metric, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center justify-between text-xs"
+                      >
+                        <span className="truncate flex-1">
+                          {metric.component}
+                        </span>
+                        {metric.duration !== undefined && (
+                          <Badge
+                            variant={
+                              metric.duration < 100
+                                ? "default"
+                                : metric.duration < 500
+                                  ? "secondary"
+                                  : "destructive"
+                            }
+                            className="ml-2 font-mono text-xs"
+                          >
+                            {metric.duration.toFixed(0)}ms
+                          </Badge>
+                        )}
+                      </div>
+                    ))}
                 </div>
               </div>
             )}

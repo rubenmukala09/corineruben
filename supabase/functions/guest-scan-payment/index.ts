@@ -4,7 +4,8 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
 const MB = 1024 * 1024;
@@ -23,7 +24,15 @@ const ALLOWED_MIME_TYPES = [
   "audio/x-wav",
 ];
 
-const ALLOWED_EXTENSIONS = [".pdf", ".jpg", ".jpeg", ".png", ".mp4", ".mp3", ".wav"];
+const ALLOWED_EXTENSIONS = [
+  ".pdf",
+  ".jpg",
+  ".jpeg",
+  ".png",
+  ".mp4",
+  ".mp3",
+  ".wav",
+];
 
 const EXTENSION_MIME_MAP: Record<string, string> = {
   ".pdf": "application/pdf",
@@ -41,7 +50,8 @@ const sanitizeFileName = (name: string) =>
     .replace(/_{2,}/g, "_")
     .slice(0, 120);
 
-const getExtension = (name: string) => name.slice(Math.max(0, name.lastIndexOf("."))).toLowerCase();
+const getExtension = (name: string) =>
+  name.slice(Math.max(0, name.lastIndexOf("."))).toLowerCase();
 
 const calculateAmount = (bytes: number) => {
   const sizeMb = bytes / MB;
@@ -74,22 +84,26 @@ serve(async (req) => {
 
     const extension = getExtension(fileName);
     const normalizedType = (fileType || "").toLowerCase();
-    const storedType = normalizedType || EXTENSION_MIME_MAP[extension] || extension;
+    const storedType =
+      normalizedType || EXTENSION_MIME_MAP[extension] || extension;
 
     if (
       !ALLOWED_MIME_TYPES.includes(normalizedType) &&
       !ALLOWED_EXTENSIONS.includes(extension)
     ) {
-      return new Response(
-        JSON.stringify({ error: "Unsupported file type." }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 400 }
-      );
+      return new Response(JSON.stringify({ error: "Unsupported file type." }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 400,
+      });
     }
 
     if (fileSize > MAX_FILE_MB * MB) {
       return new Response(
         JSON.stringify({ error: `File exceeds ${MAX_FILE_MB}MB limit.` }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 400 }
+        {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 400,
+        },
       );
     }
 
@@ -141,10 +155,14 @@ serve(async (req) => {
         filePath,
         paymentIntentId: paymentIntent.id,
       }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
+      {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      },
     );
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Payment initialization failed.";
+    const message =
+      error instanceof Error ? error.message : "Payment initialization failed.";
     return new Response(JSON.stringify({ error: message }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 500,

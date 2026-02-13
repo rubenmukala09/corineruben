@@ -77,7 +77,10 @@ export const PremiumMeshBackground = ({
   };
 
   return (
-    <div className={cn("relative overflow-hidden", className)} style={{ background: colors.bg }}>
+    <div
+      className={cn("relative overflow-hidden", className)}
+      style={{ background: colors.bg }}
+    >
       {/* Premium mesh gradient overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -128,7 +131,12 @@ export const PremiumMeshBackground = ({
               y: [0, 40, -20, 50, 0],
               scale: [1, 1.15, 1, 1.08, 1],
             }}
-            transition={{ duration: 25, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+            transition={{
+              duration: 25,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 3,
+            }}
           />
           <motion.div
             className="absolute pointer-events-none"
@@ -146,7 +154,12 @@ export const PremiumMeshBackground = ({
               y: [0, -30, 20, -40, 0],
               scale: [1, 1.08, 1.15, 1, 1],
             }}
-            transition={{ duration: 28, repeat: Infinity, ease: "easeInOut", delay: 6 }}
+            transition={{
+              duration: 28,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 6,
+            }}
           />
           <motion.div
             className="absolute pointer-events-none"
@@ -164,7 +177,12 @@ export const PremiumMeshBackground = ({
               y: [0, 20, -30, 10, 0],
               scale: [1, 1.12, 0.98, 1.06, 1],
             }}
-            transition={{ duration: 22, repeat: Infinity, ease: "easeInOut", delay: 9 }}
+            transition={{
+              duration: 22,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 9,
+            }}
           />
         </>
       )}
@@ -197,7 +215,7 @@ export const PremiumMeshBackground = ({
               }}
               animate={{
                 y: [0, -20 - (i % 3) * 10, 0],
-                x: [0, (i % 2 === 0 ? 8 : -8), 0],
+                x: [0, i % 2 === 0 ? 8 : -8, 0],
                 opacity: [
                   config.particleOpacity * 0.2,
                   config.particleOpacity * 0.5,
@@ -228,7 +246,8 @@ export const PremiumMeshBackground = ({
       <div
         className="absolute top-0 left-0 right-0 h-px pointer-events-none"
         style={{
-          background: "linear-gradient(90deg, transparent 10%, rgba(255,255,255,0.8) 50%, transparent 90%)",
+          background:
+            "linear-gradient(90deg, transparent 10%, rgba(255,255,255,0.8) 50%, transparent 90%)",
         }}
       />
 

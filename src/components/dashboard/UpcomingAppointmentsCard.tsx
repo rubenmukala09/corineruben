@@ -18,7 +18,10 @@ interface UpcomingAppointmentsCardProps {
   onBookAppointment: () => void;
 }
 
-export function UpcomingAppointmentsCard({ appointments, onBookAppointment }: UpcomingAppointmentsCardProps) {
+export function UpcomingAppointmentsCard({
+  appointments,
+  onBookAppointment,
+}: UpcomingAppointmentsCardProps) {
   return (
     <Card className="h-full">
       <CardHeader className="pb-3">
@@ -40,8 +43,12 @@ export function UpcomingAppointmentsCard({ appointments, onBookAppointment }: Up
               <Calendar className="w-8 h-8 text-muted-foreground" />
             </div>
             <div>
-              <p className="font-medium text-muted-foreground">No upcoming sessions</p>
-              <p className="text-sm text-muted-foreground/70">Schedule a 1-on-1 training session</p>
+              <p className="font-medium text-muted-foreground">
+                No upcoming sessions
+              </p>
+              <p className="text-sm text-muted-foreground/70">
+                Schedule a 1-on-1 training session
+              </p>
             </div>
             <Button variant="default" size="sm" onClick={onBookAppointment}>
               <Plus className="w-4 h-4 mr-2" />
@@ -71,15 +78,20 @@ export function UpcomingAppointmentsCard({ appointments, onBookAppointment }: Up
                           <Video className="w-3 h-3" />
                           Virtual
                         </span>
-                      ) : apt.location && (
-                        <span className="flex items-center gap-1">
-                          <MapPin className="w-3 h-3" />
-                          {apt.location}
-                        </span>
+                      ) : (
+                        apt.location && (
+                          <span className="flex items-center gap-1">
+                            <MapPin className="w-3 h-3" />
+                            {apt.location}
+                          </span>
+                        )
                       )}
                     </div>
                   </div>
-                  <Badge variant="outline" className="shrink-0 bg-green-500/10 text-green-600 border-green-500/30">
+                  <Badge
+                    variant="outline"
+                    className="shrink-0 bg-green-500/10 text-green-600 border-green-500/30"
+                  >
                     Confirmed
                   </Badge>
                 </div>

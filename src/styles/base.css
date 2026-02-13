@@ -76,7 +76,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --navy-300: 212 38% 55%;
     --navy-200: 210 30% 75%;
     --navy-100: 208 25% 92%;
-    
+
     /* Lavender/Purple spectrum (from #BB81B5 to #493C62) */
     --lavender-700: 275 25% 30%;
     --lavender-600: 280 30% 38%;
@@ -85,7 +85,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --lavender-300: 315 40% 82%;
     --lavender-200: 320 45% 90%;
     --lavender-100: 325 40% 96%;
-    
+
     /* Coral/Peach spectrum (from #F8926A) */
     --coral-600: 15 85% 52%;
     --coral-500: 18 92% 62%;
@@ -93,25 +93,25 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --coral-300: 20 90% 78%;
     --coral-200: 22 85% 88%;
     --coral-100: 25 80% 95%;
-    
+
     /* Blush Pink (from #F6D7DD) */
     --blush-500: 348 55% 88%;
     --blush-400: 348 60% 92%;
     --blush-300: 348 65% 95%;
-    
+
     /* Neutral slate tones */
     --slate-900: 230 30% 10%;
     --slate-700: 230 22% 25%;
     --slate-500: 230 15% 42%;
     --slate-300: 230 12% 70%;
     --slate-100: 230 14% 96%;
-    
+
     /* Gold accent for premium touches - warmer amber */
     --gold-600: 35 90% 45%;
     --gold-500: 38 92% 52%;
     --gold-400: 42 88% 60%;
     --gold-300: 45 85% 72%;
-    
+
     /* Keep purple/violet for legacy compatibility */
     --purple-900: 275 45% 16%;
     --purple-700: 275 40% 26%;
@@ -194,48 +194,55 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   /* ===== SKEUOMORPHISM 2.0 - GLOBAL MATERIAL STYLES ===== */
   :root {
     /* Skeuomorphic shadow layers for realistic depth */
-    --skeuo-shadow-raised: 
-      0 1px 2px rgba(0,0,0,0.04),
-      0 2px 4px rgba(0,0,0,0.03),
-      0 4px 8px rgba(0,0,0,0.02);
-    --skeuo-shadow-pressed: 
-      inset 0 1px 2px rgba(0,0,0,0.08);
-    --skeuo-shadow-floating: 
-      0 2px 8px rgba(0,0,0,0.04),
-      0 8px 24px rgba(0,0,0,0.06);
-    --skeuo-highlight: linear-gradient(180deg, rgba(255,255,255,0.25) 0%, transparent 50%);
-    --skeuo-inset: 
-      inset 0 1px 2px rgba(0,0,0,0.06),
-      inset 0 -1px 1px rgba(255,255,255,0.5);
-    
+    --skeuo-shadow-raised:
+      0 1px 2px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.03),
+      0 4px 8px rgba(0, 0, 0, 0.02);
+    --skeuo-shadow-pressed: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+    --skeuo-shadow-floating:
+      0 2px 8px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
+    --skeuo-highlight: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.25) 0%,
+      transparent 50%
+    );
+    --skeuo-inset:
+      inset 0 1px 2px rgba(0, 0, 0, 0.06),
+      inset 0 -1px 1px rgba(255, 255, 255, 0.5);
+
     /* Skeuomorphic themed shadows with coral/lavender tints */
-    --skeuo-shadow-coral: 
+    --skeuo-shadow-coral:
       0 2px 4px hsl(var(--coral-400) / 0.1),
       0 4px 8px hsl(var(--coral-400) / 0.08),
       0 8px 16px hsl(var(--coral-400) / 0.06);
-    --skeuo-shadow-lavender: 
+    --skeuo-shadow-lavender:
       0 2px 4px hsl(var(--lavender-400) / 0.1),
       0 4px 8px hsl(var(--lavender-400) / 0.08),
       0 8px 16px hsl(var(--lavender-400) / 0.06);
-    --skeuo-shadow-mixed: 
+    --skeuo-shadow-mixed:
       0 2px 4px hsl(var(--coral-400) / 0.08),
       0 4px 8px hsl(var(--lavender-400) / 0.06),
       0 8px 16px hsl(var(--coral-400) / 0.04);
-    
+
     /* Glassmorphism + Skeuomorphism hybrid backgrounds */
-    --skeuo-glass-bg: linear-gradient(135deg, 
-      hsl(0 0% 100% / 0.9) 0%, 
+    --skeuo-glass-bg: linear-gradient(
+      135deg,
+      hsl(0 0% 100% / 0.9) 0%,
       hsl(0 0% 100% / 0.7) 50%,
-      hsl(0 0% 100% / 0.85) 100%);
+      hsl(0 0% 100% / 0.85) 100%
+    );
     --skeuo-glass-border: hsl(0 0% 100% / 0.6);
-    
+
     /* Premium coral-lavender gradient for accents */
-    --skeuo-gradient-accent: linear-gradient(135deg, 
-      hsl(var(--coral-400)) 0%, 
-      hsl(var(--lavender-500)) 100%);
-    --skeuo-gradient-accent-soft: linear-gradient(135deg, 
-      hsl(var(--coral-100)) 0%, 
-      hsl(var(--lavender-100)) 100%);
+    --skeuo-gradient-accent: linear-gradient(
+      135deg,
+      hsl(var(--coral-400)) 0%,
+      hsl(var(--lavender-500)) 100%
+    );
+    --skeuo-gradient-accent-soft: linear-gradient(
+      135deg,
+      hsl(var(--coral-100)) 0%,
+      hsl(var(--lavender-100)) 100%
+    );
   }
 
   html {
@@ -255,15 +262,18 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
       zoom: 0.8;
     }
   }
-  
+
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Rubik', sans-serif;
+    font-family: "Rubik", sans-serif;
     font-size: 1rem;
     line-height: 1.7;
     letter-spacing: -0.002em;
     text-rendering: optimizeLegibility;
-    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    font-feature-settings:
+      "kern" 1,
+      "liga" 1,
+      "calt" 1;
     font-kerning: normal;
     font-optical-sizing: auto;
     overflow-x: hidden;
@@ -272,9 +282,21 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     /* Clean warm cream background */
     background-color: hsl(30 25% 97%);
     background-image:
-      radial-gradient(ellipse 60% 40% at 10% 5%, hsl(var(--coral-200) / 0.35) 0%, transparent 55%),
-      radial-gradient(ellipse 50% 35% at 90% 0%, hsl(var(--lavender-200) / 0.3) 0%, transparent 60%),
-      radial-gradient(ellipse 50% 40% at 50% 100%, hsl(var(--navy-100) / 0.35) 0%, transparent 65%);
+      radial-gradient(
+        ellipse 60% 40% at 10% 5%,
+        hsl(var(--coral-200) / 0.35) 0%,
+        transparent 55%
+      ),
+      radial-gradient(
+        ellipse 50% 35% at 90% 0%,
+        hsl(var(--lavender-200) / 0.3) 0%,
+        transparent 60%
+      ),
+      radial-gradient(
+        ellipse 50% 40% at 50% 100%,
+        hsl(var(--navy-100) / 0.35) 0%,
+        transparent 65%
+      );
     background-repeat: no-repeat;
   }
 
@@ -388,9 +410,14 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     color: hsl(var(--foreground));
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-bold;
-    font-family: 'Lora', 'Rubik', serif;
+    font-family: "Lora", "Rubik", serif;
     line-height: 1.15;
     letter-spacing: -0.02em;
   }
@@ -423,7 +450,8 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   }
 
   /* Minimum tap targets for accessibility */
-  button, a {
+  button,
+  a {
     min-height: 44px;
     min-width: 44px;
   }
@@ -431,61 +459,84 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   button {
     font-size: 1rem;
   }
-  
+
   /* ===== SKEUOMORPHISM 2.0 GLOBAL EFFECTS ===== */
-  
+
   /* All cards get subtle raised effect */
-  .rounded-xl, .rounded-2xl, .rounded-3xl {
+  .rounded-xl,
+  .rounded-2xl,
+  .rounded-3xl {
     box-shadow: var(--skeuo-shadow-raised);
   }
-  
+
   /* Premium section backgrounds with depth */
   section {
     position: relative;
   }
-  
+
   /* Ambient lighting effect for sections */
   .skeuo-ambient-coral::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(ellipse at 30% 20%, hsl(var(--coral-200) / 0.15) 0%, transparent 60%);
+    background: radial-gradient(
+      ellipse at 30% 20%,
+      hsl(var(--coral-200) / 0.15) 0%,
+      transparent 60%
+    );
     pointer-events: none;
     z-index: 0;
   }
-  
+
   .skeuo-ambient-lavender::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(ellipse at 70% 80%, hsl(var(--lavender-200) / 0.15) 0%, transparent 60%);
+    background: radial-gradient(
+      ellipse at 70% 80%,
+      hsl(var(--lavender-200) / 0.15) 0%,
+      transparent 60%
+    );
     pointer-events: none;
     z-index: 0;
   }
-  
+
   .skeuo-ambient-mixed::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: 
-      radial-gradient(ellipse at 20% 30%, hsl(var(--coral-200) / 0.12) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 70%, hsl(var(--lavender-200) / 0.12) 0%, transparent 50%);
+    background:
+      radial-gradient(
+        ellipse at 20% 30%,
+        hsl(var(--coral-200) / 0.12) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse at 80% 70%,
+        hsl(var(--lavender-200) / 0.12) 0%,
+        transparent 50%
+      );
     pointer-events: none;
     z-index: 0;
   }
 }
 
 /* Global transition timing - only apply to interactive elements */
-button, a, input, select, textarea, [role="button"] {
+button,
+a,
+input,
+select,
+textarea,
+[role="button"] {
   transition-timing-function: cubic-bezier(0.2, 0, 0.2, 1);
 }
 
@@ -500,78 +551,84 @@ section:not(:first-child) {
 /* Raised surface with physical depth */
 .skeuo-raised {
   background: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(0 0% 98%) 100%);
-  box-shadow: 
-    0 1px 1px rgba(0,0,0,0.02),
-    0 2px 2px rgba(0,0,0,0.02),
-    0 4px 4px rgba(0,0,0,0.03),
-    0 8px 8px rgba(0,0,0,0.04),
-    inset 0 1px 0 rgba(255,255,255,0.9);
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.02),
+    0 2px 2px rgba(0, 0, 0, 0.02),
+    0 4px 4px rgba(0, 0, 0, 0.03),
+    0 8px 8px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
   border: 1px solid hsl(0 0% 92%);
 }
 
 .skeuo-raised:hover {
   transform: translateY(-2px);
-  box-shadow: 
-    0 2px 2px rgba(0,0,0,0.02),
-    0 4px 4px rgba(0,0,0,0.03),
-    0 8px 8px rgba(0,0,0,0.04),
-    0 16px 16px rgba(0,0,0,0.05),
-    inset 0 1px 0 rgba(255,255,255,1);
+  box-shadow:
+    0 2px 2px rgba(0, 0, 0, 0.02),
+    0 4px 4px rgba(0, 0, 0, 0.03),
+    0 8px 8px rgba(0, 0, 0, 0.04),
+    0 16px 16px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
 }
 
 /* Inset/recessed surface */
 .skeuo-inset {
   background: linear-gradient(180deg, hsl(0 0% 97%) 0%, hsl(0 0% 100%) 100%);
-  box-shadow: 
-    inset 0 1px 3px rgba(0,0,0,0.08),
-    inset 0 2px 6px rgba(0,0,0,0.04),
-    0 1px 0 rgba(255,255,255,0.8);
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.08),
+    inset 0 2px 6px rgba(0, 0, 0, 0.04),
+    0 1px 0 rgba(255, 255, 255, 0.8);
   border: 1px solid hsl(0 0% 90%);
 }
 
 /* Floating element with premium shadow */
 .skeuo-floating {
-  box-shadow: 
-    0 4px 8px rgba(0,0,0,0.04),
-    0 8px 16px rgba(0,0,0,0.06),
-    0 16px 32px rgba(0,0,0,0.08);
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.04),
+    0 8px 16px rgba(0, 0, 0, 0.06),
+    0 16px 32px rgba(0, 0, 0, 0.08);
 }
 
 /* Coral-tinted skeuomorphic surface */
 .skeuo-coral {
-  background: linear-gradient(135deg, 
-    hsl(var(--coral-100)) 0%, 
+  background: linear-gradient(
+    135deg,
+    hsl(var(--coral-100)) 0%,
     hsl(0 0% 100%) 50%,
-    hsl(var(--coral-50, 25 80% 98%)) 100%);
-  box-shadow: 
+    hsl(var(--coral-50, 25 80% 98%)) 100%
+  );
+  box-shadow:
     0 2px 4px hsl(var(--coral-400) / 0.08),
     0 4px 8px hsl(var(--coral-400) / 0.06),
-    0 8px 16px rgba(0,0,0,0.04),
-    inset 0 1px 0 rgba(255,255,255,0.9);
+    0 8px 16px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
   border: 1px solid hsl(var(--coral-200) / 0.5);
 }
 
 /* Lavender-tinted skeuomorphic surface */
 .skeuo-lavender {
-  background: linear-gradient(135deg, 
-    hsl(var(--lavender-100)) 0%, 
+  background: linear-gradient(
+    135deg,
+    hsl(var(--lavender-100)) 0%,
     hsl(0 0% 100%) 50%,
-    hsl(var(--lavender-100)) 100%);
-  box-shadow: 
+    hsl(var(--lavender-100)) 100%
+  );
+  box-shadow:
     0 2px 4px hsl(var(--lavender-400) / 0.08),
     0 4px 8px hsl(var(--lavender-400) / 0.06),
-    0 8px 16px rgba(0,0,0,0.04),
-    inset 0 1px 0 rgba(255,255,255,0.9);
+    0 8px 16px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
   border: 1px solid hsl(var(--lavender-200) / 0.5);
 }
 
 /* Mixed coral-lavender gradient surface */
 .skeuo-gradient {
-  background: linear-gradient(135deg, 
-    hsl(var(--coral-100) / 0.5) 0%, 
+  background: linear-gradient(
+    135deg,
+    hsl(var(--coral-100) / 0.5) 0%,
     hsl(0 0% 100%) 30%,
     hsl(0 0% 100%) 70%,
-    hsl(var(--lavender-100) / 0.5) 100%);
+    hsl(var(--lavender-100) / 0.5) 100%
+  );
   box-shadow: var(--skeuo-shadow-mixed);
   border: 1px solid hsl(0 0% 92%);
 }
@@ -582,20 +639,22 @@ section:not(:first-child) {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--skeuo-glass-border);
-  box-shadow: 
-    0 4px 8px rgba(0,0,0,0.04),
-    0 8px 16px rgba(0,0,0,0.06),
-    inset 0 1px 0 rgba(255,255,255,0.8),
-    inset 0 -1px 0 rgba(0,0,0,0.02);
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.04),
+    0 8px 16px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.02);
 }
 
 /* Tactile button base */
 .skeuo-button-primary {
-  background: linear-gradient(180deg, 
-    hsl(var(--coral-400)) 0%, 
-    hsl(var(--coral-500)) 100%);
+  background: linear-gradient(
+    180deg,
+    hsl(var(--coral-400)) 0%,
+    hsl(var(--coral-500)) 100%
+  );
   color: white;
-  box-shadow: 
+  box-shadow:
     0 2px 4px hsl(var(--coral-600) / 0.25),
     0 4px 8px hsl(var(--coral-600) / 0.15),
     inset 0 1px 0 hsl(var(--coral-300) / 0.4),
@@ -605,11 +664,13 @@ section:not(:first-child) {
 }
 
 .skeuo-button-primary:hover {
-  background: linear-gradient(180deg, 
-    hsl(var(--coral-300)) 0%, 
-    hsl(var(--coral-400)) 100%);
+  background: linear-gradient(
+    180deg,
+    hsl(var(--coral-300)) 0%,
+    hsl(var(--coral-400)) 100%
+  );
   transform: translateY(-1px);
-  box-shadow: 
+  box-shadow:
     0 4px 8px hsl(var(--coral-600) / 0.3),
     0 8px 16px hsl(var(--coral-600) / 0.2),
     inset 0 1px 0 hsl(var(--coral-200) / 0.5),
@@ -618,7 +679,7 @@ section:not(:first-child) {
 
 .skeuo-button-primary:active {
   transform: translateY(0);
-  box-shadow: 
+  box-shadow:
     inset 0 2px 4px hsl(var(--coral-600) / 0.3),
     inset 0 1px 2px hsl(var(--coral-700) / 0.2);
 }
@@ -627,68 +688,72 @@ section:not(:first-child) {
 .skeuo-button-secondary {
   background: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(0 0% 98%) 100%);
   color: hsl(var(--foreground));
-  box-shadow: 
-    0 1px 2px rgba(0,0,0,0.06),
-    0 2px 4px rgba(0,0,0,0.04),
-    inset 0 1px 0 rgba(255,255,255,1),
-    inset 0 -1px 0 rgba(0,0,0,0.04);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.06),
+    0 2px 4px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04);
   border: 1px solid hsl(0 0% 88%);
 }
 
 .skeuo-button-secondary:hover {
   background: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(0 0% 96%) 100%);
   transform: translateY(-1px);
-  box-shadow: 
-    0 2px 4px rgba(0,0,0,0.08),
-    0 4px 8px rgba(0,0,0,0.06),
-    inset 0 1px 0 rgba(255,255,255,1),
-    inset 0 -1px 0 rgba(0,0,0,0.04);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.08),
+    0 4px 8px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04);
 }
 
 /* Embossed text effect */
 .skeuo-embossed {
-  text-shadow: 
-    0 1px 0 rgba(255,255,255,0.8),
-    0 -1px 0 rgba(0,0,0,0.1);
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8),
+    0 -1px 0 rgba(0, 0, 0, 0.1);
 }
 
 /* Debossed/engraved text effect */
 .skeuo-debossed {
-  text-shadow: 
-    0 -1px 0 rgba(255,255,255,0.6),
-    0 1px 1px rgba(0,0,0,0.15);
+  text-shadow:
+    0 -1px 0 rgba(255, 255, 255, 0.6),
+    0 1px 1px rgba(0, 0, 0, 0.15);
 }
 
 /* Premium icon container */
 .skeuo-icon-container {
-  background: linear-gradient(135deg, 
-    hsl(var(--coral-100)) 0%, 
-    hsl(var(--lavender-100)) 100%);
+  background: linear-gradient(
+    135deg,
+    hsl(var(--coral-100)) 0%,
+    hsl(var(--lavender-100)) 100%
+  );
   border-radius: 1rem;
   padding: 1rem;
-  box-shadow: 
-    0 2px 4px rgba(0,0,0,0.06),
-    0 4px 8px rgba(0,0,0,0.04),
-    inset 0 1px 0 rgba(255,255,255,0.9),
-    inset 0 -1px 0 rgba(0,0,0,0.03);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.06),
+    0 4px 8px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.03);
   border: 1px solid hsl(0 0% 92%);
 }
 
 /* Progress bar with depth */
 .skeuo-progress-track {
   background: linear-gradient(180deg, hsl(0 0% 92%) 0%, hsl(0 0% 96%) 100%);
-  box-shadow: 
-    inset 0 1px 3px rgba(0,0,0,0.1),
-    inset 0 2px 6px rgba(0,0,0,0.05);
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.1),
+    inset 0 2px 6px rgba(0, 0, 0, 0.05);
   border-radius: 9999px;
   overflow: hidden;
 }
 
 .skeuo-progress-fill {
-  background: linear-gradient(180deg, 
-    hsl(var(--coral-400)) 0%, 
-    hsl(var(--coral-500)) 100%);
-  box-shadow: 
+  background: linear-gradient(
+    180deg,
+    hsl(var(--coral-400)) 0%,
+    hsl(var(--coral-500)) 100%
+  );
+  box-shadow:
     inset 0 1px 0 hsl(var(--coral-300) / 0.5),
     0 1px 2px hsl(var(--coral-600) / 0.3);
   border-radius: 9999px;
@@ -697,10 +762,12 @@ section:not(:first-child) {
 /* Divider with embossed effect */
 .skeuo-divider {
   height: 2px;
-  background: linear-gradient(180deg, 
-    rgba(0,0,0,0.06) 0%, 
-    rgba(0,0,0,0.02) 50%, 
-    rgba(255,255,255,0.8) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.06) 0%,
+    rgba(0, 0, 0, 0.02) 50%,
+    rgba(255, 255, 255, 0.8) 100%
+  );
   border: none;
   margin: 2rem 0;
 }
@@ -713,20 +780,28 @@ section:not(:first-child) {
   font-size: 0.875rem;
   font-weight: 500;
   border: 1px solid hsl(0 0% 90%);
-  box-shadow: 
-    0 1px 2px rgba(0,0,0,0.05),
-    inset 0 1px 0 rgba(255,255,255,0.9),
-    inset 0 -1px 0 rgba(0,0,0,0.03);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.03);
 }
 
 .skeuo-pill-coral {
-  background: linear-gradient(180deg, hsl(var(--coral-100)) 0%, hsl(var(--coral-200)) 100%);
+  background: linear-gradient(
+    180deg,
+    hsl(var(--coral-100)) 0%,
+    hsl(var(--coral-200)) 100%
+  );
   border-color: hsl(var(--coral-300) / 0.5);
   color: hsl(var(--coral-600));
 }
 
 .skeuo-pill-lavender {
-  background: linear-gradient(180deg, hsl(var(--lavender-100)) 0%, hsl(var(--lavender-200)) 100%);
+  background: linear-gradient(
+    180deg,
+    hsl(var(--lavender-100)) 0%,
+    hsl(var(--lavender-200)) 100%
+  );
   border-color: hsl(var(--lavender-300) / 0.5);
   color: hsl(var(--lavender-600));
 }
@@ -738,13 +813,15 @@ section:not(:first-child) {
   position: relative;
 }
 .theme-layer-coral::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, 
-    hsl(var(--coral-100) / 0.4) 0%, 
+  background: linear-gradient(
+    135deg,
+    hsl(var(--coral-100) / 0.4) 0%,
     transparent 40%,
-    hsl(var(--coral-200) / 0.2) 100%);
+    hsl(var(--coral-200) / 0.2) 100%
+  );
   pointer-events: none;
   z-index: 0;
 }
@@ -753,13 +830,15 @@ section:not(:first-child) {
   position: relative;
 }
 .theme-layer-lavender::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, 
-    hsl(var(--lavender-100) / 0.4) 0%, 
+  background: linear-gradient(
+    135deg,
+    hsl(var(--lavender-100) / 0.4) 0%,
     transparent 40%,
-    hsl(var(--lavender-200) / 0.2) 100%);
+    hsl(var(--lavender-200) / 0.2) 100%
+  );
   pointer-events: none;
   z-index: 0;
 }
@@ -768,13 +847,15 @@ section:not(:first-child) {
   position: relative;
 }
 .theme-layer-navy::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, 
-    hsl(var(--navy-100) / 0.3) 0%, 
+  background: linear-gradient(
+    135deg,
+    hsl(var(--navy-100) / 0.3) 0%,
     transparent 40%,
-    hsl(var(--navy-200) / 0.15) 100%);
+    hsl(var(--navy-200) / 0.15) 100%
+  );
   pointer-events: none;
   z-index: 0;
 }
@@ -783,13 +864,25 @@ section:not(:first-child) {
   position: relative;
 }
 .theme-layer-mixed::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background: 
-    radial-gradient(ellipse at 20% 30%, hsl(var(--coral-200) / 0.25) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 70%, hsl(var(--lavender-200) / 0.25) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 100%, hsl(var(--navy-100) / 0.15) 0%, transparent 40%);
+  background:
+    radial-gradient(
+      ellipse at 20% 30%,
+      hsl(var(--coral-200) / 0.25) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 80% 70%,
+      hsl(var(--lavender-200) / 0.25) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 50% 100%,
+      hsl(var(--navy-100) / 0.15) 0%,
+      transparent 40%
+    );
   pointer-events: none;
   z-index: 0;
 }
@@ -801,7 +894,7 @@ section:not(:first-child) {
 }
 
 .glass-cursor-overlay::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 180px;
   height: 180px;
@@ -825,29 +918,35 @@ section:not(:first-child) {
   transition: box-shadow 0.3s ease;
 }
 .image-glow-coral:hover {
-  box-shadow: 0 0 30px hsl(var(--coral-400) / 0.3), 0 10px 40px hsl(var(--coral-400) / 0.2);
+  box-shadow:
+    0 0 30px hsl(var(--coral-400) / 0.3),
+    0 10px 40px hsl(var(--coral-400) / 0.2);
 }
 
 .image-glow-lavender {
   transition: box-shadow 0.3s ease;
 }
 .image-glow-lavender:hover {
-  box-shadow: 0 0 30px hsl(var(--lavender-400) / 0.3), 0 10px 40px hsl(var(--lavender-400) / 0.2);
+  box-shadow:
+    0 0 30px hsl(var(--lavender-400) / 0.3),
+    0 10px 40px hsl(var(--lavender-400) / 0.2);
 }
 
 .image-glow-navy {
   transition: box-shadow 0.3s ease;
 }
 .image-glow-navy:hover {
-  box-shadow: 0 0 30px hsl(var(--navy-300) / 0.3), 0 10px 40px hsl(var(--navy-300) / 0.2);
+  box-shadow:
+    0 0 30px hsl(var(--navy-300) / 0.3),
+    0 10px 40px hsl(var(--navy-300) / 0.2);
 }
 
 .image-glow-mixed {
   transition: box-shadow 0.3s ease;
 }
 .image-glow-mixed:hover {
-  box-shadow: 
-    0 0 20px hsl(var(--coral-400) / 0.2), 
+  box-shadow:
+    0 0 20px hsl(var(--coral-400) / 0.2),
     0 0 40px hsl(var(--lavender-400) / 0.15),
-    0 10px 40px rgba(0,0,0,0.1);
+    0 10px 40px rgba(0, 0, 0, 0.1);
 }

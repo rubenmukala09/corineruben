@@ -7,7 +7,14 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Loader2, CheckCircle, XCircle } from "lucide-react";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { format } from "date-fns";
 
 export default function Pending() {
@@ -54,16 +61,28 @@ export default function Pending() {
 
   useEffect(() => {
     const channel = supabase
-      .channel('pending-updates')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'testimonials' }, () => {
-        refetchTestimonials();
-      })
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'booking_requests' }, () => {
-        refetchBookings();
-      })
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'website_inquiries' }, () => {
-        refetchInquiries();
-      })
+      .channel("pending-updates")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "testimonials" },
+        () => {
+          refetchTestimonials();
+        },
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "booking_requests" },
+        () => {
+          refetchBookings();
+        },
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "website_inquiries" },
+        () => {
+          refetchInquiries();
+        },
+      )
       .subscribe();
 
     return () => {
@@ -71,7 +90,10 @@ export default function Pending() {
     };
   }, [refetchTestimonials, refetchBookings, refetchInquiries]);
 
-  const handleTestimonialAction = async (id: string, status: "approved" | "rejected") => {
+  const handleTestimonialAction = async (
+    id: string,
+    status: "approved" | "rejected",
+  ) => {
     setUpdatingId(id);
     try {
       const { error } = await supabase
@@ -132,7 +154,9 @@ export default function Pending() {
     <div className="p-6 max-w-7xl mx-auto space-y-6">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-[#F9FAFB]">Pending Actions</h1>
-        <p className="text-[#9CA3AF]">Review and manage items requiring attention</p>
+        <p className="text-[#9CA3AF]">
+          Review and manage items requiring attention
+        </p>
       </div>
 
       <Tabs defaultValue="testimonials" className="w-full">
@@ -166,7 +190,9 @@ export default function Pending() {
         <TabsContent value="testimonials">
           <Card className="bg-[#111827] border-gray-800">
             <CardHeader>
-              <CardTitle className="text-[#F9FAFB]">Pending Testimonials</CardTitle>
+              <CardTitle className="text-[#F9FAFB]">
+                Pending Testimonials
+              </CardTitle>
             </CardHeader>
             <CardContent>
               {!pendingTestimonials ? (
@@ -174,7 +200,9 @@ export default function Pending() {
                   <Loader2 className="h-8 w-8 animate-spin text-[#9CA3AF]" />
                 </div>
               ) : pendingTestimonials.length === 0 ? (
-                <p className="text-center text-[#9CA3AF] py-8">No pending testimonials</p>
+                <p className="text-center text-[#9CA3AF] py-8">
+                  No pending testimonials
+                </p>
               ) : (
                 <Table>
                   <TableHeader>
@@ -187,15 +215,32 @@ export default function Pending() {
                   </TableHeader>
                   <TableBody>
                     {pendingTestimonials.map((testimonial) => (
-                      <TableRow key={testimonial.id} className="border-gray-700">
-                        <TableCell className="font-medium text-[#F9FAFB]">{testimonial.name}</TableCell>
-                        <TableCell className="max-w-md truncate text-[#9CA3AF]">{testimonial.content}</TableCell>
-                        <TableCell className="text-[#9CA3AF]">{format(new Date(testimonial.created_at), "MMM dd, yyyy")}</TableCell>
+                      <TableRow
+                        key={testimonial.id}
+                        className="border-gray-700"
+                      >
+                        <TableCell className="font-medium text-[#F9FAFB]">
+                          {testimonial.name}
+                        </TableCell>
+                        <TableCell className="max-w-md truncate text-[#9CA3AF]">
+                          {testimonial.content}
+                        </TableCell>
+                        <TableCell className="text-[#9CA3AF]">
+                          {format(
+                            new Date(testimonial.created_at),
+                            "MMM dd, yyyy",
+                          )}
+                        </TableCell>
                         <TableCell>
                           <div className="flex gap-2">
                             <Button
                               size="sm"
-                              onClick={() => handleTestimonialAction(testimonial.id, "approved")}
+                              onClick={() =>
+                                handleTestimonialAction(
+                                  testimonial.id,
+                                  "approved",
+                                )
+                              }
                               disabled={updatingId === testimonial.id}
                             >
                               {updatingId === testimonial.id ? (
@@ -208,7 +253,12 @@ export default function Pending() {
                             <Button
                               size="sm"
                               variant="destructive"
-                              onClick={() => handleTestimonialAction(testimonial.id, "rejected")}
+                              onClick={() =>
+                                handleTestimonialAction(
+                                  testimonial.id,
+                                  "rejected",
+                                )
+                              }
                               disabled={updatingId === testimonial.id}
                             >
                               <XCircle className="h-4 w-4 mr-1" />
@@ -236,12 +286,16 @@ export default function Pending() {
                   <Loader2 className="h-8 w-8 animate-spin text-[#9CA3AF]" />
                 </div>
               ) : pendingBookings.length === 0 ? (
-                <p className="text-center text-[#9CA3AF] py-8">No pending bookings</p>
+                <p className="text-center text-[#9CA3AF] py-8">
+                  No pending bookings
+                </p>
               ) : (
                 <Table>
                   <TableHeader>
                     <TableRow className="border-gray-700">
-                      <TableHead className="text-[#9CA3AF]">Request #</TableHead>
+                      <TableHead className="text-[#9CA3AF]">
+                        Request #
+                      </TableHead>
                       <TableHead className="text-[#9CA3AF]">Name</TableHead>
                       <TableHead className="text-[#9CA3AF]">Service</TableHead>
                       <TableHead className="text-[#9CA3AF]">Date</TableHead>
@@ -251,15 +305,25 @@ export default function Pending() {
                   <TableBody>
                     {pendingBookings.map((booking) => (
                       <TableRow key={booking.id} className="border-gray-700">
-                        <TableCell className="font-medium text-[#F9FAFB]">{booking.request_number}</TableCell>
-                        <TableCell className="text-[#9CA3AF]">{booking.full_name}</TableCell>
-                        <TableCell className="text-[#9CA3AF]">{booking.service_name}</TableCell>
-                        <TableCell className="text-[#9CA3AF]">{format(new Date(booking.created_at), "MMM dd, yyyy")}</TableCell>
+                        <TableCell className="font-medium text-[#F9FAFB]">
+                          {booking.request_number}
+                        </TableCell>
+                        <TableCell className="text-[#9CA3AF]">
+                          {booking.full_name}
+                        </TableCell>
+                        <TableCell className="text-[#9CA3AF]">
+                          {booking.service_name}
+                        </TableCell>
+                        <TableCell className="text-[#9CA3AF]">
+                          {format(new Date(booking.created_at), "MMM dd, yyyy")}
+                        </TableCell>
                         <TableCell>
                           <div className="flex gap-2">
                             <Button
                               size="sm"
-                              onClick={() => handleBookingAction(booking.id, "confirmed")}
+                              onClick={() =>
+                                handleBookingAction(booking.id, "confirmed")
+                              }
                               disabled={updatingId === booking.id}
                             >
                               {updatingId === booking.id ? (
@@ -272,7 +336,9 @@ export default function Pending() {
                             <Button
                               size="sm"
                               variant="destructive"
-                              onClick={() => handleBookingAction(booking.id, "cancelled")}
+                              onClick={() =>
+                                handleBookingAction(booking.id, "cancelled")
+                              }
                               disabled={updatingId === booking.id}
                             >
                               <XCircle className="h-4 w-4 mr-1" />
@@ -292,7 +358,9 @@ export default function Pending() {
         <TabsContent value="inquiries">
           <Card className="bg-[#111827] border-gray-800">
             <CardHeader>
-              <CardTitle className="text-[#F9FAFB]">Pending Inquiries</CardTitle>
+              <CardTitle className="text-[#F9FAFB]">
+                Pending Inquiries
+              </CardTitle>
             </CardHeader>
             <CardContent>
               {!pendingInquiries ? (
@@ -300,7 +368,9 @@ export default function Pending() {
                   <Loader2 className="h-8 w-8 animate-spin text-[#9CA3AF]" />
                 </div>
               ) : pendingInquiries.length === 0 ? (
-                <p className="text-center text-[#9CA3AF] py-8">No pending inquiries</p>
+                <p className="text-center text-[#9CA3AF] py-8">
+                  No pending inquiries
+                </p>
               ) : (
                 <Table>
                   <TableHeader>
@@ -315,15 +385,25 @@ export default function Pending() {
                   <TableBody>
                     {pendingInquiries.map((inquiry) => (
                       <TableRow key={inquiry.id} className="border-gray-700">
-                        <TableCell className="font-medium text-[#F9FAFB]">{inquiry.name}</TableCell>
-                        <TableCell className="text-[#9CA3AF]">{inquiry.email}</TableCell>
-                        <TableCell className="max-w-md truncate text-[#9CA3AF]">{inquiry.message}</TableCell>
-                        <TableCell className="text-[#9CA3AF]">{format(new Date(inquiry.created_at), "MMM dd, yyyy")}</TableCell>
+                        <TableCell className="font-medium text-[#F9FAFB]">
+                          {inquiry.name}
+                        </TableCell>
+                        <TableCell className="text-[#9CA3AF]">
+                          {inquiry.email}
+                        </TableCell>
+                        <TableCell className="max-w-md truncate text-[#9CA3AF]">
+                          {inquiry.message}
+                        </TableCell>
+                        <TableCell className="text-[#9CA3AF]">
+                          {format(new Date(inquiry.created_at), "MMM dd, yyyy")}
+                        </TableCell>
                         <TableCell>
                           <div className="flex gap-2">
                             <Button
                               size="sm"
-                              onClick={() => handleInquiryAction(inquiry.id, "responded")}
+                              onClick={() =>
+                                handleInquiryAction(inquiry.id, "responded")
+                              }
                               disabled={updatingId === inquiry.id}
                             >
                               {updatingId === inquiry.id ? (
@@ -337,7 +417,9 @@ export default function Pending() {
                               size="sm"
                               variant="outline"
                               className="border-gray-700"
-                              onClick={() => handleInquiryAction(inquiry.id, "archived")}
+                              onClick={() =>
+                                handleInquiryAction(inquiry.id, "archived")
+                              }
                               disabled={updatingId === inquiry.id}
                             >
                               Archive

@@ -105,7 +105,10 @@ export const useGuestScanner = () => {
             body: { scanId },
           }),
           new Promise((_, reject) =>
-            setTimeout(() => reject(new Error("Analysis timed out.")), ANALYSIS_TIMEOUT_MS)
+            setTimeout(
+              () => reject(new Error("Analysis timed out.")),
+              ANALYSIS_TIMEOUT_MS,
+            ),
           ),
         ]);
 
@@ -118,7 +121,11 @@ export const useGuestScanner = () => {
         if (!data?.analysis) throw new Error("No analysis results returned.");
 
         setAnalysis(data.analysis);
-        setExpiresAt(data.expiresAt ? new Date(data.expiresAt) : new Date(Date.now() + 10 * 60 * 1000));
+        setExpiresAt(
+          data.expiresAt
+            ? new Date(data.expiresAt)
+            : new Date(Date.now() + 10 * 60 * 1000),
+        );
         setScanId(scanId);
         setStatus("completed");
         setProgress(100);
@@ -131,7 +138,7 @@ export const useGuestScanner = () => {
         toast.error(message);
       }
     },
-    [file]
+    [file],
   );
 
   const markExpired = useCallback(() => {

@@ -2,78 +2,224 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-    
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"
+    />
+
     <!-- CRITICAL: CSS async loader MUST be first to intercept Vite-injected CSS before render-blocking -->
     <script>
-      (function(){
-        function makeAsync(link){
-          if(link.rel==='stylesheet'&&link.href&&!link.dataset.critical){
-            link.media='print';
-            link.onload=function(){this.media='all';this.onload=null};
+      (function () {
+        function makeAsync(link) {
+          if (
+            link.rel === "stylesheet" &&
+            link.href &&
+            !link.dataset.critical
+          ) {
+            link.media = "print";
+            link.onload = function () {
+              this.media = "all";
+              this.onload = null;
+            };
           }
         }
-        var obs=new MutationObserver(function(m){
-          m.forEach(function(mut){
-            mut.addedNodes.forEach(function(n){
-              if(n.tagName==='LINK')makeAsync(n);
+        var obs = new MutationObserver(function (m) {
+          m.forEach(function (mut) {
+            mut.addedNodes.forEach(function (n) {
+              if (n.tagName === "LINK") makeAsync(n);
             });
           });
         });
-        obs.observe(document.documentElement,{childList:true,subtree:true});
+        obs.observe(document.documentElement, {
+          childList: true,
+          subtree: true,
+        });
         document.querySelectorAll('link[rel="stylesheet"]').forEach(makeAsync);
       })();
     </script>
-    
+
     <!-- Preconnect hints for early connection establishment -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://avoafweoebstkgjnbadv.supabase.co" crossorigin>
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preconnect"
+      href="https://avoafweoebstkgjnbadv.supabase.co"
+      crossorigin
+    />
+
     <!-- Load primary fonts (Rubik + Lora) -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Lora:wght@400;500;600;700&display=swap">
-    
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Lora:wght@400;500;600;700&display=swap"
+    />
+
     <!-- Critical CSS inlined for FCP/LCP -->
     <style>
       /* System font stack for instant text paint, then swap to Rubik/Lora */
-      @font-face{font-family:'Rubik';font-style:normal;font-weight:400 700;font-display:swap;src:local('Rubik'),local('Rubik-Regular')}
-      @font-face{font-family:'Lora';font-style:normal;font-weight:400 700;font-display:swap;src:local('Lora'),local('Lora-Regular')}
-      *,*::before,*::after{box-sizing:border-box;border-width:0;border-style:solid}
-      html{line-height:1.5;-webkit-text-size-adjust:100%;font-family:'Rubik',ui-sans-serif,system-ui,-apple-system,sans-serif}
-      body{margin:0;line-height:inherit;background-color:#faf9f7;color:#0f172a}
-      #root{min-height:100vh;display:flex;flex-direction:column}
-      .fixed{position:fixed}.relative{position:relative}.flex{display:flex}.hidden{display:none}
-      .h-screen{height:100vh}.w-full{width:100%}.min-h-screen{min-height:100vh}
-      .items-center{align-items:center}.justify-center{justify-content:center}
-      .overflow-hidden{overflow:hidden}.z-50{z-index:50}
-      .bg-primary{background-color:#7c3aed}.text-white{color:#fff}
-      .bg-background{background-color:#fff}
+      @font-face {
+        font-family: "Rubik";
+        font-style: normal;
+        font-weight: 400 700;
+        font-display: swap;
+        src: local("Rubik"), local("Rubik-Regular");
+      }
+      @font-face {
+        font-family: "Lora";
+        font-style: normal;
+        font-weight: 400 700;
+        font-display: swap;
+        src: local("Lora"), local("Lora-Regular");
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        border-width: 0;
+        border-style: solid;
+      }
+      html {
+        line-height: 1.5;
+        -webkit-text-size-adjust: 100%;
+        font-family:
+          "Rubik",
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          sans-serif;
+      }
+      body {
+        margin: 0;
+        line-height: inherit;
+        background-color: #faf9f7;
+        color: #0f172a;
+      }
+      #root {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .fixed {
+        position: fixed;
+      }
+      .relative {
+        position: relative;
+      }
+      .flex {
+        display: flex;
+      }
+      .hidden {
+        display: none;
+      }
+      .h-screen {
+        height: 100vh;
+      }
+      .w-full {
+        width: 100%;
+      }
+      .min-h-screen {
+        min-height: 100vh;
+      }
+      .items-center {
+        align-items: center;
+      }
+      .justify-center {
+        justify-content: center;
+      }
+      .overflow-hidden {
+        overflow: hidden;
+      }
+      .z-50 {
+        z-index: 50;
+      }
+      .bg-primary {
+        background-color: #7c3aed;
+      }
+      .text-white {
+        color: #fff;
+      }
+      .bg-background {
+        background-color: #fff;
+      }
       /* LCP element - gradient text for nav brand */
-      .gradient-text-primary{background:linear-gradient(135deg,hsl(260,70%,35%),hsl(260,60%,55%));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-      .sticky{position:sticky}.top-0{top:0}.bg-card{background-color:#fff}.border-b{border-bottom-width:1px}.border-border{border-color:#e2e8f0}.shadow-lg{box-shadow:0 10px 15px -3px rgba(0,0,0,.1)}
-      nav{z-index:9999}
-      h1{font-weight:700;line-height:.95;letter-spacing:-.025em}
-      @media(min-width:640px){h1{font-size:2.25rem}}
-      @media(min-width:768px){h1{font-size:3rem}}
-      @media(min-width:1024px){h1{font-size:3.75rem}}
-      .lcp-text{font-size:clamp(1rem,2vw,1.5rem);color:#64748b;line-height:1.6;margin:0 0 2rem}
+      .gradient-text-primary {
+        background: linear-gradient(
+          135deg,
+          hsl(260, 70%, 35%),
+          hsl(260, 60%, 55%)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .sticky {
+        position: sticky;
+      }
+      .top-0 {
+        top: 0;
+      }
+      .bg-card {
+        background-color: #fff;
+      }
+      .border-b {
+        border-bottom-width: 1px;
+      }
+      .border-border {
+        border-color: #e2e8f0;
+      }
+      .shadow-lg {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      }
+      nav {
+        z-index: 9999;
+      }
+      h1 {
+        font-weight: 700;
+        line-height: 0.95;
+        letter-spacing: -0.025em;
+      }
+      @media (min-width: 640px) {
+        h1 {
+          font-size: 2.25rem;
+        }
+      }
+      @media (min-width: 768px) {
+        h1 {
+          font-size: 3rem;
+        }
+      }
+      @media (min-width: 1024px) {
+        h1 {
+          font-size: 3.75rem;
+        }
+      }
+      .lcp-text {
+        font-size: clamp(1rem, 2vw, 1.5rem);
+        color: #64748b;
+        line-height: 1.6;
+        margin: 0 0 2rem;
+      }
     </style>
-    
+
     <!-- DNS prefetch for other origins -->
-    <link rel="dns-prefetch" href="https://js.stripe.com">
-    <link rel="dns-prefetch" href="https://m.stripe.network">
-    
+    <link rel="dns-prefetch" href="https://js.stripe.com" />
+    <link rel="dns-prefetch" href="https://m.stripe.network" />
+
     <!-- Google Analytics - deferred to reduce main-thread impact -->
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('consent', 'default', {analytics_storage: 'denied', ad_storage: 'denied'});
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("consent", "default", {
+        analytics_storage: "denied",
+        ad_storage: "denied",
+      });
       var gaLoaded = false;
       function isAnalyticsAllowed() {
         try {
-          var consent = localStorage.getItem('invision-cookie-consent');
+          var consent = localStorage.getItem("invision-cookie-consent");
           if (!consent) return false;
-          var prefsRaw = localStorage.getItem('invision-cookie-preferences');
+          var prefsRaw = localStorage.getItem("invision-cookie-preferences");
           if (!prefsRaw) return false;
           var prefs = JSON.parse(prefsRaw);
           return !!prefs.analytics;
@@ -84,18 +230,21 @@
       function loadGA() {
         if (gaLoaded || !isAnalyticsAllowed()) return;
         gaLoaded = true;
-        var s = document.createElement('script');
+        var s = document.createElement("script");
         s.async = true;
-        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-B1MKM2FPV7';
+        s.src = "https://www.googletagmanager.com/gtag/js?id=G-B1MKM2FPV7";
         document.head.appendChild(s);
-        gtag('consent', 'update', {analytics_storage: 'granted', ad_storage: 'denied'});
-        gtag('js', new Date());
-        gtag('config', 'G-B1MKM2FPV7', {send_page_view: false});
+        gtag("consent", "update", {
+          analytics_storage: "granted",
+          ad_storage: "denied",
+        });
+        gtag("js", new Date());
+        gtag("config", "G-B1MKM2FPV7", { send_page_view: false });
       }
       function scheduleLoadGA() {
         if (gaLoaded) return;
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(loadGA, {timeout: 4000});
+        if ("requestIdleCallback" in window) {
+          requestIdleCallback(loadGA, { timeout: 4000 });
         } else {
           setTimeout(loadGA, 2000);
         }
@@ -103,30 +252,48 @@
       if (isAnalyticsAllowed()) {
         scheduleLoadGA();
       }
-      window.addEventListener('cookie-consent-updated', function() {
+      window.addEventListener("cookie-consent-updated", function () {
         scheduleLoadGA();
       });
     </script>
-    
+
     <link rel="icon" type="image/png" href="/favicon.png" />
     <title>InVision Network | Cybersecurity & AI Protection in Ohio</title>
-    <meta name="description" content="InVision Network provides expert cybersecurity training and AI protection for Ohio families and businesses. Protect your identity and data from online scams.">
+    <meta
+      name="description"
+      content="InVision Network provides expert cybersecurity training and AI protection for Ohio families and businesses. Protect your identity and data from online scams."
+    />
     <meta name="author" content="InVision Network" />
-    <meta name="keywords" content="AI scam protection, deepfake detection, senior scam training, family cybersecurity, phishing defense, Dayton Ohio">
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    
+    <meta
+      name="keywords"
+      content="AI scam protection, deepfake detection, senior scam training, family cybersecurity, phishing defense, Dayton Ohio"
+    />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+
     <!-- Google Site Verification -->
-    <meta name="google-site-verification" content="google7d90b5b18423192a.html" />
+    <meta
+      name="google-site-verification"
+      content="google7d90b5b18423192a.html"
+    />
 
     <!-- Preconnect hints moved to top of head for maximum LCP benefit -->
-    
+
     <!-- Open Graph Tags -->
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/UpYpYr7MTVdr1jgHmL94ALNUlk93/social-images/social-1761862743436-shield_purpleb.png">
+    <meta
+      property="og:image"
+      content="https://storage.googleapis.com/gpt-engineer-file-uploads/UpYpYr7MTVdr1jgHmL94ALNUlk93/social-images/social-1761862743436-shield_purpleb.png"
+    />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@invisionnetwork" />
-    <meta name="twitter:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/UpYpYr7MTVdr1jgHmL94ALNUlk93/social-images/social-1761862743436-shield_purpleb.png">
+    <meta
+      name="twitter:image"
+      content="https://storage.googleapis.com/gpt-engineer-file-uploads/UpYpYr7MTVdr1jgHmL94ALNUlk93/social-images/social-1761862743436-shield_purpleb.png"
+    />
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://invisionnetwork.org" />
@@ -135,63 +302,82 @@
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#6D28D9" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
     <meta name="apple-mobile-web-app-title" content="InVision" />
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "InVision Network",
-      "description": "AI Scam Protection Training for Families & Seniors",
-      "url": "https://invisionnetwork.org",
-      "logo": "https://invisionnetwork.org/favicon.png",
-      "foundingDate": "2024",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Dayton",
-        "addressRegion": "OH",
-        "addressCountry": "US"
-      },
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+1-937-301-8749",
-        "contactType": "Customer Service",
-        "availableLanguage": ["English", "French", "Spanish"]
-      },
-      "sameAs": [
-        "https://twitter.com/invisionnetwork",
-        "https://facebook.com/invisionnetwork",
-        "https://linkedin.com/company/invisionnetwork"
-      ],
-      "offers": {
-        "@type": "Offer",
-        "category": "Training & Consulting",
-        "description": "AI Scam Protection Training and Consultation Services"
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "InVision Network",
+        "description": "AI Scam Protection Training for Families & Seniors",
+        "url": "https://invisionnetwork.org",
+        "logo": "https://invisionnetwork.org/favicon.png",
+        "foundingDate": "2024",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Dayton",
+          "addressRegion": "OH",
+          "addressCountry": "US"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+1-937-301-8749",
+          "contactType": "Customer Service",
+          "availableLanguage": ["English", "French", "Spanish"]
+        },
+        "sameAs": [
+          "https://twitter.com/invisionnetwork",
+          "https://facebook.com/invisionnetwork",
+          "https://linkedin.com/company/invisionnetwork"
+        ],
+        "offers": {
+          "@type": "Offer",
+          "category": "Training & Consulting",
+          "description": "AI Scam Protection Training and Consultation Services"
+        }
       }
-    }
     </script>
-    
-    <link rel="icon" type="image/x-icon" href="https://storage.googleapis.com/gpt-engineer-file-uploads/UpYpYr7MTVdr1jgHmL94ALNUlk93/uploads/1761862729082-shield_purpleb.png">
-    <meta property="og:title" content="InVision Network | Cybersecurity & AI Protection in Ohio">
-    <meta name="twitter:title" content="InVision Network | Cybersecurity & AI Protection in Ohio">
-    <meta property="og:description" content="InVision Network provides expert cybersecurity training and AI protection for Ohio families and businesses. Protect your identity and data from online scams.">
-    <meta name="twitter:description" content="InVision Network provides expert cybersecurity training and AI protection for Ohio families and businesses. Protect your identity and data from online scams.">
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://storage.googleapis.com/gpt-engineer-file-uploads/UpYpYr7MTVdr1jgHmL94ALNUlk93/uploads/1761862729082-shield_purpleb.png"
+    />
+    <meta
+      property="og:title"
+      content="InVision Network | Cybersecurity & AI Protection in Ohio"
+    />
+    <meta
+      name="twitter:title"
+      content="InVision Network | Cybersecurity & AI Protection in Ohio"
+    />
+    <meta
+      property="og:description"
+      content="InVision Network provides expert cybersecurity training and AI protection for Ohio families and businesses. Protect your identity and data from online scams."
+    />
+    <meta
+      name="twitter:description"
+      content="InVision Network provides expert cybersecurity training and AI protection for Ohio families and businesses. Protect your identity and data from online scams."
+    />
   </head>
 
   <body>
     <div id="root"></div>
-    
+
     <!-- Service Worker Registration - deferred to reduce main-thread blocking -->
     <script>
       // Use requestIdleCallback to defer SW registration out of critical path
       function registerSW() {
-        if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('/sw.js').catch(function(){});
+        if ("serviceWorker" in navigator) {
+          navigator.serviceWorker.register("/sw.js").catch(function () {});
         }
       }
-      if ('requestIdleCallback' in window) {
+      if ("requestIdleCallback" in window) {
         requestIdleCallback(registerSW, { timeout: 5000 });
       } else {
         setTimeout(registerSW, 3000);

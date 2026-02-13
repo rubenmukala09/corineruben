@@ -15,10 +15,13 @@ interface SEOProps {
 
 const DEFAULT_SEO = {
   title: "Cybersecurity & AI Protection in Ohio | InVision Network",
-  description: "InVision Network provides expert cybersecurity training and AI protection for Ohio families and businesses. Protect your identity and data from online scams.",
-  image: "https://storage.googleapis.com/gpt-engineer-file-uploads/UpYpYr7MTVdr1jgHmL94ALNUlk93/social-images/social-1761862743436-shield_purpleb.png",
+  description:
+    "InVision Network provides expert cybersecurity training and AI protection for Ohio families and businesses. Protect your identity and data from online scams.",
+  image:
+    "https://storage.googleapis.com/gpt-engineer-file-uploads/UpYpYr7MTVdr1jgHmL94ALNUlk93/social-images/social-1761862743436-shield_purpleb.png",
   type: "website",
-  keywords: "cybersecurity Ohio, AI scam protection, deepfake detection, senior scam training, family cybersecurity, phishing defense, Dayton Ohio",
+  keywords:
+    "cybersecurity Ohio, AI scam protection, deepfake detection, senior scam training, family cybersecurity, phishing defense, Dayton Ohio",
 };
 
 export function SEO({
@@ -71,46 +74,60 @@ export function SEO({
     if (structuredData) {
       updateStructuredData(structuredData);
     }
-  }, [fullTitle, description, image, url, type, keywords, canonicalUrl, noindex, structuredData]);
+  }, [
+    fullTitle,
+    description,
+    image,
+    url,
+    type,
+    keywords,
+    canonicalUrl,
+    noindex,
+    structuredData,
+  ]);
 
   return null;
 }
 
-function updateMeta(name: string, content: string, attributeName: "name" | "property" = "name") {
+function updateMeta(
+  name: string,
+  content: string,
+  attributeName: "name" | "property" = "name",
+) {
   let element = document.querySelector(`meta[${attributeName}="${name}"]`);
-  
+
   if (!element) {
     element = document.createElement("meta");
     element.setAttribute(attributeName, name);
     document.head.appendChild(element);
   }
-  
+
   element.setAttribute("content", content);
 }
 
 function updateLink(rel: string, href: string) {
   let element = document.querySelector(`link[rel="${rel}"]`);
-  
+
   if (!element) {
     element = document.createElement("link");
     element.setAttribute("rel", rel);
     document.head.appendChild(element);
   }
-  
+
   element.setAttribute("href", href);
 }
 
 function updateStructuredData(data: Record<string, any>) {
   const scriptId = "structured-data";
   let script = document.getElementById(scriptId) as HTMLScriptElement | null;
-  
+
   if (!script) {
     script = document.createElement("script");
     script.id = scriptId;
     script.type = "application/ld+json";
     document.head.appendChild(script);
   }
-  
+
   script.textContent = JSON.stringify(data);
 }
 
@@ -118,144 +135,162 @@ function updateStructuredData(data: Record<string, any>) {
 export const PAGE_SEO = {
   home: {
     title: "",
-    description: "Protect your family from AI-powered scams. Expert training, deepfake detection, and 24/7 scam analysis. Trusted by 100+ families. Based in Dayton, OH.",
+    description:
+      "Protect your family from AI-powered scams. Expert training, deepfake detection, and 24/7 scam analysis. Trusted by 100+ families. Based in Dayton, OH.",
     structuredData: {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
-      "name": SITE.name,
-      "description": SITE.tagline,
-      "address": {
+      name: SITE.name,
+      description: SITE.tagline,
+      address: {
         "@type": "PostalAddress",
-        "addressLocality": SITE.location.city,
-        "addressRegion": SITE.location.region,
-        "addressCountry": SITE.location.country
+        addressLocality: SITE.location.city,
+        addressRegion: SITE.location.region,
+        addressCountry: SITE.location.country,
       },
-      "telephone": SITE.phone.e164,
-      "url": "https://invisionnetwork.org",
-      "priceRange": "$$"
-    }
+      telephone: SITE.phone.e164,
+      url: "https://invisionnetwork.org",
+      priceRange: "$$",
+    },
   },
   training: {
     title: "AI Scam Protection Training",
-    description: "Comprehensive AI scam protection training for families and seniors. Learn to spot deepfakes, phishing, and AI-powered scams. Zoom and in-person classes available.",
-    keywords: "AI scam training, deepfake detection training, senior cybersecurity, phishing awareness, Dayton Ohio",
+    description:
+      "Comprehensive AI scam protection training for families and seniors. Learn to spot deepfakes, phishing, and AI-powered scams. Zoom and in-person classes available.",
+    keywords:
+      "AI scam training, deepfake detection training, senior cybersecurity, phishing awareness, Dayton Ohio",
     structuredData: {
       "@context": "https://schema.org",
       "@type": "EducationalOrganization",
-      "name": "InVision Network Training Academy",
-      "description": "Comprehensive AI scam protection training for families, seniors, and businesses",
-      "url": "https://invisionnetwork.org/training",
-      "address": {
+      name: "InVision Network Training Academy",
+      description:
+        "Comprehensive AI scam protection training for families, seniors, and businesses",
+      url: "https://invisionnetwork.org/training",
+      address: {
         "@type": "PostalAddress",
-        "addressLocality": SITE.location.city,
-        "addressRegion": SITE.location.region,
-        "addressCountry": SITE.location.country
+        addressLocality: SITE.location.city,
+        addressRegion: SITE.location.region,
+        addressCountry: SITE.location.country,
       },
-      "telephone": SITE.phone.e164,
-      "offers": [
+      telephone: SITE.phone.e164,
+      offers: [
         {
           "@type": "Offer",
-          "name": "Individual Training Session",
-          "price": "89",
-          "priceCurrency": "USD",
-          "description": "1-hour personalized AI scam protection training"
+          name: "Individual Training Session",
+          price: "89",
+          priceCurrency: "USD",
+          description: "1-hour personalized AI scam protection training",
         },
         {
           "@type": "Offer",
-          "name": "Enterprise Training Program",
-          "price": "599",
-          "priceCurrency": "USD",
-          "description": "Comprehensive team training with ongoing support"
-        }
-      ]
-    }
+          name: "Enterprise Training Program",
+          price: "599",
+          priceCurrency: "USD",
+          description: "Comprehensive team training with ongoing support",
+        },
+      ],
+    },
   },
   business: {
     title: "AI Business Solutions & Automation",
-    description: "Transform your business with AI receptionists, automated follow-ups, and professional websites. Stop missing calls. Let AI run your front desk 24/7. Serving Dayton and all of Ohio.",
-    keywords: "AI receptionist, business automation, AI answering service, virtual receptionist, Dayton Ohio, small business AI",
+    description:
+      "Transform your business with AI receptionists, automated follow-ups, and professional websites. Stop missing calls. Let AI run your front desk 24/7. Serving Dayton and all of Ohio.",
+    keywords:
+      "AI receptionist, business automation, AI answering service, virtual receptionist, Dayton Ohio, small business AI",
     structuredData: {
       "@context": "https://schema.org",
       "@type": "ItemList",
-      "name": "AI Business Services",
-      "description": "Professional AI automation services for businesses",
-      "itemListElement": [
+      name: "AI Business Services",
+      description: "Professional AI automation services for businesses",
+      itemListElement: [
         {
           "@type": "Service",
-          "position": 1,
-          "name": "AI Receptionist & Virtual Intake Agent",
-          "description": "24/7 AI-powered phone answering that sounds human, filters spam, and books appointments automatically",
-          "provider": {
+          position: 1,
+          name: "AI Receptionist & Virtual Intake Agent",
+          description:
+            "24/7 AI-powered phone answering that sounds human, filters spam, and books appointments automatically",
+          provider: {
             "@type": "Organization",
-            "name": "InVision Network"
+            name: "InVision Network",
           },
-          "areaServed": {
+          areaServed: {
             "@type": "State",
-            "name": "Ohio"
+            name: "Ohio",
           },
-          "offers": {
+          offers: {
             "@type": "Offer",
-            "price": "9500",
-            "priceCurrency": "USD",
-            "priceValidUntil": "2026-12-31"
-          }
+            price: "9500",
+            priceCurrency: "USD",
+            priceValidUntil: "2026-12-31",
+          },
         },
         {
           "@type": "Service",
-          "position": 2,
-          "name": "AI Follow-Up Automation",
-          "description": "Automated lead nurturing, appointment reminders, and customer follow-up systems",
-          "provider": {
+          position: 2,
+          name: "AI Follow-Up Automation",
+          description:
+            "Automated lead nurturing, appointment reminders, and customer follow-up systems",
+          provider: {
             "@type": "Organization",
-            "name": "InVision Network"
+            name: "InVision Network",
           },
-          "offers": {
+          offers: {
             "@type": "Offer",
-            "price": "12500",
-            "priceCurrency": "USD"
-          }
+            price: "12500",
+            priceCurrency: "USD",
+          },
         },
         {
           "@type": "Service",
-          "position": 3,
-          "name": "Custom AI Automation",
-          "description": "Enterprise-grade custom AI solutions tailored to your specific business needs",
-          "provider": {
+          position: 3,
+          name: "Custom AI Automation",
+          description:
+            "Enterprise-grade custom AI solutions tailored to your specific business needs",
+          provider: {
             "@type": "Organization",
-            "name": "InVision Network"
+            name: "InVision Network",
           },
-          "offers": {
+          offers: {
             "@type": "Offer",
-            "price": "25000",
-            "priceCurrency": "USD"
-          }
-        }
-      ]
-    }
+            price: "25000",
+            priceCurrency: "USD",
+          },
+        },
+      ],
+    },
   },
   about: {
     title: "About Us",
-    description: "InVision Network is Ohio's leading AI scam protection and business solutions provider. Meet our team of cybersecurity experts based in Dayton.",
-    keywords: "InVision Network, cybersecurity Dayton, AI protection team, Ohio cybersecurity",
+    description:
+      "InVision Network is Ohio's leading AI scam protection and business solutions provider. Meet our team of cybersecurity experts based in Dayton.",
+    keywords:
+      "InVision Network, cybersecurity Dayton, AI protection team, Ohio cybersecurity",
   },
   contact: {
     title: "Contact Us",
     description: `Get in touch with ${SITE.name} for AI scam protection services. Serving the ${SITE.location.areaLabel}. Call ${SITE.phone.display} or fill out our contact form.`,
-    keywords: "contact InVision Network, Dayton cybersecurity contact, AI protection inquiry",
+    keywords:
+      "contact InVision Network, Dayton cybersecurity contact, AI protection inquiry",
   },
   resources: {
     title: "Scam Protection Resources",
-    description: "Free resources, guides, and articles about AI scam protection, deepfake detection, and cybersecurity. Stay informed and stay safe.",
-    keywords: "scam protection resources, AI security guides, cybersecurity articles, deepfake information",
+    description:
+      "Free resources, guides, and articles about AI scam protection, deepfake detection, and cybersecurity. Stay informed and stay safe.",
+    keywords:
+      "scam protection resources, AI security guides, cybersecurity articles, deepfake information",
   },
   guestScanner: {
     title: "Guest File Scanner",
-    description: "Scan a file without creating an account. Pay per use and get instant threat analysis with automatic deletion.",
-    keywords: "guest file scanner, pay per scan, phishing detection, malware scan, deepfake detection",
+    description:
+      "Scan a file without creating an account. Pay per use and get instant threat analysis with automatic deletion.",
+    keywords:
+      "guest file scanner, pay per scan, phishing detection, malware scan, deepfake detection",
   },
   careers: {
     title: "Careers",
-    description: "Join the InVision Network team. We're hiring cybersecurity professionals, trainers, and AI specialists in Dayton, Ohio.",
-    keywords: "cybersecurity careers Dayton, AI jobs Ohio, InVision Network careers",
+    description:
+      "Join the InVision Network team. We're hiring cybersecurity professionals, trainers, and AI specialists in Dayton, Ohio.",
+    keywords:
+      "cybersecurity careers Dayton, AI jobs Ohio, InVision Network careers",
   },
 };

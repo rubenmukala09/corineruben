@@ -53,4 +53,3 @@ export const CartFeedbackProvider = ({ children }: { children: ReactNode }) => {
     </CartFeedbackContext.Provider>
   );
 };
-

@@ -32,8 +32,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -87,11 +85,17 @@ const BookingsList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [bookingToDelete, setBookingToDelete] = useState<BookingRequest | null>(null);
+  const [bookingToDelete, setBookingToDelete] = useState<BookingRequest | null>(
+    null,
+  );
   const [denyDialogOpen, setDenyDialogOpen] = useState(false);
-  const [bookingToDeny, setBookingToDeny] = useState<BookingRequest | null>(null);
+  const [bookingToDeny, setBookingToDeny] = useState<BookingRequest | null>(
+    null,
+  );
   const [assignDialogOpen, setAssignDialogOpen] = useState(false);
-  const [bookingToAssign, setBookingToAssign] = useState<BookingRequest | null>(null);
+  const [bookingToAssign, setBookingToAssign] = useState<BookingRequest | null>(
+    null,
+  );
   const [selectedStaffId, setSelectedStaffId] = useState<string>("");
 
   // Fetch staff members (users with staff-related roles)
@@ -103,7 +107,7 @@ const BookingsList = () => {
         .select("id, full_name, email")
         .not("full_name", "is", null)
         .order("full_name");
-      
+
       if (error) throw error;
       return (data || []) as StaffMember[];
     },
@@ -118,7 +122,7 @@ const BookingsList = () => {
         { event: "*", schema: "public", table: "booking_requests" },
         () => {
           queryClient.invalidateQueries({ queryKey: ["booking-requests"] });
-        }
+        },
       )
       .subscribe();
 
@@ -127,7 +131,11 @@ const BookingsList = () => {
     };
   }, [queryClient]);
 
-  const { data: bookings = [], isLoading, refetch } = useQuery({
+  const {
+    data: bookings = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["booking-requests", statusFilter],
     queryFn: async () => {
       let query = supabase
@@ -151,7 +159,7 @@ const BookingsList = () => {
         .from("booking_requests")
         .update({ status })
         .eq("id", id);
-      
+
       if (error) throw error;
     },
     onSuccess: () => {
@@ -199,22 +207,29 @@ const BookingsList = () => {
 
   // Assign staff mutation
   const assignStaffMutation = useMutation({
-    mutationFn: async ({ bookingId, staffId }: { bookingId: string; staffId: string }) => {
+    mutationFn: async ({
+      bookingId,
+      staffId,
+    }: {
+      bookingId: string;
+      staffId: string;
+    }) => {
       const { error } = await supabase
         .from("booking_requests")
-        .update({ 
+        .update({
           assigned_to: staffId,
-          status: "contacted"
+          status: "contacted",
         })
         .eq("id", bookingId);
-      
+
       if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["booking-requests"] });
       toast({
         title: "Staff Assigned",
-        description: "Booking has been assigned and status updated to 'Contacted'",
+        description:
+          "Booking has been assigned and status updated to 'Contacted'",
       });
       setAssignDialogOpen(false);
       setBookingToAssign(null);
@@ -242,46 +257,66 @@ const BookingsList = () => {
   const handleConfirmBooking = async (booking: BookingRequest) => {
     updateStatusMutation.mutate({ id: booking.id, status: "confirmed" });
     // Open email client with confirmation template
-    const subject = encodeURIComponent(`Booking Confirmed: ${booking.service_name}`);
+    const subject = encodeURIComponent(
+      `Booking Confirmed: ${booking.service_name}`,
+    );
     const body = encodeURIComponent(
       `Dear ${booking.full_name},\n\n` +
-      `We're pleased to confirm your booking for ${booking.service_name}.\n\n` +
-      `Reference Number: ${booking.request_number}\n` +
-      `Preferred Date: ${booking.preferred_dates || 'To be scheduled'}\n` +
-      (booking.final_price ? `Total: $${booking.final_price.toFixed(2)}\n` : '') +
-      `\nWe'll be in touch shortly with additional details.\n\n` +
-      `Best regards,\nInVision Network Team`
+        `We're pleased to confirm your booking for ${booking.service_name}.\n\n` +
+        `Reference Number: ${booking.request_number}\n` +
+        `Preferred Date: ${booking.preferred_dates || "To be scheduled"}\n` +
+        (booking.final_price
+          ? `Total: $${booking.final_price.toFixed(2)}\n`
+          : "") +
+        `\nWe'll be in touch shortly with additional details.\n\n` +
+        `Best regards,\nInVision Network Team`,
     );
-    window.open(`mailto:${booking.email}?subject=${subject}&body=${body}`, "_blank");
+    window.open(
+      `mailto:${booking.email}?subject=${subject}&body=${body}`,
+      "_blank",
+    );
   };
 
   // Handle deny booking (send rejection email)
   const handleDenyBooking = async (booking: BookingRequest) => {
     updateStatusMutation.mutate({ id: booking.id, status: "cancelled" });
     // Open email client with denial template
-    const subject = encodeURIComponent(`Booking Update: ${booking.service_name}`);
+    const subject = encodeURIComponent(
+      `Booking Update: ${booking.service_name}`,
+    );
     const body = encodeURIComponent(
       `Dear ${booking.full_name},\n\n` +
-      `Thank you for your interest in ${booking.service_name}.\n\n` +
-      `Unfortunately, we are unable to accommodate your booking request at this time.\n\n` +
-      `If you have any questions or would like to discuss alternative options, please don't hesitate to contact us.\n\n` +
-      `Best regards,\nInVision Network Team`
+        `Thank you for your interest in ${booking.service_name}.\n\n` +
+        `Unfortunately, we are unable to accommodate your booking request at this time.\n\n` +
+        `If you have any questions or would like to discuss alternative options, please don't hesitate to contact us.\n\n` +
+        `Best regards,\nInVision Network Team`,
     );
-    window.open(`mailto:${booking.email}?subject=${subject}&body=${body}`, "_blank");
+    window.open(
+      `mailto:${booking.email}?subject=${subject}&body=${body}`,
+      "_blank",
+    );
     setDenyDialogOpen(false);
     setBookingToDeny(null);
   };
 
-  const pendingCount = bookings.filter(b => b.status === "pending").length;
-  const confirmedCount = bookings.filter(b => b.status === "confirmed").length;
-  const completedCount = bookings.filter(b => b.status === "completed").length;
-  const totalRevenue = bookings.filter(b => b.status === "completed" || b.status === "confirmed").reduce((sum, b) => sum + (b.final_price || 0), 0);
+  const pendingCount = bookings.filter((b) => b.status === "pending").length;
+  const confirmedCount = bookings.filter(
+    (b) => b.status === "confirmed",
+  ).length;
+  const completedCount = bookings.filter(
+    (b) => b.status === "completed",
+  ).length;
+  const totalRevenue = bookings
+    .filter((b) => b.status === "completed" || b.status === "confirmed")
+    .reduce((sum, b) => sum + (b.final_price || 0), 0);
 
   const filteredBookings = bookings.filter((booking) => {
     const matchesSearch =
       booking.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       booking.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      booking.request_number.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      booking.request_number
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
       booking.service_name.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesSearch;
   });
@@ -299,25 +334,35 @@ const BookingsList = () => {
   };
 
   const exportToCSV = () => {
-    const headers = ["Date", "Reference", "Name", "Email", "Service", "Price", "Status"];
-    const rows = filteredBookings.map(b => [
+    const headers = [
+      "Date",
+      "Reference",
+      "Name",
+      "Email",
+      "Service",
+      "Price",
+      "Status",
+    ];
+    const rows = filteredBookings.map((b) => [
       format(new Date(b.created_at), "yyyy-MM-dd"),
       b.request_number,
       b.full_name,
       b.email,
       b.service_name,
       b.final_price?.toFixed(2) || "0",
-      b.status
+      b.status,
     ]);
 
-    const csvContent = [headers, ...rows].map(row => row.join(",")).join("\n");
+    const csvContent = [headers, ...rows]
+      .map((row) => row.join(","))
+      .join("\n");
     const blob = new Blob([csvContent], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
     a.download = `bookings-${format(new Date(), "yyyy-MM-dd")}.csv`;
     a.click();
-    
+
     toast({
       title: "Export Complete",
       description: `Exported ${filteredBookings.length} bookings to CSV`,
@@ -328,15 +373,27 @@ const BookingsList = () => {
     <div className="p-6 max-w-7xl mx-auto space-y-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-[#F9FAFB]">Booking Requests</h1>
-          <p className="text-[#9CA3AF]">Manage training and workshop bookings</p>
+          <h1 className="text-2xl font-bold text-[#F9FAFB]">
+            Booking Requests
+          </h1>
+          <p className="text-[#9CA3AF]">
+            Manage training and workshop bookings
+          </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" onClick={() => refetch()} className="border-gray-700 hover:bg-gray-800">
+          <Button
+            variant="outline"
+            onClick={() => refetch()}
+            className="border-gray-700 hover:bg-gray-800"
+          >
             <RefreshCw className="mr-2 h-4 w-4" />
             Refresh
           </Button>
-          <Button variant="outline" onClick={exportToCSV} className="border-gray-700 hover:bg-gray-800">
+          <Button
+            variant="outline"
+            onClick={exportToCSV}
+            className="border-gray-700 hover:bg-gray-800"
+          >
             <Download className="mr-2 h-4 w-4" />
             Export
           </Button>
@@ -383,7 +440,9 @@ const BookingsList = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-muted-foreground">Revenue</p>
-                  <p className="text-2xl font-bold text-green-600">${totalRevenue.toFixed(0)}</p>
+                  <p className="text-2xl font-bold text-green-600">
+                    ${totalRevenue.toFixed(0)}
+                  </p>
                 </div>
                 <DollarSign className="h-8 w-8 text-primary" />
               </div>
@@ -445,7 +504,10 @@ const BookingsList = () => {
                 </TableRow>
               ) : filteredBookings.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={8} className="text-center py-8 text-muted-foreground">
+                  <TableCell
+                    colSpan={8}
+                    className="text-center py-8 text-muted-foreground"
+                  >
                     No booking requests found
                   </TableCell>
                 </TableRow>
@@ -467,15 +529,21 @@ const BookingsList = () => {
                     <TableCell>
                       <div>
                         <div className="font-medium">{booking.full_name}</div>
-                        <div className="text-xs text-muted-foreground">{booking.email}</div>
+                        <div className="text-xs text-muted-foreground">
+                          {booking.email}
+                        </div>
                         {booking.phone && (
-                          <div className="text-xs text-muted-foreground">{booking.phone}</div>
+                          <div className="text-xs text-muted-foreground">
+                            {booking.phone}
+                          </div>
                         )}
                       </div>
                     </TableCell>
                     <TableCell>
                       <div>
-                        <div className="font-medium">{booking.service_name}</div>
+                        <div className="font-medium">
+                          {booking.service_name}
+                        </div>
                         {booking.service_tier && (
                           <div className="text-xs text-muted-foreground">
                             {booking.service_tier}
@@ -489,18 +557,21 @@ const BookingsList = () => {
                           <span className="font-bold text-green-600">
                             ${booking.final_price.toFixed(2)}
                           </span>
-                          {booking.discount_amount && booking.discount_amount > 0 && (
-                            <div className="text-xs text-muted-foreground line-through">
-                              ${booking.base_price?.toFixed(2)}
-                            </div>
-                          )}
+                          {booking.discount_amount &&
+                            booking.discount_amount > 0 && (
+                              <div className="text-xs text-muted-foreground line-through">
+                                ${booking.base_price?.toFixed(2)}
+                              </div>
+                            )}
                         </div>
                       ) : (
                         <span className="text-muted-foreground">-</span>
                       )}
                     </TableCell>
                     <TableCell>
-                      <span className="text-sm">{booking.preferred_dates || "-"}</span>
+                      <span className="text-sm">
+                        {booking.preferred_dates || "-"}
+                      </span>
                     </TableCell>
                     <TableCell>{getStatusBadge(booking.status)}</TableCell>
                     <TableCell>
@@ -569,19 +640,26 @@ const BookingsList = () => {
                           <Button
                             size="sm"
                             variant="default"
-                            onClick={() => updateStatusMutation.mutate({ id: booking.id, status: "completed" })}
+                            onClick={() =>
+                              updateStatusMutation.mutate({
+                                id: booking.id,
+                                status: "completed",
+                              })
+                            }
                             disabled={updateStatusMutation.isPending}
                           >
                             <CheckCircle className="h-4 w-4 mr-1" />
                             Complete
                           </Button>
                         )}
-                        
+
                         {/* Quick contact buttons */}
                         <Button
                           size="sm"
                           variant="ghost"
-                          onClick={() => window.open(`mailto:${booking.email}`, "_blank")}
+                          onClick={() =>
+                            window.open(`mailto:${booking.email}`, "_blank")
+                          }
                           title="Send Email"
                         >
                           <Mail className="h-4 w-4" />
@@ -590,13 +668,15 @@ const BookingsList = () => {
                           <Button
                             size="sm"
                             variant="ghost"
-                            onClick={() => window.open(`tel:${booking.phone}`, "_blank")}
+                            onClick={() =>
+                              window.open(`tel:${booking.phone}`, "_blank")
+                            }
                             title="Call"
                           >
                             <Phone className="h-4 w-4" />
                           </Button>
                         )}
-                        
+
                         {/* Delete button */}
                         <Button
                           size="sm"
@@ -624,10 +704,12 @@ const BookingsList = () => {
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent className="bg-[#1F2937] border-gray-700">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white">Delete Booking Request</AlertDialogTitle>
+            <AlertDialogTitle className="text-white">
+              Delete Booking Request
+            </AlertDialogTitle>
             <AlertDialogDescription className="text-gray-400">
-              Are you sure you want to delete this booking from {bookingToDelete?.full_name}? 
-              This action cannot be undone.
+              Are you sure you want to delete this booking from{" "}
+              {bookingToDelete?.full_name}? This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -636,7 +718,9 @@ const BookingsList = () => {
             </AlertDialogCancel>
             <AlertDialogAction
               className="bg-red-600 hover:bg-red-700 text-white"
-              onClick={() => bookingToDelete && deleteMutation.mutate(bookingToDelete.id)}
+              onClick={() =>
+                bookingToDelete && deleteMutation.mutate(bookingToDelete.id)
+              }
             >
               <Trash2 className="h-4 w-4 mr-2" />
               Delete
@@ -649,10 +733,12 @@ const BookingsList = () => {
       <AlertDialog open={denyDialogOpen} onOpenChange={setDenyDialogOpen}>
         <AlertDialogContent className="bg-[#1F2937] border-gray-700">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white">Deny Booking Request</AlertDialogTitle>
+            <AlertDialogTitle className="text-white">
+              Deny Booking Request
+            </AlertDialogTitle>
             <AlertDialogDescription className="text-gray-400">
-              This will mark the booking as cancelled and open your email client to send a 
-              rejection notification to {bookingToDeny?.full_name}.
+              This will mark the booking as cancelled and open your email client
+              to send a rejection notification to {bookingToDeny?.full_name}.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -671,32 +757,44 @@ const BookingsList = () => {
       </AlertDialog>
 
       {/* Assign Staff Dialog */}
-      <AlertDialog open={assignDialogOpen} onOpenChange={(open) => {
-        setAssignDialogOpen(open);
-        if (!open) {
-          setSelectedStaffId("");
-          setBookingToAssign(null);
-        }
-      }}>
+      <AlertDialog
+        open={assignDialogOpen}
+        onOpenChange={(open) => {
+          setAssignDialogOpen(open);
+          if (!open) {
+            setSelectedStaffId("");
+            setBookingToAssign(null);
+          }
+        }}
+      >
         <AlertDialogContent className="bg-[#1F2937] border-gray-700">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white">Assign Staff Member</AlertDialogTitle>
+            <AlertDialogTitle className="text-white">
+              Assign Staff Member
+            </AlertDialogTitle>
             <AlertDialogDescription className="text-gray-400">
-              Select a team member to handle this booking request from {bookingToAssign?.full_name}.
+              Select a team member to handle this booking request from{" "}
+              {bookingToAssign?.full_name}.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          
+
           <div className="py-4">
             <Select value={selectedStaffId} onValueChange={setSelectedStaffId}>
               <SelectTrigger className="w-full bg-[#111827] border-gray-700">
-                <SelectValue placeholder={loadingStaff ? "Loading staff..." : "Select staff member"} />
+                <SelectValue
+                  placeholder={
+                    loadingStaff ? "Loading staff..." : "Select staff member"
+                  }
+                />
               </SelectTrigger>
               <SelectContent className="bg-[#1F2937] border-gray-700">
                 {staffMembers.map((staff) => (
                   <SelectItem key={staff.id} value={staff.id}>
                     <div className="flex flex-col">
                       <span>{staff.full_name || "Unnamed"}</span>
-                      <span className="text-xs text-gray-400">{staff.email}</span>
+                      <span className="text-xs text-gray-400">
+                        {staff.email}
+                      </span>
                     </div>
                   </SelectItem>
                 ))}

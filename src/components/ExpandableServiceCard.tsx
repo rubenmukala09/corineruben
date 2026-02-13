@@ -28,10 +28,10 @@ export const ExpandableServiceCard = ({
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: delay / 1000 }}
     >
-      <Card 
+      <Card
         className={cn(
           "group transition-all duration-400 hover:shadow-[0_20px_40px_rgba(109,40,217,0.15)] overflow-hidden cursor-pointer",
-          isExpanded && "shadow-lg border-primary/30"
+          isExpanded && "shadow-lg border-primary/30",
         )}
         onClick={() => setIsExpanded(!isExpanded)}
       >
@@ -51,7 +51,9 @@ export const ExpandableServiceCard = ({
                   <ChevronDown className="w-5 h-5 text-muted-foreground" />
                 </motion.div>
               </div>
-              <p className="text-sm text-muted-foreground line-clamp-2">{summary}</p>
+              <p className="text-sm text-muted-foreground line-clamp-2">
+                {summary}
+              </p>
             </div>
           </div>
         </div>
@@ -65,7 +67,7 @@ export const ExpandableServiceCard = ({
               transition={{ duration: 0.3 }}
               className="overflow-hidden"
             >
-              <div 
+              <div
                 className="px-5 pb-5 pt-3 border-t border-border/50"
                 onClick={(e) => e.stopPropagation()}
               >

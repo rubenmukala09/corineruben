@@ -14,36 +14,42 @@ export function usePullToRefresh({
   const [isPulling, setIsPulling] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [pullDistance, setPullDistance] = useState(0);
-  
+
   const startY = useRef<number>(0);
   const isDragging = useRef(false);
 
-  const handleTouchStart = useCallback((e: TouchEvent) => {
-    if (!enabled) return;
-    requestAnimationFrame(() => {
-      if (window.scrollY > 0) return;
-      startY.current = e.touches[0].clientY;
-      isDragging.current = true;
-    });
-  }, [enabled]);
+  const handleTouchStart = useCallback(
+    (e: TouchEvent) => {
+      if (!enabled) return;
+      requestAnimationFrame(() => {
+        if (window.scrollY > 0) return;
+        startY.current = e.touches[0].clientY;
+        isDragging.current = true;
+      });
+    },
+    [enabled],
+  );
 
-  const handleTouchMove = useCallback((e: TouchEvent) => {
-    if (!isDragging.current || !enabled) return;
-    
-    const currentY = e.touches[0].clientY;
-    const distance = currentY - startY.current;
-    
-    requestAnimationFrame(() => {
-      if (distance > 0 && window.scrollY === 0) {
-        setPullDistance(Math.min(distance, threshold * 1.5));
-        setIsPulling(distance > threshold);
-      }
-    });
-  }, [enabled, threshold]);
+  const handleTouchMove = useCallback(
+    (e: TouchEvent) => {
+      if (!isDragging.current || !enabled) return;
+
+      const currentY = e.touches[0].clientY;
+      const distance = currentY - startY.current;
+
+      requestAnimationFrame(() => {
+        if (distance > 0 && window.scrollY === 0) {
+          setPullDistance(Math.min(distance, threshold * 1.5));
+          setIsPulling(distance > threshold);
+        }
+      });
+    },
+    [enabled, threshold],
+  );
 
   const handleTouchEnd = useCallback(async () => {
     if (!isDragging.current || !enabled) return;
-    
+
     isDragging.current = false;
 
     if (pullDistance > threshold) {
@@ -54,7 +60,7 @@ export function usePullToRefresh({
         setIsRefreshing(false);
       }
     }
-    
+
     setPullDistance(0);
     setIsPulling(false);
   }, [enabled, pullDistance, threshold, onRefresh]);
@@ -62,7 +68,9 @@ export function usePullToRefresh({
   useEffect(() => {
     if (!enabled) return;
 
-    document.addEventListener("touchstart", handleTouchStart, { passive: true });
+    document.addEventListener("touchstart", handleTouchStart, {
+      passive: true,
+    });
     document.addEventListener("touchmove", handleTouchMove, { passive: false });
     document.addEventListener("touchend", handleTouchEnd);
 

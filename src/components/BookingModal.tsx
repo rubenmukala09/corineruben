@@ -2,35 +2,85 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { 
-  Loader2, Calendar as CalendarIcon, CheckCircle, Clock, 
-  Users, Shield, Phone, Mail, MessageSquare, Sparkles,
-  Video, MapPin, Star, QrCode
+import {
+  Loader2,
+  Calendar as CalendarIcon,
+  CheckCircle,
+  Clock,
+  Users,
+  Shield,
+  Phone,
+  Mail,
+  MessageSquare,
+  Sparkles,
+  Video,
+  MapPin,
+  Star,
+  QrCode,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { bookingFormSchema, formatPhoneNumber, US_STATES } from "@/utils/formValidation";
+import {
+  bookingFormSchema,
+  formatPhoneNumber,
+  US_STATES,
+} from "@/utils/formValidation";
 import { z } from "zod";
 import { Badge } from "@/components/ui/badge";
 import { QuickVeteranToggle } from "@/components/payment/QuickVeteranToggle";
 import { TrustIndicators } from "@/components/payment/TrustIndicators";
 import { TermsCheckbox } from "@/components/payment/TermsCheckbox";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { SITE } from "@/config/site";
 
 interface BookingModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  serviceType: 'training' | 'scamshield' | 'business' | 'website' | 'guide' | 'product' | 'consultation';
+  serviceType:
+    | "training"
+    | "scamshield"
+    | "business"
+    | "website"
+    | "guide"
+    | "product"
+    | "consultation";
   serviceName: string;
   serviceTier?: string;
   basePrice?: number;
@@ -39,37 +89,69 @@ interface BookingModalProps {
 
 type BookingFormData = z.infer<typeof bookingFormSchema>;
 
-const serviceInfo: Record<string, { icon: React.ReactNode; benefits: string[]; duration: string; format: string }> = {
+const serviceInfo: Record<
+  string,
+  {
+    icon: React.ReactNode;
+    benefits: string[];
+    duration: string;
+    format: string;
+  }
+> = {
   training: {
     icon: <Users className="w-5 h-5" />,
-    benefits: ["Personalized curriculum", "Hands-on exercises", "Certificate of completion", "Follow-up support"],
+    benefits: [
+      "Personalized curriculum",
+      "Hands-on exercises",
+      "Certificate of completion",
+      "Follow-up support",
+    ],
     duration: "1-2 hours",
-    format: "Virtual or In-Person"
+    format: "Virtual or In-Person",
   },
   scamshield: {
     icon: <Shield className="w-5 h-5" />,
-    benefits: ["24/7 protection monitoring", "Real-time threat alerts", "Family account coverage", "Monthly security reports"],
+    benefits: [
+      "24/7 protection monitoring",
+      "Real-time threat alerts",
+      "Family account coverage",
+      "Monthly security reports",
+    ],
     duration: "Ongoing subscription",
-    format: "Digital Service"
+    format: "Digital Service",
   },
   business: {
     icon: <Sparkles className="w-5 h-5" />,
-    benefits: ["Custom AI solutions", "Dedicated account manager", "Implementation support", "ROI tracking"],
+    benefits: [
+      "Custom AI solutions",
+      "Dedicated account manager",
+      "Implementation support",
+      "ROI tracking",
+    ],
     duration: "Project-based",
-    format: "Virtual & On-site"
+    format: "Virtual & On-site",
   },
   consultation: {
     icon: <Video className="w-5 h-5" />,
-    benefits: ["Expert advice", "Action plan", "Resource recommendations", "Follow-up email summary"],
+    benefits: [
+      "Expert advice",
+      "Action plan",
+      "Resource recommendations",
+      "Follow-up email summary",
+    ],
     duration: "30-60 minutes",
-    format: "Video Call"
+    format: "Video Call",
   },
   default: {
     icon: <Calendar className="w-5 h-5" />,
-    benefits: ["Professional service", "Quality guarantee", "Dedicated support"],
+    benefits: [
+      "Professional service",
+      "Quality guarantee",
+      "Dedicated support",
+    ],
     duration: "Varies",
-    format: "Flexible"
-  }
+    format: "Flexible",
+  },
 };
 
 export const BookingModal = ({
@@ -87,83 +169,86 @@ export const BookingModal = ({
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [isVeteran, setIsVeteran] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
-  
+
   const info = serviceInfo[serviceType] || serviceInfo.default;
-  
+
   const form = useForm<BookingFormData>({
     resolver: zodResolver(bookingFormSchema),
     defaultValues: {
-      fullName: '',
-      email: '',
-      phone: '',
-      state: '',
-      preferredDates: '',
-      message: '',
+      fullName: "",
+      email: "",
+      phone: "",
+      state: "",
+      preferredDates: "",
+      message: "",
       isVeteran: false,
-      veteranType: '',
-      veteranIdLast4: '',
+      veteranType: "",
+      veteranIdLast4: "",
     },
   });
 
   // Auto-fill from localStorage for returning users
   useEffect(() => {
-    const savedEmail = localStorage.getItem('checkout_email');
-    const savedName = localStorage.getItem('checkout_name');
-    if (savedEmail) form.setValue('email', savedEmail);
-    if (savedName) form.setValue('fullName', savedName);
+    const savedEmail = localStorage.getItem("checkout_email");
+    const savedName = localStorage.getItem("checkout_name");
+    if (savedEmail) form.setValue("email", savedEmail);
+    if (savedName) form.setValue("fullName", savedName);
   }, [open]);
 
-  const discountAmount = isVeteran && basePrice > 0 
-    ? (basePrice * veteranDiscountPercent) / 100 
-    : 0;
+  const discountAmount =
+    isVeteran && basePrice > 0 ? (basePrice * veteranDiscountPercent) / 100 : 0;
   const finalPrice = basePrice - discountAmount;
 
   const handleSubmit = async (data: BookingFormData) => {
     setLoading(true);
     try {
       const formattedPhone = data.phone ? formatPhoneNumber(data.phone) : null;
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       const requestNumber = `REQ-${Date.now().toString().slice(-8)}`;
 
       // Save for future auto-fill
-      localStorage.setItem('checkout_email', data.email);
-      localStorage.setItem('checkout_name', data.fullName);
+      localStorage.setItem("checkout_email", data.email);
+      localStorage.setItem("checkout_name", data.fullName);
 
-      const { error } = await supabase.from('booking_requests').insert([{
-        full_name: data.fullName,
-        email: data.email,
-        phone: formattedPhone,
-        service_type: serviceType,
-        service_name: serviceName,
-        service_tier: serviceTier || null,
-        preferred_dates: data.preferredDates,
-        message: data.message,
-        is_veteran: isVeteran,
-        request_number: requestNumber,
-        status: 'pending',
-        base_price: basePrice,
-        discount_amount: discountAmount,
-        final_price: finalPrice,
-        user_id: user?.id,
-        metadata: { state: data.state }
-      }]);
+      const { error } = await supabase.from("booking_requests").insert([
+        {
+          full_name: data.fullName,
+          email: data.email,
+          phone: formattedPhone,
+          service_type: serviceType,
+          service_name: serviceName,
+          service_tier: serviceTier || null,
+          preferred_dates: data.preferredDates,
+          message: data.message,
+          is_veteran: isVeteran,
+          request_number: requestNumber,
+          status: "pending",
+          base_price: basePrice,
+          discount_amount: discountAmount,
+          final_price: finalPrice,
+          user_id: user?.id,
+          metadata: { state: data.state },
+        },
+      ]);
 
       if (error) throw error;
 
       // Send confirmation email
       try {
-        await supabase.functions.invoke('send-booking-confirmation', {
+        await supabase.functions.invoke("send-booking-confirmation", {
           body: {
             email: data.email,
             name: data.fullName,
             serviceName,
             requestNumber,
             preferredDate: data.preferredDates,
-            serviceType
-          }
+            serviceType,
+          },
         });
       } catch (emailError) {
-        console.error('Failed to send confirmation email:', emailError);
+        console.error("Failed to send confirmation email:", emailError);
         // Don't fail the submission if email fails
       }
 
@@ -190,7 +275,7 @@ export const BookingModal = ({
   const steps = [
     { num: 1, label: "Contact" },
     { num: 2, label: "Schedule" },
-    { num: 3, label: "Confirm" }
+    { num: 3, label: "Confirm" },
   ];
 
   return (
@@ -213,36 +298,40 @@ export const BookingModal = ({
             <DialogDescription className="sr-only">
               Complete the booking form for {serviceName} service
             </DialogDescription>
-            {serviceTier && (
-              <Badge className="w-fit mt-1">{serviceTier}</Badge>
-            )}
+            {serviceTier && <Badge className="w-fit mt-1">{serviceTier}</Badge>}
           </DialogHeader>
 
           {/* Step Indicator */}
           <div className="flex items-center justify-between mt-6 max-w-xs">
             {steps.map((s, i) => (
               <div key={s.num} className="flex items-center">
-                <div className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold transition-colors ${
-                  step >= s.num 
-                    ? 'bg-primary text-primary-foreground' 
-                    : 'bg-muted text-muted-foreground'
-                }`}>
+                <div
+                  className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold transition-colors ${
+                    step >= s.num
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted text-muted-foreground"
+                  }`}
+                >
                   {step > s.num ? <CheckCircle className="w-5 h-5" /> : s.num}
                 </div>
-                <span className={`ml-2 text-xs font-medium hidden sm:block ${
-                  step >= s.num ? 'text-primary' : 'text-muted-foreground'
-                }`}>
+                <span
+                  className={`ml-2 text-xs font-medium hidden sm:block ${
+                    step >= s.num ? "text-primary" : "text-muted-foreground"
+                  }`}
+                >
                   {s.label}
                 </span>
                 {i < steps.length - 1 && (
-                  <div className={`w-8 sm:w-12 h-0.5 mx-2 ${
-                    step > s.num ? 'bg-primary' : 'bg-muted'
-                  }`} />
+                  <div
+                    className={`w-8 sm:w-12 h-0.5 mx-2 ${
+                      step > s.num ? "bg-primary" : "bg-muted"
+                    }`}
+                  />
                 )}
               </div>
             ))}
           </div>
-          
+
           {/* Quick Info Bar */}
           <div className="flex flex-wrap gap-4 mt-4 text-sm">
             <div className="flex items-center gap-1.5 text-muted-foreground">
@@ -257,7 +346,10 @@ export const BookingModal = ({
               <div className="flex items-center gap-1.5 font-semibold text-primary">
                 <span>${finalPrice.toFixed(0)}</span>
                 {isVeteran && (
-                  <Badge variant="outline" className="text-xs text-green-600 border-green-600">
+                  <Badge
+                    variant="outline"
+                    className="text-xs text-green-600 border-green-600"
+                  >
                     -${discountAmount.toFixed(0)}
                   </Badge>
                 )}
@@ -284,14 +376,17 @@ export const BookingModal = ({
           </div>
 
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-5">
+            <form
+              onSubmit={form.handleSubmit(handleSubmit)}
+              className="space-y-5"
+            >
               {/* Contact Info - Minimal */}
               <div className="space-y-4">
                 <h4 className="font-semibold flex items-center gap-2">
                   <Mail className="w-4 h-4 text-primary" />
                   Contact Information
                 </h4>
-                
+
                 <div className="grid md:grid-cols-2 gap-3">
                   <FormField
                     control={form.control}
@@ -299,7 +394,11 @@ export const BookingModal = ({
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
-                          <Input {...field} placeholder="Your Name *" className="h-11" />
+                          <Input
+                            {...field}
+                            placeholder="Your Name *"
+                            className="h-11"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -311,7 +410,12 @@ export const BookingModal = ({
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
-                          <Input {...field} type="email" placeholder="Email *" className="h-11" />
+                          <Input
+                            {...field}
+                            type="email"
+                            placeholder="Email *"
+                            className="h-11"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -328,7 +432,11 @@ export const BookingModal = ({
                         <FormControl>
                           <div className="relative">
                             <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                            <Input {...field} placeholder="Phone *" className="h-11 pl-10" />
+                            <Input
+                              {...field}
+                              placeholder="Phone *"
+                              className="h-11 pl-10"
+                            />
                           </div>
                         </FormControl>
                         <FormMessage />
@@ -340,7 +448,10 @@ export const BookingModal = ({
                     name="state"
                     render={({ field }) => (
                       <FormItem>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
                           <FormControl>
                             <SelectTrigger className="h-11">
                               <SelectValue placeholder="Select State *" />
@@ -367,7 +478,7 @@ export const BookingModal = ({
                   <CalendarIcon className="w-4 h-4 text-primary" />
                   Preferred Schedule
                 </h4>
-                
+
                 <FormField
                   control={form.control}
                   name="preferredDates"
@@ -380,21 +491,26 @@ export const BookingModal = ({
                               variant="outline"
                               className={cn(
                                 "w-full h-11 justify-start text-left font-normal",
-                                !selectedDate && "text-muted-foreground"
+                                !selectedDate && "text-muted-foreground",
                               )}
                             >
                               <CalendarIcon className="mr-2 h-4 w-4" />
-                              {selectedDate ? format(selectedDate, "PPP") : "Select preferred date"}
+                              {selectedDate
+                                ? format(selectedDate, "PPP")
+                                : "Select preferred date"}
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0 bg-background" align="start">
+                        <PopoverContent
+                          className="w-auto p-0 bg-background"
+                          align="start"
+                        >
                           <Calendar
                             mode="single"
                             selected={selectedDate}
                             onSelect={(date) => {
                               setSelectedDate(date);
-                              field.onChange(date ? format(date, "PPP") : '');
+                              field.onChange(date ? format(date, "PPP") : "");
                             }}
                             disabled={(date) => date < new Date()}
                             initialFocus
@@ -471,7 +587,8 @@ export const BookingModal = ({
                     </div>
                   </div>
                   <p className="text-xs text-muted-foreground mt-2">
-                    📋 This is a free consultation request. No payment required now
+                    📋 This is a free consultation request. No payment required
+                    now
                   </p>
                 </div>
               )}
@@ -486,7 +603,15 @@ export const BookingModal = ({
                     </span>
                   </AccordionTrigger>
                   <AccordionContent className="text-sm text-muted-foreground">
-                    We typically respond within 24 hours. For urgent requests, call us at <a href={SITE.phone.tel} className="text-primary hover:underline">{SITE.phone.display}</a>.
+                    We typically respond within 24 hours. For urgent requests,
+                    call us at{" "}
+                    <a
+                      href={SITE.phone.tel}
+                      className="text-primary hover:underline"
+                    >
+                      {SITE.phone.display}
+                    </a>
+                    .
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="cancellation" className="border-b-0">
@@ -497,7 +622,8 @@ export const BookingModal = ({
                     </span>
                   </AccordionTrigger>
                   <AccordionContent className="text-sm text-muted-foreground">
-                    Free cancellation up to 24 hours before your scheduled appointment.
+                    Free cancellation up to 24 hours before your scheduled
+                    appointment.
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>

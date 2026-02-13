@@ -104,15 +104,21 @@ export function NeonDashboardLinks() {
                 transition={{ delay: 0.7 + index * 0.05, duration: 0.3 }}
               >
                 <Link to={dashboard.href}>
-                  <div className={`flex items-center gap-2 p-2.5 bg-[#111827] rounded-lg border border-gray-800/50 hover:border-gray-700/50 transition-all duration-300 group cursor-pointer`}>
-                    <div className={`w-8 h-8 bg-gradient-to-br ${dashboard.gradient} rounded-lg flex items-center justify-center shadow-md ${dashboard.glow} group-hover:scale-110 transition-transform duration-300`}>
+                  <div
+                    className={`flex items-center gap-2 p-2.5 bg-[#111827] rounded-lg border border-gray-800/50 hover:border-gray-700/50 transition-all duration-300 group cursor-pointer`}
+                  >
+                    <div
+                      className={`w-8 h-8 bg-gradient-to-br ${dashboard.gradient} rounded-lg flex items-center justify-center shadow-md ${dashboard.glow} group-hover:scale-110 transition-transform duration-300`}
+                    >
                       <Icon className="w-4 h-4 text-white" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-xs font-medium text-white truncate group-hover:text-cyan-400 transition-colors">
                         {dashboard.title}
                       </p>
-                      <p className="text-[10px] text-gray-500 truncate">{dashboard.description}</p>
+                      <p className="text-[10px] text-gray-500 truncate">
+                        {dashboard.description}
+                      </p>
                     </div>
                   </div>
                 </Link>

@@ -78,7 +78,7 @@ export default function BusinessClientDetail() {
   const fetchClientData = async (clientId: string) => {
     try {
       setLoading(true);
-      
+
       // Try to fetch from profiles table
       const { data: profileData, error } = await supabase
         .from("profiles")
@@ -101,9 +101,13 @@ export default function BusinessClientDetail() {
           contactPhone: profileData.phone || "-",
           preferredContact: "Email",
           accountId: `#${clientId.slice(0, 8).toUpperCase()}`,
-          joinDate: profileData.created_at ? new Date(profileData.created_at).toLocaleDateString() : "-",
+          joinDate: profileData.created_at
+            ? new Date(profileData.created_at).toLocaleDateString()
+            : "-",
           status: "active",
-          lastActivity: profileData.updated_at ? new Date(profileData.updated_at).toLocaleDateString() : "-",
+          lastActivity: profileData.updated_at
+            ? new Date(profileData.updated_at).toLocaleDateString()
+            : "-",
           accountManager: "-",
           tags: [],
           services: 0,
@@ -146,13 +150,15 @@ export default function BusinessClientDetail() {
               {client.companyName.substring(0, 2).toUpperCase()}
             </AvatarFallback>
           </Avatar>
-          
+
           <div className="flex-1">
             <div className="flex items-center gap-3 mb-2">
               <h1 className="text-3xl font-bold">{client.companyName}</h1>
               {getStatusBadge(client.status)}
             </div>
-            <p className="text-muted-foreground">Account ID: {client.accountId}</p>
+            <p className="text-muted-foreground">
+              Account ID: {client.accountId}
+            </p>
           </div>
 
           <div className="flex gap-2">

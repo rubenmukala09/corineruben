@@ -17,7 +17,7 @@ const routeNameMap: Record<string, string> = {
   "/about": "About",
   "/careers": "Careers",
   "/contact": "Contact",
-  
+
   "/articles": "Articles",
   "/portal": "Portal",
   "/portal/admin": "Admin Dashboard",
@@ -41,11 +41,20 @@ export const BreadcrumbNav = () => {
   const pathnames = location.pathname.split("/").filter((x) => x);
 
   // Hide breadcrumbs on auth pages and public routes
-  const hiddenRoutes = ["/auth", "/login", "/signup", "/reset-password", "/setup"];
-  const isHiddenRoute = hiddenRoutes.some(route => location.pathname === route);
-  const isPublicRoute = !location.pathname.startsWith("/admin") && 
-                        !location.pathname.startsWith("/portal");
-  
+  const hiddenRoutes = [
+    "/auth",
+    "/login",
+    "/signup",
+    "/reset-password",
+    "/setup",
+  ];
+  const isHiddenRoute = hiddenRoutes.some(
+    (route) => location.pathname === route,
+  );
+  const isPublicRoute =
+    !location.pathname.startsWith("/admin") &&
+    !location.pathname.startsWith("/portal");
+
   if (isHiddenRoute || isPublicRoute) {
     return null;
   }
@@ -55,7 +64,9 @@ export const BreadcrumbNav = () => {
     const path = `/${pathnames.slice(0, index + 1).join("/")}`;
     return {
       path,
-      name: routeNameMap[path] || pathnames[index].charAt(0).toUpperCase() + pathnames[index].slice(1),
+      name:
+        routeNameMap[path] ||
+        pathnames[index].charAt(0).toUpperCase() + pathnames[index].slice(1),
     };
   });
 
@@ -71,7 +82,7 @@ export const BreadcrumbNav = () => {
               </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
-          
+
           {breadcrumbPaths.map((item, index) => (
             <div key={item.path} className="flex items-center gap-1.5">
               <BreadcrumbSeparator />

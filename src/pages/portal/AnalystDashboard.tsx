@@ -16,7 +16,10 @@ import {
   LogOut,
 } from "lucide-react";
 
-type DashboardTask = Pick<Database["public"]["Tables"]["tasks"]["Row"], "id" | "title" | "description" | "status">;
+type DashboardTask = Pick<
+  Database["public"]["Tables"]["tasks"]["Row"],
+  "id" | "title" | "description" | "status"
+>;
 type DashboardEvent = {
   id: string;
   title: string;
@@ -41,9 +44,9 @@ function AnalystDashboard() {
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut();
-      toast({ 
+      toast({
         title: "👋 Signed Out Successfully",
-        description: "You've been securely logged out. See you next time!"
+        description: "You've been securely logged out. See you next time!",
       });
       navigate("/auth");
     } catch (error: unknown) {
@@ -62,7 +65,9 @@ function AnalystDashboard() {
   });
 
   const loadData = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return;
 
     const { data: tasksData } = await supabase
@@ -131,7 +136,9 @@ function AnalystDashboard() {
               </Button>
               <div>
                 <h1 className="text-2xl font-bold">Threat Analyst Dashboard</h1>
-                <p className="text-sm text-muted-foreground">ScamShield case management</p>
+                <p className="text-sm text-muted-foreground">
+                  ScamShield case management
+                </p>
               </div>
             </div>
             <Button variant="outline" size="sm" onClick={handleSignOut}>
@@ -145,15 +152,32 @@ function AnalystDashboard() {
       <main className="container mx-auto px-4 py-8">
         <div className="grid md:grid-cols-3 gap-6 mb-8">
           {[
-            { label: "Open Cases", value: stats.openCases, icon: Shield, color: "text-blue-600" },
-            { label: "Critical", value: stats.critical, icon: AlertTriangle, color: "text-red-600" },
-            { label: "Resolved Today", value: stats.resolvedToday, icon: CheckCircle, color: "text-green-600" },
+            {
+              label: "Open Cases",
+              value: stats.openCases,
+              icon: Shield,
+              color: "text-blue-600",
+            },
+            {
+              label: "Critical",
+              value: stats.critical,
+              icon: AlertTriangle,
+              color: "text-red-600",
+            },
+            {
+              label: "Resolved Today",
+              value: stats.resolvedToday,
+              icon: CheckCircle,
+              color: "text-green-600",
+            },
           ].map((stat) => {
             const Icon = stat.icon;
             return (
               <Card key={stat.label} className="p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <div className={`w-12 h-12 ${stat.color} bg-primary/10 rounded-lg flex items-center justify-center`}>
+                  <div
+                    className={`w-12 h-12 ${stat.color} bg-primary/10 rounded-lg flex items-center justify-center`}
+                  >
                     <Icon className="w-6 h-6" />
                   </div>
                   <span className="text-3xl font-bold">{stat.value}</span>
@@ -179,13 +203,22 @@ function AnalystDashboard() {
               <h2 className="text-xl font-bold mb-6">My Tasks</h2>
               <div className="space-y-3">
                 {tasks.length === 0 ? (
-                  <p className="text-center text-muted-foreground py-8">No tasks yet</p>
+                  <p className="text-center text-muted-foreground py-8">
+                    No tasks yet
+                  </p>
                 ) : (
                   tasks.map((task) => (
-                    <div key={task.id} className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
+                    <div
+                      key={task.id}
+                      className="flex items-center justify-between p-4 bg-muted/50 rounded-lg"
+                    >
                       <div>
                         <p className="font-medium">{task.title}</p>
-                        {task.description && <p className="text-sm text-muted-foreground">{task.description}</p>}
+                        {task.description && (
+                          <p className="text-sm text-muted-foreground">
+                            {task.description}
+                          </p>
+                        )}
                       </div>
                       <Badge>{task.status}</Badge>
                     </div>
@@ -210,6 +243,6 @@ function AnalystDashboard() {
       </main>
     </div>
   );
-};
+}
 
 export default AnalystDashboard;

@@ -4,19 +4,44 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Plus, Download, Trash2, Search, RefreshCw, Mail, TrendingUp, Users } from "lucide-react";
+import {
+  Plus,
+  Download,
+  Trash2,
+  Search,
+  RefreshCw,
+  Mail,
+  TrendingUp,
+  Users,
+} from "lucide-react";
 import { format } from "date-fns";
-
 
 export default function NewsletterManagement() {
   const [searchTerm, setSearchTerm] = useState("");
   const [newSubscriber, setNewSubscriber] = useState("");
 
-  const { data: subscribers, isLoading, refetch } = useQuery({
+  const {
+    data: subscribers,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["newsletter-subscribers"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -29,7 +54,7 @@ export default function NewsletterManagement() {
   });
 
   const filteredSubscribers = subscribers?.filter((sub) =>
-    sub.email.toLowerCase().includes(searchTerm.toLowerCase())
+    sub.email.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const handleAddSubscriber = async () => {
@@ -102,17 +127,23 @@ export default function NewsletterManagement() {
 
   const stats = {
     total: subscribers?.length || 0,
-    thisMonth: subscribers?.filter(
-      (sub) => new Date(sub.subscribed_at).getMonth() === new Date().getMonth()
-    ).length || 0,
+    thisMonth:
+      subscribers?.filter(
+        (sub) =>
+          new Date(sub.subscribed_at).getMonth() === new Date().getMonth(),
+      ).length || 0,
   };
 
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-[#F9FAFB]">Newsletter Management</h1>
-          <p className="text-[#9CA3AF]">Manage newsletter subscribers and campaigns</p>
+          <h1 className="text-2xl font-bold text-[#F9FAFB]">
+            Newsletter Management
+          </h1>
+          <p className="text-[#9CA3AF]">
+            Manage newsletter subscribers and campaigns
+          </p>
         </div>
         <div className="flex items-center gap-2">
           <Dialog>
@@ -124,7 +155,9 @@ export default function NewsletterManagement() {
             </DialogTrigger>
             <DialogContent className="bg-[#111827] border-gray-800">
               <DialogHeader>
-                <DialogTitle className="text-[#F9FAFB]">Add Subscriber</DialogTitle>
+                <DialogTitle className="text-[#F9FAFB]">
+                  Add Subscriber
+                </DialogTitle>
               </DialogHeader>
               <div className="space-y-4">
                 <div className="space-y-2">
@@ -137,13 +170,20 @@ export default function NewsletterManagement() {
                     className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
                   />
                 </div>
-                <Button onClick={handleAddSubscriber} className="w-full bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white">
+                <Button
+                  onClick={handleAddSubscriber}
+                  className="w-full bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white"
+                >
                   Add Subscriber
                 </Button>
               </div>
             </DialogContent>
           </Dialog>
-          <Button variant="outline" onClick={handleExport} className="border-gray-700 text-[#9CA3AF] hover:text-white">
+          <Button
+            variant="outline"
+            onClick={handleExport}
+            className="border-gray-700 text-[#9CA3AF] hover:text-white"
+          >
             <Download className="h-4 w-4 mr-2" />
             Export
           </Button>
@@ -158,7 +198,9 @@ export default function NewsletterManagement() {
                 <Users className="h-6 w-6 text-[#06B6D4]" />
               </div>
               <div>
-                <p className="text-3xl font-bold text-[#F9FAFB]">{stats.total}</p>
+                <p className="text-3xl font-bold text-[#F9FAFB]">
+                  {stats.total}
+                </p>
                 <p className="text-sm text-[#9CA3AF]">Total Subscribers</p>
               </div>
             </div>
@@ -171,7 +213,9 @@ export default function NewsletterManagement() {
                 <Mail className="h-6 w-6 text-[#10B981]" />
               </div>
               <div>
-                <p className="text-3xl font-bold text-[#F9FAFB]">{stats.thisMonth}</p>
+                <p className="text-3xl font-bold text-[#F9FAFB]">
+                  {stats.thisMonth}
+                </p>
                 <p className="text-sm text-[#9CA3AF]">New This Month</p>
               </div>
             </div>
@@ -185,7 +229,10 @@ export default function NewsletterManagement() {
               </div>
               <div>
                 <p className="text-3xl font-bold text-[#F9FAFB]">
-                  {stats.total > 0 ? ((stats.thisMonth / stats.total) * 100).toFixed(1) : 0}%
+                  {stats.total > 0
+                    ? ((stats.thisMonth / stats.total) * 100).toFixed(1)
+                    : 0}
+                  %
                 </p>
                 <p className="text-sm text-[#9CA3AF]">Growth Rate</p>
               </div>
@@ -204,7 +251,9 @@ export default function NewsletterManagement() {
             onClick={() => refetch()}
             className="text-[#9CA3AF] hover:text-white"
           >
-            <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+            <RefreshCw
+              className={`h-4 w-4 mr-2 ${isLoading ? "animate-spin" : ""}`}
+            />
             Refresh
           </Button>
         </div>
@@ -216,24 +265,38 @@ export default function NewsletterManagement() {
           ) : !filteredSubscribers || filteredSubscribers.length === 0 ? (
             <div className="text-center py-12">
               <Mail className="h-16 w-16 mx-auto text-[#3B82F6]/50 mb-4" />
-              <h3 className="text-xl font-semibold text-[#F9FAFB] mb-2">No Subscribers Yet</h3>
-              <p className="text-[#9CA3AF]">Add your first subscriber to get started</p>
+              <h3 className="text-xl font-semibold text-[#F9FAFB] mb-2">
+                No Subscribers Yet
+              </h3>
+              <p className="text-[#9CA3AF]">
+                Add your first subscriber to get started
+              </p>
             </div>
           ) : (
             <Table>
               <TableHeader>
                 <TableRow className="border-gray-800 hover:bg-transparent">
                   <TableHead className="text-[#9CA3AF]">Email</TableHead>
-                  <TableHead className="text-[#9CA3AF]">Subscribed Date</TableHead>
+                  <TableHead className="text-[#9CA3AF]">
+                    Subscribed Date
+                  </TableHead>
                   <TableHead className="text-[#9CA3AF]">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredSubscribers.map((subscriber) => (
-                  <TableRow key={subscriber.id} className="border-gray-800 hover:bg-[#1F2937]">
-                    <TableCell className="font-medium text-[#F9FAFB]">{subscriber.email}</TableCell>
+                  <TableRow
+                    key={subscriber.id}
+                    className="border-gray-800 hover:bg-[#1F2937]"
+                  >
+                    <TableCell className="font-medium text-[#F9FAFB]">
+                      {subscriber.email}
+                    </TableCell>
                     <TableCell className="text-[#9CA3AF]">
-                      {format(new Date(subscriber.subscribed_at), "MMM dd, yyyy HH:mm")}
+                      {format(
+                        new Date(subscriber.subscribed_at),
+                        "MMM dd, yyyy HH:mm",
+                      )}
                     </TableCell>
                     <TableCell>
                       <Button

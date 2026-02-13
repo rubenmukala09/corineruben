@@ -35,9 +35,12 @@ const priorityConfig = {
 };
 
 const statusConfig = {
-  completed: "bg-gradient-to-r from-green-500/20 to-emerald-500/20 text-green-400 border-green-500/30",
-  pending: "bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-400 border-amber-500/30",
-  "in-progress": "bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-400 border-blue-500/30",
+  completed:
+    "bg-gradient-to-r from-green-500/20 to-emerald-500/20 text-green-400 border-green-500/30",
+  pending:
+    "bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-400 border-amber-500/30",
+  "in-progress":
+    "bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-400 border-blue-500/30",
 };
 
 export function NeonTasksCard({ tasks }: NeonTasksCardProps) {
@@ -61,7 +64,7 @@ export function NeonTasksCard({ tasks }: NeonTasksCardProps) {
             Add Task
           </Button>
         </div>
-        
+
         <div className="space-y-3">
           {tasks.length === 0 ? (
             <div className="text-center py-12">
@@ -69,13 +72,19 @@ export function NeonTasksCard({ tasks }: NeonTasksCardProps) {
                 <CheckCircle2 className="w-8 h-8 text-gray-600" />
               </div>
               <p className="text-gray-400">No tasks yet</p>
-              <p className="text-gray-500 text-sm">Create your first task to get started</p>
+              <p className="text-gray-500 text-sm">
+                Create your first task to get started
+              </p>
             </div>
           ) : (
             tasks.map((task, index) => {
-              const priority = priorityConfig[task.priority as keyof typeof priorityConfig] || priorityConfig.low;
-              const status = statusConfig[task.status as keyof typeof statusConfig] || statusConfig.pending;
-              
+              const priority =
+                priorityConfig[task.priority as keyof typeof priorityConfig] ||
+                priorityConfig.low;
+              const status =
+                statusConfig[task.status as keyof typeof statusConfig] ||
+                statusConfig.pending;
+
               return (
                 <motion.div
                   key={task.id}
@@ -86,21 +95,27 @@ export function NeonTasksCard({ tasks }: NeonTasksCardProps) {
                 >
                   <div className="flex items-center gap-3">
                     <div className="relative">
-                      <div className={`w-2.5 h-2.5 rounded-full ${priority.dot} shadow-lg ${priority.glow}`} />
+                      <div
+                        className={`w-2.5 h-2.5 rounded-full ${priority.dot} shadow-lg ${priority.glow}`}
+                      />
                       {priority.pulse && (
-                        <div className={`absolute inset-0 w-2.5 h-2.5 rounded-full ${priority.dot} animate-ping`} />
+                        <div
+                          className={`absolute inset-0 w-2.5 h-2.5 rounded-full ${priority.dot} animate-ping`}
+                        />
                       )}
                     </div>
                     <div>
-                      <p className="font-medium text-white group-hover:text-cyan-400 transition-colors">{task.title}</p>
+                      <p className="font-medium text-white group-hover:text-cyan-400 transition-colors">
+                        {task.title}
+                      </p>
                       {task.description && (
-                        <p className="text-sm text-gray-500 line-clamp-1">{task.description}</p>
+                        <p className="text-sm text-gray-500 line-clamp-1">
+                          {task.description}
+                        </p>
                       )}
                     </div>
                   </div>
-                  <Badge className={`border ${status}`}>
-                    {task.status}
-                  </Badge>
+                  <Badge className={`border ${status}`}>{task.status}</Badge>
                 </motion.div>
               );
             })

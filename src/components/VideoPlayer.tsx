@@ -10,7 +10,12 @@ interface VideoPlayerProps {
   onFullscreen?: () => void;
 }
 
-export function VideoPlayer({ src, thumbnail, className = "", onFullscreen }: VideoPlayerProps) {
+export function VideoPlayer({
+  src,
+  thumbnail,
+  className = "",
+  onFullscreen,
+}: VideoPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -81,7 +86,9 @@ export function VideoPlayer({ src, thumbnail, className = "", onFullscreen }: Vi
   };
 
   return (
-    <div className={`relative bg-black rounded-lg overflow-hidden group ${className}`}>
+    <div
+      className={`relative bg-black rounded-lg overflow-hidden group ${className}`}
+    >
       <video
         ref={videoRef}
         src={src}
@@ -89,7 +96,7 @@ export function VideoPlayer({ src, thumbnail, className = "", onFullscreen }: Vi
         className="w-full h-full object-cover"
         onClick={togglePlay}
       />
-      
+
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/50">
           <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />
@@ -105,7 +112,7 @@ export function VideoPlayer({ src, thumbnail, className = "", onFullscreen }: Vi
           step={0.1}
           className="mb-3"
         />
-        
+
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Button
@@ -114,18 +121,26 @@ export function VideoPlayer({ src, thumbnail, className = "", onFullscreen }: Vi
               onClick={togglePlay}
               className="text-white hover:bg-white/20"
             >
-              {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+              {isPlaying ? (
+                <Pause className="w-5 h-5" />
+              ) : (
+                <Play className="w-5 h-5" />
+              )}
             </Button>
-            
+
             <Button
               size="icon"
               variant="ghost"
               onClick={toggleMute}
               className="text-white hover:bg-white/20"
             >
-              {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+              {isMuted ? (
+                <VolumeX className="w-5 h-5" />
+              ) : (
+                <Volume2 className="w-5 h-5" />
+              )}
             </Button>
-            
+
             <Slider
               value={[volume]}
               onValueChange={handleVolumeChange}
@@ -134,7 +149,7 @@ export function VideoPlayer({ src, thumbnail, className = "", onFullscreen }: Vi
               className="w-20"
             />
           </div>
-          
+
           {onFullscreen && (
             <Button
               size="icon"

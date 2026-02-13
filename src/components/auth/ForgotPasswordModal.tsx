@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,7 +17,10 @@ interface ForgotPasswordModalProps {
   onClose: () => void;
 }
 
-export function ForgotPasswordModal({ open, onClose }: ForgotPasswordModalProps) {
+export function ForgotPasswordModal({
+  open,
+  onClose,
+}: ForgotPasswordModalProps) {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
@@ -25,7 +33,7 @@ export function ForgotPasswordModal({ open, onClose }: ForgotPasswordModalProps)
       // Use Supabase's built-in password reset for all users
       const { error } = await supabase.auth.resetPasswordForEmail(
         email.toLowerCase().trim(),
-        { redirectTo: `${window.location.origin}/reset-password` }
+        { redirectTo: `${window.location.origin}/reset-password` },
       );
 
       if (error) {
@@ -35,7 +43,9 @@ export function ForgotPasswordModal({ open, onClose }: ForgotPasswordModalProps)
       }
 
       setEmailSent(true);
-      toast.success("If your email is registered, you will receive a reset link.");
+      toast.success(
+        "If your email is registered, you will receive a reset link.",
+      );
     } catch (error) {
       console.error("Password reset error:", error);
       toast.error("An error occurred. Please try again.");
@@ -62,7 +72,8 @@ export function ForgotPasswordModal({ open, onClose }: ForgotPasswordModalProps)
         {!emailSent ? (
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="text-center text-sm text-muted-foreground">
-              Enter your authorized email address and we'll send you a reset link.
+              Enter your authorized email address and we'll send you a reset
+              link.
             </div>
 
             <div className="space-y-2">
@@ -104,7 +115,8 @@ export function ForgotPasswordModal({ open, onClose }: ForgotPasswordModalProps)
 
             <div className="space-y-2">
               <p className="text-sm text-muted-foreground">
-                If your email is registered, we've sent you a password reset link.
+                If your email is registered, we've sent you a password reset
+                link.
               </p>
               <p className="text-sm text-muted-foreground">
                 Check your inbox and spam folder.

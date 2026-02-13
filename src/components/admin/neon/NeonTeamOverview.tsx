@@ -49,11 +49,11 @@ export function NeonTeamOverview() {
           <Users className="w-5 h-5 text-blue-400" />
           Team Overview
         </h2>
-        
+
         <div className="grid grid-cols-2 gap-4">
           {teamConfig.map((team, index) => {
             const Icon = team.icon;
-            
+
             return (
               <motion.div
                 key={team.role}
@@ -63,10 +63,14 @@ export function NeonTeamOverview() {
                 className="relative overflow-hidden p-4 bg-[#111827] rounded-lg border border-gray-800/50 hover:border-gray-700/50 transition-all duration-300 group"
               >
                 {/* Background glow */}
-                <div className={`absolute top-0 right-0 w-20 h-20 ${team.bgGlow} blur-2xl rounded-full -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                
+                <div
+                  className={`absolute top-0 right-0 w-20 h-20 ${team.bgGlow} blur-2xl rounded-full -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+                />
+
                 <div className="relative z-10 flex items-center gap-3">
-                  <div className={`w-10 h-10 bg-gradient-to-br ${team.gradient} rounded-lg flex items-center justify-center shadow-lg ${team.glow}`}>
+                  <div
+                    className={`w-10 h-10 bg-gradient-to-br ${team.gradient} rounded-lg flex items-center justify-center shadow-lg ${team.glow}`}
+                  >
                     <Icon className="w-5 h-5 text-white" />
                   </div>
                   <div>
@@ -74,7 +78,7 @@ export function NeonTeamOverview() {
                     <p className="text-sm text-gray-400">{team.role}</p>
                   </div>
                 </div>
-                
+
                 {/* Mini bar visualization */}
                 <div className="mt-3 flex gap-1">
                   {[...Array(5)].map((_, i) => (
@@ -82,8 +86,11 @@ export function NeonTeamOverview() {
                       key={i}
                       initial={{ height: 0 }}
                       animate={{ height: i < team.count ? 16 : 8 }}
-                      transition={{ delay: 0.8 + index * 0.1 + i * 0.05, duration: 0.3 }}
-                      className={`flex-1 rounded-sm ${i < team.count ? `bg-gradient-to-t ${team.gradient}` : 'bg-gray-800'}`}
+                      transition={{
+                        delay: 0.8 + index * 0.1 + i * 0.05,
+                        duration: 0.3,
+                      }}
+                      className={`flex-1 rounded-sm ${i < team.count ? `bg-gradient-to-t ${team.gradient}` : "bg-gray-800"}`}
                     />
                   ))}
                 </div>

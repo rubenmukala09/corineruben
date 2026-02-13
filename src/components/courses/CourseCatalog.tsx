@@ -5,19 +5,24 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
-import { 
-  BookOpen, 
-  Clock, 
-  Users, 
-  CheckCircle, 
-  Play, 
+import {
+  BookOpen,
+  Clock,
+  Users,
+  CheckCircle,
+  Play,
   ArrowRight,
   GraduationCap,
   Trophy,
-  Calendar
+  Calendar,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { useCourses, useUserEnrollments, useEnrollInCourse, type Course } from "@/hooks/useCourses";
+import {
+  useCourses,
+  useUserEnrollments,
+  useEnrollInCourse,
+  type Course,
+} from "@/hooks/useCourses";
 import { useAuth } from "@/contexts/AuthContext";
 
 interface CourseCardProps {
@@ -27,7 +32,12 @@ interface CourseCardProps {
   isEnrolling: boolean;
 }
 
-function CourseCard({ course, enrollment, onEnroll, isEnrolling }: CourseCardProps) {
+function CourseCard({
+  course,
+  enrollment,
+  onEnroll,
+  isEnrolling,
+}: CourseCardProps) {
   const navigate = useNavigate();
   const isEnrolled = !!enrollment;
   const progress = enrollment?.progress_percentage || 0;
@@ -60,7 +70,8 @@ function CourseCard({ course, enrollment, onEnroll, isEnrolling }: CourseCardPro
         </CardHeader>
         <CardContent className="flex-1 flex flex-col">
           <p className="text-muted-foreground mb-4 flex-1">
-            {course.description || "Learn essential skills to protect yourself and your family."}
+            {course.description ||
+              "Learn essential skills to protect yourself and your family."}
           </p>
 
           {/* Course Meta */}
@@ -105,8 +116,8 @@ function CourseCard({ course, enrollment, onEnroll, isEnrolling }: CourseCardPro
 
           {/* Actions */}
           {isEnrolled ? (
-            <Button 
-              className="w-full" 
+            <Button
+              className="w-full"
               onClick={() => navigate(`/portal/courses/${course.id}`)}
             >
               {isCompleted ? (
@@ -122,8 +133,8 @@ function CourseCard({ course, enrollment, onEnroll, isEnrolling }: CourseCardPro
               )}
             </Button>
           ) : (
-            <Button 
-              className="w-full" 
+            <Button
+              className="w-full"
               onClick={() => onEnroll(course.id)}
               disabled={isEnrolling}
             >
@@ -173,7 +184,8 @@ export function CourseCatalog() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { data: courses, isLoading: coursesLoading } = useCourses();
-  const { data: enrollments, isLoading: enrollmentsLoading } = useUserEnrollments();
+  const { data: enrollments, isLoading: enrollmentsLoading } =
+    useUserEnrollments();
   const enrollMutation = useEnrollInCourse();
 
   const handleEnroll = (courseId: string) => {
@@ -217,13 +229,28 @@ export function CourseCatalog() {
             <div className="flex items-center gap-2">
               <CheckCircle className="w-5 h-5 text-green-500" />
               <span>
-                <strong>{enrollments.filter(e => e.progress_percentage >= 100).length}</strong> Completed
+                <strong>
+                  {
+                    enrollments.filter((e) => e.progress_percentage >= 100)
+                      .length
+                  }
+                </strong>{" "}
+                Completed
               </span>
             </div>
             <div className="flex items-center gap-2">
               <Play className="w-5 h-5 text-blue-500" />
               <span>
-                <strong>{enrollments.filter(e => e.progress_percentage > 0 && e.progress_percentage < 100).length}</strong> In Progress
+                <strong>
+                  {
+                    enrollments.filter(
+                      (e) =>
+                        e.progress_percentage > 0 &&
+                        e.progress_percentage < 100,
+                    ).length
+                  }
+                </strong>{" "}
+                In Progress
               </span>
             </div>
           </div>
@@ -233,7 +260,9 @@ export function CourseCatalog() {
       {/* Course Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {courses.map((course) => {
-          const enrollment = enrollments?.find(e => e.course_id === course.id);
+          const enrollment = enrollments?.find(
+            (e) => e.course_id === course.id,
+          );
           return (
             <CourseCard
               key={course.id}

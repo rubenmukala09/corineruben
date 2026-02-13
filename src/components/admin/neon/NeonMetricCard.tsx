@@ -100,21 +100,30 @@ export function NeonMetricCard({
 
         {/* Header */}
         <div className="flex items-center justify-between mb-4 relative z-10">
-          <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${config.gradient} 
-            flex items-center justify-center shadow-lg ${config.glow}`}>
+          <div
+            className={`w-10 h-10 rounded-lg bg-gradient-to-br ${config.gradient} 
+            flex items-center justify-center shadow-lg ${config.glow}`}
+          >
             <Icon className="h-5 w-5 text-white" />
           </div>
-          
+
           {/* Status Indicator */}
           <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full ${statusIndicator[status]}`} />
+            <div
+              className={`w-2 h-2 rounded-full ${statusIndicator[status]}`}
+            />
             {trendValue && (
-              <span className={`text-xs font-medium ${
-                trend === "up" ? "text-emerald-400" : 
-                trend === "down" ? "text-red-400" : 
-                "text-gray-400"
-              }`}>
-                {trend === "up" ? "↑" : trend === "down" ? "↓" : ""} {trendValue}
+              <span
+                className={`text-xs font-medium ${
+                  trend === "up"
+                    ? "text-emerald-400"
+                    : trend === "down"
+                      ? "text-red-400"
+                      : "text-gray-400"
+                }`}
+              >
+                {trend === "up" ? "↑" : trend === "down" ? "↓" : ""}{" "}
+                {trendValue}
               </span>
             )}
           </div>
@@ -123,7 +132,9 @@ export function NeonMetricCard({
         {/* Value */}
         <div className="relative z-10">
           <p className={`text-3xl font-bold text-white mb-1`}>
-            {prefix}{animatedValue.toLocaleString()}{suffix}
+            {prefix}
+            {animatedValue.toLocaleString()}
+            {suffix}
           </p>
           <p className="text-sm text-[#D1D5DB]">{title}</p>
         </div>

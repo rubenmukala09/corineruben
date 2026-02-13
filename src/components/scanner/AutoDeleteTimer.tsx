@@ -12,9 +12,14 @@ const formatRemaining = (seconds: number) => {
   return `${mins}:${secs.toString().padStart(2, "0")}`;
 };
 
-export const AutoDeleteTimer = ({ expiresAt, onExpire }: AutoDeleteTimerProps) => {
+export const AutoDeleteTimer = ({
+  expiresAt,
+  onExpire,
+}: AutoDeleteTimerProps) => {
   const targetTime = useMemo(() => new Date(expiresAt).getTime(), [expiresAt]);
-  const [remaining, setRemaining] = useState(() => Math.max(0, Math.floor((targetTime - Date.now()) / 1000)));
+  const [remaining, setRemaining] = useState(() =>
+    Math.max(0, Math.floor((targetTime - Date.now()) / 1000)),
+  );
 
   useEffect(() => {
     const interval = window.setInterval(() => {

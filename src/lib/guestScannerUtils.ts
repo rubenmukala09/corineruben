@@ -17,7 +17,15 @@ const ALLOWED_MIME_TYPES = [
   "audio/x-wav",
 ];
 
-const ALLOWED_EXTENSIONS = [".pdf", ".jpg", ".jpeg", ".png", ".mp4", ".mp3", ".wav"];
+const ALLOWED_EXTENSIONS = [
+  ".pdf",
+  ".jpg",
+  ".jpeg",
+  ".png",
+  ".mp4",
+  ".mp3",
+  ".wav",
+];
 
 export const getFileExtension = (fileName: string) =>
   fileName.slice(Math.max(0, fileName.lastIndexOf("."))).toLowerCase();
@@ -41,7 +49,10 @@ export const formatFileSize = (bytes: number) => {
 export const calculateScanCost = (bytes: number) => {
   const { sizeMb } = formatFileSize(bytes);
   const rawCost = sizeMb * GUEST_SCAN_PRICING.ratePerMb;
-  const cost = Math.max(GUEST_SCAN_PRICING.minimumCharge, roundUpToCents(rawCost));
+  const cost = Math.max(
+    GUEST_SCAN_PRICING.minimumCharge,
+    roundUpToCents(rawCost),
+  );
   return {
     sizeMb,
     cost,
@@ -60,13 +71,17 @@ export const validateGuestScanFile = (file: File) => {
   const extension = getFileExtension(file.name);
   const mimeType = (file.type || "").toLowerCase();
 
-  if (ALLOWED_MIME_TYPES.includes(mimeType) || ALLOWED_EXTENSIONS.includes(extension)) {
+  if (
+    ALLOWED_MIME_TYPES.includes(mimeType) ||
+    ALLOWED_EXTENSIONS.includes(extension)
+  ) {
     return { valid: true };
   }
 
   return {
     valid: false,
-    error: "Unsupported file type. Please upload PDF, JPG, PNG, MP4, MP3, or WAV.",
+    error:
+      "Unsupported file type. Please upload PDF, JPG, PNG, MP4, MP3, or WAV.",
   };
 };
 
@@ -94,7 +109,7 @@ export interface GuestScanAnalysis {
 export const buildReportText = (
   analysis: GuestScanAnalysis,
   file: File,
-  scannedAt: string
+  scannedAt: string,
 ) => {
   const { formatted } = formatFileSize(file.size);
   const lines = [
@@ -120,7 +135,9 @@ export const buildReportText = (
 
   if (analysis.indicators.suspiciousLinks.length > 0) {
     lines.push("", "Suspicious Links:");
-    lines.push(...analysis.indicators.suspiciousLinks.map((link) => `- ${link}`));
+    lines.push(
+      ...analysis.indicators.suspiciousLinks.map((link) => `- ${link}`),
+    );
   }
 
   return lines.join("\n");

@@ -69,14 +69,18 @@ export function NeonAccountActions() {
               >
                 <Link to={action.href}>
                   <div className="flex items-center gap-3 p-3 bg-[#111827] rounded-lg border border-gray-800/50 hover:border-gray-700/50 transition-all duration-300 group cursor-pointer">
-                    <div className={`w-9 h-9 bg-gradient-to-br ${action.gradient} rounded-lg flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300`}>
+                    <div
+                      className={`w-9 h-9 bg-gradient-to-br ${action.gradient} rounded-lg flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300`}
+                    >
                       <Icon className="w-4 h-4 text-white" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-white group-hover:text-cyan-400 transition-colors">
                         {action.title}
                       </p>
-                      <p className="text-xs text-gray-500">{action.description}</p>
+                      <p className="text-xs text-gray-500">
+                        {action.description}
+                      </p>
                     </div>
                   </div>
                 </Link>

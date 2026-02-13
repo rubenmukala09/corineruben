@@ -33,14 +33,17 @@ export default function ResetPassword() {
   };
 
   const allRequirementsMet = Object.values(requirements).every(Boolean);
-  const passwordsMatch = password && confirmPassword && password === confirmPassword;
+  const passwordsMatch =
+    password && confirmPassword && password === confirmPassword;
 
   // Password strength
   const getPasswordStrength = () => {
     const met = Object.values(requirements).filter(Boolean).length;
     if (met < 3) return { label: "Weak", color: "bg-red-500", width: "w-1/4" };
-    if (met === 3) return { label: "Medium", color: "bg-yellow-500", width: "w-1/2" };
-    if (met === 4) return { label: "Strong", color: "bg-green-500", width: "w-3/4" };
+    if (met === 3)
+      return { label: "Medium", color: "bg-yellow-500", width: "w-1/2" };
+    if (met === 4)
+      return { label: "Strong", color: "bg-green-500", width: "w-3/4" };
     return { label: "Very Strong", color: "bg-green-600", width: "w-full" };
   };
 
@@ -166,11 +169,10 @@ export default function ResetPassword() {
           </div>
           <h1 className="text-2xl font-bold mb-2">Invalid Reset Link</h1>
           <p className="text-gray-600 mb-6">
-            This reset link is invalid or has expired. Please request a new password reset.
+            This reset link is invalid or has expired. Please request a new
+            password reset.
           </p>
-          <Button onClick={() => navigate("/auth")}>
-            Back to Login
-          </Button>
+          <Button onClick={() => navigate("/auth")}>Back to Login</Button>
         </div>
       </div>
     );
@@ -184,18 +186,14 @@ export default function ResetPassword() {
             <CheckCircle className="w-8 h-8 text-green-600" />
           </div>
           <h1 className="text-2xl font-bold mb-2">Password Reset Successful</h1>
-          <p className="text-gray-600 mb-2">
-            Your password has been updated.
-          </p>
+          <p className="text-gray-600 mb-2">Your password has been updated.</p>
           <p className="text-gray-600 mb-6">
             You can now sign in with your new password.
           </p>
           <p className="text-sm text-gray-500 mb-4">
             Redirecting to login in {countdown} seconds...
           </p>
-          <Button onClick={() => navigate("/auth")}>
-            Sign In Now
-          </Button>
+          <Button onClick={() => navigate("/auth")}>Sign In Now</Button>
         </div>
       </div>
     );
@@ -204,11 +202,13 @@ export default function ResetPassword() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-purple-50 flex items-center justify-center p-4 relative overflow-hidden">
       <FloatingShapes />
-      
+
       <div className="w-full max-w-md relative z-10">
         <div className="bg-white rounded-2xl shadow-2xl p-8 border border-purple-100">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">Create New Password</h1>
+            <h1 className="text-3xl font-bold text-gray-900">
+              Create New Password
+            </h1>
             <p className="text-gray-600 mt-2">
               Choose a strong password for your InVision Network admin account.
             </p>
@@ -233,7 +233,11 @@ export default function ResetPassword() {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 >
-                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
                 </button>
               </div>
 
@@ -242,12 +246,22 @@ export default function ResetPassword() {
                 <div>
                   <div className="flex items-center justify-between text-xs text-gray-600 mb-1">
                     <span>Password strength:</span>
-                    <span className={strength.label === "Weak" ? "text-red-600" : strength.label === "Medium" ? "text-yellow-600" : "text-green-600"}>
+                    <span
+                      className={
+                        strength.label === "Weak"
+                          ? "text-red-600"
+                          : strength.label === "Medium"
+                            ? "text-yellow-600"
+                            : "text-green-600"
+                      }
+                    >
                       {strength.label}
                     </span>
                   </div>
                   <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                    <div className={`h-full ${strength.color} ${strength.width} transition-all duration-300`} />
+                    <div
+                      className={`h-full ${strength.color} ${strength.width} transition-all duration-300`}
+                    />
                   </div>
                 </div>
               )}
@@ -271,7 +285,13 @@ export default function ResetPassword() {
                       ) : (
                         <X className="w-4 h-4 text-gray-400" />
                       )}
-                      <span className={requirements[key as keyof typeof requirements] ? "text-green-600" : "text-gray-600"}>
+                      <span
+                        className={
+                          requirements[key as keyof typeof requirements]
+                            ? "text-green-600"
+                            : "text-gray-600"
+                        }
+                      >
                         {label}
                       </span>
                     </div>
@@ -298,7 +318,11 @@ export default function ResetPassword() {
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 >
-                  {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                  {showConfirmPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
                 </button>
               </div>
               {confirmPassword && passwordsMatch && (

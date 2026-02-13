@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,7 +21,11 @@ interface VideoTestimonialUploadProps {
   onSuccess: () => void;
 }
 
-export function VideoTestimonialUpload({ open, onOpenChange, onSuccess }: VideoTestimonialUploadProps) {
+export function VideoTestimonialUpload({
+  open,
+  onOpenChange,
+  onSuccess,
+}: VideoTestimonialUploadProps) {
   const [step, setStep] = useState(1);
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -97,9 +107,9 @@ export function VideoTestimonialUpload({ open, onOpenChange, onSuccess }: VideoT
       if (videoError) throw videoError;
       setProgress(60);
 
-      const { data: { publicUrl: videoUrl } } = supabase.storage
-        .from("testimonial-videos")
-        .getPublicUrl(videoPath);
+      const {
+        data: { publicUrl: videoUrl },
+      } = supabase.storage.from("testimonial-videos").getPublicUrl(videoPath);
 
       // Upload thumbnail if provided
       let thumbnailUrl = null;
@@ -110,7 +120,9 @@ export function VideoTestimonialUpload({ open, onOpenChange, onSuccess }: VideoT
           .upload(thumbPath, thumbnailFile);
 
         if (!thumbError) {
-          const { data: { publicUrl } } = supabase.storage
+          const {
+            data: { publicUrl },
+          } = supabase.storage
             .from("testimonial-images")
             .getPublicUrl(thumbPath);
           thumbnailUrl = publicUrl;
@@ -174,7 +186,9 @@ export function VideoTestimonialUpload({ open, onOpenChange, onSuccess }: VideoT
               <Input
                 id="name"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
                 required
               />
             </div>
@@ -185,7 +199,9 @@ export function VideoTestimonialUpload({ open, onOpenChange, onSuccess }: VideoT
                 id="email"
                 type="email"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
                 required
               />
             </div>
@@ -195,7 +211,9 @@ export function VideoTestimonialUpload({ open, onOpenChange, onSuccess }: VideoT
               <Input
                 id="location"
                 value={formData.location}
-                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, location: e.target.value })
+                }
                 required
               />
             </div>
@@ -208,7 +226,9 @@ export function VideoTestimonialUpload({ open, onOpenChange, onSuccess }: VideoT
                 min="1"
                 max="5"
                 value={formData.rating}
-                onChange={(e) => setFormData({ ...formData, rating: parseInt(e.target.value) })}
+                onChange={(e) =>
+                  setFormData({ ...formData, rating: parseInt(e.target.value) })
+                }
               />
             </div>
 
@@ -217,7 +237,9 @@ export function VideoTestimonialUpload({ open, onOpenChange, onSuccess }: VideoT
               <Textarea
                 id="story"
                 value={formData.story}
-                onChange={(e) => setFormData({ ...formData, story: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, story: e.target.value })
+                }
                 rows={4}
                 required
               />
@@ -226,7 +248,12 @@ export function VideoTestimonialUpload({ open, onOpenChange, onSuccess }: VideoT
             <Button
               onClick={() => setStep(2)}
               className="w-full"
-              disabled={!formData.name || !formData.email || !formData.location || !formData.story}
+              disabled={
+                !formData.name ||
+                !formData.email ||
+                !formData.location ||
+                !formData.story
+              }
             >
               Next: Upload Video
             </Button>
@@ -297,15 +324,26 @@ export function VideoTestimonialUpload({ open, onOpenChange, onSuccess }: VideoT
             {uploading && (
               <div className="space-y-2">
                 <Progress value={progress} />
-                <p className="text-sm text-center text-muted-foreground">Uploading... {progress}%</p>
+                <p className="text-sm text-center text-muted-foreground">
+                  Uploading... {progress}%
+                </p>
               </div>
             )}
 
             <div className="flex gap-2">
-              <Button variant="outline" onClick={() => setStep(1)} disabled={uploading} className="flex-1">
+              <Button
+                variant="outline"
+                onClick={() => setStep(1)}
+                disabled={uploading}
+                className="flex-1"
+              >
                 Back
               </Button>
-              <Button onClick={handleSubmit} disabled={!videoFile || uploading} className="flex-1">
+              <Button
+                onClick={handleSubmit}
+                disabled={!videoFile || uploading}
+                className="flex-1"
+              >
                 {uploading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />

@@ -14,7 +14,12 @@ import { Separator } from "@/components/ui/separator";
 import { Lock, CreditCard, FileText, Loader2 } from "lucide-react";
 import { useStripeKey } from "@/hooks/useStripeKey";
 import useStripePayment from "@/hooks/useStripePayment";
-import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import {
+  Elements,
+  PaymentElement,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js";
 import { formatFileSize, getFileTypeLabel } from "@/lib/guestScannerUtils";
 import { toast } from "sonner";
 
@@ -23,7 +28,11 @@ interface PaymentDialogProps {
   onOpenChange: (open: boolean) => void;
   file: File | null;
   amount: number;
-  onPaymentSuccess: (payload: { scanId: string; filePath: string; paymentIntentId: string }) => void;
+  onPaymentSuccess: (payload: {
+    scanId: string;
+    filePath: string;
+    paymentIntentId: string;
+  }) => void;
 }
 
 interface GuestPaymentFormProps {
@@ -32,7 +41,11 @@ interface GuestPaymentFormProps {
   onSuccess: (paymentIntentId: string) => void;
 }
 
-const GuestPaymentForm = ({ amount, disabled, onSuccess }: GuestPaymentFormProps) => {
+const GuestPaymentForm = ({
+  amount,
+  disabled,
+  onSuccess,
+}: GuestPaymentFormProps) => {
   const stripe = useStripe();
   const elements = useElements();
   const [processing, setProcessing] = useState(false);
@@ -46,17 +59,21 @@ const GuestPaymentForm = ({ amount, disabled, onSuccess }: GuestPaymentFormProps
       const { error: submitError } = await elements.submit();
       if (submitError) throw submitError;
 
-      const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          return_url: `${window.location.origin}/training/ai-analysis#guest-scanner`,
-        },
-        redirect: "if_required",
-      });
+      const { error: confirmError, paymentIntent } =
+        await stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            return_url: `${window.location.origin}/training/ai-analysis#guest-scanner`,
+          },
+          redirect: "if_required",
+        });
 
       if (confirmError) throw confirmError;
 
-      if (paymentIntent?.status === "succeeded" || paymentIntent?.status === "processing") {
+      if (
+        paymentIntent?.status === "succeeded" ||
+        paymentIntent?.status === "processing"
+      ) {
         onSuccess(paymentIntent.id);
       }
     } catch (err: any) {
@@ -96,9 +113,24 @@ const GuestPaymentForm = ({ amount, disabled, onSuccess }: GuestPaymentFormProps
   );
 };
 
-export const PaymentDialog = ({ open, onOpenChange, file, amount, onPaymentSuccess }: PaymentDialogProps) => {
-  const { stripePromise, loading: stripeLoading, error: stripeError, initializeStripe } = useStripeKey();
-  const { createGuestScanPayment, loading: paymentLoading, error: paymentError } = useStripePayment();
+export const PaymentDialog = ({
+  open,
+  onOpenChange,
+  file,
+  amount,
+  onPaymentSuccess,
+}: PaymentDialogProps) => {
+  const {
+    stripePromise,
+    loading: stripeLoading,
+    error: stripeError,
+    initializeStripe,
+  } = useStripeKey();
+  const {
+    createGuestScanPayment,
+    loading: paymentLoading,
+    error: paymentError,
+  } = useStripePayment();
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [scanId, setScanId] = useState<string | null>(null);
   const [filePath, setFilePath] = useState<string | null>(null);
@@ -174,12 +206,15 @@ export const PaymentDialog = ({ open, onOpenChange, file, amount, onPaymentSucce
             Secure Guest Scan Payment
           </DialogTitle>
           <DialogDescription>
-            Your file is analyzed immediately after payment. No account required.
+            Your file is analyzed immediately after payment. No account
+            required.
           </DialogDescription>
         </DialogHeader>
 
         {!file || !fileMeta ? (
-          <div className="text-sm text-muted-foreground">Select a file to continue.</div>
+          <div className="text-sm text-muted-foreground">
+            Select a file to continue.
+          </div>
         ) : (
           <div className="space-y-6">
             <div className="rounded-2xl border border-border/60 p-4 bg-muted/40">
@@ -188,7 +223,9 @@ export const PaymentDialog = ({ open, onOpenChange, file, amount, onPaymentSucce
                   <FileText className="w-5 h-5 text-primary" />
                 </div>
                 <div className="flex-1">
-                  <p className="font-semibold text-foreground">{fileMeta.name}</p>
+                  <p className="font-semibold text-foreground">
+                    {fileMeta.name}
+                  </p>
                   <p className="text-sm text-muted-foreground">
                     {fileMeta.type} · {fileMeta.size}
                   </p>
@@ -201,14 +238,16 @@ export const PaymentDialog = ({ open, onOpenChange, file, amount, onPaymentSucce
 
             <div className="rounded-2xl border border-border/60 p-4 bg-white/70">
               <p className="text-sm text-muted-foreground">
-                We do NOT store your file or payment details. Your file is analyzed once and permanently
-                deleted within 10 minutes.
+                We do NOT store your file or payment details. Your file is
+                analyzed once and permanently deleted within 10 minutes.
               </p>
               <div className="mt-3 flex items-start gap-2">
                 <Checkbox
                   id="delete-ack"
                   checked={acknowledged}
-                  onCheckedChange={(checked) => setAcknowledged(checked === true)}
+                  onCheckedChange={(checked) =>
+                    setAcknowledged(checked === true)
+                  }
                 />
                 <Label htmlFor="delete-ack" className="text-sm text-foreground">
                   I understand my file will be deleted after analysis.
@@ -232,27 +271,30 @@ export const PaymentDialog = ({ open, onOpenChange, file, amount, onPaymentSucce
               </div>
             )}
 
-            {stripePromise && clientSecret && !stripeLoading && !paymentLoading && (
-              <Elements
-                stripe={stripePromise}
-                options={{
-                  clientSecret,
-                  appearance: {
-                    theme: "stripe",
-                    variables: {
-                      colorPrimary: "#1e3a8a",
-                      borderRadius: "10px",
+            {stripePromise &&
+              clientSecret &&
+              !stripeLoading &&
+              !paymentLoading && (
+                <Elements
+                  stripe={stripePromise}
+                  options={{
+                    clientSecret,
+                    appearance: {
+                      theme: "stripe",
+                      variables: {
+                        colorPrimary: "#1e3a8a",
+                        borderRadius: "10px",
+                      },
                     },
-                  },
-                }}
-              >
-                <GuestPaymentForm
-                  amount={displayAmount}
-                  disabled={!acknowledged}
-                  onSuccess={handleSuccess}
-                />
-              </Elements>
-            )}
+                  }}
+                >
+                  <GuestPaymentForm
+                    amount={displayAmount}
+                    disabled={!acknowledged}
+                    onSuccess={handleSuccess}
+                  />
+                </Elements>
+              )}
           </div>
         )}
       </DialogContent>

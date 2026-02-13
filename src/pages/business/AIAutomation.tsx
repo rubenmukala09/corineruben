@@ -7,11 +7,11 @@ import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Mail, 
-  MessageSquare, 
-  Bell, 
-  RefreshCw, 
+import {
+  Mail,
+  MessageSquare,
+  Bell,
+  RefreshCw,
   Target,
   Zap,
   CheckCircle2,
@@ -19,7 +19,7 @@ import {
   BarChart3,
   Clock,
   Users,
-  Bot
+  Bot,
 } from "lucide-react";
 import heroNatureAi1 from "@/assets/hero-nature-ai-1.jpg";
 import heroNatureAi2 from "@/assets/hero-nature-ai-2.jpg";
@@ -29,113 +29,131 @@ const AIAutomation = () => {
     {
       icon: Mail,
       title: "Email Follow-Up Sequences",
-      description: "Automated, personalized email sequences that nurture leads and re-engage dormant customers."
+      description:
+        "Automated, personalized email sequences that nurture leads and re-engage dormant customers.",
     },
     {
       icon: MessageSquare,
       title: "SMS Reminders & Updates",
-      description: "Timely text messages for appointments, deliveries, and important updates that reduce no-shows."
+      description:
+        "Timely text messages for appointments, deliveries, and important updates that reduce no-shows.",
     },
     {
       icon: Bell,
       title: "Smart Notifications",
-      description: "Alert the right team members when leads take action or when intervention is needed."
+      description:
+        "Alert the right team members when leads take action or when intervention is needed.",
     },
     {
       icon: RefreshCw,
       title: "Re-engagement Campaigns",
-      description: "Automatically reach out to customers who haven't purchased in 30, 60, or 90 days."
+      description:
+        "Automatically reach out to customers who haven't purchased in 30, 60, or 90 days.",
     },
     {
       icon: Target,
       title: "Lead Scoring",
-      description: "AI-powered lead scoring that prioritizes your hottest prospects for immediate follow-up."
+      description:
+        "AI-powered lead scoring that prioritizes your hottest prospects for immediate follow-up.",
     },
     {
       icon: BarChart3,
       title: "Performance Analytics",
-      description: "Detailed dashboards showing open rates, click rates, conversions, and ROI metrics."
-    }
+      description:
+        "Detailed dashboards showing open rates, click rates, conversions, and ROI metrics.",
+    },
   ];
 
   const automationTypes = [
     {
       title: "Appointment Reminders",
-      description: "Reduce no-shows by 60% with automated reminder sequences via email and SMS.",
-      metric: "60% fewer no-shows"
+      description:
+        "Reduce no-shows by 60% with automated reminder sequences via email and SMS.",
+      metric: "60% fewer no-shows",
     },
     {
       title: "Quote Follow-Ups",
-      description: "Never let a quote go cold. Automatic follow-ups at 24 hours, 3 days, and 7 days.",
-      metric: "35% higher close rate"
+      description:
+        "Never let a quote go cold. Automatic follow-ups at 24 hours, 3 days, and 7 days.",
+      metric: "35% higher close rate",
     },
     {
       title: "Review Requests",
-      description: "Automatically request reviews from happy customers at the perfect moment.",
-      metric: "4x more reviews"
+      description:
+        "Automatically request reviews from happy customers at the perfect moment.",
+      metric: "4x more reviews",
     },
     {
       title: "Birthday & Anniversary",
-      description: "Delight customers with personalized messages on their special days.",
-      metric: "25% repeat purchases"
-    }
+      description:
+        "Delight customers with personalized messages on their special days.",
+      metric: "25% repeat purchases",
+    },
   ];
 
   const process = [
     {
       step: "1",
       title: "Discovery Call",
-      description: "We analyze your current customer journey and identify automation opportunities."
+      description:
+        "We analyze your current customer journey and identify automation opportunities.",
     },
     {
       step: "2",
       title: "Custom Design",
-      description: "Our team designs automation workflows tailored to your business processes."
+      description:
+        "Our team designs automation workflows tailored to your business processes.",
     },
     {
       step: "3",
       title: "Implementation",
-      description: "We build and test your automation system with your existing tools."
+      description:
+        "We build and test your automation system with your existing tools.",
     },
     {
       step: "4",
       title: "Launch & Optimize",
-      description: "Go live with continuous monitoring and optimization for best results."
-    }
+      description:
+        "Go live with continuous monitoring and optimization for best results.",
+    },
   ];
 
   return (
     <PageTransition variant="fade">
       <div className="min-h-screen bg-background">
-        <SEO 
+        <SEO
           title="AI Follow-Up Automation System"
           description="Never lose a lead again with AI-powered follow-up automation. Automated email sequences, SMS reminders, and smart re-engagement campaigns. 35% higher close rates."
           keywords="follow-up automation, email automation, SMS reminders, lead nurturing, CRM automation, business automation Dayton Ohio"
           structuredData={{
             "@context": "https://schema.org",
             "@type": "Service",
-            "name": "AI Follow-Up Automation System",
-            "description": "Automated email and SMS follow-up sequences for business lead nurturing",
-            "provider": {
+            name: "AI Follow-Up Automation System",
+            description:
+              "Automated email and SMS follow-up sequences for business lead nurturing",
+            provider: {
               "@type": "Organization",
-              "name": "InVision Network"
+              name: "InVision Network",
             },
-            "areaServed": "United States",
-            "offers": {
+            areaServed: "United States",
+            offers: {
               "@type": "Offer",
-              "price": "12500",
-              "priceCurrency": "USD"
-            }
+              price: "12500",
+              priceCurrency: "USD",
+            },
           }}
         />
         <Navigation />
-        
+
         <main>
           {/* Hero Section with Nature Image */}
           <Hero
             backgroundImages={[
-              { src: heroNatureAi2, alt: "Beautiful meadow with wildflowers at sunrise" },
-              { src: heroNatureAi1, alt: "Tranquil forest path with sunbeams" }
+              {
+                src: heroNatureAi2,
+                alt: "Beautiful meadow with wildflowers at sunrise",
+              },
+              { src: heroNatureAi1, alt: "Tranquil forest path with sunbeams" },
             ]}
             headline="Follow-Up Automation System"
             subheadline="Stop losing leads to silence. Our AI-powered follow-up system ensures every prospect gets the right message at the right time."
@@ -159,19 +177,27 @@ const AIAutomation = () => {
             <div className="container mx-auto px-4">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                 <div>
-                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">35%</div>
+                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
+                    35%
+                  </div>
                   <div className="text-muted-foreground">Higher Close Rate</div>
                 </div>
                 <div>
-                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">60%</div>
+                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
+                    60%
+                  </div>
                   <div className="text-muted-foreground">Fewer No-Shows</div>
                 </div>
                 <div>
-                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">15hrs</div>
+                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
+                    15hrs
+                  </div>
                   <div className="text-muted-foreground">Saved Weekly</div>
                 </div>
                 <div>
-                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">4x</div>
+                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
+                    4x
+                  </div>
                   <div className="text-muted-foreground">More Reviews</div>
                 </div>
               </div>
@@ -186,12 +212,16 @@ const AIAutomation = () => {
                   Complete Follow-Up Automation Suite
                 </h2>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
-                  Every tool you need to automate customer communication and never let a lead slip through the cracks.
+                  Every tool you need to automate customer communication and
+                  never let a lead slip through the cracks.
                 </p>
               </div>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {features.map((feature, index) => (
-                  <Card key={index} className="border-border/50 bg-card/50 hover:shadow-lg transition-shadow">
+                  <Card
+                    key={index}
+                    className="border-border/50 bg-card/50 hover:shadow-lg transition-shadow"
+                  >
                     <CardHeader>
                       <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center mb-4">
                         <feature.icon className="w-6 h-6 text-accent" />
@@ -199,7 +229,9 @@ const AIAutomation = () => {
                       <CardTitle className="text-xl">{feature.title}</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-muted-foreground">{feature.description}</p>
+                      <p className="text-muted-foreground">
+                        {feature.description}
+                      </p>
                     </CardContent>
                   </Card>
                 ))}
@@ -215,7 +247,8 @@ const AIAutomation = () => {
                   Ready-to-Deploy Automation Templates
                 </h2>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
-                  Start with proven automation sequences that deliver results from day one.
+                  Start with proven automation sequences that deliver results
+                  from day one.
                 </p>
               </div>
               <div className="grid md:grid-cols-2 gap-6">
@@ -224,11 +257,16 @@ const AIAutomation = () => {
                     <CardContent className="p-6">
                       <div className="flex justify-between items-start mb-4">
                         <h3 className="text-xl font-bold">{type.title}</h3>
-                        <Badge variant="secondary" className="bg-success/10 text-success border-success/30">
+                        <Badge
+                          variant="secondary"
+                          className="bg-success/10 text-success border-success/30"
+                        >
                           {type.metric}
                         </Badge>
                       </div>
-                      <p className="text-muted-foreground">{type.description}</p>
+                      <p className="text-muted-foreground">
+                        {type.description}
+                      </p>
                     </CardContent>
                   </Card>
                 ))}
@@ -244,17 +282,22 @@ const AIAutomation = () => {
                   How We Build Your Automation
                 </h2>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
-                  A proven 4-step process to implement automation that works for your business.
+                  A proven 4-step process to implement automation that works for
+                  your business.
                 </p>
               </div>
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {process.map((item, index) => (
                   <div key={index} className="text-center">
                     <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl font-bold text-white">{item.step}</span>
+                      <span className="text-2xl font-bold text-white">
+                        {item.step}
+                      </span>
                     </div>
                     <h3 className="text-lg font-bold mb-2">{item.title}</h3>
-                    <p className="text-muted-foreground text-sm">{item.description}</p>
+                    <p className="text-muted-foreground text-sm">
+                      {item.description}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -269,8 +312,12 @@ const AIAutomation = () => {
                   Investment That Pays for Itself
                 </h2>
                 <Card className="p-8 border-primary/20">
-                  <div className="text-5xl font-bold text-primary mb-2">$12,500</div>
-                  <p className="text-muted-foreground mb-6">One-time implementation fee</p>
+                  <div className="text-5xl font-bold text-primary mb-2">
+                    $12,500
+                  </div>
+                  <p className="text-muted-foreground mb-6">
+                    One-time implementation fee
+                  </p>
                   <ul className="space-y-3 text-left max-w-md mx-auto mb-8">
                     {[
                       "Custom automation workflow design",
@@ -278,7 +325,7 @@ const AIAutomation = () => {
                       "Email & SMS sequence setup",
                       "Lead scoring configuration",
                       "30 days of optimization support",
-                      "Training for your team"
+                      "Training for your team",
                     ].map((item, index) => (
                       <li key={index} className="flex items-center gap-3">
                         <CheckCircle2 className="w-5 h-5 text-success flex-shrink-0" />
@@ -286,7 +333,12 @@ const AIAutomation = () => {
                       </li>
                     ))}
                   </ul>
-                  <Button asChild size="xl" variant="gold" className="w-full sm:w-auto">
+                  <Button
+                    asChild
+                    size="xl"
+                    variant="gold"
+                    className="w-full sm:w-auto"
+                  >
                     <Link to="/contact">
                       Schedule Consultation
                       <ArrowRight className="ml-2 h-5 w-5" />
@@ -304,7 +356,8 @@ const AIAutomation = () => {
                 Ready to Automate Your Follow-Ups?
               </h2>
               <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Let's discuss how automation can save you time and increase your close rate.
+                Let's discuss how automation can save you time and increase your
+                close rate.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild size="xl" variant="gold">

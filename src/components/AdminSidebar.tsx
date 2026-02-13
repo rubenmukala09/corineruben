@@ -31,7 +31,11 @@ import {
   Calendar,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { useUserRole } from "@/hooks/useUserRole";
 
 interface MenuItem {
@@ -58,7 +62,11 @@ const menuItems: MenuItem[] = [
     children: [
       { title: "Pages", href: "/admin/content/pages" },
       { title: "Testimonials", href: "/admin/content/testimonials" },
-      { title: "Articles", href: "/admin/content/articles", permission: "view_training" },
+      {
+        title: "Articles",
+        href: "/admin/content/articles",
+        permission: "view_training",
+      },
       { title: "Team", href: "/admin/content/team" },
     ],
   },
@@ -66,9 +74,21 @@ const menuItems: MenuItem[] = [
     title: "Clients",
     icon: Users,
     children: [
-      { title: "Businesses", href: "/admin/clients/businesses", permission: "view_business_clients" },
-      { title: "Individuals", href: "/admin/clients/individuals", permission: "view_individual_clients" },
-      { title: "Messages", href: "/admin/clients/messages", permission: "view_messages" },
+      {
+        title: "Businesses",
+        href: "/admin/clients/businesses",
+        permission: "view_business_clients",
+      },
+      {
+        title: "Individuals",
+        href: "/admin/clients/individuals",
+        permission: "view_individual_clients",
+      },
+      {
+        title: "Messages",
+        href: "/admin/clients/messages",
+        permission: "view_messages",
+      },
     ],
   },
   {
@@ -126,18 +146,22 @@ interface AdminSidebarProps {
   isMobileOpen?: boolean;
 }
 
-export const AdminSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: AdminSidebarProps) => {
+export const AdminSidebar = ({
+  isOpen,
+  onMobileClose,
+  isMobileOpen = false,
+}: AdminSidebarProps) => {
   const [openMenus, setOpenMenus] = useState<string[]>([]);
 
   // Lock body scroll when mobile sidebar is open
   React.useEffect(() => {
     if (isMobileOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [isMobileOpen]);
   const location = useLocation();
@@ -150,15 +174,18 @@ export const AdminSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: Ad
     return hasPermission(permission);
   };
 
-  const filteredMenuItems = menuItems.filter(item => canAccessItem(item.permission))
-    .map(item => ({
+  const filteredMenuItems = menuItems
+    .filter((item) => canAccessItem(item.permission))
+    .map((item) => ({
       ...item,
-      children: item.children?.filter(child => canAccessItem(child.permission))
+      children: item.children?.filter((child) =>
+        canAccessItem(child.permission),
+      ),
     }));
 
   const toggleMenu = (title: string) => {
     setOpenMenus((prev) =>
-      prev.includes(title) ? prev.filter((m) => m !== title) : [...prev, title]
+      prev.includes(title) ? prev.filter((m) => m !== title) : [...prev, title],
     );
   };
 
@@ -184,7 +211,8 @@ export const AdminSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: Ad
                 className={cn(
                   "flex items-center gap-3 px-4 py-3 mx-2 rounded-lg transition-all duration-300 ease-out relative",
                   "hover:bg-[#2A2540]",
-                  isActive(item.href!) && "bg-[#2A2540] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-[#14B8A6] before:rounded-r"
+                  isActive(item.href!) &&
+                    "bg-[#2A2540] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-[#14B8A6] before:rounded-r",
                 )}
                 onClick={onMobileClose}
               >
@@ -194,7 +222,7 @@ export const AdminSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: Ad
                 <Icon
                   className={cn(
                     "h-5 w-5 text-white flex-shrink-0 transition-opacity duration-300",
-                    collapsed && "mx-auto opacity-70"
+                    collapsed && "mx-auto opacity-70",
                   )}
                 />
                 {!collapsed && (
@@ -216,7 +244,7 @@ export const AdminSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: Ad
                 className={cn(
                   "flex items-center gap-3 w-full px-4 py-3 mx-2 rounded-lg transition-all duration-300 ease-out",
                   "hover:bg-[#2A2540] group relative",
-                  parentActive && "bg-[#2A2540]"
+                  parentActive && "bg-[#2A2540]",
                 )}
               >
                 {parentActive && (
@@ -225,7 +253,7 @@ export const AdminSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: Ad
                 <Icon
                   className={cn(
                     "h-5 w-5 text-white flex-shrink-0 transition-opacity duration-300",
-                    collapsed && "mx-auto opacity-70"
+                    collapsed && "mx-auto opacity-70",
                   )}
                 />
                 {!collapsed && (
@@ -250,7 +278,7 @@ export const AdminSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: Ad
                       className={cn(
                         "flex items-center gap-3 pl-12 pr-4 py-2 mx-2 rounded-lg transition-all duration-300 ease-out",
                         "hover:bg-[#2A2540] relative",
-                        isActive(child.href) && "bg-[#2A2540]"
+                        isActive(child.href) && "bg-[#2A2540]",
                       )}
                       onClick={onMobileClose}
                     >
@@ -277,7 +305,7 @@ export const AdminSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: Ad
       <aside
         className={cn(
           "fixed left-0 top-0 h-screen bg-[#1A1626] text-white transition-all duration-300 ease-out z-30 border-r border-white/5 shadow-2xl hidden md:block",
-          collapsed ? "w-[70px]" : "w-[260px]"
+          collapsed ? "w-[70px]" : "w-[260px]",
         )}
       >
         <SidebarContent />
@@ -291,13 +319,13 @@ export const AdminSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: Ad
             className="fixed inset-0 bg-black/60 z-40 md:hidden animate-fade-in backdrop-blur-sm"
             onClick={onMobileClose}
           />
-          
+
           {/* Mobile Sidebar - Slides in from left */}
           <aside
             className={cn(
               "fixed left-0 top-0 h-screen w-[280px] bg-[#1A1626] text-white z-50 md:hidden",
               "transform transition-transform duration-300 ease-out shadow-2xl",
-              isMobileOpen ? "translate-x-0" : "-translate-x-full"
+              isMobileOpen ? "translate-x-0" : "-translate-x-full",
             )}
           >
             {/* Close button inside sidebar */}

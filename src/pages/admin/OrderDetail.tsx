@@ -1,6 +1,17 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, Printer, Mail, Package, X, MapPin, CreditCard, Clock, CheckCircle, Truck } from "lucide-react";
+import {
+  ArrowLeft,
+  Printer,
+  Mail,
+  Package,
+  X,
+  MapPin,
+  CreditCard,
+  Clock,
+  CheckCircle,
+  Truck,
+} from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -30,7 +41,6 @@ import {
 } from "@/components/ui/dialog";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
-
 const OrderDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -41,15 +51,21 @@ const OrderDetail = () => {
   const [note, setNote] = useState("");
 
   // Fetch order details
-  const { data: order, isLoading, error } = useQuery({
+  const {
+    data: order,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["order", id],
     queryFn: async () => {
       const { data: orderData, error: orderError } = await supabase
         .from("partner_orders")
-        .select(`
+        .select(
+          `
           *,
           customer:profiles(first_name, last_name, email, phone, address_street, address_city, address_state, address_zip)
-        `)
+        `,
+        )
         .eq("id", id)
         .single();
 
@@ -69,19 +85,33 @@ const OrderDetail = () => {
         paymentStatus: orderData.payment_status,
         fulfillmentStatus: orderData.status,
         customer: {
-          name: orderData.customer ? `${orderData.customer.first_name || ''} ${orderData.customer.last_name || ''}`.trim() : 'Unknown',
-          email: orderData.customer?.email || '',
-          phone: orderData.customer?.phone || ''
+          name: orderData.customer
+            ? `${orderData.customer.first_name || ""} ${orderData.customer.last_name || ""}`.trim()
+            : "Unknown",
+          email: orderData.customer?.email || "",
+          phone: orderData.customer?.phone || "",
         },
         shippingAddress: {
-          street: orderData.shipping_address?.street || orderData.customer?.address_street || '',
-          city: orderData.shipping_address?.city || orderData.customer?.address_city || '',
-          state: orderData.shipping_address?.state || orderData.customer?.address_state || '',
-          zip: orderData.shipping_address?.zip || orderData.customer?.address_zip || '',
-          country: 'United States'
+          street:
+            orderData.shipping_address?.street ||
+            orderData.customer?.address_street ||
+            "",
+          city:
+            orderData.shipping_address?.city ||
+            orderData.customer?.address_city ||
+            "",
+          state:
+            orderData.shipping_address?.state ||
+            orderData.customer?.address_state ||
+            "",
+          zip:
+            orderData.shipping_address?.zip ||
+            orderData.customer?.address_zip ||
+            "",
+          country: "United States",
         },
         billingAddress: { sameAsShipping: true },
-        items: itemsData.map(item => ({
+        items: itemsData.map((item) => ({
           id: item.id,
           name: item.product_name,
           variant: item.variant_name,
@@ -89,29 +119,34 @@ const OrderDetail = () => {
           price: item.unit_price,
           image: "/placeholder.svg",
           type: "physical",
-          fulfilled: false
+          fulfilled: false,
         })),
         payment: {
-          method: orderData.payment_method || 'Card',
-          transactionId: orderData.stripe_payment_intent_id || 'N/A',
-          gateway: 'Stripe',
-          amount: orderData.total_amount
+          method: orderData.payment_method || "Card",
+          transactionId: orderData.stripe_payment_intent_id || "N/A",
+          gateway: "Stripe",
+          amount: orderData.total_amount,
         },
         summary: {
           subtotal: orderData.subtotal || 0,
           shipping: orderData.shipping_cost || 0,
           tax: orderData.tax_amount || 0,
           discount: orderData.discount_amount || 0,
-          discountCode: orderData.discount_code || '',
-          total: orderData.total_amount
+          discountCode: orderData.discount_code || "",
+          total: orderData.total_amount,
         },
         timeline: [
-          { type: "created", description: "Order placed", timestamp: orderData.created_at, user: "Customer" }
+          {
+            type: "created",
+            description: "Order placed",
+            timestamp: orderData.created_at,
+            user: "Customer",
+          },
         ],
-        notes: []
+        notes: [],
       };
     },
-    enabled: !!id
+    enabled: !!id,
   });
 
   if (isLoading) {
@@ -130,7 +165,9 @@ const OrderDetail = () => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <p className="text-destructive mb-4">Order not found</p>
-          <Button onClick={() => navigate("/admin/ecommerce/orders")}>Back to Orders</Button>
+          <Button onClick={() => navigate("/admin/ecommerce/orders")}>
+            Back to Orders
+          </Button>
         </div>
       </div>
     );
@@ -143,7 +180,11 @@ const OrderDetail = () => {
         <div className="container mx-auto px-6 py-4">
           <div className="mt-4 flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon" onClick={() => navigate("/admin/ecommerce/orders")}>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => navigate("/admin/ecommerce/orders")}
+              >
                 <ArrowLeft className="h-5 w-5" />
               </Button>
               <div>
@@ -159,10 +200,20 @@ const OrderDetail = () => {
                 </p>
               </div>
               <div className="flex gap-2">
-                <Badge variant={order.paymentStatus === "paid" ? "success" : "outline"}>
+                <Badge
+                  variant={
+                    order.paymentStatus === "paid" ? "success" : "outline"
+                  }
+                >
                   {order.paymentStatus}
                 </Badge>
-                <Badge variant={order.fulfillmentStatus === "fulfilled" ? "success" : "outline"}>
+                <Badge
+                  variant={
+                    order.fulfillmentStatus === "fulfilled"
+                      ? "success"
+                      : "outline"
+                  }
+                >
                   {order.fulfillmentStatus}
                 </Badge>
               </div>
@@ -180,7 +231,11 @@ const OrderDetail = () => {
                 <Mail className="mr-2 h-4 w-4" />
                 Email Customer
               </Button>
-              <Button variant="outline" size="sm" onClick={() => setRefundModalOpen(true)}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setRefundModalOpen(true)}
+              >
                 Refund Order
               </Button>
             </div>
@@ -197,28 +252,54 @@ const OrderDetail = () => {
               <h2 className="mb-4 text-xl font-semibold">Order Items</h2>
               <div className="space-y-4">
                 {order.items.map((item) => (
-                  <div key={item.id} className="flex gap-4 rounded-lg border p-4">
-                    <img src={item.image} alt={item.name} className="h-20 w-20 rounded object-cover" />
+                  <div
+                    key={item.id}
+                    className="flex gap-4 rounded-lg border p-4"
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="h-20 w-20 rounded object-cover"
+                    />
                     <div className="flex-1">
                       <h3 className="font-medium">{item.name}</h3>
-                      {item.variant && <p className="text-sm text-muted-foreground">{item.variant}</p>}
+                      {item.variant && (
+                        <p className="text-sm text-muted-foreground">
+                          {item.variant}
+                        </p>
+                      )}
                       <div className="mt-2 flex items-center gap-4">
-                        <span className="text-sm text-muted-foreground">Qty: {item.quantity}</span>
-                        <span className="text-sm text-muted-foreground">${item.price.toFixed(2)} each</span>
-                        <span className="font-medium">${(item.quantity * item.price).toFixed(2)}</span>
+                        <span className="text-sm text-muted-foreground">
+                          Qty: {item.quantity}
+                        </span>
+                        <span className="text-sm text-muted-foreground">
+                          ${item.price.toFixed(2)} each
+                        </span>
+                        <span className="font-medium">
+                          ${(item.quantity * item.price).toFixed(2)}
+                        </span>
                       </div>
-                      
+
                       {item.type === "physical" && (
                         <div className="mt-3 space-y-2">
                           <div className="flex items-center gap-2">
-                            <Checkbox id={`fulfilled-${item.id}`} checked={item.fulfilled} />
-                            <Label htmlFor={`fulfilled-${item.id}`} className="text-sm">
+                            <Checkbox
+                              id={`fulfilled-${item.id}`}
+                              checked={item.fulfilled}
+                            />
+                            <Label
+                              htmlFor={`fulfilled-${item.id}`}
+                              className="text-sm"
+                            >
                               Mark as fulfilled
                             </Label>
                           </div>
                           {!item.fulfilled && (
                             <div className="flex gap-2">
-                              <Input placeholder="Tracking number" className="text-sm" />
+                              <Input
+                                placeholder="Tracking number"
+                                className="text-sm"
+                              />
                               <Select>
                                 <SelectTrigger className="w-32">
                                   <SelectValue placeholder="Carrier" />
@@ -259,12 +340,15 @@ const OrderDetail = () => {
                       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
                         <div className="h-2 w-2 rounded-full bg-primary" />
                       </div>
-                      {index < order.timeline.length - 1 && <div className="h-full w-0.5 bg-border" />}
+                      {index < order.timeline.length - 1 && (
+                        <div className="h-full w-0.5 bg-border" />
+                      )}
                     </div>
                     <div className="flex-1 pb-4">
                       <p className="font-medium">{event.description}</p>
                       <p className="text-sm text-muted-foreground">
-                        {new Date(event.timestamp).toLocaleString()} • {event.user}
+                        {new Date(event.timestamp).toLocaleString()} •{" "}
+                        {event.user}
                       </p>
                     </div>
                   </div>
@@ -301,10 +385,16 @@ const OrderDetail = () => {
               <h3 className="mb-3 font-semibold">Customer Information</h3>
               <div className="space-y-2">
                 <p className="font-medium">{order.customer.name}</p>
-                <a href={`mailto:${order.customer.email}`} className="block text-sm text-primary hover:underline">
+                <a
+                  href={`mailto:${order.customer.email}`}
+                  className="block text-sm text-primary hover:underline"
+                >
                   {order.customer.email}
                 </a>
-                <a href={`tel:${order.customer.phone}`} className="block text-sm text-primary hover:underline">
+                <a
+                  href={`tel:${order.customer.phone}`}
+                  className="block text-sm text-primary hover:underline"
+                >
                   {order.customer.phone}
                 </a>
                 <Button variant="outline" size="sm" className="mt-2 w-full">
@@ -341,9 +431,13 @@ const OrderDetail = () => {
             <Card className="p-4">
               <h3 className="mb-3 font-semibold">Billing Address</h3>
               {order.billingAddress.sameAsShipping ? (
-                <p className="text-sm text-muted-foreground">Same as shipping address</p>
+                <p className="text-sm text-muted-foreground">
+                  Same as shipping address
+                </p>
               ) : (
-                <div className="space-y-1 text-sm">{/* Billing address details */}</div>
+                <div className="space-y-1 text-sm">
+                  {/* Billing address details */}
+                </div>
               )}
             </Card>
 
@@ -419,7 +513,11 @@ const OrderDetail = () => {
             {order.paymentStatus === "paid" && (
               <Card className="p-4">
                 <h3 className="mb-3 font-semibold">Refund</h3>
-                <Button variant="outline" className="w-full" onClick={() => setRefundModalOpen(true)}>
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => setRefundModalOpen(true)}
+                >
                   Issue Refund
                 </Button>
               </Card>
@@ -433,7 +531,9 @@ const OrderDetail = () => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Issue Refund for {order.orderNumber}</DialogTitle>
-            <DialogDescription>Process a refund for this order</DialogDescription>
+            <DialogDescription>
+              Process a refund for this order
+            </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
@@ -441,7 +541,9 @@ const OrderDetail = () => {
               <RadioGroup value={refundType} onValueChange={setRefundType}>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="full" id="full" />
-                  <Label htmlFor="full">Full Refund (${order.summary.total.toFixed(2)})</Label>
+                  <Label htmlFor="full">
+                    Full Refund (${order.summary.total.toFixed(2)})
+                  </Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="partial" id="partial" />
@@ -465,9 +567,13 @@ const OrderDetail = () => {
                   <SelectValue placeholder="Select reason" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="customer-request">Customer request</SelectItem>
+                  <SelectItem value="customer-request">
+                    Customer request
+                  </SelectItem>
                   <SelectItem value="damaged">Item damaged</SelectItem>
-                  <SelectItem value="not-received">Item not received</SelectItem>
+                  <SelectItem value="not-received">
+                    Item not received
+                  </SelectItem>
                   <SelectItem value="wrong-item">Wrong item sent</SelectItem>
                   <SelectItem value="other">Other</SelectItem>
                 </SelectContent>
@@ -489,7 +595,9 @@ const OrderDetail = () => {
             <Button variant="outline" onClick={() => setRefundModalOpen(false)}>
               Cancel
             </Button>
-            <Button onClick={() => setRefundModalOpen(false)}>Issue Refund</Button>
+            <Button onClick={() => setRefundModalOpen(false)}>
+              Issue Refund
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

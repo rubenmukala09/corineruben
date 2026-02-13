@@ -12,7 +12,7 @@ export const useConfetti = () => {
       particleCount: 100,
       spread: 70,
       origin: { x: 0.5, y: 0.6 },
-      colors: ['#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3'],
+      colors: ["#E91E63", "#9C27B0", "#673AB7", "#3F51B5", "#2196F3"],
     };
 
     confetti({
@@ -26,7 +26,7 @@ export const useConfetti = () => {
     const count = 200;
     const defaults = {
       origin: { y: 0.7 },
-      colors: ['#E91E63', '#9C27B0', '#673AB7', '#FFD700', '#00E676'],
+      colors: ["#E91E63", "#9C27B0", "#673AB7", "#FFD700", "#00E676"],
     };
 
     function fire(particleRatio: number, opts: confetti.Options) {
@@ -49,7 +49,7 @@ export const useConfetti = () => {
       particleCount: 80,
       spread: 60,
       origin: { y: 0.65 },
-      colors: ['#00E676', '#69F0AE', '#B2FF59', '#CCFF90'],
+      colors: ["#00E676", "#69F0AE", "#B2FF59", "#CCFF90"],
     });
   };
 
@@ -62,14 +62,14 @@ export const useConfetti = () => {
         angle: 60,
         spread: 55,
         origin: { x: 0 },
-        colors: ['#E91E63', '#9C27B0', '#673AB7'],
+        colors: ["#E91E63", "#9C27B0", "#673AB7"],
       });
       confetti({
         particleCount: 3,
         angle: 120,
         spread: 55,
         origin: { x: 1 },
-        colors: ['#E91E63', '#9C27B0', '#673AB7'],
+        colors: ["#E91E63", "#9C27B0", "#673AB7"],
       });
 
       if (Date.now() < end) {

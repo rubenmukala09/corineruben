@@ -22,22 +22,18 @@ export function useAnalytics() {
     let scrollDepth = 0;
     let ticking = false;
     let listenerAdded = false;
-    
+
     const updateScrollDepth = () => {
       requestAnimationFrame(() => {
         const windowHeight = window.innerHeight;
         const documentHeight = document.documentElement.scrollHeight;
         const scrollTop = window.scrollY || document.documentElement.scrollTop;
         const scrollPercent = Math.round(
-          (scrollTop / (documentHeight - windowHeight)) * 100
+          (scrollTop / (documentHeight - windowHeight)) * 100,
         );
 
         // Track at 25%, 50%, 75%, 100%
-        if (
-          scrollPercent >= 25 &&
-          scrollDepth < 25 &&
-          scrollPercent < 50
-        ) {
+        if (scrollPercent >= 25 && scrollDepth < 25 && scrollPercent < 50) {
           scrollDepth = 25;
           if (window.gtag) {
             window.gtag("event", "scroll_depth", { percentage: 25 });
@@ -69,7 +65,7 @@ export function useAnalytics() {
         ticking = false;
       });
     };
-    
+
     const handleScroll = () => {
       if (!ticking) {
         ticking = true;
@@ -84,16 +80,22 @@ export function useAnalytics() {
         listenerAdded = true;
       }
     };
-    
+
     let idleId: number | ReturnType<typeof setTimeout>;
-    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-      idleId = (window as any).requestIdleCallback(scheduleListener, { timeout: 2000 });
+    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      idleId = (window as any).requestIdleCallback(scheduleListener, {
+        timeout: 2000,
+      });
     } else {
       idleId = setTimeout(scheduleListener, 500);
     }
 
     return () => {
-      if (typeof window !== 'undefined' && 'requestIdleCallback' in window && typeof idleId === 'number') {
+      if (
+        typeof window !== "undefined" &&
+        "requestIdleCallback" in window &&
+        typeof idleId === "number"
+      ) {
         (window as any).cancelIdleCallback(idleId);
       } else {
         clearTimeout(idleId as ReturnType<typeof setTimeout>);

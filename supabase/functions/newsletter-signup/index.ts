@@ -27,7 +27,9 @@ function checkRateLimit(ip: string): { allowed: boolean; retryAfter?: number } {
 
   if (record.count >= RATE_LIMIT) {
     const retryAfter = Math.ceil((record.resetTime - now) / 1000);
-    console.log(`[RATE LIMIT] IP ${ip} exceeded limit. Retry after ${retryAfter}s`);
+    console.log(
+      `[RATE LIMIT] IP ${ip} exceeded limit. Retry after ${retryAfter}s`,
+    );
     return { allowed: false, retryAfter };
   }
 
@@ -45,22 +47,23 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   // Rate limiting check
-  const clientIP = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || 
-                   req.headers.get("x-real-ip") || 
-                   "unknown";
-  
+  const clientIP =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-real-ip") ||
+    "unknown";
+
   const rateCheck = checkRateLimit(clientIP);
   if (!rateCheck.allowed) {
     return new Response(
       JSON.stringify({ error: "Too many requests. Please try again later." }),
       {
         status: 429,
-        headers: { 
-          ...corsHeaders, 
+        headers: {
+          ...corsHeaders,
           "Content-Type": "application/json",
-          "Retry-After": String(rateCheck.retryAfter)
+          "Retry-After": String(rateCheck.retryAfter),
         },
-      }
+      },
     );
   }
 
@@ -71,13 +74,10 @@ const handler = async (req: Request): Promise<Response> => {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return new Response(
-        JSON.stringify({ error: "Invalid email format" }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
-      );
+      return new Response(JSON.stringify({ error: "Invalid email format" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
     }
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
@@ -90,14 +90,14 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (existingSubscriber) {
       return new Response(
-        JSON.stringify({ 
+        JSON.stringify({
           message: "You're already subscribed!",
-          alreadySubscribed: true
+          alreadySubscribed: true,
         }),
         {
           status: 200,
           headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
+        },
       );
     }
 
@@ -115,8 +115,8 @@ const handler = async (req: Request): Promise<Response> => {
     const emailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${resendApiKey}`,
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${resendApiKey}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         from: "InVision Network <onboarding@resend.dev>",
@@ -163,9 +163,9 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         success: true,
-        message: "✓ Subscribed! Check your email."
+        message: "✓ Subscribed! Check your email.",
       }),
       {
         status: 200,
@@ -173,19 +173,19 @@ const handler = async (req: Request): Promise<Response> => {
           "Content-Type": "application/json",
           ...corsHeaders,
         },
-      }
+      },
     );
   } catch (error: any) {
     console.error("Error in newsletter-signup function:", error);
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         error: error.message,
-        details: "Failed to process newsletter signup"
+        details: "Failed to process newsletter signup",
       }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },
-      }
+      },
     );
   }
 };

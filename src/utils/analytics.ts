@@ -53,7 +53,7 @@ export function trackPageView(path: string, title: string) {
 // Track custom event
 export function trackEvent(
   eventName: string,
-  eventParams?: AnalyticsEventParams
+  eventParams?: AnalyticsEventParams,
 ) {
   if (!window.gtag || !isTrackingEnabled()) return;
 
@@ -64,7 +64,7 @@ export function trackEvent(
 export function trackButtonClick(
   buttonName: string,
   location: string,
-  additionalData?: AnalyticsEventParams
+  additionalData?: AnalyticsEventParams,
 ) {
   trackEvent("button_click", {
     button_name: buttonName,
@@ -77,7 +77,7 @@ export function trackButtonClick(
 export function trackFormSubmit(
   formName: string,
   formId: string,
-  success: boolean = true
+  success: boolean = true,
 ) {
   trackEvent("form_submit", {
     form_name: formName,
@@ -211,11 +211,7 @@ export function trackError(error: string, location: string) {
 }
 
 // Track timing
-export function trackTiming(
-  category: string,
-  variable: string,
-  value: number
-) {
+export function trackTiming(category: string, variable: string, value: number) {
   trackEvent("timing_complete", {
     name: variable,
     value: Math.round(value),

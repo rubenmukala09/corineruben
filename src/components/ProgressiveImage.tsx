@@ -44,9 +44,7 @@ export function ProgressiveImage({
   return (
     <div className={cn("relative overflow-hidden", containerClassName)}>
       {/* Shimmer placeholder */}
-      {!loaded && (
-        <div className="absolute inset-0 bg-muted" />
-      )}
+      {!loaded && <div className="absolute inset-0 bg-muted" />}
 
       {/* Image with CSS transition */}
       <img
@@ -57,7 +55,7 @@ export function ProgressiveImage({
         className={cn(
           "w-full h-full object-cover transition-opacity duration-200",
           loaded ? "opacity-100" : "opacity-0",
-          className
+          className,
         )}
       />
     </div>
@@ -66,7 +64,7 @@ export function ProgressiveImage({
 
 // Preload critical images
 export const preloadCriticalImages = (urls: string[]) => {
-  urls.forEach(url => {
+  urls.forEach((url) => {
     if (!loadedImages.has(url)) {
       const img = new Image();
       img.onload = () => loadedImages.add(url);

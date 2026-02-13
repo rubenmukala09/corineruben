@@ -3,11 +3,12 @@ import Stripe from "https://esm.sh/stripe@18.5.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
 const logStep = (step: string, details?: any) => {
-  const detailsStr = details ? ` - ${JSON.stringify(details)}` : '';
+  const detailsStr = details ? ` - ${JSON.stringify(details)}` : "";
   console.log(`[CREATE-CART-PAYMENT-INTENT] ${step}${detailsStr}`);
 };
 
@@ -35,16 +36,21 @@ serve(async (req) => {
     const stripe = new Stripe(stripeKey, { apiVersion: "2024-11-20.acacia" });
 
     const body = await req.json();
-    const { 
+    const {
       amount, // Amount in cents
-      customerEmail, 
+      customerEmail,
       customerName,
       isVeteran = false,
       items = [],
-      metadata = {}
+      metadata = {},
     } = body;
 
-    logStep("Request body parsed", { amount, customerEmail, isVeteran, itemCount: items.length });
+    logStep("Request body parsed", {
+      amount,
+      customerEmail,
+      isVeteran,
+      itemCount: items.length,
+    });
 
     if (!amount || !customerEmail) {
       throw new Error("Missing required fields: amount, customerEmail");
@@ -55,7 +61,10 @@ serve(async (req) => {
     }
 
     // Check if customer already exists
-    const customers = await stripe.customers.list({ email: customerEmail, limit: 1 });
+    const customers = await stripe.customers.list({
+      email: customerEmail,
+      limit: 1,
+    });
     let customerId: string;
 
     if (customers.data.length > 0) {
@@ -67,50 +76,52 @@ serve(async (req) => {
         email: customerEmail,
         name: customerName,
         metadata: {
-          isVeteran: isVeteran ? 'true' : 'false',
-        }
+          isVeteran: isVeteran ? "true" : "false",
+        },
       });
       customerId = newCustomer.id;
       logStep("Created new customer", { customerId });
     }
 
     // Build items description for metadata
-    const itemsDescription = items.map((item: CartItem) => 
-      `${item.name} x${item.quantity}`
-    ).join(', ');
+    const itemsDescription = items
+      .map((item: CartItem) => `${item.name} x${item.quantity}`)
+      .join(", ");
 
     // Create PaymentIntent with the raw amount
     const paymentIntent = await stripe.paymentIntents.create({
       customer: customerId,
       amount: Math.round(amount), // Ensure it's an integer
-      currency: 'usd',
+      currency: "usd",
       automatic_payment_methods: { enabled: true },
       metadata: {
-        isVeteran: isVeteran ? 'true' : 'false',
-        customerName: customerName || '',
+        isVeteran: isVeteran ? "true" : "false",
+        customerName: customerName || "",
         itemsDescription: itemsDescription.substring(0, 500), // Stripe metadata limit
         itemCount: items.length.toString(),
-        ...metadata
-      }
+        ...metadata,
+      },
     });
 
-    logStep("PaymentIntent created", { 
+    logStep("PaymentIntent created", {
       paymentIntentId: paymentIntent.id,
       amount: paymentIntent.amount,
-      clientSecret: paymentIntent.client_secret ? "present" : "missing"
+      clientSecret: paymentIntent.client_secret ? "present" : "missing",
     });
 
-    return new Response(JSON.stringify({
-      clientSecret: paymentIntent.client_secret,
-      paymentIntentId: paymentIntent.id,
-      customerId,
-      amount: paymentIntent.amount,
-      type: "payment"
-    }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 200,
-    });
-
+    return new Response(
+      JSON.stringify({
+        clientSecret: paymentIntent.client_secret,
+        paymentIntentId: paymentIntent.id,
+        customerId,
+        amount: paymentIntent.amount,
+        type: "payment",
+      }),
+      {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      },
+    );
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     logStep("ERROR", { message: errorMessage });

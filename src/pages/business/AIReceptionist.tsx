@@ -8,18 +8,18 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { SITE } from "@/config/site";
-import { 
-  Phone, 
-  Clock, 
-  Calendar, 
-  MessageSquare, 
-  Shield, 
+import {
+  Phone,
+  Clock,
+  Calendar,
+  MessageSquare,
+  Shield,
   Zap,
   CheckCircle2,
   ArrowRight,
   Users,
   TrendingUp,
-  Bot
+  Bot,
 } from "lucide-react";
 import heroNatureAi1 from "@/assets/hero-nature-ai-1.jpg";
 import heroNatureAi2 from "@/assets/hero-nature-ai-2.jpg";
@@ -29,33 +29,39 @@ const AIReceptionist = () => {
     {
       icon: Phone,
       title: "Answers Calls 24/7",
-      description: "Your AI never sleeps. Every call gets answered professionally, nights, weekends, holidays. No more lost customers to voicemail."
+      description:
+        "Your AI never sleeps. Every call gets answered professionally, nights, weekends, holidays. No more lost customers to voicemail.",
     },
     {
       icon: Calendar,
       title: "Books Appointments Automatically",
-      description: "The AI checks your real-time availability, books directly into your calendar, and sends confirmation texts. All without you lifting a finger."
+      description:
+        "The AI checks your real-time availability, books directly into your calendar, and sends confirmation texts. All without you lifting a finger.",
     },
     {
       icon: MessageSquare,
       title: "Sounds Human, Not Robotic",
-      description: "Advanced conversational AI that handles complex questions naturally. Callers often don't realize they're talking to AI."
+      description:
+        "Advanced conversational AI that handles complex questions naturally. Callers often don't realize they're talking to AI.",
     },
     {
       icon: Shield,
       title: "Filters Spam & Telemarketers",
-      description: "Stop wasting time on junk calls. Our AI screens every caller so you only talk to real customers and genuine opportunities."
+      description:
+        "Stop wasting time on junk calls. Our AI screens every caller so you only talk to real customers and genuine opportunities.",
     },
     {
       icon: Zap,
       title: "Captures Every Lead",
-      description: "Get instant text/email notifications with caller details. Urgent matters get routed to you immediately. Nothing falls through the cracks."
+      description:
+        "Get instant text/email notifications with caller details. Urgent matters get routed to you immediately. Nothing falls through the cracks.",
     },
     {
       icon: Users,
       title: "Speaks Their Language",
-      description: "Serve the diverse Dayton community. Fluent in English and Spanish with more languages available on request."
-    }
+      description:
+        "Serve the diverse Dayton community. Fluent in English and Spanish with more languages available on request.",
+    },
   ];
 
   const benefits = [
@@ -63,50 +69,78 @@ const AIReceptionist = () => {
     "Capture 40% more leads from after-hours calls you were missing",
     "Reduce no-shows by 60% with automated appointment reminders",
     "Handle unlimited concurrent calls. No busy signals ever",
-    "Project a Fortune 500 image on a small business budget"
+    "Project a Fortune 500 image on a small business budget",
   ];
 
   const useCases = [
-    { industry: "Medical & Dental Offices", example: "Patient intake, appointment scheduling, prescription refill requests, insurance verification" },
-    { industry: "Law Firms & Legal", example: "New client intake, case status updates, consultation booking, after-hours emergencies" },
-    { industry: "Real Estate Agents", example: "Property inquiries, showing scheduling, lead qualification, market updates" },
-    { industry: "HVAC & Home Services", example: "Service requests, emergency dispatch, quote scheduling, follow-up calls" },
-    { industry: "Auto Shops & Dealerships", example: "Service appointments, parts inquiries, recall notifications, estimate requests" },
-    { industry: "Restaurants & Hospitality", example: "Reservations, catering inquiries, event booking, hours and directions" }
+    {
+      industry: "Medical & Dental Offices",
+      example:
+        "Patient intake, appointment scheduling, prescription refill requests, insurance verification",
+    },
+    {
+      industry: "Law Firms & Legal",
+      example:
+        "New client intake, case status updates, consultation booking, after-hours emergencies",
+    },
+    {
+      industry: "Real Estate Agents",
+      example:
+        "Property inquiries, showing scheduling, lead qualification, market updates",
+    },
+    {
+      industry: "HVAC & Home Services",
+      example:
+        "Service requests, emergency dispatch, quote scheduling, follow-up calls",
+    },
+    {
+      industry: "Auto Shops & Dealerships",
+      example:
+        "Service appointments, parts inquiries, recall notifications, estimate requests",
+    },
+    {
+      industry: "Restaurants & Hospitality",
+      example:
+        "Reservations, catering inquiries, event booking, hours and directions",
+    },
   ];
 
   return (
     <PageTransition variant="fade">
       <div className="min-h-screen bg-background">
-        <SEO 
+        <SEO
           title="AI Receptionist & Virtual Intake Agent"
           description="24/7 AI-powered phone answering and appointment scheduling. Never miss a call again. Save $3,000-5,000/month on receptionist costs. Privacy-conscious workflows."
           keywords="AI receptionist, virtual receptionist, automated phone answering, appointment scheduling AI, business phone automation, Dayton Ohio"
           structuredData={{
             "@context": "https://schema.org",
             "@type": "Service",
-            "name": "AI Receptionist & Intake Agent",
-            "description": "24/7 AI-powered phone answering and appointment scheduling service",
-            "provider": {
+            name: "AI Receptionist & Intake Agent",
+            description:
+              "24/7 AI-powered phone answering and appointment scheduling service",
+            provider: {
               "@type": "Organization",
-              "name": "InVision Network"
+              name: "InVision Network",
             },
-            "areaServed": "United States",
-            "offers": {
+            areaServed: "United States",
+            offers: {
               "@type": "Offer",
-              "price": "9500",
-              "priceCurrency": "USD"
-            }
+              price: "9500",
+              priceCurrency: "USD",
+            },
           }}
         />
         <Navigation />
-        
+
         <main>
           {/* Hero Section with Nature Image */}
           <Hero
             backgroundImages={[
               { src: heroNatureAi1, alt: "Tranquil forest path with sunbeams" },
-              { src: heroNatureAi2, alt: "Beautiful meadow with wildflowers at sunrise" }
+              {
+                src: heroNatureAi2,
+                alt: "Beautiful meadow with wildflowers at sunrise",
+              },
             ]}
             headline="Stop Missing Calls. Let AI Run Your Front Desk."
             subheadline="Our AI answers calls 24/7, sounds human, filters spam, and books appointments directly into your calendar while you sleep. Never lose another customer to voicemail."
@@ -136,19 +170,29 @@ const AIReceptionist = () => {
             <div className="container mx-auto px-4">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                 <div>
-                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">24/7</div>
+                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
+                    24/7
+                  </div>
                   <div className="text-muted-foreground">Availability</div>
                 </div>
                 <div>
-                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">40%</div>
-                  <div className="text-muted-foreground">More Leads Captured</div>
+                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
+                    40%
+                  </div>
+                  <div className="text-muted-foreground">
+                    More Leads Captured
+                  </div>
                 </div>
                 <div>
-                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">$5K</div>
+                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
+                    $5K
+                  </div>
                   <div className="text-muted-foreground">Monthly Savings</div>
                 </div>
                 <div>
-                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">99.9%</div>
+                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
+                    99.9%
+                  </div>
                   <div className="text-muted-foreground">Uptime</div>
                 </div>
               </div>
@@ -163,13 +207,17 @@ const AIReceptionist = () => {
                   Your AI Receptionist Does It All
                 </h2>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
-                  Everything a $50,000/year receptionist does, plus things they can't. 
-                  Available 24/7, never calls in sick, never takes vacation.
+                  Everything a $50,000/year receptionist does, plus things they
+                  can't. Available 24/7, never calls in sick, never takes
+                  vacation.
                 </p>
               </div>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {features.map((feature, index) => (
-                  <Card key={index} className="border-border/50 bg-card/50 hover:shadow-lg transition-shadow">
+                  <Card
+                    key={index}
+                    className="border-border/50 bg-card/50 hover:shadow-lg transition-shadow"
+                  >
                     <CardHeader>
                       <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                         <feature.icon className="w-6 h-6 text-primary" />
@@ -177,7 +225,9 @@ const AIReceptionist = () => {
                       <CardTitle className="text-xl">{feature.title}</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-muted-foreground">{feature.description}</p>
+                      <p className="text-muted-foreground">
+                        {feature.description}
+                      </p>
                     </CardContent>
                   </Card>
                 ))}
@@ -194,8 +244,9 @@ const AIReceptionist = () => {
                     The Math is Simple: You're Losing Money Right Now
                   </h2>
                   <p className="text-muted-foreground mb-8">
-                    Every missed call is a missed customer. Research shows 80% of callers who reach 
-                    voicemail hang up and call your competitor instead. How many calls did you miss last month?
+                    Every missed call is a missed customer. Research shows 80%
+                    of callers who reach voicemail hang up and call your
+                    competitor instead. How many calls did you miss last month?
                   </p>
                   <ul className="space-y-4">
                     {benefits.map((benefit, index) => (
@@ -210,7 +261,9 @@ const AIReceptionist = () => {
                   <Card className="p-8 bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20">
                     <div className="text-center">
                       <TrendingUp className="w-16 h-16 text-primary mx-auto mb-4" />
-                      <h3 className="text-2xl font-bold mb-2">Your Savings Calculator</h3>
+                      <h3 className="text-2xl font-bold mb-2">
+                        Your Savings Calculator
+                      </h3>
                       <p className="text-muted-foreground mb-6">
                         What a Dayton business owner saves annually
                       </p>
@@ -225,15 +278,21 @@ const AIReceptionist = () => {
                         </div>
                         <div className="flex justify-between py-3 border-b border-border">
                           <span>AI Receptionist (one-time)</span>
-                          <span className="font-semibold text-success">$9,500</span>
+                          <span className="font-semibold text-success">
+                            $9,500
+                          </span>
                         </div>
                         <div className="flex justify-between py-3 text-xl bg-success/10 px-4 rounded-lg">
                           <span className="font-bold">First Year Savings</span>
-                          <span className="font-bold text-success">Significant*</span>
+                          <span className="font-bold text-success">
+                            Significant*
+                          </span>
                         </div>
                       </div>
                       <p className="text-sm text-muted-foreground mt-4">
-                        *Savings vary based on current staffing costs. Plus: Capture leads 24/7, not just 9-5. No sick days. No vacations.
+                        *Savings vary based on current staffing costs. Plus:
+                        Capture leads 24/7, not just 9-5. No sick days. No
+                        vacations.
                       </p>
                     </div>
                   </Card>
@@ -250,15 +309,21 @@ const AIReceptionist = () => {
                   Built for Dayton Businesses Like Yours
                 </h2>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
-                  Our AI learns your business, your terminology, and your processes. 
-                  Callers get the same quality experience as talking to your best employee.
+                  Our AI learns your business, your terminology, and your
+                  processes. Callers get the same quality experience as talking
+                  to your best employee.
                 </p>
               </div>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {useCases.map((useCase, index) => (
-                  <Card key={index} className="border-border/50 hover:border-primary/30 transition-colors">
+                  <Card
+                    key={index}
+                    className="border-border/50 hover:border-primary/30 transition-colors"
+                  >
                     <CardHeader>
-                      <CardTitle className="text-lg">{useCase.industry}</CardTitle>
+                      <CardTitle className="text-lg">
+                        {useCase.industry}
+                      </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <p className="text-muted-foreground">{useCase.example}</p>
@@ -276,8 +341,9 @@ const AIReceptionist = () => {
                 While You Read This, How Many Calls Went to Voicemail?
               </h3>
               <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
-                The average small business misses 6 calls per day. At $200 per new customer, 
-                that's $36,000 in lost revenue every month walking straight to your competitors.
+                The average small business misses 6 calls per day. At $200 per
+                new customer, that's $36,000 in lost revenue every month walking
+                straight to your competitors.
               </p>
             </div>
           </section>
@@ -289,8 +355,9 @@ const AIReceptionist = () => {
                 Get Your AI Receptionist Running in 48 Hours
               </h2>
               <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Call us right now. Our AI will answer (so you can hear it for yourself), 
-                then a real human will call you back to discuss your business needs.
+                Call us right now. Our AI will answer (so you can hear it for
+                yourself), then a real human will call you back to discuss your
+                business needs.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild size="xl" variant="gold">

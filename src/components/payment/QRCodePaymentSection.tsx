@@ -57,7 +57,7 @@ export function QRCodePaymentSection({
             customerEmail,
             customerName,
           },
-        }
+        },
       );
 
       if (fnError) throw fnError;
@@ -111,7 +111,7 @@ export function QRCodePaymentSection({
           "verify-payment-link",
           {
             body: { paymentLinkId },
-          }
+          },
         );
 
         if (fnError) {
@@ -122,30 +122,33 @@ export function QRCodePaymentSection({
         if (data?.paid) {
           setIsPaid(true);
           clearInterval(pollInterval);
-          
+
           // Celebrate!
           confetti({
             particleCount: 100,
             spread: 70,
             origin: { y: 0.6 },
           });
-          
+
           // Call complete-payment to finalize and send emails
           try {
-            await supabase.functions.invoke('complete-payment', {
+            await supabase.functions.invoke("complete-payment", {
               body: {
-                paymentType: 'product',
+                paymentType: "product",
                 paymentIntentId: data.paymentIntentId,
                 customerEmail,
                 customerName,
                 amount,
                 productName,
-              }
+              },
             });
           } catch (completeErr) {
-            console.error('Failed to complete payment processing:', completeErr);
+            console.error(
+              "Failed to complete payment processing:",
+              completeErr,
+            );
           }
-          
+
           toast.success("Payment received!");
           onSuccess();
         }
@@ -194,11 +197,7 @@ export function QRCodePaymentSection({
       {qrImageUrl ? (
         <div className="flex flex-col items-center gap-4 animate-fade-in">
           <div className="relative bg-white p-4 rounded-xl border-2 border-primary/20">
-            <img
-              src={qrImageUrl}
-              alt="Payment QR Code"
-              className="w-48 h-48"
-            />
+            <img src={qrImageUrl} alt="Payment QR Code" className="w-48 h-48" />
             {/* Countdown overlay */}
             <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2">
               <Badge
@@ -237,7 +236,9 @@ export function QRCodePaymentSection({
             disabled={isGenerating}
             className="text-xs"
           >
-            <RefreshCw className={`w-3 h-3 mr-1 ${isGenerating ? "animate-spin" : ""}`} />
+            <RefreshCw
+              className={`w-3 h-3 mr-1 ${isGenerating ? "animate-spin" : ""}`}
+            />
             Generate new code
           </Button>
         </div>
@@ -276,7 +277,10 @@ export function QRCodePaymentSection({
       {/* Amount reminder */}
       <div className="text-center pt-2 border-t">
         <p className="text-sm text-muted-foreground">
-          Amount: <span className="font-semibold text-foreground">${(amount / 100).toFixed(2)}</span>
+          Amount:{" "}
+          <span className="font-semibold text-foreground">
+            ${(amount / 100).toFixed(2)}
+          </span>
         </p>
       </div>
     </div>

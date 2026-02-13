@@ -171,9 +171,14 @@ const EmailSettings = () => {
               <Label htmlFor={key}>{label}</Label>
               <Switch
                 id={key}
-                checked={adminNotifications[key as keyof typeof adminNotifications]}
+                checked={
+                  adminNotifications[key as keyof typeof adminNotifications]
+                }
                 onCheckedChange={(checked) =>
-                  setAdminNotifications({ ...adminNotifications, [key]: checked })
+                  setAdminNotifications({
+                    ...adminNotifications,
+                    [key]: checked,
+                  })
                 }
               />
             </div>
@@ -200,9 +205,16 @@ const EmailSettings = () => {
               <Label htmlFor={key}>{label}</Label>
               <Switch
                 id={key}
-                checked={customerNotifications[key as keyof typeof customerNotifications]}
+                checked={
+                  customerNotifications[
+                    key as keyof typeof customerNotifications
+                  ]
+                }
                 onCheckedChange={(checked) =>
-                  setCustomerNotifications({ ...customerNotifications, [key]: checked })
+                  setCustomerNotifications({
+                    ...customerNotifications,
+                    [key]: checked,
+                  })
                 }
               />
             </div>
