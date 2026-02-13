@@ -1,91 +1,95 @@
 
 
-# Full Website Audit: Out-of-Context and Missing Items
+# Rebuild Training Page, LauRA Button, and Apply 80% Zoom
 
-## 1. Broken Links / Dead Routes
+## Overview
 
-### CRITICAL: `/safety-vault` Route Does Not Exist
-- **Services.tsx (line 148)**: The "Safety Vault" service card links to `/safety-vault`, but there is NO route for this in `App.tsx` and the `SafetyVault.tsx` page was previously deleted.
-- **BreadcrumbNav.tsx (line 20)**: Also references `/safety-vault`.
-- **Fix**: Either remove the Safety Vault card from the Services page or redirect `/safety-vault` to an appropriate page (e.g., `/training`).
-
-### Orphaned Page: `GuestScanner.tsx`
-- `src/pages/GuestScanner.tsx` still exists as a full page file (206 lines) with its own Navigation/Footer, but it is NOT routed in `App.tsx`. The route `/guest-scanner` redirects to `/training/ai-analysis`. This file is dead code.
-- **Fix**: Delete `GuestScanner.tsx`.
+Three tasks: (1) restore the Training page to match the clean, professional style shown in the reference screenshots, (2) rebuild the LauRA AI assistant button, and (3) apply an 80% global zoom to the entire website. Also fix the existing build error in `dialog.tsx`.
 
 ---
 
-## 2. PremiumGlassmorphismWidgets Still on Homepage
-- Per project memory, the "PremiumGlassmorphismWidgets" block was supposed to be removed from the homepage. However, it is still imported and rendered on `Index.tsx` (lines 25, 119-123).
-- **Fix**: Remove the import and the `<section id="widgets">` block from `Index.tsx`.
+## Task 1: Fix Build Error
+
+The `dialog.tsx` file has a TypeScript error on line 42 where `e.currentTarget.querySelector` is called on an `EventTarget` type. Fix by casting to `HTMLElement`.
 
 ---
 
-## 3. ProtectionPathSection Imported but Never Rendered
-- `Index.tsx` (line 13) imports `ProtectionPathSection` but it is NEVER used anywhere in the JSX.
-- **Fix**: Remove the unused import.
+## Task 2: Restore Training Page Style
+
+The reference screenshots show a cleaner, lighter version of the Training page. The current page (1346 lines) has heavy premium effects, large gradient backgrounds, oversized text, and elaborate card styling. Changes needed:
+
+### Section 1: "Why Families Trust InVision Network"
+- Keep the trust pillars (Clear Teaching, Privacy-First, Actionable Playbooks, Industry-Leading Expertise) as clean white cards in a 4-column grid instead of the current side-by-side image+list layout
+- Keep the Emergency Protocol and Identity Verification cards below as 2-column layout
+- Remove the large decorative image with floating stat overlays
+- Match the clean card style from screenshots: white background, subtle border, centered icon, title, description
+
+### Section 2: "How It Works" - 3 Steps
+- Restore to clean white cards with centered content matching the screenshots
+- Remove the image backgrounds from each card
+- Use simple icon badges (calendar, graduation cap, shield) instead of photos
+- Keep numbered step badges in the top-right corner
+- Keep the progress connector dots below
+
+### Section 3: "Scam Prevention Workshops" Pricing
+- The current layout already matches reasonably well
+- Ensure the card style matches screenshots: clean white cards with badge labels (GROUPS, BEST VALUE, PREMIUM, ORGS), large prices, feature checklists, Book Now buttons
+- The "Best Value" card gets a filled dark button, others get outline buttons
+
+### Instructor Showcase
+- Keep as-is (already matches screenshots)
+
+### Section 4: "Simple Protection in 4 Steps"
+- This section was previously removed in an audit. Restore it with 4 clean white cards matching the screenshots: Something Suspicious, Forward to Us, Expert Analysis, Clear Guidance
+- Colorful icon badges (red/orange, blue/pink, teal/blue, green)
+- Numbered step badges (01-04)
+- Subtitle text in colored accent below each card
+
+### Section 5: "We Analyze All Types of Threats"
+- Keep the 8-card grid (Phishing Emails, SMS Scams, Voice Calls, Voice Messages, Suspicious Links, QR Codes, Documents, Social Media)
+- Simplify to match screenshot: muted icon backgrounds, clean white cards, "Click to learn more" text
+
+### Section 6: AI Professional Training
+- Keep the 4-card grid (AI Automation $299, AI Agency Building $499, Web Design + AI $349, Project Troubleshoot $150/hr)
+- Same clean card style as Scam Prevention pricing
+
+### Section 7-8: Secure Your Family + Scams We've Caught
+- Keep these sections with current styling (they already look clean)
 
 ---
 
-## 4. Money Counter Animation Still on Business Page
-- Per project memory, the "money counting effect" should be removed. However, `Business.tsx` still uses `useCounterAnimation` (lines 85-87) with animated counters for pricing cards (`price1Counter`, `price2Counter`, `price3Counter`).
-- **Fix**: Replace animated counters with static price text, matching the approach already applied to the Training page.
+## Task 3: Rebuild LauRA AI Button
+
+The current button (`LauraAIAssistant.tsx`) is a 80x80px rounded square with gradient background. Rebuild it to be a cleaner, more prominent floating button:
+- Rounded-2xl glassmorphism container
+- Clear "LAURA" text label
+- Laura avatar image (56px, `contain: strict`)
+- Glowing pulse indicator for online status
+- `fetchPriority="high"` for the image
+- Remove artificial delays per project memory
 
 ---
 
-## 5. Inconsistencies Between Pages
+## Task 4: Apply 80% Global Zoom
 
-### Services Page Out of Sync
-- **Safety Vault** is listed as a standalone service with its own pricing ($19/mo) on the Services page, but it actually exists only as a feature within the Training page's "Family Safety Vault" section (included with Family & Premium Plans). These are contradictory.
-- **ScamShield pricing** on Services ($29/mo) doesn't match any plan on the Training page (Training shows $79-$510 per session, not monthly subscriptions).
-- **Fix**: Align Services page offerings with actual available products on Training and Business pages, or clearly differentiate them.
+Add a CSS variable `--site-scale: 0.8` in `base.css` and apply `zoom: 0.8` or `transform: scale(0.8)` to the root element for desktop viewports only. This makes the entire site appear zoomed out for a more expansive, professional view.
 
-### Duplicate "How It Works" Sections on Training
-- The Training page has TWO "How It Works" sections:
-  1. Section 2 (line 737): "How It Works" - 3 steps (Book, Learn, Get Support)
-  2. Section 4 (line 906): "Simple Protection in 4 Steps" - 4 steps (Suspicious? Forward, Analysis, Guidance)
-- These are confusingly similar and could be consolidated.
+- Apply via `:root` or `body` using CSS `zoom: 0.8` (best cross-browser support for this use case)
+- Ensure mobile viewports (below 768px) remain at 100% scale
+- Adjust any fixed-position elements (LauRA button, BackToTop, MobileCallButton) to account for the zoom
 
 ---
 
-## 6. Missing Functionality
+## Technical Details
 
-### No Scam Prevention Workshop card (`$49`)
-- The structured data in Training SEO references an "Individual Training Session" at $89, but the cheapest displayed plan is Group Class at $79. The earlier "Scam Prevention Workshop" card mentioned in the user request is not present. This may be intentional but should be verified.
+### Files to modify:
+1. **`src/components/ui/dialog.tsx`** - Fix TypeScript error (cast EventTarget)
+2. **`src/pages/Training.tsx`** - Major restructure to match reference screenshots
+3. **`src/components/chat/LauraAIAssistant.tsx`** - Rebuild floating button
+4. **`src/styles/base.css`** - Add global 80% zoom rule
 
-### AI Analysis Page: No Actual AI Processing
-- The `TrainingAiAnalysis.tsx` page has a chat interface using `useAiChat()` and a file scan workflow using `useGuestScanner()`. The file scan requires payment. However, the chat/AI analysis itself does not appear to connect to any actual AI model for free text queries -- it depends on the `useAiChat` hook implementation, which should be verified.
-
----
-
-## 7. Stale/Unused Imports
-
-- **Training.tsx**: Imports `Video` from lucide (line 43) and `Upload` (line 27) but only uses them in admin-only conditional block. Not critical but adds bundle weight.
-- **Business.tsx**: The `useCounterAnimation` import and usage should be removed if counter effects are being eliminated.
-
----
-
-## Implementation Plan
-
-### Step 1: Fix Broken `/safety-vault` Link
-- Remove the "Safety Vault" card from `Services.tsx` or redirect the link to `/training`
-- Clean up `BreadcrumbNav.tsx` reference
-
-### Step 2: Delete Orphaned `GuestScanner.tsx`
-- Delete `src/pages/GuestScanner.tsx`
-
-### Step 3: Clean Homepage (Index.tsx)
-- Remove `PremiumGlassmorphismWidgets` import and section
-- Remove unused `ProtectionPathSection` import
-
-### Step 4: Remove Counter Animation from Business Page
-- Replace `useCounterAnimation` with static text in `Business.tsx`
-- Remove the hook import
-
-### Step 5: Align Services Page
-- Update or remove the Safety Vault card on Services page
-- Review and correct pricing discrepancies so they match actual offerings
-
-### Step 6: Consolidate Training Page
-- Consider merging the two "How It Works" sections into one clear flow
+### Files unchanged:
+- Navigation, Footer, and other shared components remain as-is
+- Existing hooks (useLauraChat, useAdminStatus) stay the same
+- No database changes needed
 
