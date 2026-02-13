@@ -25,10 +25,11 @@ function MyCourses() {
         description: "You've been securely logged out."
       });
       navigate("/auth");
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "Unable to sign out";
       toast({
         title: "❌ Sign Out Failed",
-        description: error.message,
+        description: errorMessage,
         variant: "destructive",
       });
     }

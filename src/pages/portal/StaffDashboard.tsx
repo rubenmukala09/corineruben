@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import type { Database } from "@/integrations/supabase/types";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
@@ -15,12 +16,23 @@ import {
   LogOut,
 } from "lucide-react";
 
+type DashboardTask = Pick<Database["public"]["Tables"]["tasks"]["Row"], "id" | "title" | "description" | "status">;
+type DashboardEvent = {
+  id: string;
+  title: string;
+  start_time: string;
+  event_type: string | null;
+};
+
+const getErrorMessage = (error: unknown): string =>
+  error instanceof Error ? error.message : "An unexpected error occurred";
+
 function StaffDashboard() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [date, setDate] = useState<Date | undefined>(new Date());
-  const [tasks, setTasks] = useState<any[]>([]);
-  const [events, setEvents] = useState<any[]>([]);
+  const [tasks, setTasks] = useState<DashboardTask[]>([]);
+  const [events, setEvents] = useState<DashboardEvent[]>([]);
 
   useEffect(() => {
     loadData();
@@ -34,10 +46,10 @@ function StaffDashboard() {
         description: "You've been securely logged out. See you next time!"
       });
       navigate("/auth");
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error signing out",
-        description: error.message,
+        description: getErrorMessage(error),
         variant: "destructive",
       });
     }
@@ -61,7 +73,9 @@ function StaffDashboard() {
       .order("due_date", { ascending: true })
       .limit(10);
 
-    if (tasksData) setTasks(tasksData);
+    if (tasksData) {
+      setTasks(tasksData as DashboardTask[]);
+    }
 
     const { data: eventsData } = await supabase
       .from("events")
@@ -71,7 +85,9 @@ function StaffDashboard() {
       .order("start_time", { ascending: true })
       .limit(5);
 
-    if (eventsData) setEvents(eventsData);
+    if (eventsData) {
+      setEvents(eventsData as DashboardEvent[]);
+    }
 
     // Count active clients
     const { count: clientsCount } = await supabase

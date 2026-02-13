@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import type { Database } from "@/integrations/supabase/types";
 import { BookingModal } from "@/components/BookingModal";
 import { useToast } from "@/hooks/use-toast";
 import { useSubscription } from "@/contexts/SubscriptionContext";
@@ -15,9 +16,21 @@ import { TrainingProgressCard } from "@/components/dashboard/TrainingProgressCar
 import { UpcomingAppointmentsCard } from "@/components/dashboard/UpcomingAppointmentsCard";
 import { SubscriptionStatus } from "@/components/SubscriptionStatus";
 
+type SeniorProfile =
+  Database["public"]["Views"]["profiles_safe"]["Row"] &
+  Partial<Database["public"]["Views"]["senior_profiles_safe"]["Row"]>;
+
+type DashboardAppointment = Pick<
+  Database["public"]["Tables"]["appointments"]["Row"],
+  "id" | "title" | "scheduled_start" | "is_virtual" | "location" | "status"
+>;
+
+const getErrorMessage = (error: unknown): string =>
+  error instanceof Error ? error.message : "An unexpected error occurred";
+
 function SeniorDashboard() {
-  const [profile, setProfile] = useState<any>(null);
-  const [appointments, setAppointments] = useState<any[]>([]);
+  const [profile, setProfile] = useState<SeniorProfile | null>(null);
+  const [appointments, setAppointments] = useState<DashboardAppointment[]>([]);
   const [loading, setLoading] = useState(true);
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -50,8 +63,11 @@ function SeniorDashboard() {
         .eq("user_id", user.id)
         .single();
 
-      setProfile({ ...profileData, ...seniorData });
-    } catch (error: any) {
+      setProfile({
+        ...(profileData ?? {}),
+        ...(seniorData ?? {}),
+      } as SeniorProfile);
+    } catch (error: unknown) {
       console.error("Error loading profile:", error);
     } finally {
       setLoading(false);
@@ -72,8 +88,8 @@ function SeniorDashboard() {
         .limit(5);
 
       if (error) throw error;
-      setAppointments(data || []);
-    } catch (error: any) {
+      setAppointments((data ?? []) as DashboardAppointment[]);
+    } catch (error: unknown) {
       console.error("Error loading appointments:", error);
     }
   };
@@ -86,10 +102,10 @@ function SeniorDashboard() {
         description: "You've been securely logged out. See you next time!"
       });
       navigate("/auth");
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "❌ Sign Out Failed",
-        description: error.message || "Unable to sign out",
+        description: getErrorMessage(error) || "Unable to sign out",
         variant: "destructive",
       });
     }
@@ -136,12 +152,12 @@ function SeniorDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Column - Threat Activity */}
           <div className="lg:col-span-2">
-            <ThreatActivityTimeline userId={profile?.id} />
+            <ThreatActivityTimeline userId={profile?.id ?? undefined} />
           </div>
 
           {/* Right Column - Training Progress */}
           <div>
-            <TrainingProgressCard userId={profile?.id} />
+            <TrainingProgressCard userId={profile?.id ?? undefined} />
           </div>
         </div>
 

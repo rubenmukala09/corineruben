@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import type { Database } from "@/integrations/supabase/types";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
@@ -15,8 +16,15 @@ import {
   Activity,
 } from "lucide-react";
 
+type HealthcareProfile =
+  Database["public"]["Views"]["profiles_safe"]["Row"] &
+  Partial<Database["public"]["Views"]["healthcare_profiles_safe"]["Row"]>;
+
+const getErrorMessage = (error: unknown): string =>
+  error instanceof Error ? error.message : "An unexpected error occurred";
+
 function HealthcareDashboard() {
-  const [profile, setProfile] = useState<any>(null);
+  const [profile, setProfile] = useState<HealthcareProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -46,8 +54,11 @@ function HealthcareDashboard() {
         .eq("user_id", user.id)
         .single();
 
-      setProfile({ ...profileData, ...healthcareData });
-    } catch (error: any) {
+      setProfile({
+        ...(profileData ?? {}),
+        ...(healthcareData ?? {}),
+      } as HealthcareProfile);
+    } catch (error: unknown) {
       console.error("Error loading profile:", error);
     } finally {
       setLoading(false);
@@ -62,10 +73,10 @@ function HealthcareDashboard() {
         description: "You've been securely logged out. See you next time!"
       });
       navigate("/auth");
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "❌ Sign Out Failed",
-        description: error.message || "Unable to sign out",
+        description: getErrorMessage(error) || "Unable to sign out",
         variant: "destructive",
       });
     }
