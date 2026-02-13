@@ -39,7 +39,8 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       onOpenAutoFocus={(e) => {
-        const firstInput = e.currentTarget.querySelector(
+        const target = e.currentTarget as HTMLElement;
+        const firstInput = target.querySelector(
           'input, button, textarea, select'
         );
         if (firstInput instanceof HTMLElement) {

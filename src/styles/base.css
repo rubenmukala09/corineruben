@@ -248,6 +248,13 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
   }
+
+  /* Global 80% zoom for desktop - expansive professional view */
+  @media (min-width: 768px) {
+    html {
+      zoom: 0.8;
+    }
+  }
   
   body {
     @apply bg-background text-foreground antialiased;

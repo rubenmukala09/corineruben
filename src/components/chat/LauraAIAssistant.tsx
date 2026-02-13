@@ -149,33 +149,30 @@ export const LauraAIAssistant = () => {
       <div className="fixed bottom-6 right-6 z-fab">
         <button
           onClick={() => setIsOpen(true)}
-          className="group relative flex flex-col items-center justify-center w-20 h-20 rounded-3xl shadow-3d-lg overflow-hidden bg-gradient-to-br from-primary to-accent backdrop-blur-xl border-2 border-white/40 transition-all duration-300 hover:scale-105 hover:shadow-[0_12px_40px_rgba(0,0,0,0.25)] hover:-translate-y-1"
+          className="group relative flex items-center gap-3 px-4 py-3 rounded-2xl bg-white/80 dark:bg-card/80 backdrop-blur-xl border border-white/50 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:-translate-y-1"
           aria-label="Open Laura AI Assistant"
+          style={{ contain: 'layout' }}
         >
-          {/* Avatar Background Glow */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/30 to-primary/20 blur-xl" />
-
-          {/* Avatar Image */}
-          <div className="relative w-14 h-14 rounded-2xl overflow-hidden border-2 border-white/60 shadow-lg">
+          {/* Avatar */}
+          <div className="relative w-14 h-14 rounded-xl overflow-hidden flex-shrink-0" style={{ contain: 'strict' }}>
             <img
               src={lauraAvatar}
               alt="Laura"
-              className="w-full h-full object-cover object-top scale-110"
+              width={56}
+              height={56}
+              fetchPriority="high"
+              className="w-full h-full object-cover object-top"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent" />
           </div>
 
-          {/* Online Status */}
+          {/* Label */}
+          <span className="text-sm font-bold text-foreground tracking-wide">LAURA</span>
+
+          {/* Online pulse */}
           <span className="absolute top-2 right-2 flex h-3 w-3">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 border-2 border-white"></span>
           </span>
-
-          {/* Label */}
-          <span className="relative mt-1 text-[10px] font-bold text-white/95 tracking-wider drop-shadow-lg">LAURA AI</span>
-
-          {/* Shine effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent premium-shine-sweep" />
         </button>
       </div>
     );
