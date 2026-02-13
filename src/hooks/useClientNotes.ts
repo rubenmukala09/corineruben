@@ -42,9 +42,13 @@ export function useCreateClientNote() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async (note: Omit<ClientNote, "id" | "created_at" | "updated_at">) => {
-      const { data: { user } } = await supabase.auth.getUser();
-      
+    mutationFn: async (
+      note: Omit<ClientNote, "id" | "created_at" | "updated_at">,
+    ) => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
       const { data, error } = await supabase
         .from("client_notes")
         .insert({
@@ -62,7 +66,9 @@ export function useCreateClientNote() {
       return data;
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["client-notes", variables.client_id] });
+      queryClient.invalidateQueries({
+        queryKey: ["client-notes", variables.client_id],
+      });
       toast({
         title: "Note Created",
         description: "The note has been added successfully.",
@@ -83,7 +89,11 @@ export function useUpdateClientNote() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ id, clientId, ...updates }: Partial<ClientNote> & { id: string; clientId: string }) => {
+    mutationFn: async ({
+      id,
+      clientId,
+      ...updates
+    }: Partial<ClientNote> & { id: string; clientId: string }) => {
       const { data, error } = await supabase
         .from("client_notes")
         .update(updates)
@@ -99,7 +109,9 @@ export function useUpdateClientNote() {
       return { data, clientId };
     },
     onSuccess: (result) => {
-      queryClient.invalidateQueries({ queryKey: ["client-notes", result.clientId] });
+      queryClient.invalidateQueries({
+        queryKey: ["client-notes", result.clientId],
+      });
       toast({
         title: "Note Updated",
         description: "The note has been updated successfully.",
@@ -134,7 +146,9 @@ export function useDeleteClientNote() {
       return { clientId };
     },
     onSuccess: (result) => {
-      queryClient.invalidateQueries({ queryKey: ["client-notes", result.clientId] });
+      queryClient.invalidateQueries({
+        queryKey: ["client-notes", result.clientId],
+      });
       toast({
         title: "Note Deleted",
         description: "The note has been removed.",

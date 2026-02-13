@@ -1,8 +1,8 @@
-import { motion } from 'framer-motion';
-import { Check, Mail, Download, Clock } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import confetti from 'canvas-confetti';
-import { useEffect } from 'react';
+import { motion } from "framer-motion";
+import { Check, Mail, Download, Clock } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import confetti from "canvas-confetti";
+import { useEffect } from "react";
 
 interface PaymentSuccessProps {
   email: string;
@@ -11,24 +11,29 @@ interface PaymentSuccessProps {
   onClose: () => void;
 }
 
-export function PaymentSuccess({ email, orderNumber, isDigital, onClose }: PaymentSuccessProps) {
+export function PaymentSuccess({
+  email,
+  orderNumber,
+  isDigital,
+  onClose,
+}: PaymentSuccessProps) {
   useEffect(() => {
     // Trigger confetti celebration
     confetti({
       particleCount: 100,
       spread: 70,
       origin: { y: 0.6 },
-      colors: ['#8B5CF6', '#06B6D4', '#10B981']
+      colors: ["#8B5CF6", "#06B6D4", "#10B981"],
     });
   }, []);
 
   return (
-    <motion.div 
+    <motion.div
       className="text-center py-6 space-y-6"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
     >
-      <motion.div 
+      <motion.div
         className="mx-auto w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
@@ -44,7 +49,7 @@ export function PaymentSuccess({ email, orderNumber, isDigital, onClose }: Payme
       </motion.div>
 
       <div className="space-y-2">
-        <motion.h3 
+        <motion.h3
           className="text-2xl font-bold text-foreground"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -52,9 +57,9 @@ export function PaymentSuccess({ email, orderNumber, isDigital, onClose }: Payme
         >
           Payment Successful!
         </motion.h3>
-        
+
         {orderNumber && (
-          <motion.p 
+          <motion.p
             className="text-sm text-muted-foreground"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -65,7 +70,7 @@ export function PaymentSuccess({ email, orderNumber, isDigital, onClose }: Payme
         )}
       </div>
 
-      <motion.div 
+      <motion.div
         className="bg-muted/50 rounded-xl p-4 space-y-3"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -88,7 +93,9 @@ export function PaymentSuccess({ email, orderNumber, isDigital, onClose }: Payme
             </div>
             <div>
               <p className="text-sm font-medium">Download ready</p>
-              <p className="text-sm text-muted-foreground">Check your email for download links</p>
+              <p className="text-sm text-muted-foreground">
+                Check your email for download links
+              </p>
             </div>
           </div>
         )}
@@ -99,7 +106,9 @@ export function PaymentSuccess({ email, orderNumber, isDigital, onClose }: Payme
           </div>
           <div>
             <p className="text-sm font-medium">
-              {isDigital ? 'Arriving in 2-5 minutes' : 'Shipping in 1-3 business days'}
+              {isDigital
+                ? "Arriving in 2-5 minutes"
+                : "Shipping in 1-3 business days"}
             </p>
           </div>
         </div>

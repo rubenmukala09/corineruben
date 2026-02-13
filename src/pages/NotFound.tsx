@@ -1,6 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Search, Home, Shield, Briefcase, BookOpen, Phone, MessageCircle } from "lucide-react";
+import {
+  Search,
+  Home,
+  Shield,
+  Briefcase,
+  BookOpen,
+  Phone,
+  MessageCircle,
+} from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -11,7 +19,6 @@ import { SITE } from "@/config/site";
 function NotFound() {
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
-
 
   const popularPages = [
     { icon: Home, label: "Home", path: "/" },
@@ -31,7 +38,7 @@ function NotFound() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
-      
+
       <div className="flex-1 flex items-center justify-center bg-gradient-to-br from-background via-background to-muted px-4 py-16">
         <div className="max-w-2xl w-full text-center">
           {/* Error Icon & Code */}
@@ -44,10 +51,11 @@ function NotFound() {
 
           {/* Headline */}
           <h2 className="text-4xl font-bold mb-4">Page Not Found</h2>
-          
+
           {/* Message */}
           <p className="text-muted-foreground text-lg mb-8 max-w-md mx-auto leading-relaxed">
-            This page is under protection! The content you're looking for may have been moved or deleted. Let's get you back on track.
+            This page is under protection! The content you're looking for may
+            have been moved or deleted. Let's get you back on track.
           </p>
 
           {/* Search Bar */}
@@ -80,7 +88,9 @@ function NotFound() {
                   className="flex items-center gap-3 p-4 rounded-lg border border-border bg-card hover:bg-accent hover:border-primary transition-all group"
                 >
                   <page.icon className="h-5 w-5 text-primary group-hover:scale-110 transition-transform" />
-                  <span className="text-foreground font-medium">{page.label}</span>
+                  <span className="text-foreground font-medium">
+                    {page.label}
+                  </span>
                 </Link>
               ))}
             </div>
@@ -88,7 +98,11 @@ function NotFound() {
 
           {/* CTA Button - Large and Prominent */}
           <div className="flex justify-center">
-            <Button asChild size="lg" className="h-14 px-8 text-lg font-semibold gap-2 bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all">
+            <Button
+              asChild
+              size="lg"
+              className="h-14 px-8 text-lg font-semibold gap-2 bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all"
+            >
               <Link to="/">
                 <Home className="h-5 w-5" />
                 Take Me Home
@@ -107,8 +121,8 @@ function NotFound() {
                 </Link>
               </Button>
               <span className="text-muted-foreground text-sm">or call us</span>
-              <a 
-                href={SITE.phone.tel} 
+              <a
+                href={SITE.phone.tel}
                 className="text-primary hover:text-primary/80 font-medium text-sm"
               >
                 {SITE.phone.display}

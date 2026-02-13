@@ -29,7 +29,7 @@ export const ProfessionalAccordion = ({
   className,
 }: ProfessionalAccordionProps) => {
   const [openItems, setOpenItems] = React.useState<Set<number>>(
-    new Set(defaultOpen !== undefined ? [defaultOpen] : [])
+    new Set(defaultOpen !== undefined ? [defaultOpen] : []),
   );
 
   const toggleItem = (index: number) => {
@@ -108,7 +108,7 @@ const AccordionItemComponent = ({
             "flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300",
             isOpen
               ? "bg-coral-500 text-white rotate-180"
-              : "bg-gray-100 text-gray-600"
+              : "bg-gray-100 text-gray-600",
           )}
         >
           {isOpen ? (
@@ -196,7 +196,7 @@ export const CompactFAQItem = ({
         <div
           className={cn(
             "flex-shrink-0 transition-transform duration-300",
-            isOpen ? "rotate-180" : "rotate-0"
+            isOpen ? "rotate-180" : "rotate-0",
           )}
         >
           <Plus className="w-5 h-5 text-gray-400" />

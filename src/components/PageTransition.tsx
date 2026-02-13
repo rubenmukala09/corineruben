@@ -8,15 +8,10 @@ interface PageTransitionProps {
 
 export const PageTransition = ({
   children,
-  variant = "auto"
+  variant = "auto",
 }: PageTransitionProps) => {
-  const variantClass = variant === "fade"
-    ? "animate-fade-in"
-    : "animate-slide-up";
+  const variantClass =
+    variant === "fade" ? "animate-fade-in" : "animate-slide-up";
 
-  return (
-    <div className={cn(variantClass)}>
-      {children}
-    </div>
-  );
+  return <div className={cn(variantClass)}>{children}</div>;
 };

@@ -89,7 +89,9 @@ export default function AdminDashboardContent() {
 
   const loadDashboardData = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         setLoading(false);
         return;
@@ -117,7 +119,14 @@ export default function AdminDashboardContent() {
       const { count: staffCount } = await supabase
         .from("user_roles")
         .select("*", { count: "exact", head: true })
-        .in("role", ["staff", "trainer", "developer", "analyst", "healthcare", "caregiver"]);
+        .in("role", [
+          "staff",
+          "trainer",
+          "developer",
+          "analyst",
+          "healthcare",
+          "caregiver",
+        ]);
 
       const { count: projectsCount } = await supabase
         .from("jobs")

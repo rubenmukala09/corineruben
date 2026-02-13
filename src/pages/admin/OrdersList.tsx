@@ -1,9 +1,18 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Package, Printer, Eye, MoreVertical, Download, TrendingUp, DollarSign, ShoppingCart, AlertTriangle } from "lucide-react";
+import {
+  Package,
+  Printer,
+  Eye,
+  MoreVertical,
+  Download,
+  TrendingUp,
+  DollarSign,
+  ShoppingCart,
+  AlertTriangle,
+} from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,7 +44,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-
 const OrdersList = () => {
   const navigate = useNavigate();
   const [selectedOrders, setSelectedOrders] = useState<string[]>([]);
@@ -43,16 +51,22 @@ const OrdersList = () => {
   const [activeTab, setActiveTab] = useState("all");
 
   // Fetch orders from database
-  const { data: orders = [], isLoading, refetch } = useQuery({
+  const {
+    data: orders = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["orders"],
     queryFn: async () => {
       const { data: ordersData, error: ordersError } = await supabase
         .from("partner_orders")
-        .select(`
+        .select(
+          `
           *,
           customer:profiles(first_name, last_name, email)
-        `)
-        .order("created_at", { ascending: false});
+        `,
+        )
+        .order("created_at", { ascending: false });
 
       if (ordersError) throw ordersError;
 
@@ -68,34 +82,44 @@ const OrdersList = () => {
             id: order.id,
             orderNumber: order.order_number,
             customer: {
-              name: order.customer ? `${order.customer.first_name || ''} ${order.customer.last_name || ''}`.trim() : 'Unknown',
+              name: order.customer
+                ? `${order.customer.first_name || ""} ${order.customer.last_name || ""}`.trim()
+                : "Unknown",
               avatar: null,
-              email: order.customer?.email || ''
+              email: order.customer?.email || "",
             },
             items: count || 0,
             total: order.total_amount,
             paymentStatus: order.payment_status,
             fulfillmentStatus: order.status,
             date: order.created_at,
-            itemImages: ["/placeholder.svg"]
+            itemImages: ["/placeholder.svg"],
           };
-        })
+        }),
       );
 
       return ordersWithItems;
-    }
+    },
   });
 
   // Add realtime updates
   useEffect(() => {
     const channel = supabase
-      .channel('orders-updates')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'partner_orders' }, () => {
-        refetch();
-      })
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'order_items' }, () => {
-        refetch();
-      })
+      .channel("orders-updates")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "partner_orders" },
+        () => {
+          refetch();
+        },
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "order_items" },
+        () => {
+          refetch();
+        },
+      )
       .subscribe();
 
     return () => {
@@ -104,7 +128,10 @@ const OrdersList = () => {
   }, [refetch]);
 
   const getPaymentStatusBadge = (status: string) => {
-    const variants: Record<string, { variant: any; icon: string; label: string }> = {
+    const variants: Record<
+      string,
+      { variant: any; icon: string; label: string }
+    > = {
       paid: { variant: "success", icon: "✓", label: "Paid" },
       pending: { variant: "outline", icon: "⏱", label: "Pending" },
       refunded: { variant: "secondary", icon: "↩", label: "Refunded" },
@@ -119,7 +146,10 @@ const OrdersList = () => {
   };
 
   const getFulfillmentStatusBadge = (status: string) => {
-    const variants: Record<string, { variant: any; icon: string; label: string }> = {
+    const variants: Record<
+      string,
+      { variant: any; icon: string; label: string }
+    > = {
       fulfilled: { variant: "success", icon: "✓", label: "Fulfilled" },
       unfulfilled: { variant: "outline", icon: "⚠", label: "Unfulfilled" },
       partial: { variant: "default", icon: "◐", label: "Partially Fulfilled" },
@@ -134,20 +164,25 @@ const OrdersList = () => {
   };
 
   const filteredOrders = orders.filter((order) => {
-    const matchesSearch = 
+    const matchesSearch =
       order.orderNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
       order.customer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       order.customer.email.toLowerCase().includes(searchQuery.toLowerCase());
 
     if (activeTab === "all") return matchesSearch;
-    if (activeTab === "unfulfilled") return matchesSearch && order.fulfillmentStatus === "unfulfilled";
-    if (activeTab === "fulfilled") return matchesSearch && order.fulfillmentStatus === "fulfilled";
-    if (activeTab === "pending") return matchesSearch && order.paymentStatus === "pending";
-    
+    if (activeTab === "unfulfilled")
+      return matchesSearch && order.fulfillmentStatus === "unfulfilled";
+    if (activeTab === "fulfilled")
+      return matchesSearch && order.fulfillmentStatus === "fulfilled";
+    if (activeTab === "pending")
+      return matchesSearch && order.paymentStatus === "pending";
+
     return matchesSearch;
   });
 
-  const unfulfilledCount = orders.filter((o) => o.fulfillmentStatus === "unfulfilled").length;
+  const unfulfilledCount = orders.filter(
+    (o) => o.fulfillmentStatus === "unfulfilled",
+  ).length;
   const todaysOrders = orders.length;
   const todaysRevenue = orders.reduce((sum, o) => sum + o.total, 0);
   const avgOrderValue = orders.length > 0 ? todaysRevenue / todaysOrders : 0;
@@ -199,7 +234,9 @@ const OrdersList = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Today's Revenue</p>
-                <p className="text-2xl font-bold">${todaysRevenue.toFixed(2)}</p>
+                <p className="text-2xl font-bold">
+                  ${todaysRevenue.toFixed(2)}
+                </p>
               </div>
               <DollarSign className="h-8 w-8 text-success" />
             </div>
@@ -208,7 +245,9 @@ const OrdersList = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Avg Order Value</p>
-                <p className="text-2xl font-bold">${avgOrderValue.toFixed(2)}</p>
+                <p className="text-2xl font-bold">
+                  ${avgOrderValue.toFixed(2)}
+                </p>
               </div>
               <TrendingUp className="h-8 w-8 text-accent" />
             </div>
@@ -217,7 +256,9 @@ const OrdersList = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">To Fulfill</p>
-                <p className="text-2xl font-bold text-yellow-500">{unfulfilledCount}</p>
+                <p className="text-2xl font-bold text-yellow-500">
+                  {unfulfilledCount}
+                </p>
               </div>
               <Package className="h-8 w-8 text-yellow-500" />
             </div>
@@ -233,7 +274,7 @@ const OrdersList = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          
+
           <Select>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Date Range" />
@@ -280,7 +321,9 @@ const OrdersList = () => {
         {/* Bulk Actions */}
         {selectedOrders.length > 0 && (
           <div className="mb-4 flex items-center gap-4 rounded-lg border bg-muted p-4">
-            <span className="font-medium">{selectedOrders.length} orders selected</span>
+            <span className="font-medium">
+              {selectedOrders.length} orders selected
+            </span>
             <Button variant="outline" size="sm">
               <Printer className="mr-2 h-4 w-4" />
               Print Packing Slips
@@ -291,7 +334,11 @@ const OrdersList = () => {
             <Button variant="outline" size="sm">
               Export Selected
             </Button>
-            <Button variant="ghost" size="sm" onClick={() => setSelectedOrders([])}>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setSelectedOrders([])}
+            >
               Clear Selection
             </Button>
           </div>
@@ -320,7 +367,9 @@ const OrdersList = () => {
                   <TableRow>
                     <TableHead className="w-12">
                       <Checkbox
-                        checked={selectedOrders.length === filteredOrders.length}
+                        checked={
+                          selectedOrders.length === filteredOrders.length
+                        }
                         onCheckedChange={(checked) => {
                           if (checked) {
                             setSelectedOrders(filteredOrders.map((o) => o.id));
@@ -345,7 +394,9 @@ const OrdersList = () => {
                     <TableRow
                       key={order.id}
                       className="cursor-pointer hover:bg-muted/50"
-                      onClick={() => navigate(`/admin/ecommerce/orders/${order.id}`)}
+                      onClick={() =>
+                        navigate(`/admin/ecommerce/orders/${order.id}`)
+                      }
                     >
                       <TableCell onClick={(e) => e.stopPropagation()}>
                         <Checkbox
@@ -354,7 +405,9 @@ const OrdersList = () => {
                             if (checked) {
                               setSelectedOrders([...selectedOrders, order.id]);
                             } else {
-                              setSelectedOrders(selectedOrders.filter((id) => id !== order.id));
+                              setSelectedOrders(
+                                selectedOrders.filter((id) => id !== order.id),
+                              );
                             }
                           }}
                         />
@@ -365,7 +418,9 @@ const OrdersList = () => {
                       <TableCell>
                         <div className="flex items-center gap-3">
                           <Avatar className="h-8 w-8">
-                            <AvatarImage src={order.customer.avatar || undefined} />
+                            <AvatarImage
+                              src={order.customer.avatar || undefined}
+                            />
                             <AvatarFallback>
                               {order.customer.name
                                 .split(" ")
@@ -374,14 +429,20 @@ const OrdersList = () => {
                             </AvatarFallback>
                           </Avatar>
                           <div>
-                            <div className="font-medium">{order.customer.name}</div>
-                            <div className="text-xs text-muted-foreground">{order.customer.email}</div>
+                            <div className="font-medium">
+                              {order.customer.name}
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              {order.customer.email}
+                            </div>
                           </div>
                         </div>
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
-                          <span className="text-sm text-muted-foreground">{order.items} items</span>
+                          <span className="text-sm text-muted-foreground">
+                            {order.items} items
+                          </span>
                           <div className="flex -space-x-2">
                             {order.itemImages.slice(0, 3).map((img, i) => (
                               <img
@@ -395,10 +456,16 @@ const OrdersList = () => {
                         </div>
                       </TableCell>
                       <TableCell>
-                        <span className="text-lg font-bold">${order.total.toFixed(2)}</span>
+                        <span className="text-lg font-bold">
+                          ${order.total.toFixed(2)}
+                        </span>
                       </TableCell>
-                      <TableCell>{getPaymentStatusBadge(order.paymentStatus)}</TableCell>
-                      <TableCell>{getFulfillmentStatusBadge(order.fulfillmentStatus)}</TableCell>
+                      <TableCell>
+                        {getPaymentStatusBadge(order.paymentStatus)}
+                      </TableCell>
+                      <TableCell>
+                        {getFulfillmentStatusBadge(order.fulfillmentStatus)}
+                      </TableCell>
                       <TableCell>
                         <div>
                           <div className="text-sm">
@@ -421,7 +488,9 @@ const OrdersList = () => {
                           <Button
                             variant="ghost"
                             size="icon"
-                            onClick={() => navigate(`/admin/ecommerce/orders/${order.id}`)}
+                            onClick={() =>
+                              navigate(`/admin/ecommerce/orders/${order.id}`)
+                            }
                           >
                             <Eye className="h-4 w-4" />
                           </Button>
@@ -437,9 +506,15 @@ const OrdersList = () => {
                             <DropdownMenuContent align="end">
                               <DropdownMenuItem>View Details</DropdownMenuItem>
                               <DropdownMenuItem>Print Invoice</DropdownMenuItem>
-                              <DropdownMenuItem>Mark as Fulfilled</DropdownMenuItem>
-                              <DropdownMenuItem>Email Customer</DropdownMenuItem>
-                              <DropdownMenuItem className="text-destructive">Cancel Order</DropdownMenuItem>
+                              <DropdownMenuItem>
+                                Mark as Fulfilled
+                              </DropdownMenuItem>
+                              <DropdownMenuItem>
+                                Email Customer
+                              </DropdownMenuItem>
+                              <DropdownMenuItem className="text-destructive">
+                                Cancel Order
+                              </DropdownMenuItem>
                             </DropdownMenuContent>
                           </DropdownMenu>
                         </div>
@@ -454,7 +529,9 @@ const OrdersList = () => {
               <div className="flex flex-col items-center justify-center py-12">
                 <Package className="h-16 w-16 text-muted-foreground" />
                 <h3 className="mt-4 text-lg font-semibold">No Orders Found</h3>
-                <p className="text-muted-foreground">Orders from customers will appear here</p>
+                <p className="text-muted-foreground">
+                  Orders from customers will appear here
+                </p>
               </div>
             )}
           </TabsContent>

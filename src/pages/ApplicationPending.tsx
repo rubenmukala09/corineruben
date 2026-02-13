@@ -12,11 +12,14 @@ function ApplicationPending() {
     <div className="min-h-screen relative overflow-hidden flex items-center justify-center p-4">
       {/* Animated Gradient Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-accent/10" />
-      
+
       {/* Floating Orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-20 -right-20 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        <div
+          className="absolute -bottom-20 -left-20 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "1s" }}
+        />
       </div>
 
       {/* Main Content */}
@@ -28,24 +31,34 @@ function ApplicationPending() {
             </div>
           </div>
 
-          <h1 className="text-3xl font-bold mb-4">Application Submitted Successfully!</h1>
-          
+          <h1 className="text-3xl font-bold mb-4">
+            Application Submitted Successfully!
+          </h1>
+
           <p className="text-lg text-muted-foreground mb-4">
-            Thank you for applying to InVision Network. Your application has been received and is pending admin approval.
+            Thank you for applying to InVision Network. Your application has
+            been received and is pending admin approval.
           </p>
-          
+
           <p className="text-sm text-primary font-semibold mb-8">
-            All applications require admin authorization before account activation
+            All applications require admin authorization before account
+            activation
           </p>
 
           {/* Application Reference */}
           <div className="mb-8 p-6 bg-primary/5 rounded-lg border border-primary/20">
             <div className="flex items-center justify-center gap-2 mb-2">
               <Shield className="w-5 h-5 text-primary" />
-              <h2 className="font-semibold text-lg">Application Reference Number</h2>
+              <h2 className="font-semibold text-lg">
+                Application Reference Number
+              </h2>
             </div>
-            <p className="text-2xl font-mono font-bold text-primary">{applicationRef}</p>
-            <p className="text-xs text-muted-foreground mt-2">Save this number for your records</p>
+            <p className="text-2xl font-mono font-bold text-primary">
+              {applicationRef}
+            </p>
+            <p className="text-xs text-muted-foreground mt-2">
+              Save this number for your records
+            </p>
           </div>
 
           {/* What's Next */}
@@ -58,22 +71,35 @@ function ApplicationPending() {
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-medium text-foreground">Application Review</p>
-                  <p>Our admin team will review your application and verify your information</p>
+                  <p className="font-medium text-foreground">
+                    Application Review
+                  </p>
+                  <p>
+                    Our admin team will review your application and verify your
+                    information
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <Mail className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-medium text-foreground">Email Notification</p>
-                  <p>You will receive an email notification once your account is activated</p>
+                  <p className="font-medium text-foreground">
+                    Email Notification
+                  </p>
+                  <p>
+                    You will receive an email notification once your account is
+                    activated
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <Shield className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground">Account Access</p>
-                  <p>After approval, you can login and access your role-appropriate dashboard</p>
+                  <p>
+                    After approval, you can login and access your
+                    role-appropriate dashboard
+                  </p>
                 </div>
               </div>
             </div>
@@ -83,7 +109,8 @@ function ApplicationPending() {
           <div className="mb-8 p-4 bg-accent/5 rounded-lg border border-accent/20">
             <p className="font-semibold">Estimated Review Time: 24-48 hours</p>
             <p className="text-sm text-muted-foreground mt-1">
-              We'll do our best to review your application as quickly as possible
+              We'll do our best to review your application as quickly as
+              possible
             </p>
           </div>
 
@@ -92,16 +119,30 @@ function ApplicationPending() {
             <p className="font-semibold mb-2">Important:</p>
             <ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside">
               <li>Anyone can apply for any role in our network</li>
-              <li>All applications are reviewed by our admin team for security and quality</li>
-              <li>You cannot login until your account is approved by an administrator</li>
+              <li>
+                All applications are reviewed by our admin team for security and
+                quality
+              </li>
+              <li>
+                You cannot login until your account is approved by an
+                administrator
+              </li>
               <li>Check your email regularly for approval updates</li>
-              <li>If you don't hear from us within 48 hours, please contact support</li>
+              <li>
+                If you don't hear from us within 48 hours, please contact
+                support
+              </li>
             </ul>
           </div>
 
           {/* Actions */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild variant="default" size="lg" className="bg-gradient-to-r from-primary to-accent">
+            <Button
+              asChild
+              variant="default"
+              size="lg"
+              className="bg-gradient-to-r from-primary to-accent"
+            >
               <Link to="/">
                 <Home className="w-4 h-4 mr-2" />
                 Return to Home
@@ -128,6 +169,6 @@ function ApplicationPending() {
       </div>
     </div>
   );
-};
+}
 
 export default ApplicationPending;

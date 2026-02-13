@@ -41,9 +41,16 @@ export function useSendClientMessage() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async (message: { client_id: string | null; content: string; message_type?: string | null; subject?: string | null }) => {
-      const { data: { user } } = await supabase.auth.getUser();
-      
+    mutationFn: async (message: {
+      client_id: string | null;
+      content: string;
+      message_type?: string | null;
+      subject?: string | null;
+    }) => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
       const { data, error } = await supabase
         .from("client_messages")
         .insert({
@@ -67,7 +74,9 @@ export function useSendClientMessage() {
       return data;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["client-messages", data.client_id] });
+      queryClient.invalidateQueries({
+        queryKey: ["client-messages", data.client_id],
+      });
       toast({
         title: "Message Sent",
         description: "Your message has been sent successfully.",
@@ -101,7 +110,9 @@ export function useMarkMessageRead() {
       return { clientId };
     },
     onSuccess: (result) => {
-      queryClient.invalidateQueries({ queryKey: ["client-messages", result.clientId] });
+      queryClient.invalidateQueries({
+        queryKey: ["client-messages", result.clientId],
+      });
     },
   });
 }
@@ -110,7 +121,15 @@ export function useToggleMessageStar() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, clientId, starred }: { id: string; clientId: string; starred: boolean }) => {
+    mutationFn: async ({
+      id,
+      clientId,
+      starred,
+    }: {
+      id: string;
+      clientId: string;
+      starred: boolean;
+    }) => {
       const { error } = await supabase
         .from("client_messages")
         .update({ is_starred: starred })
@@ -124,7 +143,9 @@ export function useToggleMessageStar() {
       return { clientId };
     },
     onSuccess: (result) => {
-      queryClient.invalidateQueries({ queryKey: ["client-messages", result.clientId] });
+      queryClient.invalidateQueries({
+        queryKey: ["client-messages", result.clientId],
+      });
     },
   });
 }

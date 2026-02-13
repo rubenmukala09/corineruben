@@ -4,22 +4,27 @@ import Footer from "@/components/Footer";
 import { PageTransition } from "@/components/PageTransition";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Shield, 
-  Clock, 
-  RefreshCw, 
-  Lock, 
+import {
+  Shield,
+  Clock,
+  RefreshCw,
+  Lock,
   HeadphonesIcon,
   Server,
   CheckCircle2,
   ArrowRight,
   Star,
   AlertTriangle,
-  Zap
+  Zap,
 } from "lucide-react";
-
 
 const WebsiteInsurance = () => {
   const plans = [
@@ -33,9 +38,9 @@ const WebsiteInsurance = () => {
         "SSL certificate monitoring",
         "Uptime monitoring",
         "Email support",
-        "Monthly security scans"
+        "Monthly security scans",
       ],
-      popular: false
+      popular: false,
     },
     {
       name: "Professional",
@@ -49,9 +54,9 @@ const WebsiteInsurance = () => {
         "Performance monitoring",
         "Priority support",
         "Weekly security scans",
-        "1-hour response time"
+        "1-hour response time",
       ],
-      popular: true
+      popular: true,
     },
     {
       name: "Enterprise",
@@ -66,105 +71,112 @@ const WebsiteInsurance = () => {
         "Instant malware removal",
         "Daily security scans",
         "15-minute response time",
-        "Dedicated account manager"
+        "Dedicated account manager",
       ],
-      popular: false
-    }
+      popular: false,
+    },
   ];
 
   const coverage = [
     {
       icon: RefreshCw,
       title: "Automatic Backups",
-      description: "Your site is backed up automatically so you never lose data. Restore with one click."
+      description:
+        "Your site is backed up automatically so you never lose data. Restore with one click.",
     },
     {
       icon: Lock,
       title: "Security Monitoring",
-      description: "24/7 scanning for malware, vulnerabilities, and suspicious activity."
+      description:
+        "24/7 scanning for malware, vulnerabilities, and suspicious activity.",
     },
     {
       icon: Zap,
       title: "Performance Optimization",
-      description: "Speed monitoring and optimization to keep your site fast and responsive."
+      description:
+        "Speed monitoring and optimization to keep your site fast and responsive.",
     },
     {
       icon: HeadphonesIcon,
       title: "Expert Support",
-      description: "Real humans ready to help when something goes wrong. Not bots."
+      description:
+        "Real humans ready to help when something goes wrong. Not bots.",
     },
     {
       icon: Server,
       title: "Uptime Guarantee",
-      description: "99.9% uptime guarantee with instant alerts if your site goes down."
+      description:
+        "99.9% uptime guarantee with instant alerts if your site goes down.",
     },
     {
       icon: Shield,
       title: "Hack Recovery",
-      description: "If your site gets hacked, we clean it up and secure it. Guaranteed."
-    }
+      description:
+        "If your site gets hacked, we clean it up and secure it. Guaranteed.",
+    },
   ];
 
   const risks = [
     "47% of small business websites have been hacked in the past year",
     "Average cost of website downtime: $5,600 per minute",
     "60% of small businesses close within 6 months of a cyber attack",
-    "Malware can remain undetected for an average of 287 days"
+    "Malware can remain undetected for an average of 287 days",
   ];
 
   return (
     <PageTransition variant="fade">
       <div className="min-h-screen bg-background">
-        <SEO 
+        <SEO
           title="Website Insurance & Protection Plans"
           description="Protect your website from hackers, malware, and downtime. Website insurance plans starting at $29/month. Daily backups, security monitoring, and expert support."
           keywords="website insurance, website security, malware protection, website backup, DDoS protection, website monitoring Dayton Ohio"
           structuredData={{
             "@context": "https://schema.org",
             "@type": "Service",
-            "name": "Website Insurance & Protection",
-            "description": "Comprehensive website protection including backups, security monitoring, and hack recovery",
-            "provider": {
+            name: "Website Insurance & Protection",
+            description:
+              "Comprehensive website protection including backups, security monitoring, and hack recovery",
+            provider: {
               "@type": "Organization",
-              "name": "InVision Network"
+              name: "InVision Network",
             },
-            "areaServed": "United States",
-            "offers": [
+            areaServed: "United States",
+            offers: [
               {
                 "@type": "Offer",
-                "name": "Essential Plan",
-                "price": "29",
-                "priceCurrency": "USD",
-                "priceSpecification": {
+                name: "Essential Plan",
+                price: "29",
+                priceCurrency: "USD",
+                priceSpecification: {
                   "@type": "UnitPriceSpecification",
-                  "billingDuration": "P1M"
-                }
+                  billingDuration: "P1M",
+                },
               },
               {
                 "@type": "Offer",
-                "name": "Professional Plan",
-                "price": "49",
-                "priceCurrency": "USD",
-                "priceSpecification": {
+                name: "Professional Plan",
+                price: "49",
+                priceCurrency: "USD",
+                priceSpecification: {
                   "@type": "UnitPriceSpecification",
-                  "billingDuration": "P1M"
-                }
+                  billingDuration: "P1M",
+                },
               },
               {
                 "@type": "Offer",
-                "name": "Enterprise Plan",
-                "price": "99",
-                "priceCurrency": "USD",
-                "priceSpecification": {
+                name: "Enterprise Plan",
+                price: "99",
+                priceCurrency: "USD",
+                priceSpecification: {
                   "@type": "UnitPriceSpecification",
-                  "billingDuration": "P1M"
-                }
-              }
-            ]
+                  billingDuration: "P1M",
+                },
+              },
+            ],
           }}
         />
         <Navigation />
-        
+
         <main>
           {/* Hero Section */}
           <section className="relative py-20 lg:py-32 overflow-hidden">
@@ -172,18 +184,24 @@ const WebsiteInsurance = () => {
             <div className="container mx-auto px-4 relative">
               <div className="max-w-4xl mx-auto text-center animate-fade-in">
                 <div>
-                  <Badge variant="outline" className="mb-6 px-4 py-2 text-sm border-success/30 bg-success/5">
+                  <Badge
+                    variant="outline"
+                    className="mb-6 px-4 py-2 text-sm border-success/30 bg-success/5"
+                  >
                     <Shield className="w-4 h-4 mr-2" />
                     Website Protection
                   </Badge>
                 </div>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-                  <span className="gradient-text-primary">Website Insurance</span>
+                  <span className="gradient-text-primary">
+                    Website Insurance
+                  </span>
                   <br />& Protection Plans
                 </h1>
                 <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                  Sleep soundly knowing your website is protected 24/7. Automatic backups, 
-                  security monitoring, and expert support. All in one plan.
+                  Sleep soundly knowing your website is protected 24/7.
+                  Automatic backups, security monitoring, and expert support.
+                  All in one plan.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button asChild size="xl" variant="gold">
@@ -205,11 +223,16 @@ const WebsiteInsurance = () => {
             <div className="container mx-auto px-4">
               <div className="flex items-center justify-center gap-3 mb-6">
                 <AlertTriangle className="w-6 h-6 text-destructive" />
-                <h2 className="text-xl font-bold text-destructive">The Risks Are Real</h2>
+                <h2 className="text-xl font-bold text-destructive">
+                  The Risks Are Real
+                </h2>
               </div>
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
                 {risks.map((risk, index) => (
-                  <div key={index} className="text-center p-4 bg-background rounded-lg border border-destructive/20">
+                  <div
+                    key={index}
+                    className="text-center p-4 bg-background rounded-lg border border-destructive/20"
+                  >
                     <p className="text-sm text-muted-foreground">{risk}</p>
                   </div>
                 ))}
@@ -225,39 +248,53 @@ const WebsiteInsurance = () => {
                   Choose Your Protection Level
                 </h2>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
-                  All plans include our core protection features. Upgrade for more comprehensive coverage.
+                  All plans include our core protection features. Upgrade for
+                  more comprehensive coverage.
                 </p>
               </div>
               <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                 {plans.map((plan, index) => (
                   <div key={index} className="relative pt-4">
                     {plan.popular && (
-                      <Badge 
-                        className="absolute -top-1 left-1/2 -translate-x-1/2 z-10 bg-gradient-to-r from-primary to-accent text-white border-0 px-4 py-1"
-                      >
+                      <Badge className="absolute -top-1 left-1/2 -translate-x-1/2 z-10 bg-gradient-to-r from-primary to-accent text-white border-0 px-4 py-1">
                         <Star className="w-3 h-3 mr-1 fill-current" />
                         Recommended
                       </Badge>
                     )}
-                    <Card className={`h-full ${plan.popular ? 'border-primary/50 shadow-lg pt-6' : 'border-border/50 pt-6'}`}>
+                    <Card
+                      className={`h-full ${plan.popular ? "border-primary/50 shadow-lg pt-6" : "border-border/50 pt-6"}`}
+                    >
                       <CardHeader className="text-center">
                         <CardTitle className="text-2xl">{plan.name}</CardTitle>
                         <div className="mt-2">
-                          <span className="text-4xl font-bold text-primary">{plan.price}</span>
-                          <span className="text-muted-foreground">{plan.period}</span>
+                          <span className="text-4xl font-bold text-primary">
+                            {plan.price}
+                          </span>
+                          <span className="text-muted-foreground">
+                            {plan.period}
+                          </span>
                         </div>
-                        <CardDescription className="mt-2">{plan.description}</CardDescription>
+                        <CardDescription className="mt-2">
+                          {plan.description}
+                        </CardDescription>
                       </CardHeader>
                       <CardContent>
                         <ul className="space-y-3 mb-6">
                           {plan.features.map((feature, fIndex) => (
-                            <li key={fIndex} className="flex items-center gap-2">
+                            <li
+                              key={fIndex}
+                              className="flex items-center gap-2"
+                            >
                               <CheckCircle2 className="w-5 h-5 text-success flex-shrink-0" />
                               <span className="text-sm">{feature}</span>
                             </li>
                           ))}
                         </ul>
-                        <Button asChild className="w-full" variant={plan.popular ? "gold" : "outline"}>
+                        <Button
+                          asChild
+                          className="w-full"
+                          variant={plan.popular ? "gold" : "outline"}
+                        >
                           <Link to="/contact">Get {plan.name}</Link>
                         </Button>
                       </CardContent>
@@ -279,12 +316,16 @@ const WebsiteInsurance = () => {
                   What's Covered
                 </h2>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
-                  Comprehensive protection for every aspect of your website's health and security.
+                  Comprehensive protection for every aspect of your website's
+                  health and security.
                 </p>
               </div>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {coverage.map((item, index) => (
-                  <Card key={index} className="border-border/50 bg-card/50 hover:shadow-lg transition-shadow">
+                  <Card
+                    key={index}
+                    className="border-border/50 bg-card/50 hover:shadow-lg transition-shadow"
+                  >
                     <CardHeader>
                       <div className="w-12 h-12 rounded-lg bg-success/10 flex items-center justify-center mb-4">
                         <item.icon className="w-6 h-6 text-success" />
@@ -292,7 +333,9 @@ const WebsiteInsurance = () => {
                       <CardTitle className="text-xl">{item.title}</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-muted-foreground">{item.description}</p>
+                      <p className="text-muted-foreground">
+                        {item.description}
+                      </p>
                     </CardContent>
                   </Card>
                 ))}
@@ -311,20 +354,20 @@ const WebsiteInsurance = () => {
                   {[
                     {
                       q: "What happens if my site gets hacked?",
-                      a: "We immediately quarantine the threat, clean your site, and restore it from a clean backup. Professional and Enterprise plans include this at no extra cost."
+                      a: "We immediately quarantine the threat, clean your site, and restore it from a clean backup. Professional and Enterprise plans include this at no extra cost.",
                     },
                     {
                       q: "How often are backups taken?",
-                      a: "Essential plan: daily. Professional and Enterprise: real-time. All backups are stored securely for 30 days."
+                      a: "Essential plan: daily. Professional and Enterprise: real-time. All backups are stored securely for 30 days.",
                     },
                     {
                       q: "Can I upgrade or downgrade my plan?",
-                      a: "Yes! You can change your plan at any time. Upgrades take effect immediately; downgrades at the next billing cycle."
+                      a: "Yes! You can change your plan at any time. Upgrades take effect immediately; downgrades at the next billing cycle.",
                     },
                     {
                       q: "Do you work with any website platform?",
-                      a: "We support WordPress, Shopify, Wix, Squarespace, custom sites, and most other platforms."
-                    }
+                      a: "We support WordPress, Shopify, Wix, Squarespace, custom sites, and most other platforms.",
+                    },
                   ].map((faq, index) => (
                     <Card key={index} className="border-border/50">
                       <CardContent className="p-6">
@@ -360,9 +403,7 @@ const WebsiteInsurance = () => {
                   </Link>
                 </Button>
                 <Button asChild size="xl" variant="outline">
-                  <Link to="/business/website-design">
-                    Need a New Website?
-                  </Link>
+                  <Link to="/business/website-design">Need a New Website?</Link>
                 </Button>
               </div>
             </div>

@@ -41,39 +41,39 @@ export const TestimonialForm = () => {
   const onSubmit = async (data: TestimonialFormData) => {
     setIsSubmitting(true);
     try {
-      const { error } = await supabase
-        .from("testimonials")
-        .insert({
-          name: data.name,
-          email: data.email,
-          location: data.location,
-          rating: data.rating,
-          story: data.story,
-        });
+      const { error } = await supabase.from("testimonials").insert({
+        name: data.name,
+        email: data.email,
+        location: data.location,
+        rating: data.rating,
+        story: data.story,
+      });
 
       if (error) throw error;
 
       // Track analytics
-      const { trackFormSubmit, trackConversion } = await import("@/utils/analyticsTracker");
+      const { trackFormSubmit, trackConversion } =
+        await import("@/utils/analyticsTracker");
       trackFormSubmit("testimonial_form", { rating: data.rating });
       trackConversion("testimonial_submission");
 
       // Send thank-you email
       try {
-        await supabase.functions.invoke('send-testimonial-thankyou', {
+        await supabase.functions.invoke("send-testimonial-thankyou", {
           body: {
             email: data.email,
             name: data.name,
-            rating: data.rating
-          }
+            rating: data.rating,
+          },
         });
       } catch (emailError) {
-        console.error('Failed to send thank-you email:', emailError);
+        console.error("Failed to send thank-you email:", emailError);
       }
 
       toast({
         title: "Thank you for your testimonial! 💜",
-        description: "Check your email for a special thank-you message. We'll notify you once it's approved.",
+        description:
+          "Check your email for a special thank-you message. We'll notify you once it's approved.",
       });
 
       form.reset();
@@ -81,7 +81,8 @@ export const TestimonialForm = () => {
       console.error("Error submitting testimonial:", error);
       toast({
         title: "Submission failed",
-        description: "There was an error submitting your testimonial. Please try again.",
+        description:
+          "There was an error submitting your testimonial. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -95,7 +96,9 @@ export const TestimonialForm = () => {
     <Card className="p-6 max-w-2xl mx-auto bg-gradient-to-br from-card to-card/50 border-border/50">
       <div className="mb-6 text-center">
         <h3 className="text-2xl font-bold mb-2">Share Your Story</h3>
-        <p className="text-muted-foreground">Help others by sharing your experience with InVision Network</p>
+        <p className="text-muted-foreground">
+          Help others by sharing your experience with InVision Network
+        </p>
       </div>
 
       <Form {...form}>
@@ -122,7 +125,11 @@ export const TestimonialForm = () => {
                 <FormItem>
                   <FormLabel>Email Address *</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="you@email.com" {...field} />
+                    <Input
+                      type="email"
+                      placeholder="you@email.com"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -198,12 +205,19 @@ export const TestimonialForm = () => {
             )}
           />
 
-          <Button type="submit" disabled={isSubmitting} className="w-full" size="lg">
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full"
+            size="lg"
+          >
             {isSubmitting ? "Submitting..." : "Submit Testimonial"}
           </Button>
 
           <p className="text-xs text-muted-foreground text-center">
-            Your testimonial will be reviewed by our team before being published. We respect your privacy and will not share your email address.
+            Your testimonial will be reviewed by our team before being
+            published. We respect your privacy and will not share your email
+            address.
           </p>
         </form>
       </Form>

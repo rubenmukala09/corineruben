@@ -7,9 +7,16 @@ import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
-  const previewFlag = (env.VITE_PREVIEW_MODE || env.LOVABLE_PREVIEW || env.PREVIEW || "").toLowerCase();
-  const isPreviewBuild = previewFlag === "true" || previewFlag === "1" || previewFlag === "yes";
-  const disableImageOptimizer = (env.VITE_DISABLE_IMAGE_OPTIMIZER || "").toLowerCase() === "true";
+  const previewFlag = (
+    env.VITE_PREVIEW_MODE ||
+    env.LOVABLE_PREVIEW ||
+    env.PREVIEW ||
+    ""
+  ).toLowerCase();
+  const isPreviewBuild =
+    previewFlag === "true" || previewFlag === "1" || previewFlag === "yes";
+  const disableImageOptimizer =
+    (env.VITE_DISABLE_IMAGE_OPTIMIZER || "").toLowerCase() === "true";
 
   return {
     server: {
@@ -17,32 +24,29 @@ export default defineConfig(({ mode }) => {
       port: 8080,
     },
     build: {
-      sourcemap: mode === 'development',
+      sourcemap: mode === "development",
       cssCodeSplit: true,
-      minify: 'esbuild',
-      target: 'es2015',
+      minify: "esbuild",
+      target: "es2015",
       cssMinify: true,
       rollupOptions: {
         output: {
           manualChunks: {
-            'react-vendor': ['react', 'react-dom'],
-            'router': ['react-router-dom'],
-            'animation': ['framer-motion'],
-            'ui': ['lucide-react', '@radix-ui/react-dialog', '@radix-ui/react-slot'],
-            'stripe': ['@stripe/react-stripe-js', '@stripe/stripe-js'],
-            'query': ['@tanstack/react-query'],
+            "react-vendor": ["react", "react-dom"],
+            animation: ["framer-motion"],
+            stripe: ["@stripe/react-stripe-js", "@stripe/stripe-js"],
           },
           // Optimize chunk file names for caching
-          chunkFileNames: 'assets/js/[name]-[hash].js',
-          entryFileNames: 'assets/js/[name]-[hash].js',
-          assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
+          chunkFileNames: "assets/js/[name]-[hash].js",
+          entryFileNames: "assets/js/[name]-[hash].js",
+          assetFileNames: "assets/[ext]/[name]-[hash].[ext]",
         },
       },
       // Enable chunk size warnings
       chunkSizeWarningLimit: 1000,
     },
     esbuild: {
-      drop: mode === 'production' ? ['console', 'debugger'] : [],
+      drop: mode === "production" ? ["console", "debugger"] : [],
     },
     css: {
       devSourcemap: true,

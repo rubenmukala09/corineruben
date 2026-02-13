@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 interface UseCounterAnimationOptions {
   end: number;
@@ -12,8 +12,8 @@ export const useCounterAnimation = ({
   end,
   duration = 2500,
   start = 0,
-  suffix = '',
-  prefix = '',
+  suffix = "",
+  prefix = "",
 }: UseCounterAnimationOptions) => {
   const [count, setCount] = useState(start);
   const [isVisible, setIsVisible] = useState(false);
@@ -31,7 +31,7 @@ export const useCounterAnimation = ({
           hasAnimated.current = true;
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     );
 
     observer.observe(element);
@@ -51,11 +51,12 @@ export const useCounterAnimation = ({
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const easedProgress = easeOutQuad(progress);
-      
+
       // Use decimal precision for small numbers (like 3.4)
-      const currentCount = end < 10 
-        ? Math.round((start + range * easedProgress) * 10) / 10
-        : Math.floor(start + range * easedProgress);
+      const currentCount =
+        end < 10
+          ? Math.round((start + range * easedProgress) * 10) / 10
+          : Math.floor(start + range * easedProgress);
       setCount(currentCount);
 
       if (progress < 1) {

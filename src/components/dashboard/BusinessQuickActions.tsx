@@ -1,4 +1,4 @@
-import { 
+import {
   Plus,
   Settings,
   BarChart3,
@@ -7,7 +7,7 @@ import {
   Headphones,
   Rocket,
   GraduationCap,
-  Calendar
+  Calendar,
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -31,42 +31,42 @@ export function BusinessQuickActions() {
       label: "Add Automation",
       description: "Create new workflow",
       color: "from-violet-500 to-purple-600",
-      action: () => navigate("/business/ai-automation")
+      action: () => navigate("/business/ai-automation"),
     },
     {
       icon: GraduationCap,
       label: "My Courses",
       description: "Training & learning",
       color: "from-blue-500 to-cyan-600",
-      action: () => navigate("/portal/my-courses")
+      action: () => navigate("/portal/my-courses"),
     },
     {
       icon: Calendar,
       label: "My Bookings",
       description: "View appointments",
       color: "from-green-500 to-emerald-600",
-      action: () => navigate("/portal/my-bookings")
+      action: () => navigate("/portal/my-bookings"),
     },
     {
       icon: FileText,
       label: "View Leads",
       description: "Recent captures",
       color: "from-orange-500 to-amber-600",
-      action: () => {}
+      action: () => {},
     },
     {
       icon: Settings,
       label: "Settings",
       description: "Configure AI",
       color: "from-slate-500 to-slate-600",
-      action: () => {}
+      action: () => {},
     },
     {
       icon: Headphones,
       label: "Get Support",
       description: "Talk to an expert",
       color: "from-pink-500 to-rose-600",
-      action: () => navigate("/contact")
+      action: () => navigate("/contact"),
     },
   ];
 
@@ -92,12 +92,16 @@ export function BusinessQuickActions() {
                 className="w-full h-auto flex flex-col items-center gap-2 p-4 hover:shadow-md transition-all group"
                 onClick={action.action}
               >
-                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${action.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                <div
+                  className={`w-10 h-10 rounded-xl bg-gradient-to-br ${action.color} flex items-center justify-center group-hover:scale-110 transition-transform`}
+                >
                   <action.icon className="w-5 h-5 text-white" />
                 </div>
                 <div className="text-center">
                   <p className="font-medium text-sm">{action.label}</p>
-                  <p className="text-xs text-muted-foreground">{action.description}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {action.description}
+                  </p>
                 </div>
               </Button>
             </motion.div>

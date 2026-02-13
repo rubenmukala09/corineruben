@@ -1,6 +1,14 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Shield, CheckCircle2, AlertTriangle, Activity, Users, X, ChevronUp } from "lucide-react";
+import {
+  Shield,
+  CheckCircle2,
+  AlertTriangle,
+  Activity,
+  Users,
+  X,
+  ChevronUp,
+} from "lucide-react";
 
 interface ProtectionEvent {
   id: number;
@@ -11,8 +19,16 @@ interface ProtectionEvent {
 
 const eventTypes = {
   blocked: { icon: Shield, color: "text-red-500", bg: "bg-red-500/10" },
-  verified: { icon: CheckCircle2, color: "text-green-500", bg: "bg-green-500/10" },
-  alert: { icon: AlertTriangle, color: "text-amber-500", bg: "bg-amber-500/10" },
+  verified: {
+    icon: CheckCircle2,
+    color: "text-green-500",
+    bg: "bg-green-500/10",
+  },
+  alert: {
+    icon: AlertTriangle,
+    color: "text-amber-500",
+    bg: "bg-amber-500/10",
+  },
   protected: { icon: Users, color: "text-primary", bg: "bg-primary/10" },
 };
 
@@ -42,20 +58,22 @@ export const LiveProtectionStatus = () => {
   // Simulate live events
   useEffect(() => {
     const addEvent = () => {
-      const randomEvent = sampleEvents[Math.floor(Math.random() * sampleEvents.length)];
+      const randomEvent =
+        sampleEvents[Math.floor(Math.random() * sampleEvents.length)];
       const newEvent: ProtectionEvent = {
         ...randomEvent,
         id: Date.now(),
         timestamp: new Date(),
       };
 
-      setEvents(prev => [newEvent, ...prev].slice(0, 5));
+      setEvents((prev) => [newEvent, ...prev].slice(0, 5));
 
       // Update stats occasionally
       if (Math.random() > 0.5) {
-        setStats(prev => ({
+        setStats((prev) => ({
           ...prev,
-          threatsBlocked: prev.threatsBlocked + Math.floor(Math.random() * 3) + 1,
+          threatsBlocked:
+            prev.threatsBlocked + Math.floor(Math.random() * 3) + 1,
         }));
       }
     };
@@ -98,7 +116,9 @@ export const LiveProtectionStatus = () => {
                     transition={{ duration: 2, repeat: Infinity }}
                     className="w-2 h-2 rounded-full bg-green-500"
                   />
-                  <span className="text-sm font-semibold text-foreground">Sample Protection</span>
+                  <span className="text-sm font-semibold text-foreground">
+                    Sample Protection
+                  </span>
                   <span className="rounded-full bg-white/70 px-2 py-0.5 text-[10px] font-semibold text-foreground/70">
                     Demo
                   </span>
@@ -131,14 +151,22 @@ export const LiveProtectionStatus = () => {
                 >
                   {stats.threatsBlocked.toLocaleString()}
                 </motion.div>
-                <div className="text-[10px] text-muted-foreground">Threats Blocked</div>
+                <div className="text-[10px] text-muted-foreground">
+                  Threats Blocked
+                </div>
               </div>
               <div className="text-center">
-                <div className="text-lg font-bold text-foreground">{stats.familiesProtected}</div>
-                <div className="text-[10px] text-muted-foreground">Families Safe</div>
+                <div className="text-lg font-bold text-foreground">
+                  {stats.familiesProtected}
+                </div>
+                <div className="text-[10px] text-muted-foreground">
+                  Families Safe
+                </div>
               </div>
               <div className="text-center">
-                <div className="text-lg font-bold text-green-500">{stats.activeMonitoring}%</div>
+                <div className="text-lg font-bold text-green-500">
+                  {stats.activeMonitoring}%
+                </div>
                 <div className="text-[10px] text-muted-foreground">Uptime</div>
               </div>
             </div>
@@ -158,9 +186,13 @@ export const LiveProtectionStatus = () => {
                         transition={{ duration: 0.3 }}
                         className={`flex items-start gap-2 p-2 rounded-lg ${eventTypes[event.type].bg}`}
                       >
-                        <EventIcon className={`w-4 h-4 mt-0.5 ${eventTypes[event.type].color}`} />
+                        <EventIcon
+                          className={`w-4 h-4 mt-0.5 ${eventTypes[event.type].color}`}
+                        />
                         <div className="flex-1 min-w-0">
-                          <p className="text-xs text-foreground/90 leading-tight">{event.message}</p>
+                          <p className="text-xs text-foreground/90 leading-tight">
+                            {event.message}
+                          </p>
                           <p className="text-[10px] text-muted-foreground mt-0.5">
                             {event.timestamp.toLocaleTimeString()}
                           </p>
@@ -207,7 +239,9 @@ export const LiveProtectionStatus = () => {
             </div>
 
             <div className="text-left">
-              <div className="text-xs font-semibold text-foreground">Sample Activity</div>
+              <div className="text-xs font-semibold text-foreground">
+                Sample Activity
+              </div>
               <motion.div
                 key={stats.threatsBlocked}
                 initial={{ opacity: 0.5 }}

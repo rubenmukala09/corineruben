@@ -46,7 +46,11 @@ const menuItems: MenuItem[] = [
     children: [
       { title: "Pages", href: "/admin/content/pages" },
       { title: "Testimonials", href: "/admin/content/testimonials" },
-      { title: "Articles", href: "/admin/content/articles", permission: "view_training" },
+      {
+        title: "Articles",
+        href: "/admin/content/articles",
+        permission: "view_training",
+      },
       { title: "Team", href: "/admin/content/team" },
     ],
   },
@@ -55,9 +59,21 @@ const menuItems: MenuItem[] = [
     icon: Users,
     gradient: "from-emerald-400 to-teal-500",
     children: [
-      { title: "Businesses", href: "/admin/clients/businesses", permission: "view_business_clients" },
-      { title: "Individuals", href: "/admin/clients/individuals", permission: "view_individual_clients" },
-      { title: "Messages", href: "/admin/clients/messages", permission: "view_messages" },
+      {
+        title: "Businesses",
+        href: "/admin/clients/businesses",
+        permission: "view_business_clients",
+      },
+      {
+        title: "Individuals",
+        href: "/admin/clients/individuals",
+        permission: "view_individual_clients",
+      },
+      {
+        title: "Messages",
+        href: "/admin/clients/messages",
+        permission: "view_messages",
+      },
     ],
   },
   {
@@ -120,7 +136,11 @@ interface PremiumSidebarProps {
   isMobileOpen?: boolean;
 }
 
-export const PremiumSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: PremiumSidebarProps) => {
+export const PremiumSidebar = ({
+  isOpen,
+  onMobileClose,
+  isMobileOpen = false,
+}: PremiumSidebarProps) => {
   const [openMenus, setOpenMenus] = useState<string[]>([]);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const location = useLocation();
@@ -129,12 +149,12 @@ export const PremiumSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: 
 
   useEffect(() => {
     if (isMobileOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [isMobileOpen]);
 
@@ -144,15 +164,18 @@ export const PremiumSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: 
     return hasPermission(permission);
   };
 
-  const filteredMenuItems = menuItems.filter(item => canAccessItem(item.permission))
-    .map(item => ({
+  const filteredMenuItems = menuItems
+    .filter((item) => canAccessItem(item.permission))
+    .map((item) => ({
       ...item,
-      children: item.children?.filter(child => canAccessItem(child.permission))
+      children: item.children?.filter((child) =>
+        canAccessItem(child.permission),
+      ),
     }));
 
   const toggleMenu = (title: string) => {
     setOpenMenus((prev) =>
-      prev.includes(title) ? prev.filter((m) => m !== title) : [...prev, title]
+      prev.includes(title) ? prev.filter((m) => m !== title) : [...prev, title],
     );
   };
 
@@ -163,17 +186,17 @@ export const PremiumSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: 
   const SidebarContent = () => (
     <div className="flex flex-col h-full relative">
       {/* Noise texture overlay */}
-      <div 
+      <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
         }}
       />
-      
+
       {/* Ambient glow effects */}
       <div className="absolute top-20 -left-20 w-40 h-40 bg-violet-500/20 rounded-full blur-[80px] pointer-events-none" />
       <div className="absolute bottom-40 -right-10 w-32 h-32 bg-cyan-500/15 rounded-full blur-[60px] pointer-events-none" />
-      
+
       {/* Logo Section */}
       <div className="h-20 flex items-center px-5 border-b border-white/[0.06] relative z-10">
         <Link to="/admin" className="flex items-center gap-3 group">
@@ -189,8 +212,12 @@ export const PremiumSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: 
               animate={{ opacity: 1, x: 0 }}
               className="flex flex-col"
             >
-              <span className="text-base font-semibold text-white tracking-tight">InVision</span>
-              <span className="text-[10px] text-white/40 font-medium tracking-widest uppercase">Network</span>
+              <span className="text-base font-semibold text-white tracking-tight">
+                InVision
+              </span>
+              <span className="text-[10px] text-white/40 font-medium tracking-widest uppercase">
+                Network
+              </span>
             </motion.div>
           )}
         </Link>
@@ -223,55 +250,62 @@ export const PremiumSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: 
                       exit={{ opacity: 0, scale: 0.8 }}
                       className={cn(
                         "absolute inset-0 rounded-xl blur-xl pointer-events-none",
-                        `bg-gradient-to-r ${item.gradient}`
+                        `bg-gradient-to-r ${item.gradient}`,
                       )}
                       style={{ opacity: itemActive ? 0.25 : 0.15 }}
                     />
                   )}
                 </AnimatePresence>
-                
+
                 <Link
                   to={item.href!}
                   className={cn(
                     "relative flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300",
                     "backdrop-blur-sm border border-transparent",
-                    itemActive 
-                      ? "bg-white/[0.08] border-white/[0.1] shadow-lg" 
+                    itemActive
+                      ? "bg-white/[0.08] border-white/[0.1] shadow-lg"
                       : "hover:bg-white/[0.04] hover:border-white/[0.06]",
-                    collapsed && "justify-center px-3"
+                    collapsed && "justify-center px-3",
                   )}
                   onClick={onMobileClose}
                 >
                   {/* Icon with glow */}
                   <div className="relative">
-                    <Icon className={cn(
-                      "h-5 w-5 transition-all duration-300",
-                      itemActive ? "text-white" : "text-white/60"
-                    )} />
+                    <Icon
+                      className={cn(
+                        "h-5 w-5 transition-all duration-300",
+                        itemActive ? "text-white" : "text-white/60",
+                      )}
+                    />
                     {itemActive && (
-                      <div className={cn(
-                        "absolute inset-0 blur-md",
-                        `bg-gradient-to-r ${item.gradient}`
-                      )} style={{ opacity: 0.6 }} />
+                      <div
+                        className={cn(
+                          "absolute inset-0 blur-md",
+                          `bg-gradient-to-r ${item.gradient}`,
+                        )}
+                        style={{ opacity: 0.6 }}
+                      />
                     )}
                   </div>
-                  
+
                   {!collapsed && (
-                    <span className={cn(
-                      "text-sm font-medium transition-colors duration-300",
-                      itemActive ? "text-white" : "text-white/70"
-                    )}>
+                    <span
+                      className={cn(
+                        "text-sm font-medium transition-colors duration-300",
+                        itemActive ? "text-white" : "text-white/70",
+                      )}
+                    >
                       {item.title}
                     </span>
                   )}
-                  
+
                   {/* Active indicator */}
                   {itemActive && (
                     <motion.div
                       layoutId="activeIndicator"
                       className={cn(
                         "absolute right-3 w-1.5 h-1.5 rounded-full",
-                        `bg-gradient-to-r ${item.gradient}`
+                        `bg-gradient-to-r ${item.gradient}`,
                       )}
                     />
                   )}
@@ -296,43 +330,50 @@ export const PremiumSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: 
                     exit={{ opacity: 0, scale: 0.8 }}
                     className={cn(
                       "absolute inset-0 rounded-xl blur-xl pointer-events-none -z-10",
-                      `bg-gradient-to-r ${item.gradient}`
+                      `bg-gradient-to-r ${item.gradient}`,
                     )}
                     style={{ opacity: parentActive ? 0.2 : 0.1 }}
                   />
                 )}
               </AnimatePresence>
-              
+
               <button
                 onClick={() => toggleMenu(item.title)}
                 className={cn(
                   "relative w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300",
                   "backdrop-blur-sm border border-transparent",
-                  parentActive 
-                    ? "bg-white/[0.08] border-white/[0.1]" 
+                  parentActive
+                    ? "bg-white/[0.08] border-white/[0.1]"
                     : "hover:bg-white/[0.04] hover:border-white/[0.06]",
-                  collapsed && "justify-center px-3"
+                  collapsed && "justify-center px-3",
                 )}
               >
                 <div className="relative">
-                  <Icon className={cn(
-                    "h-5 w-5 transition-all duration-300",
-                    parentActive ? "text-white" : "text-white/60"
-                  )} />
+                  <Icon
+                    className={cn(
+                      "h-5 w-5 transition-all duration-300",
+                      parentActive ? "text-white" : "text-white/60",
+                    )}
+                  />
                   {parentActive && (
-                    <div className={cn(
-                      "absolute inset-0 blur-md",
-                      `bg-gradient-to-r ${item.gradient}`
-                    )} style={{ opacity: 0.6 }} />
+                    <div
+                      className={cn(
+                        "absolute inset-0 blur-md",
+                        `bg-gradient-to-r ${item.gradient}`,
+                      )}
+                      style={{ opacity: 0.6 }}
+                    />
                   )}
                 </div>
-                
+
                 {!collapsed && (
                   <>
-                    <span className={cn(
-                      "flex-1 text-left text-sm font-medium transition-colors duration-300",
-                      parentActive ? "text-white" : "text-white/70"
-                    )}>
+                    <span
+                      className={cn(
+                        "flex-1 text-left text-sm font-medium transition-colors duration-300",
+                        parentActive ? "text-white" : "text-white/70",
+                      )}
+                    >
                       {item.title}
                     </span>
                     <motion.div
@@ -344,7 +385,7 @@ export const PremiumSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: 
                   </>
                 )}
               </button>
-              
+
               {/* Submenu */}
               <AnimatePresence>
                 {isMenuOpen && !collapsed && (
@@ -365,7 +406,7 @@ export const PremiumSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: 
                             "flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-all duration-200",
                             isActive(child.href)
                               ? "text-white bg-white/[0.06]"
-                              : "text-white/50 hover:text-white/80 hover:bg-white/[0.03]"
+                              : "text-white/50 hover:text-white/80 hover:bg-white/[0.03]",
                           )}
                         >
                           {isActive(child.href) && (
@@ -373,7 +414,7 @@ export const PremiumSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: 
                               layoutId="subActiveIndicator"
                               className={cn(
                                 "w-1 h-1 rounded-full",
-                                `bg-gradient-to-r ${item.gradient}`
+                                `bg-gradient-to-r ${item.gradient}`,
                               )}
                             />
                           )}
@@ -390,14 +431,14 @@ export const PremiumSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: 
           );
         })}
       </nav>
-      
+
       {/* Profile Widget */}
       {!collapsed && (
         <div className="p-4 border-t border-white/[0.06] relative z-10">
           <div className="relative p-4 rounded-2xl bg-gradient-to-br from-white/[0.06] to-white/[0.02] border border-white/[0.08] backdrop-blur-xl">
             {/* Decorative glow */}
             <div className="absolute -top-2 -right-2 w-16 h-16 bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 rounded-full blur-2xl" />
-            
+
             <div className="relative flex items-center gap-3">
               <div className="relative">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">
@@ -409,7 +450,9 @@ export const PremiumSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: 
                 </div>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-white truncate">Admin Portal</p>
+                <p className="text-sm font-medium text-white truncate">
+                  Admin Portal
+                </p>
                 <p className="text-xs text-white/40">System Online</p>
               </div>
             </div>
@@ -427,7 +470,7 @@ export const PremiumSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: 
           "fixed left-0 top-0 h-screen text-white transition-all duration-500 ease-out z-30 hidden md:block",
           "bg-[#0a0a0f]/95 backdrop-blur-2xl border-r border-white/[0.06]",
           "shadow-[0_0_60px_-15px_rgba(139,92,246,0.3)]",
-          collapsed ? "w-[70px]" : "w-[260px]"
+          collapsed ? "w-[70px]" : "w-[260px]",
         )}
       >
         <SidebarContent />
@@ -445,7 +488,7 @@ export const PremiumSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: 
               className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 md:hidden"
               onClick={onMobileClose}
             />
-            
+
             {/* Mobile Sidebar */}
             <motion.aside
               initial={{ x: -280 }}
@@ -455,7 +498,7 @@ export const PremiumSidebar = ({ isOpen, onMobileClose, isMobileOpen = false }: 
               className={cn(
                 "fixed left-0 top-0 h-screen w-[280px] z-50 md:hidden",
                 "bg-[#0a0a0f]/98 backdrop-blur-2xl border-r border-white/[0.06]",
-                "shadow-[0_0_60px_-15px_rgba(139,92,246,0.4)]"
+                "shadow-[0_0_60px_-15px_rgba(139,92,246,0.4)]",
               )}
             >
               {/* Close button */}

@@ -3,7 +3,8 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
 serve(async (req) => {
@@ -31,7 +32,8 @@ serve(async (req) => {
     if (error) throw error;
 
     const ids = expiredScans?.map((scan) => scan.id) || [];
-    const filePaths = expiredScans?.map((scan) => scan.file_path).filter(Boolean) || [];
+    const filePaths =
+      expiredScans?.map((scan) => scan.file_path).filter(Boolean) || [];
 
     if (filePaths.length) {
       await supabase.storage.from("guest-scans").remove(filePaths);
@@ -43,7 +45,10 @@ serve(async (req) => {
 
     return new Response(
       JSON.stringify({ deleted: ids.length, filesRemoved: filePaths.length }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
+      {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      },
     );
   } catch (error) {
     const message = error instanceof Error ? error.message : "Cleanup failed.";

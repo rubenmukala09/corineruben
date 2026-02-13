@@ -12,65 +12,75 @@ export const SearchBar = () => {
     if (!searchQuery.trim()) return;
 
     setIsSearching(true);
-    
+
     // Remove previous highlights
-    const highlights = document.querySelectorAll('.search-highlight');
-    highlights.forEach(el => {
+    const highlights = document.querySelectorAll(".search-highlight");
+    highlights.forEach((el) => {
       const parent = el.parentNode;
       if (parent) {
-        parent.replaceChild(document.createTextNode(el.textContent || ''), el);
+        parent.replaceChild(document.createTextNode(el.textContent || ""), el);
         parent.normalize();
       }
     });
 
     // Search and highlight
     if (searchQuery.trim()) {
-      const regex = new RegExp(`(${searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      const regex = new RegExp(
+        `(${searchQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+        "gi",
+      );
       const walker = document.createTreeWalker(
         document.body,
         NodeFilter.SHOW_TEXT,
         {
           acceptNode: (node) => {
-            if (node.parentElement?.tagName === 'SCRIPT' || 
-                node.parentElement?.tagName === 'STYLE' ||
-                node.parentElement?.classList.contains('search-bar')) {
+            if (
+              node.parentElement?.tagName === "SCRIPT" ||
+              node.parentElement?.tagName === "STYLE" ||
+              node.parentElement?.classList.contains("search-bar")
+            ) {
               return NodeFilter.FILTER_REJECT;
             }
-            return regex.test(node.textContent || '') 
-              ? NodeFilter.FILTER_ACCEPT 
+            return regex.test(node.textContent || "")
+              ? NodeFilter.FILTER_ACCEPT
               : NodeFilter.FILTER_REJECT;
-          }
-        }
+          },
+        },
       );
 
       const nodesToReplace: { node: Node; parent: Node }[] = [];
       let currentNode;
-      
+
       while ((currentNode = walker.nextNode())) {
         if (currentNode.parentNode) {
-          nodesToReplace.push({ node: currentNode, parent: currentNode.parentNode });
+          nodesToReplace.push({
+            node: currentNode,
+            parent: currentNode.parentNode,
+          });
         }
       }
 
       nodesToReplace.forEach(({ node, parent }) => {
-        const text = node.textContent || '';
+        const text = node.textContent || "";
         const fragment = document.createDocumentFragment();
         let lastIndex = 0;
 
         text.replace(regex, (match, p1, offset) => {
           if (offset > lastIndex) {
-            fragment.appendChild(document.createTextNode(text.slice(lastIndex, offset)));
+            fragment.appendChild(
+              document.createTextNode(text.slice(lastIndex, offset)),
+            );
           }
-          
-          const span = document.createElement('span');
-          span.className = 'search-highlight';
-          span.style.backgroundColor = 'rgba(124, 58, 237, 0.3)';
-          span.style.padding = '2px 4px';
-          span.style.borderRadius = '3px';
-          span.style.transition = 'all 0.3s ease';
+
+          const span = document.createElement("span");
+          span.className = "search-highlight";
+          span.style.backgroundColor = "rgba(124, 58, 237, 0.3)";
+          span.style.padding = "2px 4px";
+          span.style.borderRadius = "3px";
+          span.style.transition = "all 0.3s ease";
           span.textContent = match;
           fragment.appendChild(span);
-          
+
           lastIndex = offset + match.length;
           return match;
         });
@@ -83,9 +93,9 @@ export const SearchBar = () => {
       });
 
       // Scroll to first result
-      const firstHighlight = document.querySelector('.search-highlight');
+      const firstHighlight = document.querySelector(".search-highlight");
       if (firstHighlight) {
-        firstHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        firstHighlight.scrollIntoView({ behavior: "smooth", block: "center" });
       }
     }
 
@@ -94,18 +104,21 @@ export const SearchBar = () => {
 
   const clearSearch = () => {
     setSearchQuery("");
-    const highlights = document.querySelectorAll('.search-highlight');
-    highlights.forEach(el => {
+    const highlights = document.querySelectorAll(".search-highlight");
+    highlights.forEach((el) => {
       const parent = el.parentNode;
       if (parent) {
-        parent.replaceChild(document.createTextNode(el.textContent || ''), el);
+        parent.replaceChild(document.createTextNode(el.textContent || ""), el);
         parent.normalize();
       }
     });
   };
 
   return (
-    <form onSubmit={handleSearch} className="search-bar flex-1 max-w-[600px] mx-4">
+    <form
+      onSubmit={handleSearch}
+      className="search-bar flex-1 max-w-[600px] mx-4"
+    >
       <div className="relative group">
         <Input
           type="text"

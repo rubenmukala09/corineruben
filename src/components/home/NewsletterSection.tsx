@@ -15,19 +15,25 @@ export const NewsletterSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const validation = newsletterSchema.safeParse({ email: email.trim() });
     if (!validation.success) {
-      toast.error(validation.error.errors[0]?.message || "Please enter a valid email address");
+      toast.error(
+        validation.error.errors[0]?.message ||
+          "Please enter a valid email address",
+      );
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke('newsletter-signup', {
-        body: { email: validation.data.email }
-      });
+      const { data, error } = await supabase.functions.invoke(
+        "newsletter-signup",
+        {
+          body: { email: validation.data.email },
+        },
+      );
 
       if (error) throw error;
 
@@ -37,7 +43,7 @@ export const NewsletterSection = () => {
         fireCelebration();
         toast.success("✓ Successfully subscribed! Check your email.");
       }
-      
+
       setEmail("");
     } catch (error: any) {
       console.error("Newsletter signup error:", error);
@@ -51,11 +57,12 @@ export const NewsletterSection = () => {
     <section className="py-32 bg-gradient-to-b from-primary via-primary to-primary/95 relative overflow-hidden">
       {/* Pattern overlay */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-        <div 
+        <div
           className="absolute inset-0"
           style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',
-            backgroundSize: '40px 40px'
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
+            backgroundSize: "40px 40px",
           }}
         />
       </div>
@@ -65,15 +72,16 @@ export const NewsletterSection = () => {
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary-foreground/10 border border-primary-foreground/20 mb-8">
             <Bell className="w-8 h-8 text-primary-foreground" />
           </div>
-          
+
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6 tracking-tight">
             Join Our Newsletter
             <br />
             <span className="text-accent">Stay Updated</span>
           </h2>
-          
+
           <p className="text-primary-foreground/80 text-xl mb-10 max-w-xl mx-auto">
-            Get the latest security tips, scam alerts, and protection updates delivered to your inbox.
+            Get the latest security tips, scam alerts, and protection updates
+            delivered to your inbox.
           </p>
 
           <form
@@ -93,9 +101,9 @@ export const NewsletterSection = () => {
               />
             </div>
             <MagneticWrapper strength={0.25}>
-              <Button 
+              <Button
                 type="submit"
-                size="lg" 
+                size="lg"
                 disabled={isSubmitting}
                 className="h-14 px-8 rounded-xl text-base font-semibold bg-accent hover:bg-accent/90 text-accent-foreground"
               >

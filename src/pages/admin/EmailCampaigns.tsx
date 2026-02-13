@@ -2,11 +2,25 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Mail, Send, Pause, Play, Plus, TrendingUp, Users, Clock } from "lucide-react";
+import {
+  Mail,
+  Send,
+  Pause,
+  Play,
+  Plus,
+  TrendingUp,
+  Users,
+  Clock,
+} from "lucide-react";
 import { toast } from "sonner";
-
 
 interface EmailCampaign {
   id: string;
@@ -59,10 +73,19 @@ const EmailCampaigns = () => {
         .select("sent_count, open_rate, click_rate, status");
 
       if (campaignsData) {
-        const totalSent = campaignsData.reduce((sum, c) => sum + (c.sent_count || 0), 0);
-        const avgOpenRate = campaignsData.reduce((sum, c) => sum + (c.open_rate || 0), 0) / (campaignsData.length || 1);
-        const avgClickRate = campaignsData.reduce((sum, c) => sum + (c.click_rate || 0), 0) / (campaignsData.length || 1);
-        const activeCampaigns = campaignsData.filter(c => c.status === "active").length;
+        const totalSent = campaignsData.reduce(
+          (sum, c) => sum + (c.sent_count || 0),
+          0,
+        );
+        const avgOpenRate =
+          campaignsData.reduce((sum, c) => sum + (c.open_rate || 0), 0) /
+          (campaignsData.length || 1);
+        const avgClickRate =
+          campaignsData.reduce((sum, c) => sum + (c.click_rate || 0), 0) /
+          (campaignsData.length || 1);
+        const activeCampaigns = campaignsData.filter(
+          (c) => c.status === "active",
+        ).length;
 
         setStats({
           totalSent,
@@ -76,7 +99,10 @@ const EmailCampaigns = () => {
     }
   };
 
-  const toggleCampaignStatus = async (campaignId: string, currentStatus: string) => {
+  const toggleCampaignStatus = async (
+    campaignId: string,
+    currentStatus: string,
+  ) => {
     try {
       const newStatus = currentStatus === "active" ? "paused" : "active";
       const { error } = await supabase
@@ -85,8 +111,10 @@ const EmailCampaigns = () => {
         .eq("id", campaignId);
 
       if (error) throw error;
-      
-      toast.success(`Campaign ${newStatus === "active" ? "activated" : "paused"}`);
+
+      toast.success(
+        `Campaign ${newStatus === "active" ? "activated" : "paused"}`,
+      );
       fetchCampaigns();
       fetchStats();
     } catch (error) {
@@ -96,7 +124,10 @@ const EmailCampaigns = () => {
   };
 
   const getStatusBadge = (status: string) => {
-    const variants: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
+    const variants: Record<
+      string,
+      "default" | "secondary" | "destructive" | "outline"
+    > = {
       draft: "secondary",
       active: "default",
       paused: "outline",
@@ -114,9 +145,14 @@ const EmailCampaigns = () => {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-[#F9FAFB]">Email Campaigns</h1>
-          <p className="text-[#9CA3AF]">Manage automated email campaigns and monitor performance</p>
+          <p className="text-[#9CA3AF]">
+            Manage automated email campaigns and monitor performance
+          </p>
         </div>
-        <Button size="lg" className="gap-2 bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white">
+        <Button
+          size="lg"
+          className="gap-2 bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white"
+        >
           <Plus className="h-5 w-5" />
           New Campaign
         </Button>
@@ -132,7 +168,9 @@ const EmailCampaigns = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold">{stats.totalSent.toLocaleString()}</div>
+              <div className="text-3xl font-bold">
+                {stats.totalSent.toLocaleString()}
+              </div>
             </CardContent>
           </Card>
 
@@ -183,13 +221,16 @@ const EmailCampaigns = () => {
           </CardHeader>
           <CardContent>
             {loading ? (
-              <div className="text-center py-8 text-muted-foreground">Loading campaigns...</div>
+              <div className="text-center py-8 text-muted-foreground">
+                Loading campaigns...
+              </div>
             ) : campaigns.length === 0 ? (
               <div className="text-center py-12">
                 <Mail className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
                 <h3 className="text-lg font-semibold mb-2">No campaigns yet</h3>
                 <p className="text-muted-foreground mb-6">
-                  Create your first email campaign to start engaging with your audience
+                  Create your first email campaign to start engaging with your
+                  audience
                 </p>
                 <Button className="gap-2">
                   <Plus className="h-4 w-4" />
@@ -205,7 +246,9 @@ const EmailCampaigns = () => {
                   >
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
-                        <h3 className="font-semibold text-lg">{campaign.name}</h3>
+                        <h3 className="font-semibold text-lg">
+                          {campaign.name}
+                        </h3>
                         {getStatusBadge(campaign.status)}
                         <Badge variant="outline" className="capitalize">
                           {campaign.campaign_type}
@@ -233,7 +276,9 @@ const EmailCampaigns = () => {
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => toggleCampaignStatus(campaign.id, campaign.status)}
+                        onClick={() =>
+                          toggleCampaignStatus(campaign.id, campaign.status)
+                        }
                         className="gap-2"
                       >
                         {campaign.status === "active" ? (

@@ -4,11 +4,12 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
-const logStep = (step: string, details?: any) => {
-  const detailsStr = details ? ` - ${JSON.stringify(details)}` : '';
+const logStep = (step: string, details?: unknown) => {
+  const detailsStr = details ? ` - ${JSON.stringify(details)}` : "";
   console.log(`[POST-PURCHASE-SESSION] ${step}${detailsStr}`);
 };
 
@@ -30,49 +31,62 @@ serve(async (req) => {
       auth: {
         autoRefreshToken: false,
         persistSession: false,
-      }
+      },
     });
 
     const { session_id } = await req.json();
     if (!session_id) throw new Error("session_id is required");
-    
+
     logStep("Processing session", { session_id });
 
     const stripe = new Stripe(stripeKey, { apiVersion: "2024-11-20.acacia" });
-    
+
     // Retrieve the checkout session
     const session = await stripe.checkout.sessions.retrieve(session_id);
 
-    if (session.payment_status !== 'paid') {
-      return new Response(JSON.stringify({ 
-        success: false,
-        message: "Payment not completed"
-      }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 200,
-      });
+    if (session.payment_status !== "paid") {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: "Payment not completed",
+        }),
+        {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 200,
+        },
+      );
     }
 
-    const customerEmail = session.customer_email || session.customer_details?.email;
-    const customerName = session.customer_details?.name || session.metadata?.customer_name || '';
-    const isSubscription = session.mode === 'subscription';
-    const planTier = session.metadata?.plan_tier || 'starter';
+    const customerEmail =
+      session.customer_email || session.customer_details?.email;
+    const customerName =
+      session.customer_details?.name || session.metadata?.customer_name || "";
+    const isSubscription = session.mode === "subscription";
+    const planTier = session.metadata?.plan_tier || "starter";
 
     if (!customerEmail) {
       throw new Error("No customer email found in session");
     }
 
-    logStep("Customer details", { email: customerEmail, name: customerName, isSubscription, planTier });
+    logStep("Customer details", {
+      email: customerEmail,
+      name: customerName,
+      isSubscription,
+      planTier,
+    });
 
     // Check if user already exists
-    const { data: existingUsers, error: listError } = await supabaseAdmin.auth.admin.listUsers();
-    
+    const { data: existingUsers, error: listError } =
+      await supabaseAdmin.auth.admin.listUsers();
+
     let userId: string | null = null;
     let isNewUser = false;
     let magicLinkUrl: string | null = null;
 
     if (!listError && existingUsers?.users) {
-      const existingUser = existingUsers.users.find(u => u.email?.toLowerCase() === customerEmail.toLowerCase());
+      const existingUser = existingUsers.users.find(
+        (u) => u.email?.toLowerCase() === customerEmail.toLowerCase(),
+      );
       if (existingUser) {
         userId = existingUser.id;
         logStep("Found existing user", { userId });
@@ -82,20 +96,21 @@ serve(async (req) => {
     // If no existing user, create one
     if (!userId) {
       logStep("Creating new user account");
-      
+
       // Generate a secure random password (user will use magic link to access)
       const tempPassword = crypto.randomUUID() + crypto.randomUUID();
-      
-      const { data: newUser, error: createError } = await supabaseAdmin.auth.admin.createUser({
-        email: customerEmail,
-        password: tempPassword,
-        email_confirm: true, // Auto-confirm since they paid
-        user_metadata: {
-          full_name: customerName,
-          subscription_tier: planTier,
-          created_via: 'post_purchase',
-        }
-      });
+
+      const { data: newUser, error: createError } =
+        await supabaseAdmin.auth.admin.createUser({
+          email: customerEmail,
+          password: tempPassword,
+          email_confirm: true, // Auto-confirm since they paid
+          user_metadata: {
+            full_name: customerName,
+            subscription_tier: planTier,
+            created_via: "post_purchase",
+          },
+        });
 
       if (createError) {
         logStep("Error creating user", { error: createError.message });
@@ -106,34 +121,44 @@ serve(async (req) => {
         logStep("Created new user", { userId });
 
         // Create profile record
-        const nameParts = customerName.split(' ');
-        const firstName = nameParts[0] || '';
-        const lastName = nameParts.slice(1).join(' ') || '';
+        const nameParts = customerName.split(" ");
+        const firstName = nameParts[0] || "";
+        const lastName = nameParts.slice(1).join(" ") || "";
 
         const { error: profileError } = await supabaseAdmin
-          .from('profiles')
-          .upsert({
-            id: userId,
-            first_name: firstName,
-            last_name: lastName,
-            account_status: 'active',
-          }, { onConflict: 'id' });
+          .from("profiles")
+          .upsert(
+            {
+              id: userId,
+              first_name: firstName,
+              last_name: lastName,
+              account_status: "active",
+            },
+            { onConflict: "id" },
+          );
 
         if (profileError) {
-          logStep("Warning: Profile creation failed", { error: profileError.message });
+          logStep("Warning: Profile creation failed", {
+            error: profileError.message,
+          });
         }
 
         // Assign user role based on subscription type
-        const userRole = isSubscription ? 'senior' : 'user';
+        const userRole = isSubscription ? "senior" : "user";
         const { error: roleError } = await supabaseAdmin
-          .from('user_roles')
-          .upsert({
-            user_id: userId,
-            role: userRole,
-          }, { onConflict: 'user_id' });
+          .from("user_roles")
+          .upsert(
+            {
+              user_id: userId,
+              role: userRole,
+            },
+            { onConflict: "user_id" },
+          );
 
         if (roleError) {
-          logStep("Warning: Role assignment failed", { error: roleError.message });
+          logStep("Warning: Role assignment failed", {
+            error: roleError.message,
+          });
         }
       }
     }
@@ -141,18 +166,23 @@ serve(async (req) => {
     // Generate magic link for seamless login
     if (userId) {
       const origin = req.headers.get("origin") || "https://invisionnetwork.org";
-      const redirectTo = isSubscription ? `${origin}/portal/senior` : `${origin}/portal`;
+      const redirectTo = isSubscription
+        ? `${origin}/portal/senior`
+        : `${origin}/portal`;
 
-      const { data: linkData, error: linkError } = await supabaseAdmin.auth.admin.generateLink({
-        type: 'magiclink',
-        email: customerEmail,
-        options: {
-          redirectTo: redirectTo,
-        }
-      });
+      const { data: linkData, error: linkError } =
+        await supabaseAdmin.auth.admin.generateLink({
+          type: "magiclink",
+          email: customerEmail,
+          options: {
+            redirectTo: redirectTo,
+          },
+        });
 
       if (linkError) {
-        logStep("Warning: Magic link generation failed", { error: linkError.message });
+        logStep("Warning: Magic link generation failed", {
+          error: linkError.message,
+        });
       } else if (linkData?.properties?.action_link) {
         magicLinkUrl = linkData.properties.action_link;
         logStep("Magic link generated", { redirectTo });
@@ -160,9 +190,9 @@ serve(async (req) => {
     }
 
     // Determine the appropriate dashboard based on purchase type
-    let dashboardPath = '/portal';
+    let dashboardPath = "/portal";
     if (isSubscription) {
-      dashboardPath = '/portal/senior';
+      dashboardPath = "/portal/senior";
     }
 
     const response = {
@@ -177,19 +207,25 @@ serve(async (req) => {
       plan_tier: planTier,
     };
 
-    logStep("Session processing complete", { userId, isNewUser, hasMagicLink: !!magicLinkUrl });
+    logStep("Session processing complete", {
+      userId,
+      isNewUser,
+      hasMagicLink: !!magicLinkUrl,
+    });
 
     return new Response(JSON.stringify(response), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     });
-
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     logStep("ERROR", { message: errorMessage });
-    return new Response(JSON.stringify({ success: false, error: errorMessage }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 500,
-    });
+    return new Response(
+      JSON.stringify({ success: false, error: errorMessage }),
+      {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 500,
+      },
+    );
   }
 });

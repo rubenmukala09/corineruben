@@ -1,4 +1,15 @@
-import { Shield, Eye, Bell, Lock, Users, TrendingUp, Award, Heart, CheckCircle, Sparkles } from "lucide-react";
+import {
+  Shield,
+  Eye,
+  Bell,
+  Lock,
+  Users,
+  TrendingUp,
+  Award,
+  Heart,
+  CheckCircle,
+  Sparkles,
+} from "lucide-react";
 import {
   ProfessionalCard,
   CardGrid,
@@ -29,25 +40,29 @@ const securityFeatures = [
   {
     icon: Shield,
     title: "End-to-End Protection",
-    description: "Comprehensive security monitoring across all your digital activities, keeping you safe 24/7.",
+    description:
+      "Comprehensive security monitoring across all your digital activities, keeping you safe 24/7.",
     iconGradient: "linear-gradient(135deg, #F8926A 0%, #FF6B4A 100%)",
   },
   {
     icon: Eye,
     title: "Real-Time Monitoring",
-    description: "Advanced AI detection systems analyze threats in real-time, alerting you instantly to suspicious activity.",
+    description:
+      "Advanced AI detection systems analyze threats in real-time, alerting you instantly to suspicious activity.",
     iconGradient: "linear-gradient(135deg, #BB81B5 0%, #9B5FA5 100%)",
   },
   {
     icon: Bell,
     title: "Instant Alerts",
-    description: "Get immediate notifications when potential scams are detected, with clear action steps to protect yourself.",
+    description:
+      "Get immediate notifications when potential scams are detected, with clear action steps to protect yourself.",
     iconGradient: "linear-gradient(135deg, #18305A 0%, #0F2040 100%)",
   },
   {
     icon: Lock,
     title: "Identity Protection",
-    description: "Safeguard your personal information with military-grade encryption and identity theft prevention.",
+    description:
+      "Safeguard your personal information with military-grade encryption and identity theft prevention.",
     iconGradient: "linear-gradient(135deg, #10B981 0%, #059669 100%)",
   },
 ];
@@ -75,7 +90,8 @@ const trustStats = [
 
 const testimonials = [
   {
-    quote: "Clear guidance and calm, respectful support throughout the process. I feel much safer online now.",
+    quote:
+      "Clear guidance and calm, respectful support throughout the process. I feel much safer online now.",
     name: "Margaret Thompson",
     role: "Retired Teacher",
     company: "Dayton, OH",
@@ -83,7 +99,8 @@ const testimonials = [
     rating: 5,
   },
   {
-    quote: "The training was easy to follow and the team was incredibly patient. Highly recommend for all seniors.",
+    quote:
+      "The training was easy to follow and the team was incredibly patient. Highly recommend for all seniors.",
     name: "Robert Williams",
     role: "US Army Veteran",
     company: "Columbus, OH",
@@ -95,19 +112,23 @@ const testimonials = [
 const faqs = [
   {
     question: "How does the AI protection system work?",
-    answer: "Our advanced AI continuously monitors your digital activities, analyzing patterns and detecting potential threats in real-time. When suspicious activity is detected, you receive instant alerts with clear, simple instructions on how to stay safe.",
+    answer:
+      "Our advanced AI continuously monitors your digital activities, analyzing patterns and detecting potential threats in real-time. When suspicious activity is detected, you receive instant alerts with clear, simple instructions on how to stay safe.",
   },
   {
     question: "Is this service suitable for seniors?",
-    answer: "Absolutely! Our service is specifically designed for seniors and families. We use simple, clear language and provide patient, respectful support. No technical knowledge is required—we guide you through everything step by step.",
+    answer:
+      "Absolutely! Our service is specifically designed for seniors and families. We use simple, clear language and provide patient, respectful support. No technical knowledge is required—we guide you through everything step by step.",
   },
   {
     question: "What types of scams can you detect?",
-    answer: "We detect a wide range of scams including phishing emails, phone scams, romance scams, investment fraud, tech support scams, and deepfake voice/video attempts. Our AI is constantly updated with the latest scam techniques.",
+    answer:
+      "We detect a wide range of scams including phishing emails, phone scams, romance scams, investment fraud, tech support scams, and deepfake voice/video attempts. Our AI is constantly updated with the latest scam techniques.",
   },
   {
     question: "How quickly will I see results?",
-    answer: "Protection begins immediately after setup. Most clients report feeling more confident and secure within the first week, and our monitoring system starts working the moment it's activated.",
+    answer:
+      "Protection begins immediately after setup. Most clients report feeling more confident and secure within the first week, and our monitoring system starts working the moment it's activated.",
   },
 ];
 

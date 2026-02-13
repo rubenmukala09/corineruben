@@ -1,6 +1,13 @@
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
-import { Users, MessageSquare, CheckSquare, Calendar, TrendingUp, TrendingDown } from "lucide-react";
+import {
+  Users,
+  MessageSquare,
+  CheckSquare,
+  Calendar,
+  TrendingUp,
+  TrendingDown,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface StatsProps {
@@ -65,33 +72,41 @@ export function NeonOperationsStats({ stats }: StatsProps) {
         const Icon = config.icon;
         const value = stats[config.key as keyof typeof stats];
         const TrendIcon = config.trend.isUp ? TrendingUp : TrendingDown;
-        
+
         const cardContent = (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1, duration: 0.5 }}
           >
-            <Card className={`relative overflow-hidden bg-[#1F2937] border-gray-800/50 p-5 hover:border-gray-700/50 transition-all duration-300 shadow-lg ${config.glow} ${config.link ? 'cursor-pointer' : ''}`}>
+            <Card
+              className={`relative overflow-hidden bg-[#1F2937] border-gray-800/50 p-5 hover:border-gray-700/50 transition-all duration-300 shadow-lg ${config.glow} ${config.link ? "cursor-pointer" : ""}`}
+            >
               {/* Gradient glow effect */}
-              <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${config.gradient} opacity-10 blur-2xl rounded-full -translate-y-1/2 translate-x-1/2`} />
-              
+              <div
+                className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${config.gradient} opacity-10 blur-2xl rounded-full -translate-y-1/2 translate-x-1/2`}
+              />
+
               <div className="relative z-10">
                 <div className="flex items-center justify-between mb-3">
-                  <div className={`w-10 h-10 bg-gradient-to-br ${config.gradient} rounded-lg flex items-center justify-center shadow-lg ${config.glow}`}>
+                  <div
+                    className={`w-10 h-10 bg-gradient-to-br ${config.gradient} rounded-lg flex items-center justify-center shadow-lg ${config.glow}`}
+                  >
                     <Icon className="w-5 h-5 text-white" />
                   </div>
-                  <div className={`flex items-center gap-1 text-xs ${config.trend.isUp ? 'text-green-400' : 'text-red-400'}`}>
+                  <div
+                    className={`flex items-center gap-1 text-xs ${config.trend.isUp ? "text-green-400" : "text-red-400"}`}
+                  >
                     <TrendIcon className="w-3 h-3" />
                     <span>{config.trend.value}%</span>
                   </div>
                 </div>
-                
+
                 <div className="mb-3">
                   <p className="text-2xl font-bold text-white">{value}</p>
                   <p className="text-xs text-gray-400">{config.label}</p>
                 </div>
-                
+
                 {/* Mini Sparkline */}
                 <div className="flex items-end gap-0.5 h-8">
                   {sparklineData.map((height, i) => (
@@ -99,11 +114,14 @@ export function NeonOperationsStats({ stats }: StatsProps) {
                       key={i}
                       initial={{ height: 0 }}
                       animate={{ height: `${height}%` }}
-                      transition={{ delay: index * 0.1 + i * 0.05, duration: 0.3 }}
+                      transition={{
+                        delay: index * 0.1 + i * 0.05,
+                        duration: 0.3,
+                      }}
                       className="flex-1 rounded-sm"
-                      style={{ 
+                      style={{
                         background: `linear-gradient(to top, ${config.sparklineColor}, transparent)`,
-                        opacity: 0.7 + (i * 0.03)
+                        opacity: 0.7 + i * 0.03,
                       }}
                     />
                   ))}
@@ -112,7 +130,7 @@ export function NeonOperationsStats({ stats }: StatsProps) {
             </Card>
           </motion.div>
         );
-        
+
         return config.link ? (
           <Link key={config.key} to={config.link}>
             {cardContent}

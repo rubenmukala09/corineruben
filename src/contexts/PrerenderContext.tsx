@@ -1,4 +1,12 @@
-import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+} from "react";
 import { useLocation } from "react-router-dom";
 
 type PrerenderContextValue = {
@@ -41,7 +49,9 @@ export function PrerenderProvider({ children }: { children: React.ReactNode }) {
     if (document.readyState === "complete") {
       setTimeout(onReady, 0);
     } else {
-      window.addEventListener("load", () => setTimeout(onReady, 0), { once: true });
+      window.addEventListener("load", () => setTimeout(onReady, 0), {
+        once: true,
+      });
     }
 
     const fallback = window.setTimeout(() => {
@@ -76,7 +86,11 @@ export function PrerenderProvider({ children }: { children: React.ReactNode }) {
 
   const value = useMemo(() => ({ block, signalReady }), [block, signalReady]);
 
-  return <PrerenderContext.Provider value={value}>{children}</PrerenderContext.Provider>;
+  return (
+    <PrerenderContext.Provider value={value}>
+      {children}
+    </PrerenderContext.Provider>
+  );
 }
 
 export function usePrerenderBlocker(isBlocking: boolean) {

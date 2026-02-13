@@ -11,7 +11,13 @@ interface VideoLightboxProps {
   title?: string;
 }
 
-export function VideoLightbox({ isOpen, onClose, videoSrc, thumbnail, title }: VideoLightboxProps) {
+export function VideoLightbox({
+  isOpen,
+  onClose,
+  videoSrc,
+  thumbnail,
+  title,
+}: VideoLightboxProps) {
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -49,12 +55,16 @@ export function VideoLightbox({ isOpen, onClose, videoSrc, thumbnail, title }: V
         >
           <X className="w-6 h-6" />
         </Button>
-        
+
         {title && (
           <h3 className="text-white text-xl font-bold mb-4">{title}</h3>
         )}
-        
-        <VideoPlayer src={videoSrc} thumbnail={thumbnail} className="w-full aspect-video" />
+
+        <VideoPlayer
+          src={videoSrc}
+          thumbnail={thumbnail}
+          className="w-full aspect-video"
+        />
       </div>
     </div>
   );

@@ -15,7 +15,8 @@ import { SEO } from "@/components/SEO";
 function ArticleDetail() {
   const { slug } = useParams<{ slug: string }>();
   const { data: article, isLoading, error } = useArticleBySlug(slug || "");
-  const { data: relatedArticles, isLoading: relatedLoading } = useFeaturedArticles(3);
+  const { data: relatedArticles, isLoading: relatedLoading } =
+    useFeaturedArticles(3);
   usePrerenderBlocker(isLoading || relatedLoading);
 
   useEffect(() => {
@@ -37,7 +38,11 @@ function ArticleDetail() {
   if (isLoading) {
     return (
       <div className="min-h-screen">
-        <SEO title="Loading Article" description="Loading article content." noindex />
+        <SEO
+          title="Loading Article"
+          description="Loading article content."
+          noindex
+        />
         <Navigation />
         <div className="container mx-auto px-4 py-16 max-w-4xl">
           <Skeleton className="h-8 w-32 mb-4" />
@@ -58,7 +63,11 @@ function ArticleDetail() {
   if (error || !article) {
     return (
       <div className="min-h-screen">
-        <SEO title="Article Not Found" description="The article you're looking for doesn't exist or has been removed." noindex />
+        <SEO
+          title="Article Not Found"
+          description="The article you're looking for doesn't exist or has been removed."
+          noindex
+        />
         <Navigation />
         <div className="container mx-auto px-4 py-16 text-center">
           <h1 className="text-4xl font-bold mb-4">Article Not Found</h1>
@@ -78,9 +87,14 @@ function ArticleDetail() {
   }
 
   // Filter out current article from related
-  const otherArticles = relatedArticles?.filter(a => a.id !== article.id).slice(0, 2);
+  const otherArticles = relatedArticles
+    ?.filter((a) => a.id !== article.id)
+    .slice(0, 2);
   const articleUrl = `https://invisionnetwork.org/articles/${article.slug}`;
-  const articleDescription = article.seo_description || article.excerpt || "Read the latest scam prevention guidance from InVision Network.";
+  const articleDescription =
+    article.seo_description ||
+    article.excerpt ||
+    "Read the latest scam prevention guidance from InVision Network.";
 
   return (
     <div className="min-h-screen">
@@ -93,20 +107,27 @@ function ArticleDetail() {
         structuredData={{
           "@context": "https://schema.org",
           "@type": "Article",
-          "mainEntityOfPage": articleUrl,
-          "headline": article.seo_title || article.title,
-          "description": articleDescription,
-          "image": article.featured_image_url ? [article.featured_image_url] : undefined,
-          "datePublished": article.published_at || article.created_at || undefined,
-          "dateModified": article.updated_at || article.published_at || article.created_at || undefined,
-          "publisher": {
+          mainEntityOfPage: articleUrl,
+          headline: article.seo_title || article.title,
+          description: articleDescription,
+          image: article.featured_image_url
+            ? [article.featured_image_url]
+            : undefined,
+          datePublished:
+            article.published_at || article.created_at || undefined,
+          dateModified:
+            article.updated_at ||
+            article.published_at ||
+            article.created_at ||
+            undefined,
+          publisher: {
             "@type": "Organization",
-            "name": "InVision Network",
-            "logo": {
+            name: "InVision Network",
+            logo: {
               "@type": "ImageObject",
-              "url": "https://invisionnetwork.org/favicon.png"
-            }
-          }
+              url: "https://invisionnetwork.org/favicon.png",
+            },
+          },
         }}
       />
       <Navigation />
@@ -225,7 +246,9 @@ function ArticleDetail() {
                       <Badge variant="secondary" className="mb-2">
                         {related.category}
                       </Badge>
-                      <h3 className="text-lg font-semibold mb-2">{related.title}</h3>
+                      <h3 className="text-lg font-semibold mb-2">
+                        {related.title}
+                      </h3>
                       <p className="text-sm text-muted-foreground line-clamp-2">
                         {related.excerpt}
                       </p>

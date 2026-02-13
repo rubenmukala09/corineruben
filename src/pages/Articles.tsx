@@ -18,18 +18,32 @@ import { usePrerenderBlocker } from "@/contexts/PrerenderContext";
 function Articles() {
   const [page, setPage] = useState(0);
   const pageSize = 10;
-  
-  const { data: articles, isLoading, isError, refetch } = useArticles({
+
+  const {
+    data: articles,
+    isLoading,
+    isError,
+    refetch,
+  } = useArticles({
     status: "published",
     limit: pageSize,
-    offset: page * pageSize
+    offset: page * pageSize,
   });
   usePrerenderBlocker(isLoading);
 
   const articlesHeroImages = [
-    { src: heroResourcesNew, alt: "Educational resources and learning materials" },
-    { src: heroResources, alt: "Community members reading and learning together" },
-    { src: heroResourcesMarketplace, alt: "Digital marketplace for safety resources" }
+    {
+      src: heroResourcesNew,
+      alt: "Educational resources and learning materials",
+    },
+    {
+      src: heroResources,
+      alt: "Community members reading and learning together",
+    },
+    {
+      src: heroResourcesMarketplace,
+      alt: "Digital marketplace for safety resources",
+    },
   ];
 
   return (
@@ -41,9 +55,10 @@ function Articles() {
         structuredData={{
           "@context": "https://schema.org",
           "@type": "CollectionPage",
-          "name": "Scam Prevention Articles & News",
-          "description": "Practical guidance on scam prevention, AI threats, and digital safety.",
-          "url": "https://invisionnetwork.org/articles"
+          name: "Scam Prevention Articles & News",
+          description:
+            "Practical guidance on scam prevention, AI threats, and digital safety.",
+          url: "https://invisionnetwork.org/articles",
         }}
       />
       <Navigation />
@@ -75,7 +90,9 @@ function Articles() {
                 <BookOpen className="w-8 h-8 text-muted-foreground" />
               </div>
               <h3 className="text-xl font-semibold mb-2">No Articles Yet</h3>
-              <p className="text-muted-foreground">Check back soon for new content!</p>
+              <p className="text-muted-foreground">
+                Check back soon for new content!
+              </p>
             </div>
           ) : (
             <div className="grid grid-cols-1 gap-8 max-w-4xl mx-auto">
@@ -99,7 +116,9 @@ function Articles() {
                       <div className="flex items-center gap-4 text-sm text-muted-foreground">
                         <span className="flex items-center gap-1">
                           <Calendar className="w-4 h-4" />
-                          {new Date(article.published_at || article.created_at || '').toLocaleDateString("en-US", {
+                          {new Date(
+                            article.published_at || article.created_at || "",
+                          ).toLocaleDateString("en-US", {
                             month: "short",
                             day: "numeric",
                             year: "numeric",
@@ -107,7 +126,8 @@ function Articles() {
                         </span>
                         <span className="flex items-center gap-1">
                           <Clock className="w-4 h-4" />
-                          {Math.ceil((article.content?.length || 0) / 1000)} min read
+                          {Math.ceil((article.content?.length || 0) / 1000)} min
+                          read
                         </span>
                       </div>
                     </div>
@@ -115,7 +135,8 @@ function Articles() {
                     <h2 className="text-3xl font-bold mb-4">{article.title}</h2>
 
                     <p className="text-muted-foreground text-lg mb-6">
-                      {article.excerpt || article.content?.slice(0, 200) + "..."}
+                      {article.excerpt ||
+                        article.content?.slice(0, 200) + "..."}
                     </p>
 
                     <Button asChild variant="default" size="lg">
@@ -127,13 +148,13 @@ function Articles() {
                   </div>
                 </Card>
               ))}
-              
+
               {articles.length >= pageSize && (
                 <div className="text-center pt-8">
-                  <Button 
-                    variant="outline" 
-                    size="lg" 
-                    onClick={() => setPage(p => p + 1)}
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    onClick={() => setPage((p) => p + 1)}
                   >
                     Load More Articles
                   </Button>
@@ -149,8 +170,8 @@ function Articles() {
                 Stay Protected from Scams
               </h3>
               <p className="text-muted-foreground mb-6">
-                Get expert analysis of suspicious messages, calls, and links with
-                ScamShield protection.
+                Get expert analysis of suspicious messages, calls, and links
+                with ScamShield protection.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild variant="default" size="lg">

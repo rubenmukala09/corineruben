@@ -10,7 +10,10 @@ interface AdminRouteProps {
   requiredPermission?: string;
 }
 
-export const AdminRoute = ({ children, requiredPermission }: AdminRouteProps) => {
+export const AdminRoute = ({
+  children,
+  requiredPermission,
+}: AdminRouteProps) => {
   const { user, roleConfig, loading, hasPermission, isAdmin } = useUserRole();
   const [permissionDenied, setPermissionDenied] = useState(false);
   const navigate = useNavigate();
@@ -46,10 +49,11 @@ export const AdminRoute = ({ children, requiredPermission }: AdminRouteProps) =>
               <ShieldAlert className="h-12 w-12 text-destructive" />
               <h2 className="text-xl font-semibold">Access Denied</h2>
               <p className="text-muted-foreground">
-                Your account does not have permission to access the admin portal.
-                Please contact the administrator if you believe this is an error.
+                Your account does not have permission to access the admin
+                portal. Please contact the administrator if you believe this is
+                an error.
               </p>
-              <Button onClick={() => navigate('/')} variant="outline">
+              <Button onClick={() => navigate("/")} variant="outline">
                 Return to Homepage
               </Button>
             </div>
@@ -68,8 +72,8 @@ export const AdminRoute = ({ children, requiredPermission }: AdminRouteProps) =>
               <ShieldAlert className="h-12 w-12 text-yellow-500" />
               <h2 className="text-xl font-semibold">Permission Required</h2>
               <p className="text-muted-foreground">
-                You do not have permission to access this page.
-                Your role: <strong>{roleConfig.displayName}</strong>
+                You do not have permission to access this page. Your role:{" "}
+                <strong>{roleConfig.displayName}</strong>
               </p>
               <Button onClick={() => navigate(-1)} variant="outline">
                 Go Back

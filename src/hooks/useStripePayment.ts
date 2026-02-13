@@ -26,7 +26,7 @@ export const useStripePayment = () => {
             fileSize: file.size,
             fileType: file.type,
           },
-        }
+        },
       );
 
       if (fnError) {

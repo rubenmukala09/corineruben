@@ -8,7 +8,11 @@ interface ImageZoomProps {
   scale?: number;
 }
 
-const ImageZoom = ({ children, className = "", scale = 1.05 }: ImageZoomProps) => {
+const ImageZoom = ({
+  children,
+  className = "",
+  scale = 1.05,
+}: ImageZoomProps) => {
   return (
     <motion.div
       className={cn("overflow-hidden rounded-2xl", className)}

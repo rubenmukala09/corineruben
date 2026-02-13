@@ -11,25 +11,43 @@ interface TestimonialCardProps {
   onVideoClick?: () => void;
 }
 
-const TestimonialCard = ({ name, age, location, quote, image, rating = 5, videoUrl, onVideoClick }: TestimonialCardProps) => {
+const TestimonialCard = ({
+  name,
+  age,
+  location,
+  quote,
+  image,
+  rating = 5,
+  videoUrl,
+  onVideoClick,
+}: TestimonialCardProps) => {
   return (
     <div className="premium-3d-card premium-shadow-depth premium-shine-sweep bg-gradient-card rounded-2xl p-8 shadow-soft relative overflow-hidden border-none group card-enhanced">
       {/* Large gradient quote mark background */}
       <div className="absolute -top-4 left-6 text-[120px] font-bold gradient-text-primary opacity-10 leading-none pointer-events-none select-none group-hover:opacity-20 transition-opacity duration-500">
         "
       </div>
-      
+
       <div className="relative z-10">
         <div className="flex gap-1 mb-4">
           {[...Array(rating)].map((_, i) => (
-            <div key={i} className="w-5 h-5 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center group-hover:scale-110 transition-all duration-300" style={{ transitionDelay: `${i * 50}ms` }}>
-              <Star className="w-3 h-3 fill-white text-white group-hover:rotate-12 transition-transform duration-300" style={{ transitionDelay: `${i * 50}ms` }} />
+            <div
+              key={i}
+              className="w-5 h-5 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center group-hover:scale-110 transition-all duration-300"
+              style={{ transitionDelay: `${i * 50}ms` }}
+            >
+              <Star
+                className="w-3 h-3 fill-white text-white group-hover:rotate-12 transition-transform duration-300"
+                style={{ transitionDelay: `${i * 50}ms` }}
+              />
             </div>
           ))}
         </div>
-        
-        <p className="text-foreground mb-6 text-lg leading-relaxed">"{quote}"</p>
-        
+
+        <p className="text-foreground mb-6 text-lg leading-relaxed">
+          "{quote}"
+        </p>
+
         <div className="flex items-center gap-4 pt-4 border-t border-border/50">
           <div className="relative">
             <img
@@ -45,7 +63,10 @@ const TestimonialCard = ({ name, age, location, quote, image, rating = 5, videoU
                 className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-full hover:bg-black/60 transition-all group/play"
                 aria-label="Play video testimonial"
               >
-                <Play className="w-6 h-6 text-white group-hover/play:scale-110 transition-transform" fill="white" />
+                <Play
+                  className="w-6 h-6 text-white group-hover/play:scale-110 transition-transform"
+                  fill="white"
+                />
               </button>
             )}
           </div>

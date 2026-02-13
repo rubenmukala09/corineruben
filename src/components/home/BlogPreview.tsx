@@ -4,7 +4,10 @@ import { ArrowRight, Calendar } from "lucide-react";
 import heroArticles1 from "@/assets/hero-articles-1.jpg";
 import heroArticles2 from "@/assets/hero-articles-2.jpg";
 import heroArticles3 from "@/assets/hero-articles-3.jpg";
-import { GeometricCorner, GridPattern } from "@/components/ui/GeometricDecorations";
+import {
+  GeometricCorner,
+  GridPattern,
+} from "@/components/ui/GeometricDecorations";
 
 const articles = [
   {
@@ -33,26 +36,26 @@ export const BlogPreview = () => {
     <section className="py-16 relative overflow-hidden">
       {/* Grid pattern */}
       <GridPattern className="opacity-50" />
-      
+
       {/* Geometric corner accents */}
       <GeometricCorner position="top-right" variant="lines" />
       <GeometricCorner position="bottom-left" variant="dots" />
-      
+
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <div className="text-center mb-16">
-          <div 
+          <div
             className="inline-flex items-center gap-2 px-6 py-2.5 bg-primary/10 text-primary text-base font-bold uppercase tracking-wider mb-6 border border-primary/20"
             style={{ clipPath: "polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%)" }}
           >
             Latest Updates
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-            Learn From Our{" "}
-            <span className="text-primary">Latest Blog</span>
+            Learn From Our <span className="text-primary">Latest Blog</span>
           </h2>
           <p className="text-foreground/80 text-xl md:text-2xl max-w-2xl mx-auto font-medium leading-relaxed">
-            Stay informed with the latest cybersecurity tips and protection strategies.
+            Stay informed with the latest cybersecurity tips and protection
+            strategies.
           </p>
         </div>
 
@@ -79,7 +82,7 @@ export const BlogPreview = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Content */}
                   <div className="p-8 text-center">
                     <div className="flex items-center justify-center gap-2 text-base text-foreground/70 mb-4">
@@ -98,7 +101,12 @@ export const BlogPreview = () => {
 
         {/* CTA */}
         <div className="text-center mt-14">
-          <Button asChild variant="outline" size="lg" className="h-14 px-10 text-lg font-bold rounded-2xl border-2">
+          <Button
+            asChild
+            variant="outline"
+            size="lg"
+            className="h-14 px-10 text-lg font-bold rounded-2xl border-2"
+          >
             <Link to="/articles">
               View All Articles
               <ArrowRight className="ml-2 w-5 h-5" />

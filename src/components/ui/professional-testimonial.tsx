@@ -39,9 +39,10 @@ export const ProfessionalTestimonial = ({
   // Generate star array
   const stars = Array.from({ length: 5 }, (_, i) => i < rating);
 
-  const cardStyles = variant === "card"
-    ? "bg-white border border-gray-100 shadow-md hover:shadow-xl p-8 rounded-2xl"
-    : "bg-transparent p-6";
+  const cardStyles =
+    variant === "card"
+      ? "bg-white border border-gray-100 shadow-md hover:shadow-xl p-8 rounded-2xl"
+      : "bg-transparent p-6";
 
   return (
     <motion.div
@@ -56,7 +57,7 @@ export const ProfessionalTestimonial = ({
       className={cn(
         "relative transition-all duration-300",
         cardStyles,
-        className
+        className,
       )}
     >
       {/* Quote Icon */}
@@ -73,7 +74,7 @@ export const ProfessionalTestimonial = ({
               "w-5 h-5",
               filled
                 ? "text-amber-400 fill-amber-400"
-                : "text-gray-300 fill-gray-300"
+                : "text-gray-300 fill-gray-300",
             )}
           />
         ))}
@@ -128,14 +129,13 @@ export const TestimonialsGrid = ({
   columns = 2,
   className,
 }: TestimonialsGridProps) => {
-  const gridCols = columns === 2
-    ? "grid-cols-1 md:grid-cols-2"
-    : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
+  const gridCols =
+    columns === 2
+      ? "grid-cols-1 md:grid-cols-2"
+      : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
 
   return (
-    <div className={cn("grid gap-8", gridCols, className)}>
-      {children}
-    </div>
+    <div className={cn("grid gap-8", gridCols, className)}>{children}</div>
   );
 };
 
@@ -201,7 +201,7 @@ export const TestimonialsCarousel = ({
                 "w-6 h-6",
                 i < current.rating
                   ? "text-amber-400 fill-amber-400"
-                  : "text-gray-300 fill-gray-300"
+                  : "text-gray-300 fill-gray-300",
               )}
             />
           ))}
@@ -244,7 +244,7 @@ export const TestimonialsCarousel = ({
               "w-2 h-2 rounded-full transition-all duration-300",
               index === currentIndex
                 ? "bg-coral-500 w-8"
-                : "bg-gray-300 hover:bg-gray-400"
+                : "bg-gray-300 hover:bg-gray-400",
             )}
             aria-label={`Go to testimonial ${index + 1}`}
           />

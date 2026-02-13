@@ -4,7 +4,14 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Phone, Shield, Loader2, Download, Briefcase } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  Shield,
+  Loader2,
+  Download,
+  Briefcase,
+} from "lucide-react";
 
 export const JobApplicationsTable = () => {
   const { toast } = useToast();
@@ -16,10 +23,11 @@ export const JobApplicationsTable = () => {
     loadApplications();
 
     const channel = supabase
-      .channel('job_applications_changes')
-      .on('postgres_changes', 
-        { event: '*', schema: 'public', table: 'job_applications' },
-        () => loadApplications()
+      .channel("job_applications_changes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "job_applications" },
+        () => loadApplications(),
       )
       .subscribe();
 
@@ -75,15 +83,15 @@ export const JobApplicationsTable = () => {
   const downloadVeteranDoc = async (docUrl: string) => {
     try {
       const { data, error } = await supabase.storage
-        .from('veteran-docs')
+        .from("veteran-docs")
         .download(docUrl);
 
       if (error) throw error;
 
       const url = URL.createObjectURL(data);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
-      a.download = docUrl.split('/').pop() || 'veteran-doc';
+      a.download = docUrl.split("/").pop() || "veteran-doc";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -99,13 +107,20 @@ export const JobApplicationsTable = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pending': return 'bg-yellow-500';
-      case 'reviewing': return 'bg-blue-500';
-      case 'interviewing': return 'bg-purple-500';
-      case 'offered': return 'bg-green-500';
-      case 'rejected': return 'bg-red-500';
-      case 'withdrawn': return 'bg-gray-500';
-      default: return 'bg-gray-400';
+      case "pending":
+        return "bg-yellow-500";
+      case "reviewing":
+        return "bg-blue-500";
+      case "interviewing":
+        return "bg-purple-500";
+      case "offered":
+        return "bg-green-500";
+      case "rejected":
+        return "bg-red-500";
+      case "withdrawn":
+        return "bg-gray-500";
+      default:
+        return "bg-gray-400";
     }
   };
 
@@ -120,7 +135,9 @@ export const JobApplicationsTable = () => {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-bold">Job Applications ({applications.length})</h3>
+        <h3 className="text-lg font-bold">
+          Job Applications ({applications.length})
+        </h3>
         <Button onClick={loadApplications} variant="outline" size="sm">
           Refresh
         </Button>
@@ -136,13 +153,15 @@ export const JobApplicationsTable = () => {
             <div className="flex items-start justify-between">
               <div className="space-y-2">
                 <div className="flex items-center gap-3 flex-wrap">
-                  <h4 className="font-bold text-lg">{app.first_name} {app.last_name}</h4>
+                  <h4 className="font-bold text-lg">
+                    {app.first_name} {app.last_name}
+                  </h4>
                   <Badge variant="secondary">
                     <Briefcase className="w-3 h-3 mr-1" />
                     {app.position}
                   </Badge>
-                  <Badge className={getStatusColor(app.status || 'pending')}>
-                    {app.status || 'pending'}
+                  <Badge className={getStatusColor(app.status || "pending")}>
+                    {app.status || "pending"}
                   </Badge>
                   {app.is_veteran && (
                     <Badge variant="outline" className="gap-1">
@@ -160,7 +179,9 @@ export const JobApplicationsTable = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="text-sm font-semibold mb-1">Contact Information</p>
+                <p className="text-sm font-semibold mb-1">
+                  Contact Information
+                </p>
                 <div className="space-y-1 text-sm">
                   <div className="flex items-center gap-2">
                     <Mail className="w-4 h-4 text-muted-foreground" />
@@ -177,7 +198,12 @@ export const JobApplicationsTable = () => {
                     </div>
                   )}
                   {app.linkedin_url && (
-                    <a href={app.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline text-sm">
+                    <a
+                      href={app.linkedin_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline text-sm"
+                    >
                       View LinkedIn →
                     </a>
                   )}
@@ -194,7 +220,9 @@ export const JobApplicationsTable = () => {
 
             {app.is_veteran && app.veteran_document_url && (
               <div className="bg-primary/5 p-3 rounded-lg">
-                <p className="text-sm font-semibold mb-2">🇺🇸 Veteran Verification</p>
+                <p className="text-sm font-semibold mb-2">
+                  🇺🇸 Veteran Verification
+                </p>
                 <Button
                   size="sm"
                   variant="outline"
@@ -219,31 +247,33 @@ export const JobApplicationsTable = () => {
               <Button
                 size="sm"
                 variant="outline"
-                onClick={() => updateStatus(app.id, 'reviewing')}
-                disabled={updatingId === app.id || app.status === 'reviewing'}
+                onClick={() => updateStatus(app.id, "reviewing")}
+                disabled={updatingId === app.id || app.status === "reviewing"}
               >
                 Start Review
               </Button>
               <Button
                 size="sm"
                 variant="default"
-                onClick={() => updateStatus(app.id, 'interviewing')}
-                disabled={updatingId === app.id || app.status === 'interviewing'}
+                onClick={() => updateStatus(app.id, "interviewing")}
+                disabled={
+                  updatingId === app.id || app.status === "interviewing"
+                }
               >
                 Schedule Interview
               </Button>
               <Button
                 size="sm"
                 variant="secondary"
-                onClick={() => updateStatus(app.id, 'offered')}
-                disabled={updatingId === app.id || app.status === 'offered'}
+                onClick={() => updateStatus(app.id, "offered")}
+                disabled={updatingId === app.id || app.status === "offered"}
               >
                 Make Offer
               </Button>
               <Button
                 size="sm"
                 variant="destructive"
-                onClick={() => updateStatus(app.id, 'rejected')}
+                onClick={() => updateStatus(app.id, "rejected")}
                 disabled={updatingId === app.id}
               >
                 Reject

@@ -16,7 +16,11 @@ interface GuestScanUploadProps {
   onClear: () => void;
 }
 
-export const GuestScanUpload = ({ file, onFileSelect, onClear }: GuestScanUploadProps) => {
+export const GuestScanUpload = ({
+  file,
+  onFileSelect,
+  onClear,
+}: GuestScanUploadProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
 
@@ -31,7 +35,7 @@ export const GuestScanUpload = ({ file, onFileSelect, onClear }: GuestScanUpload
       setValidationError(null);
       onFileSelect(nextFile);
     },
-    [onFileSelect]
+    [onFileSelect],
   );
 
   const onDrop = (event: React.DragEvent<HTMLDivElement>) => {
@@ -52,7 +56,9 @@ export const GuestScanUpload = ({ file, onFileSelect, onClear }: GuestScanUpload
       <div className="relative p-6 md:p-8">
         <div
           className={`border-2 border-dashed rounded-2xl p-8 md:p-10 transition-all ${
-            isDragging ? "border-primary bg-primary/5" : "border-border/60 bg-background/60"
+            isDragging
+              ? "border-primary bg-primary/5"
+              : "border-border/60 bg-background/60"
           }`}
           onDragOver={(event) => {
             event.preventDefault();
@@ -71,7 +77,8 @@ export const GuestScanUpload = ({ file, onFileSelect, onClear }: GuestScanUpload
                 Drag & drop your file to scan
               </h3>
               <p className="text-muted-foreground">
-                PDF, JPG, PNG, MP4, MP3, WAV up to {GUEST_SCAN_PRICING.maxFileSizeMb}MB
+                PDF, JPG, PNG, MP4, MP3, WAV up to{" "}
+                {GUEST_SCAN_PRICING.maxFileSizeMb}MB
               </p>
             </div>
 
@@ -106,12 +113,19 @@ export const GuestScanUpload = ({ file, onFileSelect, onClear }: GuestScanUpload
                 <FileText className="w-6 h-6 text-primary" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-semibold text-foreground truncate">{file.name}</p>
+                <p className="font-semibold text-foreground truncate">
+                  {file.name}
+                </p>
                 <p className="text-sm text-muted-foreground">
                   {formatFileSize(file.size).formatted}
                 </p>
               </div>
-              <Button variant="ghost" size="icon" onClick={onClear} aria-label="Remove file">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={onClear}
+                aria-label="Remove file"
+              >
                 <X className="w-4 h-4" />
               </Button>
             </div>

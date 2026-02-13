@@ -31,8 +31,10 @@ export const AIImageDisclaimer = () => {
                   Privacy-First Imagery
                 </h4>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  🎨 <strong>AI-Generated Images:</strong> To protect the privacy and identity of our clients, partners, and team members, 
-                  many images on this website are AI-generated. We prioritize your privacy and security above all else.
+                  🎨 <strong>AI-Generated Images:</strong> To protect the
+                  privacy and identity of our clients, partners, and team
+                  members, many images on this website are AI-generated. We
+                  prioritize your privacy and security above all else.
                 </p>
                 <div className="mt-4 flex flex-wrap gap-3">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium">

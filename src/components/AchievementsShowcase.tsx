@@ -39,14 +39,21 @@ export const AchievementsShowcase = () => {
           {stats.map((stat, index) => {
             const IconComponent = stat.icon;
             return (
-              <Card key={index} className="p-4 text-center bg-gradient-to-br from-primary/5 to-accent/5 border-primary/10">
+              <Card
+                key={index}
+                className="p-4 text-center bg-gradient-to-br from-primary/5 to-accent/5 border-primary/10"
+              >
                 <div className="flex justify-center mb-2">
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                     <IconComponent className="w-5 h-5 text-primary" />
                   </div>
                 </div>
-                <div className="text-2xl md:text-3xl font-bold text-primary">{stat.value}</div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
+                <div className="text-2xl md:text-3xl font-bold text-primary">
+                  {stat.value}
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  {stat.label}
+                </div>
               </Card>
             );
           })}

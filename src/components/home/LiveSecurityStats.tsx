@@ -92,7 +92,9 @@ const AnimatedCounter = ({
         setCount(value);
         clearInterval(timer);
       } else {
-        setCount(isDecimal ? parseFloat(current.toFixed(2)) : Math.floor(current));
+        setCount(
+          isDecimal ? parseFloat(current.toFixed(2)) : Math.floor(current),
+        );
       }
     }, 1000 / 60);
 
@@ -120,10 +122,13 @@ export const LiveSecurityStats = () => {
       setStats((prev) =>
         prev.map((stat) => {
           if (stat.id === "threats") {
-            return { ...stat, value: stat.value + Math.floor(Math.random() * 3) };
+            return {
+              ...stat,
+              value: stat.value + Math.floor(Math.random() * 3),
+            };
           }
           return stat;
-        })
+        }),
       );
       setLastUpdate(new Date());
     }, 10000);
@@ -166,11 +171,10 @@ export const LiveSecurityStats = () => {
           className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 glass-light rounded-full mb-6">
-            <span className="live-indicator">
-              DEMO
-            </span>
+            <span className="live-indicator">DEMO</span>
             <span className="text-sm text-muted-foreground">
-              Simulated updates • Last updated: {lastUpdate.toLocaleTimeString()}
+              Simulated updates • Last updated:{" "}
+              {lastUpdate.toLocaleTimeString()}
             </span>
           </div>
 
@@ -180,8 +184,8 @@ export const LiveSecurityStats = () => {
           </h2>
 
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Preview of how real-time monitoring could look.
-            Data shown here is simulated for demo purposes.
+            Preview of how real-time monitoring could look. Data shown here is
+            simulated for demo purposes.
           </p>
         </motion.div>
 

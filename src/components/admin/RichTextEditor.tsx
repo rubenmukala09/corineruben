@@ -58,7 +58,11 @@ interface RichTextEditorProps {
   placeholder?: string;
 }
 
-export function RichTextEditor({ content, onChange, placeholder }: RichTextEditorProps) {
+export function RichTextEditor({
+  content,
+  onChange,
+  placeholder,
+}: RichTextEditorProps) {
   const [linkDialogOpen, setLinkDialogOpen] = useState(false);
   const [imageDialogOpen, setImageDialogOpen] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
@@ -100,7 +104,8 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
     },
     editorProps: {
       attributes: {
-        class: "prose prose-sm sm:prose lg:prose-lg xl:prose-xl focus:outline-none min-h-[400px] p-4",
+        class:
+          "prose prose-sm sm:prose lg:prose-lg xl:prose-xl focus:outline-none min-h-[400px] p-4",
       },
     },
   });
@@ -151,7 +156,7 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
       onClick={onClick}
       className={cn(
         "h-8 w-8 p-0",
-        active && "bg-accent text-accent-foreground"
+        active && "bg-accent text-accent-foreground",
       )}
       title={title}
       type="button"
@@ -161,7 +166,12 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
   );
 
   return (
-    <div className={cn("border rounded-lg bg-background", fullscreen && "fixed inset-4 z-50")}>
+    <div
+      className={cn(
+        "border rounded-lg bg-background",
+        fullscreen && "fixed inset-4 z-50",
+      )}
+    >
       {/* Toolbar */}
       <div className="border-b bg-muted/50 p-2">
         <div className="flex flex-wrap gap-1">
@@ -200,21 +210,27 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
           {/* Row 2: Headings */}
           <div className="flex gap-1 pr-2 border-r">
             <ToolbarButton
-              onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+              onClick={() =>
+                editor.chain().focus().toggleHeading({ level: 2 }).run()
+              }
               active={editor.isActive("heading", { level: 2 })}
               title="Heading 2"
             >
               <Heading2 className="h-4 w-4" />
             </ToolbarButton>
             <ToolbarButton
-              onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+              onClick={() =>
+                editor.chain().focus().toggleHeading({ level: 3 }).run()
+              }
               active={editor.isActive("heading", { level: 3 })}
               title="Heading 3"
             >
               <Heading3 className="h-4 w-4" />
             </ToolbarButton>
             <ToolbarButton
-              onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
+              onClick={() =>
+                editor.chain().focus().toggleHeading({ level: 4 }).run()
+              }
               active={editor.isActive("heading", { level: 4 })}
               title="Heading 4"
             >
@@ -262,10 +278,16 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
 
           {/* Row 4: Media */}
           <div className="flex gap-1 pr-2 border-r">
-            <ToolbarButton onClick={() => setLinkDialogOpen(true)} title="Insert Link">
+            <ToolbarButton
+              onClick={() => setLinkDialogOpen(true)}
+              title="Insert Link"
+            >
               <Link2 className="h-4 w-4" />
             </ToolbarButton>
-            <ToolbarButton onClick={() => setImageDialogOpen(true)} title="Insert Image">
+            <ToolbarButton
+              onClick={() => setImageDialogOpen(true)}
+              title="Insert Image"
+            >
               <ImageIcon className="h-4 w-4" />
             </ToolbarButton>
             <ToolbarButton
@@ -315,7 +337,9 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Insert Link</DialogTitle>
-            <DialogDescription>Add a hyperlink to your content</DialogDescription>
+            <DialogDescription>
+              Add a hyperlink to your content
+            </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
@@ -371,8 +395,12 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
             <TabsContent value="upload" className="space-y-4">
               <div className="border-2 border-dashed rounded-lg p-8 text-center">
                 <ImageIcon className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
-                <p className="text-sm font-medium mb-1">Drop image here or click to browse</p>
-                <p className="text-xs text-muted-foreground">Max 5MB • JPG, PNG, WebP</p>
+                <p className="text-sm font-medium mb-1">
+                  Drop image here or click to browse
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Max 5MB • JPG, PNG, WebP
+                </p>
               </div>
             </TabsContent>
             <TabsContent value="url" className="space-y-4">
@@ -409,7 +437,10 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Alignment</Label>
-                <Select value={imageAlignment} onValueChange={setImageAlignment}>
+                <Select
+                  value={imageAlignment}
+                  onValueChange={setImageAlignment}
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -440,7 +471,10 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
             <Button variant="outline" onClick={() => setImageDialogOpen(false)}>
               Cancel
             </Button>
-            <Button onClick={handleInsertImage} disabled={!imageUrl || !imageAlt}>
+            <Button
+              onClick={handleInsertImage}
+              disabled={!imageUrl || !imageAlt}
+            >
               Insert
             </Button>
           </DialogFooter>

@@ -53,7 +53,10 @@ const fetchArticleSlugs = async () => {
   }
 
   const url = new URL(`${supabaseUrl}/rest/v1/articles`);
-  url.searchParams.set("select", "slug,updated_at,published_at,created_at,status");
+  url.searchParams.set(
+    "select",
+    "slug,updated_at,published_at,created_at,status",
+  );
   url.searchParams.set("status", "eq.published");
 
   try {
@@ -97,17 +100,20 @@ const generateSitemap = async () => {
       lastmod: today,
       changefreq: page.changefreq,
       priority: page.priority,
-    })
+    }),
   );
 
   const articleUrls = articleRows
     .filter((row) => row?.slug)
-    .map((row) => buildUrlEntry({
-      loc: `${SITE_URL}/articles/${row.slug}`,
-      lastmod: toDate(row.updated_at || row.published_at || row.created_at) || today,
-      changefreq: "monthly",
-      priority: 0.6,
-    }));
+    .map((row) =>
+      buildUrlEntry({
+        loc: `${SITE_URL}/articles/${row.slug}`,
+        lastmod:
+          toDate(row.updated_at || row.published_at || row.created_at) || today,
+        changefreq: "monthly",
+        priority: 0.6,
+      }),
+    );
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -116,7 +122,9 @@ ${[...baseUrls, ...articleUrls].join("\n")}
 `;
 
   fs.writeFileSync(OUTPUT_PATH, xml, "utf8");
-  console.log(`Sitemap generated with ${baseUrls.length + articleUrls.length} URLs.`);
+  console.log(
+    `Sitemap generated with ${baseUrls.length + articleUrls.length} URLs.`,
+  );
 };
 
 await generateSitemap();

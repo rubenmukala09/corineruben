@@ -6,7 +6,8 @@ const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
 serve(async (req) => {
@@ -33,11 +34,11 @@ serve(async (req) => {
     if (fetchError || !codeData) {
       console.log("No valid code found");
       return new Response(
-        JSON.stringify({ 
-          valid: false, 
-          error: "No verification code found. Please request a new one." 
+        JSON.stringify({
+          valid: false,
+          error: "No verification code found. Please request a new one.",
         }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
 
@@ -45,11 +46,11 @@ serve(async (req) => {
     if (new Date(codeData.expires_at) < new Date()) {
       console.log("Code expired");
       return new Response(
-        JSON.stringify({ 
-          valid: false, 
-          error: "This code has expired. Please request a new one." 
+        JSON.stringify({
+          valid: false,
+          error: "This code has expired. Please request a new one.",
         }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
 
@@ -57,18 +58,18 @@ serve(async (req) => {
     if (codeData.attempts >= 3) {
       console.log("Too many attempts");
       return new Response(
-        JSON.stringify({ 
-          valid: false, 
-          error: "Too many attempts. Please request a new code." 
+        JSON.stringify({
+          valid: false,
+          error: "Too many attempts. Please request a new code.",
         }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
 
     // Check if code matches
     if (codeData.code !== code) {
       console.log("Invalid code");
-      
+
       // Increment attempts
       await supabase
         .from("verification_codes")
@@ -77,12 +78,12 @@ serve(async (req) => {
 
       const attemptsLeft = 3 - (codeData.attempts + 1);
       return new Response(
-        JSON.stringify({ 
-          valid: false, 
-          error: `Invalid code. ${attemptsLeft} attempt${attemptsLeft !== 1 ? 's' : ''} remaining.`,
-          attemptsLeft
+        JSON.stringify({
+          valid: false,
+          error: `Invalid code. ${attemptsLeft} attempt${attemptsLeft !== 1 ? "s" : ""} remaining.`,
+          attemptsLeft,
         }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
 
@@ -94,18 +95,14 @@ serve(async (req) => {
 
     console.log("Code verified successfully");
 
-    return new Response(
-      JSON.stringify({ valid: true }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
-    );
-  } catch (error: any) {
+    return new Response(JSON.stringify({ valid: true }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  } catch (error: unknown) {
     console.error("Error in verify-code:", error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { 
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" }
-      }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
   }
 });

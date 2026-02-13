@@ -19,7 +19,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
-import { Loader2, Search, Filter, DollarSign, Users, TrendingUp } from "lucide-react";
+import {
+  Loader2,
+  Search,
+  Filter,
+  DollarSign,
+  Users,
+  TrendingUp,
+} from "lucide-react";
 import { toast } from "sonner";
 
 export default function Subscriptions() {
@@ -36,9 +43,9 @@ export default function Subscriptions() {
   const fetchSubscriptions = async () => {
     try {
       const { data, error } = await supabase
-        .from('subscriptions')
-        .select('*')
-        .order('created_at', { ascending: false });
+        .from("subscriptions")
+        .select("*")
+        .order("created_at", { ascending: false });
 
       if (error) throw error;
       setSubscriptions(data || []);
@@ -55,22 +62,26 @@ export default function Subscriptions() {
       sub.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       sub.stripe_customer_id.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === "all" || sub.status === statusFilter;
-    const matchesService = serviceFilter === "all" || sub.service_type === serviceFilter;
+    const matchesService =
+      serviceFilter === "all" || sub.service_type === serviceFilter;
     return matchesSearch && matchesStatus && matchesService;
   });
 
   const stats = {
     total: subscriptions.length,
     active: subscriptions.filter((s) => s.status === "active").length,
-    mrr: subscriptions
-      .filter((s) => s.status === "active")
-      .reduce((acc, s) => acc + (s.amount || 0), 0) / 100,
+    mrr:
+      subscriptions
+        .filter((s) => s.status === "active")
+        .reduce((acc, s) => acc + (s.amount || 0), 0) / 100,
   };
 
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-6">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-[#F9FAFB]">Subscription Management</h1>
+        <h1 className="text-2xl font-bold text-[#F9FAFB]">
+          Subscription Management
+        </h1>
         <p className="text-[#9CA3AF]">
           Manage all customer subscriptions and billing
         </p>
@@ -80,31 +91,43 @@ export default function Subscriptions() {
       <div className="grid gap-4 md:grid-cols-3">
         <Card className="bg-[#111827] border-gray-800">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-[#9CA3AF]">Total Subscriptions</CardTitle>
+            <CardTitle className="text-sm font-medium text-[#9CA3AF]">
+              Total Subscriptions
+            </CardTitle>
             <Users className="h-4 w-4 text-[#06B6D4]" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-[#F9FAFB]">{stats.total}</div>
+            <div className="text-2xl font-bold text-[#F9FAFB]">
+              {stats.total}
+            </div>
           </CardContent>
         </Card>
 
         <Card className="bg-[#111827] border-gray-800">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-[#9CA3AF]">Active Subscriptions</CardTitle>
+            <CardTitle className="text-sm font-medium text-[#9CA3AF]">
+              Active Subscriptions
+            </CardTitle>
             <TrendingUp className="h-4 w-4 text-[#10B981]" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-[#F9FAFB]">{stats.active}</div>
+            <div className="text-2xl font-bold text-[#F9FAFB]">
+              {stats.active}
+            </div>
           </CardContent>
         </Card>
 
         <Card className="bg-[#111827] border-gray-800">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-[#9CA3AF]">Monthly Revenue</CardTitle>
+            <CardTitle className="text-sm font-medium text-[#9CA3AF]">
+              Monthly Revenue
+            </CardTitle>
             <DollarSign className="h-4 w-4 text-[#8B5CF6]" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-[#F9FAFB]">${stats.mrr.toFixed(2)}</div>
+            <div className="text-2xl font-bold text-[#F9FAFB]">
+              ${stats.mrr.toFixed(2)}
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -176,32 +199,41 @@ export default function Subscriptions() {
                   <TableHead className="text-[#9CA3AF]">Plan</TableHead>
                   <TableHead className="text-[#9CA3AF]">Status</TableHead>
                   <TableHead className="text-[#9CA3AF]">Next Billing</TableHead>
-                  <TableHead className="text-right text-[#9CA3AF]">Actions</TableHead>
+                  <TableHead className="text-right text-[#9CA3AF]">
+                    Actions
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredSubscriptions.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center text-[#9CA3AF]">
+                    <TableCell
+                      colSpan={6}
+                      className="text-center text-[#9CA3AF]"
+                    >
                       No subscriptions found
                     </TableCell>
                   </TableRow>
                 ) : (
                   filteredSubscriptions.map((sub) => (
                     <TableRow key={sub.id} className="border-gray-700">
-                      <TableCell className="font-medium text-[#F9FAFB]">{sub.email}</TableCell>
-                      <TableCell className="text-[#9CA3AF]">
-                        {sub.service_type.replace(/_/g, ' ').toUpperCase()}
+                      <TableCell className="font-medium text-[#F9FAFB]">
+                        {sub.email}
                       </TableCell>
-                      <TableCell className="text-[#9CA3AF]">{sub.plan_tier}</TableCell>
+                      <TableCell className="text-[#9CA3AF]">
+                        {sub.service_type.replace(/_/g, " ").toUpperCase()}
+                      </TableCell>
+                      <TableCell className="text-[#9CA3AF]">
+                        {sub.plan_tier}
+                      </TableCell>
                       <TableCell>
                         <Badge
                           variant={
-                            sub.status === 'active'
-                              ? 'default'
-                              : sub.status === 'past_due'
-                              ? 'destructive'
-                              : 'secondary'
+                            sub.status === "active"
+                              ? "default"
+                              : sub.status === "past_due"
+                                ? "destructive"
+                                : "secondary"
                           }
                         >
                           {sub.status}

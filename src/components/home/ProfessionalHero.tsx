@@ -22,7 +22,6 @@ export const ProfessionalHero = () => {
 
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center py-20 md:py-28 lg:py-32">
-
           {/* Left Column - Content */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -62,7 +61,9 @@ export const ProfessionalHero = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="font-body text-lg md:text-xl text-gray-600 leading-relaxed mb-8 max-w-xl"
             >
-              Professional cybersecurity training and AI-powered protection for seniors and families in Ohio. Stay safe from deepfakes, phishing, and online fraud.
+              Professional cybersecurity training and AI-powered protection for
+              seniors and families in Ohio. Stay safe from deepfakes, phishing,
+              and online fraud.
             </motion.p>
 
             {/* Trust Indicators */}
@@ -104,7 +105,8 @@ export const ProfessionalHero = () => {
                 to="/training#pricing"
                 className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl text-white font-bold text-base shadow-lg hover:shadow-xl hover:scale-105 active:scale-100 transition-all duration-300 group"
                 style={{
-                  background: "linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)",
+                  background:
+                    "linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)",
                 }}
               >
                 Get Protected Now
@@ -123,7 +125,11 @@ export const ProfessionalHero = () => {
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+            transition={{
+              duration: 0.7,
+              delay: 0.3,
+              ease: [0.25, 0.46, 0.45, 0.94],
+            }}
             className="relative"
           >
             {/* Main Image */}

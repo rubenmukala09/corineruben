@@ -39,7 +39,7 @@ export function NeonQuickActions() {
         <div className="space-y-2">
           {actions.map((action, index) => {
             const Icon = action.icon;
-            
+
             return (
               <motion.div
                 key={action.label}
@@ -51,7 +51,9 @@ export function NeonQuickActions() {
                   className={`w-full justify-start bg-[#111827] border border-gray-800/50 hover:border-gray-700/50 text-gray-300 hover:text-white transition-all duration-300 group`}
                   variant="outline"
                 >
-                  <div className={`w-8 h-8 mr-3 bg-gradient-to-br ${action.gradient} rounded-lg flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300`}>
+                  <div
+                    className={`w-8 h-8 mr-3 bg-gradient-to-br ${action.gradient} rounded-lg flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300`}
+                  >
                     <Icon className="w-4 h-4 text-white" />
                   </div>
                   {action.label}

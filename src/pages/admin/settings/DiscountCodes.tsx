@@ -37,7 +37,7 @@ import { Plus, Edit2, Percent, DollarSign, Tag, Truck } from "lucide-react";
 interface DiscountCode {
   id: string;
   code: string;
-  type: 'percentage' | 'fixed';
+  type: "percentage" | "fixed";
   value: number;
   description: string | null;
   is_active: boolean;
@@ -55,7 +55,7 @@ export default function DiscountCodes() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [editingCode, setEditingCode] = useState<DiscountCode | null>(null);
-  
+
   const [newCode, setNewCode] = useState({
     code: "",
     type: "percentage",
@@ -78,15 +78,15 @@ export default function DiscountCodes() {
     try {
       setLoading(true);
       const { data, error } = await supabase
-        .from('discount_codes')
-        .select('*')
-        .order('created_at', { ascending: false });
+        .from("discount_codes")
+        .select("*")
+        .order("created_at", { ascending: false });
 
       if (error) throw error;
       setCodes(data || []);
     } catch (error) {
-      console.error('Error fetching discount codes:', error);
-      toast.error('Failed to load discount codes');
+      console.error("Error fetching discount codes:", error);
+      toast.error("Failed to load discount codes");
     } finally {
       setLoading(false);
     }
@@ -94,8 +94,7 @@ export default function DiscountCodes() {
 
   const generateCode = () => {
     const randomCode =
-      "CODE" +
-      Math.random().toString(36).substring(2, 8).toUpperCase();
+      "CODE" + Math.random().toString(36).substring(2, 8).toUpperCase();
     setNewCode({ ...newCode, code: randomCode });
   };
 
@@ -106,16 +105,17 @@ export default function DiscountCodes() {
         return;
       }
 
-      const { error } = await supabase.from('discount_codes').insert({
+      const { error } = await supabase.from("discount_codes").insert({
         code: newCode.code,
-        type: newCode.type as 'percentage' | 'fixed',
+        type: newCode.type as "percentage" | "fixed",
         value: parseFloat(newCode.value),
         is_active: true,
         valid_from: newCode.startDate || new Date().toISOString(),
         valid_until: newCode.endDate || null,
-        max_uses: newCode.usageLimit === 'limited' ? parseInt(newCode.totalUses) : null,
+        max_uses:
+          newCode.usageLimit === "limited" ? parseInt(newCode.totalUses) : null,
         current_uses: 0,
-        service_type: newCode.appliesTo === 'entire' ? null : newCode.appliesTo,
+        service_type: newCode.appliesTo === "entire" ? null : newCode.appliesTo,
       });
 
       if (error) throw error;
@@ -137,8 +137,8 @@ export default function DiscountCodes() {
       });
       fetchDiscountCodes();
     } catch (error) {
-      console.error('Error creating discount code:', error);
-      toast.error('Failed to create discount code');
+      console.error("Error creating discount code:", error);
+      toast.error("Failed to create discount code");
     }
   };
 
@@ -190,7 +190,10 @@ export default function DiscountCodes() {
                     id="code"
                     value={newCode.code}
                     onChange={(e) =>
-                      setNewCode({ ...newCode, code: e.target.value.toUpperCase() })
+                      setNewCode({
+                        ...newCode,
+                        code: e.target.value.toUpperCase(),
+                      })
                     }
                     placeholder="SUMMER25"
                     className="uppercase"
@@ -205,7 +208,9 @@ export default function DiscountCodes() {
                 <Label>Discount Type</Label>
                 <RadioGroup
                   value={newCode.type}
-                  onValueChange={(value) => setNewCode({ ...newCode, type: value })}
+                  onValueChange={(value) =>
+                    setNewCode({ ...newCode, type: value })
+                  }
                 >
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="percentage" id="percentage" />
@@ -231,7 +236,9 @@ export default function DiscountCodes() {
                     id="value"
                     type="number"
                     value={newCode.value}
-                    onChange={(e) => setNewCode({ ...newCode, value: e.target.value })}
+                    onChange={(e) =>
+                      setNewCode({ ...newCode, value: e.target.value })
+                    }
                     placeholder={newCode.type === "percentage" ? "10" : "10.00"}
                   />
                 </div>
@@ -346,7 +353,9 @@ export default function DiscountCodes() {
           <TableBody>
             {codes.map((code) => (
               <TableRow key={code.id}>
-                <TableCell className="font-mono font-bold">{code.code}</TableCell>
+                <TableCell className="font-mono font-bold">
+                  {code.code}
+                </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
                     {getTypeIcon(code.type)}
@@ -354,13 +363,22 @@ export default function DiscountCodes() {
                   </div>
                 </TableCell>
                 <TableCell>
-                  {code.type === "percentage" ? `${code.value}%` : `$${code.value}`}
+                  {code.type === "percentage"
+                    ? `${code.value}%`
+                    : `$${code.value}`}
                 </TableCell>
-                <TableCell>{code.current_uses}{code.max_uses ? ` / ${code.max_uses}` : " / ∞"}</TableCell>
+                <TableCell>
+                  {code.current_uses}
+                  {code.max_uses ? ` / ${code.max_uses}` : " / ∞"}
+                </TableCell>
                 <TableCell>
                   <div className="text-sm">
                     <div>{new Date(code.valid_from).toLocaleDateString()}</div>
-                    <div className="text-muted-foreground">{code.valid_until ? new Date(code.valid_until).toLocaleDateString() : 'No end date'}</div>
+                    <div className="text-muted-foreground">
+                      {code.valid_until
+                        ? new Date(code.valid_until).toLocaleDateString()
+                        : "No end date"}
+                    </div>
                   </div>
                 </TableCell>
                 <TableCell>

@@ -61,7 +61,7 @@ export const ProtectionComparison = () => {
       <div className="absolute top-20 left-20 w-40 h-40 rounded-full bg-primary/5" />
       <div className="absolute bottom-20 right-10 w-32 h-32 rounded-full bg-accent/10" />
       <div className="absolute top-1/2 right-1/4 w-20 h-20 rounded-full bg-primary/10" />
-      
+
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <motion.div
@@ -74,12 +74,11 @@ export const ProtectionComparison = () => {
             Protection Plans
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Choose Your{" "}
-            <span className="text-primary">Shield</span>
+            Choose Your <span className="text-primary">Shield</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Every plan includes our award-winning ScamShield AI technology. 
-            Pick the protection level that fits your life.
+            Every plan includes our award-winning ScamShield AI technology. Pick
+            the protection level that fits your life.
           </p>
         </motion.div>
 
@@ -102,31 +101,45 @@ export const ProtectionComparison = () => {
                   </span>
                 </div>
               )}
-              
-              <div className={`h-full min-h-[520px] rounded-2xl border-2 p-8 transition-all duration-300 flex flex-col ${
-                plan.popular
-                  ? "bg-card border-primary shadow-xl scale-105"
-                  : "bg-card border-border hover:border-primary/30 hover:shadow-lg"
-              }`}>
+
+              <div
+                className={`h-full min-h-[520px] rounded-2xl border-2 p-8 transition-all duration-300 flex flex-col ${
+                  plan.popular
+                    ? "bg-card border-primary shadow-xl scale-105"
+                    : "bg-card border-border hover:border-primary/30 hover:shadow-lg"
+                }`}
+              >
                 {/* Icon & Name */}
                 <div className="text-center mb-6">
-                  <div className={`w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center ${
-                    plan.popular ? "bg-primary" : "bg-primary/10"
-                  }`}>
-                    <plan.icon className={`w-8 h-8 ${
-                      plan.popular ? "text-primary-foreground" : "text-primary"
-                    }`} />
+                  <div
+                    className={`w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center ${
+                      plan.popular ? "bg-primary" : "bg-primary/10"
+                    }`}
+                  >
+                    <plan.icon
+                      className={`w-8 h-8 ${
+                        plan.popular
+                          ? "text-primary-foreground"
+                          : "text-primary"
+                      }`}
+                    />
                   </div>
-                  <h3 className="text-2xl font-bold text-foreground">{plan.name}</h3>
-                  <p className="text-sm text-muted-foreground">{plan.description}</p>
+                  <h3 className="text-2xl font-bold text-foreground">
+                    {plan.name}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {plan.description}
+                  </p>
                 </div>
 
                 {/* Price */}
                 <div className="text-center mb-8">
-                  <span className="text-4xl font-bold text-primary">{plan.price}</span>
+                  <span className="text-4xl font-bold text-primary">
+                    {plan.price}
+                  </span>
                   <span className="text-muted-foreground">{plan.period}</span>
                 </div>
-                
+
                 {/* Features */}
                 <div className="space-y-3 mb-8">
                   {plan.features.map((feature, fIndex) => (
@@ -140,21 +153,27 @@ export const ProtectionComparison = () => {
                           <X className="w-3 h-3 text-muted-foreground/50" />
                         </div>
                       )}
-                      <span className={`text-sm ${
-                        feature.included ? "text-foreground" : "text-muted-foreground/60"
-                      }`}>
+                      <span
+                        className={`text-sm ${
+                          feature.included
+                            ? "text-foreground"
+                            : "text-muted-foreground/60"
+                        }`}
+                      >
                         {feature.name}
                       </span>
                     </div>
                   ))}
                 </div>
-                
+
                 {/* CTA Button */}
                 <Button
                   asChild
                   size="lg"
                   className={`w-full rounded-full ${
-                    plan.popular ? "" : "bg-muted text-foreground hover:bg-primary hover:text-primary-foreground"
+                    plan.popular
+                      ? ""
+                      : "bg-muted text-foreground hover:bg-primary hover:text-primary-foreground"
                   }`}
                 >
                   <Link to="/training#pricing">

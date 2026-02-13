@@ -7,7 +7,11 @@ interface SkeletonCardProps {
   lines?: number;
 }
 
-export const SkeletonCard = ({ className = "", showImage = true, lines = 3 }: SkeletonCardProps) => {
+export const SkeletonCard = ({
+  className = "",
+  showImage = true,
+  lines = 3,
+}: SkeletonCardProps) => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -19,9 +23,9 @@ export const SkeletonCard = ({ className = "", showImage = true, lines = 3 }: Sk
       )}
       <Skeleton className="h-6 w-3/4 mb-3 shimmer" />
       {Array.from({ length: lines }).map((_, i) => (
-        <Skeleton 
-          key={i} 
-          className={`h-4 mb-2 shimmer ${i === lines - 1 ? 'w-1/2' : 'w-full'}`} 
+        <Skeleton
+          key={i}
+          className={`h-4 mb-2 shimmer ${i === lines - 1 ? "w-1/2" : "w-full"}`}
           style={{ animationDelay: `${i * 100}ms` }}
         />
       ))}
@@ -29,9 +33,17 @@ export const SkeletonCard = ({ className = "", showImage = true, lines = 3 }: Sk
   );
 };
 
-export const SkeletonGrid = ({ count = 4, columns = 4 }: { count?: number; columns?: number }) => {
+export const SkeletonGrid = ({
+  count = 4,
+  columns = 4,
+}: {
+  count?: number;
+  columns?: number;
+}) => {
   return (
-    <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${columns} gap-6`}>
+    <div
+      className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${columns} gap-6`}
+    >
       {Array.from({ length: count }).map((_, i) => (
         <SkeletonCard key={i} />
       ))}

@@ -18,10 +18,11 @@ export const BookingRequestsTable = () => {
 
     // Subscribe to realtime updates
     const channel = supabase
-      .channel('booking_requests_changes')
-      .on('postgres_changes', 
-        { event: '*', schema: 'public', table: 'booking_requests' },
-        () => loadRequests()
+      .channel("booking_requests_changes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "booking_requests" },
+        () => loadRequests(),
       )
       .subscribe();
 
@@ -76,12 +77,18 @@ export const BookingRequestsTable = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pending': return 'bg-yellow-500';
-      case 'contacted': return 'bg-blue-500';
-      case 'confirmed': return 'bg-green-500';
-      case 'completed': return 'bg-gray-500';
-      case 'cancelled': return 'bg-red-500';
-      default: return 'bg-gray-400';
+      case "pending":
+        return "bg-yellow-500";
+      case "contacted":
+        return "bg-blue-500";
+      case "confirmed":
+        return "bg-green-500";
+      case "completed":
+        return "bg-gray-500";
+      case "cancelled":
+        return "bg-red-500";
+      default:
+        return "bg-gray-400";
     }
   };
 
@@ -96,7 +103,9 @@ export const BookingRequestsTable = () => {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-bold">Service Booking Requests ({requests.length})</h3>
+        <h3 className="text-lg font-bold">
+          Service Booking Requests ({requests.length})
+        </h3>
         <Button onClick={loadRequests} variant="outline" size="sm">
           Refresh
         </Button>
@@ -138,18 +147,26 @@ export const BookingRequestsTable = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="text-sm font-semibold mb-1">Contact Information</p>
+                <p className="text-sm font-semibold mb-1">
+                  Contact Information
+                </p>
                 <div className="space-y-1 text-sm">
                   <div className="flex items-center gap-2">
                     <Mail className="w-4 h-4 text-muted-foreground" />
-                    <a href={`mailto:${request.email}`} className="hover:underline">
+                    <a
+                      href={`mailto:${request.email}`}
+                      className="hover:underline"
+                    >
                       {request.email}
                     </a>
                   </div>
                   {request.phone && (
                     <div className="flex items-center gap-2">
                       <Phone className="w-4 h-4 text-muted-foreground" />
-                      <a href={`tel:${request.phone}`} className="hover:underline">
+                      <a
+                        href={`tel:${request.phone}`}
+                        className="hover:underline"
+                      >
                         {request.phone}
                       </a>
                     </div>
@@ -163,7 +180,7 @@ export const BookingRequestsTable = () => {
                 <div className="space-y-1 text-sm">
                   <div className="flex justify-between">
                     <span>Base Price:</span>
-                    <span>${request.base_price?.toFixed(2) || '0.00'}</span>
+                    <span>${request.base_price?.toFixed(2) || "0.00"}</span>
                   </div>
                   {request.discount_amount > 0 && (
                     <div className="flex justify-between text-success">
@@ -173,7 +190,9 @@ export const BookingRequestsTable = () => {
                   )}
                   <div className="flex justify-between font-bold">
                     <span>Total:</span>
-                    <span className="text-primary">${request.final_price?.toFixed(2) || '0.00'}</span>
+                    <span className="text-primary">
+                      ${request.final_price?.toFixed(2) || "0.00"}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -181,9 +200,14 @@ export const BookingRequestsTable = () => {
 
             {request.is_veteran && (
               <div className="bg-primary/5 p-3 rounded-lg">
-                <p className="text-sm font-semibold mb-1">🇺🇸 Veteran Verification</p>
+                <p className="text-sm font-semibold mb-1">
+                  🇺🇸 Veteran Verification
+                </p>
                 <div className="space-y-1 text-sm">
-                  <p>Type: {request.veteran_type?.replace('_', ' ').toUpperCase()}</p>
+                  <p>
+                    Type:{" "}
+                    {request.veteran_type?.replace("_", " ").toUpperCase()}
+                  </p>
                   <p>ID Last 4: {request.veteran_id_last4}</p>
                 </div>
               </div>
@@ -195,13 +219,17 @@ export const BookingRequestsTable = () => {
                   <Calendar className="w-4 h-4" />
                   Preferred Dates/Times
                 </p>
-                <p className="text-sm whitespace-pre-wrap">{request.preferred_dates}</p>
+                <p className="text-sm whitespace-pre-wrap">
+                  {request.preferred_dates}
+                </p>
               </div>
             )}
 
             {request.message && (
               <div>
-                <p className="text-sm font-semibold mb-1">Additional Information</p>
+                <p className="text-sm font-semibold mb-1">
+                  Additional Information
+                </p>
                 <p className="text-sm whitespace-pre-wrap">{request.message}</p>
               </div>
             )}
@@ -210,23 +238,27 @@ export const BookingRequestsTable = () => {
               <Button
                 size="sm"
                 variant="outline"
-                onClick={() => updateStatus(request.id, 'contacted')}
-                disabled={updatingId === request.id || request.status !== 'pending'}
+                onClick={() => updateStatus(request.id, "contacted")}
+                disabled={
+                  updatingId === request.id || request.status !== "pending"
+                }
               >
                 Mark Contacted
               </Button>
               <Button
                 size="sm"
                 variant="default"
-                onClick={() => updateStatus(request.id, 'confirmed')}
-                disabled={updatingId === request.id || request.status === 'confirmed'}
+                onClick={() => updateStatus(request.id, "confirmed")}
+                disabled={
+                  updatingId === request.id || request.status === "confirmed"
+                }
               >
                 Confirm Booking
               </Button>
               <Button
                 size="sm"
                 variant="secondary"
-                onClick={() => updateStatus(request.id, 'completed')}
+                onClick={() => updateStatus(request.id, "completed")}
                 disabled={updatingId === request.id}
               >
                 Complete
@@ -234,7 +266,7 @@ export const BookingRequestsTable = () => {
               <Button
                 size="sm"
                 variant="destructive"
-                onClick={() => updateStatus(request.id, 'cancelled')}
+                onClick={() => updateStatus(request.id, "cancelled")}
                 disabled={updatingId === request.id}
               >
                 Cancel

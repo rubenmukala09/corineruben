@@ -4,11 +4,12 @@ const resendApiKey = Deno.env.get("RESEND_API_KEY")!;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
-const logStep = (step: string, details?: any) => {
-  const detailsStr = details ? ` - ${JSON.stringify(details)}` : '';
+const logStep = (step: string, details?: unknown) => {
+  const detailsStr = details ? ` - ${JSON.stringify(details)}` : "";
   console.log(`[SEND-INQUIRY-CONFIRMATION] ${step}${detailsStr}`);
 };
 
@@ -28,14 +29,14 @@ serve(async (req) => {
 
   try {
     logStep("Function started");
-    
+
     const {
       email,
       name,
       serviceName,
       inquiryNumber,
       servicePrice,
-      companyName
+      companyName,
     }: InquiryConfirmationRequest = await req.json();
 
     logStep("Request data", { email, name, serviceName, inquiryNumber });
@@ -44,8 +45,8 @@ serve(async (req) => {
     const customerEmailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${resendApiKey}`,
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${resendApiKey}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         from: "InVision Network <hello@invisionnetwork.org>",
@@ -63,8 +64,8 @@ serve(async (req) => {
               <h2 style="color: #6D28D9; margin-top: 0;">Inquiry Details</h2>
               <p><strong>Reference Number:</strong> ${inquiryNumber}</p>
               <p><strong>Service:</strong> ${serviceName}</p>
-              ${servicePrice ? `<p><strong>Starting at:</strong> $${servicePrice.toLocaleString()}</p>` : ''}
-              ${companyName ? `<p><strong>Company:</strong> ${companyName}</p>` : ''}
+              ${servicePrice ? `<p><strong>Starting at:</strong> $${servicePrice.toLocaleString()}</p>` : ""}
+              ${companyName ? `<p><strong>Company:</strong> ${companyName}</p>` : ""}
             </div>
             
             <h3>What Happens Next?</h3>
@@ -101,8 +102,8 @@ serve(async (req) => {
     await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${resendApiKey}`,
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${resendApiKey}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         from: "InVision Network <hello@invisionnetwork.org>",
@@ -113,9 +114,9 @@ serve(async (req) => {
           <p><strong>Reference:</strong> ${inquiryNumber}</p>
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Email:</strong> ${email}</p>
-          ${companyName ? `<p><strong>Company:</strong> ${companyName}</p>` : ''}
+          ${companyName ? `<p><strong>Company:</strong> ${companyName}</p>` : ""}
           <p><strong>Service:</strong> ${serviceName}</p>
-          ${servicePrice ? `<p><strong>Price:</strong> $${servicePrice.toLocaleString()}</p>` : ''}
+          ${servicePrice ? `<p><strong>Price:</strong> $${servicePrice.toLocaleString()}</p>` : ""}
           <hr>
           <p><small>Action required: Contact within 24 hours</small></p>
         `,
@@ -129,17 +130,14 @@ serve(async (req) => {
       {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 200,
-      }
+      },
     );
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     logStep("ERROR", { message: errorMessage });
-    return new Response(
-      JSON.stringify({ error: errorMessage }),
-      {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 500,
-      }
-    );
+    return new Response(JSON.stringify({ error: errorMessage }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      status: 500,
+    });
   }
 });

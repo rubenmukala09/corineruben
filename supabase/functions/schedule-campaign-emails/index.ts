@@ -6,7 +6,26 @@ const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
+};
+
+type SupabaseClient = ReturnType<typeof createClient>;
+
+type Campaign = {
+  id: string;
+  campaign_type: string;
+  schedule_config?: {
+    frequency?: string;
+    day_of_month?: number;
+  } | null;
+  target_audience?: string | null;
+  template_id?: string | null;
+  sent_count?: number | null;
+};
+
+type EmailRow = {
+  email: string;
 };
 
 serve(async (req) => {
@@ -28,34 +47,39 @@ serve(async (req) => {
     if (!activeCampaigns || activeCampaigns.length === 0) {
       return new Response(
         JSON.stringify({ message: "No active campaigns", processed: 0 }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
 
-    console.log(`Processing ${activeCampaigns.length} active campaigns...`);
+    const campaigns = activeCampaigns as Campaign[];
+
+    console.log(`Processing ${campaigns.length} active campaigns...`);
 
     let scheduledCount = 0;
 
-    for (const campaign of activeCampaigns) {
+    for (const campaign of campaigns) {
       try {
         // Handle different campaign types
         if (campaign.campaign_type === "recurring") {
           // Check if it's time to send based on schedule_config
-          const scheduleConfig = campaign.schedule_config || {};
+          const scheduleConfig = campaign.schedule_config ?? {};
           const now = new Date();
-          
+
           // Example: Monthly newsletter on 1st of month
           if (scheduleConfig.frequency === "monthly") {
             const dayOfMonth = now.getDate();
             const scheduledDay = scheduleConfig.day_of_month || 1;
-            
+
             if (dayOfMonth === scheduledDay) {
               // Check if already sent this month
               const { data: recentSends } = await supabase
                 .from("scheduled_emails")
                 .select("id")
                 .eq("campaign_id", campaign.id)
-                .gte("created_at", new Date(now.getFullYear(), now.getMonth(), 1).toISOString())
+                .gte(
+                  "created_at",
+                  new Date(now.getFullYear(), now.getMonth(), 1).toISOString(),
+                )
                 .limit(1);
 
               if (!recentSends || recentSends.length === 0) {
@@ -103,21 +127,28 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({
         message: "Campaign scheduling complete",
-        campaigns_processed: activeCampaigns.length,
+        campaigns_processed: campaigns.length,
         emails_scheduled: scheduledCount,
       }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      { headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
-  } catch (error: any) {
-    console.error("Error in schedule-campaign-emails:", error);
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error("Error in schedule-campaign-emails:", errorMessage);
     return new Response(
-      JSON.stringify({ error: error.message || "Unknown error" }),
-      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      JSON.stringify({ error: errorMessage || "Unknown error" }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      },
     );
   }
 });
 
-async function scheduleForCampaign(supabase: any, campaign: any) {
+async function scheduleForCampaign(
+  supabase: SupabaseClient,
+  campaign: Campaign,
+) {
   // Get target audience
   let recipients: string[] = [];
 
@@ -125,13 +156,16 @@ async function scheduleForCampaign(supabase: any, campaign: any) {
     const { data: subscribers } = await supabase
       .from("newsletter_subscribers")
       .select("email");
-    recipients = subscribers?.map((s: any) => s.email) || [];
+    recipients = (subscribers as EmailRow[] | null)?.map((s) => s.email) || [];
   } else if (campaign.target_audience === "new_customers") {
     const { data: newCustomers } = await supabase
       .from("booking_requests")
       .select("email")
-      .gte("created_at", new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString());
-    recipients = newCustomers?.map((c: any) => c.email) || [];
+      .gte(
+        "created_at",
+        new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+      );
+    recipients = (newCustomers as EmailRow[] | null)?.map((c) => c.email) || [];
   }
 
   // Schedule emails for each recipient
@@ -149,7 +183,9 @@ async function scheduleForCampaign(supabase: any, campaign: any) {
     // Update campaign sent count
     await supabase
       .from("email_campaigns")
-      .update({ sent_count: campaign.sent_count + emailsToInsert.length })
+      .update({
+        sent_count: (campaign.sent_count ?? 0) + emailsToInsert.length,
+      })
       .eq("id", campaign.id);
   }
 }

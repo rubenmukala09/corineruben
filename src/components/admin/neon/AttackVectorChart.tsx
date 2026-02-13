@@ -50,7 +50,9 @@ export function AttackVectorChart() {
             <Shield className="h-5 w-5 text-white" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-white">Attack Vector Analysis</h2>
+            <h2 className="text-lg font-bold text-white">
+              Attack Vector Analysis
+            </h2>
             <p className="text-sm text-gray-400">Types of threats detected</p>
           </div>
         </div>
@@ -65,13 +67,33 @@ export function AttackVectorChart() {
             >
               <defs>
                 {attackData.map((entry, index) => (
-                  <linearGradient key={`gradient-${index}`} id={`barGradient-${index}`} x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor={entry.color} stopOpacity={0.8} />
-                    <stop offset="100%" stopColor={entry.color} stopOpacity={1} />
+                  <linearGradient
+                    key={`gradient-${index}`}
+                    id={`barGradient-${index}`}
+                    x1="0"
+                    y1="0"
+                    x2="1"
+                    y2="0"
+                  >
+                    <stop
+                      offset="0%"
+                      stopColor={entry.color}
+                      stopOpacity={0.8}
+                    />
+                    <stop
+                      offset="100%"
+                      stopColor={entry.color}
+                      stopOpacity={1}
+                    />
                   </linearGradient>
                 ))}
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.3} horizontal={false} />
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="#374151"
+                opacity={0.3}
+                horizontal={false}
+              />
               <XAxis
                 type="number"
                 stroke="#9ca3af"
@@ -88,7 +110,10 @@ export function AttackVectorChart() {
                 axisLine={false}
                 width={100}
               />
-              <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(255,255,255,0.05)" }} />
+              <Tooltip
+                content={<CustomTooltip />}
+                cursor={{ fill: "rgba(255,255,255,0.05)" }}
+              />
               <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={20}>
                 {attackData.map((entry, index) => (
                   <Cell

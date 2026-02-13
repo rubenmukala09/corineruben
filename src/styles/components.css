@@ -8,60 +8,64 @@
   border-radius: 1rem;
   padding: 1.5rem;
   border: 1px solid hsl(0 0% 90%);
-  box-shadow: 
-    0 1px 1px rgba(0,0,0,0.02),
-    0 2px 2px rgba(0,0,0,0.02),
-    0 4px 4px rgba(0,0,0,0.03),
-    0 8px 8px rgba(0,0,0,0.04),
-    0 16px 16px rgba(0,0,0,0.05),
-    inset 0 1px 0 rgba(255,255,255,0.9);
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.02),
+    0 2px 2px rgba(0, 0, 0, 0.02),
+    0 4px 4px rgba(0, 0, 0, 0.03),
+    0 8px 8px rgba(0, 0, 0, 0.04),
+    0 16px 16px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .skeuo-card:hover {
   transform: translateY(-6px);
-  box-shadow: 
-    0 2px 2px rgba(0,0,0,0.02),
-    0 4px 4px rgba(0,0,0,0.03),
-    0 8px 8px rgba(0,0,0,0.04),
-    0 16px 16px rgba(0,0,0,0.05),
-    0 32px 32px rgba(0,0,0,0.06),
-    inset 0 1px 0 rgba(255,255,255,1);
+  box-shadow:
+    0 2px 2px rgba(0, 0, 0, 0.02),
+    0 4px 4px rgba(0, 0, 0, 0.03),
+    0 8px 8px rgba(0, 0, 0, 0.04),
+    0 16px 16px rgba(0, 0, 0, 0.05),
+    0 32px 32px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
 }
 
 /* Skeuomorphic Button - Tactile, physical button */
 .skeuo-button {
-  background: linear-gradient(180deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.9) 100%);
+  background: linear-gradient(
+    180deg,
+    hsl(var(--primary)) 0%,
+    hsl(var(--primary) / 0.9) 100%
+  );
   border-radius: 0.75rem;
   padding: 0.75rem 1.5rem;
   font-weight: 600;
   color: white;
   border: none;
-  box-shadow: 
-    0 1px 2px rgba(0,0,0,0.07),
-    0 2px 4px rgba(0,0,0,0.07),
-    0 4px 8px rgba(0,0,0,0.07),
-    inset 0 1px 0 rgba(255,255,255,0.15),
-    inset 0 -1px 0 rgba(0,0,0,0.1);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.07),
+    0 2px 4px rgba(0, 0, 0, 0.07),
+    0 4px 8px rgba(0, 0, 0, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
 }
 
 .skeuo-button:hover {
   transform: translateY(-2px);
-  box-shadow: 
-    0 2px 4px rgba(0,0,0,0.08),
-    0 4px 8px rgba(0,0,0,0.08),
-    0 8px 16px rgba(0,0,0,0.08),
-    inset 0 1px 0 rgba(255,255,255,0.2),
-    inset 0 -1px 0 rgba(0,0,0,0.1);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.08),
+    0 4px 8px rgba(0, 0, 0, 0.08),
+    0 8px 16px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 }
 
 .skeuo-button:active {
   transform: translateY(0);
-  box-shadow: 
-    inset 0 2px 4px rgba(0,0,0,0.15),
-    inset 0 1px 2px rgba(0,0,0,0.1);
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.15),
+    inset 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* Skeuomorphic Input - Inset, recessed input field */
@@ -70,20 +74,20 @@
   border-radius: 0.625rem;
   padding: 0.875rem 1rem;
   border: 1px solid hsl(0 0% 88%);
-  box-shadow: 
-    inset 0 1px 3px rgba(0,0,0,0.08),
-    inset 0 2px 6px rgba(0,0,0,0.04),
-    0 1px 0 rgba(255,255,255,0.8);
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.08),
+    inset 0 2px 6px rgba(0, 0, 0, 0.04),
+    0 1px 0 rgba(255, 255, 255, 0.8);
   transition: all 0.2s ease-out;
 }
 
 .skeuo-input:focus {
   border-color: hsl(var(--primary) / 0.5);
-  box-shadow: 
-    inset 0 1px 3px rgba(0,0,0,0.08),
-    inset 0 2px 6px rgba(0,0,0,0.04),
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.08),
+    inset 0 2px 6px rgba(0, 0, 0, 0.04),
     0 0 0 3px hsl(var(--primary) / 0.1),
-    0 1px 0 rgba(255,255,255,0.8);
+    0 1px 0 rgba(255, 255, 255, 0.8);
   outline: none;
 }
 
@@ -93,13 +97,13 @@
   border-radius: 1.25rem;
   padding: 2rem;
   border: 1px solid hsl(0 0% 92%);
-  box-shadow: 
-    0 1px 1px rgba(0,0,0,0.015),
-    0 2px 2px rgba(0,0,0,0.015),
-    0 4px 4px rgba(0,0,0,0.02),
-    0 8px 8px rgba(0,0,0,0.025),
-    0 16px 16px rgba(0,0,0,0.03),
-    inset 0 1px 0 rgba(255,255,255,1);
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.015),
+    0 2px 2px rgba(0, 0, 0, 0.015),
+    0 4px 4px rgba(0, 0, 0, 0.02),
+    0 8px 8px rgba(0, 0, 0, 0.025),
+    0 16px 16px rgba(0, 0, 0, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
 }
 
 /* Skeuomorphic Badge - Small raised element */
@@ -110,10 +114,10 @@
   font-size: 0.75rem;
   font-weight: 600;
   border: 1px solid hsl(0 0% 88%);
-  box-shadow: 
-    0 1px 2px rgba(0,0,0,0.05),
-    inset 0 1px 0 rgba(255,255,255,0.9),
-    inset 0 -1px 0 rgba(0,0,0,0.03);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.03);
 }
 
 /* Skeuomorphic Toggle - Switch control */
@@ -123,14 +127,18 @@
   width: 3rem;
   height: 1.75rem;
   padding: 0.125rem;
-  box-shadow: 
-    inset 0 1px 3px rgba(0,0,0,0.15),
-    inset 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.15),
+    inset 0 2px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease-out;
 }
 
 .skeuo-toggle-track.active {
-  background: linear-gradient(180deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.85) 100%);
+  background: linear-gradient(
+    180deg,
+    hsl(var(--primary)) 0%,
+    hsl(var(--primary) / 0.85) 100%
+  );
 }
 
 .skeuo-toggle-thumb {
@@ -138,17 +146,22 @@
   border-radius: 9999px;
   width: 1.5rem;
   height: 1.5rem;
-  box-shadow: 
-    0 1px 2px rgba(0,0,0,0.1),
-    0 2px 4px rgba(0,0,0,0.08),
-    inset 0 1px 0 rgba(255,255,255,1);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
   transition: transform 0.2s ease-out;
 }
 
 /* Skeuomorphic Divider - Embossed line */
 .skeuo-divider {
   height: 2px;
-  background: linear-gradient(180deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.02) 50%, rgba(255,255,255,0.8) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.06) 0%,
+    rgba(0, 0, 0, 0.02) 50%,
+    rgba(255, 255, 255, 0.8) 100%
+  );
   border: none;
   margin: 1.5rem 0;
 }
@@ -159,11 +172,11 @@
   border-radius: 0.75rem;
   padding: 0.75rem;
   border: 1px solid hsl(0 0% 90%);
-  box-shadow: 
-    0 1px 2px rgba(0,0,0,0.05),
-    0 2px 4px rgba(0,0,0,0.04),
-    inset 0 1px 0 rgba(255,255,255,1),
-    inset 0 -1px 0 rgba(0,0,0,0.02);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 2px 4px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.02);
 }
 
 /* ===== LEGACY SOFT MODERN (kept for compatibility) ===== */
@@ -229,48 +242,67 @@
 /* ===== END SOFT MODERN ===== */
 
 /* Glassmorphism Effect */
-  .glass-effect {
-    background: linear-gradient(135deg, 
-      rgba(255, 255, 255, 0.1), 
-      rgba(255, 255, 255, 0.05));
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-  }
-  
-  /* Gradient Text */
-  .gradient-text-teal {
-    background: linear-gradient(135deg, hsl(180, 80%, 40%), hsl(180, 75%, 50%));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  
-  .gradient-text-primary {
-    background: linear-gradient(135deg, hsl(260, 70%, 35%), hsl(260, 60%, 55%));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  
-  /* Gradient Backgrounds */
-  .gradient-hero-primary {
-    background: linear-gradient(135deg, hsl(260, 70%, 25%) 0%, hsl(260, 65%, 35%) 50%, hsl(260, 60%, 50%) 100%);
-  }
-  
-  .gradient-hero-teal {
-    background: linear-gradient(135deg, hsl(180, 80%, 40%) 0%, hsl(180, 75%, 45%) 50%, hsl(180, 70%, 55%) 100%);
-  }
-  
-  .gradient-card {
-    background: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(220, 14%, 98%) 100%);
-  }
-  
+.glass-effect {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05)
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+/* Gradient Text */
+.gradient-text-teal {
+  background: linear-gradient(135deg, hsl(180, 80%, 40%), hsl(180, 75%, 50%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-primary {
+  background: linear-gradient(135deg, hsl(260, 70%, 35%), hsl(260, 60%, 55%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gradient Backgrounds */
+.gradient-hero-primary {
+  background: linear-gradient(
+    135deg,
+    hsl(260, 70%, 25%) 0%,
+    hsl(260, 65%, 35%) 50%,
+    hsl(260, 60%, 50%) 100%
+  );
+}
+
+.gradient-hero-teal {
+  background: linear-gradient(
+    135deg,
+    hsl(180, 80%, 40%) 0%,
+    hsl(180, 75%, 45%) 50%,
+    hsl(180, 70%, 55%) 100%
+  );
+}
+
+.gradient-card {
+  background: linear-gradient(
+    135deg,
+    hsl(0, 0%, 100%) 0%,
+    hsl(220, 14%, 98%) 100%
+  );
+}
+
 /* Image opacity utility */
 img {
   opacity: 0.9;
-  transition: opacity 0.3s ease, transform 0.4s ease, box-shadow 0.4s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
 }
 
 img:hover {
@@ -278,20 +310,30 @@ img:hover {
 }
 
 /* Gradient Mesh Background */
-  .gradient-mesh {
-    background: 
-      linear-gradient(135deg, hsl(220, 14%, 98%) 0%, hsl(0, 0%, 100%) 100%),
-      radial-gradient(at 20% 30%, rgba(109, 40, 217, 0.03) 0%, transparent 50%),
-      radial-gradient(at 80% 70%, rgba(20, 184, 166, 0.03) 0%, transparent 50%);
-    background-blend-mode: normal, screen, screen;
-  }
-  
+.gradient-mesh {
+  background:
+    linear-gradient(135deg, hsl(220, 14%, 98%) 0%, hsl(0, 0%, 100%) 100%),
+    radial-gradient(at 20% 30%, rgba(109, 40, 217, 0.03) 0%, transparent 50%),
+    radial-gradient(at 80% 70%, rgba(20, 184, 166, 0.03) 0%, transparent 50%);
+  background-blend-mode: normal, screen, screen;
+}
+
 /* Stagger Delays */
-.stagger-1 { animation-delay: 0.1s; }
-.stagger-2 { animation-delay: 0.2s; }
-.stagger-3 { animation-delay: 0.3s; }
-.stagger-4 { animation-delay: 0.4s; }
-.stagger-5 { animation-delay: 0.5s; }
+.stagger-1 {
+  animation-delay: 0.1s;
+}
+.stagger-2 {
+  animation-delay: 0.2s;
+}
+.stagger-3 {
+  animation-delay: 0.3s;
+}
+.stagger-4 {
+  animation-delay: 0.4s;
+}
+.stagger-5 {
+  animation-delay: 0.5s;
+}
 
 /* Scroll Reveal Base State */
 .reveal {
@@ -455,7 +497,9 @@ a[role="button"]:active {
 .animate-on-scroll {
   opacity: 0;
   transform: translateY(40px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
 }
 
 .animate-on-scroll.visible {
@@ -480,14 +524,30 @@ a[role="button"]:active {
   opacity: 0;
 }
 
-.stagger-children.visible > *:nth-child(1) { animation-delay: 0s; }
-.stagger-children.visible > *:nth-child(2) { animation-delay: 0.1s; }
-.stagger-children.visible > *:nth-child(3) { animation-delay: 0.15s; }
-.stagger-children.visible > *:nth-child(4) { animation-delay: 0.2s; }
-.stagger-children.visible > *:nth-child(5) { animation-delay: 0.25s; }
-.stagger-children.visible > *:nth-child(6) { animation-delay: 0.3s; }
-.stagger-children.visible > *:nth-child(7) { animation-delay: 0.35s; }
-.stagger-children.visible > *:nth-child(8) { animation-delay: 0.4s; }
+.stagger-children.visible > *:nth-child(1) {
+  animation-delay: 0s;
+}
+.stagger-children.visible > *:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.stagger-children.visible > *:nth-child(3) {
+  animation-delay: 0.15s;
+}
+.stagger-children.visible > *:nth-child(4) {
+  animation-delay: 0.2s;
+}
+.stagger-children.visible > *:nth-child(5) {
+  animation-delay: 0.25s;
+}
+.stagger-children.visible > *:nth-child(6) {
+  animation-delay: 0.3s;
+}
+.stagger-children.visible > *:nth-child(7) {
+  animation-delay: 0.35s;
+}
+.stagger-children.visible > *:nth-child(8) {
+  animation-delay: 0.4s;
+}
 
 /* Page transition animations */
 .page-transition {
@@ -578,7 +638,9 @@ a[role="button"]:active {
 /* 3D card hover utilities */
 .card-3d-hover {
   transform-style: preserve-3d;
-  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+  transition:
+    transform 0.3s ease-out,
+    box-shadow 0.3s ease-out;
 }
 
 .card-3d-hover:hover {
@@ -602,7 +664,12 @@ a[role="button"]:active {
 
 /* Animated gradient background */
 .animated-gradient {
-  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--primary)));
+  background: linear-gradient(
+    135deg,
+    hsl(var(--primary)),
+    hsl(var(--accent)),
+    hsl(var(--primary))
+  );
   background-size: 200% 200%;
   animation: gradient-shift 15s ease infinite;
 }
@@ -613,7 +680,7 @@ a[role="button"]:active {
 }
 
 .glow-effect::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: -2px;
   border-radius: inherit;
@@ -661,14 +728,14 @@ a[role="button"]:active {
 .neumorphism-card {
   background: hsl(var(--background));
   border-radius: 1.5rem;
-  box-shadow: 
+  box-shadow:
     8px 8px 16px rgba(0, 0, 0, 0.1),
     -8px -8px 16px rgba(255, 255, 255, 0.95);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .neumorphism-card:hover {
-  box-shadow: 
+  box-shadow:
     10px 10px 20px rgba(0, 0, 0, 0.12),
     -10px -10px 20px rgba(255, 255, 255, 1);
   transform: translateY(-2px);
@@ -678,7 +745,7 @@ a[role="button"]:active {
 .neumorphism-inset {
   background: hsl(var(--background));
   border-radius: 1rem;
-  box-shadow: 
+  box-shadow:
     inset 4px 4px 8px rgba(0, 0, 0, 0.08),
     inset -4px -4px 8px rgba(255, 255, 255, 0.9);
 }
@@ -687,21 +754,21 @@ a[role="button"]:active {
 .neumorphism-btn {
   background: hsl(var(--background));
   border-radius: 1rem;
-  box-shadow: 
+  box-shadow:
     6px 6px 12px rgba(0, 0, 0, 0.1),
     -6px -6px 12px rgba(255, 255, 255, 0.95);
   transition: all 0.2s ease-out;
 }
 
 .neumorphism-btn:hover {
-  box-shadow: 
+  box-shadow:
     8px 8px 16px rgba(0, 0, 0, 0.12),
     -8px -8px 16px rgba(255, 255, 255, 1);
   transform: translateY(-1px);
 }
 
 .neumorphism-btn:active {
-  box-shadow: 
+  box-shadow:
     inset 4px 4px 8px rgba(0, 0, 0, 0.1),
     inset -4px -4px 8px rgba(255, 255, 255, 0.85);
   transform: translateY(0);
@@ -711,7 +778,7 @@ a[role="button"]:active {
 .neumorphism-widget {
   background: hsl(var(--background));
   border-radius: 1.25rem;
-  box-shadow: 
+  box-shadow:
     8px 8px 20px rgba(0, 0, 0, 0.12),
     -8px -8px 20px rgba(255, 255, 255, 0.9),
     0 4px 12px rgba(0, 0, 0, 0.06);
@@ -720,7 +787,7 @@ a[role="button"]:active {
 }
 
 .neumorphism-widget:hover {
-  box-shadow: 
+  box-shadow:
     12px 12px 28px rgba(0, 0, 0, 0.15),
     -12px -12px 28px rgba(255, 255, 255, 0.95),
     0 8px 20px rgba(0, 0, 0, 0.08);
@@ -730,14 +797,14 @@ a[role="button"]:active {
 /* Neumorphism circle - for icons/badges */
 .neumorphism-circle {
   border-radius: 50%;
-  box-shadow: 
+  box-shadow:
     6px 6px 14px rgba(0, 0, 0, 0.12),
     -6px -6px 14px rgba(255, 255, 255, 0.95);
   transition: all 0.3s ease-out;
 }
 
 .neumorphism-circle:hover {
-  box-shadow: 
+  box-shadow:
     8px 8px 18px rgba(0, 0, 0, 0.15),
     -8px -8px 18px rgba(255, 255, 255, 1);
 }
@@ -746,7 +813,7 @@ a[role="button"]:active {
 .neumorphism-input {
   background: hsl(var(--background));
   border-radius: 0.75rem;
-  box-shadow: 
+  box-shadow:
     inset 3px 3px 6px rgba(0, 0, 0, 0.06),
     inset -3px -3px 6px rgba(255, 255, 255, 0.9);
   border: 1px solid transparent;
@@ -756,14 +823,25 @@ a[role="button"]:active {
 /* ===== PREMIUM MICRO-INTERACTIONS & 3D SURFACES ===== */
 
 @keyframes gradient-flow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @keyframes float-soft {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 .dynamic-gradient-overlay {
@@ -775,11 +853,13 @@ a[role="button"]:active {
   content: "";
   position: absolute;
   inset: -40% -40%;
-  background: linear-gradient(120deg,
+  background: linear-gradient(
+    120deg,
     hsl(var(--primary) / 0.18),
     hsl(var(--accent) / 0.16),
     hsl(var(--lavender-300) / 0.22),
-    hsl(var(--coral-200) / 0.18));
+    hsl(var(--coral-200) / 0.18)
+  );
   background-size: 220% 220%;
   animation: gradient-flow 16s ease-in-out infinite;
   opacity: 0.7;
@@ -793,7 +873,9 @@ a[role="button"]:active {
 
 .micro-tilt-3d {
   transform-style: preserve-3d;
-  transition: transform 0.25s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.2, 0, 0.2, 1);
+  transition:
+    transform 0.25s cubic-bezier(0.2, 0, 0.2, 1),
+    box-shadow 0.25s cubic-bezier(0.2, 0, 0.2, 1);
 }
 
 .micro-tilt-3d:hover {
@@ -811,7 +893,11 @@ a[role="button"]:active {
   position: absolute;
   inset: 1px;
   border-radius: inherit;
-  background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0));
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.55),
+    rgba(255, 255, 255, 0)
+  );
   opacity: 0.6;
   pointer-events: none;
   z-index: -1;
@@ -820,22 +906,24 @@ a[role="button"]:active {
 .tactile-button {
   box-shadow:
     0 8px 18px -12px rgba(15, 23, 42, 0.25),
-    inset 0 1px 0 rgba(255,255,255,0.4);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .tactile-button:hover {
   transform: translateY(-2px);
   box-shadow:
     0 12px 26px -12px rgba(15, 23, 42, 0.32),
-    inset 0 1px 0 rgba(255,255,255,0.5);
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .tactile-button:active {
   transform: translateY(0);
   box-shadow:
     0 6px 12px -10px rgba(15, 23, 42, 0.3),
-    inset 0 2px 6px rgba(0,0,0,0.12);
+    inset 0 2px 6px rgba(0, 0, 0, 0.12);
 }
 
 .fluid-motion {
@@ -859,7 +947,7 @@ a[role="button"]:active {
 }
 
 .neumorphism-input:focus {
-  box-shadow: 
+  box-shadow:
     inset 4px 4px 8px rgba(0, 0, 0, 0.08),
     inset -4px -4px 8px rgba(255, 255, 255, 0.95),
     0 0 0 3px hsl(var(--primary) / 0.15);
@@ -869,14 +957,14 @@ a[role="button"]:active {
 .dark .neumorphism-card,
 .dark .neumorphism-btn,
 .dark .neumorphism-widget {
-  box-shadow: 
+  box-shadow:
     6px 6px 14px rgba(0, 0, 0, 0.4),
     -6px -6px 14px rgba(255, 255, 255, 0.05);
 }
 
 .dark .neumorphism-inset,
 .dark .neumorphism-input {
-  box-shadow: 
+  box-shadow:
     inset 4px 4px 8px rgba(0, 0, 0, 0.3),
     inset -4px -4px 8px rgba(255, 255, 255, 0.03);
 }

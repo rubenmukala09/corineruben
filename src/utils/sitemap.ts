@@ -5,7 +5,14 @@
 export interface SitemapPage {
   path: string;
   priority: number;
-  changefreq: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
+  changefreq:
+    | "always"
+    | "hourly"
+    | "daily"
+    | "weekly"
+    | "monthly"
+    | "yearly"
+    | "never";
   lastmod?: string;
 }
 
@@ -16,13 +23,13 @@ export const SITEMAP_PAGES: SitemapPage[] = [
   { path: "/", priority: 1.0, changefreq: "daily" },
   { path: "/training", priority: 0.9, changefreq: "weekly" },
   { path: "/business", priority: 0.9, changefreq: "weekly" },
-  
+
   // Business service sub-pages (SEO critical)
   { path: "/business/ai-receptionist", priority: 0.85, changefreq: "weekly" },
   { path: "/business/ai-automation", priority: 0.85, changefreq: "weekly" },
   { path: "/business/website-design", priority: 0.85, changefreq: "weekly" },
   { path: "/business/website-insurance", priority: 0.85, changefreq: "weekly" },
-  
+
   // Medium priority pages
   { path: "/resources", priority: 0.8, changefreq: "weekly" },
   { path: "/contact", priority: 0.8, changefreq: "monthly" },
@@ -31,7 +38,7 @@ export const SITEMAP_PAGES: SitemapPage[] = [
   { path: "/faq", priority: 0.7, changefreq: "monthly" },
   { path: "/articles", priority: 0.7, changefreq: "weekly" },
   { path: "/careers", priority: 0.6, changefreq: "monthly" },
-  
+
   // Legal pages
   {
     path: "/privacy-policy",

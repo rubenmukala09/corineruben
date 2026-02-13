@@ -32,12 +32,32 @@ export function DashboardStats() {
 
     // Set up realtime subscriptions
     const channel = supabase
-      .channel('dashboard-updates')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'testimonials' }, fetchDashboardData)
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'booking_requests' }, fetchDashboardData)
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'website_inquiries' }, fetchDashboardData)
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'partner_orders' }, fetchDashboardData)
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'clients' }, fetchDashboardData)
+      .channel("dashboard-updates")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "testimonials" },
+        fetchDashboardData,
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "booking_requests" },
+        fetchDashboardData,
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "website_inquiries" },
+        fetchDashboardData,
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "partner_orders" },
+        fetchDashboardData,
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "clients" },
+        fetchDashboardData,
+      )
       .subscribe();
 
     return () => {
@@ -75,7 +95,7 @@ export function DashboardStats() {
       // Fetch subscriptions expiring in next 30 days
       const thirtyDaysFromNow = new Date();
       thirtyDaysFromNow.setDate(thirtyDaysFromNow.getDate() + 30);
-      
+
       const { count: expiringSoon } = await supabase
         .from("subscriptions")
         .select("*", { count: "exact", head: true })
@@ -89,10 +109,11 @@ export function DashboardStats() {
         .select("total")
         .gte("created_at", firstDayOfMonth.toISOString());
 
-      const revenueThisMonth = orderItemsThisMonth?.reduce(
-        (sum, item) => sum + Number(item.total || 0),
-        0
-      ) || 0;
+      const revenueThisMonth =
+        orderItemsThisMonth?.reduce(
+          (sum, item) => sum + Number(item.total || 0),
+          0,
+        ) || 0;
 
       // Calculate revenue last month for growth comparison
       const { data: orderItemsLastMonth } = await supabase
@@ -101,14 +122,16 @@ export function DashboardStats() {
         .gte("created_at", lastMonth.toISOString())
         .lte("created_at", endOfLastMonth.toISOString());
 
-      const revenueLastMonth = orderItemsLastMonth?.reduce(
-        (sum, item) => sum + Number(item.total || 0),
-        0
-      ) || 0;
+      const revenueLastMonth =
+        orderItemsLastMonth?.reduce(
+          (sum, item) => sum + Number(item.total || 0),
+          0,
+        ) || 0;
 
-      const revenueGrowth = revenueLastMonth > 0
-        ? ((revenueThisMonth - revenueLastMonth) / revenueLastMonth) * 100
-        : 0;
+      const revenueGrowth =
+        revenueLastMonth > 0
+          ? ((revenueThisMonth - revenueLastMonth) / revenueLastMonth) * 100
+          : 0;
 
       // Count pending actions (pending testimonials, booking requests, inquiries)
       const { count: pendingTestimonials } = await supabase
@@ -126,7 +149,10 @@ export function DashboardStats() {
         .select("*", { count: "exact", head: true })
         .eq("status", "new");
 
-      const pendingActions = (pendingTestimonials || 0) + (pendingBookings || 0) + (newInquiries || 0);
+      const pendingActions =
+        (pendingTestimonials || 0) +
+        (pendingBookings || 0) +
+        (newInquiries || 0);
 
       setData({
         totalClients: totalClients || 0,
@@ -182,7 +208,7 @@ export function DashboardStats() {
         iconBgColor="bg-gradient-to-br from-success/80 to-success"
         title="Revenue This Month"
         value={Math.round(data.revenueThisMonth)}
-        subtitle={`${data.revenueGrowth >= 0 ? '+' : ''}${(data.revenueGrowth ?? 0).toFixed(1)}% vs last month ${data.revenueGrowth >= 0 ? '↑' : '↓'}`}
+        subtitle={`${data.revenueGrowth >= 0 ? "+" : ""}${(data.revenueGrowth ?? 0).toFixed(1)}% vs last month ${data.revenueGrowth >= 0 ? "↑" : "↓"}`}
         subtitleColor={data.revenueGrowth >= 0 ? "success" : "destructive"}
         gradientFrom="hsl(var(--success) / 0.1)"
         gradientTo="hsl(var(--success) / 0.05)"

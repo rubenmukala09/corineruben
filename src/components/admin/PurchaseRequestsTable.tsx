@@ -16,10 +16,11 @@ export const PurchaseRequestsTable = () => {
     loadRequests();
 
     const channel = supabase
-      .channel('purchase_requests_changes')
-      .on('postgres_changes', 
-        { event: '*', schema: 'public', table: 'purchase_requests' },
-        () => loadRequests()
+      .channel("purchase_requests_changes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "purchase_requests" },
+        () => loadRequests(),
       )
       .subscribe();
 
@@ -75,16 +76,16 @@ export const PurchaseRequestsTable = () => {
   const downloadVeteranDoc = async (docUrl: string) => {
     try {
       const { data, error } = await supabase.storage
-        .from('veteran-docs')
+        .from("veteran-docs")
         .download(docUrl);
 
       if (error) throw error;
 
       // Create download link
       const url = URL.createObjectURL(data);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
-      a.download = docUrl.split('/').pop() || 'veteran-doc';
+      a.download = docUrl.split("/").pop() || "veteran-doc";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -100,23 +101,35 @@ export const PurchaseRequestsTable = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pending': return 'bg-yellow-500';
-      case 'processing': return 'bg-blue-500';
-      case 'shipped': return 'bg-purple-500';
-      case 'completed': return 'bg-green-500';
-      case 'cancelled': return 'bg-red-500';
-      default: return 'bg-gray-400';
+      case "pending":
+        return "bg-yellow-500";
+      case "processing":
+        return "bg-blue-500";
+      case "shipped":
+        return "bg-purple-500";
+      case "completed":
+        return "bg-green-500";
+      case "cancelled":
+        return "bg-red-500";
+      default:
+        return "bg-gray-400";
     }
   };
 
   const getPaymentStatusColor = (status: string) => {
     switch (status) {
-      case 'pending': return 'bg-yellow-500';
-      case 'processing': return 'bg-blue-500';
-      case 'completed': return 'bg-green-500';
-      case 'failed': return 'bg-red-500';
-      case 'refunded': return 'bg-orange-500';
-      default: return 'bg-gray-400';
+      case "pending":
+        return "bg-yellow-500";
+      case "processing":
+        return "bg-blue-500";
+      case "completed":
+        return "bg-green-500";
+      case "failed":
+        return "bg-red-500";
+      case "refunded":
+        return "bg-orange-500";
+      default:
+        return "bg-gray-400";
     }
   };
 
@@ -131,7 +144,9 @@ export const PurchaseRequestsTable = () => {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-bold">Purchase Requests ({requests.length})</h3>
+        <h3 className="text-lg font-bold">
+          Purchase Requests ({requests.length})
+        </h3>
         <Button onClick={loadRequests} variant="outline" size="sm">
           Refresh
         </Button>
@@ -154,7 +169,9 @@ export const PurchaseRequestsTable = () => {
                   <Badge className={getStatusColor(request.status)}>
                     {request.status}
                   </Badge>
-                  <Badge className={getPaymentStatusColor(request.payment_status)}>
+                  <Badge
+                    className={getPaymentStatusColor(request.payment_status)}
+                  >
                     Payment: {request.payment_status}
                   </Badge>
                   {request.is_veteran && (
@@ -169,26 +186,35 @@ export const PurchaseRequestsTable = () => {
                 </p>
               </div>
               <div className="text-sm text-muted-foreground text-right">
-                {new Date(request.created_at).toLocaleDateString()}<br/>
+                {new Date(request.created_at).toLocaleDateString()}
+                <br />
                 {new Date(request.created_at).toLocaleTimeString()}
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="text-sm font-semibold mb-1">Customer Information</p>
+                <p className="text-sm font-semibold mb-1">
+                  Customer Information
+                </p>
                 <div className="space-y-1 text-sm">
                   <p className="font-medium">{request.full_name}</p>
                   <div className="flex items-center gap-2">
                     <Mail className="w-4 h-4 text-muted-foreground" />
-                    <a href={`mailto:${request.email}`} className="hover:underline">
+                    <a
+                      href={`mailto:${request.email}`}
+                      className="hover:underline"
+                    >
                       {request.email}
                     </a>
                   </div>
                   {request.phone && (
                     <div className="flex items-center gap-2">
                       <Phone className="w-4 h-4 text-muted-foreground" />
-                      <a href={`tel:${request.phone}`} className="hover:underline">
+                      <a
+                        href={`tel:${request.phone}`}
+                        className="hover:underline"
+                      >
                         {request.phone}
                       </a>
                     </div>
@@ -221,7 +247,9 @@ export const PurchaseRequestsTable = () => {
                   )}
                   <div className="flex justify-between font-bold border-t pt-1">
                     <span>Total:</span>
-                    <span className="text-primary">${request.final_price.toFixed(2)}</span>
+                    <span className="text-primary">
+                      ${request.final_price.toFixed(2)}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -229,16 +257,23 @@ export const PurchaseRequestsTable = () => {
 
             {request.is_veteran && (
               <div className="bg-primary/5 p-3 rounded-lg">
-                <p className="text-sm font-semibold mb-2">🇺🇸 Veteran Verification</p>
+                <p className="text-sm font-semibold mb-2">
+                  🇺🇸 Veteran Verification
+                </p>
                 <div className="space-y-1 text-sm">
-                  <p>Type: {request.veteran_type?.replace('_', ' ').toUpperCase()}</p>
+                  <p>
+                    Type:{" "}
+                    {request.veteran_type?.replace("_", " ").toUpperCase()}
+                  </p>
                   <p>ID Last 4: {request.veteran_id_last4}</p>
                   {request.veteran_document_url && (
                     <Button
                       size="sm"
                       variant="outline"
                       className="mt-2"
-                      onClick={() => downloadVeteranDoc(request.veteran_document_url)}
+                      onClick={() =>
+                        downloadVeteranDoc(request.veteran_document_url)
+                      }
                     >
                       <Download className="w-4 h-4 mr-2" />
                       Download Verification Doc
@@ -261,25 +296,37 @@ export const PurchaseRequestsTable = () => {
               <Button
                 size="sm"
                 variant="outline"
-                onClick={() => updateStatus(request.id, 'payment_status', 'processing')}
-                disabled={updatingId === request.id || request.payment_status !== 'pending'}
+                onClick={() =>
+                  updateStatus(request.id, "payment_status", "processing")
+                }
+                disabled={
+                  updatingId === request.id ||
+                  request.payment_status !== "pending"
+                }
               >
                 Mark Payment Processing
               </Button>
               <Button
                 size="sm"
                 variant="default"
-                onClick={() => updateStatus(request.id, 'payment_status', 'completed')}
-                disabled={updatingId === request.id || request.payment_status === 'completed'}
+                onClick={() =>
+                  updateStatus(request.id, "payment_status", "completed")
+                }
+                disabled={
+                  updatingId === request.id ||
+                  request.payment_status === "completed"
+                }
               >
                 Payment Received
               </Button>
-              {request.item_type === 'product' && (
+              {request.item_type === "product" && (
                 <Button
                   size="sm"
                   variant="secondary"
-                  onClick={() => updateStatus(request.id, 'status', 'shipped')}
-                  disabled={updatingId === request.id || request.status === 'shipped'}
+                  onClick={() => updateStatus(request.id, "status", "shipped")}
+                  disabled={
+                    updatingId === request.id || request.status === "shipped"
+                  }
                 >
                   Mark Shipped
                 </Button>
@@ -287,15 +334,17 @@ export const PurchaseRequestsTable = () => {
               <Button
                 size="sm"
                 variant="secondary"
-                onClick={() => updateStatus(request.id, 'status', 'completed')}
-                disabled={updatingId === request.id || request.status === 'completed'}
+                onClick={() => updateStatus(request.id, "status", "completed")}
+                disabled={
+                  updatingId === request.id || request.status === "completed"
+                }
               >
                 Complete Order
               </Button>
               <Button
                 size="sm"
                 variant="destructive"
-                onClick={() => updateStatus(request.id, 'status', 'cancelled')}
+                onClick={() => updateStatus(request.id, "status", "cancelled")}
                 disabled={updatingId === request.id}
               >
                 Cancel

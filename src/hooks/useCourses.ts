@@ -106,10 +106,12 @@ export function useCourseModules(courseId: string) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("course_modules")
-        .select(`
+        .select(
+          `
           *,
           lessons:course_lessons(*)
-        `)
+        `,
+        )
         .eq("course_id", courseId)
         .order("order_index", { ascending: true });
 
@@ -119,10 +121,13 @@ export function useCourseModules(courseId: string) {
       }
 
       // Sort lessons within each module
-      return (data as (CourseModule & { lessons: CourseLesson[] })[]).map(module => ({
-        ...module,
-        lessons: module.lessons?.sort((a, b) => a.order_index - b.order_index) || []
-      }));
+      return (data as (CourseModule & { lessons: CourseLesson[] })[]).map(
+        (module) => ({
+          ...module,
+          lessons:
+            module.lessons?.sort((a, b) => a.order_index - b.order_index) || [],
+        }),
+      );
     },
     enabled: !!courseId,
   });
@@ -132,15 +137,19 @@ export function useUserEnrollments() {
   return useQuery({
     queryKey: ["user-enrollments"],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return [];
 
       const { data, error } = await supabase
         .from("enrollments")
-        .select(`
+        .select(
+          `
           *,
           course:courses(*)
-        `)
+        `,
+        )
         .eq("user_id", user.id)
         .order("enrolled_at", { ascending: false });
 
@@ -159,8 +168,16 @@ export function useEnrollInCourse() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ courseId, contactId }: { courseId: string; contactId?: string }) => {
-      const { data: { user } } = await supabase.auth.getUser();
+    mutationFn: async ({
+      courseId,
+      contactId,
+    }: {
+      courseId: string;
+      contactId?: string;
+    }) => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error("Must be logged in to enroll");
 
       // Check if already enrolled
@@ -217,7 +234,13 @@ export function useUpdateProgress() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ enrollmentId, progress }: { enrollmentId: string; progress: number }) => {
+    mutationFn: async ({
+      enrollmentId,
+      progress,
+    }: {
+      enrollmentId: string;
+      progress: number;
+    }) => {
       const { data, error } = await supabase
         .from("enrollments")
         .update({

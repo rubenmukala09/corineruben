@@ -32,7 +32,10 @@ export function FilterSidebar({
   onClearFilters,
   showPriceFilter = true,
 }: FilterSidebarProps) {
-  const hasActiveFilters = selectedCategories.length > 0 || (priceRange[0] > 0 || priceRange[1] < maxPrice);
+  const hasActiveFilters =
+    selectedCategories.length > 0 ||
+    priceRange[0] > 0 ||
+    priceRange[1] < maxPrice;
 
   return (
     <Card className="p-6 sticky top-24 h-fit">
@@ -54,7 +57,9 @@ export function FilterSidebar({
       <div className="space-y-6">
         {/* Categories */}
         <div>
-          <h4 className="text-sm font-semibold mb-3 text-foreground">Categories</h4>
+          <h4 className="text-sm font-semibold mb-3 text-foreground">
+            Categories
+          </h4>
           <div className="space-y-3">
             {categories.map((category) => (
               <div key={category.id} className="flex items-center space-x-2">
@@ -69,7 +74,9 @@ export function FilterSidebar({
                 >
                   {category.label}
                   {category.count !== undefined && (
-                    <span className="text-muted-foreground ml-1">({category.count})</span>
+                    <span className="text-muted-foreground ml-1">
+                      ({category.count})
+                    </span>
                   )}
                 </Label>
               </div>
@@ -80,14 +87,18 @@ export function FilterSidebar({
         {/* Price Range */}
         {showPriceFilter && onPriceChange && (
           <div>
-            <h4 className="text-sm font-semibold mb-3 text-foreground">Price Range</h4>
+            <h4 className="text-sm font-semibold mb-3 text-foreground">
+              Price Range
+            </h4>
             <div className="space-y-4">
               <Slider
                 min={0}
                 max={maxPrice}
                 step={5}
                 value={priceRange}
-                onValueChange={(value) => onPriceChange(value as [number, number])}
+                onValueChange={(value) =>
+                  onPriceChange(value as [number, number])
+                }
                 className="w-full"
               />
               <div className="flex items-center justify-between text-sm text-muted-foreground">

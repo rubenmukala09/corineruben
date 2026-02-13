@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import type { Database } from "@/integrations/supabase/types";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 
@@ -13,8 +14,13 @@ import { RecentActivityFeed } from "@/components/dashboard/RecentActivityFeed";
 import { BusinessQuickActions } from "@/components/dashboard/BusinessQuickActions";
 import { SubscriptionStatus } from "@/components/SubscriptionStatus";
 
+type BusinessProfile = Database["public"]["Views"]["profiles_safe"]["Row"];
+
+const getErrorMessage = (error: unknown): string =>
+  error instanceof Error ? error.message : "An unexpected error occurred";
+
 function BusinessDashboard() {
-  const [profile, setProfile] = useState<any>(null);
+  const [profile, setProfile] = useState<BusinessProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -25,7 +31,9 @@ function BusinessDashboard() {
 
   const loadProfile = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         navigate("/auth");
         return;
@@ -38,7 +46,7 @@ function BusinessDashboard() {
         .single();
 
       setProfile(profileData);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error loading profile:", error);
     } finally {
       setLoading(false);
@@ -48,15 +56,15 @@ function BusinessDashboard() {
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut();
-      toast({ 
+      toast({
         title: "👋 Signed Out Successfully",
-        description: "You've been securely logged out. See you next time!"
+        description: "You've been securely logged out. See you next time!",
       });
       navigate("/auth");
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "❌ Sign Out Failed",
-        description: error.message || "Unable to sign out",
+        description: getErrorMessage(error) || "Unable to sign out",
         variant: "destructive",
       });
     }
@@ -94,7 +102,7 @@ function BusinessDashboard() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <AutomationStatusHero 
+          <AutomationStatusHero
             planName="AI Automation Suite"
             status="none"
             automationScore={null}

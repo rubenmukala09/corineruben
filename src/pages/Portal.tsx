@@ -17,7 +17,18 @@ import {
   Bot,
 } from "lucide-react";
 
-type UserRole = "admin" | "secretary" | "training_coordinator" | "business_consultant" | "support_specialist" | "staff" | "moderator" | "senior" | "caregiver" | "healthcare" | "business";
+type UserRole =
+  | "admin"
+  | "secretary"
+  | "training_coordinator"
+  | "business_consultant"
+  | "support_specialist"
+  | "staff"
+  | "moderator"
+  | "senior"
+  | "caregiver"
+  | "healthcare"
+  | "business";
 
 interface Profile {
   first_name: string;
@@ -48,15 +59,18 @@ function Portal() {
   const loadUserData = async () => {
     console.log("Portal: Starting to load user data");
     try {
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
       console.log("Portal: User loaded", user?.id);
-      
+
       if (userError) {
         console.error("Portal: Error getting user", userError);
         navigate("/auth");
         return;
       }
-      
+
       if (!user) {
         console.log("Portal: No user found, redirecting to auth");
         navigate("/auth");
@@ -74,9 +88,21 @@ function Portal() {
       ] = await Promise.all([
         supabase.from("profiles_safe").select("*").eq("id", user.id).single(),
         supabase.from("user_roles").select("role").eq("user_id", user.id),
-        supabase.from("senior_client_profiles").select("id").eq("user_id", user.id).maybeSingle(),
-        supabase.from("caregiver_profiles").select("id").eq("user_id", user.id).maybeSingle(),
-        supabase.from("healthcare_professional_profiles").select("id").eq("user_id", user.id).maybeSingle(),
+        supabase
+          .from("senior_client_profiles")
+          .select("id")
+          .eq("user_id", user.id)
+          .maybeSingle(),
+        supabase
+          .from("caregiver_profiles")
+          .select("id")
+          .eq("user_id", user.id)
+          .maybeSingle(),
+        supabase
+          .from("healthcare_professional_profiles")
+          .select("id")
+          .eq("user_id", user.id)
+          .maybeSingle(),
       ]);
 
       if (profileError) {
@@ -90,7 +116,8 @@ function Portal() {
         console.error("Portal: Error loading roles", rolesError);
       }
 
-      const userRoles: UserRole[] = rolesData?.map((r) => r.role as UserRole) || [];
+      const userRoles: UserRole[] =
+        rolesData?.map((r) => r.role as UserRole) || [];
       console.log("Portal: Roles from user_roles table", userRoles);
 
       // Add profile-specific roles
@@ -126,7 +153,10 @@ function Portal() {
           healthcare: "/portal/healthcare",
         };
         const redirectPath = roleRedirects[userRoles[0]] || "/portal";
-        console.log("Portal: Auto-redirecting single-role user to", redirectPath);
+        console.log(
+          "Portal: Auto-redirecting single-role user to",
+          redirectPath,
+        );
         navigate(redirectPath);
         return;
       }
@@ -134,7 +164,8 @@ function Portal() {
       console.error("Portal: Critical error loading user data:", error);
       toast({
         title: "Error Loading Portal",
-        description: "Unable to load your portal data. Please try refreshing the page.",
+        description:
+          "Unable to load your portal data. Please try refreshing the page.",
         variant: "destructive",
       });
     } finally {
@@ -254,13 +285,26 @@ function Portal() {
             <Shield className="relative w-16 h-16 text-primary mx-auto animate-pulse" />
           </div>
           <div className="space-y-2">
-            <h3 className="text-xl font-semibold text-foreground">Loading Your Dashboard</h3>
-            <p className="text-sm text-muted-foreground">Please wait while we prepare everything for you...</p>
+            <h3 className="text-xl font-semibold text-foreground">
+              Loading Your Dashboard
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              Please wait while we prepare everything for you...
+            </p>
           </div>
           <div className="flex justify-center gap-2">
-            <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-            <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-            <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+            <div
+              className="w-2 h-2 bg-primary rounded-full animate-bounce"
+              style={{ animationDelay: "0ms" }}
+            />
+            <div
+              className="w-2 h-2 bg-primary rounded-full animate-bounce"
+              style={{ animationDelay: "150ms" }}
+            />
+            <div
+              className="w-2 h-2 bg-primary rounded-full animate-bounce"
+              style={{ animationDelay: "300ms" }}
+            />
           </div>
         </div>
       </div>
@@ -278,7 +322,9 @@ function Portal() {
                 <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
               <div className="min-w-0">
-                <h1 className="text-lg sm:text-xl font-bold truncate">InVision Network Portal</h1>
+                <h1 className="text-lg sm:text-xl font-bold truncate">
+                  InVision Network Portal
+                </h1>
                 <p className="text-xs sm:text-sm text-muted-foreground truncate">
                   Welcome back, {profile?.first_name || "User"}
                 </p>
@@ -286,13 +332,23 @@ function Portal() {
             </div>
 
             <div className="flex items-center gap-2 w-full sm:w-auto">
-              <Button asChild variant="ghost" size="sm" className="flex-1 sm:flex-none touch-target">
+              <Button
+                asChild
+                variant="ghost"
+                size="sm"
+                className="flex-1 sm:flex-none touch-target"
+              >
                 <Link to="/">
                   <Home className="w-4 h-4 mr-2" />
                   Home
                 </Link>
               </Button>
-              <Button variant="outline" size="sm" onClick={handleSignOut} className="flex-1 sm:flex-none touch-target">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleSignOut}
+                className="flex-1 sm:flex-none touch-target"
+              >
                 <LogOut className="w-4 h-4 mr-2" />
                 Sign Out
               </Button>
@@ -305,7 +361,9 @@ function Portal() {
       <main className="container-responsive py-8 sm:py-12">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">Select Your Dashboard</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">
+              Select Your Dashboard
+            </h2>
             <p className="text-base sm:text-lg text-muted-foreground">
               Choose the workspace you want to access
             </p>
@@ -314,7 +372,9 @@ function Portal() {
           {availableRoles.length === 0 ? (
             <Card className="p-8 sm:p-12 text-center">
               <Shield className="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-muted-foreground mb-4" />
-              <h3 className="text-lg sm:text-xl font-semibold mb-2">No Role Assigned</h3>
+              <h3 className="text-lg sm:text-xl font-semibold mb-2">
+                No Role Assigned
+              </h3>
               <p className="text-sm sm:text-base text-muted-foreground mb-6">
                 Please contact your administrator to assign you a role.
               </p>
@@ -340,7 +400,9 @@ function Portal() {
                         <Icon className="w-7 h-7 text-white" />
                       </div>
                       <h3 className="text-xl font-bold mb-2">{card.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-4">{card.description}</p>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        {card.description}
+                      </p>
                       <Button className="w-full" variant="outline">
                         Access Dashboard
                       </Button>
@@ -354,6 +416,6 @@ function Portal() {
       </main>
     </div>
   );
-};
+}
 
 export default Portal;

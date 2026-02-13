@@ -1,32 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Separator } from '@/components/ui/separator';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  CreditCard, 
-  Check, 
-  Loader2, 
-  AlertCircle, 
+import React, { useState, useEffect } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  CreditCard,
+  Check,
+  Loader2,
+  AlertCircle,
   Star,
   ShieldCheck,
   PartyPopper,
   ArrowLeft,
   Smartphone,
-  RefreshCw
-} from 'lucide-react';
-import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { useCheckout } from '@/contexts/CheckoutContext';
-import { useStripeKey } from '@/hooks/useStripeKey';
-import { usePaymentFlow } from '@/hooks/usePaymentFlow';
-import { supabase } from '@/integrations/supabase/client';
-import { toast } from 'sonner';
-import confetti from 'canvas-confetti';
-import { motion, AnimatePresence } from 'framer-motion';
+  RefreshCw,
+} from "lucide-react";
+import {
+  Elements,
+  PaymentElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
+import { useCheckout } from "@/contexts/CheckoutContext";
+import { useStripeKey } from "@/hooks/useStripeKey";
+import { usePaymentFlow } from "@/hooks/usePaymentFlow";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+import confetti from "canvas-confetti";
+import { motion, AnimatePresence } from "framer-motion";
 
 // Step 1: Customer Information Form
 const CustomerInfoStep: React.FC<{
@@ -38,17 +48,17 @@ const CustomerInfoStep: React.FC<{
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!customerInfo.email || !customerInfo.name) {
-      toast.error('Please fill in all required fields');
+      toast.error("Please fill in all required fields");
       return;
     }
 
-    const paymentItems = items.map(item => ({
+    const paymentItems = items.map((item) => ({
       id: item.productId,
       name: item.product.name,
       price: item.discountedPrice,
-      quantity: item.quantity
+      quantity: item.quantity,
     }));
 
     const result = await createPaymentIntent({
@@ -56,7 +66,7 @@ const CustomerInfoStep: React.FC<{
       customerEmail: customerInfo.email,
       customerName: customerInfo.name,
       isVeteran: customerInfo.isVeteran,
-      items: paymentItems
+      items: paymentItems,
     });
 
     if (result) {
@@ -94,7 +104,7 @@ const CustomerInfoStep: React.FC<{
         <Input
           id="phone"
           type="tel"
-          value={customerInfo.phone || ''}
+          value={customerInfo.phone || ""}
           onChange={(e) => setCustomerInfo({ phone: e.target.value })}
           placeholder="(555) 123-4567"
         />
@@ -104,10 +114,15 @@ const CustomerInfoStep: React.FC<{
         <Checkbox
           id="veteran"
           checked={customerInfo.isVeteran}
-          onCheckedChange={(checked) => setCustomerInfo({ isVeteran: !!checked })}
+          onCheckedChange={(checked) =>
+            setCustomerInfo({ isVeteran: !!checked })
+          }
         />
         <div className="flex-1">
-          <Label htmlFor="veteran" className="flex items-center gap-2 cursor-pointer">
+          <Label
+            htmlFor="veteran"
+            className="flex items-center gap-2 cursor-pointer"
+          >
             <Star className="h-4 w-4 text-amber-500" />
             <span>I am a Veteran or First Responder</span>
           </Label>
@@ -159,21 +174,24 @@ const QRCodePaymentStep: React.FC<{
   // Poll for payment status
   useEffect(() => {
     if (!paymentLinkId || !qrCodeUrl) return;
-    
+
     const checkPayment = async () => {
       setChecking(true);
       try {
-        const { data } = await supabase.functions.invoke('verify-payment-link', {
-          body: { paymentLinkId }
-        });
-        
+        const { data } = await supabase.functions.invoke(
+          "verify-payment-link",
+          {
+            body: { paymentLinkId },
+          },
+        );
+
         if (data?.paid) {
           confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-          toast.success('Payment received!');
+          toast.success("Payment received!");
           onSuccess();
         }
       } catch (err) {
-        console.log('Payment check:', err);
+        console.log("Payment check:", err);
       } finally {
         setChecking(false);
       }
@@ -186,31 +204,37 @@ const QRCodePaymentStep: React.FC<{
   const generateQRCode = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase.functions.invoke('generate-payment-link', {
-        body: {
-          amount: Math.round(total * 100),
-          customerEmail: state.customerInfo.email,
-          customerName: state.customerInfo.name,
-          items: state.items.map(item => ({
-            name: item.product.name,
-            quantity: item.quantity,
-            price: item.discountedPrice
-          }))
-        }
-      });
+      const { data, error } = await supabase.functions.invoke(
+        "generate-payment-link",
+        {
+          body: {
+            amount: Math.round(total * 100),
+            customerEmail: state.customerInfo.email,
+            customerName: state.customerInfo.name,
+            items: state.items.map((item) => ({
+              name: item.product.name,
+              quantity: item.quantity,
+              price: item.discountedPrice,
+            })),
+          },
+        },
+      );
 
       if (error) throw error;
-      
+
       if (data?.url) {
         const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(data.url)}`;
         setQrCodeUrl(qrUrl);
         setPaymentLinkId(data.id);
         setTimeLeft(240);
-        console.log('[QR Payment] Generated:', { id: data.id, requestId: data.requestId });
+        console.log("[QR Payment] Generated:", {
+          id: data.id,
+          requestId: data.requestId,
+        });
       }
     } catch (error: any) {
-      console.error('[QR Payment] Error:', error);
-      toast.error('Failed to generate QR code');
+      console.error("[QR Payment] Error:", error);
+      toast.error("Failed to generate QR code");
     } finally {
       setLoading(false);
     }
@@ -219,7 +243,7 @@ const QRCodePaymentStep: React.FC<{
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
   return (
@@ -240,7 +264,11 @@ const QRCodePaymentStep: React.FC<{
                 Scan QR code with Apple Pay, Google Pay, or any mobile wallet
               </p>
             </div>
-            <Button onClick={generateQRCode} disabled={loading} className="w-full">
+            <Button
+              onClick={generateQRCode}
+              disabled={loading}
+              className="w-full"
+            >
               {loading ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (
@@ -258,9 +286,13 @@ const QRCodePaymentStep: React.FC<{
             className="space-y-3"
           >
             <div className="bg-white p-3 rounded-xl inline-block shadow-md">
-              <img src={qrCodeUrl} alt="Payment QR Code" className="w-[180px] h-[180px]" />
+              <img
+                src={qrCodeUrl}
+                alt="Payment QR Code"
+                className="w-[180px] h-[180px]"
+              />
             </div>
-            
+
             <div className="flex items-center justify-center gap-2">
               <Badge variant={timeLeft < 60 ? "destructive" : "secondary"}>
                 {checking && <Loader2 className="w-3 h-3 mr-1 animate-spin" />}
@@ -268,18 +300,28 @@ const QRCodePaymentStep: React.FC<{
                 {formatTime(timeLeft)}
               </Badge>
             </div>
-            
+
             <p className="text-sm text-muted-foreground">
-              Scan to pay <strong className="text-foreground">${total.toFixed(2)}</strong>
+              Scan to pay{" "}
+              <strong className="text-foreground">${total.toFixed(2)}</strong>
             </p>
-            
+
             <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
               <Loader2 className="w-3 h-3 animate-spin" />
               Waiting for payment...
             </div>
-            
-            <Button variant="outline" onClick={generateQRCode} size="sm" disabled={loading}>
-              {loading ? <Loader2 className="w-3 h-3 animate-spin" /> : 'Regenerate'}
+
+            <Button
+              variant="outline"
+              onClick={generateQRCode}
+              size="sm"
+              disabled={loading}
+            >
+              {loading ? (
+                <Loader2 className="w-3 h-3 animate-spin" />
+              ) : (
+                "Regenerate"
+              )}
             </Button>
           </motion.div>
         )}
@@ -315,34 +357,37 @@ const PaymentFormStep: React.FC<{
         throw new Error(submitError.message);
       }
 
-      const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          return_url: `${window.location.origin}/payment-success`,
-          receipt_email: state.customerInfo.email
-        },
-        redirect: 'if_required'
-      });
+      const { error: confirmError, paymentIntent } =
+        await stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            return_url: `${window.location.origin}/payment-success`,
+            receipt_email: state.customerInfo.email,
+          },
+          redirect: "if_required",
+        });
 
       if (confirmError) {
         throw new Error(confirmError.message);
       }
 
-      if (paymentIntent?.status === 'succeeded') {
+      if (paymentIntent?.status === "succeeded") {
         // Trigger confetti
         confetti({
           particleCount: 100,
           spread: 70,
-          origin: { y: 0.6 }
+          origin: { y: 0.6 },
         });
 
         // Verify payment and send digital downloads if applicable
-        const digitalItems = state.items.filter(item => item.product.isDigital);
+        const digitalItems = state.items.filter(
+          (item) => item.product.isDigital,
+        );
         if (digitalItems.length > 0) {
           await sendDigitalDownload(
             paymentIntent.id,
             state.customerInfo.email,
-            digitalItems.map(item => item.productId)
+            digitalItems.map((item) => item.productId),
           );
         }
 
@@ -350,7 +395,7 @@ const PaymentFormStep: React.FC<{
         onSuccess();
       }
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Payment failed';
+      const message = err instanceof Error ? err.message : "Payment failed";
       setError(message);
       toast.error(message);
     } finally {
@@ -372,9 +417,9 @@ const PaymentFormStep: React.FC<{
       </Button>
 
       <div className="border rounded-lg p-4">
-        <PaymentElement 
+        <PaymentElement
           options={{
-            layout: 'tabs'
+            layout: "tabs",
           }}
         />
       </div>
@@ -429,7 +474,9 @@ const SuccessStep: React.FC<{
       <div className="bg-muted rounded-lg p-4 text-left space-y-2">
         <div className="flex justify-between">
           <span className="text-muted-foreground">Order ID</span>
-          <span className="font-mono text-sm">{state.orderId?.slice(0, 8)}...</span>
+          <span className="font-mono text-sm">
+            {state.orderId?.slice(0, 8)}...
+          </span>
         </div>
         <div className="flex justify-between">
           <span className="text-muted-foreground">Amount Paid</span>
@@ -462,7 +509,7 @@ const OrderSummary: React.FC = () => {
   return (
     <div className="space-y-3">
       <h4 className="font-medium">Order Summary</h4>
-      
+
       <div className="space-y-2">
         {state.items.map((item) => (
           <div key={item.productId} className="flex justify-between text-sm">
@@ -482,7 +529,7 @@ const OrderSummary: React.FC = () => {
           <span>Subtotal</span>
           <span>${subtotal.toFixed(2)}</span>
         </div>
-        
+
         {discount > 0 && (
           <div className="flex justify-between text-green-600">
             <span className="flex items-center gap-1">
@@ -501,11 +548,12 @@ const OrderSummary: React.FC = () => {
         </div>
       </div>
 
-      {state.type === 'subscription' && state.items[0]?.product.billingInterval && (
-        <Badge variant="secondary" className="w-full justify-center">
-          Billed {state.items[0].product.billingInterval}ly
-        </Badge>
-      )}
+      {state.type === "subscription" &&
+        state.items[0]?.product.billingInterval && (
+          <Badge variant="secondary" className="w-full justify-center">
+            Billed {state.items[0].product.billingInterval}ly
+          </Badge>
+        )}
     </div>
   );
 };
@@ -522,16 +570,16 @@ const UnifiedCheckoutDialog: React.FC = () => {
   }, [state.isOpen, initializeStripe]);
 
   const handleClose = () => {
-    if (state.step === 'success') {
+    if (state.step === "success") {
       resetCheckout();
     }
     closeCheckout();
   };
 
   const stepTitles = {
-    info: 'Checkout',
-    payment: 'Payment',
-    success: 'Order Complete'
+    info: "Checkout",
+    payment: "Payment",
+    success: "Order Complete",
   };
 
   return (
@@ -539,7 +587,7 @@ const UnifiedCheckoutDialog: React.FC = () => {
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            {state.step === 'success' ? (
+            {state.step === "success" ? (
               <Check className="h-5 w-5 text-green-600" />
             ) : (
               <CreditCard className="h-5 w-5" />
@@ -550,11 +598,9 @@ const UnifiedCheckoutDialog: React.FC = () => {
 
         <div className="grid gap-6 md:grid-cols-[1fr,auto]">
           <div className="order-2 md:order-1">
-            {state.step === 'info' && (
-              <CustomerInfoStep onNext={() => {}} />
-            )}
+            {state.step === "info" && <CustomerInfoStep onNext={() => {}} />}
 
-            {state.step === 'payment' && (
+            {state.step === "payment" && (
               <Tabs defaultValue="card" className="w-full">
                 <TabsList className="grid w-full grid-cols-2 mb-4">
                   <TabsTrigger value="card" className="flex items-center gap-2">
@@ -566,68 +612,68 @@ const UnifiedCheckoutDialog: React.FC = () => {
                     QR Code
                   </TabsTrigger>
                 </TabsList>
-                
+
                 <TabsContent value="card">
                   <Button
                     type="button"
                     variant="ghost"
                     size="sm"
-                    onClick={() => setStep('info')}
+                    onClick={() => setStep("info")}
                     className="mb-2"
                   >
                     <ArrowLeft className="mr-2 h-4 w-4" />
                     Back to details
                   </Button>
-                  
+
                   {stripePromise && state.clientSecret ? (
                     <Elements
                       stripe={stripePromise}
                       options={{
                         clientSecret: state.clientSecret,
                         appearance: {
-                          theme: 'stripe',
+                          theme: "stripe",
                           variables: {
-                            colorPrimary: 'hsl(var(--primary))'
-                          }
-                        }
+                            colorPrimary: "hsl(var(--primary))",
+                          },
+                        },
                       }}
                     >
                       <PaymentFormStep
-                        onSuccess={() => setStep('success')}
-                        onBack={() => setStep('info')}
+                        onSuccess={() => setStep("success")}
+                        onBack={() => setStep("info")}
                       />
                     </Elements>
                   ) : (
                     <div className="flex items-center justify-center py-8">
                       <Loader2 className="w-6 h-6 animate-spin text-primary" />
-                      <span className="ml-2 text-sm text-muted-foreground">Loading payment...</span>
+                      <span className="ml-2 text-sm text-muted-foreground">
+                        Loading payment...
+                      </span>
                     </div>
                   )}
                 </TabsContent>
-                
+
                 <TabsContent value="qr">
                   <Button
                     type="button"
                     variant="ghost"
                     size="sm"
-                    onClick={() => setStep('info')}
+                    onClick={() => setStep("info")}
                     className="mb-2"
                   >
                     <ArrowLeft className="mr-2 h-4 w-4" />
                     Back to details
                   </Button>
-                  
-                  <QRCodePaymentStep onSuccess={() => setStep('success')} />
+
+                  <QRCodePaymentStep onSuccess={() => setStep("success")} />
                 </TabsContent>
               </Tabs>
             )}
 
-            {state.step === 'success' && (
-              <SuccessStep onClose={handleClose} />
-            )}
+            {state.step === "success" && <SuccessStep onClose={handleClose} />}
           </div>
 
-          {state.step !== 'success' && (
+          {state.step !== "success" && (
             <div className="order-1 md:order-2 md:w-48 md:border-l md:pl-6">
               <OrderSummary />
             </div>

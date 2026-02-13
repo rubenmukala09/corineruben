@@ -1,13 +1,27 @@
 import { useState, useEffect } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { 
-  Loader2, Shield, CheckCircle, Package, FileText, 
-  Mail, Minus, Plus, Sparkles, Truck, Download
+import {
+  Loader2,
+  Shield,
+  CheckCircle,
+  Package,
+  FileText,
+  Mail,
+  Minus,
+  Plus,
+  Sparkles,
+  Truck,
+  Download,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { QuickVeteranToggle } from "@/components/payment/QuickVeteranToggle";
@@ -18,7 +32,7 @@ import { motion } from "framer-motion";
 interface PurchaseModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  itemType: 'guide' | 'product' | 'digital' | 'physical';
+  itemType: "guide" | "product" | "digital" | "physical";
   itemName: string;
   itemDescription?: string;
   itemImage?: string;
@@ -27,93 +41,111 @@ interface PurchaseModalProps {
   veteranDiscountPercent?: number;
 }
 
-export const PurchaseModal = ({ 
-  open, 
-  onOpenChange, 
-  itemType, 
-  itemName, 
+export const PurchaseModal = ({
+  open,
+  onOpenChange,
+  itemType,
+  itemName,
   itemDescription,
   itemImage,
-  suggestedPrice = 0, 
-  isPWYW = false, 
-  veteranDiscountPercent = 10 
+  suggestedPrice = 0,
+  isPWYW = false,
+  veteranDiscountPercent = 10,
 }: PurchaseModalProps) => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [isVeteran, setIsVeteran] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [customPrice, setCustomPrice] = useState(suggestedPrice.toString());
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
-  const isDigital = itemType === 'digital' || itemType === 'guide';
+  const isDigital = itemType === "digital" || itemType === "guide";
   const unitPrice = isPWYW ? parseFloat(customPrice) || 0 : suggestedPrice;
   const subtotal = unitPrice * quantity;
-  const discountAmount = isVeteran ? (subtotal * veteranDiscountPercent) / 100 : 0;
+  const discountAmount = isVeteran
+    ? (subtotal * veteranDiscountPercent) / 100
+    : 0;
   const total = subtotal - discountAmount;
 
   // Auto-fill from localStorage
   useEffect(() => {
-    const savedEmail = localStorage.getItem('checkout_email');
-    const savedName = localStorage.getItem('checkout_name');
+    const savedEmail = localStorage.getItem("checkout_email");
+    const savedName = localStorage.getItem("checkout_name");
     if (savedEmail) setEmail(savedEmail);
     if (savedName) setName(savedName);
   }, [open]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!email || !name) {
-      toast({ title: "Required", description: "Please enter your name and email.", variant: "destructive" });
+      toast({
+        title: "Required",
+        description: "Please enter your name and email.",
+        variant: "destructive",
+      });
       return;
     }
 
     if (isPWYW && unitPrice < 1) {
-      toast({ title: "Minimum $1", description: "Please enter at least $1.", variant: "destructive" });
+      toast({
+        title: "Minimum $1",
+        description: "Please enter at least $1.",
+        variant: "destructive",
+      });
       return;
     }
 
     setLoading(true);
     try {
       // Save for auto-fill
-      localStorage.setItem('checkout_email', email);
-      localStorage.setItem('checkout_name', name);
+      localStorage.setItem("checkout_email", email);
+      localStorage.setItem("checkout_name", name);
 
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       const requestNumber = `PUR-${Date.now().toString().slice(-8)}`;
 
-      const { error } = await supabase.from('purchase_requests').insert([{
-        request_number: requestNumber,
-        user_id: user?.id || null,
-        item_type: itemType,
-        item_name: itemName,
-        full_name: name,
-        email: email,
-        customer_price: unitPrice,
-        quantity: quantity,
-        subtotal: subtotal,
-        discount_amount: discountAmount,
-        final_price: total,
-        message: message,
-        is_veteran: isVeteran,
-        status: 'pending'
-      }]);
+      const { error } = await supabase.from("purchase_requests").insert([
+        {
+          request_number: requestNumber,
+          user_id: user?.id || null,
+          item_type: itemType,
+          item_name: itemName,
+          full_name: name,
+          email: email,
+          customer_price: unitPrice,
+          quantity: quantity,
+          subtotal: subtotal,
+          discount_amount: discountAmount,
+          final_price: total,
+          message: message,
+          is_veteran: isVeteran,
+          status: "pending",
+        },
+      ]);
 
       if (error) throw error;
 
-      toast({ 
-        title: "🎉 Order Submitted!", 
-        description: isDigital 
+      toast({
+        title: "🎉 Order Submitted!",
+        description: isDigital
           ? "Check your email for download links within minutes!"
-          : `Order #${requestNumber} confirmed. We'll send tracking info soon.`
+          : `Order #${requestNumber} confirmed. We'll send tracking info soon.`,
       });
 
       onOpenChange(false);
       setQuantity(1);
-      setMessage('');
+      setMessage("");
     } catch (error: any) {
-      toast({ title: "Error", description: error.message || "Please try again.", variant: "destructive" });
+      toast({
+        title: "Error",
+        description: error.message || "Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }
@@ -140,7 +172,9 @@ export const PurchaseModal = ({
             </div>
             <DialogTitle className="text-xl font-bold">{itemName}</DialogTitle>
             {itemDescription && (
-              <p className="text-sm text-muted-foreground mt-1">{itemDescription}</p>
+              <p className="text-sm text-muted-foreground mt-1">
+                {itemDescription}
+              </p>
             )}
           </DialogHeader>
         </div>
@@ -149,7 +183,11 @@ export const PurchaseModal = ({
           {/* Product Preview (if image) */}
           {itemImage && (
             <div className="relative aspect-video rounded-xl overflow-hidden bg-muted">
-              <img src={itemImage} alt={itemName} className="w-full h-full object-cover" />
+              <img
+                src={itemImage}
+                alt={itemName}
+                className="w-full h-full object-cover"
+              />
             </div>
           )}
 
@@ -158,7 +196,9 @@ export const PurchaseModal = ({
             <div className="flex items-center justify-between p-4 bg-muted/50 rounded-xl">
               <div>
                 <p className="font-medium">Quantity</p>
-                <p className="text-sm text-muted-foreground">${suggestedPrice.toFixed(2)} each</p>
+                <p className="text-sm text-muted-foreground">
+                  ${suggestedPrice.toFixed(2)} each
+                </p>
               </div>
               <div className="flex items-center gap-3">
                 <Button
@@ -171,7 +211,9 @@ export const PurchaseModal = ({
                 >
                   <Minus className="w-4 h-4" />
                 </Button>
-                <span className="w-8 text-center font-semibold">{quantity}</span>
+                <span className="w-8 text-center font-semibold">
+                  {quantity}
+                </span>
                 <Button
                   type="button"
                   variant="outline"
@@ -190,7 +232,9 @@ export const PurchaseModal = ({
             <div className="space-y-2">
               <label className="text-sm font-medium">Name Your Price</label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                  $
+                </span>
                 <Input
                   type="number"
                   min="1"
@@ -212,7 +256,9 @@ export const PurchaseModal = ({
             <div className="flex items-center gap-2 mb-2">
               <Mail className="w-4 h-4 text-primary" />
               <span className="font-medium text-sm">
-                {isDigital ? "Where to send your download" : "Contact Information"}
+                {isDigital
+                  ? "Where to send your download"
+                  : "Contact Information"}
               </span>
             </div>
             <Input
@@ -308,8 +354,14 @@ export const PurchaseModal = ({
               </>
             ) : (
               <>
-                {isDigital ? <Download className="mr-2 h-5 w-5" /> : <Package className="mr-2 h-5 w-5" />}
-                {isDigital ? `Get Instant Access - $${total.toFixed(2)}` : `Order Now - $${total.toFixed(2)}`}
+                {isDigital ? (
+                  <Download className="mr-2 h-5 w-5" />
+                ) : (
+                  <Package className="mr-2 h-5 w-5" />
+                )}
+                {isDigital
+                  ? `Get Instant Access - $${total.toFixed(2)}`
+                  : `Order Now - $${total.toFixed(2)}`}
               </>
             )}
           </Button>

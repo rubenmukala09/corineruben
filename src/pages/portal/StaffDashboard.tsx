@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import type { Database } from "@/integrations/supabase/types";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
@@ -15,12 +16,26 @@ import {
   LogOut,
 } from "lucide-react";
 
+type DashboardTask = Pick<
+  Database["public"]["Tables"]["tasks"]["Row"],
+  "id" | "title" | "description" | "status"
+>;
+type DashboardEvent = {
+  id: string;
+  title: string;
+  start_time: string;
+  event_type: string | null;
+};
+
+const getErrorMessage = (error: unknown): string =>
+  error instanceof Error ? error.message : "An unexpected error occurred";
+
 function StaffDashboard() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [date, setDate] = useState<Date | undefined>(new Date());
-  const [tasks, setTasks] = useState<any[]>([]);
-  const [events, setEvents] = useState<any[]>([]);
+  const [tasks, setTasks] = useState<DashboardTask[]>([]);
+  const [events, setEvents] = useState<DashboardEvent[]>([]);
 
   useEffect(() => {
     loadData();
@@ -29,15 +44,15 @@ function StaffDashboard() {
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut();
-      toast({ 
+      toast({
         title: "👋 Signed Out Successfully",
-        description: "You've been securely logged out. See you next time!"
+        description: "You've been securely logged out. See you next time!",
       });
       navigate("/auth");
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error signing out",
-        description: error.message,
+        description: getErrorMessage(error),
         variant: "destructive",
       });
     }
@@ -51,7 +66,9 @@ function StaffDashboard() {
   });
 
   const loadData = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return;
 
     const { data: tasksData } = await supabase
@@ -61,7 +78,9 @@ function StaffDashboard() {
       .order("due_date", { ascending: true })
       .limit(10);
 
-    if (tasksData) setTasks(tasksData);
+    if (tasksData) {
+      setTasks(tasksData as DashboardTask[]);
+    }
 
     const { data: eventsData } = await supabase
       .from("events")
@@ -71,7 +90,9 @@ function StaffDashboard() {
       .order("start_time", { ascending: true })
       .limit(5);
 
-    if (eventsData) setEvents(eventsData);
+    if (eventsData) {
+      setEvents(eventsData as DashboardEvent[]);
+    }
 
     // Count active clients
     const { count: clientsCount } = await supabase
@@ -126,7 +147,9 @@ function StaffDashboard() {
               </Button>
               <div>
                 <h1 className="text-2xl font-bold">Staff Dashboard</h1>
-                <p className="text-sm text-muted-foreground">General operations and client support</p>
+                <p className="text-sm text-muted-foreground">
+                  General operations and client support
+                </p>
               </div>
             </div>
             <Button variant="outline" size="sm" onClick={handleSignOut}>
@@ -140,16 +163,38 @@ function StaffDashboard() {
       <main className="container mx-auto px-4 py-8">
         <div className="grid md:grid-cols-4 gap-6 mb-8">
           {[
-            { label: "Active Clients", value: stats.activeClients, icon: Users, color: "text-blue-600" },
-            { label: "Open Tickets", value: stats.openTickets, icon: Headphones, color: "text-amber-600" },
-            { label: "Messages", value: stats.unreadMessages, icon: MessageSquare, color: "text-green-600" },
-            { label: "Today's Meetings", value: stats.todaysMeetings, icon: CalendarIcon, color: "text-purple-600" },
+            {
+              label: "Active Clients",
+              value: stats.activeClients,
+              icon: Users,
+              color: "text-blue-600",
+            },
+            {
+              label: "Open Tickets",
+              value: stats.openTickets,
+              icon: Headphones,
+              color: "text-amber-600",
+            },
+            {
+              label: "Messages",
+              value: stats.unreadMessages,
+              icon: MessageSquare,
+              color: "text-green-600",
+            },
+            {
+              label: "Today's Meetings",
+              value: stats.todaysMeetings,
+              icon: CalendarIcon,
+              color: "text-purple-600",
+            },
           ].map((stat) => {
             const Icon = stat.icon;
             return (
               <Card key={stat.label} className="p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <div className={`w-12 h-12 ${stat.color} bg-primary/10 rounded-lg flex items-center justify-center`}>
+                  <div
+                    className={`w-12 h-12 ${stat.color} bg-primary/10 rounded-lg flex items-center justify-center`}
+                  >
                     <Icon className="w-6 h-6" />
                   </div>
                   <span className="text-3xl font-bold">{stat.value}</span>
@@ -166,13 +211,22 @@ function StaffDashboard() {
               <h2 className="text-xl font-bold mb-6">My Tasks</h2>
               <div className="space-y-3">
                 {tasks.length === 0 ? (
-                  <p className="text-center text-muted-foreground py-8">No tasks yet</p>
+                  <p className="text-center text-muted-foreground py-8">
+                    No tasks yet
+                  </p>
                 ) : (
                   tasks.map((task) => (
-                    <div key={task.id} className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
+                    <div
+                      key={task.id}
+                      className="flex items-center justify-between p-4 bg-muted/50 rounded-lg"
+                    >
                       <div>
                         <p className="font-medium">{task.title}</p>
-                        {task.description && <p className="text-sm text-muted-foreground">{task.description}</p>}
+                        {task.description && (
+                          <p className="text-sm text-muted-foreground">
+                            {task.description}
+                          </p>
+                        )}
                       </div>
                       <Badge>{task.status}</Badge>
                     </div>
@@ -185,10 +239,15 @@ function StaffDashboard() {
               <h2 className="text-xl font-bold mb-6">Upcoming Events</h2>
               <div className="space-y-3">
                 {events.length === 0 ? (
-                  <p className="text-center text-muted-foreground py-8">No upcoming events</p>
+                  <p className="text-center text-muted-foreground py-8">
+                    No upcoming events
+                  </p>
                 ) : (
                   events.map((event) => (
-                    <div key={event.id} className="flex items-start gap-4 p-4 bg-muted/50 rounded-lg">
+                    <div
+                      key={event.id}
+                      className="flex items-start gap-4 p-4 bg-muted/50 rounded-lg"
+                    >
                       <CalendarIcon className="w-5 h-5 text-primary mt-0.5" />
                       <div className="flex-1">
                         <p className="font-medium">{event.title}</p>
@@ -219,6 +278,6 @@ function StaffDashboard() {
       </main>
     </div>
   );
-};
+}
 
 export default StaffDashboard;

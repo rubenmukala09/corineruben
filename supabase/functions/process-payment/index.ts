@@ -1,50 +1,56 @@
-import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
-import Stripe from 'https://esm.sh/stripe@14.21.0';
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.2';
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import Stripe from "https://esm.sh/stripe@14.21.0";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
 serve(async (req) => {
-  if (req.method === 'OPTIONS') {
+  if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   const supabaseAdmin = createClient(
-    Deno.env.get('SUPABASE_URL') ?? '',
-    Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
-    { auth: { persistSession: false } }
+    Deno.env.get("SUPABASE_URL") ?? "",
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+    { auth: { persistSession: false } },
   );
 
   try {
-    const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '', {
-      apiVersion: '2023-10-16',
+    const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
+      apiVersion: "2023-10-16",
     });
 
-    const { paymentMethodId, amount, currency, customerInfo, items } = await req.json();
+    const { paymentMethodId, amount, currency, customerInfo, items } =
+      await req.json();
 
-    console.log('Processing payment:', { amount, currency, itemsCount: items.length });
+    console.log("Processing payment:", {
+      amount,
+      currency,
+      itemsCount: items.length,
+    });
 
     // Get authenticated user (optional - for guest checkout support)
     let userId = null;
-    const authHeader = req.headers.get('Authorization');
+    const authHeader = req.headers.get("Authorization");
     if (authHeader) {
-      const token = authHeader.replace('Bearer ', '');
+      const token = authHeader.replace("Bearer ", "");
       const { data: userData } = await supabaseAdmin.auth.getUser(token);
       userId = userData?.user?.id || null;
     }
 
     // Get default partner (store owner)
     const { data: partners } = await supabaseAdmin
-      .from('partners')
-      .select('id')
+      .from("partners")
+      .select("id")
       .limit(1)
       .single();
 
     if (!partners) {
-      throw new Error('No partner found - store not configured');
+      throw new Error("No partner found - store not configured");
     }
 
     // Create payment intent
@@ -55,7 +61,7 @@ serve(async (req) => {
       confirm: true,
       automatic_payment_methods: {
         enabled: true,
-        allow_redirects: 'never',
+        allow_redirects: "never",
       },
       receipt_email: customerInfo.email,
       metadata: {
@@ -64,7 +70,7 @@ serve(async (req) => {
       },
     });
 
-    console.log('Payment intent created:', paymentIntent.id);
+    console.log("Payment intent created:", paymentIntent.id);
 
     // Generate order number
     const orderNumber = `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
@@ -77,7 +83,7 @@ serve(async (req) => {
 
     // Create order in database
     const { data: order, error: orderError } = await supabaseAdmin
-      .from('partner_orders')
+      .from("partner_orders")
       .insert({
         order_number: orderNumber,
         partner_id: partners.id,
@@ -89,17 +95,17 @@ serve(async (req) => {
           line1: customerInfo.address,
           city: customerInfo.city,
           state: customerInfo.state,
-          postal_code: customerInfo.zip
+          postal_code: customerInfo.zip,
         },
         billing_address: {
           line1: customerInfo.address,
           city: customerInfo.city,
           state: customerInfo.state,
-          postal_code: customerInfo.zip
+          postal_code: customerInfo.zip,
         },
-        status: 'pending',
-        payment_status: 'paid',
-        payment_method: 'card',
+        status: "pending",
+        payment_status: "paid",
+        payment_method: "card",
         payment_transaction_id: paymentIntent.id,
         subtotal,
         tax_amount: taxAmount,
@@ -108,32 +114,32 @@ serve(async (req) => {
         total_amount: totalAmount,
         metadata: {
           stripe_payment_intent: paymentIntent.id,
-          items: items
-        }
+          items: items,
+        },
       })
       .select()
       .single();
 
     if (orderError) {
-      console.error('Error creating order:', orderError);
+      console.error("Error creating order:", orderError);
       throw new Error(`Failed to create order: ${orderError.message}`);
     }
 
-    console.log('Order created:', order.id);
+    console.log("Order created:", order.id);
 
     // Create order items and update inventory
     for (const item of items) {
       // Get product details
       const { data: product } = await supabaseAdmin
-        .from('products')
-        .select('id, sku, stock_quantity')
-        .eq('id', item.productId)
+        .from("products")
+        .select("id, sku, stock_quantity")
+        .eq("id", item.productId)
         .single();
 
       if (product) {
         // Create order item
         const { error: itemError } = await supabaseAdmin
-          .from('order_items')
+          .from("order_items")
           .insert({
             order_id: order.id,
             product_id: product.id,
@@ -144,27 +150,32 @@ serve(async (req) => {
             subtotal: item.price * item.quantity,
             tax_amount: 0,
             discount_amount: 0,
-            total: item.price * item.quantity
+            total: item.price * item.quantity,
           });
 
         if (itemError) {
-          console.error('Error creating order item:', itemError);
+          console.error("Error creating order item:", itemError);
         } else {
           console.log(`Order item created for: ${item.name}`);
         }
 
         // Update product inventory (skip if digital product with 999 stock)
         if (product.stock_quantity !== null && product.stock_quantity !== 999) {
-          const newQuantity = Math.max(0, product.stock_quantity - item.quantity);
+          const newQuantity = Math.max(
+            0,
+            product.stock_quantity - item.quantity,
+          );
           const { error: updateError } = await supabaseAdmin
-            .from('products')
+            .from("products")
             .update({ stock_quantity: newQuantity })
-            .eq('id', product.id);
-          
+            .eq("id", product.id);
+
           if (updateError) {
-            console.error('Error updating inventory:', updateError);
+            console.error("Error updating inventory:", updateError);
           } else {
-            console.log(`Updated inventory for ${item.name}: ${product.stock_quantity} -> ${newQuantity}`);
+            console.log(
+              `Updated inventory for ${item.name}: ${product.stock_quantity} -> ${newQuantity}`,
+            );
           }
         }
       } else {
@@ -173,11 +184,14 @@ serve(async (req) => {
     }
 
     // Send receipt email
-    const resendApiKey = Deno.env.get('RESEND_API_KEY');
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
     if (resendApiKey) {
-      const itemsList = items.map((item: any) => 
-        `${item.name} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`
-      ).join('\n');
+      const itemsList = items
+        .map(
+          (item) =>
+            `${item.name} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`,
+        )
+        .join("\n");
 
       const emailBody = `
 Thank you for your purchase from InVision Network!
@@ -206,38 +220,42 @@ Best regards,
 InVision Network Team
       `.trim();
 
-      await fetch('https://api.resend.com/emails', {
-        method: 'POST',
+      await fetch("https://api.resend.com/emails", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${resendApiKey}`,
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${resendApiKey}`,
         },
         body: JSON.stringify({
-          from: 'InVision Network <noreply@invisionnetwork.org>',
+          from: "InVision Network <noreply@invisionnetwork.org>",
           to: [customerInfo.email],
           subject: `Order Confirmation #${orderNumber} - InVision Network`,
           text: emailBody,
         }),
       });
 
-      console.log('Receipt email sent to:', customerInfo.email);
+      console.log("Receipt email sent to:", customerInfo.email);
     }
 
     return new Response(
-      JSON.stringify({ 
-        success: true, 
+      JSON.stringify({
+        success: true,
         paymentIntentId: paymentIntent.id,
         orderId: order.id,
-        orderNumber: orderNumber
+        orderNumber: orderNumber,
       }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      { headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
   } catch (error) {
-    console.error('Payment error:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Payment processing failed';
+    console.error("Payment error:", error);
+    const errorMessage =
+      error instanceof Error ? error.message : "Payment processing failed";
     return new Response(
       JSON.stringify({ success: false, error: errorMessage }),
-      { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      },
     );
   }
 });

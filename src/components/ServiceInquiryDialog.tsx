@@ -34,18 +34,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { 
-  Shield, 
-  CheckCircle, 
-  ArrowRight, 
-  ArrowLeft, 
-  Clock, 
+import {
+  Shield,
+  CheckCircle,
+  ArrowRight,
+  ArrowLeft,
+  Clock,
   Building2,
   Mail,
   Phone,
   User,
   FileText,
-  Sparkles
+  Sparkles,
 } from "lucide-react";
 import { trackButtonClick, trackConversion } from "@/utils/analyticsTracker";
 
@@ -56,7 +56,9 @@ const formSchema = z.object({
   companyName: z.string().optional(),
   budget: z.string().optional(),
   timeline: z.string().optional(),
-  requirements: z.string().min(10, "Please describe your requirements (at least 10 characters)"),
+  requirements: z
+    .string()
+    .min(10, "Please describe your requirements (at least 10 characters)"),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -71,9 +73,9 @@ interface ServiceInquiryDialogProps {
 }
 
 const formatPhoneNumber = (phone: string): string => {
-  const digits = phone.replace(/\D/g, '');
+  const digits = phone.replace(/\D/g, "");
   if (digits.length === 10) {
-    return `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6)}`;
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
   }
   return phone;
 };
@@ -107,10 +109,10 @@ export const ServiceInquiryDialog = ({
 
   // Auto-fill from localStorage
   useEffect(() => {
-    const savedEmail = localStorage.getItem('checkout_email');
-    const savedName = localStorage.getItem('checkout_name');
-    if (savedEmail) form.setValue('email', savedEmail);
-    if (savedName) form.setValue('fullName', savedName);
+    const savedEmail = localStorage.getItem("checkout_email");
+    const savedName = localStorage.getItem("checkout_name");
+    if (savedEmail) form.setValue("email", savedEmail);
+    if (savedName) form.setValue("fullName", savedName);
   }, [open]);
 
   const discountAmount = isVeteran ? Math.round(servicePrice * 0.1) : 0;
@@ -129,46 +131,50 @@ export const ServiceInquiryDialog = ({
     setLoading(true);
     try {
       const formattedPhone = data.phone ? formatPhoneNumber(data.phone) : null;
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       const inquiryNumber = `INQ-${Date.now().toString().slice(-8)}`;
 
       // Save for future auto-fill
-      localStorage.setItem('checkout_email', data.email);
-      localStorage.setItem('checkout_name', data.fullName);
+      localStorage.setItem("checkout_email", data.email);
+      localStorage.setItem("checkout_name", data.fullName);
 
-      const { error } = await supabase.from('service_inquiries').insert([{
-        inquiry_number: inquiryNumber,
-        service_type: 'ai-automation',
-        service_name: serviceName,
-        service_price: servicePrice,
-        full_name: data.fullName,
-        email: data.email,
-        phone: formattedPhone,
-        company_name: data.companyName || null,
-        budget: data.budget || null,
-        timeline: data.timeline || null,
-        requirements: data.requirements,
-        is_veteran: isVeteran,
-        veteran_type: isVeteran ? 'veteran' : null,
-        status: 'new',
-      }]);
+      const { error } = await supabase.from("service_inquiries").insert([
+        {
+          inquiry_number: inquiryNumber,
+          service_type: "ai-automation",
+          service_name: serviceName,
+          service_price: servicePrice,
+          full_name: data.fullName,
+          email: data.email,
+          phone: formattedPhone,
+          company_name: data.companyName || null,
+          budget: data.budget || null,
+          timeline: data.timeline || null,
+          requirements: data.requirements,
+          is_veteran: isVeteran,
+          veteran_type: isVeteran ? "veteran" : null,
+          status: "new",
+        },
+      ]);
 
       if (error) throw error;
 
       // Send confirmation email
       try {
-        await supabase.functions.invoke('send-inquiry-confirmation', {
+        await supabase.functions.invoke("send-inquiry-confirmation", {
           body: {
             email: data.email,
             name: data.fullName,
             serviceName,
             inquiryNumber,
             servicePrice,
-            companyName: data.companyName
-          }
+            companyName: data.companyName,
+          },
         });
       } catch (emailError) {
-        console.error('Failed to send confirmation email:', emailError);
+        console.error("Failed to send confirmation email:", emailError);
       }
 
       trackConversion(`inquiry_${serviceTier.toLowerCase()}`, finalPrice);
@@ -184,7 +190,7 @@ export const ServiceInquiryDialog = ({
       setTermsAccepted(false);
       setIsVeteran(false);
     } catch (error: any) {
-      console.error('Inquiry submission error:', error);
+      console.error("Inquiry submission error:", error);
       toast({
         title: "Submission Failed",
         description: error.message || "Please try again.",
@@ -197,10 +203,15 @@ export const ServiceInquiryDialog = ({
 
   const nextStep = async () => {
     if (step === 1) {
-      const valid = await form.trigger(['fullName', 'email', 'phone', 'companyName']);
+      const valid = await form.trigger([
+        "fullName",
+        "email",
+        "phone",
+        "companyName",
+      ]);
       if (valid) setStep(2);
     } else if (step === 2) {
-      const valid = await form.trigger(['budget', 'timeline', 'requirements']);
+      const valid = await form.trigger(["budget", "timeline", "requirements"]);
       if (valid) setStep(3);
     }
   };
@@ -224,7 +235,8 @@ export const ServiceInquiryDialog = ({
           </div>
           <DialogTitle className="text-xl">{serviceName}</DialogTitle>
           <DialogDescription>
-            {serviceDescription || "Complete the form below and our team will contact you to discuss your project."}
+            {serviceDescription ||
+              "Complete the form below and our team will contact you to discuss your project."}
           </DialogDescription>
         </DialogHeader>
 
@@ -232,7 +244,13 @@ export const ServiceInquiryDialog = ({
         <div className="space-y-2 mb-4">
           <div className="flex justify-between text-xs text-muted-foreground">
             <span>Step {step} of 3</span>
-            <span>{step === 1 ? 'Contact Info' : step === 2 ? 'Project Details' : 'Review & Submit'}</span>
+            <span>
+              {step === 1
+                ? "Contact Info"
+                : step === 2
+                  ? "Project Details"
+                  : "Review & Submit"}
+            </span>
           </div>
           <Progress value={(step / 3) * 100} className="h-2" />
         </div>
@@ -261,7 +279,10 @@ export const ServiceInquiryDialog = ({
         </div>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="space-y-4"
+          >
             {/* Step 1: Contact Information */}
             {step === 1 && (
               <div className="space-y-4 animate-in fade-in duration-300">
@@ -292,7 +313,11 @@ export const ServiceInquiryDialog = ({
                         Email *
                       </FormLabel>
                       <FormControl>
-                        <Input type="email" placeholder="your@email.com" {...field} />
+                        <Input
+                          type="email"
+                          placeholder="your@email.com"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -344,18 +369,31 @@ export const ServiceInquiryDialog = ({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Budget Range</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value}>
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Select your budget range" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="under-10k">Under $10,000</SelectItem>
-                          <SelectItem value="10k-25k">$10,000 - $25,000</SelectItem>
-                          <SelectItem value="25k-50k">$25,000 - $50,000</SelectItem>
-                          <SelectItem value="50k-100k">$50,000 - $100,000</SelectItem>
-                          <SelectItem value="over-100k">Over $100,000</SelectItem>
+                          <SelectItem value="under-10k">
+                            Under $10,000
+                          </SelectItem>
+                          <SelectItem value="10k-25k">
+                            $10,000 - $25,000
+                          </SelectItem>
+                          <SelectItem value="25k-50k">
+                            $25,000 - $50,000
+                          </SelectItem>
+                          <SelectItem value="50k-100k">
+                            $50,000 - $100,000
+                          </SelectItem>
+                          <SelectItem value="over-100k">
+                            Over $100,000
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -369,18 +407,27 @@ export const ServiceInquiryDialog = ({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Project Timeline</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value}>
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="When do you need this?" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="asap">ASAP (Within 2 weeks)</SelectItem>
-                          <SelectItem value="1-month">Within 1 month</SelectItem>
+                          <SelectItem value="asap">
+                            ASAP (Within 2 weeks)
+                          </SelectItem>
+                          <SelectItem value="1-month">
+                            Within 1 month
+                          </SelectItem>
                           <SelectItem value="2-3-months">2-3 months</SelectItem>
                           <SelectItem value="3-6-months">3-6 months</SelectItem>
-                          <SelectItem value="flexible">Flexible / No rush</SelectItem>
+                          <SelectItem value="flexible">
+                            Flexible / No rush
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -398,10 +445,10 @@ export const ServiceInquiryDialog = ({
                         Project Requirements *
                       </FormLabel>
                       <FormControl>
-                        <Textarea 
+                        <Textarea
                           placeholder="Tell us about your business needs, current challenges, and what you'd like to automate..."
                           className="min-h-[120px]"
-                          {...field} 
+                          {...field}
                         />
                       </FormControl>
                       <FormMessage />
@@ -423,22 +470,24 @@ export const ServiceInquiryDialog = ({
                   <div className="grid grid-cols-2 gap-2 text-sm">
                     <div>
                       <p className="text-muted-foreground">Name</p>
-                      <p className="font-medium">{form.watch('fullName')}</p>
+                      <p className="font-medium">{form.watch("fullName")}</p>
                     </div>
                     <div>
                       <p className="text-muted-foreground">Email</p>
-                      <p className="font-medium">{form.watch('email')}</p>
+                      <p className="font-medium">{form.watch("email")}</p>
                     </div>
-                    {form.watch('companyName') && (
+                    {form.watch("companyName") && (
                       <div>
                         <p className="text-muted-foreground">Company</p>
-                        <p className="font-medium">{form.watch('companyName')}</p>
+                        <p className="font-medium">
+                          {form.watch("companyName")}
+                        </p>
                       </div>
                     )}
-                    {form.watch('budget') && (
+                    {form.watch("budget") && (
                       <div>
                         <p className="text-muted-foreground">Budget</p>
-                        <p className="font-medium">{form.watch('budget')}</p>
+                        <p className="font-medium">{form.watch("budget")}</p>
                       </div>
                     )}
                   </div>
@@ -469,15 +518,30 @@ export const ServiceInquiryDialog = ({
                   <Checkbox
                     id="terms"
                     checked={termsAccepted}
-                    onCheckedChange={(checked) => setTermsAccepted(checked as boolean)}
+                    onCheckedChange={(checked) =>
+                      setTermsAccepted(checked as boolean)
+                    }
                   />
-                  <label htmlFor="terms" className="text-sm leading-tight cursor-pointer">
+                  <label
+                    htmlFor="terms"
+                    className="text-sm leading-tight cursor-pointer"
+                  >
                     I agree to the{" "}
-                    <a href="/terms-of-service" className="text-primary underline" target="_blank" rel="noopener noreferrer">
+                    <a
+                      href="/terms-of-service"
+                      className="text-primary underline"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       Terms of Service
                     </a>{" "}
                     and{" "}
-                    <a href="/privacy-policy" className="text-primary underline" target="_blank" rel="noopener noreferrer">
+                    <a
+                      href="/privacy-policy"
+                      className="text-primary underline"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       Privacy Policy
                     </a>
                   </label>
@@ -501,9 +565,9 @@ export const ServiceInquiryDialog = ({
             {/* Navigation Buttons */}
             <div className="flex gap-3 pt-4">
               {step > 1 && (
-                <Button 
-                  type="button" 
-                  variant="outline" 
+                <Button
+                  type="button"
+                  variant="outline"
                   onClick={prevStep}
                   className="flex-1"
                 >
@@ -511,19 +575,15 @@ export const ServiceInquiryDialog = ({
                   Back
                 </Button>
               )}
-              
+
               {step < 3 ? (
-                <Button 
-                  type="button" 
-                  onClick={nextStep}
-                  className="flex-1"
-                >
+                <Button type="button" onClick={nextStep} className="flex-1">
                   Continue
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               ) : (
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   className="flex-1"
                   disabled={loading || !termsAccepted}
                 >

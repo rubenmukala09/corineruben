@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { cn } from '@/lib/utils';
+import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface OptimizedImagePictureProps {
   src: string;
   alt: string;
   className?: string;
-  loading?: 'lazy' | 'eager';
+  loading?: "lazy" | "eager";
   width?: number;
   height?: number;
   onLoad?: () => void;
@@ -18,7 +18,7 @@ export function OptimizedImagePicture({
   src,
   alt,
   className,
-  loading = 'lazy',
+  loading = "lazy",
   width,
   height,
   onLoad,
@@ -26,11 +26,9 @@ export function OptimizedImagePicture({
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <div className={cn('relative overflow-hidden', className)}>
+    <div className={cn("relative overflow-hidden", className)}>
       {/* Placeholder */}
-      {!loaded && (
-        <div className="absolute inset-0 bg-muted" />
-      )}
+      {!loaded && <div className="absolute inset-0 bg-muted" />}
 
       {/* Image with CSS transition */}
       <img
@@ -45,8 +43,8 @@ export function OptimizedImagePicture({
           onLoad?.();
         }}
         className={cn(
-          'w-full h-full object-cover transition-opacity duration-150',
-          loaded ? 'opacity-100' : 'opacity-0'
+          "w-full h-full object-cover transition-opacity duration-150",
+          loaded ? "opacity-100" : "opacity-0",
         )}
       />
     </div>

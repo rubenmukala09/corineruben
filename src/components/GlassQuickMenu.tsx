@@ -1,8 +1,23 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Sparkles, Shield, Phone, BookOpen, MessageSquare, Building2, Activity, ChevronUp, ChevronDown } from "lucide-react";
+import {
+  Sparkles,
+  Shield,
+  Phone,
+  BookOpen,
+  MessageSquare,
+  Building2,
+  Activity,
+  ChevronUp,
+  ChevronDown,
+} from "lucide-react";
 import { SITE } from "@/config/site";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -11,9 +26,15 @@ const HIDDEN_PATH_PREFIXES = ["/admin", "/portal"];
 const sampleEvents = [
   { type: "blocked" as const, message: "Phishing attempt blocked in Columbus" },
   { type: "verified" as const, message: "Senior verified safe transaction" },
-  { type: "protected" as const, message: "New family joined protection network" },
+  {
+    type: "protected" as const,
+    message: "New family joined protection network",
+  },
   { type: "alert" as const, message: "AI scam pattern detected & neutralized" },
-  { type: "blocked" as const, message: "Suspicious caller ID flagged in Cleveland" },
+  {
+    type: "blocked" as const,
+    message: "Suspicious caller ID flagged in Cleveland",
+  },
   { type: "verified" as const, message: "Business account security verified" },
 ];
 
@@ -37,7 +58,9 @@ export const GlassQuickMenu = () => {
     return () => clearInterval(interval);
   }, []);
 
-  if (HIDDEN_PATH_PREFIXES.some((prefix) => location.pathname.startsWith(prefix))) {
+  if (
+    HIDDEN_PATH_PREFIXES.some((prefix) => location.pathname.startsWith(prefix))
+  ) {
     return null;
   }
 
@@ -52,7 +75,9 @@ export const GlassQuickMenu = () => {
         aria-label="Open quick menu"
       >
         <Sparkles className="w-4 h-4 text-primary" />
-        <span className="text-sm font-semibold text-foreground">Quick Menu</span>
+        <span className="text-sm font-semibold text-foreground">
+          Quick Menu
+        </span>
         <span className="relative flex h-2 w-2">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
           <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
@@ -75,31 +100,51 @@ export const GlassQuickMenu = () => {
                 Book Training
               </Link>
             </Button>
-            <Button asChild variant="secondary" className="h-12 justify-start gap-3 rounded-xl">
+            <Button
+              asChild
+              variant="secondary"
+              className="h-12 justify-start gap-3 rounded-xl"
+            >
               <Link to="/training#scamshield">
                 <Shield className="w-4 h-4" />
                 Analyze a Message
               </Link>
             </Button>
-            <Button asChild variant="outline" className="h-12 justify-start gap-3 rounded-xl">
+            <Button
+              asChild
+              variant="outline"
+              className="h-12 justify-start gap-3 rounded-xl"
+            >
               <Link to="/business">
                 <Building2 className="w-4 h-4" />
                 Business Solutions
               </Link>
             </Button>
-            <Button asChild variant="outline" className="h-12 justify-start gap-3 rounded-xl">
+            <Button
+              asChild
+              variant="outline"
+              className="h-12 justify-start gap-3 rounded-xl"
+            >
               <Link to="/resources">
                 <Sparkles className="w-4 h-4" />
                 Resources & Guides
               </Link>
             </Button>
-            <Button asChild variant="ghost" className="h-12 justify-start gap-3 rounded-xl">
+            <Button
+              asChild
+              variant="ghost"
+              className="h-12 justify-start gap-3 rounded-xl"
+            >
               <Link to="/contact">
                 <MessageSquare className="w-4 h-4" />
                 Contact Support
               </Link>
             </Button>
-            <Button asChild variant="ghost" className="h-12 justify-start gap-3 rounded-xl">
+            <Button
+              asChild
+              variant="ghost"
+              className="h-12 justify-start gap-3 rounded-xl"
+            >
               <a href={SITE.phone.tel}>
                 <Phone className="w-4 h-4" />
                 Call {SITE.phone.display}
@@ -116,9 +161,15 @@ export const GlassQuickMenu = () => {
               <span className="flex items-center gap-2">
                 <Activity className="w-4 h-4 text-primary" />
                 Sample Activity
-                <span className="text-[10px] bg-muted rounded-full px-2 py-0.5 font-medium">Demo</span>
+                <span className="text-[10px] bg-muted rounded-full px-2 py-0.5 font-medium">
+                  Demo
+                </span>
               </span>
-              {showActivity ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+              {showActivity ? (
+                <ChevronUp className="w-4 h-4" />
+              ) : (
+                <ChevronDown className="w-4 h-4" />
+              )}
             </button>
 
             <AnimatePresence>
@@ -139,12 +190,20 @@ export const GlassQuickMenu = () => {
                         transition={{ delay: i * 0.05 }}
                         className="flex items-center gap-2 p-2 rounded-lg bg-muted/40"
                       >
-                        <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
-                          evt.type === "blocked" ? "bg-red-500" :
-                          evt.type === "verified" ? "bg-green-500" :
-                          evt.type === "alert" ? "bg-amber-500" : "bg-primary"
-                        }`} />
-                        <p className="text-xs text-foreground/80">{evt.message}</p>
+                        <span
+                          className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
+                            evt.type === "blocked"
+                              ? "bg-red-500"
+                              : evt.type === "verified"
+                                ? "bg-green-500"
+                                : evt.type === "alert"
+                                  ? "bg-amber-500"
+                                  : "bg-primary"
+                          }`}
+                        />
+                        <p className="text-xs text-foreground/80">
+                          {evt.message}
+                        </p>
                       </motion.div>
                     ))}
                     <p className="text-[10px] text-center text-muted-foreground pt-1">

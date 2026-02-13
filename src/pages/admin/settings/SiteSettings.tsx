@@ -10,7 +10,8 @@ const SiteSettings = () => {
   const [settings, setSettings] = useState({
     siteName: "InVision Network",
     tagline: "AI Scam Protection & Business Solutions",
-    description: "Empowering seniors and businesses with cutting-edge technology solutions and cybersecurity protection.",
+    description:
+      "Empowering seniors and businesses with cutting-edge technology solutions and cybersecurity protection.",
     phone: "(937) 301-8749",
     primaryEmail: "hello@invisionnetwork.org",
     supportEmail: "support@invisionnetwork.org",
@@ -44,14 +45,16 @@ const SiteSettings = () => {
       {/* General Information */}
       <div className="space-y-4">
         <h3 className="text-xl font-semibold">General Information</h3>
-        
+
         <div className="grid gap-4">
           <div className="space-y-2">
             <Label htmlFor="siteName">Site Name</Label>
             <Input
               id="siteName"
               value={settings.siteName}
-              onChange={(e) => setSettings({ ...settings, siteName: e.target.value })}
+              onChange={(e) =>
+                setSettings({ ...settings, siteName: e.target.value })
+              }
             />
           </div>
 
@@ -60,7 +63,9 @@ const SiteSettings = () => {
             <Input
               id="tagline"
               value={settings.tagline}
-              onChange={(e) => setSettings({ ...settings, tagline: e.target.value })}
+              onChange={(e) =>
+                setSettings({ ...settings, tagline: e.target.value })
+              }
             />
           </div>
 
@@ -69,7 +74,9 @@ const SiteSettings = () => {
             <Textarea
               id="description"
               value={settings.description}
-              onChange={(e) => setSettings({ ...settings, description: e.target.value })}
+              onChange={(e) =>
+                setSettings({ ...settings, description: e.target.value })
+              }
               maxLength={160}
               rows={3}
             />
@@ -83,14 +90,16 @@ const SiteSettings = () => {
       {/* Contact Information */}
       <div className="space-y-4">
         <h3 className="text-xl font-semibold">Contact Information</h3>
-        
+
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="phone">Phone Number</Label>
             <Input
               id="phone"
               value={settings.phone}
-              onChange={(e) => setSettings({ ...settings, phone: e.target.value })}
+              onChange={(e) =>
+                setSettings({ ...settings, phone: e.target.value })
+              }
               placeholder="(XXX) XXX-XXXX"
             />
           </div>
@@ -101,7 +110,9 @@ const SiteSettings = () => {
               id="primaryEmail"
               type="email"
               value={settings.primaryEmail}
-              onChange={(e) => setSettings({ ...settings, primaryEmail: e.target.value })}
+              onChange={(e) =>
+                setSettings({ ...settings, primaryEmail: e.target.value })
+              }
             />
           </div>
 
@@ -111,7 +122,9 @@ const SiteSettings = () => {
               id="supportEmail"
               type="email"
               value={settings.supportEmail}
-              onChange={(e) => setSettings({ ...settings, supportEmail: e.target.value })}
+              onChange={(e) =>
+                setSettings({ ...settings, supportEmail: e.target.value })
+              }
             />
           </div>
 
@@ -121,7 +134,9 @@ const SiteSettings = () => {
               id="businessEmail"
               type="email"
               value={settings.businessEmail}
-              onChange={(e) => setSettings({ ...settings, businessEmail: e.target.value })}
+              onChange={(e) =>
+                setSettings({ ...settings, businessEmail: e.target.value })
+              }
             />
           </div>
 
@@ -131,7 +146,9 @@ const SiteSettings = () => {
               id="trainingEmail"
               type="email"
               value={settings.trainingEmail}
-              onChange={(e) => setSettings({ ...settings, trainingEmail: e.target.value })}
+              onChange={(e) =>
+                setSettings({ ...settings, trainingEmail: e.target.value })
+              }
             />
           </div>
         </div>
@@ -145,7 +162,9 @@ const SiteSettings = () => {
           <Input
             id="serviceArea"
             value={settings.serviceArea}
-            onChange={(e) => setSettings({ ...settings, serviceArea: e.target.value })}
+            onChange={(e) =>
+              setSettings({ ...settings, serviceArea: e.target.value })
+            }
           />
         </div>
       </div>
@@ -214,7 +233,9 @@ const SiteSettings = () => {
             <Input
               id="facebook"
               value={settings.facebook}
-              onChange={(e) => setSettings({ ...settings, facebook: e.target.value })}
+              onChange={(e) =>
+                setSettings({ ...settings, facebook: e.target.value })
+              }
               placeholder="https://facebook.com/..."
             />
           </div>
@@ -224,7 +245,9 @@ const SiteSettings = () => {
             <Input
               id="linkedin"
               value={settings.linkedin}
-              onChange={(e) => setSettings({ ...settings, linkedin: e.target.value })}
+              onChange={(e) =>
+                setSettings({ ...settings, linkedin: e.target.value })
+              }
               placeholder="https://linkedin.com/company/..."
             />
           </div>
@@ -234,7 +257,9 @@ const SiteSettings = () => {
             <Input
               id="instagram"
               value={settings.instagram}
-              onChange={(e) => setSettings({ ...settings, instagram: e.target.value })}
+              onChange={(e) =>
+                setSettings({ ...settings, instagram: e.target.value })
+              }
               placeholder="https://instagram.com/..."
             />
           </div>
@@ -244,7 +269,9 @@ const SiteSettings = () => {
             <Input
               id="twitter"
               value={settings.twitter}
-              onChange={(e) => setSettings({ ...settings, twitter: e.target.value })}
+              onChange={(e) =>
+                setSettings({ ...settings, twitter: e.target.value })
+              }
               placeholder="https://twitter.com/..."
             />
           </div>
@@ -254,7 +281,9 @@ const SiteSettings = () => {
             <Input
               id="youtube"
               value={settings.youtube}
-              onChange={(e) => setSettings({ ...settings, youtube: e.target.value })}
+              onChange={(e) =>
+                setSettings({ ...settings, youtube: e.target.value })
+              }
               placeholder="https://youtube.com/@..."
             />
           </div>

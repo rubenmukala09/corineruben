@@ -4,13 +4,7 @@ import { Card } from "@/components/ui/card";
 import { useCounterAnimation } from "@/hooks/useCounterAnimation";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import {
-  BarChart,
-  Bar,
-  LineChart,
-  Line,
-  ResponsiveContainer,
-} from "recharts";
+import { BarChart, Bar, LineChart, Line, ResponsiveContainer } from "recharts";
 
 interface LiveMonitorCardProps {
   icon: LucideIcon;
@@ -63,7 +57,7 @@ function LiveMonitorCard({
   index,
 }: LiveMonitorCardProps) {
   const config = colorConfig[accentColor];
-  
+
   // Convert chartData array to recharts format
   const formattedData = chartData.map((val, i) => ({ value: val, index: i }));
 
@@ -86,7 +80,7 @@ function LiveMonitorCard({
           >
             <Icon className="h-5 w-5 text-white" />
           </div>
-          
+
           {/* Mini Chart */}
           <div className="w-20 h-8">
             <ResponsiveContainer width="100%" height="100%">
@@ -129,7 +123,7 @@ export function CyberGuardianStats() {
     activeSubscribers: 0,
     threatsBlocked: 0,
     newUsers: 0,
-    lastSync: "N/A"
+    lastSync: "N/A",
   });
   const [loading, setLoading] = useState(true);
 
@@ -157,7 +151,7 @@ export function CyberGuardianStats() {
         activeSubscribers: subCount || 0,
         threatsBlocked: 0, // No real threat data yet
         newUsers: newUserCount || 0,
-        lastSync: "Just now"
+        lastSync: "Just now",
       });
     } catch (err) {
       console.error("Error loading stats:", err);
@@ -170,7 +164,11 @@ export function CyberGuardianStats() {
     {
       icon: ShieldAlert,
       title: "Active Scanners",
-      value: loading ? "..." : stats.activeSubscribers > 0 ? stats.activeSubscribers.toLocaleString() : "—",
+      value: loading
+        ? "..."
+        : stats.activeSubscribers > 0
+          ? stats.activeSubscribers.toLocaleString()
+          : "—",
       chartType: "bar",
       chartData: [30, 50, 40, 70, 55, 80, 65, 90],
       accentColor: "blue",
@@ -179,7 +177,11 @@ export function CyberGuardianStats() {
     {
       icon: Ban,
       title: "Threats Stopped",
-      value: loading ? "..." : stats.threatsBlocked > 0 ? `${stats.threatsBlocked}%` : "—",
+      value: loading
+        ? "..."
+        : stats.threatsBlocked > 0
+          ? `${stats.threatsBlocked}%`
+          : "—",
       chartType: "line",
       chartData: [40, 55, 45, 60, 50, 75, 85, 95],
       accentColor: "red",
@@ -188,7 +190,11 @@ export function CyberGuardianStats() {
     {
       icon: Users,
       title: "New Family Members",
-      value: loading ? "..." : stats.newUsers > 0 ? stats.newUsers.toLocaleString() : "—",
+      value: loading
+        ? "..."
+        : stats.newUsers > 0
+          ? stats.newUsers.toLocaleString()
+          : "—",
       chartType: "bar",
       chartData: [20, 35, 45, 30, 55, 40, 65, 50],
       accentColor: "green",

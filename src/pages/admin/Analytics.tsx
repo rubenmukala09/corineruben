@@ -1,13 +1,45 @@
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { BarChart3, TrendingUp, Users, Eye, MousePointerClick, Clock, Download, Activity } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  BarChart3,
+  TrendingUp,
+  Users,
+  Eye,
+  MousePointerClick,
+  Clock,
+  Download,
+  Activity,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { format, subDays } from "date-fns";
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import {
+  LineChart,
+  Line,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Analytics() {
@@ -70,10 +102,17 @@ export default function Analytics() {
   const totalSessions = sessions?.length || 0;
   const totalEvents = events?.length || 0;
   const totalConversions = conversions?.length || 0;
-  const conversionRate = totalSessions > 0 ? ((totalConversions / totalSessions) * 100).toFixed(2) : "0.00";
-  const avgSessionDuration = sessions && sessions.length > 0
-    ? Math.round(sessions.reduce((acc, s) => acc + (s.duration_seconds || 0), 0) / sessions.length)
-    : 0;
+  const conversionRate =
+    totalSessions > 0
+      ? ((totalConversions / totalSessions) * 100).toFixed(2)
+      : "0.00";
+  const avgSessionDuration =
+    sessions && sessions.length > 0
+      ? Math.round(
+          sessions.reduce((acc, s) => acc + (s.duration_seconds || 0), 0) /
+            sessions.length,
+        )
+      : 0;
 
   const topPages = pageViews?.reduce((acc: any, pv) => {
     const url = pv.page_url || "Unknown";
@@ -102,20 +141,26 @@ export default function Analytics() {
     return acc;
   }, {});
 
-  const conversionChartData = Object.entries(conversionsByType || {})
-    .map(([type, count]) => ({ type, count }));
+  const conversionChartData = Object.entries(conversionsByType || {}).map(
+    ([type, count]) => ({ type, count }),
+  );
 
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-6">
       <div className="mb-6 flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#F9FAFB]">Analytics Dashboard</h1>
+          <h1 className="text-2xl font-bold text-[#F9FAFB]">
+            Analytics Dashboard
+          </h1>
           <p className="text-[#9CA3AF]">
             Track website performance, user behavior, and conversion metrics
           </p>
         </div>
         <div className="flex gap-2">
-          <Select value={dateRange.toString()} onValueChange={(v) => setDateRange(Number(v))}>
+          <Select
+            value={dateRange.toString()}
+            onValueChange={(v) => setDateRange(Number(v))}
+          >
             <SelectTrigger className="w-[140px] bg-[#1F2937] border-gray-700">
               <SelectValue />
             </SelectTrigger>
@@ -136,7 +181,9 @@ export default function Analytics() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card className="bg-[#111827] border-gray-800">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-[#9CA3AF]">Total Page Views</CardTitle>
+            <CardTitle className="text-sm font-medium text-[#9CA3AF]">
+              Total Page Views
+            </CardTitle>
             <Eye className="h-4 w-4 text-[#06B6D4]" />
           </CardHeader>
           <CardContent>
@@ -147,7 +194,9 @@ export default function Analytics() {
               </div>
             ) : (
               <>
-                <div className="text-2xl font-bold text-[#F9FAFB]">{totalPageViews.toLocaleString()}</div>
+                <div className="text-2xl font-bold text-[#F9FAFB]">
+                  {totalPageViews.toLocaleString()}
+                </div>
                 <p className="text-xs text-[#9CA3AF]">Last {dateRange} days</p>
               </>
             )}
@@ -156,7 +205,9 @@ export default function Analytics() {
 
         <Card className="bg-[#111827] border-gray-800">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-[#9CA3AF]">Total Sessions</CardTitle>
+            <CardTitle className="text-sm font-medium text-[#9CA3AF]">
+              Total Sessions
+            </CardTitle>
             <Users className="h-4 w-4 text-[#10B981]" />
           </CardHeader>
           <CardContent>
@@ -167,7 +218,9 @@ export default function Analytics() {
               </div>
             ) : (
               <>
-                <div className="text-2xl font-bold text-[#F9FAFB]">{totalSessions.toLocaleString()}</div>
+                <div className="text-2xl font-bold text-[#F9FAFB]">
+                  {totalSessions.toLocaleString()}
+                </div>
                 <p className="text-xs text-[#9CA3AF]">Unique visitors</p>
               </>
             )}
@@ -176,7 +229,9 @@ export default function Analytics() {
 
         <Card className="bg-[#111827] border-gray-800">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-[#9CA3AF]">Conversion Rate</CardTitle>
+            <CardTitle className="text-sm font-medium text-[#9CA3AF]">
+              Conversion Rate
+            </CardTitle>
             <TrendingUp className="h-4 w-4 text-[#8B5CF6]" />
           </CardHeader>
           <CardContent>
@@ -187,8 +242,12 @@ export default function Analytics() {
               </div>
             ) : (
               <>
-                <div className="text-2xl font-bold text-[#F9FAFB]">{conversionRate}%</div>
-                <p className="text-xs text-[#9CA3AF]">{totalConversions} conversions</p>
+                <div className="text-2xl font-bold text-[#F9FAFB]">
+                  {conversionRate}%
+                </div>
+                <p className="text-xs text-[#9CA3AF]">
+                  {totalConversions} conversions
+                </p>
               </>
             )}
           </CardContent>
@@ -196,7 +255,9 @@ export default function Analytics() {
 
         <Card className="bg-[#111827] border-gray-800">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-[#9CA3AF]">Avg Session Duration</CardTitle>
+            <CardTitle className="text-sm font-medium text-[#9CA3AF]">
+              Avg Session Duration
+            </CardTitle>
             <Clock className="h-4 w-4 text-[#F97316]" />
           </CardHeader>
           <CardContent>
@@ -207,7 +268,10 @@ export default function Analytics() {
               </div>
             ) : (
               <>
-                <div className="text-2xl font-bold text-[#F9FAFB]">{Math.floor(avgSessionDuration / 60)}m {avgSessionDuration % 60}s</div>
+                <div className="text-2xl font-bold text-[#F9FAFB]">
+                  {Math.floor(avgSessionDuration / 60)}m{" "}
+                  {avgSessionDuration % 60}s
+                </div>
                 <p className="text-xs text-[#9CA3AF]">Time on site</p>
               </>
             )}
@@ -228,7 +292,9 @@ export default function Analytics() {
           <Card className="bg-[#111827] border-gray-800">
             <CardHeader>
               <CardTitle className="text-[#F9FAFB]">Traffic Overview</CardTitle>
-              <CardDescription className="text-[#9CA3AF]">Page views over the last {dateRange} days</CardDescription>
+              <CardDescription className="text-[#9CA3AF]">
+                Page views over the last {dateRange} days
+              </CardDescription>
             </CardHeader>
             <CardContent>
               {chartData.length > 0 ? (
@@ -237,9 +303,19 @@ export default function Analytics() {
                     <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                     <XAxis dataKey="date" stroke="#9CA3AF" />
                     <YAxis stroke="#9CA3AF" />
-                    <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151' }} />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: "#1F2937",
+                        border: "1px solid #374151",
+                      }}
+                    />
                     <Legend />
-                    <Line type="monotone" dataKey="views" stroke="#06B6D4" strokeWidth={2} />
+                    <Line
+                      type="monotone"
+                      dataKey="views"
+                      stroke="#06B6D4"
+                      strokeWidth={2}
+                    />
                   </LineChart>
                 </ResponsiveContainer>
               ) : (
@@ -247,7 +323,9 @@ export default function Analytics() {
                   <div className="text-center">
                     <Activity className="w-12 h-12 mx-auto mb-4 opacity-50" />
                     <p>No traffic data yet</p>
-                    <p className="text-sm">Data will appear as users visit your site</p>
+                    <p className="text-sm">
+                      Data will appear as users visit your site
+                    </p>
                   </div>
                 </div>
               )}
@@ -257,13 +335,20 @@ export default function Analytics() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Card className="bg-[#111827] border-gray-800">
               <CardHeader>
-                <CardTitle className="text-[#F9FAFB]">Real-Time Activity</CardTitle>
-                <CardDescription className="text-[#9CA3AF]">Recent events</CardDescription>
+                <CardTitle className="text-[#F9FAFB]">
+                  Real-Time Activity
+                </CardTitle>
+                <CardDescription className="text-[#9CA3AF]">
+                  Recent events
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
                   {events?.slice(0, 5).map((event) => (
-                    <div key={event.id} className="flex items-center gap-2 text-sm">
+                    <div
+                      key={event.id}
+                      className="flex items-center gap-2 text-sm"
+                    >
                       <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
                       <span className="text-[#9CA3AF]">{event.event_name}</span>
                       <span className="text-xs text-[#6B7280] ml-auto">
@@ -272,7 +357,9 @@ export default function Analytics() {
                     </div>
                   ))}
                   {(!events || events.length === 0) && (
-                    <p className="text-sm text-[#9CA3AF] text-center py-4">No recent activity</p>
+                    <p className="text-sm text-[#9CA3AF] text-center py-4">
+                      No recent activity
+                    </p>
                   )}
                 </div>
               </CardContent>
@@ -280,19 +367,32 @@ export default function Analytics() {
 
             <Card className="bg-[#111827] border-gray-800">
               <CardHeader>
-                <CardTitle className="text-[#F9FAFB]">Top Pages Today</CardTitle>
-                <CardDescription className="text-[#9CA3AF]">Most visited pages</CardDescription>
+                <CardTitle className="text-[#F9FAFB]">
+                  Top Pages Today
+                </CardTitle>
+                <CardDescription className="text-[#9CA3AF]">
+                  Most visited pages
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
                   {topPagesArray.slice(0, 5).map((page: any, index) => (
-                    <div key={index} className="flex items-center justify-between text-sm">
-                      <span className="text-[#9CA3AF] truncate flex-1">{page.url}</span>
-                      <span className="font-medium text-[#F9FAFB] ml-2">{page.count}</span>
+                    <div
+                      key={index}
+                      className="flex items-center justify-between text-sm"
+                    >
+                      <span className="text-[#9CA3AF] truncate flex-1">
+                        {page.url}
+                      </span>
+                      <span className="font-medium text-[#F9FAFB] ml-2">
+                        {page.count}
+                      </span>
                     </div>
                   ))}
                   {topPagesArray.length === 0 && (
-                    <p className="text-sm text-[#9CA3AF] text-center py-4">No page data yet</p>
+                    <p className="text-sm text-[#9CA3AF] text-center py-4">
+                      No page data yet
+                    </p>
                   )}
                 </div>
               </CardContent>
@@ -303,22 +403,33 @@ export default function Analytics() {
         <TabsContent value="pages" className="space-y-4">
           <Card className="bg-[#111827] border-gray-800">
             <CardHeader>
-              <CardTitle className="text-[#F9FAFB]">Top Pages by Views</CardTitle>
-              <CardDescription className="text-[#9CA3AF]">Most visited pages on your website</CardDescription>
+              <CardTitle className="text-[#F9FAFB]">
+                Top Pages by Views
+              </CardTitle>
+              <CardDescription className="text-[#9CA3AF]">
+                Most visited pages on your website
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {topPagesArray.map((page: any, index) => (
-                  <div key={index} className="flex items-center justify-between">
+                  <div
+                    key={index}
+                    className="flex items-center justify-between"
+                  >
                     <div className="flex-1">
                       <p className="font-medium text-[#F9FAFB]">{page.url}</p>
                     </div>
                     <div className="flex items-center gap-4">
-                      <span className="text-sm text-[#9CA3AF]">{page.count} views</span>
+                      <span className="text-sm text-[#9CA3AF]">
+                        {page.count} views
+                      </span>
                       <div className="w-32 bg-gray-700 rounded-full h-2">
                         <div
                           className="bg-[#06B6D4] h-2 rounded-full"
-                          style={{ width: `${(page.count / totalPageViews) * 100}%` }}
+                          style={{
+                            width: `${(page.count / totalPageViews) * 100}%`,
+                          }}
                         />
                       </div>
                     </div>
@@ -333,14 +444,21 @@ export default function Analytics() {
           <Card className="bg-[#111827] border-gray-800">
             <CardHeader>
               <CardTitle className="text-[#F9FAFB]">Recent Events</CardTitle>
-              <CardDescription className="text-[#9CA3AF]">Latest user interactions tracked</CardDescription>
+              <CardDescription className="text-[#9CA3AF]">
+                Latest user interactions tracked
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
                 {events?.slice(0, 20).map((event) => (
-                  <div key={event.id} className="flex items-center justify-between py-2 border-b border-gray-700">
+                  <div
+                    key={event.id}
+                    className="flex items-center justify-between py-2 border-b border-gray-700"
+                  >
                     <div>
-                      <p className="font-medium text-[#F9FAFB]">{event.event_name}</p>
+                      <p className="font-medium text-[#F9FAFB]">
+                        {event.event_name}
+                      </p>
                       <p className="text-sm text-[#9CA3AF]">{event.page_url}</p>
                     </div>
                     <span className="text-sm text-[#9CA3AF]">
@@ -356,8 +474,12 @@ export default function Analytics() {
         <TabsContent value="conversions" className="space-y-4">
           <Card className="bg-[#111827] border-gray-800">
             <CardHeader>
-              <CardTitle className="text-[#F9FAFB]">Conversions by Type</CardTitle>
-              <CardDescription className="text-[#9CA3AF]">Breakdown of conversion events</CardDescription>
+              <CardTitle className="text-[#F9FAFB]">
+                Conversions by Type
+              </CardTitle>
+              <CardDescription className="text-[#9CA3AF]">
+                Breakdown of conversion events
+              </CardDescription>
             </CardHeader>
             <CardContent>
               {conversionChartData.length > 0 ? (
@@ -366,7 +488,12 @@ export default function Analytics() {
                     <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                     <XAxis dataKey="type" stroke="#9CA3AF" />
                     <YAxis stroke="#9CA3AF" />
-                    <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151' }} />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: "#1F2937",
+                        border: "1px solid #374151",
+                      }}
+                    />
                     <Legend />
                     <Bar dataKey="count" fill="#8B5CF6" />
                   </BarChart>
@@ -376,7 +503,9 @@ export default function Analytics() {
                   <div className="text-center">
                     <TrendingUp className="w-12 h-12 mx-auto mb-4 opacity-50" />
                     <p>No conversions yet</p>
-                    <p className="text-sm">Conversions will appear as users complete actions</p>
+                    <p className="text-sm">
+                      Conversions will appear as users complete actions
+                    </p>
                   </div>
                 </div>
               )}
@@ -385,17 +514,28 @@ export default function Analytics() {
 
           <Card className="bg-[#111827] border-gray-800">
             <CardHeader>
-              <CardTitle className="text-[#F9FAFB]">Recent Conversions</CardTitle>
-              <CardDescription className="text-[#9CA3AF]">Latest conversion events</CardDescription>
+              <CardTitle className="text-[#F9FAFB]">
+                Recent Conversions
+              </CardTitle>
+              <CardDescription className="text-[#9CA3AF]">
+                Latest conversion events
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {conversions?.slice(0, 10).map((conversion) => (
-                  <div key={conversion.id} className="flex items-center justify-between border-b border-gray-700 pb-3">
+                  <div
+                    key={conversion.id}
+                    className="flex items-center justify-between border-b border-gray-700 pb-3"
+                  >
                     <div>
-                      <p className="font-medium text-[#F9FAFB]">{conversion.conversion_type}</p>
+                      <p className="font-medium text-[#F9FAFB]">
+                        {conversion.conversion_type}
+                      </p>
                       {conversion.conversion_value && (
-                        <p className="text-sm text-[#10B981]">${conversion.conversion_value}</p>
+                        <p className="text-sm text-[#10B981]">
+                          ${conversion.conversion_value}
+                        </p>
                       )}
                     </div>
                     <span className="text-sm text-[#9CA3AF]">
@@ -404,7 +544,9 @@ export default function Analytics() {
                   </div>
                 ))}
                 {(!conversions || conversions.length === 0) && (
-                  <p className="text-center text-[#9CA3AF] py-4">No conversions recorded yet</p>
+                  <p className="text-center text-[#9CA3AF] py-4">
+                    No conversions recorded yet
+                  </p>
                 )}
               </div>
             </CardContent>

@@ -10,19 +10,19 @@ interface MobileTableCardProps {
   onSwipeRight?: () => void;
 }
 
-export function MobileTableCard({ 
-  children, 
+export function MobileTableCard({
+  children,
   className,
   onSwipeLeft,
-  onSwipeRight 
+  onSwipeRight,
 }: MobileTableCardProps) {
   return (
-    <Card 
+    <Card
       className={cn(
         "p-4 mb-4 active:scale-[0.98] transition-transform duration-200",
         "border border-border rounded-lg shadow-sm",
         "md:hidden", // Only show on mobile
-        className
+        className,
       )}
     >
       {children}
@@ -36,10 +36,16 @@ interface MobileCardFieldProps {
   className?: string;
 }
 
-export function MobileCardField({ label, value, className }: MobileCardFieldProps) {
+export function MobileCardField({
+  label,
+  value,
+  className,
+}: MobileCardFieldProps) {
   return (
     <div className={cn("mb-3 last:mb-0", className)}>
-      <div className="text-xs text-muted-foreground mb-1 font-medium">{label}</div>
+      <div className="text-xs text-muted-foreground mb-1 font-medium">
+        {label}
+      </div>
       <div className="text-sm text-foreground break-words">{value}</div>
     </div>
   );
@@ -52,17 +58,26 @@ interface MobileCardHeaderProps {
   badge?: ReactNode;
 }
 
-export function MobileCardHeader({ title, subtitle, avatar, badge }: MobileCardHeaderProps) {
+export function MobileCardHeader({
+  title,
+  subtitle,
+  avatar,
+  badge,
+}: MobileCardHeaderProps) {
   return (
     <div className="flex items-start gap-3 mb-4 pb-4 border-b border-border">
       {avatar && <div className="flex-shrink-0">{avatar}</div>}
       <div className="flex-1 min-w-0">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-semibold text-base text-foreground truncate">{title}</h3>
+          <h3 className="font-semibold text-base text-foreground truncate">
+            {title}
+          </h3>
           {badge && <div className="flex-shrink-0">{badge}</div>}
         </div>
         {subtitle && (
-          <p className="text-sm text-muted-foreground mt-1 break-words">{subtitle}</p>
+          <p className="text-sm text-muted-foreground mt-1 break-words">
+            {subtitle}
+          </p>
         )}
       </div>
     </div>
@@ -74,12 +89,17 @@ interface MobileCardActionsProps {
   className?: string;
 }
 
-export function MobileCardActions({ children, className }: MobileCardActionsProps) {
+export function MobileCardActions({
+  children,
+  className,
+}: MobileCardActionsProps) {
   return (
-    <div className={cn(
-      "flex gap-2 mt-4 pt-4 border-t border-border flex-wrap",
-      className
-    )}>
+    <div
+      className={cn(
+        "flex gap-2 mt-4 pt-4 border-t border-border flex-wrap",
+        className,
+      )}
+    >
       {children}
     </div>
   );

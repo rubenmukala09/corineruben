@@ -4,11 +4,14 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
-const logStep = (step: string, details?: any) => {
-  console.log(`[CHECK-SUBSCRIPTION-STATUS] ${step}${details ? ` - ${JSON.stringify(details)}` : ''}`);
+const logStep = (step: string, details?: unknown) => {
+  console.log(
+    `[CHECK-SUBSCRIPTION-STATUS] ${step}${details ? ` - ${JSON.stringify(details)}` : ""}`,
+  );
 };
 
 serve(async (req) => {
@@ -21,7 +24,7 @@ serve(async (req) => {
 
     const supabaseClient = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_ANON_KEY") ?? ""
+      Deno.env.get("SUPABASE_ANON_KEY") ?? "",
     );
 
     const authHeader = req.headers.get("Authorization");
@@ -30,12 +33,15 @@ serve(async (req) => {
     }
 
     const token = authHeader.replace("Bearer ", "");
-    const { data: userData, error: userError } = await supabaseClient.auth.getUser(token);
-    
-    if (userError) throw new Error(`Authentication error: ${userError.message}`);
+    const { data: userData, error: userError } =
+      await supabaseClient.auth.getUser(token);
+
+    if (userError)
+      throw new Error(`Authentication error: ${userError.message}`);
     const user = userData.user;
-    if (!user?.email) throw new Error("User not authenticated or email not available");
-    
+    if (!user?.email)
+      throw new Error("User not authenticated or email not available");
+
     logStep("User authenticated", { userId: user.id, email: user.email });
 
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
@@ -43,8 +49,11 @@ serve(async (req) => {
     });
 
     // Check for Stripe customer
-    const customers = await stripe.customers.list({ email: user.email, limit: 1 });
-    
+    const customers = await stripe.customers.list({
+      email: user.email,
+      limit: 1,
+    });
+
     if (customers.data.length === 0) {
       logStep("No customer found");
       return new Response(JSON.stringify({ subscriptions: [] }), {
@@ -60,17 +69,30 @@ serve(async (req) => {
     const subscriptions = await stripe.subscriptions.list({
       customer: customerId,
       status: "active",
-      expand: ['data.items.data.price.product'],
+      expand: ["data.items.data.price.product"],
     });
 
-    const subscriptionData = subscriptions.data.map((sub: any) => ({
-      id: sub.id,
-      status: sub.status,
-      current_period_end: new Date(sub.current_period_end * 1000).toISOString(),
-      cancel_at_period_end: sub.cancel_at_period_end,
-      plan_name: (sub.items.data[0].price.product as any)?.name || 'Unknown',
-      amount: sub.items.data[0].price.unit_amount || 0,
-    }));
+    const subscriptionData = subscriptions.data.map((sub) => {
+      const product = sub.items.data[0]?.price?.product;
+      const planName =
+        typeof product === "object" &&
+        product !== null &&
+        "name" in product &&
+        typeof product.name === "string"
+          ? product.name
+          : "Unknown";
+
+      return {
+        id: sub.id,
+        status: sub.status,
+        current_period_end: new Date(
+          sub.current_period_end * 1000,
+        ).toISOString(),
+        cancel_at_period_end: sub.cancel_at_period_end,
+        plan_name: planName,
+        amount: sub.items.data[0]?.price?.unit_amount || 0,
+      };
+    });
 
     logStep("Subscriptions found", { count: subscriptionData.length });
 
@@ -81,15 +103,19 @@ serve(async (req) => {
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     logStep("ERROR", { message: errorMessage });
-    
+
     // Return 401 for authentication errors (including deleted users)
-    const isAuthError = errorMessage.includes("Authentication error") || 
-                       errorMessage.includes("not authenticated") ||
-                       errorMessage.includes("does not exist");
-    
-    return new Response(JSON.stringify({ error: errorMessage, subscriptions: [] }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: isAuthError ? 401 : 500,
-    });
+    const isAuthError =
+      errorMessage.includes("Authentication error") ||
+      errorMessage.includes("not authenticated") ||
+      errorMessage.includes("does not exist");
+
+    return new Response(
+      JSON.stringify({ error: errorMessage, subscriptions: [] }),
+      {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: isAuthError ? 401 : 500,
+      },
+    );
   }
 });

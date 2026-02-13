@@ -1,4 +1,11 @@
-import { Bot, Zap, TrendingUp, Clock, CheckCircle, Settings } from "lucide-react";
+import {
+  Bot,
+  Zap,
+  TrendingUp,
+  Clock,
+  CheckCircle,
+  Settings,
+} from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
@@ -14,12 +21,12 @@ interface AutomationStatusHeroProps {
   hoursSaved?: number | null;
 }
 
-export function AutomationStatusHero({ 
-  planName = "AI Automation Suite", 
+export function AutomationStatusHero({
+  planName = "AI Automation Suite",
   status = "none",
   automationScore = null,
   tasksAutomated = null,
-  hoursSaved = null
+  hoursSaved = null,
 }: AutomationStatusHeroProps) {
   const navigate = useNavigate();
   const isActive = status === "active";
@@ -41,17 +48,23 @@ export function AutomationStatusHero({
             {/* Status Info */}
             <div className="flex-1 space-y-3">
               <div className="flex items-center gap-2">
-                <h2 className="text-2xl font-bold text-muted-foreground">{planName}</h2>
+                <h2 className="text-2xl font-bold text-muted-foreground">
+                  {planName}
+                </h2>
                 <Badge className="bg-yellow-500/20 text-yellow-600">
                   Setup Required
                 </Badge>
               </div>
-              
+
               <p className="text-muted-foreground">
-                Configure your AI automation to start handling tasks, capturing leads, and saving you time.
+                Configure your AI automation to start handling tasks, capturing
+                leads, and saving you time.
               </p>
 
-              <Button onClick={() => navigate("/business/ai-automation")} className="mt-2">
+              <Button
+                onClick={() => navigate("/business/ai-automation")}
+                className="mt-2"
+              >
                 <Settings className="w-4 h-4 mr-2" />
                 Get Started
               </Button>
@@ -64,7 +77,9 @@ export function AutomationStatusHero({
                   <TrendingUp className="w-4 h-4 text-muted-foreground" />
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground">Tasks Automated</p>
+                  <p className="text-xs text-muted-foreground">
+                    Tasks Automated
+                  </p>
                   <p className="font-bold text-lg text-muted-foreground">-</p>
                 </div>
               </div>
@@ -94,15 +109,15 @@ export function AutomationStatusHero({
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         />
       )}
-      
+
       <div className="relative p-6 md:p-8">
         <div className="flex flex-col md:flex-row md:items-center gap-6">
           {/* Bot Icon */}
           <div className="relative">
             <motion.div
               className={`w-20 h-20 rounded-2xl flex items-center justify-center ${
-                isActive 
-                  ? "bg-gradient-to-br from-violet-500 to-purple-600" 
+                isActive
+                  ? "bg-gradient-to-br from-violet-500 to-purple-600"
                   : "bg-muted"
               }`}
               animate={isActive ? { rotate: [0, 5, -5, 0] } : {}}
@@ -126,17 +141,23 @@ export function AutomationStatusHero({
           <div className="flex-1 space-y-3">
             <div className="flex items-center gap-2">
               <h2 className="text-2xl font-bold">{planName}</h2>
-              <Badge className={`${
-                isActive 
-                  ? "bg-green-500/20 text-green-600" 
-                  : "bg-yellow-500/20 text-yellow-600"
-              }`}>
-                {isActive ? "Active" : status === "pending" ? "Pending" : "Setting Up"}
+              <Badge
+                className={`${
+                  isActive
+                    ? "bg-green-500/20 text-green-600"
+                    : "bg-yellow-500/20 text-yellow-600"
+                }`}
+              >
+                {isActive
+                  ? "Active"
+                  : status === "pending"
+                    ? "Pending"
+                    : "Setting Up"}
               </Badge>
             </div>
-            
+
             <p className="text-muted-foreground">
-              {isActive 
+              {isActive
                 ? "Your AI automations are running smoothly, handling tasks 24/7."
                 : "Complete setup to activate your AI automation suite."}
             </p>
@@ -149,7 +170,9 @@ export function AutomationStatusHero({
                     <Zap className="w-4 h-4 text-violet-500" />
                     Automation Efficiency
                   </span>
-                  <span className="font-semibold text-violet-600">{automationScore}%</span>
+                  <span className="font-semibold text-violet-600">
+                    {automationScore}%
+                  </span>
                 </div>
                 <Progress value={automationScore} className="h-2" />
               </div>
@@ -165,7 +188,9 @@ export function AutomationStatusHero({
               <div>
                 <p className="text-xs text-muted-foreground">Tasks Automated</p>
                 <p className="font-bold text-lg">
-                  {tasksAutomated !== null ? tasksAutomated.toLocaleString() : "-"}
+                  {tasksAutomated !== null
+                    ? tasksAutomated.toLocaleString()
+                    : "-"}
                 </p>
               </div>
             </div>

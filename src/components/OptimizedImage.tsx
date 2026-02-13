@@ -59,17 +59,14 @@ export function OptimizedImage({
           objectFit === "cover" && "object-cover",
           objectFit === "contain" && "object-contain",
           objectFit === "fill" && "object-fill",
-          className
+          className,
         )}
         {...props}
       />
       {/* Placeholder while loading */}
       {!isLoaded && !hasError && (
         <div
-          className={cn(
-            "absolute inset-0 bg-muted",
-            className
-          )}
+          className={cn("absolute inset-0 bg-muted", className)}
           style={{ width, height }}
         />
       )}

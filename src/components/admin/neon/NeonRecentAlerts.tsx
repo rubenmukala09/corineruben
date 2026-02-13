@@ -1,6 +1,13 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Bell, ChevronRight, Shield, AlertTriangle, Wifi, Mail } from "lucide-react";
+import {
+  Bell,
+  ChevronRight,
+  Shield,
+  AlertTriangle,
+  Wifi,
+  Mail,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { formatDistanceToNow } from "date-fns";
 
@@ -42,17 +49,38 @@ const alerts: Alert[] = [
     id: "4",
     type: "breach",
     title: "Password Breach Alert",
-    description: "Email found in recent data breach - password change recommended",
+    description:
+      "Email found in recent data breach - password change recommended",
     severity: "critical",
     timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
   },
 ];
 
 const severityConfig = {
-  low: { color: "text-gray-400", bg: "bg-gray-500/10", border: "border-gray-500/30", pulse: false },
-  medium: { color: "text-amber-400", bg: "bg-amber-500/10", border: "border-amber-500/30", pulse: false },
-  high: { color: "text-orange-400", bg: "bg-orange-500/10", border: "border-orange-500/30", pulse: false },
-  critical: { color: "text-red-400", bg: "bg-red-500/10", border: "border-red-500/30", pulse: true },
+  low: {
+    color: "text-gray-400",
+    bg: "bg-gray-500/10",
+    border: "border-gray-500/30",
+    pulse: false,
+  },
+  medium: {
+    color: "text-amber-400",
+    bg: "bg-amber-500/10",
+    border: "border-amber-500/30",
+    pulse: false,
+  },
+  high: {
+    color: "text-orange-400",
+    bg: "bg-orange-500/10",
+    border: "border-orange-500/30",
+    pulse: false,
+  },
+  critical: {
+    color: "text-red-400",
+    bg: "bg-red-500/10",
+    border: "border-red-500/30",
+    pulse: true,
+  },
 };
 
 const typeIcons = {
@@ -110,8 +138,10 @@ export function NeonRecentAlerts() {
                     hover:border-opacity-100 transition-all cursor-pointer group`}
                 >
                   <div className="flex items-start gap-3">
-                    <div className={`w-8 h-8 rounded-lg ${severity.bg} flex items-center justify-center flex-shrink-0
-                      ${severity.pulse ? 'animate-pulse' : ''}`}>
+                    <div
+                      className={`w-8 h-8 rounded-lg ${severity.bg} flex items-center justify-center flex-shrink-0
+                      ${severity.pulse ? "animate-pulse" : ""}`}
+                    >
                       <Icon className={`h-4 w-4 ${severity.color}`} />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -119,7 +149,9 @@ export function NeonRecentAlerts() {
                         <h3 className="text-sm font-semibold text-white truncate">
                           {alert.title}
                         </h3>
-                        <span className={`text-xs px-2 py-0.5 rounded-full ${severity.bg} ${severity.color} font-medium uppercase`}>
+                        <span
+                          className={`text-xs px-2 py-0.5 rounded-full ${severity.bg} ${severity.color} font-medium uppercase`}
+                        >
                           {alert.severity}
                         </span>
                       </div>
@@ -127,7 +159,9 @@ export function NeonRecentAlerts() {
                         {alert.description}
                       </p>
                       <p className="text-xs text-gray-500">
-                        {formatDistanceToNow(alert.timestamp, { addSuffix: true })}
+                        {formatDistanceToNow(alert.timestamp, {
+                          addSuffix: true,
+                        })}
                       </p>
                     </div>
                   </div>

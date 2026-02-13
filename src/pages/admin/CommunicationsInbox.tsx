@@ -4,14 +4,39 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { RefreshCw, Mail, Archive, Inbox, Clock, CheckCircle } from "lucide-react";
+import {
+  RefreshCw,
+  Mail,
+  Archive,
+  Inbox,
+  Clock,
+  CheckCircle,
+} from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
-
 
 export default function CommunicationsInbox() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -19,7 +44,11 @@ export default function CommunicationsInbox() {
   const [selectedInquiry, setSelectedInquiry] = useState<any>(null);
   const [replyText, setReplyText] = useState("");
 
-  const { data: inquiries, isLoading, refetch } = useQuery({
+  const {
+    data: inquiries,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["website-inquiries", statusFilter],
     queryFn: async () => {
       let query = supabase
@@ -41,7 +70,7 @@ export default function CommunicationsInbox() {
     (inquiry) =>
       inquiry.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       inquiry.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      inquiry.message?.toLowerCase().includes(searchTerm.toLowerCase())
+      inquiry.message?.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const handleStatusChange = async (id: string, status: string) => {
@@ -89,7 +118,11 @@ export default function CommunicationsInbox() {
       responded: "bg-[#10B981]/20 text-[#10B981]",
       archived: "bg-gray-700 text-gray-300",
     };
-    return <Badge className={`${colors[status] || "bg-gray-700"} border-0`}>{status}</Badge>;
+    return (
+      <Badge className={`${colors[status] || "bg-gray-700"} border-0`}>
+        {status}
+      </Badge>
+    );
   };
 
   const stats = {
@@ -102,8 +135,12 @@ export default function CommunicationsInbox() {
     <div className="p-6 max-w-7xl mx-auto space-y-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-[#F9FAFB]">Communications Inbox</h1>
-          <p className="text-[#9CA3AF]">Manage website inquiries and contact form submissions</p>
+          <h1 className="text-2xl font-bold text-[#F9FAFB]">
+            Communications Inbox
+          </h1>
+          <p className="text-[#9CA3AF]">
+            Manage website inquiries and contact form submissions
+          </p>
         </div>
         <Select value={statusFilter} onValueChange={setStatusFilter}>
           <SelectTrigger className="w-[160px] bg-[#1F2937] border-gray-700 text-[#F9FAFB]">
@@ -126,7 +163,9 @@ export default function CommunicationsInbox() {
                 <Inbox className="h-6 w-6 text-[#06B6D4]" />
               </div>
               <div>
-                <p className="text-3xl font-bold text-[#F9FAFB]">{stats.total}</p>
+                <p className="text-3xl font-bold text-[#F9FAFB]">
+                  {stats.total}
+                </p>
                 <p className="text-sm text-[#9CA3AF]">Total Inquiries</p>
               </div>
             </div>
@@ -139,7 +178,9 @@ export default function CommunicationsInbox() {
                 <Clock className="h-6 w-6 text-[#F97316]" />
               </div>
               <div>
-                <p className="text-3xl font-bold text-[#F9FAFB]">{stats.pending}</p>
+                <p className="text-3xl font-bold text-[#F9FAFB]">
+                  {stats.pending}
+                </p>
                 <p className="text-sm text-[#9CA3AF]">Pending</p>
               </div>
             </div>
@@ -152,7 +193,9 @@ export default function CommunicationsInbox() {
                 <CheckCircle className="h-6 w-6 text-[#10B981]" />
               </div>
               <div>
-                <p className="text-3xl font-bold text-[#F9FAFB]">{stats.responded}</p>
+                <p className="text-3xl font-bold text-[#F9FAFB]">
+                  {stats.responded}
+                </p>
                 <p className="text-sm text-[#9CA3AF]">Responded</p>
               </div>
             </div>
@@ -170,7 +213,9 @@ export default function CommunicationsInbox() {
             onClick={() => refetch()}
             className="text-[#9CA3AF] hover:text-white"
           >
-            <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+            <RefreshCw
+              className={`h-4 w-4 mr-2 ${isLoading ? "animate-spin" : ""}`}
+            />
             Refresh
           </Button>
         </div>
@@ -182,7 +227,9 @@ export default function CommunicationsInbox() {
           ) : !filteredInquiries || filteredInquiries.length === 0 ? (
             <div className="text-center py-12">
               <Inbox className="h-16 w-16 mx-auto text-[#3B82F6]/50 mb-4" />
-              <h3 className="text-xl font-semibold text-[#F9FAFB] mb-2">No Inquiries</h3>
+              <h3 className="text-xl font-semibold text-[#F9FAFB] mb-2">
+                No Inquiries
+              </h3>
               <p className="text-[#9CA3AF]">No inquiries found</p>
             </div>
           ) : (
@@ -199,13 +246,24 @@ export default function CommunicationsInbox() {
               </TableHeader>
               <TableBody>
                 {filteredInquiries.map((inquiry) => (
-                  <TableRow key={inquiry.id} className="border-gray-800 hover:bg-[#1F2937]">
-                    <TableCell className="font-medium text-[#F9FAFB]">{inquiry.name}</TableCell>
-                    <TableCell className="text-[#9CA3AF]">{inquiry.email}</TableCell>
-                    <TableCell className="max-w-[200px] truncate text-[#9CA3AF]">{inquiry.message}</TableCell>
+                  <TableRow
+                    key={inquiry.id}
+                    className="border-gray-800 hover:bg-[#1F2937]"
+                  >
+                    <TableCell className="font-medium text-[#F9FAFB]">
+                      {inquiry.name}
+                    </TableCell>
+                    <TableCell className="text-[#9CA3AF]">
+                      {inquiry.email}
+                    </TableCell>
+                    <TableCell className="max-w-[200px] truncate text-[#9CA3AF]">
+                      {inquiry.message}
+                    </TableCell>
                     <TableCell>{getStatusBadge(inquiry.status)}</TableCell>
                     <TableCell className="text-[#9CA3AF]">
-                      {formatDistanceToNow(new Date(inquiry.created_at), { addSuffix: true })}
+                      {formatDistanceToNow(new Date(inquiry.created_at), {
+                        addSuffix: true,
+                      })}
                     </TableCell>
                     <TableCell>
                       <div className="flex gap-2">
@@ -222,13 +280,21 @@ export default function CommunicationsInbox() {
                           </DialogTrigger>
                           <DialogContent className="max-w-2xl bg-[#111827] border-gray-800">
                             <DialogHeader>
-                              <DialogTitle className="text-[#F9FAFB]">Reply to Inquiry</DialogTitle>
+                              <DialogTitle className="text-[#F9FAFB]">
+                                Reply to Inquiry
+                              </DialogTitle>
                             </DialogHeader>
                             <div className="space-y-4">
                               <div className="p-4 bg-[#1F2937] rounded-lg space-y-2 border border-gray-700">
-                                <p className="font-medium text-[#F9FAFB]">{inquiry.name}</p>
-                                <p className="text-sm text-[#9CA3AF]">{inquiry.email}</p>
-                                <p className="mt-2 text-[#9CA3AF]">{inquiry.message}</p>
+                                <p className="font-medium text-[#F9FAFB]">
+                                  {inquiry.name}
+                                </p>
+                                <p className="text-sm text-[#9CA3AF]">
+                                  {inquiry.email}
+                                </p>
+                                <p className="mt-2 text-[#9CA3AF]">
+                                  {inquiry.message}
+                                </p>
                               </div>
                               <Textarea
                                 placeholder="Type your reply..."
@@ -237,7 +303,10 @@ export default function CommunicationsInbox() {
                                 rows={6}
                                 className="bg-[#1F2937] border-gray-700 text-[#F9FAFB]"
                               />
-                              <Button onClick={handleReply} className="w-full bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white">
+                              <Button
+                                onClick={handleReply}
+                                className="w-full bg-gradient-to-r from-[#3B82F6] to-[#06B6D4] text-white"
+                              >
                                 <Mail className="h-4 w-4 mr-2" />
                                 Send Reply
                               </Button>
@@ -247,7 +316,9 @@ export default function CommunicationsInbox() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => handleStatusChange(inquiry.id, "archived")}
+                          onClick={() =>
+                            handleStatusChange(inquiry.id, "archived")
+                          }
                           className="text-[#9CA3AF] hover:text-white"
                         >
                           <Archive className="h-4 w-4" />

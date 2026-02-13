@@ -73,7 +73,11 @@ export const TRAINING_PAGE_IMAGES = {
 
   // Instructors
   instructors: [
-    { image: instructorSarah, name: "Sarah", role: "Senior Protection Specialist" },
+    {
+      image: instructorSarah,
+      name: "Sarah",
+      role: "Senior Protection Specialist",
+    },
     { image: instructorMichael, name: "Michael", role: "Cybersecurity Expert" },
     { image: instructorJames, name: "James", role: "AI Security Analyst" },
     { image: instructorPriya, name: "Priya", role: "Digital Safety Educator" },
@@ -81,11 +85,7 @@ export const TRAINING_PAGE_IMAGES = {
   ],
 
   // Testimonial backgrounds
-  testimonials: [
-    seniorCouple,
-    seniorsTablet,
-    familyGathering,
-  ],
+  testimonials: [seniorCouple, seniorsTablet, familyGathering],
 };
 
 export {

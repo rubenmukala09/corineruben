@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ShoppingCart, X, MessageCircle, Send } from "lucide-react";
 import { toast } from "sonner";
 
-const SESSION_KEY = 'cart_notification_dismissed';
+const SESSION_KEY = "cart_notification_dismissed";
 
 export const CartAbandonmentNotification = () => {
   const { items, itemCount } = useCart();
@@ -18,15 +18,15 @@ export const CartAbandonmentNotification = () => {
 
   // Check if already dismissed this session
   const isDismissedThisSession = useCallback(() => {
-    return sessionStorage.getItem(SESSION_KEY) === 'true';
+    return sessionStorage.getItem(SESSION_KEY) === "true";
   }, []);
 
   useEffect(() => {
     // Don't show if already dismissed or already shown once
     if (isDismissedThisSession() || hasShownOnce) return;
-    
+
     let timer: NodeJS.Timeout;
-    
+
     if (itemCount > 0) {
       // Show after 2 minutes of having items (longer delay, less intrusive)
       timer = setTimeout(() => {
@@ -36,7 +36,7 @@ export const CartAbandonmentNotification = () => {
         }
       }, 120000); // 2 minutes
     }
-    
+
     return () => {
       if (timer) clearTimeout(timer);
     };
@@ -52,7 +52,7 @@ export const CartAbandonmentNotification = () => {
 
   const handleDismiss = () => {
     setShowNotification(false);
-    sessionStorage.setItem(SESSION_KEY, 'true');
+    sessionStorage.setItem(SESSION_KEY, "true");
   };
 
   // Don't show if no items or already dismissed
@@ -83,8 +83,8 @@ export const CartAbandonmentNotification = () => {
                 <div>
                   <p className="font-semibold text-sm">Your cart is ready!</p>
                   <p className="text-xs text-muted-foreground">
-                    {itemCount === 1 
-                      ? `1 item - $${items[0]?.price?.toFixed(2) || '0.00'}` 
+                    {itemCount === 1
+                      ? `1 item - $${items[0]?.price?.toFixed(2) || "0.00"}`
                       : `${itemCount} items waiting for you`}
                   </p>
                 </div>
@@ -115,9 +115,7 @@ export const CartAbandonmentNotification = () => {
             </div>
           ) : (
             <div className="pr-6">
-              <p className="font-semibold text-sm mb-2">
-                How can we improve?
-              </p>
+              <p className="font-semibold text-sm mb-2">How can we improve?</p>
               <Textarea
                 value={feedback}
                 onChange={(e) => setFeedback(e.target.value)}

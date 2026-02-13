@@ -8,10 +8,10 @@ interface AnimatedAvatarProps {
   className?: string;
 }
 
-export const AnimatedAvatar = ({ 
-  isTalking = false, 
+export const AnimatedAvatar = ({
+  isTalking = false,
   isLoading = false,
-  className 
+  className,
 }: AnimatedAvatarProps) => {
   return (
     <div className={cn("relative", className)}>
@@ -30,7 +30,7 @@ export const AnimatedAvatar = ({
           }}
         />
       )}
-      
+
       {/* Avatar with breathing animation */}
       <motion.div
         className="relative z-10"
@@ -48,13 +48,13 @@ export const AnimatedAvatar = ({
           alt="Lora AI Assistant"
           className={cn(
             "w-16 h-16 rounded-full object-cover shadow-lg",
-            isTalking && "ring-2 ring-primary ring-offset-2"
+            isTalking && "ring-2 ring-primary ring-offset-2",
           )}
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
         />
-        
+
         {/* Loading spinner */}
         {isLoading && (
           <motion.div
@@ -66,7 +66,7 @@ export const AnimatedAvatar = ({
           </motion.div>
         )}
       </motion.div>
-      
+
       {/* Particle effects when talking */}
       {isTalking && (
         <div className="absolute inset-0 pointer-events-none">
@@ -74,11 +74,11 @@ export const AnimatedAvatar = ({
             <motion.div
               key={i}
               className="absolute w-1 h-1 bg-primary rounded-full"
-              initial={{ 
-                x: "50%", 
+              initial={{
+                x: "50%",
                 y: "50%",
                 scale: 0,
-                opacity: 0.8
+                opacity: 0.8,
               }}
               animate={{
                 x: `${50 + (Math.random() - 0.5) * 100}%`,

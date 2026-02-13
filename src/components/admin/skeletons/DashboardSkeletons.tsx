@@ -84,7 +84,10 @@ export function PendingCardSkeleton() {
       </div>
       <div className="space-y-2">
         {[...Array(3)].map((_, i) => (
-          <div key={i} className="flex items-center gap-3 p-3 bg-[#111827] rounded-lg">
+          <div
+            key={i}
+            className="flex items-center gap-3 p-3 bg-[#111827] rounded-lg"
+          >
             <Skeleton className="w-9 h-9 rounded-lg bg-gray-800" />
             <div className="flex-1">
               <Skeleton className="h-4 w-24 mb-1 bg-gray-800" />

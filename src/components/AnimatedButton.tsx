@@ -7,17 +7,18 @@ interface AnimatedButtonProps extends ButtonProps {
   withRipple?: boolean;
 }
 
-const AnimatedButton = ({ children, withRipple = true, ...props }: AnimatedButtonProps) => {
+const AnimatedButton = ({
+  children,
+  withRipple = true,
+  ...props
+}: AnimatedButtonProps) => {
   return (
     <motion.div
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
     >
-      <Button
-        className="relative overflow-hidden"
-        {...props}
-      >
+      <Button className="relative overflow-hidden" {...props}>
         {children}
         {withRipple && (
           <motion.span

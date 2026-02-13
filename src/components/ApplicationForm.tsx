@@ -50,9 +50,7 @@ const applicationSchema = z.object({
     .min(10, { message: "Phone number must be at least 10 digits" })
     .max(20, { message: "Phone number must be less than 20 characters" })
     .regex(/^[0-9\s+()-]+$/, { message: "Invalid phone number format" }),
-  position: z
-    .string()
-    .min(1, { message: "Please select a position" }),
+  position: z.string().min(1, { message: "Please select a position" }),
   coverLetter: z
     .string()
     .trim()
@@ -62,10 +60,9 @@ const applicationSchema = z.object({
     .string()
     .trim()
     .optional()
-    .refine(
-      (val) => !val || val === "" || val.includes("linkedin.com"),
-      { message: "Please enter a valid LinkedIn URL" }
-    ),
+    .refine((val) => !val || val === "" || val.includes("linkedin.com"), {
+      message: "Please enter a valid LinkedIn URL",
+    }),
   availability: z
     .string()
     .trim()
@@ -103,7 +100,7 @@ export const ApplicationForm = ({ positions }: ApplicationFormProps) => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    
+
     if (!file) {
       return;
     }
@@ -135,7 +132,7 @@ export const ApplicationForm = ({ positions }: ApplicationFormProps) => {
 
   const handleVeteranDocChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    
+
     if (!file) {
       return;
     }
@@ -146,7 +143,7 @@ export const ApplicationForm = ({ positions }: ApplicationFormProps) => {
       "image/jpeg",
       "image/jpg",
       "image/png",
-      "image/webp"
+      "image/webp",
     ];
 
     if (!validTypes.includes(file.type)) {
@@ -178,12 +175,12 @@ export const ApplicationForm = ({ positions }: ApplicationFormProps) => {
 
     setIsUploadingDoc(true);
     try {
-      const fileExt = veteranDocFile.name.split('.').pop();
+      const fileExt = veteranDocFile.name.split(".").pop();
       const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
       const filePath = `application-docs/${fileName}`;
 
       const { error: uploadError } = await supabase.storage
-        .from('veteran-docs')
+        .from("veteran-docs")
         .upload(filePath, veteranDocFile);
 
       if (uploadError) throw uploadError;
@@ -215,7 +212,8 @@ export const ApplicationForm = ({ positions }: ApplicationFormProps) => {
     if (isVeteran && !veteranDocFile) {
       toast({
         title: "Verification required",
-        description: "Please upload veteran verification document (DD-214, VA ID, etc.)",
+        description:
+          "Please upload veteran verification document (DD-214, VA ID, etc.)",
         variant: "destructive",
       });
       return;
@@ -225,12 +223,12 @@ export const ApplicationForm = ({ positions }: ApplicationFormProps) => {
 
     try {
       // Upload resume to storage first
-      const fileExt = resumeFile.name.split('.').pop();
+      const fileExt = resumeFile.name.split(".").pop();
       const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
       const resumePath = `resumes/${fileName}`;
 
       const { error: resumeUploadError } = await supabase.storage
-        .from('veteran-docs')
+        .from("veteran-docs")
         .upload(resumePath, resumeFile);
 
       if (resumeUploadError) {
@@ -248,7 +246,7 @@ export const ApplicationForm = ({ positions }: ApplicationFormProps) => {
 
       // Save application to database
       const { data: application, error: dbError } = await supabase
-        .from('job_applications')
+        .from("job_applications")
         .insert({
           first_name: data.firstName,
           last_name: data.lastName,
@@ -261,21 +259,22 @@ export const ApplicationForm = ({ positions }: ApplicationFormProps) => {
           resume_url: resumePath,
           is_veteran: isVeteran,
           veteran_doc_url: veteranDocPath,
-          status: 'pending'
+          status: "pending",
         })
         .select()
         .single();
 
       if (dbError) {
-        console.error('Database error:', dbError);
+        console.error("Database error:", dbError);
         throw new Error("Failed to save application");
       }
 
       // Track analytics
-      const { trackFormSubmit, trackConversion } = await import("@/utils/analyticsTracker");
-      trackFormSubmit("job_application_form", { 
+      const { trackFormSubmit, trackConversion } =
+        await import("@/utils/analyticsTracker");
+      trackFormSubmit("job_application_form", {
         position: data.position,
-        isVeteran 
+        isVeteran,
       });
       trackConversion("job_application_submission");
 
@@ -310,7 +309,7 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
       setResumeFile(null);
       setIsVeteran(false);
       setVeteranDocFile(null);
-      
+
       // Reset submitted state after 5 seconds
       setTimeout(() => {
         setIsSubmitted(false);
@@ -336,9 +335,12 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
         </div>
         <h3 className="text-2xl font-bold mb-4">Application Sent!</h3>
         <p className="text-muted-foreground mb-6">
-          Thank you for your interest in joining InVision Network. We'll review your application and contact you soon.
+          Thank you for your interest in joining InVision Network. We'll review
+          your application and contact you soon.
         </p>
-        <Button onClick={() => setIsSubmitted(false)}>Submit Another Application</Button>
+        <Button onClick={() => setIsSubmitted(false)}>
+          Submit Another Application
+        </Button>
       </Card>
     );
   }
@@ -350,7 +352,9 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
         <div>
           <div className="flex items-center gap-3 mb-6">
             <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
-            <h3 className="text-xl font-bold text-foreground">Personal Information</h3>
+            <h3 className="text-xl font-bold text-foreground">
+              Personal Information
+            </h3>
             <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
           </div>
           <div className="grid md:grid-cols-2 gap-6">
@@ -363,11 +367,13 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
                 {...register("firstName")}
                 className={cn(
                   "h-14 text-base border-2 rounded-xl",
-                  errors.firstName ? "border-destructive" : ""
+                  errors.firstName ? "border-destructive" : "",
                 )}
               />
               {errors.firstName && (
-                <p className="text-sm text-destructive">{errors.firstName.message}</p>
+                <p className="text-sm text-destructive">
+                  {errors.firstName.message}
+                </p>
               )}
             </div>
 
@@ -380,11 +386,13 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
                 {...register("lastName")}
                 className={cn(
                   "h-14 text-base border-2 rounded-xl",
-                  errors.lastName ? "border-destructive" : ""
+                  errors.lastName ? "border-destructive" : "",
                 )}
               />
               {errors.lastName && (
-                <p className="text-sm text-destructive">{errors.lastName.message}</p>
+                <p className="text-sm text-destructive">
+                  {errors.lastName.message}
+                </p>
               )}
             </div>
           </div>
@@ -394,7 +402,9 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
         <div>
           <div className="flex items-center gap-3 mb-6">
             <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
-            <h3 className="text-xl font-bold text-foreground">Contact Information</h3>
+            <h3 className="text-xl font-bold text-foreground">
+              Contact Information
+            </h3>
             <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
           </div>
           <div className="grid md:grid-cols-2 gap-6">
@@ -408,11 +418,13 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
                 {...register("email")}
                 className={cn(
                   "h-14 text-base border-2 rounded-xl",
-                  errors.email ? "border-destructive" : ""
+                  errors.email ? "border-destructive" : "",
                 )}
               />
               {errors.email && (
-                <p className="text-sm text-destructive">{errors.email.message}</p>
+                <p className="text-sm text-destructive">
+                  {errors.email.message}
+                </p>
               )}
             </div>
 
@@ -427,28 +439,34 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
                 placeholder="(937) 301-8749"
                 className={cn(
                   "h-14 text-base border-2 rounded-xl",
-                  errors.phone ? "border-destructive" : ""
+                  errors.phone ? "border-destructive" : "",
                 )}
               />
               {errors.phone && (
-                <p className="text-sm text-destructive">{errors.phone.message}</p>
+                <p className="text-sm text-destructive">
+                  {errors.phone.message}
+                </p>
               )}
             </div>
           </div>
 
           <div className="space-y-2 mt-6">
-            <Label htmlFor="linkedIn" className="text-sm font-bold">LinkedIn Profile (Optional)</Label>
+            <Label htmlFor="linkedIn" className="text-sm font-bold">
+              LinkedIn Profile (Optional)
+            </Label>
             <Input
               id="linkedIn"
               {...register("linkedIn")}
               placeholder="https://linkedin.com/in/yourprofile"
               className={cn(
                 "h-14 text-base border-2 rounded-xl",
-                errors.linkedIn ? "border-destructive" : ""
+                errors.linkedIn ? "border-destructive" : "",
               )}
             />
             {errors.linkedIn && (
-              <p className="text-sm text-destructive">{errors.linkedIn.message}</p>
+              <p className="text-sm text-destructive">
+                {errors.linkedIn.message}
+              </p>
             )}
           </div>
         </div>
@@ -459,10 +477,12 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
             Position Applying For <span className="text-destructive">*</span>
           </Label>
           <Select onValueChange={(value) => setValue("position", value)}>
-            <SelectTrigger className={cn(
-              "h-14 text-base border-2 rounded-xl",
-              errors.position ? "border-destructive" : ""
-            )}>
+            <SelectTrigger
+              className={cn(
+                "h-14 text-base border-2 rounded-xl",
+                errors.position ? "border-destructive" : "",
+              )}
+            >
               <SelectValue placeholder="Select a position" />
             </SelectTrigger>
             <SelectContent className="bg-popover border-border z-50">
@@ -474,7 +494,9 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
             </SelectContent>
           </Select>
           {errors.position && (
-            <p className="text-sm text-destructive">{errors.position.message}</p>
+            <p className="text-sm text-destructive">
+              {errors.position.message}
+            </p>
           )}
         </div>
 
@@ -488,11 +510,13 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
               <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
                 <CheckCircle className="w-6 h-6 text-green-600 dark:text-green-400" />
               </div>
-              <span className="text-sm font-medium flex-1 truncate">{resumeFile.name}</span>
-              <Button 
-                type="button" 
-                variant="ghost" 
-                size="sm" 
+              <span className="text-sm font-medium flex-1 truncate">
+                {resumeFile.name}
+              </span>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
                 onClick={() => setResumeFile(null)}
                 className="hover:bg-destructive/10"
               >
@@ -505,8 +529,12 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
                 <Upload className="w-7 h-7 text-primary" />
               </div>
               <div className="text-center">
-                <span className="text-base font-bold text-primary block">Upload Resume</span>
-                <span className="text-sm text-muted-foreground block mt-1">PDF or Word document (Max 5MB)</span>
+                <span className="text-base font-bold text-primary block">
+                  Upload Resume
+                </span>
+                <span className="text-sm text-muted-foreground block mt-1">
+                  PDF or Word document (Max 5MB)
+                </span>
               </div>
               <Input
                 id="resume"
@@ -530,11 +558,13 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
             placeholder="e.g., Immediate, 2 weeks notice, Part-time only"
             className={cn(
               "h-14 text-base border-2 rounded-xl",
-              errors.availability ? "border-destructive" : ""
+              errors.availability ? "border-destructive" : "",
             )}
           />
           {errors.availability && (
-            <p className="text-sm text-destructive">{errors.availability.message}</p>
+            <p className="text-sm text-destructive">
+              {errors.availability.message}
+            </p>
           )}
         </div>
 
@@ -550,11 +580,13 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
             rows={8}
             className={cn(
               "text-base border-2 rounded-xl resize-none",
-              errors.coverLetter ? "border-destructive" : ""
+              errors.coverLetter ? "border-destructive" : "",
             )}
           />
           {errors.coverLetter && (
-            <p className="text-sm text-destructive">{errors.coverLetter.message}</p>
+            <p className="text-sm text-destructive">
+              {errors.coverLetter.message}
+            </p>
           )}
           <p className="text-xs text-muted-foreground bg-muted/50 p-2 rounded-lg">
             Minimum 100 characters, maximum 2000 characters
@@ -569,12 +601,16 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-2xl">🇺🇸</span>
-                  <Label htmlFor="veteran-status" className="text-lg font-bold text-foreground">
+                  <Label
+                    htmlFor="veteran-status"
+                    className="text-lg font-bold text-foreground"
+                  >
                     Veteran/First Responder Status
                   </Label>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  We prioritize veterans and first responders. Receive 10% priority consideration.
+                  We prioritize veterans and first responders. Receive 10%
+                  priority consideration.
                 </p>
               </div>
               <Switch
@@ -590,18 +626,21 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
               <div className="space-y-4 pt-6 border-t-2 border-primary/20 mt-6">
                 <div className="space-y-2">
                   <Label htmlFor="veteran-doc" className="text-sm font-bold">
-                    Verification Document <span className="text-destructive">*</span>
+                    Verification Document{" "}
+                    <span className="text-destructive">*</span>
                   </Label>
                   {veteranDocFile ? (
                     <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-green-500/10 to-green-500/5 rounded-xl border-2 border-green-500/30">
                       <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
                         <CheckCircle className="w-6 h-6 text-green-600 dark:text-green-400" />
                       </div>
-                      <span className="text-sm font-medium flex-1 truncate">{veteranDocFile.name}</span>
-                      <Button 
-                        type="button" 
-                        variant="ghost" 
-                        size="sm" 
+                      <span className="text-sm font-medium flex-1 truncate">
+                        {veteranDocFile.name}
+                      </span>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
                         onClick={() => setVeteranDocFile(null)}
                         className="hover:bg-destructive/10"
                       >
@@ -614,9 +653,15 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
                         <Upload className="w-7 h-7 text-primary" />
                       </div>
                       <div className="text-center">
-                        <span className="text-base font-bold text-primary block">Upload Verification</span>
-                        <span className="text-sm text-muted-foreground block mt-1">DD-214, VA ID, military ID, or first responder badge</span>
-                        <span className="text-xs text-muted-foreground block mt-1">PDF, JPG, PNG (Max 5MB)</span>
+                        <span className="text-base font-bold text-primary block">
+                          Upload Verification
+                        </span>
+                        <span className="text-sm text-muted-foreground block mt-1">
+                          DD-214, VA ID, military ID, or first responder badge
+                        </span>
+                        <span className="text-xs text-muted-foreground block mt-1">
+                          PDF, JPG, PNG (Max 5MB)
+                        </span>
                       </div>
                       <Input
                         id="veteran-doc"
@@ -630,7 +675,11 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
                   )}
                   <div className="bg-blue-500/10 border border-blue-500/20 p-3 rounded-xl mt-2">
                     <p className="text-xs text-blue-600 dark:text-blue-400">
-                      <strong className="font-bold">Priority Consideration:</strong> Upload verification for 10% priority consideration. Documents are confidential and used only for verification.
+                      <strong className="font-bold">
+                        Priority Consideration:
+                      </strong>{" "}
+                      Upload verification for 10% priority consideration.
+                      Documents are confidential and used only for verification.
                     </p>
                   </div>
                 </div>
@@ -655,9 +704,9 @@ Resume: ${encodeURIComponent(resumeFile.name)}`;
           >
             Clear Form
           </Button>
-          <Button 
-            type="submit" 
-            disabled={isSubmitting || isUploadingDoc} 
+          <Button
+            type="submit"
+            disabled={isSubmitting || isUploadingDoc}
             className="flex-1 h-14 text-base font-semibold bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 shadow-lg"
           >
             {isSubmitting || isUploadingDoc ? (

@@ -1,21 +1,25 @@
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { useUserBookingRequests, getStatusColor, getStatusLabel } from "@/hooks/useBookingRequests";
+import {
+  useUserBookingRequests,
+  getStatusColor,
+  getStatusLabel,
+} from "@/hooks/useBookingRequests";
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { 
-  Calendar, 
-  Clock, 
-  FileText, 
-  DollarSign, 
-  ArrowRight, 
+import {
+  Calendar,
+  Clock,
+  FileText,
+  DollarSign,
+  ArrowRight,
   CheckCircle,
   AlertCircle,
-  Loader2
+  Loader2,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
@@ -28,24 +32,29 @@ function MyBookings() {
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut();
-      toast({ 
+      toast({
         title: "👋 Signed Out Successfully",
-        description: "You've been securely logged out."
+        description: "You've been securely logged out.",
       });
       navigate("/auth");
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Unable to sign out";
       toast({
         title: "❌ Sign Out Failed",
-        description: error.message,
+        description: errorMessage,
         variant: "destructive",
       });
     }
   };
 
   // Calculate stats
-  const pending = bookings?.filter(b => b.status === "pending").length || 0;
-  const confirmed = bookings?.filter(b => ["confirmed", "approved"].includes(b.status)).length || 0;
-  const completed = bookings?.filter(b => b.status === "completed").length || 0;
+  const pending = bookings?.filter((b) => b.status === "pending").length || 0;
+  const confirmed =
+    bookings?.filter((b) => ["confirmed", "approved"].includes(b.status))
+      .length || 0;
+  const completed =
+    bookings?.filter((b) => b.status === "completed").length || 0;
 
   const getStatusIcon = (status: string) => {
     switch (status.toLowerCase()) {
@@ -134,8 +143,11 @@ function MyBookings() {
           <CardContent>
             {isLoading ? (
               <div className="space-y-4">
-                {[1, 2, 3].map(i => (
-                  <div key={i} className="flex items-center gap-4 p-4 border rounded-lg">
+                {[1, 2, 3].map((i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-4 p-4 border rounded-lg"
+                  >
                     <Skeleton className="w-12 h-12 rounded" />
                     <div className="flex-1">
                       <Skeleton className="h-5 w-3/4 mb-2" />
@@ -157,13 +169,17 @@ function MyBookings() {
                   >
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-semibold">{booking.service_name}</h3>
-                        <Badge 
-                          variant="outline" 
+                        <h3 className="font-semibold">
+                          {booking.service_name}
+                        </h3>
+                        <Badge
+                          variant="outline"
                           className={getStatusColor(booking.status)}
                         >
                           {getStatusIcon(booking.status)}
-                          <span className="ml-1">{getStatusLabel(booking.status)}</span>
+                          <span className="ml-1">
+                            {getStatusLabel(booking.status)}
+                          </span>
                         </Badge>
                       </div>
                       <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
@@ -172,7 +188,9 @@ function MyBookings() {
                           {booking.request_number}
                         </span>
                         {booking.service_tier && (
-                          <Badge variant="secondary">{booking.service_tier}</Badge>
+                          <Badge variant="secondary">
+                            {booking.service_tier}
+                          </Badge>
                         )}
                         <span className="flex items-center gap-1">
                           <Calendar className="w-4 h-4" />
@@ -194,11 +212,12 @@ function MyBookings() {
                             <DollarSign className="w-4 h-4" />
                             {booking.final_price.toFixed(2)}
                           </p>
-                          {booking.discount_amount && booking.discount_amount > 0 && (
-                            <p className="text-xs text-green-600">
-                              Saved ${booking.discount_amount.toFixed(2)}
-                            </p>
-                          )}
+                          {booking.discount_amount &&
+                            booking.discount_amount > 0 && (
+                              <p className="text-xs text-green-600">
+                                Saved ${booking.discount_amount.toFixed(2)}
+                              </p>
+                            )}
                         </div>
                       )}
                     </div>

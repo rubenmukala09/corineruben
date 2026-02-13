@@ -13,7 +13,7 @@ interface NavigatorWithConnection extends Navigator {
 // Simple debounce
 export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
-  wait: number
+  wait: number,
 ): (...args: Parameters<T>) => void {
   let timeout: ReturnType<typeof setTimeout>;
   return (...args: Parameters<T>) => {
@@ -25,7 +25,7 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
 // Simple throttle
 export function throttle<T extends (...args: unknown[]) => unknown>(
   func: T,
-  limit: number
+  limit: number,
 ): (...args: Parameters<T>) => void {
   let inThrottle = false;
   return (...args: Parameters<T>) => {
@@ -38,7 +38,10 @@ export function throttle<T extends (...args: unknown[]) => unknown>(
 }
 
 // Run when idle
-export function runWhenIdle(callback: () => void, options?: { timeout?: number }) {
+export function runWhenIdle(
+  callback: () => void,
+  options?: { timeout?: number },
+) {
   if ("requestIdleCallback" in window) {
     requestIdleCallback(callback, { timeout: options?.timeout || 2000 });
   } else {
@@ -56,14 +59,18 @@ export function hasSlowConnection(): boolean {
 
 // Initialize performance optimizations - lightweight
 export function initPerformanceOptimizations() {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
 
   // Add loaded class immediately
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      document.body.classList.add('loaded');
-    }, { once: true });
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      () => {
+        document.body.classList.add("loaded");
+      },
+      { once: true },
+    );
   } else {
-    document.body.classList.add('loaded');
+    document.body.classList.add("loaded");
   }
 }

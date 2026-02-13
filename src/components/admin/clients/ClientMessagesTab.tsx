@@ -3,11 +3,21 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Paperclip, Send, Smile, Star, MessageSquare } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { useClientMessages, useSendClientMessage, useToggleMessageStar } from "@/hooks/useClientMessages";
+import {
+  useClientMessages,
+  useSendClientMessage,
+  useToggleMessageStar,
+} from "@/hooks/useClientMessages";
 import { format } from "date-fns";
 
 interface ClientMessagesTabProps {
@@ -24,11 +34,33 @@ export function ClientMessagesTab({ clientId }: ClientMessagesTabProps) {
   const toggleStarMutation = useToggleMessageStar();
 
   const templates = [
-    { value: "activation", label: "Service Activation", content: "Your service has been activated successfully!" },
-    { value: "payment", label: "Payment Received", content: "We've received your payment. Thank you!" },
-    { value: "support", label: "Support Ticket Response", content: "Thank you for contacting support. We're looking into your issue." },
-    { value: "followup", label: "Follow Up", content: "Just checking in to see how everything is going." },
-    { value: "meeting", label: "Meeting Scheduled", content: "Your meeting has been scheduled. We look forward to speaking with you." },
+    {
+      value: "activation",
+      label: "Service Activation",
+      content: "Your service has been activated successfully!",
+    },
+    {
+      value: "payment",
+      label: "Payment Received",
+      content: "We've received your payment. Thank you!",
+    },
+    {
+      value: "support",
+      label: "Support Ticket Response",
+      content:
+        "Thank you for contacting support. We're looking into your issue.",
+    },
+    {
+      value: "followup",
+      label: "Follow Up",
+      content: "Just checking in to see how everything is going.",
+    },
+    {
+      value: "meeting",
+      label: "Meeting Scheduled",
+      content:
+        "Your meeting has been scheduled. We look forward to speaking with you.",
+    },
   ];
 
   const getMessageIcon = (type: string | null) => {
@@ -44,48 +76,57 @@ export function ClientMessagesTab({ clientId }: ClientMessagesTabProps) {
 
   // Filter messages
   const filteredMessages = messages
-    .filter(message => {
+    .filter((message) => {
       if (searchQuery) {
-        return message.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-               message.subject?.toLowerCase().includes(searchQuery.toLowerCase());
+        return (
+          message.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          message.subject?.toLowerCase().includes(searchQuery.toLowerCase())
+        );
       }
       return true;
     })
-    .filter(message => {
+    .filter((message) => {
       if (messageFilter === "all") return true;
       if (messageFilter === "unread") return !message.is_read;
-      if (messageFilter === "support") return message.message_type === "support";
+      if (messageFilter === "support")
+        return message.message_type === "support";
       if (messageFilter === "forms") return message.message_type === "form";
       return true;
     });
 
   const handleSendMessage = () => {
     if (!messageText.trim()) return;
-    
+
     sendMessageMutation.mutate({
       client_id: clientId,
       content: messageText,
       message_type: "direct",
     });
-    
+
     setMessageText("");
   };
 
   const handleTemplateSelect = (templateValue: string) => {
-    const template = templates.find(t => t.value === templateValue);
+    const template = templates.find((t) => t.value === templateValue);
     if (template) {
       setMessageText(template.content);
     }
   };
 
   const handleToggleStar = (messageId: string, currentStarred: boolean) => {
-    toggleStarMutation.mutate({ id: messageId, clientId, starred: !currentStarred });
+    toggleStarMutation.mutate({
+      id: messageId,
+      clientId,
+      starred: !currentStarred,
+    });
   };
 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <div className="animate-pulse text-muted-foreground">Loading messages...</div>
+        <div className="animate-pulse text-muted-foreground">
+          Loading messages...
+        </div>
       </div>
     );
   }
@@ -108,8 +149,8 @@ export function ClientMessagesTab({ clientId }: ClientMessagesTabProps) {
                   <SelectItem value="forms">Contact Forms</SelectItem>
                 </SelectContent>
               </Select>
-              <Input 
-                placeholder="Search messages..." 
+              <Input
+                placeholder="Search messages..."
                 className="w-[200px]"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -124,7 +165,9 @@ export function ClientMessagesTab({ clientId }: ClientMessagesTabProps) {
                 <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
                   <MessageSquare className="w-12 h-12 mb-4 opacity-30" />
                   <p>No messages yet</p>
-                  <p className="text-sm">Start a conversation with this client</p>
+                  <p className="text-sm">
+                    Start a conversation with this client
+                  </p>
                 </div>
               ) : (
                 filteredMessages.map((message) => (
@@ -134,29 +177,46 @@ export function ClientMessagesTab({ clientId }: ClientMessagesTabProps) {
                   >
                     <Avatar className="h-10 w-10">
                       <AvatarFallback className="bg-primary/10 text-primary">
-                        {message.is_from_client ? "CL" : !message.sender_id ? "SYS" : "AD"}
+                        {message.is_from_client
+                          ? "CL"
+                          : !message.sender_id
+                            ? "SYS"
+                            : "AD"}
                       </AvatarFallback>
                     </Avatar>
-                    <div className={`flex-1 ${!message.is_from_client ? "text-right" : ""}`}>
+                    <div
+                      className={`flex-1 ${!message.is_from_client ? "text-right" : ""}`}
+                    >
                       <div className="flex items-center gap-2 mb-1">
                         {message.is_from_client && (
                           <span className="text-sm font-semibold">Client</span>
                         )}
-                        <span className="text-xs">{getMessageIcon(message.message_type)}</span>
+                        <span className="text-xs">
+                          {getMessageIcon(message.message_type)}
+                        </span>
                         {!message.is_from_client && (
                           <span className="text-sm font-semibold">
                             {message.sender_id ? "You" : "System"}
                           </span>
                         )}
-                        <button 
+                        <button
                           className="ml-auto"
-                          onClick={() => handleToggleStar(message.id, message.is_starred || false)}
+                          onClick={() =>
+                            handleToggleStar(
+                              message.id,
+                              message.is_starred || false,
+                            )
+                          }
                         >
-                          <Star className={`h-4 w-4 ${message.is_starred ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground"}`} />
+                          <Star
+                            className={`h-4 w-4 ${message.is_starred ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground"}`}
+                          />
                         </button>
                       </div>
                       {message.subject && (
-                        <p className={`text-xs font-medium mb-1 ${!message.is_from_client ? "text-right" : ""}`}>
+                        <p
+                          className={`text-xs font-medium mb-1 ${!message.is_from_client ? "text-right" : ""}`}
+                        >
                           Re: {message.subject}
                         </p>
                       )}
@@ -165,20 +225,24 @@ export function ClientMessagesTab({ clientId }: ClientMessagesTabProps) {
                           !message.is_from_client
                             ? "bg-primary text-primary-foreground"
                             : !message.sender_id
-                            ? "bg-blue-50 text-blue-900 border border-blue-200 dark:bg-blue-950 dark:text-blue-100"
-                            : "bg-muted"
+                              ? "bg-blue-50 text-blue-900 border border-blue-200 dark:bg-blue-950 dark:text-blue-100"
+                              : "bg-muted"
                         }`}
                       >
                         <p className="text-sm">{message.content}</p>
                       </div>
                       <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
                         <span>
-                          {message.created_at 
-                            ? format(new Date(message.created_at), "MMM d, yyyy 'at' h:mm a") 
-                            : "Unknown time"
-                          }
+                          {message.created_at
+                            ? format(
+                                new Date(message.created_at),
+                                "MMM d, yyyy 'at' h:mm a",
+                              )
+                            : "Unknown time"}
                         </span>
-                        {!message.is_from_client && message.is_read && <span>✓✓</span>}
+                        {!message.is_from_client && message.is_read && (
+                          <span>✓✓</span>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -222,12 +286,16 @@ export function ClientMessagesTab({ clientId }: ClientMessagesTabProps) {
                 </div>
                 <div className="flex gap-2">
                   <Button variant="outline">Schedule Send</Button>
-                  <Button 
+                  <Button
                     onClick={handleSendMessage}
-                    disabled={!messageText.trim() || sendMessageMutation.isPending}
+                    disabled={
+                      !messageText.trim() || sendMessageMutation.isPending
+                    }
                   >
                     <Send className="mr-2 h-4 w-4" />
-                    {sendMessageMutation.isPending ? "Sending..." : "Send Message"}
+                    {sendMessageMutation.isPending
+                      ? "Sending..."
+                      : "Send Message"}
                   </Button>
                 </div>
               </div>

@@ -21,7 +21,9 @@ export function useUserBookingRequests() {
   return useQuery({
     queryKey: ["user-booking-requests"],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return [];
 
       // Try to get from the view first, fallback to direct query

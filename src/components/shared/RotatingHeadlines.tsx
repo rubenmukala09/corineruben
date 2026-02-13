@@ -7,10 +7,10 @@ interface RotatingHeadlinesProps {
 }
 
 // Simplified - no framer-motion, just CSS transitions
-export const RotatingHeadlines = ({ 
-  headlines, 
+export const RotatingHeadlines = ({
+  headlines,
   interval = 4000,
-  className = "text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4"
+  className = "text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4",
 }: RotatingHeadlinesProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
@@ -39,7 +39,7 @@ export const RotatingHeadlines = ({
   // Returns a span, not h1 - parent should wrap in h1
   return (
     <span
-      className={`${className} transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+      className={`${className} transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0"}`}
     >
       {headlines[reduceMotion ? 0 : currentIndex]}
     </span>

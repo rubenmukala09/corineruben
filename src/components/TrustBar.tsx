@@ -11,14 +11,17 @@ const TrustBar = () => {
   useEffect(() => {
     const element = counterRef.current;
     if (!element) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !hasAnimated.current) {
-        setIsVisible(true);
-        hasAnimated.current = true;
-      }
-    }, {
-      threshold: 0.3
-    });
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          setIsVisible(true);
+          hasAnimated.current = true;
+        }
+      },
+      {
+        threshold: 0.3,
+      },
+    );
     observer.observe(element);
     return () => observer.disconnect();
   }, []);
@@ -40,28 +43,39 @@ const TrustBar = () => {
     };
     requestAnimationFrame(animate);
   }, [isVisible]);
-  const trustIndicators = [{
-    icon: Shield,
-    text: "100+ Families Protected",
-    useCounter: true,
-    count: familiesCount
-  }, {
-    icon: MapPin,
-    text: "Serving Greater Dayton Area"
-  }, {
-    icon: Award,
-    text: "Veteran Supportive Business"
-  }, {
-    icon: UserCheck,
-    text: "Expert Cybersecurity Team"
-  }];
-  return <div ref={counterRef} className="relative z-10 px-4 -mt-10" role="complementary" aria-label="Trust indicators">
+  const trustIndicators = [
+    {
+      icon: Shield,
+      text: "100+ Families Protected",
+      useCounter: true,
+      count: familiesCount,
+    },
+    {
+      icon: MapPin,
+      text: "Serving Greater Dayton Area",
+    },
+    {
+      icon: Award,
+      text: "Veteran Supportive Business",
+    },
+    {
+      icon: UserCheck,
+      text: "Expert Cybersecurity Team",
+    },
+  ];
+  return (
+    <div
+      ref={counterRef}
+      className="relative z-10 px-4 -mt-10"
+      role="complementary"
+      aria-label="Trust indicators"
+    >
       <div className="container mx-auto">
         <div className="relative mx-auto max-w-7xl group/trust">
           {/* Enhanced gradient card matching website colors */}
-          
         </div>
       </div>
-    </div>;
+    </div>
+  );
 };
 export default TrustBar;

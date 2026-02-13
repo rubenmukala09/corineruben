@@ -1,18 +1,24 @@
 import { useParams, Link } from "react-router-dom";
 import { useScamSubmissionById } from "@/hooks/useScamSubmissions";
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardDescription,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { 
-  ShieldAlert, 
-  ShieldCheck, 
-  AlertTriangle, 
-  CheckCircle, 
+import {
+  ShieldAlert,
+  ShieldCheck,
+  AlertTriangle,
+  CheckCircle,
   Clock,
   ArrowLeft,
   AlertCircle,
-  Lightbulb
+  Lightbulb,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
@@ -47,7 +53,11 @@ function getRiskIcon(riskLevel: string | null) {
 
 export default function ScamCheckResult() {
   const { id } = useParams<{ id: string }>();
-  const { data: submission, isLoading, error } = useScamSubmissionById(id || "");
+  const {
+    data: submission,
+    isLoading,
+    error,
+  } = useScamSubmissionById(id || "");
 
   if (isLoading) {
     return (
@@ -69,7 +79,8 @@ export default function ScamCheckResult() {
               <AlertCircle className="w-12 h-12 mx-auto text-destructive mb-4" />
               <h2 className="text-xl font-bold mb-2">Analysis Not Found</h2>
               <p className="text-muted-foreground mb-4">
-                We couldn't find this scam analysis. It may have been removed or the link is invalid.
+                We couldn't find this scam analysis. It may have been removed or
+                the link is invalid.
               </p>
               <Button asChild>
                 <Link to="/portal/senior">Return to Dashboard</Link>
@@ -114,7 +125,8 @@ export default function ScamCheckResult() {
                 </div>
                 <h2 className="text-xl font-bold mb-2">Analysis in Progress</h2>
                 <p className="text-muted-foreground mb-4">
-                  Our AI is analyzing your submission. This usually takes a few minutes.
+                  Our AI is analyzing your submission. This usually takes a few
+                  minutes.
                 </p>
                 <Progress value={33} className="max-w-xs mx-auto" />
               </CardContent>
@@ -128,7 +140,9 @@ export default function ScamCheckResult() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <Card className={`border-2 ${getRiskColor(submission.risk_level)}`}>
+              <Card
+                className={`border-2 ${getRiskColor(submission.risk_level)}`}
+              >
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4">
                     <div className="w-16 h-16 rounded-2xl bg-card flex items-center justify-center">
@@ -146,7 +160,10 @@ export default function ScamCheckResult() {
                       {submission.ai_confidence && (
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
                           <span>AI Confidence:</span>
-                          <Progress value={submission.ai_confidence} className="w-24 h-2" />
+                          <Progress
+                            value={submission.ai_confidence}
+                            className="w-24 h-2"
+                          />
                           <span>{submission.ai_confidence}%</span>
                         </div>
                       )}
@@ -180,66 +197,68 @@ export default function ScamCheckResult() {
             )}
 
             {/* Threats Detected */}
-            {submission.threats_detected && submission.threats_detected.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-              >
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <ShieldAlert className="w-5 h-5 text-red-500" />
-                      Threats Detected
-                    </CardTitle>
-                    <CardDescription>
-                      Warning signs identified in your submission
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      {submission.threats_detected.map((threat, index) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <AlertTriangle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
-                          <span>{threat}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            )}
+            {submission.threats_detected &&
+              submission.threats_detected.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <ShieldAlert className="w-5 h-5 text-red-500" />
+                        Threats Detected
+                      </CardTitle>
+                      <CardDescription>
+                        Warning signs identified in your submission
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="space-y-2">
+                        {submission.threats_detected.map((threat, index) => (
+                          <li key={index} className="flex items-start gap-2">
+                            <AlertTriangle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
+                            <span>{threat}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              )}
 
             {/* Recommendations */}
-            {submission.recommendations && submission.recommendations.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-              >
-                <Card className="border-green-500/20">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Lightbulb className="w-5 h-5 text-green-500" />
-                      Recommendations
-                    </CardTitle>
-                    <CardDescription>
-                      Steps to protect yourself
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      {submission.recommendations.map((rec, index) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span>{rec}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            )}
+            {submission.recommendations &&
+              submission.recommendations.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <Card className="border-green-500/20">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Lightbulb className="w-5 h-5 text-green-500" />
+                        Recommendations
+                      </CardTitle>
+                      <CardDescription>
+                        Steps to protect yourself
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="space-y-2">
+                        {submission.recommendations.map((rec, index) => (
+                          <li key={index} className="flex items-start gap-2">
+                            <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                            <span>{rec}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              )}
 
             {/* Original Submission */}
             <motion.div

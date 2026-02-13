@@ -6,7 +6,11 @@ export function Breadcrumb() {
   const pathnames = location.pathname.split("/").filter((x) => x);
 
   // Don't show breadcrumbs on homepage or admin routes
-  if (pathnames.length === 0 || pathnames[0] === "admin" || pathnames[0] === "portal") {
+  if (
+    pathnames.length === 0 ||
+    pathnames[0] === "admin" ||
+    pathnames[0] === "portal"
+  ) {
     return null;
   }
 
@@ -65,7 +69,10 @@ export function Breadcrumb() {
               <li key={path} className="flex items-center gap-2">
                 <ChevronRight className="w-4 h-4" aria-hidden="true" />
                 {isLast ? (
-                  <span className="text-foreground font-medium" aria-current="page">
+                  <span
+                    className="text-foreground font-medium"
+                    aria-current="page"
+                  >
                     {formatName(segment)}
                   </span>
                 ) : (

@@ -1,10 +1,22 @@
 import { useParams, Link } from "react-router-dom";
-import { useCourseById, useUserEnrollments, useEnrollInCourse, useUpdateProgress, useCourseModules } from "@/hooks/useCourses";
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
+import {
+  useCourseById,
+  useUserEnrollments,
+  useEnrollInCourse,
+  useUpdateProgress,
+  useCourseModules,
+} from "@/hooks/useCourses";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardDescription,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { 
+import {
   ArrowLeft,
   BookOpen,
   Clock,
@@ -14,7 +26,7 @@ import {
   CheckCircle,
   Play,
   Lock,
-  GraduationCap
+  GraduationCap,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
@@ -22,17 +34,22 @@ import { format } from "date-fns";
 export default function CourseDetail() {
   const { id } = useParams<{ id: string }>();
   const { data: course, isLoading: courseLoading } = useCourseById(id || "");
-  const { data: modules = [], isLoading: modulesLoading } = useCourseModules(id || "");
+  const { data: modules = [], isLoading: modulesLoading } = useCourseModules(
+    id || "",
+  );
   const { data: enrollments } = useUserEnrollments();
   const enrollMutation = useEnrollInCourse();
   const updateProgressMutation = useUpdateProgress();
 
-  const enrollment = enrollments?.find(e => e.course_id === id);
+  const enrollment = enrollments?.find((e) => e.course_id === id);
   const isEnrolled = !!enrollment;
   const progress = enrollment?.progress_percentage || 0;
 
   // Calculate total course duration from modules
-  const totalDuration = modules.reduce((acc, m) => acc + (m.duration_minutes || 0), 0);
+  const totalDuration = modules.reduce(
+    (acc, m) => acc + (m.duration_minutes || 0),
+    0,
+  );
   const totalModules = modules.length;
 
   // Calculate which modules are completed based on progress
@@ -84,9 +101,9 @@ export default function CourseDetail() {
     if (enrollment) {
       // Simulate progress update
       const nextProgress = Math.min(progress + 20, 100);
-      updateProgressMutation.mutate({ 
-        enrollmentId: enrollment.id, 
-        progress: nextProgress 
+      updateProgressMutation.mutate({
+        enrollmentId: enrollment.id,
+        progress: nextProgress,
       });
     }
   };
@@ -126,16 +143,20 @@ export default function CourseDetail() {
                     <div>
                       <h3 className="font-semibold">Your Progress</h3>
                       <p className="text-sm text-muted-foreground">
-                        {progress >= 100 ? "Course Completed! 🎉" : "Keep learning to complete"}
+                        {progress >= 100
+                          ? "Course Completed! 🎉"
+                          : "Keep learning to complete"}
                       </p>
                     </div>
                   </div>
-                  <span className="text-2xl font-bold text-violet-600">{progress}%</span>
+                  <span className="text-2xl font-bold text-violet-600">
+                    {progress}%
+                  </span>
                 </div>
                 <Progress value={progress} className="h-3" />
                 {progress < 100 && (
-                  <Button 
-                    className="w-full mt-4" 
+                  <Button
+                    className="w-full mt-4"
                     onClick={handleContinue}
                     disabled={updateProgressMutation.isPending}
                   >
@@ -164,7 +185,10 @@ export default function CourseDetail() {
                     Course Modules
                   </CardTitle>
                   <CardDescription>
-                    {modules.length} modules • {totalDuration > 0 ? `${Math.round(totalDuration / 60)}h ${totalDuration % 60}m` : `${course.duration_weeks} weeks`}
+                    {modules.length} modules •{" "}
+                    {totalDuration > 0
+                      ? `${Math.round(totalDuration / 60)}h ${totalDuration % 60}m`
+                      : `${course.duration_weeks} weeks`}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3">
@@ -176,42 +200,51 @@ export default function CourseDetail() {
                   ) : (
                     modules.map((module, index) => {
                       const isCompleted = getModuleCompletion(index);
-                      const durationDisplay = module.duration_minutes 
-                        ? `${module.duration_minutes} min` 
+                      const durationDisplay = module.duration_minutes
+                        ? `${module.duration_minutes} min`
                         : `${module.lessons?.length || 0} lessons`;
-                      
+
                       return (
-                        <div 
+                        <div
                           key={module.id}
                           className={`flex items-center gap-3 p-3 rounded-lg border ${
-                            isCompleted 
-                              ? "bg-green-500/5 border-green-500/20" 
-                              : isEnrolled 
-                                ? "bg-card border-border hover:bg-muted/50 cursor-pointer" 
+                            isCompleted
+                              ? "bg-green-500/5 border-green-500/20"
+                              : isEnrolled
+                                ? "bg-card border-border hover:bg-muted/50 cursor-pointer"
                                 : "bg-muted/30 border-border"
                           }`}
                         >
-                          <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                            isCompleted 
-                              ? "bg-green-500 text-white" 
-                              : isEnrolled 
-                                ? "bg-primary/20 text-primary" 
-                                : "bg-muted text-muted-foreground"
-                          }`}>
+                          <div
+                            className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                              isCompleted
+                                ? "bg-green-500 text-white"
+                                : isEnrolled
+                                  ? "bg-primary/20 text-primary"
+                                  : "bg-muted text-muted-foreground"
+                            }`}
+                          >
                             {isCompleted ? (
                               <CheckCircle className="w-4 h-4" />
                             ) : isEnrolled ? (
-                              <span className="text-sm font-medium">{index + 1}</span>
+                              <span className="text-sm font-medium">
+                                {index + 1}
+                              </span>
                             ) : (
                               <Lock className="w-4 h-4" />
                             )}
                           </div>
                           <div className="flex-1">
                             <p className="font-medium">{module.title}</p>
-                            <p className="text-xs text-muted-foreground">{durationDisplay}</p>
+                            <p className="text-xs text-muted-foreground">
+                              {durationDisplay}
+                            </p>
                           </div>
                           {isCompleted && (
-                            <Badge variant="secondary" className="bg-green-500/20 text-green-600">
+                            <Badge
+                              variant="secondary"
+                              className="bg-green-500/20 text-green-600"
+                            >
                               Completed
                             </Badge>
                           )}
@@ -248,15 +281,19 @@ export default function CourseDetail() {
                       </div>
                     </div>
                   )}
-                  
+
                   {course.duration_weeks && (
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
                         <Clock className="w-5 h-5 text-blue-500" />
                       </div>
                       <div>
-                        <p className="text-sm text-muted-foreground">Duration</p>
-                        <p className="font-semibold">{course.duration_weeks} weeks</p>
+                        <p className="text-sm text-muted-foreground">
+                          Duration
+                        </p>
+                        <p className="font-semibold">
+                          {course.duration_weeks} weeks
+                        </p>
                       </div>
                     </div>
                   )}
@@ -267,8 +304,12 @@ export default function CourseDetail() {
                         <Users className="w-5 h-5 text-violet-500" />
                       </div>
                       <div>
-                        <p className="text-sm text-muted-foreground">Class Size</p>
-                        <p className="font-semibold">Max {course.max_students} students</p>
+                        <p className="text-sm text-muted-foreground">
+                          Class Size
+                        </p>
+                        <p className="font-semibold">
+                          Max {course.max_students} students
+                        </p>
                       </div>
                     </div>
                   )}
@@ -279,7 +320,9 @@ export default function CourseDetail() {
                         <Calendar className="w-5 h-5 text-orange-500" />
                       </div>
                       <div>
-                        <p className="text-sm text-muted-foreground">Start Date</p>
+                        <p className="text-sm text-muted-foreground">
+                          Start Date
+                        </p>
                         <p className="font-semibold">
                           {format(new Date(course.start_date), "MMM d, yyyy")}
                         </p>
@@ -297,8 +340,8 @@ export default function CourseDetail() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
               >
-                <Button 
-                  className="w-full" 
+                <Button
+                  className="w-full"
                   size="lg"
                   onClick={handleEnroll}
                   disabled={enrollMutation.isPending}

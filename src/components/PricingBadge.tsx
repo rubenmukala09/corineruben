@@ -1,11 +1,35 @@
 import { ReactNode } from "react";
-import { Shield, Star, Zap, Award, CheckCircle, TrendingUp, Heart, Clock, Lock, Users } from "lucide-react";
+import {
+  Shield,
+  Star,
+  Zap,
+  Award,
+  CheckCircle,
+  TrendingUp,
+  Heart,
+  Clock,
+  Lock,
+  Users,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface PricingBadgeProps {
-  type: 'popular' | 'recommended' | 'best-value' | 'limited' | 'trusted' | 'secure' | 'fast' | 'guaranteed' | 'premium' | 'new' | 'hot' | 'save' | 'veteran';
+  type:
+    | "popular"
+    | "recommended"
+    | "best-value"
+    | "limited"
+    | "trusted"
+    | "secure"
+    | "fast"
+    | "guaranteed"
+    | "premium"
+    | "new"
+    | "hot"
+    | "save"
+    | "veteran";
   className?: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
 }
 
 const badgeConfig = {
@@ -13,107 +37,123 @@ const badgeConfig = {
     icon: Star,
     label: "MOST POPULAR",
     gradient: "from-primary via-accent to-primary",
-    emoji: "⭐"
+    emoji: "⭐",
   },
   recommended: {
     icon: Award,
     label: "RECOMMENDED",
     gradient: "from-amber-500 to-orange-500",
-    emoji: "🏆"
+    emoji: "🏆",
   },
-  'best-value': {
+  "best-value": {
     icon: TrendingUp,
     label: "BEST VALUE",
     gradient: "from-emerald-500 to-teal-500",
-    emoji: "💎"
+    emoji: "💎",
   },
   limited: {
     icon: Clock,
     label: "LIMITED TIME",
     gradient: "from-red-500 to-pink-500",
-    emoji: "🔥"
+    emoji: "🔥",
   },
   trusted: {
     icon: Shield,
     label: "TRUSTED",
     gradient: "from-blue-500 to-indigo-500",
-    emoji: "✅"
+    emoji: "✅",
   },
   secure: {
     icon: Lock,
     label: "100% SECURE",
     gradient: "from-green-500 to-emerald-500",
-    emoji: "🔒"
+    emoji: "🔒",
   },
   fast: {
     icon: Zap,
     label: "FAST SETUP",
     gradient: "from-yellow-500 to-amber-500",
-    emoji: "⚡"
+    emoji: "⚡",
   },
   guaranteed: {
     icon: CheckCircle,
     label: "GUARANTEED",
     gradient: "from-primary to-purple-600",
-    emoji: "✓"
+    emoji: "✓",
   },
   premium: {
     icon: Star,
     label: "PREMIUM",
     gradient: "from-violet-600 to-purple-700",
-    emoji: "👑"
+    emoji: "👑",
   },
   new: {
     icon: Zap,
     label: "NEW",
     gradient: "from-cyan-500 to-blue-500",
-    emoji: "🆕"
+    emoji: "🆕",
   },
   hot: {
     icon: TrendingUp,
     label: "HOT",
     gradient: "from-orange-500 to-red-500",
-    emoji: "🔥"
+    emoji: "🔥",
   },
   save: {
     icon: TrendingUp,
     label: "SAVE 10%",
     gradient: "from-green-500 to-teal-500",
-    emoji: "💰"
+    emoji: "💰",
   },
   veteran: {
     icon: Heart,
     label: "VETERAN DISCOUNT",
     gradient: "from-blue-600 via-red-500 to-blue-600",
-    emoji: "🇺🇸"
-  }
+    emoji: "🇺🇸",
+  },
 };
 
-export function PricingBadge({ type, className = "", size = 'md' }: PricingBadgeProps) {
+export function PricingBadge({
+  type,
+  className = "",
+  size = "md",
+}: PricingBadgeProps) {
   const config = badgeConfig[type];
   const Icon = config.icon;
-  
+
   const sizeClasses = {
     sm: "px-2 py-0.5 text-[10px]",
     md: "px-4 py-1.5 text-xs",
-    lg: "px-6 py-2 text-sm"
+    lg: "px-6 py-2 text-sm",
   };
-  
+
   return (
-    <div className={cn(
-      "inline-flex items-center gap-1.5",
-      "bg-white/60 backdrop-blur-xl border border-white/40",
-      "font-bold tracking-wider rounded-full shadow-lg",
-      sizeClasses[size],
-      className
-    )}>
+    <div
+      className={cn(
+        "inline-flex items-center gap-1.5",
+        "bg-white/60 backdrop-blur-xl border border-white/40",
+        "font-bold tracking-wider rounded-full shadow-lg",
+        sizeClasses[size],
+        className,
+      )}
+    >
       <span className="text-sm">{config.emoji}</span>
-      <span className={`bg-gradient-to-r ${config.gradient} bg-clip-text text-transparent`}>{config.label}</span>
+      <span
+        className={`bg-gradient-to-r ${config.gradient} bg-clip-text text-transparent`}
+      >
+        {config.label}
+      </span>
     </div>
   );
 }
 
-export function TrustBadgeInline({ icon: Icon, label }: { icon: any; label: string }) {
+export function TrustBadgeInline({
+  icon: Icon,
+  label,
+}: {
+  icon: any;
+  label: string;
+}) {
   return (
     <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-success/10 text-success border border-success/20 rounded-full text-xs font-medium">
       <Icon className="w-3.5 h-3.5" />
@@ -126,7 +166,9 @@ export function GuaranteeBadge() {
   return (
     <div className="flex items-center justify-center gap-2 p-3 bg-white/60 backdrop-blur-xl border border-white/40 rounded-xl shadow-md">
       <Shield className="w-5 h-5 text-success" />
-      <span className="text-sm font-semibold text-success">30-Day Money-Back Guarantee</span>
+      <span className="text-sm font-semibold text-success">
+        30-Day Money-Back Guarantee
+      </span>
       <CheckCircle className="w-4 h-4 text-success" />
     </div>
   );

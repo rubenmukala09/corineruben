@@ -34,14 +34,18 @@ export function ThreatActivityChart() {
     if (active && payload && payload.length) {
       const attemptedValue = payload[0]?.value ?? 0;
       const blockedValue = payload[1]?.value ?? 0;
-      const blockRate = attemptedValue > 0 ? ((blockedValue / attemptedValue) * 100) : 0;
-      
+      const blockRate =
+        attemptedValue > 0 ? (blockedValue / attemptedValue) * 100 : 0;
+
       return (
         <div className="bg-[#111827] border border-gray-700 rounded-lg shadow-xl p-4">
           <p className="text-sm font-medium text-[#F9FAFB] mb-2">{label}</p>
           {payload.map((entry: any, index: number) => (
             <p key={index} className="text-sm" style={{ color: entry.color }}>
-              {entry.name}: <span className="font-bold">{(entry.value ?? 0).toLocaleString()}</span>
+              {entry.name}:{" "}
+              <span className="font-bold">
+                {(entry.value ?? 0).toLocaleString()}
+              </span>
             </p>
           ))}
           <p className="text-xs text-[#10B981] mt-2">
@@ -67,7 +71,9 @@ export function ThreatActivityChart() {
               <TrendingUp className="h-5 w-5 text-white" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-white">Threat Activity Overview</h2>
+              <h2 className="text-xl font-bold text-white">
+                Threat Activity Overview
+              </h2>
               <p className="text-sm text-gray-400">Scam attempts vs. blocked</p>
             </div>
           </div>
@@ -109,18 +115,37 @@ export function ThreatActivityChart() {
         {/* Chart */}
         <div className="h-72">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={weeklyData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+            <AreaChart
+              data={weeklyData}
+              margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
+            >
               <defs>
-                <linearGradient id="attemptedGradient" x1="0" y1="0" x2="0" y2="1">
+                <linearGradient
+                  id="attemptedGradient"
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="1"
+                >
                   <stop offset="5%" stopColor="#f97316" stopOpacity={0.4} />
                   <stop offset="95%" stopColor="#f97316" stopOpacity={0} />
                 </linearGradient>
-                <linearGradient id="blockedGradient" x1="0" y1="0" x2="0" y2="1">
+                <linearGradient
+                  id="blockedGradient"
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="1"
+                >
                   <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.4} />
                   <stop offset="95%" stopColor="#06b6d4" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.5} />
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="#374151"
+                opacity={0.5}
+              />
               <XAxis
                 dataKey="day"
                 stroke="#9ca3af"
@@ -138,7 +163,9 @@ export function ThreatActivityChart() {
               <Tooltip content={<CustomTooltip />} />
               <Legend
                 wrapperStyle={{ paddingTop: "20px" }}
-                formatter={(value) => <span className="text-gray-300 text-sm">{value}</span>}
+                formatter={(value) => (
+                  <span className="text-gray-300 text-sm">{value}</span>
+                )}
               />
               <Area
                 type="monotone"
@@ -148,7 +175,12 @@ export function ThreatActivityChart() {
                 strokeWidth={2}
                 fill="url(#attemptedGradient)"
                 dot={{ fill: "#f97316", strokeWidth: 0, r: 4 }}
-                activeDot={{ r: 6, fill: "#f97316", stroke: "#fff", strokeWidth: 2 }}
+                activeDot={{
+                  r: 6,
+                  fill: "#f97316",
+                  stroke: "#fff",
+                  strokeWidth: 2,
+                }}
               />
               <Area
                 type="monotone"
@@ -158,7 +190,12 @@ export function ThreatActivityChart() {
                 strokeWidth={2}
                 fill="url(#blockedGradient)"
                 dot={{ fill: "#06b6d4", strokeWidth: 0, r: 4 }}
-                activeDot={{ r: 6, fill: "#06b6d4", stroke: "#fff", strokeWidth: 2 }}
+                activeDot={{
+                  r: 6,
+                  fill: "#06b6d4",
+                  stroke: "#fff",
+                  strokeWidth: 2,
+                }}
               />
             </AreaChart>
           </ResponsiveContainer>

@@ -4,7 +4,8 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
 type ThreatLevel = "safe" | "warning" | "danger";
@@ -49,23 +50,36 @@ const extractUrls = (text: string) => {
 const normalizeArray = (value: unknown): string[] =>
   Array.isArray(value) ? value.filter(Boolean).map(String) : [];
 
-const fallbackAnalysis = (fileType: string, textSample: string, urls: string[]): GuestScanAnalysis => {
+const fallbackAnalysis = (
+  fileType: string,
+  textSample: string,
+  urls: string[],
+): GuestScanAnalysis => {
   const lower = textSample.toLowerCase();
   const phishingIndicators: string[] = [];
   suspiciousKeywords.forEach((keyword) => {
-    if (lower.includes(keyword)) phishingIndicators.push(`Contains "${keyword}"`);
+    if (lower.includes(keyword))
+      phishingIndicators.push(`Contains "${keyword}"`);
   });
 
   const suspiciousLinks = urls.filter((link) =>
-    suspiciousTlds.some((tld) => link.toLowerCase().includes(tld))
+    suspiciousTlds.some((tld) => link.toLowerCase().includes(tld)),
   );
 
   const findings: string[] = [];
-  if (phishingIndicators.length) findings.push("Potential phishing language detected.");
-  if (suspiciousLinks.length) findings.push("Suspicious links were found in the file.");
+  if (phishingIndicators.length)
+    findings.push("Potential phishing language detected.");
+  if (suspiciousLinks.length)
+    findings.push("Suspicious links were found in the file.");
 
-  if (fileType.startsWith("video/") || fileType.startsWith("audio/") || fileType.startsWith("image/")) {
-    findings.push("Media file received. Deepfake/voice clone checks are preliminary.");
+  if (
+    fileType.startsWith("video/") ||
+    fileType.startsWith("audio/") ||
+    fileType.startsWith("image/")
+  ) {
+    findings.push(
+      "Media file received. Deepfake/voice clone checks are preliminary.",
+    );
   }
 
   const threatLevel: ThreatLevel =
@@ -87,8 +101,13 @@ const fallbackAnalysis = (fileType: string, textSample: string, urls: string[]):
     indicators: {
       phishing: phishingIndicators,
       malware: [],
-      deepfake: fileType.startsWith("video/") || fileType.startsWith("image/") ? ["Preliminary visual checks only."] : [],
-      voiceClone: fileType.startsWith("audio/") ? ["Preliminary audio checks only."] : [],
+      deepfake:
+        fileType.startsWith("video/") || fileType.startsWith("image/")
+          ? ["Preliminary visual checks only."]
+          : [],
+      voiceClone: fileType.startsWith("audio/")
+        ? ["Preliminary audio checks only."]
+        : [],
       suspiciousLinks,
     },
   };
@@ -124,18 +143,34 @@ serve(async (req) => {
 
     if (scan.status === "completed" && scan.analysis_results) {
       return new Response(
-        JSON.stringify({ analysis: scan.analysis_results, expiresAt: scan.expires_at }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
+        JSON.stringify({
+          analysis: scan.analysis_results,
+          expiresAt: scan.expires_at,
+        }),
+        {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 200,
+        },
       );
     }
 
     const stripe = new Stripe(stripeKey, { apiVersion: "2024-11-20.acacia" });
-    const paymentIntent = await stripe.paymentIntents.retrieve(scan.stripe_payment_id);
+    const paymentIntent = await stripe.paymentIntents.retrieve(
+      scan.stripe_payment_id,
+    );
 
-    if (paymentIntent.status !== "succeeded" && paymentIntent.status !== "processing") {
+    if (
+      paymentIntent.status !== "succeeded" &&
+      paymentIntent.status !== "processing"
+    ) {
       return new Response(
-        JSON.stringify({ error: "Payment not completed. Please finalize payment first." }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 402 }
+        JSON.stringify({
+          error: "Payment not completed. Please finalize payment first.",
+        }),
+        {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 402,
+        },
       );
     }
 
@@ -154,7 +189,9 @@ serve(async (req) => {
 
     const arrayBuffer = await fileData.arrayBuffer();
     const sampleSize = Math.min(arrayBuffer.byteLength, 50000);
-    const sampleText = new TextDecoder().decode(arrayBuffer.slice(0, sampleSize));
+    const sampleText = new TextDecoder().decode(
+      arrayBuffer.slice(0, sampleSize),
+    );
     const urls = extractUrls(sampleText);
 
     let analysis: GuestScanAnalysis | null = null;
@@ -189,22 +226,25 @@ If evidence is limited, be conservative and note limitations.`;
         textSample: sampleText.slice(0, 4000),
       });
 
-      const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${LOVABLE_API_KEY}`,
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://ai.gateway.lovable.dev/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${LOVABLE_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model: "google/gemini-2.5-flash",
+            messages: [
+              { role: "system", content: systemPrompt },
+              { role: "user", content: userPrompt },
+            ],
+            temperature: 0.2,
+            response_format: { type: "json_object" },
+          }),
         },
-        body: JSON.stringify({
-          model: "google/gemini-2.5-flash",
-          messages: [
-            { role: "system", content: systemPrompt },
-            { role: "user", content: userPrompt },
-          ],
-          temperature: 0.2,
-          response_format: { type: "json_object" },
-        }),
-      });
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -242,12 +282,16 @@ If evidence is limited, be conservative and note limitations.`;
       },
     };
 
-    if (!analysis.findings.length) analysis.findings.push("No immediate threats detected.");
+    if (!analysis.findings.length)
+      analysis.findings.push("No immediate threats detected.");
     if (!analysis.recommendations.length) {
-      analysis.recommendations.push("If in doubt, contact InVision Network support.");
+      analysis.recommendations.push(
+        "If in doubt, contact InVision Network support.",
+      );
     }
 
-    const expiresAt = scan.expires_at || new Date(Date.now() + 10 * 60 * 1000).toISOString();
+    const expiresAt =
+      scan.expires_at || new Date(Date.now() + 10 * 60 * 1000).toISOString();
 
     await supabase
       .from("guest_scans")
@@ -264,7 +308,8 @@ If evidence is limited, be conservative and note limitations.`;
     if (analysis.indicators.malware.length) scamTypes.push("malware");
     if (analysis.indicators.deepfake.length) scamTypes.push("deepfake");
     if (analysis.indicators.voiceClone.length) scamTypes.push("voice_clone");
-    if (!scamTypes.length && analysis.threatLevel === "safe") scamTypes.push("safe");
+    if (!scamTypes.length && analysis.threatLevel === "safe")
+      scamTypes.push("safe");
 
     if (scamTypes.length) {
       await supabase.from("scam_statistics").insert(
@@ -272,14 +317,14 @@ If evidence is limited, be conservative and note limitations.`;
           scam_type: scamType,
           threat_level: analysis.threatLevel,
           file_type: scan.file_type,
-        }))
+        })),
       );
     }
 
-    return new Response(
-      JSON.stringify({ analysis, expiresAt }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
-    );
+    return new Response(JSON.stringify({ analysis, expiresAt }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      status: 200,
+    });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Analysis failed.";
     return new Response(JSON.stringify({ error: message }), {

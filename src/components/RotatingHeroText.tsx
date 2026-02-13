@@ -11,7 +11,10 @@ interface RotatingHeroTextProps {
 }
 
 // Pure CSS rotating text - no framer-motion
-export const RotatingHeroText = ({ messages, interval = 5000 }: RotatingHeroTextProps) => {
+export const RotatingHeroText = ({
+  messages,
+  interval = 5000,
+}: RotatingHeroTextProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [visible, setVisible] = useState(true);
 
@@ -30,9 +33,9 @@ export const RotatingHeroText = ({ messages, interval = 5000 }: RotatingHeroText
   const current = messages[currentIndex];
 
   return (
-    <div 
+    <div
       className={`space-y-3 sm:space-y-4 md:space-y-6 transition-opacity duration-200 ${
-        visible ? 'opacity-100' : 'opacity-0'
+        visible ? "opacity-100" : "opacity-0"
       }`}
     >
       <h1 className="text-white mb-3 sm:mb-4 md:mb-6 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl [text-shadow:0_4px_20px_rgba(139,92,246,0.4)] leading-tight">

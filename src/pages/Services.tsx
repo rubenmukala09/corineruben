@@ -7,7 +7,13 @@ import CTASection from "@/components/CTASection";
 import TestimonialCard from "@/components/TestimonialCard";
 import { PageTransition } from "@/components/PageTransition";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -21,7 +27,6 @@ import {
   Shield,
   Bot,
   GraduationCap,
-  
   CheckCircle,
   Users,
   Building2,
@@ -77,7 +82,8 @@ const Services = () => {
       icon: Shield,
       title: "ScamShield Protection",
       subtitle: "For Individuals & Families",
-      description: "Comprehensive real-time protection against scams, fraud, and identity theft for you and your loved ones.",
+      description:
+        "Comprehensive real-time protection against scams, fraud, and identity theft for you and your loved ones.",
       features: [
         "24/7 AI-powered scam monitoring",
         "Real-time fraud alerts",
@@ -96,7 +102,8 @@ const Services = () => {
       icon: Bot,
       title: "AI Business Solutions",
       subtitle: "For Businesses & Organizations",
-      description: "Transform your business with custom AI integration, workflow automation, and comprehensive employee training.",
+      description:
+        "Transform your business with custom AI integration, workflow automation, and comprehensive employee training.",
       features: [
         "Custom AI integration",
         "Workflow automation",
@@ -115,7 +122,8 @@ const Services = () => {
       icon: GraduationCap,
       title: "Safety Workshops",
       subtitle: "For Education & Community",
-      description: "Empowering workshops and sessions for seniors, organizations, and community groups.",
+      description:
+        "Empowering workshops and sessions for seniors, organizations, and community groups.",
       features: [
         "Senior safety workshops",
         "Corporate training sessions",
@@ -133,40 +141,86 @@ const Services = () => {
   ];
 
   const comparisons = [
-    { feature: "Scam Detection & Alerts", scamshield: true, business: true, training: true },
-    { feature: "AI-Powered Protection", scamshield: true, business: true, training: false },
-    { feature: "24/7 Monitoring", scamshield: true, business: true, training: false },
-    { feature: "Custom Integration", scamshield: false, business: true, training: false },
-    { feature: "Workflow Automation", scamshield: false, business: true, training: false },
-    { feature: "Training & Workshops", scamshield: true, business: true, training: true },
-    { feature: "Family Sharing", scamshield: true, business: false, training: false },
-    { feature: "Dedicated Support", scamshield: false, business: true, training: false },
+    {
+      feature: "Scam Detection & Alerts",
+      scamshield: true,
+      business: true,
+      training: true,
+    },
+    {
+      feature: "AI-Powered Protection",
+      scamshield: true,
+      business: true,
+      training: false,
+    },
+    {
+      feature: "24/7 Monitoring",
+      scamshield: true,
+      business: true,
+      training: false,
+    },
+    {
+      feature: "Custom Integration",
+      scamshield: false,
+      business: true,
+      training: false,
+    },
+    {
+      feature: "Workflow Automation",
+      scamshield: false,
+      business: true,
+      training: false,
+    },
+    {
+      feature: "Training & Workshops",
+      scamshield: true,
+      business: true,
+      training: true,
+    },
+    {
+      feature: "Family Sharing",
+      scamshield: true,
+      business: false,
+      training: false,
+    },
+    {
+      feature: "Dedicated Support",
+      scamshield: false,
+      business: true,
+      training: false,
+    },
   ];
 
   const faqs = [
     {
       question: "What's included in the ScamShield Protection?",
-      answer: "ScamShield includes 24/7 AI-powered monitoring, real-time fraud alerts, identity theft protection, personal safety training, and dedicated support for seniors and families.",
+      answer:
+        "ScamShield includes 24/7 AI-powered monitoring, real-time fraud alerts, identity theft protection, personal safety training, and dedicated support for seniors and families.",
     },
     {
       question: "Can I switch between plans?",
-      answer: "Yes! You can upgrade or change your plan at any time. If you upgrade, you'll only pay the prorated difference. Downgrades take effect at the next billing cycle.",
+      answer:
+        "Yes! You can upgrade or change your plan at any time. If you upgrade, you'll only pay the prorated difference. Downgrades take effect at the next billing cycle.",
     },
     {
       question: "Do you offer enterprise solutions?",
-      answer: "Absolutely! Our AI Business Solutions are fully customizable for enterprise needs, including custom integration, dedicated account management, and volume pricing.",
+      answer:
+        "Absolutely! Our AI Business Solutions are fully customizable for enterprise needs, including custom integration, dedicated account management, and volume pricing.",
     },
     {
       question: "Is there a contract or can I cancel anytime?",
-      answer: "All our services are month-to-month with no long-term contracts. You can cancel anytime with no cancellation fees. Annual plans offer significant savings and include a 30-day money-back guarantee.",
+      answer:
+        "All our services are month-to-month with no long-term contracts. You can cancel anytime with no cancellation fees. Annual plans offer significant savings and include a 30-day money-back guarantee.",
     },
     {
       question: "What kind of training do you provide?",
-      answer: "We offer hands-on workshops for seniors, corporate cybersecurity training, community education programs, and customized training sessions tailored to your organization's specific needs.",
+      answer:
+        "We offer hands-on workshops for seniors, corporate cybersecurity training, community education programs, and customized training sessions tailored to your organization's specific needs.",
     },
     {
       question: "How do I get started?",
-      answer: "Getting started is easy! Simply choose the service that fits your needs, and our team will guide you through setup. We offer free consultations to help you find the right solution for your family or business.",
+      answer:
+        "Getting started is easy! Simply choose the service that fits your needs, and our team will guide you through setup. We offer free consultations to help you find the right solution for your family or business.",
     },
   ];
 
@@ -174,32 +228,38 @@ const Services = () => {
     {
       icon: Target,
       title: "Tailored Solutions",
-      description: "Every service is customized to meet your specific needs and circumstances.",
+      description:
+        "Every service is customized to meet your specific needs and circumstances.",
     },
     {
       icon: Users,
       title: "Expert Team",
-      description: "Our team of cybersecurity analysts, nurses, and educators bring diverse expertise.",
+      description:
+        "Our team of cybersecurity analysts, nurses, and educators bring diverse expertise.",
     },
     {
       icon: Clock,
       title: "24/7 Support",
-      description: "Round-the-clock monitoring and support when you need it most.",
+      description:
+        "Round-the-clock monitoring and support when you need it most.",
     },
     {
       icon: Award,
       title: "Proven Results",
-      description: "Thousands of families and businesses protected from scams and fraud.",
+      description:
+        "Thousands of families and businesses protected from scams and fraud.",
     },
     {
       icon: TrendingUp,
       title: "Continuous Improvement",
-      description: "We constantly update our AI models and training to stay ahead of threats.",
+      description:
+        "We constantly update our AI models and training to stay ahead of threats.",
     },
     {
       icon: Heart,
       title: "Mission-Driven",
-      description: "Founded by scam victims, we're passionate about protecting others.",
+      description:
+        "Founded by scam victims, we're passionate about protecting others.",
     },
   ];
 
@@ -208,7 +268,7 @@ const Services = () => {
     { src: heroServices2, alt: "Modern workspace solutions" },
     { src: heroServices3, alt: "Collaborative service delivery" },
     { src: heroServices4, alt: "Expert team member ready to assist" },
-    { src: heroServices5, alt: "Innovative service offerings" }
+    { src: heroServices5, alt: "Innovative service offerings" },
   ];
 
   return (
@@ -218,10 +278,10 @@ const Services = () => {
         description="Explore InVision Network's complete range of cybersecurity services: ScamShield Protection, AI Business Solutions, Training Programs, and Safety Vault. Protect what matters most."
         keywords="cybersecurity services, scam protection, AI business solutions, security training, password management, fraud prevention"
       />
-      
+
       <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/20">
         <Navigation />
-        
+
         <Hero
           backgroundImages={servicesHeroImages}
           headline="Comprehensive Protection for Everyone"
@@ -229,22 +289,24 @@ const Services = () => {
           showScrollIndicator
         >
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
-            <Button
-              size="lg"
-              className="group"
-              asChild
-            >
-              <Link to="#services" onClick={() => trackButtonClick("Explore Services", "Services Hero")}>
+            <Button size="lg" className="group" asChild>
+              <Link
+                to="#services"
+                onClick={() =>
+                  trackButtonClick("Explore Services", "Services Hero")
+                }
+              >
                 Explore Services
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              asChild
-            >
-              <Link to="/contact" onClick={() => trackButtonClick("Contact Sales", "Services Hero")}>
+            <Button size="lg" variant="outline" asChild>
+              <Link
+                to="/contact"
+                onClick={() =>
+                  trackButtonClick("Contact Sales", "Services Hero")
+                }
+              >
                 Contact Sales
               </Link>
             </Button>
@@ -260,7 +322,8 @@ const Services = () => {
                   Why Choose InVision Network?
                 </h2>
                 <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-                  We're not just a service provider. We're your partners in digital safety.
+                  We're not just a service provider. We're your partners in
+                  digital safety.
                 </p>
               </div>
             </ScrollReveal>
@@ -270,13 +333,17 @@ const Services = () => {
                 <ScrollReveal key={index} delay={index * 100}>
                   <Card className="h-full hover:shadow-strong transition-all duration-300">
                     <CardHeader>
-                      <div className={`w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-4`}>
+                      <div
+                        className={`w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-4`}
+                      >
                         <benefit.icon className="h-6 w-6 text-primary-foreground" />
                       </div>
                       <CardTitle className="text-xl">{benefit.title}</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-muted-foreground">{benefit.description}</p>
+                      <p className="text-muted-foreground">
+                        {benefit.description}
+                      </p>
                     </CardContent>
                   </Card>
                 </ScrollReveal>
@@ -302,7 +369,9 @@ const Services = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
               {services.map((service, index) => (
                 <ScrollReveal key={index} delay={index * 100}>
-                  <Card className={`h-full flex flex-col relative overflow-hidden ${service.popular ? 'border-primary shadow-strong' : ''}`}>
+                  <Card
+                    className={`h-full flex flex-col relative overflow-hidden ${service.popular ? "border-primary shadow-strong" : ""}`}
+                  >
                     {service.popular && (
                       <div className="absolute top-4 right-4">
                         <Badge variant="premium" className="text-xs font-bold">
@@ -310,29 +379,40 @@ const Services = () => {
                         </Badge>
                       </div>
                     )}
-                    
+
                     <CardHeader>
-                      <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-4`}>
+                      <div
+                        className={`w-14 h-14 rounded-xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-4`}
+                      >
                         <service.icon className="h-7 w-7 text-primary-foreground" />
                       </div>
-                      <CardTitle className="text-2xl">{service.title}</CardTitle>
+                      <CardTitle className="text-2xl">
+                        {service.title}
+                      </CardTitle>
                       <CardDescription className="text-base font-medium">
                         {service.subtitle}
                       </CardDescription>
-                      <p className="text-muted-foreground mt-2">{service.description}</p>
+                      <p className="text-muted-foreground mt-2">
+                        {service.description}
+                      </p>
                     </CardHeader>
 
                     <CardContent className="flex-1 flex flex-col">
                       <div className="mb-6">
                         <div className="flex items-baseline gap-2">
                           <span className="text-4xl font-bold">
-                            ${isMonthly ? service.priceMonthly : Math.round(service.priceAnnual / 12)}
+                            $
+                            {isMonthly
+                              ? service.priceMonthly
+                              : Math.round(service.priceAnnual / 12)}
                           </span>
                           <span className="text-muted-foreground">/month</span>
                         </div>
                         {!isMonthly && (
                           <p className="text-sm text-success mt-1">
-                            Save ${(service.priceMonthly * 12) - service.priceAnnual}/year
+                            Save $
+                            {service.priceMonthly * 12 - service.priceAnnual}
+                            /year
                           </p>
                         )}
                       </div>
@@ -351,9 +431,14 @@ const Services = () => {
                         variant={service.popular ? "default" : "outline"}
                         asChild
                       >
-                        <Link 
+                        <Link
                           to={service.link}
-                          onClick={() => trackButtonClick(`Learn More - ${service.title}`, "Services Grid")}
+                          onClick={() =>
+                            trackButtonClick(
+                              `Learn More - ${service.title}`,
+                              "Services Grid",
+                            )
+                          }
                         >
                           Learn More
                           <ArrowRight className="ml-2 h-4 w-4" />
@@ -368,7 +453,10 @@ const Services = () => {
             {/* Billing Toggle */}
             <ScrollReveal delay={400}>
               <div className="flex items-center justify-center gap-4 mt-12">
-                <Label htmlFor="billing-toggle" className={isMonthly ? "font-semibold" : ""}>
+                <Label
+                  htmlFor="billing-toggle"
+                  className={isMonthly ? "font-semibold" : ""}
+                >
                   Monthly
                 </Label>
                 <Switch
@@ -376,9 +464,15 @@ const Services = () => {
                   checked={!isMonthly}
                   onCheckedChange={(checked) => setIsMonthly(!checked)}
                 />
-                  <Label htmlFor="billing-toggle" className={!isMonthly ? "font-semibold" : ""}>
-                    Annual <Badge variant="success" className="ml-2">Save 10%</Badge>
-                  </Label>
+                <Label
+                  htmlFor="billing-toggle"
+                  className={!isMonthly ? "font-semibold" : ""}
+                >
+                  Annual{" "}
+                  <Badge variant="success" className="ml-2">
+                    Save 10%
+                  </Badge>
+                </Label>
               </div>
             </ScrollReveal>
           </div>
@@ -401,22 +495,32 @@ const Services = () => {
             <ScrollReveal delay={200}>
               {/* Mobile: Card view */}
               <MobileComparisonCards comparisons={comparisons} />
-              
+
               {/* Desktop: Table view */}
               <div className="hidden md:block max-w-5xl mx-auto overflow-x-auto">
                 <table className="w-full border-collapse">
                   <thead>
                     <tr className="border-b-2 border-border">
-                      <th className="text-left py-4 px-4 font-semibold">Feature</th>
-                      <th className="text-center py-4 px-4 font-semibold">ScamShield</th>
-                      <th className="text-center py-4 px-4 font-semibold">AI Business</th>
-                      <th className="text-center py-4 px-4 font-semibold">Training</th>
-                      
+                      <th className="text-left py-4 px-4 font-semibold">
+                        Feature
+                      </th>
+                      <th className="text-center py-4 px-4 font-semibold">
+                        ScamShield
+                      </th>
+                      <th className="text-center py-4 px-4 font-semibold">
+                        AI Business
+                      </th>
+                      <th className="text-center py-4 px-4 font-semibold">
+                        Training
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     {comparisons.map((row, index) => (
-                      <tr key={index} className="border-b border-border hover:bg-muted/50 transition-colors">
+                      <tr
+                        key={index}
+                        className="border-b border-border hover:bg-muted/50 transition-colors"
+                      >
                         <td className="py-4 px-4">{row.feature}</td>
                         <td className="text-center py-4 px-4">
                           {row.scamshield ? (
@@ -517,22 +621,22 @@ const Services = () => {
           description="Choose your service and start protecting what matters most today. No contracts, cancel anytime."
           variant="gold"
         >
-          <Button
-            size="lg"
-            variant="secondary"
-            asChild
-          >
-            <Link to="/contact" onClick={() => trackButtonClick("Contact Sales", "Services CTA")}>
+          <Button size="lg" variant="secondary" asChild>
+            <Link
+              to="/contact"
+              onClick={() => trackButtonClick("Contact Sales", "Services CTA")}
+            >
               <Phone className="mr-2 h-5 w-5" />
               Contact Sales
             </Link>
           </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            asChild
-          >
-            <Link to="/training" onClick={() => trackButtonClick("Explore Training", "Services CTA")}>
+          <Button size="lg" variant="outline" asChild>
+            <Link
+              to="/training"
+              onClick={() =>
+                trackButtonClick("Explore Training", "Services CTA")
+              }
+            >
               <GraduationCap className="mr-2 h-5 w-5" />
               Explore Training
             </Link>

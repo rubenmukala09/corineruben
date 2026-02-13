@@ -76,18 +76,18 @@ export function RevenueChart() {
 
       // Group by month
       const monthlyRevenue = new Map<string, { revenue: number; date: Date }>();
-      
+
       orderItems?.forEach((item) => {
         const date = new Date(item.created_at);
         const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
-        
+
         if (!monthlyRevenue.has(monthKey)) {
           monthlyRevenue.set(monthKey, {
             revenue: 0,
             date: new Date(date.getFullYear(), date.getMonth(), 1),
           });
         }
-        
+
         const current = monthlyRevenue.get(monthKey)!;
         current.revenue += Number(item.total || 0);
       });
@@ -95,7 +95,10 @@ export function RevenueChart() {
       // Convert to array and sort
       const data = Array.from(monthlyRevenue.entries())
         .map(([key, value]) => ({
-          month: value.date.toLocaleDateString("en-US", { month: "short", year: "2-digit" }),
+          month: value.date.toLocaleDateString("en-US", {
+            month: "short",
+            year: "2-digit",
+          }),
           revenue: Math.round(value.revenue),
           date: value.date,
         }))
@@ -107,8 +110,11 @@ export function RevenueChart() {
       const total = data.reduce((sum, item) => sum + item.revenue, 0);
       const average = data.length > 0 ? total / data.length : 0;
       const highest = data.reduce(
-        (max, item) => (item.revenue > max.amount ? { amount: item.revenue, month: item.month } : max),
-        { amount: 0, month: "" }
+        (max, item) =>
+          item.revenue > max.amount
+            ? { amount: item.revenue, month: item.month }
+            : max,
+        { amount: 0, month: "" },
       );
 
       setSummary({ total, average, highest });
@@ -153,7 +159,9 @@ export function RevenueChart() {
     if (active && payload && payload.length) {
       return (
         <div className="bg-popover border border-border rounded-lg shadow-lg p-3">
-          <p className="text-sm font-medium text-foreground">{payload[0].payload.month}</p>
+          <p className="text-sm font-medium text-foreground">
+            {payload[0].payload.month}
+          </p>
           <p className="text-lg font-bold text-primary">
             ${payload[0].value.toLocaleString()}
           </p>
@@ -172,7 +180,9 @@ export function RevenueChart() {
       <Card className="p-4 sm:p-6 mt-4 sm:mt-8 rounded-xl shadow-sm">
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-          <h2 className="text-xl sm:text-2xl font-bold text-foreground">Revenue Overview</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-foreground">
+            Revenue Overview
+          </h2>
 
           <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto">
             {/* Time Frame Tabs */}
@@ -233,15 +243,27 @@ export function RevenueChart() {
               >
                 <defs>
                   <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                    <stop
+                      offset="5%"
+                      stopColor="hsl(var(--primary))"
+                      stopOpacity={0.3}
+                    />
+                    <stop
+                      offset="95%"
+                      stopColor="hsl(var(--primary))"
+                      stopOpacity={0}
+                    />
                   </linearGradient>
                   <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
                     <stop offset="0%" stopColor="hsl(var(--primary))" />
                     <stop offset="100%" stopColor="hsl(var(--accent))" />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  stroke="hsl(var(--border))"
+                  opacity={0.3}
+                />
                 <XAxis
                   dataKey="month"
                   stroke="hsl(var(--muted-foreground))"
@@ -286,8 +308,12 @@ export function RevenueChart() {
         ) : (
           <div className="h-80 flex flex-col items-center justify-center text-center p-8">
             <span className="text-4xl mb-4">📊</span>
-            <h3 className="text-lg font-semibold text-foreground mb-2">No Revenue Data</h3>
-            <p className="text-muted-foreground text-sm">Revenue will appear here as orders come in</p>
+            <h3 className="text-lg font-semibold text-foreground mb-2">
+              No Revenue Data
+            </h3>
+            <p className="text-muted-foreground text-sm">
+              Revenue will appear here as orders come in
+            </p>
           </div>
         )}
 
@@ -300,23 +326,31 @@ export function RevenueChart() {
             className="mt-6 pt-6 border-t border-border grid grid-cols-1 sm:grid-cols-3 gap-4"
           >
             <div>
-              <p className="text-sm text-muted-foreground mb-1">Total Revenue</p>
+              <p className="text-sm text-muted-foreground mb-1">
+                Total Revenue
+              </p>
               <p className="text-2xl font-bold text-foreground">
                 ${summary.total.toLocaleString()}
               </p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground mb-1">Average per Month</p>
+              <p className="text-sm text-muted-foreground mb-1">
+                Average per Month
+              </p>
               <p className="text-2xl font-bold text-foreground">
                 ${Math.round(summary.average).toLocaleString()}
               </p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground mb-1">Highest Month</p>
+              <p className="text-sm text-muted-foreground mb-1">
+                Highest Month
+              </p>
               <p className="text-2xl font-bold text-foreground">
                 ${summary.highest.amount.toLocaleString()}
               </p>
-              <p className="text-xs text-muted-foreground mt-1">{summary.highest.month}</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                {summary.highest.month}
+              </p>
             </div>
           </motion.div>
         )}

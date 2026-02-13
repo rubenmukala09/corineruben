@@ -7,7 +7,8 @@ const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
 interface ScheduledEmail {
@@ -40,7 +41,7 @@ serve(async (req) => {
     if (!pendingEmails || pendingEmails.length === 0) {
       return new Response(
         JSON.stringify({ message: "No emails to send", processed: 0 }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
 
@@ -114,7 +115,7 @@ serve(async (req) => {
         });
 
         successCount++;
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error(`Failed to send email ${email.id}:`, error);
 
         // Update email with error and increment attempts
@@ -138,13 +139,16 @@ serve(async (req) => {
         success: successCount,
         failed: failureCount,
       }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      { headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error in send-automated-email:", error);
     return new Response(
       JSON.stringify({ error: error.message || "Unknown error" }),
-      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      },
     );
   }
 });

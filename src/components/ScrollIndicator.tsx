@@ -4,7 +4,7 @@ const ScrollIndicator = () => {
   const scrollToContent = () => {
     window.scrollTo({
       top: window.innerHeight - 80, // Account for navbar height
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   };
 

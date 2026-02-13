@@ -11,15 +11,16 @@ export const SubscriptionStatus = () => {
 
   const handleManageSubscription = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('customer-portal');
-      
+      const { data, error } =
+        await supabase.functions.invoke("customer-portal");
+
       if (error) {
         toast.error("Failed to open subscription management");
         return;
       }
 
       if (data?.url) {
-        window.open(data.url, '_blank');
+        window.open(data.url, "_blank");
       }
     } catch (error) {
       toast.error("Failed to open subscription management");
@@ -62,41 +63,50 @@ export const SubscriptionStatus = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         {subscriptions.map((sub) => (
-          <div key={sub.id} className="flex flex-col gap-3 p-4 border rounded-lg">
+          <div
+            key={sub.id}
+            className="flex flex-col gap-3 p-4 border rounded-lg"
+          >
             <div className="flex items-start justify-between">
               <div>
                 <h3 className="font-semibold">{sub.plan_name}</h3>
-                <Badge variant={sub.status === 'active' ? 'default' : 'secondary'} className="mt-1">
+                <Badge
+                  variant={sub.status === "active" ? "default" : "secondary"}
+                  className="mt-1"
+                >
                   {sub.status}
                 </Badge>
               </div>
               <div className="text-right">
                 <div className="flex items-center gap-1 text-muted-foreground">
                   <DollarSign className="w-3 h-3" />
-                  <span className="text-sm">${(sub.amount / 100).toFixed(2)}/mo</span>
+                  <span className="text-sm">
+                    ${(sub.amount / 100).toFixed(2)}/mo
+                  </span>
                 </div>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Calendar className="w-4 h-4" />
               <span>
-                {sub.cancel_at_period_end ? 'Ends on' : 'Renews on'}{' '}
+                {sub.cancel_at_period_end ? "Ends on" : "Renews on"}{" "}
                 {new Date(sub.current_period_end).toLocaleDateString()}
               </span>
             </div>
 
             {sub.cancel_at_period_end && (
               <p className="text-sm text-orange-600">
-                This subscription will be cancelled at the end of the billing period.
+                This subscription will be cancelled at the end of the billing
+                period.
               </p>
             )}
           </div>
         ))}
-        
-        <Button 
-          variant="ghost" 
-          size="sm" 
+
+        <Button
+          variant="ghost"
+          size="sm"
           onClick={refreshSubscriptions}
           className="w-full"
         >

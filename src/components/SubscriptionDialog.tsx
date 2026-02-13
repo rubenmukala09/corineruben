@@ -7,23 +7,45 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { 
-  Loader2, Tag, Shield, CheckCircle, Zap, Clock, 
-  CreditCard, RefreshCw, X, Sparkles, Users, Lock, Mail,
-  ArrowRight, ArrowLeft
+import {
+  Loader2,
+  Tag,
+  Shield,
+  CheckCircle,
+  Zap,
+  Clock,
+  CreditCard,
+  RefreshCw,
+  X,
+  Sparkles,
+  Users,
+  Lock,
+  Mail,
+  ArrowRight,
+  ArrowLeft,
 } from "lucide-react";
 import { trackConversion } from "@/utils/analyticsTracker";
 import { Badge } from "@/components/ui/badge";
 import { TrustIndicators } from "@/components/payment/TrustIndicators";
 import { TermsCheckbox } from "@/components/payment/TermsCheckbox";
 import { QuickVeteranToggle } from "@/components/payment/QuickVeteranToggle";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { useStripeKey } from "@/hooks/useStripeKey";
 
 // Inner PaymentForm component with its own stripe/elements hooks
@@ -74,22 +96,29 @@ function PaymentForm({
         throw submitError;
       }
 
-      const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
-        elements,
-        clientSecret,
-        confirmParams: {
-          return_url: `${window.location.origin}/payment-success`,
-          receipt_email: email,
-        },
-        redirect: "if_required",
-      });
+      const { error: confirmError, paymentIntent } =
+        await stripe.confirmPayment({
+          elements,
+          clientSecret,
+          confirmParams: {
+            return_url: `${window.location.origin}/payment-success`,
+            receipt_email: email,
+          },
+          redirect: "if_required",
+        });
 
       if (confirmError) {
         throw confirmError;
       }
 
-      if (paymentIntent?.status === "succeeded" || paymentIntent?.status === "processing") {
-        trackConversion(`subscription_${planTier.toLowerCase().replace(/\s+/g, '_')}`, finalAmount / 100);
+      if (
+        paymentIntent?.status === "succeeded" ||
+        paymentIntent?.status === "processing"
+      ) {
+        trackConversion(
+          `subscription_${planTier.toLowerCase().replace(/\s+/g, "_")}`,
+          finalAmount / 100,
+        );
         onSuccess();
         toast.success("Subscription activated!");
       }
@@ -107,7 +136,9 @@ function PaymentForm({
       {!isReady && (
         <div className="flex items-center justify-center py-8">
           <Loader2 className="w-6 h-6 animate-spin text-primary" />
-          <span className="ml-2 text-sm text-muted-foreground">Loading payment form...</span>
+          <span className="ml-2 text-sm text-muted-foreground">
+            Loading payment form...
+          </span>
         </div>
       )}
       <div className={!isReady ? "opacity-0 h-0 overflow-hidden" : ""}>
@@ -119,7 +150,7 @@ function PaymentForm({
           }}
         />
       </div>
-      
+
       {error && (
         <div className="p-3 bg-destructive/10 text-destructive rounded-lg text-sm">
           {error}
@@ -179,15 +210,18 @@ interface SubscriptionDialogProps {
   planTier: string;
   amount: number;
   features?: string[];
-  variant?: 'default' | 'buying' | 'existing';
+  variant?: "default" | "buying" | "existing";
 }
 
-const tierInfo: Record<string, { 
-  icon: React.ReactNode; 
-  color: string; 
-  highlights: string[];
-  badge?: string;
-}> = {
+const tierInfo: Record<
+  string,
+  {
+    icon: React.ReactNode;
+    color: string;
+    highlights: string[];
+    badge?: string;
+  }
+> = {
   Starter: {
     icon: <Shield className="w-5 h-5" />,
     color: "from-blue-500/20 to-cyan-500/20",
@@ -196,62 +230,80 @@ const tierInfo: Record<string, {
   Family: {
     icon: <Users className="w-5 h-5" />,
     color: "from-purple-500/20 to-violet-500/20",
-    highlights: ["Up to 5 family members", "Priority support", "Real-time monitoring"],
-    badge: "MOST POPULAR"
+    highlights: [
+      "Up to 5 family members",
+      "Priority support",
+      "Real-time monitoring",
+    ],
+    badge: "MOST POPULAR",
   },
   Premium: {
     icon: <Sparkles className="w-5 h-5" />,
     color: "from-amber-500/20 to-orange-500/20",
-    highlights: ["24/7 dedicated support", "Advanced AI protection", "Identity monitoring"],
-    badge: "BEST VALUE"
+    highlights: [
+      "24/7 dedicated support",
+      "Advanced AI protection",
+      "Identity monitoring",
+    ],
+    badge: "BEST VALUE",
   },
   Custom: {
     icon: <Zap className="w-5 h-5" />,
     color: "from-emerald-500/20 to-teal-500/20",
-    highlights: ["Enterprise features", "Custom integrations", "Dedicated manager"],
-    badge: "ENTERPRISE"
+    highlights: [
+      "Enterprise features",
+      "Custom integrations",
+      "Dedicated manager",
+    ],
+    badge: "ENTERPRISE",
   },
   "Basic Care": {
     icon: <Shield className="w-5 h-5" />,
     color: "from-slate-500/20 to-gray-500/20",
     highlights: ["Monthly health checks", "Security patches", "Email support"],
-    badge: "STARTER"
+    badge: "STARTER",
   },
   "Standard Care": {
     icon: <Shield className="w-5 h-5" />,
     color: "from-primary/20 to-accent/20",
     highlights: ["Weekly health checks", "Priority bug fixes", "Phone support"],
-    badge: "POPULAR"
+    badge: "POPULAR",
   },
   "Premium Care": {
     icon: <Sparkles className="w-5 h-5" />,
     color: "from-amber-500/20 to-orange-500/20",
-    highlights: ["24/7 monitoring", "Critical response (4hr)", "Dedicated engineer"],
-    badge: "PREMIUM"
-  }
+    highlights: [
+      "24/7 monitoring",
+      "Critical response (4hr)",
+      "Dedicated engineer",
+    ],
+    badge: "PREMIUM",
+  },
 };
 
 const variantStyles = {
   default: {
-    headerGradient: 'from-primary/20 to-accent/20',
-    priceColor: 'text-primary',
-    buttonStyle: 'bg-primary hover:bg-primary/90',
-    accentBorder: 'border-primary/20',
-    iconBg: 'bg-primary/10',
+    headerGradient: "from-primary/20 to-accent/20",
+    priceColor: "text-primary",
+    buttonStyle: "bg-primary hover:bg-primary/90",
+    accentBorder: "border-primary/20",
+    iconBg: "bg-primary/10",
   },
   buying: {
-    headerGradient: 'from-accent/20 to-teal-500/20',
-    priceColor: 'text-accent',
-    buttonStyle: 'bg-gradient-to-r from-accent to-teal-500 hover:from-accent/90 hover:to-teal-500/90',
-    accentBorder: 'border-accent/30',
-    iconBg: 'bg-accent/10',
+    headerGradient: "from-accent/20 to-teal-500/20",
+    priceColor: "text-accent",
+    buttonStyle:
+      "bg-gradient-to-r from-accent to-teal-500 hover:from-accent/90 hover:to-teal-500/90",
+    accentBorder: "border-accent/30",
+    iconBg: "bg-accent/10",
   },
   existing: {
-    headerGradient: 'from-amber-500/20 to-orange-500/20',
-    priceColor: 'text-amber-600 dark:text-amber-400',
-    buttonStyle: 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600',
-    accentBorder: 'border-amber-500/30',
-    iconBg: 'bg-amber-500/10',
+    headerGradient: "from-amber-500/20 to-orange-500/20",
+    priceColor: "text-amber-600 dark:text-amber-400",
+    buttonStyle:
+      "bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600",
+    accentBorder: "border-amber-500/30",
+    iconBg: "bg-amber-500/10",
   },
 };
 
@@ -261,7 +313,7 @@ interface SubscriptionFormProps {
   planTier: string;
   amount: number;
   features: string[];
-  variant: 'default' | 'buying' | 'existing';
+  variant: "default" | "buying" | "existing";
   onClose: () => void;
 }
 
@@ -276,13 +328,18 @@ function SubscriptionForm({
 }: SubscriptionFormProps) {
   const stripe = useStripe();
   const elements = useElements();
-  const { stripePromise, loading: stripeLoading, error: stripeError, initializeStripe } = useStripeKey();
+  const {
+    stripePromise,
+    loading: stripeLoading,
+    error: stripeError,
+    initializeStripe,
+  } = useStripeKey();
 
   const [step, setStep] = useState<"info" | "payment" | "success">("info");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
-  
+
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [isVeteran, setIsVeteran] = useState(false);
@@ -305,12 +362,17 @@ function SubscriptionForm({
   // Auto-fill from localStorage and auth
   useEffect(() => {
     const checkAuth = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (user?.email) {
         setEmail(user.email);
       } else {
-        const savedEmail = localStorage.getItem("userEmail") || localStorage.getItem("user_email");
-        const savedName = localStorage.getItem("userName") || localStorage.getItem("user_name");
+        const savedEmail =
+          localStorage.getItem("userEmail") ||
+          localStorage.getItem("user_email");
+        const savedName =
+          localStorage.getItem("userName") || localStorage.getItem("user_name");
         if (savedEmail) setEmail(savedEmail);
         if (savedName) setName(savedName);
       }
@@ -319,23 +381,28 @@ function SubscriptionForm({
   }, []);
 
   // Calculate pricing
-  const veteranDiscount = isVeteran ? Math.round(amount * veteranDiscountPercent / 100) : 0;
+  const veteranDiscount = isVeteran
+    ? Math.round((amount * veteranDiscountPercent) / 100)
+    : 0;
   const promoDiscount = discount ? discount.discountAmount : 0;
   const totalDiscount = veteranDiscount + promoDiscount;
   const finalAmount = amount - totalDiscount;
 
   const validateDiscountCode = async () => {
     if (!discountCode.trim()) return;
-    
+
     setValidatingCode(true);
     try {
-      const { data, error } = await supabase.functions.invoke('validate-discount-code', {
-        body: {
-          code: discountCode,
-          serviceType: serviceName.toLowerCase().replace(/\s+/g, '_'),
-          amount,
+      const { data, error } = await supabase.functions.invoke(
+        "validate-discount-code",
+        {
+          body: {
+            code: discountCode,
+            serviceType: serviceName.toLowerCase().replace(/\s+/g, "_"),
+            amount,
+          },
         },
-      });
+      );
 
       if (error || !data.valid) {
         toast.error(data?.error || "Invalid discount code");
@@ -376,20 +443,23 @@ function SubscriptionForm({
       }
 
       // Call edge function to create payment intent for subscription
-      const { data, error: fnError } = await supabase.functions.invoke("create-payment-intent", {
-        body: {
-          priceId,
-          mode: "subscription",
-          customerEmail: email,
-          customerName: name,
-          isVeteran,
-          metadata: { 
-            serviceName, 
-            planTier,
-            discountCode: discount ? discountCode : null 
-          }
-        }
-      });
+      const { data, error: fnError } = await supabase.functions.invoke(
+        "create-payment-intent",
+        {
+          body: {
+            priceId,
+            mode: "subscription",
+            customerEmail: email,
+            customerName: name,
+            isVeteran,
+            metadata: {
+              serviceName,
+              planTier,
+              discountCode: discount ? discountCode : null,
+            },
+          },
+        },
+      );
 
       if (fnError) throw fnError;
       if (data?.error) throw new Error(data.error);
@@ -405,7 +475,6 @@ function SubscriptionForm({
     }
   };
 
-
   return (
     <div className="space-y-5">
       {/* Progress Steps */}
@@ -417,8 +486,8 @@ function SubscriptionForm({
                 step === s
                   ? "bg-primary text-primary-foreground"
                   : ["info", "payment", "success"].indexOf(step) > i
-                  ? "bg-primary/20 text-primary"
-                  : "bg-muted text-muted-foreground"
+                    ? "bg-primary/20 text-primary"
+                    : "bg-muted text-muted-foreground"
               }`}
             >
               {["info", "payment", "success"].indexOf(step) > i ? (
@@ -451,15 +520,23 @@ function SubscriptionForm({
             className="space-y-4"
           >
             {/* Product Summary */}
-            <div className={`bg-gradient-to-r ${styles.headerGradient} rounded-xl p-4 border ${styles.accentBorder}`}>
+            <div
+              className={`bg-gradient-to-r ${styles.headerGradient} rounded-xl p-4 border ${styles.accentBorder}`}
+            >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className={`p-2 ${styles.iconBg} backdrop-blur rounded-lg ${styles.priceColor}`}>
+                  <div
+                    className={`p-2 ${styles.iconBg} backdrop-blur rounded-lg ${styles.priceColor}`}
+                  >
                     {info.icon}
                   </div>
                   <div>
-                    <h3 className="font-bold">{serviceName} {planTier}</h3>
-                    <p className="text-sm text-muted-foreground">{serviceName} - Monthly subscription</p>
+                    <h3 className="font-bold">
+                      {serviceName} {planTier}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {serviceName} - Monthly subscription
+                    </p>
                   </div>
                 </div>
                 <div className="text-right">
@@ -498,7 +575,10 @@ function SubscriptionForm({
             {/* Form Fields */}
             <div className="space-y-3">
               <div>
-                <Label htmlFor="email" className="text-sm font-medium flex items-center gap-2">
+                <Label
+                  htmlFor="email"
+                  className="text-sm font-medium flex items-center gap-2"
+                >
                   <Mail className="w-4 h-4" />
                   Email Address
                 </Label>
@@ -555,14 +635,16 @@ function SubscriptionForm({
               ) : (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
+                  animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
                   className="space-y-2"
                 >
                   <div className="flex gap-2">
                     <Input
                       value={discountCode}
-                      onChange={(e) => setDiscountCode(e.target.value.toUpperCase())}
+                      onChange={(e) =>
+                        setDiscountCode(e.target.value.toUpperCase())
+                      }
                       placeholder="PROMO CODE"
                       disabled={validatingCode || !!discount}
                       className="font-mono"
@@ -572,14 +654,18 @@ function SubscriptionForm({
                         onClick={validateDiscountCode}
                         disabled={!discountCode.trim() || validatingCode}
                       >
-                        {validatingCode ? <Loader2 className="w-4 h-4 animate-spin" /> : "Apply"}
+                        {validatingCode ? (
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                        ) : (
+                          "Apply"
+                        )}
                       </Button>
                     ) : (
                       <Button
                         variant="ghost"
                         onClick={() => {
                           setDiscount(null);
-                          setDiscountCode('');
+                          setDiscountCode("");
                         }}
                       >
                         <X className="w-4 h-4" />
@@ -639,9 +725,13 @@ function SubscriptionForm({
             className="space-y-4"
           >
             {/* Order Summary */}
-            <div className={`bg-gradient-to-r ${styles.headerGradient} rounded-xl p-4 border ${styles.accentBorder}`}>
+            <div
+              className={`bg-gradient-to-r ${styles.headerGradient} rounded-xl p-4 border ${styles.accentBorder}`}
+            >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-muted-foreground">Order Total:</span>
+                <span className="text-sm text-muted-foreground">
+                  Order Total:
+                </span>
                 <span className={`text-xl font-bold ${styles.priceColor}`}>
                   ${(finalAmount / 100).toFixed(2)}/mo
                 </span>
@@ -659,16 +749,20 @@ function SubscriptionForm({
               {stripeLoading ? (
                 <div className="flex items-center justify-center py-8">
                   <Loader2 className="w-6 h-6 animate-spin text-primary" />
-                  <span className="ml-2 text-sm text-muted-foreground">Initializing payment...</span>
+                  <span className="ml-2 text-sm text-muted-foreground">
+                    Initializing payment...
+                  </span>
                 </div>
               ) : !stripePromise || stripeError ? (
                 <div className="p-4 bg-destructive/10 text-destructive rounded-lg text-center">
                   <CreditCard className="w-8 h-8 mx-auto mb-2 opacity-50" />
                   <p className="font-medium">Payment system unavailable</p>
-                  <p className="text-sm mt-1">{stripeError || "Please refresh the page and try again."}</p>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
+                  <p className="text-sm mt-1">
+                    {stripeError || "Please refresh the page and try again."}
+                  </p>
+                  <Button
+                    variant="outline"
+                    size="sm"
                     className="mt-3"
                     onClick={() => window.location.reload()}
                   >
@@ -731,14 +825,15 @@ function SubscriptionForm({
             <h3 className="text-2xl font-bold mb-2">Subscription Active!</h3>
             <p className="text-muted-foreground mb-6">
               Thank you for subscribing to {serviceName} {planTier}!
-              <br />
-              A confirmation email has been sent to {email}.
+              <br />A confirmation email has been sent to {email}.
             </p>
 
             <div className="space-y-3">
               <div className="bg-green-500/10 text-green-600 p-4 rounded-xl text-sm">
                 <Sparkles className="w-5 h-5 mx-auto mb-2" />
-                <p className="font-medium">Your {planTier} plan is now active</p>
+                <p className="font-medium">
+                  Your {planTier} plan is now active
+                </p>
               </div>
 
               <div className="p-4 bg-muted/50 rounded-xl space-y-2 text-sm text-left">
@@ -773,7 +868,7 @@ export const SubscriptionDialog = ({
   planTier,
   amount,
   features = [],
-  variant = 'default',
+  variant = "default",
 }: SubscriptionDialogProps) => {
   const info = tierInfo[planTier] || tierInfo.Starter;
   const styles = variantStyles[variant];
@@ -787,7 +882,9 @@ export const SubscriptionDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={`sm:max-w-lg p-0 overflow-hidden max-h-[90vh] overflow-y-auto border-2 ${styles.accentBorder}`}>
+      <DialogContent
+        className={`sm:max-w-lg p-0 overflow-hidden max-h-[90vh] overflow-y-auto border-2 ${styles.accentBorder}`}
+      >
         {/* Header */}
         <div className="p-4 border-b bg-muted/30">
           <DialogHeader>

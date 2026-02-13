@@ -32,7 +32,7 @@ export const SectionNav = () => {
           <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-sm font-medium text-foreground bg-card/90 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-border/50 shadow-lg whitespace-nowrap">
             {section.label}
           </span>
-          
+
           {/* Dot indicator */}
           <div
             className={`w-3 h-3 rounded-full transition-all duration-300 hover:scale-130 active:scale-90 ${

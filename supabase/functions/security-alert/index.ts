@@ -7,12 +7,17 @@ const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
 interface SuspiciousPattern {
-  type: 'multiple_failed_logins' | 'privilege_escalation' | 'unusual_access' | 'mass_export';
-  severity: 'low' | 'medium' | 'high' | 'critical';
+  type:
+    | "multiple_failed_logins"
+    | "privilege_escalation"
+    | "unusual_access"
+    | "mass_export";
+  severity: "low" | "medium" | "high" | "critical";
   details: string;
   ip_address?: string;
   user_id?: string;
@@ -31,17 +36,19 @@ serve(async (req) => {
     const patterns: SuspiciousPattern[] = [];
 
     // 1. Check for multiple failed logins (>5 in last 15 minutes)
-    const fifteenMinutesAgo = new Date(Date.now() - 15 * 60 * 1000).toISOString();
+    const fifteenMinutesAgo = new Date(
+      Date.now() - 15 * 60 * 1000,
+    ).toISOString();
     const { data: failedLogins, error: failError } = await supabase
-      .from('auth_audit_logs')
-      .select('ip_address, email')
-      .eq('success', false)
-      .eq('event_type', 'login')
-      .gte('created_at', fifteenMinutesAgo);
+      .from("auth_audit_logs")
+      .select("ip_address, email")
+      .eq("success", false)
+      .eq("event_type", "login")
+      .gte("created_at", fifteenMinutesAgo);
 
     if (!failError && failedLogins) {
       const ipCounts = new Map<string, number>();
-      failedLogins.forEach(log => {
+      failedLogins.forEach((log) => {
         if (log.ip_address) {
           ipCounts.set(log.ip_address, (ipCounts.get(log.ip_address) || 0) + 1);
         }
@@ -50,8 +57,8 @@ serve(async (req) => {
       ipCounts.forEach((count, ip) => {
         if (count >= 5) {
           patterns.push({
-            type: 'multiple_failed_logins',
-            severity: count >= 10 ? 'critical' : 'high',
+            type: "multiple_failed_logins",
+            severity: count >= 10 ? "critical" : "high",
             details: `${count} failed login attempts from ${ip} in the last 15 minutes`,
             ip_address: ip,
             timestamp: new Date().toISOString(),
@@ -67,15 +74,15 @@ serve(async (req) => {
 
     if (!isBusinessHours) {
       const { data: roleChanges, error: roleError } = await supabase
-        .from('auth_audit_logs')
-        .select('*')
-        .in('event_type', ['role_assignment', 'role_change'])
-        .gte('created_at', new Date(Date.now() - 60 * 60 * 1000).toISOString());
+        .from("auth_audit_logs")
+        .select("*")
+        .in("event_type", ["role_assignment", "role_change"])
+        .gte("created_at", new Date(Date.now() - 60 * 60 * 1000).toISOString());
 
       if (!roleError && roleChanges && roleChanges.length > 0) {
         patterns.push({
-          type: 'privilege_escalation',
-          severity: 'high',
+          type: "privilege_escalation",
+          severity: "high",
           details: `${roleChanges.length} role modification(s) detected outside business hours (${hour}:00)`,
           timestamp: new Date().toISOString(),
         });
@@ -85,14 +92,19 @@ serve(async (req) => {
     // 3. Check for unusual access patterns (same user accessing many sensitive tables rapidly)
     const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
     const { data: accessLogs, error: accessError } = await supabase
-      .from('activity_log')
-      .select('user_id, entity_type')
-      .in('entity_type', ['profiles', 'clients', 'healthcare_professional_profiles', 'senior_client_profiles'])
-      .gte('created_at', oneHourAgo);
+      .from("activity_log")
+      .select("user_id, entity_type")
+      .in("entity_type", [
+        "profiles",
+        "clients",
+        "healthcare_professional_profiles",
+        "senior_client_profiles",
+      ])
+      .gte("created_at", oneHourAgo);
 
     if (!accessError && accessLogs) {
       const userAccess = new Map<string, Set<string>>();
-      accessLogs.forEach(log => {
+      accessLogs.forEach((log) => {
         if (log.user_id && log.entity_type) {
           if (!userAccess.has(log.user_id)) {
             userAccess.set(log.user_id, new Set());
@@ -104,8 +116,8 @@ serve(async (req) => {
       userAccess.forEach((tables, userId) => {
         if (tables.size >= 3) {
           patterns.push({
-            type: 'unusual_access',
-            severity: 'medium',
+            type: "unusual_access",
+            severity: "medium",
             details: `User accessed ${tables.size} different sensitive tables in the last hour`,
             user_id: userId,
             timestamp: new Date().toISOString(),
@@ -116,14 +128,14 @@ serve(async (req) => {
 
     // 4. Check for mass data exports (large SELECT queries)
     const { data: selectQueries, error: selectError } = await supabase
-      .from('activity_log')
-      .select('user_id, entity_type')
-      .eq('action', 'SELECT')
-      .gte('created_at', oneHourAgo);
+      .from("activity_log")
+      .select("user_id, entity_type")
+      .eq("action", "SELECT")
+      .gte("created_at", oneHourAgo);
 
     if (!selectError && selectQueries) {
       const userQueries = new Map<string, number>();
-      selectQueries.forEach(log => {
+      selectQueries.forEach((log) => {
         if (log.user_id) {
           userQueries.set(log.user_id, (userQueries.get(log.user_id) || 0) + 1);
         }
@@ -132,8 +144,8 @@ serve(async (req) => {
       userQueries.forEach((count, userId) => {
         if (count >= 50) {
           patterns.push({
-            type: 'mass_export',
-            severity: 'high',
+            type: "mass_export",
+            severity: "high",
             details: `${count} SELECT queries from single user in the last hour - possible data export attempt`,
             user_id: userId,
             timestamp: new Date().toISOString(),
@@ -143,25 +155,31 @@ serve(async (req) => {
     }
 
     // If critical or high severity patterns detected, send alert email
-    const criticalPatterns = patterns.filter(p => p.severity === 'critical' || p.severity === 'high');
-    
+    const criticalPatterns = patterns.filter(
+      (p) => p.severity === "critical" || p.severity === "high",
+    );
+
     if (criticalPatterns.length > 0) {
       const alertHtml = `
         <h1>🚨 Security Alert - InVision Network</h1>
         <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
-        <p><strong>Severity:</strong> ${criticalPatterns.some(p => p.severity === 'critical') ? 'CRITICAL' : 'HIGH'}</p>
+        <p><strong>Severity:</strong> ${criticalPatterns.some((p) => p.severity === "critical") ? "CRITICAL" : "HIGH"}</p>
         
         <h2>Detected Threats:</h2>
         <ul>
-          ${criticalPatterns.map(p => `
+          ${criticalPatterns
+            .map(
+              (p) => `
             <li>
-              <strong>[${p.severity.toUpperCase()}] ${p.type.replace(/_/g, ' ').toUpperCase()}</strong><br/>
+              <strong>[${p.severity.toUpperCase()}] ${p.type.replace(/_/g, " ").toUpperCase()}</strong><br/>
               ${p.details}<br/>
-              ${p.ip_address ? `IP: ${p.ip_address}<br/>` : ''}
-              ${p.user_id ? `User ID: ${p.user_id}<br/>` : ''}
+              ${p.ip_address ? `IP: ${p.ip_address}<br/>` : ""}
+              ${p.user_id ? `User ID: ${p.user_id}<br/>` : ""}
               <em>${new Date(p.timestamp).toLocaleString()}</em>
             </li>
-          `).join('')}
+          `,
+            )
+            .join("")}
         </ul>
         
         <h3>Recommended Actions:</h3>
@@ -179,7 +197,7 @@ serve(async (req) => {
       await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${resendApiKey}`,
+          Authorization: `Bearer ${resendApiKey}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -190,7 +208,9 @@ serve(async (req) => {
         }),
       });
 
-      console.log(`Security alert sent for ${criticalPatterns.length} critical patterns`);
+      console.log(
+        `Security alert sent for ${criticalPatterns.length} critical patterns`,
+      );
     }
 
     return new Response(
@@ -203,16 +223,13 @@ serve(async (req) => {
       {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 200,
-      }
+      },
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error in security-alert function:", error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 500,
-      }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      status: 500,
+    });
   }
 });

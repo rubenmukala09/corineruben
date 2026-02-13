@@ -4,7 +4,8 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
 serve(async (req) => {
@@ -14,14 +15,18 @@ serve(async (req) => {
 
   const supabaseClient = createClient(
     Deno.env.get("SUPABASE_URL") ?? "",
-    Deno.env.get("SUPABASE_ANON_KEY") ?? ""
+    Deno.env.get("SUPABASE_ANON_KEY") ?? "",
   );
 
   try {
     // Support both authenticated and guest checkout
     let user = null;
     const authHeader = req.headers.get("Authorization");
-    if (authHeader && authHeader !== "Bearer null" && authHeader !== "Bearer undefined") {
+    if (
+      authHeader &&
+      authHeader !== "Bearer null" &&
+      authHeader !== "Bearer undefined"
+    ) {
       const token = authHeader.replace("Bearer ", "");
       if (token && token !== "null" && token !== "undefined") {
         const { data } = await supabaseClient.auth.getUser(token);
@@ -30,18 +35,23 @@ serve(async (req) => {
     }
 
     const { productId, quantity = 1 } = await req.json();
-    
+
     if (!productId) {
       throw new Error("Product ID is required");
     }
-    
-    console.log("Processing payment for product:", productId, "User:", user?.email || "Guest");
+
+    console.log(
+      "Processing payment for product:",
+      productId,
+      "User:",
+      user?.email || "Guest",
+    );
 
     // Get product details
     const { data: product, error: productError } = await supabaseClient
-      .from('products')
-      .select('*')
-      .eq('id', productId)
+      .from("products")
+      .select("*")
+      .eq("id", productId)
       .single();
 
     if (productError || !product) {
@@ -55,7 +65,10 @@ serve(async (req) => {
     // Check if customer exists
     let customerId;
     if (user?.email) {
-      const customers = await stripe.customers.list({ email: user.email, limit: 1 });
+      const customers = await stripe.customers.list({
+        email: user.email,
+        limit: 1,
+      });
       if (customers.data.length > 0) {
         customerId = customers.data[0].id;
       }
@@ -78,11 +91,12 @@ serve(async (req) => {
       lineItems = [
         {
           price_data: {
-            currency: 'usd',
+            currency: "usd",
             product_data: {
               name: product.name,
               description: product.description,
-              images: product.images?.length > 0 ? [product.images[0]] : undefined,
+              images:
+                product.images?.length > 0 ? [product.images[0]] : undefined,
             },
             unit_amount: Math.round(unitPrice * 100),
           },
@@ -101,23 +115,31 @@ serve(async (req) => {
       cancel_url: `${req.headers.get("origin")}/payment-canceled`,
       metadata: {
         product_id: productId,
-        user_id: user?.id || '',
+        user_id: user?.id || "",
         quantity: quantity.toString(),
-        is_digital: product.tags?.includes('digital') ? 'true' : 'false',
+        is_digital: product.tags?.includes("digital") ? "true" : "false",
       },
     });
 
     console.log("Payment session created:", session.id);
 
-    return new Response(JSON.stringify({ url: session.url, sessionId: session.id }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 200,
-    });
+    return new Response(
+      JSON.stringify({ url: session.url, sessionId: session.id }),
+      {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      },
+    );
   } catch (error) {
     console.error("Error creating payment:", error);
-    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 500,
-    });
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : "Unknown error",
+      }),
+      {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 500,
+      },
+    );
   }
 });

@@ -28,7 +28,9 @@ const CLIENTS = [
 const StatItem = ({ value, label }: { value: string; label: string }) => (
   <div className="flex flex-col items-center justify-center transition-transform hover:-translate-y-1 cursor-default">
     <span className="text-xl font-bold text-white sm:text-2xl">{value}</span>
-    <span className="text-[10px] uppercase tracking-wider text-zinc-500 font-medium sm:text-xs">{label}</span>
+    <span className="text-[10px] uppercase tracking-wider text-zinc-500 font-medium sm:text-xs">
+      {label}
+    </span>
   </div>
 );
 
@@ -66,17 +68,17 @@ export default function HeroSection() {
       <div
         className="absolute inset-0 z-0 bg-[url(https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600&auto=format&fit=crop)] bg-cover bg-center opacity-40"
         style={{
-          maskImage: "linear-gradient(180deg, transparent, black 0%, black 70%, transparent)",
-          WebkitMaskImage: "linear-gradient(180deg, transparent, black 0%, black 70%, transparent)",
+          maskImage:
+            "linear-gradient(180deg, transparent, black 0%, black 70%, transparent)",
+          WebkitMaskImage:
+            "linear-gradient(180deg, transparent, black 0%, black 70%, transparent)",
         }}
       />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 pt-24 pb-12 sm:px-6 md:pt-32 md:pb-20 lg:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8 items-start">
-
           {/* --- LEFT COLUMN --- */}
           <div className="lg:col-span-7 flex flex-col justify-center space-y-8 pt-8">
-
             {/* Badge */}
             <div className="animate-fade-in delay-100">
               <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur-md transition-colors hover:bg-white/10">
@@ -91,21 +93,26 @@ export default function HeroSection() {
             <h1
               className="animate-fade-in delay-200 text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tighter leading-[0.9]"
               style={{
-                maskImage: "linear-gradient(180deg, black 0%, black 80%, transparent 100%)",
-                WebkitMaskImage: "linear-gradient(180deg, black 0%, black 80%, transparent 100%)",
+                maskImage:
+                  "linear-gradient(180deg, black 0%, black 80%, transparent 100%)",
+                WebkitMaskImage:
+                  "linear-gradient(180deg, black 0%, black 80%, transparent 100%)",
               }}
             >
-              Crafting Digital<br />
+              Crafting Digital
+              <br />
               <span className="bg-gradient-to-br from-white via-white to-[#ffcd75] bg-clip-text text-transparent">
                 Experiences
-              </span><br />
+              </span>
+              <br />
               That Matter
             </h1>
 
             {/* Description */}
             <p className="animate-fade-in delay-300 max-w-xl text-lg text-zinc-400 leading-relaxed">
               We design interfaces that combine beauty with functionality,
-              creating seamless experiences that users love and businesses thrive on.
+              creating seamless experiences that users love and businesses
+              thrive on.
             </p>
 
             {/* CTA Buttons */}
@@ -124,7 +131,6 @@ export default function HeroSection() {
 
           {/* --- RIGHT COLUMN --- */}
           <div className="lg:col-span-5 space-y-6 lg:mt-12">
-
             {/* Stats Card */}
             <div className="animate-fade-in delay-500 relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl shadow-2xl">
               {/* Card Glow Effect */}
@@ -136,8 +142,12 @@ export default function HeroSection() {
                     <Target className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <div className="text-3xl font-bold tracking-tight text-white">150+</div>
-                    <div className="text-sm text-zinc-400">Projects Delivered</div>
+                    <div className="text-3xl font-bold tracking-tight text-white">
+                      150+
+                    </div>
+                    <div className="text-sm text-zinc-400">
+                      Projects Delivered
+                    </div>
                   </div>
                 </div>
 
@@ -182,13 +192,17 @@ export default function HeroSection() {
 
             {/* Marquee Card */}
             <div className="animate-fade-in delay-500 relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 py-8 backdrop-blur-xl">
-              <h3 className="mb-6 px-8 text-sm font-medium text-zinc-400">Trusted by Industry Leaders</h3>
+              <h3 className="mb-6 px-8 text-sm font-medium text-zinc-400">
+                Trusted by Industry Leaders
+              </h3>
 
               <div
                 className="relative flex overflow-hidden"
                 style={{
-                  maskImage: "linear-gradient(to right, transparent, black 20%, black 80%, transparent)",
-                  WebkitMaskImage: "linear-gradient(to right, transparent, black 20%, black 80%, transparent)",
+                  maskImage:
+                    "linear-gradient(to right, transparent, black 20%, black 80%, transparent)",
+                  WebkitMaskImage:
+                    "linear-gradient(to right, transparent, black 20%, black 80%, transparent)",
                 }}
               >
                 <div className="animate-marquee flex gap-12 whitespace-nowrap px-4">
@@ -209,7 +223,6 @@ export default function HeroSection() {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>

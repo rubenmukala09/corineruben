@@ -37,7 +37,7 @@ export function AttackVectorBarChart() {
       const { count } = await supabase
         .from("threat_events")
         .select("*", { count: "exact", head: true });
-      
+
       if (count && count > 0) {
         setHasData(true);
         setTotalAttacks(count);
@@ -81,7 +81,9 @@ export function AttackVectorBarChart() {
             <Shield className="h-5 w-5 text-white" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-[#F9FAFB]">Attack Vector Analysis</h2>
+            <h2 className="text-lg font-bold text-[#F9FAFB]">
+              Attack Vector Analysis
+            </h2>
             <p className="text-sm text-[#9CA3AF]">Types of threats detected</p>
           </div>
         </div>
@@ -92,7 +94,9 @@ export function AttackVectorBarChart() {
             <div className="absolute inset-0 flex items-center justify-center z-10 bg-[#111827]/80 rounded-lg">
               <div className="text-center p-4">
                 <p className="text-[#9CA3AF] text-sm">No attack data yet</p>
-                <p className="text-xs text-gray-500 mt-1">Threat data will populate automatically</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  Threat data will populate automatically
+                </p>
               </div>
             </div>
           )}
@@ -103,12 +107,24 @@ export function AttackVectorBarChart() {
             >
               <defs>
                 {/* Orange to Pink gradient for danger bars */}
-                <linearGradient id="dangerBarGradient" x1="0" y1="0" x2="0" y2="1">
+                <linearGradient
+                  id="dangerBarGradient"
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="1"
+                >
                   <stop offset="0%" stopColor="#F97316" stopOpacity={1} />
                   <stop offset="100%" stopColor="#EC4899" stopOpacity={0.8} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.3} horizontal={true} vertical={false} />
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="#374151"
+                opacity={0.3}
+                horizontal={true}
+                vertical={false}
+              />
               <XAxis
                 dataKey="name"
                 stroke="#9CA3AF"
@@ -125,7 +141,10 @@ export function AttackVectorBarChart() {
                 tickLine={false}
                 axisLine={false}
               />
-              <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(255,255,255,0.05)" }} />
+              <Tooltip
+                content={<CustomTooltip />}
+                cursor={{ fill: "rgba(255,255,255,0.05)" }}
+              />
               <Bar
                 dataKey="value"
                 fill="url(#dangerBarGradient)"

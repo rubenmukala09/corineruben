@@ -23,26 +23,29 @@ export const preloadHeroImages = (images: string[]): void => {
 /**
  * Check if cached
  */
-export const isHeroImageCached = (src: string): boolean => loadedHeroUrls.has(src);
+export const isHeroImageCached = (src: string): boolean =>
+  loadedHeroUrls.has(src);
 
 /**
  * Hook for hero image preloading
  */
 export const useHeroImagePreload = (imageSources: string[]) => {
-  const [isLoaded, setIsLoaded] = useState(() => 
-    imageSources.length === 0 || imageSources.every(s => loadedHeroUrls.has(s))
+  const [isLoaded, setIsLoaded] = useState(
+    () =>
+      imageSources.length === 0 ||
+      imageSources.every((s) => loadedHeroUrls.has(s)),
   );
 
   useEffect(() => {
     if (isLoaded || imageSources.length === 0) return;
-    
+
     const first = imageSources[0];
     if (loadedHeroUrls.has(first)) {
       setIsLoaded(true);
       imageSources.slice(1).forEach(preloadHeroImage);
       return;
     }
-    
+
     const img = new Image();
     img.onload = () => {
       loadedHeroUrls.add(first);
@@ -51,7 +54,7 @@ export const useHeroImagePreload = (imageSources: string[]) => {
     };
     img.onerror = () => setIsLoaded(true);
     img.src = first;
-  }, [imageSources.join(','), isLoaded]);
+  }, [imageSources.join(","), isLoaded]);
 
   return { isLoaded, progress: isLoaded ? 100 : 0 };
 };

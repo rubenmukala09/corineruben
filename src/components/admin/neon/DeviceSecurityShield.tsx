@@ -17,9 +17,7 @@ export function DeviceSecurityShield() {
   const { data: devices = [], isLoading } = useQuery({
     queryKey: ["user-devices-shield"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("user_devices")
-        .select("*");
+      const { data, error } = await supabase.from("user_devices").select("*");
 
       if (error) throw error;
       return data as Device[];
@@ -27,38 +25,67 @@ export function DeviceSecurityShield() {
   });
 
   // Calculate device data from real devices
-  const mobileDevices = devices.filter(d => d.device_type === "mobile" || d.device_type === "tablet");
-  const desktopDevices = devices.filter(d => d.device_type === "desktop" || d.device_type === "laptop");
-  const vulnerableDevices = devices.filter(d => d.status === "at_risk" || d.protection_level < 70);
+  const mobileDevices = devices.filter(
+    (d) => d.device_type === "mobile" || d.device_type === "tablet",
+  );
+  const desktopDevices = devices.filter(
+    (d) => d.device_type === "desktop" || d.device_type === "laptop",
+  );
+  const vulnerableDevices = devices.filter(
+    (d) => d.status === "at_risk" || d.protection_level < 70,
+  );
 
   const totalDevices = devices.length || 1; // Prevent division by zero
-  
+
   const deviceData = [
-    { 
-      name: "Mobile Protected", 
-      value: totalDevices > 0 ? Math.round((mobileDevices.filter(d => d.status === "protected").length / totalDevices) * 100) : 0, 
-      color: "#10B981" 
+    {
+      name: "Mobile Protected",
+      value:
+        totalDevices > 0
+          ? Math.round(
+              (mobileDevices.filter((d) => d.status === "protected").length /
+                totalDevices) *
+                100,
+            )
+          : 0,
+      color: "#10B981",
     },
-    { 
-      name: "Desktop Protected", 
-      value: totalDevices > 0 ? Math.round((desktopDevices.filter(d => d.status === "protected").length / totalDevices) * 100) : 0, 
-      color: "#3B82F6" 
+    {
+      name: "Desktop Protected",
+      value:
+        totalDevices > 0
+          ? Math.round(
+              (desktopDevices.filter((d) => d.status === "protected").length /
+                totalDevices) *
+                100,
+            )
+          : 0,
+      color: "#3B82F6",
     },
-    { 
-      name: "Vulnerable", 
-      value: totalDevices > 0 ? Math.round((vulnerableDevices.length / totalDevices) * 100) : 0, 
-      color: "#EF4444" 
+    {
+      name: "Vulnerable",
+      value:
+        totalDevices > 0
+          ? Math.round((vulnerableDevices.length / totalDevices) * 100)
+          : 0,
+      color: "#EF4444",
     },
   ];
 
   // Ensure we have at least some data to show
-  const chartData = devices.length > 0 
-    ? deviceData.filter(d => d.value > 0)
-    : [{ name: "No Data", value: 100, color: "#374151" }];
+  const chartData =
+    devices.length > 0
+      ? deviceData.filter((d) => d.value > 0)
+      : [{ name: "No Data", value: 100, color: "#374151" }];
 
   // Calculate safety score
-  const protectedDevices = devices.filter(d => d.status === "protected").length;
-  const safetyScore = devices.length > 0 ? Math.round((protectedDevices / devices.length) * 100) : 0;
+  const protectedDevices = devices.filter(
+    (d) => d.status === "protected",
+  ).length;
+  const safetyScore =
+    devices.length > 0
+      ? Math.round((protectedDevices / devices.length) * 100)
+      : 0;
 
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
@@ -97,9 +124,13 @@ export function DeviceSecurityShield() {
             <Shield className="h-5 w-5 text-white" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-[#F9FAFB]">Device Security Shield</h2>
+            <h2 className="text-lg font-bold text-[#F9FAFB]">
+              Device Security Shield
+            </h2>
             <p className="text-sm text-[#9CA3AF]">
-              {devices.length > 0 ? `${devices.length} device${devices.length > 1 ? 's' : ''} monitored` : 'No devices'}
+              {devices.length > 0
+                ? `${devices.length} device${devices.length > 1 ? "s" : ""} monitored`
+                : "No devices"}
             </p>
           </div>
         </div>
@@ -123,7 +154,10 @@ export function DeviceSecurityShield() {
                     key={`cell-${index}`}
                     fill={entry.color}
                     style={{
-                      filter: entry.name !== "No Data" ? `drop-shadow(0 0 10px ${entry.color}80)` : undefined,
+                      filter:
+                        entry.name !== "No Data"
+                          ? `drop-shadow(0 0 10px ${entry.color}80)`
+                          : undefined,
                     }}
                   />
                 ))}
@@ -150,7 +184,9 @@ export function DeviceSecurityShield() {
         <div className="mt-4 space-y-2">
           {devices.length === 0 ? (
             <div className="text-center py-4">
-              <p className="text-sm text-[#9CA3AF]">Add devices to see security breakdown</p>
+              <p className="text-sm text-[#9CA3AF]">
+                Add devices to see security breakdown
+              </p>
             </div>
           ) : (
             deviceData.map((item, index) => (
@@ -171,7 +207,10 @@ export function DeviceSecurityShield() {
                   />
                   <span className="text-sm text-[#9CA3AF]">{item.name}</span>
                 </div>
-                <span className="text-sm font-semibold" style={{ color: item.color }}>
+                <span
+                  className="text-sm font-semibold"
+                  style={{ color: item.color }}
+                >
                   {item.value}%
                 </span>
               </motion.div>

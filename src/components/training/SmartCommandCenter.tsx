@@ -74,7 +74,7 @@ export const SmartCommandCenter = ({
       setValidationError(null);
       onFileSelect(nextFile);
     },
-    [onFileSelect]
+    [onFileSelect],
   );
 
   const handleDrop = useCallback(
@@ -84,7 +84,7 @@ export const SmartCommandCenter = ({
       const dropped = event.dataTransfer.files?.[0];
       if (dropped) handleFile(dropped);
     },
-    [handleFile]
+    [handleFile],
   );
 
   useEffect(() => {
@@ -141,8 +141,13 @@ export const SmartCommandCenter = ({
 
   // Initialize speech recognition
   useEffect(() => {
-    if (typeof window !== "undefined" && ("webkitSpeechRecognition" in window || "SpeechRecognition" in window)) {
-      const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
+    if (
+      typeof window !== "undefined" &&
+      ("webkitSpeechRecognition" in window || "SpeechRecognition" in window)
+    ) {
+      const SpeechRecognition =
+        (window as any).webkitSpeechRecognition ||
+        (window as any).SpeechRecognition;
       const recognition = new SpeechRecognition();
       recognition.continuous = false;
       recognition.interimResults = false;
@@ -203,7 +208,8 @@ export const SmartCommandCenter = ({
           "relative w-full max-w-[600px] rounded-2xl border border-white/10 bg-[#121212] shadow-[0_20px_50px_rgba(0,0,0,0.3)]",
           "h-16 sm:h-20 px-4 py-2 sm:px-5 sm:py-3",
           "flex flex-col justify-between",
-          isDragging && "ring-2 ring-[#4ADE80] shadow-[0_0_18px_rgba(74,222,128,0.45)]"
+          isDragging &&
+            "ring-2 ring-[#4ADE80] shadow-[0_0_18px_rgba(74,222,128,0.45)]",
         )}
         onDragOver={(event) => {
           event.preventDefault();
@@ -217,7 +223,9 @@ export const SmartCommandCenter = ({
             <div className="flex items-center gap-2 rounded-full bg-white px-3 py-1 text-[12px] font-medium text-[#121212] max-w-[280px]">
               <span className="truncate">{file.name}</span>
               <span className="text-[#121212]/60">•</span>
-              <span className="whitespace-nowrap">{fileMeta.cost.formatted}</span>
+              <span className="whitespace-nowrap">
+                {fileMeta.cost.formatted}
+              </span>
               <button
                 type="button"
                 onClick={onClearFile}
@@ -246,12 +254,16 @@ export const SmartCommandCenter = ({
                 "relative h-10 w-10 rounded-full flex items-center justify-center transition-all duration-300",
                 isListening
                   ? "bg-gradient-to-br from-red-500 to-rose-600 shadow-[0_0_20px_rgba(239,68,68,0.6)] animate-pulse scale-110"
-                  : "bg-gradient-to-br from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 shadow-[0_0_15px_rgba(16,185,129,0.4)] hover:shadow-[0_0_25px_rgba(16,185,129,0.6)] hover:scale-105"
+                  : "bg-gradient-to-br from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 shadow-[0_0_15px_rgba(16,185,129,0.4)] hover:shadow-[0_0_25px_rgba(16,185,129,0.6)] hover:scale-105",
               )}
               onClick={toggleVoiceInput}
               aria-label={isListening ? "Stop listening" : "Voice input"}
               disabled={isBusy}
-              title={isListening ? "Stop listening - Click to stop" : "Voice input - Click to speak"}
+              title={
+                isListening
+                  ? "Stop listening - Click to stop"
+                  : "Voice input - Click to speak"
+              }
             >
               {isListening ? (
                 <div className="relative">
@@ -309,7 +321,7 @@ export const SmartCommandCenter = ({
             className={cn(
               "h-9 w-9 rounded-full bg-[#4ADE80] text-[#121212] flex items-center justify-center",
               "shadow-[0_0_18px_rgba(74,222,128,0.55)] transition-transform",
-              "disabled:opacity-60 disabled:cursor-not-allowed"
+              "disabled:opacity-60 disabled:cursor-not-allowed",
             )}
             aria-label={file ? "Scan file" : "Send message"}
           >
@@ -336,13 +348,16 @@ export const SmartCommandCenter = ({
 
       <div className="mt-3 flex flex-col items-center gap-2">
         <p className="text-[14px] text-white/90 font-medium tracking-[0.5px] text-center">
-          Anonymous Scan • ${GUEST_SCAN_PRICING.minimumCharge.toFixed(2)} Minimum • Auto-deleted in 10m
+          Anonymous Scan • ${GUEST_SCAN_PRICING.minimumCharge.toFixed(2)}{" "}
+          Minimum • Auto-deleted in 10m
         </p>
 
         {isListening && (
           <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30">
             <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-            <span className="text-xs text-red-600 font-medium">Recording... Click mic to stop</span>
+            <span className="text-xs text-red-600 font-medium">
+              Recording... Click mic to stop
+            </span>
           </div>
         )}
       </div>

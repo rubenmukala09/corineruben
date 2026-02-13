@@ -2,7 +2,8 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
 // Simple in-memory rate limiter
@@ -25,7 +26,11 @@ setInterval(() => {
   }
 }, 300000);
 
-function checkRateLimit(identifier: string): { allowed: boolean; remaining: number; resetAt: number } {
+function checkRateLimit(identifier: string): {
+  allowed: boolean;
+  remaining: number;
+  resetAt: number;
+} {
   const now = Date.now();
   const entry = rateLimitMap.get(identifier);
 
@@ -41,7 +46,11 @@ function checkRateLimit(identifier: string): { allowed: boolean; remaining: numb
   }
 
   entry.count++;
-  return { allowed: true, remaining: MAX_REQUESTS_PER_WINDOW - entry.count, resetAt: entry.resetAt };
+  return {
+    allowed: true,
+    remaining: MAX_REQUESTS_PER_WINDOW - entry.count,
+    resetAt: entry.resetAt,
+  };
 }
 
 serve(async (req) => {
@@ -51,39 +60,42 @@ serve(async (req) => {
 
   try {
     // Rate limiting check
-    const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0] || 
-                     req.headers.get("x-real-ip") || 
-                     "unknown";
-    
+    const clientIp =
+      req.headers.get("x-forwarded-for")?.split(",")[0] ||
+      req.headers.get("x-real-ip") ||
+      "unknown";
+
     const rateCheck = checkRateLimit(clientIp);
-    
+
     if (!rateCheck.allowed) {
       const retryAfter = Math.ceil((rateCheck.resetAt - Date.now()) / 1000);
       console.log(`Rate limit exceeded for IP: ${clientIp}`);
       return new Response(
-        JSON.stringify({ 
+        JSON.stringify({
           error: "Too many requests. Please try again in a moment.",
-          retryAfter: retryAfter
+          retryAfter: retryAfter,
         }),
         {
           status: 429,
-          headers: { 
-            ...corsHeaders, 
+          headers: {
+            ...corsHeaders,
             "Content-Type": "application/json",
             "Retry-After": retryAfter.toString(),
             "X-RateLimit-Limit": MAX_REQUESTS_PER_WINDOW.toString(),
             "X-RateLimit-Remaining": "0",
-            "X-RateLimit-Reset": new Date(rateCheck.resetAt).toISOString()
+            "X-RateLimit-Reset": new Date(rateCheck.resetAt).toISOString(),
           },
-        }
+        },
       );
     }
 
-    console.log(`Request from IP: ${clientIp}, remaining: ${rateCheck.remaining}`);
+    console.log(
+      `Request from IP: ${clientIp}, remaining: ${rateCheck.remaining}`,
+    );
 
     const { messages, type = "chat" } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    
+
     if (!LOVABLE_API_KEY) {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
@@ -122,19 +134,24 @@ STRICT RULES:
 5. Guide users to the scanner if they ask about checking files.`;
         break;
       case "sentiment":
-        systemPrompt = "You are a sentiment analysis expert. Analyze the emotional tone, sentiment (positive/negative/neutral), and key themes in the text provided. Be concise and clear.";
+        systemPrompt =
+          "You are a sentiment analysis expert. Analyze the emotional tone, sentiment (positive/negative/neutral), and key themes in the text provided. Be concise and clear.";
         break;
       case "summary":
-        systemPrompt = "You are a summarization expert. Create clear, concise summaries that capture the main points and key information. Keep summaries brief but comprehensive.";
+        systemPrompt =
+          "You are a summarization expert. Create clear, concise summaries that capture the main points and key information. Keep summaries brief but comprehensive.";
         break;
       case "translation":
-        systemPrompt = "You are a professional translator. Translate text accurately while preserving tone, context, and cultural nuances. Always specify the target language.";
+        systemPrompt =
+          "You are a professional translator. Translate text accurately while preserving tone, context, and cultural nuances. Always specify the target language.";
         break;
       case "document_qa":
-        systemPrompt = "You are a document analysis expert. Answer questions about documents accurately and cite specific information when possible. If you don't know, say so.";
+        systemPrompt =
+          "You are a document analysis expert. Answer questions about documents accurately and cite specific information when possible. If you don't know, say so.";
         break;
       case "image_analysis":
-        systemPrompt = "You are an image analysis expert. Describe images in detail, identify objects, text, and context. Be thorough and precise.";
+        systemPrompt =
+          "You are an image analysis expert. Describe images in detail, identify objects, text, and context. Be thorough and precise.";
         break;
       default:
         systemPrompt = `You are Laura, the professional AI assistant for InVision Network, a leading cybersecurity education company specializing in AI scam protection and business solutions.
@@ -178,42 +195,46 @@ Always prioritize user safety, privacy, and empowerment in every interaction.`;
 
     console.log(`Processing ${type} request with ${messages.length} messages`);
 
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
-        "Content-Type": "application/json",
+    const response = await fetch(
+      "https://ai.gateway.lovable.dev/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${LOVABLE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "google/gemini-2.5-flash",
+          messages: [{ role: "system", content: systemPrompt }, ...messages],
+          stream: true,
+        }),
       },
-      body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
-        messages: [
-          { role: "system", content: systemPrompt },
-          ...messages,
-        ],
-        stream: true,
-      }),
-    });
+    );
 
     if (!response.ok) {
       if (response.status === 429) {
         return new Response(
-          JSON.stringify({ error: "Rate limit exceeded. Please try again later." }),
+          JSON.stringify({
+            error: "Rate limit exceeded. Please try again later.",
+          }),
           {
             status: 429,
             headers: { ...corsHeaders, "Content-Type": "application/json" },
-          }
+          },
         );
       }
       if (response.status === 402) {
         return new Response(
-          JSON.stringify({ error: "AI credits depleted. Please add credits to continue." }),
+          JSON.stringify({
+            error: "AI credits depleted. Please add credits to continue.",
+          }),
           {
             status: 402,
             headers: { ...corsHeaders, "Content-Type": "application/json" },
-          }
+          },
         );
       }
-      
+
       const errorText = await response.text();
       console.error("AI gateway error:", response.status, errorText);
       throw new Error("AI gateway error");
@@ -221,26 +242,27 @@ Always prioritize user safety, privacy, and empowerment in every interaction.`;
 
     // Stream the response back
     return new Response(response.body, {
-      headers: { 
-        ...corsHeaders, 
+      headers: {
+        ...corsHeaders,
         "Content-Type": "text/event-stream",
         "Cache-Control": "no-cache",
-        "Connection": "keep-alive",
+        Connection: "keep-alive",
         "X-RateLimit-Limit": MAX_REQUESTS_PER_WINDOW.toString(),
         "X-RateLimit-Remaining": rateCheck.remaining.toString(),
-        "X-RateLimit-Reset": new Date(rateCheck.resetAt).toISOString()
+        "X-RateLimit-Reset": new Date(rateCheck.resetAt).toISOString(),
       },
     });
   } catch (error) {
     console.error("AI chat error:", error);
     return new Response(
-      JSON.stringify({ 
-        error: error instanceof Error ? error.message : "Unknown error occurred" 
+      JSON.stringify({
+        error:
+          error instanceof Error ? error.message : "Unknown error occurred",
       }),
       {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
-      }
+      },
     );
   }
 });

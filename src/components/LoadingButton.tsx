@@ -34,7 +34,7 @@ export function LoadingButton({
       className={cn(
         "relative transition-all duration-300",
         showError && "animate-shake",
-        className
+        className,
       )}
       disabled={disabled || loading || success}
       {...props}
@@ -45,21 +45,21 @@ export function LoadingButton({
           {loadingText || children}
         </span>
       )}
-      
+
       {showSuccess && (
         <span className="flex items-center gap-2 text-success">
           <Check className="h-4 w-4" />
           {successText || "Success!"}
         </span>
       )}
-      
+
       {showError && (
         <span className="flex items-center gap-2 text-destructive-foreground">
           <AlertCircle className="h-4 w-4" />
           {errorText || children}
         </span>
       )}
-      
+
       {!showLoading && !showSuccess && !showError && children}
     </Button>
   );

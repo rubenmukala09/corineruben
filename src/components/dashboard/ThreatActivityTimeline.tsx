@@ -1,4 +1,13 @@
-import { Shield, Mail, Phone, MessageSquare, QrCode, AlertTriangle, CheckCircle, ShieldCheck } from "lucide-react";
+import {
+  Shield,
+  Mail,
+  Phone,
+  MessageSquare,
+  QrCode,
+  AlertTriangle,
+  CheckCircle,
+  ShieldCheck,
+} from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useEffect, useState } from "react";
@@ -21,24 +30,33 @@ interface ThreatActivityTimelineProps {
 const getIcon = (type: string) => {
   switch (type?.toLowerCase()) {
     case "email":
-    case "phishing": return Mail;
+    case "phishing":
+      return Mail;
     case "sms":
-    case "smishing": return MessageSquare;
+    case "smishing":
+      return MessageSquare;
     case "call":
-    case "vishing": return Phone;
+    case "vishing":
+      return Phone;
     case "qr":
-    case "quishing": return QrCode;
-    default: return AlertTriangle;
+    case "quishing":
+      return QrCode;
+    default:
+      return AlertTriangle;
   }
 };
 
 const getSeverityColor = (severity: string) => {
   switch (severity?.toLowerCase()) {
     case "critical":
-    case "high": return "text-red-500 bg-red-500/10";
-    case "medium": return "text-orange-500 bg-orange-500/10";
-    case "low": return "text-yellow-500 bg-yellow-500/10";
-    default: return "text-muted-foreground bg-muted";
+    case "high":
+      return "text-red-500 bg-red-500/10";
+    case "medium":
+      return "text-orange-500 bg-orange-500/10";
+    case "low":
+      return "text-yellow-500 bg-yellow-500/10";
+    default:
+      return "text-muted-foreground bg-muted";
   }
 };
 
@@ -57,7 +75,9 @@ const formatTimeAgo = (dateString: string) => {
   return date.toLocaleDateString();
 };
 
-export function ThreatActivityTimeline({ userId }: ThreatActivityTimelineProps) {
+export function ThreatActivityTimeline({
+  userId,
+}: ThreatActivityTimelineProps) {
   const [threats, setThreats] = useState<ThreatEvent[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -75,7 +95,7 @@ export function ThreatActivityTimeline({ userId }: ThreatActivityTimelineProps) 
         }
 
         const { data, error } = await query;
-        
+
         if (error) {
           console.error("Error fetching threat events:", error);
           setThreats([]);
@@ -93,7 +113,9 @@ export function ThreatActivityTimeline({ userId }: ThreatActivityTimelineProps) 
     fetchThreats();
   }, [userId]);
 
-  const hasActiveThreats = threats.some(t => t.status === "active" || t.status === "pending");
+  const hasActiveThreats = threats.some(
+    (t) => t.status === "active" || t.status === "pending",
+  );
 
   return (
     <Card className="h-full">
@@ -103,11 +125,12 @@ export function ThreatActivityTimeline({ userId }: ThreatActivityTimelineProps) 
             <Shield className="w-5 h-5 text-primary" />
             Recent Threat Activity
           </CardTitle>
-          <Badge 
-            variant="outline" 
-            className={hasActiveThreats 
-              ? "bg-yellow-500/10 text-yellow-600 border-yellow-500/30"
-              : "bg-green-500/10 text-green-600 border-green-500/30"
+          <Badge
+            variant="outline"
+            className={
+              hasActiveThreats
+                ? "bg-yellow-500/10 text-yellow-600 border-yellow-500/30"
+                : "bg-green-500/10 text-green-600 border-green-500/30"
             }
           >
             <CheckCircle className="w-3 h-3 mr-1" />
@@ -147,7 +170,9 @@ export function ThreatActivityTimeline({ userId }: ThreatActivityTimelineProps) 
                 className="flex items-start gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors group animate-fade-in"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
-                <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${getSeverityColor(threat.severity)}`}>
+                <div
+                  className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${getSeverityColor(threat.severity)}`}
+                >
                   <Icon className="w-4 h-4" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -155,19 +180,24 @@ export function ThreatActivityTimeline({ userId }: ThreatActivityTimelineProps) 
                     <p className="font-medium text-sm truncate">
                       {threat.title || `${threat.threat_type} Threat`}
                     </p>
-                    <Badge 
-                      variant="secondary" 
+                    <Badge
+                      variant="secondary"
                       className={`text-xs shrink-0 ${
-                        threat.status === "resolved" || threat.status === "blocked"
-                          ? "bg-green-500/20 text-green-600" 
+                        threat.status === "resolved" ||
+                        threat.status === "blocked"
+                          ? "bg-green-500/20 text-green-600"
                           : "bg-yellow-500/20 text-yellow-600"
                       }`}
                     >
                       {threat.status}
                     </Badge>
                   </div>
-                  <p className="text-xs text-muted-foreground truncate">{threat.description}</p>
-                  <p className="text-xs text-muted-foreground/60 mt-1">{formatTimeAgo(threat.created_at)}</p>
+                  <p className="text-xs text-muted-foreground truncate">
+                    {threat.description}
+                  </p>
+                  <p className="text-xs text-muted-foreground/60 mt-1">
+                    {formatTimeAgo(threat.created_at)}
+                  </p>
                 </div>
               </div>
             );

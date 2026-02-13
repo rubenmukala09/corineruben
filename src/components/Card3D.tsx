@@ -36,7 +36,7 @@ const Card3D = ({ children, className = "", intensity = 10 }: Card3DProps) => {
         setRotateY(rotateYValue);
       });
     }, 16),
-    [intensity]
+    [intensity],
   );
 
   const handleMouseLeave = () => {
@@ -58,24 +58,24 @@ const Card3D = ({ children, className = "", intensity = 10 }: Card3DProps) => {
       animate={{
         rotateX,
         rotateY,
-        scale: isHovering ? 1.02 : 1
+        scale: isHovering ? 1.02 : 1,
       }}
       transition={{
         type: "spring",
         stiffness: 300,
-        damping: 30
+        damping: 30,
       }}
       style={{
         transformStyle: "preserve-3d",
-        transformPerspective: 1000
+        transformPerspective: 1000,
       }}
       className={cn("relative card-3d", className)}
     >
       <motion.div
         animate={{
-          boxShadow: isHovering 
+          boxShadow: isHovering
             ? "0 20px 40px -15px hsl(220 20% 20% / 0.2), 0 10px 20px -10px hsl(220 20% 20% / 0.15)"
-            : "0 10px 30px -10px hsl(220 20% 20% / 0.1)"
+            : "0 10px 30px -10px hsl(220 20% 20% / 0.1)",
         }}
         transition={{ duration: 0.3 }}
         className="w-full h-full glass-light rounded-2xl"

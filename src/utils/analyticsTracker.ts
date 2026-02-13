@@ -23,14 +23,14 @@ export const isAnalyticsAllowed = (): boolean => {
 // Generate or retrieve session ID
 export const getSessionId = (): string => {
   if (sessionId) return sessionId;
-  
+
   sessionId = sessionStorage.getItem("analytics_session_id");
-  
+
   if (!sessionId) {
     sessionId = `sess_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     sessionStorage.setItem("analytics_session_id", sessionId);
   }
-  
+
   return sessionId;
 };
 
@@ -57,9 +57,11 @@ export const trackEvent = async ({
     // Use AbortController for timeout to prevent hanging requests
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 5000);
-    
-    const { data: { user } } = await supabase.auth.getUser();
-    
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
     const eventPayload = {
       eventName,
       eventCategory,
@@ -76,11 +78,11 @@ export const trackEvent = async ({
       supabase.functions.invoke("track-analytics-event", {
         body: eventPayload,
       }),
-      new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Analytics timeout')), 5000)
-      )
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Analytics timeout")), 5000),
+      ),
     ]);
-    
+
     clearTimeout(timeoutId);
   } catch {
     // Silently ignore analytics errors - they should never affect UX
@@ -104,7 +106,10 @@ export const trackButtonClick = (buttonName: string, location: string) => {
   });
 };
 
-export const trackFormSubmit = (formName: string, formData?: Record<string, unknown>) => {
+export const trackFormSubmit = (
+  formName: string,
+  formData?: Record<string, unknown>,
+) => {
   trackEvent({
     eventName: "form_submit",
     eventCategory: "conversion",

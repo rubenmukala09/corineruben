@@ -8,17 +8,17 @@ interface TrustIndicatorProps {
   size?: "sm" | "md" | "lg";
 }
 
-export const TrustIndicator = ({ 
-  type = "check", 
+export const TrustIndicator = ({
+  type = "check",
   className,
   text,
-  size = "md"
+  size = "md",
 }: TrustIndicatorProps) => {
   const icons = {
     check: CheckCircle,
     shield: Shield,
     lock: Lock,
-    award: Award
+    award: Award,
   };
 
   const Icon = icons[type];
@@ -26,7 +26,7 @@ export const TrustIndicator = ({
   const sizeClasses = {
     sm: "w-4 h-4",
     md: "w-5 h-5",
-    lg: "w-6 h-6"
+    lg: "w-6 h-6",
   };
 
   if (text) {

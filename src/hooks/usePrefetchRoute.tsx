@@ -15,14 +15,16 @@ const routeToPageKey: Record<string, string> = {
   "/faq": "faq",
 };
 
-
 export const usePrefetchRoute = (path: string) => {
   const prefetchTimerRef = useRef<NodeJS.Timeout>();
 
   const prefetch = () => {
     if (prefetchedRoutes.has(path)) return;
     const connection = (navigator as any).connection;
-    if (connection?.saveData || ["slow-2g", "2g"].includes(connection?.effectiveType)) {
+    if (
+      connection?.saveData ||
+      ["slow-2g", "2g"].includes(connection?.effectiveType)
+    ) {
       return;
     }
 
@@ -30,7 +32,9 @@ export const usePrefetchRoute = (path: string) => {
       // Preload professional hero images for the route
       const pageKey = routeToPageKey[path];
       if (pageKey && PROFESSIONAL_HERO_IMAGES[pageKey]) {
-        const heroImages = PROFESSIONAL_HERO_IMAGES[pageKey].map(img => img.src);
+        const heroImages = PROFESSIONAL_HERO_IMAGES[pageKey].map(
+          (img) => img.src,
+        );
         preloadRouteImages(heroImages);
       }
 

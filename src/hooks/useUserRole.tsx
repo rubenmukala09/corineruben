@@ -2,7 +2,15 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { User } from "@supabase/supabase-js";
 
-export type UserRole = 'admin' | 'secretary' | 'training_coordinator' | 'business_consultant' | 'support_specialist' | 'staff' | 'moderator' | 'user';
+export type UserRole =
+  | "admin"
+  | "secretary"
+  | "training_coordinator"
+  | "business_consultant"
+  | "support_specialist"
+  | "staff"
+  | "moderator"
+  | "user";
 
 export interface RoleConfig {
   role: UserRole;
@@ -12,87 +20,80 @@ export interface RoleConfig {
 }
 
 export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
-  'admin': {
-    role: 'admin',
-    displayName: 'Administrator',
-    permissions: ['*'],
-    redirectTo: '/admin'
+  admin: {
+    role: "admin",
+    displayName: "Administrator",
+    permissions: ["*"],
+    redirectTo: "/admin",
   },
-  'secretary': {
-    role: 'secretary',
-    displayName: 'Office Manager',
+  secretary: {
+    role: "secretary",
+    displayName: "Office Manager",
     permissions: [
-      'view_clients',
-      'manage_clients',
-      'view_messages',
-      'reply_messages',
-      'view_calendar',
-      'manage_appointments'
+      "view_clients",
+      "manage_clients",
+      "view_messages",
+      "reply_messages",
+      "view_calendar",
+      "manage_appointments",
     ],
-    redirectTo: '/admin/clients/businesses'
+    redirectTo: "/admin/clients/businesses",
   },
-  'training_coordinator': {
-    role: 'training_coordinator',
-    displayName: 'Training Coordinator',
+  training_coordinator: {
+    role: "training_coordinator",
+    displayName: "Training Coordinator",
     permissions: [
-      'view_training',
-      'manage_training',
-      'view_individual_clients',
-      'manage_scamshield',
-      'create_content',
-      'view_training_analytics'
+      "view_training",
+      "manage_training",
+      "view_individual_clients",
+      "manage_scamshield",
+      "create_content",
+      "view_training_analytics",
     ],
-    redirectTo: '/admin/content/articles'
+    redirectTo: "/admin/content/articles",
   },
-  'business_consultant': {
-    role: 'business_consultant',
-    displayName: 'Business Consultant',
+  business_consultant: {
+    role: "business_consultant",
+    displayName: "Business Consultant",
     permissions: [
-      'view_business_clients',
-      'manage_business_clients',
-      'view_services',
-      'create_proposals',
-      'manage_ai_services'
+      "view_business_clients",
+      "manage_business_clients",
+      "view_services",
+      "create_proposals",
+      "manage_ai_services",
     ],
-    redirectTo: '/admin/clients/businesses'
+    redirectTo: "/admin/clients/businesses",
   },
-  'support_specialist': {
-    role: 'support_specialist',
-    displayName: 'Support Specialist',
+  support_specialist: {
+    role: "support_specialist",
+    displayName: "Support Specialist",
     permissions: [
-      'view_all_clients',
-      'view_tickets',
-      'manage_tickets',
-      'view_logs',
-      'access_technical_docs'
+      "view_all_clients",
+      "view_tickets",
+      "manage_tickets",
+      "view_logs",
+      "access_technical_docs",
     ],
-    redirectTo: '/admin'
+    redirectTo: "/admin",
   },
-  'staff': {
-    role: 'staff',
-    displayName: 'Staff Member',
-    permissions: [
-      'view_clients',
-      'view_messages',
-      'view_calendar'
-    ],
-    redirectTo: '/admin'
+  staff: {
+    role: "staff",
+    displayName: "Staff Member",
+    permissions: ["view_clients", "view_messages", "view_calendar"],
+    redirectTo: "/admin",
   },
-  'moderator': {
-    role: 'moderator',
-    displayName: 'Moderator',
-    permissions: [
-      'view_clients',
-      'manage_content'
-    ],
-    redirectTo: '/admin'
+  moderator: {
+    role: "moderator",
+    displayName: "Moderator",
+    permissions: ["view_clients", "manage_content"],
+    redirectTo: "/admin",
   },
-  'user': {
-    role: 'user',
-    displayName: 'User',
+  user: {
+    role: "user",
+    displayName: "User",
     permissions: [],
-    redirectTo: '/portal'
-  }
+    redirectTo: "/portal",
+  },
 };
 
 export function useUserRole() {
@@ -105,13 +106,13 @@ export function useUserRole() {
       try {
         // Fetch user role from database
         const { data: roleData, error } = await supabase
-          .from('user_roles')
-          .select('role')
-          .eq('user_id', currentUser.id)
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", currentUser.id)
           .single();
 
         if (error) {
-          console.error('Error fetching user role:', error);
+          console.error("Error fetching user role:", error);
           setRoleConfig(null);
         } else if (roleData) {
           // Map database role to RoleConfig
@@ -121,25 +122,25 @@ export function useUserRole() {
           setRoleConfig(null);
         }
       } catch (error) {
-        console.error('Error fetching user role:', error);
+        console.error("Error fetching user role:", error);
         setRoleConfig(null);
       } finally {
         setLoading(false);
       }
     };
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        const currentUser = session?.user ?? null;
-        setUser(currentUser);
-        if (currentUser) {
-          fetchUserRole(currentUser);
-        } else {
-          setRoleConfig(null);
-          setLoading(false);
-        }
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      const currentUser = session?.user ?? null;
+      setUser(currentUser);
+      if (currentUser) {
+        fetchUserRole(currentUser);
+      } else {
+        setRoleConfig(null);
+        setLoading(false);
       }
-    );
+    });
 
     supabase.auth.getSession().then(({ data: { session } }) => {
       const currentUser = session?.user ?? null;
@@ -156,12 +157,12 @@ export function useUserRole() {
 
   const hasPermission = (permission: string): boolean => {
     if (!roleConfig) return false;
-    if (roleConfig.permissions.includes('*')) return true;
+    if (roleConfig.permissions.includes("*")) return true;
     return roleConfig.permissions.includes(permission);
   };
 
   const isAdmin = (): boolean => {
-    return roleConfig?.role === 'admin';
+    return roleConfig?.role === "admin";
   };
 
   return {
@@ -170,6 +171,6 @@ export function useUserRole() {
     roleConfig,
     loading,
     hasPermission,
-    isAdmin
+    isAdmin,
   };
 }

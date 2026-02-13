@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 export const useRipple = () => {
   const ref = useRef<HTMLElement>(null);
@@ -9,8 +9,8 @@ export const useRipple = () => {
 
     const createRipple = (event: MouseEvent) => {
       const button = event.currentTarget as HTMLElement;
-      const ripple = document.createElement('span');
-      ripple.classList.add('ripple');
+      const ripple = document.createElement("span");
+      ripple.classList.add("ripple");
 
       // Calculate position relative to button
       const rect = button.getBoundingClientRect();
@@ -33,10 +33,10 @@ export const useRipple = () => {
       }, 600);
     };
 
-    element.addEventListener('click', createRipple as EventListener);
+    element.addEventListener("click", createRipple as EventListener);
 
     return () => {
-      element.removeEventListener('click', createRipple as EventListener);
+      element.removeEventListener("click", createRipple as EventListener);
     };
   }, []);
 

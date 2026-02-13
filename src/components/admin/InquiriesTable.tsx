@@ -16,10 +16,11 @@ export const InquiriesTable = () => {
     loadInquiries();
 
     const channel = supabase
-      .channel('website_inquiries_changes')
-      .on('postgres_changes', 
-        { event: '*', schema: 'public', table: 'website_inquiries' },
-        () => loadInquiries()
+      .channel("website_inquiries_changes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "website_inquiries" },
+        () => loadInquiries(),
       )
       .subscribe();
 
@@ -74,11 +75,16 @@ export const InquiriesTable = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'new': return 'bg-blue-500';
-      case 'in_progress': return 'bg-yellow-500';
-      case 'resolved': return 'bg-green-500';
-      case 'archived': return 'bg-gray-500';
-      default: return 'bg-gray-400';
+      case "new":
+        return "bg-blue-500";
+      case "in_progress":
+        return "bg-yellow-500";
+      case "resolved":
+        return "bg-green-500";
+      case "archived":
+        return "bg-gray-500";
+      default:
+        return "bg-gray-400";
     }
   };
 
@@ -93,7 +99,9 @@ export const InquiriesTable = () => {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-bold">Contact Form Inquiries ({inquiries.length})</h3>
+        <h3 className="text-lg font-bold">
+          Contact Form Inquiries ({inquiries.length})
+        </h3>
         <Button onClick={loadInquiries} variant="outline" size="sm">
           Refresh
         </Button>
@@ -111,33 +119,41 @@ export const InquiriesTable = () => {
                 <div className="flex items-center gap-3">
                   <h4 className="font-bold text-lg">{inquiry.name}</h4>
                   <Badge variant="secondary">
-                    {inquiry.inquiry_type?.replace('_', ' ').toUpperCase()}
+                    {inquiry.inquiry_type?.replace("_", " ").toUpperCase()}
                   </Badge>
-                  <Badge className={getStatusColor(inquiry.status || 'new')}>
-                    {inquiry.status || 'new'}
+                  <Badge className={getStatusColor(inquiry.status || "new")}>
+                    {inquiry.status || "new"}
                   </Badge>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Submitted {new Date(inquiry.created_at).toLocaleDateString()} at{" "}
-                  {new Date(inquiry.created_at).toLocaleTimeString()}
+                  Submitted {new Date(inquiry.created_at).toLocaleDateString()}{" "}
+                  at {new Date(inquiry.created_at).toLocaleTimeString()}
                 </p>
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="text-sm font-semibold mb-1">Contact Information</p>
+                <p className="text-sm font-semibold mb-1">
+                  Contact Information
+                </p>
                 <div className="space-y-1 text-sm">
                   <div className="flex items-center gap-2">
                     <Mail className="w-4 h-4 text-muted-foreground" />
-                    <a href={`mailto:${inquiry.email}`} className="hover:underline">
+                    <a
+                      href={`mailto:${inquiry.email}`}
+                      className="hover:underline"
+                    >
                       {inquiry.email}
                     </a>
                   </div>
                   {inquiry.phone && (
                     <div className="flex items-center gap-2">
                       <Phone className="w-4 h-4 text-muted-foreground" />
-                      <a href={`tel:${inquiry.phone}`} className="hover:underline">
+                      <a
+                        href={`tel:${inquiry.phone}`}
+                        className="hover:underline"
+                      >
                         {inquiry.phone}
                       </a>
                     </div>
@@ -167,7 +183,9 @@ export const InquiriesTable = () => {
                   <MessageSquare className="w-4 h-4" />
                   Message
                 </p>
-                <p className="text-sm whitespace-pre-wrap bg-muted p-3 rounded-lg">{inquiry.message}</p>
+                <p className="text-sm whitespace-pre-wrap bg-muted p-3 rounded-lg">
+                  {inquiry.message}
+                </p>
               </div>
             )}
 
@@ -175,23 +193,27 @@ export const InquiriesTable = () => {
               <Button
                 size="sm"
                 variant="outline"
-                onClick={() => updateStatus(inquiry.id, 'in_progress')}
-                disabled={updatingId === inquiry.id || inquiry.status === 'in_progress'}
+                onClick={() => updateStatus(inquiry.id, "in_progress")}
+                disabled={
+                  updatingId === inquiry.id || inquiry.status === "in_progress"
+                }
               >
                 Mark In Progress
               </Button>
               <Button
                 size="sm"
                 variant="default"
-                onClick={() => updateStatus(inquiry.id, 'resolved')}
-                disabled={updatingId === inquiry.id || inquiry.status === 'resolved'}
+                onClick={() => updateStatus(inquiry.id, "resolved")}
+                disabled={
+                  updatingId === inquiry.id || inquiry.status === "resolved"
+                }
               >
                 Mark Resolved
               </Button>
               <Button
                 size="sm"
                 variant="secondary"
-                onClick={() => updateStatus(inquiry.id, 'archived')}
+                onClick={() => updateStatus(inquiry.id, "archived")}
                 disabled={updatingId === inquiry.id}
               >
                 Archive

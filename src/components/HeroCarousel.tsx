@@ -10,13 +10,13 @@ interface HeroCarouselProps {
   interval?: number;
 }
 
-export const HeroCarousel = ({ 
-  images, 
-  interval = 6000
+export const HeroCarousel = ({
+  images,
+  interval = 6000,
 }: HeroCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const mountedRef = useRef(true);
-  
+
   // Preload remaining images in background after first renders
   useEffect(() => {
     mountedRef.current = true;
@@ -25,7 +25,9 @@ export const HeroCarousel = ({
       const img = new Image();
       img.src = image.src;
     });
-    return () => { mountedRef.current = false; };
+    return () => {
+      mountedRef.current = false;
+    };
   }, [images]);
 
   // Simple auto-advance
@@ -67,14 +69,15 @@ export const HeroCarousel = ({
           loading={index === 0 ? "eager" : "lazy"}
           decoding="async"
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
-          style={{ 
+          style={{
             opacity: index === currentIndex ? 1 : 0,
-            zIndex: index === currentIndex ? 1 : 0
+            zIndex: index === currentIndex ? 1 : 0,
           }}
         />
       ))}
       <div className="sr-only" aria-live="polite" aria-atomic="true">
-        Showing image {currentIndex + 1} of {images.length}: {images[currentIndex]?.alt}
+        Showing image {currentIndex + 1} of {images.length}:{" "}
+        {images[currentIndex]?.alt}
       </div>
     </div>
   );
@@ -82,7 +85,7 @@ export const HeroCarousel = ({
 
 // Export preload function for route prefetching
 export const preloadHeroImages = (images: HeroImage[]) => {
-  images.forEach(img => {
+  images.forEach((img) => {
     const image = new Image();
     image.fetchPriority = "high";
     image.src = img.src;

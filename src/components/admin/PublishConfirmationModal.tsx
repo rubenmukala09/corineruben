@@ -15,7 +15,10 @@ import { CheckCircle, AlertCircle, Calendar, Globe } from "lucide-react";
 interface PublishConfirmationModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: (options?: { sendNewsletter?: boolean; shareOnSocial?: boolean }) => void;
+  onConfirm: (options?: {
+    sendNewsletter?: boolean;
+    shareOnSocial?: boolean;
+  }) => void;
   article: {
     title: string;
     status: "draft" | "scheduled" | "published";
@@ -65,8 +68,8 @@ export function PublishConfirmationModal({
             {isUpdate
               ? "Your changes will be published immediately."
               : isScheduled
-              ? "Your article will be published at the scheduled time."
-              : "Your article will be published immediately and visible to everyone."}
+                ? "Your article will be published at the scheduled time."
+                : "Your article will be published immediately and visible to everyone."}
           </DialogDescription>
         </DialogHeader>
 
@@ -86,23 +89,23 @@ export function PublishConfirmationModal({
                   article.status === "published"
                     ? "default"
                     : article.status === "scheduled"
-                    ? "secondary"
-                    : "outline"
+                      ? "secondary"
+                      : "outline"
                 }
               >
                 {article.status === "published"
                   ? "Published"
                   : article.status === "scheduled"
-                  ? "Scheduled"
-                  : "Draft"}
+                    ? "Scheduled"
+                    : "Draft"}
               </Badge>
 
               <Badge variant="outline">
                 {article.visibility === "public"
                   ? "Public"
                   : article.visibility === "password"
-                  ? "Password Protected"
-                  : "Private"}
+                    ? "Password Protected"
+                    : "Private"}
               </Badge>
             </div>
 
@@ -126,7 +129,9 @@ export function PublishConfirmationModal({
             {/* Categories */}
             {article.categories.length > 0 && (
               <div>
-                <p className="text-sm text-muted-foreground mb-2">Categories:</p>
+                <p className="text-sm text-muted-foreground mb-2">
+                  Categories:
+                </p>
                 <div className="flex flex-wrap gap-2">
                   {article.categories.map((cat) => (
                     <Badge key={cat} variant="secondary">
@@ -162,10 +167,12 @@ export function PublishConfirmationModal({
             <div className="flex items-start gap-3 bg-amber-50 border border-amber-200 p-4 rounded-lg">
               <AlertCircle className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" />
               <div className="text-sm text-amber-900">
-                <p className="font-medium mb-1">This article will go live immediately</p>
+                <p className="font-medium mb-1">
+                  This article will go live immediately
+                </p>
                 <p className="text-amber-700">
-                  Make sure you've reviewed all content, SEO settings, and images before
-                  publishing.
+                  Make sure you've reviewed all content, SEO settings, and
+                  images before publishing.
                 </p>
               </div>
             </div>
@@ -176,14 +183,21 @@ export function PublishConfirmationModal({
             <div className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-purple-50 border rounded-lg">
               <div>
                 <p className="text-sm font-medium text-foreground">SEO Score</p>
-                <p className="text-xs text-muted-foreground">Your article's optimization</p>
+                <p className="text-xs text-muted-foreground">
+                  Your article's optimization
+                </p>
               </div>
-              <div className={`text-3xl font-bold ${
-                seoScore >= 80 ? 'text-green-600' : 
-                seoScore >= 60 ? 'text-yellow-600' : 
-                seoScore >= 40 ? 'text-orange-600' : 
-                'text-red-600'
-              }`}>
+              <div
+                className={`text-3xl font-bold ${
+                  seoScore >= 80
+                    ? "text-green-600"
+                    : seoScore >= 60
+                      ? "text-yellow-600"
+                      : seoScore >= 40
+                        ? "text-orange-600"
+                        : "text-red-600"
+                }`}
+              >
                 {seoScore}
                 <span className="text-sm text-muted-foreground">/100</span>
                 {seoScore >= 80 && <span className="ml-2 text-base">✓</span>}
@@ -195,10 +209,12 @@ export function PublishConfirmationModal({
           {!isUpdate && (
             <div className="space-y-3 border-t pt-4">
               <div className="flex items-center space-x-3">
-                <Checkbox 
-                  id="newsletter" 
+                <Checkbox
+                  id="newsletter"
                   checked={sendNewsletter}
-                  onCheckedChange={(checked) => setSendNewsletter(checked as boolean)}
+                  onCheckedChange={(checked) =>
+                    setSendNewsletter(checked as boolean)
+                  }
                 />
                 <label
                   htmlFor="newsletter"
@@ -208,10 +224,12 @@ export function PublishConfirmationModal({
                 </label>
               </div>
               <div className="flex items-center space-x-3">
-                <Checkbox 
-                  id="social" 
+                <Checkbox
+                  id="social"
                   checked={shareOnSocial}
-                  onCheckedChange={(checked) => setShareOnSocial(checked as boolean)}
+                  onCheckedChange={(checked) =>
+                    setShareOnSocial(checked as boolean)
+                  }
                 />
                 <label
                   htmlFor="social"

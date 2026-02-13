@@ -6,7 +6,13 @@ import { PurchaseRequestsTable } from "@/components/admin/PurchaseRequestsTable"
 import { InquiriesTable } from "@/components/admin/InquiriesTable";
 import { JobApplicationsTable } from "@/components/admin/JobApplicationsTable";
 import { TestimonialsTable } from "@/components/admin/TestimonialsTable";
-import { BookOpen, ShoppingCart, MessageSquare, Briefcase, Star } from "lucide-react";
+import {
+  BookOpen,
+  ShoppingCart,
+  MessageSquare,
+  Briefcase,
+  Star,
+} from "lucide-react";
 
 const tabItems = [
   { value: "bookings", label: "Bookings", icon: BookOpen },
@@ -40,7 +46,7 @@ export function NeonManagementTabs() {
               );
             })}
           </TabsList>
-          
+
           <div className="[&_table]:bg-[#111827] [&_th]:text-gray-400 [&_th]:border-gray-800 [&_td]:border-gray-800 [&_tr:hover]:bg-gray-800/50 [&_.border]:border-gray-800">
             <TabsContent value="bookings">
               <BookingRequestsTable />

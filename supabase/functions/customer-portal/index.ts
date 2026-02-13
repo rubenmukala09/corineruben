@@ -4,11 +4,14 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
-const logStep = (step: string, details?: any) => {
-  console.log(`[CUSTOMER-PORTAL] ${step}${details ? ` - ${JSON.stringify(details)}` : ''}`);
+const logStep = (step: string, details?: unknown) => {
+  console.log(
+    `[CUSTOMER-PORTAL] ${step}${details ? ` - ${JSON.stringify(details)}` : ""}`,
+  );
 };
 
 serve(async (req) => {
@@ -21,30 +24,36 @@ serve(async (req) => {
 
     const supabaseClient = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_ANON_KEY") ?? ""
+      Deno.env.get("SUPABASE_ANON_KEY") ?? "",
     );
 
     const authHeader = req.headers.get("Authorization");
     if (!authHeader) throw new Error("No authorization header provided");
 
     const token = authHeader.replace("Bearer ", "");
-    const { data: userData, error: userError } = await supabaseClient.auth.getUser(token);
-    
-    if (userError) throw new Error(`Authentication error: ${userError.message}`);
+    const { data: userData, error: userError } =
+      await supabaseClient.auth.getUser(token);
+
+    if (userError)
+      throw new Error(`Authentication error: ${userError.message}`);
     const user = userData.user;
-    if (!user?.email) throw new Error("User not authenticated or email not available");
-    
+    if (!user?.email)
+      throw new Error("User not authenticated or email not available");
+
     logStep("User authenticated", { userId: user.id, email: user.email });
 
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
       apiVersion: "2024-11-20.acacia",
     });
 
-    const customers = await stripe.customers.list({ email: user.email, limit: 1 });
+    const customers = await stripe.customers.list({
+      email: user.email,
+      limit: 1,
+    });
     if (customers.data.length === 0) {
       throw new Error("No Stripe customer found for this user");
     }
-    
+
     const customerId = customers.data[0].id;
     logStep("Found customer", { customerId });
 
@@ -53,7 +62,7 @@ serve(async (req) => {
       customer: customerId,
       return_url: `${origin}/portal`,
     });
-    
+
     logStep("Portal session created", { sessionId: portalSession.id });
 
     return new Response(JSON.stringify({ url: portalSession.url }), {

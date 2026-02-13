@@ -1,4 +1,10 @@
-import { Activity, ShieldCheck, AlertTriangle, Database, Loader2 } from "lucide-react";
+import {
+  Activity,
+  ShieldCheck,
+  AlertTriangle,
+  Database,
+  Loader2,
+} from "lucide-react";
 import { NeonMetricCard } from "./NeonMetricCard";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -20,9 +26,17 @@ export function NeonDashboardStats() {
     try {
       // Get real counts from database
       const [subscriptions, threats, pendingBookings] = await Promise.all([
-        supabase.from("subscriptions").select("*", { count: "exact", head: true }).eq("status", "active"),
-        supabase.from("threat_events").select("*", { count: "exact", head: true }),
-        supabase.from("booking_requests").select("*", { count: "exact", head: true }).eq("status", "pending"),
+        supabase
+          .from("subscriptions")
+          .select("*", { count: "exact", head: true })
+          .eq("status", "active"),
+        supabase
+          .from("threat_events")
+          .select("*", { count: "exact", head: true }),
+        supabase
+          .from("booking_requests")
+          .select("*", { count: "exact", head: true })
+          .eq("status", "pending"),
       ]);
 
       setStats({
@@ -49,7 +63,11 @@ export function NeonDashboardStats() {
         index={0}
         trend={stats.activeScanners > 0 ? "up" : "neutral"}
         trendValue={stats.activeScanners > 0 ? "Active" : "No data"}
-        sparklineData={stats.activeScanners > 0 ? [50, 60, 55, 70, 65, 80, 75, 85, 80, 90] : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}
+        sparklineData={
+          stats.activeScanners > 0
+            ? [50, 60, 55, 70, 65, 80, 75, 85, 80, 90]
+            : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        }
         status={stats.activeScanners > 0 ? "healthy" : "warning"}
       />
       <NeonMetricCard
@@ -60,7 +78,11 @@ export function NeonDashboardStats() {
         index={1}
         trend={stats.threatsBlocked > 0 ? "up" : "neutral"}
         trendValue={stats.threatsBlocked > 0 ? "Protected" : "No threats"}
-        sparklineData={stats.threatsBlocked > 0 ? [40, 45, 50, 55, 60, 70, 75, 85, 90, 95] : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}
+        sparklineData={
+          stats.threatsBlocked > 0
+            ? [40, 45, 50, 55, 60, 70, 75, 85, 90, 95]
+            : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        }
         status="healthy"
       />
       <NeonMetricCard
@@ -71,8 +93,16 @@ export function NeonDashboardStats() {
         accentColor="red"
         index={2}
         trend={stats.pendingAlerts === 0 ? "down" : "up"}
-        trendValue={stats.pendingAlerts === 0 ? "All clear" : `${stats.pendingAlerts} pending`}
-        sparklineData={stats.pendingAlerts > 0 ? [80, 70, 75, 65, 60, 55, 50, 45, 40, 35] : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}
+        trendValue={
+          stats.pendingAlerts === 0
+            ? "All clear"
+            : `${stats.pendingAlerts} pending`
+        }
+        sparklineData={
+          stats.pendingAlerts > 0
+            ? [80, 70, 75, 65, 60, 55, 50, 45, 40, 35]
+            : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        }
         status={stats.pendingAlerts > 0 ? "warning" : "healthy"}
       />
       <NeonMetricCard

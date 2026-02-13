@@ -1,8 +1,19 @@
-import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
-import { Product, getProductById, calculateVeteranDiscount, VETERAN_DISCOUNT } from '@/config/products';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  ReactNode,
+} from "react";
+import {
+  Product,
+  getProductById,
+  calculateVeteranDiscount,
+  VETERAN_DISCOUNT,
+} from "@/config/products";
 
-export type CheckoutStep = 'info' | 'payment' | 'success';
-export type CheckoutType = 'one-time' | 'subscription' | 'cart';
+export type CheckoutStep = "info" | "payment" | "success";
+export type CheckoutType = "one-time" | "subscription" | "cart";
 
 export interface CustomerInfo {
   email: string;
@@ -36,7 +47,9 @@ interface CheckoutContextType {
   state: CheckoutState;
   // Actions
   openCheckout: (productId: string, type?: CheckoutType) => void;
-  openCartCheckout: (cartItems: { productId: string; quantity: number }[]) => void;
+  openCartCheckout: (
+    cartItems: { productId: string; quantity: number }[],
+  ) => void;
   closeCheckout: () => void;
   setStep: (step: CheckoutStep) => void;
   setCustomerInfo: (info: Partial<CustomerInfo>) => void;
@@ -54,137 +67,156 @@ interface CheckoutContextType {
 }
 
 const initialCustomerInfo: CustomerInfo = {
-  email: '',
-  name: '',
-  phone: '',
-  isVeteran: false
+  email: "",
+  name: "",
+  phone: "",
+  isVeteran: false,
 };
 
 const initialState: CheckoutState = {
   isOpen: false,
-  type: 'one-time',
-  step: 'info',
+  type: "one-time",
+  step: "info",
   items: [],
   customerInfo: initialCustomerInfo,
   paymentIntentId: null,
   clientSecret: null,
   orderId: null,
   isLoading: false,
-  error: null
+  error: null,
 };
 
-const CheckoutContext = createContext<CheckoutContextType | undefined>(undefined);
+const CheckoutContext = createContext<CheckoutContextType | undefined>(
+  undefined,
+);
 
-export const CheckoutProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const CheckoutProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [state, setState] = useState<CheckoutState>(initialState);
 
-  const openCheckout = useCallback((productId: string, type: CheckoutType = 'one-time') => {
-    const product = getProductById(productId);
-    if (!product) {
-      console.error(`Product not found: ${productId}`);
-      return;
-    }
-
-    const checkoutType: CheckoutType = product.paymentType === 'subscription' ? 'subscription' : type;
-
-    const item: CheckoutItem = {
-      productId,
-      product,
-      quantity: 1,
-      originalPrice: product.price,
-      discountedPrice: product.price
-    };
-
-    setState(prev => ({
-      ...prev,
-      isOpen: true,
-      type: checkoutType,
-      step: 'info',
-      items: [item],
-      error: null
-    }));
-  }, []);
-
-  const openCartCheckout = useCallback((cartItems: { productId: string; quantity: number }[]) => {
-    const items: CheckoutItem[] = cartItems.map(({ productId, quantity }) => {
+  const openCheckout = useCallback(
+    (productId: string, type: CheckoutType = "one-time") => {
       const product = getProductById(productId);
       if (!product) {
-        console.warn(`Product not found in cart: ${productId}`);
-        return null;
+        console.error(`Product not found: ${productId}`);
+        return;
       }
-      return {
+
+      const checkoutType: CheckoutType =
+        product.paymentType === "subscription" ? "subscription" : type;
+
+      const item: CheckoutItem = {
         productId,
         product,
-        quantity,
-        originalPrice: product.price * quantity,
-        discountedPrice: product.price * quantity
+        quantity: 1,
+        originalPrice: product.price,
+        discountedPrice: product.price,
       };
-    }).filter((item): item is CheckoutItem => item !== null);
 
-    setState(prev => ({
-      ...prev,
-      isOpen: true,
-      type: 'cart',
-      step: 'info',
-      items,
-      error: null
-    }));
-  }, []);
+      setState((prev) => ({
+        ...prev,
+        isOpen: true,
+        type: checkoutType,
+        step: "info",
+        items: [item],
+        error: null,
+      }));
+    },
+    [],
+  );
+
+  const openCartCheckout = useCallback(
+    (cartItems: { productId: string; quantity: number }[]) => {
+      const items: CheckoutItem[] = cartItems
+        .map(({ productId, quantity }) => {
+          const product = getProductById(productId);
+          if (!product) {
+            console.warn(`Product not found in cart: ${productId}`);
+            return null;
+          }
+          return {
+            productId,
+            product,
+            quantity,
+            originalPrice: product.price * quantity,
+            discountedPrice: product.price * quantity,
+          };
+        })
+        .filter((item): item is CheckoutItem => item !== null);
+
+      setState((prev) => ({
+        ...prev,
+        isOpen: true,
+        type: "cart",
+        step: "info",
+        items,
+        error: null,
+      }));
+    },
+    [],
+  );
 
   const closeCheckout = useCallback(() => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
       isOpen: false,
-      error: null
+      error: null,
     }));
   }, []);
 
   const setStep = useCallback((step: CheckoutStep) => {
-    setState(prev => ({ ...prev, step }));
+    setState((prev) => ({ ...prev, step }));
   }, []);
 
   const setCustomerInfo = useCallback((info: Partial<CustomerInfo>) => {
-    setState(prev => {
+    setState((prev) => {
       const newInfo = { ...prev.customerInfo, ...info };
-      
+
       // Recalculate discounts when veteran status changes
-      const items = prev.items.map(item => {
-        const discount = newInfo.isVeteran 
-          ? calculateVeteranDiscount(item.product.price * item.quantity, item.product.category)
+      const items = prev.items.map((item) => {
+        const discount = newInfo.isVeteran
+          ? calculateVeteranDiscount(
+              item.product.price * item.quantity,
+              item.product.category,
+            )
           : 0;
         return {
           ...item,
           originalPrice: item.product.price * item.quantity,
-          discountedPrice: (item.product.price * item.quantity) - discount
+          discountedPrice: item.product.price * item.quantity - discount,
         };
       });
 
       return {
         ...prev,
         customerInfo: newInfo,
-        items
+        items,
       };
     });
   }, []);
 
-  const setPaymentDetails = useCallback((paymentIntentId: string, clientSecret: string) => {
-    setState(prev => ({
-      ...prev,
-      paymentIntentId,
-      clientSecret
-    }));
-  }, []);
+  const setPaymentDetails = useCallback(
+    (paymentIntentId: string, clientSecret: string) => {
+      setState((prev) => ({
+        ...prev,
+        paymentIntentId,
+        clientSecret,
+      }));
+    },
+    [],
+  );
 
   const setOrderId = useCallback((orderId: string) => {
-    setState(prev => ({ ...prev, orderId }));
+    setState((prev) => ({ ...prev, orderId }));
   }, []);
 
   const setLoading = useCallback((isLoading: boolean) => {
-    setState(prev => ({ ...prev, isLoading }));
+    setState((prev) => ({ ...prev, isLoading }));
   }, []);
 
   const setError = useCallback((error: string | null) => {
-    setState(prev => ({ ...prev, error, isLoading: false }));
+    setState((prev) => ({ ...prev, error, isLoading: false }));
   }, []);
 
   const resetCheckout = useCallback(() => {
@@ -192,12 +224,22 @@ export const CheckoutProvider: React.FC<{ children: ReactNode }> = ({ children }
   }, []);
 
   // Computed values
-  const subtotal = state.items.reduce((sum, item) => sum + item.originalPrice, 0);
-  const discount = state.items.reduce((sum, item) => sum + (item.originalPrice - item.discountedPrice), 0);
+  const subtotal = state.items.reduce(
+    (sum, item) => sum + item.originalPrice,
+    0,
+  );
+  const discount = state.items.reduce(
+    (sum, item) => sum + (item.originalPrice - item.discountedPrice),
+    0,
+  );
   const total = subtotal - discount;
-  
-  const hasDigitalProducts = state.items.some(item => item.product.isDigital === true);
-  const hasPhysicalProducts = state.items.some(item => item.product.isDigital === false);
+
+  const hasDigitalProducts = state.items.some(
+    (item) => item.product.isDigital === true,
+  );
+  const hasPhysicalProducts = state.items.some(
+    (item) => item.product.isDigital === false,
+  );
 
   const value: CheckoutContextType = {
     state,
@@ -215,7 +257,7 @@ export const CheckoutProvider: React.FC<{ children: ReactNode }> = ({ children }
     discount,
     total,
     hasDigitalProducts,
-    hasPhysicalProducts
+    hasPhysicalProducts,
   };
 
   return (
@@ -228,7 +270,7 @@ export const CheckoutProvider: React.FC<{ children: ReactNode }> = ({ children }
 export const useCheckout = (): CheckoutContextType => {
   const context = useContext(CheckoutContext);
   if (!context) {
-    throw new Error('useCheckout must be used within a CheckoutProvider');
+    throw new Error("useCheckout must be used within a CheckoutProvider");
   }
   return context;
 };

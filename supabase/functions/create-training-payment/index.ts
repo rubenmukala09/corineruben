@@ -4,11 +4,12 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
-const logStep = (step: string, details?: any) => {
-  const detailsStr = details ? ` - ${JSON.stringify(details)}` : '';
+const logStep = (step: string, details?: unknown) => {
+  const detailsStr = details ? ` - ${JSON.stringify(details)}` : "";
   console.log(`[CREATE-TRAINING-PAYMENT] ${step}${detailsStr}`);
 };
 
@@ -50,33 +51,44 @@ serve(async (req) => {
       preferredDate,
       phone,
       message,
-      state
+      state,
     }: TrainingPaymentRequest = await req.json();
 
-    logStep("Request data", { serviceType, serviceName, amount, customerEmail, isVeteran });
+    logStep("Request data", {
+      serviceType,
+      serviceName,
+      amount,
+      customerEmail,
+      isVeteran,
+    });
 
     if (!customerEmail || !customerName || !amount) {
-      throw new Error("Missing required fields: customerEmail, customerName, or amount");
+      throw new Error(
+        "Missing required fields: customerEmail, customerName, or amount",
+      );
     }
 
     // Calculate veteran discount (10%)
-    const veteranDiscount = isVeteran ? amount * 0.10 : 0;
+    const veteranDiscount = isVeteran ? amount * 0.1 : 0;
     const finalAmount = amount - veteranDiscount;
     const amountInCents = Math.round(finalAmount * 100);
 
-    logStep("Calculated pricing", { 
-      originalAmount: amount, 
-      veteranDiscount, 
-      finalAmount, 
-      amountInCents 
+    logStep("Calculated pricing", {
+      originalAmount: amount,
+      veteranDiscount,
+      finalAmount,
+      amountInCents,
     });
 
     const stripe = new Stripe(stripeKey, { apiVersion: "2024-11-20.acacia" });
 
     // Check if customer exists
-    const customers = await stripe.customers.list({ email: customerEmail, limit: 1 });
+    const customers = await stripe.customers.list({
+      email: customerEmail,
+      limit: 1,
+    });
     let customerId: string | undefined;
-    
+
     if (customers.data.length > 0) {
       customerId = customers.data[0].id;
       logStep("Found existing customer", { customerId });
@@ -87,9 +99,9 @@ serve(async (req) => {
         name: customerName,
         phone: phone || undefined,
         metadata: {
-          isVeteran: isVeteran ? 'true' : 'false',
-          state: state || ''
-        }
+          isVeteran: isVeteran ? "true" : "false",
+          state: state || "",
+        },
       });
       customerId = newCustomer.id;
       logStep("Created new customer", { customerId });
@@ -101,29 +113,29 @@ serve(async (req) => {
       currency: "usd",
       customer: customerId,
       metadata: {
-        paymentType: 'training',
+        paymentType: "training",
         serviceType,
         serviceName,
-        serviceTier: serviceTier || '',
-        isVeteran: isVeteran ? 'true' : 'false',
+        serviceTier: serviceTier || "",
+        isVeteran: isVeteran ? "true" : "false",
         veteranDiscount: veteranDiscount.toString(),
         originalAmount: amount.toString(),
-        preferredDate: preferredDate || '',
+        preferredDate: preferredDate || "",
         customerName,
         customerEmail,
-        phone: phone || '',
-        message: message || '',
-        state: state || ''
+        phone: phone || "",
+        message: message || "",
+        state: state || "",
       },
       automatic_payment_methods: {
         enabled: true,
       },
-      description: `Training: ${serviceName}${serviceTier ? ` - ${serviceTier}` : ''}`
+      description: `Training: ${serviceName}${serviceTier ? ` - ${serviceTier}` : ""}`,
     });
 
-    logStep("Created payment intent", { 
-      paymentIntentId: paymentIntent.id, 
-      amount: amountInCents 
+    logStep("Created payment intent", {
+      paymentIntentId: paymentIntent.id,
+      amount: amountInCents,
     });
 
     return new Response(
@@ -134,22 +146,19 @@ serve(async (req) => {
         amount: amountInCents,
         originalAmount: amount,
         veteranDiscount,
-        finalAmount
+        finalAmount,
       }),
       {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 200,
-      }
+      },
     );
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     logStep("ERROR", { message: errorMessage });
-    return new Response(
-      JSON.stringify({ error: errorMessage }),
-      {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 500,
-      }
-    );
+    return new Response(JSON.stringify({ error: errorMessage }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      status: 500,
+    });
   }
 });

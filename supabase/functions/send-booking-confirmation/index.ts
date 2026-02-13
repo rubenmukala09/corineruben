@@ -4,11 +4,12 @@ const resendApiKey = Deno.env.get("RESEND_API_KEY")!;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
-const logStep = (step: string, details?: any) => {
-  const detailsStr = details ? ` - ${JSON.stringify(details)}` : '';
+const logStep = (step: string, details?: unknown) => {
+  const detailsStr = details ? ` - ${JSON.stringify(details)}` : "";
   console.log(`[SEND-BOOKING-CONFIRMATION] ${step}${detailsStr}`);
 };
 
@@ -29,7 +30,7 @@ serve(async (req) => {
 
   try {
     logStep("Function started");
-    
+
     const {
       email,
       name,
@@ -37,10 +38,16 @@ serve(async (req) => {
       requestNumber,
       preferredDate,
       serviceType,
-      isFreeInquiry = true
+      isFreeInquiry = true,
     }: BookingConfirmationRequest = await req.json();
 
-    logStep("Request data", { email, name, serviceName, requestNumber, isFreeInquiry });
+    logStep("Request data", {
+      email,
+      name,
+      serviceName,
+      requestNumber,
+      isFreeInquiry,
+    });
 
     // This function is now for FREE inquiries/consultations only
     // Paid bookings go through complete-payment function
@@ -49,8 +56,8 @@ serve(async (req) => {
     const customerEmailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${resendApiKey}`,
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${resendApiKey}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         from: "InVision Network <hello@invisionnetwork.org>",
@@ -70,7 +77,7 @@ serve(async (req) => {
               <h2 style="color: #6D28D9; margin-top: 0;">Inquiry Details</h2>
               <p><strong>Reference Number:</strong> ${requestNumber}</p>
               <p><strong>Service:</strong> ${serviceName}</p>
-              ${preferredDate ? `<p><strong>Preferred Date:</strong> ${preferredDate}</p>` : ''}
+              ${preferredDate ? `<p><strong>Preferred Date:</strong> ${preferredDate}</p>` : ""}
               <p><strong>Status:</strong> Pending Review</p>
             </div>
             
@@ -112,8 +119,8 @@ serve(async (req) => {
     await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${resendApiKey}`,
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${resendApiKey}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         from: "InVision Network <hello@invisionnetwork.org>",
@@ -128,8 +135,8 @@ serve(async (req) => {
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Email:</strong> ${email}</p>
           <p><strong>Service:</strong> ${serviceName}</p>
-          ${serviceType ? `<p><strong>Type:</strong> ${serviceType}</p>` : ''}
-          ${preferredDate ? `<p><strong>Preferred Date:</strong> ${preferredDate}</p>` : ''}
+          ${serviceType ? `<p><strong>Type:</strong> ${serviceType}</p>` : ""}
+          ${preferredDate ? `<p><strong>Preferred Date:</strong> ${preferredDate}</p>` : ""}
           <hr>
           <p><strong>Action Required:</strong> Review and respond within 24 hours to discuss pricing and convert to paid booking.</p>
         `,
@@ -143,17 +150,14 @@ serve(async (req) => {
       {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 200,
-      }
+      },
     );
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     logStep("ERROR", { message: errorMessage });
-    return new Response(
-      JSON.stringify({ error: errorMessage }),
-      {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 500,
-      }
-    );
+    return new Response(JSON.stringify({ error: errorMessage }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      status: 500,
+    });
   }
 });

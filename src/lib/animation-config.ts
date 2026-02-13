@@ -26,35 +26,35 @@ export const STAGGER = {
 
 // Transform presets
 export const TRANSFORMS = {
-  fadeUp: { 
-    from: { opacity: 0, y: 12 }, 
-    to: { opacity: 1, y: 0 } 
+  fadeUp: {
+    from: { opacity: 0, y: 12 },
+    to: { opacity: 1, y: 0 },
   },
-  fadeIn: { 
-    from: { opacity: 0 }, 
-    to: { opacity: 1 } 
+  fadeIn: {
+    from: { opacity: 0 },
+    to: { opacity: 1 },
   },
-  scaleIn: { 
-    from: { opacity: 0, scale: 0.98 }, 
-    to: { opacity: 1, scale: 1 } 
+  scaleIn: {
+    from: { opacity: 0, scale: 0.98 },
+    to: { opacity: 1, scale: 1 },
   },
-  slideLeft: { 
-    from: { opacity: 0, x: -20 }, 
-    to: { opacity: 1, x: 0 } 
+  slideLeft: {
+    from: { opacity: 0, x: -20 },
+    to: { opacity: 1, x: 0 },
   },
-  slideRight: { 
-    from: { opacity: 0, x: 20 }, 
-    to: { opacity: 1, x: 0 } 
+  slideRight: {
+    from: { opacity: 0, x: 20 },
+    to: { opacity: 1, x: 0 },
   },
 } as const;
 
 // CSS class mappings
 export const ANIMATION_CLASSES = {
-  'fade-up': 'scroll-fade-up',
-  'fade-in': 'scroll-fade-in', 
-  'scale': 'scroll-scale-in',
-  'slide-left': 'scroll-slide-left',
-  'slide-right': 'scroll-slide-right',
+  "fade-up": "scroll-fade-up",
+  "fade-in": "scroll-fade-in",
+  scale: "scroll-scale-in",
+  "slide-left": "scroll-slide-left",
+  "slide-right": "scroll-slide-right",
 } as const;
 
 export type AnimationType = keyof typeof ANIMATION_CLASSES;

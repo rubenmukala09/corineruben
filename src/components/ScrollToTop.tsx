@@ -12,11 +12,12 @@ export const ScrollToTop = () => {
         if (element) {
           const headerOffset = 80;
           const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          const offsetPosition =
+            elementPosition + window.pageYOffset - headerOffset;
 
           window.scrollTo({
             top: offsetPosition,
-            behavior: "smooth"
+            behavior: "smooth",
           });
         }
       }, 100);
@@ -24,7 +25,7 @@ export const ScrollToTop = () => {
       // Scroll to top on route change
       window.scrollTo({
         top: 0,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     }
   }, [pathname, hash]);

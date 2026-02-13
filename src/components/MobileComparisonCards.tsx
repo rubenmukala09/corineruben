@@ -14,27 +14,43 @@ interface MobileComparisonCardsProps {
 }
 
 const serviceConfigs = [
-  { key: 'scamshield', label: 'ScamShield', gradient: 'from-primary to-primary/80' },
-  { key: 'business', label: 'AI Business', gradient: 'from-accent to-accent/80' },
-  { key: 'training', label: 'Training', gradient: 'from-success to-success/80' },
+  {
+    key: "scamshield",
+    label: "ScamShield",
+    gradient: "from-primary to-primary/80",
+  },
+  {
+    key: "business",
+    label: "AI Business",
+    gradient: "from-accent to-accent/80",
+  },
+  {
+    key: "training",
+    label: "Training",
+    gradient: "from-success to-success/80",
+  },
 ] as const;
 
-export function MobileComparisonCards({ comparisons }: MobileComparisonCardsProps) {
+export function MobileComparisonCards({
+  comparisons,
+}: MobileComparisonCardsProps) {
   return (
     <div className="md:hidden space-y-4">
       {serviceConfigs.map((service) => (
         <Card key={service.key} className="overflow-hidden">
-          <div className={cn(
-            "px-4 py-3 bg-gradient-to-r text-white font-semibold",
-            service.gradient
-          )}>
+          <div
+            className={cn(
+              "px-4 py-3 bg-gradient-to-r text-white font-semibold",
+              service.gradient,
+            )}
+          >
             {service.label}
           </div>
           <div className="p-4 space-y-3">
             {comparisons.map((row, index) => {
               const hasFeature = row[service.key as keyof ComparisonRow];
               return (
-                <div 
+                <div
                   key={index}
                   className="flex items-center justify-between py-2 border-b border-border last:border-0"
                 >

@@ -17,7 +17,7 @@
   }
 
   /* Ensure all interactive elements have proper touch targets */
-  button, 
+  button,
   a[role="button"],
   [role="button"] {
     min-height: 44px;
@@ -63,12 +63,12 @@
     transform: translateY(0);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
-  
+
   .card-enhanced:active {
     transform: scale(0.98);
     transition: transform 0.1s ease-out;
   }
-  
+
   .card-enhanced:hover img {
     transform: scale(1);
   }
@@ -79,18 +79,24 @@
   .section-spacing {
     @apply py-6;
   }
-  
+
   .hero-mobile {
     min-height: 50vh !important;
   }
-  
+
   .card-mobile {
     @apply p-4;
   }
-  
-  h1 { font-size: 2rem; }
-  h2 { font-size: 1.5rem; }
-  h3 { font-size: 1.25rem; }
+
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  h3 {
+    font-size: 1.25rem;
+  }
 }
 
 /* Mobile Typography Optimizations */
@@ -99,11 +105,11 @@
     font-size: clamp(1.75rem, 5vw, 2.5rem) !important;
     line-height: 1.2 !important;
   }
-  
+
   .hero-mobile h2 {
     font-size: clamp(1.25rem, 4vw, 1.75rem) !important;
   }
-  
+
   .hero-mobile p {
     font-size: clamp(0.875rem, 3vw, 1rem) !important;
   }
@@ -112,18 +118,18 @@
   body {
     overflow-x: hidden;
   }
-  
+
   .container {
     padding-left: 1rem !important;
     padding-right: 1rem !important;
   }
-  
+
   /* Ensure images don't overflow */
   img {
     max-width: 100%;
     height: auto;
   }
-  
+
   /* Make cards more compact on mobile */
   .card {
     padding: 1rem !important;
@@ -135,11 +141,11 @@
   .hero-mobile h1 {
     font-size: 1.5rem !important;
   }
-  
+
   .hero-mobile h2 {
     font-size: 1.125rem !important;
   }
-  
+
   /* Prevent text overflow */
   * {
     word-wrap: break-word;

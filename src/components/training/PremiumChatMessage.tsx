@@ -8,7 +8,10 @@ interface PremiumChatMessageProps {
   index: number;
 }
 
-export const PremiumChatMessage = ({ message, index }: PremiumChatMessageProps) => {
+export const PremiumChatMessage = ({
+  message,
+  index,
+}: PremiumChatMessageProps) => {
   const isUser = message.role === "user";
 
   return (
@@ -24,7 +27,7 @@ export const PremiumChatMessage = ({ message, index }: PremiumChatMessageProps) 
       }}
       className={cn(
         "flex gap-3 w-full",
-        isUser ? "justify-end" : "justify-start"
+        isUser ? "justify-end" : "justify-start",
       )}
     >
       {!isUser && (
@@ -40,7 +43,7 @@ export const PremiumChatMessage = ({ message, index }: PremiumChatMessageProps) 
       <motion.div
         className={cn(
           "relative max-w-[75%] group",
-          isUser ? "ml-auto" : "mr-auto"
+          isUser ? "ml-auto" : "mr-auto",
         )}
         whileHover={{ scale: 1.01 }}
         transition={{ type: "spring", stiffness: 300 }}
@@ -50,23 +53,30 @@ export const PremiumChatMessage = ({ message, index }: PremiumChatMessageProps) 
             "relative px-5 py-3.5 rounded-2xl",
             isUser
               ? "premium-gradient-bg text-white shadow-lg"
-              : "premium-glass-refraction shadow-md"
+              : "premium-glass-refraction shadow-md",
           )}
         >
           {/* Message content */}
-          <p className={cn(
-            "text-sm leading-relaxed whitespace-pre-wrap",
-            isUser ? "text-white" : "text-foreground"
-          )}>
+          <p
+            className={cn(
+              "text-sm leading-relaxed whitespace-pre-wrap",
+              isUser ? "text-white" : "text-foreground",
+            )}
+          >
             {message.content}
           </p>
 
           {/* Timestamp */}
-          <p className={cn(
-            "text-[10px] mt-1.5 opacity-60",
-            isUser ? "text-white/80" : "text-muted-foreground"
-          )}>
-            {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+          <p
+            className={cn(
+              "text-[10px] mt-1.5 opacity-60",
+              isUser ? "text-white/80" : "text-muted-foreground",
+            )}
+          >
+            {message.timestamp.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
           </p>
 
           {/* Shine effect on hover */}
@@ -94,7 +104,7 @@ export const PremiumChatMessage = ({ message, index }: PremiumChatMessageProps) 
             "absolute inset-0 rounded-2xl blur-md opacity-20 -z-10",
             isUser
               ? "bg-gradient-to-br from-primary to-accent"
-              : "bg-gradient-to-br from-slate-300 to-slate-400"
+              : "bg-gradient-to-br from-slate-300 to-slate-400",
           )}
           style={{
             transform: "translateY(4px) scale(0.98)",

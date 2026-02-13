@@ -2,9 +2,29 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { CreditCard, Download, Eye, Mail, Plus, DollarSign } from "lucide-react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  CreditCard,
+  Download,
+  Eye,
+  Mail,
+  Plus,
+  DollarSign,
+} from "lucide-react";
 
 interface ClientBillingTabProps {
   clientId: number;
@@ -14,11 +34,18 @@ export function ClientBillingTab({ clientId }: ClientBillingTabProps) {
   const [statusFilter, setStatusFilter] = useState("all");
 
   // Placeholder - will be fetched from Stripe/database
-  const invoices: Array<{ id: string; date: string; description: string; amount: number; status: string }> = [];
+  const invoices: Array<{
+    id: string;
+    date: string;
+    description: string;
+    amount: number;
+    status: string;
+  }> = [];
 
-  const filteredInvoices = statusFilter === "all" 
-    ? invoices 
-    : invoices.filter(inv => inv.status === statusFilter);
+  const filteredInvoices =
+    statusFilter === "all"
+      ? invoices
+      : invoices.filter((inv) => inv.status === statusFilter);
 
   const getStatusBadge = (status: string) => {
     const variants = {
@@ -34,8 +61,12 @@ export function ClientBillingTab({ clientId }: ClientBillingTabProps) {
     );
   };
 
-  const totalPaid = invoices.filter(i => i.status === "paid").reduce((sum, i) => sum + i.amount, 0);
-  const outstanding = invoices.filter(i => i.status !== "paid").reduce((sum, i) => sum + i.amount, 0);
+  const totalPaid = invoices
+    .filter((i) => i.status === "paid")
+    .reduce((sum, i) => sum + i.amount, 0);
+  const outstanding = invoices
+    .filter((i) => i.status !== "paid")
+    .reduce((sum, i) => sum + i.amount, 0);
 
   return (
     <div className="space-y-6">
@@ -45,7 +76,9 @@ export function ClientBillingTab({ clientId }: ClientBillingTabProps) {
             <CardTitle className="text-sm font-medium">Total Paid</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-green-600">${totalPaid.toLocaleString()}</div>
+            <div className="text-2xl font-bold text-green-600">
+              ${totalPaid.toLocaleString()}
+            </div>
           </CardContent>
         </Card>
 
@@ -54,7 +87,9 @@ export function ClientBillingTab({ clientId }: ClientBillingTabProps) {
             <CardTitle className="text-sm font-medium">Outstanding</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className={`text-2xl font-bold ${outstanding === 0 ? 'text-green-600' : 'text-red-600'}`}>
+            <div
+              className={`text-2xl font-bold ${outstanding === 0 ? "text-green-600" : "text-red-600"}`}
+            >
               ${outstanding.toLocaleString()}
             </div>
           </CardContent>
@@ -75,7 +110,9 @@ export function ClientBillingTab({ clientId }: ClientBillingTabProps) {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle>Payment Method on File</CardTitle>
-            <Button variant="outline" size="sm">Update Payment Method</Button>
+            <Button variant="outline" size="sm">
+              Update Payment Method
+            </Button>
           </div>
         </CardHeader>
         <CardContent>
@@ -93,7 +130,9 @@ export function ClientBillingTab({ clientId }: ClientBillingTabProps) {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle>Billing Information</CardTitle>
-            <Button variant="outline" size="sm">Edit Billing Info</Button>
+            <Button variant="outline" size="sm">
+              Edit Billing Info
+            </Button>
           </div>
         </CardHeader>
         <CardContent className="space-y-3">
@@ -150,10 +189,14 @@ export function ClientBillingTab({ clientId }: ClientBillingTabProps) {
             <TableBody>
               {filteredInvoices.map((invoice) => (
                 <TableRow key={invoice.id}>
-                  <TableCell className="font-medium font-mono">{invoice.id}</TableCell>
+                  <TableCell className="font-medium font-mono">
+                    {invoice.id}
+                  </TableCell>
                   <TableCell>{invoice.date}</TableCell>
                   <TableCell>{invoice.description}</TableCell>
-                  <TableCell className="font-semibold">${invoice.amount}</TableCell>
+                  <TableCell className="font-semibold">
+                    ${invoice.amount}
+                  </TableCell>
                   <TableCell>{getStatusBadge(invoice.status)}</TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
@@ -173,7 +216,9 @@ export function ClientBillingTab({ clientId }: ClientBillingTabProps) {
             </TableBody>
           </Table>
 
-          {invoices.some(i => i.status === "pending" || i.status === "overdue") && (
+          {invoices.some(
+            (i) => i.status === "pending" || i.status === "overdue",
+          ) && (
             <div className="mt-4 flex justify-end">
               <Button variant="outline">
                 <Mail className="mr-2 h-4 w-4" />

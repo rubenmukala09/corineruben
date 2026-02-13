@@ -76,7 +76,9 @@ const actions: QuickAction[] = [
 
 export function QuickActions() {
   const navigate = useNavigate();
-  const [ripples, setRipples] = useState<{ [key: string]: { x: number; y: number; id: number } | null }>({});
+  const [ripples, setRipples] = useState<{
+    [key: string]: { x: number; y: number; id: number } | null;
+  }>({});
 
   // Fetch unread messages count
   const { data: unreadCount } = useQuery({
@@ -91,11 +93,14 @@ export function QuickActions() {
     refetchInterval: 30000, // Refresh every 30 seconds
   });
 
-  const handleClick = (action: QuickAction, event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (
+    action: QuickAction,
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
     const rect = event.currentTarget.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
-    
+
     setRipples((prev) => ({
       ...prev,
       [action.id]: { x, y, id: Date.now() },
@@ -131,7 +136,7 @@ export function QuickActions() {
         {actions.map((action, index) => {
           const Icon = action.icon;
           const ripple = ripples[action.id];
-          
+
           return (
             <motion.button
               key={action.id}
@@ -159,11 +164,11 @@ export function QuickActions() {
               )}
 
               {/* Icon */}
-              <Icon 
+              <Icon
                 className={`w-7 h-7 sm:w-8 sm:h-8 mb-2 ${action.iconColor} transition-transform duration-300 
-                  md:group-hover:scale-110`} 
+                  md:group-hover:scale-110`}
               />
-              
+
               {/* Text */}
               <span className="text-sm sm:text-base font-semibold text-gray-700 text-center px-2">
                 {action.text}

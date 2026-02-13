@@ -7,10 +7,10 @@ import { z } from "zod";
 // Remove dangerous HTML/script tags
 export const sanitizeHtml = (input: string): string => {
   return input
-    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
-    .replace(/javascript:/gi, '')
-    .replace(/on\w+\s*=/gi, '');
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
+    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, "")
+    .replace(/javascript:/gi, "")
+    .replace(/on\w+\s*=/gi, "");
 };
 
 // Trim and sanitize string input
@@ -20,7 +20,7 @@ export const sanitizeString = (input: string): string => {
 
 // Format phone number to (xxx) xxx-xxxx
 export const formatPhoneNumber = (phone: string): string => {
-  const digits = phone.replace(/\D/g, '');
+  const digits = phone.replace(/\D/g, "");
   if (digits.length === 10) {
     return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
   }
@@ -32,7 +32,8 @@ export const formatPhoneNumber = (phone: string): string => {
  */
 
 // Phone validation - accepts various formats
-export const phoneSchema = z.string()
+export const phoneSchema = z
+  .string()
   .trim()
   .min(10, "Phone number must be at least 10 digits")
   .max(20, "Phone number is too long")
@@ -40,7 +41,8 @@ export const phoneSchema = z.string()
   .transform(sanitizeString);
 
 // Email validation with sanitization
-export const emailSchema = z.string()
+export const emailSchema = z
+  .string()
   .trim()
   .min(5, "Email is too short")
   .max(255, "Email is too long")
@@ -49,42 +51,54 @@ export const emailSchema = z.string()
   .transform(sanitizeString);
 
 // Name validation (2-100 characters)
-export const nameSchema = z.string()
+export const nameSchema = z
+  .string()
   .trim()
   .min(2, "Name must be at least 2 characters")
   .max(100, "Name must be less than 100 characters")
-  .regex(/^[a-zA-Z\s'.-]+$/, "Name can only contain letters, spaces, hyphens, apostrophes, and periods")
+  .regex(
+    /^[a-zA-Z\s'.-]+$/,
+    "Name can only contain letters, spaces, hyphens, apostrophes, and periods",
+  )
   .transform(sanitizeString);
 
 // Message/textarea validation
-export const messageSchema = (minLength: number = 10, maxLength: number = 2000) => 
-  z.string()
+export const messageSchema = (
+  minLength: number = 10,
+  maxLength: number = 2000,
+) =>
+  z
+    .string()
     .trim()
     .min(minLength, `Message must be at least ${minLength} characters`)
     .max(maxLength, `Message must be less than ${maxLength} characters`)
     .transform(sanitizeString);
 
 // Subject validation
-export const subjectSchema = z.string()
+export const subjectSchema = z
+  .string()
   .trim()
   .min(3, "Subject must be at least 3 characters")
   .max(200, "Subject must be less than 200 characters")
   .transform(sanitizeString);
 
 // Location validation
-export const locationSchema = z.string()
+export const locationSchema = z
+  .string()
   .trim()
   .min(2, "Location must be at least 2 characters")
   .max(100, "Location must be less than 100 characters")
   .transform(sanitizeString);
 
 // Amount validation
-export const amountSchema = z.number()
+export const amountSchema = z
+  .number()
   .min(1, "Minimum amount is $1")
   .max(1000000, "Maximum amount is $1,000,000");
 
 // Veteran ID last 4 digits
-export const veteranIdSchema = z.string()
+export const veteranIdSchema = z
+  .string()
   .trim()
   .length(4, "Must be exactly 4 digits")
   .regex(/^\d{4}$/, "Must contain only numbers")
@@ -96,37 +110,88 @@ export const veteranIdSchema = z.string()
 
 // US States for dropdown
 export const US_STATES = [
-  "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", 
-  "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", 
-  "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", 
-  "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", 
-  "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", 
-  "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", 
-  "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", 
-  "Wisconsin", "Wyoming"
+  "Alabama",
+  "Alaska",
+  "Arizona",
+  "Arkansas",
+  "California",
+  "Colorado",
+  "Connecticut",
+  "Delaware",
+  "Florida",
+  "Georgia",
+  "Hawaii",
+  "Idaho",
+  "Illinois",
+  "Indiana",
+  "Iowa",
+  "Kansas",
+  "Kentucky",
+  "Louisiana",
+  "Maine",
+  "Maryland",
+  "Massachusetts",
+  "Michigan",
+  "Minnesota",
+  "Mississippi",
+  "Missouri",
+  "Montana",
+  "Nebraska",
+  "Nevada",
+  "New Hampshire",
+  "New Jersey",
+  "New Mexico",
+  "New York",
+  "North Carolina",
+  "North Dakota",
+  "Ohio",
+  "Oklahoma",
+  "Oregon",
+  "Pennsylvania",
+  "Rhode Island",
+  "South Carolina",
+  "South Dakota",
+  "Tennessee",
+  "Texas",
+  "Utah",
+  "Vermont",
+  "Virginia",
+  "Washington",
+  "West Virginia",
+  "Wisconsin",
+  "Wyoming",
 ] as const;
 
 // Booking form schema
-export const bookingFormSchema = z.object({
-  fullName: nameSchema,
-  email: emailSchema,
-  phone: phoneSchema,
-  state: z.string().trim().min(2, "Please select your state").max(50),
-  message: messageSchema(0, 1000).optional(),
-  preferredDates: z.string().trim().max(500).optional(),
-  isVeteran: z.boolean().default(false),
-  veteranType: z.string().optional(),
-  veteranIdLast4: z.string().optional(),
-}).refine((data) => {
-  // If veteran, require veteran type and ID
-  if (data.isVeteran) {
-    return data.veteranType && data.veteranIdLast4 && /^\d{4}$/.test(data.veteranIdLast4);
-  }
-  return true;
-}, {
-  message: "Veteran type and 4-digit ID are required for veteran discount",
-  path: ["veteranIdLast4"],
-});
+export const bookingFormSchema = z
+  .object({
+    fullName: nameSchema,
+    email: emailSchema,
+    phone: phoneSchema,
+    state: z.string().trim().min(2, "Please select your state").max(50),
+    message: messageSchema(0, 1000).optional(),
+    preferredDates: z.string().trim().max(500).optional(),
+    isVeteran: z.boolean().default(false),
+    veteranType: z.string().optional(),
+    veteranIdLast4: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      // If veteran, require veteran type and ID
+      if (data.isVeteran) {
+        return (
+          data.veteranType &&
+          data.veteranIdLast4 &&
+          /^\d{4}$/.test(data.veteranIdLast4)
+        );
+      }
+      return true;
+    },
+    {
+      message: "Veteran type and 4-digit ID are required for veteran discount",
+      path: ["veteranIdLast4"],
+    },
+  );
 
 // Donation form schema
 export const donationFormSchema = z.object({

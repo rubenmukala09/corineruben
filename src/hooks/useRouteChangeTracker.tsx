@@ -13,13 +13,13 @@ export function useRouteChangeTracker() {
       // Track with Performance API
       if (window.performance && window.performance.mark) {
         performance.mark(`route-change-${currentPath}`);
-        
+
         if (performance.measure) {
           try {
             performance.measure(
               `navigation-to-${currentPath}`,
               undefined,
-              `route-change-${currentPath}`
+              `route-change-${currentPath}`,
             );
           } catch (e) {
             // Measure might fail if marks don't exist

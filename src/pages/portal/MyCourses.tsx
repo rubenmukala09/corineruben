@@ -9,7 +9,13 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { GraduationCap, BookOpen, Trophy, ArrowRight, Clock } from "lucide-react";
+import {
+  GraduationCap,
+  BookOpen,
+  Trophy,
+  ArrowRight,
+  Clock,
+} from "lucide-react";
 import { motion } from "framer-motion";
 
 function MyCourses() {
@@ -20,15 +26,17 @@ function MyCourses() {
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut();
-      toast({ 
+      toast({
         title: "👋 Signed Out Successfully",
-        description: "You've been securely logged out."
+        description: "You've been securely logged out.",
       });
       navigate("/auth");
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Unable to sign out";
       toast({
         title: "❌ Sign Out Failed",
-        description: error.message,
+        description: errorMessage,
         variant: "destructive",
       });
     }
@@ -36,11 +44,21 @@ function MyCourses() {
 
   // Calculate stats
   const totalEnrollments = enrollments?.length || 0;
-  const completedCourses = enrollments?.filter(e => e.progress_percentage >= 100).length || 0;
-  const inProgressCourses = enrollments?.filter(e => e.progress_percentage > 0 && e.progress_percentage < 100).length || 0;
-  const averageProgress = totalEnrollments > 0 
-    ? Math.round(enrollments!.reduce((acc, e) => acc + (e.progress_percentage || 0), 0) / totalEnrollments)
-    : 0;
+  const completedCourses =
+    enrollments?.filter((e) => e.progress_percentage >= 100).length || 0;
+  const inProgressCourses =
+    enrollments?.filter(
+      (e) => e.progress_percentage > 0 && e.progress_percentage < 100,
+    ).length || 0;
+  const averageProgress =
+    totalEnrollments > 0
+      ? Math.round(
+          enrollments!.reduce(
+            (acc, e) => acc + (e.progress_percentage || 0),
+            0,
+          ) / totalEnrollments,
+        )
+      : 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-accent/10">
@@ -121,8 +139,11 @@ function MyCourses() {
               <Skeleton className="h-6 w-48" />
             </CardHeader>
             <CardContent className="space-y-4">
-              {[1, 2].map(i => (
-                <div key={i} className="flex items-center gap-4 p-4 border rounded-lg">
+              {[1, 2].map((i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-4 p-4 border rounded-lg"
+                >
                   <Skeleton className="w-16 h-16 rounded" />
                   <div className="flex-1">
                     <Skeleton className="h-5 w-3/4 mb-2" />
@@ -142,7 +163,7 @@ function MyCourses() {
             </CardHeader>
             <CardContent className="space-y-4">
               {enrollments
-                .filter(e => e.progress_percentage < 100)
+                .filter((e) => e.progress_percentage < 100)
                 .slice(0, 3)
                 .map((enrollment) => (
                   <motion.div
@@ -150,7 +171,9 @@ function MyCourses() {
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     className="flex items-center gap-4 p-4 border rounded-lg hover:bg-muted/50 transition-colors cursor-pointer group"
-                    onClick={() => navigate(`/portal/courses/${enrollment.course_id}`)}
+                    onClick={() =>
+                      navigate(`/portal/courses/${enrollment.course_id}`)
+                    }
                   >
                     <div className="w-16 h-16 rounded-lg bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center">
                       <GraduationCap className="w-8 h-8 text-white" />
@@ -160,7 +183,10 @@ function MyCourses() {
                         {enrollment.course?.title || "Course"}
                       </h3>
                       <div className="flex items-center gap-2 mt-1">
-                        <Progress value={enrollment.progress_percentage || 0} className="h-2 flex-1" />
+                        <Progress
+                          value={enrollment.progress_percentage || 0}
+                          className="h-2 flex-1"
+                        />
                         <span className="text-sm text-muted-foreground shrink-0">
                           {enrollment.progress_percentage || 0}%
                         </span>

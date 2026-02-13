@@ -3,13 +3,14 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
 interface AnalyticsEvent {
   eventName: string;
   eventCategory?: string;
-  eventData?: Record<string, any>;
+  eventData?: Record<string, unknown>;
   pageUrl?: string;
   pageTitle?: string;
   sessionId: string;
@@ -27,7 +28,7 @@ serve(async (req) => {
   try {
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
     );
 
     const event: AnalyticsEvent = await req.json();
@@ -92,7 +93,10 @@ serve(async (req) => {
     }
 
     // Track conversion events
-    if (event.eventName.includes("conversion") || event.eventName.includes("submit")) {
+    if (
+      event.eventName.includes("conversion") ||
+      event.eventName.includes("submit")
+    ) {
       await supabase.from("conversion_events").insert({
         user_id: event.userId,
         session_id: event.sessionId,
@@ -107,16 +111,13 @@ serve(async (req) => {
       {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 200,
-      }
+      },
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error in track-analytics-event function:", error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 500,
-      }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      status: 500,
+    });
   }
 });

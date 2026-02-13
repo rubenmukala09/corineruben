@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 const PaymentSettings = () => {
   const [mode, setMode] = useState<"test" | "live">("test");
   const [stripeEnabled, setStripeEnabled] = useState(true);
-  
+
   const [testKeys, setTestKeys] = useState({
     publishable: "pk_test_...",
     secret: "sk_test_...",
@@ -64,7 +64,9 @@ const PaymentSettings = () => {
             <CreditCard className="h-5 w-5" />
             <div>
               <p className="font-medium">Stripe</p>
-              <p className="text-sm text-muted-foreground">Primary payment processor</p>
+              <p className="text-sm text-muted-foreground">
+                Primary payment processor
+              </p>
             </div>
           </div>
           <Switch checked={stripeEnabled} onCheckedChange={setStripeEnabled} />
@@ -74,7 +76,10 @@ const PaymentSettings = () => {
       {/* Mode Toggle */}
       <div className="space-y-4">
         <h3 className="text-xl font-semibold">Mode</h3>
-        <RadioGroup value={mode} onValueChange={(value: "test" | "live") => setMode(value)}>
+        <RadioGroup
+          value={mode}
+          onValueChange={(value: "test" | "live") => setMode(value)}
+        >
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="test" id="test" />
             <Label htmlFor="test" className="flex items-center gap-2">
@@ -106,8 +111,12 @@ const PaymentSettings = () => {
         {mode === "test" && (
           <div className="p-4 bg-muted rounded-lg space-y-2">
             <p className="text-sm font-medium">Test Card Information:</p>
-            <p className="text-sm text-muted-foreground">Card: 4242 4242 4242 4242</p>
-            <p className="text-sm text-muted-foreground">Exp: Any future date</p>
+            <p className="text-sm text-muted-foreground">
+              Card: 4242 4242 4242 4242
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Exp: Any future date
+            </p>
             <p className="text-sm text-muted-foreground">CVV: Any 3 digits</p>
           </div>
         )}
@@ -116,7 +125,9 @@ const PaymentSettings = () => {
           <div className="space-y-2">
             <Label>Publishable Key</Label>
             <Input
-              value={mode === "test" ? testKeys.publishable : liveKeys.publishable}
+              value={
+                mode === "test" ? testKeys.publishable : liveKeys.publishable
+              }
               onChange={(e) =>
                 mode === "test"
                   ? setTestKeys({ ...testKeys, publishable: e.target.value })
@@ -145,7 +156,7 @@ const PaymentSettings = () => {
       {/* Webhook Configuration */}
       <div className="space-y-4">
         <h3 className="text-xl font-semibold">Webhook Configuration</h3>
-        
+
         <div className="space-y-2">
           <Label>Webhook URL</Label>
           <div className="flex gap-2">
@@ -214,7 +225,10 @@ const PaymentSettings = () => {
               id="requestBilling"
               checked={paymentOptions.requestBilling}
               onCheckedChange={(checked) =>
-                setPaymentOptions({ ...paymentOptions, requestBilling: checked })
+                setPaymentOptions({
+                  ...paymentOptions,
+                  requestBilling: checked,
+                })
               }
             />
           </div>
@@ -234,7 +248,7 @@ const PaymentSettings = () => {
       {/* Tax Settings */}
       <div className="space-y-4">
         <h3 className="text-xl font-semibold">Tax Settings</h3>
-        
+
         <div className="flex items-center justify-between">
           <Label htmlFor="collectTax">Collect Tax</Label>
           <Switch

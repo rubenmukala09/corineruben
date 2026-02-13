@@ -6,7 +6,8 @@ const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
 };
 
 serve(async (req) => {
@@ -34,14 +35,14 @@ serve(async (req) => {
 
     if (findError || !logEntry) {
       console.log("Email log not found for ID:", emailId);
-      return new Response(
-        JSON.stringify({ message: "Email log not found" }),
-        { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
+      return new Response(JSON.stringify({ message: "Email log not found" }), {
+        status: 404,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     // Update based on webhook type
-    const updates: Record<string, any> = {};
+    const updates: Record<string, unknown> = {};
 
     switch (webhook.type) {
       case "email.delivered":
@@ -89,18 +90,25 @@ serve(async (req) => {
 
     return new Response(
       JSON.stringify({ message: "Webhook processed successfully" }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      { headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
-  } catch (error: any) {
-    console.error("Error in process-email-webhooks:", error);
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error("Error in process-email-webhooks:", errorMessage);
     return new Response(
-      JSON.stringify({ error: error.message || "Unknown error" }),
-      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      JSON.stringify({ error: errorMessage || "Unknown error" }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      },
     );
   }
 });
 
-async function updateCampaignMetrics(supabase: any, webhookType: string) {
+async function updateCampaignMetrics(
+  supabase: ReturnType<typeof createClient>,
+  webhookType: string,
+) {
   // Recalculate open and click rates for campaigns
   // This would involve aggregating data from email_delivery_logs
   // For now, we'll just log it
