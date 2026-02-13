@@ -10,7 +10,7 @@ const corsHeaders = {
 interface AnalyticsEvent {
   eventName: string;
   eventCategory?: string;
-  eventData?: Record<string, any>;
+  eventData?: Record<string, unknown>;
   pageUrl?: string;
   pageTitle?: string;
   sessionId: string;
@@ -113,7 +113,7 @@ serve(async (req) => {
         status: 200,
       },
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error in track-analytics-event function:", error);
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },

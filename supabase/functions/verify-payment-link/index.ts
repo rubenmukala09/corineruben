@@ -7,7 +7,7 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
-const logStep = (step: string, details?: any) => {
+const logStep = (step: string, details?: unknown) => {
   const timestamp = new Date().toISOString();
   const detailsStr = details ? ` - ${JSON.stringify(details)}` : "";
   console.log(`[${timestamp}] [VERIFY-PAYMENT-LINK] ${step}${detailsStr}`);
@@ -82,7 +82,7 @@ serve(async (req) => {
       });
 
       const paidSession = sessions.data.find(
-        (s: any) => s.payment_status === "paid",
+        (s) => s.payment_status === "paid",
       );
 
       if (paidSession) {

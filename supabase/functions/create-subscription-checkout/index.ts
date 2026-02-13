@@ -8,7 +8,7 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
-const logStep = (step: string, details?: any) => {
+const logStep = (step: string, details?: unknown) => {
   console.log(
     `[CREATE-SUBSCRIPTION-CHECKOUT] ${step}${details ? ` - ${JSON.stringify(details)}` : ""}`,
   );
@@ -114,7 +114,7 @@ serve(async (req) => {
             discountData.current_uses < discountData.max_uses
           ) {
             // Create Stripe coupon
-            const couponData: any = {
+            const couponData: Stripe.CouponCreateParams = {
               duration: "once",
               name: discountData.code, // Use code as name since description doesn't exist
             };
@@ -142,9 +142,10 @@ serve(async (req) => {
     const origin = req.headers.get("origin") || "https://invisionnetwork.org";
 
     // Create checkout session with session_id in success URL for auto-login
-    const sessionConfig: any = {
-      customer: customerId,
-      customer_email: customerId ? undefined : userEmail,
+    const sessionConfig: Stripe.Checkout.SessionCreateParams = {
+      ...(customerId
+        ? { customer: customerId }
+        : { customer_email: userEmail }),
       line_items: [
         {
           price: priceId,

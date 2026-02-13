@@ -8,7 +8,7 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
-const logStep = (step: string, details?: any) => {
+const logStep = (step: string, details?: unknown) => {
   const detailsStr = details ? ` - ${JSON.stringify(details)}` : "";
   console.log(`[VERIFY-PAYMENT] ${step}${detailsStr}`);
 };
@@ -33,6 +33,17 @@ function generateDownloadToken(
     hash = hash & hash;
   }
   return btoa(`${payload}:${Math.abs(hash).toString(16)}`);
+}
+
+function isExpandedProduct(
+  product: Stripe.Price["product"],
+): product is Stripe.Product {
+  return (
+    typeof product === "object" &&
+    product !== null &&
+    "name" in product &&
+    "metadata" in product
+  );
 }
 
 serve(async (req) => {
@@ -87,12 +98,12 @@ serve(async (req) => {
 
     for (const item of lineItems) {
       const product = item.price?.product;
-      if (typeof product === "object" && product !== null) {
-        const productName = (product as any).name || "Product";
+      if (isExpandedProduct(product)) {
+        const productName = product.name || "Product";
         productNames.push(productName);
 
         // Check product metadata or name for type
-        const metadata = (product as any).metadata || {};
+        const metadata = product.metadata || {};
         const name = productName.toLowerCase();
 
         if (

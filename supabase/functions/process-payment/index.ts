@@ -188,7 +188,7 @@ serve(async (req) => {
     if (resendApiKey) {
       const itemsList = items
         .map(
-          (item: any) =>
+          (item) =>
             `${item.name} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`,
         )
         .join("\n");

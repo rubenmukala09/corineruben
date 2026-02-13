@@ -8,7 +8,7 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
-const logStep = (step: string, details?: any) => {
+const logStep = (step: string, details?: unknown) => {
   console.log(
     `[CHECK-SUBSCRIPTION-STATUS] ${step}${details ? ` - ${JSON.stringify(details)}` : ""}`,
   );
@@ -72,14 +72,27 @@ serve(async (req) => {
       expand: ["data.items.data.price.product"],
     });
 
-    const subscriptionData = subscriptions.data.map((sub: any) => ({
-      id: sub.id,
-      status: sub.status,
-      current_period_end: new Date(sub.current_period_end * 1000).toISOString(),
-      cancel_at_period_end: sub.cancel_at_period_end,
-      plan_name: (sub.items.data[0].price.product as any)?.name || "Unknown",
-      amount: sub.items.data[0].price.unit_amount || 0,
-    }));
+    const subscriptionData = subscriptions.data.map((sub) => {
+      const product = sub.items.data[0]?.price?.product;
+      const planName =
+        typeof product === "object" &&
+        product !== null &&
+        "name" in product &&
+        typeof product.name === "string"
+          ? product.name
+          : "Unknown";
+
+      return {
+        id: sub.id,
+        status: sub.status,
+        current_period_end: new Date(
+          sub.current_period_end * 1000,
+        ).toISOString(),
+        cancel_at_period_end: sub.cancel_at_period_end,
+        plan_name: planName,
+        amount: sub.items.data[0]?.price?.unit_amount || 0,
+      };
+    });
 
     logStep("Subscriptions found", { count: subscriptionData.length });
 

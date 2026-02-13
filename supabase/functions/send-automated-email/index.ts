@@ -115,7 +115,7 @@ serve(async (req) => {
         });
 
         successCount++;
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error(`Failed to send email ${email.id}:`, error);
 
         // Update email with error and increment attempts
@@ -141,7 +141,7 @@ serve(async (req) => {
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error in send-automated-email:", error);
     return new Response(
       JSON.stringify({ error: error.message || "Unknown error" }),

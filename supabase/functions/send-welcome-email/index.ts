@@ -118,7 +118,7 @@ serve(async (req) => {
     return new Response(JSON.stringify({ success: true, messageId: data.id }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error sending welcome email:", error);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
