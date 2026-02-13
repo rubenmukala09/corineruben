@@ -227,6 +227,20 @@ const Navigation = React.memo(() => {
 
               {/* Mobile Actions */}
               <div className="pt-4 border-t border-border mt-4 space-y-3">
+                {/* Mobile Donate Button */}
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full h-11 text-base font-semibold border-coral-200 text-coral-700 hover:bg-coral-50"
+                  onClick={() => {
+                    setDonateOpen(true);
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  <Heart className="h-5 w-5 mr-2" />
+                  Donate
+                </Button>
+
                 {/* Mobile Login/Dashboard Button */}
                 <Button
                   asChild
