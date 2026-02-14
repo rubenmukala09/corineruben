@@ -1,6 +1,15 @@
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Clock, Shield, Star, Users, CheckCircle2 } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  MapPin,
+  Clock,
+  Shield,
+  Star,
+  Users,
+  CheckCircle2,
+  X,
+} from "lucide-react";
+
 interface ProofItem {
   id: number;
   type: "signup" | "review" | "protection" | "milestone";
@@ -8,6 +17,7 @@ interface ProofItem {
   message: string;
   time: string;
 }
+
 const proofData: Omit<ProofItem, "id">[] = [
   {
     type: "signup",
@@ -70,185 +80,160 @@ const proofData: Omit<ProofItem, "id">[] = [
     time: "30 min ago",
   },
 ];
+
 const typeConfig = {
   signup: {
     icon: Users,
-    color: "text-primary",
-    bg: "from-primary/20 to-primary/5",
+    label: "New Signup",
+    iconClass: "text-primary",
+    chipClass: "bg-primary/12 text-primary border-primary/25",
+    progressClass: "from-primary to-accent",
   },
   review: {
     icon: Star,
-    color: "text-amber-500",
-    bg: "from-amber-500/20 to-amber-500/5",
+    label: "Review",
+    iconClass: "text-amber-500",
+    chipClass: "bg-amber-500/12 text-amber-700 border-amber-500/30",
+    progressClass: "from-amber-500 to-orange-500",
   },
   protection: {
     icon: Shield,
-    color: "text-green-500",
-    bg: "from-green-500/20 to-green-500/5",
+    label: "Protection Event",
+    iconClass: "text-emerald-600",
+    chipClass: "bg-emerald-500/12 text-emerald-700 border-emerald-500/30",
+    progressClass: "from-emerald-500 to-teal-500",
   },
   milestone: {
     icon: CheckCircle2,
-    color: "text-accent",
-    bg: "from-accent/20 to-accent/5",
+    label: "Milestone",
+    iconClass: "text-accent",
+    chipClass: "bg-accent/12 text-accent border-accent/30",
+    progressClass: "from-accent to-primary",
   },
 };
+
 export const SocialProofTicker = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  useEffect(() => {
-    // Show after delay
-    const showTimer = setTimeout(() => setIsVisible(true), 3000);
+  const [isPaused, setIsPaused] = useState(false);
 
-    // Rotate items
+  useEffect(() => {
+    const showTimer = setTimeout(() => setIsVisible(true), 2600);
+    return () => clearTimeout(showTimer);
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible || isPaused) return;
+
     const rotateInterval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % proofData.length);
-    }, 5000);
-    return () => {
-      clearTimeout(showTimer);
-      clearInterval(rotateInterval);
-    };
-  }, []);
+    }, 5500);
+
+    return () => clearInterval(rotateInterval);
+  }, [isPaused, isVisible]);
+
   const currentItem = proofData[currentIndex];
-  const TypeIcon = typeConfig[currentItem.type].icon;
+  const config = typeConfig[currentItem.type];
+  const TypeIcon = config.icon;
+
   return (
     <AnimatePresence>
-      {isVisible && (
+      {isVisible ? (
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 50,
-            x: -20,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-            x: 0,
-          }}
-          exit={{
-            opacity: 0,
-            y: 50,
-          }}
-          transition={{
-            duration: 0.5,
-            type: "spring",
-          }}
-          className="fixed bottom-6 left-6 z-50 max-w-xs"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 24 }}
+          transition={{ duration: 0.35 }}
+          className="fixed bottom-4 left-4 right-4 z-50 sm:bottom-6 sm:left-6 sm:right-auto sm:w-[360px]"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onFocus={() => setIsPaused(true)}
+          onBlur={() => setIsPaused(false)}
         >
           <motion.div
             key={currentIndex}
-            initial={{
-              opacity: 0,
-              scale: 0.9,
-              x: -20,
-            }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              x: 0,
-            }}
-            exit={{
-              opacity: 0,
-              scale: 0.9,
-              x: 20,
-            }}
-            transition={{
-              duration: 0.4,
-            }}
-            className="relative overflow-hidden"
+            initial={{ opacity: 0, x: -16 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 12 }}
+            transition={{ duration: 0.28 }}
+            className="overflow-hidden rounded-2xl border border-border/70 bg-card/92 shadow-[0_24px_48px_-30px_hsl(var(--navy-900)/0.55)] backdrop-blur-xl"
           >
-            {/* Main Card */}
-            <div
-              className={`glass-heavy rounded-2xl p-4 shadow-3d border border-white/20 bg-gradient-to-br ${typeConfig[currentItem.type].bg}`}
-            >
-              {/* Close button */}
+            <div className="flex items-start justify-between border-b border-border/70 px-4 pb-3 pt-3">
+              <div className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                <p className="text-xs font-semibold uppercase tracking-[0.13em] text-muted-foreground">
+                  Live Activity Widget
+                </p>
+              </div>
+
               <button
+                type="button"
                 onClick={() => setIsVisible(false)}
-                className="absolute top-2 right-2 p-1 rounded-full hover:bg-white/20 transition-colors opacity-50 hover:opacity-100"
+                className="rounded-full p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                aria-label="Close activity widget"
               >
-                <span className="sr-only">Close</span>
-                <svg
-                  className="w-3 h-3"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                <X className="h-3.5 w-3.5" />
               </button>
+            </div>
 
+            <div className="space-y-3 px-4 pb-4 pt-3">
               <div className="flex items-start gap-3">
-                {/* Icon */}
-                <motion.div
-                  animate={{
-                    scale: [1, 1.1, 1],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                  }}
-                  className={`flex-shrink-0 p-2 rounded-xl bg-white/50 ${typeConfig[currentItem.type].color}`}
+                <div
+                  className={`rounded-xl border border-border/70 bg-muted/40 p-2 ${config.iconClass}`}
                 >
-                  <TypeIcon className="w-5 h-5" />
-                </motion.div>
+                  <TypeIcon className="h-5 w-5" />
+                </div>
 
-                {/* Content */}
-                <div className="flex-1 min-w-0 pr-4">
-                  <p className="text-sm font-medium text-foreground leading-snug">
+                <div className="min-w-0 flex-1">
+                  <span
+                    className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] ${config.chipClass}`}
+                  >
+                    {config.label}
+                  </span>
+                  <p className="mt-2 text-sm font-semibold leading-snug text-foreground">
                     {currentItem.message}
                   </p>
-                  <div className="flex items-center gap-3 mt-2">
-                    <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-                      <MapPin className="w-3 h-3" />
+                  <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+                    <span className="inline-flex items-center gap-1">
+                      <MapPin className="h-3.5 w-3.5" />
                       {currentItem.location}
                     </span>
-                    <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-                      <Clock className="w-3 h-3" />
+                    <span className="inline-flex items-center gap-1">
+                      <Clock className="h-3.5 w-3.5" />
                       {currentItem.time}
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* Progress bar */}
-              <div className="mt-3 h-1 bg-white/20 rounded-full overflow-hidden">
+              <div className="h-1.5 overflow-hidden rounded-full bg-muted/70">
                 <motion.div
-                  initial={{
-                    width: "0%",
-                  }}
-                  animate={{
-                    width: "100%",
-                  }}
-                  transition={{
-                    duration: 5,
-                    ease: "linear",
-                  }}
-                  className="h-full bg-gradient-to-r from-primary to-accent rounded-full"
+                  key={`progress-${currentIndex}`}
+                  initial={{ width: "0%" }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 5.5, ease: "linear" }}
+                  className={`h-full rounded-full bg-gradient-to-r ${config.progressClass}`}
                 />
               </div>
-            </div>
 
-            {/* Notification dots */}
-            <div className="flex justify-center gap-1 mt-2">
-              {proofData.slice(0, 5).map((_, i) => (
-                <motion.div
-                  key={i}
-                  animate={{
-                    scale: i === currentIndex % 5 ? 1.2 : 1,
-                    opacity: i === currentIndex % 5 ? 1 : 0.4,
-                  }}
-                  className={`w-1.5 h-1.5 rounded-full ${i === currentIndex % 5 ? "bg-primary" : "bg-muted-foreground"}`}
-                />
-              ))}
+              <div className="flex items-center justify-center gap-1.5 pt-0.5">
+                {proofData.slice(0, 6).map((_, i) => (
+                  <span
+                    key={i}
+                    className={`h-1.5 rounded-full transition-all ${
+                      i === currentIndex % 6
+                        ? "w-4 bg-primary"
+                        : "w-1.5 bg-muted-foreground/40"
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
           </motion.div>
         </motion.div>
-      )}
+      ) : null}
     </AnimatePresence>
   );
 };
+
 export default SocialProofTicker;
