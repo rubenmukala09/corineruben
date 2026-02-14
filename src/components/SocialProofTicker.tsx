@@ -154,7 +154,7 @@ export const SocialProofTicker = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="flex items-center gap-2.5 rounded-full border border-border/60 bg-card/95 px-3 py-2 shadow-md backdrop-blur-lg max-w-[280px]"
+            className="flex items-center gap-2.5 rounded-full border border-white/40 bg-white/60 px-3 py-2 shadow-[var(--skeuo-shadow-ombre)] backdrop-blur-xl max-w-[280px]"
           >
             <div className={`flex-shrink-0 ${config.iconClass}`}>
               <TypeIcon className="h-3.5 w-3.5" />
