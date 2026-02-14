@@ -33,6 +33,10 @@ import {
 } from "lucide-react";
 import { ExpandableServiceCard } from "@/components/ExpandableServiceCard";
 import { Badge } from "@/components/ui/badge";
+import businessReceptionist from "@/assets/business-ai-receptionist.jpg";
+import businessScheduling from "@/assets/business-smart-scheduling.jpg";
+import businessSupportBot from "@/assets/business-support-bot.jpg";
+import businessIntake from "@/assets/business-intake-scheduling.jpg";
 import { natureSummer2 } from "@/config/natureHeroImages";
 import { PROFESSIONAL_HERO_IMAGES } from "@/config/professionalHeroImages";
 import { VideoLightbox } from "@/components/VideoLightbox";
@@ -362,6 +366,7 @@ function Business() {
               <ExpandableServiceCard
                 icon={<Phone className="w-7 h-7 text-primary" />}
                 title="AI Receptionist"
+                image={businessReceptionist}
                 summary="Answer calls 24/7, route to right person, book appointments, answer FAQs. Never miss a lead again."
               >
                 <div className="space-y-4">
@@ -391,6 +396,7 @@ function Business() {
               <ExpandableServiceCard
                 icon={<Calendar className="w-7 h-7 text-primary" />}
                 title="Smart Scheduling"
+                image={businessScheduling}
                 summary="Auto-book appointments, send reminders, sync calendars. Eliminate back-and-forth emails forever."
               >
                 <div className="space-y-4">
@@ -419,6 +425,7 @@ function Business() {
               <ExpandableServiceCard
                 icon={<MessageSquare className="w-7 h-7 text-primary" />}
                 title="Customer Support Bot"
+                image={businessSupportBot}
                 summary="Handle common questions instantly. 24/7 support on website, text, or WhatsApp. Focus your team on complex issues."
               >
                 <div className="space-y-4">
@@ -448,6 +455,7 @@ function Business() {
               <ExpandableServiceCard
                 icon={<Calendar className="w-7 h-7 text-primary" />}
                 title="Intake & Scheduling"
+                image={businessIntake}
                 summary="Collect client info, qualify leads, book meetings automatically. Eliminate back-and-forth emails."
               >
                 <div className="space-y-4">
