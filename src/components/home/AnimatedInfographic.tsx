@@ -48,7 +48,7 @@ export const AnimatedInfographic = () => {
             {THREAT_TYPES.map((threat) => (
               <div
                 key={threat.label}
-                className="p-5 rounded-2xl bg-card/80 backdrop-blur-sm border border-border/40"
+                className="p-5 rounded-2xl bg-card/80 border border-border/40"
               >
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
@@ -81,7 +81,7 @@ export const AnimatedInfographic = () => {
             {CENTER_STATS.map((stat) => (
               <div
                 key={stat.label}
-                className="p-6 rounded-2xl bg-card/80 backdrop-blur-sm border border-border/40 text-center"
+                className="p-6 rounded-2xl bg-card/80 border border-border/40 text-center"
               >
                 <div className="w-12 h-12 mx-auto rounded-xl bg-primary/10 flex items-center justify-center mb-3">
                   <stat.icon className="w-6 h-6 text-primary" />

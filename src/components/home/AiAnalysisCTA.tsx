@@ -11,7 +11,6 @@ import {
   CreditCard,
   CheckCircle2,
 } from "lucide-react";
-import { motion } from "framer-motion";
 
 interface AiAnalysisCTAProps {
   compact?: boolean;
@@ -40,10 +39,6 @@ export const AiAnalysisCTA = ({ compact = false }: AiAnalysisCTAProps) => {
     <section className={compact ? "py-8" : "py-14"}>
       <div className="container mx-auto px-6 lg:px-12">
         <div className="relative rounded-3xl overflow-hidden border border-border/40 bg-gradient-to-br from-card via-card/95 to-primary/5 shadow-xl">
-          {/* Decorative glow */}
-          <div className="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-24 -left-24 w-64 h-64 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
-
           <div className="relative p-8 lg:p-12">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
               {/* Left: Text & CTA */}
@@ -70,7 +65,7 @@ export const AiAnalysisCTA = ({ compact = false }: AiAnalysisCTAProps) => {
                     Auto-deleted in 10 min
                   </span>
                   <span className="flex items-center gap-1.5 text-muted-foreground">
-                    <Zap className="w-4 h-4 text-amber-500" />
+                    <Zap className="w-4 h-4 text-primary" />
                     From $0.50/scan
                   </span>
                 </div>
@@ -92,14 +87,10 @@ export const AiAnalysisCTA = ({ compact = false }: AiAnalysisCTAProps) => {
 
               {/* Right: How it works steps */}
               <div className="space-y-4">
-                {steps.map((step, i) => (
-                  <motion.div
+                {steps.map((step) => (
+                  <div
                     key={step.title}
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.15 }}
-                    viewport={{ once: true }}
-                    className="flex items-start gap-4 p-4 rounded-2xl bg-background/60 backdrop-blur-sm border border-border/30"
+                    className="flex items-start gap-4 p-4 rounded-2xl bg-background/60 border border-border/30"
                   >
                     <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
                       <step.icon className="w-5 h-5 text-primary" />
@@ -112,11 +103,11 @@ export const AiAnalysisCTA = ({ compact = false }: AiAnalysisCTAProps) => {
                         {step.desc}
                       </p>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
 
                 <div className="flex items-center gap-2 pl-4 pt-1">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                  <CheckCircle2 className="w-4 h-4 text-primary" />
                   <span className="text-xs text-muted-foreground">
                     No signup required • Anonymous • Privacy-first
                   </span>

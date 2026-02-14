@@ -3,19 +3,7 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { HeroHomepage } from "@/components/HeroHomepage";
-import { WorkshopsPromo } from "@/components/home/WorkshopsPromo";
-import { AIBusinessPromo } from "@/components/home/AIBusinessPromo";
-import { ResourcesPromo } from "@/components/home/ResourcesPromo";
-import { WorkingProcess } from "@/components/home/WorkingProcess";
-import { ScamAlertsSection } from "@/components/home/ScamAlertsSection";
-import { FAQPreview } from "@/components/home/FAQPreview";
-import { QuickLinksSection } from "@/components/home/QuickLinksSection";
 import { IntroductionSection } from "@/components/home/IntroductionSection";
-import { MotivationalSection } from "@/components/home/MotivationalSection";
-import { IllustrativeHeroSection } from "@/components/home/IllustrativeHeroSection";
-import { AiAnalysisCTA } from "@/components/home/AiAnalysisCTA";
-import { DecorativeBanner } from "@/components/home/DecorativeBanner";
-import { AnimatedInfographic } from "@/components/home/AnimatedInfographic";
 import { AnimatedSection } from "@/components/AnimatedSection";
 
 import CTASection from "@/components/CTASection";
@@ -24,11 +12,26 @@ import { PageTransition } from "@/components/PageTransition";
 import { Button } from "@/components/ui/button";
 import { SEO, PAGE_SEO } from "@/components/SEO";
 import seniorCoupleActive from "@/assets/senior-couple-active.jpg";
-import { FamilyTrustSection } from "@/components/home/FamilyTrustSection";
 import { SITE } from "@/config/site";
 
-const LiveSecurityStats = lazy(
-  () => import("@/components/home/LiveSecurityStats"),
+// Lazy-load all below-fold sections
+const IllustrativeHeroSection = lazy(() => import("@/components/home/IllustrativeHeroSection").then(m => ({ default: m.IllustrativeHeroSection })));
+const AiAnalysisCTA = lazy(() => import("@/components/home/AiAnalysisCTA").then(m => ({ default: m.AiAnalysisCTA })));
+const DecorativeBanner = lazy(() => import("@/components/home/DecorativeBanner").then(m => ({ default: m.DecorativeBanner })));
+const AnimatedInfographic = lazy(() => import("@/components/home/AnimatedInfographic").then(m => ({ default: m.AnimatedInfographic })));
+const LiveSecurityStats = lazy(() => import("@/components/home/LiveSecurityStats"));
+const WorkshopsPromo = lazy(() => import("@/components/home/WorkshopsPromo").then(m => ({ default: m.WorkshopsPromo })));
+const AIBusinessPromo = lazy(() => import("@/components/home/AIBusinessPromo").then(m => ({ default: m.AIBusinessPromo })));
+const ResourcesPromo = lazy(() => import("@/components/home/ResourcesPromo").then(m => ({ default: m.ResourcesPromo })));
+const ScamAlertsSection = lazy(() => import("@/components/home/ScamAlertsSection").then(m => ({ default: m.ScamAlertsSection })));
+const MotivationalSection = lazy(() => import("@/components/home/MotivationalSection").then(m => ({ default: m.MotivationalSection })));
+const FamilyTrustSection = lazy(() => import("@/components/home/FamilyTrustSection").then(m => ({ default: m.FamilyTrustSection })));
+const WorkingProcess = lazy(() => import("@/components/home/WorkingProcess").then(m => ({ default: m.WorkingProcess })));
+const FAQPreview = lazy(() => import("@/components/home/FAQPreview").then(m => ({ default: m.FAQPreview })));
+const QuickLinksSection = lazy(() => import("@/components/home/QuickLinksSection").then(m => ({ default: m.QuickLinksSection })));
+
+const LazySection = ({ children }: { children: React.ReactNode }) => (
+  <Suspense fallback={null}>{children}</Suspense>
 );
 
 const Index = () => {
@@ -86,11 +89,11 @@ const Index = () => {
 
           {/* Illustrative Hero Graphic */}
           <AnimatedSection animation="fade-up">
-            <IllustrativeHeroSection />
+            <LazySection><IllustrativeHeroSection /></LazySection>
           </AnimatedSection>
 
           {/* Decorative Banner */}
-          <DecorativeBanner />
+          <LazySection><DecorativeBanner /></LazySection>
 
           {/* Live Stats */}
           <section id="stats" ref={statsRef}>
@@ -109,73 +112,75 @@ const Index = () => {
 
           {/* AI Analysis CTA */}
           <AnimatedSection animation="fade-up">
-            <AiAnalysisCTA />
+            <LazySection><AiAnalysisCTA /></LazySection>
           </AnimatedSection>
 
           {/* Workshops */}
           <section id="workshops">
             <AnimatedSection animation="fade-up">
-              <WorkshopsPromo />
+              <LazySection><WorkshopsPromo /></LazySection>
             </AnimatedSection>
           </section>
 
           {/* AI & Business */}
           <section id="business">
             <AnimatedSection animation="fade-up">
-              <AIBusinessPromo />
+              <LazySection><AIBusinessPromo /></LazySection>
             </AnimatedSection>
           </section>
 
           {/* Scam Alerts */}
           <section id="alerts">
             <AnimatedSection animation="fade-up">
-              <ScamAlertsSection onSubmitThreat={() => setScamShieldOpen(true)} />
+              <LazySection>
+                <ScamAlertsSection onSubmitThreat={() => setScamShieldOpen(true)} />
+              </LazySection>
             </AnimatedSection>
           </section>
 
           {/* Resources */}
           <section id="resources">
             <AnimatedSection animation="fade-up">
-              <ResourcesPromo />
+              <LazySection><ResourcesPromo /></LazySection>
             </AnimatedSection>
           </section>
 
           {/* Animated Infographic */}
           <AnimatedSection animation="fade-up">
-            <AnimatedInfographic />
+            <LazySection><AnimatedInfographic /></LazySection>
           </AnimatedSection>
 
           {/* Decorative Banner */}
-          <DecorativeBanner />
+          <LazySection><DecorativeBanner /></LazySection>
 
           {/* Motivational */}
           <section id="motivation">
             <AnimatedSection animation="fade-up">
-              <MotivationalSection />
+              <LazySection><MotivationalSection /></LazySection>
             </AnimatedSection>
           </section>
 
           {/* Trust */}
           <section id="trust">
             <AnimatedSection animation="fade-up">
-              <FamilyTrustSection />
+              <LazySection><FamilyTrustSection /></LazySection>
             </AnimatedSection>
           </section>
 
           {/* Process */}
           <AnimatedSection animation="fade-up">
-            <WorkingProcess />
+            <LazySection><WorkingProcess /></LazySection>
           </AnimatedSection>
 
           {/* FAQ */}
           <AnimatedSection animation="fade-up">
-            <FAQPreview />
+            <LazySection><FAQPreview /></LazySection>
           </AnimatedSection>
 
           {/* Quick Links */}
           <section id="quick-links">
             <AnimatedSection animation="fade-up">
-              <QuickLinksSection />
+              <LazySection><QuickLinksSection /></LazySection>
             </AnimatedSection>
           </section>
 

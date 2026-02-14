@@ -22,13 +22,13 @@ export const IllustrativeHeroSection = () => {
               />
             </div>
             {/* Floating animated badges */}
-            <div className="absolute -top-3 -right-3 px-4 py-2.5 rounded-2xl bg-card/95 backdrop-blur-xl border border-border/40 shadow-md float-slow">
+            <div className="absolute -top-3 -right-3 px-4 py-2.5 rounded-2xl bg-card/95 border border-border/40 shadow-md float-slow">
               <div className="flex items-center gap-2">
                 <Shield className="w-5 h-5 text-primary" />
                 <span className="text-sm font-bold text-foreground">AI-Powered</span>
               </div>
             </div>
-            <div className="absolute -bottom-3 -left-3 px-4 py-2.5 rounded-2xl bg-card/95 backdrop-blur-xl border border-border/40 shadow-md float-delayed">
+            <div className="absolute -bottom-3 -left-3 px-4 py-2.5 rounded-2xl bg-card/95 border border-border/40 shadow-md float-delayed">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5 text-primary" />
                 <span className="text-sm font-bold text-foreground">Verified Safe</span>
