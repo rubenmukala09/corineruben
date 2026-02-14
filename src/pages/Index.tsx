@@ -11,6 +11,7 @@ import { ScamAlertsSection } from "@/components/home/ScamAlertsSection";
 import { FAQPreview } from "@/components/home/FAQPreview";
 import { QuickLinksSection } from "@/components/home/QuickLinksSection";
 import { IntroductionSection } from "@/components/home/IntroductionSection";
+import { MotivationalSection } from "@/components/home/MotivationalSection";
 import { AnimatedSection } from "@/components/AnimatedSection";
 
 import CTASection from "@/components/CTASection";
@@ -119,6 +120,13 @@ const Index = () => {
           <section id="resources">
             <AnimatedSection animation="fade-up">
               <ResourcesPromo />
+            </AnimatedSection>
+          </section>
+
+          {/* Motivational */}
+          <section id="motivation">
+            <AnimatedSection animation="fade-up">
+              <MotivationalSection />
             </AnimatedSection>
           </section>
 
