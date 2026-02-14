@@ -31,6 +31,13 @@ import {
   Lock,
   Sparkles,
   FileText,
+  Palette,
+  Pen,
+  Shapes,
+  Image,
+  BarChart3,
+  Grid3X3,
+  ArrowRight,
 } from "lucide-react";
 import { ExpandableServiceCard } from "@/components/ExpandableServiceCard";
 import { Badge } from "@/components/ui/badge";
@@ -1209,6 +1216,140 @@ function Business() {
                     </Button>
                   </div>
                 )}
+              </Card>
+            </AnimatedSection>
+          </div>
+        </section>
+
+        {/* ═══════════════════ ILLUSTRATION & VISUAL ART ═══════════════════ */}
+        <section id="illustration" className="py-16 bg-background relative overflow-hidden">
+          {/* Decorative background mesh */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-coral-100/30 via-transparent to-transparent rounded-full blur-3xl" />
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-lavender-100/25 via-transparent to-transparent rounded-full blur-3xl" />
+          </div>
+
+          <div className="container mx-auto px-4 relative z-10">
+            <SectionHeader
+              badge="Creative Services"
+              title="Illustration & Visual Art"
+              subtitle="Professional illustration and visual design services that give your brand a distinctive, memorable identity."
+            />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              {[
+                {
+                  icon: Palette,
+                  title: "Illustration Design",
+                  desc: "Custom hand-crafted illustrations tailored to your brand story and audience. From editorial to product illustration.",
+                  accent: "from-coral-400 to-coral-600",
+                  glow: "hsl(var(--coral-400) / 0.15)",
+                },
+                {
+                  icon: Shapes,
+                  title: "Vector Illustration",
+                  desc: "Clean, scalable vector artwork for digital and print. Perfect for logos, web assets, and marketing collateral.",
+                  accent: "from-primary to-lavender-500",
+                  glow: "hsl(var(--primary) / 0.15)",
+                },
+                {
+                  icon: Pen,
+                  title: "Character Design",
+                  desc: "Original character concepts for your brand mascot, game, or animated content. Full turnarounds and style sheets included.",
+                  accent: "from-lavender-500 to-violet-500",
+                  glow: "hsl(var(--lavender-500) / 0.15)",
+                },
+                {
+                  icon: Image,
+                  title: "Icon Design",
+                  desc: "Pixel-perfect custom icon sets that match your brand language. Available in SVG, PNG, and icon-font formats.",
+                  accent: "from-teal-500 to-cyan-500",
+                  glow: "hsl(var(--teal-500) / 0.15)",
+                },
+                {
+                  icon: BarChart3,
+                  title: "Infographic Design",
+                  desc: "Data-driven visual storytelling that turns complex information into clear, shareable graphics your audience remembers.",
+                  accent: "from-gold-500 to-coral-400",
+                  glow: "hsl(var(--gold-500) / 0.15)",
+                },
+                {
+                  icon: Grid3X3,
+                  title: "Pattern Design",
+                  desc: "Seamless, repeatable patterns for packaging, textiles, wallpapers, and digital backgrounds. Unique to your brand.",
+                  accent: "from-coral-500 to-lavender-400",
+                  glow: "hsl(var(--coral-500) / 0.15)",
+                },
+              ].map((service, i) => (
+                <AnimatedSection key={i} animation="scale-up" delay={i * 80}>
+                  <Card className="group relative p-0 border-border/40 rounded-2xl overflow-hidden hover:-translate-y-2 hover:shadow-[0_8px_32px_hsl(var(--lavender-400)/0.15)] transition-all duration-500">
+                    {/* Top accent bar */}
+                    <div className={`h-1.5 w-full bg-gradient-to-r ${service.accent}`} />
+                    
+                    {/* Hover glow */}
+                    <div
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
+                      style={{ background: `radial-gradient(circle at 50% 0%, ${service.glow}, transparent 70%)` }}
+                    />
+
+                    <div className="relative z-10 p-6">
+                      {/* Icon */}
+                      <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${service.accent} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
+                        <service.icon className="w-7 h-7 text-white" />
+                      </div>
+
+                      <h3 className="text-lg font-bold mb-2 group-hover:text-primary transition-colors duration-300">
+                        {service.title}
+                      </h3>
+                      <p className="text-muted-foreground text-sm leading-relaxed mb-4">{service.desc}</p>
+
+                      {/* CTA link */}
+                      <button
+                        onClick={() => {
+                          setSelectedInquiry({
+                            name: service.title,
+                            price: 0,
+                            tier: "Illustration",
+                            description: service.desc,
+                          });
+                          setInquiryDialogOpen(true);
+                        }}
+                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:gap-3 transition-all duration-300"
+                      >
+                        Get a Quote <ArrowRight className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </Card>
+                </AnimatedSection>
+              ))}
+            </div>
+
+            {/* Bottom CTA */}
+            <AnimatedSection animation="fade-up" delay={300} className="text-center mt-12">
+              <Card className="widget-frosted max-w-3xl mx-auto p-8 rounded-2xl widget-border-gradient">
+                <h3 className="text-xl font-bold mb-2">Need a Custom Visual Package?</h3>
+                <p className="text-muted-foreground text-sm mb-5 max-w-xl mx-auto">
+                  We build complete visual identity systems. Illustrations, icons, patterns, and brand assets, all designed to work together.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <Button
+                    onClick={() => {
+                      setSelectedInquiry({
+                        name: "Custom Visual Package",
+                        price: 0,
+                        tier: "Custom",
+                        description: "Complete visual identity system with illustrations, icons, patterns, and brand assets.",
+                      });
+                      setInquiryDialogOpen(true);
+                    }}
+                    size="lg"
+                  >
+                    Request Custom Quote
+                  </Button>
+                  <Button asChild variant="outline" size="lg">
+                    <Link to="/contact">Talk to Our Design Team</Link>
+                  </Button>
+                </div>
               </Card>
             </AnimatedSection>
           </div>
