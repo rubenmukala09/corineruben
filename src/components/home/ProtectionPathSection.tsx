@@ -47,7 +47,7 @@ export const ProtectionPathSection = () => {
             >
               {plan.popular && (
                 <div className="absolute right-4 top-4">
-                  <Badge className="bg-gradient-to-r from-primary to-accent text-white">
+                  <Badge variant="premium">
                     <Sparkles className="w-3.5 h-3.5 mr-1.5" />
                     Most Popular
                   </Badge>

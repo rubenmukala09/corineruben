@@ -112,18 +112,24 @@
     inset 0 1px 0 rgba(255, 255, 255, 1);
 }
 
-/* Skeuomorphic Badge - Small raised element */
+/* Skeuomorphic Badge - Warm glassmorphism pill */
 .skeuo-badge {
-  background: linear-gradient(180deg, hsl(0 0% 98%) 0%, hsl(0 0% 95%) 100%);
+  background: linear-gradient(
+    135deg,
+    hsl(348 30% 98% / 0.85) 0%,
+    hsl(310 20% 96% / 0.7) 100%
+  );
+  backdrop-filter: blur(12px) saturate(1.4);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
   border-radius: 9999px;
   padding: 0.375rem 0.875rem;
   font-size: 0.75rem;
   font-weight: 600;
-  border: 1px solid hsl(0 0% 88%);
+  border: 1px solid hsl(310 20% 90% / 0.5);
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.03);
+    0 1px 3px hsl(var(--coral-300) / 0.08),
+    0 2px 6px hsl(var(--lavender-300) / 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 /* Skeuomorphic Toggle - Switch control */

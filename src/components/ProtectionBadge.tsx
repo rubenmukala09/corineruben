@@ -21,7 +21,7 @@ export const ProtectionBadge = ({
   return (
     <div
       className={cn(
-        "inline-flex items-center gap-2 rounded-full bg-white/60 backdrop-blur-xl border border-white/40 shadow-lg",
+        "inline-flex items-center gap-2 rounded-full bg-background/70 backdrop-blur-xl border border-border/30 shadow-[0_1px_3px_hsl(var(--coral-300)/0.1),0_2px_6px_hsl(var(--lavender-300)/0.08)]",
         sizeClasses[size],
         className,
       )}

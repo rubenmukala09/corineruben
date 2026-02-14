@@ -131,8 +131,9 @@ export function PricingBadge({
     <div
       className={cn(
         "inline-flex items-center gap-1.5",
-        "bg-white/60 backdrop-blur-xl border border-white/40",
-        "font-bold tracking-wider rounded-full shadow-lg",
+        "bg-background/70 backdrop-blur-xl border border-border/30",
+        "font-bold tracking-wider rounded-full",
+        "shadow-[0_1px_3px_hsl(var(--coral-300)/0.1),0_2px_6px_hsl(var(--lavender-300)/0.08)]",
         sizeClasses[size],
         className,
       )}
@@ -155,7 +156,7 @@ export function TrustBadgeInline({
   label: string;
 }) {
   return (
-    <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-success/10 text-success border border-success/20 rounded-full text-xs font-medium">
+    <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-success/10 text-success border border-success/20 rounded-full text-xs font-medium backdrop-blur-sm">
       <Icon className="w-3.5 h-3.5" />
       <span>{label}</span>
     </div>
@@ -164,7 +165,7 @@ export function TrustBadgeInline({
 
 export function GuaranteeBadge() {
   return (
-    <div className="flex items-center justify-center gap-2 p-3 bg-white/60 backdrop-blur-xl border border-white/40 rounded-xl shadow-md">
+    <div className="flex items-center justify-center gap-2 p-3 bg-background/70 backdrop-blur-xl border border-border/30 rounded-xl shadow-[0_2px_8px_hsl(var(--coral-300)/0.08),0_4px_12px_hsl(var(--lavender-300)/0.06)]">
       <Shield className="w-5 h-5 text-success" />
       <span className="text-sm font-semibold text-success">
         30-Day Money-Back Guarantee
@@ -177,15 +178,15 @@ export function GuaranteeBadge() {
 export function SecurityBadges() {
   return (
     <div className="flex flex-wrap items-center justify-center gap-3 mt-4">
-      <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white/60 backdrop-blur-xl border border-white/40 rounded-full text-xs shadow-sm">
+      <div className="flex items-center gap-1.5 px-3 py-1.5 bg-background/70 backdrop-blur-xl border border-border/30 rounded-full text-xs shadow-sm">
         <Lock className="w-3.5 h-3.5 text-primary" />
         <span className="text-primary font-medium">TLS Encryption</span>
       </div>
-      <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white/60 backdrop-blur-xl border border-white/40 rounded-full text-xs shadow-sm">
+      <div className="flex items-center gap-1.5 px-3 py-1.5 bg-background/70 backdrop-blur-xl border border-border/30 rounded-full text-xs shadow-sm">
         <Shield className="w-3.5 h-3.5 text-success" />
         <span className="text-success font-medium">Privacy-First</span>
       </div>
-      <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white/60 backdrop-blur-xl border border-white/40 rounded-full text-xs shadow-sm">
+      <div className="flex items-center gap-1.5 px-3 py-1.5 bg-background/70 backdrop-blur-xl border border-border/30 rounded-full text-xs shadow-sm">
         <Users className="w-3.5 h-3.5 text-accent" />
         <span className="text-accent font-medium">100+ Protected</span>
       </div>
