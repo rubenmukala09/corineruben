@@ -15,7 +15,7 @@ const buttonVariants = cva(
           "shadow-[0_2px_8px_hsl(var(--primary)/0.35),0_8px_20px_-6px_hsl(var(--primary)/0.25),inset_0_1px_0_hsl(0_0%_100%/0.2),inset_0_-1px_0_hsl(0_0%_0%/0.1)]",
           "hover:shadow-[0_4px_14px_hsl(var(--primary)/0.45),0_12px_28px_-6px_hsl(var(--primary)/0.3),inset_0_1px_0_hsl(0_0%_100%/0.25)]",
           "hover:brightness-110",
-          "[text-shadow:0_1px_2px_rgba(0,0,0,0.2)]",
+          "[text-shadow:0_1px_3px_rgba(0,0,0,0.35)]",
         ].join(" "),
         gold: [
           "bg-gradient-to-br from-coral-400 via-coral-500 to-coral-600 text-white",
@@ -23,13 +23,14 @@ const buttonVariants = cva(
           "shadow-[0_2px_8px_hsl(var(--coral-500)/0.35),0_8px_20px_-6px_hsl(var(--coral-500)/0.25),inset_0_1px_0_hsl(0_0%_100%/0.2),inset_0_-1px_0_hsl(0_0%_0%/0.1)]",
           "hover:shadow-[0_4px_14px_hsl(var(--coral-500)/0.45),0_12px_28px_-6px_hsl(var(--coral-500)/0.3)]",
           "hover:brightness-110",
-          "[text-shadow:0_1px_2px_rgba(0,0,0,0.2)]",
+          "[text-shadow:0_1px_3px_rgba(0,0,0,0.35)]",
         ].join(" "),
         outline: [
-          "bg-white/90 backdrop-blur-sm text-foreground",
-          "border border-border/80",
-          "shadow-[0_1px_3px_hsl(258_20%_20%/0.06),inset_0_1px_0_hsl(0_0%_100%/0.9)]",
-          "hover:bg-white hover:border-primary/30 hover:shadow-[0_2px_8px_hsl(var(--primary)/0.1),0_6px_16px_-4px_hsl(var(--lavender-400)/0.12)]",
+          "bg-white text-foreground",
+          "border-2 border-border",
+          "shadow-[0_1px_3px_hsl(258_20%_20%/0.08),inset_0_1px_0_hsl(0_0%_100%/0.9)]",
+          "hover:bg-muted hover:border-primary/40 hover:shadow-[0_2px_8px_hsl(var(--primary)/0.12),0_6px_16px_-4px_hsl(var(--lavender-400)/0.14)]",
+          "[text-shadow:none]",
         ].join(" "),
         outlineGold: [
           "bg-coral-100/60 backdrop-blur-sm text-coral-600",
