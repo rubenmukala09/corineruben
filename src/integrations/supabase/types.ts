@@ -3019,6 +3019,284 @@ export type Database = {
         }
         Relationships: []
       }
+      portfolio_case_study_sections: {
+        Row: {
+          content: string | null
+          created_at: string
+          display_order: number
+          id: string
+          media_urls: string[] | null
+          project_id: string
+          section_type: string
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string
+          display_order?: number
+          id?: string
+          media_urls?: string[] | null
+          project_id: string
+          section_type: string
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          content?: string | null
+          created_at?: string
+          display_order?: number
+          id?: string
+          media_urls?: string[] | null
+          project_id?: string
+          section_type?: string
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "portfolio_case_study_sections_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "portfolio_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      portfolio_categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          display_order: number
+          id: string
+          name: string
+          slug: string
+          updated_at: string
+          visibility: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          id?: string
+          name: string
+          slug: string
+          updated_at?: string
+          visibility?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          id?: string
+          name?: string
+          slug?: string
+          updated_at?: string
+          visibility?: string
+        }
+        Relationships: []
+      }
+      portfolio_gallery: {
+        Row: {
+          caption: string | null
+          created_at: string
+          display_order: number
+          id: string
+          image_url: string
+          project_id: string
+        }
+        Insert: {
+          caption?: string | null
+          created_at?: string
+          display_order?: number
+          id?: string
+          image_url: string
+          project_id: string
+        }
+        Update: {
+          caption?: string | null
+          created_at?: string
+          display_order?: number
+          id?: string
+          image_url?: string
+          project_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "portfolio_gallery_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "portfolio_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      portfolio_project_tags: {
+        Row: {
+          id: string
+          project_id: string
+          tag_id: string
+        }
+        Insert: {
+          id?: string
+          project_id: string
+          tag_id: string
+        }
+        Update: {
+          id?: string
+          project_id?: string
+          tag_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "portfolio_project_tags_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "portfolio_projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "portfolio_project_tags_tag_id_fkey"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "portfolio_tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      portfolio_projects: {
+        Row: {
+          category_id: string | null
+          client_name: string | null
+          created_at: string
+          created_by: string | null
+          display_order: number
+          featured: boolean
+          hero_image_url: string | null
+          id: string
+          project_date: string | null
+          short_description: string | null
+          slug: string
+          status: string
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category_id?: string | null
+          client_name?: string | null
+          created_at?: string
+          created_by?: string | null
+          display_order?: number
+          featured?: boolean
+          hero_image_url?: string | null
+          id?: string
+          project_date?: string | null
+          short_description?: string | null
+          slug: string
+          status?: string
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category_id?: string | null
+          client_name?: string | null
+          created_at?: string
+          created_by?: string | null
+          display_order?: number
+          featured?: boolean
+          hero_image_url?: string | null
+          id?: string
+          project_date?: string | null
+          short_description?: string | null
+          slug?: string
+          status?: string
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "portfolio_projects_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "portfolio_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      portfolio_style_dictionary: {
+        Row: {
+          aliases: string[] | null
+          canonical_term: string
+          category: string
+          client_facing_label: string | null
+          created_at: string
+          description: string | null
+          id: string
+          trend_age: string
+        }
+        Insert: {
+          aliases?: string[] | null
+          canonical_term: string
+          category?: string
+          client_facing_label?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          trend_age?: string
+        }
+        Update: {
+          aliases?: string[] | null
+          canonical_term?: string
+          category?: string
+          client_facing_label?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          trend_age?: string
+        }
+        Relationships: []
+      }
+      portfolio_tags: {
+        Row: {
+          created_at: string
+          display_order: number
+          id: string
+          name: string
+          slug: string
+          style_dictionary_id: string | null
+          tag_type: string
+        }
+        Insert: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          name: string
+          slug: string
+          style_dictionary_id?: string | null
+          tag_type?: string
+        }
+        Update: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          name?: string
+          slug?: string
+          style_dictionary_id?: string | null
+          tag_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "portfolio_tags_style_dictionary_id_fkey"
+            columns: ["style_dictionary_id"]
+            isOneToOne: false
+            referencedRelation: "portfolio_style_dictionary"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       product_categories: {
         Row: {
           created_at: string

@@ -89,6 +89,7 @@ import DonationsList from "./pages/admin/DonationsList";
 import ServiceInquiriesList from "./pages/admin/ServiceInquiriesList";
 import BookingsList from "./pages/admin/BookingsList";
 import GraphicDesignAdmin from "./pages/admin/GraphicDesignAdmin";
+import PortfolioAdmin from "./pages/admin/PortfolioAdmin";
 
 // Cyber dashboard pages
 import ThreatMonitor from "./pages/admin/cyber/ThreatMonitor";
@@ -230,6 +231,7 @@ function PublicRoutes() {
         <Route path="bookings" element={<BookingsList />} />
         <Route path="job-applications" element={<JobApplicationsList />} />
         <Route path="content/portfolio" element={<GraphicDesignAdmin />} />
+        <Route path="content/portfolio-cms" element={<PortfolioAdmin />} />
       </Route>
 
       <Route path="*" element={<NotFound />} />
