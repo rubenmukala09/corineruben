@@ -27,9 +27,9 @@ const buttonVariants = cva(
         ].join(" "),
         outline: [
           "bg-white text-foreground",
-          "border-2 border-border",
-          "shadow-[0_1px_3px_hsl(258_20%_20%/0.08),inset_0_1px_0_hsl(0_0%_100%/0.9)]",
-          "hover:bg-muted hover:border-primary/40 hover:shadow-[0_2px_8px_hsl(var(--primary)/0.12),0_6px_16px_-4px_hsl(var(--lavender-400)/0.14)]",
+          "border-2 border-border/80",
+          "shadow-[0_1px_4px_hsl(258_20%_20%/0.1),inset_0_1px_0_hsl(0_0%_100%/0.9)]",
+          "hover:bg-muted hover:border-primary/40 hover:text-primary hover:shadow-[0_2px_8px_hsl(var(--primary)/0.15),0_6px_16px_-4px_hsl(var(--lavender-400)/0.14)]",
           "[text-shadow:none]",
         ].join(" "),
         outlineGold: [
