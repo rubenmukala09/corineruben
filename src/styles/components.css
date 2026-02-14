@@ -2,45 +2,37 @@
 
 /* ===== SKEUOMORPHISM 2.0 DESIGN SYSTEM ===== */
 
-/* Skeuomorphic Card - Glassmorphism hybrid with physical depth */
+/* Skeuomorphic Card - Glassmorphism hybrid with warm ombre depth */
 .skeuo-card {
   background:
     linear-gradient(
       135deg,
-      hsl(0 0% 100% / 0.9) 0%,
-      hsl(0 0% 100% / 0.7) 50%,
-      hsl(0 0% 100% / 0.85) 100%
+      hsl(348 20% 99% / 0.92) 0%,
+      hsl(310 15% 97% / 0.72) 50%,
+      hsl(348 20% 99% / 0.88) 100%
     ),
     radial-gradient(
       circle at 10% 15%,
-      hsl(var(--coral-100) / 0.2) 0%,
+      hsl(var(--coral-100) / 0.15) 0%,
       transparent 50%
     );
   backdrop-filter: blur(20px) saturate(1.6);
   -webkit-backdrop-filter: blur(20px) saturate(1.6);
   border-radius: 1rem;
-  padding: 1.5rem;
-  border: 1px solid hsl(0 0% 100% / 0.6);
-  box-shadow:
-    0 1px 1px rgba(0, 0, 0, 0.02),
-    0 2px 4px rgba(0, 0, 0, 0.02),
-    0 4px 8px rgba(0, 0, 0, 0.03),
-    0 8px 16px rgba(0, 0, 0, 0.04),
-    0 16px 32px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  padding: 1.25rem;
+  border: 1px solid hsl(310 20% 92% / 0.6);
+  box-shadow: var(--skeuo-shadow-ombre);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .skeuo-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-4px);
   box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.02),
-    0 4px 8px rgba(0, 0, 0, 0.03),
-    0 8px 16px rgba(0, 0, 0, 0.04),
-    0 16px 32px rgba(0, 0, 0, 0.05),
-    0 32px 48px rgba(0, 0, 0, 0.04),
+    0 3px 8px hsl(var(--coral-400) / 0.1),
+    0 8px 18px hsl(var(--lavender-400) / 0.08),
+    0 16px 36px hsl(258 30% 30% / 0.06),
     inset 0 1px 0 rgba(255, 255, 255, 1);
-  border-color: hsl(0 0% 100% / 0.8);
+  border-color: hsl(310 22% 90% / 0.75);
 }
 
 /* Skeuomorphic Button - Tactile, physical button */
