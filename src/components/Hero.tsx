@@ -110,30 +110,28 @@ const Hero = ({
 
       {/* Content - CSS animations instead of framer-motion */}
       <div className="w-full center-container-wide py-20 sm:py-24 md:py-28 lg:py-32 relative z-10">
-        <div className="max-w-6xl">
-          <div className="glass-hero rounded-3xl card-padding-xl animate-fade-in">
-            {headline && (
-              <h1 className="text-white mb-4 sm:mb-6 md:mb-8 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight font-bold">
-                {headline}
-              </h1>
-            )}
-            {subheadline && (
-              <p className="text-white/95 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl mb-8 md:mb-10 leading-relaxed max-w-3xl">
-                {subheadline}
-              </p>
-            )}
-            {children && (
-              <div className="flex flex-wrap spacing-md justify-start">
-                {Children.map(children, (child) =>
-                  isValidElement(child) ? (
-                    <MagneticWrapper strength={0.3}>{child}</MagneticWrapper>
-                  ) : (
-                    child
-                  ),
-                )}
-              </div>
-            )}
-          </div>
+        <div className="max-w-6xl animate-fade-in">
+          {headline && (
+            <h1 className="text-white mb-4 sm:mb-6 md:mb-8 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight font-bold">
+              {headline}
+            </h1>
+          )}
+          {subheadline && (
+            <p className="text-white/95 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl mb-8 md:mb-10 leading-relaxed max-w-3xl">
+              {subheadline}
+            </p>
+          )}
+          {children && (
+            <div className="flex flex-wrap spacing-md justify-start">
+              {Children.map(children, (child) =>
+                isValidElement(child) ? (
+                  <MagneticWrapper strength={0.3}>{child}</MagneticWrapper>
+                ) : (
+                  child
+                ),
+              )}
+            </div>
+          )}
         </div>
       </div>
 

@@ -278,24 +278,11 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     overflow-x: hidden;
     width: 100%;
     position: relative;
-    /* Animated glassmorphism-friendly gradient background */
+    /* Static subtle gradient background for performance */
     background: linear-gradient(135deg,
       hsl(var(--background)) 0%,
-      hsl(var(--navy-100)) 25%,
-      hsl(var(--coral-100)) 50%,
-      hsl(var(--lavender-100)) 75%,
+      hsl(var(--navy-100) / 0.3) 50%,
       hsl(var(--background)) 100%);
-    background-size: 400% 400%;
-    animation: gradientShift 20s ease infinite;
-    will-change: background-position;
-  }
-
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    25% { background-position: 50% 50%; }
-    50% { background-position: 100% 50%; }
-    75% { background-position: 50% 50%; }
-    100% { background-position: 0% 50%; }
   }
 
   @media (min-width: 768px) {

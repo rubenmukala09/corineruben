@@ -66,12 +66,12 @@ const Navigation = React.memo(() => {
       {/* Mobile backdrop overlay */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[10000] lg:hidden"
+          className="fixed inset-0 bg-black/50 z-[10000] lg:hidden"
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
 
-      <nav className="sticky top-0 z-navigation relative border-b border-white/20 bg-gradient-to-br from-white/60 via-white/50 to-white/40 backdrop-blur-2xl supports-[backdrop-filter]:bg-white/30 shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] before:absolute before:inset-0 before:bg-gradient-to-b before:from-white/20 before:to-transparent before:pointer-events-none">
+      <nav className="sticky top-0 z-navigation relative border-b border-white/20 bg-white/90 backdrop-blur-sm shadow-sm">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between h-14 md:h-16">
             {/* Logo */}
@@ -194,7 +194,7 @@ const Navigation = React.memo(() => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden fixed top-14 md:top-16 left-0 right-0 bottom-0 bg-gradient-to-br from-white/95 via-white/90 to-white/85 backdrop-blur-2xl border-t border-white/30 shadow-[0_8px_32px_0_rgba(31,38,135,0.2)] z-[10001] overflow-y-auto overscroll-contain pb-[calc(env(safe-area-inset-bottom)+1.25rem)] [-webkit-overflow-scrolling:touch]">
+          <div className="lg:hidden fixed top-14 md:top-16 left-0 right-0 bottom-0 bg-white/95 backdrop-blur-sm border-t border-border shadow-lg z-[10001] overflow-y-auto overscroll-contain pb-[calc(env(safe-area-inset-bottom)+1.25rem)] [-webkit-overflow-scrolling:touch]">
             <div className="container mx-auto px-4 py-6 space-y-2">
               {navLinks.map((link) => {
                 const isActive = isActiveLink(link.href);

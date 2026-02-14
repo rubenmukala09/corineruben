@@ -372,7 +372,7 @@ export const HeroHomepage = () => {
                         ? { duration: 0 }
                         : { duration: 2.5, repeat: Infinity }
                     }
-                    className="text-foreground font-medium bg-gradient-to-r from-primary/15 to-accent/15 px-2 py-1 rounded-lg mx-1 backdrop-blur-sm"
+                    className="text-foreground font-medium bg-gradient-to-r from-primary/15 to-accent/15 px-2 py-1 rounded-lg mx-1"
                   >
                     over 100 families
                   </motion.span>
