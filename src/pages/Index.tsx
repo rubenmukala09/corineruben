@@ -147,14 +147,10 @@ const Index = () => {
           </section>
 
           {/* Working Process - How It Works */}
-          <section id="process">
-            <WorkingProcess />
-          </section>
+          <WorkingProcess />
 
           {/* FAQ Section */}
-          <section id="faq">
-            <FAQPreview />
-          </section>
+          <FAQPreview />
 
           {/* Quick Links - FAQ, Contact, Careers */}
           <section id="quick-links">
