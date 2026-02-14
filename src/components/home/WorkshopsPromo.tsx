@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Shield, Eye, AlertTriangle, Target, Play } from "lucide-react";
+import { ArrowRight, Shield, Eye, AlertTriangle, Target } from "lucide-react";
 import seniorLearning from "@/assets/protection-training-workshop.jpg";
-import trainingVideo from "@/assets/training-workshop-video.mp4";
 
 const services = [
   { icon: AlertTriangle, title: "Scam Prevention", desc: "Spot AI-powered scams before they reach you" },
@@ -13,76 +11,21 @@ const services = [
 ];
 
 export const WorkshopsPromo = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const mediaRef = useRef<HTMLDivElement>(null);
-  const [shouldLoad, setShouldLoad] = useState(false);
-  const [videoLoaded, setVideoLoaded] = useState(false);
-  const [videoError, setVideoError] = useState(false);
-
-  useEffect(() => {
-    const target = mediaRef.current;
-    if (!target) { setShouldLoad(true); return; }
-    if (!("IntersectionObserver" in window)) { setShouldLoad(true); return; }
-    const observer = new IntersectionObserver(
-      (entries) => { if (entries[0]?.isIntersecting) { setShouldLoad(true); observer.disconnect(); } },
-      { rootMargin: "150px" }
-    );
-    observer.observe(target);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!shouldLoad) return;
-    setVideoError(false);
-    const video = videoRef.current;
-    if (!video) return;
-    const handleCanPlay = () => {
-      setVideoLoaded(true);
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { setVideoError(true); return; }
-      video.play().catch(() => setVideoError(true));
-    };
-    const handleError = () => setVideoError(true);
-    video.addEventListener("canplay", handleCanPlay);
-    video.addEventListener("error", handleError);
-    video.load();
-    return () => { video.removeEventListener("canplay", handleCanPlay); video.removeEventListener("error", handleError); };
-  }, [shouldLoad]);
-
   return (
     <section className="py-16 lg:py-24 relative overflow-hidden" aria-labelledby="workshops-heading">
-      {/* Background decorative orbs */}
       <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-primary/8 to-accent/5 blur-[120px] pointer-events-none" />
       <div className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-gradient-to-br from-accent/6 to-primary/4 blur-[100px] pointer-events-none" />
 
       <div className="container mx-auto px-4 lg:px-8 max-w-6xl relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Media - Left */}
-          <div className="relative" ref={mediaRef}>
+          <div className="relative">
             <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
-              {/* Glass border effect */}
               <div className="absolute -inset-[1px] rounded-3xl bg-gradient-to-br from-white/30 via-white/5 to-white/20 pointer-events-none z-20" style={{ mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)', maskComposite: 'xor', WebkitMaskComposite: 'xor', padding: '1px' }} />
               <div className="absolute inset-0 shadow-[0_20px_60px_-15px_hsl(var(--primary)/0.25),0_10px_30px_-10px_hsl(var(--accent)/0.15)] rounded-3xl pointer-events-none z-20" />
-
-              {(!shouldLoad || !videoLoaded) && (
-                <img src={seniorLearning} alt="Protection Training Workshop" className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" />
-              )}
-              {shouldLoad && (
-                <video ref={videoRef} autoPlay muted loop playsInline preload="metadata" controls={false} poster={seniorLearning}
-                  className={`w-full h-full object-cover transition-opacity duration-500 ${videoLoaded ? "opacity-100" : "opacity-0"}`}>
-                  <source src={trainingVideo} type="video/mp4" />
-                </video>
-              )}
-              {videoError && (
-                <button onClick={() => { videoRef.current?.play().catch(console.error); setVideoError(false); }}
-                  className="absolute inset-0 flex items-center justify-center bg-foreground/20 z-30" aria-label="Play video">
-                  <div className="w-16 h-16 rounded-full bg-white/90 backdrop-blur-xl flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
-                    <Play className="w-6 h-6 text-primary ml-1" fill="currentColor" />
-                  </div>
-                </button>
-              )}
+              <img src={seniorLearning} alt="Protection Training Workshop" className="w-full h-full object-cover" width={800} height={600} loading="lazy" decoding="async" />
             </div>
 
-            {/* Floating glass badge */}
             <div className="absolute -bottom-5 -right-3 lg:-right-6 backdrop-blur-xl bg-card/80 rounded-2xl border border-white/40 p-4" style={{ boxShadow: 'var(--skeuo-shadow-ombre)' }}>
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-[0_4px_15px_hsl(var(--primary)/0.4)]">
@@ -109,7 +52,6 @@ export const WorkshopsPromo = () => {
               </p>
             </div>
 
-            {/* Glass stats */}
             <div className="flex items-center gap-8 p-5 rounded-2xl backdrop-blur-xl bg-card/60 border border-border/40" style={{ boxShadow: 'var(--skeuo-shadow-ombre)' }}>
               <div>
                 <div className="text-4xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">100+</div>
@@ -122,7 +64,6 @@ export const WorkshopsPromo = () => {
               </div>
             </div>
 
-            {/* Glass service cards */}
             <div className="grid grid-cols-2 gap-3" role="list" aria-label="Services">
               {services.map((service) => (
                 <div key={service.title} role="listitem" className="group relative rounded-xl overflow-hidden">

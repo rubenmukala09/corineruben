@@ -9,8 +9,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, ArrowRight, Loader2, BookOpen } from "lucide-react";
 import heroResourcesNew from "@/assets/hero-resources-new.jpg";
-import heroResources from "@/assets/hero-resources.jpg";
-import heroResourcesMarketplace from "@/assets/hero-resources-marketplace.jpg";
 import { useArticles } from "@/hooks/useArticles";
 import { SEO } from "@/components/SEO";
 import { usePrerenderBlocker } from "@/contexts/PrerenderContext";
@@ -35,14 +33,6 @@ function Articles() {
     {
       src: heroResourcesNew,
       alt: "Educational resources and learning materials",
-    },
-    {
-      src: heroResources,
-      alt: "Community members reading and learning together",
-    },
-    {
-      src: heroResourcesMarketplace,
-      alt: "Digital marketplace for safety resources",
     },
   ];
 
