@@ -6,16 +6,16 @@ import threatAnalysisScreen from "@/assets/threat-analysis-screen.jpg";
 import seniorPhoneProtection from "@/assets/senior-phone-protection.jpg";
 
 const scamAlerts = [
-  { icon: Phone, title: "AI Voice Impersonation", description: "Criminals clone voices of loved ones using AI to request emergency funds.", trend: "+340%", tip: "Verify any urgent request by calling back on a known number.", severity: "critical" },
-  { icon: Mail, title: "Government Impersonation", description: "Fraudulent emails mimicking IRS, SSA, or Medicare demanding immediate action.", trend: "+180%", tip: "Government agencies never request payments via email or phone.", severity: "high" },
-  { icon: CreditCard, title: "Untraceable Payment Demands", description: "Requests for gift cards, wire transfers, or cryptocurrency are always scams.", trend: "+95%", tip: "No legitimate business accepts gift cards as payment.", severity: "high" },
+  { icon: Phone, title: "AI Voice Impersonation", description: "Criminals clone voices of loved ones using AI, then call requesting emergency funds.", trend: "+340%", tip: "Verify every urgent request by calling back on a number you already have.", severity: "critical" },
+  { icon: Mail, title: "Government Impersonation", description: "Fraudulent emails mimicking IRS, SSA, or Medicare demand immediate action or payment.", trend: "+180%", tip: "Government agencies never request payments via email or phone.", severity: "high" },
+  { icon: CreditCard, title: "Untraceable Payment Demands", description: "Requests for gift cards, wire transfers, or cryptocurrency are always fraud.", trend: "+95%", tip: "No legitimate business accepts gift cards as payment.", severity: "high" },
 ];
 
 const quickTips = [
   "Never give personal info to incoming callers",
   "Verify requests through official channels",
-  "Don't click links in unexpected emails",
-  "Trust your instincts - if it feels wrong, it is",
+  "Do not click links in unexpected emails",
+  "Trust your instincts. If it feels wrong, it is",
 ];
 
 interface ScamAlertsSectionProps { onSubmitThreat?: () => void; }
@@ -31,7 +31,6 @@ export const ScamAlertsSection = ({ onSubmitThreat }: ScamAlertsSectionProps) =>
   return (
     <section className="py-16 lg:py-20" aria-labelledby="alerts-heading">
       <div className="container mx-auto px-4 lg:px-8">
-        {/* Section Label */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-destructive/20 bg-destructive/5 mb-5">
             <span className="w-2 h-2 rounded-full bg-destructive animate-pulse" />
@@ -47,10 +46,9 @@ export const ScamAlertsSection = ({ onSubmitThreat }: ScamAlertsSectionProps) =>
           </p>
         </div>
 
-        {/* Image Row */}
         <div className="grid md:grid-cols-2 gap-6 mb-12 max-w-5xl mx-auto">
-          <div className="relative rounded-2xl overflow-hidden border border-border/60 shadow-lg">
-            <img src={threatAnalysisScreen} alt="Threat analysis" className="h-56 w-full object-cover" width={600} height={400} loading="lazy" decoding="async" />
+          <div className="relative rounded-2xl overflow-hidden border border-border/60 shadow-lg group">
+            <img src={threatAnalysisScreen} alt="Threat analysis dashboard" className="h-56 w-full object-cover group-hover:scale-105 transition-transform duration-500" width={600} height={400} loading="lazy" decoding="async" />
             <div className="absolute bottom-3 left-3 right-3 flex items-center gap-3 bg-card/90 backdrop-blur-sm rounded-xl p-3 border border-border/40">
               <div className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center"><TrendingUp className="w-5 h-5 text-white" /></div>
               <div>
@@ -59,8 +57,8 @@ export const ScamAlertsSection = ({ onSubmitThreat }: ScamAlertsSectionProps) =>
               </div>
             </div>
           </div>
-          <div className="relative rounded-2xl overflow-hidden border border-border/60 shadow-lg">
-            <img src={seniorPhoneProtection} alt="Senior using phone safely" className="h-56 w-full object-cover" width={600} height={400} loading="lazy" decoding="async" />
+          <div className="relative rounded-2xl overflow-hidden border border-border/60 shadow-lg group">
+            <img src={seniorPhoneProtection} alt="Senior using phone safely" className="h-56 w-full object-cover group-hover:scale-105 transition-transform duration-500" width={600} height={400} loading="lazy" decoding="async" />
             <div className="absolute bottom-3 left-3 right-3 flex items-center gap-3 bg-card/90 backdrop-blur-sm rounded-xl p-3 border border-border/40">
               <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center"><Shield className="w-5 h-5 text-white" /></div>
               <div>
@@ -71,13 +69,11 @@ export const ScamAlertsSection = ({ onSubmitThreat }: ScamAlertsSectionProps) =>
           </div>
         </div>
 
-        {/* Alerts + Tips */}
         <div className="grid lg:grid-cols-2 gap-8 items-start max-w-5xl mx-auto">
-          {/* Alert Cards */}
           <div className="space-y-3" role="list" aria-label="Current scam alerts">
             {scamAlerts.map((alert, index) => (
               <div key={index} role="listitem" onClick={() => setActiveAlert(index)}
-                className={`p-5 rounded-2xl cursor-pointer border transition-all duration-300 ${
+                className={`p-5 rounded-2xl cursor-pointer border transition-all duration-300 hover:-translate-y-0.5 ${
                   index === activeAlert ? "bg-card border-primary/30 shadow-md" : "bg-card/60 border-border/40 hover:border-primary/20"
                 }`}>
                 <div className="flex items-start gap-4">
@@ -105,7 +101,6 @@ export const ScamAlertsSection = ({ onSubmitThreat }: ScamAlertsSectionProps) =>
             ))}
           </div>
 
-          {/* Tips + CTA */}
           <div className="space-y-6">
             <div className="bg-card rounded-2xl p-6 border border-border/60">
               <div className="flex items-center gap-3 mb-5">
@@ -127,12 +122,12 @@ export const ScamAlertsSection = ({ onSubmitThreat }: ScamAlertsSectionProps) =>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3">
-              <Button asChild size="lg" className="h-12 px-6 text-sm font-bold rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90">
+              <Button asChild size="lg" className="h-12 px-6 text-sm font-bold rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90 hover:scale-105 active:scale-95 transition-all">
                 <Link to="/training#pricing">Get Protected Now <ArrowRight className="ml-2 w-4 h-4" /></Link>
               </Button>
               {onSubmitThreat && (
                 <Button type="button" variant="outline" size="lg" onClick={onSubmitThreat}
-                  className="h-12 px-6 text-sm font-bold rounded-full">
+                  className="h-12 px-6 text-sm font-bold rounded-full hover:scale-105 active:scale-95 transition-all">
                   Analyze a Message
                 </Button>
               )}

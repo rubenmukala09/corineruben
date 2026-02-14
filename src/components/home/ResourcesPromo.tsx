@@ -13,7 +13,6 @@ export const ResourcesPromo = () => {
   return (
     <section className="py-16 lg:py-20" aria-labelledby="resources-heading">
       <div className="container mx-auto px-4 lg:px-8">
-        {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12 max-w-5xl mx-auto">
           <div className="max-w-xl">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-accent/20 bg-accent/5 mb-5">
@@ -21,24 +20,22 @@ export const ResourcesPromo = () => {
               <span className="text-xs font-bold uppercase tracking-[0.15em] text-primary">Resources</span>
             </div>
             <h2 id="resources-heading" className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground leading-tight mb-3">
-              Tools For{" "}
+              Tools For Your{" "}
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Protection</span>
             </h2>
             <p className="text-muted-foreground text-base">
-              From insurance coverage to free educational materials. Everything you need to stay protected.
+              From insurance coverage to free educational materials, everything you need to stay safe online.
             </p>
           </div>
-          <Button asChild size="lg" className="h-12 px-8 text-sm font-bold rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90">
+          <Button asChild size="lg" className="h-12 px-8 text-sm font-bold rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90 hover:scale-105 active:scale-95 transition-all">
             <Link to="/resources">Browse All <ArrowRight className="ml-2 w-4 h-4" /></Link>
           </Button>
         </div>
 
-        {/* Two Column */}
         <div className="grid lg:grid-cols-2 gap-8 mb-10 max-w-5xl mx-auto">
-          {/* Image */}
-          <div className="relative rounded-2xl overflow-hidden border border-border/60 shadow-lg">
+          <div className="relative rounded-2xl overflow-hidden border border-border/60 shadow-lg group">
             <img src={securityProtectionTools} alt="Digital security protection tools"
-              className="aspect-[4/3] w-full object-cover" width={600} height={450} loading="lazy" decoding="async" />
+              className="aspect-[4/3] w-full object-cover group-hover:scale-105 transition-transform duration-500" width={600} height={450} loading="lazy" decoding="async" />
             <div className="absolute bottom-4 left-4 right-4 bg-card/90 backdrop-blur-sm rounded-xl p-4 border border-border/40">
               <div className="flex items-center justify-between">
                 <div>
@@ -52,12 +49,11 @@ export const ResourcesPromo = () => {
             </div>
           </div>
 
-          {/* Resource Cards */}
           <div className="grid gap-4" role="list" aria-label="Available resources">
             {resources.map((resource) => (
               <Link key={resource.title} to="/resources" className="group block" role="listitem">
-                <div className="flex items-center gap-4 p-5 rounded-2xl bg-card border border-border/60 hover:border-primary/30 hover:shadow-md transition-all duration-300">
-                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${resource.gradient} flex items-center justify-center flex-shrink-0`}>
+                <div className="flex items-center gap-4 p-5 rounded-2xl bg-card border border-border/60 hover:border-primary/30 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${resource.gradient} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
                     <resource.icon className="w-6 h-6 text-white" />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -74,18 +70,17 @@ export const ResourcesPromo = () => {
           </div>
         </div>
 
-        {/* Download Banner */}
-        <div className="max-w-5xl mx-auto p-5 rounded-2xl border border-border/60 bg-card flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="max-w-5xl mx-auto p-5 rounded-2xl border border-border/60 bg-card flex flex-col md:flex-row items-center justify-between gap-4 hover:shadow-lg transition-shadow">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
               <Download className="w-6 h-6 text-white" />
             </div>
             <div>
               <div className="text-base font-bold text-foreground">Free Emergency Anti-Scam Scripts</div>
-              <div className="text-sm text-muted-foreground">IRS • Tech Support • Grandparent • Bank Fraud</div>
+              <div className="text-sm text-muted-foreground">IRS, Tech Support, Grandparent, Bank Fraud</div>
             </div>
           </div>
-          <Button asChild size="lg" className="h-12 px-6 text-sm font-bold rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90">
+          <Button asChild size="lg" className="h-12 px-6 text-sm font-bold rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90 hover:scale-105 active:scale-95 transition-all">
             <Link to="/resources">Download Free <ArrowRight className="ml-2 w-4 h-4" /></Link>
           </Button>
         </div>

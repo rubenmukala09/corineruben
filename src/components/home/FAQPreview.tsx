@@ -6,10 +6,10 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import supportAgent from "@/assets/support-agent.jpg";
 
 const faqs = [
-  { question: "How does ScamShield AI actually protect me?", answer: "ScamShield uses advanced AI to analyze incoming calls, texts, and emails in real-time. When it detects suspicious patterns (like known scam phone numbers, phishing language, or AI-cloned voices), it immediately alerts you and blocks the threat." },
-  { question: "Is my personal data safe with InVision Network?", answer: "Absolutely. We use military-grade encryption and never sell your data. As a company that supports veterans, we take security personally. Your information is stored securely and only used to protect you from scams." },
-  { question: "What makes you different from other companies?", answer: "We're local (Ohio-based), veteran-supporting, and focused specifically on protecting families and seniors from AI-powered scams. We don't just provide software. We provide education, support, and a personal relationship with our clients." },
-  { question: "Can I protect my elderly parents who aren't tech-savvy?", answer: "Yes! That's exactly who we designed ScamShield for. Our Family plan covers up to 5 members, and we provide simple setup assistance. Many of our clients are seniors or their family members who want to protect loved ones." },
+  { question: "How does ScamShield AI protect me?", answer: "ScamShield uses AI to analyze incoming calls, texts, and emails in real time. When it detects suspicious patterns, known scam numbers, phishing language, or cloned voices, it alerts you and blocks the threat." },
+  { question: "Is my personal data safe with InVision Network?", answer: "Yes. We use encryption and never sell your data. As a veteran-supporting company, we take security personally. Your information is stored securely and only used to protect you from scams." },
+  { question: "What makes you different from other companies?", answer: "We are Ohio-based, veteran-supporting, and focused on protecting families and seniors from AI-powered scams. We provide education, support, and a personal relationship with every client." },
+  { question: "I want to protect my elderly parents who are not tech-savvy. Is this for them?", answer: "Yes. That is exactly who we designed ScamShield for. Our Family plan covers up to 5 members, and we provide simple setup assistance. Many of our clients are seniors or their family members." },
 ];
 
 export const FAQPreview = () => {
@@ -17,7 +17,6 @@ export const FAQPreview = () => {
     <section className="py-16 lg:py-20" aria-labelledby="faq-heading">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-10 items-start max-w-5xl mx-auto">
-          {/* Left - Header & Support */}
           <div className="space-y-6">
             <div>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/20 bg-primary/5 mb-5">
@@ -26,15 +25,14 @@ export const FAQPreview = () => {
               </div>
               <h2 id="faq-heading" className="text-3xl md:text-4xl font-black text-foreground leading-tight mb-3">
                 Got <span className="text-primary">Questions?</span><br />
-                We've Got Answers
+                We Have Answers
               </h2>
               <p className="text-muted-foreground text-base">
-                Protecting your family from scams is a serious decision. Here's what you need to know.
+                Protecting your family from scams is a big decision. Here is what you need to know.
               </p>
             </div>
 
-            {/* Support Card */}
-            <div className="bg-card rounded-2xl border border-border/60 p-5">
+            <div className="bg-card rounded-2xl border border-border/60 p-5 hover:shadow-lg transition-shadow">
               <div className="flex items-center gap-3 mb-4">
                 <div className="relative">
                   <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-primary/20">
@@ -44,17 +42,17 @@ export const FAQPreview = () => {
                 </div>
                 <div>
                   <h3 className="font-bold text-foreground">Talk to a Human</h3>
-                  <p className="text-xs text-muted-foreground">Real experts, not bots • Available now</p>
+                  <p className="text-xs text-muted-foreground">Real experts, not bots. Available now</p>
                 </div>
               </div>
               <p className="text-sm text-muted-foreground mb-4">
                 Our Ohio-based team is ready to answer your questions and help you find the right protection.
               </p>
               <div className="flex flex-col gap-2">
-                <Button asChild className="w-full rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90">
+                <Button asChild className="w-full rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90 hover:scale-105 active:scale-95 transition-all">
                   <Link to="/contact">Chat With Expert</Link>
                 </Button>
-                <Button asChild variant="outline" className="w-full rounded-full">
+                <Button asChild variant="outline" className="w-full rounded-full hover:scale-105 active:scale-95 transition-all">
                   <a href={`tel:${SITE.phone.e164}`}>
                     <Phone className="w-4 h-4 mr-2" /> Call Now
                   </a>
@@ -63,7 +61,6 @@ export const FAQPreview = () => {
             </div>
           </div>
 
-          {/* Right - FAQ Accordion */}
           <div className="space-y-4">
             <Accordion type="single" collapsible className="space-y-3">
               {faqs.map((faq, index) => (

@@ -6,10 +6,10 @@ import seniorLearning from "@/assets/protection-training-workshop.jpg";
 import trainingVideo from "@/assets/training-workshop-video.mp4";
 
 const services = [
-  { icon: AlertTriangle, title: "Scam Prevention", desc: "Identify AI-powered scams before they strike" },
-  { icon: Shield, title: "4-Step Protection", desc: "Proven methodology for digital safety" },
-  { icon: Target, title: "Protection Tiers", desc: "Customized security for your needs" },
-  { icon: Eye, title: "Threat Analysis", desc: "Real-time monitoring and alerts" },
+  { icon: AlertTriangle, title: "Scam Prevention", desc: "Spot AI-powered scams before they reach you" },
+  { icon: Shield, title: "4-Step Protection", desc: "A proven process for your digital safety" },
+  { icon: Target, title: "Protection Tiers", desc: "Security plans sized to your needs" },
+  { icon: Eye, title: "Threat Analysis", desc: "Active monitoring with real-time alerts" },
 ];
 
 export const WorkshopsPromo = () => {
@@ -51,25 +51,24 @@ export const WorkshopsPromo = () => {
   return (
     <section className="py-16 lg:py-20" aria-labelledby="workshops-heading">
       <div className="container mx-auto px-4 lg:px-8">
-        {/* Section Label */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/20 bg-primary/5 mb-5">
             <span className="w-2 h-2 rounded-full bg-gradient-to-r from-primary to-accent" />
             <span className="text-xs font-bold uppercase tracking-[0.15em] text-primary">Learn & Train</span>
           </div>
           <h2 id="workshops-heading" className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground leading-tight mb-3">
-            Reason For Choosing Our{" "}
+            Why Families Choose Our{" "}
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Protection Training</span>
           </h2>
           <p className="text-muted-foreground text-base max-w-2xl mx-auto">
-            Scammers now use deepfakes and voice cloning. Our expert-led workshops teach you to recognize and stop these sophisticated threats.
+            Scammers now use deepfakes and voice cloning to target you. Our expert-led workshops show you how to recognize and stop these threats.
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-10 items-center max-w-6xl mx-auto">
-          {/* Left - Media */}
+          {/* Media */}
           <div className="relative" ref={mediaRef}>
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-border/60 shadow-lg">
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-border/60 shadow-lg group">
               {(!shouldLoad || !videoLoaded) && (
                 <img src={seniorLearning} alt="Protection Training Workshop" className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" />
               )}
@@ -82,14 +81,13 @@ export const WorkshopsPromo = () => {
               {videoError && (
                 <button onClick={() => { videoRef.current?.play().catch(console.error); setVideoError(false); }}
                   className="absolute inset-0 flex items-center justify-center bg-foreground/20" aria-label="Play video">
-                  <div className="w-16 h-16 rounded-full bg-card flex items-center justify-center shadow-lg">
+                  <div className="w-16 h-16 rounded-full bg-card flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
                     <Play className="w-6 h-6 text-primary ml-1" fill="currentColor" />
                   </div>
                 </button>
               )}
             </div>
-            {/* Stats badge */}
-            <div className="absolute -bottom-4 -right-4 bg-card rounded-xl border border-border/60 shadow-lg p-4">
+            <div className="absolute -bottom-4 -right-4 bg-card rounded-xl border border-border/60 shadow-lg p-4 hover:shadow-xl transition-shadow">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
                   <span className="text-white font-black text-sm">99%</span>
@@ -102,9 +100,8 @@ export const WorkshopsPromo = () => {
             </div>
           </div>
 
-          {/* Right - Content */}
+          {/* Content */}
           <div className="space-y-6">
-            {/* Stats Row */}
             <div className="flex items-center gap-8">
               <div>
                 <div className="text-4xl font-black text-foreground">100+</div>
@@ -113,14 +110,13 @@ export const WorkshopsPromo = () => {
               <div className="h-12 w-px bg-border" />
               <div>
                 <div className="text-4xl font-black text-accent">100%</div>
-                <div className="text-sm text-muted-foreground">Satisfaction Rate</div>
+                <div className="text-sm text-muted-foreground">Satisfaction</div>
               </div>
             </div>
 
-            {/* Services Grid */}
             <div className="grid grid-cols-2 gap-4" role="list" aria-label="Services">
               {services.map((service) => (
-                <div key={service.title} role="listitem" className="flex items-start gap-3 p-3 rounded-xl bg-card border border-border/40 hover:border-primary/30 transition-colors">
+                <div key={service.title} role="listitem" className="flex items-start gap-3 p-3 rounded-xl bg-card border border-border/40 hover:border-primary/30 hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
                   <div className="w-10 h-10 rounded-xl bg-primary/8 flex items-center justify-center flex-shrink-0">
                     <service.icon className="w-5 h-5 text-primary" />
                   </div>
@@ -132,10 +128,9 @@ export const WorkshopsPromo = () => {
               ))}
             </div>
 
-            {/* CTA */}
-            <Button asChild size="lg" className="h-12 px-8 text-sm font-bold rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90 transition-opacity">
+            <Button asChild size="lg" className="h-12 px-8 text-sm font-bold rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90 transition-all hover:scale-105 active:scale-95">
               <Link to="/training">
-                Learn More <ArrowRight className="ml-2 w-4 h-4" />
+                Start Training <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
             </Button>
           </div>

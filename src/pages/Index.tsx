@@ -10,30 +10,26 @@ import { WorkingProcess } from "@/components/home/WorkingProcess";
 import { ScamAlertsSection } from "@/components/home/ScamAlertsSection";
 import { FAQPreview } from "@/components/home/FAQPreview";
 import { QuickLinksSection } from "@/components/home/QuickLinksSection";
+import { AnimatedSection } from "@/components/AnimatedSection";
 
 import CTASection from "@/components/CTASection";
 import { ScamShieldSubmission } from "@/components/ScamShieldSubmission";
 import { PageTransition } from "@/components/PageTransition";
 import { Button } from "@/components/ui/button";
 import { SEO, PAGE_SEO } from "@/components/SEO";
-import { SectionNav } from "@/components/SectionNav";
 import seniorCoupleActive from "@/assets/senior-couple-active.jpg";
 import { FamilyTrustSection } from "@/components/home/FamilyTrustSection";
 import { SITE } from "@/config/site";
+
 const LiveSecurityStats = lazy(
   () => import("@/components/home/LiveSecurityStats"),
 );
-const SocialProofTicker = lazy(() => import("@/components/SocialProofTicker"));
-const PremiumGlassmorphismWidgets = lazy(
-  () => import("@/components/home/PremiumGlassmorphismWidgets"),
-);
+
 const Index = () => {
   const [scamShieldOpen, setScamShieldOpen] = useState(false);
-  const [enableLiveWidgets, setEnableLiveWidgets] = useState(false);
   const [enableStats, setEnableStats] = useState(false);
   const statsRef = useRef<HTMLElement | null>(null);
 
-  // Combined effect for performance optimization - handles both widget loading and stats observer
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
@@ -42,155 +38,144 @@ const Index = () => {
       "connection" in navigator &&
       (
         navigator as Navigator & {
-          connection?: {
-            saveData?: boolean;
-          };
+          connection?: { saveData?: boolean };
         }
       ).connection?.saveData;
 
     if (prefersReducedMotion || saveData) return;
 
-    // Setup lazy widget loading
-    const enableWidgets = () => setEnableLiveWidgets(true);
-    let idleId: number | ReturnType<typeof setTimeout>;
-    if ("requestIdleCallback" in window) {
-      idleId = (window as any).requestIdleCallback(enableWidgets, {
-        timeout: 2000,
-      });
-    } else {
-      idleId = setTimeout(enableWidgets, 1500);
-    }
-
-    // Setup stats intersection observer
     const element = statsRef.current;
-    let observer: IntersectionObserver | null = null;
+    if (!element) return;
 
-    if (element) {
-      observer = new IntersectionObserver(
-        (entries) => {
-          if (entries[0]?.isIntersecting) {
-            setEnableStats(true);
-            observer?.disconnect();
-          }
-        },
-        { rootMargin: "200px" },
-      );
-      observer.observe(element);
-    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setEnableStats(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px" },
+    );
+    observer.observe(element);
 
-    // Cleanup both
-    return () => {
-      if ("cancelIdleCallback" in window && typeof idleId === "number") {
-        (window as any).cancelIdleCallback(idleId);
-      } else {
-        clearTimeout(idleId as ReturnType<typeof setTimeout>);
-      }
-      observer?.disconnect();
-    };
+    return () => observer.disconnect();
   }, []);
+
   return (
     <PageTransition variant="fade">
       <div className="min-h-screen">
         <SEO {...PAGE_SEO.home} />
         <Navigation />
-        <SectionNav />
-
-        {/* Floating widgets */}
-        {enableLiveWidgets && (
-          <Suspense fallback={null}>
-            <SocialProofTicker />
-          </Suspense>
-        )}
 
         <main>
-          {/* Hero Section */}
+          {/* Hero */}
           <section id="hero">
             <HeroHomepage />
           </section>
 
-          {/* Live Security Stats - NEW */}
+          {/* Live Stats */}
           <section id="stats" ref={statsRef}>
-            {enableStats ? (
-              <Suspense
-                fallback={<div className="min-h-[320px]" aria-hidden="true" />}
-              >
-                <LiveSecurityStats />
-              </Suspense>
-            ) : (
-              <div className="min-h-[320px]" aria-hidden="true" />
-            )}
+            <AnimatedSection animation="fade-up">
+              {enableStats ? (
+                <Suspense
+                  fallback={<div className="min-h-[320px]" aria-hidden="true" />}
+                >
+                  <LiveSecurityStats />
+                </Suspense>
+              ) : (
+                <div className="min-h-[320px]" aria-hidden="true" />
+              )}
+            </AnimatedSection>
           </section>
 
-          {/* Workshops Promo - Learn & Train Introduction */}
+          {/* Workshops */}
           <section id="workshops">
-            <WorkshopsPromo />
+            <AnimatedSection animation="fade-up">
+              <WorkshopsPromo />
+            </AnimatedSection>
           </section>
 
-          {/* AI & Business Promo */}
+          {/* AI & Business */}
           <section id="business">
-            <AIBusinessPromo />
+            <AnimatedSection animation="fade-up">
+              <AIBusinessPromo />
+            </AnimatedSection>
           </section>
 
-          {/* Current Scam Alerts - Immediate Value */}
+          {/* Scam Alerts */}
           <section id="alerts">
-            <ScamAlertsSection onSubmitThreat={() => setScamShieldOpen(true)} />
+            <AnimatedSection animation="fade-up">
+              <ScamAlertsSection onSubmitThreat={() => setScamShieldOpen(true)} />
+            </AnimatedSection>
           </section>
 
-          {/* Resources Promo */}
+          {/* Resources */}
           <section id="resources">
-            <ResourcesPromo />
+            <AnimatedSection animation="fade-up">
+              <ResourcesPromo />
+            </AnimatedSection>
           </section>
 
-          {/* Why Families Trust Us */}
+          {/* Trust */}
           <section id="trust">
-            <FamilyTrustSection />
+            <AnimatedSection animation="fade-up">
+              <FamilyTrustSection />
+            </AnimatedSection>
           </section>
 
-          {/* Working Process */}
-          <WorkingProcess />
+          {/* Process */}
+          <AnimatedSection animation="fade-up">
+            <WorkingProcess />
+          </AnimatedSection>
 
-          {/* FAQ Section */}
-          <FAQPreview />
+          {/* FAQ */}
+          <AnimatedSection animation="fade-up">
+            <FAQPreview />
+          </AnimatedSection>
 
           {/* Quick Links */}
           <section id="quick-links">
-            <QuickLinksSection />
+            <AnimatedSection animation="fade-up">
+              <QuickLinksSection />
+            </AnimatedSection>
           </section>
 
           {/* Final CTA */}
-          <CTASection
-            headline="Join Our Protected Community"
-            variant="image"
-            backgroundImage={seniorCoupleActive}
-          >
-            <p className="text-lg text-white/90 mb-6">
-              Join families across Ohio who live confidently, knowing they're
-              protected from AI scams.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center">
-              <Button
-                asChild
-                size="lg"
-                className="h-12 px-8 text-sm font-bold rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90"
-              >
-                <Link to="/training#pricing" className="text-white">
-                  Get Protected Today
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="h-12 px-8 text-sm font-bold rounded-full border-2 border-white/30 text-white hover:bg-white/10"
-              >
-                <Link to="/business">Business Solutions</Link>
-              </Button>
-            </div>
-            <p className="text-white/80 mt-4 text-sm">
-              ✓ {SITE.veteranDiscountPercent}% Veteran Discount ✓ Privacy-First
-              Practices ✓ {SITE.moneyBackGuaranteeDays}-Day Money-Back Guarantee
-            </p>
-          </CTASection>
+          <AnimatedSection animation="scale-up">
+            <CTASection
+              headline="Join Our Protected Community"
+              variant="image"
+              backgroundImage={seniorCoupleActive}
+            >
+              <p className="text-lg text-white/90 mb-6">
+                Join families across Ohio who live confidently, knowing they are
+                protected from AI scams.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center">
+                <Button
+                  asChild
+                  size="lg"
+                  className="h-12 px-8 text-sm font-bold rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90"
+                >
+                  <Link to="/training#pricing" className="text-white">
+                    Get Protected Today
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="h-12 px-8 text-sm font-bold rounded-full border-2 border-white/30 text-white hover:bg-white/10"
+                >
+                  <Link to="/business">Business Solutions</Link>
+                </Button>
+              </div>
+              <p className="text-white/80 mt-4 text-sm">
+                ✓ {SITE.veteranDiscountPercent}% Veteran Discount ✓ Privacy-First
+                Practices ✓ {SITE.moneyBackGuaranteeDays}-Day Money-Back Guarantee
+              </p>
+            </CTASection>
+          </AnimatedSection>
 
           <Footer />
 
