@@ -14,7 +14,7 @@ import {
   GeometricCorner,
   GridPattern,
 } from "@/components/ui/GeometricDecorations";
-import customerSupportHeadset from "@/assets/customer-support-headset.jpg";
+
 
 const faqs = [
   {
@@ -52,85 +52,74 @@ export const FAQPreview = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-10 items-start">
           {/* Left - Header & Support Card */}
-          <div className="lg:sticky lg:top-24 space-y-8">
+          <div className="space-y-6">
             <div>
               <div className="inline-flex items-center gap-2 px-5 py-2.5 glass-light rounded-full text-sm font-bold uppercase tracking-wider mb-5 micro-bounce skeuo-badge">
                 <HelpCircle className="w-4 h-4 text-primary" />
                 <span className="text-foreground">FAQ</span>
               </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3 leading-tight">
                 Got <span className="text-primary">Questions?</span>
                 <br />
                 We've Got Answers
               </h2>
-              <p className="text-muted-foreground text-lg md:text-xl leading-relaxed font-medium">
+              <p className="text-muted-foreground text-base leading-relaxed">
                 Protecting your family from scams is a serious decision. Here's
                 what you need to know.
               </p>
             </div>
 
-            {/* Support Agent Card with Glassmorphism */}
+            {/* Support Agent Card - Compact */}
             <div className="widget-premium hover-depth overflow-hidden micro-tilt-3d subtle-3d-surface">
-              {/* Featured Support Image */}
-              <div className="mb-6 -mx-8 -mt-8">
-                <img
-                  src={customerSupportHeadset}
-                  alt="Professional customer support specialist"
-                  className="w-full aspect-[16/9] rounded-t-3xl object-cover"
-                  width={400}
-                  height={225}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-
-              <div className="flex items-center gap-4 mb-6">
+              <div className="flex items-center gap-3 mb-4">
                 <div className="relative">
-                  <div className="w-20 h-20 rounded-full overflow-hidden border-3 border-primary/30 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)]">
+                  <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-primary/30 shadow-sm">
                     <img
                       src={supportAgent}
                       alt="Support specialist"
                       className="w-full h-full object-cover"
+                      width={56}
+                      height={56}
                     />
                   </div>
-                  <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-green-900 rounded-full border-2 border-background flex items-center justify-center">
-                    <span className="text-[11px] text-white font-bold">ON</span>
+                  <div className="absolute -bottom-0.5 -right-0.5 w-5 h-5 bg-green-600 rounded-full border-2 border-background flex items-center justify-center">
+                    <span className="text-[8px] text-white font-bold">ON</span>
                   </div>
                 </div>
                 <div>
-                  <h3 className="font-bold text-xl text-foreground">
+                  <h3 className="font-bold text-lg text-foreground">
                     Talk to a Human
                   </h3>
-                  <p className="text-base text-foreground/70">
+                  <p className="text-sm text-foreground/70">
                     Real experts, not bots • Available now
                   </p>
                 </div>
               </div>
 
-              <p className="text-foreground/70 text-lg mb-6 leading-relaxed">
+              <p className="text-foreground/70 text-sm mb-4 leading-relaxed">
                 Our Ohio-based team is ready to answer your questions and help
                 you find the right protection.
               </p>
 
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-2">
                 <Button
                   asChild
-                  size="lg"
-                  className="w-full h-14 text-lg font-bold rounded-2xl tactile-button"
+                  size="default"
+                  className="w-full rounded-xl tactile-button"
                 >
                   <Link to="/contact">
-                    <MessageCircle className="mr-2 w-5 h-5" />
+                    <MessageCircle className="mr-2 w-4 h-4" />
                     Chat With Expert
                   </Link>
                 </Button>
                 <Button
                   asChild
                   variant="outline"
-                  size="lg"
-                  className="w-full h-14 text-lg font-bold rounded-2xl border-2 tactile-button"
+                  size="default"
+                  className="w-full rounded-xl border-2 tactile-button"
                 >
                   <a href={SITE.phone.tel}>
-                    <Phone className="mr-2 w-5 h-5" />
+                    <Phone className="mr-2 w-4 h-4" />
                     Call Now
                   </a>
                 </Button>
@@ -139,7 +128,7 @@ export const FAQPreview = () => {
           </div>
 
           {/* Right - FAQ Accordion with Glassmorphism */}
-          <div>
+          <div className="flex flex-col justify-between h-full">
             <Accordion type="single" collapsible className="space-y-4">
               {faqs.map((faq, index) => (
                 <AccordionItem
