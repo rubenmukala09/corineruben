@@ -82,7 +82,7 @@ serve(async (req) => {
       });
 
       const paidSession = sessions.data.find(
-        (s) => s.payment_status === "paid",
+        (s: any) => s.payment_status === "paid",
       );
 
       if (paidSession) {

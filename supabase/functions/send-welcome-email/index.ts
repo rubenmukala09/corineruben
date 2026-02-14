@@ -120,7 +120,8 @@ serve(async (req) => {
     });
   } catch (error: unknown) {
     console.error("Error sending welcome email:", error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    const msg = error instanceof Error ? error.message : String(error);
+    return new Response(JSON.stringify({ error: msg }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });

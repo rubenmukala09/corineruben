@@ -123,7 +123,7 @@ serve(async (req) => {
           .from("scheduled_emails")
           .update({
             status: "failed",
-            error_message: error.message || "Unknown error",
+            error_message: (error instanceof Error ? error.message : String(error)) || "Unknown error",
             attempts: email.attempts + 1,
           })
           .eq("id", email.id);
@@ -144,7 +144,7 @@ serve(async (req) => {
   } catch (error: unknown) {
     console.error("Error in send-automated-email:", error);
     return new Response(
-      JSON.stringify({ error: error.message || "Unknown error" }),
+      JSON.stringify({ error: (error instanceof Error ? error.message : String(error)) || "Unknown error" }),
       {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },

@@ -106,7 +106,7 @@ serve(async (req) => {
 });
 
 async function updateCampaignMetrics(
-  supabase: ReturnType<typeof createClient>,
+  supabase: any,
   webhookType: string,
 ) {
   // Recalculate open and click rates for campaigns
