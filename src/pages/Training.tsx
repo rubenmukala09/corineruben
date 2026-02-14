@@ -9,7 +9,6 @@ import Hero from "@/components/Hero";
 import { PageTransition } from "@/components/PageTransition";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ScrollReveal } from "@/components/ScrollReveal";
 
 import { useAdminStatus } from "@/hooks/useAdminStatus";
 import { supabase } from "@/integrations/supabase/client";
@@ -46,6 +45,12 @@ import {
   Calendar,
   Eye,
   Forward,
+  AlertTriangle,
+  ShieldCheck,
+  BarChart3,
+  Globe,
+  Fingerprint,
+  Brain,
 } from "lucide-react";
 import { PROFESSIONAL_HERO_IMAGES } from "@/config/professionalHeroImages";
 import TestimonialCard from "@/components/TestimonialCard";
@@ -70,21 +75,29 @@ const TRUST_PILLARS = [
     icon: BookOpen,
     title: "Clear, Respectful Teaching",
     desc: "Senior-friendly pace, real-world examples, no jargon. We explain everything step-by-step.",
+    stat: "4.9★",
+    statLabel: "Avg Rating",
   },
   {
     icon: Lock,
     title: "Privacy-First Guarantee",
     desc: "We never ask for passwords, OTPs, or banking information. Your data stays private.",
+    stat: "100%",
+    statLabel: "Data Safe",
   },
   {
     icon: FileText,
     title: "Actionable Playbooks",
     desc: "Ready-to-use scripts for bank, IRS, romance, and tech-support scam scenarios.",
+    stat: "12+",
+    statLabel: "Playbooks",
   },
   {
     icon: Award,
     title: "Industry-Leading Expertise",
     desc: "Years of experience defending seniors against the latest AI-enabled fraud techniques.",
+    stat: "80+",
+    statLabel: "Yrs Combined",
   },
 ];
 
@@ -99,66 +112,64 @@ const PremiumTrainingCard = memo(
     onBook: (plan: any) => void;
   }) => {
     return (
-      <ScrollReveal animation="fade-up" delay={index * 100} threshold={0.2}>
-        <div className="relative h-full pt-5">
-          {plan.popular && (
-            <div className="absolute -top-1 left-1/2 -translate-x-1/2 bg-foreground text-background px-5 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 whitespace-nowrap">
-              ⭐ BEST VALUE
-            </div>
-          )}
-          <div
-            className={`p-6 pt-8 rounded-2xl bg-card border transition-all duration-300 hover:-translate-y-1 h-full flex flex-col ${
+      <div className="relative h-full pt-5">
+        {plan.popular && (
+          <div className="absolute -top-1 left-1/2 -translate-x-1/2 bg-foreground text-background px-5 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 whitespace-nowrap">
+            ⭐ BEST VALUE
+          </div>
+        )}
+        <div
+          className={`p-6 pt-8 rounded-2xl bg-card border transition-all duration-300 hover:-translate-y-1 h-full flex flex-col ${
+            plan.popular
+              ? "shadow-lg border-2 border-primary/30"
+              : "shadow-sm border-border/60 hover:shadow-md hover:border-primary/20"
+          }`}
+        >
+          <div className="flex items-center justify-center gap-1.5 mb-4 text-xs text-muted-foreground pt-2">
+            <ClockIcon className="w-3.5 h-3.5" />
+            <span className="font-medium">{plan.duration}</span>
+            <span className="mx-1">·</span>
+            <Users className="w-3.5 h-3.5" />
+            <span className="font-medium">{plan.size}</span>
+          </div>
+          <h3 className="text-2xl font-black mb-3 text-center text-foreground">{plan.name}</h3>
+          <p className="text-muted-foreground mb-4 text-sm text-center">
+            {plan.description}
+          </p>
+          <p className="text-3xl font-black text-primary mb-4 text-center">
+            {plan.price}
+            {plan.pricePrefix || ""}
+            <span className="text-base font-normal text-muted-foreground ml-1">
+              /session
+            </span>
+          </p>
+          <div className="flex flex-wrap gap-2 justify-center mb-4">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
+              {plan.badge}
+            </span>
+          </div>
+          <ul className="space-y-2 mb-6 text-sm flex-1">
+            {plan.features.slice(0, 4).map((feature: string, idx: number) => (
+              <li key={idx} className="flex items-start gap-2">
+                <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                <span className="text-muted-foreground">{feature.replace("✓ ", "")}</span>
+              </li>
+            ))}
+          </ul>
+          <Button
+            onClick={() => onBook(plan)}
+            variant={plan.popular ? "default" : "outline"}
+            className={`w-full mt-auto rounded-full font-bold ${
               plan.popular
-                ? "shadow-lg border-2 border-primary/30"
-                : "shadow-sm border-border/60 hover:shadow-md hover:border-primary/20"
+                ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                : ""
             }`}
           >
-            <div className="flex items-center justify-center gap-1.5 mb-4 text-xs text-muted-foreground pt-2">
-              <ClockIcon className="w-3.5 h-3.5" />
-              <span className="font-medium">{plan.duration}</span>
-              <span className="mx-1">·</span>
-              <Users className="w-3.5 h-3.5" />
-              <span className="font-medium">{plan.size}</span>
-            </div>
-            <h3 className="text-2xl font-black mb-3 text-center text-foreground">{plan.name}</h3>
-            <p className="text-muted-foreground mb-4 text-sm text-center">
-              {plan.description}
-            </p>
-            <p className="text-3xl font-black text-primary mb-4 text-center">
-              {plan.price}
-              {plan.pricePrefix || ""}
-              <span className="text-base font-normal text-muted-foreground ml-1">
-                /session
-              </span>
-            </p>
-            <div className="flex flex-wrap gap-2 justify-center mb-4">
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
-                {plan.badge}
-              </span>
-            </div>
-            <ul className="space-y-2 mb-6 text-sm flex-1">
-              {plan.features.slice(0, 4).map((feature: string, idx: number) => (
-                <li key={idx} className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-muted-foreground">{feature.replace("✓ ", "")}</span>
-                </li>
-              ))}
-            </ul>
-            <Button
-              onClick={() => onBook(plan)}
-              variant={plan.popular ? "default" : "outline"}
-              className={`w-full mt-auto rounded-full font-bold ${
-                plan.popular
-                  ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                  : ""
-              }`}
-            >
-              Book Now
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-          </div>
+            Book Now
+            <ArrowRight className="w-4 h-4 ml-2" />
+          </Button>
         </div>
-      </ScrollReveal>
+      </div>
     );
   },
 );
@@ -171,42 +182,40 @@ const ScamExampleCard = ({
   index: number;
 }) => {
   return (
-    <ScrollReveal animation="fade-up" delay={index * 100} threshold={0.2}>
-      <div className="h-full overflow-hidden rounded-2xl bg-card border border-border/60 shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1">
-        <div className="h-1 bg-gradient-to-r from-primary to-accent" />
-        <div className="p-6">
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20 mb-4">
-            {example.badge}
-          </span>
-          <div className="space-y-4">
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.15em] text-muted-foreground font-bold mb-2">
-                What They Received
-              </p>
-              <p className="text-foreground italic leading-relaxed text-sm">
-                "{example.received}"
-              </p>
-            </div>
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.15em] text-muted-foreground font-bold mb-2">
-                Our Analysis
-              </p>
-              <p className="text-muted-foreground leading-relaxed text-sm">
-                {example.analysis}
-              </p>
-            </div>
-            <div className="pt-4 border-t border-border/50">
-              <p className="text-[11px] uppercase tracking-[0.15em] text-muted-foreground font-bold mb-2">
-                Amount Saved
-              </p>
-              <p className="text-3xl font-black text-primary">
-                {example.saved}
-              </p>
-            </div>
+    <div className="h-full overflow-hidden rounded-2xl bg-card border border-border/60 shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1">
+      <div className="h-1.5 bg-gradient-to-r from-primary via-accent to-primary" />
+      <div className="p-6">
+        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20 mb-4">
+          {example.badge}
+        </span>
+        <div className="space-y-4">
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.15em] text-muted-foreground font-bold mb-2">
+              What They Received
+            </p>
+            <p className="text-foreground italic leading-relaxed text-sm">
+              "{example.received}"
+            </p>
+          </div>
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.15em] text-muted-foreground font-bold mb-2">
+              Our Analysis
+            </p>
+            <p className="text-muted-foreground leading-relaxed text-sm">
+              {example.analysis}
+            </p>
+          </div>
+          <div className="pt-4 border-t border-border/50">
+            <p className="text-[11px] uppercase tracking-[0.15em] text-muted-foreground font-bold mb-2">
+              Amount Saved
+            </p>
+            <p className="text-3xl font-black text-primary">
+              {example.saved}
+            </p>
           </div>
         </div>
       </div>
-    </ScrollReveal>
+    </div>
   );
 };
 
@@ -451,14 +460,14 @@ function LearnAndTrain() {
   ];
 
   const threats = [
-    { icon: Mail, title: "Phishing Emails", description: "Forward suspicious emails for analysis. We check sender authenticity, analyze links, and identify fake logos." },
-    { icon: MessageSquare, title: "SMS Scams", description: "Screenshot suspicious texts. We trace senders and verify if messages are legitimate." },
-    { icon: Phone, title: "Voice Calls", description: "Describe suspicious calls. We identify voice scam patterns and AI-generated voices." },
-    { icon: FileText, title: "Voice Messages", description: "Send voicemails for AI analysis. We detect voice cloning and verify authenticity." },
-    { icon: LinkIcon, title: "Suspicious Links", description: "Send links before clicking. We safely scan for malware and verify destinations." },
-    { icon: QrCode, title: "QR Codes", description: "Photo us QR codes. We decode them safely and tell you where they lead." },
-    { icon: FileCheck, title: "Documents", description: "Upload suspicious PDFs. We check for malware and fake information." },
-    { icon: ImageIcon, title: "Social Media", description: "Screenshot fake profiles. We verify authenticity and identify scam patterns." },
+    { icon: Mail, title: "Phishing Emails", description: "Forward suspicious emails for analysis. We check sender authenticity, analyze links, and identify fake logos.", color: "bg-blue-500/10 text-blue-600" },
+    { icon: MessageSquare, title: "SMS Scams", description: "Screenshot suspicious texts. We trace senders and verify if messages are legitimate.", color: "bg-green-500/10 text-green-600" },
+    { icon: Phone, title: "Voice Calls", description: "Describe suspicious calls. We identify voice scam patterns and AI-generated voices.", color: "bg-violet-500/10 text-violet-600" },
+    { icon: FileText, title: "Voice Messages", description: "Send voicemails for AI analysis. We detect voice cloning and verify authenticity.", color: "bg-amber-500/10 text-amber-600" },
+    { icon: LinkIcon, title: "Suspicious Links", description: "Send links before clicking. We safely scan for malware and verify destinations.", color: "bg-red-500/10 text-red-600" },
+    { icon: QrCode, title: "QR Codes", description: "Photo us QR codes. We decode them safely and tell you where they lead.", color: "bg-pink-500/10 text-pink-600" },
+    { icon: FileCheck, title: "Documents", description: "Upload suspicious PDFs. We check for malware and fake information.", color: "bg-teal-500/10 text-teal-600" },
+    { icon: ImageIcon, title: "Social Media", description: "Screenshot fake profiles. We verify authenticity and identify scam patterns.", color: "bg-indigo-500/10 text-indigo-600" },
   ];
 
   return (
@@ -526,6 +535,19 @@ function LearnAndTrain() {
           <HeroFloatingStats />
         </div>
 
+        {/* ══════════ LIVE THREAT TICKER ══════════ */}
+        <div className="bg-foreground text-background py-3 overflow-hidden">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-center gap-4 sm:gap-8 flex-wrap text-xs sm:text-sm font-semibold">
+              <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" /> 2,847 scams blocked this month</span>
+              <span className="hidden sm:inline text-background/30">|</span>
+              <span className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-green-400" /> $1.2M saved for families</span>
+              <span className="hidden sm:inline text-background/30">|</span>
+              <span className="flex items-center gap-2"><Users className="w-4 h-4" /> 140,000+ students trained</span>
+            </div>
+          </div>
+        </div>
+
         {/* ══════════ SECTION 1: WHY FAMILIES TRUST US ══════════ */}
         <section className="py-10 sm:py-16 md:py-20 bg-background">
           <div className="container mx-auto px-4 lg:px-12">
@@ -544,87 +566,99 @@ function LearnAndTrain() {
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-14">
               {TRUST_PILLARS.map((item, index) => (
-                <ScrollReveal key={index} animation="fade-up" delay={index * 80}>
-                  <div className="bg-card border border-border/60 rounded-2xl p-6 text-center shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1 h-full">
-                    <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                      <item.icon className="w-7 h-7 text-primary" />
-                    </div>
-                    <h3 className="text-lg font-bold text-foreground mb-2">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {item.desc}
-                    </p>
+                <div key={index} className="bg-card border border-border/60 rounded-2xl p-6 text-center shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1 h-full">
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                    <item.icon className="w-7 h-7 text-primary" />
                   </div>
-                </ScrollReveal>
+                  <h3 className="text-lg font-bold text-foreground mb-2">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+                    {item.desc}
+                  </p>
+                  {/* Graphic stat callout */}
+                  <div className="mt-auto pt-3 border-t border-border/50">
+                    <p className="text-2xl font-black text-primary">{item.stat}</p>
+                    <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">{item.statLabel}</p>
+                  </div>
+                </div>
               ))}
             </div>
 
             {/* Emergency Protocol + Identity Verification */}
             <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-              <ScrollReveal animation="fade-up">
-                <div className="bg-card border border-border/60 rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 h-full">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-12 h-12 rounded-xl bg-destructive/10 flex items-center justify-center">
-                      <span className="text-xl">🚨</span>
-                    </div>
+              <div className="bg-card border border-border/60 rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-lg transition-all duration-300 h-full">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 rounded-xl bg-destructive/10 flex items-center justify-center">
+                    <AlertTriangle className="w-6 h-6 text-destructive" />
+                  </div>
+                  <div>
                     <h3 className="text-xl font-black text-foreground">
                       60-Second Pause Protocol
                     </h3>
+                    <p className="text-xs text-muted-foreground">Memorize these 5 steps</p>
                   </div>
-                  <ol className="space-y-3">
-                    {[
-                      { step: "Stop immediately.", detail: "Hang up / stop replying. Take a breath." },
-                      { step: "Verify independently.", detail: "Call back using the official number on your card." },
-                      { step: "Use your safeword", detail: "with family before taking any action." },
-                      { step: "Double-check money requests", detail: "with a second family member." },
-                      { step: "Report and document", detail: "the attempt (we provide templates)." },
-                    ].map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <span className="w-8 h-8 bg-primary/10 text-primary rounded-lg flex items-center justify-center font-bold text-sm flex-shrink-0">
-                          {idx + 1}
-                        </span>
-                        <div className="text-sm">
-                          <span className="font-bold text-foreground">{item.step}</span>{" "}
-                          <span className="text-muted-foreground">{item.detail}</span>
-                        </div>
-                      </li>
-                    ))}
-                  </ol>
                 </div>
-              </ScrollReveal>
+                <ol className="space-y-3">
+                  {[
+                    { step: "Stop immediately.", detail: "Hang up / stop replying. Take a breath.", icon: "🛑" },
+                    { step: "Verify independently.", detail: "Call back using the official number on your card.", icon: "📞" },
+                    { step: "Use your safeword", detail: "with family before taking any action.", icon: "🔑" },
+                    { step: "Double-check money requests", detail: "with a second family member.", icon: "👥" },
+                    { step: "Report and document", detail: "the attempt (we provide templates).", icon: "📝" },
+                  ].map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <span className="w-10 h-10 bg-primary/10 text-primary rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0">
+                        {item.icon}
+                      </span>
+                      <div className="text-sm pt-1">
+                        <span className="font-bold text-foreground">{item.step}</span>{" "}
+                        <span className="text-muted-foreground">{item.detail}</span>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
 
-              <ScrollReveal animation="fade-up" delay={100}>
-                <div className="bg-card border border-border/60 rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 h-full">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                      <Search className="w-6 h-6 text-primary" />
-                    </div>
+              <div className="bg-card border border-border/60 rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-lg transition-all duration-300 h-full">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <Fingerprint className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
                     <h3 className="text-xl font-black text-foreground">
                       Identity Verification Script
                     </h3>
+                    <p className="text-xs text-muted-foreground">Use these exact phrases</p>
                   </div>
-                  <ul className="space-y-3">
-                    {[
-                      { action: "Demand specifics:", detail: "Full name, department, callback number, case number." },
-                      { action: "Always say:", detail: '"I\'ll call you back through the main line."' },
-                      { action: "Never share:", detail: "Codes, passwords, or download any software." },
-                      { action: "Forward suspicious items", detail: "to our help line for expert review." },
-                    ].map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <CheckCircle className="w-4 h-4 text-primary" />
-                        </div>
-                        <div className="text-sm">
-                          <span className="font-bold text-foreground">{item.action}</span>{" "}
-                          <span className="text-muted-foreground">{item.detail}</span>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
-              </ScrollReveal>
+                <ul className="space-y-3">
+                  {[
+                    { action: "Demand specifics:", detail: "Full name, department, callback number, case number.", icon: "📋" },
+                    { action: "Always say:", detail: '"I\'ll call you back through the main line."', icon: "💬" },
+                    { action: "Never share:", detail: "Codes, passwords, or download any software.", icon: "🚫" },
+                    { action: "Forward suspicious items", detail: "to our help line for expert review.", icon: "📨" },
+                  ].map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0 text-lg">
+                        {item.icon}
+                      </div>
+                      <div className="text-sm pt-1">
+                        <span className="font-bold text-foreground">{item.action}</span>{" "}
+                        <span className="text-muted-foreground">{item.detail}</span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+                {/* Visual callout */}
+                <div className="mt-6 p-4 bg-primary/5 rounded-xl border border-primary/10 text-center">
+                  <p className="text-sm font-bold text-primary">💡 Pro Tip: Print this card and keep it by your phone</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
+
+        {/* ══════════ GRADIENT DIVIDER ══════════ */}
+        <div className="h-1.5 bg-gradient-to-r from-primary via-accent to-primary" />
 
         {/* ══════════ SECTION 2: HOW IT WORKS ══════════ */}
         <section id="book" className="py-10 sm:py-16 md:py-20 bg-muted/30">
@@ -643,13 +677,15 @@ function LearnAndTrain() {
 
             <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {[
-                { step: "01", icon: Calendar, title: "Book Your Session", desc: "Choose a convenient Zoom class time, request a Priority Group session, or schedule private in-person coaching." },
-                { step: "02", icon: GraduationCap, title: "Learn & Practice", desc: "Master identity verification, spot deepfakes, and handle urgent messages with confidence." },
-                { step: "03", icon: Shield, title: "Get Ongoing Support", desc: "Add our monthly help line to forward suspicious messages for expert review." },
+                { step: "01", icon: Calendar, title: "Book Your Session", desc: "Choose a convenient Zoom class time, request a Priority Group session, or schedule private in-person coaching.", color: "from-blue-500/20 to-primary/20" },
+                { step: "02", icon: GraduationCap, title: "Learn & Practice", desc: "Master identity verification, spot deepfakes, and handle urgent messages with confidence.", color: "from-green-500/20 to-primary/20" },
+                { step: "03", icon: Shield, title: "Get Ongoing Support", desc: "Add our monthly help line to forward suspicious messages for expert review.", color: "from-violet-500/20 to-primary/20" },
               ].map((item, index) => (
-                <ScrollReveal key={index} animation="fade-up" delay={index * 100}>
-                  <div className="relative bg-card border border-border/60 rounded-2xl p-8 text-center shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1 h-full">
-                    <div className="absolute top-4 right-4 text-5xl font-black text-primary/10">
+                <div key={index} className="relative bg-card border border-border/60 rounded-2xl p-8 text-center shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1 h-full overflow-hidden">
+                  {/* Background gradient accent */}
+                  <div className={`absolute top-0 left-0 right-0 h-24 bg-gradient-to-b ${item.color} to-transparent opacity-50`} />
+                  <div className="relative">
+                    <div className="absolute top-0 right-0 text-5xl font-black text-primary/10">
                       {item.step}
                     </div>
                     <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-5">
@@ -658,7 +694,13 @@ function LearnAndTrain() {
                     <h3 className="text-xl font-black text-foreground mb-3">{item.title}</h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
                   </div>
-                </ScrollReveal>
+                  {/* Connecting arrow for desktop */}
+                  {index < 2 && (
+                    <div className="hidden md:flex absolute -right-5 top-1/2 -translate-y-1/2 z-10">
+                      <ArrowRight className="w-6 h-6 text-primary/30" />
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
           </div>
@@ -698,6 +740,22 @@ function LearnAndTrain() {
                 <PremiumTrainingCard key={index} plan={plan} index={index} onBook={handleBookTraining} />
               ))}
             </div>
+
+            {/* Comparison quick-stat bar */}
+            <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-4xl mx-auto">
+              {[
+                { icon: Users, value: "25+", label: "Group Size Options" },
+                { icon: GraduationCap, value: "4", label: "Workshop Tiers" },
+                { icon: Award, value: "100%", label: "Completion Rate" },
+                { icon: Heart, value: "4.9/5", label: "Student Rating" },
+              ].map((stat, i) => (
+                <div key={i} className="bg-muted/50 border border-border/40 rounded-xl p-3 text-center">
+                  <stat.icon className="w-5 h-5 text-primary mx-auto mb-1" />
+                  <p className="text-xl font-black text-foreground">{stat.value}</p>
+                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">{stat.label}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -721,14 +779,15 @@ function LearnAndTrain() {
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
               {[
-                { step: "01", icon: Eye, title: "Something Suspicious", subtitle: "Spot it", desc: "You receive a suspicious email, text, call, or link that doesn't feel right." },
-                { step: "02", icon: Forward, title: "Forward to Us", subtitle: "Send it", desc: "Simply forward the message, screenshot, or file to our secure analysis line." },
-                { step: "03", icon: Search, title: "Expert Analysis", subtitle: "We check it", desc: "Our AI and human experts analyze the threat and verify authenticity." },
-                { step: "04", icon: Shield, title: "Clear Guidance", subtitle: "You're safe", desc: "You get a clear, simple answer: safe or dangerous, with next steps." },
+                { step: "01", icon: Eye, title: "Something Suspicious", subtitle: "Spot it", desc: "You receive a suspicious email, text, call, or link that doesn't feel right.", color: "from-amber-500/15" },
+                { step: "02", icon: Forward, title: "Forward to Us", subtitle: "Send it", desc: "Simply forward the message, screenshot, or file to our secure analysis line.", color: "from-blue-500/15" },
+                { step: "03", icon: Brain, title: "Expert Analysis", subtitle: "We check it", desc: "Our AI and human experts analyze the threat and verify authenticity.", color: "from-violet-500/15" },
+                { step: "04", icon: ShieldCheck, title: "Clear Guidance", subtitle: "You're safe", desc: "You get a clear, simple answer: safe or dangerous, with next steps.", color: "from-green-500/15" },
               ].map((item, index) => (
-                <ScrollReveal key={index} animation="fade-up" delay={index * 80}>
-                  <div className="relative bg-card border border-border/60 rounded-2xl p-6 text-center shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1 h-full">
-                    <div className="absolute top-4 right-4 text-4xl font-black text-primary/10">
+                <div key={index} className="relative bg-card border border-border/60 rounded-2xl p-6 text-center shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1 h-full overflow-hidden">
+                  <div className={`absolute inset-0 bg-gradient-to-b ${item.color} to-transparent opacity-40`} />
+                  <div className="relative">
+                    <div className="absolute top-0 right-0 text-4xl font-black text-primary/10">
                       {item.step}
                     </div>
                     <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
@@ -738,8 +797,27 @@ function LearnAndTrain() {
                     <p className="text-sm font-semibold text-primary mb-3">{item.subtitle}</p>
                     <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
                   </div>
-                </ScrollReveal>
+                </div>
               ))}
+            </div>
+
+            {/* Visual response time graphic */}
+            <div className="mt-10 max-w-2xl mx-auto bg-card border border-border/60 rounded-2xl p-5 sm:p-6 shadow-sm">
+              <div className="flex items-center justify-between gap-4 flex-wrap">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center">
+                    <Zap className="w-6 h-6 text-green-600" />
+                  </div>
+                  <div>
+                    <p className="font-black text-foreground">Average Response Time</p>
+                    <p className="text-xs text-muted-foreground">From submission to analysis</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-3xl sm:text-4xl font-black text-primary">{'<'}2 min</p>
+                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">AI-Powered Speed</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -761,37 +839,53 @@ function LearnAndTrain() {
 
             <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto">
               {threats.map((threat, index) => (
-                <ScrollReveal key={index} animation="fade-up" delay={index * 50}>
-                  <div
-                    onClick={() => setExpandedThreat(expandedThreat === threat.title ? null : threat.title)}
-                    className={`cursor-pointer bg-card border rounded-2xl p-5 transition-all duration-300 hover:-translate-y-1 shadow-sm hover:shadow-lg ${
-                      expandedThreat === threat.title
-                        ? "border-primary/40 shadow-lg"
-                        : "border-border/60 hover:border-primary/20"
-                    }`}
-                  >
-                    <div className="flex flex-col items-center text-center">
-                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-3">
-                        <threat.icon className="w-6 h-6 text-primary" />
-                      </div>
-                      <h3 className="font-bold text-sm text-foreground mb-1">{threat.title}</h3>
-                      <p className="text-xs text-muted-foreground">Click to learn more</p>
+                <div
+                  key={index}
+                  onClick={() => setExpandedThreat(expandedThreat === threat.title ? null : threat.title)}
+                  className={`cursor-pointer bg-card border rounded-2xl p-5 transition-all duration-300 hover:-translate-y-1 shadow-sm hover:shadow-lg ${
+                    expandedThreat === threat.title
+                      ? "border-primary/40 shadow-lg"
+                      : "border-border/60 hover:border-primary/20"
+                  }`}
+                >
+                  <div className="flex flex-col items-center text-center">
+                    <div className={`w-12 h-12 rounded-xl ${threat.color.split(' ')[0]} flex items-center justify-center mb-3`}>
+                      <threat.icon className={`w-6 h-6 ${threat.color.split(' ')[1]}`} />
                     </div>
-                    {expandedThreat === threat.title && (
-                      <div className="mt-3 pt-3 border-t border-border/50">
-                        <p className="text-xs text-muted-foreground leading-relaxed">{threat.description}</p>
-                        <div className="mt-2 flex items-center justify-center gap-1 text-primary">
-                          <span className="text-xs font-bold">Forward to us!</span>
-                          <CheckCircle className="w-3 h-3" />
-                        </div>
-                      </div>
-                    )}
+                    <h3 className="font-bold text-sm text-foreground mb-1">{threat.title}</h3>
+                    <p className="text-xs text-muted-foreground">Click to learn more</p>
                   </div>
-                </ScrollReveal>
+                  {expandedThreat === threat.title && (
+                    <div className="mt-3 pt-3 border-t border-border/50">
+                      <p className="text-xs text-muted-foreground leading-relaxed">{threat.description}</p>
+                      <div className="mt-2 flex items-center justify-center gap-1 text-primary">
+                        <span className="text-xs font-bold">Forward to us!</span>
+                        <CheckCircle className="w-3 h-3" />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Threat coverage stat */}
+            <div className="mt-10 grid grid-cols-3 gap-4 max-w-3xl mx-auto">
+              {[
+                { value: "8", label: "Threat Types Covered" },
+                { value: "99.7%", label: "Detection Accuracy" },
+                { value: "24/7", label: "Monitoring Active" },
+              ].map((stat, i) => (
+                <div key={i} className="bg-card border border-border/60 rounded-xl p-4 text-center">
+                  <p className="text-2xl sm:text-3xl font-black text-primary">{stat.value}</p>
+                  <p className="text-[10px] sm:text-xs uppercase tracking-widest text-muted-foreground font-bold">{stat.label}</p>
+                </div>
               ))}
             </div>
           </div>
         </section>
+
+        {/* ══════════ GRADIENT DIVIDER ══════════ */}
+        <div className="h-1.5 bg-gradient-to-r from-accent via-primary to-accent" />
 
         {/* ══════════ SECTION 6: AI PROFESSIONAL TRAINING ══════════ */}
         <section id="ai-pro-training" className="py-10 sm:py-16 md:py-20 bg-muted/30">
@@ -860,53 +954,63 @@ function LearnAndTrain() {
             </div>
 
             <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto mb-14">
-              <ScrollReveal animation="fade-up">
-                <div className="bg-card border border-destructive/20 rounded-2xl p-8 shadow-sm h-full">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-12 h-12 rounded-xl bg-destructive/10 flex items-center justify-center">
-                      <span className="text-xl">⚠️</span>
-                    </div>
-                    <h3 className="text-xl font-black text-destructive">Without Protection</h3>
+              <div className="bg-card border-2 border-destructive/20 rounded-2xl p-6 sm:p-8 shadow-sm h-full">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 rounded-xl bg-destructive/10 flex items-center justify-center">
+                    <AlertTriangle className="w-6 h-6 text-destructive" />
                   </div>
-                  <ul className="space-y-3">
-                    {[
-                      "Scammers can impersonate grandchildren using AI voice cloning",
-                      "One family member clicking a bad link can compromise everyone",
-                      "You may lose life savings to fake emergencies",
-                      "Personal documents and identity could be stolen",
-                    ].map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-sm">
-                        <span className="text-destructive text-lg mt-0.5">✗</span>
-                        <span className="text-muted-foreground">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <h3 className="text-xl font-black text-destructive">Without Protection</h3>
                 </div>
-              </ScrollReveal>
+                <ul className="space-y-3">
+                  {[
+                    "Scammers can impersonate grandchildren using AI voice cloning",
+                    "One family member clicking a bad link can compromise everyone",
+                    "You may lose life savings to fake emergencies",
+                    "Personal documents and identity could be stolen",
+                  ].map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-sm">
+                      <span className="w-6 h-6 rounded-full bg-destructive/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-destructive text-xs font-bold">✗</span>
+                      </span>
+                      <span className="text-muted-foreground">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                {/* Danger stat */}
+                <div className="mt-6 p-4 bg-destructive/5 rounded-xl border border-destructive/10 text-center">
+                  <p className="text-2xl font-black text-destructive">$28.4B</p>
+                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Lost to scams in 2024 (FTC)</p>
+                </div>
+              </div>
 
-              <ScrollReveal animation="fade-up" delay={100}>
-                <div className="bg-card border border-primary/20 rounded-2xl p-8 shadow-sm h-full">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                      <Shield className="w-6 h-6 text-primary" />
-                    </div>
-                    <h3 className="text-xl font-black text-primary">With InVision Protection</h3>
+              <div className="bg-card border-2 border-primary/20 rounded-2xl p-6 sm:p-8 shadow-sm h-full">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <Shield className="w-6 h-6 text-primary" />
                   </div>
-                  <ul className="space-y-3">
-                    {[
-                      "Family safe words to verify real emergencies instantly",
-                      "24/7 expert analysis. Just forward anything suspicious",
-                      "Proactive alerts when new scam patterns emerge",
-                      "Secure vault for important family documents",
-                    ].map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-sm">
-                        <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                        <span className="text-muted-foreground">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <h3 className="text-xl font-black text-primary">With InVision Protection</h3>
                 </div>
-              </ScrollReveal>
+                <ul className="space-y-3">
+                  {[
+                    "Family safe words to verify real emergencies instantly",
+                    "24/7 expert analysis. Just forward anything suspicious",
+                    "Proactive alerts when new scam patterns emerge",
+                    "Secure vault for important family documents",
+                  ].map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-sm">
+                      <span className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <CheckCircle className="w-3.5 h-3.5 text-primary" />
+                      </span>
+                      <span className="text-muted-foreground">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                {/* Protection stat */}
+                <div className="mt-6 p-4 bg-primary/5 rounded-xl border border-primary/10 text-center">
+                  <p className="text-2xl font-black text-primary">$1.2M+</p>
+                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Saved for our families</p>
+                </div>
+              </div>
             </div>
 
             {/* Family Safety Vault */}
@@ -958,6 +1062,13 @@ function LearnAndTrain() {
               ))}
             </div>
 
+            {/* Total saved banner */}
+            <div className="mt-10 bg-card border border-primary/20 rounded-2xl p-6 max-w-3xl mx-auto text-center">
+              <p className="text-sm uppercase tracking-widest text-muted-foreground font-bold mb-2">Total Saved Across All Members</p>
+              <p className="text-4xl sm:text-5xl font-black text-primary">$1,200,000+</p>
+              <p className="text-sm text-muted-foreground mt-2">and counting — since our founding</p>
+            </div>
+
             {isAdmin && (
               <div className="mt-12">
                 <h3 className="text-xl font-black text-center text-foreground mb-6">Video Testimonials</h3>
@@ -982,7 +1093,7 @@ function LearnAndTrain() {
 
         {/* Training Success Stories */}
         {trainingTestimonials.length > 0 && (
-          <section className="py-20 bg-background">
+          <section className="py-10 sm:py-16 md:py-20 bg-background">
             <div className="container mx-auto px-4 lg:px-12">
               <div className="text-center mb-14">
                 <span className="inline-block text-[11px] uppercase tracking-[0.15em] font-bold text-primary bg-primary/10 px-4 py-1.5 rounded-full mb-4">

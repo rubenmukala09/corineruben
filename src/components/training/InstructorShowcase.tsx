@@ -6,7 +6,6 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { ScrollReveal } from "@/components/ScrollReveal";
 import {
   Award,
   BookOpen,
@@ -107,64 +106,68 @@ export const InstructorShowcase = () => {
     <>
       <section className="py-10 sm:py-16 md:py-20 bg-muted/30">
         <div className="container mx-auto px-4 lg:px-12">
-          <ScrollReveal>
-            <div className="text-center mb-14">
-              <span className="inline-block text-[11px] uppercase tracking-[0.15em] font-bold text-primary bg-primary/10 px-4 py-1.5 rounded-full mb-4">
-                Meet Your Instructors
-              </span>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground mb-4">
-                Learn From Industry <span className="text-primary">Experts</span>
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-                Our instructors combine decades of real-world experience with a passion for teaching.
-              </p>
-            </div>
-          </ScrollReveal>
+          <div className="text-center mb-14">
+            <span className="inline-block text-[11px] uppercase tracking-[0.15em] font-bold text-primary bg-primary/10 px-4 py-1.5 rounded-full mb-4">
+              Meet Your Instructors
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground mb-4">
+              Learn From Industry <span className="text-primary">Experts</span>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              Our instructors combine decades of real-world experience with a passion for teaching.
+            </p>
+          </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 max-w-6xl mx-auto">
-            {instructors.map((instructor, index) => (
-              <ScrollReveal key={instructor.id} delay={index * 100}>
-                <div
-                  className="group p-5 text-center cursor-pointer bg-card border border-border/60 rounded-2xl shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1"
-                  onClick={() => setSelectedInstructor(instructor)}
-                >
-                  <div className="relative w-20 h-20 md:w-24 md:h-24 mx-auto mb-3 rounded-full overflow-hidden ring-2 ring-border group-hover:ring-primary/40 transition-all">
-                    <img
-                      src={instructor.image}
-                      alt={instructor.name}
-                      width={96}
-                      height={96}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <h3 className="font-bold text-sm md:text-base mb-1 text-foreground group-hover:text-primary transition-colors line-clamp-1">
-                    {instructor.name}
-                  </h3>
-                  <p className="text-xs text-muted-foreground mb-2 line-clamp-1">
-                    {instructor.title}
-                  </p>
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] md:text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
-                    {instructor.specialty}
-                  </span>
-                  <p className="text-xs text-primary mt-2 opacity-0 group-hover:opacity-100 transition-opacity font-semibold">
-                    View Bio →
-                  </p>
+            {instructors.map((instructor) => (
+              <div
+                key={instructor.id}
+                className="group p-5 text-center cursor-pointer bg-card border border-border/60 rounded-2xl shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1"
+                onClick={() => setSelectedInstructor(instructor)}
+              >
+                <div className="relative w-20 h-20 md:w-24 md:h-24 mx-auto mb-3 rounded-full overflow-hidden ring-2 ring-border group-hover:ring-primary/40 transition-all">
+                  <img
+                    src={instructor.image}
+                    alt={instructor.name}
+                    width={96}
+                    height={96}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
                 </div>
-              </ScrollReveal>
+                <h3 className="font-bold text-sm md:text-base mb-1 text-foreground group-hover:text-primary transition-colors line-clamp-1">
+                  {instructor.name}
+                </h3>
+                <p className="text-xs text-muted-foreground mb-2 line-clamp-1">
+                  {instructor.title}
+                </p>
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] md:text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
+                  {instructor.specialty}
+                </span>
+                <p className="text-xs text-primary mt-2 opacity-0 group-hover:opacity-100 transition-opacity font-semibold">
+                  View Bio →
+                </p>
+              </div>
             ))}
           </div>
 
-          <ScrollReveal delay={500}>
-            <div className="mt-10 text-center">
-              <p className="text-sm text-muted-foreground">
-                All instructors are vetted and experienced in their specialties.
-                <br className="hidden md:block" />
-                <span className="text-primary font-bold">
-                  Combined experience: 80+ years • Students helped: 140,000+
-                </span>
-              </p>
+          <div className="mt-10 text-center">
+            <div className="inline-flex items-center gap-6 sm:gap-10 bg-card border border-border/60 rounded-2xl px-6 sm:px-10 py-4 shadow-sm">
+              <div className="text-center">
+                <p className="text-2xl font-black text-primary">80+</p>
+                <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Years Combined</p>
+              </div>
+              <div className="w-px h-10 bg-border/60" />
+              <div className="text-center">
+                <p className="text-2xl font-black text-primary">140K+</p>
+                <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Students Helped</p>
+              </div>
+              <div className="w-px h-10 bg-border/60" />
+              <div className="text-center">
+                <p className="text-2xl font-black text-primary">5</p>
+                <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Specialists</p>
+              </div>
             </div>
-          </ScrollReveal>
+          </div>
         </div>
       </section>
 
