@@ -6,7 +6,6 @@ import {
   X,
   Phone,
   LayoutDashboard,
-  ShoppingCart as CartIcon,
   Heart,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -14,8 +13,6 @@ import { PrefetchLink } from "@/components/PrefetchLink";
 import { ShoppingCart } from "@/components/ShoppingCart";
 import { useAuth } from "@/contexts/AuthContext";
 import { SITE } from "@/config/site";
-import { clearAllCachesAndReload } from "@/utils/cacheUtils";
-import { toast } from "sonner";
 import invisionLogo from "@/assets/shield-logo.png";
 import { DonationModal } from "@/components/DonationModal";
 
@@ -74,7 +71,7 @@ const Navigation = React.memo(() => {
         />
       )}
 
-      <nav className="sticky top-0 z-navigation relative glass-heavy border-b border-white/20 premium-shadow-depth premium-shine-sweep">
+      <nav className="sticky top-0 z-navigation relative border-b border-border/70 bg-background/88 backdrop-blur-xl supports-[backdrop-filter]:bg-background/72 shadow-[0_12px_26px_-24px_hsl(var(--primary)/0.5)]">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between h-14 md:h-16">
             {/* Logo */}
@@ -96,8 +93,7 @@ const Navigation = React.memo(() => {
                 <span
                   className="text-lg md:text-xl font-bold tracking-tight"
                   style={{
-                    background:
-                      "linear-gradient(135deg, #18305A 0%, #BB81B5 100%)",
+                    background: "linear-gradient(120deg, #173B72 0%, #F47C52 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                   }}
@@ -118,10 +114,10 @@ const Navigation = React.memo(() => {
                   <PrefetchLink
                     key={link.name}
                     to={link.href}
-                    className={`relative text-sm transition-colors duration-150 font-semibold px-3 py-2 rounded-md whitespace-nowrap animated-underline tracking-tight ${
+                    className={`relative text-sm transition-colors duration-150 font-semibold px-3 py-2 rounded-md whitespace-nowrap tracking-tight ${
                       isActive
-                        ? "text-primary font-bold"
-                        : "text-foreground/80 hover:text-foreground hover:bg-muted/50"
+                        ? "text-primary font-bold bg-primary/10 border border-primary/15 shadow-sm"
+                        : "text-foreground/80 hover:text-foreground hover:bg-card/80"
                     }`}
                   >
                     {link.name}
@@ -152,7 +148,7 @@ const Navigation = React.memo(() => {
               <button
                 type="button"
                 onClick={() => setDonateOpen(true)}
-                className="hidden lg:flex items-center gap-1.5 text-sm font-semibold px-3 py-2 rounded-md text-coral-600 hover:bg-coral-50 dark:hover:bg-coral-950/20 transition-colors"
+                className="hidden lg:flex items-center gap-1.5 text-sm font-semibold px-3 py-2 rounded-md text-primary hover:bg-primary/10 transition-colors"
                 aria-label="Donate"
               >
                 <Heart className="w-4 h-4" fill="currentColor" />
@@ -162,11 +158,7 @@ const Navigation = React.memo(() => {
               {/* Login/Dashboard Button */}
               <Button
                 asChild
-                className="h-9 px-5 text-white font-semibold rounded-full shadow-sm"
-                style={{
-                  background:
-                    "linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)",
-                }}
+                className="h-9 px-5 text-white font-semibold rounded-full shadow-sm bg-gradient-to-r from-primary to-accent hover:brightness-105"
               >
                 {isAdminOrStaff ? (
                   <Link
@@ -202,7 +194,7 @@ const Navigation = React.memo(() => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden fixed top-14 md:top-16 left-0 right-0 bottom-0 bg-background/95 backdrop-blur-lg border-t border-border z-[10001] overflow-y-auto overscroll-contain pb-[calc(env(safe-area-inset-bottom)+1.25rem)] [-webkit-overflow-scrolling:touch]">
+          <div className="lg:hidden fixed top-14 md:top-16 left-0 right-0 bottom-0 bg-background/98 backdrop-blur-md border-t border-border/70 z-[10001] overflow-y-auto overscroll-contain pb-[calc(env(safe-area-inset-bottom)+1.25rem)] [-webkit-overflow-scrolling:touch]">
             <div className="container mx-auto px-4 py-6 space-y-2">
               {navLinks.map((link) => {
                 const isActive = isActiveLink(link.href);
@@ -210,10 +202,10 @@ const Navigation = React.memo(() => {
                   <Link
                     key={link.name}
                     to={link.href}
-                    className={`block text-base transition-colors duration-150 font-medium px-4 py-3 rounded-lg animated-underline ${
+                    className={`block text-base transition-colors duration-150 font-medium px-4 py-3 rounded-lg ${
                       isActive
-                        ? "text-primary bg-primary/5 font-semibold"
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                        ? "text-primary bg-primary/10 border border-primary/15 font-semibold"
+                        : "text-muted-foreground hover:text-foreground hover:bg-card/80"
                     }`}
                     onClick={() => {
                       setMobileMenuOpen(false);
@@ -231,7 +223,7 @@ const Navigation = React.memo(() => {
                 <Button
                   type="button"
                   variant="outline"
-                  className="w-full h-11 text-base font-semibold border-coral-200 text-coral-700 hover:bg-coral-50"
+                  className="w-full h-11 text-base font-semibold border-primary/30 text-primary hover:bg-primary/10"
                   onClick={() => {
                     setDonateOpen(true);
                     setMobileMenuOpen(false);
@@ -244,11 +236,7 @@ const Navigation = React.memo(() => {
                 {/* Mobile Login/Dashboard Button */}
                 <Button
                   asChild
-                  className="w-full h-11 text-base font-semibold text-white rounded-full"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)",
-                  }}
+                  className="w-full h-11 text-base font-semibold text-white rounded-full bg-gradient-to-r from-primary to-accent hover:brightness-105"
                 >
                   {isAdminOrStaff ? (
                     <Link
@@ -280,7 +268,7 @@ const Navigation = React.memo(() => {
           </div>
         )}
 
-        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent pointer-events-none" />
       </nav>
 
       {/* Donation Modal */}

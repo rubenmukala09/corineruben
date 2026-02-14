@@ -9,11 +9,8 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-2xl text-card-foreground",
-      // Glassmorphism with 3D depth
-      "glass-light premium-shadow-depth premium-shine-sweep",
-      // Microinteraction
-      "micro-scale hover-depth",
+      "rounded-2xl border border-border/80 bg-card/92 text-card-foreground backdrop-blur-sm",
+      "shadow-[0_18px_38px_-28px_hsl(var(--primary)/0.45),0_8px_20px_-16px_hsl(220_20%_20%/0.2)]",
       className,
     )}
     {...props}

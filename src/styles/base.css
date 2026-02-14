@@ -24,16 +24,16 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   }
 
   :root {
-    /* Base colors - Premium cream/warm off-white */
-    --background: 30 25% 97%;
-    --foreground: 230 35% 12%;
+    /* Base colors - warm neutral with stronger contrast */
+    --background: 35 28% 97%;
+    --foreground: 222 33% 13%;
 
-    /* Deep Navy Primary - from #18305A palette */
-    --primary: 220 58% 22%;
+    /* Deep Navy Primary */
+    --primary: 216 61% 24%;
     --primary-foreground: 0 0% 100%;
 
-    /* Coral/Peach Accent - from #F8926A palette */
-    --accent: 18 92% 69%;
+    /* Coral Accent */
+    --accent: 18 88% 63%;
     --accent-foreground: 0 0% 100%;
 
     /* Success - refined emerald */
@@ -51,17 +51,17 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --popover: 0 0% 100%;
     --popover-foreground: 230 35% 12%;
 
-    /* Secondary - soft lavender tint */
-    --secondary: 270 20% 95%;
-    --secondary-foreground: 220 58% 22%;
+    /* Secondary - cool neutral tint */
+    --secondary: 214 34% 95%;
+    --secondary-foreground: 216 61% 24%;
 
-    /* Muted - subtle warm gray */
-    --muted: 30 15% 92%;
-    --muted-foreground: 230 20% 42%;
+    /* Muted - neutral gray */
+    --muted: 210 18% 93%;
+    --muted-foreground: 222 15% 40%;
 
-    --border: 30 10% 90%;
-    --input: 30 15% 94%;
-    --ring: 220 58% 22%;
+    --border: 214 20% 88%;
+    --input: 210 25% 95%;
+    --ring: 216 61% 24%;
 
     /* Standardized radius - 8px base */
     --radius: 0.5rem;
@@ -143,16 +143,16 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --shadow-lg: 0 4px 16px -4px hsl(220 20% 20% / 0.08);
 
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 230 35% 12%;
-    --sidebar-primary: 220 58% 22%;
+    --sidebar-foreground: 222 33% 13%;
+    --sidebar-primary: 216 61% 24%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 30 25% 97%;
-    --sidebar-accent-foreground: 220 58% 22%;
-    --sidebar-border: 30 12% 88%;
-    --sidebar-ring: 220 58% 22%;
+    --sidebar-accent: 214 34% 95%;
+    --sidebar-accent-foreground: 216 61% 24%;
+    --sidebar-border: 214 20% 88%;
+    --sidebar-ring: 216 61% 24%;
 
     /* Global text scale (rem-based) */
-    --text-scale: 0.9;
+    --text-scale: 1;
   }
 
   .dark {
@@ -260,9 +260,11 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     @apply bg-background text-foreground antialiased;
     font-family: "Rubik", sans-serif;
     font-size: 1rem;
-    line-height: 1.7;
-    letter-spacing: -0.002em;
+    line-height: 1.62;
+    letter-spacing: -0.001em;
     text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     font-feature-settings:
       "kern" 1,
       "liga" 1,
@@ -272,23 +274,28 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     overflow-x: hidden;
     width: 100%;
     position: relative;
-    /* Clean warm cream background */
-    background-color: hsl(30 25% 97%);
+    /* Clean layered background for a consistent pro look */
+    background-color: hsl(var(--background));
     background-image:
       radial-gradient(
-        ellipse 60% 40% at 10% 5%,
-        hsl(var(--coral-200) / 0.35) 0%,
+        ellipse 55% 36% at 12% 6%,
+        hsl(var(--coral-200) / 0.2) 0%,
         transparent 55%
       ),
       radial-gradient(
-        ellipse 50% 35% at 90% 0%,
-        hsl(var(--lavender-200) / 0.3) 0%,
-        transparent 60%
+        ellipse 48% 32% at 88% 2%,
+        hsl(var(--navy-100) / 0.18) 0%,
+        transparent 58%
       ),
       radial-gradient(
-        ellipse 50% 40% at 50% 100%,
-        hsl(var(--navy-100) / 0.35) 0%,
-        transparent 65%
+        ellipse 52% 38% at 50% 100%,
+        hsl(var(--lavender-200) / 0.16) 0%,
+        transparent 62%
+      ),
+      linear-gradient(
+        180deg,
+        hsl(0 0% 100% / 0.6) 0%,
+        hsl(0 0% 100% / 0.9) 100%
       );
     background-repeat: no-repeat;
   }
@@ -296,13 +303,13 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   @media (min-width: 768px) {
     body {
       font-size: 1rem;
-      line-height: 1.7;
+      line-height: 1.62;
     }
   }
 
   @media (max-width: 768px) {
     :root {
-      --text-scale: 0.9;
+      --text-scale: 0.95;
     }
   }
 
@@ -410,41 +417,55 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   h5,
   h6 {
     @apply font-bold;
-    font-family: "Lora", "Rubik", serif;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
+    font-family: "Rubik", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.08;
+    letter-spacing: -0.022em;
+    text-wrap: balance;
   }
 
   h1 {
-    font-size: clamp(2.1rem, 4vw, 4.1rem);
+    font-size: clamp(2rem, 3.6vw, 3.6rem);
     letter-spacing: -0.03em;
   }
 
   h2 {
-    font-size: clamp(1.8rem, 3.2vw, 3.2rem);
-    letter-spacing: -0.025em;
+    font-size: clamp(1.72rem, 2.8vw, 2.9rem);
+    letter-spacing: -0.026em;
   }
 
   h3 {
-    font-size: clamp(1.5rem, 2.4vw, 2.4rem);
-    letter-spacing: -0.02em;
+    font-size: clamp(1.36rem, 2.15vw, 2.2rem);
+    letter-spacing: -0.018em;
   }
 
   h4 {
-    font-size: clamp(1.25rem, 1.9vw, 1.9rem);
+    font-size: clamp(1.2rem, 1.65vw, 1.74rem);
   }
 
   h5 {
-    font-size: clamp(1.125rem, 1.6vw, 1.6rem);
+    font-size: clamp(1.08rem, 1.35vw, 1.42rem);
   }
 
   h6 {
-    font-size: clamp(1rem, 1.3vw, 1.3rem);
+    font-size: clamp(1rem, 1.2vw, 1.2rem);
+    letter-spacing: -0.01em;
+  }
+
+  p,
+  li,
+  label {
+    letter-spacing: 0;
+  }
+
+  p,
+  li {
+    line-height: 1.68;
   }
 
   /* Minimum tap targets for accessibility */
   button,
-  a {
+  [role="button"],
+  a[role="button"] {
     min-height: 44px;
     min-width: 44px;
   }

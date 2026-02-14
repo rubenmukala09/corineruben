@@ -82,7 +82,7 @@ const Footer = () => {
       <TrustedTechLogos />
 
       {/* Main Footer */}
-      <div className="bg-[#1a1a2e] text-white relative overflow-hidden premium-aurora">
+      <div className="bg-gradient-to-br from-navy-900 via-navy-800 to-navy-700 text-white relative overflow-hidden">
         {/* Subtle Background Pattern */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div
@@ -100,7 +100,7 @@ const Footer = () => {
             {/* Brand */}
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-white/10 border border-white/10">
+                <div className="p-2 rounded-xl bg-white/10 border border-white/15 shadow-lg">
                   <img
                     src={invisionLogo}
                     alt="InVision Network"
@@ -132,7 +132,9 @@ const Footer = () => {
 
             {/* Newsletter */}
             <div className="lg:pl-8">
-              <h3 className="text-lg font-semibold mb-2">Stay Protected</h3>
+              <h3 className="text-lg font-semibold mb-2 text-white">
+                Stay Protected
+              </h3>
               <p className="text-sm text-white/60 mb-4">
                 Get monthly AI safety tips and scam alerts delivered to your
                 inbox.
@@ -144,13 +146,13 @@ const Footer = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={isSubmitting}
-                  className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:bg-white/10 rounded-xl disabled:opacity-50"
+                  className="flex-1 bg-white/10 border-white/20 text-white placeholder:text-white/45 focus:bg-white/15 rounded-xl disabled:opacity-50"
                   aria-label="Email address for newsletter"
                 />
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="bg-primary hover:bg-primary/90 px-5 rounded-xl disabled:opacity-50"
+                  className="bg-gradient-to-r from-coral-400 to-coral-500 hover:brightness-105 px-5 rounded-xl border border-coral-300/20 disabled:opacity-50"
                   aria-label="Subscribe to newsletter"
                 >
                   {isSubmitting ? (
@@ -181,7 +183,7 @@ const Footer = () => {
                   <li key={link.to}>
                     <Link
                       to={link.to}
-                      className="text-base text-white/60 hover:text-white transition-colors"
+                      className="text-base text-white/65 hover:text-coral-300 transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -204,7 +206,7 @@ const Footer = () => {
                   <li key={i}>
                     <Link
                       to="/services"
-                      className="text-base text-white/60 hover:text-white transition-colors"
+                      className="text-base text-white/65 hover:text-coral-300 transition-colors"
                     >
                       {label}
                     </Link>
@@ -227,7 +229,7 @@ const Footer = () => {
                   <li key={i}>
                     <Link
                       to="/training"
-                      className="text-base text-white/60 hover:text-white transition-colors"
+                      className="text-base text-white/65 hover:text-coral-300 transition-colors"
                     >
                       {label}
                     </Link>
@@ -244,7 +246,7 @@ const Footer = () => {
                 <li>
                   <Link
                     to="/faq"
-                    className="text-base text-white/60 hover:text-white transition-colors"
+                    className="text-base text-white/65 hover:text-coral-300 transition-colors"
                   >
                     FAQ
                   </Link>
@@ -252,7 +254,7 @@ const Footer = () => {
                 <li>
                   <Link
                     to="/contact"
-                    className="text-base text-white/60 hover:text-white transition-colors"
+                    className="text-base text-white/65 hover:text-coral-300 transition-colors"
                   >
                     Contact Us
                   </Link>
@@ -260,7 +262,7 @@ const Footer = () => {
                 <li>
                   <Link
                     to="/contact"
-                    className="text-base text-white/60 hover:text-white transition-colors"
+                    className="text-base text-white/65 hover:text-coral-300 transition-colors"
                   >
                     Emergency Help
                   </Link>
@@ -271,7 +273,7 @@ const Footer = () => {
                       toast.info("Clearing cache...", { duration: 1500 });
                       setTimeout(() => clearAllCachesAndReload(), 300);
                     }}
-                    className="flex items-center gap-1.5 text-base text-white/60 hover:text-white transition-colors"
+                    className="flex items-center gap-1.5 text-base text-white/65 hover:text-coral-300 transition-colors"
                   >
                     <RefreshCw className="w-4 h-4" />
                     Clear Cache & Refresh
@@ -286,7 +288,7 @@ const Footer = () => {
                 <li>
                   <Link
                     to="/privacy-policy"
-                    className="text-base text-white/60 hover:text-white transition-colors"
+                    className="text-base text-white/65 hover:text-coral-300 transition-colors"
                   >
                     Privacy Policy
                   </Link>
@@ -294,7 +296,7 @@ const Footer = () => {
                 <li>
                   <Link
                     to="/terms-of-service"
-                    className="text-base text-white/60 hover:text-white transition-colors"
+                    className="text-base text-white/65 hover:text-coral-300 transition-colors"
                   >
                     Terms of Service
                   </Link>
@@ -302,7 +304,7 @@ const Footer = () => {
                 <li>
                   <Link
                     to="/refund-policy"
-                    className="text-base text-white/60 hover:text-white transition-colors"
+                    className="text-base text-white/65 hover:text-coral-300 transition-colors"
                   >
                     Refund Policy
                   </Link>
@@ -310,7 +312,7 @@ const Footer = () => {
                 <li>
                   <Link
                     to="/cookie-policy"
-                    className="text-base text-white/60 hover:text-white transition-colors"
+                    className="text-base text-white/65 hover:text-coral-300 transition-colors"
                   >
                     Cookie Policy
                   </Link>
@@ -318,7 +320,7 @@ const Footer = () => {
                 <li>
                   <Link
                     to="/acceptable-use"
-                    className="text-base text-white/60 hover:text-white transition-colors"
+                    className="text-base text-white/65 hover:text-coral-300 transition-colors"
                   >
                     Acceptable Use
                   </Link>
@@ -326,7 +328,7 @@ const Footer = () => {
                 <li>
                   <Link
                     to="/disclaimer"
-                    className="text-base text-white/60 hover:text-white transition-colors"
+                    className="text-base text-white/65 hover:text-coral-300 transition-colors"
                   >
                     Disclaimer
                   </Link>
@@ -384,7 +386,7 @@ const Footer = () => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/5 transition-all premium-3d-icon"
+                    className="p-2 rounded-lg bg-white/8 hover:bg-white/15 border border-white/15 transition-colors"
                     aria-label={social.label}
                   >
                     <social.icon className="w-4 h-4 text-white/60" />
