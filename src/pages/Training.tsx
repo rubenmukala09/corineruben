@@ -112,62 +112,79 @@ const PremiumTrainingCard = memo(
     onBook: (plan: any) => void;
   }) => {
     return (
-      <div className="relative h-full pt-5">
+      <div className="relative h-full pt-4">
         {plan.popular && (
-          <div className="absolute -top-1 left-1/2 -translate-x-1/2 bg-foreground text-background px-5 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 whitespace-nowrap">
-            ⭐ BEST VALUE
+          <div className="absolute -top-0.5 left-1/2 -translate-x-1/2 z-20">
+            <span className="inline-flex items-center gap-1.5 px-5 py-1.5 rounded-full text-xs font-bold tracking-wider bg-gradient-to-r from-primary to-accent text-white shadow-lg whitespace-nowrap">
+              ⭐ BEST VALUE
+            </span>
           </div>
         )}
         <div
-          className={`p-6 pt-8 rounded-2xl bg-card border transition-all duration-300 hover:-translate-y-1 h-full flex flex-col ${
+          className={`relative overflow-hidden rounded-2xl bg-card border transition-all duration-300 hover:-translate-y-1 h-full flex flex-col ${
             plan.popular
-              ? "shadow-lg border-2 border-primary/30"
-              : "shadow-sm border-border/60 hover:shadow-md hover:border-primary/20"
+              ? "shadow-xl border-2 border-primary/40 ring-1 ring-primary/10"
+              : "shadow-sm border-border/60 hover:shadow-lg hover:border-primary/20"
           }`}
         >
-          <div className="flex items-center justify-center gap-1.5 mb-4 text-xs text-muted-foreground pt-2">
-            <ClockIcon className="w-3.5 h-3.5" />
-            <span className="font-medium">{plan.duration}</span>
-            <span className="mx-1">·</span>
-            <Users className="w-3.5 h-3.5" />
-            <span className="font-medium">{plan.size}</span>
+          {/* Top gradient accent */}
+          <div className={`h-1.5 ${plan.popular ? 'bg-gradient-to-r from-primary via-accent to-primary' : 'bg-gradient-to-r from-muted-foreground/20 via-primary/30 to-muted-foreground/20'}`} />
+
+          <div className="p-6 flex flex-col flex-1">
+            {/* Badge */}
+            <div className="flex justify-center mb-3">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-primary/10 text-primary border border-primary/20">
+                {plan.badge}
+              </span>
+            </div>
+
+            {/* Title */}
+            <h3 className="text-xl font-black mb-2 text-center text-foreground">{plan.name}</h3>
+
+            {/* Meta info */}
+            <div className="flex items-center justify-center gap-3 mb-3 text-xs text-muted-foreground">
+              <span className="flex items-center gap-1"><ClockIcon className="w-3 h-3" />{plan.duration}</span>
+              <span className="w-1 h-1 rounded-full bg-border" />
+              <span className="flex items-center gap-1"><Users className="w-3 h-3" />{plan.size}</span>
+            </div>
+
+            {/* Description */}
+            <p className="text-muted-foreground mb-5 text-sm text-center leading-relaxed">
+              {plan.description}
+            </p>
+
+            {/* Price */}
+            <div className="text-center mb-5 py-3 bg-muted/40 rounded-xl border border-border/30">
+              <p className="text-3xl font-black text-primary">
+                {plan.price}
+                {plan.pricePrefix || ""}
+              </p>
+              <span className="text-xs font-medium text-muted-foreground">per session</span>
+            </div>
+
+            {/* Features */}
+            <ul className="space-y-2.5 mb-6 flex-1">
+              {plan.features.slice(0, 4).map((feature: string, idx: number) => (
+                <li key={idx} className="flex items-start gap-2.5">
+                  <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-muted-foreground">{feature.replace("✓ ", "")}</span>
+                </li>
+              ))}
+            </ul>
+
+            {/* CTA */}
+            <Button
+              onClick={() => onBook(plan)}
+              className={`w-full mt-auto rounded-full font-bold h-11 ${
+                plan.popular
+                  ? "bg-gradient-to-r from-primary to-accent text-white hover:opacity-90 shadow-md"
+                  : "bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground border border-primary/20"
+              }`}
+            >
+              Book Now
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
           </div>
-          <h3 className="text-2xl font-black mb-3 text-center text-foreground">{plan.name}</h3>
-          <p className="text-muted-foreground mb-4 text-sm text-center">
-            {plan.description}
-          </p>
-          <p className="text-3xl font-black text-primary mb-4 text-center">
-            {plan.price}
-            {plan.pricePrefix || ""}
-            <span className="text-base font-normal text-muted-foreground ml-1">
-              /session
-            </span>
-          </p>
-          <div className="flex flex-wrap gap-2 justify-center mb-4">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
-              {plan.badge}
-            </span>
-          </div>
-          <ul className="space-y-2 mb-6 text-sm flex-1">
-            {plan.features.slice(0, 4).map((feature: string, idx: number) => (
-              <li key={idx} className="flex items-start gap-2">
-                <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                <span className="text-muted-foreground">{feature.replace("✓ ", "")}</span>
-              </li>
-            ))}
-          </ul>
-          <Button
-            onClick={() => onBook(plan)}
-            variant={plan.popular ? "default" : "outline"}
-            className={`w-full mt-auto rounded-full font-bold ${
-              plan.popular
-                ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                : ""
-            }`}
-          >
-            Book Now
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </Button>
         </div>
       </div>
     );

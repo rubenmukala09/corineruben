@@ -14,11 +14,10 @@ import { SEO, PAGE_SEO } from "@/components/SEO";
 import seniorCoupleActive from "@/assets/senior-couple-active.jpg";
 import { SITE } from "@/config/site";
 
-// Lazy-load below-fold sections (consolidated from 13 to 7)
+// Lazy-load below-fold sections
+const SiteOrientationGrid = lazy(() => import("@/components/home/SiteOrientationGrid"));
 const AiAnalysisCTA = lazy(() => import("@/components/home/AiAnalysisCTA").then(m => ({ default: m.AiAnalysisCTA })));
 const LiveSecurityStats = lazy(() => import("@/components/home/LiveSecurityStats"));
-const WorkshopsPromo = lazy(() => import("@/components/home/WorkshopsPromo").then(m => ({ default: m.WorkshopsPromo })));
-const AIBusinessPromo = lazy(() => import("@/components/home/AIBusinessPromo").then(m => ({ default: m.AIBusinessPromo })));
 const ScamAlertsSection = lazy(() => import("@/components/home/ScamAlertsSection").then(m => ({ default: m.ScamAlertsSection })));
 const FamilyTrustSection = lazy(() => import("@/components/home/FamilyTrustSection").then(m => ({ default: m.FamilyTrustSection })));
 const FAQPreview = lazy(() => import("@/components/home/FAQPreview").then(m => ({ default: m.FAQPreview })));
@@ -93,24 +92,13 @@ const Index = () => {
             </AnimatedSection>
           </section>
 
+          {/* Site Orientation Grid */}
+          <LazySection><SiteOrientationGrid /></LazySection>
+
           {/* AI Analysis CTA */}
           <AnimatedSection animation="fade-up">
             <LazySection><AiAnalysisCTA /></LazySection>
           </AnimatedSection>
-
-          {/* Workshops */}
-          <section id="workshops">
-            <AnimatedSection animation="fade-up">
-              <LazySection><WorkshopsPromo /></LazySection>
-            </AnimatedSection>
-          </section>
-
-          {/* AI & Business */}
-          <section id="business">
-            <AnimatedSection animation="fade-up">
-              <LazySection><AIBusinessPromo /></LazySection>
-            </AnimatedSection>
-          </section>
 
           {/* Scam Alerts */}
           <section id="alerts">
