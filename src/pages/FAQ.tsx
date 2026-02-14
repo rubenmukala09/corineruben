@@ -471,7 +471,8 @@ export default function FAQ() {
           </div>
 
           {/* Spacer for floating stats bar */}
-          <div className="h-6" />
+          <div className="hidden lg:block h-14" />
+          <div className="lg:hidden h-6" />
 
           <TrustBar />
 
