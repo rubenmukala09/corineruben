@@ -831,16 +831,16 @@ function Resources() {
           {/* Bundle Info Banner */}
           <ScrollReveal>
             <div className="mt-8 space-y-4">
-              <div className="p-4 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 rounded-xl border border-primary/20 text-center">
-                <p className="text-sm font-medium mb-2">
-                  📖 <strong>Click any book cover</strong> to view full details
-                  and enlarged cover image
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  All digital products are delivered instantly to your email.
-                  Written by InVision Network experts.
-                </p>
-              </div>
+              
+
+
+
+
+
+
+
+
+
 
               {/* Language Request Note */}
               <div className="p-4 bg-gradient-to-r from-accent/10 via-primary/5 to-accent/10 rounded-xl border border-accent/20 text-center">
