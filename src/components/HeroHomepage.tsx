@@ -385,7 +385,7 @@ export const HeroHomepage = () => {
                 initial={{ opacity: 0, y: 25 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, delay: 0.6 }}
-                className="flex flex-col sm:flex-row gap-4"
+                className="flex flex-col sm:flex-row gap-4 justify-start"
               >
                 <motion.div
                   whileHover={{ scale: 1.06, y: -2 }}

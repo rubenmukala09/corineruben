@@ -653,7 +653,7 @@ export function CheckoutDialog({ open, onOpenChange }: CheckoutDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto rounded-2xl">
+      <DialogContent className="glass-modal sm:max-w-[500px] max-h-[90vh] overflow-y-auto rounded-2xl border-white/30">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">

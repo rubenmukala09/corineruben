@@ -883,7 +883,7 @@ export const SubscriptionDialog = ({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className={`sm:max-w-lg p-0 overflow-hidden max-h-[90vh] overflow-y-auto border-2 ${styles.accentBorder}`}
+        className={`glass-modal sm:max-w-lg p-0 overflow-hidden max-h-[90vh] overflow-y-auto border-2 ${styles.accentBorder}`}
       >
         {/* Header */}
         <div className="p-4 border-b bg-muted/30">

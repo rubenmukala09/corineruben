@@ -123,7 +123,7 @@ const Hero = ({
               </p>
             )}
             {children && (
-              <div className="flex flex-wrap spacing-md">
+              <div className="flex flex-wrap spacing-md justify-start">
                 {Children.map(children, (child) =>
                   isValidElement(child) ? (
                     <MagneticWrapper strength={0.3}>{child}</MagneticWrapper>
