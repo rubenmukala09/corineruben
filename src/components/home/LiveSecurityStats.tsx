@@ -63,12 +63,31 @@ export const LiveSecurityStats = () => {
   return (
     <section className="py-12 lg:py-16" ref={containerRef}>
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl border border-white/10 p-8 lg:p-12 relative overflow-hidden">
-          {/* Decorative glow */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
+        <div className="relative rounded-3xl overflow-hidden" style={{ background: 'linear-gradient(135deg, hsl(258 35% 12%) 0%, hsl(258 30% 16%) 40%, hsl(310 25% 14%) 70%, hsl(258 35% 10%) 100%)' }}>
+          {/* Glassmorphism orbs */}
+          <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-gradient-to-br from-primary/30 to-accent/20 blur-[100px] pointer-events-none" />
+          <div className="absolute -bottom-24 -right-16 w-96 h-96 rounded-full bg-gradient-to-br from-accent/25 to-primary/15 blur-[120px] pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-gradient-to-br from-lavender-500/15 to-coral-400/10 blur-[80px] pointer-events-none" />
+          
+          {/* Mesh gradient overlay */}
+          <div className="absolute inset-0 pointer-events-none opacity-30" style={{
+            backgroundImage: `
+              radial-gradient(ellipse 50% 80% at 20% 30%, hsl(var(--coral-400) / 0.2) 0%, transparent 60%),
+              radial-gradient(ellipse 60% 50% at 80% 70%, hsl(var(--lavender-500) / 0.15) 0%, transparent 60%),
+              radial-gradient(ellipse 40% 40% at 50% 10%, hsl(var(--accent) / 0.1) 0%, transparent 50%)
+            `
+          }} />
 
-          <div className="relative z-10">
+          {/* Noise texture */}
+          <div className="absolute inset-0 pointer-events-none opacity-[0.03]" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`
+          }} />
+
+          {/* Glass border highlight */}
+          <div className="absolute inset-0 rounded-3xl border border-white/10 pointer-events-none" />
+          <div className="absolute top-0 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none" />
+
+          <div className="relative z-10 p-8 lg:p-12">
             <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
               <div>
                 <div className="flex items-center gap-2 mb-4">
@@ -79,21 +98,30 @@ export const LiveSecurityStats = () => {
                   Real-Time Security Metrics
                 </h2>
               </div>
-              <Link to="/portal" className="inline-flex items-center gap-2 text-sm font-semibold text-white/60 hover:text-white transition-colors">
+              <Link to="/portal" className="inline-flex items-center gap-2 text-sm font-semibold text-white/50 hover:text-white transition-colors">
                 Full Dashboard <ArrowUpRight className="w-4 h-4" />
               </Link>
             </div>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {liveStats.map((stat) => (
-                <div key={stat.id} className="group bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-6 hover:bg-white/10 hover:border-white/20 transition-all duration-300">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/30 to-accent/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <stat.icon className="w-6 h-6 text-white" />
+                <div key={stat.id} className="group relative rounded-2xl overflow-hidden">
+                  {/* Glass card */}
+                  <div className="relative bg-white/[0.06] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-6 hover:bg-white/[0.1] hover:border-white/15 transition-all duration-500">
+                    {/* Inner glow on hover */}
+                    <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{
+                      background: 'radial-gradient(circle at 50% 0%, hsl(var(--primary) / 0.15) 0%, transparent 70%)'
+                    }} />
+                    <div className="relative z-10">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 backdrop-blur-sm border border-white/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:shadow-[0_0_20px_hsl(var(--primary)/0.3)] transition-all duration-300">
+                        <stat.icon className="w-6 h-6 text-white" />
+                      </div>
+                      <div className="text-3xl md:text-4xl font-black text-white mb-1">
+                        <AnimatedCounter value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
+                      </div>
+                      <div className="text-sm font-medium text-white/40">{stat.label}</div>
+                    </div>
                   </div>
-                  <div className="text-3xl md:text-4xl font-black text-white mb-1">
-                    <AnimatedCounter value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
-                  </div>
-                  <div className="text-sm font-medium text-white/50">{stat.label}</div>
                 </div>
               ))}
             </div>
