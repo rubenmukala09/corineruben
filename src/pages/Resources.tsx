@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
+import { AiAnalysisCTA } from "@/components/home/AiAnalysisCTA";
 import { useQuery } from "@tanstack/react-query";
 import { useCart } from "@/contexts/CartContext";
 import { useToast } from "@/hooks/use-toast";
@@ -661,6 +662,9 @@ function Resources() {
             </ScrollReveal>
           </div>
         </section>
+
+        {/* AI Analysis CTA */}
+        <AiAnalysisCTA compact />
 
         {/* Quick Stats Banner */}
         <section className="py-6">
