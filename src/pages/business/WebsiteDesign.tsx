@@ -1,3 +1,4 @@
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
@@ -35,7 +36,103 @@ import {
   Layers,
 } from "lucide-react";
 
+type SpecialtyKey =
+  | "animation"
+  | "interactions"
+  | "cms"
+  | "ecommerce"
+  | "portfolio";
+
+interface SpecialtyCategory {
+  key: SpecialtyKey;
+  title: string;
+  description: string;
+  tags: string[];
+}
+
+const specialtyCategories: SpecialtyCategory[] = [
+  {
+    key: "animation",
+    title: "Animation",
+    description:
+      "Intentional motion patterns for loading states, content reveals, and micro-feedback.",
+    tags: [
+      "Preload Animation",
+      "Button Animation",
+      "SVG Animation",
+      "Loop Animation",
+      "Scroll Animation",
+      "Image Animation",
+      "Text Animation",
+      "Letter Animation",
+    ],
+  },
+  {
+    key: "interactions",
+    title: "Interactions",
+    description:
+      "High-clarity interaction design for desktop and mobile browsing behavior.",
+    tags: [
+      "Mouseover Interaction",
+      "Mouse Hover Interaction",
+      "User Interaction",
+      "Navbar Interactions",
+      "Interaction Design",
+    ],
+  },
+  {
+    key: "cms",
+    title: "CMS",
+    description:
+      "Flexible content architecture for collections, media, and filtering workflows.",
+    tags: [
+      "CMS Gallery",
+      "Webflow CMS",
+      "CMS Slider",
+      "Audio CMS",
+      "CMS Filter",
+      "Slider CMS",
+      "CMS Grid",
+      "CMS Layout",
+    ],
+  },
+  {
+    key: "ecommerce",
+    title: "Ecommerce",
+    description:
+      "Commerce-ready storefront structures with clean navigation and checkout flow.",
+    tags: ["E-Commerce", "Ecom", "Commerce"],
+  },
+  {
+    key: "portfolio",
+    title: "Portfolio",
+    description:
+      "Portfolio systems tailored for creative teams, studios, and visual case studies.",
+    tags: [
+      "Photography Portfolio",
+      "UI Portfolio",
+      "UX Portfolio",
+      "Design Portfolio",
+      "Art Portfolio",
+      "Video Portfolio",
+    ],
+  },
+];
+
+const specialtyFilters: Array<{ key: "all" | SpecialtyKey; label: string }> = [
+  { key: "all", label: "All" },
+  { key: "animation", label: "Animation" },
+  { key: "interactions", label: "Interactions" },
+  { key: "cms", label: "CMS" },
+  { key: "ecommerce", label: "Ecommerce" },
+  { key: "portfolio", label: "Portfolio" },
+];
+
 const WebsiteDesign = () => {
+  const [activeSpecialty, setActiveSpecialty] = useState<"all" | SpecialtyKey>(
+    "all",
+  );
+
   const packages = [
     {
       name: "Landing Page",
@@ -145,13 +242,23 @@ const WebsiteDesign = () => {
     },
   ];
 
+  const visibleSpecialties = useMemo(() => {
+    if (activeSpecialty === "all") {
+      return specialtyCategories;
+    }
+
+    return specialtyCategories.filter(
+      (category) => category.key === activeSpecialty,
+    );
+  }, [activeSpecialty]);
+
   return (
     <PageTransition variant="fade">
       <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
         <SEO
           title="Professional Website Design Services"
           description="Custom website design for businesses in Dayton, Ohio. Landing pages from $2,500, business websites from $5,000, e-commerce from $10,000. Mobile-responsive, SEO-optimized."
-          keywords="website design Dayton Ohio, web development, business website, e-commerce website, landing page design, responsive web design"
+          keywords="website design Dayton Ohio, web development, business website, e-commerce website, landing page design, responsive web design, preload animation, navbar interactions, webflow cms, cms gallery, ecommerce design, UI portfolio, UX portfolio, video portfolio"
           structuredData={{
             "@context": "https://schema.org",
             "@type": "Service",
@@ -466,6 +573,90 @@ const WebsiteDesign = () => {
                     </motion.div>
                   ))}
                 </motion.div>
+              </div>
+            </div>
+          </section>
+
+          {/* Specialty Categories */}
+          <section className="relative overflow-hidden py-16">
+            <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/20 to-background" />
+            <div className="container relative z-10 mx-auto px-4">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="mx-auto mb-10 max-w-3xl text-center"
+              >
+                <Badge
+                  variant="outline"
+                  className="border-primary/30 bg-white/80 px-4 py-1.5 text-xs dark:bg-card/80"
+                >
+                  Build Categories
+                </Badge>
+                <h2 className="mt-4 text-3xl font-bold md:text-4xl">
+                  Animation, Interactions, CMS, Ecommerce, Portfolio
+                </h2>
+                <p className="mt-3 text-muted-foreground">
+                  Use focused category groups to scope features faster and keep
+                  implementation aligned from discovery to launch.
+                </p>
+              </motion.div>
+
+              <div className="mb-8 flex flex-wrap justify-center gap-2">
+                {specialtyFilters.map((filter) => {
+                  const isActive = activeSpecialty === filter.key;
+                  return (
+                    <button
+                      key={filter.key}
+                      type="button"
+                      onClick={() => setActiveSpecialty(filter.key)}
+                      className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+                        isActive
+                          ? "border-primary/40 bg-primary text-primary-foreground shadow-lg shadow-primary/25"
+                          : "border-white/50 bg-white/70 text-foreground hover:border-primary/30 hover:bg-white/90 dark:bg-card/70"
+                      }`}
+                    >
+                      {filter.label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                {visibleSpecialties.map((category, index) => (
+                  <motion.div
+                    key={category.key}
+                    initial={{ opacity: 0, y: 22 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.06 }}
+                  >
+                    <Card className="h-full border-white/60 bg-white/80 shadow-xl backdrop-blur-2xl dark:bg-card/80">
+                      <CardHeader className="pb-3">
+                        <div className="flex items-center justify-between gap-3">
+                          <CardTitle className="text-xl">
+                            {category.title}
+                          </CardTitle>
+                          <Badge variant="secondary" className="text-xs">
+                            {category.tags.length} items
+                          </Badge>
+                        </div>
+                        <CardDescription>{category.description}</CardDescription>
+                      </CardHeader>
+                      <CardContent className="flex flex-wrap gap-2 pt-0">
+                        {category.tags.map((tag) => (
+                          <Badge
+                            key={tag}
+                            variant="outline"
+                            className="border-primary/20 bg-primary/5 text-xs"
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
               </div>
             </div>
           </section>
