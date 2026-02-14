@@ -146,18 +146,18 @@ const Index = () => {
             <FamilyTrustSection />
           </section>
 
-          {/* Working Process - How It Works */}
+          {/* Working Process */}
           <WorkingProcess />
 
           {/* FAQ Section */}
           <FAQPreview />
 
-          {/* Quick Links - FAQ, Contact, Careers */}
+          {/* Quick Links */}
           <section id="quick-links">
             <QuickLinksSection />
           </section>
 
-          {/* Final CTA with Senior Couple Image */}
+          {/* Final CTA */}
           <CTASection
             headline="Join Our Protected Community"
             variant="image"
@@ -171,11 +171,7 @@ const Index = () => {
               <Button
                 asChild
                 size="lg"
-                className="h-12 px-6 text-sm font-bold rounded-full"
-                style={{
-                  background:
-                    "linear-gradient(135deg, #F8926A 0%, #BB81B5 100%)",
-                }}
+                className="h-12 px-8 text-sm font-bold rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90"
               >
                 <Link to="/training#pricing" className="text-white">
                   Get Protected Today
@@ -185,7 +181,7 @@ const Index = () => {
                 asChild
                 variant="outline"
                 size="lg"
-                className="h-12 px-6 text-sm font-bold rounded-full border-2 border-white/30 text-white hover:bg-white/10"
+                className="h-12 px-8 text-sm font-bold rounded-full border-2 border-white/30 text-white hover:bg-white/10"
               >
                 <Link to="/business">Business Solutions</Link>
               </Button>
