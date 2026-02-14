@@ -10,6 +10,7 @@ import { WorkingProcess } from "@/components/home/WorkingProcess";
 import { ScamAlertsSection } from "@/components/home/ScamAlertsSection";
 import { FAQPreview } from "@/components/home/FAQPreview";
 import { QuickLinksSection } from "@/components/home/QuickLinksSection";
+import { IntroductionSection } from "@/components/home/IntroductionSection";
 import { AnimatedSection } from "@/components/AnimatedSection";
 
 import CTASection from "@/components/CTASection";
@@ -71,6 +72,11 @@ const Index = () => {
           {/* Hero */}
           <section id="hero">
             <HeroHomepage />
+          </section>
+
+          {/* Introduction */}
+          <section id="intro">
+            <IntroductionSection />
           </section>
 
           {/* Live Stats */}
