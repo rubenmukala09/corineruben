@@ -72,7 +72,7 @@ serve(async (req) => {
       expand: ["data.items.data.price.product"],
     });
 
-    const subscriptionData = subscriptions.data.map((sub) => {
+    const subscriptionData = subscriptions.data.map((sub: any) => {
       const product = sub.items.data[0]?.price?.product;
       const planName =
         typeof product === "object" &&

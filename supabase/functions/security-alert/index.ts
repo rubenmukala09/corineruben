@@ -227,7 +227,8 @@ serve(async (req) => {
     );
   } catch (error: unknown) {
     console.error("Error in security-alert function:", error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    const msg = error instanceof Error ? error.message : String(error);
+    return new Response(JSON.stringify({ error: msg }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 500,
     });

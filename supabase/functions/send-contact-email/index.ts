@@ -205,7 +205,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.error("Error in send-contact-email function:", error);
     return new Response(
       JSON.stringify({
-        error: error.message,
+        error: error instanceof Error ? error.message : String(error),
         details: "Failed to send contact form email",
       }),
       {

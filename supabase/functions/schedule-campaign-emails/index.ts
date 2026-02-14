@@ -10,7 +10,8 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
-type SupabaseClient = ReturnType<typeof createClient>;
+// deno-lint-ignore no-explicit-any
+type SupabaseClient = any;
 
 type Campaign = {
   id: string;

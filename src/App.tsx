@@ -37,7 +37,7 @@ import { AnalyticsTracker } from "./components/AnalyticsTracker";
 import { MagnificentDonateButton } from "./components/MagnificentDonateButton";
 import { PrerenderProvider } from "./contexts/PrerenderContext";
 
-interface IdleWindow extends Window {
+interface IdleWindow extends Omit<Window, 'requestIdleCallback' | 'cancelIdleCallback'> {
   requestIdleCallback?: (
     callback: () => void,
     options?: { timeout: number },
