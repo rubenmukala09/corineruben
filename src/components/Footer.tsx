@@ -82,7 +82,7 @@ const Footer = () => {
       {/* Main Footer */}
       <div
         className="text-white relative overflow-hidden"
-        style={{ background: "linear-gradient(180deg, #1a1430 0%, #13111c 40%, #0e0c16 100%)" }}
+        style={{ background: "linear-gradient(180deg, #2a2345 0%, #221d3a 40%, #1c1830 100%)" }}
       >
         {/* Subtle top border glow */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/30 to-transparent" />
