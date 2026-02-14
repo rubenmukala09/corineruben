@@ -1,4 +1,5 @@
 import { FileText, Search, Shield, Smile } from "lucide-react";
+import processConsultation from "@/assets/process-consultation.jpg";
 
 const steps = [
   { step: "01", icon: FileText, title: "Share Your Details", description: "Tell us about your security concerns and what you need." },
@@ -24,6 +25,15 @@ export const WorkingProcess = () => {
           <p className="text-muted-foreground text-base max-w-xl mx-auto">
             Our process makes getting protected simple and stress-free.
           </p>
+        </div>
+
+        {/* Real photo banner */}
+        <div className="relative rounded-3xl overflow-hidden mb-12">
+          <img src={processConsultation} alt="Professional cybersecurity consultant meeting with business owner" className="w-full aspect-[21/9] object-cover" width={1920} height={823} loading="lazy" decoding="async" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
+          <div className="absolute bottom-6 left-6 right-6 text-center">
+            <p className="text-base font-bold text-foreground">Expert consultation tailored to your needs</p>
+          </div>
         </div>
 
         {/* Timeline with glass cards */}
