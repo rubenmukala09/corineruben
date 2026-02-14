@@ -287,7 +287,7 @@ export const WorkshopsPromo = () => {
                 }}
               >
                 <Link to="/training" className="text-white">
-                  Discover More
+                  Learn More
                   <ArrowRight className="ml-2 w-4 h-4" aria-hidden="true" />
                 </Link>
               </Button>

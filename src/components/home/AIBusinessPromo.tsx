@@ -70,7 +70,7 @@ export const AIBusinessPromo = () => {
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-            Transform your business with AI-powered automation. Solutions that
+            Grow your business with AI-powered automation. Solutions that
             work 24/7 so you never miss an opportunity.
           </p>
         </div>
@@ -197,7 +197,7 @@ export const AIBusinessPromo = () => {
                 }}
               >
                 <Link to="/business" className="text-white">
-                  Discover More
+                  Learn More
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Link>
               </Button>
