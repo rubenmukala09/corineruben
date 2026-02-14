@@ -13,6 +13,7 @@ import { QuickLinksSection } from "@/components/home/QuickLinksSection";
 import { IntroductionSection } from "@/components/home/IntroductionSection";
 import { MotivationalSection } from "@/components/home/MotivationalSection";
 import { IllustrativeHeroSection } from "@/components/home/IllustrativeHeroSection";
+import { AiAnalysisCTA } from "@/components/home/AiAnalysisCTA";
 import { DecorativeBanner } from "@/components/home/DecorativeBanner";
 import { AnimatedInfographic } from "@/components/home/AnimatedInfographic";
 import { AnimatedSection } from "@/components/AnimatedSection";
@@ -105,6 +106,11 @@ const Index = () => {
               )}
             </AnimatedSection>
           </section>
+
+          {/* AI Analysis CTA */}
+          <AnimatedSection animation="fade-up">
+            <AiAnalysisCTA />
+          </AnimatedSection>
 
           {/* Workshops */}
           <section id="workshops">
