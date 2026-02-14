@@ -170,27 +170,11 @@ export const DonationModal = ({
 
     setLoading(true);
     try {
-      const { data: donation, error: insertError } = await supabase
-        .from("donations")
-        .insert([
-          {
-            donor_name: data.donor_name,
-            email: data.email,
-            amount: finalAmount,
-            donation_type: donationType,
-            message: data.message || `Donation to ${info.title}`,
-            payment_status: "pending",
-          },
-        ])
-        .select()
-        .single();
-
-      if (insertError) throw insertError;
-
       // Save for future auto-fill
       localStorage.setItem("checkout_email", data.email);
       localStorage.setItem("checkout_name", data.donor_name);
 
+      // Call the edge function directly — it handles DB insert with service role
       const { data: paymentData, error: paymentError } =
         await supabase.functions.invoke("process-donation", {
           body: {
@@ -198,8 +182,7 @@ export const DonationModal = ({
             email: data.email,
             amount: finalAmount,
             donationType: donationType,
-            message: data.message,
-            donationId: donation?.id,
+            message: data.message || `Donation to ${info.title}`,
           },
         });
 

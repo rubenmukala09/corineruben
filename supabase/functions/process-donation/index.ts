@@ -73,7 +73,7 @@ serve(async (req) => {
   try {
     logStep("Function started");
 
-    const { donorName, email, amount, donationType, message, donationId } =
+    const { donorName, email, amount, donationType, message } =
       await req.json();
 
     logStep("Request data", {
@@ -81,7 +81,6 @@ serve(async (req) => {
       email,
       amount,
       donationType,
-      donationId,
     });
 
     if (!email || !amount || amount < 1) {
@@ -107,6 +106,28 @@ serve(async (req) => {
       customerId = customer.id;
       logStep("Created new customer", { customerId });
     }
+
+    // Create donation record server-side
+    const { data: donation, error: insertError } = await supabaseClient
+      .from("donations")
+      .insert({
+        donor_name: donorName,
+        email,
+        amount,
+        donation_type: donationType || "one-time",
+        message: message || "",
+        payment_status: "pending",
+      })
+      .select("id")
+      .single();
+
+    if (insertError) {
+      logStep("Donation insert error", { message: insertError.message });
+      throw new Error("Failed to create donation record");
+    }
+
+    const donationId = donation.id;
+    logStep("Created donation record", { donationId });
 
     const origin = req.headers.get("origin") || "https://invisionnetwork.org";
 
@@ -135,7 +156,7 @@ serve(async (req) => {
         success_url: `${origin}/payment-success?session_id={CHECKOUT_SESSION_ID}&type=donation`,
         cancel_url: `${origin}/payment-canceled`,
         metadata: {
-          donation_id: donationId || "",
+          donation_id: donationId,
           donation_type: "monthly",
           donor_name: donorName,
           message: message || "",
@@ -164,7 +185,7 @@ serve(async (req) => {
         success_url: `${origin}/payment-success?session_id={CHECKOUT_SESSION_ID}&type=donation`,
         cancel_url: `${origin}/payment-canceled`,
         metadata: {
-          donation_id: donationId || "",
+          donation_id: donationId,
           donation_type: "one-time",
           donor_name: donorName,
           message: message || "",
@@ -173,16 +194,14 @@ serve(async (req) => {
       logStep("Created payment checkout session", { sessionId: session.id });
     }
 
-    if (donationId) {
-      await supabaseClient
-        .from("donations")
-        .update({
-          stripe_payment_id: session.id,
-          payment_status: "processing",
-        })
-        .eq("id", donationId);
-      logStep("Updated donation record", { donationId });
-    }
+    await supabaseClient
+      .from("donations")
+      .update({
+        stripe_payment_id: session.id,
+        payment_status: "processing",
+      })
+      .eq("id", donationId);
+    logStep("Updated donation record", { donationId });
 
     return new Response(
       JSON.stringify({ url: session.url, sessionId: session.id }),
