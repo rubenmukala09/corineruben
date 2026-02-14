@@ -90,7 +90,7 @@ export const QuickLinksSection = () => {
         </div>
 
         {/* Quick Links Grid - Same Height Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
           {/* FAQ & Contact Cards */}
           {quickLinks.map((item, index) => (
             <div

@@ -186,10 +186,10 @@ export const WorkshopsPromo = () => {
                     <span className="text-white font-bold text-sm">99%</span>
                   </div>
                   <div>
-                    <div className="text-sm font-bold text-foreground">
+                    <div className="text-sm font-bold text-white">
                       Success Rate
                     </div>
-                    <div className="text-xs text-muted-foreground">
+                    <div className="text-xs text-white/70">
                       Satisfaction
                     </div>
                   </div>
