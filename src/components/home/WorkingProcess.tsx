@@ -35,7 +35,7 @@ const steps = [
 export const WorkingProcess = () => {
   return (
     <section
-      className="py-10 lg:py-14 dynamic-gradient-overlay"
+      className="py-6 lg:py-8 dynamic-gradient-overlay"
       style={{
         background:
           "linear-gradient(135deg, #ffffff 0%, #faf9f7 50%, #fff5f0 100%)",
