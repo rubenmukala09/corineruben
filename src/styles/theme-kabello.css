@@ -1,0 +1,219 @@
+/* Kabello-inspired dark glass theme overrides */
+
+:root {
+  --background: 240 9% 7%; /* #0f0f12 */
+  --foreground: 0 0% 100%;
+
+  --primary: 19 37% 51%; /* #b06d55 */
+  --primary-foreground: 0 0% 100%;
+
+  --accent: 240 73% 59%; /* #4a4ae2 */
+  --accent-foreground: 0 0% 100%;
+
+  --card: 240 8% 11%;
+  --card-foreground: 0 0% 98%;
+  --popover: 240 8% 11%;
+  --popover-foreground: 0 0% 98%;
+
+  --secondary: 240 8% 15%;
+  --secondary-foreground: 0 0% 95%;
+
+  --muted: 240 7% 16%;
+  --muted-foreground: 0 0% 63%; /* #a1a1a1 */
+
+  --destructive: 6 72% 56%;
+  --destructive-foreground: 0 0% 100%;
+  --success: 152 58% 42%;
+  --success-foreground: 0 0% 100%;
+
+  --border: 240 6% 25%;
+  --input: 240 7% 14%;
+  --ring: 19 37% 51%;
+
+  --sidebar-background: 240 10% 6%;
+  --sidebar-foreground: 0 0% 96%;
+  --sidebar-primary: 19 37% 51%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 240 8% 15%;
+  --sidebar-accent-foreground: 0 0% 95%;
+  --sidebar-border: 240 6% 24%;
+  --sidebar-ring: 19 37% 51%;
+
+  --navy-900: 240 11% 4%;
+  --navy-800: 240 10% 6%;
+  --navy-700: 240 9% 10%;
+  --navy-600: 240 9% 14%;
+  --navy-500: 240 8% 20%;
+  --navy-400: 240 8% 32%;
+  --navy-300: 240 8% 46%;
+  --navy-200: 240 7% 64%;
+  --navy-100: 240 8% 86%;
+
+  --coral-600: 19 42% 39%;
+  --coral-500: 19 37% 51%;
+  --coral-400: 20 42% 60%;
+  --coral-300: 20 46% 68%;
+  --coral-200: 21 52% 82%;
+  --coral-100: 21 58% 92%;
+
+  --lavender-700: 240 63% 39%;
+  --lavender-600: 240 67% 46%;
+  --lavender-500: 240 73% 59%;
+  --lavender-400: 240 75% 68%;
+  --lavender-300: 240 80% 78%;
+  --lavender-200: 240 84% 88%;
+  --lavender-100: 240 92% 95%;
+
+  --purple-900: 240 61% 29%;
+  --purple-700: 240 66% 39%;
+  --purple-500: 240 73% 52%;
+  --purple-400: 240 76% 62%;
+  --purple-300: 240 80% 74%;
+  --purple-200: 240 86% 86%;
+  --purple-100: 240 92% 95%;
+
+  --violet-600: 240 67% 46%;
+  --violet-500: 240 73% 59%;
+  --violet-400: 240 75% 68%;
+  --violet-300: 240 80% 78%;
+
+  --slate-900: 240 10% 9%;
+  --slate-700: 240 7% 22%;
+  --slate-500: 240 7% 43%;
+  --slate-300: 240 8% 67%;
+  --slate-100: 240 15% 90%;
+}
+
+html,
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+body {
+  background-image:
+    radial-gradient(
+      circle at 16% 12%,
+      hsl(var(--primary) / 0.14) 0%,
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at 84% 16%,
+      hsl(var(--accent) / 0.14) 0%,
+      transparent 46%
+    ),
+    linear-gradient(180deg, hsl(var(--background)) 0%, hsl(240 11% 5%) 100%);
+}
+
+p,
+li,
+small,
+label {
+  color: hsl(var(--muted-foreground));
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: hsl(var(--foreground));
+  letter-spacing: -0.03em;
+}
+
+.kabello-nav-surface {
+  background: rgba(15, 15, 18, 0.82);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 12px 36px -24px rgba(0, 0, 0, 0.9);
+}
+
+.kabello-mobile-drawer {
+  background: rgba(15, 15, 18, 0.96);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.kabello-brand-text {
+  background: linear-gradient(
+    120deg,
+    hsl(var(--primary)) 0%,
+    hsl(var(--accent)) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.kabello-action-btn {
+  background-image: linear-gradient(
+    120deg,
+    hsl(var(--primary)) 0%,
+    hsl(var(--accent)) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow:
+    0 14px 30px -20px hsl(var(--primary) / 0.85),
+    0 10px 22px -20px hsl(var(--accent) / 0.7);
+}
+
+.kabello-action-btn:hover {
+  filter: brightness(1.08);
+}
+
+.kabello-glass-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.kabello-glass-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 18% 18%,
+      hsl(var(--primary) / 0.12) 0%,
+      transparent 46%
+    ),
+    radial-gradient(
+      circle at 82% 82%,
+      hsl(var(--accent) / 0.14) 0%,
+      transparent 44%
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.kabello-glass-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.kabello-footer-surface {
+  background:
+    radial-gradient(
+      circle at 8% 20%,
+      hsl(var(--primary) / 0.18) 0%,
+      transparent 44%
+    ),
+    radial-gradient(
+      circle at 86% 78%,
+      hsl(var(--accent) / 0.14) 0%,
+      transparent 44%
+    ),
+    linear-gradient(135deg, hsl(240 12% 6%) 0%, hsl(240 11% 8%) 100%);
+}
+
+.kabello-surface-glass {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}

@@ -82,7 +82,7 @@ const Footer = () => {
       <TrustedTechLogos />
 
       {/* Main Footer */}
-      <div className="bg-gradient-to-br from-navy-900 via-navy-800 to-navy-700 text-white relative overflow-hidden">
+      <div className="kabello-footer-surface bg-gradient-to-br from-navy-900 via-navy-800 to-navy-700 text-white relative overflow-hidden">
         {/* Subtle Background Pattern */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div
@@ -146,13 +146,13 @@ const Footer = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={isSubmitting}
-                  className="flex-1 bg-white/10 border-white/20 text-white placeholder:text-white/45 focus:bg-white/15 rounded-xl disabled:opacity-50"
+                  className="kabello-surface-glass flex-1 bg-white/10 border-white/20 text-white placeholder:text-white/45 focus:bg-white/15 rounded-xl disabled:opacity-50"
                   aria-label="Email address for newsletter"
                 />
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="bg-gradient-to-r from-coral-400 to-coral-500 hover:brightness-105 px-5 rounded-xl border border-coral-300/20 disabled:opacity-50"
+                  className="kabello-action-btn bg-gradient-to-r from-primary to-accent hover:brightness-105 px-5 rounded-xl border border-white/20 disabled:opacity-50"
                   aria-label="Subscribe to newsletter"
                 >
                   {isSubmitting ? (

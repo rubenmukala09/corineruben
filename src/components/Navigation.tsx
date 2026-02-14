@@ -1,13 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import {
-  Menu,
-  X,
-  Phone,
-  LayoutDashboard,
-  Heart,
-} from "lucide-react";
+import { Menu, X, Phone, LayoutDashboard, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PrefetchLink } from "@/components/PrefetchLink";
 import { ShoppingCart } from "@/components/ShoppingCart";
@@ -71,7 +65,7 @@ const Navigation = React.memo(() => {
         />
       )}
 
-      <nav className="sticky top-0 z-navigation relative border-b border-white/20 bg-white/90 backdrop-blur-sm shadow-sm">
+      <nav className="kabello-nav-surface sticky top-0 z-navigation relative border-b border-white/10 shadow-sm">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between h-14 md:h-16">
             {/* Logo */}
@@ -90,17 +84,10 @@ const Navigation = React.memo(() => {
                 className="w-10 h-10 md:w-11 md:h-11 object-contain flex-shrink-0 premium-4k-image"
               />
               <div className="flex flex-col leading-tight min-w-0">
-                <span
-                  className="text-lg md:text-xl font-bold tracking-tight"
-                  style={{
-                    background: "linear-gradient(120deg, #173B72 0%, #F47C52 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                  }}
-                >
+                <span className="kabello-brand-text text-lg md:text-xl font-bold tracking-tight">
                   InVision Network
                 </span>
-                <span className="text-[10px] md:text-xs text-muted-foreground hidden sm:block">
+                <span className="text-[10px] md:text-xs text-muted-foreground/90 hidden sm:block">
                   AI Scam Protection & Business Solutions
                 </span>
               </div>
@@ -116,8 +103,8 @@ const Navigation = React.memo(() => {
                     to={link.href}
                     className={`relative text-sm transition-colors duration-150 font-semibold px-3 py-2 rounded-md whitespace-nowrap tracking-tight ${
                       isActive
-                        ? "text-primary font-bold bg-primary/10 border border-primary/15 shadow-sm"
-                        : "text-foreground/80 hover:text-foreground hover:bg-card/80"
+                        ? "text-white font-bold bg-white/10 border border-white/15 shadow-sm"
+                        : "text-muted-foreground hover:text-foreground hover:bg-white/5"
                     }`}
                   >
                     {link.name}
@@ -133,10 +120,10 @@ const Navigation = React.memo(() => {
               {/* Phone */}
               <a
                 href={SITE.phone.tel}
-                className="flex md:flex items-center gap-2 text-foreground hover:text-primary transition-colors duration-150 no-underline"
+                className="flex md:flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors duration-150 no-underline"
                 aria-label={`Call us at ${SITE.phone.display}`}
               >
-                <div className="w-8 h-8 md:w-8 md:h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <div className="w-8 h-8 md:w-8 md:h-8 rounded-full bg-white/10 border border-white/15 flex items-center justify-center">
                   <Phone className="w-4 h-4 text-primary" fill="currentColor" />
                 </div>
                 <span className="hidden md:inline text-sm font-semibold whitespace-nowrap text-foreground">
@@ -148,7 +135,7 @@ const Navigation = React.memo(() => {
               <button
                 type="button"
                 onClick={() => setDonateOpen(true)}
-                className="hidden lg:flex items-center gap-1.5 text-sm font-semibold px-3 py-2 rounded-md text-primary hover:bg-primary/10 transition-colors"
+                className="hidden lg:flex items-center gap-1.5 text-sm font-semibold px-3 py-2 rounded-md text-primary hover:bg-white/10 transition-colors border border-transparent hover:border-white/10"
                 aria-label="Donate"
               >
                 <Heart className="w-4 h-4" fill="currentColor" />
@@ -158,7 +145,7 @@ const Navigation = React.memo(() => {
               {/* Login/Dashboard Button */}
               <Button
                 asChild
-                className="h-9 px-5 text-white font-semibold rounded-full shadow-sm bg-gradient-to-r from-primary to-accent hover:brightness-105"
+                className="kabello-action-btn h-9 px-5 text-white font-semibold rounded-full shadow-sm bg-gradient-to-r from-primary to-accent hover:brightness-105"
               >
                 {isAdminOrStaff ? (
                   <Link
@@ -179,7 +166,7 @@ const Navigation = React.memo(() => {
               {/* Mobile menu button */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden p-2 rounded-md hover:bg-muted/50 transition-colors duration-150 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                className="lg:hidden p-2 rounded-md hover:bg-white/10 transition-colors duration-150 min-w-[44px] min-h-[44px] flex items-center justify-center border border-transparent hover:border-white/10"
                 aria-label="Toggle menu"
               >
                 {mobileMenuOpen ? (
@@ -194,7 +181,7 @@ const Navigation = React.memo(() => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden fixed top-14 md:top-16 left-0 right-0 bottom-0 bg-white/95 backdrop-blur-sm border-t border-border shadow-lg z-[10001] overflow-y-auto overscroll-contain pb-[calc(env(safe-area-inset-bottom)+1.25rem)] [-webkit-overflow-scrolling:touch]">
+          <div className="kabello-mobile-drawer lg:hidden fixed top-14 md:top-16 left-0 right-0 bottom-0 backdrop-blur-sm border-t border-white/10 shadow-lg z-[10001] overflow-y-auto overscroll-contain pb-[calc(env(safe-area-inset-bottom)+1.25rem)] [-webkit-overflow-scrolling:touch]">
             <div className="container mx-auto px-4 py-6 space-y-2">
               {navLinks.map((link) => {
                 const isActive = isActiveLink(link.href);
@@ -204,8 +191,8 @@ const Navigation = React.memo(() => {
                     to={link.href}
                     className={`block text-base transition-colors duration-150 font-medium px-4 py-3 rounded-lg ${
                       isActive
-                        ? "text-primary bg-primary/10 border border-primary/15 font-semibold"
-                        : "text-muted-foreground hover:text-foreground hover:bg-card/80"
+                        ? "text-white bg-white/10 border border-white/15 font-semibold"
+                        : "text-muted-foreground hover:text-foreground hover:bg-white/5"
                     }`}
                     onClick={() => {
                       setMobileMenuOpen(false);
@@ -223,7 +210,7 @@ const Navigation = React.memo(() => {
                 <Button
                   type="button"
                   variant="outline"
-                  className="w-full h-11 text-base font-semibold border-primary/30 text-primary hover:bg-primary/10"
+                  className="w-full h-11 text-base font-semibold border-white/20 text-primary hover:bg-white/10"
                   onClick={() => {
                     setDonateOpen(true);
                     setMobileMenuOpen(false);
@@ -236,7 +223,7 @@ const Navigation = React.memo(() => {
                 {/* Mobile Login/Dashboard Button */}
                 <Button
                   asChild
-                  className="w-full h-11 text-base font-semibold text-white rounded-full bg-gradient-to-r from-primary to-accent hover:brightness-105"
+                  className="kabello-action-btn w-full h-11 text-base font-semibold text-white rounded-full bg-gradient-to-r from-primary to-accent hover:brightness-105"
                 >
                   {isAdminOrStaff ? (
                     <Link
@@ -257,7 +244,7 @@ const Navigation = React.memo(() => {
                 {/* Mobile Phone Link */}
                 <a
                   href={SITE.phone.tel}
-                  className="flex items-center justify-center gap-2 text-base text-muted-foreground font-medium px-4 py-3 rounded-lg hover:bg-muted/50 transition-colors duration-150"
+                  className="flex items-center justify-center gap-2 text-base text-muted-foreground font-medium px-4 py-3 rounded-lg hover:bg-white/10 transition-colors duration-150"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <Phone className="h-5 w-5" />
@@ -268,7 +255,7 @@ const Navigation = React.memo(() => {
           </div>
         )}
 
-        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/45 to-transparent pointer-events-none" />
       </nav>
 
       {/* Donation Modal */}
