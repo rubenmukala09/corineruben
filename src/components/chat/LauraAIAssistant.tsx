@@ -154,37 +154,20 @@ export const LauraAIAssistant = () => {
       <div className="fixed bottom-6 right-6 z-fab">
         <button
           onClick={() => setIsOpen(true)}
-          className="group relative flex items-center gap-3 pl-1.5 pr-5 py-1.5 rounded-full bg-gradient-to-r from-primary to-accent shadow-[0_4px_20px_hsl(var(--primary)/0.35),0_12px_40px_-8px_hsl(var(--primary)/0.25)] transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_30px_hsl(var(--primary)/0.45)] active:scale-95"
+          className="group relative w-14 h-14 rounded-full bg-gradient-to-br from-primary to-accent shadow-[0_4px_20px_hsl(var(--primary)/0.35),0_12px_40px_-8px_hsl(var(--primary)/0.25)] transition-all duration-300 hover:scale-110 hover:shadow-[0_8px_30px_hsl(var(--primary)/0.45)] active:scale-95 overflow-hidden ring-2 ring-white/20"
           aria-label="Open Laura AI Assistant"
           style={{ contain: "layout" }}
         >
-          {/* Avatar circle */}
-          <div
-            className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-white/30 flex-shrink-0"
-            style={{ contain: "strict" }}
-          >
-            <img
-              src={lauraAvatar}
-              alt="Laura"
-              width={48}
-              height={48}
-              fetchPriority="high"
-              className="w-full h-full object-cover object-top"
-            />
-          </div>
-
-          {/* Label text - HIGH CONTRAST white on gradient */}
-          <div className="flex flex-col items-start">
-            <span className="text-sm font-extrabold text-white leading-tight tracking-wide">
-              LAURA
-            </span>
-            <span className="text-[10px] font-medium text-white/80 leading-tight">
-              AI Assistant
-            </span>
-          </div>
-
+          <img
+            src={lauraAvatar}
+            alt="Laura"
+            width={56}
+            height={56}
+            fetchPriority="high"
+            className="w-full h-full object-cover object-top"
+          />
           {/* Online pulse */}
-          <span className="absolute top-1 right-1 flex h-3 w-3">
+          <span className="absolute bottom-0.5 right-0.5 flex h-3 w-3">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75" />
             <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-400 border-2 border-white/50" />
           </span>
