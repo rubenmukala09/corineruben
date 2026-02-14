@@ -10,7 +10,6 @@ import {
   MapPin,
   ArrowRight,
   Loader2,
-  RefreshCw,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,7 +20,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useConfetti } from "@/hooks/useConfetti";
 import { z } from "zod";
-import { clearAllCachesAndReload } from "@/utils/cacheUtils";
 
 const newsletterSchema = z.object({
   email: z
@@ -267,18 +265,6 @@ const Footer = () => {
                     Emergency Help
                   </Link>
                 </li>
-                <li>
-                  <button
-                    onClick={() => {
-                      toast.info("Clearing cache...", { duration: 1500 });
-                      setTimeout(() => clearAllCachesAndReload(), 300);
-                    }}
-                    className="flex items-center gap-1.5 text-base text-white/65 hover:text-coral-300 transition-colors"
-                  >
-                    <RefreshCw className="w-4 h-4" />
-                    Clear Cache & Refresh
-                  </button>
-                </li>
               </ul>
             </div>
 
@@ -309,30 +295,6 @@ const Footer = () => {
                     Refund Policy
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    to="/cookie-policy"
-                    className="text-base text-white/65 hover:text-coral-300 transition-colors"
-                  >
-                    Cookie Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/acceptable-use"
-                    className="text-base text-white/65 hover:text-coral-300 transition-colors"
-                  >
-                    Acceptable Use
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/disclaimer"
-                    className="text-base text-white/65 hover:text-coral-300 transition-colors"
-                  >
-                    Disclaimer
-                  </Link>
-                </li>
               </ul>
             </div>
           </div>
@@ -348,11 +310,11 @@ const Footer = () => {
                 <div className="flex items-center gap-4">
                   <span className="flex items-center gap-1.5 text-sm text-white/60">
                     <Shield className="w-5 h-5 text-emerald-500/80" />
-                    Community Trusted
+                    BBB Accredited
                   </span>
                   <span className="flex items-center gap-1.5 text-sm text-white/60">
                     <Shield className="w-5 h-5 text-amber-500/80" />
-                    Supports Veterans
+                    Veteran-Supporting
                   </span>
                 </div>
               </div>
