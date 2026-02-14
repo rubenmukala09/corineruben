@@ -1,4 +1,6 @@
 import { Shield, Users, Award, CheckCircle, TrendingUp, Clock } from "lucide-react";
+import familyTrustHero from "@/assets/family-trust-hero.jpg";
+import seniorDeviceSafety from "@/assets/senior-device-safety.jpg";
 
 const stats = [
   { value: "100+", label: "Ohio Families Protected" },
@@ -22,15 +24,26 @@ export const FamilyTrustSection = () => {
       <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-gradient-to-br from-accent/5 to-primary/3 blur-[100px] pointer-events-none" />
 
       <div className="container mx-auto px-4 lg:px-8 max-w-6xl relative z-10">
-        <div className="text-center mb-12">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 backdrop-blur-sm border border-primary/15 text-xs font-bold uppercase tracking-[0.2em] text-primary mb-4">Real Protection, Real Results</span>
-          <h2 id="trust-heading" className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground leading-[1.1] mb-3">
-            Why Families{" "}
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Trust Us</span>
-          </h2>
-          <p className="text-muted-foreground text-base max-w-2xl mx-auto">
-            Join Ohio families who rely on us for their digital safety every day.
-          </p>
+        {/* Photo + heading grid */}
+        <div className="grid lg:grid-cols-2 gap-10 items-center mb-12">
+          <div>
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 backdrop-blur-sm border border-primary/15 text-xs font-bold uppercase tracking-[0.2em] text-primary mb-4">Real Protection, Real Results</span>
+            <h2 id="trust-heading" className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground leading-[1.1] mb-3">
+              Why Families{" "}
+              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Trust Us</span>
+            </h2>
+            <p className="text-muted-foreground text-base max-w-lg">
+              Join Ohio families who rely on us for their digital safety every day.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="rounded-2xl overflow-hidden border border-border/30 shadow-lg">
+              <img src={familyTrustHero} alt="Happy multigenerational family using tablet together in living room" width={600} height={600} loading="lazy" decoding="async" className="w-full h-full object-cover" />
+            </div>
+            <div className="rounded-2xl overflow-hidden border border-border/30 shadow-lg mt-6">
+              <img src={seniorDeviceSafety} alt="Senior woman safely browsing online with cybersecurity protection" width={600} height={600} loading="lazy" decoding="async" className="w-full h-full object-cover" />
+            </div>
+          </div>
         </div>
 
         {/* Glass stats row */}

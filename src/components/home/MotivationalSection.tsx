@@ -12,6 +12,7 @@ import {
   Quote,
 } from "lucide-react";
 import motivationGraphic from "@/assets/motivation-infographic.jpg";
+import communityWorkshop from "@/assets/community-workshop-real.jpg";
 
 const IMPACT_STATS = [
   { value: "5,000+", label: "Families Protected", icon: Users },
@@ -140,18 +141,25 @@ export const MotivationalSection = () => {
       {/* ═══ SUCCESS STORIES ═══ */}
       <section className="py-16">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="text-center mb-10">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-[0.15em] mb-4">
-              <Star className="w-3.5 h-3.5" />
-              Real Stories
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-foreground">
-              Protection That{" "}
-              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Changes Lives
-              </span>
-            </h2>
-          </div>
+          <div className="grid lg:grid-cols-5 gap-8 items-start">
+            {/* Community workshop photo */}
+            <div className="lg:col-span-2 rounded-2xl overflow-hidden border border-border/40 shadow-lg">
+              <img src={communityWorkshop} alt="Seniors attending digital literacy workshop in community center" width={1024} height={1024} loading="lazy" decoding="async" className="w-full h-full object-cover" />
+            </div>
+
+            <div className="lg:col-span-3">
+              <div className="mb-8">
+                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-[0.15em] mb-4">
+                  <Star className="w-3.5 h-3.5" />
+                  Real Stories
+                </span>
+                <h2 className="text-3xl sm:text-4xl font-black text-foreground">
+                  Protection That{" "}
+                  <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                    Changes Lives
+                  </span>
+                </h2>
+              </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {SUCCESS_STORIES.map((story, i) => (
@@ -175,6 +183,8 @@ export const MotivationalSection = () => {
                 </div>
               </div>
             ))}
+            </div>
+            </div>
           </div>
         </div>
       </section>
