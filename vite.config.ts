@@ -1,8 +1,24 @@
-import { defineConfig, loadEnv } from "vite";
+import { defineConfig, loadEnv, Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
+
+// Plugin to defer non-critical CSS (critical CSS is already inlined in index.html)
+function deferCssPlugin(): Plugin {
+  return {
+    name: "defer-css",
+    enforce: "post",
+    transformIndexHtml(html) {
+      // Convert <link rel="stylesheet" href="..."> to async loading pattern
+      // Only for Vite-generated asset CSS, not external fonts
+      return html.replace(
+        /<link rel="stylesheet" crossorigin href="(\/assets\/[^"]+\.css)">/g,
+        `<link rel="stylesheet" href="$1" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="$1"></noscript>`
+      );
+    },
+  };
+}
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -52,6 +68,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react(),
       mode === "development" && componentTagger(),
+      mode === "production" && deferCssPlugin(),
       !isPreviewBuild &&
         !disableImageOptimizer &&
         ViteImageOptimizer({
