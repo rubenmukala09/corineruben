@@ -17,7 +17,6 @@ import { ErrorBoundary } from "./components/ErrorBoundary";
 import { RouteTracker } from "./components/RouteTracker";
 const DraggablePerformanceMonitor = lazy(() => import("./components/DraggablePerformanceMonitor").then(m => ({ default: m.DraggablePerformanceMonitor })));
 import { PageTransition } from "./components/PageTransition";
-import { MotionConfig } from "framer-motion";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { useSmoothAnchorScroll } from "./hooks/useSmoothAnchorScroll";
 import { CookieConsent } from "./components/CookieConsent";
@@ -29,12 +28,12 @@ const MagnificentDonateButton = lazy(() => import("./components/MagnificentDonat
 import { PrerenderProvider } from "./contexts/PrerenderContext";
 
 // Admin Shell
-import { AdminShell } from "./components/admin/AdminShell";
+const AdminShell = lazy(() => import("./components/admin/AdminShell").then(m => ({ default: m.AdminShell })));
 
 // Critical pages - static imports for instant homepage/nav
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import Auth from "./pages/Auth";
+const Auth = lazy(() => import("./pages/Auth"));
 
 // Non-critical public pages - lazy loaded
 const Training = lazy(() => import("./pages/Training"));
@@ -259,7 +258,6 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <MotionConfig reducedMotion="user">
           <Toaster />
           <Sonner />
           <SubscriptionProvider>
@@ -293,7 +291,6 @@ function App() {
               </CheckoutProvider>
             </CartProvider>
           </SubscriptionProvider>
-        </MotionConfig>
       </AuthProvider>
     </QueryClientProvider>
   );
