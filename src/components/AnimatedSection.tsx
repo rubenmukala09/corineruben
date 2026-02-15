@@ -17,29 +17,39 @@ export const AnimatedSection = ({
   stagger = false,
 }: AnimatedSectionProps) => {
   const ref = useRef<HTMLDivElement>(null);
+  const cleanupRef = useRef<(() => void) | null>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReduced) {
-      setIsVisible(true);
-      return;
-    }
+    // Defer observer setup to avoid forced reflow during initial paint
+    const rafId = requestAnimationFrame(() => {
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (prefersReduced) {
+        setIsVisible(true);
+        return;
+      }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(el);
-        }
-      },
-      { rootMargin: "100px 0px 0px 0px", threshold: 0.05 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            observer.unobserve(el);
+          }
+        },
+        { rootMargin: "100px 0px 0px 0px", threshold: 0.05 }
+      );
+      observer.observe(el);
+      // Store cleanup
+      cleanupRef.current = () => observer.disconnect();
+    });
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      cleanupRef.current?.();
+    };
   }, []);
 
   const baseStyles = "transition-all duration-300 ease-out";

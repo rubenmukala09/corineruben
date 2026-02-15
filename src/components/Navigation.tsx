@@ -25,14 +25,19 @@ const Navigation = React.memo(() => {
 
   const isAdminOrStaff = user && roleConfig;
 
+  // Use ref to skip unnecessary overflow write on initial mount (prevents forced reflow)
+  const hasOpenedMenu = React.useRef(false);
   React.useEffect(() => {
     if (mobileMenuOpen) {
+      hasOpenedMenu.current = true;
       document.body.style.overflow = "hidden";
-    } else {
+    } else if (hasOpenedMenu.current) {
       document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = "";
+      if (hasOpenedMenu.current) {
+        document.body.style.overflow = "";
+      }
     };
   }, [mobileMenuOpen]);
 
