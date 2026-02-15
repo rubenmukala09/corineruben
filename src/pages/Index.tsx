@@ -14,6 +14,7 @@ import seniorCoupleActive from "@/assets/senior-couple-active.jpg";
 import { SITE } from "@/config/site";
 import { TrustBadgesSection } from "@/components/home/TrustBadgesSection";
 import SiteOrientationGrid from "@/components/home/SiteOrientationGrid";
+import PromoStrip from "@/components/home/PromoStrip";
 
 const FAQPreview = lazy(() => import("@/components/home/FAQPreview").then(m => ({ default: m.FAQPreview })));
 
@@ -41,6 +42,9 @@ const Index = () => {
 
           {/* Site directory — cards linking to each page */}
           <SiteOrientationGrid />
+
+          {/* Promotional banner */}
+          <PromoStrip />
 
           {/* Trust proof */}
           <TrustBadgesSection />
