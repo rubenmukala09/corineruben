@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Shield, Star, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import heroImage from "@/assets/hero-corporate-protection.jpg";
+const heroImage = "/images/hero-corporate-protection.jpg";
 import { SITE } from "@/config/site";
 
 const trustBadges = [
