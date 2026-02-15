@@ -9,12 +9,13 @@ import { CartProvider } from "./contexts/CartContext";
 import { CartFeedbackProvider } from "./contexts/CartFeedbackContext";
 import { SubscriptionProvider } from "./contexts/SubscriptionContext";
 import { CheckoutProvider } from "./contexts/CheckoutContext";
-import UnifiedCheckoutDialog from "./components/payment/UnifiedCheckoutDialog";
-import LauraAIAssistant from "./components/chat/LauraAIAssistant";
-import { CartFeedbackNotifications } from "./components/CartFeedbackNotifications";
+// Heavy components - lazy loaded to reduce initial JS
+const UnifiedCheckoutDialog = lazy(() => import("./components/payment/UnifiedCheckoutDialog"));
+const LauraAIAssistant = lazy(() => import("./components/chat/LauraAIAssistant"));
+const CartFeedbackNotifications = lazy(() => import("./components/CartFeedbackNotifications").then(m => ({ default: m.CartFeedbackNotifications })));
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { RouteTracker } from "./components/RouteTracker";
-import { DraggablePerformanceMonitor } from "./components/DraggablePerformanceMonitor";
+const DraggablePerformanceMonitor = lazy(() => import("./components/DraggablePerformanceMonitor").then(m => ({ default: m.DraggablePerformanceMonitor })));
 import { PageTransition } from "./components/PageTransition";
 import { MotionConfig } from "framer-motion";
 import { ScrollToTop } from "./components/ScrollToTop";
@@ -24,7 +25,7 @@ import { SkipToContent } from "./components/SkipToContent";
 import BackToTop from "./components/BackToTop";
 import MobileCallButton from "./components/MobileCallButton";
 import { AnalyticsTracker } from "./components/AnalyticsTracker";
-import { MagnificentDonateButton } from "./components/MagnificentDonateButton";
+const MagnificentDonateButton = lazy(() => import("./components/MagnificentDonateButton").then(m => ({ default: m.MagnificentDonateButton })));
 import { PrerenderProvider } from "./contexts/PrerenderContext";
 
 // Admin Shell
@@ -270,7 +271,6 @@ function App() {
                       <SkipToContent />
                       <ScrollToTop />
                       <BackToTop />
-                      <MagnificentDonateButton />
                       <MobileCallButton />
                       <RouteTracker />
                       <AnalyticsTracker />
@@ -279,11 +279,14 @@ function App() {
                           <PublicRoutes />
                         </div>
                       </ErrorBoundary>
-                      <LauraAIAssistant />
                       <CookieConsent />
-                      <CartFeedbackNotifications />
-                      <UnifiedCheckoutDialog />
-                      <DraggablePerformanceMonitor />
+                      <Suspense fallback={null}>
+                        <MagnificentDonateButton />
+                        <LauraAIAssistant />
+                        <CartFeedbackNotifications />
+                        <UnifiedCheckoutDialog />
+                        <DraggablePerformanceMonitor />
+                      </Suspense>
                     </PrerenderProvider>
                   </BrowserRouter>
                 </CartFeedbackProvider>

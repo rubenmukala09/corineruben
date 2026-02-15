@@ -14,8 +14,8 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
-import { useState } from "react";
-import { EnhancedCheckoutDialog } from "./EnhancedCheckoutDialog";
+import { useState, lazy, Suspense } from "react";
+const EnhancedCheckoutDialog = lazy(() => import("./EnhancedCheckoutDialog").then(m => ({ default: m.EnhancedCheckoutDialog })));
 import { Badge } from "@/components/ui/badge";
 
 export function ShoppingCart() {
@@ -134,10 +134,14 @@ export function ShoppingCart() {
         </SheetContent>
       </Sheet>
 
-      <EnhancedCheckoutDialog
-        open={checkoutOpen}
-        onOpenChange={setCheckoutOpen}
-      />
+      {checkoutOpen && (
+        <Suspense fallback={null}>
+          <EnhancedCheckoutDialog
+            open={checkoutOpen}
+            onOpenChange={setCheckoutOpen}
+          />
+        </Suspense>
+      )}
     </>
   );
 }
