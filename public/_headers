@@ -50,6 +50,14 @@
 /assets/*.otf
   Cache-Control: public, max-age=31536000, immutable
 
+# Cache images in /images/ directory for 1 year
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache PNG assets specifically
+/assets/png/*
+  Cache-Control: public, max-age=31536000, immutable
+
 # HTML files should not be cached long-term
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
