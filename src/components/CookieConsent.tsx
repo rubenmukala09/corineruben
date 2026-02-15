@@ -43,7 +43,9 @@ export function CookieConsent() {
       localStorage.setItem(PAGE_VISIT_COUNT_KEY, visitCount.toString());
 
       if (visitCount >= VISIT_THRESHOLD) {
-        setShowBanner(true);
+        // Delay banner until after LCP to avoid layout shift during measurement
+        const timer = setTimeout(() => setShowBanner(true), 3500);
+        return () => clearTimeout(timer);
       }
     } else {
       const saved = localStorage.getItem(COOKIE_PREFERENCES_KEY);
