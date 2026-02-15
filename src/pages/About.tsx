@@ -248,7 +248,7 @@ function About() {
 
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 max-w-5xl mx-auto">
             <ScrollReveal delay={100}>
-              <Card className="p-6 md:p-8 hover:shadow-2xl transition-all duration-500 border-2 border-border/50 hover:border-primary/50">
+              <Card className="glass-card card-padding-lg hover:shadow-2xl transition-all duration-300 border border-white/25 hover:border-white/35">
                 {/* Placeholder for founder photo upload */}
                 <div className="relative mb-6">
                   <div className="w-full aspect-square bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl flex items-center justify-center border-2 border-dashed border-primary/30">
@@ -285,7 +285,7 @@ function About() {
             </ScrollReveal>
 
             <ScrollReveal delay={200}>
-              <Card className="p-6 md:p-8 hover:shadow-2xl transition-all duration-500 border-2 border-border/50 hover:border-primary/50">
+              <Card className="glass-card card-padding-lg hover:shadow-2xl transition-all duration-300 border border-white/25 hover:border-white/35">
                 {/* Placeholder for founder photo upload */}
                 <div className="relative mb-6">
                   <div className="w-full aspect-square bg-gradient-to-br from-accent/10 to-primary/10 rounded-xl flex items-center justify-center border-2 border-dashed border-accent/30">
@@ -345,7 +345,7 @@ function About() {
               const Icon = value.icon;
               return (
                 <ScrollReveal key={value.title} delay={index * 100}>
-                  <Card className="p-4 sm:p-6 md:p-8 text-center hover:shadow-2xl transition-all duration-500 hover:scale-105 border-2 border-border/50 hover:border-primary/50">
+                  <Card className="glass-card card-padding-lg align-text-center hover:shadow-2xl transition-all duration-300 hover:scale-105 border border-white/25 hover:border-white/35">
                     <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto mb-3 sm:mb-4 md:mb-6 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
                       <Icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-primary" />
                     </div>
@@ -389,21 +389,21 @@ function About() {
           {/* Three Info Cards Only */}
           <ScrollReveal delay={200}>
             <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <div className="text-center p-6 bg-white/15 rounded-2xl backdrop-blur-md border border-white/25 hover:bg-white/20 transition-all duration-300 hover:-translate-y-1">
+              <div className="glass-light align-text-center card-padding-lg rounded-2xl transition-all duration-300 hover:-translate-y-1">
                 <div className="text-4xl mb-4">🏠</div>
                 <div className="font-bold text-xl mb-2">Ohio-Based</div>
                 <div className="text-sm opacity-90">
                   Serving local communities across the Buckeye State
                 </div>
               </div>
-              <div className="text-center p-6 bg-white/15 rounded-2xl backdrop-blur-md border border-white/25 hover:bg-white/20 transition-all duration-300 hover:-translate-y-1">
+              <div className="glass-light align-text-center card-padding-lg rounded-2xl transition-all duration-300 hover:-translate-y-1">
                 <div className="text-4xl mb-4">🎖️</div>
                 <div className="font-bold text-xl mb-2">Veteran-Supporting</div>
                 <div className="text-sm opacity-90">
                   Honoring those who served with special discounts
                 </div>
               </div>
-              <div className="text-center p-6 bg-white/15 rounded-2xl backdrop-blur-md border border-white/25 hover:bg-white/20 transition-all duration-300 hover:-translate-y-1">
+              <div className="glass-light align-text-center card-padding-lg rounded-2xl transition-all duration-300 hover:-translate-y-1">
                 <div className="text-4xl mb-4">💙</div>
                 <div className="font-bold text-xl mb-2">Mission-Driven</div>
                 <div className="text-sm opacity-90">

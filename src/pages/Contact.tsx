@@ -290,7 +290,7 @@ function Contact() {
           <div className="grid lg:grid-cols-5 gap-8 max-w-7xl mx-auto">
             {/* Premium Contact Form - 60% */}
             <div className="lg:col-span-3">
-              <div className="relative bg-card/90 backdrop-blur-md rounded-3xl border border-border/30 shadow-2xl overflow-hidden">
+              <div className="relative glass-modal rounded-3xl shadow-2xl overflow-hidden">
                 {/* Premium header gradient */}
                 <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary via-accent to-primary" />
 
