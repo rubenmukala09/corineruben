@@ -20,11 +20,11 @@ const DraggablePerformanceMonitor = lazy(() => import("./components/DraggablePer
 import { PageTransition } from "./components/PageTransition";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { useSmoothAnchorScroll } from "./hooks/useSmoothAnchorScroll";
-import { CookieConsent } from "./components/CookieConsent";
+const CookieConsent = lazy(() => import("./components/CookieConsent").then(m => ({ default: m.CookieConsent })));
 import { SkipToContent } from "./components/SkipToContent";
-import BackToTop from "./components/BackToTop";
-import MobileCallButton from "./components/MobileCallButton";
-import { AnalyticsTracker } from "./components/AnalyticsTracker";
+const BackToTop = lazy(() => import("./components/BackToTop"));
+const MobileCallButton = lazy(() => import("./components/MobileCallButton"));
+const AnalyticsTracker = lazy(() => import("./components/AnalyticsTracker").then(m => ({ default: m.AnalyticsTracker })));
 const MagnificentDonateButton = lazy(() => import("./components/MagnificentDonateButton").then(m => ({ default: m.MagnificentDonateButton })));
 import { PrerenderProvider } from "./contexts/PrerenderContext";
 
@@ -274,16 +274,20 @@ function App() {
                     <PrerenderProvider>
                       <SkipToContent />
                       <ScrollToTop />
-                      <BackToTop />
-                      <MobileCallButton />
-                      <RouteTracker />
-                      <AnalyticsTracker />
+                      <Suspense fallback={null}>
+                        <BackToTop />
+                        <MobileCallButton />
+                        <AnalyticsTracker />
+                      </Suspense>
                       <ErrorBoundary>
                         <div id="main-content" tabIndex={-1} role="main">
                           <PublicRoutes />
                         </div>
                       </ErrorBoundary>
-                      <CookieConsent />
+                      <RouteTracker />
+                      <Suspense fallback={null}>
+                        <CookieConsent />
+                      </Suspense>
                       <Suspense fallback={null}>
                         <MagnificentDonateButton />
                         <LauraAIAssistant />
