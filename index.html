@@ -10,11 +10,8 @@
     <!-- Preconnect hints for early connection establishment -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="preconnect"
-      href="https://avoafweoebstkgjnbadv.supabase.co"
-      crossorigin
-    />
+    <!-- DNS prefetch for backend (not preconnect - avoids unused preconnect warning) -->
+    <link rel="dns-prefetch" href="https://avoafweoebstkgjnbadv.supabase.co" />
 
     <!-- Load primary fonts (Rubik + Lora) with optimized font-display -->
     <link
@@ -205,6 +202,9 @@
     <!-- DNS prefetch for other origins -->
     <link rel="dns-prefetch" href="https://js.stripe.com" />
     <link rel="dns-prefetch" href="https://m.stripe.network" />
+
+    <!-- Preload hero image for LCP -->
+    <link rel="preload" as="image" href="/assets/jpg/hero-corporate-protection.jpg" fetchpriority="high" />
 
     <!-- Google Analytics - deferred to reduce main-thread impact -->
     <script>
