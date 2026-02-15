@@ -20,7 +20,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { z } from "zod";
-import invisionLogo from "@/assets/shield-logo.png";
+import invisionLogo from "@/assets/shield-logo-nav.webp";
 const authBackground = "/images/hero-corporate-protection.jpg";
 import { Session, User as SupabaseUser } from "@supabase/supabase-js";
 import { ForgotPasswordModal } from "@/components/auth/ForgotPasswordModal";

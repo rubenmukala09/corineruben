@@ -13,7 +13,7 @@ import { PrefetchLink } from "@/components/PrefetchLink";
 import { ShoppingCart } from "@/components/ShoppingCart";
 import { useAuth } from "@/contexts/AuthContext";
 import { SITE } from "@/config/site";
-import invisionLogo from "@/assets/shield-logo.png";
+import invisionLogo from "@/assets/shield-logo-nav.webp";
 import { DonationModal } from "@/components/DonationModal";
 
 // Memoized for performance - prevents re-renders when parent components update

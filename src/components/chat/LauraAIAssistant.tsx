@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLauraChat } from "@/hooks/useLauraChat";
-import lauraAvatar from "@/assets/laura-avatar-new.png";
+import lauraAvatar from "@/assets/laura-avatar-nav.webp";
 import { SITE } from "@/config/site";
 
 const quickActions = [

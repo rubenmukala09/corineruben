@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import TrustedTechLogos from "./TrustedTechLogos";
 import { SITE } from "@/config/site";
-import invisionLogo from "@/assets/shield-logo.png";
+import invisionLogo from "@/assets/shield-logo-nav.webp";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useConfetti } from "@/hooks/useConfetti";

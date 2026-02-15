@@ -15,7 +15,7 @@ import {
   Square,
   ChevronDown,
 } from "lucide-react";
-import lauraAvatar from "@/assets/laura-avatar-new.png";
+import lauraAvatar from "@/assets/laura-avatar-nav.webp";
 
 interface Message {
   role: "user" | "assistant";
