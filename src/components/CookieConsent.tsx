@@ -130,7 +130,8 @@ export function CookieConsent() {
 
   return (
     <>
-      <div className="fixed bottom-0 left-0 right-0 z-50 p-4 sm:p-6 animate-fade-in">
+      <style>{`@keyframes cookieFadeIn{from{opacity:0}to{opacity:1}}`}</style>
+      <div className="fixed bottom-0 left-0 right-0 z-50 p-4 sm:p-6" style={{ animation: 'cookieFadeIn 0.3s ease-out', contain: 'layout style paint' }}>
         <Card className="max-w-4xl mx-auto p-4 sm:p-6 shadow-2xl border-2 border-border">
           <div className="flex flex-col sm:flex-row items-start gap-4">
             <div className="flex-1">
