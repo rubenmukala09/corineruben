@@ -66,12 +66,12 @@ const Navigation = React.memo(() => {
       {/* Mobile backdrop overlay */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-[10000] lg:hidden"
+          className="fixed inset-0 bg-black/50 z-[9998] lg:hidden"
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
 
-      <nav className="sticky top-0 z-[9999] relative border-b border-white/20 bg-white/90 backdrop-blur-sm shadow-sm">
+      <nav className="sticky top-0 z-[9999] border-b border-white/20 bg-white/90 backdrop-blur-sm shadow-sm">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-16">
             {/* Logo */}
