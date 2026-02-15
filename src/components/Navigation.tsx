@@ -92,7 +92,7 @@ const Navigation = React.memo(() => {
                 height={44}
                 loading="eager"
                 decoding="async"
-                className="w-10 h-10 md:w-11 md:h-11 object-contain flex-shrink-0 premium-4k-image"
+                className="w-10 h-10 md:w-11 md:h-11 object-contain flex-shrink-0"
               />
               <div className="flex flex-col leading-tight min-w-0">
                 <span
