@@ -24,7 +24,7 @@ export default defineConfig(({ mode }) => {
       port: 8080,
     },
     build: {
-      sourcemap: mode === "development",
+      sourcemap: true,
       cssCodeSplit: true,
       minify: "esbuild",
       target: "es2015",
