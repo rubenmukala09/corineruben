@@ -63,15 +63,15 @@ const Index = () => {
               variant="image"
               backgroundImage={seniorCoupleActive}
             >
-              <p className="text-lg text-white/90 mb-6">
+              <p className="text-sm sm:text-base md:text-lg text-white/90 mb-4 sm:mb-6">
                 Join families across Ohio who live confidently, knowing they are
                 protected from AI scams.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 flex-wrap justify-center">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 flex-wrap justify-center">
                 <Button
                   asChild
                   size="lg"
-                  className="h-12 px-8 text-sm font-bold rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90"
+                  className="h-11 sm:h-12 px-6 sm:px-8 text-xs sm:text-sm font-bold rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90 w-full sm:w-auto"
                 >
                   <Link to="/training#pricing" className="text-white">
                     Get Protected Today
@@ -81,12 +81,12 @@ const Index = () => {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="h-12 px-8 text-sm font-bold rounded-full border-2 border-white/30 text-white hover:bg-white/10"
+                  className="h-11 sm:h-12 px-6 sm:px-8 text-xs sm:text-sm font-bold rounded-full border-2 border-white/30 text-white hover:bg-white/10 w-full sm:w-auto"
                 >
                   <Link to="/business">Business Solutions</Link>
                 </Button>
               </div>
-              <p className="text-white/80 mt-4 text-sm">
+              <p className="text-white/80 mt-3 sm:mt-4 text-[10px] sm:text-sm">
                 ✓ {SITE.veteranDiscountPercent}% Veteran Discount ✓ Privacy-First
                 Practices ✓ {SITE.moneyBackGuaranteeDays}-Day Money-Back Guarantee
               </p>
