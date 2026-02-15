@@ -33,8 +33,6 @@ export default defineConfig(({ mode }) => {
         output: {
           manualChunks: {
             "react-vendor": ["react", "react-dom"],
-            animation: ["framer-motion"],
-            stripe: ["@stripe/react-stripe-js", "@stripe/stripe-js"],
           },
           // Optimize chunk file names for caching
           chunkFileNames: "assets/js/[name]-[hash].js",
