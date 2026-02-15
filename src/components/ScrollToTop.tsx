@@ -5,9 +5,9 @@ export const ScrollToTop = () => {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    // If there's a hash (anchor link), scroll to it
+    // Defer scroll operations to avoid forced reflow during initial paint
     if (hash) {
-      setTimeout(() => {
+      requestAnimationFrame(() => {
         const element = document.querySelector(hash);
         if (element) {
           const headerOffset = 80;
@@ -20,12 +20,14 @@ export const ScrollToTop = () => {
             behavior: "smooth",
           });
         }
-      }, 100);
+      });
     } else {
-      // Scroll to top on route change
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
+      // Scroll to top on route change - defer to avoid reflow
+      requestAnimationFrame(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
       });
     }
   }, [pathname, hash]);
