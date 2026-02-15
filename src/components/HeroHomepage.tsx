@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Shield, Star, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-const heroImage = "/images/hero-corporate-protection.jpg";
+const heroImageWebP = "/images/hero-corporate-protection.webp";
+const heroImageJpg = "/images/hero-corporate-protection.jpg";
 import { SITE } from "@/config/site";
 
 const trustBadges = [
@@ -16,16 +17,19 @@ export const HeroHomepage = () => {
     <section className="relative min-h-[90vh] lg:min-h-screen overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
-        <img
-          src={heroImage}
-          alt="Senior couple protected with digital security"
-          width={1920}
-          height={1080}
-          loading="eager"
-          decoding="async"
-          fetchPriority="high"
-          className="w-full h-full object-cover"
-        />
+        <picture>
+          <source srcSet={heroImageWebP} type="image/webp" />
+          <img
+            src={heroImageJpg}
+            alt="Senior couple protected with digital security"
+            width={1920}
+            height={1080}
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
+            className="w-full h-full object-cover"
+          />
+        </picture>
         <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/75 to-slate-900/50" />
       </div>
 
