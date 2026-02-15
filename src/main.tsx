@@ -2,6 +2,12 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 
+// Non-critical CSS - loaded immediately but non-render-blocking
+import("./styles/animations.css");
+import("./styles/components.css");
+import("./styles/utilities.css");
+import("./styles/trending-ui.css");
+
 // Clean refresh param
 if (window.location.search.includes("r=")) {
   window.history.replaceState({}, "", window.location.pathname);

@@ -1,7 +1,3 @@
-/* Import modular CSS files */
+/* Critical CSS only - base design system + responsive */
 @import "./styles/base.css";
-@import "./styles/animations.css";
-@import "./styles/components.css";
-@import "./styles/utilities.css";
-@import "./styles/trending-ui.css";
 @import "./styles/responsive.css";
