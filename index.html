@@ -369,6 +369,8 @@
   </head>
 
   <body>
+    <!-- LCP image: in initial HTML so preload scanner discovers it immediately -->
+    <img src="/images/hero-corporate-protection.webp" alt="" width="1920" height="1080" fetchpriority="high" decoding="sync" style="position:absolute;width:0;height:0;overflow:hidden;opacity:0;pointer-events:none" aria-hidden="true" />
     <div id="root"></div>
 
     <!-- Font loading optimization script -->
