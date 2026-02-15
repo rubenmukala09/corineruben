@@ -97,7 +97,12 @@ export const LauraAIAssistant = () => {
 
   useEffect(() => {
     if (!scrollRef.current) return;
-    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    // Wrap in rAF to avoid forced reflow from reading scrollHeight
+    requestAnimationFrame(() => {
+      if (scrollRef.current) {
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      }
+    });
   }, [messages, isLoading]);
 
   useEffect(() => {
