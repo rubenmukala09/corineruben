@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Shield, Star, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { AnimatedSection } from "@/components/AnimatedSection";
 import heroImage from "@/assets/hero-corporate-protection.jpg";
 import { SITE } from "@/config/site";
 
@@ -30,35 +29,35 @@ export const HeroHomepage = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/75 to-slate-900/50" />
       </div>
 
-      {/* Main Content */}
+      {/* Main Content — no animation wrappers to prevent CLS */}
       <div className="relative z-10 min-h-[90vh] lg:min-h-screen flex items-center">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="max-w-2xl py-24 lg:py-0">
-            <AnimatedSection animation="fade-up">
+            <div>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-8">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="text-xs font-bold uppercase tracking-[0.15em] text-white/80">
                   Protecting Ohio Families Since 2024
                 </span>
               </div>
-            </AnimatedSection>
+            </div>
 
-            <AnimatedSection animation="fade-up" delay={100}>
+            <div>
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.05] mb-6">
                 Stop AI Scams{" "}
                 <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                   Before They Start
                 </span>
               </h1>
-            </AnimatedSection>
+            </div>
 
-            <AnimatedSection animation="fade-up" delay={200}>
+            <div>
               <p className="text-lg md:text-xl text-white/80 leading-relaxed max-w-lg mb-10">
                 Veteran-supporting cybersecurity for families and businesses. We train you to spot deepfakes, voice cloning, and phishing attacks.
               </p>
-            </AnimatedSection>
+            </div>
 
-            <AnimatedSection animation="fade-up" delay={300}>
+            <div>
               <div className="flex flex-col sm:flex-row gap-4 mb-10">
                 <Button
                   asChild
@@ -78,9 +77,9 @@ export const HeroHomepage = () => {
                   <Link to="/business">For Businesses</Link>
                 </Button>
               </div>
-            </AnimatedSection>
+            </div>
 
-            <AnimatedSection animation="fade-up" delay={400}>
+            <div>
               <div className="flex flex-wrap gap-3">
                 {trustBadges.map((badge) => (
                   <div
@@ -92,7 +91,7 @@ export const HeroHomepage = () => {
                   </div>
                 ))}
               </div>
-            </AnimatedSection>
+            </div>
           </div>
         </div>
       </div>
