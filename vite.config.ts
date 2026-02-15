@@ -49,6 +49,7 @@ export default defineConfig(({ mode }) => {
         output: {
           manualChunks: {
             "react-vendor": ["react", "react-dom"],
+            "supabase-vendor": ["@supabase/supabase-js"],
           },
           // Optimize chunk file names for caching
           chunkFileNames: "assets/js/[name]-[hash].js",
