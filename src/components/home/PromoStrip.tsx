@@ -1,58 +1,75 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Shield, Clock, Percent } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { SITE } from "@/config/site";
+
+const steps = [
+  {
+    num: "01",
+    title: "Free Assessment",
+    desc: "We evaluate your current digital safety and identify vulnerabilities.",
+  },
+  {
+    num: "02",
+    title: "Custom Plan",
+    desc: "Receive a tailored protection strategy for your family or business.",
+  },
+  {
+    num: "03",
+    title: "Get Protected",
+    desc: "Activate your defenses with hands-on training and AI-powered tools.",
+  },
+];
 
 export const PromoStrip = () => {
   return (
-    <section className="py-10 md:py-14">
+    <section className="py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-6 lg:px-12">
-        <div className="rounded-3xl bg-gradient-to-r from-primary via-primary/90 to-accent p-6 md:p-10 text-white relative overflow-hidden">
-          {/* Background decoration */}
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/4" />
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/4" />
-          </div>
+        <div className="text-center mb-12">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary mb-4">
+            How It Works
+          </p>
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+            Three Steps to Safety
+          </h2>
+          <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
+            Getting protected is simple. We handle the complexity so you don't
+            have to.
+          </p>
+        </div>
 
-          <div className="relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
-              {/* Left — Copy */}
-              <div>
-                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black leading-tight mb-3">
-                  Limited Time: Get Your Family Protected at Our Best Price
-                </h3>
-                <p className="text-white/80 text-sm md:text-base mb-5 max-w-md">
-                  Every day without protection is a risk. Start today and lock in our lowest rate with a {SITE.moneyBackGuaranteeDays}-day money-back guarantee.
-                </p>
-
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Button asChild size="lg" className="h-12 px-8 text-sm font-bold rounded-full bg-white text-primary hover:bg-white/90 shadow-lg w-full sm:w-auto">
-                    <Link to="/training#pricing">
-                      View Protection Plans <ArrowRight className="ml-2 w-4 h-4" />
-                    </Link>
-                  </Button>
-                  <Button asChild variant="outline" size="lg" className="h-12 px-8 text-sm font-bold rounded-full border-2 border-white/30 text-white hover:bg-white/10 w-full sm:w-auto">
-                    <Link to="/business">Business Plans</Link>
-                  </Button>
-                </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-12">
+          {steps.map((step, i) => (
+            <div key={step.num} className="text-center relative">
+              {/* Connector line */}
+              {i < steps.length - 1 && (
+                <div className="hidden md:block absolute top-8 left-[60%] w-[80%] h-px border-t-2 border-dashed border-border/60" />
+              )}
+              <div className="w-16 h-16 rounded-full border-2 border-primary/30 flex items-center justify-center mx-auto mb-5">
+                <span className="text-xl font-bold text-primary">
+                  {step.num}
+                </span>
               </div>
-
-              {/* Right — Value props */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {[
-                  { icon: Shield, title: "Full Coverage", desc: "All devices protected" },
-                  { icon: Clock, title: "Same-Day Setup", desc: "Protected in minutes" },
-                  { icon: Percent, title: `${SITE.veteranDiscountPercent}% Off`, desc: "Veterans & Seniors" },
-                ].map((item) => (
-                  <div key={item.title} className="rounded-xl bg-white/10 backdrop-blur-sm border border-white/15 p-4 text-center">
-                    <item.icon className="w-6 h-6 mx-auto mb-2 text-white/90" />
-                    <div className="text-sm font-bold">{item.title}</div>
-                    <div className="text-xs text-white/70">{item.desc}</div>
-                  </div>
-                ))}
-              </div>
+              <h3 className="text-lg font-bold text-foreground mb-2">
+                {step.title}
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">
+                {step.desc}
+              </p>
             </div>
-          </div>
+          ))}
+        </div>
+
+        <div className="text-center">
+          <Button
+            asChild
+            size="lg"
+            className="h-12 px-8 text-sm font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90"
+          >
+            <Link to="/training#pricing">
+              Start Your Free Assessment{" "}
+              <ArrowRight className="ml-2 w-4 h-4" />
+            </Link>
+          </Button>
         </div>
       </div>
     </section>
