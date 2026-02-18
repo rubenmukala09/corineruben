@@ -883,6 +883,30 @@
 
 /* ===== REDUCED MOTION ===== */
 
+/* ===== HERO FLOAT ANIMATIONS ===== */
+@keyframes hero-float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-20px) scale(1.05); }
+}
+
+.hero-float-slow {
+  animation: hero-float 8s ease-in-out infinite;
+}
+
+.hero-float-delayed {
+  animation: hero-float 10s ease-in-out 2s infinite;
+}
+
+/* ===== TICKER ANIMATION ===== */
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-ticker {
+  animation: ticker-scroll 30s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
