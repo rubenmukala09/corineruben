@@ -18,6 +18,7 @@ import { CaseStudiesSection } from "@/components/home/CaseStudiesSection";
 import { TeamPreviewSection } from "@/components/home/TeamPreviewSection";
 import { BlogPreviewSection } from "@/components/home/BlogPreviewSection";
 import { PartnerLogosSection } from "@/components/home/PartnerLogosSection";
+import { GraphicDesignSection } from "@/components/home/GraphicDesignSection";
 import { ArrowRight } from "lucide-react";
 
 const FAQPreview = lazy(() =>
@@ -84,6 +85,9 @@ const Index = () => {
 
           {/* Blog Preview */}
           <BlogPreviewSection />
+
+          {/* Graphic Design Services */}
+          <GraphicDesignSection />
 
           {/* FAQ */}
           <section id="faq">
