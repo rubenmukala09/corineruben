@@ -112,14 +112,17 @@ const PremiumTrainingCard = memo(
     onBook: (plan: any) => void;
   }) => {
     return (
-      <div className="relative h-full pt-4">
-        {plan.popular && (
-          <div className="absolute -top-0.5 left-1/2 -translate-x-1/2 z-20">
-            <span className="inline-flex items-center gap-1.5 px-5 py-1.5 rounded-full text-xs font-bold tracking-wider bg-gradient-to-r from-primary to-accent text-white shadow-lg whitespace-nowrap">
-              ⭐ BEST VALUE
-            </span>
-          </div>
-        )}
+      <div className="relative h-full pt-5">
+        {/* Floating badge — always visible, decorative */}
+        <div className="absolute -top-0.5 left-1/2 -translate-x-1/2 z-20">
+          <span className={`inline-flex items-center gap-1.5 px-5 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg whitespace-nowrap border ${
+            plan.popular
+              ? "bg-gradient-to-r from-primary to-accent text-white border-primary/30"
+              : "bg-card text-primary border-primary/30 shadow-md"
+          }`}>
+            {plan.badge}
+          </span>
+        </div>
         <div
           className={`relative overflow-hidden rounded-2xl bg-card border transition-all duration-300 hover:-translate-y-1 h-full flex flex-col ${
             plan.popular
@@ -131,12 +134,8 @@ const PremiumTrainingCard = memo(
           <div className={`h-1.5 ${plan.popular ? 'bg-gradient-to-r from-primary via-accent to-primary' : 'bg-gradient-to-r from-muted-foreground/20 via-primary/30 to-muted-foreground/20'}`} />
 
           <div className="p-6 flex flex-col flex-1">
-            {/* Badge */}
-            <div className="flex justify-center mb-3">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-primary/10 text-primary border border-primary/20">
-                {plan.badge}
-              </span>
-            </div>
+            {/* Spacer for badge */}
+            <div className="h-4" />
 
             {/* Title */}
             <h3 className="text-xl font-black mb-2 text-center text-foreground">{plan.name}</h3>
@@ -172,16 +171,16 @@ const PremiumTrainingCard = memo(
               ))}
             </ul>
 
-            {/* CTA */}
+            {/* CTA — high contrast, visible text */}
             <Button
               onClick={() => onBook(plan)}
-              className={`w-full mt-auto rounded-full font-bold h-11 ${
+              className={`w-full mt-auto rounded-full font-bold h-12 text-base tracking-wide shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5 ${
                 plan.popular
-                  ? "bg-gradient-to-r from-primary to-accent text-white hover:opacity-90 shadow-md"
-                  : "bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground border border-primary/20"
+                  ? "bg-gradient-to-r from-primary to-accent text-white hover:opacity-90"
+                  : "bg-primary text-white hover:bg-primary/90"
               }`}
             >
-              Book Now
+              Book Now — {plan.price}
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </div>

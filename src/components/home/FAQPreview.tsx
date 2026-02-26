@@ -8,6 +8,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 const faqs = [
   {
@@ -34,15 +36,20 @@ const faqs = [
 ];
 
 export const FAQPreview = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+
   return (
-    <section
-      className="py-16 md:py-24"
-      aria-labelledby="faq-heading"
-    >
+    <section className="py-16 md:py-24" aria-labelledby="faq-heading" ref={ref}>
       <div className="container mx-auto px-4 md:px-6 lg:px-12 max-w-5xl">
         <div className="grid lg:grid-cols-5 gap-10 items-start">
           {/* Left sidebar */}
-          <div className="lg:col-span-2 space-y-6">
+          <motion.div
+            className="lg:col-span-2 space-y-6"
+            initial={{ opacity: 0, x: -20 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.5 }}
+          >
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary mb-4">
                 FAQ
@@ -59,8 +66,11 @@ export const FAQPreview = () => {
               </p>
             </div>
 
-            {/* Support card */}
-            <div className="rounded-lg border border-border/60 bg-card p-5">
+            {/* Support card — 3D lift */}
+            <motion.div
+              whileHover={{ y: -4, boxShadow: "0 16px 32px -8px hsl(288 25% 20% / 0.12)" }}
+              className="rounded-2xl border border-border/60 bg-card p-5 shadow-md"
+            >
               <h3 className="font-bold text-foreground text-sm mb-1">
                 Talk to a Human
               </h3>
@@ -86,21 +96,26 @@ export const FAQPreview = () => {
                   </a>
                 </Button>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Accordion */}
-          <div className="lg:col-span-3 space-y-3">
+          <motion.div
+            className="lg:col-span-3 space-y-3"
+            initial={{ opacity: 0, x: 20 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.15 }}
+          >
             <Accordion type="single" collapsible className="space-y-3">
               {faqs.map((faq, index) => (
                 <AccordionItem
                   key={index}
                   value={`faq-${index}`}
-                  className="rounded-lg border border-border/60 bg-card overflow-hidden"
+                  className="rounded-2xl border border-border/60 bg-card overflow-hidden shadow-sm hover:shadow-md transition-shadow"
                 >
                   <AccordionTrigger className="text-left font-bold text-foreground hover:no-underline px-5 py-4">
                     <span className="flex items-center gap-3">
-                      <span className="w-7 h-7 rounded bg-primary/10 flex items-center justify-center flex-shrink-0 text-sm font-bold text-primary">
+                      <span className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 text-sm font-bold text-primary">
                         {index + 1}
                       </span>
                       {faq.question}
@@ -120,7 +135,7 @@ export const FAQPreview = () => {
                 View All FAQs <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
