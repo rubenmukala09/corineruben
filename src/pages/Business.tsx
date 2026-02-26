@@ -59,6 +59,160 @@ const businessHeadlines = [
   "Stop Missing Calls. Start Closing Deals.",
 ];
 
+const platformSnapshotStats = [
+  { value: "9", label: "Integrated Services" },
+  { value: "< 90s", label: "Avg. Threat Response" },
+  { value: "$500K", label: "Max Scam Coverage" },
+  { value: "24/7", label: "Autonomous Monitoring" },
+];
+
+const platformGroups = [
+  {
+    key: "enterprise",
+    title: "Enterprise Cybersecurity",
+    subtitle: "Autonomous prevention and response for organizations handling sensitive data.",
+    minPrice: "From $297/mo",
+    icon: Shield,
+    accentStrip: "bg-primary",
+    titleColor: "text-primary",
+    cardBorderHover: "hover:border-primary/35",
+    cardShadowHover: "hover:shadow-primary/10",
+    iconBg: "bg-primary/10 group-hover:bg-primary/20",
+    iconColor: "text-primary",
+    featureHoverText: "group-hover:text-primary",
+    priceColor: "text-primary/75",
+    badgeClass: "bg-primary/12 text-primary border-primary/25",
+    features: [
+      {
+        badge: "Enterprise",
+        icon: Bot,
+        title: "Agentic SOC",
+        tagline: "AI analysts that triage and contain threats autonomously, 24/7.",
+        price: "From $297/mo",
+        href: "/business/autonomous-defense-hub",
+      },
+      {
+        badge: "Enterprise",
+        icon: Scan,
+        title: "InVision Validator",
+        tagline: "Cryptographic deepfake detection for video calls and voice transfer requests.",
+        price: "From $297/mo",
+        href: "/business/autonomous-defense-hub",
+      },
+      {
+        badge: "Enterprise",
+        icon: Radio,
+        title: "Honey-Identity Network",
+        tagline: "Deploy decoy identities to trap AI scrapers across 40+ platforms.",
+        price: "From $697/mo",
+        href: "/business/autonomous-defense-hub",
+      },
+      {
+        badge: "Enterprise",
+        icon: Key,
+        title: "Safe-Zone Hardware Key",
+        tagline: "Physical USB-C touch for high-risk actions. AI cannot press it remotely.",
+        price: "Included in plan",
+        href: "/business/autonomous-defense-hub",
+      },
+    ],
+  },
+  {
+    key: "family",
+    title: "Senior & Family Protection",
+    subtitle: "Real-time protection workflows designed for individuals, families, and caregivers.",
+    minPrice: "From $19/mo",
+    icon: Brain,
+    accentStrip: "bg-emerald-500",
+    titleColor: "text-emerald-700",
+    cardBorderHover: "hover:border-emerald-500/35",
+    cardShadowHover: "hover:shadow-emerald-500/10",
+    iconBg: "bg-emerald-500/12 group-hover:bg-emerald-500/22",
+    iconColor: "text-emerald-700",
+    featureHoverText: "group-hover:text-emerald-700",
+    priceColor: "text-emerald-700/80",
+    badgeClass: "bg-emerald-500/12 text-emerald-700 border-emerald-500/25",
+    features: [
+      {
+        badge: "Senior",
+        icon: Brain,
+        title: "Cognitive Sentinel",
+        tagline: "Detects behavioral stress signals and alerts caregivers during active scams.",
+        price: "$49/mo add-on",
+        href: "/services/cognitive-sentinel",
+      },
+      {
+        badge: "Senior",
+        icon: Bell,
+        title: "Family Emergency Network",
+        tagline: "One PANIC action calls family, alerts analysts, and notifies police in seconds.",
+        price: "$19/mo add-on",
+        href: "/services/family-emergency-network",
+      },
+      {
+        badge: "Senior",
+        icon: Archive,
+        title: "Digital Estate Executor",
+        tagline: "Locks down accounts and securely transfers credentials to heirs when needed.",
+        price: "$299 + $9/mo",
+        href: "/services/digital-estate",
+      },
+    ],
+  },
+  {
+    key: "risk",
+    title: "Business Risk & Insurance",
+    subtitle: "Coverage and trust signals that reduce legal and financial exposure.",
+    minPrice: "From $49/mo",
+    icon: Award,
+    accentStrip: "bg-amber-500",
+    titleColor: "text-amber-700",
+    cardBorderHover: "hover:border-amber-500/35",
+    cardShadowHover: "hover:shadow-amber-500/10",
+    iconBg: "bg-amber-500/12 group-hover:bg-amber-500/22",
+    iconColor: "text-amber-700",
+    featureHoverText: "group-hover:text-amber-700",
+    priceColor: "text-amber-700/80",
+    badgeClass: "bg-amber-500/12 text-amber-700 border-amber-500/25",
+    features: [
+      {
+        badge: "Business",
+        icon: DollarSign,
+        title: "Scam Insurance",
+        tagline: "If fraud succeeds despite our controls, coverage pays up to $500K.",
+        price: "From $49/mo",
+        href: "/services/scam-insurance",
+      },
+      {
+        badge: "Business",
+        icon: Award,
+        title: "AI-Safe Certification",
+        tagline: "Annual audit and verified trust seal for Ohio businesses handling AI risk.",
+        price: "$2,400/yr",
+        href: "/services/ai-safe-certification",
+      },
+    ],
+  },
+];
+
+const platformPillars = [
+  {
+    icon: Zap,
+    title: "Shared Threat Intelligence",
+    desc: "Signals captured in any service immediately harden detections across the full platform.",
+  },
+  {
+    icon: Lock,
+    title: "Single Client Profile",
+    desc: "One profile for alerts, coverage, vault status, and certifications across all active services.",
+  },
+  {
+    icon: Shield,
+    title: "Layered Defense Model",
+    desc: "If one layer misses an event, downstream controls and insurance coverage still protect outcomes.",
+  },
+];
+
 /* ─── Section Header ─── */
 const SectionHeader = ({
   badge,
@@ -505,40 +659,142 @@ function Business() {
           </div>
         </section>
 
-        {/* Autonomous Defense Hub Banner */}
-        <section className="py-10 bg-gradient-to-r from-[#0a0f1e] to-[#111827]">
+        {/* ═══════════════════ COMPLETE PLATFORM ═══════════════════ */}
+        <section className="py-20 bg-gradient-to-b from-background via-background to-muted/30 border-t border-border/30">
           <div className="container mx-auto px-4">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6 max-w-5xl mx-auto">
-              <div className="flex items-center gap-5">
-                <div className="w-14 h-14 rounded-2xl bg-primary/20 border border-primary/30 flex items-center justify-center flex-shrink-0">
-                  <Shield className="w-7 h-7 text-primary" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs font-bold uppercase tracking-widest text-primary">
-                      New for 2026
-                    </span>
-                    <Badge className="bg-accent/20 text-accent border-accent/30 text-[10px] font-bold">
-                      Early Access
-                    </Badge>
+            <SectionHeader
+              badge="Complete Platform"
+              title="InVision Platform, Fully Integrated"
+              subtitle="All 2026 platform capabilities are now inside AI & Business: one mission, one platform, one operating model."
+            />
+
+            <AnimatedSection animation="fade-up" className="max-w-6xl mx-auto mb-10">
+              <Card className="p-7 md:p-10 rounded-3xl border-border/60 bg-card/80 backdrop-blur-sm shadow-sm">
+                <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+                  <div>
+                    <h3 className="text-2xl md:text-3xl font-black mb-3">
+                      One Platform. Clear Mission. Practical Outcomes.
+                    </h3>
+                    <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-4">
+                      We merged the full 2026 platform into AI & Business to keep the story simple.
+                      Our purpose is to help Ohio organizations grow with AI while staying safe from
+                      modern fraud and operational risk.
+                    </p>
+                    <div className="space-y-2.5">
+                      {[
+                        "Current focus: business growth automation, enterprise defense, and family-level protection.",
+                        "Single operating model: shared threat intelligence across all 9 services.",
+                        "Single engagement path: strategy, deployment, hardening, and ongoing support.",
+                      ].map((item) => (
+                        <div key={item} className="flex items-start gap-2.5 text-sm">
+                          <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                          <p className="text-foreground/85">{item}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  <p className="text-white font-bold text-lg leading-tight">
-                    Autonomous Defense Hub
-                  </p>
-                  <p className="text-white/60 text-sm">
-                    Agentic SOC · Deepfake Validator · Honey-Identities · Safe-Zone Key
-                  </p>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    {platformSnapshotStats.map((stat) => (
+                      <div
+                        key={stat.label}
+                        className="rounded-2xl border border-border/60 bg-background p-4 text-center"
+                      >
+                        <p className="text-2xl md:text-3xl font-black text-primary mb-1">{stat.value}</p>
+                        <p className="text-[11px] md:text-xs uppercase tracking-wide text-muted-foreground">{stat.label}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
+              </Card>
+            </AnimatedSection>
+
+            <div className="max-w-6xl mx-auto space-y-12">
+              {platformGroups.map((group) => (
+                <div key={group.key}>
+                  <div className="flex flex-wrap items-center gap-3 mb-5">
+                    <div className={`h-5 w-1 rounded-full ${group.accentStrip}`} />
+                    <div className="w-7 h-7 rounded-lg bg-muted flex items-center justify-center">
+                      <group.icon className={`w-4 h-4 ${group.titleColor}`} />
+                    </div>
+                    <span className={`text-xs font-bold uppercase tracking-widest ${group.titleColor}`}>{group.title}</span>
+                    <span className="text-xs text-muted-foreground">· {group.minPrice}</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-4 max-w-3xl">{group.subtitle}</p>
+
+                  <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 ${group.features.length === 4 ? "lg:grid-cols-4" : group.features.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-2"}`}>
+                    {group.features.map((feature) => (
+                      <AnimatedSection key={feature.title} animation="fade-up">
+                        <Link
+                          to={feature.href}
+                          className={`group flex flex-col p-5 rounded-xl border border-border bg-card transition-all duration-200 h-full no-underline ${group.cardBorderHover} hover:shadow-md ${group.cardShadowHover}`}
+                        >
+                          <div className="flex items-start justify-between gap-3 mb-3">
+                            <div className={`w-9 h-9 rounded-lg ${group.iconBg} flex items-center justify-center transition-colors flex-shrink-0`}>
+                              <feature.icon className={`w-4 h-4 ${group.iconColor}`} />
+                            </div>
+                            <Badge className={`text-[10px] font-bold border ${group.badgeClass}`}>
+                              {feature.badge}
+                            </Badge>
+                          </div>
+                          <div className="mb-2">
+                            <p className={`font-bold text-sm text-foreground leading-tight transition-colors ${group.featureHoverText}`}>
+                              {feature.title}
+                            </p>
+                            <p className={`text-[11px] font-semibold ${group.priceColor}`}>{feature.price}</p>
+                          </div>
+                          <p className="text-xs text-muted-foreground leading-relaxed flex-1 mb-3">{feature.tagline}</p>
+                          <div className="flex items-center gap-1 text-xs text-muted-foreground/70 group-hover:text-foreground transition-colors">
+                            <span>Explore</span>
+                            <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                          </div>
+                        </Link>
+                      </AnimatedSection>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Platform integration pillars */}
+            <div className="mt-14 grid md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+              {platformPillars.map((pillar) => (
+                <AnimatedSection key={pillar.title} animation="fade-up">
+                  <Card className="p-6 rounded-2xl border-border/60 bg-card text-center h-full">
+                    <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3">
+                      <pillar.icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <h3 className="font-bold text-sm mb-2">{pillar.title}</h3>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{pillar.desc}</p>
+                  </Card>
+                </AnimatedSection>
+              ))}
+            </div>
+
+            {/* Demo CTA */}
+            <div className="text-center mt-10">
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Button
+                  className="h-12 px-10 font-bold rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90 transition-opacity"
+                  onClick={() => {
+                    setSelectedInquiry({
+                      name: "InVision Platform Demo",
+                      price: 0,
+                      tier: "Full Platform",
+                      description: "Schedule a live demo of all 9 integrated services now consolidated under AI & Business.",
+                    });
+                    setInquiryDialogOpen(true);
+                  }}
+                >
+                  Request a Platform Demo <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+                <Button asChild variant="outline" className="h-12 px-8 rounded-full font-semibold">
+                  <Link to="/training">View Individual Plans</Link>
+                </Button>
               </div>
-              <Button
-                asChild
-                className="flex-shrink-0 h-11 px-8 font-bold rounded-full text-white shadow-lg"
-                style={{ background: "linear-gradient(120deg, #173B72, #F47C52)" }}
-              >
-                <Link to="/business/autonomous-defense-hub">
-                  Explore the Hub <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
-              </Button>
+              <p className="text-xs text-muted-foreground mt-3">
+                Early-access pricing is still available for platform-wide engagements.
+              </p>
             </div>
           </div>
         </section>

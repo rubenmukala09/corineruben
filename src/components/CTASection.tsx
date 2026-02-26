@@ -1,4 +1,4 @@
-import { ReactNode, Children, cloneElement, isValidElement } from "react";
+import { ReactNode, Children, isValidElement } from "react";
 import { cn } from "@/lib/utils";
 import { MagneticWrapper } from "@/components/ui/magnetic-button";
 
@@ -62,7 +62,7 @@ const CTASection = ({
           style={{ backgroundImage: `url(${backgroundImage})` }}
         />
         {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/85 via-slate-900/75 to-primary/65" />
+        <div className="absolute inset-0 bg-gradient-to-r from-foreground/62 via-foreground/44 to-primary/34" />
 
         <div className="container mx-auto px-4 text-center relative z-10">
           <h2

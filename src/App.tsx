@@ -46,7 +46,6 @@ const AIAutomation = lazy(() => import("./pages/business/AIAutomation"));
 const WebsiteDesign = lazy(() => import("./pages/business/WebsiteDesign"));
 const WebsiteInsurance = lazy(() => import("./pages/business/WebsiteInsurance"));
 const AutonomousDefenseHub = lazy(() => import("./pages/business/AutonomousDefenseHub"));
-const InVision2026 = lazy(() => import("./pages/InVision2026"));
 const CognitiveSentinel = lazy(() => import("./pages/services/CognitiveSentinel"));
 const ScamInsurance = lazy(() => import("./pages/services/ScamInsurance"));
 const AISafeCertification = lazy(() => import("./pages/services/AISafeCertification"));
@@ -162,7 +161,7 @@ function PublicRoutes() {
         <Route path="/business/website-design" element={<PageTransition variant="auto"><WebsiteDesign /></PageTransition>} />
         <Route path="/business/website-insurance" element={<PageTransition variant="auto"><WebsiteInsurance /></PageTransition>} />
         <Route path="/business/autonomous-defense-hub" element={<PageTransition variant="auto"><AutonomousDefenseHub /></PageTransition>} />
-        <Route path="/invision-2026" element={<PageTransition variant="auto"><InVision2026 /></PageTransition>} />
+        <Route path="/invision-2026" element={<Navigate to="/business" replace />} />
         <Route path="/services/cognitive-sentinel" element={<PageTransition variant="auto"><CognitiveSentinel /></PageTransition>} />
         <Route path="/services/scam-insurance" element={<PageTransition variant="auto"><ScamInsurance /></PageTransition>} />
         <Route path="/services/ai-safe-certification" element={<PageTransition variant="auto"><AISafeCertification /></PageTransition>} />

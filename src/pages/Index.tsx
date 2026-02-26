@@ -101,7 +101,7 @@ const Index = () => {
               className="absolute inset-0 bg-cover bg-center"
               style={{ backgroundImage: `url(${seniorCoupleActive})` }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/75 to-foreground/50" />
+            <div className="absolute inset-0 bg-gradient-to-t from-foreground/68 via-foreground/46 to-foreground/24" />
             <div className="absolute inset-0 home-final-cta-overlay" />
             <div className="absolute inset-0 home-final-cta-grid" />
 
@@ -111,7 +111,7 @@ const Index = () => {
                 animate={ctaInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.7, ease: "easeOut" }}
               >
-                <div className="home-final-cta-panel max-w-4xl mx-auto rounded-[2rem] border border-white/20 bg-white/10 backdrop-blur-xl p-8 md:p-10 lg:p-14 shadow-[0_24px_64px_-24px_hsl(288_30%_14%_/_0.6)]">
+                <div className="home-final-cta-panel max-w-4xl mx-auto rounded-[2rem] border border-white/28 bg-white/16 backdrop-blur-xl p-8 md:p-10 lg:p-14 shadow-[0_22px_56px_-24px_hsl(288_26%_18%_/_0.35)]">
                   <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/30 bg-white/15 backdrop-blur-sm mb-6">
                     <Sparkles className="w-4 h-4 text-accent" />
                     <span className="text-xs font-bold uppercase tracking-wider text-white/90">

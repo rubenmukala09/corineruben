@@ -29,7 +29,7 @@ export const HeroHomepage = () => {
           fetchPriority="high"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/80 to-slate-900/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/76 via-slate-900/52 to-slate-900/18" />
         {/* Subtle animated gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-primary/10" />
       </div>
@@ -186,7 +186,7 @@ export const HeroHomepage = () => {
       </div>
 
       {/* Bottom Trust Bar */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 bg-white/10 backdrop-blur-md border-t border-white/15">
+      <div className="absolute bottom-0 left-0 right-0 z-20 bg-white/18 backdrop-blur-md border-t border-white/25">
         <div className="container mx-auto px-6 lg:px-8 py-4">
           <div className="flex flex-wrap items-center justify-between gap-6">
             <div className="flex items-center gap-3">
@@ -195,7 +195,7 @@ export const HeroHomepage = () => {
                   <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                 ))}
               </div>
-              <span className="text-sm font-medium text-white/80">Trusted by 100+ Ohio Families</span>
+              <span className="text-sm font-medium text-white/90">Trusted by 100+ Ohio Families</span>
             </div>
             <div className="hidden md:flex items-center gap-8">
               {[
@@ -205,7 +205,7 @@ export const HeroHomepage = () => {
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
                   <div className="text-xl font-black text-white">{stat.value}</div>
-                  <div className="text-[10px] font-medium text-white/60 uppercase tracking-wider">{stat.label}</div>
+                  <div className="text-[10px] font-medium text-white/75 uppercase tracking-wider">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -218,8 +218,8 @@ export const HeroHomepage = () => {
                   key={badge.label}
                   className="flex items-center gap-2 px-3 py-2 bg-white/10 rounded-xl border border-white/15"
                 >
-                  <badge.icon className="w-3.5 h-3.5 text-white/70" />
-                  <span className="text-xs font-medium text-white/80">{badge.label}</span>
+                  <badge.icon className="w-3.5 h-3.5 text-white/80" />
+                  <span className="text-xs font-medium text-white/90">{badge.label}</span>
                 </div>
               ))}
             </div>

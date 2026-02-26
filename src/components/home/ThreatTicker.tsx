@@ -14,14 +14,13 @@ export const ThreatTicker = () => {
   const items = [...tickerItems, ...tickerItems];
 
   return (
-    <div className="relative overflow-hidden py-4">
-      {/* Glassmorphism background */}
-      <div className="absolute inset-0 bg-foreground" />
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-accent/10" />
+    <div className="relative overflow-hidden py-4 border-y border-border/50 bg-card/75 backdrop-blur-sm">
+      {/* Soft gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/6 via-background/80 to-accent/6" />
       
       {/* Edge fades */}
-      <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-foreground to-transparent z-10" />
-      <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-foreground to-transparent z-10" />
+      <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10" />
+      <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10" />
 
       <motion.div
         className="flex gap-10 whitespace-nowrap relative"
@@ -31,8 +30,8 @@ export const ThreatTicker = () => {
         {items.map((item, i) => (
           <div key={i} className="flex items-center gap-2.5 text-sm font-semibold">
             <item.icon className={`w-4 h-4 ${item.color}`} />
-            <span className="text-background/90">{item.text}</span>
-            <span className="text-background/20 mx-2">•</span>
+            <span className="text-foreground/85">{item.text}</span>
+            <span className="text-foreground/20 mx-2">•</span>
           </div>
         ))}
       </motion.div>

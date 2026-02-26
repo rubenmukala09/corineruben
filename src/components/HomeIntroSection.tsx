@@ -197,7 +197,7 @@ export const HomeIntroSection = () => {
                       className="w-full h-48 md:h-64 object-cover group-hover:scale-105 transition-transform duration-700"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/56 via-foreground/16 to-transparent" />
                     <div className="absolute bottom-4 left-4 right-4">
                       <p className="text-white font-bold text-sm">Expert-Led Security Operations</p>
                       <p className="text-white/70 text-xs">24/7 Monitoring & Threat Response</p>
@@ -212,7 +212,7 @@ export const HomeIntroSection = () => {
                       className="w-full h-36 md:h-44 object-cover group-hover:scale-110 transition-transform duration-700"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/44 to-transparent" />
                     <div className="absolute bottom-3 left-3">
                       <p className="text-white font-bold text-xs">Family Plans</p>
                     </div>
@@ -224,7 +224,7 @@ export const HomeIntroSection = () => {
                       className="w-full h-36 md:h-44 object-cover group-hover:scale-110 transition-transform duration-700"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/44 to-transparent" />
                     <div className="absolute bottom-3 left-3">
                       <p className="text-white font-bold text-xs">Community Events</p>
                     </div>
@@ -348,7 +348,7 @@ export const HomeIntroSection = () => {
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-foreground/85 via-foreground/50 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-foreground/70 via-foreground/38 to-transparent" />
               <div className="relative p-8 md:p-10 flex flex-col justify-end h-full">
                 <motion.span
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/20 backdrop-blur-xl border border-primary/30 text-xs font-bold text-primary w-fit mb-4"
