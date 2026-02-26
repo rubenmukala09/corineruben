@@ -363,14 +363,6 @@ export default function ArticleEditor() {
       setPublishing(false);
       setShowSuccessModal(true);
 
-      // Log the newsletter and social options (in real app, would trigger actions)
-      if (options?.sendNewsletter) {
-        console.log("Sending to newsletter subscribers...");
-      }
-      if (options?.shareOnSocial) {
-        console.log("Sharing on social media...");
-      }
-
       toast({
         title: articleId ? "Article Updated!" : "Article Published!",
         description:

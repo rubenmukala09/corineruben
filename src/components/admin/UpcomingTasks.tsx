@@ -5,8 +5,6 @@ import {
   User,
   Bell,
   CheckCircle2,
-  Eye,
-  Edit,
   Trash2,
   Clock,
   Plus,
@@ -505,28 +503,6 @@ export function UpcomingTasks() {
                   {/* Action Buttons */}
                   {!isCompleting && (
                     <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-7 w-7 p-0 md:w-auto md:px-2"
-                        onClick={() => {}}
-                      >
-                        <Eye className="h-3.5 w-3.5" />
-                        <span className="hidden md:inline ml-1 text-xs">
-                          View
-                        </span>
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-7 w-7 p-0 md:w-auto md:px-2"
-                        onClick={() => {}}
-                      >
-                        <Edit className="h-3.5 w-3.5" />
-                        <span className="hidden md:inline ml-1 text-xs">
-                          Edit
-                        </span>
-                      </Button>
                       <Button
                         variant="ghost"
                         size="sm"

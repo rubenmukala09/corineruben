@@ -43,6 +43,7 @@ const Navigation = React.memo(() => {
 
   const navLinks = [
     { name: "AI & Business", href: "/business" },
+    { name: "2026 Platform", href: "/invision-2026", highlight: true },
     { name: "Learn & Train", href: "/training" },
     { name: "Resources", href: "/resources" },
     { name: "About", href: "/about" },
@@ -115,6 +116,21 @@ const Navigation = React.memo(() => {
             <div className="hidden lg:flex items-center gap-0.5">
               {navLinks.map((link) => {
                 const isActive = isActiveLink(link.href);
+                if (link.highlight) {
+                  return (
+                    <PrefetchLink
+                      key={link.name}
+                      to={link.href}
+                      className={`relative text-sm transition-colors duration-150 font-bold px-3 py-2 rounded-md whitespace-nowrap tracking-tight ${
+                        isActive
+                          ? "bg-primary text-white shadow-sm"
+                          : "bg-gradient-to-r from-primary/10 to-accent/10 text-primary border border-primary/20 hover:from-primary/20 hover:to-accent/20"
+                      }`}
+                    >
+                      {link.name}
+                    </PrefetchLink>
+                  );
+                }
                 return (
                   <PrefetchLink
                     key={link.name}
@@ -210,6 +226,8 @@ const Navigation = React.memo(() => {
                     className={`block text-base transition-colors duration-150 font-medium px-4 py-3 rounded-lg ${
                       isActive
                         ? "text-primary bg-primary/10 border border-primary/15 font-semibold"
+                        : link.highlight
+                        ? "text-primary bg-primary/5 border border-primary/20 font-semibold"
                         : "text-muted-foreground hover:text-foreground hover:bg-card/80"
                     }`}
                     onClick={() => {

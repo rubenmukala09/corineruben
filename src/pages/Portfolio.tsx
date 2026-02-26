@@ -16,7 +16,6 @@ import {
   Filter,
   Palette,
   X,
-  Sparkles,
   Eye,
 } from "lucide-react";
 import { TREND_AGES } from "@/config/portfolioDesignSystem";

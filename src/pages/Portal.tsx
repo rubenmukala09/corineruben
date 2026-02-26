@@ -57,13 +57,11 @@ function Portal() {
   }, []);
 
   const loadUserData = async () => {
-    console.log("Portal: Starting to load user data");
     try {
       const {
         data: { user },
         error: userError,
       } = await supabase.auth.getUser();
-      console.log("Portal: User loaded", user?.id);
 
       if (userError) {
         console.error("Portal: Error getting user", userError);
@@ -72,13 +70,11 @@ function Portal() {
       }
 
       if (!user) {
-        console.log("Portal: No user found, redirecting to auth");
         navigate("/auth");
         return;
       }
 
       // Parallelize all database queries for faster loading
-      console.log("Portal: Loading all data in parallel");
       const [
         { data: profileData, error: profileError },
         { data: rolesData, error: rolesError },
@@ -108,7 +104,6 @@ function Portal() {
       if (profileError) {
         console.error("Portal: Error loading profile", profileError);
       } else if (profileData) {
-        console.log("Portal: Profile loaded", profileData);
         setProfile(profileData);
       }
 
@@ -118,23 +113,12 @@ function Portal() {
 
       const userRoles: UserRole[] =
         rolesData?.map((r) => r.role as UserRole) || [];
-      console.log("Portal: Roles from user_roles table", userRoles);
 
       // Add profile-specific roles
-      if (seniorProfile) {
-        console.log("Portal: Senior profile found");
-        userRoles.push("senior");
-      }
-      if (caregiverProfile) {
-        console.log("Portal: Caregiver profile found");
-        userRoles.push("caregiver");
-      }
-      if (healthcareProfile) {
-        console.log("Portal: Healthcare profile found");
-        userRoles.push("healthcare");
-      }
+      if (seniorProfile) userRoles.push("senior");
+      if (caregiverProfile) userRoles.push("caregiver");
+      if (healthcareProfile) userRoles.push("healthcare");
 
-      console.log("Portal: Final roles array", userRoles);
       setRoles(userRoles);
 
       // Auto-redirect if user has only one role
@@ -153,10 +137,6 @@ function Portal() {
           healthcare: "/portal/healthcare",
         };
         const redirectPath = roleRedirects[userRoles[0]] || "/portal";
-        console.log(
-          "Portal: Auto-redirecting single-role user to",
-          redirectPath,
-        );
         navigate(redirectPath);
         return;
       }
@@ -169,7 +149,6 @@ function Portal() {
         variant: "destructive",
       });
     } finally {
-      console.log("Portal: Setting loading to false");
       setLoading(false);
     }
   };

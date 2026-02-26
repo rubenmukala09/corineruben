@@ -505,6 +505,44 @@ function Business() {
           </div>
         </section>
 
+        {/* Autonomous Defense Hub Banner */}
+        <section className="py-10 bg-gradient-to-r from-[#0a0f1e] to-[#111827]">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6 max-w-5xl mx-auto">
+              <div className="flex items-center gap-5">
+                <div className="w-14 h-14 rounded-2xl bg-primary/20 border border-primary/30 flex items-center justify-center flex-shrink-0">
+                  <Shield className="w-7 h-7 text-primary" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xs font-bold uppercase tracking-widest text-primary">
+                      New for 2026
+                    </span>
+                    <Badge className="bg-accent/20 text-accent border-accent/30 text-[10px] font-bold">
+                      Early Access
+                    </Badge>
+                  </div>
+                  <p className="text-white font-bold text-lg leading-tight">
+                    Autonomous Defense Hub
+                  </p>
+                  <p className="text-white/60 text-sm">
+                    Agentic SOC · Deepfake Validator · Honey-Identities · Safe-Zone Key
+                  </p>
+                </div>
+              </div>
+              <Button
+                asChild
+                className="flex-shrink-0 h-11 px-8 font-bold rounded-full text-white shadow-lg"
+                style={{ background: "linear-gradient(120deg, #173B72, #F47C52)" }}
+              >
+                <Link to="/business/autonomous-defense-hub">
+                  Explore the Hub <ArrowRight className="ml-2 w-4 h-4" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
         {/* Veterans Discount */}
         <section className="py-4 bg-muted border-y border-border/40">
           <div className="container mx-auto px-4">

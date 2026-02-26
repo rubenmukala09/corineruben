@@ -191,7 +191,7 @@ const QRCodePaymentStep: React.FC<{
           onSuccess();
         }
       } catch (err) {
-        console.log("Payment check:", err);
+        console.error("Payment check:", err);
       } finally {
         setChecking(false);
       }
@@ -227,10 +227,6 @@ const QRCodePaymentStep: React.FC<{
         setQrCodeUrl(qrUrl);
         setPaymentLinkId(data.id);
         setTimeLeft(240);
-        console.log("[QR Payment] Generated:", {
-          id: data.id,
-          requestId: data.requestId,
-        });
       }
     } catch (error: any) {
       console.error("[QR Payment] Error:", error);

@@ -1,5 +1,64 @@
 /* Utility Classes */
 
+/* ===== DARK HERO GRID OVERLAY ===== */
+/* Reusable blueprint/cybersecurity grid pattern for dark hero sections */
+.hero-grid-overlay {
+  background-image:
+    linear-gradient(rgba(99, 102, 241, 0.8) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.8) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ===== GRADIENT TEXT UTILITIES ===== */
+/* Brand: primary blue → accent orange */
+.gradient-text-brand {
+  background-image: linear-gradient(120deg, hsl(var(--primary)), hsl(var(--accent)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+/* Electric: indigo → cyan (futuristic pages) */
+.gradient-text-electric {
+  background-image: linear-gradient(120deg, #6366f1, #22d3ee);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+/* Fire: indigo → accent orange */
+.gradient-text-fire {
+  background-image: linear-gradient(120deg, #6366f1, hsl(var(--accent)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+/* Warm: accent → yellow */
+.gradient-text-warm {
+  background-image: linear-gradient(120deg, hsl(var(--accent)), #facc15);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+/* Gold: yellow → accent (certification pages) */
+.gradient-text-gold {
+  background-image: linear-gradient(120deg, #facc15, hsl(var(--accent)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+/* Red-fire: red → accent (emergency pages) */
+.gradient-text-red-fire {
+  background-image: linear-gradient(120deg, #ef4444, hsl(var(--accent)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
 /* ===== GLOBAL GLASSMORPHISM CARD UPGRADE ===== */
 /* Apply premium warm glass effect to all shadcn Card components */
 [data-slot="card"],

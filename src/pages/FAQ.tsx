@@ -16,16 +16,7 @@ import {
   ThumbsDown,
   Phone,
   MessageCircle,
-  ChevronDown,
-  Mail,
-  TrendingUp,
-  Copy,
-  Check,
   Shield,
-  HelpCircle,
-  Lightbulb,
-  DollarSign,
-  MessageSquare,
   BookOpen,
 } from "lucide-react";
 import { ScrollRevealSection } from "@/components/ScrollRevealSection";

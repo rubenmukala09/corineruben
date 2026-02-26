@@ -320,11 +320,11 @@ function PaymentForm({
                   className="text-sm text-muted-foreground"
                 >
                   I agree to the{" "}
-                  <a href="/terms" className="text-primary hover:underline">
+                  <a href="/terms-of-service" className="text-primary hover:underline">
                     Terms of Service
                   </a>{" "}
                   and{" "}
-                  <a href="/privacy" className="text-primary hover:underline">
+                  <a href="/privacy-policy" className="text-primary hover:underline">
                     Privacy Policy
                   </a>
                 </Label>
