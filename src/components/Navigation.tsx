@@ -43,7 +43,6 @@ const Navigation = React.memo(() => {
 
   const navLinks = [
     { name: "AI & Business", href: "/business" },
-    { name: "2026 Platform", href: "/invision-2026", highlight: true },
     { name: "Learn & Train", href: "/training" },
     { name: "Resources", href: "/resources" },
     { name: "About", href: "/about" },

@@ -38,6 +38,16 @@ import {
   BarChart3,
   Grid3X3,
   ArrowRight,
+  Bot,
+  Scan,
+  Radio,
+  Key,
+  Brain,
+  DollarSign,
+  Award,
+  Bell,
+  Archive,
+  Zap,
 } from "lucide-react";
 import { ExpandableServiceCard } from "@/components/ExpandableServiceCard";
 import { Badge } from "@/components/ui/badge";
@@ -505,40 +515,154 @@ function Business() {
           </div>
         </section>
 
-        {/* Autonomous Defense Hub Banner */}
-        <section className="py-10 bg-gradient-to-r from-[#0a0f1e] to-[#111827]">
+        {/* ═══════════════════ COMPLETE PLATFORM ═══════════════════ */}
+        <section className="py-20 bg-gradient-to-b from-slate-50/80 to-background border-t border-border/30">
           <div className="container mx-auto px-4">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6 max-w-5xl mx-auto">
-              <div className="flex items-center gap-5">
-                <div className="w-14 h-14 rounded-2xl bg-primary/20 border border-primary/30 flex items-center justify-center flex-shrink-0">
-                  <Shield className="w-7 h-7 text-primary" />
+            <SectionHeader
+              badge="Complete Platform"
+              title="AI Defense for Every Client We Serve"
+              subtitle="9 integrated services across enterprise cybersecurity, senior protection, and business risk management — all sharing one threat intelligence network."
+            />
+
+            <div className="max-w-6xl mx-auto space-y-12">
+
+              {/* ── Group 1: Enterprise Cybersecurity ── */}
+              <div>
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="h-5 w-1 rounded-full bg-primary" />
+                  <span className="text-xs font-bold uppercase tracking-widest text-primary">Enterprise Cybersecurity</span>
+                  <span className="text-xs text-muted-foreground">· From $297/mo</span>
                 </div>
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs font-bold uppercase tracking-widest text-primary">
-                      New for 2026
-                    </span>
-                    <Badge className="bg-accent/20 text-accent border-accent/30 text-[10px] font-bold">
-                      Early Access
-                    </Badge>
-                  </div>
-                  <p className="text-white font-bold text-lg leading-tight">
-                    Autonomous Defense Hub
-                  </p>
-                  <p className="text-white/60 text-sm">
-                    Agentic SOC · Deepfake Validator · Honey-Identities · Safe-Zone Key
-                  </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {[
+                    { icon: Bot, title: "Agentic SOC", tagline: "AI analysts that triage and contain threats autonomously — 24/7, no human delay.", price: "From $297/mo", href: "/business/autonomous-defense-hub" },
+                    { icon: Scan, title: "InVision Validator", tagline: "Cryptographic deepfake detection for video calls and voice-based transfer requests.", price: "From $297/mo", href: "/business/autonomous-defense-hub" },
+                    { icon: Radio, title: "Honey-Identity Network", tagline: "Proactively trap AI scrapers with decoy identities deployed across 40+ platforms.", price: "From $697/mo", href: "/business/autonomous-defense-hub" },
+                    { icon: Key, title: "Safe-Zone Hardware Key", tagline: "Physical USB-C touch required for every high-risk action. No AI can press it remotely.", price: "Included in plan", href: "/business/autonomous-defense-hub" },
+                  ].map((f) => (
+                    <AnimatedSection key={f.title} animation="fade-up">
+                      <Link to={f.href} className="group flex flex-col p-5 rounded-xl border border-border bg-card hover:border-primary/30 hover:shadow-md transition-all duration-200 h-full no-underline">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-9 h-9 rounded-lg bg-primary/8 group-hover:bg-primary/15 flex items-center justify-center transition-colors flex-shrink-0">
+                            <f.icon className="w-4 h-4 text-primary" />
+                          </div>
+                          <div className="min-w-0">
+                            <p className="font-bold text-sm text-foreground group-hover:text-primary transition-colors leading-tight">{f.title}</p>
+                            <p className="text-[11px] text-primary/70 font-semibold">{f.price}</p>
+                          </div>
+                        </div>
+                        <p className="text-xs text-muted-foreground leading-relaxed flex-1 mb-3">{f.tagline}</p>
+                        <div className="flex items-center gap-1 text-xs text-muted-foreground/60 group-hover:text-primary transition-colors">
+                          <span>Explore</span>
+                          <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                        </div>
+                      </Link>
+                    </AnimatedSection>
+                  ))}
                 </div>
               </div>
+
+              {/* ── Group 2: Senior & Family Protection ── */}
+              <div>
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="h-5 w-1 rounded-full bg-emerald-500" />
+                  <span className="text-xs font-bold uppercase tracking-widest text-emerald-600">Senior & Family Protection</span>
+                  <span className="text-xs text-muted-foreground">· From $19/mo</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {[
+                    { icon: Brain, title: "Cognitive Sentinel", tagline: "Detects behavioral stress signals in real time. Alerts caregivers while a scam is actively happening.", price: "$49/mo add-on", href: "/services/cognitive-sentinel" },
+                    { icon: Bell, title: "Family Emergency Network", tagline: "One PANIC button calls 3 family members, alerts an analyst, and notifies police — in 8 seconds.", price: "$19/mo add-on", href: "/services/family-emergency-network" },
+                    { icon: Archive, title: "Digital Estate Executor", tagline: "AI vault that locks down all accounts and transfers credentials to heirs upon death or incapacitation.", price: "$299 + $9/mo", href: "/services/digital-estate" },
+                  ].map((f) => (
+                    <AnimatedSection key={f.title} animation="fade-up">
+                      <Link to={f.href} className="group flex flex-col p-5 rounded-xl border border-border bg-card hover:border-emerald-500/30 hover:shadow-md transition-all duration-200 h-full no-underline">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-9 h-9 rounded-lg bg-emerald-500/10 group-hover:bg-emerald-500/20 flex items-center justify-center transition-colors flex-shrink-0">
+                            <f.icon className="w-4 h-4 text-emerald-600" />
+                          </div>
+                          <div className="min-w-0">
+                            <p className="font-bold text-sm text-foreground group-hover:text-emerald-700 transition-colors leading-tight">{f.title}</p>
+                            <p className="text-[11px] text-emerald-600/80 font-semibold">{f.price}</p>
+                          </div>
+                        </div>
+                        <p className="text-xs text-muted-foreground leading-relaxed flex-1 mb-3">{f.tagline}</p>
+                        <div className="flex items-center gap-1 text-xs text-muted-foreground/60 group-hover:text-emerald-600 transition-colors">
+                          <span>Explore</span>
+                          <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                        </div>
+                      </Link>
+                    </AnimatedSection>
+                  ))}
+                </div>
+              </div>
+
+              {/* ── Group 3: Business Risk & Insurance ── */}
+              <div>
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="h-5 w-1 rounded-full bg-amber-500" />
+                  <span className="text-xs font-bold uppercase tracking-widest text-amber-600">Business Risk & Insurance</span>
+                  <span className="text-xs text-muted-foreground">· From $49/mo</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {[
+                    { icon: DollarSign, title: "Scam Insurance", tagline: "If fraud succeeds despite our protection, we pay. Up to $500K in coverage. An industry first.", price: "From $49/mo", href: "/services/scam-insurance" },
+                    { icon: Award, title: "AI-Safe Certification", tagline: "Annual AI-safety audit and verified seal for Ohio businesses. Defense contractors and law firms first.", price: "$2,400/yr", href: "/services/ai-safe-certification" },
+                  ].map((f) => (
+                    <AnimatedSection key={f.title} animation="fade-up">
+                      <Link to={f.href} className="group flex flex-col p-5 rounded-xl border border-border bg-card hover:border-amber-500/30 hover:shadow-md transition-all duration-200 h-full no-underline">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-9 h-9 rounded-lg bg-amber-500/10 group-hover:bg-amber-500/20 flex items-center justify-center transition-colors flex-shrink-0">
+                            <f.icon className="w-4 h-4 text-amber-600" />
+                          </div>
+                          <div className="min-w-0">
+                            <p className="font-bold text-sm text-foreground group-hover:text-amber-700 transition-colors leading-tight">{f.title}</p>
+                            <p className="text-[11px] text-amber-600/80 font-semibold">{f.price}</p>
+                          </div>
+                        </div>
+                        <p className="text-xs text-muted-foreground leading-relaxed flex-1 mb-3">{f.tagline}</p>
+                        <div className="flex items-center gap-1 text-xs text-muted-foreground/60 group-hover:text-amber-600 transition-colors">
+                          <span>Explore</span>
+                          <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                        </div>
+                      </Link>
+                    </AnimatedSection>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Platform integration pillars */}
+            <div className="mt-14 grid md:grid-cols-3 gap-5 max-w-4xl mx-auto">
+              {[
+                { icon: Zap, title: "Shared Threat Intelligence", desc: "Attack vectors captured by any service instantly update every other client's defenses — network-wide protection from one incident." },
+                { icon: Lock, title: "Single Client Profile", desc: "One dashboard for every active service, alert history, insurance status, vault health, and certification — for clients and caregivers alike." },
+                { icon: Shield, title: "Layered Defense Model", desc: "No single point of failure. If a deepfake bypasses the Validator, the SOC catches the anomaly. If the SOC misses it, insurance pays." },
+              ].map((p) => (
+                <AnimatedSection key={p.title} animation="fade-up">
+                  <div className="p-6 rounded-xl border border-border bg-card text-center">
+                    <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3">
+                      <p.icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <h3 className="font-bold text-sm mb-2">{p.title}</h3>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{p.desc}</p>
+                  </div>
+                </AnimatedSection>
+              ))}
+            </div>
+
+            {/* Demo CTA */}
+            <div className="text-center mt-10">
               <Button
-                asChild
-                className="flex-shrink-0 h-11 px-8 font-bold rounded-full text-white shadow-lg"
-                style={{ background: "linear-gradient(120deg, #173B72, #F47C52)" }}
+                className="h-12 px-10 font-bold rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90 transition-opacity"
+                onClick={() => {
+                  setSelectedInquiry({ name: "InVision Platform Demo", price: 0, tier: "Full Platform", description: "Schedule a live demo of all 9 InVision services — enterprise cybersecurity, senior protection, and business risk management in one integrated platform." });
+                  setInquiryDialogOpen(true);
+                }}
               >
-                <Link to="/business/autonomous-defense-hub">
-                  Explore the Hub <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
+                Request a Platform Demo <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
+              <p className="text-xs text-muted-foreground mt-3">Early-access pricing available — secure your rate before public launch.</p>
             </div>
           </div>
         </section>
@@ -1109,6 +1233,7 @@ function Business() {
                   { key: "leaving" as const, label: "🚪 Want to Leave AI", color: "bg-primary" },
                 ].map((tab) => (
                   <button
+                    type="button"
                     key={tab.key}
                     onClick={() => setActiveConsultingTab(tab.key)}
                     className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 flex-1 min-w-[130px] ${
@@ -1323,12 +1448,6 @@ function Business() {
                   <Card className="group relative p-0 border-border/40 rounded-2xl overflow-hidden hover:-translate-y-2 hover:shadow-[0_8px_32px_hsl(var(--lavender-400)/0.15)] transition-all duration-500">
                     {/* Top accent bar */}
                     <div className={`h-1.5 w-full bg-gradient-to-r ${service.accent}`} />
-                    
-                    {/* Hover glow */}
-                    <div
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
-                      style={{ background: `radial-gradient(circle at 50% 0%, ${service.glow}, transparent 70%)` }}
-                    />
 
                     <div className="relative z-10 p-6">
                       {/* Icon */}
@@ -1343,6 +1462,7 @@ function Business() {
 
                       {/* CTA link */}
                       <button
+                        type="button"
                         onClick={() => {
                           setSelectedInquiry({
                             name: service.title,
