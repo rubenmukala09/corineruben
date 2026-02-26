@@ -13,7 +13,9 @@ import { SITE } from "@/config/site";
 import { TrustBadgesSection } from "@/components/home/TrustBadgesSection";
 import SiteOrientationGrid from "@/components/home/SiteOrientationGrid";
 import PromoStrip from "@/components/home/PromoStrip";
-import { ArrowRight, Shield, Phone, CheckCircle } from "lucide-react";
+import { ThreatTicker } from "@/components/home/ThreatTicker";
+import { TestimonialCarousel } from "@/components/home/TestimonialCarousel";
+import { ArrowRight, Shield, CheckCircle } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 
 const FAQPreview = lazy(() =>
@@ -38,19 +40,25 @@ const Index = () => {
         <Navigation />
 
         <main>
-          {/* Hero — unchanged */}
+          {/* Hero */}
           <section id="hero">
             <HeroHomepage />
           </section>
 
-          {/* Stats Counter + Intro */}
+          {/* Live Threat Ticker */}
+          <ThreatTicker />
+
+          {/* Stats + Visual Bento Intro + Real Results */}
           <HomeIntroSection />
 
-          {/* Services directory */}
+          {/* Services with images */}
           <SiteOrientationGrid />
 
           {/* How It Works */}
           <PromoStrip />
+
+          {/* Testimonial Carousel */}
+          <TestimonialCarousel />
 
           {/* Trust proof */}
           <TrustBadgesSection />
@@ -62,7 +70,7 @@ const Index = () => {
             </LazySection>
           </section>
 
-          {/* Final CTA — 3D immersive style */}
+          {/* Final CTA */}
           <section id="final-action" className="py-20 md:py-28 lg:py-32 relative overflow-hidden" ref={ctaRef}>
             <div
               className="absolute inset-0 bg-cover bg-center"
@@ -70,12 +78,11 @@ const Index = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/75 to-foreground/60" />
 
-            <div className="container mx-auto px-4 text-center relative z-10" style={{ perspective: 800 }}>
+            <div className="container mx-auto px-4 text-center relative z-10">
               <motion.div
-                initial={{ opacity: 0, y: 40, rotateX: 10 }}
-                animate={ctaInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
+                initial={{ opacity: 0, y: 40 }}
+                animate={ctaInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.7, ease: "easeOut" }}
-                style={{ transformStyle: "preserve-3d" }}
               >
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-6">
                   <Shield className="w-4 h-4 text-primary" />
@@ -112,7 +119,6 @@ const Index = () => {
                   </Button>
                 </div>
 
-                {/* Trust indicators */}
                 <div className="flex flex-wrap gap-4 justify-center">
                   {[
                     `${SITE.veteranDiscountPercent}% Veteran Discount`,
