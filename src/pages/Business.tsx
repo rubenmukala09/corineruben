@@ -235,13 +235,14 @@ const SectionHeader = ({
   subtitle?: string;
   children?: React.ReactNode;
 }) => (
-  <AnimatedSection animation="fade-up" className="text-center mb-12">
-    <span className="inline-block px-4 py-1.5 bg-primary/10 rounded-full text-xs font-bold text-primary uppercase tracking-[0.15em] mb-4">
+  <AnimatedSection animation="fade-up" className="text-center mb-14">
+    <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-primary/8 backdrop-blur-sm border border-primary/15 rounded-full text-xs font-bold text-primary uppercase tracking-[0.18em] mb-5 shadow-sm">
+      <Sparkles className="w-3 h-3" />
       {badge}
     </span>
-    <h2 className="text-3xl md:text-4xl font-black mb-3">{title}</h2>
+    <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 tracking-tight">{title}</h2>
     {subtitle && (
-      <p className="text-base text-muted-foreground max-w-3xl mx-auto">
+      <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
         {subtitle}
       </p>
     )}
@@ -278,25 +279,30 @@ const PricingCard = ({
   delay?: number;
 }) => (
   <AnimatedSection animation="scale-up" delay={delay}>
-    <div className="relative h-full pt-5 group">
+    <div className="relative h-full pt-5 group" style={{ perspective: "800px" }}>
       <div
-        className={`absolute -top-1 left-1/2 -translate-x-1/2 bg-gradient-to-r ${tagColor} text-white px-5 py-1.5 rounded-full text-xs font-bold tracking-wider shadow-md z-20 whitespace-nowrap`}
+        className={`absolute -top-1 left-1/2 -translate-x-1/2 bg-gradient-to-r ${tagColor} text-white px-5 py-1.5 rounded-full text-xs font-bold tracking-wider shadow-lg z-20 whitespace-nowrap border border-white/20`}
       >
         {tag}
       </div>
       <Card
-        className={`p-6 rounded-2xl border ${featured ? "border-2 border-primary shadow-lg" : "border-border/60"} hover:shadow-xl transition-all duration-500 hover:-translate-y-2 h-full flex flex-col pt-8`}
+        className={`p-6 rounded-2xl border backdrop-blur-sm ${featured ? "border-2 border-primary shadow-xl shadow-primary/10 bg-card" : "border-border/60 bg-card/90"} hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 h-full flex flex-col pt-8`}
       >
         <div className="text-center flex-1 flex flex-col">
           <h3 className="text-xl font-bold mb-3">{title}</h3>
-          <p className="text-4xl font-black text-primary mb-1">
-            {price}
-            {priceSuffix && (
-              <span className="text-base text-muted-foreground font-normal">
-                {priceSuffix}
-              </span>
+          <div className="relative mb-1">
+            <p className="text-4xl font-black text-primary">
+              {price}
+              {priceSuffix && (
+                <span className="text-base text-muted-foreground font-normal">
+                  {priceSuffix}
+                </span>
+              )}
+            </p>
+            {featured && (
+              <div className="absolute -inset-4 bg-primary/5 rounded-2xl -z-10 blur-sm" />
             )}
-          </p>
+          </div>
           {priceNote && (
             <p className="text-sm text-muted-foreground mb-4">{priceNote}</p>
           )}
@@ -305,7 +311,7 @@ const PricingCard = ({
               {badges.map((b, i) => (
                 <span
                   key={i}
-                  className={`inline-flex items-center gap-1 px-2.5 py-0.5 ${b.color} text-xs font-medium rounded-full`}
+                  className={`inline-flex items-center gap-1 px-2.5 py-0.5 ${b.color} text-xs font-medium rounded-full backdrop-blur-sm border border-primary/10`}
                 >
                   {b.text}
                 </span>
@@ -314,15 +320,17 @@ const PricingCard = ({
           )}
           <ul className="space-y-2.5 mb-6 text-sm text-left flex-1">
             {features.map((f, i) => (
-              <li key={i} className="flex items-start gap-2">
-                <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+              <li key={i} className="flex items-start gap-2.5">
+                <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <CheckCircle className="w-3 h-3 text-primary" />
+                </div>
                 <span>{f}</span>
               </li>
             ))}
           </ul>
           <Button
             variant={featured ? "default" : "outline"}
-            className="w-full mt-auto h-11 transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
+            className={`w-full mt-auto h-12 font-semibold transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] ${featured ? "shadow-lg shadow-primary/20" : ""}`}
             onClick={onButtonClick}
           >
             {buttonText}
@@ -531,7 +539,8 @@ function Business() {
         <TrustBar />
 
         {/* ═══════════════════ SERVICES ═══════════════════ */}
-        <section id="services" className="py-16 bg-background">
+        <section id="services" className="py-20 bg-background relative">
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
           <div className="container mx-auto px-4">
             <SectionHeader
               badge="Our Services"
@@ -670,122 +679,155 @@ function Business() {
         </section>
 
         {/* ═══════════════════ COMPLETE PLATFORM ═══════════════════ */}
-        <section className="py-20 bg-gradient-to-b from-background via-background to-muted/30 border-t border-border/30">
-          <div className="container mx-auto px-4">
+        <section className="py-24 relative overflow-hidden">
+          {/* Premium background */}
+          <div className="absolute inset-0 bg-gradient-to-b from-muted/40 via-background to-muted/30" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary/[0.03] rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-accent/[0.04] rounded-full blur-3xl pointer-events-none" />
+
+          <div className="container mx-auto px-4 relative z-10">
             <SectionHeader
               badge="Complete Platform"
               title="InVision Platform, Fully Integrated"
-              subtitle="All 2026 platform capabilities are now inside AI & Business: one mission, one platform, one operating model."
+              subtitle="All platform capabilities consolidated under one mission, one operating model, and one unified experience."
             />
 
-            <AnimatedSection animation="fade-up" className="max-w-6xl mx-auto mb-10">
-              <Card className="p-7 md:p-10 rounded-3xl border-border/60 bg-card/80 backdrop-blur-sm shadow-sm">
-                <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-                  <div>
-                    <h3 className="text-2xl md:text-3xl font-black mb-3">
-                      One Platform. Clear Mission. Practical Outcomes.
-                    </h3>
-                    <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-4">
-                      We merged the full 2026 platform into AI & Business to keep the story simple.
-                      Our purpose is to help Ohio organizations grow with AI while staying safe from
-                      modern fraud and operational risk.
-                    </p>
-                    <div className="space-y-2.5">
-                      {[
-                        "Current focus: business growth automation, enterprise defense, and family-level protection.",
-                        "Single operating model: shared threat intelligence across all 9 services.",
-                        "Single engagement path: strategy, deployment, hardening, and ongoing support.",
-                      ].map((item) => (
-                        <div key={item} className="flex items-start gap-2.5 text-sm">
-                          <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                          <p className="text-foreground/85">{item}</p>
-                        </div>
+            {/* Hero overview card */}
+            <AnimatedSection animation="fade-up" className="max-w-6xl mx-auto mb-16">
+              <div className="relative rounded-3xl overflow-hidden border border-border/40 shadow-2xl shadow-primary/5" style={{ perspective: "1200px" }}>
+                {/* Glass card */}
+                <div className="relative bg-card/95 backdrop-blur-xl p-8 md:p-12">
+                  {/* Decorative corner accents */}
+                  <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-primary/10 to-transparent rounded-br-3xl" />
+                  <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-accent/8 to-transparent rounded-tl-3xl" />
+
+                  <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] relative z-10">
+                    <div>
+                      <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/8 border border-primary/15 rounded-full text-xs font-bold text-primary uppercase tracking-wider mb-5">
+                        <Shield className="w-3 h-3" />
+                        Unified Defense
+                      </div>
+                      <h3 className="text-2xl md:text-3xl font-black mb-4 leading-tight">
+                        One Platform. Clear Mission.<br />
+                        <span className="text-primary">Practical Outcomes.</span>
+                      </h3>
+                      <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-6">
+                        We merged the full platform into AI & Business to keep the story simple.
+                        Our purpose is to help Ohio organizations grow with AI while staying safe from
+                        modern fraud and operational risk.
+                      </p>
+                      <div className="space-y-3">
+                        {[
+                          "Current focus: business growth automation, enterprise defense, and family-level protection.",
+                          "Single operating model: shared threat intelligence across all 9 services.",
+                          "Single engagement path: strategy, deployment, hardening, and ongoing support.",
+                        ].map((item) => (
+                          <div key={item} className="flex items-start gap-3 text-sm group">
+                            <div className="w-6 h-6 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors">
+                              <CheckCircle className="w-3.5 h-3.5 text-primary" />
+                            </div>
+                            <p className="text-foreground/85">{item}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Stats grid with 3D depth */}
+                    <div className="grid grid-cols-2 gap-4">
+                      {platformSnapshotStats.map((stat, i) => (
+                        <AnimatedSection key={stat.label} animation="scale-up" delay={i * 100}>
+                          <div
+                            className="group relative rounded-2xl border border-border/50 bg-gradient-to-br from-background to-muted/50 p-5 text-center hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-1"
+                          >
+                            <div className="absolute inset-0 rounded-2xl bg-primary/[0.02] opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <p className="text-3xl md:text-4xl font-black text-primary mb-1 relative z-10">{stat.value}</p>
+                            <p className="text-[11px] md:text-xs uppercase tracking-wider text-muted-foreground font-semibold relative z-10">{stat.label}</p>
+                          </div>
+                        </AnimatedSection>
                       ))}
                     </div>
                   </div>
-
-                  <div className="grid grid-cols-2 gap-3">
-                    {platformSnapshotStats.map((stat) => (
-                      <div
-                        key={stat.label}
-                        className="rounded-2xl border border-border/60 bg-background p-4 text-center"
-                      >
-                        <p className="text-2xl md:text-3xl font-black text-primary mb-1">{stat.value}</p>
-                        <p className="text-[11px] md:text-xs uppercase tracking-wide text-muted-foreground">{stat.label}</p>
-                      </div>
-                    ))}
-                  </div>
                 </div>
-              </Card>
+              </div>
             </AnimatedSection>
 
-            <div className="max-w-6xl mx-auto space-y-12">
-              {platformGroups.map((group) => (
-                <div key={group.key}>
-                  <div className="flex flex-wrap items-center gap-3 mb-5">
-                    <div className={`h-5 w-1 rounded-full ${group.accentStrip}`} />
-                    <div className="w-7 h-7 rounded-lg bg-muted flex items-center justify-center">
-                      <group.icon className={`w-4 h-4 ${group.titleColor}`} />
+            {/* Service groups */}
+            <div className="max-w-6xl mx-auto space-y-16">
+              {platformGroups.map((group, gi) => (
+                <AnimatedSection key={group.key} animation="fade-up" delay={gi * 100}>
+                  <div>
+                    {/* Group header with accent line */}
+                    <div className="flex flex-wrap items-center gap-3 mb-6">
+                      <div className={`h-8 w-1.5 rounded-full ${group.accentStrip}`} />
+                      <div className={`w-10 h-10 rounded-xl ${group.iconBg} flex items-center justify-center shadow-sm`}>
+                        <group.icon className={`w-5 h-5 ${group.iconColor}`} />
+                      </div>
+                      <div>
+                        <span className={`text-sm font-bold ${group.titleColor}`}>{group.title}</span>
+                        <span className="text-xs text-muted-foreground ml-3 bg-muted px-2.5 py-0.5 rounded-full font-medium">{group.minPrice}</span>
+                      </div>
                     </div>
-                    <span className={`text-xs font-bold uppercase tracking-widest ${group.titleColor}`}>{group.title}</span>
-                    <span className="text-xs text-muted-foreground">· {group.minPrice}</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-4 max-w-3xl">{group.subtitle}</p>
+                    <p className="text-sm text-muted-foreground mb-6 max-w-3xl ml-[3.25rem]">{group.subtitle}</p>
 
-                  <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 ${group.features.length === 4 ? "lg:grid-cols-4" : group.features.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-2"}`}>
-                    {group.features.map((feature) => (
-                      <AnimatedSection key={feature.title} animation="fade-up">
-                        <Link
-                          to={feature.href}
-                          className={`group flex flex-col p-5 rounded-xl border border-border bg-card transition-all duration-200 h-full no-underline ${group.cardBorderHover} hover:shadow-md ${group.cardShadowHover}`}
-                        >
-                          <div className="flex items-start justify-between gap-3 mb-3">
-                            <div className={`w-9 h-9 rounded-lg ${group.iconBg} flex items-center justify-center transition-colors flex-shrink-0`}>
-                              <feature.icon className={`w-4 h-4 ${group.iconColor}`} />
+                    <div className={`grid grid-cols-1 sm:grid-cols-2 gap-5 ${group.features.length === 4 ? "lg:grid-cols-4" : group.features.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-2"}`}>
+                      {group.features.map((feature, fi) => (
+                        <AnimatedSection key={feature.title} animation="scale-up" delay={fi * 80}>
+                          <Link
+                            to={feature.href}
+                            className={`group/card relative flex flex-col p-6 rounded-2xl border border-border/50 bg-card/95 backdrop-blur-sm transition-all duration-400 h-full no-underline ${group.cardBorderHover} hover:shadow-xl ${group.cardShadowHover} hover:-translate-y-2`}
+                            style={{ perspective: "600px" }}
+                          >
+                            {/* Top glow on hover */}
+                            <div className={`absolute top-0 left-0 right-0 h-1 rounded-t-2xl ${group.accentStrip} opacity-0 group-hover/card:opacity-100 transition-opacity duration-300`} />
+
+                            <div className="flex items-start justify-between gap-3 mb-4">
+                              <div className={`w-11 h-11 rounded-xl ${group.iconBg} flex items-center justify-center transition-all duration-300 shadow-sm group-hover/card:scale-110 group-hover/card:shadow-md`}>
+                                <feature.icon className={`w-5 h-5 ${group.iconColor}`} />
+                              </div>
+                              <Badge className={`text-[10px] font-bold border ${group.badgeClass} backdrop-blur-sm`}>
+                                {feature.badge}
+                              </Badge>
                             </div>
-                            <Badge className={`text-[10px] font-bold border ${group.badgeClass}`}>
-                              {feature.badge}
-                            </Badge>
-                          </div>
-                          <div className="mb-2">
-                            <p className={`font-bold text-sm text-foreground leading-tight transition-colors ${group.featureHoverText}`}>
-                              {feature.title}
-                            </p>
-                            <p className={`text-[11px] font-semibold ${group.priceColor}`}>{feature.price}</p>
-                          </div>
-                          <p className="text-xs text-muted-foreground leading-relaxed flex-1 mb-3">{feature.tagline}</p>
-                          <div className="flex items-center gap-1 text-xs text-muted-foreground/70 group-hover:text-foreground transition-colors">
-                            <span>Explore</span>
-                            <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
-                          </div>
-                        </Link>
-                      </AnimatedSection>
-                    ))}
+                            <div className="mb-3">
+                              <p className={`font-bold text-sm text-foreground leading-tight transition-colors ${group.featureHoverText}`}>
+                                {feature.title}
+                              </p>
+                              <p className={`text-[11px] font-semibold mt-0.5 ${group.priceColor}`}>{feature.price}</p>
+                            </div>
+                            <p className="text-xs text-muted-foreground leading-relaxed flex-1 mb-4">{feature.tagline}</p>
+                            <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground/70 group-hover/card:text-primary transition-colors">
+                              <span>Explore</span>
+                              <ArrowRight className="w-3 h-3 group-hover/card:translate-x-1 transition-transform duration-300" />
+                            </div>
+                          </Link>
+                        </AnimatedSection>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                </AnimatedSection>
               ))}
             </div>
 
             {/* Platform integration pillars */}
-            <div className="mt-14 grid md:grid-cols-3 gap-5 max-w-5xl mx-auto">
-              {platformPillars.map((pillar) => (
-                <AnimatedSection key={pillar.title} animation="fade-up">
-                  <Card className="p-6 rounded-2xl border-border/60 bg-card text-center h-full">
-                    <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3">
-                      <pillar.icon className="w-5 h-5 text-primary" />
+            <div className="mt-20 grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              {platformPillars.map((pillar, i) => (
+                <AnimatedSection key={pillar.title} animation="scale-up" delay={i * 100}>
+                  <Card className="group p-7 rounded-2xl border-border/40 bg-card/95 backdrop-blur-sm text-center h-full hover:shadow-xl hover:border-primary/20 hover:-translate-y-2 transition-all duration-500">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/15 to-accent/10 flex items-center justify-center mx-auto mb-4 shadow-inner group-hover:scale-110 transition-transform duration-300">
+                      <pillar.icon className="w-6 h-6 text-primary" />
                     </div>
-                    <h3 className="font-bold text-sm mb-2">{pillar.title}</h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed">{pillar.desc}</p>
+                    <h3 className="font-bold text-base mb-2">{pillar.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{pillar.desc}</p>
                   </Card>
                 </AnimatedSection>
               ))}
             </div>
 
             {/* Demo CTA */}
-            <div className="text-center mt-10">
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <AnimatedSection animation="fade-up" delay={200} className="text-center mt-14">
+              <div className="inline-flex flex-col sm:flex-row gap-3 justify-center">
                 <Button
-                  className="h-12 px-10 font-bold rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90 transition-opacity"
+                  className="h-13 px-10 font-bold rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90 transition-all duration-300 shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 hover:scale-[1.03]"
                   onClick={() => {
                     setSelectedInquiry({
                       name: "InVision Platform Demo",
@@ -798,14 +840,14 @@ function Business() {
                 >
                   Request a Platform Demo <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
-                <Button asChild variant="outline" className="h-12 px-8 rounded-full font-semibold">
+                <Button asChild variant="outline" className="h-13 px-8 rounded-full font-semibold hover:scale-[1.03] transition-all duration-300">
                   <Link to="/training">View Individual Plans</Link>
                 </Button>
               </div>
-              <p className="text-xs text-muted-foreground mt-3">
+              <p className="text-xs text-muted-foreground mt-4">
                 Early-access pricing is still available for platform-wide engagements.
               </p>
-            </div>
+            </AnimatedSection>
           </div>
         </section>
 
@@ -1660,32 +1702,35 @@ function Business() {
         </section>
 
         {/* ═══════════════════ WHY CHOOSE US ═══════════════════ */}
-        <section className="py-16 bg-muted">
-          <div className="container mx-auto px-4">
+        <section className="py-20 bg-muted relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/[0.03] rounded-full blur-3xl pointer-events-none" />
+          <div className="container mx-auto px-4 relative z-10">
             <SectionHeader
               badge="Why Choose Us"
               title="The InVision Difference"
               subtitle="What makes us different from other AI vendors."
             />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto mb-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto mb-12">
               {[
-                { icon: Shield, title: "Security-First", desc: "Every solution ships with enterprise-grade encryption, monitoring, and data protection built in.", color: "text-primary" },
-                { icon: Lock, title: "No Vendor Lock-In", desc: "We build on open standards. You own your AI and your data. Move in-house whenever you want.", color: "text-primary" },
-                { icon: FileText, title: "Plain-English Docs", desc: "Your team gets documentation written in clear language. No jargon, no confusion.", color: "text-primary" },
-                { icon: Sparkles, title: "Fast Deployment", desc: "Most AI solutions go live in 2 to 4 weeks. We move fast without cutting corners on security.", color: "text-primary" },
-                { icon: CheckCircle, title: "Ongoing Partnership", desc: "We stay with you after launch. Continuous support, updates, and optimization as your business grows.", color: "text-primary" },
-                { icon: Phone, title: "24/7 Support", desc: "Get help when you need it. Our team is available around the clock for critical issues.", color: "text-primary" },
+                { icon: Shield, title: "Security-First", desc: "Every solution ships with enterprise-grade encryption, monitoring, and data protection built in." },
+                { icon: Lock, title: "No Vendor Lock-In", desc: "We build on open standards. You own your AI and your data. Move in-house whenever you want." },
+                { icon: FileText, title: "Plain-English Docs", desc: "Your team gets documentation written in clear language. No jargon, no confusion." },
+                { icon: Sparkles, title: "Fast Deployment", desc: "Most AI solutions go live in 2 to 4 weeks. We move fast without cutting corners on security." },
+                { icon: CheckCircle, title: "Ongoing Partnership", desc: "We stay with you after launch. Continuous support, updates, and optimization as your business grows." },
+                { icon: Phone, title: "24/7 Support", desc: "Get help when you need it. Our team is available around the clock for critical issues." },
               ].map((item, i) => (
                 <AnimatedSection key={i} animation="scale-up" delay={i * 80}>
                   <Card
-                    className="p-5 border-border/60 hover:shadow-xl transition-all duration-500 hover:-translate-y-2 hover:border-primary/30 rounded-2xl group"
+                    className="group relative p-6 border-border/40 hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 hover:border-primary/25 rounded-2xl bg-card/95 backdrop-blur-sm overflow-hidden"
                   >
-                    <div className="w-11 h-11 bg-primary/10 rounded-xl flex items-center justify-center mb-3 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
-                      <item.icon className={`w-5.5 h-5.5 ${item.color}`} />
+                    {/* Top accent on hover */}
+                    <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="w-12 h-12 bg-gradient-to-br from-primary/15 to-accent/10 rounded-xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-primary/10">
+                      <item.icon className="w-5.5 h-5.5 text-primary" />
                     </div>
-                    <h3 className="text-base font-bold mb-1.5">{item.title}</h3>
-                    <p className="text-muted-foreground text-sm">{item.desc}</p>
+                    <h3 className="text-base font-bold mb-2">{item.title}</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{item.desc}</p>
                   </Card>
                 </AnimatedSection>
               ))}
@@ -1693,8 +1738,8 @@ function Business() {
 
             {/* Stats Bar */}
             <AnimatedSection animation="fade-up" delay={200}>
-              <Card className="max-w-4xl mx-auto p-6 border-border/60 rounded-2xl">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <Card className="max-w-4xl mx-auto p-8 border-border/40 rounded-2xl bg-card/95 backdrop-blur-sm shadow-lg">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
                   {[
                     { value: "15+", label: "Businesses Served" },
                     { value: "99%+", label: "Uptime Guarantee" },
@@ -1702,8 +1747,8 @@ function Business() {
                     { value: "50+", label: "Integrations" },
                   ].map((stat, i) => (
                     <div key={i} className="group">
-                      <p className="text-3xl font-black text-primary mb-0.5 transition-transform duration-300 group-hover:scale-110">{stat.value}</p>
-                      <p className="text-xs text-muted-foreground">{stat.label}</p>
+                      <p className="text-3xl md:text-4xl font-black text-primary mb-1 transition-transform duration-300 group-hover:scale-110">{stat.value}</p>
+                      <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">{stat.label}</p>
                     </div>
                   ))}
                 </div>
