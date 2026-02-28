@@ -783,7 +783,7 @@ const AutonomousDefenseHub = () => {
           open={inquiryOpen}
           onOpenChange={setInquiryOpen}
           serviceName="Autonomous Defense Hub — Fortress"
-          servicePrice="Custom Quote"
+          servicePrice={0}
           serviceTier="Enterprise"
           serviceDescription="White-glove deployment for government contractors and enterprises. Includes unlimited Honey-Identities, on-site Safe-Zone key provisioning, and CMMC/NIST 800-171 alignment."
         />

@@ -38,6 +38,16 @@ import {
   BarChart3,
   Grid3X3,
   ArrowRight,
+  Bot,
+  Scan,
+  Radio,
+  Key,
+  Brain,
+  Bell,
+  Archive,
+  Award,
+  DollarSign,
+  Zap,
 } from "lucide-react";
 import { ExpandableServiceCard } from "@/components/ExpandableServiceCard";
 import { Badge } from "@/components/ui/badge";
