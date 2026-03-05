@@ -50,18 +50,18 @@ const Index = () => {
     <div className="min-h-screen flex flex-col">
       {/* ===== HERO ===== */}
       <section className="w-full min-h-screen relative overflow-hidden flex flex-col items-center pt-8 pb-24">
-        {/* Background layers */}
+        {/* Aurora background layers */}
         <div className="absolute inset-0 gradient-hero" />
         <div className="absolute inset-0">
-          <img src={heroImg} alt="Wedding hero background" className="w-full h-full object-cover opacity-[0.08] dark:opacity-[0.04]" />
+          <img src={heroImg} alt="Wedding hero background" className="w-full h-full object-cover opacity-[0.06] dark:opacity-[0.03]" style={{ filter: 'saturate(0.8) contrast(0.95) brightness(1.05) sepia(0.1)' }} />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-background/10 via-transparent to-background/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/40" />
 
-        {/* Background blobs behind the card grid */}
-        <div className="absolute left-[-10%] bottom-[5%] w-[600px] h-[600px] rounded-full bg-dusty-rose/30 blur-[120px] -z-10 pointer-events-none" />
-        <div className="absolute right-[-10%] bottom-[10%] w-[600px] h-[600px] rounded-full bg-pale-lilac/30 blur-[120px] -z-10 pointer-events-none" />
-        <div className="floating-blob w-[500px] h-[500px] bg-primary/15 top-[-200px] right-[-150px]" />
-        <div className="floating-blob w-[400px] h-[400px] bg-pale-lilac/25 top-[5%] left-[-180px]" />
+        {/* Aurora gradient blobs */}
+        <div className="absolute left-[-10%] bottom-[5%] w-[600px] h-[600px] rounded-full blur-[120px] -z-10 pointer-events-none" style={{ background: 'rgba(139, 107, 138, 0.35)' }} />
+        <div className="absolute right-[-10%] bottom-[10%] w-[600px] h-[600px] rounded-full blur-[120px] -z-10 pointer-events-none" style={{ background: 'rgba(212, 196, 224, 0.3)' }} />
+        <div className="absolute top-[-200px] right-[-150px] w-[500px] h-[500px] rounded-full blur-[100px] pointer-events-none opacity-35" style={{ background: 'rgba(232, 196, 184, 0.5)' }} />
+        <div className="absolute top-[5%] left-[-180px] w-[400px] h-[400px] rounded-full blur-[100px] pointer-events-none opacity-35" style={{ background: 'rgba(212, 165, 165, 0.4)' }} />
 
         {/* ===== HERO TEXT CONTAINER ===== */}
         <motion.div
