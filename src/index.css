@@ -596,19 +596,19 @@
   .nav-glow-border::before {
     content: '';
     position: absolute;
-    inset: -1px;
-    border-radius: 21px;
-    padding: 1px;
+    inset: -2px;
+    border-radius: 24px;
+    padding: 2px;
     background: linear-gradient(
       90deg,
       transparent 0%,
-      hsl(293 15% 58% / 0.6) 25%,
-      hsl(270 18% 84% / 0.8) 50%,
-      hsl(330 40% 89% / 0.6) 75%,
+      hsl(293 15% 58% / 0.8) 20%,
+      hsl(270 18% 84% / 1) 50%,
+      hsl(330 40% 89% / 0.8) 80%,
       transparent 100%
     );
     background-size: 300% 100%;
-    animation: nav-glow-slide 4s linear infinite;
+    animation: nav-glow-slide 3s linear infinite;
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -619,19 +619,19 @@
   .nav-glow-border::after {
     content: '';
     position: absolute;
-    inset: -3px;
-    border-radius: 23px;
+    inset: -6px;
+    border-radius: 28px;
     background: linear-gradient(
       90deg,
       transparent 0%,
-      hsl(293 15% 58% / 0.15) 25%,
-      hsl(270 18% 84% / 0.25) 50%,
-      hsl(330 40% 89% / 0.15) 75%,
+      hsl(293 15% 58% / 0.2) 20%,
+      hsl(270 18% 84% / 0.35) 50%,
+      hsl(330 40% 89% / 0.2) 80%,
       transparent 100%
     );
     background-size: 300% 100%;
-    animation: nav-glow-slide 4s linear infinite;
-    filter: blur(8px);
+    animation: nav-glow-slide 3s linear infinite;
+    filter: blur(12px);
     pointer-events: none;
     z-index: 0;
   }
@@ -640,27 +640,27 @@
     background: linear-gradient(
       90deg,
       transparent 0%,
-      hsl(280 25% 62% / 0.5) 25%,
-      hsl(265 18% 52% / 0.7) 50%,
-      hsl(310 20% 52% / 0.5) 75%,
+      hsl(280 25% 62% / 0.7) 20%,
+      hsl(265 18% 60% / 0.9) 50%,
+      hsl(310 20% 55% / 0.7) 80%,
       transparent 100%
     );
     background-size: 300% 100%;
-    animation: nav-glow-slide 4s linear infinite;
+    animation: nav-glow-slide 3s linear infinite;
   }
 
   .dark .nav-glow-border::after {
     background: linear-gradient(
       90deg,
       transparent 0%,
-      hsl(280 25% 62% / 0.12) 25%,
-      hsl(265 18% 52% / 0.2) 50%,
-      hsl(310 20% 52% / 0.12) 75%,
+      hsl(280 25% 62% / 0.2) 20%,
+      hsl(265 18% 60% / 0.3) 50%,
+      hsl(310 20% 55% / 0.2) 80%,
       transparent 100%
     );
     background-size: 300% 100%;
-    animation: nav-glow-slide 4s linear infinite;
-    filter: blur(10px);
+    animation: nav-glow-slide 3s linear infinite;
+    filter: blur(14px);
   }
 
   @keyframes nav-glow-slide {

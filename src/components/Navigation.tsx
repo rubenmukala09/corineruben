@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
-import { Sun, Moon, Menu, X, Globe } from 'lucide-react';
+import { Sun, Moon, Menu, X, Globe, Heart } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navigation = () => {
@@ -45,16 +45,21 @@ const Navigation = () => {
       transition={{ duration: 0.35, ease: 'easeInOut' }}
     >
       <nav
-        className={`w-full max-w-2xl nav-glow-border transition-all duration-500 rounded-[20px] border border-primary/20 ${
+        className={`w-full max-w-2xl nav-glow-border transition-all duration-500 rounded-[22px] border-2 ${
           scrolled
-            ? 'bg-gradient-to-r from-plum/80 via-plum-dark/70 to-plum/80 backdrop-blur-xl shadow-[0_8px_32px_rgba(107,78,113,0.25)]'
-            : 'bg-gradient-to-r from-plum/60 via-plum-dark/50 to-plum/60 backdrop-blur-lg shadow-[0_4px_16px_rgba(107,78,113,0.15)]'
+            ? 'border-white/20 bg-gradient-to-r from-plum/90 via-plum-dark/85 to-plum/90 backdrop-blur-2xl shadow-[0_8px_40px_rgba(107,78,113,0.4),0_2px_8px_rgba(0,0,0,0.2)]'
+            : 'border-white/15 bg-gradient-to-r from-plum/80 via-plum-dark/75 to-plum/80 backdrop-blur-xl shadow-[0_4px_24px_rgba(107,78,113,0.3),0_1px_4px_rgba(0,0,0,0.15)]'
         }`}
-        style={{ height: '52px' }}
+        style={{ height: '56px' }}
       >
         <div className="px-5 md:px-6 flex items-center justify-between h-full">
-          <Link to="/" className="font-serif-display text-base font-extrabold tracking-wide text-white hover:text-white/90 transition-colors" style={{ letterSpacing: '0.5px' }}>
-            C & R
+          <Link to="/" className="flex items-center gap-2 group" >
+            <span className="w-8 h-8 rounded-full bg-white/15 border border-white/25 flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 shadow-[0_0_12px_rgba(255,255,255,0.1)]">
+              <Heart className="w-3.5 h-3.5 text-white fill-white" />
+            </span>
+            <span className="font-serif-display text-base font-extrabold tracking-wide text-white group-hover:text-white/90 transition-colors" style={{ letterSpacing: '1px' }}>
+              C & R
+            </span>
           </Link>
 
           {/* Desktop links */}
