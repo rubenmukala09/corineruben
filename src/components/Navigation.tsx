@@ -39,13 +39,13 @@ const Navigation = () => {
 
   return (
     <motion.div
-      className="fixed top-0 left-1/2 -translate-x-1/2 z-50 px-4 pt-3 w-full max-w-2xl"
+      className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-3 px-4"
       initial={{ y: 0 }}
       animate={{ y: visible ? 0 : -100 }}
       transition={{ duration: 0.35, ease: 'easeInOut' }}
     >
       <nav
-        className={`nav-glow-border transition-all duration-500 rounded-[20px] border border-primary/20 ${
+        className={`w-full max-w-2xl nav-glow-border transition-all duration-500 rounded-[20px] border border-primary/20 ${
           scrolled
             ? 'bg-gradient-to-r from-plum/80 via-plum-dark/70 to-plum/80 backdrop-blur-xl shadow-[0_8px_32px_rgba(107,78,113,0.25)]'
             : 'bg-gradient-to-r from-plum/60 via-plum-dark/50 to-plum/60 backdrop-blur-lg shadow-[0_4px_16px_rgba(107,78,113,0.15)]'
