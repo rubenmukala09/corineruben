@@ -10,9 +10,13 @@ import { Textarea } from '@/components/ui/textarea';
 
 import heroImg from '@/assets/hero-wedding.jpg';
 import flowersImg from '@/assets/flowers-lavender.jpg';
+import flowersImgSmall from '@/assets/flowers-lavender-small.jpg';
 import ringsImg from '@/assets/rings.jpg';
+import ringsImgSmall from '@/assets/rings-small.jpg';
 import cakeImg from '@/assets/cake.jpg';
+import cakeImgSmall from '@/assets/cake-small.jpg';
 import coupleImg from '@/assets/couple-lavender.jpg';
+import coupleImgSmall from '@/assets/couple-lavender-small.jpg';
 
 const WEDDING_DATE = new Date('2027-08-15T14:00:00');
 
@@ -417,7 +421,7 @@ const Index = () => {
                 onClick={() => toggleTrack('amazing-grace')}
               >
                 <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-rose-400/20">
-                  <img src={flowersImg} alt="" className="w-full h-full object-cover" width={48} height={48} loading="lazy" decoding="async" />
+                  <img src={flowersImgSmall} alt="" className="w-full h-full object-cover" width={48} height={48} loading="lazy" decoding="async" />
                 </div>
                 <div>
                   <p className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">{t('hymn.amazing')}</p>
@@ -495,7 +499,7 @@ const Index = () => {
                 onClick={() => toggleTrack('blessed-larson')}
               >
                 <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-violet-400/20">
-                  <img src={ringsImg} alt="" className="w-full h-full object-cover" width={48} height={48} loading="lazy" decoding="async" />
+                  <img src={ringsImgSmall} alt="" className="w-full h-full object-cover" width={48} height={48} loading="lazy" decoding="async" />
                 </div>
                 <div>
                   <p className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">I Have Been Blessed</p>
@@ -579,7 +583,7 @@ const Index = () => {
               <div className="relative">
                 <div className="glass-card-strong rounded-3xl p-2.5">
                   <img
-                    src={coupleImg}
+                    src={coupleImgSmall}
                     alt="Corine & Ruben"
                     className="rounded-[20px] w-full object-cover aspect-[4/5]"
                     style={{ boxShadow: '0 20px 40px rgba(107, 78, 113, 0.15)' }}
@@ -695,7 +699,7 @@ const Index = () => {
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               className="glass-card-strong rounded-3xl overflow-hidden md:row-span-2 card-hover">
               <div className="relative h-full min-h-[300px]">
-                <img src={flowersImg} alt="" className="w-full h-full object-cover" width={297} height={428} loading="lazy" decoding="async" />
+                <img src={flowersImgSmall} alt="" className="w-full h-full object-cover" width={297} height={428} loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-6">
                   <Heart className="w-5 h-5 text-rose-300 fill-rose-300 icon-glow mb-3 animate-pulse-love" />
@@ -743,9 +747,9 @@ const Index = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[
               { img: heroImg, label: '♥' },
-              { img: cakeImg, label: '🌸' },
-              { img: ringsImg, label: '💍' },
-              { img: coupleImg, label: '♥' },
+              { img: cakeImgSmall, label: '🌸' },
+              { img: ringsImgSmall, label: '💍' },
+              { img: coupleImgSmall, label: '♥' },
             ].map((item, i) =>
               <motion.div
                 key={i}
@@ -993,7 +997,7 @@ const Index = () => {
         <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <div className="glass-card-strong rounded-full w-28 h-28 mx-auto mb-8 flex items-center justify-center overflow-hidden ring-4 ring-primary/15 relative">
-              <img src={ringsImg} alt="Wedding rings" className="w-full h-full object-cover" width={112} height={112} loading="lazy" decoding="async" />
+              <img src={ringsImgSmall} alt="Wedding rings" className="w-full h-full object-cover" width={112} height={112} loading="lazy" decoding="async" />
               <div className="absolute inset-0 flex items-center justify-center bg-foreground/20" />
             </div>
 
