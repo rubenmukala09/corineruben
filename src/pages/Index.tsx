@@ -96,7 +96,7 @@ const FallingPetals = () =>
 const SectionDivider = ({ variant = 'heart' }: { variant?: 'heart' | 'sparkle' | 'line' }) => (
   <div className="relative py-8 flex items-center justify-center overflow-hidden">
     <div className="absolute inset-0 flex items-center">
-      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-gold/30 dark:via-gold/50 to-transparent dark:shadow-[0_0_8px_hsl(var(--gold)/0.2)]" />
+      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
     </div>
     <motion.div
       initial={{ opacity: 0, scale: 0.5 }}
@@ -104,9 +104,9 @@ const SectionDivider = ({ variant = 'heart' }: { variant?: 'heart' | 'sparkle' |
       viewport={{ once: true }}
       className="relative z-10 bg-background/60 backdrop-blur-sm px-4 rounded-full"
     >
-      {variant === 'heart' && <Heart className="w-5 h-5 text-gold/60 fill-gold/60 dark:text-gold dark:fill-gold dark:drop-shadow-[0_0_6px_hsl(var(--gold)/0.5)]" />}
-      {variant === 'sparkle' && <Sparkles className="w-5 h-5 text-gold/60 dark:text-gold dark:drop-shadow-[0_0_6px_hsl(var(--gold)/0.5)]" />}
-      {variant === 'line' && <span className="text-gold/40 dark:text-gold text-xs dark:drop-shadow-[0_0_4px_hsl(var(--gold)/0.4)]">✦ ✦ ✦</span>}
+      {variant === 'heart' && <Heart className="w-5 h-5 text-primary/40 fill-primary/40" />}
+      {variant === 'sparkle' && <Sparkles className="w-5 h-5 text-amber-400/60" />}
+      {variant === 'line' && <span className="text-primary/30 text-xs">✦ ✦ ✦</span>}
     </motion.div>
   </div>
 );
@@ -256,13 +256,36 @@ const Index = () => {
       <section className="w-full min-h-screen relative overflow-hidden flex flex-col items-center pt-8 pb-16">
         <FallingPetals />
 
-        {/* Clean subtle accent — no blurry blobs */}
-        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-gold/30 dark:via-gold/60 to-transparent z-[2]" />
-        {/* Gold shimmer light streak */}
+        {/* Hero aurora orbs */}
+        <motion.div
+          className="absolute w-[500px] h-[500px] rounded-full pointer-events-none z-[1]"
+          style={{ top: '5%', left: '-8%', background: 'radial-gradient(circle, rgba(212,165,200,0.35) 0%, transparent 70%)', filter: 'blur(80px)' }}
+          animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0], scale: [1, 1.15, 0.95, 1] }}
+          transition={{ duration: 14, repeat: Infinity, ease: 'linear' }}
+        />
+        <motion.div
+          className="absolute w-[400px] h-[400px] rounded-full pointer-events-none z-[1]"
+          style={{ top: '30%', right: '-10%', background: 'radial-gradient(circle, rgba(180,140,210,0.3) 0%, transparent 70%)', filter: 'blur(90px)' }}
+          animate={{ x: [0, -50, 30, 0], y: [0, 40, -25, 0], scale: [1, 1.1, 0.9, 1] }}
+          transition={{ duration: 18, repeat: Infinity, ease: 'linear', delay: 3 }}
+        />
+        <motion.div
+          className="absolute w-[350px] h-[350px] rounded-full pointer-events-none z-[1]"
+          style={{ bottom: '10%', left: '25%', background: 'radial-gradient(circle, rgba(232,196,184,0.4) 0%, transparent 70%)', filter: 'blur(100px)' }}
+          animate={{ x: [0, 30, -40, 0], y: [0, -20, 35, 0], scale: [1, 1.08, 0.92, 1] }}
+          transition={{ duration: 16, repeat: Infinity, ease: 'linear', delay: 5 }}
+        />
+        <motion.div
+          className="absolute w-[300px] h-[300px] rounded-full pointer-events-none z-[1]"
+          style={{ top: '60%', right: '15%', background: 'radial-gradient(circle, rgba(201,169,182,0.3) 0%, transparent 70%)', filter: 'blur(70px)' }}
+          animate={{ x: [0, -30, 20, 0], y: [0, 25, -15, 0], scale: [1, 1.12, 0.88, 1] }}
+          transition={{ duration: 20, repeat: Infinity, ease: 'linear', delay: 7 }}
+        />
+        {/* Shimmer light streak */}
         <div className="absolute top-0 left-0 right-0 h-[1px] z-[2] overflow-hidden">
           <motion.div
             className="h-full w-1/3"
-            style={{ background: 'linear-gradient(90deg, transparent, hsl(43 72% 52% / 0.5), transparent)' }}
+            style={{ background: 'linear-gradient(90deg, transparent, rgba(212,196,224,0.6), transparent)' }}
             animate={{ x: ['-100%', '400%'] }}
             transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', repeatDelay: 4 }}
           />
