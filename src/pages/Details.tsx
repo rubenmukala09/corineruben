@@ -52,7 +52,7 @@ const Details = () => {
                 i === sections.length - 1 && sections.length % 2 !== 0 ? 'md:col-span-2 md:max-w-md md:mx-auto' : ''
               }`}
             >
-              <div className="w-14 h-14 rounded-2xl gradient-primary flex items-center justify-center mb-6 group-hover:shadow-glow transition-shadow duration-500 shadow-soft">
+              <div className="w-14 h-14 rounded-3xl gradient-primary flex items-center justify-center mb-6 group-hover:shadow-glow transition-shadow duration-500 shadow-soft">
                 <section.icon className="w-6 h-6 text-primary-foreground" />
               </div>
               <h2 className="font-serif-display text-2xl text-foreground mb-4 font-semibold">{section.title}</h2>

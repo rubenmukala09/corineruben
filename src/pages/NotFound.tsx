@@ -1,10 +1,12 @@
 import { useLocation, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from "framer-motion";
 import { Home, ArrowLeft, Heart, MapPin, Calendar, Mail } from "lucide-react";
 
 const NotFound = () => {
   const location = useLocation();
+  const { t } = useLanguage();
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -20,15 +22,14 @@ const NotFound = () => {
   }, []);
 
   const quickLinks = [
-    { icon: Home, label: "Home", path: "/", desc: "Back to the beginning" },
-    { icon: Heart, label: "Our Story", path: "/story", desc: "How we met" },
-    { icon: Calendar, label: "RSVP", path: "/rsvp", desc: "Confirm attendance" },
-    { icon: MapPin, label: "Details", path: "/details", desc: "Venue & schedule" },
+    { icon: Home, label: t('nav.home'), path: "/", desc: t('notfound.backToStart') },
+    { icon: Heart, label: t('nav.story'), path: "/story", desc: t('notfound.howWeMet') },
+    { icon: Calendar, label: t('nav.rsvp'), path: "/rsvp", desc: t('notfound.confirmAttendance') },
+    { icon: MapPin, label: t('nav.details'), path: "/details", desc: t('notfound.venueSchedule') },
   ];
 
   return (
     <div className="relative min-h-screen overflow-hidden gradient-hero flex items-center justify-center px-6 md:px-12 py-24">
-      {/* Interactive floating blobs */}
       <div
         className="floating-blob w-[500px] h-[500px] bg-primary/20 top-[-10%] left-[-5%]"
         style={{ transform: `translate(${mousePos.x * 30}px, ${mousePos.y * 20}px)` }}
@@ -43,14 +44,12 @@ const NotFound = () => {
       />
 
       <div className="relative z-10 w-full max-w-4xl mx-auto">
-        {/* Main glass card */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="glass-card-strong rounded-3xl p-8 md:p-14 text-center mb-8"
         >
-          {/* Decorative hearts */}
           <motion.div
             animate={{ y: [-8, 8, -8], rotate: [0, 5, -5, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
@@ -61,7 +60,6 @@ const NotFound = () => {
             <Heart className="w-5 h-5 text-dusty-rose/50" />
           </motion.div>
 
-          {/* 404 number */}
           <motion.h1
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -71,23 +69,18 @@ const NotFound = () => {
             404
           </motion.h1>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-          >
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
             <h2 className="font-serif-display text-2xl md:text-3xl text-foreground mb-3 font-semibold">
-              Page Not Found
+              {t('notfound.title')}
             </h2>
             <p className="font-sans-elegant text-lg md:text-xl text-muted-foreground max-w-md mx-auto mb-2" style={{ lineHeight: 1.6 }}>
-              It seems this page wandered off before the celebration.
+              {t('notfound.desc')}
             </p>
-            <p className="font-sans-elegant text-xs text-muted-foreground/60 tracking-wider uppercase mt-4" style={{ letterSpacing: '0.5px' }}>
-              Requested: <span className="text-primary/70">{location.pathname}</span>
+            <p className="font-sans-elegant text-xs text-muted-foreground/60 tracking-wider uppercase mt-4">
+              {t('notfound.requested')}: <span className="text-primary/70">{location.pathname}</span>
             </p>
           </motion.div>
 
-          {/* CTA buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -96,16 +89,15 @@ const NotFound = () => {
           >
             <Link to="/" className="btn-primary">
               <Home className="w-4 h-4" />
-              Return Home
+              {t('notfound.returnHome')}
             </Link>
             <button onClick={() => window.history.back()} className="btn-outline">
               <ArrowLeft className="w-4 h-4" />
-              Go Back
+              {t('notfound.goBack')}
             </button>
           </motion.div>
         </motion.div>
 
-        {/* Quick links grid */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -124,21 +116,16 @@ const NotFound = () => {
                 to={link.path}
                 className="glass-card-strong rounded-3xl p-6 flex flex-col items-center text-center gap-2.5 card-hover group block"
               >
-                <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
+                <div className="w-12 h-12 rounded-3xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
                   <link.icon className="w-5 h-5 text-primary" />
                 </div>
-                <span className="font-sans-elegant text-sm font-semibold text-foreground">
-                  {link.label}
-                </span>
-                <span className="font-sans-elegant text-xs text-muted-foreground">
-                  {link.desc}
-                </span>
+                <span className="font-sans-elegant text-sm font-semibold text-foreground">{link.label}</span>
+                <span className="font-sans-elegant text-xs text-muted-foreground">{link.desc}</span>
               </Link>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* Contact widget */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -146,19 +133,19 @@ const NotFound = () => {
           className="mt-8 glass-card-strong rounded-3xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4"
         >
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-2xl bg-accent/30 flex items-center justify-center">
+            <div className="w-11 h-11 rounded-3xl bg-accent/30 flex items-center justify-center">
               <Mail className="w-5 h-5 text-primary" />
             </div>
             <div>
-              <p className="font-sans-elegant text-sm font-semibold text-foreground">Need help?</p>
-              <p className="font-sans-elegant text-xs text-muted-foreground">Reach out to the couple</p>
+              <p className="font-sans-elegant text-sm font-semibold text-foreground">{t('notfound.needHelp')}</p>
+              <p className="font-sans-elegant text-xs text-muted-foreground">{t('notfound.reachOut')}</p>
             </div>
           </div>
           <Link
             to="/rsvp"
             className="font-sans-elegant text-xs font-semibold tracking-wider uppercase text-primary hover:text-primary/80 transition-colors"
           >
-            Contact Us →
+            {t('notfound.contactUs')} →
           </Link>
         </motion.div>
       </div>

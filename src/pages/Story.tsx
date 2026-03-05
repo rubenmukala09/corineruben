@@ -33,7 +33,6 @@ const Story = () => {
         </motion.div>
 
         <div className="relative">
-          {/* Timeline line */}
           <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/40 via-accent/30 to-transparent md:-translate-x-px" />
 
           {events.map((event, i) => (
@@ -45,7 +44,6 @@ const Story = () => {
               transition={{ delay: i * 0.1, duration: 0.6 }}
               className={`relative flex items-start mb-14 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
             >
-              {/* Timeline dot */}
               <div className="absolute left-6 md:left-1/2 w-4 h-4 rounded-full gradient-primary -translate-x-2 mt-2 z-10 ring-4 ring-background shadow-glow" />
 
               <div className={`ml-14 md:ml-0 md:w-[calc(50%-2rem)] ${i % 2 === 0 ? 'md:pr-8 md:text-right' : 'md:pl-8'}`}>
@@ -60,7 +58,6 @@ const Story = () => {
           ))}
         </div>
 
-        {/* Bottom CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -69,7 +66,7 @@ const Story = () => {
         >
           <div className="glass-card-strong rounded-3xl p-8 inline-block">
             <Heart className="w-8 h-8 text-dusty-rose fill-dusty-rose mx-auto mb-3" />
-            <p className="font-serif-display text-lg text-foreground font-semibold">Our journey continues...</p>
+            <p className="font-serif-display text-lg text-foreground font-semibold">{t('story.continues')}</p>
             <p className="font-sans-elegant text-sm text-muted-foreground mt-1">{t('hero.date')}</p>
           </div>
         </motion.div>
