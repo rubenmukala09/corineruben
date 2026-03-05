@@ -82,8 +82,10 @@ const Footer = () => {
       {/* Main Footer */}
       <div
         className="text-white relative overflow-hidden"
-        style={{ background: "linear-gradient(180deg, #2a2345 0%, #221d3a 40%, #1c1830 100%)" }}
+        style={{ background: "linear-gradient(180deg, hsl(260 30% 20%) 0%, hsl(265 28% 16%) 40%, hsl(268 32% 12%) 100%)" }}
       >
+        {/* Glassmorphic frost overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] via-transparent to-white/[0.02] pointer-events-none" />
         {/* Subtle top border glow */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/30 to-transparent" />
 

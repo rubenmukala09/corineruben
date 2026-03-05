@@ -59,6 +59,7 @@ import businessScheduling from "@/assets/business-smart-scheduling.jpg";
 import businessSupportBot from "@/assets/business-support-bot.jpg";
 import businessIntake from "@/assets/business-intake-scheduling.jpg";
 import { natureSummer2 } from "@/config/natureHeroImages";
+import { NatureAccent } from "@/components/ui/NatureAccent";
 import { PROFESSIONAL_HERO_IMAGES } from "@/config/professionalHeroImages";
 import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
@@ -699,6 +700,7 @@ function Business() {
         <section className="py-28 relative overflow-hidden" ref={platformRef}>
           {/* Rich layered background */}
           <div className="absolute inset-0 bg-gradient-to-b from-muted/50 via-background to-muted/40" />
+          <NatureAccent variant="leaves" position="left" opacity={0.08} />
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
           <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/15 to-transparent" />
           <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[900px] bg-primary/[0.025] rounded-full blur-3xl pointer-events-none" />
@@ -1835,6 +1837,7 @@ function Business() {
         {/* ═══════════════════ WHY CHOOSE US ═══════════════════ */}
         <section className="py-24 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-muted/50 via-background to-muted/40" />
+          <NatureAccent variant="landscape" position="right" opacity={0.07} />
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/[0.03] rounded-full blur-3xl pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-accent/[0.03] rounded-full blur-3xl pointer-events-none" />
           

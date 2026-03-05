@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import TrustBar from "@/components/TrustBar";
 import { SEO } from "@/components/SEO";
 import { PageTransition } from "@/components/PageTransition";
+import { NatureAccent } from "@/components/ui/NatureAccent";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -467,7 +468,8 @@ export default function FAQ() {
           <TrustBar />
 
           {/* Platform Guide Section */}
-          <section className="py-6 bg-gradient-to-b from-primary/5 to-background">
+          <section className="py-6 bg-gradient-to-b from-primary/5 to-background relative overflow-hidden">
+            <NatureAccent variant="leaves" position="left" opacity={0.08} />
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto text-center">
                 <Badge className="mb-3 bg-primary/10 text-primary border-primary/20">

@@ -7,6 +7,7 @@ import TrustBar from "@/components/TrustBar";
 import CTASection from "@/components/CTASection";
 import { PageTransition } from "@/components/PageTransition";
 // FloatingShapes removed for performance
+import { NatureAccent } from "@/components/ui/NatureAccent";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -156,7 +157,8 @@ function About() {
       <TrustBar />
 
       {/* Our Story */}
-      <section className="py-10 sm:py-16 md:py-20 bg-background">
+      <section className="py-10 sm:py-16 md:py-20 bg-background relative overflow-hidden">
+        <NatureAccent variant="landscape" position="right" opacity={0.1} />
         <div className="container mx-auto px-4 lg:px-12">
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div>
@@ -210,7 +212,8 @@ function About() {
       </section>
 
       {/* Timeline */}
-      <section className="py-10 sm:py-16 md:py-20 bg-muted/30">
+      <section className="py-10 sm:py-16 md:py-20 bg-muted/30 relative overflow-hidden">
+        <NatureAccent variant="forest" position="left" opacity={0.08} />
         <div className="container mx-auto px-4 lg:px-12">
           <div className="text-center mb-14">
             <span className="inline-block text-[11px] uppercase tracking-[0.15em] font-bold text-primary bg-primary/10 px-4 py-1.5 rounded-full mb-4">
@@ -228,7 +231,8 @@ function About() {
       </section>
 
       {/* Founders */}
-      <section id="founders" className="py-10 sm:py-16 md:py-20 bg-background">
+      <section id="founders" className="py-10 sm:py-16 md:py-20 bg-background relative overflow-hidden">
+        <NatureAccent variant="lake" position="right" opacity={0.07} />
         <div className="container mx-auto px-4 lg:px-12">
           <div className="text-center mb-14">
             <span className="inline-block text-[11px] uppercase tracking-[0.15em] font-bold text-primary bg-primary/10 px-4 py-1.5 rounded-full mb-4">
@@ -243,7 +247,7 @@ function About() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 max-w-5xl mx-auto">
-            <Card className="p-6 sm:p-8 border border-border/60 shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1">
+            <Card className="p-6 sm:p-8 border border-border/40 bg-card/70 backdrop-blur-xl shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1">
               <div className="relative mb-6">
                 <div className="w-full aspect-square bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl flex items-center justify-center border-2 border-dashed border-primary/30">
                   <div className="text-center p-6">
@@ -271,7 +275,7 @@ function About() {
               </blockquote>
             </Card>
 
-            <Card className="p-6 sm:p-8 border border-border/60 shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1">
+            <Card className="p-6 sm:p-8 border border-border/40 bg-card/70 backdrop-blur-xl shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1">
               <div className="relative mb-6">
                 <div className="w-full aspect-square bg-gradient-to-br from-accent/10 to-primary/10 rounded-xl flex items-center justify-center border-2 border-dashed border-accent/30">
                   <div className="text-center p-6">

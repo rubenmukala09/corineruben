@@ -76,7 +76,7 @@ const Navigation = React.memo(() => {
         />
       )}
 
-      <nav className="sticky top-0 z-[9999] bg-white/95 backdrop-blur-md border-b border-border/50 shadow-sm">
+      <nav className="sticky top-0 z-[9999] bg-card/70 backdrop-blur-2xl border-b border-border/30 shadow-[0_4px_30px_-10px_hsl(288_30%_30%/0.08)]">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-16">
             {/* Logo */}

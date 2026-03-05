@@ -7,6 +7,7 @@ import Hero from "@/components/Hero";
 import { SEO } from "@/components/SEO";
 import { PageTransition } from "@/components/PageTransition";
 // FloatingShapes & ScrollReveal removed for performance
+import { NatureAccent } from "@/components/ui/NatureAccent";
 import {
   Card,
   CardContent,
@@ -209,11 +210,12 @@ function Contact() {
       <div className="h-8" />
 
       <div className="py-16 bg-gradient-to-b from-background via-muted/30 to-background relative overflow-hidden">
-        {/* Premium Background Effects */}
+        {/* Premium Background Effects + Nature */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
         </div>
+        <NatureAccent variant="lake" position="right" opacity={0.08} />
 
         <div className="container mx-auto px-4 relative z-10">
           {/* Contact Methods Grid — matches Business card style */}
@@ -233,7 +235,7 @@ function Contact() {
             {contactMethods.map((method, index) => {
               const IconComponent = method.icon;
               return (
-                <div key={index} className="bg-card border border-border/60 rounded-2xl p-6 shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1 h-full">
+                <div key={index} className="bg-card/70 backdrop-blur-xl border border-border/40 rounded-2xl p-6 shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1 h-full">
                   <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
                     <IconComponent className="w-7 h-7 text-primary" />
                   </div>
@@ -268,7 +270,7 @@ function Contact() {
           <div className="grid lg:grid-cols-5 gap-8 max-w-7xl mx-auto">
             {/* Premium Contact Form - 60% */}
             <div className="lg:col-span-3">
-              <div className="relative bg-card border border-border/60 rounded-2xl shadow-sm overflow-hidden">
+              <div className="relative bg-card/70 backdrop-blur-xl border border-border/40 rounded-2xl shadow-sm overflow-hidden">
                 {/* Top gradient accent */}
                 <div className="h-1.5 bg-gradient-to-r from-primary via-accent to-primary" />
 

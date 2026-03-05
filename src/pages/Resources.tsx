@@ -81,6 +81,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
 import HeroFloatingStats from "@/components/business/HeroFloatingStats";
 // GlassmorphismBackground removed — using Business-style sections
+import { NatureAccent } from "@/components/ui/NatureAccent";
 import { usePrerenderBlocker } from "@/contexts/PrerenderContext";
 
 // Static book products with covers (20 books)
@@ -616,6 +617,7 @@ function Resources() {
       {/* Introduction Section — Business style */}
       <section className="py-12 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background" />
+        <NatureAccent variant="forest" position="left" opacity={0.08} />
         <div className="absolute top-20 left-0 w-[500px] h-[500px] bg-primary/[0.03] rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-20 right-0 w-[400px] h-[400px] bg-accent/[0.04] rounded-full blur-3xl pointer-events-none" />
 
@@ -640,7 +642,7 @@ function Resources() {
                 { icon: Download, label: "Instant Downloads" },
                 { icon: Users, label: "Family-Friendly" },
               ].map((item) => (
-                <div key={item.label} className="flex items-center gap-2 text-sm text-muted-foreground bg-card border border-border/50 px-3 py-1.5 rounded-full">
+                <div key={item.label} className="flex items-center gap-2 text-sm text-muted-foreground bg-card/70 backdrop-blur-sm border border-border/40 px-3 py-1.5 rounded-full">
                   <item.icon className="w-4 h-4 text-primary" />
                   <span>{item.label}</span>
                 </div>
@@ -659,7 +661,7 @@ function Resources() {
               { value: "100+", label: "Happy Customers", icon: Heart },
               { value: "24/7", label: "Support Available", icon: Headphones },
             ].map((stat, index) => (
-              <div key={index} className="flex flex-col items-center gap-1 rounded-2xl bg-card border border-border/50 p-4 shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1">
+              <div key={index} className="flex flex-col items-center gap-1 rounded-2xl bg-card/70 backdrop-blur-xl border border-border/40 p-4 shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1">
                 <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-1">
                   <stat.icon className="w-5 h-5 text-primary" />
                 </div>
@@ -672,7 +674,8 @@ function Resources() {
       </section>
 
       {/* Digital Security Guides */}
-      <section id="guides" className="py-10 sm:py-16 md:py-20 bg-muted/20">
+      <section id="guides" className="py-10 sm:py-16 md:py-20 bg-muted/20 relative overflow-hidden">
+        <NatureAccent variant="landscape" position="right" opacity={0.07} />
         <div className="container mx-auto px-4">
           <div className="text-center mb-10">
             <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em] mb-6 shadow-sm border border-primary/15 bg-primary/5">
