@@ -618,46 +618,41 @@ function Resources() {
         {/* Introduction Section */}
         <section className="py-6">
           <div className="container mx-auto px-4">
-            <ScrollReveal>
-              <div className="max-w-4xl mx-auto text-center backdrop-blur-sm bg-white/40 rounded-3xl p-8 border border-white/60 shadow-xl">
-                <Badge className="mb-3 text-sm px-3 py-1 bg-gradient-to-r from-primary to-accent text-white">
-                  <Sparkles className="w-3.5 h-3.5 mr-1.5" /> Trusted Resources
-                </Badge>
-                <h2 className="text-2xl md:text-3xl font-bold mb-3">
-                  Your One-Stop Security Shop
-                </h2>
-                <p className="text-base text-muted-foreground mb-4 leading-relaxed">
-                  Welcome to InVision Network's resource center. Here you'll
-                  find carefully curated
-                  <strong className="text-foreground">
-                    {" "}
-                    e-books, digital guides, softcover books, and security
-                    gadgets
-                  </strong>
-                  . all designed to help you and your family stay safe in the
-                  digital age. Every product is created by security experts with
-                  decades of experience protecting families from scams.
-                </p>
-                <div className="flex flex-wrap gap-3 justify-center">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground bg-white/50 px-3 py-1.5 rounded-full">
-                    <BookOpen className="w-4 h-4 text-primary" />
-                    <span>Digital & Print Books</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground bg-white/50 px-3 py-1.5 rounded-full">
-                    <Package className="w-4 h-4 text-primary" />
-                    <span>Security Gadgets</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground bg-white/50 px-3 py-1.5 rounded-full">
-                    <Download className="w-4 h-4 text-primary" />
-                    <span>Instant Downloads</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground bg-white/50 px-3 py-1.5 rounded-full">
-                    <Users className="w-4 h-4 text-primary" />
-                    <span>Family-Friendly</span>
-                  </div>
+            <div className="max-w-4xl mx-auto text-center backdrop-blur-sm bg-white/40 rounded-3xl p-8 border border-white/60 shadow-xl">
+              <Badge className="mb-3 text-sm px-3 py-1 bg-gradient-to-r from-primary to-accent text-white">
+                <Sparkles className="w-3.5 h-3.5 mr-1.5" /> Trusted Resources
+              </Badge>
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">
+                Your One-Stop Security Shop
+              </h2>
+              <p className="text-base text-muted-foreground mb-4 leading-relaxed">
+                Welcome to InVision Network's resource center. Here you'll
+                find carefully curated
+                <strong className="text-foreground">
+                  {" "}e-books, digital guides, softcover books, and security gadgets
+                </strong>
+                . All designed to help you and your family stay safe in the
+                digital age.
+              </p>
+              <div className="flex flex-wrap gap-3 justify-center">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground bg-white/50 px-3 py-1.5 rounded-full">
+                  <BookOpen className="w-4 h-4 text-primary" />
+                  <span>Digital & Print Books</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground bg-white/50 px-3 py-1.5 rounded-full">
+                  <Package className="w-4 h-4 text-primary" />
+                  <span>Security Gadgets</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground bg-white/50 px-3 py-1.5 rounded-full">
+                  <Download className="w-4 h-4 text-primary" />
+                  <span>Instant Downloads</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground bg-white/50 px-3 py-1.5 rounded-full">
+                  <Users className="w-4 h-4 text-primary" />
+                  <span>Family-Friendly</span>
                 </div>
               </div>
-            </ScrollReveal>
+            </div>
           </div>
         </section>
 
@@ -716,21 +711,19 @@ function Resources() {
         className="py-10 bg-gradient-to-b from-background to-secondary/20">
 
         <div className="container mx-auto px-4">
-          <ScrollReveal>
-            <div className="text-center mb-8">
-              <Badge className="mb-3 text-sm px-4 py-1.5" variant="secondary">
-                <Download className="w-3.5 h-3.5 mr-1.5" />
-                Instant Digital Download
-              </Badge>
-              <h2 className="text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Digital Security Guides
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto text-sm">
-                Expert knowledge delivered instantly. Download and print, or
-                read on any device.
-              </p>
-            </div>
-          </ScrollReveal>
+          <div className="text-center mb-8">
+            <Badge className="mb-3 text-sm px-4 py-1.5" variant="secondary">
+              <Download className="w-3.5 h-3.5 mr-1.5" />
+              Instant Digital Download
+            </Badge>
+            <h2 className="text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Digital Security Guides
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto text-sm">
+              Expert knowledge delivered instantly. Download and print, or
+              read on any device.
+            </p>
+          </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-3">
             {staticBooks.map((book) =>
@@ -830,19 +823,7 @@ function Resources() {
           </div>
 
           {/* Bundle Info Banner */}
-          <ScrollReveal>
-            <div className="mt-8 space-y-4">
-              
-
-
-
-
-
-
-
-
-
-
+          <div className="mt-8 space-y-4">
               {/* Language Request Note */}
               <div className="p-4 bg-gradient-to-r from-accent/10 via-primary/5 to-accent/10 rounded-xl border border-accent/20 text-center">
                 <div className="flex items-center justify-center gap-2 mb-2">
@@ -852,24 +833,19 @@ function Resources() {
                   </span>
                 </div>
                 <p className="text-sm text-muted-foreground mb-3">
-                  We offer translations in Spanish, French, German, Chinese, and
-                  more.
+                  We offer translations in Spanish, French, German, Chinese, and more.
                   <br className="hidden md:block" />
                   Simply contact us with your request and we'll prepare your
                   copy within <strong>1-3 business days</strong>.
                 </p>
                 <Button variant="outline" size="sm" asChild>
-                  <Link
-                    to="/contact"
-                    className="inline-flex items-center gap-2">
-
+                  <Link to="/contact" className="inline-flex items-center gap-2">
                     <Mail className="w-4 h-4" />
                     Request Translation
                   </Link>
                 </Button>
               </div>
             </div>
-          </ScrollReveal>
         </div>
       </section>
 
@@ -882,8 +858,7 @@ function Resources() {
       {/* Emergency Scripts Section */}
       <section id="scripts" className="py-12 bg-card">
         <div className="container mx-auto px-4">
-          <ScrollReveal>
-            <div className="text-center mb-10">
+          <div className="text-center mb-10">
               <Badge className="mb-3 text-sm px-4 py-1.5 bg-gradient-to-r from-chart-4 to-chart-5 text-primary-foreground">
                 <FileText className="w-3.5 h-3.5 mr-1.5" />
                 Free Downloads
@@ -896,73 +871,60 @@ function Resources() {
                 ones when scammers call
               </p>
             </div>
-          </ScrollReveal>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
             {[
             {
               title: "IRS/Tax Scam Script",
-              description:
-              "What to say when someone claims to be from the IRS demanding immediate payment",
+              description: "What to say when someone claims to be from the IRS demanding immediate payment",
               icon: FileText,
               color: "from-red-500/20 to-red-600/20",
               textColor: "text-red-600"
             },
             {
               title: "Tech Support Scam Script",
-              description:
-              "Responses for fake Microsoft, Apple, or antivirus callers",
+              description: "Responses for fake Microsoft, Apple, or antivirus callers",
               icon: Headphones,
               color: "from-blue-500/20 to-blue-600/20",
               textColor: "text-blue-600"
             },
             {
               title: "Grandparent Scam Script",
-              description:
-              "Verification questions when someone claims a family emergency",
+              description: "Verification questions when someone claims a family emergency",
               icon: Heart,
               color: "from-pink-500/20 to-pink-600/20",
               textColor: "text-pink-600"
             },
             {
               title: "Bank Fraud Alert Script",
-              description:
-              "How to verify if a bank fraud alert is legitimate",
+              description: "How to verify if a bank fraud alert is legitimate",
               icon: Lock,
               color: "from-green-500/20 to-green-600/20",
               textColor: "text-green-600"
-            }].
-            map((script, index) =>
-            <ScrollReveal key={script.title} delay={index * 100}>
-                <Card className="p-5 h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col">
-                  <div
-                  className={`w-12 h-12 rounded-xl bg-gradient-to-br ${script.color} flex items-center justify-center mb-4`}>
-
-                    <script.icon className={`w-6 h-6 ${script.textColor}`} />
-                  </div>
-                  <h3 className="font-bold mb-2">{script.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-4 flex-1">
-                    {script.description}
-                  </p>
-                  <Button variant="outline" className="w-full gap-2" size="sm">
-                    <Download className="w-4 h-4" />
-                    Download PDF
-                  </Button>
-                </Card>
-              </ScrollReveal>
+            }].map((script) =>
+              <Card key={script.title} className="p-5 h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col">
+                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${script.color} flex items-center justify-center mb-4`}>
+                  <script.icon className={`w-6 h-6 ${script.textColor}`} />
+                </div>
+                <h3 className="font-bold mb-2">{script.title}</h3>
+                <p className="text-sm text-muted-foreground mb-4 flex-1">
+                  {script.description}
+                </p>
+                <Button variant="outline" className="w-full gap-2" size="sm">
+                  <Download className="w-4 h-4" />
+                  Download PDF
+                </Button>
+              </Card>
             )}
           </div>
 
-          <ScrollReveal delay={400}>
-            <div className="text-center mt-8">
-              <p className="text-sm text-muted-foreground mb-4">
-                📞 <strong>Remember:</strong> Legitimate organizations will
-                never pressure you for immediate payment or personal info over
-                the phone.
-              </p>
-              <Button asChild variant="default" className="gap-2"></Button>
-            </div>
-          </ScrollReveal>
+          <div className="text-center mt-8">
+            <p className="text-sm text-muted-foreground mb-4">
+              📞 <strong>Remember:</strong> Legitimate organizations will
+              never pressure you for immediate payment or personal info over
+              the phone.
+            </p>
+          </div>
         </div>
       </section>
 

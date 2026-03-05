@@ -121,17 +121,31 @@ function About() {
       />
       <Navigation />
 
-      {/* Hero wrapper for floating stats */}
+      {/* Hero */}
       <div className="relative">
         <Hero
           backgroundImages={aboutHeroImages}
-          headline={<RotatingHeadlines headlines={aboutHeadlines} />}
-          subheadline="From victims to protectors. Serving families across Ohio."
+          headline=""
+          subheadline=""
+          showScrollIndicator={true}
         >
-          <FloatingShapes />
+          <div className="text-center mb-6">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+              <RotatingHeadlines headlines={aboutHeadlines} className="" />
+            </h1>
+            <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
+              From victims to protectors. Serving families across Ohio.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="xl" asChild>
+              <Link to="/training">Start Training</Link>
+            </Button>
+            <Button size="xl" variant="heroOutline" asChild>
+              <Link to="/contact">Get in Touch</Link>
+            </Button>
+          </div>
         </Hero>
-
-        {/* Floating Stats Bar - Outside Hero to stay static */}
         <HeroFloatingStats />
       </div>
 
@@ -142,341 +156,269 @@ function About() {
       <TrustBar />
 
       {/* Our Story */}
-      <section className="py-6 md:py-8 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-4 md:gap-6 lg:gap-8 items-center">
-            <ScrollReveal>
-              <div>
-                <Badge
-                  className="mb-2 sm:mb-3 text-sm sm:text-base px-3 sm:px-4 py-1"
-                  variant="secondary"
-                >
-                  Our Story
-                </Badge>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-3">
-                  It Started With a Breach
-                </h2>
-                <div className="space-y-2 sm:space-y-3 text-sm sm:text-base text-muted-foreground leading-relaxed">
-                  <p>
-                    When Ruben and Corine fell victim to a sophisticated data
-                    breach, their worst fears came true. All their passwords,
-                    emails, and personal information were exposed. Then came the
-                    chilling demand: pay thousands of dollars, or their private
-                    data would be sold on the dark web.
-                  </p>
-                  <p>
-                    This traumatic experience transformed them from victims into
-                    protectors. Even before entering the cybersecurity field,
-                    they realized anyone can become a target. The attackers were
-                    sophisticated, relentless, and terrifying - this drove Ruben
-                    to dedicate his career to protecting others.
-                  </p>
-                  <p>
-                    Today, InVision Network exists because of that painful
-                    lesson. We're a team of cybersecurity analysts, nurses,
-                    educators, and community advocates united by one mission:
-                    ensuring no family experiences the fear and financial
-                    devastation we endured.
-                  </p>
+      <section className="py-10 sm:py-16 md:py-20 bg-background">
+        <div className="container mx-auto px-4 lg:px-12">
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div>
+              <span className="inline-block text-[11px] uppercase tracking-[0.15em] font-bold text-primary bg-primary/10 px-4 py-1.5 rounded-full mb-4">
+                Our Story
+              </span>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground mb-4">
+                It Started With a <span className="text-primary">Breach</span>
+              </h2>
+              <div className="space-y-3 text-sm sm:text-base text-muted-foreground leading-relaxed">
+                <p>
+                  When Ruben and Corine fell victim to a sophisticated data
+                  breach, their worst fears came true. All their passwords,
+                  emails, and personal information were exposed. Then came the
+                  chilling demand: pay thousands of dollars, or their private
+                  data would be sold on the dark web.
+                </p>
+                <p>
+                  This traumatic experience transformed them from victims into
+                  protectors. Even before entering the cybersecurity field,
+                  they realized anyone can become a target. The attackers were
+                  sophisticated, relentless, and terrifying - this drove Ruben
+                  to dedicate his career to protecting others.
+                </p>
+                <p>
+                  Today, InVision Network exists because of that painful
+                  lesson. We're a team of cybersecurity analysts, nurses,
+                  educators, and community advocates united by one mission:
+                  ensuring no family experiences the fear and financial
+                  devastation we endured.
+                </p>
+              </div>
+            </div>
+            <div className="relative mt-8 md:mt-0">
+              <img
+                src={teamDiverse1}
+                alt="InVision Network team working together"
+                className="rounded-2xl shadow-2xl w-full h-auto border-4 border-primary/20"
+              />
+              <div className="absolute -bottom-4 sm:-bottom-6 -right-4 sm:-right-6 bg-primary text-primary-foreground p-4 sm:p-6 md:p-8 rounded-xl shadow-xl">
+                <div className="text-3xl sm:text-4xl md:text-5xl font-bold mb-1 sm:mb-2">
+                  100+
+                </div>
+                <div className="text-xs sm:text-sm md:text-base">
+                  Families Protected
                 </div>
               </div>
-            </ScrollReveal>
-            <ScrollReveal delay={200}>
-              <div className="relative mt-8 md:mt-0">
-                <img
-                  src={teamDiverse1}
-                  alt="InVision Network team working together"
-                  className="rounded-2xl shadow-2xl w-full h-auto border-4 border-primary/20"
-                />
-                <div className="absolute -bottom-4 sm:-bottom-6 -right-4 sm:-right-6 bg-primary text-primary-foreground p-4 sm:p-6 md:p-8 rounded-xl shadow-xl">
-                  <div className="text-3xl sm:text-4xl md:text-5xl font-bold mb-1 sm:mb-2">
-                    100+
-                  </div>
-                  <div className="text-xs sm:text-sm md:text-base">
-                    Families Protected
-                  </div>
-                </div>
-              </div>
-            </ScrollReveal>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Timeline */}
-      <section className="py-6 md:py-8 bg-gradient-to-b from-secondary/20 to-background">
-        <div className="container mx-auto px-4">
-          <ScrollReveal>
-            <div className="text-center mb-6">
-              <Badge
-                className="mb-2 text-sm md:text-base px-4 py-1"
-                variant="secondary"
-              >
-                Our Journey
-              </Badge>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">
-                Milestones That Matter
-              </h2>
-              <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto">
-                From a personal scare to protecting hundreds of families
-              </p>
-            </div>
-          </ScrollReveal>
-
+      <section className="py-10 sm:py-16 md:py-20 bg-muted/30">
+        <div className="container mx-auto px-4 lg:px-12">
+          <div className="text-center mb-14">
+            <span className="inline-block text-[11px] uppercase tracking-[0.15em] font-bold text-primary bg-primary/10 px-4 py-1.5 rounded-full mb-4">
+              Our Journey
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground mb-4">
+              Milestones That <span className="text-primary">Matter</span>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              From a personal scare to protecting hundreds of families
+            </p>
+          </div>
           <TimelineVisualization events={timeline} />
         </div>
       </section>
 
       {/* Founders */}
-      <section id="founders" className="py-6 md:py-8 bg-background">
-        <div className="container mx-auto px-4">
-          <ScrollReveal>
-            <div className="text-center mb-6">
-              <Badge
-                className="mb-2 text-sm md:text-base px-4 py-1"
-                variant="secondary"
-              >
-                Meet Our Founders
-              </Badge>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">
-                The People Behind the Mission
-              </h2>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-                United by experience, driven by purpose
-              </p>
-            </div>
-          </ScrollReveal>
+      <section id="founders" className="py-10 sm:py-16 md:py-20 bg-background">
+        <div className="container mx-auto px-4 lg:px-12">
+          <div className="text-center mb-14">
+            <span className="inline-block text-[11px] uppercase tracking-[0.15em] font-bold text-primary bg-primary/10 px-4 py-1.5 rounded-full mb-4">
+              Meet Our Founders
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground mb-4">
+              The People Behind the <span className="text-primary">Mission</span>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              United by experience, driven by purpose
+            </p>
+          </div>
 
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 max-w-5xl mx-auto">
-            <ScrollReveal delay={100}>
-              <Card className="glass-card card-padding-lg hover:shadow-2xl transition-all duration-300 border border-white/25 hover:border-white/35">
-                {/* Placeholder for founder photo upload */}
-                <div className="relative mb-6">
-                  <div className="w-full aspect-square bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl flex items-center justify-center border-2 border-dashed border-primary/30">
-                    <div className="text-center p-6">
-                      <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                        <span className="text-4xl font-bold text-primary">
-                          R
-                        </span>
-                      </div>
-                      <p className="text-sm text-muted-foreground">
-                        Photo Coming Soon
-                      </p>
+            <Card className="p-6 sm:p-8 border border-border/60 shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1">
+              <div className="relative mb-6">
+                <div className="w-full aspect-square bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl flex items-center justify-center border-2 border-dashed border-primary/30">
+                  <div className="text-center p-6">
+                    <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+                      <span className="text-4xl font-bold text-primary">R</span>
                     </div>
+                    <p className="text-sm text-muted-foreground">Photo Coming Soon</p>
                   </div>
-                  <Badge className="absolute top-4 right-4 bg-primary">
-                    Co-Founder & CEO
-                  </Badge>
                 </div>
-                <h3 className="text-2xl md:text-3xl font-bold mb-2">Ruben</h3>
-                <p className="text-base md:text-lg text-muted-foreground mb-4">
-                  Cybersecurity Analyst with 5 years of experience protecting
-                  organizations and families. After he and his wife Corine fell
-                  victim to a sophisticated scam that exposed their passwords
-                  and emails - with criminals demanding payment to delete their
-                  data - Ruben was inspired to enter the cybersecurity field,
-                  embracing a deeper mission: making enterprise-level security
-                  accessible to everyone.
-                </p>
-                <blockquote className="border-l-4 border-primary pl-4 italic text-sm md:text-base text-muted-foreground">
-                  "Everyone deserves to feel safe online, regardless of their
-                  technical knowledge."
-                </blockquote>
-              </Card>
-            </ScrollReveal>
+                <Badge className="absolute top-4 right-4 bg-primary text-primary-foreground">Co-Founder & CEO</Badge>
+              </div>
+              <h3 className="text-2xl font-black mb-2 text-foreground">Ruben</h3>
+              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                Cybersecurity Analyst with 5 years of experience protecting
+                organizations and families. After he and his wife Corine fell
+                victim to a sophisticated scam that exposed their passwords
+                and emails - with criminals demanding payment to delete their
+                data - Ruben was inspired to enter the cybersecurity field,
+                embracing a deeper mission: making enterprise-level security
+                accessible to everyone.
+              </p>
+              <blockquote className="border-l-4 border-primary pl-4 italic text-sm text-muted-foreground">
+                "Everyone deserves to feel safe online, regardless of their
+                technical knowledge."
+              </blockquote>
+            </Card>
 
-            <ScrollReveal delay={200}>
-              <Card className="glass-card card-padding-lg hover:shadow-2xl transition-all duration-300 border border-white/25 hover:border-white/35">
-                {/* Placeholder for founder photo upload */}
-                <div className="relative mb-6">
-                  <div className="w-full aspect-square bg-gradient-to-br from-accent/10 to-primary/10 rounded-xl flex items-center justify-center border-2 border-dashed border-accent/30">
-                    <div className="text-center p-6">
-                      <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-accent/20 to-primary/20 flex items-center justify-center">
-                        <span className="text-4xl font-bold text-accent">
-                          C
-                        </span>
-                      </div>
-                      <p className="text-sm text-muted-foreground">
-                        Photo Coming Soon
-                      </p>
+            <Card className="p-6 sm:p-8 border border-border/60 shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1">
+              <div className="relative mb-6">
+                <div className="w-full aspect-square bg-gradient-to-br from-accent/10 to-primary/10 rounded-xl flex items-center justify-center border-2 border-dashed border-accent/30">
+                  <div className="text-center p-6">
+                    <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-accent/10 flex items-center justify-center">
+                      <span className="text-4xl font-bold text-accent">C</span>
                     </div>
+                    <p className="text-sm text-muted-foreground">Photo Coming Soon</p>
                   </div>
-                  <Badge className="absolute top-4 right-4 bg-primary">
-                    Co-Founder & COO
-                  </Badge>
                 </div>
-                <h3 className="text-2xl md:text-3xl font-bold mb-2">Corine</h3>
-                <p className="text-base md:text-lg text-muted-foreground mb-4">
-                  Registered Nurse with 4 years of clinical experience and a
-                  heart for community wellness. After experiencing identity
-                  theft alongside her husband, Corine channeled her
-                  compassionate care approach into designing trauma-informed
-                  cybersecurity training that meets people where they are -
-                  especially seniors and vulnerable populations.
-                </p>
-                <blockquote className="border-l-4 border-primary pl-4 italic text-sm md:text-base text-muted-foreground">
-                  "Technology should empower, not intimidate. We're here to
-                  bridge that gap."
-                </blockquote>
-              </Card>
-            </ScrollReveal>
+                <Badge className="absolute top-4 right-4 bg-primary text-primary-foreground">Co-Founder & COO</Badge>
+              </div>
+              <h3 className="text-2xl font-black mb-2 text-foreground">Corine</h3>
+              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                Registered Nurse with 4 years of clinical experience and a
+                heart for community wellness. After experiencing identity
+                theft alongside her husband, Corine channeled her
+                compassionate care approach into designing trauma-informed
+                cybersecurity training that meets people where they are -
+                especially seniors and vulnerable populations.
+              </p>
+              <blockquote className="border-l-4 border-primary pl-4 italic text-sm text-muted-foreground">
+                "Technology should empower, not intimidate. We're here to
+                bridge that gap."
+              </blockquote>
+            </Card>
           </div>
         </div>
       </section>
 
       {/* Values */}
-      <section className="py-10 md:py-14 bg-gradient-to-b from-secondary/20 to-background">
-        <div className="container mx-auto px-4">
-          <ScrollReveal>
-            <div className="text-center mb-8">
-              <Badge
-                className="mb-3 text-base md:text-lg px-4 md:px-6 py-2"
-                variant="secondary"
-              >
-                Our Values
-              </Badge>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3">
-                What Drives Us Every Day
-              </h2>
-            </div>
-          </ScrollReveal>
+      <section className="py-10 sm:py-16 md:py-20 bg-muted/30">
+        <div className="container mx-auto px-4 lg:px-12">
+          <div className="text-center mb-14">
+            <span className="inline-block text-[11px] uppercase tracking-[0.15em] font-bold text-primary bg-primary/10 px-4 py-1.5 rounded-full mb-4">
+              Our Values
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground mb-4">
+              What Drives Us <span className="text-primary">Every Day</span>
+            </h2>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            {values.map((value, index) => {
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            {values.map((value) => {
               const Icon = value.icon;
               return (
-                <ScrollReveal key={value.title} delay={index * 100}>
-                  <Card className="glass-card card-padding-lg align-text-center hover:shadow-2xl transition-all duration-300 hover:scale-105 border border-white/25 hover:border-white/35">
-                    <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto mb-3 sm:mb-4 md:mb-6 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                      <Icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-primary" />
-                    </div>
-                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3">
-                      {value.title}
-                    </h3>
-                    <p className="text-xs sm:text-sm md:text-base text-muted-foreground leading-relaxed">
-                      {value.description}
-                    </p>
-                  </Card>
-                </ScrollReveal>
+                <div key={value.title} className="bg-card border border-border/60 rounded-2xl p-6 text-center shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1 h-full">
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                    <Icon className="w-7 h-7 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-bold text-foreground mb-2">
+                    {value.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {value.description}
+                  </p>
+                </div>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* Community Impact with Nature Background */}
-      <section className="py-16 md:py-24 lg:py-32 relative overflow-hidden">
-        {/* Background image */}
+      {/* Community Impact */}
+      <section className="py-16 md:py-24 relative overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${ohioNatureImpact})` }}
         />
-
-        {/* Gradient overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary/60 to-accent/70" />
 
-        <div className="container mx-auto px-4 relative z-10 text-white">
-          <ScrollReveal>
-            <div className="text-center mb-10 md:mb-14">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 drop-shadow-lg">
-                Our Community Impact
-              </h2>
-              <p className="text-base sm:text-lg md:text-xl opacity-95 max-w-3xl mx-auto px-4 drop-shadow-md">
-                Protecting families and serving our local community
-              </p>
-            </div>
-          </ScrollReveal>
+        <div className="container mx-auto px-4 lg:px-12 relative z-10 text-white">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 drop-shadow-lg">
+              Our Community Impact
+            </h2>
+            <p className="text-lg opacity-95 max-w-3xl mx-auto drop-shadow-md">
+              Protecting families and serving our local community
+            </p>
+          </div>
 
-          {/* Three Info Cards Only */}
-          <ScrollReveal delay={200}>
-            <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <div className="glass-light align-text-center card-padding-lg rounded-2xl transition-all duration-300 hover:-translate-y-1">
-                <div className="text-4xl mb-4">🏠</div>
-                <div className="font-bold text-xl mb-2">Ohio-Based</div>
-                <div className="text-sm opacity-90">
-                  Serving local communities across the Buckeye State
-                </div>
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {[
+              { emoji: "🏠", title: "Ohio-Based", desc: "Serving local communities across the Buckeye State" },
+              { emoji: "🎖️", title: "Veteran-Supporting", desc: "Honoring those who served with special discounts" },
+              { emoji: "💙", title: "Mission-Driven", desc: "Protection over profit, always" },
+            ].map((item) => (
+              <div key={item.title} className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 text-center transition-all duration-300 hover:-translate-y-1">
+                <div className="text-4xl mb-4">{item.emoji}</div>
+                <div className="font-bold text-xl mb-2">{item.title}</div>
+                <div className="text-sm opacity-90">{item.desc}</div>
               </div>
-              <div className="glass-light align-text-center card-padding-lg rounded-2xl transition-all duration-300 hover:-translate-y-1">
-                <div className="text-4xl mb-4">🎖️</div>
-                <div className="font-bold text-xl mb-2">Veteran-Supporting</div>
-                <div className="text-sm opacity-90">
-                  Honoring those who served with special discounts
-                </div>
-              </div>
-              <div className="glass-light align-text-center card-padding-lg rounded-2xl transition-all duration-300 hover:-translate-y-1">
-                <div className="text-4xl mb-4">💙</div>
-                <div className="font-bold text-xl mb-2">Mission-Driven</div>
-                <div className="text-sm opacity-90">
-                  Protection over profit, always
-                </div>
-              </div>
-            </div>
-          </ScrollReveal>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Who We Help - Photo Gallery */}
-      <section className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <ScrollReveal>
-            <div className="text-center mb-12">
-              <Badge className="mb-4" variant="secondary">
-                Who We Serve
-              </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Protecting Those Who Matter Most
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                From multi-generational families to seniors learning new
-                technology
-              </p>
-            </div>
-          </ScrollReveal>
+      {/* Who We Help */}
+      <section className="py-10 sm:py-16 md:py-20 bg-background">
+        <div className="container mx-auto px-4 lg:px-12">
+          <div className="text-center mb-14">
+            <span className="inline-block text-[11px] uppercase tracking-[0.15em] font-bold text-primary bg-primary/10 px-4 py-1.5 rounded-full mb-4">
+              Who We Serve
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground mb-4">
+              Protecting Those Who <span className="text-primary">Matter Most</span>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              From multi-generational families to seniors learning new technology
+            </p>
+          </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <ScrollReveal delay={100}>
-              <div className="relative group overflow-hidden rounded-3xl shadow-2xl">
-                <img
-                  src={familyGathering}
-                  alt="Multi-generational family enjoying time together"
-                  className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                  <h3 className="text-2xl font-bold mb-2">Family Protection</h3>
-                  <p className="text-white/90">
-                    Keeping your loved ones safe across all generations, from
-                    tech-savvy kids to treasured grandparents.
-                  </p>
-                </div>
+            <div className="relative group overflow-hidden rounded-2xl shadow-lg border border-border/60">
+              <img
+                src={familyGathering}
+                alt="Multi-generational family enjoying time together"
+                className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/30 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+                <h3 className="text-2xl font-black mb-2">Family Protection</h3>
+                <p className="text-white/90 text-sm">
+                  Keeping your loved ones safe across all generations.
+                </p>
               </div>
-            </ScrollReveal>
+            </div>
 
-            <ScrollReveal delay={200}>
-              <div className="relative group overflow-hidden rounded-3xl shadow-2xl">
-                <img
-                  src={seniorLearning}
-                  alt="Senior learning to use technology with instructor"
-                  className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-accent/90 via-accent/40 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                  <h3 className="text-2xl font-bold mb-2">Senior Education</h3>
-                  <p className="text-white/90">
-                    Patient, compassionate training designed specifically for
-                    seniors who want to stay safe online.
-                  </p>
-                </div>
+            <div className="relative group overflow-hidden rounded-2xl shadow-lg border border-border/60">
+              <img
+                src={seniorLearning}
+                alt="Senior learning to use technology with instructor"
+                className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/30 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+                <h3 className="text-2xl font-black mb-2">Senior Education</h3>
+                <p className="text-white/90 text-sm">
+                  Patient, compassionate training for seniors online.
+                </p>
               </div>
-            </ScrollReveal>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Inspirational Verses */}
       <InspirationalVerses />
-
-      {/* Team section - real team profiles to be added via admin */}
 
       {/* Achievements Showcase */}
       <AchievementsShowcase />
@@ -490,11 +432,10 @@ function About() {
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${fieldSunsetCta})` }}
         />
-        {/* Gradient overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/50 to-transparent" />
 
         <div className="container mx-auto px-4 relative z-10 text-center">
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 drop-shadow-lg">
+          <h2 className="text-3xl md:text-5xl font-black text-white mb-6 drop-shadow-lg">
             Ready to Join Our Protected Community?
           </h2>
           <p className="text-lg md:text-xl text-white/95 mb-8 max-w-2xl mx-auto drop-shadow-md">
@@ -502,11 +443,7 @@ function About() {
             want to support our mission, we'd love to connect.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Button
-              asChild
-              size="lg"
-              className="bg-primary hover:bg-primary/90 text-white font-bold shadow-xl"
-            >
+            <Button asChild size="xl">
               <Link
                 to="/training"
                 onClick={() => trackButtonClick("Start Training", "About CTA")}
@@ -514,7 +451,7 @@ function About() {
                 Start Training
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outlineLight">
+            <Button asChild size="xl" variant="heroOutline">
               <Link
                 to="/business"
                 onClick={() => trackButtonClick("Partner With Us", "About CTA")}

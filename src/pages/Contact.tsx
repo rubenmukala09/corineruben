@@ -53,6 +53,7 @@ import { z } from "zod";
 import { useConfetti } from "@/hooks/useConfetti";
 import { PROFESSIONAL_HERO_IMAGES } from "@/config/professionalHeroImages";
 import supportAgentPhoto from "@/assets/support-agent.jpg";
+import heroContactBranded from "@/assets/hero-contact-branded.jpg";
 import { SITE } from "@/config/site";
 
 type ContactFormData = z.infer<typeof contactFormSchema>;
@@ -173,72 +174,93 @@ function Contact() {
         description="Contact InVision Network for scam protection support. Phone, email, live chat available. Average 2-minute wait time. 95% same-day response rate."
       />
       <Navigation />
-      {/* Hero wrapper for floating stats */}
+      {/* Hero */}
       <div className="relative">
         <Hero
-          backgroundImages={contactHeroImages}
-          headline="Contact Us"
-          subheadline="We're here to help protect your family"
-          showProtectionBadge
-          badgeText="Response within 4 hours"
+          backgroundImage={heroContactBranded}
+          headline=""
+          subheadline=""
         >
-          <FloatingShapes />
+          <div className="text-center mb-6">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+              Contact Us
+            </h1>
+            <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
+              We're here to help protect your family. Get in touch today.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="xl" asChild>
+              <a href={SITE.phone.tel}>
+                <Phone className="w-5 h-5 mr-2" />
+                {SITE.phone.display}
+              </a>
+            </Button>
+            <Button size="xl" variant="heroOutline" asChild>
+              <a href={`mailto:${SITE.emails.info}`}>
+                <Mail className="w-5 h-5 mr-2" />
+                Email Us
+              </a>
+            </Button>
+          </div>
         </Hero>
       </div>
 
       {/* Spacer */}
-      <div className="h-6" />
+      <div className="h-8" />
 
-      <div className="section-spacing bg-gradient-to-b from-background via-muted/10 to-background relative overflow-hidden">
+      <div className="py-16 bg-gradient-to-b from-background via-muted/30 to-background relative overflow-hidden">
         {/* Premium Background Effects */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-pulse" />
-          <div
-            className="absolute bottom-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-pulse"
-            style={{ animationDelay: "1s" }}
-          />
+          <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
         </div>
 
-        <div className="container-padding relative z-10">
-          {/* Contact Methods Grid with Premium Styling */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 spacing-md mb-8">
+        <div className="container mx-auto px-4 relative z-10">
+          {/* Contact Methods Grid — matches Business card style */}
+          <div className="text-center mb-10">
+            <span className="inline-block text-[11px] uppercase tracking-[0.15em] font-bold text-primary bg-primary/10 px-4 py-1.5 rounded-full mb-4">
+              Get in Touch
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground mb-4">
+              How Can We <span className="text-primary">Help?</span>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              Choose the best way to reach us. We respond to every inquiry.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
             {contactMethods.map((method, index) => {
               const IconComponent = method.icon;
               return (
-                <ScrollReveal key={index} delay={index * 100}>
-                  <div className="group relative glass-card rounded-2xl border-white/30 card-padding-md transition-all duration-500 hover:-translate-y-2 overflow-hidden h-full">
-                    {/* Gradient border effect on hover */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
-
-                    <div className="relative z-10">
-                      <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-accent/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:shadow-lg transition-all duration-300">
-                        <IconComponent className="w-7 h-7 text-primary" />
-                      </div>
-                      <h3 className="text-lg font-bold mb-2">{method.title}</h3>
-                      <p className="font-semibold text-foreground mb-1 text-sm">
-                        {method.detail}
-                      </p>
-                      <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-4">
-                        <Clock className="w-3.5 h-3.5" />
-                        {method.hours}
-                      </div>
-                      <Badge
-                        variant={method.badgeVariant}
-                        className="mb-4 text-xs"
-                      >
-                        {method.badge}
-                      </Badge>
-                      <Button
-                        variant="outline"
-                        className="w-full"
-                        size="sm"
-                        asChild
-                      >
-                        <a href={method.action}>{method.actionText}</a>
-                      </Button>
-                    </div>
+                <div key={index} className="bg-card border border-border/60 rounded-2xl p-6 shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1 h-full">
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
+                    <IconComponent className="w-7 h-7 text-primary" />
                   </div>
-                </ScrollReveal>
+                  <h3 className="text-lg font-bold text-foreground mb-2">{method.title}</h3>
+                  <p className="font-semibold text-foreground mb-1 text-sm">
+                    {method.detail}
+                  </p>
+                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-3">
+                    <Clock className="w-3.5 h-3.5" />
+                    {method.hours}
+                  </div>
+                  <Badge
+                    variant={method.badgeVariant}
+                    className="mb-4 text-xs"
+                  >
+                    {method.badge}
+                  </Badge>
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    size="sm"
+                    asChild
+                  >
+                    <a href={method.action}>{method.actionText}</a>
+                  </Button>
+                </div>
               );
             })}
           </div>
@@ -247,13 +269,9 @@ function Contact() {
           <div className="grid lg:grid-cols-5 gap-8 max-w-7xl mx-auto">
             {/* Premium Contact Form - 60% */}
             <div className="lg:col-span-3">
-              <div className="relative glass-modal rounded-3xl shadow-2xl overflow-hidden">
-                {/* Premium header gradient */}
-                <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary via-accent to-primary" />
-
-                {/* Decorative corner accents */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/10 to-transparent rounded-bl-full" />
-                <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-accent/10 to-transparent rounded-tr-full" />
+              <div className="relative bg-card border border-border/60 rounded-2xl shadow-sm overflow-hidden">
+                {/* Top gradient accent */}
+                <div className="h-1.5 bg-gradient-to-r from-primary via-accent to-primary" />
 
                 <div className="p-8 md:p-10">
                   <div className="flex items-center justify-between mb-6">
