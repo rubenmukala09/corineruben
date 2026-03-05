@@ -6,8 +6,7 @@ import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import { SEO } from "@/components/SEO";
 import { PageTransition } from "@/components/PageTransition";
-import { FloatingShapes } from "@/components/FloatingShapes";
-import { ScrollReveal } from "@/components/ScrollReveal";
+// FloatingShapes & ScrollReveal removed for performance
 import {
   Card,
   CardContent,

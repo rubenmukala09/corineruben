@@ -41,7 +41,7 @@ import {
   Mail } from
 "lucide-react";
 import { EmbeddedPaymentModal } from "@/components/payment/EmbeddedPaymentModal";
-import { ScrollReveal } from "@/components/ScrollReveal";
+// ScrollReveal removed — instant rendering
 import { PROFESSIONAL_HERO_IMAGES } from "@/config/professionalHeroImages";
 import BookCoverModal from "@/components/resources/BookCoverModal";
 import bookAiFundamentals from "@/assets/book-ai-fundamentals.jpg";
@@ -80,7 +80,7 @@ import { SEO } from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
 import HeroFloatingStats from "@/components/business/HeroFloatingStats";
-import { GlassmorphismBackground } from "@/components/backgrounds/GlassmorphismBackground";
+// GlassmorphismBackground removed — using Business-style sections
 import { usePrerenderBlocker } from "@/contexts/PrerenderContext";
 
 // Static book products with covers (20 books)
@@ -613,115 +613,77 @@ function Resources() {
 
       <TrustBar />
 
-      {/* Glassmorphism Background Wrapper */}
-      <GlassmorphismBackground variant="mixed">
-        {/* Introduction Section */}
-        <section className="py-6">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center backdrop-blur-sm bg-white/40 rounded-3xl p-8 border border-white/60 shadow-xl">
-              <Badge className="mb-3 text-sm px-3 py-1 bg-gradient-to-r from-primary to-accent text-white">
-                <Sparkles className="w-3.5 h-3.5 mr-1.5" /> Trusted Resources
-              </Badge>
-              <h2 className="text-2xl md:text-3xl font-bold mb-3">
-                Your One-Stop Security Shop
-              </h2>
-              <p className="text-base text-muted-foreground mb-4 leading-relaxed">
-                Welcome to InVision Network's resource center. Here you'll
-                find carefully curated
-                <strong className="text-foreground">
-                  {" "}e-books, digital guides, softcover books, and security gadgets
-                </strong>
-                . All designed to help you and your family stay safe in the
-                digital age.
-              </p>
-              <div className="flex flex-wrap gap-3 justify-center">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground bg-white/50 px-3 py-1.5 rounded-full">
-                  <BookOpen className="w-4 h-4 text-primary" />
-                  <span>Digital & Print Books</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground bg-white/50 px-3 py-1.5 rounded-full">
-                  <Package className="w-4 h-4 text-primary" />
-                  <span>Security Gadgets</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground bg-white/50 px-3 py-1.5 rounded-full">
-                  <Download className="w-4 h-4 text-primary" />
-                  <span>Instant Downloads</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground bg-white/50 px-3 py-1.5 rounded-full">
-                  <Users className="w-4 h-4 text-primary" />
-                  <span>Family-Friendly</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+      {/* Introduction Section — Business style */}
+      <section className="py-12 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background" />
+        <div className="absolute top-20 left-0 w-[500px] h-[500px] bg-primary/[0.03] rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-20 right-0 w-[400px] h-[400px] bg-accent/[0.04] rounded-full blur-3xl pointer-events-none" />
 
-        {/* AI Analysis CTA */}
-        <AiAnalysisCTA compact />
-
-        {/* Quick Stats Banner */}
-        <section className="py-6">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-              {[
-              {
-                value: "20+",
-                label: "Digital Guides",
-                icon: BookOpen
-              },
-              {
-                value: "15+",
-                label: "Security Products",
-                icon: Shield
-              },
-              {
-                value: "100+",
-                label: "Happy Customers",
-                icon: Heart
-              },
-              {
-                value: "24/7",
-                label: "Support Available",
-                icon: Headphones
-              }].
-              map((stat, index) =>
-              <div
-                key={index}
-                className="flex flex-col items-center gap-1 backdrop-blur-sm bg-white/50 rounded-2xl p-4 border border-white/60 shadow-lg hover:shadow-xl transition-shadow duration-300">
-
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-coral-100 to-lavender-100 flex items-center justify-center mb-1">
-                    <stat.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <span className="text-2xl font-bold text-foreground">
-                    {stat.value}
-                  </span>
-                  <span className="text-xs text-muted-foreground">
-                    {stat.label}
-                  </span>
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
-      </GlassmorphismBackground>
-
-      {/* Digital Security Guides - Compact Cards */}
-      <section
-        id="guides"
-        className="py-10 bg-gradient-to-b from-background to-secondary/20">
-
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-8">
-            <Badge className="mb-3 text-sm px-4 py-1.5" variant="secondary">
-              <Download className="w-3.5 h-3.5 mr-1.5" />
-              Instant Digital Download
-            </Badge>
-            <h2 className="text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Digital Security Guides
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-4xl mx-auto text-center mb-10">
+            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em] mb-6 shadow-sm border border-primary/15 bg-primary/5">
+              <Sparkles className="w-3.5 h-3.5 text-primary" />
+              <span className="text-primary">Trusted Resources</span>
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-5 tracking-tight leading-[1.1]">
+              Your One-Stop Security Shop
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto text-sm">
-              Expert knowledge delivered instantly. Download and print, or
-              read on any device.
+            <p className="text-base md:text-lg max-w-3xl mx-auto leading-relaxed text-muted-foreground mb-6">
+              Welcome to InVision Network's resource center. Here you'll find carefully curated
+              <strong className="text-foreground"> e-books, digital guides, softcover books, and security gadgets</strong>.
+              All designed to help you and your family stay safe in the digital age.
+            </p>
+            <div className="flex flex-wrap gap-3 justify-center">
+              {[
+                { icon: BookOpen, label: "Digital & Print Books" },
+                { icon: Package, label: "Security Gadgets" },
+                { icon: Download, label: "Instant Downloads" },
+                { icon: Users, label: "Family-Friendly" },
+              ].map((item) => (
+                <div key={item.label} className="flex items-center gap-2 text-sm text-muted-foreground bg-card border border-border/50 px-3 py-1.5 rounded-full">
+                  <item.icon className="w-4 h-4 text-primary" />
+                  <span>{item.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* AI Analysis CTA */}
+          <AiAnalysisCTA compact />
+
+          {/* Quick Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center mt-10">
+            {[
+              { value: "20+", label: "Digital Guides", icon: BookOpen },
+              { value: "15+", label: "Security Products", icon: Shield },
+              { value: "100+", label: "Happy Customers", icon: Heart },
+              { value: "24/7", label: "Support Available", icon: Headphones },
+            ].map((stat, index) => (
+              <div key={index} className="flex flex-col items-center gap-1 rounded-2xl bg-card border border-border/50 p-4 shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-1">
+                  <stat.icon className="w-5 h-5 text-primary" />
+                </div>
+                <span className="text-2xl font-black text-foreground">{stat.value}</span>
+                <span className="text-xs text-muted-foreground">{stat.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Digital Security Guides */}
+      <section id="guides" className="py-10 sm:py-16 md:py-20 bg-muted/20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-10">
+            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em] mb-6 shadow-sm border border-primary/15 bg-primary/5">
+              <Download className="w-3.5 h-3.5 text-primary" />
+              <span className="text-primary">Instant Download</span>
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-5 tracking-tight leading-[1.1]">
+              Digital Security <span className="text-primary">Guides</span>
+            </h2>
+            <p className="text-base md:text-lg max-w-3xl mx-auto leading-relaxed text-muted-foreground">
+              Expert knowledge delivered instantly. Download and print, or read on any device.
             </p>
           </div>
 
@@ -856,21 +818,20 @@ function Resources() {
 
 
       {/* Emergency Scripts Section */}
-      <section id="scripts" className="py-12 bg-card">
+      <section id="scripts" className="py-10 sm:py-16 md:py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-10">
-              <Badge className="mb-3 text-sm px-4 py-1.5 bg-gradient-to-r from-chart-4 to-chart-5 text-primary-foreground">
-                <FileText className="w-3.5 h-3.5 mr-1.5" />
-                Free Downloads
-              </Badge>
-              <h2 className="text-2xl md:text-3xl font-bold mb-3">
-                Emergency Anti-Scam Scripts
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Download ready-to-use scripts to protect yourself and your loved
-                ones when scammers call
-              </p>
-            </div>
+            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em] mb-6 shadow-sm border border-primary/15 bg-primary/5">
+              <FileText className="w-3.5 h-3.5 text-primary" />
+              <span className="text-primary">Free Downloads</span>
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-5 tracking-tight leading-[1.1]">
+              Emergency Anti-Scam <span className="text-primary">Scripts</span>
+            </h2>
+            <p className="text-base md:text-lg max-w-3xl mx-auto leading-relaxed text-muted-foreground">
+              Download ready-to-use scripts to protect yourself and your loved ones when scammers call
+            </p>
+          </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
             {[

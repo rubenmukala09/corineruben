@@ -5,7 +5,6 @@ import Hero from "@/components/Hero";
 import TrustBar from "@/components/TrustBar";
 import { SEO } from "@/components/SEO";
 import { PageTransition } from "@/components/PageTransition";
-import { ScrollReveal } from "@/components/ScrollReveal";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -19,7 +18,7 @@ import {
   Shield,
   BookOpen,
 } from "lucide-react";
-import { ScrollRevealSection } from "@/components/ScrollRevealSection";
+import { Sparkles } from "lucide-react";
 import { PlatformGuide } from "@/components/PlatformGuide";
 import { AIImageDisclaimer } from "@/components/AIImageDisclaimer";
 import { SITE } from "@/config/site";
@@ -527,41 +526,29 @@ export default function FAQ() {
             </div>
           </section>
 
-          {/* Category Tabs - Redesigned */}
+          {/* Category Tabs */}
           <section className="py-4 border-y border-border/40 bg-muted/20">
             <div className="container mx-auto px-4">
               <div className="max-w-6xl mx-auto">
-                <ScrollReveal animation="fade-up">
-                  <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3 text-center">
-                    Filter by Category
-                  </h3>
-                </ScrollReveal>
+                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3 text-center">
+                  Filter by Category
+                </h3>
                 <div className="flex flex-wrap gap-2 justify-center">
-                  {categories.map((category, index) => {
+                  {categories.map((category) => {
                     const count = categoryCounts[category] || 0;
                     return (
-                      <ScrollReveal
+                      <Button
                         key={category}
-                        delay={index * 50}
-                        animation="scale-in"
+                        variant={activeCategory === category ? "default" : "outline"}
+                        size="lg"
+                        onClick={() => setActiveCategory(category)}
+                        className="rounded-full shadow-sm hover:shadow-md transition-shadow"
                       >
-                        <Button
-                          variant={
-                            activeCategory === category ? "default" : "outline"
-                          }
-                          size="lg"
-                          onClick={() => setActiveCategory(category)}
-                          className="rounded-full shadow-sm hover:shadow-md transition-shadow"
-                        >
-                          {category}
-                          <Badge
-                            variant="secondary"
-                            className="ml-2 bg-background/50"
-                          >
-                            {count}
-                          </Badge>
-                        </Button>
-                      </ScrollReveal>
+                        {category}
+                        <Badge variant="secondary" className="ml-2 bg-background/50">
+                          {count}
+                        </Badge>
+                      </Button>
                     );
                   })}
                 </div>
@@ -576,80 +563,40 @@ export default function FAQ() {
                 {filteredFAQs.length > 0 ? (
                   <Accordion type="single" collapsible className="space-y-1">
                     {filteredFAQs.map((faq) => (
-                      <ScrollRevealSection key={faq.id}>
-                        <Card className="overflow-hidden">
-                          <AccordionItem value={faq.id} className="border-none">
-                            <AccordionTrigger className="px-4 py-2.5 text-left hover:bg-muted/50 transition-colors text-base font-semibold hover:no-underline">
-                              <span className="pr-4">{faq.question}</span>
-                            </AccordionTrigger>
-                            <AccordionContent className="px-4 pb-4">
-                              <div className="pt-1 space-y-3">
-                                <p className="text-base leading-relaxed whitespace-pre-line text-foreground/90">
-                                  {faq.answer}
-                                </p>
-
-                                {/* Was this helpful? */}
-                                <div className="flex items-center gap-4 pt-4 border-t border-border">
-                                  <span className="text-sm text-muted-foreground">
-                                    Was this helpful?
-                                  </span>
-                                  <div className="flex gap-2">
-                                    <Button
-                                      variant={
-                                        helpfulVotes[faq.id] === true
-                                          ? "default"
-                                          : "outline"
-                                      }
-                                      size="sm"
-                                      onClick={() =>
-                                        handleHelpful(faq.id, true)
-                                      }
-                                      className="gap-2"
-                                    >
-                                      <ThumbsUp className="w-4 h-4" />
-                                      Yes
-                                    </Button>
-                                    <Button
-                                      variant={
-                                        helpfulVotes[faq.id] === false
-                                          ? "default"
-                                          : "outline"
-                                      }
-                                      size="sm"
-                                      onClick={() =>
-                                        handleHelpful(faq.id, false)
-                                      }
-                                      className="gap-2"
-                                    >
-                                      <ThumbsDown className="w-4 h-4" />
-                                      No
-                                    </Button>
-                                  </div>
+                      <Card key={faq.id} className="overflow-hidden">
+                        <AccordionItem value={faq.id} className="border-none">
+                          <AccordionTrigger className="px-4 py-2.5 text-left hover:bg-muted/50 transition-colors text-base font-semibold hover:no-underline">
+                            <span className="pr-4">{faq.question}</span>
+                          </AccordionTrigger>
+                          <AccordionContent className="px-4 pb-4">
+                            <div className="pt-1 space-y-3">
+                              <p className="text-base leading-relaxed whitespace-pre-line text-foreground/90">
+                                {faq.answer}
+                              </p>
+                              <div className="flex items-center gap-4 pt-4 border-t border-border">
+                                <span className="text-sm text-muted-foreground">Was this helpful?</span>
+                                <div className="flex gap-2">
+                                  <Button variant={helpfulVotes[faq.id] === true ? "default" : "outline"} size="sm" onClick={() => handleHelpful(faq.id, true)} className="gap-2">
+                                    <ThumbsUp className="w-4 h-4" /> Yes
+                                  </Button>
+                                  <Button variant={helpfulVotes[faq.id] === false ? "default" : "outline"} size="sm" onClick={() => handleHelpful(faq.id, false)} className="gap-2">
+                                    <ThumbsDown className="w-4 h-4" /> No
+                                  </Button>
                                 </div>
                               </div>
-                            </AccordionContent>
-                          </AccordionItem>
-                        </Card>
-                      </ScrollRevealSection>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Card>
                     ))}
                   </Accordion>
                 ) : (
                   <Card className="p-12 text-center">
                     <div className="max-w-md mx-auto">
                       <Search className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
-                      <h3 className="text-xl font-semibold mb-2">
-                        No results found
-                      </h3>
-                      <p className="text-muted-foreground mb-4">
-                        Try adjusting your search or browse all categories
-                      </p>
-                      <Button
-                        variant="outline"
-                        onClick={() => {
-                          setSearchQuery("");
-                          setActiveCategory("All Questions");
-                        }}
-                      >
+                      <h3 className="text-xl font-semibold mb-2">No results found</h3>
+                      <p className="text-muted-foreground mb-4">Try adjusting your search or browse all categories</p>
+                      <Button variant="outline" onClick={() => { setSearchQuery(""); setActiveCategory("All Questions"); }}>
                         Clear Search
                       </Button>
                     </div>
@@ -660,46 +607,36 @@ export default function FAQ() {
           </section>
 
           {/* Still Have Questions CTA */}
-          <section className="py-12 sm:py-16 bg-gradient-to-br from-primary/10 via-accent/5 to-background">
-            <div className="container mx-auto px-4">
-              <ScrollRevealSection>
-                <Card className="max-w-2xl mx-auto p-8 sm:p-12 text-center">
-                  <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-                    Still Have Questions?
-                  </h2>
-                  <p className="text-lg text-muted-foreground mb-8">
-                    Didn't find what you need? Our support team is here to help.
+          <section className="py-12 sm:py-16 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background" />
+            <div className="absolute top-10 right-0 w-[400px] h-[400px] bg-primary/[0.03] rounded-full blur-3xl pointer-events-none" />
+            <div className="container mx-auto px-4 relative z-10">
+              <Card className="max-w-2xl mx-auto p-8 sm:p-12 text-center border border-border/50 shadow-sm">
+                <h2 className="text-3xl sm:text-4xl font-black mb-4">
+                  Still Have Questions?
+                </h2>
+                <p className="text-lg text-muted-foreground mb-8">
+                  Didn't find what you need? Our support team is here to help.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button size="lg" asChild className="gap-2">
+                    <Link to="/contact">
+                      <MessageCircle className="w-5 h-5" /> Contact Support
+                    </Link>
+                  </Button>
+                  <Button size="lg" variant="outline" asChild className="gap-2">
+                    <a href={SITE.phone.tel}>
+                      <Phone className="w-5 h-5" /> Call {SITE.phone.display}
+                    </a>
+                  </Button>
+                </div>
+                <div className="mt-8 pt-8 border-t border-border">
+                  <p className="text-sm text-muted-foreground">
+                    <strong>Support Hours:</strong><br />
+                    Email: 24/7 • Phone: Mon-Fri 9am-6pm EST
                   </p>
-
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Button size="lg" asChild className="gap-2">
-                      <Link to="/contact">
-                        <MessageCircle className="w-5 h-5" />
-                        Contact Support
-                      </Link>
-                    </Button>
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      asChild
-                      className="gap-2"
-                    >
-                      <a href={SITE.phone.tel}>
-                        <Phone className="w-5 h-5" />
-                        Call {SITE.phone.display}
-                      </a>
-                    </Button>
-                  </div>
-
-                  <div className="mt-8 pt-8 border-t border-border">
-                    <p className="text-sm text-muted-foreground">
-                      <strong>Support Hours:</strong>
-                      <br />
-                      Email: 24/7 • Phone: Mon-Fri 9am-6pm EST
-                    </p>
-                  </div>
-                </Card>
-              </ScrollRevealSection>
+                </div>
+              </Card>
             </div>
           </section>
 

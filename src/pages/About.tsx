@@ -6,7 +6,7 @@ import Hero from "@/components/Hero";
 import TrustBar from "@/components/TrustBar";
 import CTASection from "@/components/CTASection";
 import { PageTransition } from "@/components/PageTransition";
-import { FloatingShapes } from "@/components/FloatingShapes";
+// FloatingShapes removed for performance
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -19,7 +19,7 @@ import {
   Star,
   CheckCircle,
 } from "lucide-react";
-import { ScrollReveal } from "@/components/ScrollReveal";
+// ScrollReveal removed for instant rendering
 import { TimelineVisualization } from "@/components/TimelineVisualization";
 import { InspirationalVerses } from "@/components/InspirationalVerses";
 import { OhioServiceMap } from "@/components/OhioServiceMap";
