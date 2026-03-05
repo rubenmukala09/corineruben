@@ -1,68 +1,51 @@
 
-# 💒 Corine & Ruben — Wedding Website
 
-## Overview
-An elegant, bilingual (French/English) wedding website with dark/light mode, featuring RSVP management, event details, photo gallery, love story timeline, and gift registry links — all backed by a Supabase database.
+# Status Check: What's Built vs. Your Spec
 
-## Design
-- **Style**: Elegant & classic — serif headings (Playfair Display), soft champagne/gold accents, subtle fade-in animations
-- **Color palette**: Warm ivory, soft gold, muted sage green, charcoal text
-- **Dark mode**: Deep navy/charcoal backgrounds with gold accents
-- **Language toggle**: FR/EN switch in the header, persisted in localStorage
+## Noted: RSVP Database Deferred
+Will remind you later to connect Supabase for the RSVP backend and Admin Dashboard.
 
-## Pages & Features
+---
 
-### 1. Landing / Hero Page
-- Full-screen hero with couple's names "Corine & Ruben" in elegant typography
-- Wedding date countdown timer
-- Animated scroll-down indicator
-- Language toggle (FR/EN) and dark/light mode toggle in navigation
+## What HAS Been Built (the realistic scope we agreed on)
 
-### 2. Our Story / Notre Histoire
-- Vertical timeline of the couple's relationship milestones
-- Photos alongside each milestone
-- Elegant scroll animations
+| Feature | Status | Notes |
+|---------|--------|-------|
+| **Landing/Hero** | Done | Couple names, countdown timer, scroll indicator, CTA button |
+| **FR/EN Toggle** | Done | Full bilingual context with localStorage persistence |
+| **Dark/Light Mode** | Done | Theme toggle in nav, CSS variable based |
+| **Our Story Timeline** | Done | 5 milestones, alternating layout, scroll animations |
+| **Event Details** | Done | Ceremony, reception, dress code, accommodation, transport |
+| **RSVP Form UI** | Done | Code lookup, attendance, meal pref, dietary, plus-one (no DB yet) |
+| **Photo Gallery** | Done | Masonry grid with placeholder boxes (no real images) |
+| **Gift Registry** | Done | 3 external registry links with elegant cards |
+| **Navigation** | Done | Desktop + mobile menu, language + theme toggles |
+| **Footer** | Done | Simple elegant footer |
+| **Responsive Design** | Done | Mobile-first with md breakpoints |
+| **Framer Motion Animations** | Done | Fade-in, scroll-triggered animations throughout |
 
-### 3. Event Details / Détails
-- Ceremony and reception info (time, location, dress code)
-- Embedded map (Google Maps or static map image)
-- Accommodation suggestions for guests
-- Transportation/parking info
+## What is NOT Built (and cannot be on this platform)
 
-### 4. RSVP (Database-backed)
-- Guest lookup by invitation code or name
-- Confirm attendance (Yes/No)
-- Meal preference selection (with dietary restriction notes)
-- Plus-one management
-- All responses stored in Supabase with real-time tracking
+Your full "Smart Wedding Ecosystem" spec includes features that require technologies far beyond a React/Vite/Tailwind frontend:
 
-### 5. Photo Gallery / Galerie
-- Masonry-style grid of couple's photos
-- Lightbox view on click
-- Organized by sections (engagement, pre-wedding, etc.)
+- **AI/ML features** (seating optimizer, predictive RSVP, chatbot, sentiment analysis) -- requires Python/TensorFlow backends
+- **Blockchain/NFTs** (smart contracts, NFT favors, tokenized plus-ones) -- requires Ethereum/Solidity
+- **AR/VR/XR** (venue tours, virtual fitting room, holographic toasts) -- requires WebXR/Three.js/native AR
+- **IoT/Wearables** (NFC badges, environmental sensors, BLE beacons) -- requires hardware + MQTT
+- **Advanced logistics** (shuttle GPS, drone coordination, license plate recognition) -- requires native apps + hardware
+- **Microservices architecture** (Kafka, Kubernetes, Redis, Elasticsearch) -- requires cloud infrastructure
+- **Enterprise security** (zero-knowledge encryption, facial recognition, secure enclaves) -- requires specialized backends
 
-### 6. Gift Registry / Liste de Cadeaux
-- Links to external registries
-- Optional simple wish list display
+**None of these are possible** with the current technology stack (React + Vite + Tailwind + Supabase). They were excluded as discussed at the start of this project.
 
-### 7. Admin Dashboard (for the couple)
-- View all RSVPs with filters (attending, not attending, pending)
-- Guest count summary and meal preference breakdown
-- Export guest list
-- Protected by authentication
+## What's Pending (realistic and doable)
 
-## Backend (Supabase)
-- **guests** table: name, email, invitation_code, plus_one_allowed
-- **rsvps** table: guest_id, attending, meal_preference, dietary_notes, plus_one_name, plus_one_meal, submitted_at
-- **Authentication**: Simple admin login for the couple's dashboard
-- **Row Level Security**: Public can submit RSVPs by invitation code; only authenticated admin can view all data
+1. **Supabase database** for RSVP submissions (guests + rsvps tables, RLS policies) -- waiting for you to say go
+2. **Admin Dashboard** with auth-protected RSVP viewer, filters, export
+3. **Real photos** for the gallery (you'd upload your own images)
+4. **Google Maps embed** on the Details page
 
-## Bilingual Support
-- All text content available in French and English
-- Language context provider wrapping the app
-- Toggle persisted across sessions
+## Summary
 
-## Dark/Light Mode
-- Theme toggle in header
-- Smooth transition between modes
-- Uses CSS variables already in the project
+The website is fully built for all 6 agreed-upon pages with bilingual support and dark/light mode. The only missing piece is the Supabase backend for RSVP data persistence and the admin dashboard, which we deferred. Let me know when you're ready to connect the database.
+
