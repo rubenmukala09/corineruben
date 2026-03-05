@@ -208,6 +208,42 @@ const Index = () => {
       {/* ===== HERO ===== */}
       <section className="w-full min-h-screen relative overflow-hidden flex flex-col items-center pt-8 pb-16">
         <FallingPetals />
+
+        {/* Extra aurora orbs for rich graphic depth */}
+        <motion.div
+          className="absolute w-[500px] h-[500px] rounded-full pointer-events-none z-[1]"
+          style={{ top: '5%', left: '-8%', background: 'radial-gradient(circle, rgba(212,165,200,0.35) 0%, transparent 70%)', filter: 'blur(80px)' }}
+          animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0], scale: [1, 1.15, 0.95, 1] }}
+          transition={{ duration: 14, repeat: Infinity, ease: 'linear' }}
+        />
+        <motion.div
+          className="absolute w-[400px] h-[400px] rounded-full pointer-events-none z-[1]"
+          style={{ top: '30%', right: '-10%', background: 'radial-gradient(circle, rgba(180,140,210,0.3) 0%, transparent 70%)', filter: 'blur(90px)' }}
+          animate={{ x: [0, -50, 30, 0], y: [0, 40, -25, 0], scale: [1, 1.1, 0.9, 1] }}
+          transition={{ duration: 18, repeat: Infinity, ease: 'linear', delay: 3 }}
+        />
+        <motion.div
+          className="absolute w-[350px] h-[350px] rounded-full pointer-events-none z-[1]"
+          style={{ bottom: '10%', left: '25%', background: 'radial-gradient(circle, rgba(232,196,184,0.4) 0%, transparent 70%)', filter: 'blur(100px)' }}
+          animate={{ x: [0, 30, -40, 0], y: [0, -20, 35, 0], scale: [1, 1.08, 0.92, 1] }}
+          transition={{ duration: 16, repeat: Infinity, ease: 'linear', delay: 5 }}
+        />
+        <motion.div
+          className="absolute w-[300px] h-[300px] rounded-full pointer-events-none z-[1]"
+          style={{ top: '60%', right: '15%', background: 'radial-gradient(circle, rgba(201,169,182,0.3) 0%, transparent 70%)', filter: 'blur(70px)' }}
+          animate={{ x: [0, -30, 20, 0], y: [0, 25, -15, 0], scale: [1, 1.12, 0.88, 1] }}
+          transition={{ duration: 20, repeat: Infinity, ease: 'linear', delay: 7 }}
+        />
+        {/* Shimmer light streak */}
+        <div className="absolute top-0 left-0 right-0 h-[1px] z-[2] overflow-hidden">
+          <motion.div
+            className="h-full w-1/3"
+            style={{ background: 'linear-gradient(90deg, transparent, rgba(212,196,224,0.6), transparent)' }}
+            animate={{ x: ['-100%', '400%'] }}
+            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', repeatDelay: 4 }}
+          />
+        </div>
+
         <div className="absolute inset-0 mix-blend-soft-light z-[1]">
           <img src={heroImg} alt="" className="w-full h-full object-cover opacity-[0.1]" style={{ filter: 'saturate(0.4) brightness(1.2)' }} />
         </div>
