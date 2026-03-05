@@ -12,7 +12,7 @@ import MusicFloatingButton, { MusicProvider } from "@/components/MusicPlayer";
 import Index from "./pages/Index";
 import Story from "./pages/Story";
 import RSVP from "./pages/RSVP";
-import Registry from "./pages/Registry";
+
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -37,7 +37,7 @@ const App = () => (
                   <Route path="/" element={<Index />} />
                   <Route path="/story" element={<Story />} />
                   <Route path="/rsvp" element={<RSVP />} />
-                  <Route path="/registry" element={<Registry />} />
+                  
                   <Route path="*" element={<NotFound />} />
                 </Routes>
                 <Footer />

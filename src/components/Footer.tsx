@@ -12,7 +12,6 @@ const Footer = () => {
 
   const inspirationLinks = [
     { label: t('nav.rsvp'), to: '/rsvp' },
-    { label: t('nav.registry'), to: '/registry' },
   ];
 
   return (

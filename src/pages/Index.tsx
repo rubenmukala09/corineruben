@@ -2,8 +2,11 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useMusic } from '@/components/MusicPlayer';
-import { motion } from 'framer-motion';
-import { ChevronDown, Heart, MapPin, Calendar, Clock, Utensils, Gift, Sparkles, Play, Pause, Music, Users, Flower2, BookOpen, Cross, Church, Gem, PartyPopper, Shirt, Hotel, Car } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown, Heart, MapPin, Calendar, Clock, Utensils, Gift, Sparkles, Play, Pause, Music, Users, Flower2, BookOpen, Cross, Church, Gem, PartyPopper, Hotel, Car, Check, X } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
 import heroImg from '@/assets/hero-wedding.jpg';
 import flowersImg from '@/assets/flowers-lavender.jpg';
@@ -13,10 +16,27 @@ import coupleImg from '@/assets/couple-lavender.jpg';
 
 const WEDDING_DATE = new Date('2027-08-15T14:00:00');
 
+const giftTiers = [
+  { amount: 60, emoji: '💐', labelKey: 'registry.tier.bouquet' },
+  { amount: 100, emoji: '🥂', labelKey: 'registry.tier.toast' },
+  { amount: 200, emoji: '✨', labelKey: 'registry.tier.sparkle' },
+  { amount: 500, emoji: '💎', labelKey: 'registry.tier.diamond' },
+];
+
 const Index = () => {
   const { t } = useLanguage();
   const { isPlaying, currentTrack, toggleTrack } = useMusic();
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [activeDetail, setActiveDetail] = useState<string | null>(null);
+  
+  // Gift dialog state
+  const [giftOpen, setGiftOpen] = useState(false);
+  const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
+  const [customAmount, setCustomAmount] = useState('');
+  const [giftFormOpen, setGiftFormOpen] = useState(false);
+  const [giftName, setGiftName] = useState('');
+  const [giftMessage, setGiftMessage] = useState('');
+  const [giftSent, setGiftSent] = useState(false);
 
   useEffect(() => {
     const update = () => {
@@ -35,6 +55,36 @@ const Index = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const handleSelectTier = (amount: number) => {
+    setSelectedAmount(amount);
+    setCustomAmount('');
+    setGiftOpen(false);
+    setGiftFormOpen(true);
+    setGiftSent(false);
+  };
+
+  const handleCustomGift = () => {
+    const val = parseInt(customAmount);
+    if (val && val > 0) {
+      setSelectedAmount(val);
+      setGiftOpen(false);
+      setGiftFormOpen(true);
+      setGiftSent(false);
+    }
+  };
+
+  const handleSendGift = (e: React.FormEvent) => {
+    e.preventDefault();
+    setGiftSent(true);
+    setTimeout(() => {
+      setGiftFormOpen(false);
+      setGiftSent(false);
+      setGiftMessage('');
+      setGiftName('');
+      setSelectedAmount(null);
+    }, 2000);
+  };
+
   const highlights = [
     { icon: Calendar, titleKey: 'hero.tagline', descKey: 'hero.date', img: flowersImg, color: 'text-pink-400' },
     { icon: MapPin, titleKey: 'details.ceremony', descKey: 'details.ceremony.location', img: cakeImg, color: 'text-violet-400' },
@@ -43,28 +93,80 @@ const Index = () => {
 
   const features = [
     { icon: Heart, label: t('nav.story'), desc: t('story.subtitle'), to: '/story', color: 'text-rose-400', bg: 'from-rose-500/20 to-pink-500/10' },
-    { icon: Gift, label: t('nav.registry'), desc: t('registry.subtitle'), to: '/registry', color: 'text-amber-400', bg: 'from-amber-500/20 to-orange-500/10' },
     { icon: Clock, label: t('nav.rsvp'), desc: t('rsvp.subtitle'), to: '/rsvp', color: 'text-emerald-400', bg: 'from-emerald-500/20 to-teal-500/10' },
   ];
 
   const detailSections = [
-    { icon: Church, title: t('details.ceremony'), items: [
-      { label: t('details.ceremony.time'), bold: true },
-      { label: t('details.ceremony.location'), bold: true },
-      { label: t('details.ceremony.address') },
-    ]},
-    { icon: PartyPopper, title: t('details.reception'), items: [
-      { label: t('details.reception.time'), bold: true },
-      { label: t('details.reception.location'), bold: true },
-      { label: t('details.reception.address') },
-    ]},
-    { icon: Shirt, title: t('details.dresscode'), items: [{ label: t('details.dresscode.desc') }] },
-    { icon: Hotel, title: t('details.accommodation'), items: [{ label: t('details.accommodation.desc') }] },
-    { icon: Car, title: t('details.transport'), items: [{ label: t('details.transport.desc') }] },
+    { 
+      id: 'ceremony',
+      icon: Church, 
+      title: t('details.ceremony'), 
+      color: 'from-rose-500/20 to-pink-500/10',
+      iconColor: 'text-rose-400',
+      dialogContent: [
+        { icon: Clock, label: t('details.ceremony.time'), desc: t('details.ceremony.program.welcome') },
+        { icon: MapPin, label: t('details.ceremony.location'), desc: t('details.ceremony.address') },
+        { icon: BookOpen, label: t('details.ceremony.program.readings'), desc: t('details.ceremony.program.readings.desc') },
+        { icon: Gem, label: t('details.ceremony.program.vows'), desc: t('details.ceremony.program.vows.desc') },
+        { icon: Music, label: t('details.ceremony.program.hymns'), desc: t('details.ceremony.program.hymns.desc') },
+        { icon: Cross, label: t('details.ceremony.program.blessing'), desc: t('details.ceremony.program.blessing.desc') },
+      ]
+    },
+    { 
+      id: 'reception',
+      icon: PartyPopper, 
+      title: t('details.reception'), 
+      color: 'from-amber-500/20 to-orange-500/10',
+      iconColor: 'text-amber-400',
+      dialogContent: [
+        { icon: Clock, label: t('details.reception.time'), desc: t('details.reception.program.cocktail') },
+        { icon: MapPin, label: t('details.reception.location'), desc: t('details.reception.address') },
+        { icon: Utensils, label: t('details.reception.program.dinner'), desc: t('details.reception.program.dinner.desc') },
+        { icon: Music, label: t('details.reception.program.dance'), desc: t('details.reception.program.dance.desc') },
+        { icon: Heart, label: t('details.reception.program.cake'), desc: t('details.reception.program.cake.desc') },
+      ]
+    },
+    { 
+      id: 'accommodation',
+      icon: Hotel, 
+      title: t('details.accommodation'), 
+      color: 'from-violet-500/20 to-purple-500/10',
+      iconColor: 'text-violet-400',
+      dialogContent: [
+        { icon: Hotel, label: t('details.accommodation.hotel'), desc: t('details.accommodation.hotel.desc') },
+        { icon: MapPin, label: t('details.accommodation.address'), desc: t('details.accommodation.address.desc') },
+        { icon: Sparkles, label: t('details.accommodation.rate'), desc: t('details.accommodation.rate.desc') },
+      ]
+    },
+    { 
+      id: 'transport',
+      icon: Car, 
+      title: t('details.transport'), 
+      color: 'from-emerald-500/20 to-teal-500/10',
+      iconColor: 'text-emerald-400',
+      dialogContent: [
+        { icon: Car, label: t('details.transport.shuttle'), desc: t('details.transport.shuttle.desc') },
+        { icon: MapPin, label: t('details.transport.parking'), desc: t('details.transport.parking.desc') },
+        { icon: Clock, label: t('details.transport.schedule'), desc: t('details.transport.schedule.desc') },
+      ]
+    },
   ];
 
   return (
     <div className="min-h-screen flex flex-col">
+      {/* ===== FLOATING GIFT BUTTON ===== */}
+      <motion.button
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 2, type: 'spring' }}
+        onClick={() => setGiftOpen(true)}
+        className="fixed bottom-8 right-8 z-40 w-14 h-14 rounded-full gradient-primary shadow-glow flex items-center justify-center hover:scale-110 transition-transform duration-300 group"
+        aria-label="Gift"
+      >
+        <Gift className="w-6 h-6 text-primary-foreground group-hover:rotate-12 transition-transform duration-300" />
+        <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rose-500 animate-pulse" />
+      </motion.button>
+
       {/* ===== HERO ===== */}
       <section className="w-full min-h-screen relative overflow-hidden flex flex-col items-center pt-8 pb-16">
         <div className="absolute inset-0 mix-blend-soft-light z-[1]">
@@ -166,7 +268,6 @@ const Index = () => {
 
             {/* LEFT */}
             <div className="flex flex-col gap-4 items-center md:items-end md:translate-y-8">
-              {/* Scripture card */}
               <motion.div
                 animate={{ y: [-6, 8, -6] }}
                 transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
@@ -182,7 +283,6 @@ const Index = () => {
                 <p className="font-sans-elegant text-[10px] text-muted-foreground mt-2 font-semibold">1 Corinthians 13:4-7</p>
               </motion.div>
 
-              {/* Hymn player card — Amazing Grace */}
               <motion.div
                 animate={{ y: [-8, 10, -8] }}
                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
@@ -258,7 +358,6 @@ const Index = () => {
                 <span className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">{t('index.foreverAlways')}</span>
               </motion.div>
 
-              {/* Hymn card — I Have Been Blessed */}
               <motion.div
                 animate={{ y: [-6, 10, -6] }}
                 transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
@@ -277,7 +376,6 @@ const Index = () => {
                 </div>
               </motion.div>
 
-              {/* Date card */}
               <motion.div
                 animate={{ y: [-4, 8, -4] }}
                 transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
@@ -309,7 +407,6 @@ const Index = () => {
         <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <div className="glass-card-strong rounded-3xl p-10 md:p-14 relative overflow-hidden">
-              {/* Abstract decoration */}
               <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br from-rose-400/10 to-violet-400/10 blur-2xl pointer-events-none" />
               <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-gradient-to-tr from-amber-400/10 to-pink-400/10 blur-2xl pointer-events-none" />
               <BookOpen className="w-8 h-8 text-amber-400 icon-glow mx-auto mb-6" />
@@ -410,7 +507,6 @@ const Index = () => {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Photo widget with verse overlay */}
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               className="glass-card-strong rounded-3xl overflow-hidden md:row-span-2 card-hover"
             >
@@ -427,53 +523,23 @@ const Index = () => {
               </div>
             </motion.div>
 
-            {/* Promise widget */}
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
-              className="glass-card-strong rounded-3xl p-6 card-hover relative overflow-hidden"
-            >
-              <div className="absolute top-0 right-0 w-24 h-24 rounded-full bg-gradient-to-br from-rose-400/10 to-transparent blur-xl pointer-events-none" />
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-rose-500/20 to-pink-500/10 flex items-center justify-center mb-4">
-                <Church className="w-6 h-6 text-rose-400 icon-glow" />
-              </div>
-              <h3 className="font-serif-display text-lg text-foreground font-semibold mb-2">{t('index.ceremony')}</h3>
-              <p className="font-sans-elegant text-sm text-muted-foreground leading-relaxed">{t('index.ceremony.desc')}</p>
-            </motion.div>
-
-            {/* Blessing widget */}
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }}
-              className="glass-card-strong rounded-3xl p-6 card-hover relative overflow-hidden"
-            >
-              <div className="absolute top-0 right-0 w-24 h-24 rounded-full bg-gradient-to-br from-violet-400/10 to-transparent blur-xl pointer-events-none" />
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500/20 to-purple-500/10 flex items-center justify-center mb-4">
-                <Cross className="w-6 h-6 text-violet-400 icon-glow" />
-              </div>
-              <h3 className="font-serif-display text-lg text-foreground font-semibold mb-2">{t('index.blessing')}</h3>
-              <p className="font-sans-elegant text-sm text-muted-foreground leading-relaxed">{t('index.blessing.desc')}</p>
-            </motion.div>
-
-            {/* Vow widget */}
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
-              className="glass-card-strong rounded-3xl p-6 card-hover relative overflow-hidden"
-            >
-              <div className="absolute top-0 right-0 w-24 h-24 rounded-full bg-gradient-to-br from-amber-400/10 to-transparent blur-xl pointer-events-none" />
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500/20 to-orange-500/10 flex items-center justify-center mb-4">
-                <Gem className="w-6 h-6 text-amber-400 icon-glow" />
-              </div>
-              <h3 className="font-serif-display text-lg text-foreground font-semibold mb-2">{t('index.vows')}</h3>
-              <p className="font-sans-elegant text-sm text-muted-foreground leading-relaxed">{t('index.vows.desc')}</p>
-            </motion.div>
-
-            {/* Fellowship widget */}
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.25 }}
-              className="glass-card-strong rounded-3xl p-6 card-hover relative overflow-hidden"
-            >
-              <div className="absolute top-0 right-0 w-24 h-24 rounded-full bg-gradient-to-br from-emerald-400/10 to-transparent blur-xl pointer-events-none" />
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/10 flex items-center justify-center mb-4">
-                <Users className="w-6 h-6 text-emerald-400 icon-glow" />
-              </div>
-              <h3 className="font-serif-display text-lg text-foreground font-semibold mb-2">{t('index.fellowship')}</h3>
-              <p className="font-sans-elegant text-sm text-muted-foreground leading-relaxed">{t('index.fellowship.desc')}</p>
-            </motion.div>
+            {[
+              { icon: Church, title: t('index.ceremony'), desc: t('index.ceremony.desc'), color: 'from-rose-500/20 to-pink-500/10', iconColor: 'text-rose-400' },
+              { icon: Cross, title: t('index.blessing'), desc: t('index.blessing.desc'), color: 'from-violet-500/20 to-purple-500/10', iconColor: 'text-violet-400' },
+              { icon: Gem, title: t('index.vows'), desc: t('index.vows.desc'), color: 'from-amber-500/20 to-orange-500/10', iconColor: 'text-amber-400' },
+              { icon: Users, title: t('index.fellowship'), desc: t('index.fellowship.desc'), color: 'from-emerald-500/20 to-teal-500/10', iconColor: 'text-emerald-400' },
+            ].map((item, i) => (
+              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 + i * 0.05 }}
+                className="glass-card-strong rounded-3xl p-6 card-hover relative overflow-hidden"
+              >
+                <div className={`absolute top-0 right-0 w-24 h-24 rounded-full bg-gradient-to-br ${item.color} blur-xl pointer-events-none`} />
+                <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center mb-4`}>
+                  <item.icon className={`w-6 h-6 ${item.iconColor} icon-glow`} />
+                </div>
+                <h3 className="font-serif-display text-lg text-foreground font-semibold mb-2">{item.title}</h3>
+                <p className="font-sans-elegant text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -510,7 +576,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ===== WEDDING DETAILS ===== */}
+      {/* ===== WEDDING DETAILS — Interactive Cards ===== */}
       <section className="py-14 md:py-20 relative">
         <div className="container mx-auto px-6 md:px-12 max-w-4xl relative z-10">
           <motion.div
@@ -526,30 +592,26 @@ const Index = () => {
             <p className="font-sans-elegant text-lg text-muted-foreground max-w-lg mx-auto">{t('details.subtitle')}</p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {detailSections.map((section, i) => (
-              <motion.div
-                key={i}
+              <motion.button
+                key={section.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
-                className={`glass-card-strong rounded-3xl p-8 card-hover group ${
-                  i === detailSections.length - 1 && detailSections.length % 2 !== 0 ? 'md:col-span-2 md:max-w-md md:mx-auto' : ''
-                }`}
+                whileHover={{ scale: 1.04, y: -4 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => setActiveDetail(section.id)}
+                className="glass-card-strong rounded-3xl p-6 card-hover group text-center relative overflow-hidden cursor-pointer"
               >
-                <div className="w-14 h-14 rounded-3xl gradient-primary flex items-center justify-center mb-6 group-hover:shadow-glow transition-shadow duration-500 shadow-soft">
-                  <section.icon className="w-6 h-6 text-primary-foreground" />
+                <div className={`absolute top-0 right-0 w-20 h-20 rounded-full bg-gradient-to-br ${section.color} blur-xl pointer-events-none opacity-60`} />
+                <div className={`w-14 h-14 rounded-3xl bg-gradient-to-br ${section.color} flex items-center justify-center mb-4 mx-auto group-hover:shadow-glow transition-shadow duration-500 shadow-soft`}>
+                  <section.icon className={`w-6 h-6 ${section.iconColor} icon-glow`} />
                 </div>
-                <h3 className="font-serif-display text-2xl text-foreground mb-4 font-semibold">{section.title}</h3>
-                <div className="space-y-2">
-                  {section.items.map((item, j) => (
-                    <p key={j} className={`font-sans-elegant text-sm ${item.bold ? 'text-foreground font-semibold' : 'text-muted-foreground'}`} style={{ lineHeight: 1.6 }}>
-                      {item.label}
-                    </p>
-                  ))}
-                </div>
-              </motion.div>
+                <h3 className="font-serif-display text-base text-foreground font-semibold">{section.title}</h3>
+                <p className="font-sans-elegant text-[11px] text-muted-foreground mt-1.5">{t('details.tapToSee')}</p>
+              </motion.button>
             ))}
           </div>
         </div>
@@ -658,7 +720,7 @@ const Index = () => {
             </p>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
             {features.map((feat, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
                 <Link
@@ -677,7 +739,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-
 
       {/* ===== CTA / RSVP ===== */}
       <section className="py-14 md:py-20 relative">
@@ -698,6 +759,163 @@ const Index = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* ===== DETAIL DIALOGS ===== */}
+      {detailSections.map(section => (
+        <Dialog key={section.id} open={activeDetail === section.id} onOpenChange={(open) => !open && setActiveDetail(null)}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <div className={`w-14 h-14 rounded-3xl bg-gradient-to-br ${section.color} flex items-center justify-center mb-3 mx-auto`}>
+                <section.icon className={`w-6 h-6 ${section.iconColor}`} />
+              </div>
+              <DialogTitle className="font-serif-display text-2xl text-center">{section.title}</DialogTitle>
+              <DialogDescription className="font-sans-elegant text-center text-muted-foreground">
+                {t('details.subtitle')}
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-3 pt-2">
+              {section.dialogContent.map((item, j) => (
+                <motion.div
+                  key={j}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: j * 0.06 }}
+                  className="glass-card rounded-2xl p-4 flex items-start gap-3"
+                >
+                  <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${section.color} flex items-center justify-center flex-shrink-0 mt-0.5`}>
+                    <item.icon className={`w-4 h-4 ${section.iconColor}`} />
+                  </div>
+                  <div>
+                    <p className="font-sans-elegant text-sm font-semibold text-foreground">{item.label}</p>
+                    <p className="font-sans-elegant text-xs text-muted-foreground mt-0.5" style={{ lineHeight: 1.5 }}>{item.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </DialogContent>
+        </Dialog>
+      ))}
+
+      {/* ===== GIFT PICKER DIALOG ===== */}
+      <Dialog open={giftOpen} onOpenChange={setGiftOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <div className="w-16 h-16 rounded-full gradient-primary flex items-center justify-center mx-auto mb-3 shadow-glow">
+              <Gift className="w-7 h-7 text-primary-foreground" />
+            </div>
+            <DialogTitle className="font-serif-display text-2xl text-center">{t('registry.title')}</DialogTitle>
+            <DialogDescription className="font-sans-elegant text-center text-muted-foreground">
+              {t('registry.message')}
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            {giftTiers.map((tier, i) => (
+              <motion.button
+                key={tier.amount}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.06 }}
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => handleSelectTier(tier.amount)}
+                className="glass-card rounded-2xl p-5 text-center card-hover group"
+              >
+                <div className="text-2xl mb-2">{tier.emoji}</div>
+                <div className="font-serif-display text-xl text-foreground font-bold">${tier.amount}</div>
+                <div className="font-sans-elegant text-[10px] text-muted-foreground font-medium mt-1">{t(tier.labelKey)}</div>
+              </motion.button>
+            ))}
+          </div>
+
+          <div className="flex gap-3 pt-2">
+            <div className="relative flex-1">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground font-sans-elegant text-sm">$</span>
+              <Input
+                type="number"
+                min="1"
+                value={customAmount}
+                onChange={e => setCustomAmount(e.target.value)}
+                placeholder={t('registry.custom.placeholder')}
+                className="font-sans-elegant rounded-full h-11 pl-8 border-border/50 bg-background/50 backdrop-blur-sm"
+              />
+            </div>
+            <button onClick={handleCustomGift} className="btn-primary px-5 rounded-full text-sm">
+              <Gift className="w-4 h-4" />
+              {t('registry.give')}
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* ===== GIFT FORM DIALOG ===== */}
+      <Dialog open={giftFormOpen} onOpenChange={setGiftFormOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="font-serif-display text-2xl text-center">{t('registry.dialog.title')}</DialogTitle>
+            <DialogDescription className="font-sans-elegant text-center text-muted-foreground">
+              {t('registry.dialog.subtitle')}
+            </DialogDescription>
+          </DialogHeader>
+
+          <AnimatePresence mode="wait">
+            {giftSent ? (
+              <motion.div
+                key="success"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="py-8 text-center"
+              >
+                <div className="w-16 h-16 rounded-full gradient-primary flex items-center justify-center mx-auto mb-4 shadow-glow">
+                  <Check className="w-7 h-7 text-primary-foreground" />
+                </div>
+                <p className="font-sans-elegant text-foreground font-semibold">{t('registry.dialog.thanks')}</p>
+              </motion.div>
+            ) : (
+              <motion.form
+                key="form"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                onSubmit={handleSendGift}
+                className="space-y-5 pt-2"
+              >
+                <div className="glass-card rounded-2xl p-5 text-center">
+                  <p className="font-sans-elegant text-xs text-muted-foreground mb-1">{t('registry.dialog.amount')}</p>
+                  <p className="font-serif-display text-3xl text-foreground font-bold">${selectedAmount}</p>
+                </div>
+
+                <div>
+                  <label className="font-sans-elegant text-sm text-foreground block mb-2 font-semibold">{t('registry.dialog.name')}</label>
+                  <Input
+                    value={giftName}
+                    onChange={e => setGiftName(e.target.value)}
+                    placeholder={t('registry.dialog.name.placeholder')}
+                    className="font-sans-elegant rounded-full h-12 border-border/50 bg-background/50 backdrop-blur-sm"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="font-sans-elegant text-sm text-foreground block mb-2 font-semibold">{t('registry.dialog.message')}</label>
+                  <Textarea
+                    value={giftMessage}
+                    onChange={e => setGiftMessage(e.target.value)}
+                    placeholder={t('registry.dialog.message.placeholder')}
+                    className="font-sans-elegant rounded-2xl border-border/50 bg-background/50 backdrop-blur-sm"
+                  />
+                </div>
+
+                <button type="submit" className="w-full btn-primary justify-center">
+                  <Heart className="w-4 h-4" />
+                  {t('registry.dialog.send')}
+                </button>
+
+                <p className="font-sans-elegant text-[11px] text-muted-foreground text-center">{t('registry.dialog.note')}</p>
+              </motion.form>
+            )}
+          </AnimatePresence>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
