@@ -22,15 +22,15 @@ const FloatingHearts = () => {
       return;
     }
 
-    const symbols = ['✦', '✧', '♥', '·', '✦', '♥', '✧', '·'];
-    const generated: Heart[] = Array.from({ length: 35 }, (_, i) => ({
+    const symbols = ['✦', '✧', '♥', '·', '✦', '♥', '✧', '·', '✵', '♡'];
+    const generated: Heart[] = Array.from({ length: 28 }, (_, i) => ({
       id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: 10 + Math.random() * 16,
-      delay: Math.random() * 8,
-      duration: 2.5 + Math.random() * 5,
-      opacity: 0.5 + Math.random() * 0.4,
+      x: 5 + Math.random() * 90,
+      y: 5 + Math.random() * 90,
+      size: 8 + Math.random() * 14,
+      delay: Math.random() * 10,
+      duration: 3 + Math.random() * 5,
+      opacity: 0.45 + Math.random() * 0.35,
       symbol: symbols[i % symbols.length],
     }));
     setHearts(generated);
