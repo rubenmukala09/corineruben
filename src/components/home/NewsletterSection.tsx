@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowRight, Mail, Bell, Loader2 } from "lucide-react";
-import { MagneticWrapper } from "@/components/ui/magnetic-button";
+import { ArrowRight, Mail, Loader2 } from "lucide-react";
 import { useConfetti } from "@/hooks/useConfetti";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -54,42 +53,19 @@ export const NewsletterSection = () => {
   };
 
   return (
-    <section className="py-32 bg-gradient-to-b from-primary via-primary to-primary/95 relative overflow-hidden">
-      {/* Pattern overlay */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
-            backgroundSize: "40px 40px",
-          }}
-        />
-      </div>
+    <div className="py-10">
+      <div className="container mx-auto px-4">
+        <div className="max-w-2xl mx-auto">
+          <div className="flex flex-col sm:flex-row items-center gap-4 rounded-2xl border border-border/60 bg-card/80 backdrop-blur-sm px-6 py-5 shadow-sm">
+            <div className="flex items-center gap-3 shrink-0">
+              <Mail className="w-5 h-5 text-primary" />
+              <span className="text-sm font-semibold text-foreground whitespace-nowrap">Stay updated</span>
+            </div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary-foreground/10 border border-primary-foreground/20 mb-8">
-            <Bell className="w-8 h-8 text-primary-foreground" />
-          </div>
-
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6 tracking-tight">
-            Join Our Newsletter
-            <br />
-            <span className="text-accent">Stay Updated</span>
-          </h2>
-
-          <p className="text-primary-foreground/80 text-xl mb-10 max-w-xl mx-auto">
-            Get the latest security tips, scam alerts, and protection updates
-            delivered to your inbox.
-          </p>
-
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto"
-          >
-            <div className="relative flex-1">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-primary-foreground/50" />
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-1 w-full gap-3"
+            >
               <Input
                 type="email"
                 placeholder="Enter your email"
@@ -97,37 +73,28 @@ export const NewsletterSection = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={isSubmitting}
                 required
-                className="h-14 bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/50 rounded-xl text-base pl-12 focus:border-accent focus:ring-accent"
+                className="h-10 flex-1 rounded-xl text-sm bg-background/60 border-border/50"
               />
-            </div>
-            <MagneticWrapper strength={0.25}>
               <Button
                 type="submit"
-                size="lg"
+                size="sm"
                 disabled={isSubmitting}
-                className="h-14 px-8 rounded-xl text-base font-semibold bg-accent hover:bg-accent/90 text-accent-foreground"
+                className="h-10 px-5 rounded-xl text-sm font-semibold shrink-0"
               >
                 {isSubmitting ? (
-                  <>
-                    <Loader2 className="mr-2 w-5 h-5 animate-spin" />
-                    Subscribing...
-                  </>
+                  <Loader2 className="w-4 h-4 animate-spin" />
                 ) : (
                   <>
                     Subscribe
-                    <ArrowRight className="ml-2 w-5 h-5" />
+                    <ArrowRight className="ml-1.5 w-4 h-4" />
                   </>
                 )}
               </Button>
-            </MagneticWrapper>
-          </form>
-
-          <p className="text-primary-foreground/60 text-sm mt-6">
-            We respect your privacy. Unsubscribe at any time.
-          </p>
+            </form>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
