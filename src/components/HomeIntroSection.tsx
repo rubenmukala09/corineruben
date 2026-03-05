@@ -157,21 +157,12 @@ export const HomeIntroSection = () => {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3">
-                <Button
-                  asChild
-                  size="lg"
-                  className="h-12 px-8 text-sm font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5 w-full sm:w-auto"
-                >
+                <Button asChild size="lg">
                   <Link to="/training#pricing">
                     Get Started <ArrowRight className="ml-2 w-4 h-4" />
                   </Link>
                 </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="h-12 px-8 text-sm font-semibold rounded-lg w-full sm:w-auto"
-                >
+                <Button asChild variant="outline" size="lg">
                   <a href={`tel:${SITE.phone.e164}`}>
                     <Phone className="w-4 h-4 mr-2" /> {SITE.phone.display}
                   </a>

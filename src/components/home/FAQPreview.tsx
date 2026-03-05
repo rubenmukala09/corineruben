@@ -84,11 +84,7 @@ export const FAQPreview = () => {
                   Real experts, not bots
                 </p>
                 <div className="flex flex-col gap-2">
-                  <Button
-                    asChild
-                    size="sm"
-                    className="w-full rounded-lg bg-gradient-to-r from-primary to-accent text-white hover:opacity-90 shadow-md"
-                  >
+                  <Button asChild size="sm" className="w-full">
                     <Link to="/contact">Chat With Expert</Link>
                   </Button>
                   <Button

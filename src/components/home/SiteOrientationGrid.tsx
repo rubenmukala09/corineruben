@@ -159,21 +159,12 @@ export const SiteOrientationGrid = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.6 }}
         >
-          <Button
-            asChild
-            size="lg"
-            className="h-12 px-8 text-sm font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5"
-          >
+          <Button asChild size="lg">
             <Link to="/contact">
               Talk to an Expert <ArrowRight className="ml-2 w-4 h-4" />
             </Link>
           </Button>
-          <Button
-            asChild
-            size="lg"
-            variant="outline"
-            className="h-12 px-8 text-sm font-semibold rounded-lg"
-          >
+          <Button asChild size="lg" variant="outline">
             <Link to="/about">
               About Our Team <ArrowRight className="ml-2 w-4 h-4" />
             </Link>

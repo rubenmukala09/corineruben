@@ -144,11 +144,7 @@ export const HeroHomepage = () => {
               transition={{ duration: 0.7, delay: 0.3 }}
             >
               <div className="flex flex-col sm:flex-row gap-4 mb-10">
-                <Button
-                  asChild
-                  size="lg"
-                  className="h-14 px-10 text-base font-bold rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90 shadow-lg hover:shadow-xl transition-all hover:scale-105 active:scale-95"
-                >
+                <Button asChild size="xl">
                   <Link to="/training#pricing">
                     Get Protected <ArrowRight className="ml-2 w-5 h-5" />
                   </Link>
@@ -156,8 +152,8 @@ export const HeroHomepage = () => {
                 <Button
                   asChild
                   variant="outline"
-                  size="lg"
-                  className="h-14 px-10 text-base font-bold rounded-full border-2 border-white/30 text-white hover:bg-white/10 transition-all hover:scale-105 active:scale-95"
+                  size="xl"
+                  className="border-2 border-white/40 bg-white/10 text-white hover:bg-white/20 hover:text-white hover:border-white/60"
                 >
                   <Link to="/business">For Businesses</Link>
                 </Button>

@@ -85,7 +85,7 @@ export const WorkshopsPromo = () => {
               ))}
             </div>
 
-            <Button asChild size="lg" className="h-12 px-8 text-sm font-bold rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90 transition-all hover:scale-105 active:scale-95 shadow-[0_8px_30px_hsl(var(--primary)/0.3)]">
+            <Button asChild size="lg">
               <Link to="/training">
                 Start Training <ArrowRight className="ml-2 w-4 h-4" />
               </Link>

@@ -64,11 +64,11 @@ export const BlogPreview = () => {
           {articles.map((article, index) => (
             <div key={index} className="group">
               <Link to="/articles" className="block">
-                <div className="bg-white rounded-3xl overflow-hidden border border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] transition-all duration-400 ease-out hover:translate-y-[-8px] hover:scale-[1.02] hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.12)]">
+                <div className="bg-card rounded-3xl overflow-hidden border border-border/50 shadow-sm transition-all duration-400 ease-out hover:translate-y-[-8px] hover:shadow-lg">
                   {/* Image - Physical Photo Effect */}
                   <div className="relative p-6 pb-0">
                     <div className="relative">
-                      <div className="rounded-2xl overflow-hidden aspect-square border border-white/50 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)]">
+                      <div className="rounded-2xl overflow-hidden aspect-square border border-border/30 shadow-sm">
                         <img
                           src={article.image}
                           alt={article.title}
@@ -101,12 +101,7 @@ export const BlogPreview = () => {
 
         {/* CTA */}
         <div className="text-center mt-14">
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="h-14 px-10 text-lg font-bold rounded-2xl border-2"
-          >
+          <Button asChild variant="outline" size="lg">
             <Link to="/articles">
               View All Articles
               <ArrowRight className="ml-2 w-5 h-5" />

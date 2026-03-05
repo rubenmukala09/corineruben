@@ -123,11 +123,7 @@ export const PromoStrip = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.5 }}
         >
-          <Button
-            asChild
-            size="lg"
-            className="h-13 px-10 text-sm font-bold rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90 shadow-lg hover:shadow-xl transition-all hover:scale-105 active:scale-95"
-          >
+          <Button asChild size="lg">
             <Link to="/training#pricing">
               Start Your Free Assessment{" "}
               <ArrowRight className="ml-2 w-4 h-4" />

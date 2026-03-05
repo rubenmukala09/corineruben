@@ -46,6 +46,14 @@ const buttonVariants = cva(
           "hover:translate-y-[-1px] hover:border-primary/30 hover:shadow-[0_3px_0_0_hsl(var(--primary)/0.08),0_4px_12px_-2px_hsl(var(--primary)/0.1)]",
           "active:translate-y-[1px] active:shadow-[inset_0_2px_3px_hsl(var(--primary)/0.08)]",
         ].join(" "),
+        heroOutline: [
+          "bg-white/15 backdrop-blur-sm text-white",
+          "border-2 border-white/40",
+          "shadow-[0_2px_0_0_hsl(0_0%_100%/0.1),0_4px_12px_-2px_hsl(0_0%_0%/0.2),inset_0_1px_0_0_hsl(0_0%_100%/0.2)]",
+          "hover:translate-y-[-1px] hover:bg-white/25 hover:border-white/60 hover:shadow-[0_3px_0_0_hsl(0_0%_100%/0.15),0_6px_16px_-2px_hsl(0_0%_0%/0.25)]",
+          "active:translate-y-[1px] active:shadow-[inset_0_2px_4px_hsl(0_0%_0%/0.2)]",
+          "[text-shadow:0_1px_3px_rgba(0,0,0,0.4)]",
+        ].join(" "),
         destructive: [
           "bg-gradient-to-b from-destructive to-destructive/85 text-destructive-foreground",
           "border border-destructive/60",
