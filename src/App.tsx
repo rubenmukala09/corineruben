@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import AuroraBackground from "@/components/AuroraBackground";
+import FloatingHearts from "@/components/FloatingHearts";
 import MusicFloatingButton, { MusicProvider } from "@/components/MusicPlayer";
 import Index from "./pages/Index";
 import Story from "./pages/Story";
@@ -30,6 +31,7 @@ const App = () => (
               <div className="fixed inset-0 z-0">
                 <AuroraBackground variant="hero" />
               </div>
+              <FloatingHearts />
 
               <div className="relative z-10">
                 <Navigation />

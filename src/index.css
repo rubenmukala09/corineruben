@@ -727,3 +727,16 @@
     background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.4), transparent);
   }
 }
+
+/* ===== DARK MODE FLOATING HEARTS GLOW ===== */
+@keyframes heart-glow-pulse {
+  0%, 100% { opacity: 0; transform: scale(0.8); filter: blur(0px); }
+  50% { opacity: var(--heart-max-opacity, 0.4); transform: scale(1.2); filter: blur(1px); }
+}
+
+.dark .heart-glow {
+  color: hsl(var(--dusty-rose));
+  text-shadow: 0 0 12px hsl(var(--dusty-rose) / 0.7), 0 0 24px hsl(var(--primary) / 0.4);
+  animation: heart-glow-pulse var(--heart-duration, 4s) ease-in-out infinite;
+  animation-delay: var(--heart-delay, 0s);
+}
