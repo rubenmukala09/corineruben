@@ -36,9 +36,9 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --primary: 288 30% 30%;
     --primary-foreground: 0 0% 100%;
 
-    /* Coral-Peach Accent (from #F8926A) */
-    --accent: 18 90% 69%;
-    --accent-foreground: 288 30% 14%;
+    /* Emerald-Teal Accent */
+    --accent: 162 55% 42%;
+    --accent-foreground: 0 0% 100%;
 
     /* Success - warm sage */
     --success: 152 48% 45%;
@@ -90,13 +90,13 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --lavender-200: 330 52% 89%;
     --lavender-100: 335 45% 95%;
 
-    /* Coral/Peach spectrum (from #F8926A) */
-    --coral-600: 15 85% 52%;
-    --coral-500: 18 92% 62%;
-    --coral-400: 18 92% 69%;
-    --coral-300: 20 90% 78%;
-    --coral-200: 22 85% 88%;
-    --coral-100: 25 75% 95%;
+    /* Emerald-Teal spectrum */
+    --coral-600: 162 70% 32%;
+    --coral-500: 162 60% 38%;
+    --coral-400: 162 55% 42%;
+    --coral-300: 162 45% 58%;
+    --coral-200: 162 35% 80%;
+    --coral-100: 162 28% 93%;
 
     /* Blush Pink (from #F3CCDE / #F6D7DD) */
     --blush-500: 330 58% 87%;
