@@ -10,13 +10,13 @@ import { Textarea } from '@/components/ui/textarea';
 
 import heroImg from '@/assets/hero-wedding.jpg';
 import flowersImg from '@/assets/flowers-lavender.jpg';
-import flowersImgSmall from '@/assets/flowers-lavender-small.jpg';
+import flowersImgSmall from '@/assets/flowers-lavender-small.webp';
 import ringsImg from '@/assets/rings.jpg';
-import ringsImgSmall from '@/assets/rings-small.jpg';
+import ringsImgSmall from '@/assets/rings-small.webp';
 import cakeImg from '@/assets/cake.jpg';
 import cakeImgSmall from '@/assets/cake-small.jpg';
 import coupleImg from '@/assets/couple-lavender.jpg';
-import coupleImgSmall from '@/assets/couple-lavender-small.jpg';
+import coupleImgSmall from '@/assets/couple-lavender-small.webp';
 
 const WEDDING_DATE = new Date('2027-08-15T14:00:00');
 
