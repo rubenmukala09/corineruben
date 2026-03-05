@@ -4,12 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
-import TrustBar from "@/components/TrustBar";
 import { SEO } from "@/components/SEO";
 import { PageTransition } from "@/components/PageTransition";
 import { FloatingShapes } from "@/components/FloatingShapes";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import AnimatedCounter from "@/components/AnimatedCounter";
 import {
   Card,
   CardContent,
@@ -47,9 +45,6 @@ import {
   CheckCircle,
   Shield,
   Loader2,
-  Users,
-  Award,
-  Heart,
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -57,9 +52,7 @@ import { contactFormSchema, formatPhoneNumber } from "@/utils/formValidation";
 import { z } from "zod";
 import { useConfetti } from "@/hooks/useConfetti";
 import { PROFESSIONAL_HERO_IMAGES } from "@/config/professionalHeroImages";
-import HeroFloatingStats from "@/components/business/HeroFloatingStats";
 import supportAgentPhoto from "@/assets/support-agent.jpg";
-import familyGathering from "@/assets/family-gathering.jpg";
 import { SITE } from "@/config/site";
 
 type ContactFormData = z.infer<typeof contactFormSchema>;
@@ -191,40 +184,10 @@ function Contact() {
         >
           <FloatingShapes />
         </Hero>
-
-        {/* Floating Stats Bar - Outside Hero to stay static */}
-        <HeroFloatingStats />
       </div>
 
-      {/* Spacer for floating stats bar */}
-      <div className="hidden lg:block h-14" />
-      <div className="lg:hidden h-6" />
-
-      <TrustBar />
-
-      {/* Stats Section with AnimatedCounter */}
-      <section className="py-6 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 border-y border-primary/20">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
-            {[
-              { icon: Users, end: 500, suffix: "+", label: "Families Helped" },
-              { icon: Clock, end: 4, suffix: "hr", label: "Avg Response" },
-              { icon: Award, end: 95, suffix: "%", label: "Same-Day Reply" },
-              { icon: Heart, end: 98, suffix: "%", label: "Satisfaction" },
-            ].map((stat, index) => (
-              <div key={index} className="flex flex-col items-center gap-1">
-                <stat.icon className="w-5 h-5 text-primary mb-1" />
-                <span className="text-2xl font-bold text-foreground">
-                  <AnimatedCounter end={stat.end} suffix={stat.suffix} />
-                </span>
-                <span className="text-xs text-muted-foreground">
-                  {stat.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Spacer */}
+      <div className="h-6" />
 
       <div className="section-spacing bg-gradient-to-b from-background via-muted/10 to-background relative overflow-hidden">
         {/* Premium Background Effects */}
@@ -267,7 +230,7 @@ function Contact() {
                       </Badge>
                       <Button
                         variant="outline"
-                        className="w-full group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all duration-300"
+                        className="w-full"
                         size="sm"
                         asChild
                       >
@@ -567,10 +530,10 @@ function Contact() {
                           )}
                         />
 
-                        {/* Premium Submit Button */}
+                        {/* Submit Button */}
                         <Button
                           type="submit"
-                          className="w-full h-14 text-lg font-bold rounded-xl bg-gradient-to-r from-primary via-purple-600 to-primary bg-[length:200%_100%] hover:bg-[position:100%_0] transition-all duration-500"
+                          className="w-full h-14 text-lg"
                           size="lg"
                           disabled={isSubmitting}
                         >
@@ -660,10 +623,13 @@ function Contact() {
                   </div>
                   <Button
                     variant="outline"
-                    className="w-full group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all duration-300"
+                    className="w-full"
                     size="sm"
+                    asChild
                   >
-                    Get Directions
+                    <a href="https://maps.google.com/?q=123+Tech+Boulevard+Dayton+OH+45402" target="_blank" rel="noopener noreferrer">
+                      Get Directions
+                    </a>
                   </Button>
                 </div>
               </div>
