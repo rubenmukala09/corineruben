@@ -39,7 +39,7 @@ const Navigation = () => {
 
   return (
     <motion.div
-      className="fixed top-0 left-1/2 -translate-x-1/2 z-50 px-4 pt-3 w-full max-w-xl"
+      className="fixed top-0 left-1/2 -translate-x-1/2 z-50 px-4 pt-3 w-full max-w-2xl"
       initial={{ y: 0 }}
       animate={{ y: visible ? 0 : -100 }}
       transition={{ duration: 0.35, ease: 'easeInOut' }}
