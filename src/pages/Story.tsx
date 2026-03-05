@@ -1,7 +1,7 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
 import { Heart } from 'lucide-react';
-import heroImg from '@/assets/hero-wedding.jpg';
+import heroImg from '@/assets/hero-wedding-opt.webp';
 import flowersImg from '@/assets/flowers-lavender.jpg';
 import ringsImg from '@/assets/rings.jpg';
 import venueImg from '@/assets/venue.jpg';

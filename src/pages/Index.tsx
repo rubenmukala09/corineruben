@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
-import heroImg from '@/assets/hero-wedding.jpg';
+import heroImg from '@/assets/hero-wedding-opt.webp';
 import flowersImg from '@/assets/flowers-lavender.jpg';
 import flowersImgSmall from '@/assets/flowers-lavender-opt.webp';
 import ringsImg from '@/assets/rings.jpg';
