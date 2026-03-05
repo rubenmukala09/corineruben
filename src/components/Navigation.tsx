@@ -30,7 +30,7 @@ const Navigation = () => {
   return (
     <div className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 pt-4">
       <nav
-        className={`transition-all duration-500 rounded-[20px] ${
+        className={`nav-glow-border transition-all duration-500 rounded-[20px] ${
           scrolled
             ? 'glass-card-strong shadow-[0_8px_32px_rgba(139,107,138,0.18),0_2px_8px_rgba(212,165,165,0.12)]'
             : 'glass-card shadow-[0_4px_16px_rgba(139,107,138,0.1)]'

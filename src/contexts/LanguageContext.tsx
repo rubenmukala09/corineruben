@@ -171,6 +171,30 @@ const translations: Record<string, Record<Language, string>> = {
   'notfound.confirmAttendance': { fr: 'Confirmer présence', en: 'Confirm attendance' },
   'notfound.venueSchedule': { fr: 'Lieu & programme', en: 'Venue & schedule' },
   'notfound.backToStart': { fr: 'Retour au début', en: 'Back to the beginning' },
+
+  // Christian / Hymns
+  'badge.blessed': { fr: 'Union Bénie', en: 'Blessed Union' },
+  'badge.faith': { fr: 'Foi & Amour', en: 'Faith & Love' },
+  'badge.garden': { fr: 'Jardin d\'Éden', en: 'Garden Party' },
+  'badge.covenant': { fr: 'Alliance Sacrée', en: 'Holy Covenant' },
+  'index.scripture': { fr: 'Écriture', en: 'Scripture' },
+  'index.sacredUnion': { fr: 'Union Sacrée', en: 'Sacred Union' },
+  'index.covenantLove': { fr: 'Amour d\'Alliance', en: 'Covenant Love' },
+  'index.foreverAlways': { fr: 'Pour Toujours', en: 'Forever & Always' },
+  'index.beginJourney': { fr: 'Début du Voyage', en: 'Begin the Journey' },
+  'index.years': { fr: 'Ans', en: 'Years' },
+  'index.worshipMusic': { fr: 'Musique de Louange', en: 'Worship Music' },
+  'index.hymns': { fr: 'Nos Cantiques', en: 'Our Hymns' },
+  'index.hymns.desc': { fr: 'Les chants qui accompagneront notre célébration', en: 'The songs that will accompany our celebration' },
+  'hymn.amazing': { fr: 'Grâce Infinie', en: 'Amazing Grace' },
+  'hymn.blessed': { fr: 'Béni Soit le Lien', en: 'Blessed Be the Tie' },
+  'hymn.howgreat': { fr: 'Que Tu Es Grand', en: 'How Great Thou Art' },
+  'hymn.joyful': { fr: 'Joie au Monde', en: 'Joyful, Joyful' },
+  'hymn.greatis': { fr: 'Grande Est Ta Fidélité', en: 'Great Is Thy Faithfulness' },
+  'hymn.traditional': { fr: 'Hymne Traditionnel', en: 'Traditional Hymn' },
+  'verse.1cor13': { fr: 'L\'amour est patient, l\'amour est bon. Il n\'envie pas, il ne se vante pas, il ne s\'enfle pas d\'orgueil.', en: 'Love is patient, love is kind. It does not envy, it does not boast, it is not proud.' },
+  'verse.genesis': { fr: 'C\'est pourquoi l\'homme quittera son père et sa mère, et s\'attachera à sa femme, et ils deviendront une seule chair.', en: 'Therefore a man shall leave his father and his mother and hold fast to his wife, and they shall become one flesh.' },
+  'verse.ecclesiastes': { fr: 'Deux valent mieux qu\'un seul, car ils ont un bon salaire de leur travail. Car s\'ils tombent, l\'un relève son compagnon.', en: 'Two are better than one, because they have a good reward for their toil. For if they fall, one will lift up his fellow.' },
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);

@@ -515,4 +515,98 @@
     33% { transform: translate(5%, 5%) rotate(5deg); }
     66% { transform: translate(-5%, 3%) rotate(-3deg); }
   }
+
+  /* ===== NAV GLOW BORDER ===== */
+  .nav-glow-border {
+    position: relative;
+    overflow: visible;
+  }
+
+  .nav-glow-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 21px;
+    padding: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(293 15% 58% / 0.6) 25%,
+      hsl(270 18% 84% / 0.8) 50%,
+      hsl(330 40% 89% / 0.6) 75%,
+      transparent 100%
+    );
+    background-size: 300% 100%;
+    animation: nav-glow-slide 4s linear infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .nav-glow-border::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 23px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(293 15% 58% / 0.15) 25%,
+      hsl(270 18% 84% / 0.25) 50%,
+      hsl(330 40% 89% / 0.15) 75%,
+      transparent 100%
+    );
+    background-size: 300% 100%;
+    animation: nav-glow-slide 4s linear infinite;
+    filter: blur(8px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .dark .nav-glow-border::before {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(280 25% 62% / 0.5) 25%,
+      hsl(265 18% 52% / 0.7) 50%,
+      hsl(310 20% 52% / 0.5) 75%,
+      transparent 100%
+    );
+    background-size: 300% 100%;
+    animation: nav-glow-slide 4s linear infinite;
+  }
+
+  .dark .nav-glow-border::after {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(280 25% 62% / 0.12) 25%,
+      hsl(265 18% 52% / 0.2) 50%,
+      hsl(310 20% 52% / 0.12) 75%,
+      transparent 100%
+    );
+    background-size: 300% 100%;
+    animation: nav-glow-slide 4s linear infinite;
+    filter: blur(10px);
+  }
+
+  @keyframes nav-glow-slide {
+    0% { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+  }
+
+  /* ===== SHADOW GLOW ===== */
+  .shadow-glow {
+    box-shadow: 0 0 20px rgba(159, 130, 164, 0.3), 0 0 40px rgba(159, 130, 164, 0.1);
+  }
+
+  .dark .shadow-glow {
+    box-shadow: 0 0 20px rgba(140, 110, 170, 0.25), 0 0 40px rgba(140, 110, 170, 0.08);
+  }
+
+  .shadow-soft {
+    box-shadow: 0 4px 12px rgba(74, 59, 78, 0.15);
+  }
 }
