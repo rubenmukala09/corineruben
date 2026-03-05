@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 type Language = 'fr' | 'en';
 
@@ -29,6 +29,16 @@ const translations: Record<string, Record<Language, string>> = {
   'countdown.minutes': { fr: 'Minutes', en: 'Minutes' },
   'countdown.seconds': { fr: 'Secondes', en: 'Seconds' },
 
+  // Index page
+  'index.ourJourney': { fr: 'Notre Parcours', en: 'Our Journey' },
+  'index.joinCelebration': { fr: 'Rejoignez la célébration', en: 'Join our celebration' },
+  'index.celebrationDesc': { fr: 'Une célébration d\'amour, de famille et d\'union', en: 'A celebration of love, family & togetherness' },
+  'index.guestsInvited': { fr: 'Invités', en: 'Guests Invited' },
+  'index.courseDinner': { fr: 'Plats au Dîner', en: 'Course Dinner' },
+  'index.love': { fr: 'Amour', en: 'Love' },
+  'index.explore': { fr: 'Explorer', en: 'Explore' },
+  'index.capturedMoments': { fr: 'Des moments précieux de notre histoire d\'amour', en: 'Captured moments of our love story' },
+
   // Story
   'story.title': { fr: 'Notre Histoire', en: 'Our Story' },
   'story.subtitle': { fr: 'Le chemin qui nous a menés l\'un vers l\'autre', en: 'The journey that led us to each other' },
@@ -47,6 +57,7 @@ const translations: Record<string, Record<Language, string>> = {
   'story.event5.title': { fr: 'La Demande', en: 'The Proposal' },
   'story.event5.description': { fr: 'Un genou à terre, un anneau, et un « oui » qui résonne encore dans nos cœurs.', en: 'One knee on the ground, a ring, and a "yes" that still echoes in our hearts.' },
   'story.event5.date': { fr: 'Décembre 2024', en: 'December 2024' },
+  'story.continues': { fr: 'Notre aventure continue...', en: 'Our journey continues...' },
 
   // Details
   'details.title': { fr: 'Détails du Mariage', en: 'Wedding Details' },
@@ -104,6 +115,23 @@ const translations: Record<string, Record<Language, string>> = {
   // Footer
   'footer.made': { fr: 'Fait avec amour', en: 'Made with love' },
   'footer.copyright': { fr: '© 2025 Corine & Ruben', en: '© 2025 Corine & Ruben' },
+  'footer.links': { fr: 'Liens', en: 'Links' },
+  'footer.celebrate': { fr: 'Célébrer', en: 'Celebrate' },
+  'footer.venue': { fr: 'Lieu', en: 'Venue' },
+
+  // 404
+  'notfound.title': { fr: 'Page Introuvable', en: 'Page Not Found' },
+  'notfound.desc': { fr: 'Cette page s\'est égarée avant la célébration.', en: 'It seems this page wandered off before the celebration.' },
+  'notfound.requested': { fr: 'Demandé', en: 'Requested' },
+  'notfound.returnHome': { fr: 'Retour à l\'accueil', en: 'Return Home' },
+  'notfound.goBack': { fr: 'Retour', en: 'Go Back' },
+  'notfound.needHelp': { fr: 'Besoin d\'aide ?', en: 'Need help?' },
+  'notfound.reachOut': { fr: 'Contactez les mariés', en: 'Reach out to the couple' },
+  'notfound.contactUs': { fr: 'Nous contacter', en: 'Contact Us' },
+  'notfound.howWeMet': { fr: 'Notre rencontre', en: 'How we met' },
+  'notfound.confirmAttendance': { fr: 'Confirmer présence', en: 'Confirm attendance' },
+  'notfound.venueSchedule': { fr: 'Lieu & programme', en: 'Venue & schedule' },
+  'notfound.backToStart': { fr: 'Retour au début', en: 'Back to the beginning' },
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
