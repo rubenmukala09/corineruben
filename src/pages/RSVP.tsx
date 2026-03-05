@@ -42,8 +42,8 @@ const RSVP = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [attending, setAttending] = useState<boolean | null>(null);
-  const [plusOneName, setPlusOneName] = useState('');
-  const [hasPlusOne, setHasPlusOne] = useState(false);
+  const [companions, setCompanions] = useState<string[]>([]);
+  const [newCompanionName, setNewCompanionName] = useState('');
 
   // Meal
   const [selectedMeal, setSelectedMeal] = useState<string | null>(null);
@@ -210,23 +210,73 @@ const RSVP = () => {
               </div>
 
               {attending && (
-                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}>
-                  <div className="flex items-center justify-between glass-card rounded-2xl p-4">
-                    <div className="flex items-center gap-3">
-                      <UserPlus className="w-4 h-4 text-primary" />
-                      <span className="font-sans-elegant text-sm text-foreground font-medium">{t('rsvp.plusone')}</span>
-                    </div>
-                    <button type="button" onClick={() => setHasPlusOne(!hasPlusOne)}
-                      className={`w-12 h-7 rounded-full transition-all duration-300 ${hasPlusOne ? 'gradient-primary' : 'bg-border/50'} relative`}
+                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="space-y-3">
+                  <label className="font-sans-elegant text-sm text-foreground block font-semibold flex items-center gap-2">
+                    <UserPlus className="w-4 h-4 text-primary" />
+                    {t('rsvp.companions')}
+                  </label>
+                  <p className="font-sans-elegant text-xs text-muted-foreground">{t('rsvp.companions.hint')}</p>
+
+                  {/* List of added companions */}
+                  <AnimatePresence>
+                    {companions.map((comp, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 10 }}
+                        className="glass-card rounded-2xl px-4 py-3 flex items-center justify-between"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full gradient-primary flex items-center justify-center shadow-soft">
+                            <span className="font-sans-elegant text-xs text-primary-foreground font-bold">{i + 1}</span>
+                          </div>
+                          <span className="font-sans-elegant text-sm text-foreground font-medium">{comp}</span>
+                        </div>
+                        <button type="button" onClick={() => setCompanions(prev => prev.filter((_, j) => j !== i))}
+                          className="w-7 h-7 rounded-full bg-destructive/10 flex items-center justify-center hover:bg-destructive/20 transition-colors"
+                        >
+                          <X className="w-3.5 h-3.5 text-destructive" />
+                        </button>
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
+
+                  {/* Add companion input */}
+                  <div className="flex gap-2">
+                    <Input
+                      value={newCompanionName}
+                      onChange={e => setNewCompanionName(e.target.value)}
+                      onKeyDown={e => {
+                        if (e.key === 'Enter' && newCompanionName.trim()) {
+                          e.preventDefault();
+                          setCompanions(prev => [...prev, newCompanionName.trim()]);
+                          setNewCompanionName('');
+                        }
+                      }}
+                      placeholder={t('rsvp.companions.placeholder')}
+                      className="font-sans-elegant rounded-full h-11 border-border/50 bg-background/50 backdrop-blur-sm flex-1"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (newCompanionName.trim()) {
+                          setCompanions(prev => [...prev, newCompanionName.trim()]);
+                          setNewCompanionName('');
+                        }
+                      }}
+                      disabled={!newCompanionName.trim()}
+                      className="btn-primary px-4 rounded-full text-sm disabled:opacity-40 disabled:cursor-not-allowed"
                     >
-                      <div className={`w-5 h-5 rounded-full bg-white shadow-sm absolute top-1 transition-all duration-300 ${hasPlusOne ? 'left-6' : 'left-1'}`} />
+                      <Plus className="w-4 h-4" />
+                      {t('rsvp.companions.add')}
                     </button>
                   </div>
-                  {hasPlusOne && (
-                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-3">
-                      <Input value={plusOneName} onChange={e => setPlusOneName(e.target.value)} placeholder={t('rsvp.plusone.name')}
-                        className="font-sans-elegant rounded-full h-12 border-border/50 bg-background/50 backdrop-blur-sm" />
-                    </motion.div>
+
+                  {companions.length > 0 && (
+                    <p className="font-sans-elegant text-xs text-primary font-medium">
+                      {t('rsvp.companions.count').replace('{count}', String(companions.length + 1))}
+                    </p>
                   )}
                 </motion.div>
               )}
@@ -591,10 +641,14 @@ const RSVP = () => {
                       <p className="font-serif-display text-sm text-foreground font-bold">${finalGiftAmount}</p>
                     </div>
                   )}
-                  {hasPlusOne && plusOneName && (
+                  {companions.length > 0 && (
                     <div className="glass-card rounded-2xl p-4">
-                      <p className="font-sans-elegant text-[10px] text-muted-foreground uppercase tracking-wider mb-1">{t('rsvp.plusone')}</p>
-                      <p className="font-sans-elegant text-sm text-foreground font-semibold">{plusOneName}</p>
+                      <p className="font-sans-elegant text-[10px] text-muted-foreground uppercase tracking-wider mb-1">{t('rsvp.companions')}</p>
+                      <div className="space-y-1">
+                        {companions.map((comp, i) => (
+                          <p key={i} className="font-sans-elegant text-sm text-foreground font-semibold">{comp}</p>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>
