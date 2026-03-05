@@ -27,18 +27,18 @@ const NotFound = () => {
   ];
 
   return (
-    <div className="relative min-h-screen overflow-hidden gradient-hero flex items-center justify-center px-4 py-24">
-      {/* Floating blobs */}
+    <div className="relative min-h-screen overflow-hidden gradient-hero flex items-center justify-center px-6 md:px-12 py-24">
+      {/* Interactive floating blobs */}
       <div
         className="floating-blob w-[500px] h-[500px] bg-primary/20 top-[-10%] left-[-5%]"
         style={{ transform: `translate(${mousePos.x * 30}px, ${mousePos.y * 20}px)` }}
       />
       <div
-        className="floating-blob w-[400px] h-[400px] bg-accent/25 bottom-[-10%] right-[-5%]"
+        className="floating-blob w-[400px] h-[400px] bg-pale-lilac/25 bottom-[-10%] right-[-5%]"
         style={{ transform: `translate(${-mousePos.x * 20}px, ${-mousePos.y * 15}px)` }}
       />
       <div
-        className="floating-blob w-[300px] h-[300px] bg-rose/15 top-[40%] right-[20%]"
+        className="floating-blob w-[300px] h-[300px] bg-dusty-rose/15 top-[40%] right-[20%]"
         style={{ transform: `translate(${mousePos.x * 15}px, ${-mousePos.y * 25}px)` }}
       />
 
@@ -56,9 +56,9 @@ const NotFound = () => {
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
             className="flex items-center justify-center gap-3 mb-6"
           >
-            <Heart className="w-5 h-5 text-primary/40" />
-            <Heart className="w-7 h-7 text-primary/60 fill-primary/20" />
-            <Heart className="w-5 h-5 text-primary/40" />
+            <Heart className="w-5 h-5 text-dusty-rose/50" />
+            <Heart className="w-7 h-7 text-dusty-rose/70 fill-dusty-rose/20" />
+            <Heart className="w-5 h-5 text-dusty-rose/50" />
           </motion.div>
 
           {/* 404 number */}
@@ -66,7 +66,7 @@ const NotFound = () => {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="font-serif-display text-8xl md:text-9xl font-bold gradient-text mb-4 leading-none"
+            className="font-serif-display text-8xl md:text-9xl font-semibold gradient-text mb-4 leading-none"
           >
             404
           </motion.h1>
@@ -76,14 +76,14 @@ const NotFound = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            <h2 className="font-serif-display text-2xl md:text-3xl text-foreground mb-3">
+            <h2 className="font-serif-display text-2xl md:text-3xl text-foreground mb-3 font-semibold">
               Page Not Found
             </h2>
-            <p className="font-serif-body text-lg md:text-xl text-muted-foreground max-w-md mx-auto mb-2">
+            <p className="font-sans-elegant text-lg md:text-xl text-muted-foreground max-w-md mx-auto mb-2" style={{ lineHeight: 1.6 }}>
               It seems this page wandered off before the celebration.
             </p>
-            <p className="font-sans-elegant text-sm text-muted-foreground/70 tracking-wide uppercase">
-              Requested: <span className="text-primary/80">{location.pathname}</span>
+            <p className="font-sans-elegant text-xs text-muted-foreground/60 tracking-wider uppercase mt-4" style={{ letterSpacing: '0.5px' }}>
+              Requested: <span className="text-primary/70">{location.pathname}</span>
             </p>
           </motion.div>
 
@@ -94,17 +94,11 @@ const NotFound = () => {
             transition={{ delay: 0.6 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10"
           >
-            <Link
-              to="/"
-              className="btn-primary px-8 py-3.5 text-sm"
-            >
+            <Link to="/" className="btn-primary">
               <Home className="w-4 h-4" />
               Return Home
             </Link>
-            <button
-              onClick={() => window.history.back()}
-              className="btn-outline px-8 py-3.5 text-sm"
-            >
+            <button onClick={() => window.history.back()} className="btn-outline">
               <ArrowLeft className="w-4 h-4" />
               Go Back
             </button>
@@ -124,19 +118,19 @@ const NotFound = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9 + i * 0.1 }}
-              whileHover={{ y: -4, scale: 1.02 }}
+              whileHover={{ y: -6, scale: 1.02 }}
             >
               <Link
                 to={link.path}
-                className="glass-card rounded-2xl p-5 flex flex-col items-center text-center gap-2 hover:shadow-glow transition-all duration-500 group block"
+                className="glass-card-strong rounded-3xl p-6 flex flex-col items-center text-center gap-2.5 card-hover group block"
               >
-                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
+                <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
                   <link.icon className="w-5 h-5 text-primary" />
                 </div>
-                <span className="font-sans-elegant text-sm font-semibold text-foreground tracking-wide">
+                <span className="font-sans-elegant text-sm font-semibold text-foreground">
                   {link.label}
                 </span>
-                <span className="font-serif-body text-xs text-muted-foreground">
+                <span className="font-sans-elegant text-xs text-muted-foreground">
                   {link.desc}
                 </span>
               </Link>
@@ -149,15 +143,15 @@ const NotFound = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.3 }}
-          className="mt-8 glass-card rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4"
+          className="mt-8 glass-card-strong rounded-3xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4"
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-accent/30 flex items-center justify-center">
-              <Mail className="w-4 h-4 text-primary" />
+            <div className="w-11 h-11 rounded-2xl bg-accent/30 flex items-center justify-center">
+              <Mail className="w-5 h-5 text-primary" />
             </div>
             <div>
-              <p className="font-sans-elegant text-sm font-medium text-foreground">Need help?</p>
-              <p className="font-serif-body text-xs text-muted-foreground">Reach out to the couple</p>
+              <p className="font-sans-elegant text-sm font-semibold text-foreground">Need help?</p>
+              <p className="font-sans-elegant text-xs text-muted-foreground">Reach out to the couple</p>
             </div>
           </div>
           <Link
