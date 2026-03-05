@@ -328,11 +328,7 @@ const PricingCard = ({
           </ul>
           <Button
             variant={featured ? "default" : "outline"}
-            className={`w-full mt-auto h-12 font-bold rounded-xl transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] ${
-              featured 
-                ? "bg-gradient-to-r from-primary to-accent text-white shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30" 
-                : "hover:border-primary/40"
-            }`}
+            className="w-full mt-auto h-12 rounded-xl"
             onClick={onButtonClick}
           >
             {buttonText}
@@ -521,13 +517,12 @@ function Business() {
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button variant="default" size="xl" onClick={openStrategyCall} className="transition-transform duration-200 hover:scale-105 active:scale-95">
+              <Button variant="default" size="xl" onClick={openStrategyCall}>
                 Book Strategy Call
               </Button>
               <Button
-                variant="outlineLight"
+                variant="heroOutline"
                 size="xl"
-                className="transition-transform duration-200 hover:scale-105 active:scale-95"
                 onClick={() => {
                   scrollToSection("services");
                   trackButtonClick("Explore Services", "Business Hero");
@@ -542,6 +537,19 @@ function Business() {
 
         <div className="h-8" />
         <TrustBar />
+
+        {/* Live Stats Ticker — matches Training page */}
+        <div className="bg-foreground text-background py-3 overflow-hidden">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-center gap-4 sm:gap-8 flex-wrap text-xs sm:text-sm font-semibold">
+              <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" /> 200+ Ohio Businesses Served</span>
+              <span className="hidden sm:inline text-background/30">|</span>
+              <span className="flex items-center gap-2"><Shield className="w-4 h-4 text-green-400" /> $500K Max Scam Coverage</span>
+              <span className="hidden sm:inline text-background/30">|</span>
+              <span className="flex items-center gap-2"><Zap className="w-4 h-4" /> {'<'}90s Avg. Response Time</span>
+            </div>
+          </div>
+        </div>
 
         {/* ═══════════════════ SERVICES ═══════════════════ */}
         <section id="services" className="py-24 relative overflow-hidden">
@@ -917,7 +925,7 @@ function Business() {
             <AnimatedSection animation="fade-up" delay={200} className="text-center mt-16">
               <div className="inline-flex flex-col sm:flex-row gap-4 justify-center">
                 <Button
-                  className="h-14 px-12 font-bold rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90 transition-all duration-300 shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 hover:scale-[1.03] text-base"
+                  size="xl"
                   onClick={() => {
                     setSelectedInquiry({
                       name: "InVision Platform Demo",
@@ -930,7 +938,7 @@ function Business() {
                 >
                   Request a Platform Demo <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
-                <Button asChild variant="outline" className="h-14 px-10 rounded-full font-semibold hover:scale-[1.03] transition-all duration-300 text-base">
+                <Button asChild variant="outline" size="xl">
                   <Link to="/training">View Individual Plans</Link>
                 </Button>
               </div>
@@ -1104,7 +1112,7 @@ function Business() {
               <div className="mt-8 text-center">
                 <Button
                   variant="outline"
-                  className="rounded-full h-11 px-8 font-semibold transition-all duration-300 hover:scale-105 active:scale-95 hover:border-primary/40"
+                  size="lg"
                   onClick={() => {
                     setSelectedInquiry({
                       name: "Custom Website Package",

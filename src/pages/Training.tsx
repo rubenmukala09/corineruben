@@ -174,11 +174,8 @@ const PremiumTrainingCard = memo(
             {/* CTA — high contrast, visible text */}
             <Button
               onClick={() => onBook(plan)}
-              className={`w-full mt-auto rounded-full font-bold h-12 text-base tracking-wide shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5 ${
-                plan.popular
-                  ? "bg-gradient-to-r from-primary to-accent text-white hover:opacity-90"
-                  : "bg-primary text-white hover:bg-primary/90"
-              }`}
+              variant={plan.popular ? "default" : "outline"}
+              className="w-full mt-auto rounded-xl h-12 text-base"
             >
               Book Now — {plan.price}
               <ArrowRight className="w-4 h-4 ml-2" />
@@ -529,17 +526,15 @@ function LearnAndTrain() {
                     .getElementById("training")
                     ?.scrollIntoView({ behavior: "smooth" })
                 }
-                size="lg"
-                className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90 text-base px-8 py-5 font-bold"
+                size="xl"
               >
                 <Shield className="w-5 h-5 mr-2" />
                 Learn & Train Workshops
               </Button>
               <Button
                 asChild
-                size="lg"
-                variant="outline"
-                className="rounded-full bg-white/15 backdrop-blur-md text-white border-white/30 hover:bg-white/25 text-base px-8 py-5 font-bold"
+                size="xl"
+                variant="heroOutline"
               >
                 <Link to="/training/ai-analysis">
                   <FileCheck className="w-5 h-5 mr-2" />
