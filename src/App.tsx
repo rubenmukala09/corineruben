@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,10 +12,10 @@ import AuroraBackground from "@/components/AuroraBackground";
 import FloatingHearts from "@/components/FloatingHearts";
 import MusicFloatingButton, { MusicProvider } from "@/components/MusicPlayer";
 import Index from "./pages/Index";
-import Story from "./pages/Story";
-import RSVP from "./pages/RSVP";
 
-import NotFound from "./pages/NotFound";
+const Story = lazy(() => import("./pages/Story"));
+const RSVP = lazy(() => import("./pages/RSVP"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
 
@@ -37,10 +38,10 @@ const App = () => (
                 <Navigation />
                 <Routes>
                   <Route path="/" element={<Index />} />
-                  <Route path="/story" element={<Story />} />
-                  <Route path="/rsvp" element={<RSVP />} />
+                  <Route path="/story" element={<Suspense fallback={null}><Story /></Suspense>} />
+                  <Route path="/rsvp" element={<Suspense fallback={null}><RSVP /></Suspense>} />
                   
-                  <Route path="*" element={<NotFound />} />
+                  <Route path="*" element={<Suspense fallback={null}><NotFound /></Suspense>} />
                 </Routes>
                 <Footer />
               </div>
