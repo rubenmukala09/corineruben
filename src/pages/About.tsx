@@ -344,10 +344,10 @@ function About() {
 
         <div className="container mx-auto px-4 lg:px-12 relative z-10 text-white">
           <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 drop-shadow-lg">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 drop-shadow-lg text-white">
               Our Community Impact
             </h2>
-            <p className="text-lg opacity-95 max-w-3xl mx-auto drop-shadow-md">
+            <p className="text-lg max-w-3xl mx-auto drop-shadow-md text-white/95">
               Protecting families and serving our local community
             </p>
           </div>
