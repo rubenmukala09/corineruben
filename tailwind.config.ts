@@ -73,10 +73,10 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       boxShadow: {
-        "soft": "0 4px 24px -4px hsl(328 40% 38% / 0.1)",
-        "glow": "0 0 45px -10px hsl(328 40% 38% / 0.3)",
-        "card-hover": "0 20px 55px -15px hsl(328 40% 38% / 0.18)",
-        "glass": "0 8px 32px hsl(328 40% 38% / 0.07), inset 0 1px 0 hsl(0 0% 100% / 0.18)",
+        "soft": "0 4px 20px -4px hsl(348 22% 44% / 0.08)",
+        "glow": "0 0 40px -10px hsl(348 22% 44% / 0.22)",
+        "card-hover": "0 18px 50px -14px hsl(348 22% 44% / 0.14)",
+        "glass": "0 8px 28px hsl(348 22% 44% / 0.05), inset 0 1px 0 hsl(0 0% 100% / 0.16)",
       },
       keyframes: {
         "accordion-down": {
