@@ -151,9 +151,8 @@ export const HeroHomepage = () => {
                 </Button>
                 <Button
                   asChild
-                  variant="outline"
+                  variant="heroOutline"
                   size="xl"
-                  className="border-2 border-white/40 bg-white/10 text-white hover:bg-white/20 hover:text-white hover:border-white/60"
                 >
                   <Link to="/business">For Businesses</Link>
                 </Button>

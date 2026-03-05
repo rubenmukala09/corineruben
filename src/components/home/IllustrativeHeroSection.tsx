@@ -65,21 +65,12 @@ export const IllustrativeHeroSection = () => {
               ))}
             </ul>
             <div className="flex flex-wrap gap-3 pt-2">
-              <Button
-                asChild
-                size="lg"
-                className="h-12 px-8 rounded-full font-bold bg-gradient-to-r from-primary to-accent text-white hover:opacity-90"
-              >
+              <Button asChild size="lg">
                 <Link to="/training#pricing">
                   Start Protection <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="h-12 px-8 rounded-full font-bold"
-              >
+              <Button asChild variant="outline" size="lg">
                 <Link to="/contact">Free Consultation</Link>
               </Button>
             </div>

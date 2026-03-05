@@ -164,7 +164,7 @@ const Index = () => {
                       Get Protected Today <ArrowRight className="ml-2 w-5 h-5" />
                     </Link>
                   </Button>
-                  <Button asChild variant="outline" size="lg" className="border-2 border-white/40 bg-white/10 text-white hover:bg-white/20 hover:text-white hover:border-white/60">
+                  <Button asChild variant="heroOutline" size="lg">
                     <Link to="/business">Business Solutions</Link>
                   </Button>
                 </div>

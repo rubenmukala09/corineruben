@@ -170,11 +170,8 @@ export const ProtectionComparison = () => {
                 <Button
                   asChild
                   size="lg"
-                  className={`w-full rounded-full ${
-                    plan.popular
-                      ? ""
-                      : "bg-muted text-foreground hover:bg-primary hover:text-primary-foreground"
-                  }`}
+                  variant={plan.popular ? "default" : "outline"}
+                  className="w-full"
                 >
                   <Link to="/training#pricing">
                     Get Started
