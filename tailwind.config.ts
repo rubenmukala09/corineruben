@@ -9,7 +9,7 @@ export default {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1400px",
+        "2xl": "1280px",
       },
     },
     extend: {
@@ -47,15 +47,14 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        mauve: "hsl(var(--mauve))",
-        "mauve-light": "hsl(var(--mauve-light))",
-        cream: "hsl(var(--cream))",
-        blush: "hsl(var(--blush))",
-        wine: "hsl(var(--wine))",
-        rose: "hsl(var(--rose))",
-        peach: "hsl(var(--peach))",
-        lavender: "hsl(var(--lavender))",
         plum: "hsl(var(--plum))",
+        "plum-dark": "hsl(var(--plum-dark))",
+        "plum-light": "hsl(var(--plum-light))",
+        "lavender-pink": "hsl(var(--lavender-pink))",
+        cream: "hsl(var(--cream))",
+        "cream-dark": "hsl(var(--cream-dark))",
+        "dusty-rose": "hsl(var(--dusty-rose))",
+        "pale-lilac": "hsl(var(--pale-lilac))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -69,14 +68,14 @@ export default {
       },
       borderRadius: {
         lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        md: "calc(var(--radius) - 4px)",
+        sm: "calc(var(--radius) - 8px)",
       },
       boxShadow: {
-        "soft": "0 4px 20px -4px hsl(348 22% 44% / 0.08)",
-        "glow": "0 0 40px -10px hsl(348 22% 44% / 0.22)",
-        "card-hover": "0 18px 50px -14px hsl(348 22% 44% / 0.14)",
-        "glass": "0 8px 28px hsl(348 22% 44% / 0.05), inset 0 1px 0 hsl(0 0% 100% / 0.16)",
+        "soft": "0 4px 20px rgba(107, 78, 113, 0.08)",
+        "glow": "0 0 40px -10px rgba(107, 78, 113, 0.25)",
+        "card-hover": "0 30px 60px rgba(107, 78, 113, 0.15)",
+        "glass": "0 8px 32px rgba(107, 78, 113, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6)",
       },
       keyframes: {
         "accordion-down": {
@@ -96,8 +95,12 @@ export default {
           "50%": { transform: "translateY(10px)", opacity: "0.5" },
         },
         "float": {
-          "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-20px)" },
+          "0%, 100%": { transform: "translateY(0px) rotate(0deg)" },
+          "50%": { transform: "translateY(-20px) rotate(2deg)" },
+        },
+        "shimmer": {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
         },
       },
       animation: {
@@ -106,6 +109,7 @@ export default {
         "fade-in-up": "fade-in-up 0.8s ease-out forwards",
         "scroll-indicator": "scroll-indicator 2s ease-in-out infinite",
         "float": "float 6s ease-in-out infinite",
+        "shimmer": "shimmer 3s ease-in-out infinite",
       },
     },
   },

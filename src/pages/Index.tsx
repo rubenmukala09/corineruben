@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
-import { ChevronDown, Heart, MapPin, Calendar, Clock, Utensils, Camera, Gift, Star, Sparkles } from 'lucide-react';
+import { ChevronDown, Heart, MapPin, Calendar, Clock, Utensils, Camera, Gift, Star, Sparkles, Play, Music, Activity } from 'lucide-react';
 import heroImg from '@/assets/hero-wedding.jpg';
 import flowersImg from '@/assets/flowers-lavender.jpg';
 import ringsImg from '@/assets/rings.jpg';
@@ -49,89 +49,108 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
       {/* ===== HERO ===== */}
-      <section className="min-h-screen flex flex-col items-center justify-center relative px-4 overflow-hidden">
-        {/* Deep layered background */}
+      <section className="min-h-screen flex flex-col items-center justify-center relative px-6 md:px-12 overflow-hidden">
+        {/* Hero gradient background — peach to pink */}
         <div className="absolute inset-0 gradient-hero" />
         <div className="absolute inset-0">
-          <img src={heroImg} alt="" className="w-full h-full object-cover opacity-[0.18] dark:opacity-[0.08]" />
+          <img src={heroImg} alt="" className="w-full h-full object-cover opacity-[0.12] dark:opacity-[0.06]" />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-background/50" />
 
-        {/* Glass overlay texture */}
-        <div className="absolute inset-0 backdrop-blur-[1px]" />
+        {/* Floating organic blobs — plum/lilac */}
+        <div className="floating-blob w-[700px] h-[700px] bg-primary/20 top-[-280px] right-[-200px]" />
+        <div className="floating-blob w-[600px] h-[600px] bg-pale-lilac/30 top-[5%] left-[-200px]" />
+        <div className="floating-blob w-[400px] h-[400px] bg-dusty-rose/25 bottom-[10%] right-[2%]" />
+        <div className="floating-blob w-[300px] h-[300px] bg-lavender-pink/35 bottom-[-80px] left-[25%]" />
 
-        {/* Floating blobs — warm tones */}
-        <div className="floating-blob w-[700px] h-[700px] bg-primary/25 top-[-280px] right-[-200px]" />
-        <div className="floating-blob w-[600px] h-[600px] bg-lavender/30 top-[5%] left-[-200px]" />
-        <div className="floating-blob w-[400px] h-[400px] bg-peach/35 bottom-[10%] right-[2%]" />
-        <div className="floating-blob w-[300px] h-[300px] bg-blush/40 bottom-[-80px] left-[25%]" />
-        <div className="floating-blob w-[200px] h-[200px] bg-rose/20 top-[45%] right-[35%]" />
-
-        {/* Floating glass widgets */}
+        {/* ===== FLOATING GLASS CARDS ===== */}
+        {/* Card 1: Audio card — top left */}
         <motion.div
           animate={{ y: [-12, 12, -12] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-32 left-6 md:left-16 glass-card-strong rounded-2xl p-3.5 hidden md:flex items-center gap-3 z-20 shadow-glass"
+          className="absolute top-32 left-4 md:left-12 glass-card-strong rounded-[20px] p-4 hidden md:flex items-center gap-3 z-20"
+          style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}
         >
-          <div className="w-12 h-12 rounded-xl overflow-hidden ring-2 ring-primary/10">
+          <div className="w-12 h-12 rounded-xl overflow-hidden">
             <img src={flowersImg} alt="" className="w-full h-full object-cover" />
           </div>
           <div>
-            <p className="font-sans-elegant text-xs font-bold text-foreground">15 Août 2027</p>
-            <p className="font-sans-elegant text-[10px] text-muted-foreground">{t('hero.tagline')}</p>
+            <p className="font-sans-elegant text-sm font-semibold text-foreground">Celestial Calm</p>
+            <p className="font-sans-elegant text-xs text-muted-foreground">2:10 mins</p>
+          </div>
+          <div className="w-8 h-8 rounded-full bg-white/80 dark:bg-white/20 flex items-center justify-center ml-2">
+            <Play className="w-3 h-3 text-foreground fill-foreground" />
           </div>
         </motion.div>
 
+        {/* Card 2: Feature card dark — top right */}
         <motion.div
           animate={{ y: [10, -15, 10] }}
           transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-36 right-6 md:right-16 glass-card-strong rounded-2xl overflow-hidden hidden md:block z-20 shadow-glass"
+          className="absolute top-28 right-4 md:right-12 glass-card-dark rounded-3xl p-5 hidden md:block z-20 w-52"
         >
-          <img src={ringsImg} alt="" className="w-40 h-28 object-cover" />
-          <div className="p-3 text-center glass-card">
-            <div className="flex items-center justify-center gap-1 mb-1">
-              <Star className="w-3 h-3 text-primary fill-primary" />
-              <Star className="w-3 h-3 text-primary fill-primary" />
-              <Star className="w-3 h-3 text-primary fill-primary" />
-              <Star className="w-3 h-3 text-primary fill-primary" />
-              <Star className="w-3 h-3 text-primary fill-primary" />
+          <p className="font-sans-elegant text-xs font-medium text-white/70 mb-1">Featured</p>
+          <p className="font-serif-display text-lg font-semibold text-white mb-3">Serenity Waves</p>
+          <div className="flex gap-2">
+            <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center">
+              <Play className="w-4 h-4 text-white fill-white" />
             </div>
-            <p className="font-serif-body text-[11px] italic text-muted-foreground">Forever & Always</p>
+            <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center">
+              <Music className="w-4 h-4 text-white" />
+            </div>
           </div>
         </motion.div>
 
+        {/* Card 3: Mindfulness card — mid-left */}
         <motion.div
           animate={{ y: [-8, 14, -8] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-48 left-10 md:left-28 glass-card-strong rounded-2xl p-3.5 hidden lg:flex items-center gap-3 z-20 shadow-glass"
+          className="absolute bottom-52 left-6 md:left-16 glass-card-strong rounded-[20px] p-4 hidden lg:block z-20 w-48"
         >
-          <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center shadow-soft">
-            <MapPin className="w-4 h-4 text-primary-foreground" />
-          </div>
-          <div>
-            <p className="font-sans-elegant text-[11px] font-semibold text-foreground">{t('details.ceremony.location')}</p>
-            <p className="font-sans-elegant text-[9px] text-muted-foreground">14:00 — Ceremony</p>
-          </div>
+          <p className="font-sans-elegant text-xs text-muted-foreground mb-1">Today, 15 Aug 2027</p>
+          <p className="font-sans-elegant text-sm font-semibold text-foreground">Start Your Journey</p>
+          <p className="font-sans-elegant text-xs text-muted-foreground mt-1">A celebration of love</p>
         </motion.div>
 
+        {/* Card 4: Audio card — bottom right */}
         <motion.div
           animate={{ y: [12, -10, 12] }}
           transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-40 right-8 md:right-24 glass-card-strong rounded-2xl overflow-hidden hidden lg:block z-20 shadow-glass"
+          className="absolute bottom-44 right-6 md:right-20 glass-card-strong rounded-[20px] p-4 hidden lg:flex items-center gap-3 z-20"
         >
-          <img src={venueImg} alt="" className="w-36 h-24 object-cover" />
-          <div className="p-2.5 text-center glass-card">
-            <p className="font-sans-elegant text-[10px] text-muted-foreground">🥂 {t('nav.details')}</p>
+          <div className="w-12 h-12 rounded-xl overflow-hidden">
+            <img src={ringsImg} alt="" className="w-full h-full object-cover" />
+          </div>
+          <div>
+            <p className="font-sans-elegant text-sm font-semibold text-foreground">Forever & Always</p>
+            <p className="font-sans-elegant text-xs text-muted-foreground">3:22 mins</p>
+          </div>
+          <div className="w-8 h-8 rounded-full bg-white/80 dark:bg-white/20 flex items-center justify-center ml-2">
+            <Play className="w-3 h-3 text-foreground fill-foreground" />
           </div>
         </motion.div>
 
-        {/* Decorative sparkle widget */}
+        {/* Card 5: Stats card — lower center-right */}
         <motion.div
-          animate={{ y: [-6, 10, -6], rotate: [0, 3, -3, 0] }}
+          animate={{ y: [-6, 10, -6], rotate: [0, 2, -2, 0] }}
           transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[55%] left-6 md:left-10 glass-card rounded-full w-14 h-14 hidden xl:flex items-center justify-center z-20 shadow-glass"
+          className="absolute top-[58%] right-[8%] glass-card-strong rounded-3xl p-4 hidden xl:block z-20 w-44"
         >
-          <Sparkles className="w-5 h-5 text-primary/70" />
+          <div className="flex items-center gap-2 mb-2">
+            <Star className="w-4 h-4 text-primary fill-primary" />
+            <span className="font-sans-elegant text-lg font-bold text-foreground">4.8</span>
+          </div>
+          <p className="font-sans-elegant text-xs font-semibold text-foreground">Guest Reviews</p>
+          <p className="font-sans-elegant text-[10px] text-muted-foreground">150+ invited</p>
+        </motion.div>
+
+        {/* Decorative sparkle */}
+        <motion.div
+          animate={{ y: [-6, 10, -6], rotate: [0, 5, -5, 0] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[52%] left-6 md:left-10 glass-card rounded-full w-14 h-14 hidden xl:flex items-center justify-center z-20"
+        >
+          <Heart className="w-5 h-5 text-dusty-rose fill-dusty-rose" />
         </motion.div>
 
         {/* Main hero content */}
@@ -145,36 +164,36 @@ const Index = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="inline-block px-6 py-2.5 rounded-full glass-card-strong mb-8 shadow-glass"
+            className="inline-block px-6 py-2.5 rounded-full glass-card-strong mb-8"
           >
             <p className="font-sans-elegant text-xs tracking-[0.3em] uppercase text-muted-foreground font-medium">
               {t('hero.tagline')}
             </p>
           </motion.div>
 
-          <h1 className="font-serif-display text-6xl md:text-8xl lg:text-9xl font-bold tracking-wide text-foreground mb-2">
+          <h1 className="font-serif-display text-6xl md:text-7xl lg:text-8xl font-semibold text-foreground mb-2" style={{ letterSpacing: '-1px', lineHeight: 1.1 }}>
             Corine
           </h1>
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.5, type: "spring" }}
-            className="my-6"
+            className="my-5"
           >
-            <span className="inline-flex items-center justify-center w-18 h-18 rounded-full gradient-primary shadow-glow">
-              <span className="text-primary-foreground text-3xl font-serif-display">&</span>
+            <span className="inline-flex items-center justify-center w-16 h-16 rounded-full gradient-primary shadow-glow">
+              <span className="text-primary-foreground text-2xl font-serif-display">&</span>
             </span>
           </motion.div>
-          <h1 className="font-serif-display text-6xl md:text-8xl lg:text-9xl font-bold tracking-wide text-foreground mb-10">
+          <h1 className="font-serif-display text-6xl md:text-7xl lg:text-8xl font-semibold text-foreground mb-8" style={{ letterSpacing: '-1px', lineHeight: 1.1 }}>
             Ruben
           </h1>
 
-          <p className="font-serif-body text-xl md:text-2xl tracking-wider text-muted-foreground mb-14">
+          <p className="font-sans-elegant text-lg md:text-xl text-muted-foreground mb-12 max-w-lg mx-auto" style={{ lineHeight: 1.6 }}>
             {t('hero.date')}
           </p>
 
-          {/* Countdown — glassmorphism timer */}
-          <div className="flex gap-3 md:gap-5 justify-center mb-14">
+          {/* Countdown */}
+          <div className="flex gap-3 md:gap-5 justify-center mb-12">
             {[
               { value: countdown.days, label: t('countdown.days') },
               { value: countdown.hours, label: t('countdown.hours') },
@@ -186,12 +205,12 @@ const Index = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 + i * 0.1 }}
-                className="glass-card-strong rounded-2xl px-5 py-5 md:px-8 md:py-6 min-w-[72px] md:min-w-[96px] text-center shadow-glass"
+                className="glass-card-strong rounded-3xl px-5 py-5 md:px-7 md:py-6 min-w-[72px] md:min-w-[90px] text-center"
               >
-                <span className="font-serif-display text-3xl md:text-4xl text-foreground block font-bold">
+                <span className="font-serif-display text-3xl md:text-4xl text-foreground block font-semibold">
                   {String(item.value).padStart(2, '0')}
                 </span>
-                <span className="font-sans-elegant text-[9px] md:text-xs tracking-[0.15em] uppercase text-muted-foreground mt-1.5 block font-medium">
+                <span className="font-sans-elegant text-[10px] md:text-xs tracking-[0.15em] uppercase text-muted-foreground mt-1.5 block font-medium">
                   {item.label}
                 </span>
               </motion.div>
@@ -204,10 +223,10 @@ const Index = () => {
             transition={{ delay: 1 }}
             className="flex gap-4 justify-center flex-wrap"
           >
-            <Link to="/rsvp" className="btn-primary px-10 py-4">
+            <Link to="/rsvp" className="btn-primary">
               {t('hero.cta')}
             </Link>
-            <Link to="/story" className="btn-outline px-10 py-4">
+            <Link to="/story" className="btn-glass">
               {t('nav.story')}
             </Link>
           </motion.div>
@@ -227,12 +246,10 @@ const Index = () => {
       {/* ===== ABOUT / INTRO ===== */}
       <section className="py-28 md:py-36 relative overflow-hidden">
         <div className="absolute inset-0 gradient-mesh" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/40" />
-        <div className="floating-blob w-[550px] h-[550px] bg-lavender/25 top-[-80px] right-[-150px]" />
-        <div className="floating-blob w-[400px] h-[400px] bg-peach/30 bottom-[-40px] left-[-100px]" />
-        <div className="floating-blob w-[250px] h-[250px] bg-blush/25 top-[50%] left-[60%]" />
+        <div className="floating-blob w-[550px] h-[550px] bg-pale-lilac/25 top-[-80px] right-[-150px]" />
+        <div className="floating-blob w-[400px] h-[400px] bg-dusty-rose/20 bottom-[-40px] left-[-100px]" />
 
-        <div className="container mx-auto px-4 max-w-6xl relative z-10">
+        <div className="container mx-auto px-6 md:px-12 max-w-6xl relative z-10">
           <div className="grid md:grid-cols-2 gap-14 md:gap-20 items-center">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -241,21 +258,22 @@ const Index = () => {
               transition={{ duration: 0.7 }}
             >
               <div className="relative">
-                <div className="glass-card-strong rounded-3xl p-2.5 shadow-glass">
+                <div className="glass-card-strong rounded-3xl p-2.5">
                   <img
                     src={coupleImg}
                     alt="Corine & Ruben"
-                    className="rounded-2xl w-full object-cover aspect-[4/5]"
+                    className="rounded-[20px] w-full object-cover aspect-[4/5]"
+                    style={{ boxShadow: '0 20px 40px rgba(107, 78, 113, 0.15)' }}
                   />
                 </div>
                 {/* Floating badge */}
                 <motion.div
                   animate={{ y: [-8, 8, -8] }}
                   transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute -bottom-6 -right-6 glass-card-strong rounded-2xl p-4 shadow-glass"
+                  className="absolute -bottom-6 -right-6 glass-card-strong rounded-3xl p-4"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-full gradient-primary flex items-center justify-center shadow-soft">
+                    <div className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center shadow-soft">
                       <Heart className="w-5 h-5 text-primary-foreground fill-primary-foreground" />
                     </div>
                     <div>
@@ -264,15 +282,15 @@ const Index = () => {
                     </div>
                   </div>
                 </motion.div>
-                {/* Top-left decorative glass chip */}
+                {/* Sparkle chip */}
                 <motion.div
                   animate={{ y: [6, -6, 6] }}
                   transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute -top-4 -left-4 glass-card rounded-xl px-3 py-2 shadow-glass hidden md:block"
+                  className="absolute -top-4 -left-4 glass-card rounded-2xl px-4 py-2.5 hidden md:block"
                 >
                   <div className="flex items-center gap-2">
-                    <Sparkles className="w-3.5 h-3.5 text-primary" />
-                    <span className="font-sans-elegant text-[10px] font-semibold text-foreground tracking-wide">Our Journey</span>
+                    <Sparkles className="w-4 h-4 text-primary" />
+                    <span className="font-sans-elegant text-xs font-semibold text-foreground">Our Journey</span>
                   </div>
                 </motion.div>
               </div>
@@ -284,22 +302,22 @@ const Index = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
             >
-              <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-6 shadow-glass">
+              <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-6">
                 <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('nav.story')}</p>
               </div>
-              <h2 className="font-serif-display text-3xl md:text-5xl text-foreground mb-6 font-bold leading-tight">
+              <h2 className="font-serif-display text-3xl md:text-5xl text-foreground mb-6 font-semibold">
                 {t('story.title')}
               </h2>
-              <div className="glass-card rounded-2xl p-6 mb-6">
+              <div className="glass-card rounded-3xl p-6 mb-6">
                 <p className="font-sans-elegant text-base text-muted-foreground leading-relaxed">
                   <span className="text-foreground font-semibold">{t('story.event1.description').split('.')[0]}.</span>{' '}
                   {t('story.event1.description').split('.').slice(1).join('.')}
                 </p>
               </div>
-              <p className="font-serif-body text-lg text-muted-foreground leading-relaxed mb-8 italic">
+              <p className="font-serif-display text-lg text-muted-foreground leading-relaxed mb-8 italic">
                 "{t('story.event5.description')}"
               </p>
-              <Link to="/story" className="btn-primary px-8 py-3.5">
+              <Link to="/story" className="btn-primary">
                 {t('nav.story')} →
               </Link>
             </motion.div>
@@ -308,28 +326,26 @@ const Index = () => {
       </section>
 
       {/* ===== HIGHLIGHTS CARDS ===== */}
-      <section className="py-24 md:py-32 relative overflow-hidden">
+      <section className="py-28 md:py-36 relative overflow-hidden">
         <div className="absolute inset-0 gradient-soft" />
-        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-background/20 to-background/50" />
-        <div className="floating-blob w-[500px] h-[500px] bg-primary/18 top-[-80px] left-[-120px]" />
-        <div className="floating-blob w-[400px] h-[400px] bg-lavender/22 bottom-[-60px] right-[-80px]" />
-        <div className="floating-blob w-[200px] h-[200px] bg-rose/15 top-[40%] right-[20%]" />
+        <div className="floating-blob w-[500px] h-[500px] bg-primary/15 top-[-80px] left-[-120px]" />
+        <div className="floating-blob w-[400px] h-[400px] bg-pale-lilac/20 bottom-[-60px] right-[-80px]" />
 
-        <div className="container mx-auto px-4 max-w-6xl relative z-10">
+        <div className="container mx-auto px-6 md:px-12 max-w-6xl relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5 shadow-glass">
+            <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
               <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('nav.details')}</p>
             </div>
-            <h2 className="font-serif-display text-3xl md:text-5xl text-foreground font-bold mb-4">{t('details.title')}</h2>
-            <p className="font-serif-body text-lg text-muted-foreground max-w-lg mx-auto italic">{t('details.subtitle')}</p>
+            <h2 className="font-serif-display text-3xl md:text-5xl text-foreground font-semibold mb-4">{t('details.title')}</h2>
+            <p className="font-sans-elegant text-lg text-muted-foreground max-w-lg mx-auto">{t('details.subtitle')}</p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-8">
             {highlights.map((item, i) => (
               <motion.div
                 key={i}
@@ -339,20 +355,20 @@ const Index = () => {
                 transition={{ delay: i * 0.15 }}
                 className="group"
               >
-                <div className="glass-card-strong rounded-3xl overflow-hidden hover:shadow-card-hover transition-all duration-500 shadow-glass">
+                <div className="glass-card-strong rounded-3xl overflow-hidden card-hover">
                   <div className="relative h-60 overflow-hidden">
                     <img src={item.img} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/30 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
                     <div className="absolute bottom-4 left-4 right-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center shadow-soft">
+                        <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center">
                           <item.icon className="w-4 h-4 text-primary-foreground" />
                         </div>
-                        <p className="font-sans-elegant text-sm font-bold text-foreground">{t(item.titleKey)}</p>
+                        <p className="font-sans-elegant text-sm font-semibold text-white">{t(item.titleKey)}</p>
                       </div>
                     </div>
                   </div>
-                  <div className="p-6">
+                  <div className="p-8">
                     <p className="font-sans-elegant text-sm text-muted-foreground leading-relaxed">{t(item.descKey)}</p>
                   </div>
                 </div>
@@ -363,27 +379,23 @@ const Index = () => {
       </section>
 
       {/* ===== STATS ===== */}
-      <section className="py-24 md:py-32 relative overflow-hidden">
+      <section className="py-28 md:py-36 relative overflow-hidden">
         <div className="absolute inset-0 gradient-mesh" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-background/30" />
-        <div className="floating-blob w-[550px] h-[550px] bg-primary/20 top-[-120px] right-[-120px]" />
-        <div className="floating-blob w-[350px] h-[350px] bg-lavender/25 bottom-[-60px] left-[-80px]" />
-        <div className="floating-blob w-[250px] h-[250px] bg-peach/20 top-[30%] left-[50%]" />
+        <div className="floating-blob w-[550px] h-[550px] bg-primary/18 top-[-120px] right-[-120px]" />
+        <div className="floating-blob w-[350px] h-[350px] bg-pale-lilac/22 bottom-[-60px] left-[-80px]" />
 
-        <div className="container mx-auto px-4 max-w-5xl relative z-10 text-center">
+        <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="glass-card-strong rounded-full w-28 h-28 mx-auto mb-8 flex items-center justify-center overflow-hidden shadow-glass ring-4 ring-primary/10">
-              <img src={flowersImg} alt="" className="w-full h-full object-cover" />
-            </div>
-            <h2 className="font-serif-display text-3xl md:text-5xl text-foreground font-bold mb-4">
+            <p className="font-sans-elegant text-sm text-muted-foreground mb-4 tracking-wide">Join our celebration</p>
+            <h2 className="font-serif-display text-3xl md:text-5xl text-foreground font-semibold mb-4">
               {t('hero.tagline')}
             </h2>
-            <p className="font-serif-body text-lg text-muted-foreground italic mb-14 max-w-md mx-auto">
+            <p className="font-sans-elegant text-lg text-muted-foreground mb-14 max-w-md mx-auto">
               A celebration of love, family & togetherness
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
               { value: countdown.days, label: t('countdown.days'), icon: '📅' },
               { value: '150+', label: 'Guests Invited', icon: '👥' },
@@ -396,52 +408,61 @@ const Index = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="glass-card-strong rounded-2xl p-7 hover:shadow-card-hover transition-all duration-500 shadow-glass group"
+                className="glass-card-strong rounded-3xl p-8 card-hover group"
               >
                 <span className="text-3xl mb-3 block group-hover:scale-110 transition-transform duration-300">{stat.icon}</span>
-                <span className="font-serif-display text-3xl md:text-4xl font-bold gradient-text block mb-2">
+                <span className="font-serif-display text-3xl md:text-4xl font-semibold gradient-text block mb-2">
                   {typeof stat.value === 'number' ? String(stat.value).padStart(2, '0') : stat.value}
                 </span>
                 <span className="font-sans-elegant text-xs tracking-[0.12em] uppercase text-muted-foreground font-medium">{stat.label}</span>
               </motion.div>
             ))}
           </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-14"
+          >
+            <Link to="/rsvp" className="btn-primary">
+              {t('hero.cta')} →
+            </Link>
+          </motion.div>
         </div>
       </section>
 
       {/* ===== EXPLORE NAVIGATION ===== */}
-      <section className="py-24 md:py-32 relative overflow-hidden">
+      <section className="py-28 md:py-36 relative overflow-hidden">
         <div className="absolute inset-0 gradient-hero" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-transparent to-background/50" />
-        <div className="floating-blob w-[450px] h-[450px] bg-accent/22 bottom-[-100px] right-[-120px]" />
-        <div className="floating-blob w-[350px] h-[350px] bg-peach/25 top-[-60px] left-[-80px]" />
-        <div className="floating-blob w-[200px] h-[200px] bg-blush/30 top-[60%] left-[40%]" />
+        <div className="floating-blob w-[450px] h-[450px] bg-accent/20 bottom-[-100px] right-[-120px]" />
+        <div className="floating-blob w-[350px] h-[350px] bg-dusty-rose/20 top-[-60px] left-[-80px]" />
 
-        <div className="container mx-auto px-4 max-w-5xl relative z-10">
+        <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
-            <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5 shadow-glass">
+            <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
               <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">Explore</p>
             </div>
-            <h2 className="font-serif-display text-3xl md:text-5xl text-foreground font-bold mb-4">
-              {t('explore.title') || 'Explore Our Wedding'}
+            <h2 className="font-serif-display text-3xl md:text-5xl text-foreground font-semibold mb-4">
+              {t('explore.title')}
             </h2>
-            <p className="font-serif-body text-lg text-muted-foreground italic max-w-md mx-auto">
-              {t('explore.subtitle') || 'Everything you need to know'}
+            <p className="font-sans-elegant text-lg text-muted-foreground max-w-md mx-auto">
+              {t('explore.subtitle')}
             </p>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {features.map((feat, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
                 <Link
                   to={feat.to}
-                  className="glass-card-strong rounded-2xl p-7 flex flex-col items-center text-center hover:shadow-card-hover transition-all duration-500 group block h-full shadow-glass"
+                  className="glass-card-strong rounded-3xl p-8 flex flex-col items-center text-center card-hover group block h-full"
                 >
                   <div className="w-16 h-16 rounded-2xl gradient-primary flex items-center justify-center mb-5 group-hover:shadow-glow group-hover:scale-110 transition-all duration-500 shadow-soft">
                     <feat.icon className="w-7 h-7 text-primary-foreground" />
                   </div>
-                  <h3 className="font-sans-elegant text-sm font-bold text-foreground mb-2 tracking-wide">{feat.label}</h3>
-                  <p className="font-serif-body text-sm text-muted-foreground leading-relaxed italic">{feat.desc}</p>
+                  <h3 className="font-serif-display text-lg font-semibold text-foreground mb-2">{feat.label}</h3>
+                  <p className="font-sans-elegant text-sm text-muted-foreground leading-relaxed">{feat.desc}</p>
                 </Link>
               </motion.div>
             ))}
@@ -450,22 +471,21 @@ const Index = () => {
       </section>
 
       {/* ===== GALLERY PREVIEW ===== */}
-      <section className="py-24 md:py-32 relative overflow-hidden">
+      <section className="py-28 md:py-36 relative overflow-hidden">
         <div className="absolute inset-0 gradient-mesh" />
-        <div className="absolute inset-0 bg-gradient-to-br from-background/30 via-transparent to-background/40" />
-        <div className="floating-blob w-[450px] h-[450px] bg-lavender/20 top-[-60px] right-[-80px]" />
-        <div className="floating-blob w-[300px] h-[300px] bg-primary/15 bottom-[-40px] left-[-60px]" />
+        <div className="floating-blob w-[450px] h-[450px] bg-pale-lilac/18 top-[-60px] right-[-80px]" />
+        <div className="floating-blob w-[300px] h-[300px] bg-primary/12 bottom-[-40px] left-[-60px]" />
 
-        <div className="container mx-auto px-4 max-w-6xl relative z-10">
+        <div className="container mx-auto px-6 md:px-12 max-w-6xl relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-14">
-            <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5 shadow-glass">
+            <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
               <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('nav.gallery')}</p>
             </div>
-            <h2 className="font-serif-display text-3xl md:text-5xl text-foreground font-bold mb-4">{t('gallery.title')}</h2>
-            <p className="font-serif-body text-lg text-muted-foreground italic max-w-md mx-auto">Captured moments of our love story</p>
+            <h2 className="font-serif-display text-3xl md:text-5xl text-foreground font-semibold mb-4">{t('gallery.title')}</h2>
+            <p className="font-sans-elegant text-lg text-muted-foreground max-w-md mx-auto">Captured moments of our love story</p>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[heroImg, flowersImg, ringsImg, venueImg, coupleImg, cakeImg].map((img, i) => (
               <motion.div
                 key={i}
@@ -473,15 +493,15 @@ const Index = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className={`overflow-hidden rounded-2xl ${i === 0 ? 'md:col-span-2 md:row-span-2' : ''} group cursor-pointer glass-card-strong p-1.5 hover:shadow-card-hover transition-all duration-500 shadow-glass`}
+                className={`overflow-hidden rounded-[20px] ${i === 0 ? 'md:col-span-2 md:row-span-2' : ''} group cursor-pointer glass-card-strong p-1.5 card-hover`}
               >
-                <img src={img} alt="" className="w-full h-full object-cover aspect-square rounded-xl group-hover:scale-105 transition-transform duration-700" />
+                <img src={img} alt="" className="w-full h-full object-cover aspect-square rounded-[16px] group-hover:scale-105 transition-transform duration-700" style={{ boxShadow: '0 20px 40px rgba(107, 78, 113, 0.15)' }} />
               </motion.div>
             ))}
           </div>
 
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center mt-12">
-            <Link to="/gallery" className="btn-primary px-9 py-4">
+            <Link to="/gallery" className="btn-primary">
               {t('nav.gallery')} →
             </Link>
           </motion.div>
@@ -491,23 +511,21 @@ const Index = () => {
       {/* ===== CTA / RSVP ===== */}
       <section className="py-28 md:py-36 relative overflow-hidden">
         <div className="absolute inset-0 gradient-hero" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-background/40" />
-        <div className="floating-blob w-[600px] h-[600px] bg-primary/22 top-[-120px] left-[-120px]" />
-        <div className="floating-blob w-[450px] h-[450px] bg-lavender/20 bottom-[-100px] right-[-100px]" />
-        <div className="floating-blob w-[250px] h-[250px] bg-blush/30 top-[50%] right-[30%]" />
+        <div className="floating-blob w-[600px] h-[600px] bg-primary/18 top-[-120px] left-[-120px]" />
+        <div className="floating-blob w-[450px] h-[450px] bg-pale-lilac/18 bottom-[-100px] right-[-100px]" />
 
-        <div className="container mx-auto px-4 max-w-3xl relative z-10 text-center">
+        <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="glass-card-strong rounded-full w-32 h-32 mx-auto mb-10 flex items-center justify-center overflow-hidden shadow-glass ring-4 ring-primary/10">
+            <div className="glass-card-strong rounded-full w-32 h-32 mx-auto mb-10 flex items-center justify-center overflow-hidden ring-4 ring-primary/15">
               <img src={ringsImg} alt="" className="w-full h-full object-cover" />
             </div>
-            <h2 className="font-serif-display text-4xl md:text-6xl text-foreground font-bold mb-6">
+            <h2 className="font-serif-display text-4xl md:text-6xl text-foreground font-semibold mb-6">
               {t('rsvp.title')}
             </h2>
-            <p className="font-serif-body text-lg md:text-xl text-muted-foreground leading-relaxed mb-12 max-w-lg mx-auto italic">
+            <p className="font-sans-elegant text-lg md:text-xl text-muted-foreground leading-relaxed mb-12 max-w-lg mx-auto">
               {t('rsvp.subtitle')}
             </p>
-            <Link to="/rsvp" className="btn-primary px-12 py-4 text-base">
+            <Link to="/rsvp" className="btn-primary text-base">
               {t('hero.cta')}
             </Link>
           </motion.div>

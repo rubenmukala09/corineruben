@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -9,7 +9,14 @@ const Navigation = () => {
   const { language, setLanguage, t } = useLanguage();
   const { theme, toggleTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const links = [
     { to: '/', label: t('nav.home') },
@@ -21,23 +28,31 @@ const Navigation = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass-card-strong border-b border-border/15" style={{ borderRadius: 0 }}>
-      <div className="container mx-auto px-6 flex items-center justify-between py-4">
-        <Link to="/" className="font-serif-display text-xl md:text-2xl tracking-wider gradient-text font-bold hover:opacity-80 transition-opacity">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? 'glass-card-strong border-b border-border/20'
+          : 'bg-transparent'
+      }`}
+      style={{ borderRadius: 0, height: '80px' }}
+    >
+      <div className="container mx-auto px-6 md:px-12 flex items-center justify-between h-full">
+        <Link to="/" className="font-serif-display text-lg font-semibold tracking-wide gradient-text hover:opacity-80 transition-opacity" style={{ letterSpacing: '0.5px' }}>
           C & R
         </Link>
 
         {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-7">
+        <div className="hidden md:flex items-center gap-8">
           {links.map(link => (
             <Link
               key={link.to}
               to={link.to}
-              className={`text-[13px] font-sans-elegant font-medium tracking-wide transition-all duration-300 relative py-1.5 ${
+              className={`font-sans-elegant text-sm font-medium transition-all duration-300 relative py-1.5 ${
                 location.pathname === link.to
                   ? 'text-primary font-semibold'
-                  : 'text-muted-foreground hover:text-foreground'
+                  : 'text-foreground hover:text-primary'
               }`}
+              style={{ letterSpacing: '0.3px' }}
             >
               {link.label}
               {location.pathname === link.to && (
@@ -55,7 +70,7 @@ const Navigation = () => {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setLanguage(language === 'fr' ? 'en' : 'fr')}
-            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-sans-elegant font-semibold rounded-full border border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+            className="btn-outline flex items-center gap-1.5 !px-4 !py-2 !text-xs"
             aria-label="Toggle language"
           >
             <Globe className="w-3.5 h-3.5" />
@@ -70,7 +85,7 @@ const Navigation = () => {
           </button>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden p-2.5 rounded-full hover:bg-primary/10 transition-all duration-300 text-muted-foreground"
+            className="md:hidden p-2.5 rounded-full hover:bg-primary/10 transition-all duration-300 text-foreground"
             aria-label="Toggle menu"
           >
             {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -93,11 +108,12 @@ const Navigation = () => {
                   key={link.to}
                   to={link.to}
                   onClick={() => setMobileOpen(false)}
-                  className={`text-sm font-sans-elegant font-medium tracking-wide py-3 px-4 rounded-xl transition-all duration-300 ${
+                  className={`font-sans-elegant text-sm font-medium py-3 px-4 rounded-2xl transition-all duration-300 ${
                     location.pathname === link.to
-                      ? 'text-primary bg-primary/10 font-semibold'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                      ? 'text-primary-foreground bg-primary font-semibold'
+                      : 'text-foreground hover:bg-primary/10'
                   }`}
+                  style={{ letterSpacing: '0.3px' }}
                 >
                   {link.label}
                 </Link>
