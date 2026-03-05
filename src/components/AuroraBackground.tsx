@@ -20,7 +20,7 @@ const AuroraBackground = ({ variant = 'mesh', className = '' }: AuroraBackground
       // Deep Plum / Orchid glow — bottom-left
       width: 600, height: 600,
       lightBg: 'rgba(139, 107, 138, 0.45)',
-      darkBg: 'rgba(160, 100, 200, 0.25)',
+      darkBg: 'rgba(120, 80, 160, 0.12)',
       left: '-10%', bottom: '-5%',
       animate: { x: [0, 40, -20, 0], y: [0, -30, 20, 0], scale: [1, 1.1, 0.95, 1] },
       duration: 18, delay: 0,
@@ -29,7 +29,7 @@ const AuroraBackground = ({ variant = 'mesh', className = '' }: AuroraBackground
       // Rose Gold — mid-left
       width: 500, height: 500,
       lightBg: 'rgba(212, 165, 165, 0.35)',
-      darkBg: 'rgba(200, 120, 150, 0.2)',
+      darkBg: 'rgba(160, 100, 130, 0.1)',
       left: '-5%', top: '30%',
       animate: { x: [0, 60, -30, 0], y: [0, 40, -20, 0], scale: [1, 0.9, 1.1, 1] },
       duration: 22, delay: 2,
@@ -38,7 +38,7 @@ const AuroraBackground = ({ variant = 'mesh', className = '' }: AuroraBackground
       // Peach / Warm amber — bottom-right
       width: 550, height: 550,
       lightBg: 'rgba(232, 196, 184, 0.4)',
-      darkBg: 'rgba(180, 120, 140, 0.18)',
+      darkBg: 'rgba(140, 100, 120, 0.09)',
       right: '-8%', bottom: '5%',
       animate: { x: [0, -50, 30, 0], y: [0, -40, 25, 0], scale: [1, 1.08, 0.92, 1] },
       duration: 20, delay: 4,
@@ -47,7 +47,7 @@ const AuroraBackground = ({ variant = 'mesh', className = '' }: AuroraBackground
       // Lavender / Amethyst — top-right
       width: 500, height: 500,
       lightBg: 'rgba(212, 196, 224, 0.3)',
-      darkBg: 'rgba(140, 110, 210, 0.2)',
+      darkBg: 'rgba(110, 90, 160, 0.1)',
       right: '-10%', top: '0%',
       animate: { x: [0, -40, 20, 0], y: [0, 30, -15, 0], scale: [1, 1.05, 0.95, 1] },
       duration: 24, delay: 6,
@@ -56,7 +56,7 @@ const AuroraBackground = ({ variant = 'mesh', className = '' }: AuroraBackground
       // Cream / Soft glow — center
       width: 400, height: 400,
       lightBg: 'rgba(245, 230, 220, 0.45)',
-      darkBg: 'rgba(160, 130, 200, 0.15)',
+      darkBg: 'rgba(120, 100, 150, 0.08)',
       left: '30%', top: '25%',
       animate: { x: [0, 30, -40, 0], y: [0, -25, 35, 0], scale: [1, 1.12, 0.88, 1] },
       duration: 16, delay: 1,
@@ -65,7 +65,7 @@ const AuroraBackground = ({ variant = 'mesh', className = '' }: AuroraBackground
       // Muted Coral / Magenta — bottom accent
       width: 350, height: 350,
       lightBg: 'rgba(224, 180, 168, 0.35)',
-      darkBg: 'rgba(180, 100, 160, 0.18)',
+      darkBg: 'rgba(140, 80, 120, 0.09)',
       left: '20%', bottom: '10%',
       animate: { x: [0, -35, 45, 0], y: [0, 20, -30, 0], scale: [1, 0.95, 1.1, 1] },
       duration: 19, delay: 3,
