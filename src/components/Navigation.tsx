@@ -76,7 +76,7 @@ const Navigation = React.memo(() => {
         />
       )}
 
-      <nav className="sticky top-0 z-[9999] border-b border-white/20 bg-white/90 backdrop-blur-sm shadow-sm">
+      <nav className="sticky top-0 z-[9999] bg-white/95 backdrop-blur-md border-b border-border/50 shadow-sm">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-16">
             {/* Logo */}
@@ -119,13 +119,16 @@ const Navigation = React.memo(() => {
                   <PrefetchLink
                     key={link.name}
                     to={link.href}
-                    className={`relative text-sm transition-colors duration-150 font-semibold px-3 py-2 rounded-md whitespace-nowrap tracking-tight ${
+                    className={`relative text-sm transition-colors duration-150 font-semibold px-3 py-2 whitespace-nowrap tracking-tight ${
                       isActive
-                        ? "text-primary font-bold bg-primary/10 border border-primary/15 shadow-sm"
-                        : "text-foreground/80 hover:text-foreground hover:bg-card/80"
+                        ? "text-primary font-bold"
+                        : "text-foreground/75 hover:text-foreground"
                     }`}
                   >
                     {link.name}
+                    {isActive && (
+                      <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary" />
+                    )}
                   </PrefetchLink>
                 );
               })}
@@ -207,10 +210,10 @@ const Navigation = React.memo(() => {
                   <Link
                     key={link.name}
                     to={link.href}
-                    className={`block text-base transition-colors duration-150 font-medium px-4 py-3 rounded-lg ${
+                   className={`block text-base transition-colors duration-150 font-medium px-4 py-3 rounded-lg ${
                       isActive
-                        ? "text-primary bg-primary/10 border border-primary/15 font-semibold"
-                        : "text-muted-foreground hover:text-foreground hover:bg-card/80"
+                        ? "text-primary font-semibold bg-primary/5"
+                        : "text-muted-foreground hover:text-foreground"
                     }`}
                     onClick={() => {
                       setMobileMenuOpen(false);
@@ -273,7 +276,7 @@ const Navigation = React.memo(() => {
           </div>
         )}
 
-        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent pointer-events-none" />
+        
       </nav>
 
       {/* Donation Modal */}
