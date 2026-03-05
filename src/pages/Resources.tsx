@@ -590,16 +590,14 @@ function Resources() {
             <Button
               size="xl"
               onClick={() => scrollToSection("guides")}
-              className="transition-all duration-300 hover:scale-[1.03] tactile-button">
-
+            >
               Shop Digital Guides
             </Button>
             <Button
               size="xl"
-              variant="outlineLight"
+              variant="heroOutline"
               asChild
-              className="transition-all duration-300 hover:scale-[1.03] tactile-button">
-
+            >
               <Link to="/training#pricing">Get Protection Plan</Link>
             </Button>
           </div>
@@ -735,9 +733,8 @@ function Resources() {
           </ScrollReveal>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-3">
-            {staticBooks.map((book, index) =>
-            <ScrollReveal key={book.id} delay={index * 50}>
-                <Card className="group p-3 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-border/50 hover:border-primary/30 relative overflow-hidden bg-card h-full flex flex-col">
+            {staticBooks.map((book) =>
+              <Card key={book.id} className="group p-3 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-border/50 hover:border-primary/30 relative overflow-hidden bg-card h-full flex flex-col">
                   {/* eBook Badge - Top Left */}
                   <Badge className="absolute top-2 left-2 text-[9px] px-1.5 py-0.5 bg-primary/90 text-primary-foreground z-10 shadow-sm">
                     📘 eBook
@@ -829,7 +826,6 @@ function Resources() {
                     </div>
                   </div>
                 </Card>
-              </ScrollReveal>
             )}
           </div>
 
