@@ -62,6 +62,8 @@ import supportAgentPhoto from "@/assets/support-agent.jpg";
 import familyGathering from "@/assets/family-gathering.jpg";
 import { SITE } from "@/config/site";
 
+type ContactFormData = z.infer<typeof contactFormSchema>;
+
 const contactMethods = [
   {
     icon: Phone,
@@ -106,35 +108,40 @@ const contactMethods = [
 ];
 
 function Contact() {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    subject: "",
-    message: "",
-    hearAbout: "",
-    contactMethod: "email",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { fireCelebration } = useConfetti();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  const form = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      phone: "",
+      subject: "",
+      message: "",
+      hearAbout: "",
+      contactMethod: "email",
+    },
+  });
 
+  const isSubmitting = form.formState.isSubmitting;
+  const messageValue = form.watch("message") || "";
+  const messageLength = messageValue.length;
+  const maxLength = 500;
+
+  const handleSubmit = async (data: ContactFormData) => {
     try {
-      const { data, error } = await supabase.functions.invoke(
+      const { error } = await supabase.functions.invoke(
         "send-contact-email",
         {
           body: {
-            name: formData.fullName,
-            email: formData.email,
-            phone: formData.phone,
-            interest: formData.subject,
-            message: formData.message,
-            hearAbout: formData.hearAbout,
-            contactMethod: formData.contactMethod,
+            name: data.fullName,
+            email: data.email,
+            phone: data.phone || "",
+            interest: data.subject,
+            message: data.message,
+            hearAbout: data.hearAbout || "",
+            contactMethod: data.contactMethod,
           },
         },
       );
@@ -144,7 +151,7 @@ function Contact() {
       // Track conversion
       const { trackFormSubmit, trackConversion } =
         await import("@/utils/analyticsTracker");
-      trackFormSubmit("contact_form", { subject: formData.subject });
+      trackFormSubmit("contact_form", { subject: data.subject });
       trackConversion("contact_inquiry");
 
       setIsSubmitted(true);
@@ -154,28 +161,15 @@ function Contact() {
       // Reset form after 3 seconds
       setTimeout(() => {
         setIsSubmitted(false);
-        setFormData({
-          fullName: "",
-          email: "",
-          phone: "",
-          subject: "",
-          message: "",
-          hearAbout: "",
-          contactMethod: "email",
-        });
+        form.reset();
       }, 3000);
     } catch (error) {
       console.error("Contact form error:", error);
       toast.error(
         `Failed to send message. Please try again or email us directly at ${SITE.emails.info}`,
       );
-    } finally {
-      setIsSubmitting(false);
     }
   };
-
-  const messageLength = formData.message.length;
-  const maxLength = 500;
 
   const contactHeroImages = PROFESSIONAL_HERO_IMAGES.contact;
 
@@ -330,270 +324,277 @@ function Contact() {
                       </p>
                     </div>
                   ) : (
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                      {/* Full Name with premium styling */}
-                      <div className="group">
-                        <Label
-                          htmlFor="fullName"
-                          className="text-sm font-semibold mb-2 block"
-                        >
-                          Full Name <span className="text-primary">*</span>
-                        </Label>
-                        <div className="relative">
-                          <Input
-                            id="fullName"
-                            required
-                            value={formData.fullName}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                fullName: e.target.value,
-                              })
-                            }
-                            placeholder="Enter your full name"
-                            className="h-12 bg-background/50 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 pl-4"
-                          />
-                        </div>
-                      </div>
-
-                      {/* Email & Phone in grid */}
-                      <div className="grid md:grid-cols-2 gap-5">
-                        <div className="group">
-                          <Label
-                            htmlFor="email"
-                            className="text-sm font-semibold mb-2 block"
-                          >
-                            Email <span className="text-primary">*</span>
-                          </Label>
-                          <Input
-                            id="email"
-                            type="email"
-                            required
-                            value={formData.email}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                email: e.target.value,
-                              })
-                            }
-                            placeholder="your@email.com"
-                            className="h-12 bg-background/50 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
-                          />
-                        </div>
-                        <div className="group">
-                          <Label
-                            htmlFor="phone"
-                            className="text-sm font-semibold mb-2 block"
-                          >
-                            Phone{" "}
-                            <span className="text-muted-foreground text-xs">
-                              (optional)
-                            </span>
-                          </Label>
-                          <Input
-                            id="phone"
-                            type="tel"
-                            value={formData.phone}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                phone: e.target.value,
-                              })
-                            }
-                            placeholder="(937) 000-0000"
-                            className="h-12 bg-background/50 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
-                          />
-                        </div>
-                      </div>
-
-                      {/* Subject dropdown with premium styling */}
-                      <div className="group">
-                        <Label
-                          htmlFor="subject"
-                          className="text-sm font-semibold mb-2 block"
-                        >
-                          Subject <span className="text-primary">*</span>
-                        </Label>
-                        <Select
-                          required
-                          value={formData.subject}
-                          onValueChange={(value) =>
-                            setFormData({ ...formData, subject: value })
-                          }
-                        >
-                          <SelectTrigger className="h-12 bg-background/50 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300">
-                            <SelectValue placeholder="What can we help you with?" />
-                          </SelectTrigger>
-                          <SelectContent className="rounded-xl border-border/50 backdrop-blur-md">
-                            <SelectItem value="general">
-                              General Inquiry
-                            </SelectItem>
-                            <SelectItem value="support">
-                              Technical Support
-                            </SelectItem>
-                            <SelectItem value="business">
-                              Business Services
-                            </SelectItem>
-                            <SelectItem value="careers">Careers</SelectItem>
-                            <SelectItem value="billing">
-                              Billing Question
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      {/* Message textarea with character counter */}
-                      <div className="group">
-                        <Label
-                          htmlFor="message"
-                          className="text-sm font-semibold mb-2 block"
-                        >
-                          Message <span className="text-primary">*</span>
-                        </Label>
-                        <Textarea
-                          id="message"
-                          required
-                          value={formData.message}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              message: e.target.value,
-                            })
-                          }
-                          placeholder="Tell us how we can help you..."
-                          rows={5}
-                          maxLength={maxLength}
-                          className="bg-background/50 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 resize-none"
+                    <Form {...form}>
+                      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+                        {/* Full Name */}
+                        <FormField
+                          control={form.control}
+                          name="fullName"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-sm font-semibold">
+                                Full Name <span className="text-primary">*</span>
+                              </FormLabel>
+                              <FormControl>
+                                <Input
+                                  {...field}
+                                  placeholder="Enter your full name"
+                                  className="h-12 bg-background/50 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 pl-4"
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
                         />
-                        <div className="flex justify-between items-center mt-2">
-                          <div className="h-1.5 flex-1 bg-muted rounded-full overflow-hidden mr-4">
-                            <div
-                              className={`h-full rounded-full transition-all duration-300 ${
-                                messageLength > maxLength * 0.9
-                                  ? "bg-destructive"
-                                  : messageLength > maxLength * 0.7
-                                    ? "bg-yellow-500"
-                                    : "bg-primary"
-                              }`}
-                              style={{
-                                width: `${(messageLength / maxLength) * 100}%`,
-                              }}
-                            />
-                          </div>
-                          <span
-                            className={`text-xs font-medium ${messageLength > maxLength * 0.9 ? "text-destructive" : "text-muted-foreground"}`}
-                          >
-                            {messageLength}/{maxLength}
-                          </span>
+
+                        {/* Email & Phone in grid */}
+                        <div className="grid md:grid-cols-2 gap-5">
+                          <FormField
+                            control={form.control}
+                            name="email"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel className="text-sm font-semibold">
+                                  Email <span className="text-primary">*</span>
+                                </FormLabel>
+                                <FormControl>
+                                  <Input
+                                    {...field}
+                                    type="email"
+                                    placeholder="your@email.com"
+                                    className="h-12 bg-background/50 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control}
+                            name="phone"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel className="text-sm font-semibold">
+                                  Phone{" "}
+                                  <span className="text-muted-foreground text-xs">
+                                    (optional)
+                                  </span>
+                                </FormLabel>
+                                <FormControl>
+                                  <Input
+                                    {...field}
+                                    type="tel"
+                                    placeholder="(937) 000-0000"
+                                    className="h-12 bg-background/50 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
                         </div>
-                      </div>
 
-                      {/* How did you hear about us */}
-                      <div className="group">
-                        <Label
-                          htmlFor="hearAbout"
-                          className="text-sm font-semibold mb-2 block"
+                        {/* Subject dropdown */}
+                        <FormField
+                          control={form.control}
+                          name="subject"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-sm font-semibold">
+                                Subject <span className="text-primary">*</span>
+                              </FormLabel>
+                              <Select
+                                value={field.value}
+                                onValueChange={field.onChange}
+                              >
+                                <FormControl>
+                                  <SelectTrigger className="h-12 bg-background/50 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300">
+                                    <SelectValue placeholder="What can we help you with?" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent className="rounded-xl border-border/50 backdrop-blur-md">
+                                  <SelectItem value="general">
+                                    General Inquiry
+                                  </SelectItem>
+                                  <SelectItem value="support">
+                                    Technical Support
+                                  </SelectItem>
+                                  <SelectItem value="business">
+                                    Business Services
+                                  </SelectItem>
+                                  <SelectItem value="careers">Careers</SelectItem>
+                                  <SelectItem value="billing">
+                                    Billing Question
+                                  </SelectItem>
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        {/* Message textarea with character counter */}
+                        <FormField
+                          control={form.control}
+                          name="message"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-sm font-semibold">
+                                Message <span className="text-primary">*</span>
+                              </FormLabel>
+                              <FormControl>
+                                <Textarea
+                                  {...field}
+                                  placeholder="Tell us how we can help you..."
+                                  rows={5}
+                                  maxLength={maxLength}
+                                  className="bg-background/50 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 resize-none"
+                                />
+                              </FormControl>
+                              <div className="flex justify-between items-center mt-2">
+                                <div className="h-1.5 flex-1 bg-muted rounded-full overflow-hidden mr-4">
+                                  <div
+                                    className={`h-full rounded-full transition-all duration-300 ${
+                                      messageLength > maxLength * 0.9
+                                        ? "bg-destructive"
+                                        : messageLength > maxLength * 0.7
+                                          ? "bg-yellow-500"
+                                          : "bg-primary"
+                                    }`}
+                                    style={{
+                                      width: `${(messageLength / maxLength) * 100}%`,
+                                    }}
+                                  />
+                                </div>
+                                <span
+                                  className={`text-xs font-medium ${messageLength > maxLength * 0.9 ? "text-destructive" : "text-muted-foreground"}`}
+                                >
+                                  {messageLength}/{maxLength}
+                                </span>
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        {/* How did you hear about us */}
+                        <FormField
+                          control={form.control}
+                          name="hearAbout"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-sm font-semibold">
+                                How did you hear about us?
+                              </FormLabel>
+                              <Select
+                                value={field.value}
+                                onValueChange={field.onChange}
+                              >
+                                <FormControl>
+                                  <SelectTrigger className="h-12 bg-background/50 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300">
+                                    <SelectValue placeholder="Select an option" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent className="rounded-xl border-border/50 backdrop-blur-md">
+                                  <SelectItem value="search">
+                                    Search Engine
+                                  </SelectItem>
+                                  <SelectItem value="social">Social Media</SelectItem>
+                                  <SelectItem value="referral">
+                                    Friend/Family Referral
+                                  </SelectItem>
+                                  <SelectItem value="news">News Article</SelectItem>
+                                  <SelectItem value="other">Other</SelectItem>
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        {/* Preferred Contact Method */}
+                        <FormField
+                          control={form.control}
+                          name="contactMethod"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-sm font-semibold">
+                                Preferred Contact Method{" "}
+                                <span className="text-primary">*</span>
+                              </FormLabel>
+                              <FormControl>
+                                <RadioGroup
+                                  value={field.value}
+                                  onValueChange={field.onChange}
+                                  className="flex gap-4"
+                                >
+                                  <div
+                                    className={`flex-1 flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 ${
+                                      field.value === "email"
+                                        ? "border-primary bg-primary/5"
+                                        : "border-border/50 hover:border-primary/50"
+                                    }`}
+                                  >
+                                    <RadioGroupItem value="email" id="contact-email" />
+                                    <Label
+                                      htmlFor="contact-email"
+                                      className="cursor-pointer flex items-center gap-2"
+                                    >
+                                      <Mail className="w-4 h-4" />
+                                      Email
+                                    </Label>
+                                  </div>
+                                  <div
+                                    className={`flex-1 flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 ${
+                                      field.value === "phone"
+                                        ? "border-primary bg-primary/5"
+                                        : "border-border/50 hover:border-primary/50"
+                                    }`}
+                                  >
+                                    <RadioGroupItem value="phone" id="contact-phone" />
+                                    <Label
+                                      htmlFor="contact-phone"
+                                      className="cursor-pointer flex items-center gap-2"
+                                    >
+                                      <Phone className="w-4 h-4" />
+                                      Phone
+                                    </Label>
+                                  </div>
+                                </RadioGroup>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        {/* Premium Submit Button */}
+                        <Button
+                          type="submit"
+                          className="w-full h-14 text-lg font-bold rounded-xl bg-gradient-to-r from-primary via-purple-600 to-primary bg-[length:200%_100%] hover:bg-[position:100%_0] transition-all duration-500"
+                          size="lg"
+                          disabled={isSubmitting}
                         >
-                          How did you hear about us?
-                        </Label>
-                        <Select
-                          value={formData.hearAbout}
-                          onValueChange={(value) =>
-                            setFormData({ ...formData, hearAbout: value })
-                          }
-                        >
-                          <SelectTrigger className="h-12 bg-background/50 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300">
-                            <SelectValue placeholder="Select an option" />
-                          </SelectTrigger>
-                          <SelectContent className="rounded-xl border-border/50 backdrop-blur-md">
-                            <SelectItem value="search">
-                              Search Engine
-                            </SelectItem>
-                            <SelectItem value="social">Social Media</SelectItem>
-                            <SelectItem value="referral">
-                              Friend/Family Referral
-                            </SelectItem>
-                            <SelectItem value="news">News Article</SelectItem>
-                            <SelectItem value="other">Other</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
+                          {isSubmitting ? (
+                            <>
+                              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                              Sending...
+                            </>
+                          ) : (
+                            <>
+                              <MessageCircle className="mr-2 h-5 w-5" />
+                              Send Message
+                            </>
+                          )}
+                        </Button>
 
-                      {/* Preferred Contact Method with premium radio buttons */}
-                      <div className="group">
-                        <Label className="text-sm font-semibold mb-3 block">
-                          Preferred Contact Method{" "}
-                          <span className="text-primary">*</span>
-                        </Label>
-                        <RadioGroup
-                          value={formData.contactMethod}
-                          onValueChange={(value) =>
-                            setFormData({ ...formData, contactMethod: value })
-                          }
-                          className="flex gap-4"
-                        >
-                          <div
-                            className={`flex-1 flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 ${
-                              formData.contactMethod === "email"
-                                ? "border-primary bg-primary/5"
-                                : "border-border/50 hover:border-primary/50"
-                            }`}
-                          >
-                            <RadioGroupItem value="email" id="contact-email" />
-                            <Label
-                              htmlFor="contact-email"
-                              className="cursor-pointer flex items-center gap-2"
-                            >
-                              <Mail className="w-4 h-4" />
-                              Email
-                            </Label>
-                          </div>
-                          <div
-                            className={`flex-1 flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 ${
-                              formData.contactMethod === "phone"
-                                ? "border-primary bg-primary/5"
-                                : "border-border/50 hover:border-primary/50"
-                            }`}
-                          >
-                            <RadioGroupItem value="phone" id="contact-phone" />
-                            <Label
-                              htmlFor="contact-phone"
-                              className="cursor-pointer flex items-center gap-2"
-                            >
-                              <Phone className="w-4 h-4" />
-                              Phone
-                            </Label>
-                          </div>
-                        </RadioGroup>
-                      </div>
-
-                      {/* Premium Submit Button */}
-                      <Button
-                        type="submit"
-                        className="w-full h-14 text-lg font-bold rounded-xl bg-gradient-to-r from-primary via-purple-600 to-primary bg-[length:200%_100%] hover:bg-[position:100%_0] transition-all duration-500"
-                        size="lg"
-                        disabled={isSubmitting}
-                      >
-                        {isSubmitting ? (
-                          <>
-                            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                            Sending...
-                          </>
-                        ) : (
-                          <>
-                            <MessageCircle className="mr-2 h-5 w-5" />
-                            Send Message
-                          </>
-                        )}
-                      </Button>
-
-                      {/* Security note */}
-                      <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground bg-muted/30 rounded-lg p-3">
-                        <Shield className="w-4 h-4 text-success" />
-                        Your message is encrypted and secure. We never share
-                        your information.
-                      </div>
-                    </form>
+                        {/* Security note */}
+                        <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground bg-muted/30 rounded-lg p-3">
+                          <Shield className="w-4 h-4 text-success" />
+                          Your message is encrypted and secure. We never share
+                          your information.
+                        </div>
+                      </form>
+                    </Form>
                   )}
                 </div>
               </div>
