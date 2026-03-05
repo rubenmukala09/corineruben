@@ -7,7 +7,7 @@ import TrustBar from "@/components/TrustBar";
 import CTASection from "@/components/CTASection";
 import { PageTransition } from "@/components/PageTransition";
 // FloatingShapes removed for performance
-import { NatureAccent } from "@/components/ui/NatureAccent";
+// NatureAccent removed for performance
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -158,7 +158,7 @@ function About() {
 
       {/* Our Story */}
       <section className="py-10 sm:py-16 md:py-20 bg-background relative overflow-hidden">
-        <NatureAccent variant="landscape" position="right" opacity={0.1} />
+        
         <div className="container mx-auto px-4 lg:px-12">
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div>
@@ -213,7 +213,7 @@ function About() {
 
       {/* Timeline */}
       <section className="py-10 sm:py-16 md:py-20 bg-muted/30 relative overflow-hidden">
-        <NatureAccent variant="forest" position="left" opacity={0.08} />
+        
         <div className="container mx-auto px-4 lg:px-12">
           <div className="text-center mb-14">
             <span className="inline-block text-[11px] uppercase tracking-[0.15em] font-bold text-primary bg-primary/10 px-4 py-1.5 rounded-full mb-4">
@@ -232,7 +232,7 @@ function About() {
 
       {/* Founders */}
       <section id="founders" className="py-10 sm:py-16 md:py-20 bg-background relative overflow-hidden">
-        <NatureAccent variant="lake" position="right" opacity={0.07} />
+        
         <div className="container mx-auto px-4 lg:px-12">
           <div className="text-center mb-14">
             <span className="inline-block text-[11px] uppercase tracking-[0.15em] font-bold text-primary bg-primary/10 px-4 py-1.5 rounded-full mb-4">

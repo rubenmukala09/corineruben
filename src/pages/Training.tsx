@@ -61,7 +61,7 @@ import { SEO } from "@/components/SEO";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
 import HeroFloatingStats from "@/components/business/HeroFloatingStats";
 import { usePrerenderBlocker } from "@/contexts/PrerenderContext";
-import { NatureAccent } from "@/components/ui/NatureAccent";
+// NatureAccent removed for performance
 
 import seniorCouple from "@/assets/senior-couple-active.jpg";
 
@@ -639,7 +639,7 @@ function LearnAndTrain() {
         {/* ══════════ SECTION 1: WHY FAMILIES TRUST US ══════════ */}
         <section className="py-10 sm:py-16 md:py-20 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background" />
-          <NatureAccent variant="lake" position="right" opacity={0.09} />
+          
           <div className="absolute top-20 left-0 w-[500px] h-[500px] bg-primary/[0.03] rounded-full blur-3xl pointer-events-none" />
           <div className="container mx-auto px-4 lg:px-12 relative z-10">
             <div className="text-center mb-14">

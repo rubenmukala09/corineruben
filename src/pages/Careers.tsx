@@ -6,7 +6,7 @@ import TrustBar from "@/components/TrustBar";
 import { SEO } from "@/components/SEO";
 import { PageTransition } from "@/components/PageTransition";
 // ScrollReveal removed for instant rendering
-import { NatureAccent } from "@/components/ui/NatureAccent";
+// NatureAccent removed for performance
 import {
   Card,
   CardContent,
@@ -263,7 +263,7 @@ function Careers() {
       <section className="py-20 relative overflow-hidden">
         {/* Premium background — matches Business page */}
         <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background" />
-        <NatureAccent variant="landscape" position="right" opacity={0.09} />
+        
         <div className="absolute top-20 left-0 w-[500px] h-[500px] bg-primary/[0.03] rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-20 right-0 w-[400px] h-[400px] bg-accent/[0.04] rounded-full blur-3xl pointer-events-none" />
 
