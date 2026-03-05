@@ -50,18 +50,20 @@ const Index = () => {
     <div className="min-h-screen flex flex-col">
       {/* ===== HERO ===== */}
       <section className="w-full min-h-screen relative overflow-hidden flex flex-col items-center pt-8 pb-24">
-        {/* Aurora background layers */}
+        {/* Aurora background — the canvas */}
         <div className="absolute inset-0 gradient-hero" />
-        <div className="absolute inset-0">
-          <img src={heroImg} alt="Wedding hero background" className="w-full h-full object-cover opacity-[0.06] dark:opacity-[0.03]" style={{ filter: 'saturate(0.8) contrast(0.95) brightness(1.05) sepia(0.1)' }} />
+        {/* Hero image — very faint watermark only */}
+        <div className="absolute inset-0 mix-blend-soft-light">
+          <img src={heroImg} alt="" className="w-full h-full object-cover opacity-[0.12]" style={{ filter: 'saturate(0.4) brightness(1.2)' }} />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/40" />
 
-        {/* Aurora gradient blobs */}
-        <div className="absolute left-[-10%] bottom-[5%] w-[600px] h-[600px] rounded-full blur-[120px] -z-10 pointer-events-none" style={{ background: 'rgba(139, 107, 138, 0.35)' }} />
-        <div className="absolute right-[-10%] bottom-[10%] w-[600px] h-[600px] rounded-full blur-[120px] -z-10 pointer-events-none" style={{ background: 'rgba(212, 196, 224, 0.3)' }} />
-        <div className="absolute top-[-200px] right-[-150px] w-[500px] h-[500px] rounded-full blur-[100px] pointer-events-none opacity-35" style={{ background: 'rgba(232, 196, 184, 0.5)' }} />
-        <div className="absolute top-[5%] left-[-180px] w-[400px] h-[400px] rounded-full blur-[100px] pointer-events-none opacity-35" style={{ background: 'rgba(212, 165, 165, 0.4)' }} />
+        {/* Aurora gradient blobs — deep plum, rose gold, peach, lavender, coral */}
+        <div className="absolute left-[-5%] bottom-[0%] w-[700px] h-[700px] rounded-full blur-[120px] pointer-events-none" style={{ background: 'rgba(139, 107, 138, 0.6)' }} />
+        <div className="absolute left-[-10%] top-[30%] w-[500px] h-[500px] rounded-full blur-[100px] pointer-events-none" style={{ background: 'rgba(212, 165, 165, 0.4)' }} />
+        <div className="absolute right-[-5%] bottom-[5%] w-[600px] h-[600px] rounded-full blur-[120px] pointer-events-none" style={{ background: 'rgba(232, 196, 184, 0.45)' }} />
+        <div className="absolute right-[-10%] top-[0%] w-[500px] h-[500px] rounded-full blur-[100px] pointer-events-none" style={{ background: 'rgba(212, 196, 224, 0.35)' }} />
+        <div className="absolute left-[30%] top-[20%] w-[400px] h-[400px] rounded-full blur-[120px] pointer-events-none" style={{ background: 'rgba(245, 230, 220, 0.5)' }} />
+        <div className="absolute left-[20%] bottom-[10%] w-[350px] h-[350px] rounded-full blur-[100px] pointer-events-none" style={{ background: 'rgba(224, 180, 168, 0.4)' }} />
 
         {/* ===== HERO TEXT CONTAINER ===== */}
         <motion.div
@@ -271,8 +273,8 @@ const Index = () => {
       {/* ===== ABOUT / INTRO ===== */}
       <section className="py-28 md:py-36 relative overflow-hidden">
         <div className="absolute inset-0 gradient-mesh" />
-        <div className="floating-blob w-[550px] h-[550px] bg-pale-lilac/25 top-[-80px] right-[-150px]" />
-        <div className="floating-blob w-[400px] h-[400px] bg-dusty-rose/20 bottom-[-40px] left-[-100px]" />
+        <div className="absolute top-[-80px] right-[-150px] w-[550px] h-[550px] rounded-full blur-[100px] pointer-events-none" style={{ background: 'rgba(184, 169, 201, 0.3)' }} />
+        <div className="absolute bottom-[-40px] left-[-100px] w-[400px] h-[400px] rounded-full blur-[100px] pointer-events-none" style={{ background: 'rgba(212, 165, 165, 0.25)' }} />
 
         <div className="container mx-auto px-6 md:px-12 max-w-6xl relative z-10">
           <div className="grid md:grid-cols-2 gap-14 md:gap-20 items-center">
@@ -351,8 +353,8 @@ const Index = () => {
       {/* ===== HIGHLIGHTS CARDS ===== */}
       <section className="py-28 md:py-36 relative overflow-hidden">
         <div className="absolute inset-0 gradient-soft" />
-        <div className="floating-blob w-[500px] h-[500px] bg-primary/15 top-[-80px] left-[-120px]" />
-        <div className="floating-blob w-[400px] h-[400px] bg-pale-lilac/20 bottom-[-60px] right-[-80px]" />
+        <div className="absolute top-[-80px] left-[-120px] w-[500px] h-[500px] rounded-full blur-[100px] pointer-events-none" style={{ background: 'rgba(139, 107, 138, 0.25)' }} />
+        <div className="absolute bottom-[-60px] right-[-80px] w-[400px] h-[400px] rounded-full blur-[100px] pointer-events-none" style={{ background: 'rgba(212, 196, 224, 0.25)' }} />
 
         <div className="container mx-auto px-6 md:px-12 max-w-6xl relative z-10">
           <motion.div
@@ -404,8 +406,8 @@ const Index = () => {
       {/* ===== STATS ===== */}
       <section className="py-28 md:py-36 relative overflow-hidden">
         <div className="absolute inset-0 gradient-mesh" />
-        <div className="floating-blob w-[550px] h-[550px] bg-primary/20 top-[-120px] right-[-120px]" />
-        <div className="floating-blob w-[350px] h-[350px] bg-pale-lilac/25 bottom-[-60px] left-[-80px]" />
+        <div className="absolute top-[-120px] right-[-120px] w-[550px] h-[550px] rounded-full blur-[100px] pointer-events-none" style={{ background: 'rgba(201, 169, 182, 0.3)' }} />
+        <div className="absolute bottom-[-60px] left-[-80px] w-[350px] h-[350px] rounded-full blur-[100px] pointer-events-none" style={{ background: 'rgba(184, 169, 201, 0.25)' }} />
 
         <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
@@ -458,8 +460,8 @@ const Index = () => {
       {/* ===== EXPLORE NAVIGATION ===== */}
       <section className="py-28 md:py-36 relative overflow-hidden">
         <div className="absolute inset-0 gradient-hero" />
-        <div className="floating-blob w-[450px] h-[450px] bg-accent/20 bottom-[-100px] right-[-120px]" />
-        <div className="floating-blob w-[350px] h-[350px] bg-dusty-rose/20 top-[-60px] left-[-80px]" />
+        <div className="absolute bottom-[-100px] right-[-120px] w-[450px] h-[450px] rounded-full blur-[100px] pointer-events-none" style={{ background: 'rgba(232, 196, 184, 0.3)' }} />
+        <div className="absolute top-[-60px] left-[-80px] w-[350px] h-[350px] rounded-full blur-[100px] pointer-events-none" style={{ background: 'rgba(212, 165, 165, 0.25)' }} />
 
         <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
@@ -496,8 +498,8 @@ const Index = () => {
       {/* ===== GALLERY PREVIEW ===== */}
       <section className="py-28 md:py-36 relative overflow-hidden">
         <div className="absolute inset-0 gradient-mesh" />
-        <div className="floating-blob w-[450px] h-[450px] bg-pale-lilac/20 top-[-60px] right-[-80px]" />
-        <div className="floating-blob w-[300px] h-[300px] bg-primary/10 bottom-[-40px] left-[-60px]" />
+        <div className="absolute top-[-60px] right-[-80px] w-[450px] h-[450px] rounded-full blur-[100px] pointer-events-none" style={{ background: 'rgba(184, 169, 201, 0.25)' }} />
+        <div className="absolute bottom-[-40px] left-[-60px] w-[300px] h-[300px] rounded-full blur-[100px] pointer-events-none" style={{ background: 'rgba(139, 107, 138, 0.2)' }} />
 
         <div className="container mx-auto px-6 md:px-12 max-w-6xl relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-14">
@@ -534,8 +536,8 @@ const Index = () => {
       {/* ===== CTA / RSVP ===== */}
       <section className="py-28 md:py-36 relative overflow-hidden">
         <div className="absolute inset-0 gradient-hero" />
-        <div className="floating-blob w-[600px] h-[600px] bg-primary/20 top-[-120px] left-[-120px]" />
-        <div className="floating-blob w-[450px] h-[450px] bg-pale-lilac/20 bottom-[-100px] right-[-100px]" />
+        <div className="absolute top-[-120px] left-[-120px] w-[600px] h-[600px] rounded-full blur-[120px] pointer-events-none" style={{ background: 'rgba(139, 107, 138, 0.3)' }} />
+        <div className="absolute bottom-[-100px] right-[-100px] w-[450px] h-[450px] rounded-full blur-[100px] pointer-events-none" style={{ background: 'rgba(212, 196, 224, 0.25)' }} />
 
         <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>

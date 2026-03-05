@@ -290,11 +290,20 @@
   }
 
   .gradient-soft {
-    background: linear-gradient(135deg, hsl(330 40% 95%), hsl(270 18% 94%));
+    background:
+      radial-gradient(ellipse 70% 50% at 30% 40%, rgba(201, 169, 182, 0.3) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 50% at 70% 60%, rgba(212, 196, 224, 0.25) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 40% at 50% 50%, rgba(245, 230, 220, 0.35) 0%, transparent 55%),
+      linear-gradient(135deg, #F5F0F0 0%, #F0E8F0 50%, #F5E8E0 100%);
+    background-blend-mode: soft-light, overlay, overlay, normal;
   }
 
   .dark .gradient-soft {
-    background: linear-gradient(135deg, hsl(286 18% 8%), hsl(270 12% 10%));
+    background:
+      radial-gradient(ellipse 70% 50% at 30% 40%, rgba(139, 107, 138, 0.2) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 50% at 70% 60%, rgba(184, 169, 201, 0.15) 0%, transparent 50%),
+      linear-gradient(135deg, hsl(286 18% 8%) 0%, hsl(270 12% 10%) 100%);
+    background-blend-mode: soft-light, overlay, normal;
   }
 
   .gradient-text {
@@ -313,18 +322,22 @@
 
   .gradient-mesh {
     background:
-      radial-gradient(ellipse 80% 60% at 20% 15%, hsl(330 40% 89% / 0.5) 0, transparent 60%),
-      radial-gradient(ellipse 70% 50% at 80% 25%, hsl(270 18% 84% / 0.45) 0, transparent 55%),
-      radial-gradient(ellipse 60% 50% at 50% 80%, hsl(330 40% 93% / 0.3) 0, transparent 50%),
-      hsl(var(--background));
+      radial-gradient(ellipse 80% 60% at 20% 15%, rgba(201, 169, 182, 0.4) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 50% at 80% 25%, rgba(184, 169, 201, 0.35) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 50% at 50% 80%, rgba(232, 196, 184, 0.3) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 40% at 40% 50%, rgba(245, 230, 220, 0.4) 0%, transparent 55%),
+      linear-gradient(135deg, #F5F0F0 0%, #F0E8F0 50%, #F5E8E0 100%);
+    background-blend-mode: soft-light, overlay, screen, overlay, normal;
   }
 
   .dark .gradient-mesh {
     background:
-      radial-gradient(ellipse 80% 60% at 20% 15%, hsl(290 22% 14% / 0.7) 0, transparent 55%),
-      radial-gradient(ellipse 70% 50% at 80% 25%, hsl(270 18% 12% / 0.6) 0, transparent 50%),
-      radial-gradient(ellipse 60% 50% at 50% 80%, hsl(300 16% 10% / 0.5) 0, transparent 45%),
-      hsl(var(--background));
+      radial-gradient(ellipse 80% 60% at 20% 15%, rgba(139, 107, 138, 0.3) 0%, transparent 55%),
+      radial-gradient(ellipse 70% 50% at 80% 25%, rgba(184, 169, 201, 0.2) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 50% at 50% 80%, rgba(232, 196, 184, 0.15) 0%, transparent 45%),
+      radial-gradient(ellipse 50% 40% at 40% 50%, rgba(107, 78, 113, 0.25) 0%, transparent 55%),
+      linear-gradient(135deg, hsl(286 22% 7%) 0%, hsl(270 16% 9%) 50%, hsl(300 12% 8%) 100%);
+    background-blend-mode: soft-light, overlay, screen, overlay, normal;
   }
 
   .gradient-hero {
