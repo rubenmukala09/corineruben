@@ -193,7 +193,7 @@ const Index = () => {
           </p>
 
           {/* Countdown */}
-          <div className="flex gap-3 md:gap-5 justify-center mb-12">
+          <div className="grid grid-cols-4 gap-2 md:gap-5 justify-center mb-12 w-full max-w-md mx-auto">
             {[
               { value: countdown.days, label: t('countdown.days') },
               { value: countdown.hours, label: t('countdown.hours') },
