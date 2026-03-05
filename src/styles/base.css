@@ -405,10 +405,6 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     @apply block;
     max-width: 100%;
     height: auto;
-    image-rendering: -webkit-optimize-contrast;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    transform: translateZ(0);
   }
 
   /* Lazy loaded images */
@@ -562,6 +558,14 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     background: transparent !important;
     filter: none !important;
     opacity: 0 !important;
+  }
+
+  /* ===== PERFORMANCE OPTIMIZATION ===== */
+  /* Reduce compositing cost from backdrop-blur on non-interactive elements */
+  .backdrop-blur-xl,
+  .backdrop-blur-2xl {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
   }
 
   /* ===== SKEUOMORPHISM 2.0 GLOBAL EFFECTS ===== */

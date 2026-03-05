@@ -18,7 +18,7 @@ import { TestimonialCarousel } from "@/components/home/TestimonialCarousel";
 import { LiveSecurityStats } from "@/components/home/LiveSecurityStats";
 import { WorkshopsPromo } from "@/components/home/WorkshopsPromo";
 import { FamilyTrustSection } from "@/components/home/FamilyTrustSection";
-import { NatureAccent } from "@/components/ui/NatureAccent";
+// NatureAccent removed for performance
 import { ArrowRight, CheckCircle, Phone, Shield } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 
@@ -65,8 +65,7 @@ const Index = () => {
           <ThreatTicker />
 
           {/* 3. Stats + Who We Are + Real Results */}
-          <div id="stats" className="relative">
-            <NatureAccent variant="landscape" position="right" opacity={0.08} />
+          <div id="stats">
             <HomeIntroSection />
           </div>
 
@@ -76,14 +75,12 @@ const Index = () => {
           </div>
 
           {/* 5. Services Grid */}
-          <div id="services" className="relative bg-muted/20">
-            <NatureAccent variant="leaves" position="left" opacity={0.1} className="top-[20%]" />
+          <div id="services" className="bg-muted/20">
             <SiteOrientationGrid />
           </div>
 
           {/* 6. Protection Training Promo */}
-          <div id="workshops" className="relative">
-            <NatureAccent variant="forest" position="right" opacity={0.07} />
+          <div id="workshops">
             <WorkshopsPromo />
           </div>
 
@@ -93,20 +90,17 @@ const Index = () => {
           </div>
 
           {/* 8. Family Trust Section */}
-          <div id="trust" className="relative">
-            <NatureAccent variant="lake" position="left" opacity={0.09} />
+          <div id="trust">
             <FamilyTrustSection />
           </div>
 
           {/* 9. Testimonials */}
-          <div id="testimonials" className="relative bg-muted/20">
-            <NatureAccent variant="landscape" position="right" opacity={0.06} className="top-[30%]" />
+          <div id="testimonials" className="bg-muted/20">
             <TestimonialCarousel />
           </div>
 
           {/* 10. Why Choose Us */}
-          <div id="why-us" className="relative">
-            <NatureAccent variant="leaves" position="left" opacity={0.08} />
+          <div id="why-us">
             <TrustBadgesSection />
           </div>
 

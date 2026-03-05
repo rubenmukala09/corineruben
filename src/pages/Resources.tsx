@@ -81,7 +81,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
 import HeroFloatingStats from "@/components/business/HeroFloatingStats";
 // GlassmorphismBackground removed — using Business-style sections
-import { NatureAccent } from "@/components/ui/NatureAccent";
+// NatureAccent removed for performance
 import { usePrerenderBlocker } from "@/contexts/PrerenderContext";
 import { TranslationRequestDialog } from "@/components/resources/TranslationRequestDialog";
 
@@ -619,9 +619,6 @@ function Resources() {
       {/* Introduction Section — Business style */}
       <section className="py-12 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background" />
-        <NatureAccent variant="forest" position="left" opacity={0.08} />
-        <div className="absolute top-20 left-0 w-[500px] h-[500px] bg-primary/[0.03] rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-20 right-0 w-[400px] h-[400px] bg-accent/[0.04] rounded-full blur-3xl pointer-events-none" />
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center mb-10">
@@ -644,7 +641,7 @@ function Resources() {
                 { icon: Download, label: "Instant Downloads" },
                 { icon: Users, label: "Family-Friendly" },
               ].map((item) => (
-                <div key={item.label} className="flex items-center gap-2 text-sm text-muted-foreground bg-card/70 backdrop-blur-sm border border-border/40 px-3 py-1.5 rounded-full">
+                <div key={item.label} className="flex items-center gap-2 text-sm text-muted-foreground bg-card border border-border/40 px-3 py-1.5 rounded-full">
                   <item.icon className="w-4 h-4 text-primary" />
                   <span>{item.label}</span>
                 </div>
@@ -663,7 +660,7 @@ function Resources() {
               { value: "100+", label: "Happy Customers", icon: Heart },
               { value: "24/7", label: "Support Available", icon: Headphones },
             ].map((stat, index) => (
-              <div key={index} className="flex flex-col items-center gap-1 rounded-2xl bg-card/70 backdrop-blur-xl border border-border/40 p-4 shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1">
+              <div key={index} className="flex flex-col items-center gap-1 rounded-2xl bg-card border border-border/40 p-4 shadow-sm">
                 <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-1">
                   <stat.icon className="w-5 h-5 text-primary" />
                 </div>
@@ -677,7 +674,6 @@ function Resources() {
 
       {/* Digital Security Guides */}
       <section id="guides" className="py-10 sm:py-16 md:py-20 bg-muted/20 relative overflow-hidden">
-        <NatureAccent variant="landscape" position="right" opacity={0.07} />
         <div className="container mx-auto px-4">
           <div className="text-center mb-10">
             <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em] mb-6 shadow-sm border border-primary/15 bg-primary/5">
@@ -692,11 +688,11 @@ function Resources() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4 scroll-smooth" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 2000px' }}>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 2000px' }}>
             {staticBooks.map((book) =>
               <div key={book.id} className="group relative">
-                <div className="h-full rounded-2xl p-[1px] bg-gradient-to-b from-border/50 to-border/20 hover:from-primary/30 hover:to-primary/10 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1">
-                  <Card className="h-full rounded-[calc(1rem-1px)] p-3 border-0 bg-card/95 backdrop-blur-xl flex flex-col relative overflow-hidden">
+                <div className="h-full rounded-2xl p-[1px] bg-gradient-to-b from-border/50 to-border/20 hover:from-primary/30 hover:to-primary/10 transition-colors duration-200 shadow-sm hover:shadow-md">
+                  <Card className="h-full rounded-[calc(1rem-1px)] p-3 border-0 bg-card flex flex-col relative overflow-hidden">
                     {/* Gradient accent bar */}
                     <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/30 to-accent/20" />
 
@@ -722,14 +718,14 @@ function Resources() {
                           alt={book.name}
                           width={240}
                           height={320}
-                          loading="eager"
+                          loading="lazy"
                           decoding="async"
-                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                          className="w-full h-full object-cover"
                         />
                       </div>
                       {/* Hover overlay */}
-                      <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-200 flex items-center justify-center">
-                        <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-card/90 backdrop-blur-sm text-foreground text-xs px-3 py-1.5 rounded-full font-semibold shadow-lg border border-border/30">
+                      <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-150 flex items-center justify-center">
+                        <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-150 bg-card/90 text-foreground text-xs px-3 py-1.5 rounded-full font-semibold shadow-lg border border-border/30">
                           👁️ View Details
                         </span>
                       </div>
