@@ -112,83 +112,151 @@ const PremiumTrainingCard = memo(
     index: number;
     onBook: (plan: any) => void;
   }) => {
+    const isPopular = plan.popular;
+
     return (
-      <div className="relative h-full pt-5" style={{ perspective: '800px' }}>
-        {/* Floating badge — always visible, decorative */}
-        <div className="absolute -top-0.5 left-1/2 -translate-x-1/2 z-20">
-          <span className={`inline-flex items-center gap-1.5 px-5 py-2 rounded-full text-xs font-bold tracking-wider shadow-lg whitespace-nowrap border ${
-            plan.popular
-              ? "bg-gradient-to-r from-primary to-accent text-white border-primary/30"
-              : "bg-card text-primary border-primary/30 shadow-md"
-          }`}>
+      <div className="relative h-full pt-6 group/card" style={{ perspective: '1000px' }}>
+        {/* Floating badge */}
+        <div className="absolute -top-0 left-1/2 -translate-x-1/2 z-30">
+          <span
+            className={`inline-flex items-center gap-1.5 px-5 py-2 rounded-full text-[11px] font-black uppercase tracking-[0.15em] whitespace-nowrap border shadow-lg ${
+              isPopular
+                ? "bg-gradient-to-r from-primary via-accent to-primary text-white border-primary/40 shadow-[0_4px_20px_hsl(var(--primary)/0.35)]"
+                : "bg-card text-primary border-primary/25 shadow-md"
+            }`}
+          >
             {plan.badge}
           </span>
         </div>
+
+        {/* Outer glow wrapper for popular */}
         <div
-          className={`relative overflow-hidden rounded-2xl bg-card/80 backdrop-blur-xl border transition-all duration-500 hover:-translate-y-2 h-full flex flex-col group ${
-            plan.popular
-              ? "shadow-[0_8px_40px_-12px_hsl(var(--primary)/0.3)] border-2 border-primary/40 ring-1 ring-primary/10"
-              : "shadow-sm border-border/60 hover:shadow-[0_12px_40px_-12px_hsl(var(--primary)/0.15)] hover:border-primary/20"
+          className={`relative h-full rounded-[20px] ${
+            isPopular
+              ? "p-[2px] bg-gradient-to-b from-primary/60 via-accent/30 to-primary/10 shadow-[0_0_60px_-15px_hsl(var(--primary)/0.4)]"
+              : ""
           }`}
-          style={{ transformStyle: 'preserve-3d' }}
         >
-          {/* Ambient glow orb */}
-          {plan.popular && (
-            <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-40 h-40 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
-          )}
-          
-          {/* Top gradient accent */}
-          <div className={`h-1.5 ${plan.popular ? 'bg-gradient-to-r from-primary via-accent to-primary' : 'bg-gradient-to-r from-muted-foreground/20 via-primary/30 to-muted-foreground/20'}`} />
-
-          <div className="p-6 flex flex-col flex-1 relative z-10">
-            {/* Spacer for badge */}
-            <div className="h-4" />
-
-            {/* Title */}
-            <h3 className="text-xl font-black mb-2 text-center text-foreground">{plan.name}</h3>
-
-            {/* Meta info */}
-            <div className="flex items-center justify-center gap-3 mb-3 text-xs text-muted-foreground">
-              <span className="flex items-center gap-1"><ClockIcon className="w-3 h-3" />{plan.duration}</span>
-              <span className="w-1 h-1 rounded-full bg-border" />
-              <span className="flex items-center gap-1"><Users className="w-3 h-3" />{plan.size}</span>
-            </div>
-
-            {/* Description */}
-            <p className="text-muted-foreground mb-5 text-sm text-center leading-relaxed">
-              {plan.description}
-            </p>
-
-            {/* Price — 3D glassmorphic block */}
-            <div className="text-center mb-5 py-4 bg-gradient-to-br from-primary/5 via-muted/40 to-accent/5 rounded-xl border border-border/40 backdrop-blur-sm shadow-inner">
-              <p className="text-3xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                {plan.price}
-                {plan.pricePrefix || ""}
-              </p>
-              <span className="text-xs font-medium text-muted-foreground">per session</span>
-            </div>
-
-            {/* Features */}
-            <ul className="space-y-2.5 mb-6 flex-1">
-              {plan.features.slice(0, 4).map((feature: string, idx: number) => (
-                <li key={idx} className="flex items-start gap-2.5">
-                  <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-muted-foreground">{feature.replace("✓ ", "")}</span>
-                </li>
-              ))}
-            </ul>
-
-            {/* CTA — high contrast, visible text */}
-            <Button
-              onClick={() => onBook(plan)}
-              variant={plan.popular ? "default" : "outline"}
-              className={`w-full mt-auto rounded-xl h-12 text-base font-bold ${
-                plan.popular ? "shadow-[0_4px_20px_hsl(var(--primary)/0.3)]" : ""
+          <div
+            className={`relative overflow-hidden rounded-[18px] bg-card backdrop-blur-xl h-full flex flex-col transition-all duration-500 group-hover/card:-translate-y-1.5 ${
+              isPopular
+                ? "shadow-none"
+                : "border border-border/60 shadow-[0_4px_24px_-8px_hsl(0_0%_0%/0.08)] hover:shadow-[0_16px_48px_-12px_hsl(var(--primary)/0.18)] hover:border-primary/25"
+            }`}
+            style={{ transformStyle: 'preserve-3d' }}
+          >
+            {/* Top accent bar */}
+            <div
+              className={`h-1 ${
+                isPopular
+                  ? "bg-gradient-to-r from-primary via-accent to-primary"
+                  : "bg-gradient-to-r from-transparent via-primary/40 to-transparent"
               }`}
-            >
-              Book Now — {plan.price}
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
+            />
+
+            {/* Ambient glow */}
+            {isPopular && (
+              <>
+                <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-48 h-48 bg-primary/8 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute -bottom-16 right-0 w-32 h-32 bg-accent/6 rounded-full blur-3xl pointer-events-none" />
+              </>
+            )}
+
+            <div className="p-6 flex flex-col flex-1 relative z-10">
+              {/* Spacer for badge */}
+              <div className="h-3" />
+
+              {/* Title */}
+              <h3 className="text-xl font-black mb-2 text-center text-foreground tracking-tight">
+                {plan.name}
+              </h3>
+
+              {/* Meta chips */}
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-muted/60 border border-border/40 text-[11px] font-semibold text-muted-foreground">
+                  <ClockIcon className="w-3 h-3" />
+                  {plan.duration}
+                </span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-muted/60 border border-border/40 text-[11px] font-semibold text-muted-foreground">
+                  <Users className="w-3 h-3" />
+                  {plan.size}
+                </span>
+              </div>
+
+              {/* Description */}
+              <p className="text-muted-foreground mb-5 text-sm text-center leading-relaxed">
+                {plan.description}
+              </p>
+
+              {/* Price block — premium glassmorphic */}
+              <div
+                className={`text-center mb-6 py-5 px-4 rounded-2xl border backdrop-blur-sm relative overflow-hidden ${
+                  isPopular
+                    ? "bg-gradient-to-br from-primary/10 via-accent/5 to-primary/8 border-primary/20 shadow-[inset_0_1px_0_hsl(0_0%_100%/0.15)]"
+                    : "bg-gradient-to-br from-muted/50 via-card to-muted/30 border-border/40 shadow-inner"
+                }`}
+              >
+                {isPopular && (
+                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.08),transparent_70%)] pointer-events-none" />
+                )}
+                <p
+                  className={`text-4xl font-black relative z-10 ${
+                    isPopular
+                      ? "bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent"
+                      : "text-foreground"
+                  }`}
+                >
+                  {plan.price}
+                  {plan.pricePrefix && (
+                    <span className="text-lg font-bold text-muted-foreground">
+                      {plan.pricePrefix}
+                    </span>
+                  )}
+                </p>
+                <span className="text-xs font-medium text-muted-foreground relative z-10">
+                  per session
+                </span>
+              </div>
+
+              {/* Features */}
+              <ul className="space-y-2.5 mb-6 flex-1">
+                {plan.features.slice(0, 5).map((feature: string, idx: number) => (
+                  <li key={idx} className="flex items-start gap-2.5">
+                    <span
+                      className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                        isPopular
+                          ? "bg-primary/15"
+                          : "bg-muted"
+                      }`}
+                    >
+                      <CheckCircle
+                        className={`w-3.5 h-3.5 ${
+                          isPopular ? "text-primary" : "text-primary/70"
+                        }`}
+                      />
+                    </span>
+                    <span className="text-sm text-muted-foreground leading-snug">
+                      {feature.replace("✓ ", "")}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* CTA Button */}
+              <Button
+                onClick={() => onBook(plan)}
+                variant={isPopular ? "gold" : "outline"}
+                size="lg"
+                className={`w-full mt-auto rounded-xl h-13 text-base font-bold tracking-wide ${
+                  isPopular
+                    ? "shadow-[0_4px_24px_hsl(var(--coral-500)/0.35)]"
+                    : "hover:border-primary/40 hover:text-primary"
+                }`}
+              >
+                Book Now — {plan.price}
+                <ArrowRight className="w-4 h-4 ml-1.5" />
+              </Button>
+            </div>
           </div>
         </div>
       </div>
