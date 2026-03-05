@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
-import { ChevronDown, Heart, MapPin, Calendar, Clock, Utensils, Camera, Gift, Star, Users } from 'lucide-react';
+import { ChevronDown, Heart, MapPin, Calendar, Clock, Utensils, Camera, Gift, Star } from 'lucide-react';
 import heroImg from '@/assets/hero-wedding.jpg';
 import flowersImg from '@/assets/flowers-lavender.jpg';
 import ringsImg from '@/assets/rings.jpg';
@@ -50,12 +50,10 @@ const Index = () => {
     <div className="min-h-screen flex flex-col">
       {/* ===== HERO ===== */}
       <section className="min-h-screen flex flex-col items-center justify-center relative px-4 overflow-hidden gradient-hero">
-        {/* Background image with overlay */}
         <div className="absolute inset-0">
           <img src={heroImg} alt="" className="w-full h-full object-cover opacity-25 dark:opacity-12" />
         </div>
 
-        {/* Vibrant blobs */}
         <div className="floating-blob w-[650px] h-[650px] bg-primary/30 top-[-220px] right-[-180px]" />
         <div className="floating-blob w-[550px] h-[550px] bg-lavender top-[10%] left-[-150px]" />
         <div className="floating-blob w-[350px] h-[350px] bg-peach bottom-[15%] right-[5%]" />
@@ -206,7 +204,7 @@ const Index = () => {
       </section>
 
       {/* ===== ABOUT / INTRO ===== */}
-      <section className="py-24 md:py-32 relative overflow-hidden">
+      <section className="py-24 md:py-32 relative overflow-hidden gradient-mesh">
         <div className="floating-blob w-[450px] h-[450px] bg-lavender/20 top-[-50px] right-[-120px]" />
         <div className="floating-blob w-[300px] h-[300px] bg-peach/25 bottom-0 left-[-80px]" />
         <div className="container mx-auto px-4 max-w-6xl relative z-10">
@@ -217,11 +215,13 @@ const Index = () => {
               viewport={{ once: true }}
             >
               <div className="relative">
-                <img
-                  src={coupleImg}
-                  alt="Corine & Ruben"
-                  className="rounded-3xl w-full object-cover aspect-[4/5] shadow-card-hover"
-                />
+                <div className="glass-card rounded-3xl p-2">
+                  <img
+                    src={coupleImg}
+                    alt="Corine & Ruben"
+                    className="rounded-2xl w-full object-cover aspect-[4/5] shadow-card-hover"
+                  />
+                </div>
                 <motion.div
                   animate={{ y: [-8, 8, -8] }}
                   transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
@@ -267,7 +267,9 @@ const Index = () => {
       </section>
 
       {/* ===== HIGHLIGHTS CARDS ===== */}
-      <section className="py-20 md:py-28 relative overflow-hidden gradient-mesh">
+      <section className="py-20 md:py-28 relative overflow-hidden gradient-soft">
+        <div className="floating-blob w-[400px] h-[400px] bg-primary/15 top-[-60px] left-[-80px]" />
+        <div className="floating-blob w-[350px] h-[350px] bg-lavender/18 bottom-[-40px] right-[-60px]" />
         <div className="container mx-auto px-4 max-w-6xl relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -316,13 +318,14 @@ const Index = () => {
       </section>
 
       {/* ===== STATS ===== */}
-      <section className="py-20 md:py-28 relative overflow-hidden">
-        <div className="absolute inset-0 gradient-soft" />
+      <section className="py-20 md:py-28 relative overflow-hidden gradient-mesh">
         <div className="floating-blob w-[450px] h-[450px] bg-primary/18 top-[-100px] right-[-100px]" />
         <div className="floating-blob w-[300px] h-[300px] bg-lavender/20 bottom-[-50px] left-[-60px]" />
         <div className="container mx-auto px-4 max-w-5xl relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <img src={flowersImg} alt="" className="w-20 h-20 rounded-full object-cover mx-auto mb-6 ring-4 ring-primary/20 shadow-glow" />
+            <div className="glass-card rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center overflow-hidden">
+              <img src={flowersImg} alt="" className="w-full h-full object-cover" />
+            </div>
             <h2 className="font-serif-display text-3xl md:text-5xl text-foreground font-bold mb-12">
               {t('hero.tagline')}
             </h2>
@@ -355,8 +358,9 @@ const Index = () => {
       </section>
 
       {/* ===== EXPLORE NAVIGATION ===== */}
-      <section className="py-20 md:py-28 relative overflow-hidden">
+      <section className="py-20 md:py-28 relative overflow-hidden gradient-soft">
         <div className="floating-blob w-[400px] h-[400px] bg-accent/18 bottom-[-80px] right-[-100px]" />
+        <div className="floating-blob w-[300px] h-[300px] bg-peach/20 top-[-40px] left-[-60px]" />
         <div className="container mx-auto px-4 max-w-5xl relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-14">
             <h2 className="font-serif-display text-3xl md:text-5xl text-foreground font-bold mb-4">
@@ -388,6 +392,7 @@ const Index = () => {
 
       {/* ===== GALLERY PREVIEW ===== */}
       <section className="py-20 md:py-28 relative overflow-hidden gradient-mesh">
+        <div className="floating-blob w-[350px] h-[350px] bg-lavender/15 top-[-40px] right-[-60px]" />
         <div className="container mx-auto px-4 max-w-6xl relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-14">
             <div className="inline-block px-4 py-1.5 rounded-full glass-card mb-5">
@@ -404,9 +409,9 @@ const Index = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className={`overflow-hidden rounded-2xl ${i === 0 ? 'md:col-span-2 md:row-span-2' : ''} group cursor-pointer shadow-soft hover:shadow-card-hover transition-all duration-500`}
+                className={`overflow-hidden rounded-2xl ${i === 0 ? 'md:col-span-2 md:row-span-2' : ''} group cursor-pointer glass-card p-1 hover:shadow-card-hover transition-all duration-500`}
               >
-                <img src={img} alt="" className="w-full h-full object-cover aspect-square group-hover:scale-110 transition-transform duration-700" />
+                <img src={img} alt="" className="w-full h-full object-cover aspect-square rounded-xl group-hover:scale-105 transition-transform duration-700" />
               </motion.div>
             ))}
           </div>
@@ -420,13 +425,15 @@ const Index = () => {
       </section>
 
       {/* ===== CTA / RSVP ===== */}
-      <section className="py-24 md:py-32 relative overflow-hidden">
+      <section className="py-24 md:py-32 relative overflow-hidden gradient-soft">
         <div className="floating-blob w-[500px] h-[500px] bg-primary/18 top-[-100px] left-[-100px]" />
         <div className="floating-blob w-[400px] h-[400px] bg-lavender/15 bottom-[-80px] right-[-80px]" />
 
         <div className="container mx-auto px-4 max-w-3xl relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <img src={ringsImg} alt="" className="w-24 h-24 rounded-full object-cover mx-auto mb-8 ring-4 ring-primary/20 shadow-glow" />
+            <div className="glass-card rounded-full w-28 h-28 mx-auto mb-8 flex items-center justify-center overflow-hidden">
+              <img src={ringsImg} alt="" className="w-full h-full object-cover" />
+            </div>
             <h2 className="font-serif-display text-4xl md:text-6xl text-foreground font-bold mb-6">
               {t('rsvp.title')}
             </h2>
