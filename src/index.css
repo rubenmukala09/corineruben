@@ -68,58 +68,62 @@
   }
 
   .dark {
-    --background: 292 14% 7%;
-    --foreground: 0 8% 90%;
+    /* Rich deep plum background — warm, not dead black */
+    --background: 280 20% 8%;
+    --foreground: 320 12% 92%;
 
-    --card: 292 12% 11%;
-    --card-foreground: 0 8% 90%;
+    --card: 280 18% 12%;
+    --card-foreground: 320 12% 92%;
 
-    --popover: 292 12% 11%;
-    --popover-foreground: 0 8% 90%;
+    --popover: 280 18% 12%;
+    --popover-foreground: 320 12% 92%;
 
-    --primary: 292 22% 52%;
+    /* Luminous plum primary — vibrant enough to pop on dark */
+    --primary: 290 30% 62%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 292 10% 16%;
-    --secondary-foreground: 0 8% 90%;
+    --secondary: 280 14% 18%;
+    --secondary-foreground: 320 12% 88%;
 
-    --muted: 292 8% 14%;
-    --muted-foreground: 0 4% 50%;
+    --muted: 280 12% 16%;
+    --muted-foreground: 300 8% 58%;
 
-    --accent: 268 14% 30%;
-    --accent-foreground: 0 8% 90%;
+    /* Richer lilac accent for dark */
+    --accent: 270 20% 35%;
+    --accent-foreground: 320 12% 92%;
 
-    --destructive: 0 63% 31%;
+    --destructive: 0 63% 40%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 292 8% 18%;
-    --input: 292 8% 18%;
-    --ring: 292 22% 52%;
+    --border: 280 12% 20%;
+    --input: 280 12% 20%;
+    --ring: 290 30% 62%;
 
-    --plum: 292 22% 52%;
-    --plum-dark: 290 16% 38%;
-    --plum-light: 295 12% 42%;
-    --lavender-pink: 320 12% 22%;
-    --cream: 292 14% 7%;
-    --cream-dark: 292 10% 12%;
-    --dusty-rose: 0 18% 45%;
-    --pale-lilac: 268 14% 30%;
-    --peach-gradient: 24 10% 10%;
-    --pink-gradient: 300 10% 10%;
-    --text-light: 0 8% 90%;
+    --plum: 290 30% 62%;
+    --plum-dark: 288 22% 45%;
+    --plum-light: 295 18% 50%;
+    --lavender-pink: 310 16% 25%;
+    --cream: 280 20% 8%;
+    --cream-dark: 280 16% 14%;
+    --dusty-rose: 350 22% 55%;
+    --pale-lilac: 270 20% 38%;
+    --peach-gradient: 20 14% 12%;
+    --pink-gradient: 300 14% 12%;
+    --text-light: 320 12% 92%;
 
-    --sidebar-background: 292 14% 9%;
-    --sidebar-foreground: 0 8% 90%;
-    --sidebar-primary: 292 22% 52%;
+    --sidebar-background: 280 20% 10%;
+    --sidebar-foreground: 320 12% 90%;
+    --sidebar-primary: 290 30% 62%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 292 8% 14%;
-    --sidebar-accent-foreground: 0 8% 90%;
-    --sidebar-border: 292 8% 18%;
-    --sidebar-ring: 292 22% 52%;
+    --sidebar-accent: 280 12% 16%;
+    --sidebar-accent-foreground: 320 12% 90%;
+    --sidebar-border: 280 12% 20%;
+    --sidebar-ring: 290 30% 62%;
 
-    --footer-bg: 292 14% 9%;
-    --footer-fg: 0 8% 85%;
-    --footer-muted: 292 10% 45%;
+    /* Deep rich plum footer */
+    --footer-bg: 280 22% 10%;
+    --footer-fg: 320 12% 90%;
+    --footer-muted: 290 14% 52%;
   }
 }
 
@@ -189,11 +193,11 @@
   }
 
   .dark .glass-card {
-    background: rgba(107, 78, 113, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(140, 100, 160, 0.12);
+    border: 1px solid rgba(180, 140, 200, 0.15);
     box-shadow:
-      0 8px 32px rgba(107, 78, 113, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      0 8px 32px rgba(60, 30, 80, 0.3),
+      inset 0 1px 0 rgba(200, 160, 220, 0.08);
   }
 
   .glass-card-strong {
@@ -209,11 +213,14 @@
   }
 
   .dark .glass-card-strong {
-    background: rgba(107, 78, 113, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(140, 100, 160, 0.18);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border: 1px solid rgba(180, 140, 200, 0.18);
     box-shadow:
-      0 8px 32px rgba(107, 78, 113, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      0 8px 32px rgba(60, 30, 80, 0.35),
+      0 2px 8px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(200, 160, 220, 0.1);
   }
 
   .glass-card-dark {
@@ -235,8 +242,9 @@
   }
 
   .dark .glass-button {
-    background: rgba(107, 78, 113, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(140, 100, 160, 0.25);
+    border: 1px solid rgba(180, 140, 200, 0.2);
+    color: hsl(320 12% 92%);
   }
 
   /* ===== GRADIENTS — Padmasana tones ===== */
@@ -245,7 +253,7 @@
   }
 
   .dark .gradient-primary {
-    background: linear-gradient(135deg, hsl(292 22% 48%), hsl(295 18% 42%));
+    background: linear-gradient(135deg, hsl(290 30% 55%), hsl(300 25% 48%));
   }
 
   .gradient-soft {
@@ -253,7 +261,7 @@
   }
 
   .dark .gradient-soft {
-    background: linear-gradient(135deg, hsl(292 12% 9%), hsl(292 10% 11%));
+    background: linear-gradient(135deg, hsl(280 18% 9%), hsl(300 14% 12%));
   }
 
   .gradient-text {
@@ -264,7 +272,7 @@
   }
 
   .dark .gradient-text {
-    background: linear-gradient(135deg, hsl(292 22% 52%), hsl(295 18% 45%));
+    background: linear-gradient(135deg, hsl(290 32% 68%), hsl(310 28% 58%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -280,8 +288,9 @@
 
   .dark .gradient-mesh {
     background:
-      radial-gradient(at 20% 15%, hsl(292 12% 12% / 0.5) 0, transparent 50%),
-      radial-gradient(at 80% 25%, hsl(268 10% 10% / 0.4) 0, transparent 50%),
+      radial-gradient(at 20% 15%, hsl(290 25% 16% / 0.7) 0, transparent 50%),
+      radial-gradient(at 80% 25%, hsl(270 20% 14% / 0.6) 0, transparent 50%),
+      radial-gradient(at 50% 80%, hsl(310 18% 12% / 0.5) 0, transparent 50%),
       hsl(var(--background));
   }
 
@@ -296,8 +305,11 @@
 
   .dark .gradient-hero {
     background:
-      radial-gradient(at 10% 20%, hsl(292 14% 12% / 0.5) 0, transparent 45%),
-      radial-gradient(at 88% 12%, hsl(268 10% 10% / 0.4) 0, transparent 50%),
+      linear-gradient(135deg, hsl(280 22% 10% / 0.8) 0%, hsl(300 18% 12% / 0.7) 100%),
+      radial-gradient(at 10% 20%, hsl(290 28% 18% / 0.6) 0, transparent 45%),
+      radial-gradient(at 88% 12%, hsl(270 22% 16% / 0.5) 0, transparent 50%),
+      radial-gradient(at 42% 82%, hsl(310 20% 14% / 0.4) 0, transparent 45%),
+      radial-gradient(at 65% 55%, hsl(285 18% 12% / 0.35) 0, transparent 40%),
       hsl(var(--background));
   }
 
@@ -311,7 +323,7 @@
   }
 
   .dark .floating-blob {
-    opacity: 0.12;
+    opacity: 0.2;
   }
 
   /* ===== BUTTONS — Padmasana exact specs ===== */
@@ -335,12 +347,13 @@
   }
 
   .dark .btn-primary {
-    background: hsl(292 22% 48%);
-    box-shadow: 0 4px 20px rgba(107, 78, 113, 0.3);
+    background: linear-gradient(135deg, hsl(290 30% 55%), hsl(300 25% 48%));
+    box-shadow: 0 4px 24px rgba(160, 100, 180, 0.35);
   }
 
   .dark .btn-primary:hover {
-    background: hsl(292 22% 42%);
+    background: linear-gradient(135deg, hsl(290 30% 50%), hsl(300 25% 44%));
+    box-shadow: 0 8px 32px rgba(160, 100, 180, 0.45);
   }
 
   .btn-outline {
@@ -362,8 +375,13 @@
   }
 
   .dark .btn-outline {
-    border-color: hsl(292 22% 52%);
-    color: hsl(292 22% 52%);
+    border-color: hsl(290 28% 60%);
+    color: hsl(290 28% 68%);
+  }
+
+  .dark .btn-outline:hover {
+    background: rgba(160, 100, 180, 0.15);
+    border-color: hsl(290 30% 65%);
   }
 
   .btn-glass {
@@ -384,9 +402,13 @@
   }
 
   .dark .btn-glass {
-    background: rgba(107, 78, 113, 0.3);
-    border-color: rgba(255, 255, 255, 0.15);
-    color: hsl(0 8% 90%);
+    background: rgba(140, 100, 160, 0.25);
+    border-color: rgba(180, 140, 200, 0.2);
+    color: hsl(320 12% 92%);
+  }
+
+  .dark .btn-glass:hover {
+    background: rgba(140, 100, 160, 0.35);
   }
 
   /* ===== CARD HOVER ===== */
