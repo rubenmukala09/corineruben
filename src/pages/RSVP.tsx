@@ -3,7 +3,8 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Users, Utensils, ChevronRight, Plus, X, UserPlus, Crown, Check } from 'lucide-react';
+import { Users, Utensils, ChevronRight, Plus, X, UserPlus, Crown, Check, Gift, Heart, Sparkles, QrCode, Copy, ArrowRight } from 'lucide-react';
+import { QRCodeSVG } from 'qrcode.react';
 
 // Table seating config
 const TABLES_DATA = [
@@ -17,13 +18,23 @@ const TABLES_DATA = [
   { id: 8, name: 'Camélia', seats: 6, family: false, guests: ['Jean P.', 'Marie C.', 'Antoine D.', 'Clara F.'] },
 ];
 
-type Step = 'info' | 'meal' | 'table' | 'done';
+type Step = 'info' | 'meal' | 'table' | 'gift' | 'done';
+
+const giftTiers = [
+  { amount: 60, emoji: '💐', labelKey: 'registry.tier.bouquet' },
+  { amount: 100, emoji: '🥂', labelKey: 'registry.tier.toast' },
+  { amount: 200, emoji: '✨', labelKey: 'registry.tier.sparkle' },
+  { amount: 500, emoji: '💎', labelKey: 'registry.tier.diamond' },
+];
 
 const mealOptions = [
   { key: 'meat', emoji: '🥩', sides: ['rsvp.side.potatoes', 'rsvp.side.vegetables', 'rsvp.side.rice'] },
   { key: 'fish', emoji: '🐟', sides: ['rsvp.side.salad', 'rsvp.side.vegetables', 'rsvp.side.rice'] },
   { key: 'veg', emoji: '🥗', sides: ['rsvp.side.quinoa', 'rsvp.side.vegetables', 'rsvp.side.pasta'] },
 ];
+
+// Payment link placeholder — replace with actual payment link
+const PAYMENT_BASE_URL = 'https://pay.example.com/corine-ruben';
 
 const RSVP = () => {
   const { t } = useLanguage();
@@ -45,6 +56,14 @@ const RSVP = () => {
   const [createFamily, setCreateFamily] = useState(false);
   const [familyTableName, setFamilyTableName] = useState('');
 
+  // Gift
+  const [selectedGiftAmount, setSelectedGiftAmount] = useState<number | null>(null);
+  const [customGiftAmount, setCustomGiftAmount] = useState('');
+  const [giftMessage, setGiftMessage] = useState('');
+  const [showQR, setShowQR] = useState(false);
+  const [skipGift, setSkipGift] = useState(false);
+  const [copied, setCopied] = useState(false);
+
   const toggleSide = (side: string) => {
     setSelectedSides(prev => prev.includes(side) ? prev.filter(s => s !== side) : [...prev, side]);
   };
@@ -55,15 +74,12 @@ const RSVP = () => {
 
   const handleJoinTable = (tableId: number) => {
     if (selectedTable === tableId) {
-      // Leave table
       setTables(prev => prev.map(t => t.id === tableId ? { ...t, guests: t.guests.filter(g => g !== name) } : t));
       setSelectedTable(null);
     } else {
-      // Leave previous table
       if (selectedTable) {
         setTables(prev => prev.map(t => t.id === selectedTable ? { ...t, guests: t.guests.filter(g => g !== name) } : t));
       }
-      // Join new table
       setTables(prev => prev.map(t => t.id === tableId ? { ...t, guests: [...t.guests, name || 'You'] } : t));
       setSelectedTable(tableId);
     }
@@ -84,8 +100,35 @@ const RSVP = () => {
     setFamilyTableName('');
   };
 
+  const finalGiftAmount = selectedGiftAmount || (customGiftAmount ? parseInt(customGiftAmount) : 0);
+  const paymentUrl = `${PAYMENT_BASE_URL}?amount=${finalGiftAmount}&name=${encodeURIComponent(name)}&message=${encodeURIComponent(giftMessage)}`;
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(paymentUrl).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+
+  const handleSelectGiftTier = (amount: number) => {
+    setSelectedGiftAmount(amount);
+    setCustomGiftAmount('');
+    setShowQR(true);
+  };
+
+  const handleCustomGiftConfirm = () => {
+    const val = parseInt(customGiftAmount);
+    if (val && val > 0) {
+      setSelectedGiftAmount(val);
+      setShowQR(true);
+    }
+  };
+
   const canProceedInfo = name.trim() && attending !== null;
   const canProceedMeal = selectedMeal !== null;
+
+  const allSteps: Step[] = ['info', 'meal', 'table', 'gift'];
+  const currentStepIndex = allSteps.indexOf(step);
 
   return (
     <div className="min-h-screen pt-28 pb-20 relative">
@@ -103,20 +146,26 @@ const RSVP = () => {
 
         {/* Progress Steps */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }} className="flex items-center justify-center gap-2 mb-10">
-          {(['info', 'meal', 'table'] as Step[]).map((s, i) => (
-            <div key={s} className="flex items-center gap-2">
-              <div className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-sans-elegant font-bold transition-all duration-500 ${
-                step === s ? 'gradient-primary text-primary-foreground shadow-glow' :
-                (['info', 'meal', 'table'].indexOf(step) > i || step === 'done') ? 'bg-primary/20 text-primary' :
-                'glass-card text-muted-foreground'
-              }`}>
-                {(['info', 'meal', 'table'].indexOf(step) > i || step === 'done') ? <Check className="w-4 h-4" /> : i + 1}
+          {allSteps.map((s, i) => {
+            const icons = [Users, Utensils, Users, Gift];
+            const Icon = icons[i];
+            const isPast = currentStepIndex > i || step === 'done';
+            const isCurrent = step === s;
+            return (
+              <div key={s} className="flex items-center gap-2">
+                <div className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-500 ${
+                  isCurrent ? 'gradient-primary text-primary-foreground shadow-glow' :
+                  isPast ? 'bg-primary/20 text-primary' :
+                  'glass-card text-muted-foreground'
+                }`}>
+                  {isPast ? <Check className="w-4 h-4" /> : <Icon className="w-4 h-4" />}
+                </div>
+                {i < allSteps.length - 1 && <div className={`w-6 h-0.5 rounded-full transition-all duration-500 ${
+                  isPast ? 'bg-primary/40' : 'bg-border/50'
+                }`} />}
               </div>
-              {i < 2 && <div className={`w-8 h-0.5 rounded-full transition-all duration-500 ${
-                (['info', 'meal', 'table'].indexOf(step) > i || step === 'done') ? 'bg-primary/40' : 'bg-border/50'
-              }`} />}
-            </div>
-          ))}
+            );
+          })}
         </motion.div>
 
         <AnimatePresence mode="wait">
@@ -129,7 +178,10 @@ const RSVP = () => {
                 <div className="w-10 h-10 rounded-2xl gradient-primary flex items-center justify-center shadow-soft">
                   <Users className="w-5 h-5 text-primary-foreground" />
                 </div>
-                <h2 className="font-serif-display text-xl text-foreground font-semibold">{t('rsvp.step.info')}</h2>
+                <div>
+                  <h2 className="font-serif-display text-xl text-foreground font-semibold">{t('rsvp.step.info')}</h2>
+                  <p className="font-sans-elegant text-xs text-muted-foreground">{t('rsvp.step.info.hint')}</p>
+                </div>
               </div>
 
               <div>
@@ -151,7 +203,7 @@ const RSVP = () => {
                         attending === val ? 'gradient-primary text-primary-foreground shadow-glow' : 'glass-card hover:border-primary/30 text-foreground'
                       }`}
                     >
-                      {val ? t('rsvp.yes') : t('rsvp.no')}
+                      {val ? `🎉 ${t('rsvp.yes')}` : t('rsvp.no')}
                     </button>
                   ))}
                 </div>
@@ -197,7 +249,10 @@ const RSVP = () => {
                 <div className="w-10 h-10 rounded-2xl gradient-primary flex items-center justify-center shadow-soft">
                   <Utensils className="w-5 h-5 text-primary-foreground" />
                 </div>
-                <h2 className="font-serif-display text-xl text-foreground font-semibold">{t('rsvp.step.meal')}</h2>
+                <div>
+                  <h2 className="font-serif-display text-xl text-foreground font-semibold">{t('rsvp.step.meal')}</h2>
+                  <p className="font-sans-elegant text-xs text-muted-foreground">{t('rsvp.step.meal.hint')}</p>
+                </div>
               </div>
 
               <div>
@@ -261,7 +316,10 @@ const RSVP = () => {
                     <div className="w-10 h-10 rounded-2xl gradient-primary flex items-center justify-center shadow-soft">
                       <Users className="w-5 h-5 text-primary-foreground" />
                     </div>
-                    <h2 className="font-serif-display text-xl text-foreground font-semibold">{t('rsvp.step.table')}</h2>
+                    <div>
+                      <h2 className="font-serif-display text-xl text-foreground font-semibold">{t('rsvp.step.table')}</h2>
+                      <p className="font-sans-elegant text-xs text-muted-foreground">{t('rsvp.step.table.hint')}</p>
+                    </div>
                   </div>
                   {!createFamily && (
                     <button onClick={() => setCreateFamily(true)} className="btn-outline text-xs px-3 py-2 rounded-full gap-1">
@@ -321,7 +379,6 @@ const RSVP = () => {
                           </span>
                         </div>
 
-                        {/* Seat visualization */}
                         <div className="flex flex-wrap gap-1.5 mb-3">
                           {Array.from({ length: table.seats }).map((_, si) => (
                             <div key={si} className={`w-6 h-6 rounded-full flex items-center justify-center text-[9px] font-bold transition-all duration-300 ${
@@ -334,7 +391,6 @@ const RSVP = () => {
                           ))}
                         </div>
 
-                        {/* Guest names */}
                         {table.guests.length > 0 && (
                           <div className="flex flex-wrap gap-1">
                             {table.guests.map(g => (
@@ -356,10 +412,140 @@ const RSVP = () => {
 
               <div className="flex gap-3">
                 <button onClick={() => setStep('meal')} className="flex-1 btn-outline justify-center">{t('rsvp.back')}</button>
+                <button onClick={() => setStep('gift')}
+                  className="flex-1 btn-primary justify-center"
+                >
+                  {t('rsvp.next')} <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </motion.div>
+          )}
+
+          {/* STEP 4: Gift (Optional) */}
+          {step === 'gift' && (
+            <motion.div key="gift" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}
+              className="space-y-6"
+            >
+              <div className="glass-card-strong rounded-3xl p-8 space-y-6">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-2xl gradient-primary flex items-center justify-center shadow-soft">
+                    <Gift className="w-5 h-5 text-primary-foreground" />
+                  </div>
+                  <div>
+                    <h2 className="font-serif-display text-xl text-foreground font-semibold">{t('rsvp.step.gift')}</h2>
+                    <p className="font-sans-elegant text-xs text-muted-foreground">{t('rsvp.step.gift.hint')}</p>
+                  </div>
+                </div>
+
+                {/* Warm message */}
+                <div className="glass-card rounded-2xl p-5 text-center relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-20 h-20 rounded-full bg-gradient-to-br from-rose-400/10 to-transparent blur-xl pointer-events-none" />
+                  <Heart className="w-6 h-6 text-rose-400 icon-glow mx-auto mb-3" />
+                  <p className="font-sans-elegant text-sm text-muted-foreground leading-relaxed relative z-10">
+                    {t('rsvp.gift.message')}
+                  </p>
+                </div>
+
+                <AnimatePresence mode="wait">
+                  {!showQR ? (
+                    <motion.div key="tiers" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-4">
+                      {/* Gift tiers */}
+                      <div className="grid grid-cols-2 gap-3">
+                        {giftTiers.map((tier, i) => (
+                          <motion.button
+                            key={tier.amount}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: i * 0.06 }}
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.97 }}
+                            onClick={() => handleSelectGiftTier(tier.amount)}
+                            className={`glass-card rounded-2xl p-5 text-center card-hover group ${
+                              selectedGiftAmount === tier.amount ? 'border-primary/40 shadow-glow' : ''
+                            }`}
+                          >
+                            <div className="text-2xl mb-2">{tier.emoji}</div>
+                            <div className="font-serif-display text-xl text-foreground font-bold">${tier.amount}</div>
+                            <div className="font-sans-elegant text-[10px] text-muted-foreground font-medium mt-1">{t(tier.labelKey)}</div>
+                          </motion.button>
+                        ))}
+                      </div>
+
+                      {/* Custom amount */}
+                      <div className="flex gap-3">
+                        <div className="relative flex-1">
+                          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground font-sans-elegant text-sm">$</span>
+                          <Input
+                            type="number"
+                            min="1"
+                            value={customGiftAmount}
+                            onChange={e => { setCustomGiftAmount(e.target.value); setSelectedGiftAmount(null); }}
+                            placeholder={t('registry.custom.placeholder')}
+                            className="font-sans-elegant rounded-full h-11 pl-8 border-border/50 bg-background/50 backdrop-blur-sm"
+                          />
+                        </div>
+                        <button onClick={handleCustomGiftConfirm} className="btn-primary px-5 rounded-full text-sm">
+                          <QrCode className="w-4 h-4" />
+                          {t('rsvp.gift.generateQR')}
+                        </button>
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <motion.div key="qr" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
+                      className="space-y-5"
+                    >
+                      {/* QR Code display */}
+                      <div className="glass-card rounded-3xl p-8 text-center">
+                        <div className="inline-block p-4 bg-white rounded-2xl shadow-soft mb-4">
+                          <QRCodeSVG
+                            value={paymentUrl}
+                            size={180}
+                            bgColor="#ffffff"
+                            fgColor="#1a1a2e"
+                            level="M"
+                            includeMargin={false}
+                          />
+                        </div>
+                        <p className="font-serif-display text-2xl text-foreground font-bold mb-1">${finalGiftAmount}</p>
+                        <p className="font-sans-elegant text-xs text-muted-foreground mb-4">{t('rsvp.gift.scanQR')}</p>
+
+                        <button onClick={handleCopyLink}
+                          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full glass-card text-sm font-sans-elegant font-medium text-foreground hover:border-primary/30 transition-all duration-300"
+                        >
+                          {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                          {copied ? t('rsvp.gift.copied') : t('rsvp.gift.copyLink')}
+                        </button>
+                      </div>
+
+                      {/* Optional message */}
+                      <div>
+                        <label className="font-sans-elegant text-sm text-foreground block mb-2 font-semibold">{t('rsvp.gift.noteLabel')}</label>
+                        <Textarea
+                          value={giftMessage}
+                          onChange={e => setGiftMessage(e.target.value)}
+                          placeholder={t('registry.dialog.message.placeholder')}
+                          className="font-sans-elegant rounded-2xl border-border/50 bg-background/50 backdrop-blur-sm"
+                          rows={2}
+                        />
+                      </div>
+
+                      <button onClick={() => { setShowQR(false); setSelectedGiftAmount(null); }}
+                        className="font-sans-elegant text-xs text-muted-foreground hover:text-foreground transition-colors mx-auto block"
+                      >
+                        ← {t('rsvp.gift.changeAmount')}
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              <div className="flex gap-3">
+                <button onClick={() => setStep('table')} className="flex-1 btn-outline justify-center">{t('rsvp.back')}</button>
                 <button onClick={() => setStep('done')}
                   className="flex-1 btn-primary justify-center"
                 >
-                  {t('rsvp.submit')} <Check className="w-4 h-4" />
+                  {(showQR || skipGift) ? t('rsvp.submit') : t('rsvp.gift.skip')}
+                  {(showQR || skipGift) ? <Check className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
                 </button>
               </div>
             </motion.div>
@@ -368,23 +554,53 @@ const RSVP = () => {
           {/* DONE */}
           {step === 'done' && (
             <motion.div key="done" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
-              className="glass-card-strong rounded-3xl p-12 text-center"
+              className="glass-card-strong rounded-3xl p-10 text-center space-y-6"
             >
-              <div className="w-20 h-20 rounded-full gradient-primary flex items-center justify-center mx-auto mb-6 shadow-glow">
+              <div className="w-20 h-20 rounded-full gradient-primary flex items-center justify-center mx-auto shadow-glow">
                 <Check className="w-9 h-9 text-primary-foreground" />
               </div>
-              <h2 className="font-serif-display text-2xl text-foreground font-semibold mb-3">{t('rsvp.done.title')}</h2>
-              <p className="font-sans-elegant text-sm text-muted-foreground max-w-sm mx-auto" style={{ lineHeight: 1.6 }}>
-                {attending ? t('rsvp.done.attending') : t('rsvp.done.notattending')}
-              </p>
-              {selectedTable && attending && (
-                <div className="glass-card rounded-2xl p-4 mt-6 inline-block">
-                  <p className="font-sans-elegant text-xs text-muted-foreground">{t('rsvp.done.table')}</p>
-                  <p className="font-serif-display text-lg text-foreground font-bold">
-                    {tables.find(t => t.id === selectedTable)?.name}
-                  </p>
+              <div>
+                <h2 className="font-serif-display text-2xl text-foreground font-semibold mb-3">{t('rsvp.done.title')}</h2>
+                <p className="font-sans-elegant text-sm text-muted-foreground max-w-sm mx-auto" style={{ lineHeight: 1.6 }}>
+                  {attending ? t('rsvp.done.attending') : t('rsvp.done.notattending')}
+                </p>
+              </div>
+
+              {/* Summary cards */}
+              {attending && (
+                <div className="grid grid-cols-2 gap-3 text-left">
+                  {selectedMeal && (
+                    <div className="glass-card rounded-2xl p-4">
+                      <p className="font-sans-elegant text-[10px] text-muted-foreground uppercase tracking-wider mb-1">{t('rsvp.done.meal')}</p>
+                      <p className="font-sans-elegant text-sm text-foreground font-semibold">
+                        {mealOptions.find(m => m.key === selectedMeal)?.emoji} {t(`rsvp.meal.${selectedMeal}`)}
+                      </p>
+                    </div>
+                  )}
+                  {selectedTable && (
+                    <div className="glass-card rounded-2xl p-4">
+                      <p className="font-sans-elegant text-[10px] text-muted-foreground uppercase tracking-wider mb-1">{t('rsvp.done.table')}</p>
+                      <p className="font-serif-display text-sm text-foreground font-bold">
+                        {tables.find(t => t.id === selectedTable)?.name}
+                      </p>
+                    </div>
+                  )}
+                  {finalGiftAmount > 0 && (
+                    <div className="glass-card rounded-2xl p-4">
+                      <p className="font-sans-elegant text-[10px] text-muted-foreground uppercase tracking-wider mb-1">{t('rsvp.done.gift')}</p>
+                      <p className="font-serif-display text-sm text-foreground font-bold">${finalGiftAmount}</p>
+                    </div>
+                  )}
+                  {hasPlusOne && plusOneName && (
+                    <div className="glass-card rounded-2xl p-4">
+                      <p className="font-sans-elegant text-[10px] text-muted-foreground uppercase tracking-wider mb-1">{t('rsvp.plusone')}</p>
+                      <p className="font-sans-elegant text-sm text-foreground font-semibold">{plusOneName}</p>
+                    </div>
+                  )}
                 </div>
               )}
+
+              <p className="font-sans-elegant text-xs text-muted-foreground">{t('rsvp.done.confirmation')}</p>
             </motion.div>
           )}
         </AnimatePresence>
