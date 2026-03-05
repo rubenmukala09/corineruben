@@ -58,26 +58,27 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop links */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-1">
             {links.map(link => (
               <Link
                 key={link.to}
                 to={link.to}
-                className={`font-sans-elegant text-xs font-bold transition-all duration-300 relative py-1 ${
+                className={`font-sans-elegant text-xs font-bold transition-all duration-300 relative px-3.5 py-1.5 rounded-full ${
                   location.pathname === link.to
                     ? 'text-white'
-                    : 'text-white/75 hover:text-white'
+                    : 'text-white/65 hover:text-white hover:bg-white/10'
                 }`}
                 style={{ letterSpacing: '0.3px' }}
               >
-                {link.label}
                 {location.pathname === link.to && (
                   <motion.div
                     layoutId="nav-indicator"
-                    className="absolute -bottom-0.5 left-0 right-0 h-[2px] gradient-primary rounded-full"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    className="absolute inset-0 rounded-full bg-white/15 border border-white/20"
+                    style={{ boxShadow: '0 0 12px rgba(255,255,255,0.15), inset 0 1px 0 rgba(255,255,255,0.1)' }}
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
                   />
                 )}
+                <span className="relative z-10">{link.label}</span>
               </Link>
             ))}
           </div>
