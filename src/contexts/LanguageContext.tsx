@@ -97,6 +97,10 @@ const translations: Record<string, Record<Language, string>> = {
   'registry.message': { fr: 'Si vous souhaitez nous gâter, voici quelques suggestions. Mais sachez que votre présence à nos côtés est le plus beau des cadeaux.', en: 'If you wish to spoil us, here are some suggestions. But know that your presence by our side is the greatest gift of all.' },
   'registry.link': { fr: 'Voir la liste', en: 'View Registry' },
 
+  // Explore
+  'explore.title': { fr: 'Découvrez Notre Mariage', en: 'Explore Our Wedding' },
+  'explore.subtitle': { fr: 'Tout ce que vous devez savoir', en: 'Everything you need to know' },
+
   // Footer
   'footer.made': { fr: 'Fait avec amour', en: 'Made with love' },
   'footer.copyright': { fr: '© 2025 Corine & Ruben', en: '© 2025 Corine & Ruben' },
