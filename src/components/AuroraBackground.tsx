@@ -84,22 +84,23 @@ const AuroraBackground = ({ variant = 'mesh', className = '' }: AuroraBackground
             width: blob.width,
             height: blob.height,
             filter: 'blur(120px)',
+            willChange: 'transform',
             ...(blob.left !== undefined && { left: blob.left }),
             ...(blob.right !== undefined && { right: blob.right }),
             ...(blob.top !== undefined && { top: blob.top }),
             ...(blob.bottom !== undefined && { bottom: blob.bottom }),
           }}
           animate={blob.animate}
-          transition={{ duration: blob.duration, repeat: Infinity, ease: 'easeInOut', delay: blob.delay }}
+          transition={{ duration: blob.duration, repeat: Infinity, ease: 'linear', delay: blob.delay }}
         >
           {/* Light mode color */}
           <div
-            className="absolute inset-0 rounded-full dark:opacity-0 transition-opacity duration-500"
+            className="absolute inset-0 rounded-full dark:opacity-0 transition-opacity duration-300"
             style={{ background: blob.lightBg }}
           />
           {/* Dark mode color — brighter, more saturated */}
           <div
-            className="absolute inset-0 rounded-full opacity-0 dark:opacity-100 transition-opacity duration-500"
+            className="absolute inset-0 rounded-full opacity-0 dark:opacity-100 transition-opacity duration-300"
             style={{ background: blob.darkBg }}
           />
         </motion.div>
