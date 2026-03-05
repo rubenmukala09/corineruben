@@ -733,31 +733,33 @@
 
 /* ===== DARK MODE FLOATING HEARTS GLOW ===== */
 @keyframes firefly-glow {
-  0%, 100% { opacity: 0; transform: scale(0.6) translateY(0); filter: blur(0px); }
-  30% { opacity: var(--heart-max-opacity, 0.6); transform: scale(1.1) translateY(-4px); filter: blur(0.5px); }
-  50% { opacity: var(--heart-max-opacity, 0.7); transform: scale(1.4) translateY(-8px); filter: blur(1px); }
-  70% { opacity: var(--heart-max-opacity, 0.5); transform: scale(1.1) translateY(-3px); filter: blur(0.5px); }
+  0%, 100% { opacity: 0; transform: scale(0.5) translateY(0); }
+  30% { opacity: var(--heart-max-opacity, 0.7); transform: scale(1.2) translateY(-5px); }
+  50% { opacity: var(--heart-max-opacity, 0.85); transform: scale(1.5) translateY(-10px); }
+  70% { opacity: var(--heart-max-opacity, 0.6); transform: scale(1.2) translateY(-4px); }
 }
 
 .dark .heart-glow {
   color: #ffd700;
   text-shadow: 
-    0 0 8px rgba(255, 215, 0, 0.9),
-    0 0 20px rgba(255, 200, 50, 0.7),
-    0 0 40px rgba(255, 180, 0, 0.4),
-    0 0 60px rgba(255, 160, 0, 0.2);
+    0 0 6px rgba(255, 215, 0, 1),
+    0 0 14px rgba(255, 215, 0, 0.9),
+    0 0 28px rgba(255, 200, 50, 0.7),
+    0 0 50px rgba(255, 180, 0, 0.4),
+    0 0 80px rgba(255, 160, 0, 0.2);
   animation: firefly-glow var(--heart-duration, 4s) ease-in-out infinite;
   animation-delay: var(--heart-delay, 0s);
 }
 
-/* Alternate some hearts with warm amber */
+/* Alternate with warm amber */
 .dark .heart-glow:nth-child(odd) {
   color: #ffeb3b;
   text-shadow: 
-    0 0 8px rgba(255, 235, 59, 0.9),
-    0 0 20px rgba(255, 215, 0, 0.6),
-    0 0 40px rgba(255, 193, 7, 0.35),
-    0 0 60px rgba(255, 160, 0, 0.15);
+    0 0 6px rgba(255, 235, 59, 1),
+    0 0 14px rgba(255, 235, 59, 0.9),
+    0 0 28px rgba(255, 215, 0, 0.65),
+    0 0 50px rgba(255, 193, 7, 0.35),
+    0 0 80px rgba(255, 160, 0, 0.15);
 }
 
 /* Dark mode heading glow */

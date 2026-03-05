@@ -27,10 +27,10 @@ const FloatingHearts = () => {
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: 6 + Math.random() * 14,
+      size: 10 + Math.random() * 16,
       delay: Math.random() * 8,
       duration: 2.5 + Math.random() * 5,
-      opacity: 0.3 + Math.random() * 0.5,
+      opacity: 0.5 + Math.random() * 0.4,
       symbol: symbols[i % symbols.length],
     }));
     setHearts(generated);
