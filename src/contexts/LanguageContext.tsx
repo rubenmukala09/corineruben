@@ -198,6 +198,20 @@ const translations: Record<string, Record<Language, string>> = {
   'explore.title': { fr: 'Découvrez Notre Mariage', en: 'Explore Our Wedding' },
   'explore.subtitle': { fr: 'Tout ce que vous devez savoir', en: 'Everything you need to know' },
 
+  // Love language
+  'love.tagline': { fr: 'Deux cœurs, une seule âme', en: 'Two hearts, one soul' },
+  'love.intro': { fr: 'Notre amour est une histoire écrite par Dieu, chaque chapitre plus beau que le précédent.', en: 'Our love is a story written by God, each chapter more beautiful than the last.' },
+  'love.quote1': { fr: '"Je t\'ai aimé d\'un amour éternel, c\'est pourquoi je te conserve ma bonté."', en: '"I have loved you with an everlasting love; therefore I have continued my faithfulness to you."' },
+  'love.quote1.ref': { fr: 'Jérémie 31:3', en: 'Jeremiah 31:3' },
+  'love.promise': { fr: 'Notre promesse d\'amour éternel', en: 'Our promise of everlasting love' },
+  'love.promise.desc': { fr: 'Devant Dieu et nos proches, nous nous promettons un amour fidèle, patient et éternel.', en: 'Before God and our loved ones, we promise each other a faithful, patient, and eternal love.' },
+  'love.soulmates': { fr: 'Âmes sœurs par la grâce de Dieu', en: 'Soulmates by the grace of God' },
+  'love.together': { fr: 'Ensemble pour toujours', en: 'Together forever' },
+  'love.loveStory': { fr: 'Une histoire d\'amour bénie', en: 'A blessed love story' },
+  'love.loveStory.desc': { fr: 'Chaque jour avec toi est un cadeau du ciel. Notre amour grandit comme un jardin arrosé par la grâce divine.', en: 'Every day with you is a gift from heaven. Our love grows like a garden watered by divine grace.' },
+  'love.countdownLabel': { fr: 'Jours avant notre « Oui, je le veux »', en: 'Days until our "I do"' },
+  'love.joinUs': { fr: 'Joignez-vous à notre célébration d\'amour', en: 'Join our celebration of love' },
+
   // Footer
   'footer.made': { fr: 'Fait avec amour', en: 'Made with love' },
   'footer.copyright': { fr: '© 2025 Corine & Ruben', en: '© 2025 Corine & Ruben' },

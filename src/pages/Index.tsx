@@ -23,6 +23,47 @@ const giftTiers = [
   { amount: 500, emoji: '💎', labelKey: 'registry.tier.diamond' },
 ];
 
+/* Floating hearts component */
+const FloatingHearts = () => (
+  <div className="fixed inset-0 pointer-events-none z-[5] overflow-hidden">
+    {Array.from({ length: 12 }).map((_, i) => (
+      <div
+        key={i}
+        className="absolute animate-float-heart text-primary/20"
+        style={{
+          left: `${8 + (i * 7.5) % 85}%`,
+          bottom: '-20px',
+          '--duration': `${10 + i * 2}s`,
+          '--delay': `${i * 1.5}s`,
+          fontSize: `${12 + (i % 4) * 6}px`,
+        } as React.CSSProperties}
+      >
+        ♥
+      </div>
+    ))}
+  </div>
+);
+
+/* Falling petals component */
+const FallingPetals = () => (
+  <div className="absolute inset-0 pointer-events-none overflow-hidden z-[2]">
+    {Array.from({ length: 8 }).map((_, i) => (
+      <div
+        key={i}
+        className="absolute animate-petal-fall"
+        style={{
+          left: `${10 + (i * 12) % 80}%`,
+          top: '-30px',
+          '--duration': `${14 + i * 2.5}s`,
+          '--delay': `${i * 2}s`,
+        } as React.CSSProperties}
+      >
+        <span className="text-primary/15 text-lg">🌸</span>
+      </div>
+    ))}
+  </div>
+);
+
 const Index = () => {
   const { t } = useLanguage();
   const { isPlaying, currentTrack, toggleTrack } = useMusic();
@@ -84,12 +125,6 @@ const Index = () => {
       setSelectedAmount(null);
     }, 2000);
   };
-
-  const highlights = [
-    { icon: Calendar, titleKey: 'hero.tagline', descKey: 'hero.date', img: flowersImg, color: 'text-pink-400' },
-    { icon: MapPin, titleKey: 'details.ceremony', descKey: 'details.ceremony.location', img: cakeImg, color: 'text-violet-400' },
-    { icon: Utensils, titleKey: 'details.reception', descKey: 'details.reception.location', img: ringsImg, color: 'text-amber-400' },
-  ];
 
   const features = [
     { icon: Heart, label: t('nav.story'), desc: t('story.subtitle'), to: '/story', color: 'text-rose-400', bg: 'from-rose-500/20 to-pink-500/10' },
@@ -154,6 +189,9 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Ambient floating hearts */}
+      <FloatingHearts />
+
       {/* ===== FLOATING GIFT BUTTON ===== */}
       <motion.button
         initial={{ opacity: 0, scale: 0.8 }}
@@ -169,6 +207,7 @@ const Index = () => {
 
       {/* ===== HERO ===== */}
       <section className="w-full min-h-screen relative overflow-hidden flex flex-col items-center pt-8 pb-16">
+        <FallingPetals />
         <div className="absolute inset-0 mix-blend-soft-light z-[1]">
           <img src={heroImg} alt="" className="w-full h-full object-cover opacity-[0.1]" style={{ filter: 'saturate(0.4) brightness(1.2)' }} />
         </div>
@@ -194,7 +233,7 @@ const Index = () => {
             </motion.div>
           </motion.div>
 
-          {/* Floating badge — Guests */}
+          {/* Floating badge — Soulmates */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -204,12 +243,12 @@ const Index = () => {
             <motion.div animate={{ y: [5, -5, 5] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
               className="glass-card-strong rounded-2xl px-4 py-2.5 flex items-center gap-2"
             >
-              <Users className="w-3.5 h-3.5 text-violet-400 icon-glow" />
-              <span className="font-sans-elegant text-[11px] font-bold text-foreground drop-shadow-sm">150+ {t('index.guestsInvited')}</span>
+              <Heart className="w-3.5 h-3.5 text-rose-400 fill-rose-400 icon-glow" />
+              <span className="font-sans-elegant text-[11px] font-bold text-foreground drop-shadow-sm">{t('love.soulmates')}</span>
             </motion.div>
           </motion.div>
 
-          {/* Top label */}
+          {/* Love tagline label */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -217,7 +256,7 @@ const Index = () => {
             className="inline-block px-6 py-2.5 rounded-full glass-card-strong mb-6"
           >
             <p className="font-sans-elegant text-xs tracking-[0.3em] uppercase text-foreground/80 dark:text-foreground/90 font-semibold">
-              {t('hero.tagline')}
+              {t('love.tagline')}
             </p>
           </motion.div>
 
@@ -230,13 +269,23 @@ const Index = () => {
             transition={{ delay: 0.5, type: "spring" }}
             className="my-4"
           >
-            <span className="inline-flex items-center justify-center w-14 h-14 rounded-full gradient-primary shadow-glow">
-              <span className="text-primary-foreground text-2xl font-serif-display">&</span>
+            <span className="inline-flex items-center justify-center w-16 h-16 rounded-full gradient-primary shadow-glow animate-pulse-love">
+              <Heart className="w-7 h-7 text-primary-foreground fill-primary-foreground" />
             </span>
           </motion.div>
           <h1 className="font-serif-display text-5xl md:text-7xl lg:text-8xl font-semibold text-foreground mb-6 leading-tight">
             Ruben
           </h1>
+
+          {/* Romantic subtitle */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7 }}
+            className="font-serif-display text-lg md:text-xl text-primary italic mb-2"
+          >
+            {t('love.together')}
+          </motion.p>
 
           <p className="font-sans-elegant text-lg md:text-xl text-foreground/70 dark:text-foreground/80 max-w-xl mb-8 font-medium" style={{ lineHeight: 1.6 }}>
             {t('hero.date')}
@@ -249,6 +298,7 @@ const Index = () => {
             className="flex flex-row gap-4 justify-center mb-8"
           >
             <Link to="/rsvp" className="btn-primary">
+              <Heart className="w-4 h-4 fill-current" />
               {t('hero.cta')}
             </Link>
             <Link to="/story" className="btn-outline">
@@ -274,8 +324,8 @@ const Index = () => {
                 className="glass-card-strong rounded-3xl p-5 w-52"
               >
                 <div className="flex items-center gap-2 mb-3">
-                  <BookOpen className="w-4 h-4 text-amber-400 icon-glow" />
-                  <span className="font-sans-elegant text-[10px] font-bold text-foreground/70 tracking-wider uppercase">{t('index.scripture')}</span>
+                  <Heart className="w-4 h-4 text-rose-400 fill-rose-400 icon-glow" />
+                  <span className="font-sans-elegant text-[10px] font-bold text-foreground/70 tracking-wider uppercase">{t('love.loveStory')}</span>
                 </div>
                 <p className="font-serif-display text-sm text-foreground italic leading-relaxed">
                   "{t('verse.1cor13')}"
@@ -309,10 +359,13 @@ const Index = () => {
                 transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
                 className="glass-card-dark rounded-3xl p-6 w-full max-w-[260px] md:scale-105"
               >
-                <p className="font-sans-elegant text-xs font-medium opacity-70 mb-2 tracking-[0.1em] uppercase">{t('index.sacredUnion')}</p>
+                <div className="flex items-center gap-2 mb-2">
+                  <Heart className="w-4 h-4 text-rose-300 fill-rose-300 animate-pulse-love" />
+                  <p className="font-sans-elegant text-xs font-medium opacity-80 tracking-[0.1em] uppercase">{t('love.together')}</p>
+                </div>
                 <p className="font-serif-display text-xl font-semibold mb-2">{t('index.covenantLove')}</p>
                 <p className="font-sans-elegant text-xs opacity-60 mb-5" style={{ lineHeight: 1.5 }}>
-                  {t('index.celebrationDesc')}
+                  {t('love.countdownLabel')}
                 </p>
 
                 <div className="grid grid-cols-4 gap-2 mb-5">
@@ -340,8 +393,8 @@ const Index = () => {
                   <div className="w-10 h-10 rounded-full bg-background/20 backdrop-blur-sm border border-background/30 flex items-center justify-center">
                     <Music className="w-4 h-4" />
                   </div>
-                  <div className="w-10 h-10 rounded-full bg-background/20 backdrop-blur-sm border border-background/30 flex items-center justify-center">
-                    <Heart className="w-4 h-4" />
+                  <div className="w-10 h-10 rounded-full bg-background/20 backdrop-blur-sm border border-background/30 flex items-center justify-center animate-pulse-love">
+                    <Heart className="w-4 h-4 fill-current" />
                   </div>
                 </div>
               </motion.div>
@@ -354,7 +407,7 @@ const Index = () => {
                 transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
                 className="glass-card-strong rounded-full px-5 py-3 flex items-center gap-2"
               >
-                <Heart className="w-4 h-4 text-rose-400 fill-rose-400 icon-glow" />
+                <Heart className="w-4 h-4 text-rose-400 fill-rose-400 icon-glow animate-pulse-love" />
                 <span className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">{t('index.foreverAlways')}</span>
               </motion.div>
 
@@ -382,7 +435,7 @@ const Index = () => {
                 className="glass-card-strong rounded-3xl p-4 w-48"
               >
                 <div className="flex items-center gap-1.5 mb-1.5">
-                  <Calendar className="w-3 h-3 text-emerald-400 icon-glow" />
+                  <Sparkles className="w-3 h-3 text-amber-400 icon-glow" />
                   <p className="font-sans-elegant text-xs text-foreground/60 font-medium">{t('hero.date')}</p>
                 </div>
                 <p className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">{t('index.beginJourney')}</p>
@@ -402,24 +455,33 @@ const Index = () => {
         </motion.div>
       </section>
 
-      {/* ===== SCRIPTURE SECTION ===== */}
-      <section className="py-14 md:py-18 relative">
+      {/* ===== LOVE QUOTE — Romantic Divider ===== */}
+      <section className="py-12 md:py-16 relative">
         <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <div className="glass-card-strong rounded-3xl p-10 md:p-14 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br from-rose-400/10 to-violet-400/10 blur-2xl pointer-events-none" />
-              <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-gradient-to-tr from-amber-400/10 to-pink-400/10 blur-2xl pointer-events-none" />
-              <BookOpen className="w-8 h-8 text-amber-400 icon-glow mx-auto mb-6" />
+              <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-gradient-to-tr from-pink-400/10 to-rose-400/10 blur-2xl pointer-events-none" />
+              
+              {/* Love divider with heart */}
+              <div className="love-divider mb-6">
+                <Heart className="w-6 h-6 text-rose-400 fill-rose-400 icon-glow animate-pulse-love" />
+              </div>
+              
               <p className="font-serif-display text-xl md:text-2xl text-foreground italic leading-relaxed mb-4">
-                "{t('verse.genesis')}"
+                {t('love.quote1')}
               </p>
-              <p className="font-sans-elegant text-sm text-muted-foreground font-semibold">Genesis 2:24</p>
+              <p className="font-sans-elegant text-sm text-muted-foreground font-semibold">{t('love.quote1.ref')}</p>
+              
+              <div className="love-divider mt-6">
+                <Heart className="w-4 h-4 text-primary/40 fill-primary/40" />
+              </div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* ===== ABOUT / INTRO ===== */}
+      {/* ===== ABOUT / LOVE STORY INTRO ===== */}
       <section className="py-14 md:py-20 relative">
         <div className="container mx-auto px-6 md:px-12 max-w-6xl relative z-10">
           <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
@@ -444,12 +506,12 @@ const Index = () => {
                   className="absolute -bottom-6 -right-6 glass-card-strong rounded-3xl p-4"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center shadow-soft">
+                    <div className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center shadow-soft animate-pulse-love">
                       <Heart className="w-5 h-5 text-primary-foreground fill-primary-foreground" />
                     </div>
                     <div>
                       <p className="font-sans-elegant text-sm font-bold text-foreground">4+ {t('index.years')}</p>
-                      <p className="font-sans-elegant text-[10px] text-muted-foreground">{t('story.subtitle')}</p>
+                      <p className="font-sans-elegant text-[10px] text-muted-foreground">{t('love.together')}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -460,7 +522,7 @@ const Index = () => {
                 >
                   <div className="flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-amber-400 icon-glow" />
-                    <span className="font-sans-elegant text-xs font-semibold text-foreground">{t('index.ourJourney')}</span>
+                    <span className="font-sans-elegant text-xs font-semibold text-foreground">{t('love.loveStory')}</span>
                   </div>
                 </motion.div>
               </div>
@@ -475,24 +537,48 @@ const Index = () => {
               <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-6">
                 <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('nav.story')}</p>
               </div>
-              <h2 className="font-serif-display text-3xl md:text-5xl text-foreground mb-6 font-semibold">
+              <h2 className="font-serif-display text-3xl md:text-5xl text-foreground mb-4 font-semibold">
                 {t('story.title')}
               </h2>
+              <p className="font-serif-display text-lg text-primary italic mb-6">{t('love.tagline')}</p>
               <div className="glass-card rounded-3xl p-6 mb-6 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-20 h-20 rounded-full bg-gradient-to-br from-rose-400/8 to-violet-400/5 blur-xl pointer-events-none" />
                 <p className="font-sans-elegant text-base text-muted-foreground leading-relaxed relative z-10">
-                  <span className="text-foreground font-semibold">{t('story.event1.description').split('.')[0]}.</span>{' '}
-                  {t('story.event1.description').split('.').slice(1).join('.')}
+                  {t('love.intro')}
                 </p>
               </div>
-              <p className="font-serif-display text-lg text-muted-foreground leading-relaxed mb-8 italic">
-                "{t('story.event5.description')}"
-              </p>
+              <div className="glass-card rounded-3xl p-6 mb-6 relative overflow-hidden border-l-4 border-primary/30">
+                <p className="font-serif-display text-lg text-foreground italic leading-relaxed">
+                  {t('love.loveStory.desc')}
+                </p>
+                <div className="flex items-center gap-2 mt-3">
+                  <Heart className="w-3 h-3 text-rose-400 fill-rose-400" />
+                  <span className="font-sans-elegant text-xs text-muted-foreground font-medium">Corine & Ruben</span>
+                </div>
+              </div>
               <Link to="/story" className="btn-primary">
+                <Heart className="w-4 h-4 fill-current" />
                 {t('nav.story')} →
               </Link>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* ===== SCRIPTURE — Love is Patient ===== */}
+      <section className="py-14 md:py-18 relative">
+        <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <div className="glass-card-strong rounded-3xl p-10 md:p-14 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br from-rose-400/10 to-violet-400/10 blur-2xl pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-gradient-to-tr from-amber-400/10 to-pink-400/10 blur-2xl pointer-events-none" />
+              <BookOpen className="w-8 h-8 text-amber-400 icon-glow mx-auto mb-6" />
+              <p className="font-serif-display text-xl md:text-2xl text-foreground italic leading-relaxed mb-4">
+                "{t('verse.genesis')}"
+              </p>
+              <p className="font-sans-elegant text-sm text-muted-foreground font-semibold">Genesis 2:24</p>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -504,6 +590,7 @@ const Index = () => {
               <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('badge.faith')}</p>
             </div>
             <h2 className="font-serif-display text-3xl md:text-4xl text-foreground font-semibold mb-3">{t('index.foundedOnFaith')}</h2>
+            <p className="font-sans-elegant text-base text-muted-foreground max-w-md mx-auto">{t('love.promise.desc')}</p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -514,7 +601,7 @@ const Index = () => {
                 <img src={flowersImg} alt="" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <BookOpen className="w-5 h-5 text-amber-300 icon-glow mb-3" />
+                  <Heart className="w-5 h-5 text-rose-300 fill-rose-300 icon-glow mb-3 animate-pulse-love" />
                   <p className="font-serif-display text-base text-white italic leading-relaxed mb-2">
                     "{t('verse.proverbs')}"
                   </p>
@@ -544,15 +631,21 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ===== PHOTO + VERSE STRIP ===== */}
+      {/* ===== LOVE GALLERY STRIP ===== */}
       <section className="py-10 md:py-14 relative">
         <div className="container mx-auto px-6 md:px-12 max-w-6xl relative z-10">
+          <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-6">
+            <div className="love-divider mb-3">
+              <Heart className="w-5 h-5 text-rose-400 fill-rose-400 icon-glow" />
+            </div>
+            <p className="font-serif-display text-lg text-primary italic">{t('index.capturedMoments')}</p>
+          </motion.div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[
-              { img: heroImg, overlay: true },
-              { img: cakeImg, overlay: false },
-              { img: ringsImg, overlay: false },
-              { img: coupleImg, overlay: true },
+              { img: heroImg, label: '♥' },
+              { img: cakeImg, label: '🌸' },
+              { img: ringsImg, label: '💍' },
+              { img: coupleImg, label: '♥' },
             ].map((item, i) => (
               <motion.div
                 key={i}
@@ -562,13 +655,11 @@ const Index = () => {
                 transition={{ delay: i * 0.08 }}
                 className="glass-card-strong rounded-3xl p-1.5 overflow-hidden card-hover"
               >
-                <div className="relative rounded-[20px] overflow-hidden aspect-square">
+                <div className="relative rounded-[20px] overflow-hidden aspect-square group">
                   <img src={item.img} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                  {item.overlay && (
-                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 to-transparent flex items-end p-4">
-                      <Heart className="w-4 h-4 text-rose-300 fill-rose-300 icon-glow" />
-                    </div>
-                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 to-transparent flex items-end justify-center p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <span className="text-2xl">{item.label}</span>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -617,31 +708,15 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ===== STATS ===== */}
+      {/* ===== LOVE STATS ===== */}
       <section className="py-14 md:py-20 relative">
         <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="flex flex-wrap gap-3 justify-center mb-8">
-              {[
-                { icon: Cross, text: t('badge.faith'), color: 'text-rose-400' },
-                { icon: Flower2, text: t('badge.garden'), color: 'text-emerald-400' },
-                { icon: BookOpen, text: t('badge.covenant'), color: 'text-amber-400' },
-              ].map((badge, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="glass-card-strong rounded-full px-4 py-2 flex items-center gap-2"
-                >
-                  <badge.icon className={`w-3.5 h-3.5 ${badge.color} icon-glow`} />
-                  <span className="font-sans-elegant text-[11px] font-semibold text-foreground">{badge.text}</span>
-                </motion.div>
-              ))}
+            <div className="love-divider mb-6">
+              <Heart className="w-6 h-6 text-rose-400 fill-rose-400 icon-glow animate-pulse-love" />
             </div>
 
-            <p className="font-sans-elegant text-sm text-muted-foreground mb-4 tracking-wide">{t('index.joinCelebration')}</p>
+            <p className="font-sans-elegant text-sm text-muted-foreground mb-4 tracking-wide">{t('love.joinUs')}</p>
             <h2 className="font-serif-display text-3xl md:text-5xl text-foreground font-semibold mb-4">
               {t('hero.tagline')}
             </h2>
@@ -655,7 +730,7 @@ const Index = () => {
               { value: countdown.days, label: t('countdown.days'), icon: Calendar, color: 'text-pink-400' },
               { value: '150+', label: t('index.guestsInvited'), icon: Users, color: 'text-violet-400' },
               { value: '5', label: t('index.courseDinner'), icon: Utensils, color: 'text-amber-400' },
-              { value: '∞', label: t('index.love'), icon: Cross, color: 'text-rose-400' },
+              { value: '∞', label: t('index.love'), icon: Heart, color: 'text-rose-400' },
             ].map((stat, i) => (
               <motion.div
                 key={i}
@@ -666,7 +741,7 @@ const Index = () => {
                 className="glass-card-strong rounded-3xl p-6 card-hover group relative overflow-hidden"
               >
                 <div className="absolute top-0 right-0 w-16 h-16 rounded-full bg-gradient-to-br from-current/5 to-transparent blur-xl pointer-events-none" />
-                <stat.icon className={`w-6 h-6 ${stat.color} icon-glow mb-3 mx-auto group-hover:scale-110 transition-transform duration-300`} />
+                <stat.icon className={`w-6 h-6 ${stat.color} icon-glow mb-3 mx-auto group-hover:scale-110 transition-transform duration-300 ${stat.color === 'text-rose-400' ? 'fill-rose-400 animate-pulse-love' : ''}`} />
                 <span className="font-serif-display text-3xl md:text-4xl font-semibold gradient-text block mb-2">
                   {typeof stat.value === 'number' ? String(stat.value).padStart(2, '0') : stat.value}
                 </span>
@@ -682,6 +757,7 @@ const Index = () => {
             className="mt-10"
           >
             <Link to="/rsvp" className="btn-primary">
+              <Heart className="w-4 h-4 fill-current" />
               {t('hero.cta')} →
             </Link>
           </motion.div>
@@ -700,6 +776,51 @@ const Index = () => {
                 "{t('verse.ecclesiastes')}"
               </p>
               <p className="font-sans-elegant text-sm text-muted-foreground font-semibold">Ecclesiastes 4:9-12</p>
+              <div className="love-divider mt-6">
+                <Heart className="w-4 h-4 text-primary/40 fill-primary/40" />
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ===== LOVE PROMISE SECTION ===== */}
+      <section className="py-14 md:py-20 relative">
+        <div className="container mx-auto px-6 md:px-12 max-w-4xl relative z-10">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center">
+            <div className="glass-card-strong rounded-3xl p-10 md:p-16 relative overflow-hidden">
+              <div className="absolute top-4 left-4 text-6xl opacity-[0.06] text-primary">♥</div>
+              <div className="absolute bottom-4 right-4 text-6xl opacity-[0.06] text-primary">♥</div>
+              <div className="absolute top-4 right-10 text-3xl opacity-[0.04] text-primary">♥</div>
+              <div className="absolute bottom-4 left-10 text-3xl opacity-[0.04] text-primary">♥</div>
+
+              <div className="love-divider mb-6">
+                <Heart className="w-6 h-6 text-rose-400 fill-rose-400 icon-glow animate-pulse-love" />
+              </div>
+
+              <h2 className="font-serif-display text-3xl md:text-4xl text-foreground font-semibold mb-4">{t('love.promise')}</h2>
+              <p className="font-sans-elegant text-base md:text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto mb-8">
+                {t('love.promise.desc')}
+              </p>
+
+              <div className="flex flex-wrap justify-center gap-3 mb-8">
+                {['💕', '🌹', '💒', '🕊️', '✨'].map((emoji, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2 + i * 0.1 }}
+                    className="text-2xl"
+                  >
+                    {emoji}
+                  </motion.span>
+                ))}
+              </div>
+
+              <div className="love-divider">
+                <Heart className="w-4 h-4 text-primary/40 fill-primary/40" />
+              </div>
             </div>
           </motion.div>
         </div>
@@ -744,16 +865,26 @@ const Index = () => {
       <section className="py-14 md:py-20 relative">
         <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="glass-card-strong rounded-full w-28 h-28 mx-auto mb-8 flex items-center justify-center overflow-hidden ring-4 ring-primary/15">
+            <div className="glass-card-strong rounded-full w-28 h-28 mx-auto mb-8 flex items-center justify-center overflow-hidden ring-4 ring-primary/15 relative">
               <img src={ringsImg} alt="Wedding rings" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 flex items-center justify-center bg-foreground/20">
+                <Heart className="w-8 h-8 text-white fill-white animate-pulse-love" />
+              </div>
             </div>
-            <h2 className="font-serif-display text-4xl md:text-6xl text-foreground font-semibold mb-6">
+
+            <div className="love-divider mb-6">
+              <Heart className="w-5 h-5 text-rose-400 fill-rose-400 icon-glow" />
+            </div>
+
+            <h2 className="font-serif-display text-4xl md:text-6xl text-foreground font-semibold mb-4">
               {t('rsvp.title')}
             </h2>
+            <p className="font-serif-display text-lg text-primary italic mb-2">{t('love.tagline')}</p>
             <p className="font-sans-elegant text-lg md:text-xl text-muted-foreground leading-relaxed mb-10 max-w-lg mx-auto">
               {t('rsvp.subtitle')}
             </p>
             <Link to="/rsvp" className="btn-primary text-base">
+              <Heart className="w-5 h-5 fill-current" />
               {t('hero.cta')}
             </Link>
           </motion.div>
@@ -870,6 +1001,9 @@ const Index = () => {
                   <Check className="w-7 h-7 text-primary-foreground" />
                 </div>
                 <p className="font-sans-elegant text-foreground font-semibold">{t('registry.dialog.thanks')}</p>
+                <div className="love-divider mt-4">
+                  <Heart className="w-4 h-4 text-rose-400 fill-rose-400" />
+                </div>
               </motion.div>
             ) : (
               <motion.form
@@ -906,7 +1040,7 @@ const Index = () => {
                 </div>
 
                 <button type="submit" className="w-full btn-primary justify-center">
-                  <Heart className="w-4 h-4" />
+                  <Heart className="w-4 h-4 fill-current" />
                   {t('registry.dialog.send')}
                 </button>
 
