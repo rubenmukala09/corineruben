@@ -54,6 +54,8 @@ export default {
         wine: "hsl(var(--wine))",
         rose: "hsl(var(--rose))",
         peach: "hsl(var(--peach))",
+        lavender: "hsl(var(--lavender))",
+        plum: "hsl(var(--plum))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -71,10 +73,10 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       boxShadow: {
-        "soft": "0 4px 24px -4px hsl(330 35% 42% / 0.08)",
-        "glow": "0 0 40px -10px hsl(330 35% 42% / 0.25)",
-        "card-hover": "0 20px 50px -15px hsl(330 35% 42% / 0.15)",
-        "glass": "0 8px 32px hsl(330 35% 42% / 0.06), inset 0 1px 0 hsl(0 0% 100% / 0.15)",
+        "soft": "0 4px 24px -4px hsl(328 40% 38% / 0.1)",
+        "glow": "0 0 45px -10px hsl(328 40% 38% / 0.3)",
+        "card-hover": "0 20px 55px -15px hsl(328 40% 38% / 0.18)",
+        "glass": "0 8px 32px hsl(328 40% 38% / 0.07), inset 0 1px 0 hsl(0 0% 100% / 0.18)",
       },
       keyframes: {
         "accordion-down": {

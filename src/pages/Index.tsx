@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
-import { ChevronDown, Heart, MapPin, Calendar, Clock, Utensils, Camera, Gift, Star } from 'lucide-react';
+import { ChevronDown, Heart, MapPin, Calendar, Clock, Utensils, Camera, Gift, Star, Users } from 'lucide-react';
 import heroImg from '@/assets/hero-wedding.jpg';
 import flowersImg from '@/assets/flowers-lavender.jpg';
 import ringsImg from '@/assets/rings.jpg';
@@ -49,16 +49,17 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
       {/* ===== HERO ===== */}
-      <section className="min-h-screen flex flex-col items-center justify-center relative px-4 overflow-hidden gradient-mesh">
+      <section className="min-h-screen flex flex-col items-center justify-center relative px-4 overflow-hidden gradient-hero">
         {/* Background image with overlay */}
         <div className="absolute inset-0">
-          <img src={heroImg} alt="" className="w-full h-full object-cover opacity-30 dark:opacity-15" />
+          <img src={heroImg} alt="" className="w-full h-full object-cover opacity-25 dark:opacity-12" />
         </div>
 
-        {/* Blobs */}
-        <div className="floating-blob w-[600px] h-[600px] bg-primary/25 top-[-200px] right-[-150px]" />
-        <div className="floating-blob w-[500px] h-[500px] bg-accent/30 bottom-[-100px] left-[-120px]" />
-        <div className="floating-blob w-[300px] h-[300px] bg-peach bottom-[20%] right-[10%]" />
+        {/* Vibrant blobs */}
+        <div className="floating-blob w-[650px] h-[650px] bg-primary/30 top-[-220px] right-[-180px]" />
+        <div className="floating-blob w-[550px] h-[550px] bg-lavender top-[10%] left-[-150px]" />
+        <div className="floating-blob w-[350px] h-[350px] bg-peach bottom-[15%] right-[5%]" />
+        <div className="floating-blob w-[250px] h-[250px] bg-blush bottom-[-50px] left-[30%]" />
 
         {/* Floating widgets */}
         <motion.div
@@ -206,7 +207,8 @@ const Index = () => {
 
       {/* ===== ABOUT / INTRO ===== */}
       <section className="py-24 md:py-32 relative overflow-hidden">
-        <div className="floating-blob w-[400px] h-[400px] bg-accent/15 top-0 right-[-100px]" />
+        <div className="floating-blob w-[450px] h-[450px] bg-lavender/20 top-[-50px] right-[-120px]" />
+        <div className="floating-blob w-[300px] h-[300px] bg-peach/25 bottom-0 left-[-80px]" />
         <div className="container mx-auto px-4 max-w-6xl relative z-10">
           <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             <motion.div
@@ -316,10 +318,11 @@ const Index = () => {
       {/* ===== STATS ===== */}
       <section className="py-20 md:py-28 relative overflow-hidden">
         <div className="absolute inset-0 gradient-soft" />
-        <div className="floating-blob w-[400px] h-[400px] bg-primary/15 top-[-80px] right-[-80px]" />
+        <div className="floating-blob w-[450px] h-[450px] bg-primary/18 top-[-100px] right-[-100px]" />
+        <div className="floating-blob w-[300px] h-[300px] bg-lavender/20 bottom-[-50px] left-[-60px]" />
         <div className="container mx-auto px-4 max-w-5xl relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <img src={flowersImg} alt="" className="w-20 h-20 rounded-full object-cover mx-auto mb-6 ring-4 ring-primary/15 shadow-glow" />
+            <img src={flowersImg} alt="" className="w-20 h-20 rounded-full object-cover mx-auto mb-6 ring-4 ring-primary/20 shadow-glow" />
             <h2 className="font-serif-display text-3xl md:text-5xl text-foreground font-bold mb-12">
               {t('hero.tagline')}
             </h2>
@@ -353,7 +356,7 @@ const Index = () => {
 
       {/* ===== EXPLORE NAVIGATION ===== */}
       <section className="py-20 md:py-28 relative overflow-hidden">
-        <div className="floating-blob w-[400px] h-[400px] bg-accent/15 bottom-[-80px] right-[-100px]" />
+        <div className="floating-blob w-[400px] h-[400px] bg-accent/18 bottom-[-80px] right-[-100px]" />
         <div className="container mx-auto px-4 max-w-5xl relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-14">
             <h2 className="font-serif-display text-3xl md:text-5xl text-foreground font-bold mb-4">
@@ -401,7 +404,7 @@ const Index = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className={`overflow-hidden rounded-2xl ${i === 0 ? 'md:col-span-2 md:row-span-2' : ''} group cursor-pointer`}
+                className={`overflow-hidden rounded-2xl ${i === 0 ? 'md:col-span-2 md:row-span-2' : ''} group cursor-pointer shadow-soft hover:shadow-card-hover transition-all duration-500`}
               >
                 <img src={img} alt="" className="w-full h-full object-cover aspect-square group-hover:scale-110 transition-transform duration-700" />
               </motion.div>
@@ -418,12 +421,12 @@ const Index = () => {
 
       {/* ===== CTA / RSVP ===== */}
       <section className="py-24 md:py-32 relative overflow-hidden">
-        <div className="floating-blob w-[500px] h-[500px] bg-primary/15 top-[-100px] left-[-100px]" />
-        <div className="floating-blob w-[400px] h-[400px] bg-accent/15 bottom-[-80px] right-[-80px]" />
+        <div className="floating-blob w-[500px] h-[500px] bg-primary/18 top-[-100px] left-[-100px]" />
+        <div className="floating-blob w-[400px] h-[400px] bg-lavender/15 bottom-[-80px] right-[-80px]" />
 
         <div className="container mx-auto px-4 max-w-3xl relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <img src={ringsImg} alt="" className="w-24 h-24 rounded-full object-cover mx-auto mb-8 ring-4 ring-primary/15 shadow-glow" />
+            <img src={ringsImg} alt="" className="w-24 h-24 rounded-full object-cover mx-auto mb-8 ring-4 ring-primary/20 shadow-glow" />
             <h2 className="font-serif-display text-4xl md:text-6xl text-foreground font-bold mb-6">
               {t('rsvp.title')}
             </h2>

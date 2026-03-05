@@ -14,8 +14,8 @@ const Story = () => {
 
   return (
     <div className="min-h-screen pt-28 pb-20 relative overflow-hidden gradient-mesh">
-      <div className="floating-blob w-[400px] h-[400px] bg-primary/15 top-20 right-[-100px]" />
-      <div className="floating-blob w-[300px] h-[300px] bg-accent/20 bottom-40 left-[-80px]" />
+      <div className="floating-blob w-[450px] h-[450px] bg-primary/20 top-20 right-[-120px]" />
+      <div className="floating-blob w-[350px] h-[350px] bg-lavender/25 bottom-40 left-[-100px]" />
 
       <div className="container mx-auto px-4 max-w-3xl relative z-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-16">
@@ -27,7 +27,7 @@ const Story = () => {
         </motion.div>
 
         <div className="relative">
-          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/40 via-accent/30 to-transparent md:-translate-x-px" />
+          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/50 via-accent/35 to-transparent md:-translate-x-px" />
 
           {events.map((event, i) => (
             <motion.div
@@ -38,7 +38,7 @@ const Story = () => {
               transition={{ delay: i * 0.1 }}
               className={`relative flex items-start mb-12 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
             >
-              <div className="absolute left-6 md:left-1/2 w-4 h-4 rounded-full gradient-primary -translate-x-2 mt-2 z-10 ring-4 ring-background shadow-soft" />
+              <div className="absolute left-6 md:left-1/2 w-4 h-4 rounded-full gradient-primary -translate-x-2 mt-2 z-10 ring-4 ring-background shadow-glow" />
 
               <div className={`ml-14 md:ml-0 md:w-[calc(50%-2rem)] ${i % 2 === 0 ? 'md:pr-8 md:text-right' : 'md:pl-8'}`}>
                 <div className="glass-card-strong rounded-2xl p-6 hover:shadow-card-hover transition-all duration-500">

@@ -24,8 +24,8 @@ const Gallery = () => {
 
   return (
     <div className="min-h-screen pt-28 pb-20 relative overflow-hidden gradient-mesh">
-      <div className="floating-blob w-[400px] h-[400px] bg-accent/20 top-40 left-[-120px]" />
-      <div className="floating-blob w-[350px] h-[350px] bg-primary/12 bottom-20 right-[-100px]" />
+      <div className="floating-blob w-[450px] h-[450px] bg-lavender/25 top-40 left-[-140px]" />
+      <div className="floating-blob w-[380px] h-[380px] bg-primary/15 bottom-20 right-[-120px]" />
 
       <div className="container mx-auto px-4 max-w-5xl relative z-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-16">
