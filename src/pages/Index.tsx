@@ -15,12 +15,27 @@ import SiteOrientationGrid from "@/components/home/SiteOrientationGrid";
 import PromoStrip from "@/components/home/PromoStrip";
 import { ThreatTicker } from "@/components/home/ThreatTicker";
 import { TestimonialCarousel } from "@/components/home/TestimonialCarousel";
+import { LiveSecurityStats } from "@/components/home/LiveSecurityStats";
+import { WorkshopsPromo } from "@/components/home/WorkshopsPromo";
+import { FamilyTrustSection } from "@/components/home/FamilyTrustSection";
 import { ArrowRight, CheckCircle, Sparkles } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 
 const FAQPreview = lazy(() =>
   import("@/components/home/FAQPreview").then((m) => ({
     default: m.FAQPreview,
+  })),
+);
+
+const BlogPreview = lazy(() =>
+  import("@/components/home/BlogPreview").then((m) => ({
+    default: m.BlogPreview,
+  })),
+);
+
+const NewsletterSection = lazy(() =>
+  import("@/components/home/NewsletterSection").then((m) => ({
+    default: m.NewsletterSection,
   })),
 );
 
@@ -59,39 +74,72 @@ const Index = () => {
 
           {/* Stats + Visual Bento Intro + Real Results */}
           <SectionDivider className="home-divider-hero" />
-          <div className="home-section-surface home-surface-coral">
+          <div id="stats" className="home-section-surface home-surface-coral">
             <HomeIntroSection />
+          </div>
+
+          {/* Live Security Command Center */}
+          <SectionDivider />
+          <div id="live-security" className="home-section-surface">
+            <LiveSecurityStats />
           </div>
 
           {/* Services with images */}
           <SectionDivider />
-          <div className="home-section-surface home-surface-lavender">
+          <div id="services" className="home-section-surface home-surface-lavender">
             <SiteOrientationGrid />
+          </div>
+
+          {/* Protection Training Promo */}
+          <SectionDivider />
+          <div id="workshops" className="home-section-surface home-surface-sand">
+            <WorkshopsPromo />
           </div>
 
           {/* How It Works */}
           <SectionDivider />
-          <div className="home-section-surface home-surface-sand">
+          <div id="get-protected" className="home-section-surface home-surface-coral">
             <PromoStrip />
+          </div>
+
+          {/* Family Trust Section */}
+          <SectionDivider />
+          <div id="trust" className="home-section-surface home-surface-lavender">
+            <FamilyTrustSection />
           </div>
 
           {/* Testimonial Carousel */}
           <SectionDivider />
-          <div className="home-section-surface home-surface-card">
+          <div id="testimonials" className="home-section-surface home-surface-card">
             <TestimonialCarousel />
           </div>
 
-          {/* Trust proof */}
+          {/* Trust Badges */}
           <SectionDivider />
-          <div className="home-section-surface home-surface-coral">
+          <div id="why-us" className="home-section-surface home-surface-coral">
             <TrustBadgesSection />
           </div>
+
+          {/* Blog Preview */}
+          <SectionDivider />
+          <section id="blog" className="home-section-surface home-surface-sand">
+            <LazySection>
+              <BlogPreview />
+            </LazySection>
+          </section>
 
           {/* FAQ */}
           <SectionDivider />
           <section id="faq" className="home-section-surface home-surface-lavender">
             <LazySection>
               <FAQPreview />
+            </LazySection>
+          </section>
+
+          {/* Newsletter */}
+          <section id="newsletter">
+            <LazySection>
+              <NewsletterSection />
             </LazySection>
           </section>
 

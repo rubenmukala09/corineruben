@@ -2,17 +2,17 @@ import { useSectionNavigation } from "@/hooks/useSectionNavigation";
 
 const sections = [
   { id: "hero", label: "Home" },
-  { id: "get-protected", label: "Get Protected" },
   { id: "stats", label: "Stats" },
+  { id: "live-security", label: "Live Security" },
+  { id: "services", label: "Services" },
   { id: "workshops", label: "Workshops" },
-  { id: "business", label: "Business" },
-  { id: "alerts", label: "Alerts" },
-  { id: "widgets", label: "Insights" },
-  { id: "resources", label: "Resources" },
+  { id: "get-protected", label: "How It Works" },
   { id: "trust", label: "Trust" },
-  { id: "process", label: "Process" },
+  { id: "testimonials", label: "Testimonials" },
+  { id: "why-us", label: "Why Us" },
+  { id: "blog", label: "Blog" },
   { id: "faq", label: "FAQ" },
-  { id: "quick-links", label: "Quick Links" },
+  { id: "newsletter", label: "Newsletter" },
 ];
 
 export const SectionNav = () => {
