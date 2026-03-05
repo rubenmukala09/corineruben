@@ -9,7 +9,7 @@ export default {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1280px",
+        "2xl": "1200px",
       },
     },
     extend: {
@@ -72,10 +72,10 @@ export default {
         sm: "calc(var(--radius) - 8px)",
       },
       boxShadow: {
-        "soft": "0 4px 20px rgba(107, 78, 113, 0.08)",
-        "glow": "0 0 40px -10px rgba(107, 78, 113, 0.25)",
-        "card-hover": "0 30px 60px rgba(107, 78, 113, 0.15)",
-        "glass": "0 8px 32px rgba(107, 78, 113, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6)",
+        "soft": "0 8px 24px -4px rgba(74, 59, 78, 0.08)",
+        "glow": "0 0 40px -10px rgba(159, 130, 164, 0.3)",
+        "card-hover": "0 30px 60px -8px rgba(74, 59, 78, 0.12)",
+        "glass": "0 20px 40px -4px rgba(74, 59, 78, 0.08)",
       },
       keyframes: {
         "accordion-down": {
