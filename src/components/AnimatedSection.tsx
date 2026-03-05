@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, type ReactNode } from "react";
+import React, { useRef, useEffect, useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface AnimatedSectionProps {
@@ -9,13 +9,13 @@ interface AnimatedSectionProps {
   stagger?: boolean;
 }
 
-export const AnimatedSection = ({
+export const AnimatedSection = React.forwardRef<HTMLDivElement, AnimatedSectionProps>(({
   children,
   className,
   animation = "fade-up",
   delay = 0,
   stagger = false,
-}: AnimatedSectionProps) => {
+}, forwardedRef) => {
   const ref = useRef<HTMLDivElement>(null);
   const cleanupRef = useRef<(() => void) | null>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -92,4 +92,6 @@ export const AnimatedSection = ({
       {children}
     </div>
   );
-};
+});
+
+AnimatedSection.displayName = "AnimatedSection";
