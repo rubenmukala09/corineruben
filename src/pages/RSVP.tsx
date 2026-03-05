@@ -3,7 +3,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Users, Utensils, ChevronRight, Plus, X, UserPlus, Crown, Check, Gift, Heart, Sparkles, QrCode, Copy, ArrowRight } from 'lucide-react';
+import { Users, Utensils, ChevronRight, Plus, X, UserPlus, Crown, Check, Gift, Heart, Sparkles, QrCode, Copy, ArrowRight, EyeOff } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 
 // Table seating config
@@ -28,9 +28,13 @@ const giftTiers = [
 ];
 
 const mealOptions = [
-  { key: 'meat', emoji: '🥩', sides: ['rsvp.side.potatoes', 'rsvp.side.vegetables', 'rsvp.side.rice'] },
-  { key: 'fish', emoji: '🐟', sides: ['rsvp.side.salad', 'rsvp.side.vegetables', 'rsvp.side.rice'] },
-  { key: 'veg', emoji: '🥗', sides: ['rsvp.side.quinoa', 'rsvp.side.vegetables', 'rsvp.side.pasta'] },
+  { key: 'meat', emoji: '🥩', sides: ['rsvp.side.potatoes', 'rsvp.side.vegetables', 'rsvp.side.rice', 'rsvp.side.sweetpotato'] },
+  { key: 'fish', emoji: '🐟', sides: ['rsvp.side.salad', 'rsvp.side.vegetables', 'rsvp.side.rice', 'rsvp.side.potatoes'] },
+  { key: 'veg', emoji: '🥗', sides: ['rsvp.side.quinoa', 'rsvp.side.vegetables', 'rsvp.side.pasta', 'rsvp.side.hummus'] },
+  { key: 'vegan', emoji: '🌱', sides: ['rsvp.side.quinoa', 'rsvp.side.vegetables', 'rsvp.side.hummus', 'rsvp.side.sweetpotato'] },
+  { key: 'glutenfree', emoji: '🌾', sides: ['rsvp.side.potatoes', 'rsvp.side.rice', 'rsvp.side.vegetables', 'rsvp.side.sweetpotato'] },
+  { key: 'halal', emoji: '🍖', sides: ['rsvp.side.rice', 'rsvp.side.couscous', 'rsvp.side.vegetables', 'rsvp.side.salad'] },
+  { key: 'kids', emoji: '🧒', sides: ['rsvp.side.fries', 'rsvp.side.pasta', 'rsvp.side.vegetables', 'rsvp.side.rice'] },
 ];
 
 // Payment link placeholder — replace with actual payment link
@@ -55,7 +59,7 @@ const RSVP = () => {
   const [selectedTable, setSelectedTable] = useState<number | null>(null);
   const [createFamily, setCreateFamily] = useState(false);
   const [familyTableName, setFamilyTableName] = useState('');
-
+  const [stayAnonymous, setStayAnonymous] = useState(false);
   // Gift
   const [selectedGiftAmount, setSelectedGiftAmount] = useState<number | null>(null);
   const [customGiftAmount, setCustomGiftAmount] = useState('');
@@ -72,15 +76,17 @@ const RSVP = () => {
     return mealOptions.find(m => m.key === selectedMeal)?.sides || [];
   }, [selectedMeal]);
 
+  const displayName = stayAnonymous ? 'Anonymous' : (name || 'You');
+
   const handleJoinTable = (tableId: number) => {
     if (selectedTable === tableId) {
-      setTables(prev => prev.map(t => t.id === tableId ? { ...t, guests: t.guests.filter(g => g !== name) } : t));
+      setTables(prev => prev.map(t => t.id === tableId ? { ...t, guests: t.guests.filter(g => g !== displayName) } : t));
       setSelectedTable(null);
     } else {
       if (selectedTable) {
-        setTables(prev => prev.map(t => t.id === selectedTable ? { ...t, guests: t.guests.filter(g => g !== name) } : t));
+        setTables(prev => prev.map(t => t.id === selectedTable ? { ...t, guests: t.guests.filter(g => g !== displayName) } : t));
       }
-      setTables(prev => prev.map(t => t.id === tableId ? { ...t, guests: [...t.guests, name || 'You'] } : t));
+      setTables(prev => prev.map(t => t.id === tableId ? { ...t, guests: [...t.guests, displayName] } : t));
       setSelectedTable(tableId);
     }
   };
@@ -92,7 +98,7 @@ const RSVP = () => {
       name: familyTableName,
       seats: 8,
       family: true,
-      guests: [name || 'You'],
+      guests: [displayName],
     };
     setTables(prev => [...prev, newTable]);
     setSelectedTable(newTable.id);
@@ -307,15 +313,15 @@ const RSVP = () => {
 
               <div>
                 <label className="font-sans-elegant text-sm text-foreground block mb-3 font-semibold">{t('rsvp.meal')}</label>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                   {mealOptions.map(opt => (
                     <button key={opt.key} type="button" onClick={() => { setSelectedMeal(opt.key); setSelectedSides([]); }}
-                      className={`py-5 rounded-2xl text-center font-sans-elegant font-medium transition-all duration-500 ${
+                      className={`py-4 rounded-2xl text-center font-sans-elegant font-medium transition-all duration-500 ${
                         selectedMeal === opt.key ? 'gradient-primary text-primary-foreground shadow-glow' : 'glass-card hover:border-primary/30 text-foreground'
                       }`}
                     >
-                      <div className="text-2xl mb-2">{opt.emoji}</div>
-                      <div className="text-sm">{t(`rsvp.meal.${opt.key}`)}</div>
+                      <div className="text-xl mb-1.5">{opt.emoji}</div>
+                      <div className="text-xs">{t(`rsvp.meal.${opt.key}`)}</div>
                     </button>
                   ))}
                 </div>
@@ -355,13 +361,13 @@ const RSVP = () => {
             </motion.div>
           )}
 
-          {/* STEP 3: Table Seating */}
+          {/* STEP 3: Table Seating — Round Visual Layout */}
           {step === 'table' && (
             <motion.div key="table" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}
               className="space-y-6"
             >
               <div className="glass-card-strong rounded-3xl p-6">
-                <div className="flex items-center justify-between mb-5">
+                <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-2xl gradient-primary flex items-center justify-center shadow-soft">
                       <Users className="w-5 h-5 text-primary-foreground" />
@@ -377,6 +383,24 @@ const RSVP = () => {
                     </button>
                   )}
                 </div>
+
+                {/* Anonymous toggle */}
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="glass-card rounded-2xl p-4 mb-5">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <EyeOff className="w-4 h-4 text-primary" />
+                      <div>
+                        <span className="font-sans-elegant text-sm text-foreground font-medium block">{t('rsvp.table.anonymous')}</span>
+                        <span className="font-sans-elegant text-[10px] text-muted-foreground">{t('rsvp.table.anonymous.hint')}</span>
+                      </div>
+                    </div>
+                    <button type="button" onClick={() => setStayAnonymous(!stayAnonymous)}
+                      className={`w-12 h-7 rounded-full transition-all duration-300 ${stayAnonymous ? 'gradient-primary' : 'bg-border/50'} relative`}
+                    >
+                      <div className={`w-5 h-5 rounded-full bg-white shadow-sm absolute top-1 transition-all duration-300 ${stayAnonymous ? 'left-6' : 'left-1'}`} />
+                    </button>
+                  </div>
+                </motion.div>
 
                 {createFamily && (
                   <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}
@@ -399,10 +423,12 @@ const RSVP = () => {
                   </motion.div>
                 )}
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {/* Round Tables Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {tables.map((table, i) => {
                     const isFull = table.guests.length >= table.seats;
                     const isSelected = selectedTable === table.id;
+                    const availableSeats = table.seats - table.guests.length;
 
                     return (
                       <motion.div
@@ -410,50 +436,96 @@ const RSVP = () => {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.05 }}
-                        className={`rounded-2xl p-4 transition-all duration-300 cursor-pointer ${
+                        className={`rounded-3xl p-5 transition-all duration-300 ${
                           isSelected ? 'glass-card-strong border-primary/40 shadow-glow' :
-                          isFull ? 'glass-card opacity-50 cursor-not-allowed' :
+                          isFull ? 'glass-card opacity-50' :
                           'glass-card hover:border-primary/20'
                         }`}
-                        onClick={() => !isFull && handleJoinTable(table.id)}
                       >
-                        <div className="flex items-center justify-between mb-3">
+                        {/* Table header */}
+                        <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-2">
                             {table.family && <Crown className="w-3.5 h-3.5 text-primary" />}
-                            <span className="font-sans-elegant text-sm text-foreground font-bold">{t('rsvp.table.label')} {table.name}</span>
+                            <span className="font-serif-display text-sm text-foreground font-bold">{t('rsvp.table.label')} {table.name}</span>
                           </div>
-                          <span className={`text-xs font-sans-elegant font-semibold px-2 py-1 rounded-full ${
+                          <span className={`text-[10px] font-sans-elegant font-semibold px-2.5 py-1 rounded-full ${
                             isFull ? 'bg-destructive/10 text-destructive' : 'glass-card text-muted-foreground'
                           }`}>
-                            {table.guests.length}/{table.seats}
+                            {isFull ? t('rsvp.table.full') : `${availableSeats} ${t('rsvp.table.seats.available')}`}
                           </span>
                         </div>
 
-                        <div className="flex flex-wrap gap-1.5 mb-3">
-                          {Array.from({ length: table.seats }).map((_, si) => (
-                            <div key={si} className={`w-6 h-6 rounded-full flex items-center justify-center text-[9px] font-bold transition-all duration-300 ${
-                              si < table.guests.length
-                                ? 'gradient-primary text-primary-foreground shadow-sm'
-                                : 'border border-border/50 bg-background/30 text-muted-foreground/50'
-                            }`}>
-                              {si < table.guests.length ? table.guests[si]?.[0] : ''}
-                            </div>
-                          ))}
+                        {/* Round table visual */}
+                        <div className="relative mx-auto" style={{ width: '160px', height: '160px' }}>
+                          {/* Center circle — the table */}
+                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-gradient-to-br from-primary/15 to-accent/15 border border-border/40 flex items-center justify-center">
+                            <span className="font-serif-display text-[10px] text-muted-foreground font-semibold">{table.guests.length}/{table.seats}</span>
+                          </div>
+
+                          {/* Seat circles arranged around the table */}
+                          {Array.from({ length: table.seats }).map((_, si) => {
+                            const angle = (si / table.seats) * 2 * Math.PI - Math.PI / 2;
+                            const radius = 62;
+                            const x = Math.cos(angle) * radius;
+                            const y = Math.sin(angle) * radius;
+                            const isOccupied = si < table.guests.length;
+                            const guestName = table.guests[si] || '';
+                            const initial = guestName ? guestName[0].toUpperCase() : '';
+
+                            return (
+                              <div
+                                key={si}
+                                className="absolute group"
+                                style={{
+                                  left: `calc(50% + ${x}px - 14px)`,
+                                  top: `calc(50% + ${y}px - 14px)`,
+                                }}
+                              >
+                                <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold transition-all duration-300 ${
+                                  isOccupied
+                                    ? 'gradient-primary text-primary-foreground shadow-sm'
+                                    : 'border border-dashed border-border/60 bg-background/30 text-muted-foreground/40'
+                                }`}>
+                                  {initial}
+                                </div>
+                                {/* Tooltip with guest name */}
+                                {isOccupied && (
+                                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2 py-1 rounded-lg bg-foreground/90 text-background text-[9px] font-sans-elegant font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
+                                    {guestName}
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
                         </div>
 
+                        {/* Guest names list */}
                         {table.guests.length > 0 && (
-                          <div className="flex flex-wrap gap-1">
+                          <div className="flex flex-wrap gap-1 mt-4 justify-center">
                             {table.guests.map(g => (
                               <span key={g} className="font-sans-elegant text-[10px] text-muted-foreground bg-background/40 px-2 py-0.5 rounded-full">{g}</span>
                             ))}
                           </div>
                         )}
 
-                        {isSelected && (
-                          <div className="mt-2 text-center">
-                            <span className="font-sans-elegant text-xs text-primary font-semibold">{t('rsvp.table.yourSeat')} ✓</span>
-                          </div>
-                        )}
+                        {/* Join / Leave button */}
+                        <div className="mt-4 text-center">
+                          {isSelected ? (
+                            <button onClick={() => handleJoinTable(table.id)}
+                              className="font-sans-elegant text-xs text-destructive font-semibold px-4 py-2 rounded-full glass-card hover:bg-destructive/10 transition-colors"
+                            >
+                              <X className="w-3 h-3 inline mr-1" />
+                              {t('rsvp.table.leave')}
+                            </button>
+                          ) : !isFull ? (
+                            <button onClick={() => handleJoinTable(table.id)}
+                              className="font-sans-elegant text-xs text-primary font-semibold px-4 py-2 rounded-full glass-card hover:border-primary/30 transition-colors"
+                            >
+                              <Plus className="w-3 h-3 inline mr-1" />
+                              {t('rsvp.table.join')}
+                            </button>
+                          ) : null}
+                        </div>
                       </motion.div>
                     );
                   })}
