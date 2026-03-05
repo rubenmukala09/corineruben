@@ -9,6 +9,7 @@ interface Heart {
   delay: number;
   duration: number;
   opacity: number;
+  symbol: string;
 }
 
 const FloatingHearts = () => {
@@ -21,14 +22,16 @@ const FloatingHearts = () => {
       return;
     }
 
-    const generated: Heart[] = Array.from({ length: 28 }, (_, i) => ({
+    const symbols = ['✦', '✧', '♥', '·', '✦', '♥', '✧', '·'];
+    const generated: Heart[] = Array.from({ length: 35 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: 8 + Math.random() * 16,
-      delay: Math.random() * 6,
-      duration: 3 + Math.random() * 4,
-      opacity: 0.15 + Math.random() * 0.35,
+      size: 6 + Math.random() * 14,
+      delay: Math.random() * 8,
+      duration: 2.5 + Math.random() * 5,
+      opacity: 0.3 + Math.random() * 0.5,
+      symbol: symbols[i % symbols.length],
     }));
     setHearts(generated);
   }, [theme]);
@@ -51,7 +54,7 @@ const FloatingHearts = () => {
             opacity: 0,
           } as React.CSSProperties}
         >
-          ♥
+          {h.symbol}
         </span>
       ))}
     </div>
