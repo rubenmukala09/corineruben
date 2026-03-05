@@ -3,7 +3,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Users, Utensils, ChevronRight, Plus, X, UserPlus, Crown, Check, Gift, Heart, Sparkles, QrCode, Copy, ArrowRight, EyeOff } from 'lucide-react';
+import { Users, Utensils, ChevronRight, Plus, X, UserPlus, Crown, Check, Gift, Heart, Sparkles, QrCode, Copy, ArrowRight, EyeOff, Wine, Globe, AlertTriangle } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 
 // Table seating config — 30 tables with flower/nature names
@@ -44,14 +44,63 @@ const giftTiers = [
   { amount: 500, emoji: '💎', labelKey: 'registry.tier.diamond' },
 ];
 
-const mealOptions = [
-  { key: 'meat', emoji: '🥩', sides: ['rsvp.side.potatoes', 'rsvp.side.vegetables', 'rsvp.side.rice', 'rsvp.side.sweetpotato'] },
-  { key: 'fish', emoji: '🐟', sides: ['rsvp.side.salad', 'rsvp.side.vegetables', 'rsvp.side.rice', 'rsvp.side.potatoes'] },
-  { key: 'veg', emoji: '🥗', sides: ['rsvp.side.quinoa', 'rsvp.side.vegetables', 'rsvp.side.pasta', 'rsvp.side.hummus'] },
-  { key: 'vegan', emoji: '🌱', sides: ['rsvp.side.quinoa', 'rsvp.side.vegetables', 'rsvp.side.hummus', 'rsvp.side.sweetpotato'] },
-  { key: 'glutenfree', emoji: '🌾', sides: ['rsvp.side.potatoes', 'rsvp.side.rice', 'rsvp.side.vegetables', 'rsvp.side.sweetpotato'] },
-  { key: 'halal', emoji: '🍖', sides: ['rsvp.side.rice', 'rsvp.side.couscous', 'rsvp.side.vegetables', 'rsvp.side.salad'] },
-  { key: 'kids', emoji: '🧒', sides: ['rsvp.side.fries', 'rsvp.side.pasta', 'rsvp.side.vegetables', 'rsvp.side.rice'] },
+const cuisineOptions = [
+  { key: 'african', emoji: '🌍' },
+  { key: 'indian', emoji: '🇮🇳' },
+  { key: 'italian', emoji: '🇮🇹' },
+  { key: 'french', emoji: '🇫🇷' },
+  { key: 'mediterranean', emoji: '🫒' },
+  { key: 'caribbean', emoji: '🌴' },
+];
+
+const mealOptions: Record<string, { key: string; emoji: string; sides: string[] }[]> = {
+  african: [
+    { key: 'jollof', emoji: '🍛', sides: ['rsvp.side.plantain', 'rsvp.side.vegetables', 'rsvp.side.couscous', 'rsvp.side.salad'] },
+    { key: 'grilled_tilapia', emoji: '🐟', sides: ['rsvp.side.plantain', 'rsvp.side.rice', 'rsvp.side.vegetables', 'rsvp.side.cassava'] },
+    { key: 'veg_african', emoji: '🥗', sides: ['rsvp.side.couscous', 'rsvp.side.vegetables', 'rsvp.side.plantain', 'rsvp.side.sweetpotato'] },
+    { key: 'ndole', emoji: '🥬', sides: ['rsvp.side.plantain', 'rsvp.side.rice', 'rsvp.side.cassava', 'rsvp.side.vegetables'] },
+  ],
+  indian: [
+    { key: 'butter_chicken', emoji: '🍗', sides: ['rsvp.side.naan', 'rsvp.side.rice', 'rsvp.side.raita', 'rsvp.side.vegetables'] },
+    { key: 'paneer_tikka', emoji: '🧀', sides: ['rsvp.side.naan', 'rsvp.side.rice', 'rsvp.side.raita', 'rsvp.side.salad'] },
+    { key: 'dal_makhani', emoji: '🍲', sides: ['rsvp.side.naan', 'rsvp.side.rice', 'rsvp.side.raita', 'rsvp.side.vegetables'] },
+    { key: 'biryani', emoji: '🍚', sides: ['rsvp.side.raita', 'rsvp.side.salad', 'rsvp.side.naan', 'rsvp.side.vegetables'] },
+  ],
+  italian: [
+    { key: 'risotto', emoji: '🍝', sides: ['rsvp.side.salad', 'rsvp.side.bread', 'rsvp.side.vegetables', 'rsvp.side.potatoes'] },
+    { key: 'osso_buco', emoji: '🥩', sides: ['rsvp.side.polenta', 'rsvp.side.vegetables', 'rsvp.side.salad', 'rsvp.side.bread'] },
+    { key: 'eggplant_parm', emoji: '🍆', sides: ['rsvp.side.pasta', 'rsvp.side.salad', 'rsvp.side.bread', 'rsvp.side.vegetables'] },
+    { key: 'seafood_linguine', emoji: '🦐', sides: ['rsvp.side.bread', 'rsvp.side.salad', 'rsvp.side.vegetables', 'rsvp.side.potatoes'] },
+  ],
+  french: [
+    { key: 'coq_au_vin', emoji: '🍗', sides: ['rsvp.side.potatoes', 'rsvp.side.vegetables', 'rsvp.side.bread', 'rsvp.side.salad'] },
+    { key: 'ratatouille', emoji: '🥗', sides: ['rsvp.side.bread', 'rsvp.side.rice', 'rsvp.side.quinoa', 'rsvp.side.salad'] },
+    { key: 'salmon_en_croute', emoji: '🐟', sides: ['rsvp.side.potatoes', 'rsvp.side.vegetables', 'rsvp.side.salad', 'rsvp.side.rice'] },
+    { key: 'beef_bourguignon', emoji: '🥩', sides: ['rsvp.side.potatoes', 'rsvp.side.bread', 'rsvp.side.vegetables', 'rsvp.side.salad'] },
+  ],
+  mediterranean: [
+    { key: 'lamb_kofta', emoji: '🍖', sides: ['rsvp.side.hummus', 'rsvp.side.rice', 'rsvp.side.salad', 'rsvp.side.bread'] },
+    { key: 'falafel_plate', emoji: '🧆', sides: ['rsvp.side.hummus', 'rsvp.side.salad', 'rsvp.side.rice', 'rsvp.side.bread'] },
+    { key: 'grilled_sea_bass', emoji: '🐟', sides: ['rsvp.side.rice', 'rsvp.side.salad', 'rsvp.side.vegetables', 'rsvp.side.hummus'] },
+    { key: 'stuffed_peppers', emoji: '🫑', sides: ['rsvp.side.rice', 'rsvp.side.salad', 'rsvp.side.hummus', 'rsvp.side.bread'] },
+  ],
+  caribbean: [
+    { key: 'jerk_chicken', emoji: '🍗', sides: ['rsvp.side.rice', 'rsvp.side.plantain', 'rsvp.side.vegetables', 'rsvp.side.salad'] },
+    { key: 'curry_goat', emoji: '🍛', sides: ['rsvp.side.rice', 'rsvp.side.plantain', 'rsvp.side.vegetables', 'rsvp.side.bread'] },
+    { key: 'fish_escovitch', emoji: '🐟', sides: ['rsvp.side.plantain', 'rsvp.side.rice', 'rsvp.side.salad', 'rsvp.side.vegetables'] },
+    { key: 'callaloo_veg', emoji: '🥬', sides: ['rsvp.side.rice', 'rsvp.side.plantain', 'rsvp.side.vegetables', 'rsvp.side.sweetpotato'] },
+  ],
+};
+
+const drinkOptions = [
+  { key: 'juice_tropical', emoji: '🧃' },
+  { key: 'lemonade', emoji: '🍋' },
+  { key: 'sparkling_water', emoji: '💧' },
+  { key: 'mocktail', emoji: '🍹' },
+  { key: 'tea', emoji: '🍵' },
+  { key: 'coffee', emoji: '☕' },
+  { key: 'smoothie', emoji: '🥤' },
+  { key: 'hibiscus', emoji: '🌺' },
 ];
 
 // Payment link placeholder — replace with actual payment link
@@ -67,8 +116,10 @@ const RSVP = () => {
   const [newCompanionName, setNewCompanionName] = useState('');
 
   // Meal
+  const [selectedCuisine, setSelectedCuisine] = useState<string | null>(null);
   const [selectedMeal, setSelectedMeal] = useState<string | null>(null);
   const [selectedSides, setSelectedSides] = useState<string[]>([]);
+  const [selectedDrinks, setSelectedDrinks] = useState<string[]>([]);
   const [dietary, setDietary] = useState('');
 
   // Table
@@ -105,9 +156,20 @@ const RSVP = () => {
     setSelectedSides(prev => prev.includes(side) ? prev.filter(s => s !== side) : [...prev, side]);
   };
 
+  const toggleDrink = (drink: string) => {
+    setSelectedDrinks(prev => prev.includes(drink) ? prev.filter(d => d !== drink) : [...prev, drink]);
+  };
+
+  const currentCuisineMeals = useMemo(() => {
+    return selectedCuisine ? (mealOptions[selectedCuisine] || []) : [];
+  }, [selectedCuisine]);
+
   const currentMealSides = useMemo(() => {
-    return mealOptions.find(m => m.key === selectedMeal)?.sides || [];
-  }, [selectedMeal]);
+    const cuisineMeals = selectedCuisine ? (mealOptions[selectedCuisine] || []) : [];
+    return cuisineMeals.find(m => m.key === selectedMeal)?.sides || [];
+  }, [selectedCuisine, selectedMeal]);
+
+  const canProceedMeal = selectedCuisine !== null && selectedMeal !== null;
 
   const displayName = stayAnonymous ? 'Anonymous' : (name || 'You');
 
@@ -164,7 +226,6 @@ const RSVP = () => {
   };
 
   const canProceedInfo = name.trim() && attending !== null;
-  const canProceedMeal = selectedMeal !== null;
 
   const allSteps: Step[] = ['info', 'meal', 'table', 'gift'];
   const currentStepIndex = allSteps.indexOf(step);
@@ -344,22 +405,59 @@ const RSVP = () => {
                 </div>
               </div>
 
+              {/* Biblical food notice */}
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="glass-card rounded-2xl p-4 border-primary/20">
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-sm">✝️</span>
+                  </div>
+                  <div>
+                    <p className="font-sans-elegant text-xs text-foreground font-semibold mb-1">{t('rsvp.meal.notice.title')}</p>
+                    <p className="font-sans-elegant text-[11px] text-muted-foreground leading-relaxed">{t('rsvp.meal.notice.body')}</p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Step 1: Choose cuisine */}
               <div>
-                <label className="font-sans-elegant text-sm text-foreground block mb-3 font-semibold">{t('rsvp.meal')}</label>
-                <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
-                  {mealOptions.map(opt => (
-                    <button key={opt.key} type="button" onClick={() => { setSelectedMeal(opt.key); setSelectedSides([]); }}
+                <label className="font-sans-elegant text-sm text-foreground block mb-3 font-semibold flex items-center gap-2">
+                  <Globe className="w-4 h-4 text-primary" />
+                  {t('rsvp.cuisine')}
+                </label>
+                <div className="grid grid-cols-3 gap-3">
+                  {cuisineOptions.map(c => (
+                    <button key={c.key} type="button" onClick={() => { setSelectedCuisine(c.key); setSelectedMeal(null); setSelectedSides([]); }}
                       className={`py-4 rounded-2xl text-center font-sans-elegant font-medium transition-all duration-500 ${
-                        selectedMeal === opt.key ? 'gradient-primary text-primary-foreground shadow-glow' : 'glass-card hover:border-primary/30 text-foreground'
+                        selectedCuisine === c.key ? 'gradient-primary text-primary-foreground shadow-glow' : 'glass-card hover:border-primary/30 text-foreground'
                       }`}
                     >
-                      <div className="text-xl mb-1.5">{opt.emoji}</div>
-                      <div className="text-xs">{t(`rsvp.meal.${opt.key}`)}</div>
+                      <div className="text-xl mb-1.5">{c.emoji}</div>
+                      <div className="text-xs">{t(`rsvp.cuisine.${c.key}`)}</div>
                     </button>
                   ))}
                 </div>
               </div>
 
+              {/* Step 2: Choose dish */}
+              {selectedCuisine && (
+                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="space-y-3">
+                  <label className="font-sans-elegant text-sm text-foreground block font-semibold">{t('rsvp.meal')}</label>
+                  <div className="grid grid-cols-2 gap-3">
+                    {currentCuisineMeals.map(opt => (
+                      <button key={opt.key} type="button" onClick={() => { setSelectedMeal(opt.key); setSelectedSides([]); }}
+                        className={`py-4 rounded-2xl text-center font-sans-elegant font-medium transition-all duration-500 ${
+                          selectedMeal === opt.key ? 'gradient-primary text-primary-foreground shadow-glow' : 'glass-card hover:border-primary/30 text-foreground'
+                        }`}
+                      >
+                        <div className="text-xl mb-1.5">{opt.emoji}</div>
+                        <div className="text-xs">{t(`rsvp.meal.${opt.key}`)}</div>
+                      </button>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Step 3: Sides */}
               {selectedMeal && (
                 <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="space-y-4">
                   <label className="font-sans-elegant text-sm text-foreground block font-semibold">{t('rsvp.sides')}</label>
@@ -376,6 +474,27 @@ const RSVP = () => {
                   </div>
                 </motion.div>
               )}
+
+              {/* Drinks */}
+              <div>
+                <label className="font-sans-elegant text-sm text-foreground block mb-3 font-semibold flex items-center gap-2">
+                  <Wine className="w-4 h-4 text-primary" />
+                  {t('rsvp.drinks')}
+                </label>
+                <p className="font-sans-elegant text-[11px] text-muted-foreground mb-3">{t('rsvp.drinks.notice')}</p>
+                <div className="grid grid-cols-4 gap-2">
+                  {drinkOptions.map(d => (
+                    <button key={d.key} type="button" onClick={() => toggleDrink(d.key)}
+                      className={`py-3 rounded-2xl text-center font-sans-elegant font-medium transition-all duration-300 ${
+                        selectedDrinks.includes(d.key) ? 'gradient-primary text-primary-foreground shadow-soft' : 'glass-card hover:border-primary/30 text-foreground'
+                      }`}
+                    >
+                      <div className="text-lg mb-1">{d.emoji}</div>
+                      <div className="text-[10px]">{t(`rsvp.drink.${d.key}`)}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
 
               <div>
                 <label className="font-sans-elegant text-sm text-foreground block mb-2.5 font-semibold">{t('rsvp.dietary')}</label>
@@ -755,11 +874,20 @@ const RSVP = () => {
               {/* Summary cards */}
               {attending && (
                 <div className="grid grid-cols-2 gap-3 text-left">
-                  {selectedMeal && (
+                  {selectedMeal && selectedCuisine && (
                     <div className="glass-card rounded-2xl p-4">
                       <p className="font-sans-elegant text-[10px] text-muted-foreground uppercase tracking-wider mb-1">{t('rsvp.done.meal')}</p>
                       <p className="font-sans-elegant text-sm text-foreground font-semibold">
-                        {mealOptions.find(m => m.key === selectedMeal)?.emoji} {t(`rsvp.meal.${selectedMeal}`)}
+                        {currentCuisineMeals.find(m => m.key === selectedMeal)?.emoji} {t(`rsvp.meal.${selectedMeal}`)}
+                      </p>
+                      <p className="font-sans-elegant text-[10px] text-muted-foreground mt-1">{t(`rsvp.cuisine.${selectedCuisine}`)}</p>
+                    </div>
+                  )}
+                  {selectedDrinks.length > 0 && (
+                    <div className="glass-card rounded-2xl p-4">
+                      <p className="font-sans-elegant text-[10px] text-muted-foreground uppercase tracking-wider mb-1">{t('rsvp.done.drinks')}</p>
+                      <p className="font-sans-elegant text-sm text-foreground font-semibold">
+                        {selectedDrinks.map(d => t(`rsvp.drink.${d}`)).join(', ')}
                       </p>
                     </div>
                   )}
