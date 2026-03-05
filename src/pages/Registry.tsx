@@ -13,8 +13,8 @@ const Registry = () => {
 
   return (
     <div className="min-h-screen pt-28 pb-20 relative overflow-hidden gradient-mesh">
-      <div className="floating-blob w-[350px] h-[350px] bg-primary/15 top-20 left-[-80px]" />
-      <div className="floating-blob w-[300px] h-[300px] bg-accent/20 bottom-40 right-[-80px]" />
+      <div className="floating-blob w-[400px] h-[400px] bg-primary/18 top-20 left-[-100px]" />
+      <div className="floating-blob w-[350px] h-[350px] bg-lavender/22 bottom-40 right-[-100px]" />
 
       <div className="container mx-auto px-4 max-w-2xl relative z-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-16">

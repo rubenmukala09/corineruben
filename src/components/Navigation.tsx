@@ -21,9 +21,9 @@ const Navigation = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass-card-strong border-b-0" style={{ borderRadius: 0 }}>
+    <nav className="fixed top-0 left-0 right-0 z-50 glass-card-strong border-b border-border/15" style={{ borderRadius: 0 }}>
       <div className="container mx-auto px-6 flex items-center justify-between py-4">
-        <Link to="/" className="font-serif-display text-xl md:text-2xl tracking-wider gradient-text font-semibold hover:opacity-80 transition-opacity">
+        <Link to="/" className="font-serif-display text-xl md:text-2xl tracking-wider gradient-text font-bold hover:opacity-80 transition-opacity">
           C & R
         </Link>
 
@@ -35,7 +35,7 @@ const Navigation = () => {
               to={link.to}
               className={`text-[13px] font-sans-elegant font-medium tracking-wide transition-all duration-300 relative py-1.5 ${
                 location.pathname === link.to
-                  ? 'text-primary'
+                  ? 'text-primary font-semibold'
                   : 'text-muted-foreground hover:text-foreground'
               }`}
             >
@@ -55,7 +55,7 @@ const Navigation = () => {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setLanguage(language === 'fr' ? 'en' : 'fr')}
-            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-sans-elegant font-semibold rounded-full border border-primary/25 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-sans-elegant font-semibold rounded-full border border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
             aria-label="Toggle language"
           >
             <Globe className="w-3.5 h-3.5" />
@@ -95,7 +95,7 @@ const Navigation = () => {
                   onClick={() => setMobileOpen(false)}
                   className={`text-sm font-sans-elegant font-medium tracking-wide py-3 px-4 rounded-xl transition-all duration-300 ${
                     location.pathname === link.to
-                      ? 'text-primary bg-primary/8'
+                      ? 'text-primary bg-primary/10 font-semibold'
                       : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                   }`}
                 >
