@@ -31,8 +31,12 @@ const Footer = () => {
               {t('hero.tagline')}. {t('hero.date')}.
             </p>
             <div className="flex gap-3">
-              {[Instagram, Mail, MapPin].map((Icon, i) => (
-                <a key={i} href="#" className="w-10 h-10 rounded-full bg-[hsl(var(--footer-fg))]/10 hover:bg-[hsl(var(--footer-fg))]/20 flex items-center justify-center transition-all duration-300 hover:scale-110 border border-[hsl(var(--footer-fg))]/10">
+              {[
+                { Icon: Instagram, label: 'Instagram' },
+                { Icon: Mail, label: 'Email' },
+                { Icon: MapPin, label: 'Location' },
+              ].map(({ Icon, label }, i) => (
+                <a key={i} href="#" aria-label={label} className="w-10 h-10 rounded-full bg-[hsl(var(--footer-fg))]/10 hover:bg-[hsl(var(--footer-fg))]/20 flex items-center justify-center transition-all duration-300 hover:scale-110 border border-[hsl(var(--footer-fg))]/10">
                   <Icon className="w-4 h-4 text-[hsl(var(--footer-muted))]" />
                 </a>
               ))}
