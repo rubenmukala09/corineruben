@@ -41,9 +41,9 @@ const Footer = () => {
 
           {/* Links col 1 */}
           <div>
-            <h4 className="font-sans-elegant text-xs font-semibold tracking-[0.2em] uppercase mb-5 text-[hsl(var(--footer-fg))]">
+            <h2 className="font-sans-elegant text-xs font-semibold tracking-[0.2em] uppercase mb-5 text-[hsl(var(--footer-fg))]">
               {t('footer.links')}
-            </h4>
+            </h2>
             <ul className="space-y-3">
               {companyLinks.map(link => (
                 <li key={link.to}>
@@ -57,9 +57,9 @@ const Footer = () => {
 
           {/* Links col 2 */}
           <div>
-            <h4 className="font-sans-elegant text-xs font-semibold tracking-[0.2em] uppercase mb-5 text-[hsl(var(--footer-fg))]">
+            <h2 className="font-sans-elegant text-xs font-semibold tracking-[0.2em] uppercase mb-5 text-[hsl(var(--footer-fg))]">
               {t('footer.celebrate')}
-            </h4>
+            </h2>
             <ul className="space-y-3">
               {inspirationLinks.map(link => (
                 <li key={link.to}>
@@ -73,9 +73,9 @@ const Footer = () => {
 
           {/* Venue */}
           <div>
-            <h4 className="font-sans-elegant text-xs font-semibold tracking-[0.2em] uppercase mb-5 text-[hsl(var(--footer-fg))]">
+            <h2 className="font-sans-elegant text-xs font-semibold tracking-[0.2em] uppercase mb-5 text-[hsl(var(--footer-fg))]">
               {t('footer.venue')}
-            </h4>
+            </h2>
             <p className="font-sans-elegant text-sm text-[hsl(var(--footer-muted))] leading-relaxed mb-2">
               {t('details.ceremony.location')}
             </p>
