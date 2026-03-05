@@ -45,41 +45,40 @@ const Navigation = () => {
       transition={{ duration: 0.35, ease: 'easeInOut' }}
     >
       <nav
-        className={`w-full max-w-2xl nav-glow-border transition-all duration-500 rounded-[22px] border-2 ${
+        className={`w-full max-w-2xl nav-glow-border transition-all duration-500 rounded-[22px] ${
           scrolled
-            ? 'border-white/20 bg-gradient-to-r from-plum/90 via-plum-dark/85 to-plum/90 backdrop-blur-2xl shadow-[0_8px_40px_rgba(107,78,113,0.4),0_2px_8px_rgba(0,0,0,0.2)]'
-            : 'border-white/15 bg-gradient-to-r from-plum/80 via-plum-dark/75 to-plum/80 backdrop-blur-xl shadow-[0_4px_24px_rgba(107,78,113,0.3),0_1px_4px_rgba(0,0,0,0.15)]'
+            ? 'bg-gradient-to-r from-plum/95 via-plum-dark/92 to-plum/95 backdrop-blur-2xl shadow-[0_8px_32px_rgba(74,59,78,0.5),0_2px_8px_rgba(0,0,0,0.25)]'
+            : 'bg-gradient-to-r from-plum/88 via-plum-dark/85 to-plum/88 backdrop-blur-xl shadow-[0_4px_20px_rgba(74,59,78,0.35),0_1px_4px_rgba(0,0,0,0.15)]'
         }`}
-        style={{ height: '56px' }}
+        style={{ height: '54px' }}
       >
         <div className="px-5 md:px-6 flex items-center justify-between h-full">
-          <Link to="/" className="flex items-center gap-2 group" >
-            <span className="w-8 h-8 rounded-full bg-white/15 border border-white/25 flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 shadow-[0_0_12px_rgba(255,255,255,0.1)]">
-              <Heart className="w-3.5 h-3.5 text-white fill-white" />
+          <Link to="/" className="flex items-center gap-2.5 group" >
+            <span className="w-8 h-8 rounded-full bg-gradient-to-br from-gold-light/30 to-gold/20 border border-gold-light/40 flex items-center justify-center group-hover:from-gold-light/40 group-hover:to-gold/30 transition-all duration-300 shadow-[0_0_10px_hsl(var(--gold-light)/0.15)]">
+              <Heart className="w-3.5 h-3.5 text-gold-light fill-gold-light/80" />
             </span>
-            <span className="font-serif-display text-base font-extrabold tracking-wide text-white group-hover:text-white/90 transition-colors" style={{ letterSpacing: '1px' }}>
+            <span className="font-serif-display text-base font-extrabold tracking-wide text-white/95 group-hover:text-white transition-colors" style={{ letterSpacing: '1.5px' }}>
               C & R
             </span>
           </Link>
 
           {/* Desktop links */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-0.5">
             {links.map(link => (
               <Link
                 key={link.to}
                 to={link.to}
-                className={`font-sans-elegant text-xs font-bold transition-all duration-300 relative px-3.5 py-1.5 rounded-full ${
+                className={`font-sans-elegant text-[11px] font-semibold transition-all duration-300 relative px-3.5 py-1.5 rounded-full uppercase tracking-[0.08em] ${
                   location.pathname === link.to
-                    ? 'text-white'
-                    : 'text-white/65 hover:text-white hover:bg-white/10'
+                    ? 'text-gold-light'
+                    : 'text-white/60 hover:text-white/90 hover:bg-white/8'
                 }`}
-                style={{ letterSpacing: '0.3px' }}
               >
                 {location.pathname === link.to && (
                   <motion.div
                     layoutId="nav-indicator"
-                    className="absolute inset-0 rounded-full bg-white/15 border border-white/20"
-                    style={{ boxShadow: '0 0 12px rgba(255,255,255,0.15), inset 0 1px 0 rgba(255,255,255,0.1)' }}
+                    className="absolute inset-0 rounded-full border border-gold-light/30 bg-gold/8"
+                    style={{ boxShadow: '0 0 12px hsl(var(--gold-light) / 0.1), inset 0 1px 0 rgba(255,255,255,0.06)' }}
                     transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
                   />
                 )}
@@ -92,7 +91,7 @@ const Navigation = () => {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setLanguage(language === 'fr' ? 'en' : 'fr')}
-              className="flex items-center gap-1 px-3 py-1.5 text-[11px] font-bold rounded-full border border-white/25 text-white/85 hover:text-white hover:border-white/40 transition-all"
+              className="flex items-center gap-1 px-3 py-1.5 text-[10px] font-bold rounded-full border border-gold-light/30 text-gold-light/90 hover:text-gold-light hover:border-gold-light/50 hover:bg-gold/8 transition-all uppercase tracking-wider"
               aria-label={language === 'fr' ? 'Switch to EN' : 'Passer en FR'}
             >
               <Globe className="w-3.5 h-3.5" />

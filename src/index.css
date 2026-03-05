@@ -49,10 +49,10 @@
     --dusty-rose: 330 40% 89%;        /* #F3D8E2 */
     --pale-lilac: 270 18% 84%;        /* #D8CDE0 */
 
-    /* Gold accent tokens */
-    --gold: 43 72% 52%;               /* #D4A524 — rich warm gold */
-    --gold-light: 43 65% 68%;         /* Softer gold for light mode borders */
-    --gold-muted: 43 40% 72%;         /* Muted gold for subtle accents */
+    /* Gold accent tokens — warm champagne rose-gold */
+    --gold: 32 55% 56%;               /* #C8956A — antique rose-gold */
+    --gold-light: 35 50% 70%;         /* #CDB08A — soft champagne */
+    --gold-muted: 30 35% 75%;         /* #D1BDA8 — muted warm champagne */
     --peach-gradient: 330 40% 89%;
     --pink-gradient: 270 18% 90%;
     --text-light: 300 5% 97.5%;
@@ -124,10 +124,10 @@
     --dusty-rose: 340 22% 52%;
     --pale-lilac: 265 16% 32%;
 
-    /* Gold accent tokens — brighter for dark mode glow */
-    --gold: 45 85% 58%;               /* Brighter gold for dark mode */
-    --gold-light: 45 80% 65%;
-    --gold-muted: 43 50% 50%;
+    /* Gold accent tokens — luminous champagne for dark mode */
+    --gold: 36 65% 62%;               /* Warm luminous champagne */
+    --gold-light: 38 58% 72%;         /* Bright champagne */
+    --gold-muted: 34 45% 55%;         /* Rich antique gold */
     --peach-gradient: 320 10% 12%;
     --pink-gradient: 265 10% 12%;
     --text-light: 270 10% 90%;
@@ -332,11 +332,11 @@
   }
 
   .dark .gradient-text {
-    background: linear-gradient(135deg, hsl(45 80% 65%), hsl(40 70% 55%));
+    background: linear-gradient(135deg, hsl(36 60% 72%), hsl(30 50% 60%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.25));
+    filter: drop-shadow(0 0 8px rgba(200, 160, 110, 0.2));
   }
 
   .gradient-mesh {
@@ -595,28 +595,29 @@
     66% { transform: translate(-5%, 3%) rotate(-3deg); }
   }
 
-  /* ===== NAV GLOW BORDER ===== */
+  /* ===== NAV GLOW BORDER — Refined Champagne Gold ===== */
   .nav-glow-border {
     position: relative;
     overflow: visible;
   }
 
+  /* Inner crisp gold line */
   .nav-glow-border::before {
     content: '';
     position: absolute;
-    inset: -2px;
+    inset: -1.5px;
     border-radius: 24px;
-    padding: 2px;
+    padding: 1.5px;
     background: linear-gradient(
-      90deg,
-      transparent 0%,
-      hsl(var(--gold-muted) / 0.7) 20%,
-      hsl(var(--gold-light) / 0.9) 50%,
-      hsl(var(--gold-muted) / 0.7) 80%,
-      transparent 100%
+      135deg,
+      hsl(var(--gold-muted) / 0.5) 0%,
+      hsl(var(--gold-light) / 0.85) 25%,
+      hsl(var(--gold) / 0.95) 50%,
+      hsl(var(--gold-light) / 0.85) 75%,
+      hsl(var(--gold-muted) / 0.5) 100%
     );
-    background-size: 300% 100%;
-    animation: nav-glow-slide 3s linear infinite;
+    background-size: 200% 200%;
+    animation: nav-gold-sweep 5s ease-in-out infinite;
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -624,56 +625,58 @@
     z-index: 1;
   }
 
+  /* Outer soft glow halo */
   .nav-glow-border::after {
     content: '';
     position: absolute;
-    inset: -6px;
-    border-radius: 28px;
+    inset: -4px;
+    border-radius: 26px;
     background: linear-gradient(
-      90deg,
+      135deg,
       transparent 0%,
-      hsl(var(--gold-muted) / 0.15) 20%,
-      hsl(var(--gold-light) / 0.25) 50%,
-      hsl(var(--gold-muted) / 0.15) 80%,
+      hsl(var(--gold-light) / 0.1) 30%,
+      hsl(var(--gold) / 0.15) 50%,
+      hsl(var(--gold-light) / 0.1) 70%,
       transparent 100%
     );
-    background-size: 300% 100%;
-    animation: nav-glow-slide 3s linear infinite;
-    filter: blur(12px);
+    background-size: 200% 200%;
+    animation: nav-gold-sweep 5s ease-in-out infinite;
+    filter: blur(8px);
     pointer-events: none;
     z-index: 0;
   }
 
   .dark .nav-glow-border::before {
+    padding: 1.5px;
     background: linear-gradient(
-      90deg,
-      transparent 0%,
-      hsl(var(--gold) / 0.7) 20%,
-      hsl(var(--gold-light) / 0.95) 50%,
-      hsl(var(--gold) / 0.7) 80%,
-      transparent 100%
+      135deg,
+      hsl(var(--gold-muted) / 0.4) 0%,
+      hsl(var(--gold) / 0.8) 20%,
+      hsl(var(--gold-light) / 1) 50%,
+      hsl(var(--gold) / 0.8) 80%,
+      hsl(var(--gold-muted) / 0.4) 100%
     );
-    background-size: 300% 100%;
-    animation: nav-glow-slide 3s linear infinite;
+    background-size: 200% 200%;
+    animation: nav-gold-sweep 5s ease-in-out infinite;
   }
 
   .dark .nav-glow-border::after {
     background: linear-gradient(
-      90deg,
+      135deg,
       transparent 0%,
-      hsl(var(--gold) / 0.25) 20%,
-      hsl(var(--gold-light) / 0.4) 50%,
-      hsl(var(--gold) / 0.25) 80%,
+      hsl(var(--gold) / 0.15) 20%,
+      hsl(var(--gold-light) / 0.3) 50%,
+      hsl(var(--gold) / 0.15) 80%,
       transparent 100%
     );
-    background-size: 300% 100%;
-    animation: nav-glow-slide 3s linear infinite;
-    filter: blur(14px);
+    background-size: 200% 200%;
+    animation: nav-gold-sweep 5s ease-in-out infinite;
+    filter: blur(10px);
   }
 
-  @keyframes nav-glow-slide {
-    0% { background-position: 100% 0; }
-    100% { background-position: -100% 0; }
+  @keyframes nav-gold-sweep {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
   }
 
   /* ===== SHADOW GLOW ===== */
@@ -794,12 +797,12 @@
     0 0 20px rgba(255, 200, 80, 0.3);
 }
 
-/* Dark mode heading glow — gold */
+/* Dark mode heading glow — warm champagne */
 .dark h1, .dark h2 {
-  text-shadow: 0 0 20px rgba(255, 215, 0, 0.12), 0 0 40px rgba(255, 200, 50, 0.06);
+  text-shadow: 0 0 20px rgba(200, 160, 110, 0.1), 0 0 40px rgba(200, 150, 100, 0.05);
 }
 
-/* Dark mode h3/h4 subtle gold glow */
+/* Dark mode h3/h4 subtle champagne glow */
 .dark h3, .dark h4 {
-  text-shadow: 0 0 15px rgba(255, 215, 0, 0.08);
+  text-shadow: 0 0 15px rgba(200, 160, 110, 0.06);
 }
