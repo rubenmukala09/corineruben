@@ -93,7 +93,7 @@ const Navigation = () => {
             <button
               onClick={() => setLanguage(language === 'fr' ? 'en' : 'fr')}
               className="flex items-center gap-1 px-3 py-1.5 text-[11px] font-bold rounded-full border border-white/25 text-white/85 hover:text-white hover:border-white/40 transition-all"
-              aria-label="Toggle language"
+              aria-label={language === 'fr' ? 'Switch to EN' : 'Passer en FR'}
             >
               <Globe className="w-3.5 h-3.5" />
               {language === 'fr' ? 'EN' : 'FR'}
