@@ -693,7 +693,7 @@ function Resources() {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4 scroll-smooth" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 2000px' }}>
-            {staticBooks.map((book) =>
+            {staticBooks.map((book, bookIndex) =>
               <div key={book.id} className="group relative">
                 <div className="h-full rounded-2xl p-[1px] bg-gradient-to-b from-border/50 to-border/20 hover:from-primary/30 hover:to-primary/10 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1">
                   <Card className="h-full rounded-[calc(1rem-1px)] p-3 border-0 bg-card/95 backdrop-blur-xl flex flex-col relative overflow-hidden">
@@ -710,7 +710,7 @@ function Resources() {
                       {book.tag}
                     </Badge>
 
-                    {/* Book Cover Image - Optimized */}
+                    {/* Book Cover Image - first 10 eager, rest lazy */}
                     <button
                       onClick={() => handleBookClick(book)}
                       className="relative mb-3 rounded-xl overflow-hidden bg-muted/30 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-1"
@@ -722,7 +722,7 @@ function Resources() {
                           alt={book.name}
                           width={240}
                           height={320}
-                          loading="eager"
+                          loading={bookIndex < 10 ? "eager" : "lazy"}
                           decoding="async"
                           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                         />
@@ -778,8 +778,9 @@ function Resources() {
                         </Button>
                         <Button
                           size="sm"
+                          variant="gold"
                           onClick={() => handleBuyNow(book)}
-                          className="text-[10px] h-7 px-2 rounded-lg bg-gradient-to-r from-primary to-accent text-white hover:opacity-90"
+                          className="text-[10px] h-7 px-2 rounded-lg"
                         >
                           <Zap className="w-3 h-3 mr-1" />
                           Buy
