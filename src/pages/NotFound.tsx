@@ -9,14 +9,13 @@ import {
   Phone,
   MessageCircle,
   ArrowRight,
-  MapPin,
+  Sparkles,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { SITE } from "@/config/site";
-import { motion } from "framer-motion";
 
 const popularPages = [
   { icon: Home, label: "Home", desc: "Back to the main page", path: "/" },
@@ -41,62 +40,56 @@ function NotFound() {
     <div className="min-h-screen flex flex-col bg-background">
       <Navigation />
 
-      <div className="flex-1 flex items-center justify-center px-4 py-20">
-        <div className="max-w-2xl w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-10"
-          >
-            {/* Shield icon with glow */}
-            <div className="relative inline-flex items-center justify-center w-28 h-28 rounded-3xl bg-gradient-to-br from-primary/15 to-accent/10 border border-primary/20 mb-8">
-              <Shield className="w-14 h-14 text-primary" />
-              <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-primary/10 to-accent/5 blur-xl -z-10" />
+      <div className="flex-1 flex items-center justify-center px-4 py-20 relative">
+        {/* Ambient glows */}
+        <div className="absolute top-[10%] right-[15%] w-72 h-72 rounded-full bg-primary/[0.04] blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[15%] left-[10%] w-60 h-60 rounded-full bg-accent/[0.04] blur-[100px] pointer-events-none" />
+
+        <div className="max-w-2xl w-full animate-fade-in">
+          <div className="text-center mb-10">
+            {/* Shield icon */}
+            <div className="relative inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-primary/12 to-accent/8 border border-primary/15 mb-8 shadow-[0_12px_40px_-12px_hsl(var(--primary)/0.12)]">
+              <Shield className="w-12 h-12 text-primary" />
             </div>
 
-            <p className="text-sm font-bold uppercase tracking-[0.2em] text-primary mb-3">Error 404</p>
+            {/* Badge pill */}
+            <div className="flex justify-center mb-4">
+              <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em] border border-primary/15 bg-primary/5 shadow-sm">
+                <Sparkles className="w-3.5 h-3.5 text-primary" />
+                <span className="text-primary">Error 404</span>
+              </span>
+            </div>
+
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 leading-tight">
               Page Not Found
             </h1>
             <p className="text-muted-foreground text-lg max-w-md mx-auto leading-relaxed">
               The page you're looking for doesn't exist or has been moved. Let's get you back on track.
             </p>
-          </motion.div>
+          </div>
 
           {/* Search */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            <form onSubmit={handleSearch} className="relative mb-10">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-              <Input
-                type="text"
-                placeholder="Search InVision Network..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="h-14 pl-12 pr-4 text-base rounded-2xl border-2 border-border bg-card shadow-sm focus:border-primary"
-              />
-            </form>
-          </motion.div>
+          <form onSubmit={handleSearch} className="relative mb-10">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search InVision Network..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="h-14 pl-12 pr-4 text-base rounded-2xl border-2 border-border bg-card/80 backdrop-blur-sm shadow-sm focus:border-primary"
+            />
+          </form>
 
           {/* Quick Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="space-y-3 mb-10"
-          >
+          <div className="space-y-3 mb-10">
             <p className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4">Quick Navigation</p>
             {popularPages.map((page) => (
               <Link
                 key={page.path}
                 to={page.path}
-                className="flex items-center gap-4 p-4 rounded-2xl border border-border bg-card hover:border-primary/30 hover:bg-primary/5 transition-all group"
+                className="flex items-center gap-4 p-4 rounded-2xl border border-border/50 bg-card/80 backdrop-blur-sm hover:border-primary/30 hover:bg-primary/[0.03] transition-all group"
               >
-                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary/12 to-accent/8 border border-primary/10 flex items-center justify-center flex-shrink-0 group-hover:shadow-sm transition-shadow">
+                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary/10 to-accent/8 border border-primary/10 flex items-center justify-center flex-shrink-0 group-hover:shadow-sm transition-shadow">
                   <page.icon className="w-5 h-5 text-primary" />
                 </div>
                 <div className="flex-1">
@@ -106,15 +99,10 @@ function NotFound() {
                 <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
               </Link>
             ))}
-          </motion.div>
+          </div>
 
-          {/* CTA and Support */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-          >
+          {/* CTA */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button asChild size="lg">
               <Link to="/">
                 <Home className="w-5 h-5 mr-2" />
@@ -127,7 +115,7 @@ function NotFound() {
                 Contact Support
               </Link>
             </Button>
-          </motion.div>
+          </div>
 
           <p className="text-center text-sm text-muted-foreground mt-6">
             Or call us at{" "}
