@@ -687,9 +687,9 @@ function Resources() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-3" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 2000px' }}>
             {staticBooks.map((book) =>
-              <Card key={book.id} className="group p-3 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-border/50 hover:border-primary/30 relative overflow-hidden bg-card h-full flex flex-col">
+              <Card key={book.id} className="group p-3 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-border/50 hover:border-primary/30 relative overflow-hidden bg-card/90 backdrop-blur-sm h-full flex flex-col">
                   {/* eBook Badge - Top Left */}
                   <Badge className="absolute top-2 left-2 text-[9px] px-1.5 py-0.5 bg-primary/90 text-primary-foreground z-10 shadow-sm">
                     📘 eBook

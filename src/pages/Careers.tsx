@@ -5,7 +5,7 @@ import Hero from "@/components/Hero";
 import TrustBar from "@/components/TrustBar";
 import { SEO } from "@/components/SEO";
 import { PageTransition } from "@/components/PageTransition";
-import { ScrollReveal } from "@/components/ScrollReveal";
+// ScrollReveal removed for instant rendering
 import {
   Card,
   CardContent,
@@ -264,6 +264,7 @@ function Careers() {
         <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background" />
         <div className="absolute top-20 left-0 w-[500px] h-[500px] bg-primary/[0.03] rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-20 right-0 w-[400px] h-[400px] bg-accent/[0.04] rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-[40%] right-[10%] w-[300px] h-[300px] bg-primary/[0.02] rounded-full blur-3xl pointer-events-none" />
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
@@ -302,8 +303,10 @@ function Careers() {
       </section>
 
       {/* Open Positions */}
-      <section className="py-20 bg-muted/20">
-        <div className="container mx-auto px-4">
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-muted/30 via-background to-muted/20" />
+        <div className="absolute top-10 right-[20%] w-[350px] h-[350px] bg-accent/[0.03] rounded-full blur-3xl pointer-events-none" />
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
             <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em] mb-6 shadow-sm border border-primary/15 bg-primary/5">
               <Briefcase className="w-3.5 h-3.5 text-primary" />
@@ -385,7 +388,8 @@ function Careers() {
           </div>
 
           {/* Don't see your role CTA */}
-          <Card className="mt-12 max-w-3xl mx-auto bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
+          <Card className="mt-12 max-w-3xl mx-auto relative overflow-hidden border-primary/20 shadow-[0_8px_40px_-12px_hsl(var(--primary)/0.15)]">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10" />
             <CardHeader className="text-center">
               <CardTitle className="text-2xl">Don't See Your Role?</CardTitle>
               <CardDescription className="text-base">
@@ -440,8 +444,10 @@ function Careers() {
       </section>
 
       {/* Application Process */}
-      <section className="py-20 bg-muted/20">
-        <div className="container mx-auto px-4">
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-muted/20 via-background to-muted/30" />
+        <div className="absolute bottom-10 left-[15%] w-[400px] h-[400px] bg-primary/[0.03] rounded-full blur-3xl pointer-events-none" />
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
             <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em] mb-6 shadow-sm border border-primary/15 bg-primary/5">
               <Target className="w-3.5 h-3.5 text-primary" />

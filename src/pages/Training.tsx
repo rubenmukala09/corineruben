@@ -560,11 +560,15 @@ function LearnAndTrain() {
         </div>
 
         {/* ══════════ SECTION 1: WHY FAMILIES TRUST US ══════════ */}
-        <section className="py-10 sm:py-16 md:py-20 bg-background">
-          <div className="container mx-auto px-4 lg:px-12">
+        <section className="py-10 sm:py-16 md:py-20 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background" />
+          <div className="absolute top-20 left-0 w-[500px] h-[500px] bg-primary/[0.03] rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-20 right-0 w-[400px] h-[400px] bg-accent/[0.04] rounded-full blur-3xl pointer-events-none" />
+          <div className="container mx-auto px-4 lg:px-12 relative z-10">
             <div className="text-center mb-14">
-              <span className="inline-block text-[11px] uppercase tracking-[0.15em] font-bold text-primary bg-primary/10 px-4 py-1.5 rounded-full mb-4">
-                Trusted by 100+ Families
+              <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em] mb-6 shadow-sm border border-primary/15 bg-primary/5">
+                <Sparkles className="w-3.5 h-3.5 text-primary" />
+                <span className="text-primary">Trusted by 100+ Families</span>
               </span>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground mb-4">
                 Why Families <span className="text-primary">Trust Us</span>
@@ -577,7 +581,8 @@ function LearnAndTrain() {
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-14">
               {TRUST_PILLARS.map((item, index) => (
-                <div key={index} className="bg-card border border-border/60 rounded-2xl p-6 text-center shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1 h-full">
+                <div key={index} className="relative rounded-2xl border border-border/50 bg-card/90 backdrop-blur-xl overflow-hidden p-6 text-center shadow-sm hover:shadow-[0_12px_40px_-12px_hsl(var(--primary)/0.15)] hover:border-primary/25 hover:-translate-y-2 transition-all duration-500 h-full">
+                  <div className="h-1 w-full bg-gradient-to-r from-primary to-accent absolute top-0 left-0 right-0" />
                   <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
                     <item.icon className="w-7 h-7 text-primary" />
                   </div>
@@ -596,7 +601,8 @@ function LearnAndTrain() {
 
             {/* Emergency Protocol + Identity Verification */}
             <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-              <div className="bg-card border border-border/60 rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-lg transition-all duration-300 h-full">
+              <div className="relative rounded-2xl border border-border/50 bg-card/90 backdrop-blur-xl overflow-hidden p-6 sm:p-8 shadow-sm hover:shadow-[0_12px_40px_-12px_hsl(var(--primary)/0.15)] hover:border-primary/25 transition-all duration-500 h-full">
+                <div className="h-1 w-full bg-gradient-to-r from-destructive/60 to-primary absolute top-0 left-0 right-0" />
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-12 h-12 rounded-xl bg-destructive/10 flex items-center justify-center">
                     <AlertTriangle className="w-6 h-6 text-destructive" />
@@ -629,7 +635,8 @@ function LearnAndTrain() {
                 </ol>
               </div>
 
-              <div className="bg-card border border-border/60 rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-lg transition-all duration-300 h-full">
+              <div className="relative rounded-2xl border border-border/50 bg-card/90 backdrop-blur-xl overflow-hidden p-6 sm:p-8 shadow-sm hover:shadow-[0_12px_40px_-12px_hsl(var(--primary)/0.15)] hover:border-primary/25 transition-all duration-500 h-full">
+                <div className="h-1 w-full bg-gradient-to-r from-primary to-accent absolute top-0 left-0 right-0" />
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                     <Fingerprint className="w-6 h-6 text-primary" />
@@ -672,11 +679,12 @@ function LearnAndTrain() {
         <div className="h-1.5 bg-gradient-to-r from-primary via-accent to-primary" />
 
         {/* ══════════ SECTION 2: HOW IT WORKS ══════════ */}
-        <section id="book" className="py-10 sm:py-16 md:py-20 bg-muted/30">
+        <section id="book" className="py-10 sm:py-16 md:py-20 bg-muted/20">
           <div className="container mx-auto px-4 lg:px-12">
             <div className="text-center mb-14">
-              <span className="inline-block text-[11px] uppercase tracking-[0.15em] font-bold text-primary bg-primary/10 px-4 py-1.5 rounded-full mb-4">
-                Getting Started
+              <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em] mb-6 shadow-sm border border-primary/15 bg-primary/5">
+                <Sparkles className="w-3.5 h-3.5 text-primary" />
+                <span className="text-primary">Getting Started</span>
               </span>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground mb-4">
                 How It <span className="text-primary">Works</span>
@@ -692,7 +700,7 @@ function LearnAndTrain() {
                 { step: "02", icon: GraduationCap, title: "Learn & Practice", desc: "Master identity verification, spot deepfakes, and handle urgent messages with confidence.", color: "from-green-500/20 to-primary/20" },
                 { step: "03", icon: Shield, title: "Get Ongoing Support", desc: "Add our monthly help line to forward suspicious messages for expert review.", color: "from-violet-500/20 to-primary/20" },
               ].map((item, index) => (
-                <div key={index} className="relative bg-card border border-border/60 rounded-2xl p-8 text-center shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1 h-full overflow-hidden">
+                <div key={index} className="relative rounded-2xl border border-border/50 bg-card/90 backdrop-blur-xl p-8 text-center shadow-sm hover:shadow-[0_12px_40px_-12px_hsl(var(--primary)/0.15)] hover:border-primary/25 hover:-translate-y-2 transition-all duration-500 h-full overflow-hidden">
                   {/* Background gradient accent */}
                   <div className={`absolute top-0 left-0 right-0 h-24 bg-gradient-to-b ${item.color} to-transparent opacity-50`} />
                   <div className="relative">
@@ -718,11 +726,15 @@ function LearnAndTrain() {
         </section>
 
         {/* ══════════ SECTION 3: SCAM PREVENTION WORKSHOPS ══════════ */}
-        <section id="training" className="py-10 sm:py-16 md:py-20 bg-background">
-          <div className="container mx-auto px-4 lg:px-12">
+        <section id="training" className="py-10 sm:py-16 md:py-20 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background" />
+          <div className="absolute top-20 right-0 w-[400px] h-[400px] bg-primary/[0.03] rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-20 left-0 w-[500px] h-[500px] bg-accent/[0.04] rounded-full blur-3xl pointer-events-none" />
+          <div className="container mx-auto px-4 lg:px-12 relative z-10">
             <div className="text-center mb-14">
-              <span className="inline-block text-[11px] uppercase tracking-[0.15em] font-bold text-primary bg-primary/10 px-4 py-1.5 rounded-full mb-4">
-                Protecting Families Together
+              <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em] mb-6 shadow-sm border border-primary/15 bg-primary/5">
+                <Shield className="w-3.5 h-3.5 text-primary" />
+                <span className="text-primary">Protecting Families Together</span>
               </span>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground mb-4">
                 Scam Prevention <span className="text-primary">Workshops</span>
@@ -774,11 +786,12 @@ function LearnAndTrain() {
         <InstructorShowcase />
 
         {/* ══════════ SECTION 4: SIMPLE PROTECTION IN 4 STEPS ══════════ */}
-        <section className="py-10 sm:py-16 md:py-20 bg-muted/30">
+        <section className="py-10 sm:py-16 md:py-20 bg-muted/20">
           <div className="container mx-auto px-4 lg:px-12">
             <div className="text-center mb-14">
-              <span className="inline-block text-[11px] uppercase tracking-[0.15em] font-bold text-accent bg-accent/10 px-4 py-1.5 rounded-full mb-4">
-                Easy as 1-2-3-4
+              <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em] mb-6 shadow-sm border border-primary/15 bg-primary/5">
+                <Zap className="w-3.5 h-3.5 text-primary" />
+                <span className="text-primary">Easy as 1-2-3-4</span>
               </span>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground mb-4">
                 Simple Protection in <span className="text-primary">4 Steps</span>
@@ -795,7 +808,7 @@ function LearnAndTrain() {
                 { step: "03", icon: Brain, title: "Expert Analysis", subtitle: "We check it", desc: "Our AI and human experts analyze the threat and verify authenticity.", color: "from-violet-500/15" },
                 { step: "04", icon: ShieldCheck, title: "Clear Guidance", subtitle: "You're safe", desc: "You get a clear, simple answer: safe or dangerous, with next steps.", color: "from-green-500/15" },
               ].map((item, index) => (
-                <div key={index} className="relative bg-card border border-border/60 rounded-2xl p-6 text-center shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1 h-full overflow-hidden">
+                <div key={index} className="relative rounded-2xl border border-border/50 bg-card/90 backdrop-blur-xl p-6 text-center shadow-sm hover:shadow-[0_12px_40px_-12px_hsl(var(--primary)/0.15)] hover:border-primary/25 hover:-translate-y-2 transition-all duration-500 h-full overflow-hidden">
                   <div className={`absolute inset-0 bg-gradient-to-b ${item.color} to-transparent opacity-40`} />
                   <div className="relative">
                     <div className="absolute top-0 right-0 text-4xl font-black text-primary/10">
@@ -834,11 +847,14 @@ function LearnAndTrain() {
         </section>
 
         {/* ══════════ SECTION 5: THREAT ANALYSIS ══════════ */}
-        <section className="py-10 sm:py-16 md:py-20 bg-background">
-          <div className="container mx-auto px-4 lg:px-12">
+        <section className="py-10 sm:py-16 md:py-20 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background" />
+          <div className="absolute top-20 left-0 w-[500px] h-[500px] bg-accent/[0.03] rounded-full blur-3xl pointer-events-none" />
+          <div className="container mx-auto px-4 lg:px-12 relative z-10">
             <div className="text-center mb-14">
-              <span className="inline-block text-[11px] uppercase tracking-[0.15em] font-bold text-accent bg-accent/10 px-4 py-1.5 rounded-full mb-4">
-                Comprehensive Protection
+              <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em] mb-6 shadow-sm border border-primary/15 bg-primary/5">
+                <Shield className="w-3.5 h-3.5 text-primary" />
+                <span className="text-primary">Comprehensive Protection</span>
               </span>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground mb-4">
                 We Analyze <span className="text-primary">All Types</span> of Threats
@@ -899,11 +915,12 @@ function LearnAndTrain() {
         <div className="h-1.5 bg-gradient-to-r from-accent via-primary to-accent" />
 
         {/* ══════════ SECTION 6: AI PROFESSIONAL TRAINING ══════════ */}
-        <section id="ai-pro-training" className="py-10 sm:py-16 md:py-20 bg-muted/30">
+        <section id="ai-pro-training" className="py-10 sm:py-16 md:py-20 bg-muted/20">
           <div className="container mx-auto px-4 lg:px-12">
             <div className="text-center mb-14">
-              <span className="inline-block text-[11px] uppercase tracking-[0.15em] font-bold text-primary bg-primary/10 px-4 py-1.5 rounded-full mb-4">
-                For Professionals & Entrepreneurs
+              <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em] mb-6 shadow-sm border border-primary/15 bg-primary/5">
+                <Brain className="w-3.5 h-3.5 text-primary" />
+                <span className="text-primary">For Professionals & Entrepreneurs</span>
               </span>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground mb-4">
                 AI Professional <span className="text-primary">Training</span>
@@ -950,11 +967,14 @@ function LearnAndTrain() {
         </section>
 
         {/* ══════════ SECTION 7: SECURE YOUR FAMILY ══════════ */}
-        <section className="py-10 sm:py-16 md:py-20 bg-background">
-          <div className="container mx-auto px-4 lg:px-12">
+        <section className="py-10 sm:py-16 md:py-20 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background" />
+          <div className="absolute bottom-20 right-0 w-[400px] h-[400px] bg-primary/[0.03] rounded-full blur-3xl pointer-events-none" />
+          <div className="container mx-auto px-4 lg:px-12 relative z-10">
             <div className="text-center mb-14">
-              <span className="inline-block text-[11px] uppercase tracking-[0.15em] font-bold text-primary bg-primary/10 px-4 py-1.5 rounded-full mb-4">
-                Family Protection
+              <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em] mb-6 shadow-sm border border-primary/15 bg-primary/5">
+                <Heart className="w-3.5 h-3.5 text-primary" />
+                <span className="text-primary">Family Protection</span>
               </span>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground mb-4">
                 Secure Your <span className="text-primary">Family</span>
@@ -1053,11 +1073,12 @@ function LearnAndTrain() {
         </section>
 
         {/* ══════════ SECTION 8: SCAMS WE'VE CAUGHT ══════════ */}
-        <section className="py-10 sm:py-16 md:py-20 bg-muted/30">
+        <section className="py-10 sm:py-16 md:py-20 bg-muted/20">
           <div className="container mx-auto px-4 lg:px-12">
             <div className="text-center mb-14">
-              <span className="inline-block text-[11px] uppercase tracking-[0.15em] font-bold text-primary bg-primary/10 px-4 py-1.5 rounded-full mb-4">
-                Success Stories
+              <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em] mb-6 shadow-sm border border-primary/15 bg-primary/5">
+                <Award className="w-3.5 h-3.5 text-primary" />
+                <span className="text-primary">Success Stories</span>
               </span>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground mb-4">
                 Scams We've <span className="text-primary">Caught</span>
