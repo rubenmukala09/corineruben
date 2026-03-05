@@ -6,17 +6,34 @@ import { Textarea } from '@/components/ui/textarea';
 import { Users, Utensils, ChevronRight, Plus, X, UserPlus, Crown, Check, Gift, Heart, Sparkles, QrCode, Copy, ArrowRight, EyeOff } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 
-// Table seating config
-const TABLES_DATA = [
-  { id: 1, name: 'Rose', seats: 8, family: false, guests: ['Alice M.', 'David K.', 'Sophie L.'] },
-  { id: 2, name: 'Lavande', seats: 8, family: false, guests: ['Marc R.', 'Julie B.'] },
-  { id: 3, name: 'Jasmin', seats: 10, family: false, guests: [] },
-  { id: 4, name: 'Orchidée', seats: 6, family: true, guests: ['Famille Dupont'] },
-  { id: 5, name: 'Lys', seats: 10, family: false, guests: ['Pierre T.', 'Emma V.', 'Lucas G.', 'Chloé N.'] },
-  { id: 6, name: 'Pivoine', seats: 12, family: false, guests: ['Sarah H.'] },
-  { id: 7, name: 'Magnolia', seats: 8, family: true, guests: [] },
-  { id: 8, name: 'Camélia', seats: 6, family: false, guests: ['Jean P.', 'Marie C.', 'Antoine D.', 'Clara F.'] },
+// Table seating config — 30 tables with flower/nature names
+const TABLE_NAMES = [
+  'Rose', 'Lavande', 'Jasmin', 'Orchidée', 'Lys', 'Pivoine', 'Magnolia', 'Camélia',
+  'Tulipe', 'Iris', 'Dahlia', 'Violette', 'Lilas', 'Azalée', 'Hortensia', 'Amaryllis',
+  'Freesia', 'Anémone', 'Gardénia', 'Hibiscus', 'Mimosa', 'Pétunia', 'Chrysanthème',
+  'Bégonia', 'Clématite', 'Jonquille', 'Muguet', 'Renoncule', 'Tournesol', 'Édelweiss',
 ];
+
+const TABLES_DATA = TABLE_NAMES.map((name, i) => {
+  // Pre-populate a few tables with sample guests for realism
+  const presets: Record<number, { seats: number; family: boolean; guests: string[] }> = {
+    0: { seats: 8, family: false, guests: ['Alice M.', 'David K.', 'Sophie L.', 'Lucas T.', 'Emma R.', 'Paul B.', 'Léa C.', 'Hugo N.'] },
+    1: { seats: 8, family: false, guests: ['Marc R.', 'Julie B.', 'Chloé N.', 'Antoine D.', 'Clara F.', 'Pierre T.', 'Marie C.', 'Jean P.'] },
+    3: { seats: 8, family: true, guests: ['Famille Dupont', 'Famille Martin', 'Famille Bernard', 'Famille Petit', 'Famille Durand', 'Famille Leroy', 'Famille Moreau', 'Famille Simon'] },
+    7: { seats: 8, family: false, guests: ['Sarah H.', 'Thomas G.', 'Laura D.', 'Nicolas F.', 'Camille S.', 'Maxime L.', 'Inès K.', 'Raphaël M.'] },
+    4: { seats: 10, family: false, guests: ['Pierre T.', 'Emma V.', 'Lucas G.', 'Chloé N.'] },
+    5: { seats: 10, family: false, guests: ['Sarah H.'] },
+    9: { seats: 8, family: false, guests: ['François A.', 'Nathalie B.'] },
+  };
+  const preset = presets[i];
+  return {
+    id: i + 1,
+    name,
+    seats: preset?.seats || (i % 3 === 0 ? 10 : 8),
+    family: preset?.family || false,
+    guests: preset?.guests || [],
+  };
+});
 
 type Step = 'info' | 'meal' | 'table' | 'gift' | 'done';
 
@@ -60,6 +77,22 @@ const RSVP = () => {
   const [createFamily, setCreateFamily] = useState(false);
   const [familyTableName, setFamilyTableName] = useState('');
   const [stayAnonymous, setStayAnonymous] = useState(false);
+  const [tableFilter, setTableFilter] = useState<'all' | 'available' | 'full'>('available');
+  const [tableSearch, setTableSearch] = useState('');
+
+  const filteredTables = useMemo(() => {
+    return tables.filter(t => {
+      const matchesSearch = !tableSearch || t.name.toLowerCase().includes(tableSearch.toLowerCase());
+      const isFull = t.guests.length >= t.seats;
+      const isSelected = selectedTable === t.id;
+      if (tableFilter === 'available') return matchesSearch && (!isFull || isSelected);
+      if (tableFilter === 'full') return matchesSearch && isFull;
+      return matchesSearch;
+    });
+  }, [tables, tableFilter, tableSearch, selectedTable]);
+
+  const fullTablesCount = useMemo(() => tables.filter(t => t.guests.length >= t.seats).length, [tables]);
+  const availableTablesCount = tables.length - fullTablesCount;
   // Gift
   const [selectedGiftAmount, setSelectedGiftAmount] = useState<number | null>(null);
   const [customGiftAmount, setCustomGiftAmount] = useState('');
@@ -423,9 +456,40 @@ const RSVP = () => {
                   </motion.div>
                 )}
 
+                {/* Summary + Search + Filter */}
+                <div className="space-y-3 mb-5">
+                  <div className="glass-card rounded-2xl px-4 py-3 text-center">
+                    <p className="font-sans-elegant text-xs text-muted-foreground font-medium">
+                      {t('rsvp.table.summary')
+                        .replace('{available}', String(availableTablesCount))
+                        .replace('{full}', String(fullTablesCount))
+                        .replace('{total}', String(tables.length))}
+                    </p>
+                  </div>
+                  <div className="flex gap-2">
+                    <Input
+                      value={tableSearch}
+                      onChange={e => setTableSearch(e.target.value)}
+                      placeholder={t('rsvp.table.search')}
+                      className="font-sans-elegant rounded-full h-10 text-sm border-border/50 bg-background/50 flex-1"
+                    />
+                    <div className="flex rounded-full glass-card overflow-hidden">
+                      {(['available', 'all', 'full'] as const).map(f => (
+                        <button key={f} onClick={() => setTableFilter(f)}
+                          className={`px-3 py-2 font-sans-elegant text-[10px] font-semibold transition-all duration-300 ${
+                            tableFilter === f ? 'gradient-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'
+                          }`}
+                        >
+                          {t(`rsvp.table.filter.${f}`)}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
                 {/* Round Tables Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {tables.map((table, i) => {
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-h-[500px] overflow-y-auto pr-1" style={{ scrollbarWidth: 'thin' }}>
+                  {filteredTables.map((table, i) => {
                     const isFull = table.guests.length >= table.seats;
                     const isSelected = selectedTable === table.id;
                     const availableSeats = table.seats - table.guests.length;
@@ -435,7 +499,7 @@ const RSVP = () => {
                         key={table.id}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: i * 0.05 }}
+                        transition={{ delay: Math.min(i * 0.03, 0.3) }}
                         className={`rounded-3xl p-5 transition-all duration-300 ${
                           isSelected ? 'glass-card-strong border-primary/40 shadow-glow' :
                           isFull ? 'glass-card opacity-50' :
