@@ -43,9 +43,9 @@ body::before {
   z-index: 0;
   pointer-events: none;
   background:
-    /* Layer 1 — emerald bloom, top-left */
+    /* Layer 1 — mauve bloom, top-left */
     radial-gradient(ellipse 45% 35% at 15% 20%,
-      hsl(162 55% 42% / 0.12) 0%, transparent 70%),
+      hsl(308 30% 61% / 0.12) 0%, transparent 70%),
     /* Layer 2 — lavender-violet drift, top-right */
     radial-gradient(ellipse 50% 40% at 80% 15%,
       hsl(308 30% 55% / 0.10) 0%, transparent 65%),
@@ -78,9 +78,9 @@ body::after {
     /* Layer B — gold shimmer accent */
     radial-gradient(ellipse 35% 25% at 70% 35%,
       hsl(38 92% 52% / 0.06) 0%, transparent 55%),
-    /* Layer C — emerald-teal secondary */
+    /* Layer C — mauve-purple secondary */
     radial-gradient(ellipse 45% 35% at 60% 85%,
-      hsl(162 55% 42% / 0.08) 0%, transparent 60%);
+      hsl(308 30% 61% / 0.08) 0%, transparent 60%);
   animation: aurora-drift-3 30s ease-in-out infinite;
   will-change: transform;
 }
