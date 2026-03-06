@@ -92,11 +92,15 @@ const FallingPetals = () =>
     )}
   </div>;
 
-/* Section divider with decorative line */
+/* Section divider with golden decorative line */
 const SectionDivider = ({ variant = 'heart' }: { variant?: 'heart' | 'sparkle' | 'line' }) => (
   <div className="relative py-8 flex items-center justify-center overflow-hidden">
     <div className="absolute inset-0 flex items-center">
-      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
+    </div>
+    {/* Thin double golden lines */}
+    <div className="absolute inset-0 flex items-center translate-y-[3px]">
+      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-gold-light/15 to-transparent" />
     </div>
     <motion.div
       initial={{ opacity: 0, scale: 0.5 }}
@@ -104,10 +108,36 @@ const SectionDivider = ({ variant = 'heart' }: { variant?: 'heart' | 'sparkle' |
       viewport={{ once: true }}
       className="relative z-10 bg-background/60 backdrop-blur-sm px-4 rounded-full"
     >
-      {variant === 'heart' && <Heart className="w-5 h-5 text-primary/40 fill-primary/40" />}
-      {variant === 'sparkle' && <Sparkles className="w-5 h-5 text-amber-400/60" />}
-      {variant === 'line' && <span className="text-primary/30 text-xs">✦ ✦ ✦</span>}
+      {variant === 'heart' && <Heart className="w-5 h-5 text-gold/50 fill-gold/30" />}
+      {variant === 'sparkle' && <Sparkles className="w-5 h-5 text-gold/60" />}
+      {variant === 'line' && <span className="text-gold/40 text-xs">✦ ✦ ✦</span>}
     </motion.div>
+  </div>
+);
+
+/* Golden corner frame decoration for sections */
+const GoldenCorners = ({ className = '' }: { className?: string }) => (
+  <div className={`absolute inset-0 pointer-events-none z-[1] ${className}`}>
+    {/* Top-left */}
+    <div className="absolute top-0 left-0 w-12 h-12">
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-gold/40 to-transparent" />
+      <div className="absolute top-0 left-0 h-full w-[1px] bg-gradient-to-b from-gold/40 to-transparent" />
+    </div>
+    {/* Top-right */}
+    <div className="absolute top-0 right-0 w-12 h-12">
+      <div className="absolute top-0 right-0 w-full h-[1px] bg-gradient-to-l from-gold/40 to-transparent" />
+      <div className="absolute top-0 right-0 h-full w-[1px] bg-gradient-to-b from-gold/40 to-transparent" />
+    </div>
+    {/* Bottom-left */}
+    <div className="absolute bottom-0 left-0 w-12 h-12">
+      <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-gold/40 to-transparent" />
+      <div className="absolute bottom-0 left-0 h-full w-[1px] bg-gradient-to-t from-gold/40 to-transparent" />
+    </div>
+    {/* Bottom-right */}
+    <div className="absolute bottom-0 right-0 w-12 h-12">
+      <div className="absolute bottom-0 right-0 w-full h-[1px] bg-gradient-to-l from-gold/40 to-transparent" />
+      <div className="absolute bottom-0 right-0 h-full w-[1px] bg-gradient-to-t from-gold/40 to-transparent" />
+    </div>
   </div>
 );
 
@@ -545,6 +575,7 @@ const Index = () => {
         <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <div className="glass-card-strong rounded-3xl p-10 md:p-14 relative overflow-hidden">
+              <GoldenCorners />
               <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br from-rose-400/10 to-violet-400/10 blur-2xl pointer-events-none" />
               <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-gradient-to-tr from-pink-400/10 to-rose-400/10 blur-2xl pointer-events-none" />
               
@@ -667,6 +698,7 @@ const Index = () => {
         <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <div className="glass-card-strong rounded-3xl p-10 md:p-14 relative overflow-hidden">
+              <GoldenCorners />
               <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br from-rose-400/10 to-violet-400/10 blur-2xl pointer-events-none" />
               <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-gradient-to-tr from-amber-400/10 to-pink-400/10 blur-2xl pointer-events-none" />
               <BookOpen className="w-8 h-8 text-amber-400 icon-glow mx-auto mb-6" />

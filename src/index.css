@@ -52,6 +52,11 @@
     --pink-gradient: 270 18% 90%;
     --text-light: 300 5% 97.5%;
 
+    /* Golden accent for decorative lines */
+    --gold: 42 78% 60%;
+    --gold-light: 42 80% 75%;
+    --gold-dark: 38 72% 48%;
+
     /* Aurora gradient mesh tokens */
     --aurora-dusty-rose: 330 17% 73%;     /* #C9A9B6 */
     --aurora-lavender: 270 17% 73%;       /* #B8A9C9 */
@@ -121,6 +126,10 @@
     --peach-gradient: 320 10% 12%;
     --pink-gradient: 265 10% 12%;
     --text-light: 270 10% 90%;
+
+    --gold: 42 65% 50%;
+    --gold-light: 42 55% 65%;
+    --gold-dark: 38 60% 40%;
 
     --sidebar-background: 260 16% 9%;
     --sidebar-foreground: 270 10% 85%;
