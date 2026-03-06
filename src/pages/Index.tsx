@@ -15,8 +15,8 @@ import ringsImg from '@/assets/rings.jpg';
 import ringsImgSmall from '@/assets/rings-opt.webp';
 import cakeImg from '@/assets/cake.jpg';
 import cakeImgSmall from '@/assets/cake-small.jpg';
-import coupleImg from '@/assets/couple-lavender.jpg';
-import coupleImgSmall from '@/assets/couple-lavender-opt.webp';
+import coupleImg from '@/assets/couple-hero.png';
+import coupleImgSmall from '@/assets/couple-hero.png';
 
 const WEDDING_DATE = new Date('2027-08-15T14:00:00');
 
