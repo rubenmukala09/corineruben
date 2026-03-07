@@ -1391,7 +1391,10 @@ const Index = () => {
       </Dialog>
 
       {/* ===== GIFT FORM DIALOG ===== */}
-      <Dialog open={giftFormOpen} onOpenChange={setGiftFormOpen}>
+      <Dialog open={giftFormOpen} onOpenChange={(open) => {
+        setGiftFormOpen(open);
+        if (!open) { setClientSecret(null); }
+      }}>
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="font-serif-display text-2xl text-center">{t('registry.dialog.title')}</DialogTitle>
@@ -1401,7 +1404,7 @@ const Index = () => {
           </DialogHeader>
 
           <AnimatePresence mode="wait">
-            {giftSent ?
+            {giftSent ? (
               <motion.div
                 key="success"
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -1415,14 +1418,19 @@ const Index = () => {
                 <div className="love-divider mt-4">
                   <Heart className="w-4 h-4 text-rose-400 fill-rose-400" />
                 </div>
-              </motion.div> :
-              <motion.form
-                key="form"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                onSubmit={handleSendGift}
-                className="space-y-5 pt-2"
-              >
+              </motion.div>
+            ) : clientSecret ? (
+              <motion.div key="payment" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="pt-2">
+                <div className="glass-card rounded-2xl p-4 text-center mb-4">
+                  <p className="font-sans-elegant text-xs text-muted-foreground mb-1">{t('registry.dialog.amount')}</p>
+                  <p className="font-serif-display text-2xl text-foreground font-bold">${selectedAmount}</p>
+                </div>
+                <Elements stripe={stripePromise} options={{ clientSecret, appearance: { theme: 'stripe', variables: { colorPrimary: 'hsl(286, 13%, 27%)' } } }}>
+                  <EmbeddedPaymentForm onSuccess={handlePaymentSuccess} />
+                </Elements>
+              </motion.div>
+            ) : (
+              <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5 pt-2">
                 <div className="glass-card rounded-2xl p-5 text-center">
                   <p className="font-sans-elegant text-xs text-muted-foreground mb-1">{t('registry.dialog.amount')}</p>
                   <p className="font-serif-display text-3xl text-foreground font-bold">${selectedAmount}</p>
@@ -1449,18 +1457,23 @@ const Index = () => {
                   />
                 </div>
 
-                <button type="submit" disabled={giftLoading} className="w-full btn-primary justify-center disabled:opacity-50">
+                <button
+                  type="button"
+                  disabled={giftLoading || !giftName.trim()}
+                  onClick={handleProceedToPayment}
+                  className="w-full btn-primary justify-center disabled:opacity-50"
+                >
                   {giftLoading ? (
                     <span className="animate-spin w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full" />
                   ) : (
-                    <Heart className="w-4 h-4 fill-current" />
+                    <CreditCard className="w-4 h-4" />
                   )}
-                  {giftLoading ? t('registry.dialog.processing') || 'Processing...' : t('registry.dialog.send')}
+                  {giftLoading ? 'Processing...' : 'Proceed to Payment'}
                 </button>
 
                 <p className="font-sans-elegant text-[11px] text-muted-foreground text-center">{t('registry.dialog.note')}</p>
-              </motion.form>
-            }
+              </motion.div>
+            )}
           </AnimatePresence>
         </DialogContent>
       </Dialog>
