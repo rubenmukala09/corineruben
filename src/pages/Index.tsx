@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useMusic } from '@/components/MusicPlayer';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Heart, MapPin, Calendar, Clock, Utensils, Gift, Sparkles, Play, Pause, Music, Users, Flower2, BookOpen, Cross, Church, Gem, PartyPopper, Hotel, Car, Check, X, QrCode, Megaphone, CreditCard } from 'lucide-react';
+import { ChevronDown, Heart, MapPin, Calendar, Clock, Utensils, Gift, Sparkles, Play, Pause, Music, Users, Flower2, BookOpen, Cross, Church, Gem, PartyPopper, Hotel, Car, Check, X, QrCode, Megaphone, CreditCard, Shield, ArrowLeft } from 'lucide-react';
+import { QRCodeSVG } from 'qrcode.react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -517,10 +518,12 @@ const Index = () => {
   const [customAmount, setCustomAmount] = useState('');
   const [giftFormOpen, setGiftFormOpen] = useState(false);
   const [giftName, setGiftName] = useState('');
-  const [giftMessage, setGiftMessage] = useState('');
+  const [giftMessage, setGiftMessage] = useState(t('registry.dialog.defaultMessage'));
   const [giftSent, setGiftSent] = useState(false);
   const [giftLoading, setGiftLoading] = useState(false);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [showQR, setShowQR] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
 
   useEffect(() => {
     const update = () => {
@@ -546,6 +549,7 @@ const Index = () => {
     setGiftFormOpen(true);
     setGiftSent(false);
     setClientSecret(null);
+    setShowQR(false);
   };
 
   const handleCustomGift = () => {
@@ -556,6 +560,7 @@ const Index = () => {
       setGiftFormOpen(true);
       setGiftSent(false);
       setClientSecret(null);
+      setShowQR(false);
     }
   };
 
@@ -565,12 +570,12 @@ const Index = () => {
     try {
       await supabase.from('gifts').insert({
         amount: selectedAmount,
-        from_name: giftName || 'Anonymous',
+        from_name: giftName.trim() || 'Anonymous',
         message: giftMessage || null,
       });
 
       const { data, error } = await supabase.functions.invoke('create-gift-payment', {
-        body: { amount: selectedAmount, guestName: giftName, message: giftMessage },
+        body: { amount: selectedAmount, guestName: giftName.trim() || 'Anonymous', message: giftMessage },
       });
 
       if (error) throw error;
@@ -590,7 +595,7 @@ const Index = () => {
     setTimeout(() => {
       setGiftFormOpen(false);
       setGiftSent(false);
-      setGiftMessage('');
+      setGiftMessage(t('registry.dialog.defaultMessage'));
       setGiftName('');
       setSelectedAmount(null);
     }, 3000);
