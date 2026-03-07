@@ -507,7 +507,7 @@ const Index = () => {
     setGiftOpen(false);
     setGiftFormOpen(true);
     setGiftSent(false);
-    setClientSecret(null);
+    setCheckoutUrl(null);
     setShowQR(false);
   };
 
@@ -518,7 +518,7 @@ const Index = () => {
       setGiftOpen(false);
       setGiftFormOpen(true);
       setGiftSent(false);
-      setClientSecret(null);
+      setCheckoutUrl(null);
       setShowQR(false);
     }
   };
@@ -534,15 +534,26 @@ const Index = () => {
       });
 
       const { data, error } = await supabase.functions.invoke('create-gift-payment', {
-        body: { amount: selectedAmount, guestName: giftName.trim() || 'Anonymous', message: giftMessage },
+        body: {
+          amount: selectedAmount,
+          guestName: giftName.trim() || 'Anonymous',
+          message: giftMessage,
+          origin: window.location.origin,
+        },
       });
 
       if (error) throw error;
-      if (data?.clientSecret) {
-        setClientSecret(data.clientSecret);
+      if (data?.url) {
+        // Store URL for QR code too
+        setCheckoutUrl(data.url);
+        // Redirect to Stripe Checkout
+        window.open(data.url, '_blank');
+        setGiftFormOpen(false);
+        toast.success(t('gift.redirecting') || 'Redirecting to payment...');
       }
     } catch (err) {
       console.error('Gift payment error:', err);
+      toast.error('Payment failed. Please try again.');
     } finally {
       setGiftLoading(false);
     }
@@ -550,7 +561,7 @@ const Index = () => {
 
   const handlePaymentSuccess = () => {
     setGiftSent(true);
-    setClientSecret(null);
+    setCheckoutUrl(null);
     // Send gift confirmation email
     try {
       supabase.functions.invoke('send-gift-confirmation', {
@@ -1443,7 +1454,7 @@ const Index = () => {
       {/* ===== GIFT FORM DIALOG ===== */}
       <Dialog open={giftFormOpen} onOpenChange={(open) => {
         setGiftFormOpen(open);
-        if (!open) { setClientSecret(null); setShowQR(false); setShowTerms(false); }
+        if (!open) { setCheckoutUrl(null); setShowQR(false); setShowTerms(false); }
       }}>
         <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
           <DialogHeader>
@@ -1506,16 +1517,6 @@ const Index = () => {
                   <p className="font-sans-elegant text-sm text-muted-foreground">{t('gift.qr.scan')}</p>
                   <p className="font-sans-elegant text-xs text-muted-foreground mt-2">{t('gift.qr.noinfo')}</p>
                 </div>
-              </motion.div>
-            ) : clientSecret ? (
-              <motion.div key="payment" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="pt-2">
-                <div className="glass-card rounded-2xl p-4 text-center mb-4">
-                  <p className="font-sans-elegant text-xs text-muted-foreground mb-1">{t('registry.dialog.amount')}</p>
-                  <p className="font-serif-display text-2xl text-foreground font-bold">${selectedAmount}</p>
-                </div>
-                <Elements stripe={stripePromise} options={{ clientSecret, appearance: { theme: 'stripe', variables: { colorPrimary: 'hsl(286, 13%, 27%)' } } }}>
-                  <EmbeddedPaymentForm onSuccess={handlePaymentSuccess} />
-                </Elements>
               </motion.div>
             ) : (
               <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4 pt-2">
