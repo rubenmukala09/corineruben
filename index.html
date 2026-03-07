@@ -25,44 +25,40 @@
     <!-- Inline critical CSS for immediate FCP -->
     <style>
       #app-loader{display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Playfair Display',Georgia,serif;color:#4A3B4E;text-align:center;flex-direction:column;gap:1.5rem;position:relative;overflow:hidden;
-        background:rgba(249,248,249,0.4);
-        backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px)}
+        background:rgba(249,248,249,0.5);
+        backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
 
-      /* ── Central spectrum globe ── */
+      /* ── Animated spectrum ring (not filled) ── */
       .spectrum-globe{
-        width:280px;height:280px;border-radius:50%;position:relative;z-index:2;
-        background:conic-gradient(from 0deg,
-          hsl(330,50%,75%),hsl(290,40%,72%),hsl(270,45%,74%),
-          hsl(310,42%,70%),hsl(340,48%,76%),hsl(300,45%,73%),
-          hsl(280,38%,71%),hsl(330,50%,75%));
+        width:200px;height:200px;border-radius:50%;position:relative;z-index:2;
+        background:transparent;
+        border:3px solid transparent;
+        background-image:conic-gradient(from 0deg,
+          hsl(330,50%,78%),hsl(290,35%,75%),hsl(270,40%,77%),
+          hsl(310,38%,74%),hsl(340,42%,79%),hsl(300,40%,76%),
+          hsl(280,35%,74%),hsl(330,50%,78%));
+        -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 3px));
+        mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 3px));
         box-shadow:
-          0 0 80px rgba(201,169,182,0.4),
-          0 0 160px rgba(184,169,201,0.25),
-          inset 0 0 60px rgba(255,255,255,0.15);
-        animation:globe-rotate 8s linear infinite,globe-morph 12s ease-in-out infinite,globe-pulse 4s ease-in-out infinite;
+          0 0 50px rgba(201,169,182,0.2),
+          0 0 100px rgba(184,169,201,0.12);
+        animation:spectrum-spin 6s linear infinite,globe-pulse 4s ease-in-out infinite;
       }
 
-      /* Glass refraction highlight */
-      .spectrum-globe::before{content:'';position:absolute;top:10%;left:15%;width:45%;height:35%;border-radius:50%;
-        background:linear-gradient(135deg,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.1) 50%,transparent 100%);
-        transform:rotate(-25deg);pointer-events:none}
+      /* Soft glow behind the ring */
+      .spectrum-globe::before{content:'';position:absolute;inset:-20px;border-radius:50%;
+        background:radial-gradient(circle,rgba(201,169,182,0.15) 0%,transparent 70%);
+        pointer-events:none;z-index:-1}
 
-      /* Soft inner glow ring */
-      .spectrum-globe::after{content:'';position:absolute;inset:8%;border-radius:50%;
-        border:1px solid rgba(255,255,255,0.25);
-        background:radial-gradient(circle at 35% 35%,rgba(255,255,255,0.12),transparent 60%);
-        filter:blur(2px)}
+      /* Inner soft gradient fill — very subtle */
+      .spectrum-globe::after{content:'';position:absolute;inset:6px;border-radius:50%;
+        background:radial-gradient(circle at 40% 35%,rgba(201,169,182,0.08),rgba(184,169,201,0.04),transparent 70%);
+        pointer-events:none}
 
-      @keyframes globe-rotate{0%{filter:hue-rotate(0deg) blur(0px)}100%{filter:hue-rotate(30deg) blur(0px)}}
-      @keyframes globe-morph{
-        0%,100%{border-radius:60% 40% 30% 70%/60% 30% 70% 40%}
-        25%{border-radius:30% 60% 70% 40%/50% 60% 30% 60%}
-        50%{border-radius:50% 60% 30% 60%/30% 40% 70% 60%}
-        75%{border-radius:40% 50% 60% 50%/60% 30% 50% 70%}
-      }
-      @keyframes globe-pulse{0%,100%{transform:scale(1);opacity:0.9}50%{transform:scale(1.04);opacity:1}}
+      @keyframes spectrum-spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+      @keyframes globe-pulse{0%,100%{opacity:0.85;filter:blur(0px)}50%{opacity:1;filter:blur(0.5px)}}
 
-      /* ── Text below globe ── */
+      /* ── Text below ── */
       @keyframes fade-up{0%{opacity:0;transform:translateY(16px)}100%{opacity:1;transform:translateY(0)}}
       @keyframes pulse-glow{0%,100%{opacity:0.6;transform:scale(1)}50%{opacity:1;transform:scale(1.12)}}
 
@@ -76,15 +72,15 @@
 
       /* ── DARK MODE ── */
       @media(prefers-color-scheme:dark){
-        #app-loader{background:rgba(20,16,25,0.4);color:#e8e0ec}
+        #app-loader{background:rgba(20,16,25,0.5);color:#e8e0ec}
         .spectrum-globe{
-          background:conic-gradient(from 0deg,
-            hsl(330,45%,50%),hsl(290,38%,48%),hsl(270,42%,50%),
-            hsl(310,40%,47%),hsl(340,45%,52%),hsl(300,42%,49%),
-            hsl(280,36%,48%),hsl(330,45%,50%));
-          box-shadow:0 0 80px rgba(160,120,170,0.35),0 0 160px rgba(140,100,160,0.2),inset 0 0 60px rgba(255,255,255,0.06)}
-        .spectrum-globe::before{background:linear-gradient(135deg,rgba(255,255,255,0.2) 0%,rgba(255,255,255,0.04) 50%,transparent 100%)}
-        .spectrum-globe::after{border-color:rgba(255,255,255,0.1);background:radial-gradient(circle at 35% 35%,rgba(255,255,255,0.05),transparent 60%)}
+          background-image:conic-gradient(from 0deg,
+            hsl(330,45%,55%),hsl(290,35%,52%),hsl(270,40%,54%),
+            hsl(310,38%,51%),hsl(340,42%,56%),hsl(300,40%,53%),
+            hsl(280,35%,52%),hsl(330,45%,55%));
+          box-shadow:0 0 50px rgba(160,120,170,0.2),0 0 100px rgba(140,100,160,0.1)}
+        .spectrum-globe::before{background:radial-gradient(circle,rgba(160,120,170,0.12) 0%,transparent 70%)}
+        .spectrum-globe::after{background:radial-gradient(circle at 40% 35%,rgba(160,120,170,0.06),rgba(140,100,160,0.03),transparent 70%)}
         #app-loader h1{background:linear-gradient(135deg,#e8e0ec 0%,#b8a9c9 50%,#9478a5 100%);-webkit-background-clip:text;background-clip:text}
         #app-loader .loader-date{color:#b8a9c9}
         .loader-heart{color:#9478a5}
