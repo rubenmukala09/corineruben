@@ -1463,7 +1463,7 @@ const Index = () => {
                     min="1"
                     value={customAmount}
                     onChange={(e) => setCustomAmount(e.target.value)}
-                    placeholder="150"
+                    placeholder=""
                     className="font-serif-display text-lg font-bold rounded-full h-12 pl-9 border-primary/30 bg-primary/5 focus:ring-primary/30"
                   />
                 </div>
@@ -1482,7 +1482,7 @@ const Index = () => {
         setGiftFormOpen(open);
         if (!open) { setClientSecret(null); setShowQR(false); setShowTerms(false); }
       }}>
-        <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-md overflow-hidden [&>div]:overflow-y-auto [&>div]:max-h-[85vh] [&>div]:scrollbar-none [&>div]:[&::-webkit-scrollbar]:hidden [&>div]:[-ms-overflow-style:none]">
           <DialogHeader>
             <DialogTitle className="font-serif-display text-2xl text-center">{t('registry.dialog.title')}</DialogTitle>
             <DialogDescription className="font-sans-elegant text-center text-muted-foreground">
