@@ -133,6 +133,10 @@ const Dashboard = () => {
   const [donateCopied, setDonateCopied] = useState(false);
   const [answerTexts, setAnswerTexts] = useState<Record<string, string>>({});
   const [answerSending, setAnswerSending] = useState<string | null>(null);
+  const [blastSubject, setBlastSubject] = useState('');
+  const [blastContent, setBlastContent] = useState('');
+  const [blastSending, setBlastSending] = useState(false);
+  const [blastResult, setBlastResult] = useState<{ sent: number; total: number } | null>(null);
 
   const staffUrl = `${window.location.origin}/staff`;
 
