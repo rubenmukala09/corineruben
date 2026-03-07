@@ -480,9 +480,9 @@ const Index = () => {
   const [giftMessage, setGiftMessage] = useState(t('registry.dialog.defaultMessage'));
   const [giftSent, setGiftSent] = useState(false);
   const [giftLoading, setGiftLoading] = useState(false);
-  const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [showQR, setShowQR] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
+  const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
 
   useEffect(() => {
     const update = () => {
