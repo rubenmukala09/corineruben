@@ -1062,12 +1062,15 @@ const Index = () => {
             <p className="font-serif-display text-lg text-primary italic">{t('index.capturedMoments')}</p>
           </motion.div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {[
-              { img: heroImg, label: '♥' },
-              { img: cakeImgSmall, label: '🌸' },
-              { img: ringsImgSmall, label: '💍' },
-              { img: coupleImgSmall, label: '♥' },
-            ].map((item, i) =>
+            {(homepageGalleryImages.length > 0
+              ? homepageGalleryImages.map(img => ({ img: img.url, label: '♥' }))
+              : [
+                  { img: heroImg, label: '♥' },
+                  { img: cakeImgSmall, label: '🌸' },
+                  { img: ringsImgSmall, label: '💍' },
+                  { img: coupleImgSmall, label: '♥' },
+                ]
+            ).map((item, i) =>
               <motion.div
                 key={i}
                 initial={{ opacity: 0, scale: 0.9 }}
