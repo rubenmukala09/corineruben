@@ -262,6 +262,14 @@ const Dashboard = () => {
             <TabsTrigger value="quotes" className="rounded-full px-5 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
               <Heart className="w-3.5 h-3.5 mr-1.5" /> {t('dashboard.quotes')}
             </TabsTrigger>
+            <TabsTrigger value="enquiries" className="rounded-full px-5 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground relative">
+              <MessageCircleQuestion className="w-3.5 h-3.5 mr-1.5" /> {t('dashboard.enquiries')}
+              {unansweredCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-rose-500 text-[10px] font-bold text-white flex items-center justify-center animate-pulse">
+                  {unansweredCount}
+                </span>
+              )}
+            </TabsTrigger>
             <TabsTrigger value="share" className="rounded-full px-5 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
               <Share2 className="w-3.5 h-3.5 mr-1.5" /> Share
             </TabsTrigger>
@@ -603,6 +611,82 @@ const Dashboard = () => {
                   >
                     <Trash2 className="w-4 h-4 text-rose-500" />
                   </button>
+                </div>
+              ))}
+            </motion.div>
+          </TabsContent>
+
+          {/* ═══ ENQUIRIES TAB ═══ */}
+          <TabsContent value="enquiries" className="space-y-6">
+            {/* Stats */}
+            <div className="grid sm:grid-cols-3 gap-4">
+              <StatCard icon={MessageCircleQuestion} label={t('dashboard.enquiries')} value={enquiries.length} color="text-blue-400" bg="from-blue-500/20 to-cyan-500/10" />
+              <StatCard icon={CheckCircle} label={t('dashboard.answered')} value={enquiries.filter(e => e.status === 'answered').length} color="text-emerald-400" bg="from-emerald-500/20 to-teal-500/10" />
+              <StatCard icon={Bell} label={t('dashboard.unanswered')} value={unansweredCount} sub={unansweredCount > 0 ? '⚡ Needs attention' : '✓ All clear'} color="text-amber-400" bg="from-amber-500/20 to-orange-500/10" />
+            </div>
+
+            {/* Enquiries list */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+              className="space-y-4">
+              {enquiries.length === 0 ? (
+                <div className="glass-card-strong rounded-3xl p-12 text-center">
+                  <MessageCircleQuestion className="w-8 h-8 text-muted-foreground/40 mx-auto mb-3" />
+                  <p className="font-sans-elegant text-sm text-muted-foreground">{t('dashboard.noEnquiries')}</p>
+                </div>
+              ) : enquiries.map((enq) => (
+                <div key={enq.id} className="glass-card-strong rounded-3xl p-6 space-y-4">
+                  <div className="flex items-start gap-4">
+                    <div className={`w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0 mt-1 ${
+                      enq.status === 'answered' ? 'bg-gradient-to-br from-emerald-500/20 to-teal-500/10' : 'bg-gradient-to-br from-amber-500/20 to-orange-500/10'
+                    }`}>
+                      {enq.status === 'answered' ? <CheckCircle className="w-5 h-5 text-emerald-400" /> : <Clock className="w-5 h-5 text-amber-400" />}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <p className="font-sans-elegant text-sm font-bold text-foreground">{enq.name}</p>
+                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide ${
+                          enq.status === 'answered' ? 'bg-emerald-500/15 text-emerald-500' : 'bg-amber-500/15 text-amber-500'
+                        }`}>{enq.status === 'answered' ? t('dashboard.answered') : t('dashboard.unanswered')}</span>
+                      </div>
+                      <p className="font-sans-elegant text-xs text-muted-foreground mb-2">📧 {enq.email} · {new Date(enq.created_at).toLocaleDateString()}</p>
+                      <div className="glass-card rounded-2xl p-3 mb-3">
+                        <p className="font-sans-elegant text-sm text-foreground leading-relaxed">❓ {enq.question}</p>
+                      </div>
+                      {enq.answer && (
+                        <div className="glass-card rounded-2xl p-3 border-l-4 border-emerald-500/30">
+                          <p className="font-sans-elegant text-xs text-emerald-500 font-bold mb-1">✅ {t('dashboard.answered')}</p>
+                          <p className="font-sans-elegant text-sm text-foreground leading-relaxed">{enq.answer}</p>
+                        </div>
+                      )}
+                      {enq.status === 'pending' && (
+                        <div className="flex gap-2 mt-3">
+                          <Textarea
+                            value={answerTexts[enq.id] || ''}
+                            onChange={(e) => setAnswerTexts(prev => ({ ...prev, [enq.id]: e.target.value }))}
+                            placeholder={t('dashboard.answerPlaceholder')}
+                            className="rounded-2xl glass-card border-border/30 font-sans-elegant min-h-[80px] flex-1"
+                          />
+                        </div>
+                      )}
+                      {enq.status === 'pending' && (
+                        <button
+                          onClick={() => handleAnswerEnquiry(enq.id)}
+                          disabled={answerSending === enq.id || !answerTexts[enq.id]?.trim()}
+                          className="btn-primary mt-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {answerSending === enq.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+                          {t('dashboard.sendAnswer')}
+                        </button>
+                      )}
+                    </div>
+                    <button
+                      onClick={() => handleDeleteEnquiry(enq.id)}
+                      className="w-9 h-9 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 flex items-center justify-center transition-colors flex-shrink-0"
+                      title={t('dashboard.deleteConfirm')}
+                    >
+                      <Trash2 className="w-4 h-4 text-rose-500" />
+                    </button>
+                  </div>
                 </div>
               ))}
             </motion.div>
