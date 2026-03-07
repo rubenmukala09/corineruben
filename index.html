@@ -24,68 +24,65 @@
 
     <!-- Inline critical CSS for immediate FCP -->
     <style>
-      #app-loader{display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Playfair Display',Georgia,serif;color:#4A3B4E;text-align:center;flex-direction:column;gap:1.5rem;position:relative;overflow:hidden;
-        background:rgba(255,255,255,0.05);
-        backdrop-filter:blur(12px) saturate(1.2);-webkit-backdrop-filter:blur(12px) saturate(1.2);
-        border-bottom:1px solid rgba(255,255,255,0.08)}
-
-      /* ── Animated spectrum ring (not filled) ── */
-      .spectrum-globe{
-        width:200px;height:200px;border-radius:50%;position:relative;z-index:2;
+      #app-loader{display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Playfair Display',Georgia,serif;color:#4A3B4E;text-align:center;flex-direction:column;gap:0;position:relative;overflow:hidden;
         background:transparent;
-        border:3px solid transparent;
-        background-image:conic-gradient(from 0deg,
-          hsl(330,50%,78%),hsl(290,35%,75%),hsl(270,40%,77%),
-          hsl(310,38%,74%),hsl(340,42%,79%),hsl(300,40%,76%),
-          hsl(280,35%,74%),hsl(330,50%,78%));
-        -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 3px));
-        mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 3px));
-        box-shadow:
-          0 0 50px rgba(201,169,182,0.2),
-          0 0 100px rgba(184,169,201,0.12);
-        animation:spectrum-spin 6s linear infinite,globe-pulse 4s ease-in-out infinite;
-      }
+        backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 
-      /* Soft glow behind the ring */
-      .spectrum-globe::before{content:'';position:absolute;inset:-20px;border-radius:50%;
-        background:radial-gradient(circle,rgba(201,169,182,0.15) 0%,transparent 70%);
-        pointer-events:none;z-index:-1}
+      /* ── Figures container ── */
+      .loader-figures{display:flex;align-items:flex-end;justify-content:center;gap:0;position:relative;z-index:2;min-height:180px}
 
-      /* Inner soft gradient fill — very subtle */
-      .spectrum-globe::after{content:'';position:absolute;inset:6px;border-radius:50%;
-        background:radial-gradient(circle at 40% 35%,rgba(201,169,182,0.08),rgba(184,169,201,0.04),transparent 70%);
-        pointer-events:none}
+      /* ── Each figure ── */
+      .loader-figure{display:flex;flex-direction:column;align-items:center;gap:0.4rem;opacity:0}
+      .loader-figure img{width:100px;height:auto;
+        filter:brightness(0.35) sepia(0.4) hue-rotate(260deg) saturate(2);
+        drop-shadow:0 4px 12px rgba(74,59,78,0.2)}
+      .loader-figure-name{font-family:'Playfair Display',Georgia,serif;font-size:1.1rem;font-weight:600;color:#4A3B4E;letter-spacing:0.05em;opacity:0}
 
-      @keyframes spectrum-spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
-      @keyframes globe-pulse{0%,100%{opacity:0.85;filter:blur(0px)}50%{opacity:1;filter:blur(0.5px)}}
+      /* Groom slides in from left */
+      .loader-figure--groom{animation:slide-from-left 1.2s ease-out 0.2s forwards}
+      /* Bride slides in from right */
+      .loader-figure--bride{animation:slide-from-right 1.2s ease-out 0.2s forwards}
 
-      /* ── Text below ── */
-      @keyframes fade-up{0%{opacity:0;transform:translateY(16px)}100%{opacity:1;transform:translateY(0)}}
-      @keyframes pulse-glow{0%,100%{opacity:0.6;transform:scale(1)}50%{opacity:1;transform:scale(1.12)}}
+      @keyframes slide-from-left{0%{opacity:0;transform:translateX(-80px)}100%{opacity:1;transform:translateX(0)}}
+      @keyframes slide-from-right{0%{opacity:0;transform:translateX(80px)}100%{opacity:1;transform:translateX(0)}}
 
-      .loader-heart{font-size:1.4rem;color:#C9A9B6;animation:pulse-glow 2s ease-in-out infinite}
-      #app-loader h1{font-size:2.5rem;font-weight:600;letter-spacing:-0.5px;margin:0;
-        background:linear-gradient(135deg,#4A3B4E 0%,#9F82A4 50%,#6B4E71 100%);
+      /* Names fade in after figures meet */
+      .loader-figure--groom .loader-figure-name{animation:fade-up 0.6s ease-out 1.5s forwards}
+      .loader-figure--bride .loader-figure-name{animation:fade-up 0.6s ease-out 1.6s forwards}
+
+      /* ── Walking line ── */
+      .loader-walk-line{width:280px;height:2px;margin-top:-2px;opacity:0;
+        background:linear-gradient(90deg,transparent 5%,#4A3B4E 30%,#4A3B4E 70%,transparent 95%);
+        animation:fade-up 0.8s ease-out 1.4s forwards;position:relative;z-index:2}
+
+      /* ── Heart between them ── */
+      .loader-heart{font-size:1.2rem;color:#4A3B4E;opacity:0;position:relative;z-index:3;margin-top:0.5rem;
+        animation:heart-pop 0.5s ease-out 1.8s forwards}
+      @keyframes heart-pop{0%{opacity:0;transform:scale(0)}60%{opacity:1;transform:scale(1.3)}100%{opacity:1;transform:scale(1)}}
+
+      /* ── Bottom text ── */
+      .loader-bottom{display:flex;flex-direction:column;align-items:center;gap:0.25rem;margin-top:0.5rem;position:relative;z-index:3}
+      #app-loader h1{font-size:2.2rem;font-weight:600;letter-spacing:-0.5px;margin:0;opacity:0;
+        background:linear-gradient(135deg,#4A3B4E 0%,#6B4E71 100%);
         -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-        animation:fade-up 0.9s ease-out 0.15s both}
-      #app-loader .loader-date{font-family:'DM Sans','Inter',sans-serif;font-size:0.8rem;letter-spacing:0.35em;text-transform:uppercase;color:#9F82A4;margin:0;animation:fade-up 0.9s ease-out 0.35s both}
-      .loader-line{width:60px;height:1px;background:linear-gradient(90deg,transparent,rgba(191,163,122,0.5),transparent);margin:0.25rem auto;animation:fade-up 0.9s ease-out 0.25s both}
+        animation:fade-up 0.7s ease-out 2s forwards}
+      .loader-divider{width:60px;height:1px;opacity:0;
+        background:linear-gradient(90deg,transparent,rgba(74,59,78,0.4),transparent);
+        animation:fade-up 0.6s ease-out 2.1s forwards}
+      #app-loader .loader-date{font-family:'DM Sans','Inter',sans-serif;font-size:0.75rem;letter-spacing:0.35em;text-transform:uppercase;color:#6B4E71;margin:0;opacity:0;
+        animation:fade-up 0.6s ease-out 2.2s forwards}
+
+      @keyframes fade-up{0%{opacity:0;transform:translateY(12px)}100%{opacity:1;transform:translateY(0)}}
 
       /* ── DARK MODE ── */
       @media(prefers-color-scheme:dark){
-        #app-loader{background:rgba(10,8,15,0.05);border-bottom-color:rgba(255,255,255,0.04)}
-        .spectrum-globe{
-          background-image:conic-gradient(from 0deg,
-            hsl(330,45%,55%),hsl(290,35%,52%),hsl(270,40%,54%),
-            hsl(310,38%,51%),hsl(340,42%,56%),hsl(300,40%,53%),
-            hsl(280,35%,52%),hsl(330,45%,55%));
-          box-shadow:0 0 50px rgba(160,120,170,0.2),0 0 100px rgba(140,100,160,0.1)}
-        .spectrum-globe::before{background:radial-gradient(circle,rgba(160,120,170,0.12) 0%,transparent 70%)}
-        .spectrum-globe::after{background:radial-gradient(circle at 40% 35%,rgba(160,120,170,0.06),rgba(140,100,160,0.03),transparent 70%)}
-        #app-loader h1{background:linear-gradient(135deg,#e8e0ec 0%,#b8a9c9 50%,#9478a5 100%);-webkit-background-clip:text;background-clip:text}
+        .loader-figure img{filter:brightness(0.7) sepia(0.3) hue-rotate(260deg) saturate(1.8) invert(0.85)}
+        .loader-figure-name{color:#d4c8e0}
+        .loader-walk-line{background:linear-gradient(90deg,transparent 5%,#b8a9c9 30%,#b8a9c9 70%,transparent 95%)}
+        .loader-heart{color:#b8a9c9}
+        #app-loader h1{background:linear-gradient(135deg,#e8e0ec 0%,#b8a9c9 100%);-webkit-background-clip:text;background-clip:text}
+        .loader-divider{background:linear-gradient(90deg,transparent,rgba(184,169,201,0.4),transparent)}
         #app-loader .loader-date{color:#b8a9c9}
-        .loader-heart{color:#9478a5}
-        .loader-line{background:linear-gradient(90deg,transparent,rgba(191,163,122,0.3),transparent)}
       }
     </style>
     
@@ -105,14 +102,25 @@
   <body>
     <div id="root">
       <div id="app-loader" aria-hidden="true">
-        <!-- Central spectrum globe -->
-        <div class="spectrum-globe"></div>
-
-        <!-- Text info -->
-        <div style="position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;gap:0.25rem">
-          <div class="loader-heart">♥</div>
+        <!-- Silhouette figures sliding in -->
+        <div class="loader-figures">
+          <div class="loader-figure loader-figure--groom">
+            <img src="/images/groom-silhouette.png" alt="Groom" />
+            <span class="loader-figure-name">Ruben</span>
+          </div>
+          <div class="loader-figure loader-figure--bride">
+            <img src="/images/bride-silhouette.png" alt="Bride" />
+            <span class="loader-figure-name">Corine</span>
+          </div>
+        </div>
+        <!-- Walking line -->
+        <div class="loader-walk-line"></div>
+        <!-- Heart -->
+        <div class="loader-heart">♥</div>
+        <!-- Bottom text -->
+        <div class="loader-bottom">
           <h1>Corine &amp; Ruben</h1>
-          <div class="loader-line"></div>
+          <div class="loader-divider"></div>
           <p class="loader-date">15 . 08 . 2027</p>
         </div>
       </div>
