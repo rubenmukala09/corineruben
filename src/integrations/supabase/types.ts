@@ -35,6 +35,39 @@ export type Database = {
         }
         Relationships: []
       }
+      enquiries: {
+        Row: {
+          answer: string | null
+          answered_at: string | null
+          created_at: string
+          email: string
+          id: string
+          name: string
+          question: string
+          status: string
+        }
+        Insert: {
+          answer?: string | null
+          answered_at?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          question: string
+          status?: string
+        }
+        Update: {
+          answer?: string | null
+          answered_at?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          question?: string
+          status?: string
+        }
+        Relationships: []
+      }
       gifts: {
         Row: {
           amount: number
