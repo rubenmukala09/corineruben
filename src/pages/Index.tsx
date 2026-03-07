@@ -548,14 +548,51 @@ const Index = () => {
       {/* ===== FLOATING GIFT BUTTON ===== */}
       <motion.button
         initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 2, type: 'spring' }}
+        animate={{ 
+          opacity: 1, 
+          scale: [1, 1.1, 1],
+          boxShadow: [
+            '0 0 15px rgba(201,169,182,0.3)',
+            '0 0 30px rgba(201,169,182,0.6)',
+            '0 0 15px rgba(201,169,182,0.3)',
+          ],
+        }}
+        transition={{ 
+          delay: 2, 
+          type: 'spring',
+          scale: { repeat: Infinity, duration: 2, ease: 'easeInOut' },
+          boxShadow: { repeat: Infinity, duration: 2, ease: 'easeInOut' },
+        }}
         onClick={() => setGiftOpen(true)}
-        className="fixed bottom-8 right-8 z-40 w-14 h-14 rounded-full gradient-primary shadow-glow flex items-center justify-center hover:scale-110 transition-transform duration-300 group"
+        className="fixed bottom-8 right-8 z-40 w-14 h-14 rounded-full gradient-primary shadow-glow flex items-center justify-center hover:scale-125 transition-transform duration-300 group"
         aria-label="Gift"
       >
-        <Gift className="w-6 h-6 text-primary-foreground group-hover:rotate-12 transition-transform duration-300" />
+        <motion.div
+          animate={{ rotate: [0, -15, 15, -10, 10, 0], y: [0, -3, 0] }}
+          transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut', repeatDelay: 1 }}
+        >
+          <Gift className="w-6 h-6 text-primary-foreground" />
+        </motion.div>
         <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rose-500 animate-pulse" />
+        {/* Sparkle particles */}
+        {[...Array(3)].map((_, i) => (
+          <motion.span
+            key={i}
+            className="absolute w-1.5 h-1.5 rounded-full bg-gold"
+            animate={{
+              opacity: [0, 1, 0],
+              scale: [0, 1.2, 0],
+              x: [0, (i - 1) * 20],
+              y: [0, -15 - i * 8],
+            }}
+            transition={{
+              repeat: Infinity,
+              duration: 1.8,
+              delay: i * 0.5,
+              ease: 'easeOut',
+            }}
+          />
+        ))}
       </motion.button>
 
       {/* ===== HERO ===== */}
