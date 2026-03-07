@@ -449,6 +449,7 @@ const Index = () => {
   const { isPlaying, currentTrack, toggleTrack } = useMusic();
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [activeDetail, setActiveDetail] = useState<string | null>(null);
+  const { images: homepageGalleryImages } = useSiteImages('homepage_gallery');
 
   // Gift dialog state
   const [giftOpen, setGiftOpen] = useState(false);
