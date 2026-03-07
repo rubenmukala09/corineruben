@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useMusic } from '@/components/MusicPlayer';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Heart, MapPin, Calendar, Clock, Utensils, Gift, Sparkles, Play, Pause, Music, Users, Flower2, BookOpen, Cross, Church, Gem, PartyPopper, Hotel, Car, Check, X, QrCode, Megaphone, CreditCard, Shield, ArrowLeft } from 'lucide-react';
-import { QRCodeSVG } from 'qrcode.react';
+import { ChevronDown, Heart, MapPin, Calendar, Clock, Utensils, Gift, Sparkles, Play, Pause, Music, Users, Flower2, BookOpen, Cross, Church, Gem, PartyPopper, Hotel, Car, Check, X, Megaphone } from 'lucide-react';
+import EmbeddedPaymentForm from '@/components/EmbeddedPaymentForm';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -476,14 +476,7 @@ const Index = () => {
   const [giftOpen, setGiftOpen] = useState(false);
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
   const [customAmount, setCustomAmount] = useState('');
-  const [giftFormOpen, setGiftFormOpen] = useState(false);
-  const [giftName, setGiftName] = useState('');
-  const [giftMessage, setGiftMessage] = useState(t('registry.dialog.defaultMessage'));
-  const [giftSent, setGiftSent] = useState(false);
-  const [giftLoading, setGiftLoading] = useState(false);
-  const [showQR, setShowQR] = useState(false);
-  const [showTerms, setShowTerms] = useState(false);
-  const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
+  const [paymentFormOpen, setPaymentFormOpen] = useState(false);
 
   useEffect(() => {
     const update = () => {
@@ -517,10 +510,7 @@ const Index = () => {
     setSelectedAmount(amount);
     setCustomAmount('');
     setGiftOpen(false);
-    setGiftFormOpen(true);
-    setGiftSent(false);
-    setCheckoutUrl(null);
-    setShowQR(false);
+    setPaymentFormOpen(true);
   };
 
   const handleCustomGift = () => {
@@ -528,90 +518,8 @@ const Index = () => {
     if (val && val > 0) {
       setSelectedAmount(val);
       setGiftOpen(false);
-      setGiftFormOpen(true);
-      setGiftSent(false);
-      setCheckoutUrl(null);
-      setShowQR(false);
+      setPaymentFormOpen(true);
     }
-  };
-
-  const handleProceedToPayment = async () => {
-    if (!selectedAmount) return;
-    setGiftLoading(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('create-gift-payment', {
-        body: {
-          amount: selectedAmount,
-          guestName: giftName.trim() || 'Anonymous',
-          message: giftMessage,
-          origin: window.location.origin,
-        },
-      });
-
-      if (error) throw error;
-      if (data?.url) {
-        // Store URL for QR code too
-        setCheckoutUrl(data.url);
-        // Redirect to Stripe Checkout
-        window.location.href = data.url;
-        setGiftFormOpen(false);
-        toast.success(t('gift.redirecting') || 'Redirecting to payment...');
-      }
-    } catch (err) {
-      console.error('Gift payment error:', err);
-      toast.error('Payment failed. Please try again.');
-    } finally {
-      setGiftLoading(false);
-    }
-  };
-
-  const handleGenerateQR = async () => {
-    if (!selectedAmount) return;
-    setGiftLoading(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('create-gift-payment', {
-        body: {
-          amount: selectedAmount,
-          guestName: giftName.trim() || 'Anonymous',
-          message: giftMessage,
-          origin: window.location.origin,
-        },
-      });
-
-      if (error) throw error;
-      if (data?.url) {
-        setCheckoutUrl(data.url);
-      }
-    } catch (err) {
-      console.error('QR generation error:', err);
-      toast.error('Could not generate QR code. Please try again.');
-    } finally {
-      setGiftLoading(false);
-    }
-  };
-
-  const handlePaymentSuccess = () => {
-    setGiftSent(true);
-    setCheckoutUrl(null);
-    // Send gift confirmation email
-    try {
-      supabase.functions.invoke('send-gift-confirmation', {
-        body: {
-          guestName: giftName.trim() || 'Anonymous',
-          amount: selectedAmount,
-          message: giftMessage || null,
-        },
-      });
-    } catch (e) {
-      console.error('Gift confirmation email failed:', e);
-    }
-    setTimeout(() => {
-      setGiftFormOpen(false);
-      setGiftSent(false);
-      setGiftMessage(t('registry.dialog.defaultMessage'));
-      setGiftName('');
-      setSelectedAmount(null);
-    }, 3000);
   };
 
   const features = [
