@@ -470,6 +470,8 @@ const Index = () => {
   const [giftName, setGiftName] = useState('');
   const [giftMessage, setGiftMessage] = useState('');
   const [giftSent, setGiftSent] = useState(false);
+  const [giftLoading, setGiftLoading] = useState(false);
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
 
   useEffect(() => {
     const update = () => {
@@ -488,14 +490,13 @@ const Index = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const [giftLoading, setGiftLoading] = useState(false);
-
   const handleSelectTier = (amount: number) => {
     setSelectedAmount(amount);
     setCustomAmount('');
     setGiftOpen(false);
     setGiftFormOpen(true);
     setGiftSent(false);
+    setClientSecret(null);
   };
 
   const handleCustomGift = () => {
@@ -505,44 +506,45 @@ const Index = () => {
       setGiftOpen(false);
       setGiftFormOpen(true);
       setGiftSent(false);
+      setClientSecret(null);
     }
   };
 
-  const handleSendGift = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleProceedToPayment = async () => {
     if (!selectedAmount) return;
     setGiftLoading(true);
     try {
-      // Record gift in DB
       await supabase.from('gifts').insert({
         amount: selectedAmount,
         from_name: giftName || 'Anonymous',
         message: giftMessage || null,
       });
 
-      // Create Stripe checkout session
       const { data, error } = await supabase.functions.invoke('create-gift-payment', {
         body: { amount: selectedAmount, guestName: giftName, message: giftMessage },
       });
 
       if (error) throw error;
-      if (data?.url) {
-        window.open(data.url, '_blank');
+      if (data?.clientSecret) {
+        setClientSecret(data.clientSecret);
       }
-
-      setGiftSent(true);
-      setTimeout(() => {
-        setGiftFormOpen(false);
-        setGiftSent(false);
-        setGiftMessage('');
-        setGiftName('');
-        setSelectedAmount(null);
-      }, 2000);
     } catch (err) {
       console.error('Gift payment error:', err);
     } finally {
       setGiftLoading(false);
     }
+  };
+
+  const handlePaymentSuccess = () => {
+    setGiftSent(true);
+    setClientSecret(null);
+    setTimeout(() => {
+      setGiftFormOpen(false);
+      setGiftSent(false);
+      setGiftMessage('');
+      setGiftName('');
+      setSelectedAmount(null);
+    }, 3000);
   };
 
   const features = [
