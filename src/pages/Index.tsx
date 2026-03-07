@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { supabase } from '@/integrations/supabase/client';
+import { useSiteImages } from '@/hooks/useSiteContent';
 
 import heroImg from '@/assets/hero-wedding-opt.webp';
 import flowersImg from '@/assets/flowers-lavender.jpg';
@@ -448,6 +449,7 @@ const Index = () => {
   const { isPlaying, currentTrack, toggleTrack } = useMusic();
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [activeDetail, setActiveDetail] = useState<string | null>(null);
+  const { images: homepageGalleryImages } = useSiteImages('homepage_gallery');
 
   // Gift dialog state
   const [giftOpen, setGiftOpen] = useState(false);
@@ -1060,12 +1062,15 @@ const Index = () => {
             <p className="font-serif-display text-lg text-primary italic">{t('index.capturedMoments')}</p>
           </motion.div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {[
-              { img: heroImg, label: '♥' },
-              { img: cakeImgSmall, label: '🌸' },
-              { img: ringsImgSmall, label: '💍' },
-              { img: coupleImgSmall, label: '♥' },
-            ].map((item, i) =>
+            {(homepageGalleryImages.length > 0
+              ? homepageGalleryImages.map(img => ({ img: img.url, label: '♥' }))
+              : [
+                  { img: heroImg, label: '♥' },
+                  { img: cakeImgSmall, label: '🌸' },
+                  { img: ringsImgSmall, label: '💍' },
+                  { img: coupleImgSmall, label: '♥' },
+                ]
+            ).map((item, i) =>
               <motion.div
                 key={i}
                 initial={{ opacity: 0, scale: 0.9 }}

@@ -182,6 +182,84 @@ export type Database = {
         }
         Relationships: []
       }
+      site_images: {
+        Row: {
+          alt_text: string | null
+          created_at: string
+          id: string
+          section: string
+          sort_order: number | null
+          storage_path: string
+          url: string
+        }
+        Insert: {
+          alt_text?: string | null
+          created_at?: string
+          id?: string
+          section: string
+          sort_order?: number | null
+          storage_path: string
+          url: string
+        }
+        Update: {
+          alt_text?: string | null
+          created_at?: string
+          id?: string
+          section?: string
+          sort_order?: number | null
+          storage_path?: string
+          url?: string
+        }
+        Relationships: []
+      }
+      story_events: {
+        Row: {
+          created_at: string
+          date_label: string
+          date_label_es: string | null
+          date_label_fr: string | null
+          description: string
+          description_es: string | null
+          description_fr: string | null
+          icon: string
+          id: string
+          sort_order: number
+          title: string
+          title_es: string | null
+          title_fr: string | null
+        }
+        Insert: {
+          created_at?: string
+          date_label: string
+          date_label_es?: string | null
+          date_label_fr?: string | null
+          description: string
+          description_es?: string | null
+          description_fr?: string | null
+          icon?: string
+          id?: string
+          sort_order?: number
+          title: string
+          title_es?: string | null
+          title_fr?: string | null
+        }
+        Update: {
+          created_at?: string
+          date_label?: string
+          date_label_es?: string | null
+          date_label_fr?: string | null
+          description?: string
+          description_es?: string | null
+          description_fr?: string | null
+          icon?: string
+          id?: string
+          sort_order?: number
+          title?: string
+          title_es?: string | null
+          title_fr?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

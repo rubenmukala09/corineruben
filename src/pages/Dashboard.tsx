@@ -7,7 +7,7 @@ import {
   Users, Utensils, Gift, Heart, CheckCircle, XCircle, Clock,
   TrendingUp, BarChart3, PieChart, MapPin, Sparkles, Loader2, LogOut,
   Megaphone, Trash2, Plus, Share2, Copy, Check, QrCode,
-  MessageCircleQuestion, Send, Bell
+  MessageCircleQuestion, Send, Bell, Image, BookOpen
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { Input } from '@/components/ui/input';
@@ -16,6 +16,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow
 } from '@/components/ui/table';
+import ImageManager from '@/components/dashboard/ImageManager';
+import StoryManager from '@/components/dashboard/StoryManager';
+
 
 const TABLE_NAMES = [
   'Rose', 'Lavande', 'Jasmin', 'Orchidée', 'Lys', 'Pivoine', 'Magnolia', 'Camélia',
@@ -256,26 +259,32 @@ const Dashboard = () => {
         </motion.div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-          <TabsList className="glass-card-strong rounded-full p-1 mx-auto flex w-fit gap-1">
-            <TabsTrigger value="overview" className="rounded-full px-5 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
+          <TabsList className="glass-card-strong rounded-2xl p-1.5 mx-auto flex flex-wrap w-fit gap-1 max-w-full">
+            <TabsTrigger value="overview" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
               <BarChart3 className="w-3.5 h-3.5 mr-1.5" /> {t('dashboard.overview')}
             </TabsTrigger>
-            <TabsTrigger value="guests" className="rounded-full px-5 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
+            <TabsTrigger value="guests" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
               <Users className="w-3.5 h-3.5 mr-1.5" /> {t('dashboard.guests')}
             </TabsTrigger>
-            <TabsTrigger value="tables" className="rounded-full px-5 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
+            <TabsTrigger value="tables" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
               <MapPin className="w-3.5 h-3.5 mr-1.5" /> {t('dashboard.seating')}
             </TabsTrigger>
-            <TabsTrigger value="gifts" className="rounded-full px-5 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
+            <TabsTrigger value="gifts" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
               <Gift className="w-3.5 h-3.5 mr-1.5" /> {t('dashboard.gifts')}
             </TabsTrigger>
-            <TabsTrigger value="announcements" className="rounded-full px-5 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
+            <TabsTrigger value="images" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
+              <Image className="w-3.5 h-3.5 mr-1.5" /> Images
+            </TabsTrigger>
+            <TabsTrigger value="story" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
+              <BookOpen className="w-3.5 h-3.5 mr-1.5" /> Story
+            </TabsTrigger>
+            <TabsTrigger value="announcements" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
               <Megaphone className="w-3.5 h-3.5 mr-1.5" /> {t('dashboard.announcements')}
             </TabsTrigger>
-            <TabsTrigger value="quotes" className="rounded-full px-5 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
+            <TabsTrigger value="quotes" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
               <Heart className="w-3.5 h-3.5 mr-1.5" /> {t('dashboard.quotes')}
             </TabsTrigger>
-            <TabsTrigger value="enquiries" className="rounded-full px-5 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground relative">
+            <TabsTrigger value="enquiries" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground relative">
               <MessageCircleQuestion className="w-3.5 h-3.5 mr-1.5" /> {t('dashboard.enquiries')}
               {unansweredCount > 0 && (
                 <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-rose-500 text-[10px] font-bold text-white flex items-center justify-center animate-pulse">
@@ -283,7 +292,7 @@ const Dashboard = () => {
                 </span>
               )}
             </TabsTrigger>
-            <TabsTrigger value="share" className="rounded-full px-5 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
+            <TabsTrigger value="share" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
               <Share2 className="w-3.5 h-3.5 mr-1.5" /> Share
             </TabsTrigger>
           </TabsList>
@@ -733,6 +742,16 @@ const Dashboard = () => {
                 </div>
               ))}
             </motion.div>
+          </TabsContent>
+
+          {/* ═══ IMAGES TAB ═══ */}
+          <TabsContent value="images" className="space-y-6">
+            <ImageManager />
+          </TabsContent>
+
+          {/* ═══ STORY TAB ═══ */}
+          <TabsContent value="story" className="space-y-6">
+            <StoryManager />
           </TabsContent>
 
           {/* ═══ SHARE TAB ═══ */}
