@@ -176,7 +176,29 @@ const Dashboard = () => {
     setQuotes(quotes.filter(q => q.id !== id));
   };
 
-  const confirmed = rsvps.filter(r => r.status === 'confirmed');
+  const handleAnswerEnquiry = async (id: string) => {
+    const answer = answerTexts[id]?.trim();
+    if (!answer) return;
+    setAnswerSending(id);
+    const { error } = await supabase.from('enquiries').update({
+      answer,
+      status: 'answered',
+      answered_at: new Date().toISOString(),
+    }).eq('id', id);
+    if (!error) {
+      setEnquiries(enquiries.map(e => e.id === id ? { ...e, answer, status: 'answered', answered_at: new Date().toISOString() } : e));
+      setAnswerTexts(prev => { const n = { ...prev }; delete n[id]; return n; });
+    }
+    setAnswerSending(null);
+  };
+
+  const handleDeleteEnquiry = async (id: string) => {
+    await supabase.from('enquiries').delete().eq('id', id);
+    setEnquiries(enquiries.filter(e => e.id !== id));
+  };
+
+  const unansweredCount = enquiries.filter(e => e.status === 'pending').length;
+
   const pending = rsvps.filter(r => r.status === 'pending');
   const declined = rsvps.filter(r => r.status === 'declined');
   const totalGuests = confirmed.reduce((a, r) => a + r.guests, 0);
