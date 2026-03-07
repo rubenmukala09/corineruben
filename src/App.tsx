@@ -5,6 +5,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Navigation from "@/components/Navigation";
+import ScrollToTop from "@/components/ScrollToTop";
 import Footer from "@/components/Footer";
 import AuroraBackground from "@/components/AuroraBackground";
 import Index from "./pages/Index";
@@ -40,6 +41,7 @@ const App = () => (
                 <FloatingHearts />
 
                 <div className="relative z-10">
+                  <ScrollToTop />
                   <Navigation />
                   <Routes>
                     <Route path="/" element={<Index />} />
