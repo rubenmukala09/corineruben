@@ -25,25 +25,74 @@
     <!-- Inline critical CSS for immediate FCP -->
     <style>
       #app-loader{display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Playfair Display',Georgia,serif;color:#4A3B4E;text-align:center;flex-direction:column;gap:0.75rem;position:relative;overflow:hidden;background:#F9F8F9}
-      #app-loader::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(201,169,182,0.4) 0%,rgba(184,169,201,0.3) 40%,transparent 70%);top:-10%;left:-10%;filter:blur(60px);animation:aurora-drift 8s ease-in-out infinite}
-      #app-loader::after{content:'';position:absolute;width:450px;height:450px;border-radius:50%;background:radial-gradient(circle,rgba(212,165,165,0.35) 0%,rgba(212,196,224,0.25) 40%,transparent 70%);bottom:-15%;right:-10%;filter:blur(70px);animation:aurora-drift 10s ease-in-out infinite reverse}
-      @keyframes aurora-drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,-20px) scale(1.08)}}
+
+      /* ── Animated spectrum blob ── */
+      .spectrum-blob{position:absolute;width:380px;height:380px;border-radius:50%;filter:blur(50px);opacity:0.7;z-index:1;
+        background:conic-gradient(from 0deg,
+          hsl(300,50%,70%),hsl(330,60%,72%),hsl(280,55%,68%),
+          hsl(260,50%,72%),hsl(320,45%,75%),hsl(340,55%,70%),
+          hsl(300,50%,70%));
+        animation:morph 8s ease-in-out infinite,spectrum-rotate 12s linear infinite}
+      @keyframes morph{
+        0%,100%{border-radius:60% 40% 30% 70%/60% 30% 70% 40%;transform:scale(1) translate(0,0)}
+        25%{border-radius:30% 60% 70% 40%/50% 60% 30% 60%;transform:scale(1.08) translate(15px,-10px)}
+        50%{border-radius:50% 60% 30% 60%/30% 40% 70% 60%;transform:scale(0.95) translate(-10px,15px)}
+        75%{border-radius:40% 50% 60% 50%/60% 30% 50% 70%;transform:scale(1.05) translate(10px,5px)}
+      }
+      @keyframes spectrum-rotate{0%{filter:blur(50px) hue-rotate(0deg)}100%{filter:blur(50px) hue-rotate(360deg)}}
+
+      /* ── Aurora blobs ── */
+      .aurora-1,.aurora-2,.aurora-3{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0}
+      .aurora-1{width:500px;height:400px;top:-15%;left:-10%;background:radial-gradient(circle,rgba(201,169,182,0.5) 0%,rgba(184,169,201,0.35) 40%,transparent 70%);animation:aurora-float1 10s ease-in-out infinite}
+      .aurora-2{width:420px;height:350px;bottom:-10%;right:-12%;background:radial-gradient(circle,rgba(212,165,165,0.45) 0%,rgba(178,145,200,0.3) 40%,transparent 70%);animation:aurora-float2 13s ease-in-out infinite}
+      .aurora-3{width:300px;height:300px;top:30%;left:50%;transform:translateX(-50%);background:radial-gradient(circle,rgba(220,190,210,0.4) 0%,rgba(190,170,220,0.25) 50%,transparent 70%);animation:aurora-float3 9s ease-in-out infinite}
+      @keyframes aurora-float1{0%,100%{transform:translate(0,0) scale(1);opacity:0.6}50%{transform:translate(40px,-25px) scale(1.12);opacity:0.8}}
+      @keyframes aurora-float2{0%,100%{transform:translate(0,0) scale(1);opacity:0.5}50%{transform:translate(-30px,20px) scale(1.1);opacity:0.75}}
+      @keyframes aurora-float3{0%,100%{transform:translateX(-50%) scale(1);opacity:0.4}50%{transform:translateX(-50%) scale(1.15) translateY(-15px);opacity:0.65}}
+
+      /* ── Glassmorphism card ── */
+      @keyframes fade-up{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
       @keyframes pulse-glow{0%,100%{opacity:0.6;transform:scale(1)}50%{opacity:1;transform:scale(1.15)}}
-      @keyframes fade-up{0%{opacity:0;transform:translateY(16px)}100%{opacity:1;transform:translateY(0)}}
-      .loader-card{background:rgba(255,255,255,0.25);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.35);border-radius:2rem;padding:3rem 3.5rem;position:relative;z-index:2;box-shadow:0 8px 32px rgba(74,59,78,0.08),inset 0 1px 0 rgba(255,255,255,0.4);animation:fade-up 0.8s ease-out both}
+      .loader-card{
+        background:rgba(255,255,255,0.2);
+        backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);
+        border:1px solid rgba(255,255,255,0.4);
+        border-radius:2.5rem;padding:3rem 3.5rem;
+        position:relative;z-index:3;
+        box-shadow:0 8px 40px rgba(74,59,78,0.1),0 0 80px rgba(201,169,182,0.15),inset 0 1px 0 rgba(255,255,255,0.5),inset 0 -1px 0 rgba(255,255,255,0.1);
+        animation:fade-up 0.8s ease-out both}
       .loader-heart{font-size:1.5rem;color:#C9A9B6;animation:pulse-glow 2s ease-in-out infinite;margin-bottom:0.25rem}
       #app-loader h1{font-size:2.75rem;font-weight:600;letter-spacing:-0.5px;margin:0;background:linear-gradient(135deg,#4A3B4E 0%,#9F82A4 50%,#6B4E71 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:fade-up 0.8s ease-out 0.15s both}
       #app-loader .loader-date{font-family:'DM Sans','Inter',sans-serif;font-size:0.8rem;letter-spacing:0.35em;text-transform:uppercase;color:#9F82A4;margin:0;animation:fade-up 0.8s ease-out 0.3s both}
       .loader-line{width:60px;height:1px;background:linear-gradient(90deg,transparent,rgba(191,163,122,0.5),transparent);margin:0.5rem auto;animation:fade-up 0.8s ease-out 0.25s both}
+
+      /* ── SVG waves ── */
+      .loader-waves{position:absolute;bottom:0;left:0;width:100%;height:120px;z-index:2;overflow:hidden}
+      .loader-waves svg{position:absolute;bottom:-5px;left:0;width:200%;height:100%}
+      .wave-1{animation:wave-drift 7s ease-in-out infinite}
+      .wave-2{animation:wave-drift 9s ease-in-out infinite reverse;opacity:0.5}
+      .wave-3{animation:wave-drift 11s ease-in-out infinite;opacity:0.3}
+      @keyframes wave-drift{0%,100%{transform:translateX(0)}50%{transform:translateX(-25%)}}
+
+      /* ── DARK MODE ── */
       @media(prefers-color-scheme:dark){
         #app-loader{background:#141019;color:#e8e0ec}
-        #app-loader::before{background:radial-gradient(circle,rgba(139,107,138,0.3) 0%,rgba(107,78,113,0.25) 40%,transparent 70%)}
-        #app-loader::after{background:radial-gradient(circle,rgba(212,165,165,0.2) 0%,rgba(148,120,165,0.2) 40%,transparent 70%)}
-        .loader-card{background:rgba(30,24,38,0.5);border-color:rgba(255,255,255,0.08);box-shadow:0 8px 32px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.05)}
+        .spectrum-blob{opacity:0.6;
+          background:conic-gradient(from 0deg,
+            hsl(300,45%,50%),hsl(330,50%,55%),hsl(280,50%,48%),
+            hsl(260,45%,55%),hsl(320,40%,52%),hsl(340,50%,50%),
+            hsl(300,45%,50%))}
+        .aurora-1{background:radial-gradient(circle,rgba(160,120,170,0.45) 0%,rgba(130,100,160,0.3) 40%,transparent 70%)}
+        .aurora-2{background:radial-gradient(circle,rgba(200,140,150,0.35) 0%,rgba(160,130,180,0.25) 40%,transparent 70%)}
+        .aurora-3{background:radial-gradient(circle,rgba(170,140,190,0.35) 0%,rgba(150,120,180,0.2) 50%,transparent 70%)}
+        .loader-card{background:rgba(30,24,38,0.45);border-color:rgba(255,255,255,0.1);box-shadow:0 8px 40px rgba(0,0,0,0.3),0 0 60px rgba(140,100,160,0.12),inset 0 1px 0 rgba(255,255,255,0.06)}
         #app-loader h1{background:linear-gradient(135deg,#e8e0ec 0%,#b8a9c9 50%,#9478a5 100%);-webkit-background-clip:text;background-clip:text}
         #app-loader .loader-date{color:#b8a9c9}
         .loader-heart{color:#9478a5}
         .loader-line{background:linear-gradient(90deg,transparent,rgba(191,163,122,0.3),transparent)}
+        .wave-fill-1{fill:rgba(140,100,160,0.12)}
+        .wave-fill-2{fill:rgba(160,120,170,0.08)}
+        .wave-fill-3{fill:rgba(130,100,150,0.05)}
       }
     </style>
     <meta property="og:title" content="Corine &amp; Ruben — Wedding">
@@ -55,11 +104,33 @@
   <body>
     <div id="root">
       <div id="app-loader" aria-hidden="true">
+        <!-- Aurora background blobs -->
+        <div class="aurora-1"></div>
+        <div class="aurora-2"></div>
+        <div class="aurora-3"></div>
+
+        <!-- Central spectrum blob -->
+        <div class="spectrum-blob"></div>
+
+        <!-- Glassmorphism card -->
         <div class="loader-card">
           <div class="loader-heart">♥</div>
           <h1>Corine & Ruben</h1>
           <div class="loader-line"></div>
           <p class="loader-date">15 . 08 . 2027</p>
+        </div>
+
+        <!-- Animated waves -->
+        <div class="loader-waves">
+          <svg class="wave-1" viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path class="wave-fill-1" d="M0,60 C360,120 720,0 1080,60 C1260,90 1380,40 1440,60 L1440,120 L0,120 Z" fill="rgba(201,169,182,0.15)"/>
+          </svg>
+          <svg class="wave-2" viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path class="wave-fill-2" d="M0,80 C240,30 480,110 720,70 C960,30 1200,100 1440,60 L1440,120 L0,120 Z" fill="rgba(184,169,201,0.1)"/>
+          </svg>
+          <svg class="wave-3" viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path class="wave-fill-3" d="M0,40 C300,100 600,20 900,70 C1100,100 1300,50 1440,80 L1440,120 L0,120 Z" fill="rgba(220,190,210,0.08)"/>
+          </svg>
         </div>
       </div>
     </div>
