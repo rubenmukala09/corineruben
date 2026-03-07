@@ -25,8 +25,8 @@
     <!-- Inline critical CSS for immediate FCP -->
     <style>
       #app-loader{display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Playfair Display',Georgia,serif;color:#4A3B4E;text-align:center;flex-direction:column;gap:0;position:relative;overflow:hidden;
-        background:rgba(255,255,255,0.6);
-        backdrop-filter:blur(40px) saturate(1.2);-webkit-backdrop-filter:blur(40px) saturate(1.2)}
+        background:transparent;
+        backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 
       .loader-couple{display:flex;align-items:flex-end;justify-content:center;position:relative;height:180px;width:360px;margin-bottom:0.5rem}
 
@@ -49,11 +49,6 @@
         animation:fade-up 1s 2.6s forwards}
       .loader-sub{font-family:'DM Sans',sans-serif;font-size:0.7rem;letter-spacing:0.35em;text-transform:uppercase;color:#9F82A4;opacity:0;margin-top:0.3rem;animation:fade-up 1s 3s forwards}
 
-      /* Glass card behind couple */
-      .loader-glass{position:absolute;left:50%;bottom:-10px;transform:translateX(-50%);width:220px;height:160px;border-radius:24px;
-        background:rgba(255,255,255,0.35);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-        border:1px solid rgba(255,255,255,0.5);box-shadow:0 8px 32px rgba(74,59,78,0.06);opacity:0;animation:fade-up 0.8s 1.6s forwards}
-
       @keyframes slide-groom{0%{left:0;opacity:0}30%{opacity:1}100%{left:calc(50% - 70px);opacity:1}}
       @keyframes slide-bride{0%{right:0;opacity:0}30%{opacity:1}100%{right:calc(50% - 70px);opacity:1}}
       @keyframes heart-pop{0%{transform:translateX(-50%) scale(0);opacity:0}50%{transform:translateX(-50%) scale(1.3);opacity:1}100%{transform:translateX(-50%) scale(1);opacity:1}}
@@ -61,14 +56,12 @@
       @keyframes fade-up{0%{opacity:0;transform:translateY(12px)}100%{opacity:1;transform:translateY(0)}}
 
       @media(prefers-color-scheme:dark){
-        #app-loader{background:rgba(20,16,30,0.7);backdrop-filter:blur(40px) saturate(1.1);-webkit-backdrop-filter:blur(40px) saturate(1.1)}
         .loader-figure img{opacity:0.9;filter:drop-shadow(0 8px 24px rgba(148,120,165,0.15)) brightness(1.6) sepia(0.2) hue-rotate(260deg) saturate(1.2)}
         .loader-figure .loader-name{color:#d4c6e0}
         .loader-heart-pop{color:#b8a9c9;text-shadow:0 0 20px rgba(184,169,201,0.4)}
         .loader-glow{background:radial-gradient(circle,rgba(148,120,165,0.15) 0%,rgba(184,169,201,0.06) 40%,transparent 70%)}
         .loader-title{background:linear-gradient(135deg,#e8e0ec 0%,#b8a9c9 50%,#9478a5 100%);-webkit-background-clip:text;background-clip:text}
         .loader-sub{color:#b8a9c9}
-        .loader-glass{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.08);box-shadow:0 8px 32px rgba(0,0,0,0.15)}
       }
     </style>
     
@@ -85,7 +78,7 @@
     <div id="root">
       <div id="app-loader" aria-hidden="true">
         <div class="loader-couple">
-          <div class="loader-glass"></div>
+          
           <div class="loader-figure loader-groom-fig">
             <img src="/images/groom-silhouette.png" alt="" />
             <span class="loader-name">Ruben</span>
