@@ -513,6 +513,7 @@ const Index = () => {
     }
   }, []);
 
+  const handleSelectTier = (amount: number) => {
     setSelectedAmount(amount);
     setCustomAmount('');
     setGiftOpen(false);
