@@ -787,12 +787,12 @@ const Index = () => {
       <section className="py-14 md:py-20 relative overflow-hidden">
         <AuroraOrb position="left" color="rgba(201,169,182,0.25)" size={400} delay={0} />
         <AuroraOrb position="right" color="rgba(180,140,210,0.2)" size={350} delay={5} />
-        <div className="container mx-auto px-6 md:px-12 max-w-4xl relative z-10">
+        <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-10"
+            className="text-center mb-12"
           >
             <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
               <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('nav.details')}</p>
@@ -801,27 +801,61 @@ const Index = () => {
             <p className="font-sans-elegant text-lg text-muted-foreground max-w-lg mx-auto">{t('details.subtitle')}</p>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {detailSections.map((section, i) =>
-              <motion.button
-                key={section.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
-                whileHover={{ scale: 1.04, y: -4 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => setActiveDetail(section.id)}
-                className="glass-card-strong rounded-3xl p-6 card-hover group text-center relative overflow-hidden cursor-pointer"
-              >
-                <div className={`absolute top-0 right-0 w-20 h-20 rounded-full bg-gradient-to-br ${section.color} blur-xl pointer-events-none opacity-60`} />
-                <div className={`w-14 h-14 rounded-3xl bg-gradient-to-br ${section.color} flex items-center justify-center mb-4 mx-auto group-hover:shadow-glow transition-shadow duration-500 shadow-soft`}>
-                  <section.icon className={`w-6 h-6 ${section.iconColor} icon-glow`} />
-                </div>
-                <h3 className="font-serif-display text-base text-foreground font-semibold">{section.title}</h3>
-                <p className="font-sans-elegant text-[11px] text-muted-foreground mt-1.5">{t('details.tapToSee')}</p>
-              </motion.button>
-            )}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+            {detailSections.map((section, i) => {
+              const subtitleKeys: Record<string, string> = {
+                ceremony: 'details.ceremony.time',
+                reception: 'details.reception.time',
+                accommodation: 'details.accommodation.hotel',
+                transport: 'details.transport.shuttle',
+              };
+              return (
+                <motion.button
+                  key={section.id}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.12, duration: 0.6 }}
+                  whileHover={{ scale: 1.05, y: -6 }}
+                  whileTap={{ scale: 0.96 }}
+                  onClick={() => setActiveDetail(section.id)}
+                  className="group relative rounded-3xl p-6 md:p-7 text-center cursor-pointer overflow-hidden
+                    bg-white/60 dark:bg-white/[0.04] backdrop-blur-xl
+                    border border-white/40 dark:border-white/10
+                    shadow-[0_8px_32px_rgba(139,107,138,0.08),0_2px_8px_rgba(0,0,0,0.04)]
+                    hover:shadow-[0_16px_48px_rgba(139,107,138,0.16),0_4px_16px_rgba(0,0,0,0.06)]
+                    transition-shadow duration-500"
+                >
+                  {/* Soft colored glow behind icon */}
+                  <div className={`absolute top-4 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full bg-gradient-to-br ${section.color} blur-2xl pointer-events-none opacity-50 group-hover:opacity-80 transition-opacity duration-500`} />
+
+                  {/* Icon circle with soft pastel bg */}
+                  <div className={`relative w-16 h-16 rounded-full bg-gradient-to-br ${section.color} flex items-center justify-center mb-5 mx-auto
+                    ring-4 ring-white/50 dark:ring-white/10
+                    group-hover:ring-primary/20 group-hover:shadow-glow
+                    transition-all duration-500`}>
+                    <section.icon className={`w-7 h-7 ${section.iconColor} group-hover:scale-110 transition-transform duration-300`} />
+                  </div>
+
+                  <h3 className="font-serif-display text-base md:text-lg text-foreground font-semibold mb-1.5">{section.title}</h3>
+
+                  {/* Preview text */}
+                  <p className="font-sans-elegant text-[11px] text-muted-foreground leading-relaxed mb-3 line-clamp-2">
+                    {t(subtitleKeys[section.id] || 'details.tapToSee')}
+                  </p>
+
+                  {/* Tap indicator */}
+                  <div className="flex items-center justify-center gap-1.5 text-primary/60 group-hover:text-primary transition-colors duration-300">
+                    <span className="font-sans-elegant text-[10px] font-semibold tracking-wide uppercase">{t('details.tapToSee')}</span>
+                    <ChevronDown className="w-3 h-3 group-hover:translate-y-0.5 transition-transform duration-300" />
+                  </div>
+
+                  {/* Subtle animated border shimmer on hover */}
+                  <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{ background: 'linear-gradient(135deg, transparent 40%, rgba(139,107,138,0.08) 50%, transparent 60%)', backgroundSize: '200% 200%', animation: 'shimmer 3s ease-in-out infinite' }} />
+                </motion.button>
+              );
+            })}
           </div>
         </div>
       </section>
