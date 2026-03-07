@@ -49,9 +49,10 @@
       @keyframes slide-from-left{0%{opacity:0;transform:translateX(-80px)}100%{opacity:1;transform:translateX(0)}}
       @keyframes slide-from-right{0%{opacity:0;transform:translateX(80px)}100%{opacity:1;transform:translateX(0)}}
 
-      /* Names fade in after figures meet */
-      .loader-figure--groom .loader-figure-name{animation:fade-up 0.6s ease-out 1.5s forwards}
-      .loader-figure--bride .loader-figure-name{animation:fade-up 0.6s ease-out 1.6s forwards}
+      /* Names fade in behind figures */
+      .loader-figure--groom .loader-figure-name{animation:name-reveal 0.6s ease-out 1.5s forwards}
+      .loader-figure--bride .loader-figure-name{animation:name-reveal 0.6s ease-out 1.6s forwards}
+      @keyframes name-reveal{0%{opacity:0;transform:translate(-50%,-50%) scale(0.8)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 
       /* ── Walking line ── */
       .loader-walk-line{width:280px;height:2px;margin-top:-2px;opacity:0;
