@@ -27,12 +27,11 @@ const giftTiers = [
   { amount: 500, emoji: '💎', labelKey: 'registry.tier.diamond' },
 ];
 
-/* Decorative aurora orb for section dividers */
+/* Decorative aurora orb — pure CSS, no framer-motion animation */
 const AuroraOrb = ({ 
   position = 'left', 
   color = 'rgba(201,169,182,0.3)', 
   size = 400, 
-  delay = 0 
 }: { position?: 'left' | 'right' | 'center'; color?: string; size?: number; delay?: number }) => {
   const posStyle = position === 'left' 
     ? { left: '-12%', top: '20%' } 
@@ -41,16 +40,15 @@ const AuroraOrb = ({
     : { left: '30%', top: '10%' };
 
   return (
-    <motion.div
-      className="absolute rounded-full pointer-events-none z-0"
+    <div
+      className="absolute rounded-full pointer-events-none z-0 aurora-blob-css"
       style={{
         width: size, height: size,
         background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
         filter: 'blur(80px)',
+        animation: `aurora-css-1 20s ease-in-out infinite`,
         ...posStyle,
       }}
-      animate={{ x: [0, 30, -20, 0], y: [0, -20, 15, 0], scale: [1, 1.08, 0.95, 1] }}
-      transition={{ duration: 16 + delay, repeat: Infinity, ease: 'linear', delay }}
     />
   );
 };
