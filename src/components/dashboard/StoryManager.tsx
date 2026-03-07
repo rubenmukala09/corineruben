@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, Plus, Trash2, Loader2, Save, GripVertical, ChevronDown, ChevronUp } from 'lucide-react';
+import { BookOpen, Plus, Trash2, Loader2, Save, ChevronDown, ChevronUp } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
@@ -30,7 +30,6 @@ const StoryManager = () => {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
 
-  // New event form
   const [newEvent, setNewEvent] = useState({
     title: '', title_fr: '', title_es: '',
     description: '', description_fr: '', description_es: '',
@@ -86,15 +85,9 @@ const StoryManager = () => {
   const handleUpdateEvent = async (event: StoryEvent) => {
     setSaving(event.id);
     await supabase.from('story_events').update({
-      title: event.title,
-      title_fr: event.title_fr,
-      title_es: event.title_es,
-      description: event.description,
-      description_fr: event.description_fr,
-      description_es: event.description_es,
-      date_label: event.date_label,
-      date_label_fr: event.date_label_fr,
-      date_label_es: event.date_label_es,
+      title: event.title, title_fr: event.title_fr, title_es: event.title_es,
+      description: event.description, description_fr: event.description_fr, description_es: event.description_es,
+      date_label: event.date_label, date_label_fr: event.date_label_fr, date_label_es: event.date_label_es,
       icon: event.icon,
     }).eq('id', event.id);
     setSaving(null);
@@ -114,12 +107,9 @@ const StoryManager = () => {
     const tempOrder = newEvents[idx].sort_order;
     newEvents[idx].sort_order = newEvents[swapIdx].sort_order;
     newEvents[swapIdx].sort_order = tempOrder;
-
-    // Swap positions
     [newEvents[idx], newEvents[swapIdx]] = [newEvents[swapIdx], newEvents[idx]];
     setEvents(newEvents);
 
-    // Persist
     await Promise.all([
       supabase.from('story_events').update({ sort_order: newEvents[idx].sort_order }).eq('id', newEvents[idx].id),
       supabase.from('story_events').update({ sort_order: newEvents[swapIdx].sort_order }).eq('id', newEvents[swapIdx].id),
@@ -140,13 +130,48 @@ const StoryManager = () => {
 
   return (
     <div className="space-y-6">
+      {/* Timeline visual preview */}
+      {events.length > 0 && (
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+          className="glass-card-strong rounded-3xl p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <BookOpen className="w-5 h-5 text-primary" />
+            <h3 className="font-serif-display text-lg font-semibold text-foreground">Your Timeline Preview</h3>
+          </div>
+          <p className="font-sans-elegant text-xs text-muted-foreground mb-4">This is the order your story appears on the website. Drag events below to reorder.</p>
+
+          <div className="relative">
+            <div className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-primary/30 via-accent/20 to-transparent" />
+            <div className="space-y-3">
+              {events.map((event, idx) => (
+                <div key={event.id} className="flex items-center gap-3 pl-1.5">
+                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center z-10 flex-shrink-0 ring-2 ring-background">
+                    <span className="text-[10px] font-bold font-sans-elegant text-primary">{idx + 1}</span>
+                  </div>
+                  <div className="flex-1 flex items-center gap-2 glass-card rounded-xl px-3 py-2">
+                    <span className="text-lg">{event.icon}</span>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-sans-elegant text-xs font-bold text-foreground truncate">{event.title}</p>
+                      <p className="font-sans-elegant text-[10px] text-muted-foreground">{event.date_label}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      )}
+
       {/* Add new event */}
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
         className="glass-card-strong rounded-3xl p-8">
-        <div className="flex items-center gap-2 mb-6">
+        <div className="flex items-center gap-2 mb-2">
           <Plus className="w-5 h-5 text-primary" />
           <h3 className="font-serif-display text-lg font-semibold text-foreground">Add Story Event</h3>
         </div>
+        <p className="font-sans-elegant text-xs text-muted-foreground mb-6">
+          This will be added as <span className="font-bold text-primary">Event #{events.length + 1}</span> at the end of your timeline.
+        </p>
 
         <div className="space-y-4">
           {/* Icon picker */}
@@ -209,7 +234,7 @@ const StoryManager = () => {
         className="space-y-3">
         <div className="flex items-center gap-2 px-2">
           <BookOpen className="w-5 h-5 text-primary" />
-          <h3 className="font-serif-display text-lg font-semibold text-foreground">Timeline Events ({events.length})</h3>
+          <h3 className="font-serif-display text-lg font-semibold text-foreground">Edit Timeline Events ({events.length})</h3>
         </div>
 
         {events.length === 0 ? (
@@ -236,6 +261,12 @@ const StoryManager = () => {
                   <ChevronDown className="w-3.5 h-3.5 text-muted-foreground" />
                 </button>
               </div>
+
+              {/* Step number */}
+              <div className="w-8 h-8 rounded-full bg-primary/15 flex items-center justify-center flex-shrink-0">
+                <span className="text-xs font-bold font-sans-elegant text-primary">{idx + 1}</span>
+              </div>
+
               <span className="text-2xl">{event.icon}</span>
               <div className="flex-1 min-w-0">
                 <p className="font-sans-elegant text-sm font-bold text-foreground truncate">{event.title}</p>
@@ -254,7 +285,6 @@ const StoryManager = () => {
                   className="overflow-hidden"
                 >
                   <div className="px-5 pb-5 space-y-4 border-t border-border/10 pt-4">
-                    {/* Icon picker */}
                     <div className="flex flex-wrap gap-1.5">
                       {EMOJI_OPTIONS.map(emoji => (
                         <button key={emoji} onClick={() => updateEventField(event.id, 'icon', emoji)}
@@ -296,7 +326,7 @@ const StoryManager = () => {
                         Save Changes
                       </button>
                       <button onClick={() => handleDeleteEvent(event.id)}
-                        className="px-4 py-2 rounded-full bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 font-sans-elegant text-xs font-bold flex items-center gap-1.5 transition-colors">
+                        className="px-4 py-2 rounded-full bg-destructive/10 hover:bg-destructive/20 text-destructive font-sans-elegant text-xs font-bold flex items-center gap-1.5 transition-colors">
                         <Trash2 className="w-4 h-4" /> Delete
                       </button>
                     </div>
