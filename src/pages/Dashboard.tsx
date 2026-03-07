@@ -128,6 +128,9 @@ const Dashboard = () => {
   const [quoteContent, setQuoteContent] = useState('');
   const [quotePosting, setQuotePosting] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [donateLink, setDonateLink] = useState('');
+  const [donateLabel, setDonateLabel] = useState('Gift / Donate');
+  const [donateCopied, setDonateCopied] = useState(false);
   const [answerTexts, setAnswerTexts] = useState<Record<string, string>>({});
   const [answerSending, setAnswerSending] = useState<string | null>(null);
 
@@ -797,6 +800,75 @@ const Dashboard = () => {
               <p className="font-sans-elegant text-[10px] text-muted-foreground mt-6">
                 No login required · Live data · Auto-refreshes every 30 seconds
               </p>
+            </motion.div>
+
+            {/* Donate QR Code */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+              className="glass-card-strong rounded-3xl p-8 max-w-lg mx-auto">
+              <div className="text-center mb-6">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mx-auto mb-4">
+                  <Gift className="w-7 h-7 text-primary" />
+                </div>
+                <h3 className="font-serif-display text-xl font-semibold text-foreground mb-2">Donate / Gift QR Code</h3>
+                <p className="font-sans-elegant text-sm text-muted-foreground">
+                  Paste any payment link (PayPal, CashApp, Venmo, Zelle, etc.) to generate a QR code guests can scan to donate.
+                </p>
+              </div>
+
+              <div className="space-y-3 mb-6">
+                <Input
+                  value={donateLabel}
+                  onChange={(e) => setDonateLabel(e.target.value)}
+                  placeholder="Label (e.g. 'Gift / Donate')"
+                  className="rounded-2xl h-11 glass-card border-border/30 font-sans-elegant"
+                />
+                <Input
+                  value={donateLink}
+                  onChange={(e) => setDonateLink(e.target.value)}
+                  placeholder="https://paypal.me/yourname or any payment link..."
+                  className="rounded-2xl h-11 glass-card border-border/30 font-sans-elegant"
+                />
+              </div>
+
+              {donateLink.trim() ? (
+                <div className="text-center space-y-4">
+                  <div className="glass-card rounded-3xl p-6 inline-block">
+                    <p className="font-sans-elegant text-xs text-muted-foreground mb-3 font-medium">{donateLabel}</p>
+                    <QRCodeSVG
+                      value={donateLink.trim()}
+                      size={200}
+                      bgColor="transparent"
+                      fgColor="hsl(286, 13%, 27%)"
+                      level="M"
+                      includeMargin={false}
+                    />
+                  </div>
+
+                  <div className="flex items-center gap-2 glass-card rounded-full p-1.5 pl-5">
+                    <p className="font-sans-elegant text-sm text-foreground truncate flex-1 text-left">{donateLink}</p>
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText(donateLink);
+                        setDonateCopied(true);
+                        setTimeout(() => setDonateCopied(false), 2000);
+                      }}
+                      className="btn-primary !rounded-full !px-5 !py-2.5 flex items-center gap-2 flex-shrink-0"
+                    >
+                      {donateCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                      {donateCopied ? 'Copied!' : 'Copy'}
+                    </button>
+                  </div>
+
+                  <p className="font-sans-elegant text-[10px] text-muted-foreground">
+                    Share this QR code or link with guests · No personal info required · Works with any payment app
+                  </p>
+                </div>
+              ) : (
+                <div className="text-center py-6">
+                  <QrCode className="w-8 h-8 text-muted-foreground/30 mx-auto mb-2" />
+                  <p className="font-sans-elegant text-sm text-muted-foreground">Enter a payment link above to generate a QR code</p>
+                </div>
+              )}
             </motion.div>
           </TabsContent>
         </Tabs>
