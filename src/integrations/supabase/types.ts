@@ -59,6 +59,24 @@ export type Database = {
         }
         Relationships: []
       }
+      quotes: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+        }
+        Relationships: []
+      }
       rsvps: {
         Row: {
           attending: boolean
