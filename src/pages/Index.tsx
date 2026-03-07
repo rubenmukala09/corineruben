@@ -141,7 +141,7 @@ const GoldenCorners = ({ className = '' }: { className?: string }) => (
   </div>
 );
 
-/* ===== Personal Court — Dynamic quotes from DB ===== */
+/* ===== Personal Court — Promise + Dynamic quotes from DB ===== */
 const PersonalCourtSection = ({ t }: { t: (key: string) => string }) => {
   const [quotes, setQuotes] = useState<{ id: string; content: string }[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -162,21 +162,20 @@ const PersonalCourtSection = ({ t }: { t: (key: string) => string }) => {
     return () => clearInterval(interval);
   }, [quotes.length]);
 
-  if (quotes.length === 0) return null;
-
   return (
-    <section className="py-10 md:py-14 relative overflow-hidden">
-      <AuroraOrb position="center" color="rgba(139,107,138,0.2)" size={400} delay={3} />
-      <div className="container mx-auto px-6 md:px-12 max-w-4xl relative z-10 text-center">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+    <section className="py-10 md:py-16 relative overflow-hidden">
+      <AuroraOrb position="right" color="rgba(212,165,200,0.25)" size={420} delay={1} />
+      <AuroraOrb position="left" color="rgba(232,196,184,0.2)" size={350} delay={5} />
+      <div className="container mx-auto px-6 md:px-12 max-w-4xl relative z-10">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center">
           <div className="relative rounded-[2rem] overflow-hidden border border-border/20 bg-gradient-to-br from-background/80 via-background/60 to-background/80 backdrop-blur-2xl shadow-[0_20px_60px_rgba(139,107,138,0.08)]">
             {/* Top gradient accent */}
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
             
             {/* Floating soft orbs */}
-            <div className="absolute top-8 right-8 w-40 h-40 rounded-full bg-gradient-to-br from-violet-400/8 to-rose-400/5 blur-3xl pointer-events-none" />
-            <div className="absolute bottom-8 left-8 w-32 h-32 rounded-full bg-gradient-to-tr from-rose-400/6 to-pink-400/4 blur-3xl pointer-events-none" />
-
+            <div className="absolute top-8 right-8 w-40 h-40 rounded-full bg-gradient-to-br from-rose-400/8 to-violet-400/5 blur-3xl pointer-events-none" />
+            <div className="absolute bottom-8 left-8 w-32 h-32 rounded-full bg-gradient-to-tr from-amber-400/6 to-pink-400/4 blur-3xl pointer-events-none" />
+            
             <div className="px-8 py-12 md:px-16 md:py-20">
               {/* Elegant icon with ring */}
               <motion.div
@@ -188,36 +187,73 @@ const PersonalCourtSection = ({ t }: { t: (key: string) => string }) => {
                 <Cross className="w-7 h-7 text-primary" />
               </motion.div>
 
-              <h3 className="font-serif-display text-2xl md:text-4xl text-foreground font-semibold mb-2 tracking-tight">{t('court.title')}</h3>
+              <h2 className="font-serif-display text-3xl md:text-5xl text-foreground font-semibold mb-5 tracking-tight">{t('love.promise')}</h2>
               
-              <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-primary/50 to-transparent mx-auto mb-3" />
+              <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-primary/50 to-transparent mx-auto mb-6" />
               
-              <p className="font-sans-elegant text-xs tracking-[0.2em] uppercase text-muted-foreground font-medium mb-8">
-                {t('court.subtitle')}
+              <p className="font-sans-elegant text-base md:text-lg text-muted-foreground leading-relaxed max-w-md mx-auto mb-10">
+                {t('love.promise.desc')}
               </p>
 
-              <div className="min-h-[80px] flex items-center justify-center">
-                <AnimatePresence mode="wait">
-                  <motion.p
-                    key={currentIndex}
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -15 }}
-                    transition={{ duration: 0.7 }}
-                    className="font-serif-display text-lg md:text-xl text-foreground italic leading-relaxed max-w-lg mx-auto"
+              {/* Emoji row */}
+              <div className="flex justify-center gap-4 md:gap-5 mb-10">
+                {[
+                  { emoji: '💕', label: 'Love' },
+                  { emoji: '🌹', label: 'Beauty' },
+                  { emoji: '💒', label: 'Union' },
+                  { emoji: '🕊️', label: 'Peace' },
+                  { emoji: '✨', label: 'Grace' },
+                ].map((item, i) =>
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 + i * 0.08 }}
+                    className="flex flex-col items-center gap-2"
                   >
-                    "{quotes[currentIndex].content}"
-                  </motion.p>
-                </AnimatePresence>
+                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/8 to-accent/5 border border-border/15 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                      <span className="text-xl">{item.emoji}</span>
+                    </div>
+                    <span className="font-sans-elegant text-[9px] tracking-[0.15em] uppercase text-muted-foreground/60 font-medium">{item.label}</span>
+                  </motion.div>
+                )}
               </div>
 
-              {quotes.length > 1 && (
-                <div className="flex items-center justify-center gap-2 mt-8">
-                  {quotes.map((_, i) => (
-                    <button key={i} onClick={() => setCurrentIndex(i)}
-                      className={`h-1.5 rounded-full transition-all duration-300 ${i === currentIndex ? 'bg-primary w-8' : 'bg-muted-foreground/20 w-1.5'}`} />
-                  ))}
-                </div>
+              {/* Divider between promise and quotes */}
+              <div className="w-24 h-px bg-gradient-to-r from-transparent via-border/40 to-transparent mx-auto mb-10" />
+
+              {/* Transitioning quotes */}
+              {quotes.length > 0 && (
+                <>
+                  <p className="font-sans-elegant text-xs tracking-[0.2em] uppercase text-muted-foreground font-medium mb-6">
+                    {t('court.subtitle')}
+                  </p>
+
+                  <div className="min-h-[80px] flex items-center justify-center">
+                    <AnimatePresence mode="wait">
+                      <motion.p
+                        key={currentIndex}
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -15 }}
+                        transition={{ duration: 0.7 }}
+                        className="font-serif-display text-lg md:text-xl text-foreground italic leading-relaxed max-w-lg mx-auto"
+                      >
+                        "{quotes[currentIndex].content}"
+                      </motion.p>
+                    </AnimatePresence>
+                  </div>
+
+                  {quotes.length > 1 && (
+                    <div className="flex items-center justify-center gap-2 mt-8">
+                      {quotes.map((_, i) => (
+                        <button key={i} onClick={() => setCurrentIndex(i)}
+                          className={`h-1.5 rounded-full transition-all duration-300 ${i === currentIndex ? 'bg-primary w-8' : 'bg-muted-foreground/20 w-1.5'}`} />
+                      ))}
+                    </div>
+                  )}
+                </>
               )}
             </div>
             
