@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 import {
   Users, Utensils, Gift, Heart, CheckCircle, XCircle, Clock,
-  TrendingUp, BarChart3, PieChart, MapPin, Music, Sparkles,
-  ChevronDown, Search, Filter, Download, Eye, Mail
+  TrendingUp, BarChart3, PieChart, MapPin, Sparkles, Loader2, LogOut
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -12,43 +13,18 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow
 } from '@/components/ui/table';
 
-/* ── Mock data (replace with real DB data once Cloud is connected) ── */
-const MOCK_RSVPS = [
-  { id: 1, name: 'Alice & David Martin', guests: 2, status: 'confirmed', meal: 'Italian', table: 'Rose', date: '2026-02-14', message: 'So excited!' },
-  { id: 2, name: 'Sophie Laurent', guests: 1, status: 'confirmed', meal: 'African', table: 'Lavande', date: '2026-02-15', message: 'Can\'t wait 💕' },
-  { id: 3, name: 'Lucas & Emma Tremblay', guests: 3, status: 'confirmed', meal: 'Indian', table: 'Jasmin', date: '2026-02-16', message: '' },
-  { id: 4, name: 'Paul Bernard', guests: 1, status: 'pending', meal: '', table: '', date: '2026-02-18', message: '' },
-  { id: 5, name: 'Léa & Hugo Nguyen', guests: 2, status: 'confirmed', meal: 'Italian', table: 'Orchidée', date: '2026-02-20', message: 'We\'ll be there!' },
-  { id: 6, name: 'Marc & Julie Rousseau', guests: 4, status: 'confirmed', meal: 'African', table: 'Lys', date: '2026-02-21', message: 'Bringing the kids' },
-  { id: 7, name: 'Chloé Fontaine', guests: 1, status: 'declined', meal: '', table: '', date: '2026-02-22', message: 'So sorry, will be traveling' },
-  { id: 8, name: 'Antoine & Clara Dubois', guests: 2, status: 'confirmed', meal: 'Italian', table: 'Pivoine', date: '2026-02-23', message: '' },
-  { id: 9, name: 'Pierre & Marie Chevalier', guests: 2, status: 'pending', meal: '', table: '', date: '2026-02-25', message: '' },
-  { id: 10, name: 'François & Nathalie Moreau', guests: 2, status: 'confirmed', meal: 'Indian', table: 'Magnolia', date: '2026-03-01', message: 'Blessed to witness!' },
-];
-
-const MOCK_GIFTS = [
-  { id: 1, from: 'Alice Martin', amount: 200, message: 'For a beautiful honeymoon!', date: '2026-02-14' },
-  { id: 2, from: 'Sophie Laurent', amount: 100, message: 'Love you both! 🥂', date: '2026-02-15' },
-  { id: 3, from: 'Lucas Tremblay', amount: 60, message: '', date: '2026-02-16' },
-  { id: 4, from: 'Léa Nguyen', amount: 500, message: 'God bless your union', date: '2026-02-20' },
-  { id: 5, from: 'Marc Rousseau', amount: 100, message: 'Congratulations!', date: '2026-02-21' },
-  { id: 6, from: 'Antoine Dubois', amount: 200, message: '', date: '2026-02-23' },
-  { id: 7, from: 'François Moreau', amount: 100, message: 'With all our love', date: '2026-03-01' },
-];
-
 const TABLE_NAMES = [
   'Rose', 'Lavande', 'Jasmin', 'Orchidée', 'Lys', 'Pivoine', 'Magnolia', 'Camélia',
   'Tulipe', 'Iris', 'Dahlia', 'Violette', 'Lilas', 'Azalée', 'Hortensia', 'Amaryllis',
 ];
 
+/* ── Reusable components ── */
+
 const StatCard = ({ icon: Icon, label, value, sub, color, bg }: {
   icon: React.ElementType; label: string; value: string | number; sub?: string; color: string; bg: string;
 }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    className="glass-card-strong rounded-3xl p-6 relative overflow-hidden card-hover"
-  >
+  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+    className="glass-card-strong rounded-3xl p-6 relative overflow-hidden card-hover">
     <div className={`absolute top-0 right-0 w-20 h-20 rounded-full bg-gradient-to-br ${bg} blur-xl pointer-events-none opacity-60`} />
     <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${bg} flex items-center justify-center mb-4`}>
       <Icon className={`w-6 h-6 ${color}`} />
@@ -59,9 +35,9 @@ const StatCard = ({ icon: Icon, label, value, sub, color, bg }: {
   </motion.div>
 );
 
-/* ── Donut chart (pure CSS) ── */
 const DonutChart = ({ segments, size = 120 }: { segments: { value: number; color: string; label: string }[]; size?: number }) => {
   const total = segments.reduce((a, s) => a + s.value, 0);
+  if (total === 0) return <p className="text-center text-muted-foreground font-sans-elegant text-sm">No data yet</p>;
   let cumulative = 0;
   const gradientParts = segments.map(s => {
     const start = (cumulative / total) * 360;
@@ -72,14 +48,7 @@ const DonutChart = ({ segments, size = 120 }: { segments: { value: number; color
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <div
-        className="rounded-full relative"
-        style={{
-          width: size,
-          height: size,
-          background: `conic-gradient(${gradientParts.join(', ')})`,
-        }}
-      >
+      <div className="rounded-full relative" style={{ width: size, height: size, background: `conic-gradient(${gradientParts.join(', ')})` }}>
         <div className="absolute inset-3 rounded-full bg-background/90 backdrop-blur-sm flex items-center justify-center">
           <span className="font-serif-display text-xl font-semibold text-foreground">{total}</span>
         </div>
@@ -96,39 +65,72 @@ const DonutChart = ({ segments, size = 120 }: { segments: { value: number; color
   );
 };
 
-/* ── Progress bar ── */
 const ProgressBar = ({ value, max, color }: { value: number; max: number; color: string }) => (
   <div className="w-full h-2.5 rounded-full bg-muted/50 overflow-hidden">
-    <motion.div
-      initial={{ width: 0 }}
-      animate={{ width: `${(value / max) * 100}%` }}
-      transition={{ duration: 1, ease: 'easeOut' }}
-      className={`h-full rounded-full ${color}`}
-    />
+    <motion.div initial={{ width: 0 }} animate={{ width: `${Math.min((value / max) * 100, 100)}%` }}
+      transition={{ duration: 1, ease: 'easeOut' }} className={`h-full rounded-full ${color}`} />
   </div>
 );
 
+/* ── Types ── */
+interface RsvpRow {
+  id: string; name: string; email: string | null; attending: boolean;
+  guests: number; companions: string[] | null; cuisine: string | null;
+  meal: string | null; sides: string[] | null; drinks: string[] | null;
+  dietary: string | null; table_name: string | null; stay_anonymous: boolean | null;
+  status: string; message: string | null; created_at: string; updated_at: string;
+}
+
+interface GiftRow {
+  id: string; from_name: string; amount: number; message: string | null; created_at: string;
+}
+
 const Dashboard = () => {
   const { t } = useLanguage();
+  const { signOut } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('overview');
+  const [rsvps, setRsvps] = useState<RsvpRow[]>([]);
+  const [gifts, setGifts] = useState<GiftRow[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const confirmed = MOCK_RSVPS.filter(r => r.status === 'confirmed');
-  const pending = MOCK_RSVPS.filter(r => r.status === 'pending');
-  const declined = MOCK_RSVPS.filter(r => r.status === 'declined');
+  useEffect(() => {
+    const fetchData = async () => {
+      const [rsvpRes, giftRes] = await Promise.all([
+        supabase.from('rsvps').select('*').order('created_at', { ascending: false }),
+        supabase.from('gifts').select('*').order('created_at', { ascending: false }),
+      ]);
+      if (rsvpRes.data) setRsvps(rsvpRes.data);
+      if (giftRes.data) setGifts(giftRes.data);
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
+
+  const confirmed = rsvps.filter(r => r.status === 'confirmed');
+  const pending = rsvps.filter(r => r.status === 'pending');
+  const declined = rsvps.filter(r => r.status === 'declined');
   const totalGuests = confirmed.reduce((a, r) => a + r.guests, 0);
-  const totalGifts = MOCK_GIFTS.reduce((a, g) => a + g.amount, 0);
+  const totalGifts = gifts.reduce((a, g) => a + g.amount, 0);
 
   const mealCounts = confirmed.reduce((acc, r) => {
-    if (r.meal) acc[r.meal] = (acc[r.meal] || 0) + r.guests;
+    if (r.cuisine) acc[r.cuisine] = (acc[r.cuisine] || 0) + r.guests;
     return acc;
   }, {} as Record<string, number>);
 
-  const filteredRsvps = MOCK_RSVPS.filter(r =>
+  const filteredRsvps = rsvps.filter(r =>
     r.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const tablesUsed = [...new Set(confirmed.map(r => r.table).filter(Boolean))];
+  const tablesUsed = [...new Set(confirmed.map(r => r.table_name).filter(Boolean))];
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen pt-28 pb-20 relative">
@@ -168,13 +170,12 @@ const Dashboard = () => {
           <TabsContent value="overview" className="space-y-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <StatCard icon={Users} label="Total Guests" value={totalGuests} sub={`${confirmed.length} families`} color="text-violet-400" bg="from-violet-500/20 to-purple-500/10" />
-              <StatCard icon={CheckCircle} label="Confirmed" value={confirmed.length} sub={`${Math.round((confirmed.length / MOCK_RSVPS.length) * 100)}% response rate`} color="text-emerald-400" bg="from-emerald-500/20 to-teal-500/10" />
+              <StatCard icon={CheckCircle} label="Confirmed" value={confirmed.length} sub={rsvps.length ? `${Math.round((confirmed.length / rsvps.length) * 100)}% response rate` : '—'} color="text-emerald-400" bg="from-emerald-500/20 to-teal-500/10" />
               <StatCard icon={Clock} label="Pending" value={pending.length} sub="Awaiting response" color="text-amber-400" bg="from-amber-500/20 to-orange-500/10" />
-              <StatCard icon={Gift} label="Total Gifts" value={`$${totalGifts.toLocaleString()}`} sub={`${MOCK_GIFTS.length} contributions`} color="text-rose-400" bg="from-rose-500/20 to-pink-500/10" />
+              <StatCard icon={Gift} label="Total Gifts" value={`$${totalGifts.toLocaleString()}`} sub={`${gifts.length} contributions`} color="text-rose-400" bg="from-rose-500/20 to-pink-500/10" />
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
-              {/* RSVP Status Chart */}
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
                 className="glass-card-strong rounded-3xl p-8">
                 <div className="flex items-center gap-2 mb-6">
@@ -188,25 +189,23 @@ const Dashboard = () => {
                 ]} />
               </motion.div>
 
-              {/* Meal Preferences */}
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
                 className="glass-card-strong rounded-3xl p-8">
                 <div className="flex items-center gap-2 mb-6">
                   <Utensils className="w-5 h-5 text-primary" />
-                  <h3 className="font-serif-display text-lg font-semibold text-foreground">Meal Preferences</h3>
+                  <h3 className="font-serif-display text-lg font-semibold text-foreground">Cuisine Preferences</h3>
                 </div>
                 <div className="space-y-5">
-                  {Object.entries(mealCounts).map(([meal, count]) => (
-                    <div key={meal}>
+                  {Object.keys(mealCounts).length === 0 && (
+                    <p className="font-sans-elegant text-sm text-muted-foreground text-center">No meal data yet</p>
+                  )}
+                  {Object.entries(mealCounts).map(([cuisine, count]) => (
+                    <div key={cuisine}>
                       <div className="flex justify-between mb-2">
-                        <span className="font-sans-elegant text-sm font-medium text-foreground">
-                          {meal === 'African' ? '🌍' : meal === 'Indian' ? '🇮🇳' : '🇮🇹'} {meal}
-                        </span>
+                        <span className="font-sans-elegant text-sm font-medium text-foreground capitalize">{cuisine}</span>
                         <span className="font-sans-elegant text-sm text-muted-foreground">{count} guests</span>
                       </div>
-                      <ProgressBar value={count} max={totalGuests} color={
-                        meal === 'African' ? 'bg-amber-400' : meal === 'Indian' ? 'bg-orange-400' : 'bg-emerald-400'
-                      } />
+                      <ProgressBar value={count} max={totalGuests || 1} color="bg-primary" />
                     </div>
                   ))}
                 </div>
@@ -220,30 +219,32 @@ const Dashboard = () => {
                 <TrendingUp className="w-5 h-5 text-primary" />
                 <h3 className="font-serif-display text-lg font-semibold text-foreground">Recent Activity</h3>
               </div>
-              <div className="space-y-3">
-                {[...MOCK_RSVPS].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 5).map(r => (
-                  <div key={r.id} className="flex items-center gap-4 glass-card rounded-2xl p-4">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                      r.status === 'confirmed' ? 'bg-emerald-500/15' : r.status === 'pending' ? 'bg-amber-500/15' : 'bg-rose-500/15'
-                    }`}>
-                      {r.status === 'confirmed' ? <CheckCircle className="w-5 h-5 text-emerald-400" /> :
-                       r.status === 'pending' ? <Clock className="w-5 h-5 text-amber-400" /> :
-                       <XCircle className="w-5 h-5 text-rose-400" />}
+              {rsvps.length === 0 ? (
+                <p className="font-sans-elegant text-sm text-muted-foreground text-center py-8">No RSVPs yet — share your wedding link!</p>
+              ) : (
+                <div className="space-y-3">
+                  {rsvps.slice(0, 5).map(r => (
+                    <div key={r.id} className="flex items-center gap-4 glass-card rounded-2xl p-4">
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                        r.status === 'confirmed' ? 'bg-emerald-500/15' : r.status === 'pending' ? 'bg-amber-500/15' : 'bg-rose-500/15'
+                      }`}>
+                        {r.status === 'confirmed' ? <CheckCircle className="w-5 h-5 text-emerald-400" /> :
+                         r.status === 'pending' ? <Clock className="w-5 h-5 text-amber-400" /> :
+                         <XCircle className="w-5 h-5 text-rose-400" />}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-sans-elegant text-sm font-semibold text-foreground truncate">{r.name}</p>
+                        <p className="font-sans-elegant text-xs text-muted-foreground">{r.guests} guest{r.guests > 1 ? 's' : ''} · {new Date(r.created_at).toLocaleDateString()}</p>
+                      </div>
+                      <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide ${
+                        r.status === 'confirmed' ? 'bg-emerald-500/15 text-emerald-500' :
+                        r.status === 'pending' ? 'bg-amber-500/15 text-amber-500' :
+                        'bg-rose-500/15 text-rose-500'
+                      }`}>{r.status}</span>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-sans-elegant text-sm font-semibold text-foreground truncate">{r.name}</p>
-                      <p className="font-sans-elegant text-xs text-muted-foreground">{r.guests} guest{r.guests > 1 ? 's' : ''} · {r.date}</p>
-                    </div>
-                    <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide ${
-                      r.status === 'confirmed' ? 'bg-emerald-500/15 text-emerald-500' :
-                      r.status === 'pending' ? 'bg-amber-500/15 text-amber-500' :
-                      'bg-rose-500/15 text-rose-500'
-                    }`}>
-                      {r.status}
-                    </span>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </motion.div>
           </TabsContent>
 
@@ -251,13 +252,8 @@ const Dashboard = () => {
           <TabsContent value="guests" className="space-y-6">
             <div className="flex flex-col sm:flex-row gap-3">
               <div className="relative flex-1">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search guests..."
-                  className="pl-10 rounded-full h-11 glass-card border-border/30 font-sans-elegant"
-                />
+                <Input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search guests..." className="pl-4 rounded-full h-11 glass-card border-border/30 font-sans-elegant" />
               </div>
             </div>
 
@@ -269,13 +265,15 @@ const Dashboard = () => {
                     <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">Guest</TableHead>
                     <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">Party Size</TableHead>
                     <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">Status</TableHead>
-                    <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">Meal</TableHead>
+                    <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">Cuisine</TableHead>
                     <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">Table</TableHead>
                     <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">Message</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredRsvps.map(r => (
+                  {filteredRsvps.length === 0 ? (
+                    <TableRow><TableCell colSpan={6} className="text-center py-8 text-muted-foreground font-sans-elegant">No guests found</TableCell></TableRow>
+                  ) : filteredRsvps.map(r => (
                     <TableRow key={r.id} className="border-border/10 hover:bg-primary/5">
                       <TableCell className="font-sans-elegant text-sm font-semibold text-foreground">{r.name}</TableCell>
                       <TableCell className="font-sans-elegant text-sm text-muted-foreground">{r.guests}</TableCell>
@@ -284,12 +282,10 @@ const Dashboard = () => {
                           r.status === 'confirmed' ? 'bg-emerald-500/15 text-emerald-500' :
                           r.status === 'pending' ? 'bg-amber-500/15 text-amber-500' :
                           'bg-rose-500/15 text-rose-500'
-                        }`}>
-                          {r.status}
-                        </span>
+                        }`}>{r.status}</span>
                       </TableCell>
-                      <TableCell className="font-sans-elegant text-sm text-muted-foreground">{r.meal || '—'}</TableCell>
-                      <TableCell className="font-sans-elegant text-sm text-muted-foreground">{r.table || '—'}</TableCell>
+                      <TableCell className="font-sans-elegant text-sm text-muted-foreground capitalize">{r.cuisine || '—'}</TableCell>
+                      <TableCell className="font-sans-elegant text-sm text-muted-foreground">{r.table_name || '—'}</TableCell>
                       <TableCell className="font-sans-elegant text-xs text-muted-foreground max-w-[150px] truncate">{r.message || '—'}</TableCell>
                     </TableRow>
                   ))}
@@ -308,19 +304,15 @@ const Dashboard = () => {
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {TABLE_NAMES.map((tableName, i) => {
-                const tableGuests = confirmed.filter(r => r.table === tableName);
+                const tableGuests = confirmed.filter(r => r.table_name === tableName);
                 const guestCount = tableGuests.reduce((a, r) => a + r.guests, 0);
                 const maxSeats = 8;
                 const hasGuests = guestCount > 0;
 
                 return (
-                  <motion.div
-                    key={tableName}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
+                  <motion.div key={tableName} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: i * 0.03 }}
-                    className={`glass-card-strong rounded-3xl p-5 text-center relative overflow-hidden ${hasGuests ? 'card-hover' : 'opacity-50'}`}
-                  >
+                    className={`glass-card-strong rounded-3xl p-5 text-center relative overflow-hidden ${hasGuests ? 'card-hover' : 'opacity-50'}`}>
                     {hasGuests && (
                       <div className="absolute top-0 right-0 w-16 h-16 rounded-full bg-gradient-to-br from-primary/10 to-accent/10 blur-xl pointer-events-none" />
                     )}
@@ -347,8 +339,8 @@ const Dashboard = () => {
           <TabsContent value="gifts" className="space-y-6">
             <div className="grid sm:grid-cols-3 gap-4">
               <StatCard icon={Gift} label="Total Received" value={`$${totalGifts.toLocaleString()}`} color="text-rose-400" bg="from-rose-500/20 to-pink-500/10" />
-              <StatCard icon={Heart} label="Contributors" value={MOCK_GIFTS.length} color="text-violet-400" bg="from-violet-500/20 to-purple-500/10" />
-              <StatCard icon={TrendingUp} label="Average Gift" value={`$${Math.round(totalGifts / MOCK_GIFTS.length)}`} color="text-amber-400" bg="from-amber-500/20 to-orange-500/10" />
+              <StatCard icon={Heart} label="Contributors" value={gifts.length} color="text-violet-400" bg="from-violet-500/20 to-purple-500/10" />
+              <StatCard icon={TrendingUp} label="Average Gift" value={gifts.length ? `$${Math.round(totalGifts / gifts.length)}` : '$0'} color="text-amber-400" bg="from-amber-500/20 to-orange-500/10" />
             </div>
 
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
@@ -363,11 +355,13 @@ const Dashboard = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {MOCK_GIFTS.map(g => (
+                  {gifts.length === 0 ? (
+                    <TableRow><TableCell colSpan={4} className="text-center py-8 text-muted-foreground font-sans-elegant">No gifts yet</TableCell></TableRow>
+                  ) : gifts.map(g => (
                     <TableRow key={g.id} className="border-border/10 hover:bg-primary/5">
-                      <TableCell className="font-sans-elegant text-sm font-semibold text-foreground">{g.from}</TableCell>
+                      <TableCell className="font-sans-elegant text-sm font-semibold text-foreground">{g.from_name}</TableCell>
                       <TableCell className="font-serif-display text-lg font-bold text-foreground">${g.amount}</TableCell>
-                      <TableCell className="font-sans-elegant text-sm text-muted-foreground">{g.date}</TableCell>
+                      <TableCell className="font-sans-elegant text-sm text-muted-foreground">{new Date(g.created_at).toLocaleDateString()}</TableCell>
                       <TableCell className="font-sans-elegant text-xs text-muted-foreground max-w-[200px] truncate">{g.message || '—'}</TableCell>
                     </TableRow>
                   ))}
@@ -375,20 +369,21 @@ const Dashboard = () => {
               </Table>
             </motion.div>
 
-            {/* Gift tier breakdown */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-              className="glass-card-strong rounded-3xl p-8">
-              <div className="flex items-center gap-2 mb-6">
-                <Sparkles className="w-5 h-5 text-primary" />
-                <h3 className="font-serif-display text-lg font-semibold text-foreground">Gift Tiers</h3>
-              </div>
-              <DonutChart segments={[
-                { value: MOCK_GIFTS.filter(g => g.amount <= 60).length, color: 'hsl(200, 60%, 55%)', label: '💐 ≤$60' },
-                { value: MOCK_GIFTS.filter(g => g.amount > 60 && g.amount <= 100).length, color: 'hsl(38, 92%, 60%)', label: '🥂 $100' },
-                { value: MOCK_GIFTS.filter(g => g.amount > 100 && g.amount <= 200).length, color: 'hsl(280, 60%, 60%)', label: '✨ $200' },
-                { value: MOCK_GIFTS.filter(g => g.amount > 200).length, color: 'hsl(340, 70%, 55%)', label: '💎 $500+' },
-              ]} />
-            </motion.div>
+            {gifts.length > 0 && (
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+                className="glass-card-strong rounded-3xl p-8">
+                <div className="flex items-center gap-2 mb-6">
+                  <Sparkles className="w-5 h-5 text-primary" />
+                  <h3 className="font-serif-display text-lg font-semibold text-foreground">Gift Tiers</h3>
+                </div>
+                <DonutChart segments={[
+                  { value: gifts.filter(g => g.amount <= 60).length, color: 'hsl(200, 60%, 55%)', label: '💐 ≤$60' },
+                  { value: gifts.filter(g => g.amount > 60 && g.amount <= 100).length, color: 'hsl(38, 92%, 60%)', label: '🥂 $100' },
+                  { value: gifts.filter(g => g.amount > 100 && g.amount <= 200).length, color: 'hsl(280, 60%, 60%)', label: '✨ $200' },
+                  { value: gifts.filter(g => g.amount > 200).length, color: 'hsl(340, 70%, 55%)', label: '💎 $500+' },
+                ]} />
+              </motion.div>
+            )}
           </TabsContent>
         </Tabs>
       </div>

@@ -5,6 +5,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Users, Utensils, ChevronRight, Plus, X, UserPlus, Crown, Check, Gift, Heart, Sparkles, QrCode, Copy, ArrowRight, EyeOff, Wine, Globe, AlertTriangle } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 // Table seating config — 30 tables with flower/nature names
 const TABLE_NAMES = [
@@ -226,6 +228,46 @@ const RSVP = () => {
   };
 
   const canProceedInfo = name.trim() && attending !== null;
+
+  const handleSubmitRsvp = async () => {
+    try {
+      // Save RSVP
+      const tableName = selectedTable ? tables.find(t => t.id === selectedTable)?.name : null;
+      const { error: rsvpError } = await supabase.from('rsvps').insert({
+        name,
+        email: email || null,
+        attending: attending ?? false,
+        guests: 1 + companions.length,
+        companions,
+        cuisine: selectedCuisine,
+        meal: selectedMeal,
+        sides: selectedSides,
+        drinks: selectedDrinks,
+        dietary: dietary || null,
+        table_name: tableName,
+        stay_anonymous: stayAnonymous,
+        status: attending ? 'confirmed' : 'declined',
+        message: giftMessage || null,
+      });
+      if (rsvpError) throw rsvpError;
+
+      // Save gift if applicable
+      if (finalGiftAmount > 0) {
+        const { error: giftError } = await supabase.from('gifts').insert({
+          from_name: stayAnonymous ? 'Anonymous' : name,
+          amount: finalGiftAmount,
+          message: giftMessage || null,
+        });
+        if (giftError) throw giftError;
+      }
+
+      setStep('done');
+      toast.success('RSVP submitted! 💕');
+    } catch (err) {
+      console.error(err);
+      toast.error('Something went wrong. Please try again.');
+    }
+  };
 
   const allSteps: Step[] = ['info', 'meal', 'table', 'gift'];
   const currentStepIndex = allSteps.indexOf(step);
@@ -851,7 +893,7 @@ const RSVP = () => {
 
               <div className="flex gap-3">
                 <button onClick={() => setStep('table')} className="flex-1 btn-outline justify-center">{t('rsvp.back')}</button>
-                <button onClick={() => setStep('done')}
+                <button onClick={handleSubmitRsvp}
                   className="flex-1 btn-primary justify-center"
                 >
                   {(showQR || skipGift) ? t('rsvp.submit') : t('rsvp.gift.skip')}
