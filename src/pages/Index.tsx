@@ -560,7 +560,37 @@ const Index = () => {
     }
   };
 
-  const handlePaymentSuccess = () => {
+  const handleGenerateQR = async () => {
+    if (!selectedAmount) return;
+    setGiftLoading(true);
+    try {
+      await supabase.from('gifts').insert({
+        amount: selectedAmount,
+        from_name: giftName.trim() || 'Anonymous',
+        message: giftMessage || null,
+      });
+
+      const { data, error } = await supabase.functions.invoke('create-gift-payment', {
+        body: {
+          amount: selectedAmount,
+          guestName: giftName.trim() || 'Anonymous',
+          message: giftMessage,
+          origin: window.location.origin,
+        },
+      });
+
+      if (error) throw error;
+      if (data?.url) {
+        setCheckoutUrl(data.url);
+      }
+    } catch (err) {
+      console.error('QR generation error:', err);
+      toast.error('Could not generate QR code. Please try again.');
+    } finally {
+      setGiftLoading(false);
+    }
+  };
+
     setGiftSent(true);
     setCheckoutUrl(null);
     // Send gift confirmation email
