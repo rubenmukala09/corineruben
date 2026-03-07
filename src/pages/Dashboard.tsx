@@ -7,8 +7,17 @@ import {
   Users, Utensils, Gift, Heart, CheckCircle, XCircle, Clock,
   TrendingUp, BarChart3, PieChart, MapPin, Sparkles, Loader2, LogOut,
   Megaphone, Trash2, Plus, Share2, Copy, Check, QrCode,
-  MessageCircleQuestion, Send, Bell
+  MessageCircleQuestion, Send, Bell, Image, BookOpen
 } from 'lucide-react';
+import { QRCodeSVG } from 'qrcode.react';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  Table, TableBody, TableCell, TableHead, TableHeader, TableRow
+} from '@/components/ui/table';
+import ImageManager from '@/components/dashboard/ImageManager';
+import StoryManager from '@/components/dashboard/StoryManager';
 import { QRCodeSVG } from 'qrcode.react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
