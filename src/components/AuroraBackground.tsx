@@ -4,18 +4,13 @@ interface AuroraBackgroundProps {
 }
 
 /**
- * Pure-CSS aurora background — no framer-motion, minimal GPU cost.
- * Uses 3 blurred blobs with CSS keyframe animations instead of 6 JS-driven ones.
+ * Subtle frosted-glass background overlay — no colored gradients,
+ * just a gentle blur that lets the content underneath show through.
  */
-const AuroraBackground = ({ variant = 'mesh', className = '' }: AuroraBackgroundProps) => {
-  const baseClass = variant === 'hero' ? 'gradient-hero' : variant === 'soft' ? 'gradient-soft' : 'gradient-mesh';
-
+const AuroraBackground = ({ className = '' }: AuroraBackgroundProps) => {
   return (
     <div className={`absolute inset-0 overflow-hidden ${className}`}>
-      <div className={`absolute inset-0 ${baseClass}`} />
-      <div className="aurora-blob-1 aurora-blob-css" />
-      <div className="aurora-blob-2 aurora-blob-css" />
-      <div className="aurora-blob-3 aurora-blob-css" />
+      <div className="absolute inset-0 bg-background/40 backdrop-blur-sm" />
     </div>
   );
 };
