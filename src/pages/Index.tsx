@@ -461,54 +461,7 @@ const ScriptureTransition = ({ t }: { t: (key: string) => string }) => {
   );
 };
 
-/* ===== Embedded Stripe Payment Form ===== */
-const EmbeddedPaymentForm = ({ onSuccess }: { onSuccess: () => void }) => {
-  const stripe = useStripe();
-  const elements = useElements();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!stripe || !elements) return;
-
-    setLoading(true);
-    setError(null);
-
-    const { error: submitError } = await stripe.confirmPayment({
-      elements,
-      redirect: 'if_required',
-    });
-
-    if (submitError) {
-      setError(submitError.message || 'Payment failed');
-      setLoading(false);
-    } else {
-      onSuccess();
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <PaymentElement />
-      {error && (
-        <p className="font-sans-elegant text-sm text-red-500 text-center">{error}</p>
-      )}
-      <button
-        type="submit"
-        disabled={!stripe || loading}
-        className="w-full btn-primary justify-center disabled:opacity-50"
-      >
-        {loading ? (
-          <span className="animate-spin w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full" />
-        ) : (
-          <Heart className="w-4 h-4 fill-current" />
-        )}
-        {loading ? 'Processing...' : 'Pay Now'}
-      </button>
-    </form>
-  );
-};
 
 
 const Index = () => {
