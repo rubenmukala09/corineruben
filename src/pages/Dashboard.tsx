@@ -5,9 +5,11 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import {
   Users, Utensils, Gift, Heart, CheckCircle, XCircle, Clock,
-  TrendingUp, BarChart3, PieChart, MapPin, Sparkles, Loader2, LogOut
+  TrendingUp, BarChart3, PieChart, MapPin, Sparkles, Loader2, LogOut,
+  Megaphone, Trash2, Plus
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow
