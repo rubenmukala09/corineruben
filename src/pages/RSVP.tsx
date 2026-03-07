@@ -229,6 +229,46 @@ const RSVP = () => {
 
   const canProceedInfo = name.trim() && attending !== null;
 
+  const handleSubmitRsvp = async () => {
+    try {
+      // Save RSVP
+      const tableName = selectedTable ? tables.find(t => t.id === selectedTable)?.name : null;
+      const { error: rsvpError } = await supabase.from('rsvps').insert({
+        name,
+        email: email || null,
+        attending: attending ?? false,
+        guests: 1 + companions.length,
+        companions,
+        cuisine: selectedCuisine,
+        meal: selectedMeal,
+        sides: selectedSides,
+        drinks: selectedDrinks,
+        dietary: dietary || null,
+        table_name: tableName,
+        stay_anonymous: stayAnonymous,
+        status: attending ? 'confirmed' : 'declined',
+        message: giftMessage || null,
+      });
+      if (rsvpError) throw rsvpError;
+
+      // Save gift if applicable
+      if (finalGiftAmount > 0) {
+        const { error: giftError } = await supabase.from('gifts').insert({
+          from_name: stayAnonymous ? 'Anonymous' : name,
+          amount: finalGiftAmount,
+          message: giftMessage || null,
+        });
+        if (giftError) throw giftError;
+      }
+
+      setStep('done');
+      toast.success('RSVP submitted! 💕');
+    } catch (err) {
+      console.error(err);
+      toast.error('Something went wrong. Please try again.');
+    }
+  };
+
   const allSteps: Step[] = ['info', 'meal', 'table', 'gift'];
   const currentStepIndex = allSteps.indexOf(step);
 
