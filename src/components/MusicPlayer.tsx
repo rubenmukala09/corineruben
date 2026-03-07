@@ -116,7 +116,7 @@ const MusicFloatingButton = () => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0, y: 20 }}
           onClick={stopMusic}
-          className="fixed bottom-6 right-6 z-40 glass-card-strong rounded-full px-4 py-3 flex items-center gap-3 shadow-glow hover:scale-105 transition-transform duration-300"
+          className="fixed bottom-20 right-6 z-40 glass-card-strong rounded-full px-4 py-3 flex items-center gap-3 shadow-glow hover:scale-105 transition-transform duration-300"
           aria-label="Stop music"
         >
           <div className="w-8 h-8 rounded-full gradient-primary flex items-center justify-center">
