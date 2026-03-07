@@ -214,8 +214,8 @@ const Index = () => {
       color: 'from-rose-500/20 to-pink-500/10',
       iconColor: 'text-rose-400',
       dialogContent: [
-        { icon: Clock, label: t('details.ceremony.time'), desc: t('details.ceremony.program.welcome') },
-        { icon: MapPin, label: t('details.ceremony.location'), desc: t('details.ceremony.address') },
+        { icon: Calendar, label: t('details.ceremony.time'), desc: t('details.ceremony.program.welcome'), highlight: true },
+        { icon: MapPin, label: t('details.ceremony.location'), desc: t('details.ceremony.address'), highlight: true },
         { icon: BookOpen, label: t('details.ceremony.program.readings'), desc: t('details.ceremony.program.readings.desc') },
         { icon: Gem, label: t('details.ceremony.program.vows'), desc: t('details.ceremony.program.vows.desc') },
         { icon: Music, label: t('details.ceremony.program.hymns'), desc: t('details.ceremony.program.hymns.desc') },
@@ -229,8 +229,8 @@ const Index = () => {
       color: 'from-amber-500/20 to-orange-500/10',
       iconColor: 'text-amber-400',
       dialogContent: [
-        { icon: Clock, label: t('details.reception.time'), desc: t('details.reception.program.cocktail') },
-        { icon: MapPin, label: t('details.reception.location'), desc: t('details.reception.address') },
+        { icon: Calendar, label: t('details.reception.time'), desc: t('details.reception.program.cocktail'), highlight: true },
+        { icon: MapPin, label: t('details.reception.location'), desc: t('details.reception.address'), highlight: true },
         { icon: Utensils, label: t('details.reception.program.dinner'), desc: t('details.reception.program.dinner.desc') },
         { icon: Music, label: t('details.reception.program.dance'), desc: t('details.reception.program.dance.desc') },
         { icon: Heart, label: t('details.reception.program.cake'), desc: t('details.reception.program.cake.desc') },
@@ -243,7 +243,7 @@ const Index = () => {
       color: 'from-violet-500/20 to-purple-500/10',
       iconColor: 'text-violet-400',
       dialogContent: [
-        { icon: Hotel, label: t('details.accommodation.hotel'), desc: t('details.accommodation.hotel.desc') },
+        { icon: Hotel, label: t('details.accommodation.hotel'), desc: t('details.accommodation.hotel.desc'), highlight: true },
         { icon: MapPin, label: t('details.accommodation.address'), desc: t('details.accommodation.address.desc') },
         { icon: Sparkles, label: t('details.accommodation.rate'), desc: t('details.accommodation.rate.desc') },
       ]
@@ -255,7 +255,7 @@ const Index = () => {
       color: 'from-emerald-500/20 to-teal-500/10',
       iconColor: 'text-emerald-400',
       dialogContent: [
-        { icon: Car, label: t('details.transport.shuttle'), desc: t('details.transport.shuttle.desc') },
+        { icon: Car, label: t('details.transport.shuttle'), desc: t('details.transport.shuttle.desc'), highlight: true },
         { icon: MapPin, label: t('details.transport.parking'), desc: t('details.transport.parking.desc') },
         { icon: Clock, label: t('details.transport.schedule'), desc: t('details.transport.schedule.desc') },
       ]
