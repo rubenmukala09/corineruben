@@ -245,9 +245,9 @@ const translations: Record<string, Record<Language, string>> = {
   'gallery.subtitle': { fr: 'Des moments précieux capturés en images', en: 'Precious moments captured in images', es: 'Momentos preciosos capturados en imágenes' },
 
   // Registry
-  'registry.title': { fr: 'Cadeaux', en: 'Gifts', es: 'Regalos' },
-  'registry.subtitle': { fr: 'Votre présence est notre plus beau cadeau', en: 'Your presence is our greatest gift', es: 'Tu presencia es nuestro mayor regalo' },
-  'registry.message': { fr: 'Si vous souhaitez nous gâter, vous pouvez contribuer à notre nouvelle vie ensemble. Chaque geste compte énormément.', en: 'If you wish to spoil us, you can contribute to our new life together. Every gesture means the world.', es: 'Si deseas consentirmos, puedes contribuir a nuestra nueva vida juntos. Cada gesto significa mucho.' },
+  'registry.title': { fr: 'Cadeaux de Mariage', en: 'Wedding Gifts', es: 'Regalos de Boda' },
+  'registry.subtitle': { fr: 'Votre présence est notre plus beau cadeau de mariage', en: 'Your presence is our greatest wedding gift', es: 'Tu presencia es nuestro mayor regalo de boda' },
+  'registry.message': { fr: 'Si vous souhaitez nous gâter pour notre mariage, vous pouvez contribuer à notre nouvelle vie ensemble. Chaque geste compte énormément.', en: 'If you wish to spoil us for our wedding, you can contribute to our new life together. Every gesture means the world.', es: 'Si deseas consentirmos para nuestra boda, puedes contribuir a nuestra nueva vida juntos. Cada gesto significa mucho.' },
   'registry.link': { fr: 'Voir la liste', en: 'View Registry', es: 'Ver Registro' },
   'registry.tier.bouquet': { fr: 'Bouquet de fleurs', en: 'Flower Bouquet', es: 'Ramo de Flores' },
   'registry.tier.toast': { fr: 'Toast des mariés', en: 'Wedding Toast', es: 'Brindis de Boda' },
@@ -258,16 +258,16 @@ const translations: Record<string, Record<Language, string>> = {
   'registry.give': { fr: 'Offrir', en: 'Give', es: 'Dar' },
   'registry.animalfund': { fr: 'Fonds pour les animaux', en: 'Animal Fund', es: 'Fondo para Animales' },
   'registry.animalfund.desc': { fr: 'Contribuer à notre amour pour les animaux', en: 'Contribute to our love for animals', es: 'Contribuir a nuestro amor por los animales' },
-  'registry.dialog.title': { fr: 'Offrir un cadeau', en: 'Send a Gift', es: 'Enviar un Regalo' },
+  'registry.dialog.title': { fr: 'Cadeau de Mariage', en: 'Wedding Gift', es: 'Regalo de Boda' },
   'registry.dialog.subtitle': { fr: 'Votre générosité nous touche profondément', en: 'Your generosity touches us deeply', es: 'Tu generosidad nos conmueve profundamente' },
   'registry.dialog.amount': { fr: 'Montant du cadeau', en: 'Gift Amount', es: 'Monto del Regalo' },
   'registry.dialog.name': { fr: 'Votre nom', en: 'Your Name', es: 'Tu Nombre' },
   'registry.dialog.name.placeholder': { fr: 'Prénom et nom', en: 'First and last name', es: 'Nombre y apellido' },
   'registry.dialog.message': { fr: 'Un petit mot (optionnel)', en: 'A short message (optional)', es: 'Un mensaje breve (opcional)' },
   'registry.dialog.message.placeholder': { fr: 'Félicitations aux mariés...', en: 'Congratulations to the couple...', es: 'Felicidades a los novios...' },
-  'registry.dialog.send': { fr: 'Envoyer le cadeau', en: 'Send Gift', es: 'Enviar Regalo' },
-  'registry.dialog.thanks': { fr: 'Merci pour votre générosité !', en: 'Thank you for your generosity!', es: '¡Gracias por tu generosidad!' },
-  'registry.dialog.note': { fr: 'Le paiement sera configuré prochainement. Merci de votre patience.', en: 'Payment will be configured soon. Thank you for your patience.', es: 'El pago se configurará pronto. Gracias por tu paciencia.' },
+  'registry.dialog.send': { fr: 'Payer le cadeau', en: 'Pay Gift', es: 'Pagar Regalo' },
+  'registry.dialog.thanks': { fr: 'Merci pour votre cadeau de mariage !', en: 'Thank you for your wedding gift!', es: '¡Gracias por tu regalo de boda!' },
+  'registry.dialog.note': { fr: 'Paiement sécurisé par Stripe. Aucune donnée bancaire n\'est stockée.', en: 'Secure payment powered by Stripe. No banking data is stored.', es: 'Pago seguro con Stripe. No se almacenan datos bancarios.' },
   'registry.dialog.defaultMessage': { fr: 'Félicitations aux mariés ! 💕', en: 'Congratulations to the couple! 💕', es: '¡Felicidades a los novios! 💕' },
 
   // Gift payment
