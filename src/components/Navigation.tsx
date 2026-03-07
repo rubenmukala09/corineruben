@@ -35,6 +35,7 @@ const Navigation = () => {
     { to: '/', label: t('nav.home') },
     { to: '/story', label: t('nav.story') },
     { to: '/rsvp', label: t('nav.rsvp') },
+    { to: '/dashboard', label: 'Dashboard' },
   ];
 
   return (

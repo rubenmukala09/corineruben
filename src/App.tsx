@@ -15,6 +15,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 
 const Story = lazy(() => import("./pages/Story"));
 const RSVP = lazy(() => import("./pages/RSVP"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -40,7 +41,7 @@ const App = () => (
                   <Route path="/" element={<Index />} />
                   <Route path="/story" element={<Suspense fallback={null}><Story /></Suspense>} />
                   <Route path="/rsvp" element={<Suspense fallback={null}><RSVP /></Suspense>} />
-                  
+                  <Route path="/dashboard" element={<Suspense fallback={null}><Dashboard /></Suspense>} />
                   <Route path="*" element={<Suspense fallback={null}><NotFound /></Suspense>} />
                 </Routes>
                 <Footer />
