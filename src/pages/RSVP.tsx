@@ -3,10 +3,11 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Users, Utensils, ChevronRight, Plus, X, UserPlus, Crown, Check, Gift, Heart, Sparkles, QrCode, Copy, ArrowRight, EyeOff, Wine, Globe, AlertTriangle } from 'lucide-react';
+import { Users, Utensils, ChevronRight, Plus, X, UserPlus, Crown, Check, Gift, Heart, Sparkles, QrCode, Copy, ArrowRight, EyeOff, Wine, Globe, AlertTriangle, Gem } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import ringsImg from '@/assets/rings-opt.webp';
 
 // Table seating config — 30 tables with flower/nature names
 const TABLE_NAMES = [
@@ -280,9 +281,35 @@ const RSVP = () => {
           <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
             <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('nav.rsvp')}</p>
           </div>
-          <h1 className="font-serif-display text-4xl md:text-6xl text-foreground mb-4 font-semibold" style={{ letterSpacing: '-0.5px' }}>
-            {t('rsvp.title')}
-          </h1>
+
+          {/* Rings decoration around title */}
+          <div className="relative inline-block mb-4">
+            <motion.img
+              src={ringsImg}
+              alt="Wedding rings"
+              className="absolute -top-8 -left-16 w-20 h-20 object-contain opacity-60 rotate-[-15deg] pointer-events-none"
+              initial={{ opacity: 0, scale: 0.5, rotate: -30 }}
+              animate={{ opacity: 0.6, scale: 1, rotate: -15 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+            />
+            <motion.img
+              src={ringsImg}
+              alt="Wedding rings"
+              className="absolute -top-6 -right-14 w-16 h-16 object-contain opacity-40 rotate-[20deg] pointer-events-none"
+              initial={{ opacity: 0, scale: 0.5, rotate: 40 }}
+              animate={{ opacity: 0.4, scale: 1, rotate: 20 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+            />
+            <h1 className="font-serif-display text-4xl md:text-6xl text-foreground font-semibold relative z-10" style={{ letterSpacing: '-0.5px' }}>
+              {t('rsvp.title')}
+            </h1>
+          </div>
+
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <Gem className="w-4 h-4 text-primary/50" />
+            <div className="w-16 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+            <Gem className="w-4 h-4 text-primary/50" />
+          </div>
           <p className="font-sans-elegant text-base text-muted-foreground">{t('rsvp.subtitle')}</p>
         </motion.div>
 
