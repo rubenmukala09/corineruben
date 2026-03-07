@@ -74,7 +74,7 @@ const Navigation = () => {
               <Link
                 key={link.to}
                 to={link.to}
-                className={`font-sans-elegant text-xs font-bold transition-all duration-300 relative px-3.5 py-1.5 rounded-full ${
+                className={`font-sans-elegant text-xs font-bold transition-all duration-300 relative px-3.5 py-1.5 rounded-full whitespace-nowrap ${
                   location.pathname === link.to
                     ? 'text-white'
                     : 'text-white/65 hover:text-white hover:bg-white/10'
