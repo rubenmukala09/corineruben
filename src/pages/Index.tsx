@@ -218,8 +218,21 @@ const PersonalCourtSection = ({ t }: { t: (key: string) => string }) => {
 
 
 const AnnouncementsSection = ({ t }: { t: (key: string) => string }) => {
-  const [announcements, setAnnouncements] = useState<{ id: string; title: string; content: string; created_at: string }[]>([]);
+  const { language } = useLanguage();
+  const [announcements, setAnnouncements] = useState<{ id: string; title: string; content: string; created_at: string; title_fr?: string | null; title_es?: string | null; content_fr?: string | null; content_es?: string | null }[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const getTitle = (ann: typeof announcements[number]) => {
+    if (language === 'fr' && ann.title_fr) return ann.title_fr;
+    if (language === 'es' && ann.title_es) return ann.title_es;
+    return ann.title;
+  };
+
+  const getContent = (ann: typeof announcements[number]) => {
+    if (language === 'fr' && ann.content_fr) return ann.content_fr;
+    if (language === 'es' && ann.content_es) return ann.content_es;
+    return ann.content;
+  };
 
   useEffect(() => {
     const fetch = async () => {
@@ -270,9 +283,9 @@ const AnnouncementsSection = ({ t }: { t: (key: string) => string }) => {
                   transition={{ duration: 0.6 }}
                   className="text-center"
                 >
-                  <p className="font-sans-elegant text-sm font-bold text-primary mb-2">{announcements[currentIndex].title}</p>
+                  <p className="font-sans-elegant text-sm font-bold text-primary mb-2">{getTitle(announcements[currentIndex])}</p>
                   <p className="font-serif-display text-base md:text-lg text-foreground italic leading-relaxed">
-                    {announcements[currentIndex].content}
+                    {getContent(announcements[currentIndex])}
                   </p>
                 </motion.div>
               </AnimatePresence>

@@ -91,6 +91,8 @@ interface GiftRow {
 
 interface AnnouncementRow {
   id: string; title: string; content: string; created_at: string;
+  title_fr: string | null; title_es: string | null;
+  content_fr: string | null; content_es: string | null;
 }
 
 interface QuoteRow {
@@ -114,7 +116,11 @@ const Dashboard = () => {
   const [enquiries, setEnquiries] = useState<EnquiryRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [annTitle, setAnnTitle] = useState('');
+  const [annTitleFr, setAnnTitleFr] = useState('');
+  const [annTitleEs, setAnnTitleEs] = useState('');
   const [annContent, setAnnContent] = useState('');
+  const [annContentFr, setAnnContentFr] = useState('');
+  const [annContentEs, setAnnContentEs] = useState('');
   const [annPosting, setAnnPosting] = useState(false);
   const [quoteContent, setQuoteContent] = useState('');
   const [quotePosting, setQuotePosting] = useState(false);
@@ -146,11 +152,18 @@ const Dashboard = () => {
   const handlePostAnnouncement = async () => {
     if (!annTitle.trim() || !annContent.trim()) return;
     setAnnPosting(true);
-    const { data, error } = await supabase.from('announcements').insert({ title: annTitle.trim(), content: annContent.trim() }).select().single();
+    const { data, error } = await supabase.from('announcements').insert({
+      title: annTitle.trim(),
+      content: annContent.trim(),
+      title_fr: annTitleFr.trim() || annTitle.trim(),
+      title_es: annTitleEs.trim() || annTitle.trim(),
+      content_fr: annContentFr.trim() || annContent.trim(),
+      content_es: annContentEs.trim() || annContent.trim(),
+    }).select().single();
     if (data && !error) {
-      setAnnouncements([data, ...announcements]);
-      setAnnTitle('');
-      setAnnContent('');
+      setAnnouncements([data as AnnouncementRow, ...announcements]);
+      setAnnTitle(''); setAnnTitleFr(''); setAnnTitleEs('');
+      setAnnContent(''); setAnnContentFr(''); setAnnContentEs('');
     }
     setAnnPosting(false);
   };
@@ -505,18 +518,48 @@ const Dashboard = () => {
                 <h3 className="font-serif-display text-lg font-semibold text-foreground">{t('dashboard.newAnnouncement')}</h3>
               </div>
               <div className="space-y-4">
+                <p className="font-sans-elegant text-xs text-muted-foreground font-medium">🇬🇧 English (required)</p>
                 <Input
                   value={annTitle}
                   onChange={(e) => setAnnTitle(e.target.value)}
-                  placeholder={t('dashboard.announcementTitle')}
+                  placeholder="Title (English)"
                   className="rounded-2xl h-11 glass-card border-border/30 font-sans-elegant"
                 />
                 <Textarea
                   value={annContent}
                   onChange={(e) => setAnnContent(e.target.value)}
-                  placeholder={t('dashboard.announcementContent')}
-                  className="rounded-2xl glass-card border-border/30 font-sans-elegant min-h-[100px]"
+                  placeholder="Content (English)"
+                  className="rounded-2xl glass-card border-border/30 font-sans-elegant min-h-[80px]"
                 />
+
+                <p className="font-sans-elegant text-xs text-muted-foreground font-medium pt-2">🇫🇷 Français (optionnel)</p>
+                <Input
+                  value={annTitleFr}
+                  onChange={(e) => setAnnTitleFr(e.target.value)}
+                  placeholder="Titre (Français)"
+                  className="rounded-2xl h-11 glass-card border-border/30 font-sans-elegant"
+                />
+                <Textarea
+                  value={annContentFr}
+                  onChange={(e) => setAnnContentFr(e.target.value)}
+                  placeholder="Contenu (Français)"
+                  className="rounded-2xl glass-card border-border/30 font-sans-elegant min-h-[80px]"
+                />
+
+                <p className="font-sans-elegant text-xs text-muted-foreground font-medium pt-2">🇪🇸 Español (opcional)</p>
+                <Input
+                  value={annTitleEs}
+                  onChange={(e) => setAnnTitleEs(e.target.value)}
+                  placeholder="Título (Español)"
+                  className="rounded-2xl h-11 glass-card border-border/30 font-sans-elegant"
+                />
+                <Textarea
+                  value={annContentEs}
+                  onChange={(e) => setAnnContentEs(e.target.value)}
+                  placeholder="Contenido (Español)"
+                  className="rounded-2xl glass-card border-border/30 font-sans-elegant min-h-[80px]"
+                />
+
                 <button
                   onClick={handlePostAnnouncement}
                   disabled={annPosting || !annTitle.trim() || !annContent.trim()}

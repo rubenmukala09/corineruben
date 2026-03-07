@@ -17,21 +17,33 @@ export type Database = {
       announcements: {
         Row: {
           content: string
+          content_es: string | null
+          content_fr: string | null
           created_at: string
           id: string
           title: string
+          title_es: string | null
+          title_fr: string | null
         }
         Insert: {
           content: string
+          content_es?: string | null
+          content_fr?: string | null
           created_at?: string
           id?: string
           title: string
+          title_es?: string | null
+          title_fr?: string | null
         }
         Update: {
           content?: string
+          content_es?: string | null
+          content_fr?: string | null
           created_at?: string
           id?: string
           title?: string
+          title_es?: string | null
+          title_fr?: string | null
         }
         Relationships: []
       }
