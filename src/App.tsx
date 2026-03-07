@@ -15,6 +15,7 @@ import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Staff from "./pages/Staff";
 import Enquiries from "./pages/Enquiries";
+import Registry from "./pages/Registry";
 import FloatingHearts from "@/components/FloatingHearts";
 import MusicFloatingButton, { MusicProvider } from "@/components/MusicPlayer";
 import { Toaster } from "@/components/ui/toaster";
@@ -55,6 +56,7 @@ const App = () => (
                     } />
                     <Route path="/staff" element={<Staff />} />
                     <Route path="/enquiries" element={<Enquiries />} />
+                    <Route path="/registry" element={<Registry />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                   <Footer />
