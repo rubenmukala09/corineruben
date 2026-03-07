@@ -272,8 +272,12 @@ const translations: Record<string, Record<Language, string>> = {
 
   // Gift payment
   'gift.optional': { fr: 'optionnel', en: 'optional', es: 'opcional' },
+  'gift.customAmount': { fr: 'Choisissez votre propre montant', en: 'Choose your own amount', es: 'Elige tu propio monto' },
   'gift.payCard': { fr: 'Par carte', en: 'Pay by Card', es: 'Por tarjeta' },
   'gift.payQR': { fr: 'QR Code', en: 'QR Code', es: 'Código QR' },
+  'gift.msg.congrats': { fr: 'Félicitations aux mariés ! 💕', en: 'Congratulations to the newlyweds! 💕', es: '¡Felicidades a los recién casados! 💕' },
+  'gift.msg.blessed': { fr: 'Que Dieu bénisse votre union ! 🙏✨', en: 'May God bless your union! 🙏✨', es: '¡Que Dios bendiga su unión! 🙏✨' },
+  'gift.msg.love': { fr: 'Avec tout notre amour et nos meilleurs vœux ! 🌹❤️', en: 'With all our love and best wishes! 🌹❤️', es: '¡Con todo nuestro amor y mejores deseos! 🌹❤️' },
   'gift.qr.scan': { fr: 'Scannez ce code avec votre téléphone pour procéder au paiement', en: 'Scan this code with your phone to proceed with payment', es: 'Escanea este código con tu teléfono para proceder al pago' },
   'gift.qr.noinfo': { fr: 'Aucune information bancaire requise — paiement rapide et sécurisé', en: 'No bank information required — fast and secure payment', es: 'No se requiere información bancaria — pago rápido y seguro' },
   'gift.terms.link': { fr: 'Conditions & politique de remboursement', en: 'Terms & Refund Policy', es: 'Términos y política de reembolso' },
