@@ -1,1 +1,16 @@
 project_id = "ghidhlnenkzfimrcdsvg"
+
+[functions.create-gift-payment]
+verify_jwt = false
+
+[functions.send-gift-confirmation]
+verify_jwt = false
+
+[functions.send-contact-email]
+verify_jwt = false
+
+[functions.send-rsvp-confirmation]
+verify_jwt = false
+
+[functions.send-bulk-announcement]
+verify_jwt = false

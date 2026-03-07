@@ -539,12 +539,6 @@ const Index = () => {
     if (!selectedAmount) return;
     setGiftLoading(true);
     try {
-      await supabase.from('gifts').insert({
-        amount: selectedAmount,
-        from_name: giftName.trim() || 'Anonymous',
-        message: giftMessage || null,
-      });
-
       const { data, error } = await supabase.functions.invoke('create-gift-payment', {
         body: {
           amount: selectedAmount,
@@ -575,12 +569,6 @@ const Index = () => {
     if (!selectedAmount) return;
     setGiftLoading(true);
     try {
-      await supabase.from('gifts').insert({
-        amount: selectedAmount,
-        from_name: giftName.trim() || 'Anonymous',
-        message: giftMessage || null,
-      });
-
       const { data, error } = await supabase.functions.invoke('create-gift-payment', {
         body: {
           amount: selectedAmount,

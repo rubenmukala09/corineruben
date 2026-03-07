@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from "https://esm.sh/stripe@18.5.0";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -12,7 +13,12 @@ serve(async (req) => {
   }
 
   try {
-    const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
+    const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
+    if (!stripeKey) {
+      throw new Error("Stripe secret key not configured");
+    }
+
+    const stripe = new Stripe(stripeKey, {
       apiVersion: "2025-08-27.basil",
     });
 
@@ -34,20 +40,39 @@ serve(async (req) => {
               name: `Wedding Gift from ${guestName || "Anonymous"}`,
               description: message || "A heartfelt wedding gift 💕",
             },
-            unit_amount: amount * 100, // Convert dollars to cents
+            unit_amount: Math.round(amount * 100),
           },
           quantity: 1,
         },
       ],
       mode: "payment",
-      success_url: `${siteOrigin}/?gift=success&amount=${amount}`,
+      success_url: `${siteOrigin}/?gift=success&amount=${amount}&name=${encodeURIComponent(guestName || "Anonymous")}`,
       cancel_url: `${siteOrigin}/?gift=cancelled`,
       metadata: {
         guest_name: guestName || "Anonymous",
         message: message || "",
+        amount: String(amount),
         source: "wedding_gift",
       },
     });
+
+    // Record gift in database (pending status tracked via Stripe metadata)
+    try {
+      const supabaseClient = createClient(
+        Deno.env.get("SUPABASE_URL") ?? "",
+        Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
+      );
+      await supabaseClient.from("gifts").insert({
+        from_name: guestName || "Anonymous",
+        amount: amount,
+        message: message || null,
+      });
+    } catch (dbErr) {
+      console.error("Failed to record gift in DB:", dbErr);
+      // Don't block payment if DB insert fails
+    }
+
+    console.log("Checkout session created:", session.id);
 
     return new Response(JSON.stringify({ url: session.url }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
