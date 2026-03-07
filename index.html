@@ -25,21 +25,22 @@
     <!-- Inline critical CSS for immediate FCP -->
     <style>
       #app-loader{display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Playfair Display',Georgia,serif;color:#4A3B4E;text-align:center;flex-direction:column;gap:0;position:relative;overflow:hidden;
-        background:linear-gradient(135deg,rgba(253,246,240,0.85) 0%,rgba(243,232,240,0.85) 50%,rgba(237,228,243,0.85) 100%);
-        backdrop-filter:blur(20px) saturate(1.3);-webkit-backdrop-filter:blur(20px) saturate(1.3)}
+        background:rgba(255,255,255,0.6);
+        backdrop-filter:blur(40px) saturate(1.2);-webkit-backdrop-filter:blur(40px) saturate(1.2)}
 
-      .loader-couple{display:flex;align-items:flex-end;justify-content:center;position:relative;height:160px;width:360px;margin-bottom:0.5rem}
+      .loader-couple{display:flex;align-items:flex-end;justify-content:center;position:relative;height:180px;width:360px;margin-bottom:0.5rem}
 
-      .loader-figure{display:flex;flex-direction:column;align-items:center;gap:0.3rem;position:absolute;bottom:0}
-      .loader-figure img{height:120px;width:auto;object-fit:contain;opacity:0.7;filter:drop-shadow(0 4px 20px rgba(74,59,78,0.15)) blur(0.3px)}
-      .loader-figure .loader-name{font-family:'Playfair Display',Georgia,serif;font-size:0.85rem;font-weight:600;letter-spacing:0.05em;color:#4A3B4E;opacity:0;animation:fade-up 0.6s 2.2s forwards}
+      .loader-figure{display:flex;flex-direction:column;align-items:center;gap:0.4rem;position:absolute;bottom:0}
+      .loader-figure img{height:130px;width:auto;object-fit:contain;opacity:0.85;
+        filter:drop-shadow(0 8px 24px rgba(74,59,78,0.12)) brightness(0.6) sepia(0.3) hue-rotate(260deg) saturate(1.5)}
+      .loader-figure .loader-name{font-family:'Playfair Display',Georgia,serif;font-size:0.9rem;font-weight:600;letter-spacing:0.08em;color:#4A3B4E;opacity:0;animation:fade-up 0.6s 2.2s forwards}
 
       .loader-groom-fig{left:0;animation:slide-groom 2s cubic-bezier(0.4,0,0.2,1) forwards}
       .loader-bride-fig{right:0;animation:slide-bride 2s cubic-bezier(0.4,0,0.2,1) forwards}
 
-      .loader-heart-pop{position:absolute;left:50%;bottom:50px;transform:translateX(-50%) scale(0);font-size:1.4rem;color:#9F82A4;opacity:0;animation:heart-pop 1s 2s forwards;text-shadow:0 0 20px rgba(159,130,164,0.5)}
-      .loader-glow{position:absolute;left:50%;bottom:40px;transform:translateX(-50%);width:80px;height:80px;border-radius:50%;
-        background:radial-gradient(circle,rgba(159,130,164,0.25) 0%,rgba(201,169,182,0.1) 40%,transparent 70%);
+      .loader-heart-pop{position:absolute;left:50%;bottom:60px;transform:translateX(-50%) scale(0);font-size:1.4rem;color:#9F82A4;opacity:0;animation:heart-pop 1s 2s forwards;text-shadow:0 0 20px rgba(159,130,164,0.5)}
+      .loader-glow{position:absolute;left:50%;bottom:50px;transform:translateX(-50%);width:80px;height:80px;border-radius:50%;
+        background:radial-gradient(circle,rgba(159,130,164,0.2) 0%,rgba(201,169,182,0.08) 40%,transparent 70%);
         opacity:0;animation:glow-in 1.2s 1.8s forwards}
 
       .loader-title{font-size:1.8rem;font-weight:600;letter-spacing:-0.3px;margin-top:0.8rem;opacity:0;
@@ -49,9 +50,9 @@
       .loader-sub{font-family:'DM Sans',sans-serif;font-size:0.7rem;letter-spacing:0.35em;text-transform:uppercase;color:#9F82A4;opacity:0;margin-top:0.3rem;animation:fade-up 1s 3s forwards}
 
       /* Glass card behind couple */
-      .loader-glass{position:absolute;left:50%;bottom:-10px;transform:translateX(-50%);width:200px;height:140px;border-radius:20px;
-        background:rgba(255,255,255,0.25);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-        border:1px solid rgba(255,255,255,0.3);box-shadow:0 8px 32px rgba(74,59,78,0.08);opacity:0;animation:fade-up 0.8s 1.6s forwards}
+      .loader-glass{position:absolute;left:50%;bottom:-10px;transform:translateX(-50%);width:220px;height:160px;border-radius:24px;
+        background:rgba(255,255,255,0.35);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+        border:1px solid rgba(255,255,255,0.5);box-shadow:0 8px 32px rgba(74,59,78,0.06);opacity:0;animation:fade-up 0.8s 1.6s forwards}
 
       @keyframes slide-groom{0%{left:0;opacity:0}30%{opacity:1}100%{left:calc(50% - 70px);opacity:1}}
       @keyframes slide-bride{0%{right:0;opacity:0}30%{opacity:1}100%{right:calc(50% - 70px);opacity:1}}
@@ -60,14 +61,14 @@
       @keyframes fade-up{0%{opacity:0;transform:translateY(12px)}100%{opacity:1;transform:translateY(0)}}
 
       @media(prefers-color-scheme:dark){
-        #app-loader{background:linear-gradient(135deg,rgba(10,8,15,0.9) 0%,rgba(26,18,37,0.9) 50%,rgba(18,14,26,0.9) 100%)}
-        .loader-figure img{opacity:0.6;filter:drop-shadow(0 4px 20px rgba(148,120,165,0.2)) blur(0.3px) brightness(1.4)}
+        #app-loader{background:rgba(20,16,30,0.7);backdrop-filter:blur(40px) saturate(1.1);-webkit-backdrop-filter:blur(40px) saturate(1.1)}
+        .loader-figure img{opacity:0.9;filter:drop-shadow(0 8px 24px rgba(148,120,165,0.15)) brightness(1.6) sepia(0.2) hue-rotate(260deg) saturate(1.2)}
         .loader-figure .loader-name{color:#d4c6e0}
         .loader-heart-pop{color:#b8a9c9;text-shadow:0 0 20px rgba(184,169,201,0.4)}
-        .loader-glow{background:radial-gradient(circle,rgba(148,120,165,0.2) 0%,rgba(184,169,201,0.08) 40%,transparent 70%)}
+        .loader-glow{background:radial-gradient(circle,rgba(148,120,165,0.15) 0%,rgba(184,169,201,0.06) 40%,transparent 70%)}
         .loader-title{background:linear-gradient(135deg,#e8e0ec 0%,#b8a9c9 50%,#9478a5 100%);-webkit-background-clip:text;background-clip:text}
         .loader-sub{color:#b8a9c9}
-        .loader-glass{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.08);box-shadow:0 8px 32px rgba(0,0,0,0.2)}
+        .loader-glass{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.08);box-shadow:0 8px 32px rgba(0,0,0,0.15)}
       }
     </style>
     
