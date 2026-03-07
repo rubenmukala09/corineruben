@@ -108,6 +108,15 @@ const Navigation = () => {
             >
               {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
             </button>
+            {user && (
+              <button
+                onClick={signOut}
+                className="p-2 rounded-full hover:bg-white/10 transition-all duration-300 text-white/70 hover:text-white"
+                aria-label="Sign out"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            )}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="md:hidden p-2 rounded-full hover:bg-white/10 transition-all duration-300 text-white/90"
