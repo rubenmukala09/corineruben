@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useMusic } from '@/components/MusicPlayer';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Heart, MapPin, Calendar, Clock, Utensils, Gift, Sparkles, Play, Pause, Music, Users, Flower2, BookOpen, Cross, Church, Gem, PartyPopper, Hotel, Car, Check, X, QrCode } from 'lucide-react';
+import { ChevronDown, Heart, MapPin, Calendar, Clock, Utensils, Gift, Sparkles, Play, Pause, Music, Users, Flower2, BookOpen, Cross, Church, Gem, PartyPopper, Hotel, Car, Check, X, QrCode, Megaphone } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { supabase } from '@/integrations/supabase/client';
 
 import heroImg from '@/assets/hero-wedding-opt.webp';
 import flowersImg from '@/assets/flowers-lavender.jpg';
@@ -139,6 +140,131 @@ const GoldenCorners = ({ className = '' }: { className?: string }) => (
   </div>
 );
 
+/* ===== Announcements Section — pulls from DB ===== */
+const AnnouncementsSection = ({ t }: { t: (key: string) => string }) => {
+  const [announcements, setAnnouncements] = useState<{ id: string; title: string; content: string; created_at: string }[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const { data } = await supabase.from('announcements').select('*').order('created_at', { ascending: false });
+      if (data) setAnnouncements(data);
+    };
+    fetch();
+  }, []);
+
+  useEffect(() => {
+    if (announcements.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % announcements.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [announcements.length]);
+
+  if (announcements.length === 0) return null;
+
+  return (
+    <section className="py-12 md:py-16 relative overflow-hidden">
+      <AuroraOrb position="right" color="rgba(180,140,210,0.25)" size={350} delay={2} />
+      <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+          <div className="glass-card-strong rounded-3xl p-10 md:p-14 relative overflow-hidden">
+            <GoldenCorners />
+            <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br from-rose-400/10 to-violet-400/10 blur-2xl pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-gradient-to-tr from-pink-400/10 to-rose-400/10 blur-2xl pointer-events-none" />
+
+            <div className="love-divider mb-6">
+              <Megaphone className="w-6 h-6 text-primary icon-glow" />
+            </div>
+
+            <h3 className="font-serif-display text-lg md:text-xl text-foreground font-semibold mb-4 tracking-wide uppercase">
+              {t('announcements.title')}
+            </h3>
+
+            <div className="min-h-[100px] flex items-center justify-center">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentIndex}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.6 }}
+                  className="text-center"
+                >
+                  <p className="font-sans-elegant text-sm font-bold text-primary mb-2">{announcements[currentIndex].title}</p>
+                  <p className="font-serif-display text-base md:text-lg text-foreground italic leading-relaxed">
+                    {announcements[currentIndex].content}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {announcements.length > 1 && (
+              <div className="flex items-center justify-center gap-2 mt-6">
+                {announcements.map((_, i) => (
+                  <button key={i} onClick={() => setCurrentIndex(i)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${i === currentIndex ? 'bg-primary w-6' : 'bg-muted-foreground/25'}`} />
+                ))}
+              </div>
+            )}
+
+            <div className="love-divider mt-6">
+              <Heart className="w-4 h-4 text-primary/40 fill-primary/40" />
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+/* ===== Transitioning Scripture (Genesis 2:24 + Jeremiah 31:3) ===== */
+const FEATURED_VERSES = [
+  { key: 'verse.genesis', ref: 'Genesis 2:24' },
+  { key: 'love.quote1.text', ref: 'Jeremiah 31:3' },
+];
+
+const TransitioningScripture = ({ t }: { t: (key: string) => string }) => {
+  const [currentVerse, setCurrentVerse] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentVerse((prev) => (prev + 1) % FEATURED_VERSES.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+      <div className="glass-card-strong rounded-3xl p-10 md:p-14 relative overflow-hidden">
+        <GoldenCorners />
+        <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br from-rose-400/10 to-violet-400/10 blur-2xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-gradient-to-tr from-amber-400/10 to-pink-400/10 blur-2xl pointer-events-none" />
+        <BookOpen className="w-8 h-8 text-amber-400 icon-glow mx-auto mb-6" />
+        <div className="min-h-[80px] flex items-center justify-center">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentVerse}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.7 }}
+              className="text-center"
+            >
+              <p className="font-serif-display text-xl md:text-2xl text-foreground italic leading-relaxed mb-4">
+                "{t(FEATURED_VERSES[currentVerse].key)}"
+              </p>
+              <p className="font-sans-elegant text-sm text-muted-foreground font-semibold">
+                {FEATURED_VERSES[currentVerse].ref}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 /* Auto-transitioning scripture component — no cards, floating text */
 const VERSES = [
   { key: 'verse.1cor13.full', ref: '1 Corinthians 13:4-7' },
@@ -173,7 +299,6 @@ const ScriptureTransition = ({ t }: { t: (key: string) => string }) => {
           <p className="font-sans-elegant text-base text-muted-foreground max-w-lg mx-auto">{t('verse.section.subtitle')}</p>
         </motion.div>
 
-        {/* Floating transitioning verse — no card, no background */}
         <div className="min-h-[200px] flex items-center justify-center">
           <AnimatePresence mode="wait">
             <motion.div
@@ -195,7 +320,6 @@ const ScriptureTransition = ({ t }: { t: (key: string) => string }) => {
           </AnimatePresence>
         </div>
 
-        {/* Dot indicators */}
         <div className="flex items-center justify-center gap-2 mt-6">
           {VERSES.map((_, i) => (
             <button
@@ -621,32 +745,8 @@ const Index = () => {
       {/* ===== DIVIDER ===== */}
       <SectionDivider variant="heart" />
 
-      {/* ===== LOVE QUOTE — Romantic Divider ===== */}
-      <section className="py-12 md:py-16 relative overflow-hidden">
-        <AuroraOrb position="right" color="rgba(180,140,210,0.25)" size={350} delay={2} />
-        <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="glass-card-strong rounded-3xl p-10 md:p-14 relative overflow-hidden">
-              <GoldenCorners />
-              <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br from-rose-400/10 to-violet-400/10 blur-2xl pointer-events-none" />
-              <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-gradient-to-tr from-pink-400/10 to-rose-400/10 blur-2xl pointer-events-none" />
-              
-              <div className="love-divider mb-6">
-                <Heart className="w-6 h-6 text-rose-400 fill-rose-400 icon-glow animate-pulse-love" />
-              </div>
-              
-              <p className="font-serif-display text-xl md:text-2xl text-foreground italic leading-relaxed mb-4">
-                {t('love.quote1')}
-              </p>
-              <p className="font-sans-elegant text-sm text-muted-foreground font-semibold">{t('love.quote1.ref')}</p>
-              
-              <div className="love-divider mt-6">
-                <Heart className="w-4 h-4 text-primary/40 fill-primary/40" />
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      {/* ===== ANNOUNCEMENTS ===== */}
+      <AnnouncementsSection t={t} />
 
       {/* ===== DIVIDER ===== */}
       <SectionDivider variant="sparkle" />
@@ -744,22 +844,11 @@ const Index = () => {
       {/* ===== DIVIDER ===== */}
       <SectionDivider variant="line" />
 
-      {/* ===== SCRIPTURE — Love is Patient ===== */}
+      {/* ===== SCRIPTURE — Transitioning Verses ===== */}
       <section className="py-14 md:py-18 relative overflow-hidden">
         <AuroraOrb position="center" color="rgba(139,107,138,0.2)" size={400} delay={3} />
         <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="glass-card-strong rounded-3xl p-10 md:p-14 relative overflow-hidden">
-              <GoldenCorners />
-              <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br from-rose-400/10 to-violet-400/10 blur-2xl pointer-events-none" />
-              <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-gradient-to-tr from-amber-400/10 to-pink-400/10 blur-2xl pointer-events-none" />
-              <BookOpen className="w-8 h-8 text-amber-400 icon-glow mx-auto mb-6" />
-              <p className="font-serif-display text-xl md:text-2xl text-foreground italic leading-relaxed mb-4">
-                "{t('verse.genesis')}"
-              </p>
-              <p className="font-sans-elegant text-sm text-muted-foreground font-semibold">Genesis 2:24</p>
-            </div>
-          </motion.div>
+          <TransitioningScripture t={t} />
         </div>
       </section>
 

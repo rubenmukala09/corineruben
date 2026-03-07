@@ -5,9 +5,11 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import {
   Users, Utensils, Gift, Heart, CheckCircle, XCircle, Clock,
-  TrendingUp, BarChart3, PieChart, MapPin, Sparkles, Loader2, LogOut
+  TrendingUp, BarChart3, PieChart, MapPin, Sparkles, Loader2, LogOut,
+  Megaphone, Trash2, Plus
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow
@@ -85,6 +87,10 @@ interface GiftRow {
   id: string; from_name: string; amount: number; message: string | null; created_at: string;
 }
 
+interface AnnouncementRow {
+  id: string; title: string; content: string; created_at: string;
+}
+
 const Dashboard = () => {
   const { t } = useLanguage();
   const { signOut } = useAuth();
@@ -92,20 +98,43 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [rsvps, setRsvps] = useState<RsvpRow[]>([]);
   const [gifts, setGifts] = useState<GiftRow[]>([]);
+  const [announcements, setAnnouncements] = useState<AnnouncementRow[]>([]);
   const [loading, setLoading] = useState(true);
+  const [annTitle, setAnnTitle] = useState('');
+  const [annContent, setAnnContent] = useState('');
+  const [annPosting, setAnnPosting] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const [rsvpRes, giftRes] = await Promise.all([
+      const [rsvpRes, giftRes, annRes] = await Promise.all([
         supabase.from('rsvps').select('*').order('created_at', { ascending: false }),
         supabase.from('gifts').select('*').order('created_at', { ascending: false }),
+        supabase.from('announcements').select('*').order('created_at', { ascending: false }),
       ]);
       if (rsvpRes.data) setRsvps(rsvpRes.data);
       if (giftRes.data) setGifts(giftRes.data);
+      if (annRes.data) setAnnouncements(annRes.data);
       setLoading(false);
     };
     fetchData();
   }, []);
+
+  const handlePostAnnouncement = async () => {
+    if (!annTitle.trim() || !annContent.trim()) return;
+    setAnnPosting(true);
+    const { data, error } = await supabase.from('announcements').insert({ title: annTitle.trim(), content: annContent.trim() }).select().single();
+    if (data && !error) {
+      setAnnouncements([data, ...announcements]);
+      setAnnTitle('');
+      setAnnContent('');
+    }
+    setAnnPosting(false);
+  };
+
+  const handleDeleteAnnouncement = async (id: string) => {
+    await supabase.from('announcements').delete().eq('id', id);
+    setAnnouncements(announcements.filter(a => a.id !== id));
+  };
 
   const confirmed = rsvps.filter(r => r.status === 'confirmed');
   const pending = rsvps.filter(r => r.status === 'pending');
@@ -163,6 +192,9 @@ const Dashboard = () => {
             </TabsTrigger>
             <TabsTrigger value="gifts" className="rounded-full px-5 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
               <Gift className="w-3.5 h-3.5 mr-1.5" /> {t('dashboard.gifts')}
+            </TabsTrigger>
+            <TabsTrigger value="announcements" className="rounded-full px-5 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
+              <Megaphone className="w-3.5 h-3.5 mr-1.5" /> {t('dashboard.announcements')}
             </TabsTrigger>
           </TabsList>
 
@@ -384,6 +416,71 @@ const Dashboard = () => {
                 ]} />
               </motion.div>
             )}
+          </TabsContent>
+
+          {/* ═══ ANNOUNCEMENTS TAB ═══ */}
+          <TabsContent value="announcements" className="space-y-6">
+            {/* New announcement form */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+              className="glass-card-strong rounded-3xl p-8">
+              <div className="flex items-center gap-2 mb-6">
+                <Plus className="w-5 h-5 text-primary" />
+                <h3 className="font-serif-display text-lg font-semibold text-foreground">{t('dashboard.newAnnouncement')}</h3>
+              </div>
+              <div className="space-y-4">
+                <Input
+                  value={annTitle}
+                  onChange={(e) => setAnnTitle(e.target.value)}
+                  placeholder={t('dashboard.announcementTitle')}
+                  className="rounded-2xl h-11 glass-card border-border/30 font-sans-elegant"
+                />
+                <Textarea
+                  value={annContent}
+                  onChange={(e) => setAnnContent(e.target.value)}
+                  placeholder={t('dashboard.announcementContent')}
+                  className="rounded-2xl glass-card border-border/30 font-sans-elegant min-h-[100px]"
+                />
+                <button
+                  onClick={handlePostAnnouncement}
+                  disabled={annPosting || !annTitle.trim() || !annContent.trim()}
+                  className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {annPosting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Megaphone className="w-4 h-4" />}
+                  {t('dashboard.post')}
+                </button>
+              </div>
+            </motion.div>
+
+            {/* Announcements list */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+              className="space-y-4">
+              {announcements.length === 0 ? (
+                <div className="glass-card-strong rounded-3xl p-12 text-center">
+                  <Megaphone className="w-8 h-8 text-muted-foreground/40 mx-auto mb-3" />
+                  <p className="font-sans-elegant text-sm text-muted-foreground">{t('dashboard.noAnnouncements')}</p>
+                </div>
+              ) : announcements.map((ann) => (
+                <div key={ann.id} className="glass-card-strong rounded-3xl p-6 flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary/20 to-violet-500/10 flex items-center justify-center flex-shrink-0 mt-1">
+                    <Megaphone className="w-5 h-5 text-primary" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-sans-elegant text-sm font-bold text-foreground mb-1">{ann.title}</p>
+                    <p className="font-sans-elegant text-sm text-muted-foreground leading-relaxed">{ann.content}</p>
+                    <p className="font-sans-elegant text-[10px] text-muted-foreground/60 mt-2">
+                      {new Date(ann.created_at).toLocaleDateString()} · {new Date(ann.created_at).toLocaleTimeString()}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => handleDeleteAnnouncement(ann.id)}
+                    className="w-9 h-9 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 flex items-center justify-center transition-colors flex-shrink-0"
+                    title={t('dashboard.deleteConfirm')}
+                  >
+                    <Trash2 className="w-4 h-4 text-rose-500" />
+                  </button>
+                </div>
+              ))}
+            </motion.div>
           </TabsContent>
         </Tabs>
       </div>
