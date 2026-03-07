@@ -14,7 +14,90 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      gifts: {
+        Row: {
+          amount: number
+          created_at: string
+          from_name: string
+          id: string
+          message: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          from_name: string
+          id?: string
+          message?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          from_name?: string
+          id?: string
+          message?: string | null
+        }
+        Relationships: []
+      }
+      rsvps: {
+        Row: {
+          attending: boolean
+          companions: string[] | null
+          created_at: string
+          cuisine: string | null
+          dietary: string | null
+          drinks: string[] | null
+          email: string | null
+          guests: number
+          id: string
+          meal: string | null
+          message: string | null
+          name: string
+          sides: string[] | null
+          status: string
+          stay_anonymous: boolean | null
+          table_name: string | null
+          updated_at: string
+        }
+        Insert: {
+          attending?: boolean
+          companions?: string[] | null
+          created_at?: string
+          cuisine?: string | null
+          dietary?: string | null
+          drinks?: string[] | null
+          email?: string | null
+          guests?: number
+          id?: string
+          meal?: string | null
+          message?: string | null
+          name: string
+          sides?: string[] | null
+          status?: string
+          stay_anonymous?: boolean | null
+          table_name?: string | null
+          updated_at?: string
+        }
+        Update: {
+          attending?: boolean
+          companions?: string[] | null
+          created_at?: string
+          cuisine?: string | null
+          dietary?: string | null
+          drinks?: string[] | null
+          email?: string | null
+          guests?: number
+          id?: string
+          meal?: string | null
+          message?: string | null
+          name?: string
+          sides?: string[] | null
+          status?: string
+          stay_anonymous?: boolean | null
+          table_name?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
