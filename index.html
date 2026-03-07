@@ -33,9 +33,11 @@
 
       /* ── Each figure ── */
       .loader-figure{display:flex;flex-direction:column;align-items:center;gap:0;opacity:0;position:relative}
-      .loader-figure img{width:110px;height:auto;position:relative;z-index:3;
-        filter:brightness(0) saturate(100%) invert(18%) sepia(30%) saturate(1500%) hue-rotate(260deg) brightness(0.7);
-        }
+      .loader-figure img{width:120px;height:auto;position:relative;z-index:3;
+        filter:brightness(0) saturate(100%) invert(15%) sepia(50%) saturate(2500%) hue-rotate(270deg) brightness(0.55);
+        transition:filter 0.3s ease;
+        -webkit-filter:brightness(0) saturate(100%) invert(15%) sepia(50%) saturate(2500%) hue-rotate(270deg) brightness(0.55);
+        drop-shadow(0 6px 20px rgba(75,0,130,0.4))}
       .loader-figure-name{font-family:'Playfair Display',Georgia,serif;font-size:1.3rem;font-weight:700;
         color:rgba(74,59,78,0.5);letter-spacing:0.08em;opacity:0;
         position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);z-index:1;
@@ -46,8 +48,8 @@
       /* Bride slides in from right */
       .loader-figure--bride{animation:slide-from-right 1.2s ease-out 0.2s forwards}
 
-      @keyframes slide-from-left{0%{opacity:0;transform:translateX(-80px)}100%{opacity:1;transform:translateX(0)}}
-      @keyframes slide-from-right{0%{opacity:0;transform:translateX(80px)}100%{opacity:1;transform:translateX(0)}}
+      @keyframes slide-from-left{0%{opacity:0;transform:translateX(-80px) scale(0.9)}70%{opacity:1;transform:translateX(5px) scale(1.02)}100%{opacity:1;transform:translateX(0) scale(1)}}
+      @keyframes slide-from-right{0%{opacity:0;transform:translateX(80px) scale(0.9)}70%{opacity:1;transform:translateX(-5px) scale(1.02)}100%{opacity:1;transform:translateX(0) scale(1)}}
 
       /* Names fade in behind figures */
       .loader-figure--groom .loader-figure-name{animation:name-reveal 0.6s ease-out 1.5s forwards}
@@ -80,7 +82,7 @@
 
       /* ── DARK MODE ── */
       @media(prefers-color-scheme:dark){
-        .loader-figure img{filter:brightness(0.5) sepia(0.4) hue-rotate(260deg) saturate(2.5) contrast(1.3) invert(0.85)}
+        .loader-figure img{filter:brightness(0) saturate(100%) invert(60%) sepia(50%) saturate(2000%) hue-rotate(250deg) brightness(0.8)}
         .loader-figure-name{color:#d4c8e0;text-shadow:0 0 20px rgba(0,0,0,0.5),0 0 40px rgba(0,0,0,0.3)}
         .loader-walk-line{background:linear-gradient(90deg,transparent 5%,#b8a9c9 30%,#b8a9c9 70%,transparent 95%)}
         .loader-heart{color:#b8a9c9}
