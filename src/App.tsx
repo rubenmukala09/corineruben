@@ -43,17 +43,15 @@ const App = () => (
                   <Navigation />
                   <Routes>
                     <Route path="/" element={<Index />} />
-                    <Route path="/story" element={<Suspense fallback={null}><Story /></Suspense>} />
-                    <Route path="/rsvp" element={<Suspense fallback={null}><RSVP /></Suspense>} />
-                    <Route path="/login" element={<Suspense fallback={null}><Login /></Suspense>} />
+                    <Route path="/story" element={<Story />} />
+                    <Route path="/rsvp" element={<RSVP />} />
+                    <Route path="/login" element={<Login />} />
                     <Route path="/dashboard" element={
-                      <Suspense fallback={null}>
-                        <ProtectedRoute>
-                          <Dashboard />
-                        </ProtectedRoute>
-                      </Suspense>
+                      <ProtectedRoute>
+                        <Dashboard />
+                      </ProtectedRoute>
                     } />
-                    <Route path="*" element={<Suspense fallback={null}><NotFound /></Suspense>} />
+                    <Route path="*" element={<NotFound />} />
                   </Routes>
                   <Footer />
                 </div>
