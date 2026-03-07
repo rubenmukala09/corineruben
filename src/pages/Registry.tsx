@@ -5,6 +5,8 @@ import { Heart, Gift, Sparkles, X, Check } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 const giftTiers = [
   { amount: 60, emoji: '💐', labelKey: 'registry.tier.bouquet' },
@@ -38,16 +40,28 @@ const Registry = () => {
     }
   };
 
-  const handleSend = (e: React.FormEvent) => {
+  const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
-    setTimeout(() => {
-      setDialogOpen(false);
-      setSent(false);
-      setGiftMessage('');
-      setGiftName('');
-      setSelectedAmount(null);
-    }, 2000);
+    try {
+      const { error } = await supabase.from('gifts').insert({
+        from_name: giftName,
+        amount: selectedAmount!,
+        message: giftMessage || null,
+      });
+      if (error) throw error;
+      setSent(true);
+      toast.success('Gift recorded! Thank you 💕');
+      setTimeout(() => {
+        setDialogOpen(false);
+        setSent(false);
+        setGiftMessage('');
+        setGiftName('');
+        setSelectedAmount(null);
+      }, 2000);
+    } catch (err) {
+      console.error(err);
+      toast.error('Something went wrong. Please try again.');
+    }
   };
 
   return (
