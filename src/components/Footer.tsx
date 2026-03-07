@@ -134,6 +134,7 @@ const Footer = () => {
                 <button
                   type="submit"
                   disabled={subscribing}
+                  aria-label="Subscribe to newsletter"
                   className="w-10 h-10 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-colors disabled:opacity-50 flex-shrink-0"
                 >
                   <Send className="w-4 h-4 text-primary-foreground" />

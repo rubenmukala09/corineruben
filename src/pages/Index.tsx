@@ -815,13 +815,13 @@ const Index = () => {
             transition={{ delay: 0.5, type: "spring" }}
             className="my-4"
           >
-            <span className="inline-flex items-center justify-center w-16 h-16 rounded-full gradient-primary shadow-glow animate-pulse-love">
+            <span className="inline-flex items-center justify-center w-16 h-16 rounded-full gradient-primary shadow-glow animate-pulse-love" role="img" aria-label="Heart">
               <Heart className="w-7 h-7 text-primary-foreground fill-primary-foreground" />
             </span>
           </motion.div>
-          <h1 className="font-serif-display text-5xl md:text-7xl lg:text-8xl font-semibold text-foreground mb-6 leading-tight">
+          <p className="font-serif-display text-5xl md:text-7xl lg:text-8xl font-semibold text-foreground mb-6 leading-tight" aria-hidden="false">
             Ruben
-          </h1>
+          </p>
 
           {/* Romantic subtitle */}
           <motion.p
