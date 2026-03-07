@@ -3,13 +3,15 @@ import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { Sun, Moon, Menu, X, Globe, Heart, LogOut } from 'lucide-react';
+import { Sun, Moon, Menu, X, Globe, Heart, LogOut, LogIn } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const Navigation = () => {
   const { language, setLanguage, t } = useLanguage();
   const { theme, toggleTheme } = useTheme();
   const { user, signOut } = useAuth();
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [visible, setVisible] = useState(true);
   const [scrolled, setScrolled] = useState(false);
@@ -108,13 +110,22 @@ const Navigation = () => {
             >
               {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
             </button>
-            {user && (
+            {user ? (
               <button
                 onClick={signOut}
                 className="p-2 rounded-full hover:bg-white/10 transition-all duration-300 text-white/70 hover:text-white"
                 aria-label="Sign out"
               >
                 <LogOut className="w-4 h-4" />
+              </button>
+            ) : (
+              <button
+                onClick={() => navigate('/login')}
+                className="flex items-center gap-1 px-3 py-1.5 text-[11px] font-bold rounded-full border border-white/25 text-white/85 hover:text-white hover:border-white/40 transition-all"
+                aria-label="Sign in"
+              >
+                <LogIn className="w-3.5 h-3.5" />
+                Login
               </button>
             )}
             <button
