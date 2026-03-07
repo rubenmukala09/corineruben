@@ -1443,9 +1443,13 @@ const Index = () => {
                   />
                 </div>
 
-                <button type="submit" className="w-full btn-primary justify-center">
-                  <Heart className="w-4 h-4 fill-current" />
-                  {t('registry.dialog.send')}
+                <button type="submit" disabled={giftLoading} className="w-full btn-primary justify-center disabled:opacity-50">
+                  {giftLoading ? (
+                    <span className="animate-spin w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full" />
+                  ) : (
+                    <Heart className="w-4 h-4 fill-current" />
+                  )}
+                  {giftLoading ? t('registry.dialog.processing') || 'Processing...' : t('registry.dialog.send')}
                 </button>
 
                 <p className="font-sans-elegant text-[11px] text-muted-foreground text-center">{t('registry.dialog.note')}</p>
