@@ -573,6 +573,52 @@ const Dashboard = () => {
               ))}
             </motion.div>
           </TabsContent>
+
+          {/* ═══ SHARE TAB ═══ */}
+          <TabsContent value="share" className="space-y-6">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+              className="glass-card-strong rounded-3xl p-8 max-w-lg mx-auto text-center">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mx-auto mb-6">
+                <Share2 className="w-7 h-7 text-primary" />
+              </div>
+              <h3 className="font-serif-display text-xl font-semibold text-foreground mb-2">Share Staff Access</h3>
+              <p className="font-sans-elegant text-sm text-muted-foreground mb-8">
+                Share this link or QR code with your event coordinators so they can view guest info, seating, and announcements in real time.
+              </p>
+
+              {/* QR Code */}
+              <div className="glass-card rounded-3xl p-6 mb-6 inline-block">
+                <QRCodeSVG
+                  value={staffUrl}
+                  size={180}
+                  bgColor="transparent"
+                  fgColor="hsl(286, 13%, 27%)"
+                  level="M"
+                  includeMargin={false}
+                />
+              </div>
+
+              {/* Copyable link */}
+              <div className="flex items-center gap-2 glass-card rounded-full p-1.5 pl-5">
+                <p className="font-sans-elegant text-sm text-foreground truncate flex-1 text-left">{staffUrl}</p>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(staffUrl);
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                  }}
+                  className="btn-primary !rounded-full !px-5 !py-2.5 flex items-center gap-2 flex-shrink-0"
+                >
+                  {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                  {copied ? 'Copied!' : 'Copy Link'}
+                </button>
+              </div>
+
+              <p className="font-sans-elegant text-[10px] text-muted-foreground mt-6">
+                No login required · Live data · Auto-refreshes every 30 seconds
+              </p>
+            </motion.div>
+          </TabsContent>
         </Tabs>
       </div>
     </div>
