@@ -13,6 +13,7 @@ import RSVP from "./pages/RSVP";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
+import Staff from "./pages/Staff";
 import FloatingHearts from "@/components/FloatingHearts";
 import MusicFloatingButton, { MusicProvider } from "@/components/MusicPlayer";
 import { Toaster } from "@/components/ui/toaster";
