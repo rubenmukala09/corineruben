@@ -212,18 +212,9 @@ const PersonalCourtSection = ({ t }: { t: (key: string) => string }) => {
                   </p>
 
                   <div className="min-h-[60px] flex items-center justify-center">
-                    <AnimatePresence mode="wait">
-                      <motion.p
-                        key={currentIndex}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="font-serif-display text-sm md:text-base text-foreground italic leading-relaxed max-w-md mx-auto"
-                      >
-                        "{quotes[currentIndex].content}"
-                      </motion.p>
-                    </AnimatePresence>
+                    <p className="font-serif-display text-sm md:text-base text-foreground italic leading-relaxed max-w-md mx-auto">
+                      "{quotes[currentIndex].content}"
+                    </p>
                   </div>
 
                   {quotes.length > 1 && (
