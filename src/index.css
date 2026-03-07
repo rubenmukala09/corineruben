@@ -849,6 +849,11 @@
   66% { transform: translate(-35px, 30px) scale(0.9); }
 }
 
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
 /* Reduce motion for users who prefer it */
 @media (prefers-reduced-motion: reduce) {
   .aurora-blob-css, .heart-glow, .animate-float-heart, .animate-petal-fall {
