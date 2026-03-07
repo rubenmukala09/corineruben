@@ -24,68 +24,31 @@
 
     <!-- Inline critical CSS for immediate FCP -->
     <style>
-      #app-loader{display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Playfair Display',Georgia,serif;color:#4A3B4E;text-align:center;flex-direction:column;gap:1.5rem;position:relative;overflow:hidden;
-        background:rgba(255,255,255,0.05);
-        backdrop-filter:blur(12px) saturate(1.2);-webkit-backdrop-filter:blur(12px) saturate(1.2);
-        border-bottom:1px solid rgba(255,255,255,0.08)}
-
-      /* ── Animated spectrum ring (not filled) ── */
-      .spectrum-globe{
-        width:200px;height:200px;border-radius:50%;position:relative;z-index:2;
-        background:transparent;
-        border:3px solid transparent;
-        background-image:conic-gradient(from 0deg,
-          hsl(330,50%,78%),hsl(290,35%,75%),hsl(270,40%,77%),
-          hsl(310,38%,74%),hsl(340,42%,79%),hsl(300,40%,76%),
-          hsl(280,35%,74%),hsl(330,50%,78%));
-        -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 3px));
-        mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 3px));
-        box-shadow:
-          0 0 50px rgba(201,169,182,0.2),
-          0 0 100px rgba(184,169,201,0.12);
-        animation:spectrum-spin 6s linear infinite,globe-pulse 4s ease-in-out infinite;
-      }
-
-      /* Soft glow behind the ring */
-      .spectrum-globe::before{content:'';position:absolute;inset:-20px;border-radius:50%;
-        background:radial-gradient(circle,rgba(201,169,182,0.15) 0%,transparent 70%);
-        pointer-events:none;z-index:-1}
-
-      /* Inner soft gradient fill — very subtle */
-      .spectrum-globe::after{content:'';position:absolute;inset:6px;border-radius:50%;
-        background:radial-gradient(circle at 40% 35%,rgba(201,169,182,0.08),rgba(184,169,201,0.04),transparent 70%);
-        pointer-events:none}
-
-      @keyframes spectrum-spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
-      @keyframes globe-pulse{0%,100%{opacity:0.85;filter:blur(0px)}50%{opacity:1;filter:blur(0.5px)}}
-
-      /* ── Text below ── */
-      @keyframes fade-up{0%{opacity:0;transform:translateY(16px)}100%{opacity:1;transform:translateY(0)}}
-      @keyframes pulse-glow{0%,100%{opacity:0.6;transform:scale(1)}50%{opacity:1;transform:scale(1.12)}}
-
-      .loader-heart{font-size:1.4rem;color:#C9A9B6;animation:pulse-glow 2s ease-in-out infinite}
-      #app-loader h1{font-size:2.5rem;font-weight:600;letter-spacing:-0.5px;margin:0;
+      #app-loader{display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Playfair Display',Georgia,serif;color:#4A3B4E;text-align:center;flex-direction:column;gap:0;position:relative;overflow:hidden;background:linear-gradient(135deg,#fdf6f0 0%,#f3e8f0 50%,#ede4f3 100%)}
+      .loader-couple{display:flex;align-items:center;justify-content:center;gap:0;position:relative;height:80px;width:280px}
+      .loader-groom,.loader-bride{font-size:2.8rem;position:absolute;top:50%;transform:translateY(-50%);animation-fill-mode:forwards;animation-timing-function:cubic-bezier(0.4,0,0.2,1)}
+      .loader-groom{left:0;animation:slide-groom 2s forwards}
+      .loader-bride{right:0;animation:slide-bride 2s forwards}
+      .loader-heart-pop{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(0);font-size:1.6rem;color:#C9A9B6;opacity:0;animation:heart-pop 1s 2s forwards}
+      .loader-glow{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:60px;height:60px;border-radius:50%;background:radial-gradient(circle,rgba(201,169,182,0.4) 0%,transparent 70%);opacity:0;animation:glow-in 1.2s 1.8s forwards}
+      .loader-names{font-size:2rem;font-weight:600;letter-spacing:-0.5px;margin-top:1.2rem;opacity:0;
         background:linear-gradient(135deg,#4A3B4E 0%,#9F82A4 50%,#6B4E71 100%);
         -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-        animation:fade-up 0.9s ease-out 0.15s both}
-      #app-loader .loader-date{font-family:'DM Sans','Inter',sans-serif;font-size:0.8rem;letter-spacing:0.35em;text-transform:uppercase;color:#9F82A4;margin:0;animation:fade-up 0.9s ease-out 0.35s both}
-      .loader-line{width:60px;height:1px;background:linear-gradient(90deg,transparent,rgba(191,163,122,0.5),transparent);margin:0.25rem auto;animation:fade-up 0.9s ease-out 0.25s both}
+        animation:fade-up 1s 2.4s forwards}
+      .loader-sub{font-family:'DM Sans',sans-serif;font-size:0.75rem;letter-spacing:0.35em;text-transform:uppercase;color:#9F82A4;opacity:0;margin-top:0.4rem;animation:fade-up 1s 2.8s forwards}
 
-      /* ── DARK MODE ── */
+      @keyframes slide-groom{0%{left:0;opacity:0}30%{opacity:1}100%{left:calc(50% - 36px);opacity:1}}
+      @keyframes slide-bride{0%{right:0;opacity:0}30%{opacity:1}100%{right:calc(50% - 36px);opacity:1}}
+      @keyframes heart-pop{0%{transform:translate(-50%,-50%) scale(0);opacity:0}50%{transform:translate(-50%,-50%) scale(1.3);opacity:1}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}
+      @keyframes glow-in{0%{opacity:0;transform:translate(-50%,-50%) scale(0.5)}50%{opacity:1}100%{opacity:0.6;transform:translate(-50%,-50%) scale(1.2)}}
+      @keyframes fade-up{0%{opacity:0;transform:translateY(12px)}100%{opacity:1;transform:translateY(0)}}
+
       @media(prefers-color-scheme:dark){
-        #app-loader{background:rgba(10,8,15,0.05);border-bottom-color:rgba(255,255,255,0.04)}
-        .spectrum-globe{
-          background-image:conic-gradient(from 0deg,
-            hsl(330,45%,55%),hsl(290,35%,52%),hsl(270,40%,54%),
-            hsl(310,38%,51%),hsl(340,42%,56%),hsl(300,40%,53%),
-            hsl(280,35%,52%),hsl(330,45%,55%));
-          box-shadow:0 0 50px rgba(160,120,170,0.2),0 0 100px rgba(140,100,160,0.1)}
-        .spectrum-globe::before{background:radial-gradient(circle,rgba(160,120,170,0.12) 0%,transparent 70%)}
-        .spectrum-globe::after{background:radial-gradient(circle at 40% 35%,rgba(160,120,170,0.06),rgba(140,100,160,0.03),transparent 70%)}
-        #app-loader h1{background:linear-gradient(135deg,#e8e0ec 0%,#b8a9c9 50%,#9478a5 100%);-webkit-background-clip:text;background-clip:text}
-        #app-loader .loader-date{color:#b8a9c9}
-        .loader-heart{color:#9478a5}
-        .loader-line{background:linear-gradient(90deg,transparent,rgba(191,163,122,0.3),transparent)}
+        #app-loader{background:linear-gradient(135deg,#0a080f 0%,#1a1225 50%,#120e1a 100%);color:#e8e0ec}
+        .loader-heart-pop{color:#9478a5}
+        .loader-glow{background:radial-gradient(circle,rgba(148,120,165,0.3) 0%,transparent 70%)}
+        .loader-names{background:linear-gradient(135deg,#e8e0ec 0%,#b8a9c9 50%,#9478a5 100%);-webkit-background-clip:text;background-clip:text}
+        .loader-sub{color:#b8a9c9}
       }
     </style>
     
@@ -101,16 +64,14 @@
   <body>
     <div id="root">
       <div id="app-loader" aria-hidden="true">
-        <!-- Central spectrum globe -->
-        <div class="spectrum-globe"></div>
-
-        <!-- Text info -->
-        <div style="position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;gap:0.25rem">
-          <div class="loader-heart">♥</div>
-          <h1>Corine &amp; Ruben</h1>
-          <div class="loader-line"></div>
-          <p class="loader-date">15 . 08 . 2027</p>
+        <div class="loader-couple">
+          <span class="loader-groom">🤵</span>
+          <span class="loader-bride">👰</span>
+          <div class="loader-glow"></div>
+          <span class="loader-heart-pop">♥</span>
         </div>
+        <div class="loader-names">Ruben &amp; Corine</div>
+        <p class="loader-sub">15 . 08 . 2027</p>
       </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
