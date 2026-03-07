@@ -955,7 +955,7 @@ const Index = () => {
               <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-6">
                 <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('nav.story')}</p>
               </div>
-              <h2 className="font-serif-display text-3xl md:text-5xl text-foreground mb-4 font-semibold">
+              <h2 className="font-serif-display text-3xl md:text-5xl text-foreground mb-4 font-semibold whitespace-nowrap">
                 {t('story.title')}
               </h2>
               <p className="font-serif-display text-lg text-primary italic mb-6">{t('love.tagline')}</p>
