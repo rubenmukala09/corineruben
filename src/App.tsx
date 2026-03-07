@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import AuroraBackground from "@/components/AuroraBackground";
@@ -12,10 +13,12 @@ import MusicFloatingButton, { MusicProvider } from "@/components/MusicPlayer";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 const Story = lazy(() => import("./pages/Story"));
 const RSVP = lazy(() => import("./pages/RSVP"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Login = lazy(() => import("./pages/Login"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -29,25 +32,34 @@ const App = () => (
             <Toaster />
             <Sonner />
             <BrowserRouter>
-              {/* Single unified aurora background behind everything */}
-              <div className="fixed inset-0 z-0">
-                <AuroraBackground variant="hero" />
-              </div>
-              <FloatingHearts />
+              <AuthProvider>
+                {/* Single unified aurora background behind everything */}
+                <div className="fixed inset-0 z-0">
+                  <AuroraBackground variant="hero" />
+                </div>
+                <FloatingHearts />
 
-              <div className="relative z-10">
-                <Navigation />
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/story" element={<Suspense fallback={null}><Story /></Suspense>} />
-                  <Route path="/rsvp" element={<Suspense fallback={null}><RSVP /></Suspense>} />
-                  <Route path="/dashboard" element={<Suspense fallback={null}><Dashboard /></Suspense>} />
-                  <Route path="*" element={<Suspense fallback={null}><NotFound /></Suspense>} />
-                </Routes>
-                <Footer />
-              </div>
+                <div className="relative z-10">
+                  <Navigation />
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/story" element={<Suspense fallback={null}><Story /></Suspense>} />
+                    <Route path="/rsvp" element={<Suspense fallback={null}><RSVP /></Suspense>} />
+                    <Route path="/login" element={<Suspense fallback={null}><Login /></Suspense>} />
+                    <Route path="/dashboard" element={
+                      <Suspense fallback={null}>
+                        <ProtectedRoute>
+                          <Dashboard />
+                        </ProtectedRoute>
+                      </Suspense>
+                    } />
+                    <Route path="*" element={<Suspense fallback={null}><NotFound /></Suspense>} />
+                  </Routes>
+                  <Footer />
+                </div>
 
-              <MusicFloatingButton />
+                <MusicFloatingButton />
+              </AuthProvider>
             </BrowserRouter>
           </TooltipProvider>
         </MusicProvider>

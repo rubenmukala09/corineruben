@@ -2,12 +2,14 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
-import { Sun, Moon, Menu, X, Globe, Heart } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { Sun, Moon, Menu, X, Globe, Heart, LogOut } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navigation = () => {
   const { language, setLanguage, t } = useLanguage();
   const { theme, toggleTheme } = useTheme();
+  const { user, signOut } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [visible, setVisible] = useState(true);
   const [scrolled, setScrolled] = useState(false);
@@ -35,7 +37,7 @@ const Navigation = () => {
     { to: '/', label: t('nav.home') },
     { to: '/story', label: t('nav.story') },
     { to: '/rsvp', label: t('nav.rsvp') },
-    { to: '/dashboard', label: 'Dashboard' },
+    ...(user ? [{ to: '/dashboard', label: 'Dashboard' }] : []),
   ];
 
   return (
@@ -106,6 +108,15 @@ const Navigation = () => {
             >
               {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
             </button>
+            {user && (
+              <button
+                onClick={signOut}
+                className="p-2 rounded-full hover:bg-white/10 transition-all duration-300 text-white/70 hover:text-white"
+                aria-label="Sign out"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            )}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="md:hidden p-2 rounded-full hover:bg-white/10 transition-all duration-300 text-white/90"
