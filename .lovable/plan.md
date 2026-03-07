@@ -1,45 +1,51 @@
 
 
-## Plan: Footer Visibility, Merge Details into Homepage, Merge Gallery into Story
+## Plan: Enhanced Loading Animation, Vibrant Dark Footer, and Spanish Language Support
 
-### 1. Fix Footer Text Visibility
+### 1. Revamp the Loading Animation (index.html)
 
-The footer uses `--footer-muted` which is too dim in both themes. Changes:
+Replace the current static loader with a richly animated one featuring:
 
-- **`src/index.css`**: Increase `--footer-muted` lightness in light mode from `60%` to `75%` and in dark mode from `50%` to `70%`. Also increase `--footer-fg` opacity usage — remove `opacity-70`/`opacity-80` classes from footer text elements.
-- **`src/components/Footer.tsx`**: Remove `opacity-70`, `opacity-80`, `opacity-90` from text elements so all footer content is clearly readable. Update link columns to remove `/details` and `/gallery` routes since they'll be merged.
+- **Animated spectrum blob** in the center — a large morphing gradient bubble using CSS keyframe animations (`@keyframes morph`) that shifts shape, scale, and position in a fluid wave pattern
+- **Wave effect** — SVG wave shapes at the bottom of the loader with gentle CSS animation (`@keyframes wave-drift`) for organic motion
+- **Glassmorphism card** — keep the existing frosted glass card but enhance with stronger `backdrop-filter: blur(32px)`, more visible borders, and a subtle inner glow
+- **Multiple animated aurora blobs** — 3-4 colorful gradient circles with different animation timings that float and pulse behind the glass card
+- **Dark mode parity** — the `@media(prefers-color-scheme:dark)` section will use the same vibrant orchid/rose/amethyst palette at higher opacity so dark mode looks equally colorful
 
-### 2. Merge Details Content into Homepage
+All animations will be pure CSS (no JS needed) since this runs before React loads.
 
-Move all 5 detail sections (Ceremony, Reception, Dress Code, Accommodation, Transport) from `Details.tsx` into `Index.tsx` as a dedicated "Wedding Details" section with the same glassmorphic card grid, replacing the existing lightweight highlights cards (lines 498-545) with the full detail cards including times, locations, and descriptions.
+### 2. Vibrant Dark Mode Footer
 
-- **`src/pages/Index.tsx`**: Replace the existing 3-card highlights section with the full 5-card details grid (Ceremony, Reception, Dress Code, Accommodation, Transport) using the same icons and layout from `Details.tsx`.
-- **`src/pages/Details.tsx`**: Delete file.
-- **`src/App.tsx`**: Remove the `/details` route.
+Update the dark mode footer CSS in `src/index.css` (line ~586-591):
 
-### 3. Merge Gallery into Story Page
+- Change from near-black (`hsl(260 16% 11%)`) to a rich deep plum gradient that echoes the light mode's plum tones but darker
+- Use colors like `hsl(286 20% 18%)` → `hsl(280 18% 14%)` for a warm, colorful dark footer instead of cold charcoal
+- Increase the radial gradient accent opacities so the aurora shimmer is visible in dark mode
+- Update `--footer-bg`, `--footer-fg`, `--footer-muted` dark mode tokens for richer contrast
 
-Add the masonry gallery grid from `Gallery.tsx` below the timeline in `Story.tsx`.
+### 3. Add Spanish (Hispanic) Language Support
 
-- **`src/pages/Story.tsx`**: Import all gallery images and add a gallery section after the timeline, using the same masonry layout (`columns-2 md:columns-3`).
-- **`src/pages/Gallery.tsx`**: Delete file.
-- **`src/App.tsx`**: Remove the `/gallery` route.
+Update `src/contexts/LanguageContext.tsx`:
 
-### 4. Update Navigation
+- Expand the `Language` type from `'fr' | 'en'` to `'fr' | 'en' | 'es'`
+- Add Spanish translations for every key in the `translations` object (~150 keys)
+- Update the language selector UI (in Navigation component) to include Spanish option
 
-- **`src/components/Navigation.tsx`**: Remove "Details" and "Gallery" from the nav links array — reducing from 6 to 4 links (Home, Story, RSVP, Gifts).
-- **`src/components/Footer.tsx`**: Update footer link arrays to match.
+### 4. Ensure Language Switching Covers All Pages
 
-### 5. Update Explore Section
+Review `Login.tsx` and `Dashboard.tsx`:
 
-- **`src/pages/Index.tsx`**: Remove the "Gallery" and "Details" cards from the `features` array in the explore/navigation section (lines 44-49), keeping only Story, Gifts, and RSVP.
+- **Login page** currently has hardcoded English strings — wrap them with `t()` calls and add corresponding translation keys
+- **Dashboard page** already uses `useLanguage()` — verify all strings use `t()` and add any missing keys
+- Add Spanish translations for all new keys
 
-### Files Changed
-- `src/index.css` — footer color tokens
-- `src/components/Footer.tsx` — text visibility + updated links
-- `src/components/Navigation.tsx` — remove 2 nav items
-- `src/pages/Index.tsx` — add full details section, remove details/gallery from explore
-- `src/pages/Story.tsx` — add gallery section
-- `src/App.tsx` — remove 2 routes
-- Delete `src/pages/Details.tsx` and `src/pages/Gallery.tsx`
+### Technical Details
+
+**Files to modify:**
+- `index.html` — new animated loader markup and CSS
+- `src/index.css` — dark mode footer gradient colors (lines 586-591, 143-145)
+- `src/contexts/LanguageContext.tsx` — add `'es'` type, ~150 Spanish translations, new Login/Dashboard keys
+- `src/pages/Login.tsx` — replace hardcoded strings with `t()` calls
+- `src/pages/Dashboard.tsx` — audit for untranslated strings
+- `src/components/Navigation.tsx` — add Spanish option to language switcher
 
