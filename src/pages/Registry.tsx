@@ -43,21 +43,21 @@ const Registry = () => {
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const { error } = await supabase.from('gifts').insert({
-        from_name: giftName,
-        amount: selectedAmount!,
-        message: giftMessage || null,
+      const { data, error } = await supabase.functions.invoke('create-gift-payment', {
+        body: {
+          amount: selectedAmount!,
+          guestName: giftName,
+          message: giftMessage || null,
+          origin: window.location.origin,
+        },
       });
       if (error) throw error;
-      setSent(true);
-      toast.success('Gift recorded! Thank you 💕');
-      setTimeout(() => {
-        setDialogOpen(false);
-        setSent(false);
-        setGiftMessage('');
-        setGiftName('');
-        setSelectedAmount(null);
-      }, 2000);
+      if (data?.url) {
+        toast.success(t('gift.redirecting') || 'Redirecting to payment...');
+        window.location.href = data.url;
+      } else {
+        throw new Error('No checkout URL returned');
+      }
     } catch (err) {
       console.error(err);
       toast.error('Something went wrong. Please try again.');

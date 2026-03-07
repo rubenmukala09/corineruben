@@ -1,31 +1,45 @@
 
 
-## Problem Analysis
+## Plan: Footer Visibility, Merge Details into Homepage, Merge Gallery into Story
 
-I tested the `create-gift-payment` edge function directly and it **works correctly** -- it returns a valid Stripe Checkout URL. The core issues are:
+### 1. Fix Footer Text Visibility
 
-1. **Registry page (`/registry`) has no actual payment** -- it just inserts a record into the database without charging anything. No Stripe integration at all.
+The footer uses `--footer-muted` which is too dim in both themes. Changes:
 
-2. **Index page gift flow uses `window.open(url, '_blank')`** which gets blocked by popup blockers in most browsers, causing users to see nothing happen after clicking "Pay by Card".
+- **`src/index.css`**: Increase `--footer-muted` lightness in light mode from `60%` to `75%` and in dark mode from `50%` to `70%`. Also increase `--footer-fg` opacity usage — remove `opacity-70`/`opacity-80` classes from footer text elements.
+- **`src/components/Footer.tsx`**: Remove `opacity-70`, `opacity-80`, `opacity-90` from text elements so all footer content is clearly readable. Update link columns to remove `/details` and `/gallery` routes since they'll be merged.
 
-3. **Registry page direct DB insert may fail for unauthenticated guests** -- the RLS policy uses `RESTRICTIVE` (Permissive: No) which means it defaults to deny. The "Anyone can insert gifts" policy should work, but combined with restrictive mode it may not.
+### 2. Merge Details Content into Homepage
 
-## Plan
+Move all 5 detail sections (Ceremony, Reception, Dress Code, Accommodation, Transport) from `Details.tsx` into `Index.tsx` as a dedicated "Wedding Details" section with the same glassmorphic card grid, replacing the existing lightweight highlights cards (lines 498-545) with the full detail cards including times, locations, and descriptions.
 
-### 1. Fix Index page payment redirect
-- Change `window.open(url, '_blank')` to `window.location.href = url` so the redirect works without popup blockers
-- This ensures the Stripe Checkout page opens reliably
+- **`src/pages/Index.tsx`**: Replace the existing 3-card highlights section with the full 5-card details grid (Ceremony, Reception, Dress Code, Accommodation, Transport) using the same icons and layout from `Details.tsx`.
+- **`src/pages/Details.tsx`**: Delete file.
+- **`src/App.tsx`**: Remove the `/details` route.
 
-### 2. Fix Registry page to use Stripe Checkout
-- Replace the direct DB insert in `handleSend` with a call to `supabase.functions.invoke('create-gift-payment')` 
-- Redirect to Stripe Checkout URL instead of just recording in DB
-- The edge function already handles the DB insert server-side
+### 3. Merge Gallery into Story Page
 
-### 3. Handle success redirect
-- Both pages already have `?gift=success` handling in the URL params
-- Ensure Registry page also handles the return from Stripe
+Add the masonry gallery grid from `Gallery.tsx` below the timeline in `Story.tsx`.
 
-### Files to modify
-- **`src/pages/Index.tsx`**: Change `window.open` to `window.location.href`
-- **`src/pages/Registry.tsx`**: Replace direct DB insert with edge function call + Stripe redirect
+- **`src/pages/Story.tsx`**: Import all gallery images and add a gallery section after the timeline, using the same masonry layout (`columns-2 md:columns-3`).
+- **`src/pages/Gallery.tsx`**: Delete file.
+- **`src/App.tsx`**: Remove the `/gallery` route.
+
+### 4. Update Navigation
+
+- **`src/components/Navigation.tsx`**: Remove "Details" and "Gallery" from the nav links array — reducing from 6 to 4 links (Home, Story, RSVP, Gifts).
+- **`src/components/Footer.tsx`**: Update footer link arrays to match.
+
+### 5. Update Explore Section
+
+- **`src/pages/Index.tsx`**: Remove the "Gallery" and "Details" cards from the `features` array in the explore/navigation section (lines 44-49), keeping only Story, Gifts, and RSVP.
+
+### Files Changed
+- `src/index.css` — footer color tokens
+- `src/components/Footer.tsx` — text visibility + updated links
+- `src/components/Navigation.tsx` — remove 2 nav items
+- `src/pages/Index.tsx` — add full details section, remove details/gallery from explore
+- `src/pages/Story.tsx` — add gallery section
+- `src/App.tsx` — remove 2 routes
+- Delete `src/pages/Details.tsx` and `src/pages/Gallery.tsx`
 

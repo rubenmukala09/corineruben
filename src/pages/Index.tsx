@@ -553,7 +553,7 @@ const Index = () => {
         // Store URL for QR code too
         setCheckoutUrl(data.url);
         // Redirect to Stripe Checkout
-        window.open(data.url, '_blank');
+        window.location.href = data.url;
         setGiftFormOpen(false);
         toast.success(t('gift.redirecting') || 'Redirecting to payment...');
       }
