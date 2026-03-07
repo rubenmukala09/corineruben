@@ -9,11 +9,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 import { useSiteImages } from '@/hooks/useSiteContent';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
-const stripePromise = loadStripe('pk_live_51T8RMQ1zcEEWFefrmD6etyTp68WFGVzc3eg0gURh4bXd5CMwV699dZph5vhdg47r0SDdH1lFgxkmlyHurgtkzkSz004Yz5eoR5');
 
 import heroImg from '@/assets/hero-wedding-opt.webp';
 import flowersImg from '@/assets/flowers-lavender.jpg';
@@ -464,54 +462,7 @@ const ScriptureTransition = ({ t }: { t: (key: string) => string }) => {
   );
 };
 
-/* ===== Embedded Stripe Payment Form ===== */
-const EmbeddedPaymentForm = ({ onSuccess }: { onSuccess: () => void }) => {
-  const stripe = useStripe();
-  const elements = useElements();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!stripe || !elements) return;
-
-    setLoading(true);
-    setError(null);
-
-    const { error: submitError } = await stripe.confirmPayment({
-      elements,
-      redirect: 'if_required',
-    });
-
-    if (submitError) {
-      setError(submitError.message || 'Payment failed');
-      setLoading(false);
-    } else {
-      onSuccess();
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <PaymentElement />
-      {error && (
-        <p className="font-sans-elegant text-sm text-red-500 text-center">{error}</p>
-      )}
-      <button
-        type="submit"
-        disabled={!stripe || loading}
-        className="w-full btn-primary justify-center disabled:opacity-50"
-      >
-        {loading ? (
-          <span className="animate-spin w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full" />
-        ) : (
-          <Heart className="w-4 h-4 fill-current" />
-        )}
-        {loading ? 'Processing...' : 'Pay Now'}
-      </button>
-    </form>
-  );
-};
 
 
 const Index = () => {
@@ -530,9 +481,9 @@ const Index = () => {
   const [giftMessage, setGiftMessage] = useState(t('registry.dialog.defaultMessage'));
   const [giftSent, setGiftSent] = useState(false);
   const [giftLoading, setGiftLoading] = useState(false);
-  const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [showQR, setShowQR] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
+  const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
 
   useEffect(() => {
     const update = () => {
@@ -551,13 +502,24 @@ const Index = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Handle payment return from Stripe Checkout
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('gift') === 'success') {
+      const amount = params.get('amount');
+      toast.success(`Thank you for your generous gift${amount ? ` of $${amount}` : ''}! 💕`);
+      // Clean up URL
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, []);
+
   const handleSelectTier = (amount: number) => {
     setSelectedAmount(amount);
     setCustomAmount('');
     setGiftOpen(false);
     setGiftFormOpen(true);
     setGiftSent(false);
-    setClientSecret(null);
+    setCheckoutUrl(null);
     setShowQR(false);
   };
 
@@ -568,7 +530,7 @@ const Index = () => {
       setGiftOpen(false);
       setGiftFormOpen(true);
       setGiftSent(false);
-      setClientSecret(null);
+      setCheckoutUrl(null);
       setShowQR(false);
     }
   };
@@ -584,15 +546,57 @@ const Index = () => {
       });
 
       const { data, error } = await supabase.functions.invoke('create-gift-payment', {
-        body: { amount: selectedAmount, guestName: giftName.trim() || 'Anonymous', message: giftMessage },
+        body: {
+          amount: selectedAmount,
+          guestName: giftName.trim() || 'Anonymous',
+          message: giftMessage,
+          origin: window.location.origin,
+        },
       });
 
       if (error) throw error;
-      if (data?.clientSecret) {
-        setClientSecret(data.clientSecret);
+      if (data?.url) {
+        // Store URL for QR code too
+        setCheckoutUrl(data.url);
+        // Redirect to Stripe Checkout
+        window.open(data.url, '_blank');
+        setGiftFormOpen(false);
+        toast.success(t('gift.redirecting') || 'Redirecting to payment...');
       }
     } catch (err) {
       console.error('Gift payment error:', err);
+      toast.error('Payment failed. Please try again.');
+    } finally {
+      setGiftLoading(false);
+    }
+  };
+
+  const handleGenerateQR = async () => {
+    if (!selectedAmount) return;
+    setGiftLoading(true);
+    try {
+      await supabase.from('gifts').insert({
+        amount: selectedAmount,
+        from_name: giftName.trim() || 'Anonymous',
+        message: giftMessage || null,
+      });
+
+      const { data, error } = await supabase.functions.invoke('create-gift-payment', {
+        body: {
+          amount: selectedAmount,
+          guestName: giftName.trim() || 'Anonymous',
+          message: giftMessage,
+          origin: window.location.origin,
+        },
+      });
+
+      if (error) throw error;
+      if (data?.url) {
+        setCheckoutUrl(data.url);
+      }
+    } catch (err) {
+      console.error('QR generation error:', err);
+      toast.error('Could not generate QR code. Please try again.');
     } finally {
       setGiftLoading(false);
     }
@@ -600,7 +604,7 @@ const Index = () => {
 
   const handlePaymentSuccess = () => {
     setGiftSent(true);
-    setClientSecret(null);
+    setCheckoutUrl(null);
     // Send gift confirmation email
     try {
       supabase.functions.invoke('send-gift-confirmation', {
@@ -1493,7 +1497,7 @@ const Index = () => {
       {/* ===== GIFT FORM DIALOG ===== */}
       <Dialog open={giftFormOpen} onOpenChange={(open) => {
         setGiftFormOpen(open);
-        if (!open) { setClientSecret(null); setShowQR(false); setShowTerms(false); }
+        if (!open) { setCheckoutUrl(null); setShowQR(false); setShowTerms(false); }
       }}>
         <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
           <DialogHeader>
@@ -1545,27 +1549,35 @@ const Index = () => {
                 <div className="glass-card rounded-2xl p-5 text-center">
                   <p className="font-sans-elegant text-xs text-muted-foreground mb-1">{t('registry.dialog.amount')}</p>
                   <p className="font-serif-display text-2xl text-foreground font-bold mb-4">${selectedAmount}</p>
-                  <div className="bg-white rounded-2xl p-4 inline-block mb-4">
-                    <QRCodeSVG
-                      value={`https://smart-union-hub.lovable.app/registry?amount=${selectedAmount}`}
-                      size={180}
-                      level="H"
-                      includeMargin={false}
-                    />
-                  </div>
-                  <p className="font-sans-elegant text-sm text-muted-foreground">{t('gift.qr.scan')}</p>
-                  <p className="font-sans-elegant text-xs text-muted-foreground mt-2">{t('gift.qr.noinfo')}</p>
+                  {checkoutUrl ? (
+                    <>
+                      <div className="bg-white rounded-2xl p-4 inline-block mb-4">
+                        <QRCodeSVG
+                          value={checkoutUrl}
+                          size={180}
+                          level="H"
+                          includeMargin={false}
+                        />
+                      </div>
+                      <p className="font-sans-elegant text-sm text-muted-foreground">{t('gift.qr.scan')}</p>
+                    </>
+                  ) : (
+                    <div className="py-8">
+                      <button
+                        onClick={handleGenerateQR}
+                        disabled={giftLoading}
+                        className="btn-primary justify-center mx-auto disabled:opacity-50"
+                      >
+                        {giftLoading ? (
+                          <span className="animate-spin w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full" />
+                        ) : (
+                          <QrCode className="w-4 h-4" />
+                        )}
+                        {giftLoading ? '...' : t('gift.generateQR') || 'Generate QR Code'}
+                      </button>
+                    </div>
+                  )}
                 </div>
-              </motion.div>
-            ) : clientSecret ? (
-              <motion.div key="payment" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="pt-2">
-                <div className="glass-card rounded-2xl p-4 text-center mb-4">
-                  <p className="font-sans-elegant text-xs text-muted-foreground mb-1">{t('registry.dialog.amount')}</p>
-                  <p className="font-serif-display text-2xl text-foreground font-bold">${selectedAmount}</p>
-                </div>
-                <Elements stripe={stripePromise} options={{ clientSecret, appearance: { theme: 'stripe', variables: { colorPrimary: 'hsl(286, 13%, 27%)' } } }}>
-                  <EmbeddedPaymentForm onSuccess={handlePaymentSuccess} />
-                </Elements>
               </motion.div>
             ) : (
               <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4 pt-2">

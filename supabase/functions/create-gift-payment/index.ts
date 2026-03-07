@@ -16,31 +16,46 @@ serve(async (req) => {
       apiVersion: "2025-08-27.basil",
     });
 
-    const { amount, guestName, message } = await req.json();
+    const { amount, guestName, message, origin } = await req.json();
 
     if (!amount || amount <= 0) {
       throw new Error("Invalid amount");
     }
 
-    // Create a PaymentIntent for embedded form
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount * 100, // Convert dollars to cents
-      currency: "usd",
+    const siteOrigin = origin || "https://smart-union-hub.lovable.app";
+
+    // Create a Stripe Checkout Session for one-time payment
+    const session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: `Wedding Gift from ${guestName || "Anonymous"}`,
+              description: message || "A heartfelt wedding gift 💕",
+            },
+            unit_amount: amount * 100, // Convert dollars to cents
+          },
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+      success_url: `${siteOrigin}/?gift=success&amount=${amount}`,
+      cancel_url: `${siteOrigin}/?gift=cancelled`,
       metadata: {
         guest_name: guestName || "Anonymous",
         message: message || "",
         source: "wedding_gift",
       },
-      description: `Wedding Gift from ${guestName || "Anonymous"} - $${amount}`,
     });
 
-    return new Response(JSON.stringify({ clientSecret: paymentIntent.client_secret }), {
+    return new Response(JSON.stringify({ url: session.url }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-    console.error("Error creating payment intent:", errorMessage);
+    console.error("Error creating checkout session:", errorMessage);
     return new Response(JSON.stringify({ error: errorMessage }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 500,
