@@ -305,7 +305,7 @@ const translations: Record<string, Record<Language, string>> = {
   'love.quote1.text': { fr: 'Je t\'ai aimé d\'un amour éternel, c\'est pourquoi je te conserve ma bonté.', en: 'I have loved you with an everlasting love; therefore I have continued my faithfulness to you.', es: 'Con amor eterno te he amado; por eso te sigo con fidelidad.' },
   'announcements.title': { fr: 'Annonces', en: 'Announcements', es: 'Anuncios' },
   'announcements.subtitle': { fr: 'Restez informé de nos dernières nouvelles', en: 'Stay updated with our latest news', es: 'Mantente al día con nuestras últimas noticias' },
-  'court.subtitle': { fr: 'Ce en quoi nous croyons', en: 'What we believe in', es: 'En lo que creemos' },
+  'court.subtitle': { fr: 'Nos Citations', en: 'Our Quotes', es: 'Nuestras Citas' },
   'dashboard.announcements': { fr: 'Annonces', en: 'Announcements', es: 'Anuncios' },
   'dashboard.newAnnouncement': { fr: 'Nouvelle annonce', en: 'New Announcement', es: 'Nuevo Anuncio' },
   'dashboard.announcementTitle': { fr: 'Titre', en: 'Title', es: 'Título' },
