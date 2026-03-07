@@ -91,6 +91,8 @@ interface GiftRow {
 
 interface AnnouncementRow {
   id: string; title: string; content: string; created_at: string;
+  title_fr: string | null; title_es: string | null;
+  content_fr: string | null; content_es: string | null;
 }
 
 interface QuoteRow {
@@ -114,7 +116,11 @@ const Dashboard = () => {
   const [enquiries, setEnquiries] = useState<EnquiryRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [annTitle, setAnnTitle] = useState('');
+  const [annTitleFr, setAnnTitleFr] = useState('');
+  const [annTitleEs, setAnnTitleEs] = useState('');
   const [annContent, setAnnContent] = useState('');
+  const [annContentFr, setAnnContentFr] = useState('');
+  const [annContentEs, setAnnContentEs] = useState('');
   const [annPosting, setAnnPosting] = useState(false);
   const [quoteContent, setQuoteContent] = useState('');
   const [quotePosting, setQuotePosting] = useState(false);
@@ -146,11 +152,18 @@ const Dashboard = () => {
   const handlePostAnnouncement = async () => {
     if (!annTitle.trim() || !annContent.trim()) return;
     setAnnPosting(true);
-    const { data, error } = await supabase.from('announcements').insert({ title: annTitle.trim(), content: annContent.trim() }).select().single();
+    const { data, error } = await supabase.from('announcements').insert({
+      title: annTitle.trim(),
+      content: annContent.trim(),
+      title_fr: annTitleFr.trim() || annTitle.trim(),
+      title_es: annTitleEs.trim() || annTitle.trim(),
+      content_fr: annContentFr.trim() || annContent.trim(),
+      content_es: annContentEs.trim() || annContent.trim(),
+    }).select().single();
     if (data && !error) {
-      setAnnouncements([data, ...announcements]);
-      setAnnTitle('');
-      setAnnContent('');
+      setAnnouncements([data as AnnouncementRow, ...announcements]);
+      setAnnTitle(''); setAnnTitleFr(''); setAnnTitleEs('');
+      setAnnContent(''); setAnnContentFr(''); setAnnContentEs('');
     }
     setAnnPosting(false);
   };
