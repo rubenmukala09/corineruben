@@ -3,6 +3,9 @@ project_id = "ghidhlnenkzfimrcdsvg"
 [functions.create-gift-payment]
 verify_jwt = false
 
+[functions.create-gift-intent]
+verify_jwt = false
+
 [functions.send-gift-confirmation]
 verify_jwt = false
 

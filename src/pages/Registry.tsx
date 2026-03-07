@@ -1,12 +1,9 @@
 import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, Gift, Sparkles, X, Check } from 'lucide-react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { motion } from 'framer-motion';
+import { Heart, Gift, Sparkles } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { supabase } from '@/integrations/supabase/client';
-import { toast } from 'sonner';
+import EmbeddedPaymentForm from '@/components/EmbeddedPaymentForm';
 
 const giftTiers = [
   { amount: 60, emoji: '💐', labelKey: 'registry.tier.bouquet' },
@@ -19,48 +16,19 @@ const Registry = () => {
   const { t } = useLanguage();
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
   const [customAmount, setCustomAmount] = useState('');
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [giftMessage, setGiftMessage] = useState('');
-  const [giftName, setGiftName] = useState('');
-  const [sent, setSent] = useState(false);
+  const [paymentOpen, setPaymentOpen] = useState(false);
 
   const handleSelectTier = (amount: number) => {
     setSelectedAmount(amount);
     setCustomAmount('');
-    setDialogOpen(true);
-    setSent(false);
+    setPaymentOpen(true);
   };
 
   const handleCustom = () => {
     const val = parseInt(customAmount);
     if (val && val > 0) {
       setSelectedAmount(val);
-      setDialogOpen(true);
-      setSent(false);
-    }
-  };
-
-  const handleSend = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const { data, error } = await supabase.functions.invoke('create-gift-payment', {
-        body: {
-          amount: selectedAmount!,
-          guestName: giftName,
-          message: giftMessage || null,
-          origin: window.location.origin,
-        },
-      });
-      if (error) throw error;
-      if (data?.url) {
-        toast.success(t('gift.redirecting') || 'Redirecting to payment...');
-        window.location.href = data.url;
-      } else {
-        throw new Error('No checkout URL returned');
-      }
-    } catch (err) {
-      console.error(err);
-      toast.error('Something went wrong. Please try again.');
+      setPaymentOpen(true);
     }
   };
 
@@ -108,12 +76,11 @@ const Registry = () => {
               <div className="text-3xl mb-3">{tier.emoji}</div>
               <div className="font-serif-display text-2xl text-foreground font-bold mb-1">${tier.amount}</div>
               <div className="font-sans-elegant text-xs text-muted-foreground font-medium">{t(tier.labelKey)}</div>
-              <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none gradient-primary" style={{ opacity: 0, mixBlendMode: 'overlay' }} />
             </motion.button>
           ))}
         </div>
 
-        {/* 500+ and Custom */}
+        {/* Custom amount */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -139,17 +106,14 @@ const Registry = () => {
                 className="font-sans-elegant rounded-full h-12 pl-8 border-border/50 bg-background/50 backdrop-blur-sm"
               />
             </div>
-            <button
-              onClick={handleCustom}
-              className="btn-primary px-6 rounded-full text-sm"
-            >
+            <button onClick={handleCustom} className="btn-primary px-6 rounded-full text-sm">
               <Gift className="w-4 h-4" />
               {t('registry.give')}
             </button>
           </div>
         </motion.div>
 
-        {/* Animal Fund - keeping Honeymoon Fund style */}
+        {/* Animal Fund */}
         <motion.button
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -171,74 +135,12 @@ const Registry = () => {
         </motion.button>
       </div>
 
-      {/* Payment Dialog */}
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle className="font-serif-display text-2xl text-center">{t('registry.dialog.title')}</DialogTitle>
-            <DialogDescription className="font-sans-elegant text-center text-muted-foreground">
-              {t('registry.dialog.subtitle')}
-            </DialogDescription>
-          </DialogHeader>
-
-          <AnimatePresence mode="wait">
-            {sent ? (
-              <motion.div
-                key="success"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="py-8 text-center"
-              >
-                <div className="w-16 h-16 rounded-full gradient-primary flex items-center justify-center mx-auto mb-4 shadow-glow">
-                  <Check className="w-7 h-7 text-primary-foreground" />
-                </div>
-                <p className="font-sans-elegant text-foreground font-semibold">{t('registry.dialog.thanks')}</p>
-              </motion.div>
-            ) : (
-              <motion.form
-                key="form"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                onSubmit={handleSend}
-                className="space-y-5 pt-2"
-              >
-                <div className="glass-card rounded-2xl p-5 text-center">
-                  <p className="font-sans-elegant text-xs text-muted-foreground mb-1">{t('registry.dialog.amount')}</p>
-                  <p className="font-serif-display text-3xl text-foreground font-bold">${selectedAmount}</p>
-                </div>
-
-                <div>
-                  <label className="font-sans-elegant text-sm text-foreground block mb-2 font-semibold">{t('registry.dialog.name')}</label>
-                  <Input
-                    value={giftName}
-                    onChange={e => setGiftName(e.target.value)}
-                    placeholder={t('registry.dialog.name.placeholder')}
-                    className="font-sans-elegant rounded-full h-12 border-border/50 bg-background/50 backdrop-blur-sm"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="font-sans-elegant text-sm text-foreground block mb-2 font-semibold">{t('registry.dialog.message')}</label>
-                  <Textarea
-                    value={giftMessage}
-                    onChange={e => setGiftMessage(e.target.value)}
-                    placeholder={t('registry.dialog.message.placeholder')}
-                    className="font-sans-elegant rounded-2xl border-border/50 bg-background/50 backdrop-blur-sm"
-                  />
-                </div>
-
-                <button type="submit" className="w-full btn-primary justify-center">
-                  <Heart className="w-4 h-4" />
-                  {t('registry.dialog.send')}
-                </button>
-
-                <p className="font-sans-elegant text-[11px] text-muted-foreground text-center">{t('registry.dialog.note')}</p>
-              </motion.form>
-            )}
-          </AnimatePresence>
-        </DialogContent>
-      </Dialog>
+      {/* Embedded Payment */}
+      <EmbeddedPaymentForm
+        open={paymentOpen}
+        onOpenChange={setPaymentOpen}
+        selectedAmount={selectedAmount}
+      />
     </div>
   );
 };
