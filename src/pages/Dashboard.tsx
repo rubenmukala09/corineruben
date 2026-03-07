@@ -6,7 +6,8 @@ import { supabase } from '@/integrations/supabase/client';
 import {
   Users, Utensils, Gift, Heart, CheckCircle, XCircle, Clock,
   TrendingUp, BarChart3, PieChart, MapPin, Sparkles, Loader2, LogOut,
-  Megaphone, Trash2, Plus, Share2, Copy, Check, QrCode
+  Megaphone, Trash2, Plus, Share2, Copy, Check, QrCode,
+  MessageCircleQuestion, Send, Bell
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { Input } from '@/components/ui/input';
@@ -96,6 +97,11 @@ interface QuoteRow {
   id: string; content: string; created_at: string;
 }
 
+interface EnquiryRow {
+  id: string; name: string; email: string; question: string;
+  answer: string | null; status: string; created_at: string; answered_at: string | null;
+}
+
 const Dashboard = () => {
   const { t } = useLanguage();
   const { signOut } = useAuth();
@@ -105,6 +111,7 @@ const Dashboard = () => {
   const [gifts, setGifts] = useState<GiftRow[]>([]);
   const [announcements, setAnnouncements] = useState<AnnouncementRow[]>([]);
   const [quotes, setQuotes] = useState<QuoteRow[]>([]);
+  const [enquiries, setEnquiries] = useState<EnquiryRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [annTitle, setAnnTitle] = useState('');
   const [annContent, setAnnContent] = useState('');
@@ -112,21 +119,25 @@ const Dashboard = () => {
   const [quoteContent, setQuoteContent] = useState('');
   const [quotePosting, setQuotePosting] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [answerTexts, setAnswerTexts] = useState<Record<string, string>>({});
+  const [answerSending, setAnswerSending] = useState<string | null>(null);
 
   const staffUrl = `${window.location.origin}/staff`;
 
   useEffect(() => {
     const fetchData = async () => {
-      const [rsvpRes, giftRes, annRes, quoteRes] = await Promise.all([
+      const [rsvpRes, giftRes, annRes, quoteRes, enqRes] = await Promise.all([
         supabase.from('rsvps').select('*').order('created_at', { ascending: false }),
         supabase.from('gifts').select('*').order('created_at', { ascending: false }),
         supabase.from('announcements').select('*').order('created_at', { ascending: false }),
         supabase.from('quotes').select('*').order('created_at', { ascending: false }),
+        supabase.from('enquiries').select('*').order('created_at', { ascending: false }),
       ]);
       if (rsvpRes.data) setRsvps(rsvpRes.data);
       if (giftRes.data) setGifts(giftRes.data);
       if (annRes.data) setAnnouncements(annRes.data);
       if (quoteRes.data) setQuotes(quoteRes.data);
+      if (enqRes.data) setEnquiries(enqRes.data as EnquiryRow[]);
       setLoading(false);
     };
     fetchData();
