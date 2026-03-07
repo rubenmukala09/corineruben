@@ -744,6 +744,16 @@ const Dashboard = () => {
             </motion.div>
           </TabsContent>
 
+          {/* ═══ IMAGES TAB ═══ */}
+          <TabsContent value="images" className="space-y-6">
+            <ImageManager />
+          </TabsContent>
+
+          {/* ═══ STORY TAB ═══ */}
+          <TabsContent value="story" className="space-y-6">
+            <StoryManager />
+          </TabsContent>
+
           {/* ═══ SHARE TAB ═══ */}
           <TabsContent value="share" className="space-y-6">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
