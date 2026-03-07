@@ -756,7 +756,7 @@ const Index = () => {
         />
 
         <div className="absolute inset-0 mix-blend-soft-light z-[1]">
-          <img src={heroImg} alt="" className="w-full h-full object-cover opacity-[0.1]" style={{ filter: 'saturate(0.4) brightness(1.2)' }} />
+          <img src={heroImg} alt="Wedding background" className="w-full h-full object-cover opacity-[0.1]" style={{ filter: 'saturate(0.4) brightness(1.2)' }} loading="eager" decoding="async" />
         </div>
 
         <motion.div
@@ -885,7 +885,7 @@ const Index = () => {
                 onClick={() => toggleTrack('amazing-grace')}
               >
                 <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-rose-400/20">
-                  <img src={flowersImgSmall} alt="" className="w-full h-full object-cover" width={48} height={48} loading="lazy" decoding="async" />
+                  <img src={flowersImgSmall} alt="Lavender flowers" className="w-full h-full object-cover" width={48} height={48} loading="lazy" decoding="async" />
                 </div>
                 <div>
                   <p className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">{t('hymn.amazing')}</p>
@@ -963,7 +963,7 @@ const Index = () => {
                 onClick={() => toggleTrack('blessed-larson')}
               >
                 <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-violet-400/20">
-                  <img src={ringsImgSmall} alt="" className="w-full h-full object-cover" width={48} height={48} loading="lazy" decoding="async" />
+                  <img src={ringsImgSmall} alt="Wedding rings" className="w-full h-full object-cover" width={48} height={48} loading="lazy" decoding="async" />
                 </div>
                 <div>
                   <p className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">I Have Been Blessed</p>
@@ -1131,7 +1131,7 @@ const Index = () => {
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               className="glass-card-strong rounded-3xl overflow-hidden md:row-span-2 card-hover">
               <div className="relative h-full min-h-[300px]">
-                <img src={flowersImgSmall} alt="" className="w-full h-full object-cover" width={297} height={428} loading="eager" decoding="async" fetchPriority="high" />
+                <img src={flowersImgSmall} alt="Wedding flowers arrangement" className="w-full h-full object-cover" width={297} height={428} loading="eager" decoding="async" fetchPriority="high" />
                 <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/40 to-foreground/10" />
                 <div className="absolute bottom-0 left-0 right-0 p-5">
                   <div className="rounded-2xl bg-background/20 backdrop-blur-xl border border-white/20 p-5 shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
@@ -1209,7 +1209,7 @@ const Index = () => {
                 className="glass-card-strong rounded-3xl p-1.5 overflow-hidden card-hover"
               >
                 <div className="relative rounded-[20px] overflow-hidden aspect-square group">
-                  <img src={item.img} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" width={241} height={241} loading="lazy" decoding="async" />
+                  <img src={item.img} alt="Wedding gallery photo" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" width={241} height={241} loading="lazy" decoding="async" />
                   <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 to-transparent flex items-end justify-center p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     <span className="text-2xl">{item.label}</span>
                   </div>
