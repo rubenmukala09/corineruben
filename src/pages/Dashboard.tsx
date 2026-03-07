@@ -18,13 +18,7 @@ import {
 } from '@/components/ui/table';
 import ImageManager from '@/components/dashboard/ImageManager';
 import StoryManager from '@/components/dashboard/StoryManager';
-import { QRCodeSVG } from 'qrcode.react';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  Table, TableBody, TableCell, TableHead, TableHeader, TableRow
-} from '@/components/ui/table';
+
 
 const TABLE_NAMES = [
   'Rose', 'Lavande', 'Jasmin', 'Orchidée', 'Lys', 'Pivoine', 'Magnolia', 'Camélia',
