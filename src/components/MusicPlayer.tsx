@@ -1,4 +1,4 @@
-import { useState, useRef, createContext, useContext, useCallback } from 'react';
+import { useState, useRef, createContext, useContext, useCallback, forwardRef } from 'react';
 import { VolumeX, Pause } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
