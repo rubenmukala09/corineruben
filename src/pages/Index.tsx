@@ -1111,7 +1111,7 @@ const Index = () => {
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
+                transition={{ delay: i * 0.04, duration: 0.3 }}
                 className="glass-card-strong rounded-3xl p-1.5 overflow-hidden card-hover"
               >
                 <div className="relative rounded-[20px] overflow-hidden aspect-square group">
