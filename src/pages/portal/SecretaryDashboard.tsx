@@ -231,7 +231,7 @@ function SecretaryDashboard() {
                   Unread Messages
                 </h2>
                 <Button asChild variant="ghost" size="sm" className="text-gray-400 hover:text-white">
-                  <Link to="/admin/clients/messages">View All</Link>
+                  <Link to="/portal/messages">View All</Link>
                 </Button>
               </div>
               <div className="space-y-3">

@@ -213,7 +213,7 @@ function StaffDashboard() {
                 {[
                   { label: "Client Directory", path: "/admin/clients/businesses", icon: Users },
                   { label: "Support Tickets", path: "/admin/support/tickets", icon: Headphones },
-                  { label: "Messages", path: "/admin/clients/messages", icon: MessageSquare },
+                  { label: "Messages", path: "/portal/messages", icon: MessageSquare },
                   { label: "Activity Log", path: "/admin/activity", icon: Activity },
                 ].map((link) => {
                   const Icon = link.icon;
