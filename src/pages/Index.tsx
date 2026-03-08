@@ -197,5 +197,5 @@ const Index = forwardRef<HTMLDivElement>(function Index(_props, _ref) {
       </div>
     </PageTransition>
   );
-};
+});
 export default Index;
