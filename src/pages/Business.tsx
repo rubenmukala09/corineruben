@@ -748,12 +748,9 @@ function Business() {
                             "Single operating model: shared threat intelligence across all 9 services.",
                             "Single engagement path: strategy, deployment, hardening, and ongoing support.",
                           ].map((item, idx) => (
-                            <motion.div
+                            <div
                               key={item}
                               className="flex items-start gap-3 text-sm group"
-                              initial={{ opacity: 0, x: -15 }}
-                              animate={platformInView ? { opacity: 1, x: 0 } : {}}
-                              transition={{ delay: 0.5 + idx * 0.1, duration: 0.4 }}
                             >
                               <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary/15 to-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-300 shadow-sm">
                                 <CheckCircle className="w-3.5 h-3.5 text-primary" />
