@@ -35,6 +35,11 @@ import {
   FileEdit,
   Quote,
   UsersRound,
+  Ticket,
+  BookOpen,
+  Star,
+  Image,
+  UserPlus,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -67,28 +72,20 @@ const menuItems: MenuItem[] = [
     children: [
       { title: "Pages", href: "/admin/content/pages", icon: FileEdit },
       { title: "Articles", href: "/admin/content/articles", icon: FileText },
-      {
-        title: "Testimonials",
-        href: "/admin/content/testimonials",
-        icon: Quote,
-      },
+      { title: "Testimonials", href: "/admin/content/testimonials", icon: Quote },
       { title: "Team", href: "/admin/content/team", icon: UsersRound },
+      { title: "Portfolio", href: "/admin/content/portfolio", icon: Image },
+      { title: "Knowledge Base", href: "/admin/content/knowledge-base", icon: BookOpen },
+      { title: "Reviews", href: "/admin/content/reviews", icon: Star },
     ],
   },
   {
     title: "Clients",
     icon: Building2,
     children: [
-      {
-        title: "All Clients",
-        href: "/admin/clients/businesses",
-        icon: Building2,
-      },
-      {
-        title: "Messages",
-        href: "/admin/clients/messages",
-        icon: MessageSquare,
-      },
+      { title: "Business Clients", href: "/admin/clients/businesses", icon: Building2 },
+      { title: "Individual Clients", href: "/admin/clients/individuals", icon: UserPlus },
+      { title: "Messages", href: "/admin/clients/messages", icon: MessageSquare },
     ],
   },
   {
@@ -98,6 +95,7 @@ const menuItems: MenuItem[] = [
       { title: "Products", href: "/admin/ecommerce/products", icon: Package },
       { title: "Orders", href: "/admin/ecommerce/orders", icon: ShoppingCart },
       { title: "Inventory", href: "/admin/ecommerce/inventory", icon: Package },
+      { title: "Subscriptions", href: "/admin/subscriptions", icon: CreditCard },
       { title: "Donations", href: "/admin/donations", icon: Heart },
     ],
   },
@@ -105,17 +103,10 @@ const menuItems: MenuItem[] = [
     title: "Requests",
     icon: ClipboardList,
     children: [
-      {
-        title: "Service Inquiries",
-        href: "/admin/service-inquiries",
-        icon: ClipboardList,
-      },
+      { title: "Service Inquiries", href: "/admin/service-inquiries", icon: ClipboardList },
       { title: "Bookings", href: "/admin/bookings", icon: Calendar },
-      {
-        title: "Job Applications",
-        href: "/admin/job-applications",
-        icon: Briefcase,
-      },
+      { title: "Job Applications", href: "/admin/job-applications", icon: Briefcase },
+      { title: "Support Tickets", href: "/admin/support/tickets", icon: Ticket },
     ],
   },
   {
@@ -124,11 +115,7 @@ const menuItems: MenuItem[] = [
     children: [
       { title: "Email Campaigns", href: "/admin/email-campaigns", icon: Mail },
       { title: "Inbox", href: "/admin/communications/inbox", icon: Inbox },
-      {
-        title: "Newsletter",
-        href: "/admin/communications/newsletter",
-        icon: Newspaper,
-      },
+      { title: "Newsletter", href: "/admin/communications/newsletter", icon: Newspaper },
     ],
   },
   {
@@ -145,11 +132,7 @@ const menuItems: MenuItem[] = [
     icon: TestTube,
     children: [
       { title: "System Health", href: "/admin/testing", icon: HeartHandshake },
-      {
-        title: "Launch Checklist",
-        href: "/admin/testing/checklist",
-        icon: Rocket,
-      },
+      { title: "Launch Checklist", href: "/admin/testing/checklist", icon: Rocket },
     ],
   },
 ];
