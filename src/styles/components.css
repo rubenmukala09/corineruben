@@ -174,40 +174,40 @@
 /* Floating Card - simplified for performance */
 .soft-card {
   background: hsl(0 0% 100%);
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   padding: 2rem;
-  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: var(--shadow-card);
+  border: 1px solid hsl(240 6% 90%);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .soft-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
 }
 
 /* Physical Photo - Image container with depth */
 .soft-image {
-  border-radius: 1.5rem;
-  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-card);
+  border: 1px solid hsl(240 6% 92%);
   overflow: hidden;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .soft-image:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
 }
 
 /* Soft Modern hover utility - apply to any element */
 .soft-hover {
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .soft-hover:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
 }
 
 /* Subtle lift for smaller elements */
