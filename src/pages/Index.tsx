@@ -715,7 +715,7 @@ const Index = () => {
           </motion.div>
 
           <h1 className="font-serif-display text-5xl md:text-7xl lg:text-8xl font-semibold text-foreground mb-2 leading-tight">
-            Corine
+            {coupleName1}
           </h1>
           <motion.div
             initial={{ scale: 0 }}
