@@ -106,7 +106,7 @@ export const PurchaseThankYouNotification = forwardRef<HTMLDivElement>(function 
       </motion.div>
     </AnimatePresence>
   );
-};
+});
 
 // Empty Cart Help Notification Component
 export const CartEmptyHelpNotification = () => {
