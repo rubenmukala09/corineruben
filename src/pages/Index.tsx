@@ -75,7 +75,7 @@ const Index = forwardRef<HTMLDivElement>(function Index(_props, _ref) {
           </div>
 
           {/* 5. Services Grid */}
-          <div id="services" className="bg-muted/20">
+          <div id="services">
             <SiteOrientationGrid />
           </div>
 
