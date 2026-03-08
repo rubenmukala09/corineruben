@@ -1466,10 +1466,9 @@ function Business() {
                   </div>
                   <div className="flex flex-wrap justify-center gap-6 mb-8 relative z-10">
                     {["🔧 Resuscitate", "⚡ Optimize", "🛡️ Secure", "🚀 Develop"].map((item, i) => (
-                      <motion.div
+                      <div
                         key={i}
-                        className="flex items-center gap-2 text-sm group"
-                        whileHover={{ scale: 1.08, y: -2 }}
+                        className="flex items-center gap-2 text-sm group hover-scale"
                       >
                         <div className="w-10 h-10 bg-gradient-to-br from-primary/12 to-accent/8 rounded-xl flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300">
                           <span className="text-lg">{item.split(" ")[0]}</span>
