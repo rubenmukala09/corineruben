@@ -289,7 +289,7 @@ const AnnouncementsSection = forwardRef<HTMLElement, { t: (key: string) => strin
   if (announcements.length === 0) return null;
 
   return (
-    <section className="py-8 md:py-12 relative overflow-hidden">
+    <section ref={ref} className="py-8 md:py-12 relative overflow-hidden">
       <AuroraOrb position="right" color="rgba(180,140,210,0.25)" size={350} delay={2} />
       <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
