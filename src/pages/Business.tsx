@@ -1762,7 +1762,7 @@ function Business() {
                       </button>
                     </div>
                   </Card>
-                </motion.div>
+                </div>
               ))}
             </div>
 
