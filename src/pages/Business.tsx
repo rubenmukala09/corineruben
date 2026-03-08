@@ -1062,10 +1062,9 @@ function Business() {
                   { name: "AI Chatbot", price: "$1,200", note: "Full integration", color: "text-primary", tag: "POPULAR" },
                   { name: "Domain & Hosting", price: "FREE", note: "With any website", color: "text-primary", tag: "INCLUDED" },
                 ].map((addon, i) => (
-                  <motion.div
+                  <div
                     key={i}
-                    whileHover={{ y: -8, scale: 1.03 }}
-                    transition={{ type: "spring", stiffness: 300 }}
+                    className="hover-lift"
                   >
                     <Card className="p-4 text-center border-border/50 hover:shadow-[0_12px_40px_-12px_hsl(var(--primary)/0.12)] transition-all duration-500 hover:border-primary/30 relative group overflow-hidden">
                       <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.02] to-accent/[0.01] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
