@@ -483,18 +483,6 @@ a[role="button"]:active {
   animation: modalSlideOut 0.2s ease-in;
 }
 
-/* 3D card hover utilities */
-.card-3d-hover {
-  transform-style: preserve-3d;
-  transition:
-    transform 0.3s ease-out,
-    box-shadow 0.3s ease-out;
-}
-
-.card-3d-hover:hover {
-  transform: scale(1.02);
-  box-shadow: 0 20px 60px -10px hsl(var(--primary) / 0.5);
-}
 
 /* Image zoom effect */
 .image-zoom-container {
