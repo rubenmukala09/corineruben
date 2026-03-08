@@ -241,6 +241,7 @@ function CoordinatorDashboard() {
                   { label: "Articles", path: "/admin/content/articles", icon: FileText },
                   { label: "Testimonials", path: "/admin/content/testimonials", icon: Star },
                   { label: "Knowledge Base", path: "/admin/content/knowledge-base", icon: BookOpen },
+                  { label: "Internal Messages", path: "/portal/messages", icon: MessageSquare },
                   { label: "Individual Clients", path: "/admin/clients/individuals", icon: Eye },
                 ].map((link) => {
                   const Icon = link.icon;
