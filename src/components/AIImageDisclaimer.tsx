@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, forwardRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Camera, Lock, Shield } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
-export const AIImageDisclaimer = () => {
+export const AIImageDisclaimer = forwardRef<HTMLDivElement>(function AIImageDisclaimer(_props, _ref) {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
@@ -57,4 +57,4 @@ export const AIImageDisclaimer = () => {
       )}
     </AnimatePresence>
   );
-};
+});
