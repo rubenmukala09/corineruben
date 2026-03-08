@@ -195,7 +195,7 @@ export const PremiumGlassmorphismWidgets = () => {
               Results
             </span>
           </h2>
-          <p className="text-lg text-foreground/60 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Join Ohio families who trust us with their digital safety every day.
           </p>
         </motion.div>
