@@ -875,14 +875,10 @@ function Business() {
             {/* Platform integration pillars — 3D cards */}
             <div className="mt-24 grid md:grid-cols-3 gap-6 max-w-5xl mx-auto" style={{ perspective: "1200px" }}>
               {platformPillars.map((pillar, i) => (
-                <motion.div
+                <AnimatedSection
                   key={pillar.title}
-                  initial={{ opacity: 0, y: 40, rotateX: 12 }}
-                  whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.12, duration: 0.6 }}
-                  whileHover={{ y: -8, rotateX: -3, rotateY: 3 }}
-                  style={{ transformStyle: "preserve-3d" }}
+                  animation="fade-up"
+                  delay={i * 120}
                 >
                   <Card className="group p-8 rounded-2xl border-border/40 bg-card/95 backdrop-blur-sm text-center h-full hover:shadow-[0_20px_50px_-15px_hsl(var(--primary)/0.12)] hover:border-primary/25 transition-all duration-500 overflow-hidden relative">
                     <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/30 via-accent/20 to-primary/30 opacity-0 group-hover:opacity-100 transition-opacity" />
