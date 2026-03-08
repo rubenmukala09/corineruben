@@ -211,7 +211,7 @@ const PersonalCourtSection = ({ t, coupleNames }: { t: (key: string) => string; 
               <div className="text-center mt-6">
                 <div className="flex items-center justify-center gap-2">
                   <Heart className="w-3 h-3 text-rose-400 fill-rose-400" />
-                  <span className="font-sans-elegant text-xs text-muted-foreground font-semibold">Corine & Ruben</span>
+                  <span className="font-sans-elegant text-xs text-muted-foreground font-semibold">{coupleNames}</span>
                 </div>
               </div>
 
