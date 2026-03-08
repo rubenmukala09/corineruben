@@ -1,50 +1,37 @@
 
 
-## Audit Results: Mobile and Desktop Assessment
+## Mobile Performance Analysis (66%) — What's Actually Happening
 
-### Visual & UX Assessment
+After examining the audit data in detail, most of the 12 performance issues flagged are **not from your app code** — they come from platform-level infrastructure and cannot be fixed through code changes.
 
-**Mobile (390px)** — Tested homepage, RSVP, guestbook, gallery, footer:
-- Hero section: Clean layout, names centered, CTA buttons properly stacked
-- Navigation: Compact with hamburger menu, language/theme controls accessible
-- Guestbook: Form and message cards look great, proper spacing
-- Gallery: Masonry grid works well in 2 columns, lightbox functional
-- Footer: All links readable, newsletter form properly sized
-- RSVP: Multi-step form well-structured, stepper visible
+### Issues Outside Our Control (platform-level)
 
-**Desktop (1280px)** — Tested homepage:
-- Full navigation bar with all links visible and active indicator
-- Hero with floating badges ("Union Bénie", "Âmes sœurs") positioned correctly
-- Floating cards grid properly in 3 columns
-- Gift button with sparkle animation in bottom-right corner
+| Issue | Cause | Fixable? |
+|---|---|---|
+| **Redirects** (780ms) | Lovable staging → custom domain redirect | No |
+| **Render blocking requests** (2,240ms) | DM Sans font injected by Lovable badge | No (remove badge in Settings) |
+| **Unused JavaScript** (119 KiB) | Google Tag Manager scripts from Lovable | No |
+| **Cache lifetimes** (16 KiB) | Google Analytics cache headers | No |
+| **Document latency** (100ms) | Redirect chain | No |
+| **Network dependency tree** | Font chain through Google Fonts → gstatic | No |
 
-**Verdict: The app looks polished and responsive on both viewports. No layout breaks, overflow issues, or visual glitches found.**
+### Suspicious Audit Data
 
-### Console Errors Found
+The audit's LCP element references `bold-moves.webp` with text "Start your online journey / Build your website today" and a `div.services` selector — **this is NOT your wedding app**. This appears to be a domain parking page at `corineruben.com`. The CLS layout shift is also attributed to this parking page content.
 
-All remaining errors are React `forwardRef` warnings — no runtime crashes or data errors:
+This means the PageSpeed analysis may be hitting a cached or intermittent parking page at your custom domain rather than your actual app.
 
-1. **`MusicFloatingButton`** in `MusicPlayer.tsx` (line 107) — `AnimatePresence` passes a ref to it, but it's a plain function component
-2. **`PopChild` ref warning** — internal framer-motion warning triggered by `AnimatePresence mode="wait"` pattern across multiple pages (this is a known React 18 + framer-motion v12 issue)
+### What Can Be Improved In Code
 
-### Plan
+Only two items are partially addressable:
 
-**1. Fix `MusicFloatingButton` forwardRef warning**
-- In `src/components/MusicPlayer.tsx`, convert `MusicFloatingButton` from a plain function component to use `forwardRef<HTMLButtonElement>`, passing the ref to the outermost element inside `AnimatePresence` (the `motion.button`).
+1. **SEO score (58%)** — Likely caused by the parking page content being analyzed. Need to verify the custom domain is properly serving the app. If it is, we can add structured data and improve meta tags.
 
-**2. No action needed for `PopChild` warnings**
-- These are internal to `framer-motion`'s `AnimatePresence` implementation and cannot be fixed from application code. They're development-only warnings that don't appear in production builds. Upgrading framer-motion could resolve them, but the current version (v12) is already recent.
+2. **Font loading strategy** — The Google Fonts stylesheet in `index.html` is already using `media="print" onload="this.media='all'"` pattern (non-blocking). The render-blocking DM Sans flagged in the audit is from the Lovable badge, not our code.
 
-### Summary
+### Recommended Action
 
-| Area | Status |
-|------|--------|
-| Mobile layout | Excellent |
-| Desktop layout | Excellent |  
-| Navigation responsiveness | Working |
-| Guestbook page | Working, no errors |
-| Gallery page | Working, no errors |
-| RSVP page | Working, no errors |
-| Footer | Clean on both viewports |
-| Console errors | 1 fixable (`MusicFloatingButton`), rest are library-internal |
+The most impactful fix is **removing the Lovable badge** in your project Settings, which would eliminate the render-blocking DM Sans request (est. 2,240ms savings) and the unused JavaScript from Google Tag Manager (119 KiB). This alone could push the performance score significantly higher.
+
+No code changes are needed — the issues are infrastructure-level.
 

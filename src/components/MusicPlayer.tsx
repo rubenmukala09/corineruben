@@ -1,4 +1,4 @@
-import { useState, useRef, createContext, useContext, useCallback } from 'react';
+import { useState, useRef, createContext, useContext, useCallback, forwardRef } from 'react';
 import { VolumeX, Pause } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
@@ -104,13 +104,14 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   );
 };
 
-const MusicFloatingButton = () => {
+const MusicFloatingButton = forwardRef<HTMLButtonElement>((_, ref) => {
   const { isPlaying, currentTrack, stopMusic } = useMusic();
 
   return (
     <AnimatePresence>
       {isPlaying && currentTrack && (
         <motion.button
+          ref={ref}
           initial={{ opacity: 0, scale: 0, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0, y: 20 }}
@@ -143,6 +144,8 @@ const MusicFloatingButton = () => {
       )}
     </AnimatePresence>
   );
-};
+});
+
+MusicFloatingButton.displayName = 'MusicFloatingButton';
 
 export default MusicFloatingButton;
