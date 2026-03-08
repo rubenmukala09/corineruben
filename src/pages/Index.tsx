@@ -95,7 +95,7 @@ const Index = forwardRef<HTMLDivElement>(function Index(_props, _ref) {
           </div>
 
           {/* 9. Testimonials */}
-          <div id="testimonials" className="bg-muted/20">
+          <div id="testimonials" className="bg-muted/30">
             <TestimonialCarousel />
           </div>
 
