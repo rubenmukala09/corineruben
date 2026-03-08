@@ -124,12 +124,14 @@ export default function BookReader() {
   useEffect(() => {
     const raw = sessionStorage.getItem("bookReaderSession");
     if (!raw) {
+      toast({ title: "Session expired", description: "Please sign in with your Access ID to read your books.", variant: "destructive" });
       navigate("/resources");
       return;
     }
     try {
       setSession(JSON.parse(raw));
     } catch {
+      toast({ title: "Session error", description: "Please sign in again with your Access ID.", variant: "destructive" });
       navigate("/resources");
     }
   }, [navigate]);

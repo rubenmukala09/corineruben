@@ -816,10 +816,6 @@ function Resources() {
         </div>
       </section>
 
-      {/* Premier Protection - Insurance Section */}
-      
-
-
 
 
       {/* Emergency Scripts Section */}
