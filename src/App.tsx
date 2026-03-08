@@ -69,6 +69,7 @@ const StyleShowcase = lazy(() => import("./pages/StyleShowcase"));
 const FAQ = lazy(() => import("./pages/FAQ"));
 const HelpCenter = lazy(() => import("./pages/HelpCenter"));
 const Maintenance = lazy(() => import("./pages/Maintenance"));
+const BookReader = lazy(() => import("./pages/BookReader"));
 
 // Legal pages - lazy loaded
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
