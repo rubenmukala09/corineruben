@@ -106,6 +106,8 @@ function StaffDashboard() {
     }
   };
 
+  if (loading) return <PortalLoadingSkeleton />;
+
   return (
     <div className="min-h-screen bg-[#0B1120] text-gray-100">
       <header className="border-b border-gray-800/60 bg-[#111827]/80 backdrop-blur-sm">

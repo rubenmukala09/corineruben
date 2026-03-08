@@ -136,6 +136,8 @@ function SecretaryDashboard() {
     }
   };
 
+  if (loading) return <PortalLoadingSkeleton />;
+
   return (
     <div className="min-h-screen bg-[#0B1120] text-gray-100">
       {/* Header */}
