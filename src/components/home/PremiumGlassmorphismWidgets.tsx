@@ -507,7 +507,7 @@ export const PremiumGlassmorphismWidgets = () => {
                   <div className="text-xl font-black text-[#18305A]">
                     &lt;1s
                   </div>
-                  <div className="text-[10px] text-foreground/50 uppercase font-medium">
+                  <div className="text-[10px] text-muted-foreground uppercase font-medium">
                     Response
                   </div>
                 </div>
