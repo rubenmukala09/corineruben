@@ -30,8 +30,8 @@ export const ThreatTicker = () => {
         {items.map((item, i) => (
           <div key={i} className="flex items-center gap-2.5 text-sm font-semibold">
             <item.icon className={`w-4 h-4 ${item.color}`} />
-            <span className="text-foreground/85">{item.text}</span>
-            <span className="text-foreground/20 mx-2">•</span>
+            <span className="text-foreground">{item.text}</span>
+            <span className="text-muted-foreground mx-2">•</span>
           </div>
         ))}
       </motion.div>

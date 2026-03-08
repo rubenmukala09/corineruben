@@ -98,7 +98,7 @@ export const LiveSecurityStats = () => {
                   Real-Time Security Metrics
                 </h2>
               </div>
-              <Link to="/portal" className="inline-flex items-center gap-2 text-sm font-semibold text-white/50 hover:text-white transition-colors">
+              <Link to="/portal" className="inline-flex items-center gap-2 text-sm font-semibold text-white/80 hover:text-white transition-colors">
                 Full Dashboard <ArrowUpRight className="w-4 h-4" />
               </Link>
             </div>
@@ -119,7 +119,7 @@ export const LiveSecurityStats = () => {
                       <div className="text-3xl md:text-4xl font-black text-white mb-1">
                         <AnimatedCounter value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
                       </div>
-                      <div className="text-sm font-medium text-white/40">{stat.label}</div>
+                      <div className="text-sm font-medium text-white/70">{stat.label}</div>
                     </div>
                   </div>
                 </div>

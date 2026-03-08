@@ -230,7 +230,7 @@ const AutonomousDefenseHub = () => {
                       className="p-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm text-center"
                     >
                       <p className="text-2xl font-black text-white mb-1">{s.value}</p>
-                      <p className="text-xs text-white/50 uppercase tracking-wider">{s.label}</p>
+                      <p className="text-xs text-white/70 uppercase tracking-wider">{s.label}</p>
                     </div>
                   ))}
                 </div>
@@ -262,7 +262,7 @@ const AutonomousDefenseHub = () => {
                       <div className="w-3 h-3 rounded-full bg-red-500" />
                       <div className="w-3 h-3 rounded-full bg-yellow-500" />
                       <div className="w-3 h-3 rounded-full bg-green-500" />
-                      <span className="ml-2 text-xs text-white/40 font-mono">
+                      <span className="ml-2 text-xs text-white/60 font-mono">
                         invision-soc — live agent terminal
                       </span>
                     </div>
@@ -282,7 +282,7 @@ const AutonomousDefenseHub = () => {
                       <p className="text-orange-400">
                         [02:14:56] AGENT: Quarantining /payroll /HR /blueprints
                       </p>
-                      <p className="text-white/60">
+                      <p className="text-white/80">
                         [02:14:57] NOTIFY: Owner alerted via encrypted push
                       </p>
                       <p className="text-green-400">

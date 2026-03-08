@@ -279,8 +279,8 @@ export const MotivationalSection = () => {
               </div>
               <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
                 {["10% Veteran Discount", "30-Day Money-Back Guarantee", "No Contracts"].map((item) => (
-                  <span key={item} className="flex items-center gap-1.5 text-xs text-white/60">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400/70" />
+                  <span key={item} className="flex items-center gap-1.5 text-xs text-white/90">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                     {item}
                   </span>
                 ))}

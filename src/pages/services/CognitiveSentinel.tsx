@@ -273,7 +273,7 @@ const CognitiveSentinel = () => {
                 <h2 className="text-3xl md:text-4xl font-black text-white mb-4">
                   The next call your parent gets could be a scammer.
                 </h2>
-                <p className="text-white/60 mb-8 max-w-xl mx-auto">Let Cognitive Sentinel watch for you.</p>
+                <p className="text-white/85 mb-8 max-w-xl mx-auto">Let Cognitive Sentinel watch for you.</p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button
                     size="lg"
