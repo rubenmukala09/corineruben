@@ -272,6 +272,9 @@ function PublicRoutes() {
           <Route path="job-applications" element={<JobApplicationsList />} />
           <Route path="content/portfolio" element={<GraphicDesignAdmin />} />
           <Route path="content/portfolio-cms" element={<PortfolioAdmin />} />
+          <Route path="support/tickets" element={<SupportTicketsAdmin />} />
+          <Route path="content/knowledge-base" element={<KnowledgeBaseAdmin />} />
+          <Route path="content/reviews" element={<ReviewsAdmin />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />
