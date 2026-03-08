@@ -16,13 +16,13 @@
       hsl(var(--coral-100) / 0.15) 0%,
       transparent 50%
     );
-  backdrop-filter: blur(20px) saturate(1.6);
-  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border-radius: 1rem;
   padding: 1.25rem;
   border: 1px solid hsl(310 20% 92% / 0.6);
   box-shadow: var(--skeuo-shadow-ombre);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .skeuo-card:hover {
