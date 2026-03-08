@@ -235,44 +235,6 @@
   transform: scale(0.97);
 }
 
-/* Tilt on hover */
-.micro-tilt {
-  transition: transform 0.2s ease-out;
-  transform-style: preserve-3d;
-}
-
-.micro-tilt:hover {
-  transform: perspective(1000px) rotateX(2deg) rotateY(-2deg);
-}
-
-/* Search box reveal */
-.micro-search-reveal {
-  overflow: hidden;
-  width: 48px;
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.micro-search-reveal:focus-within {
-  width: 240px;
-}
-
-/* Toggle switch bounce */
-.micro-toggle {
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.micro-toggle .toggle-thumb {
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-/* Icon rotation */
-.micro-rotate:hover svg,
-.micro-rotate:hover .icon {
-  transform: rotate(8deg);
-  transition: transform 0.2s ease;
-}
 
 /* ===== INTERACTIVE HOVER REVEALS ===== */
 
