@@ -129,7 +129,7 @@ const FamilyEmergencyNetwork = () => {
                       <p className="text-yellow-400">⟳ Michael Morton — calling now</p>
                       <p className="text-yellow-400">⟳ James Morton — calling now</p>
                       <p className="text-blue-400">✓ Analyst #3 monitoring live</p>
-                      <p className="text-white/40">⟳ Police non-emergency — sending</p>
+                      <p className="text-white/70">⟳ Police non-emergency — sending</p>
                     </div>
                     <div className="mt-5 grid grid-cols-2 gap-2">
                       <button className="py-2 rounded-lg bg-red-500/20 border border-red-500/30 text-red-400 text-xs font-bold">Join Call</button>
