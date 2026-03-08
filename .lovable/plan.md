@@ -1,37 +1,24 @@
 
 
-## Mobile Performance Analysis (66%) — What's Actually Happening
+## Fix Console Errors and Ensure Responsiveness
 
-After examining the audit data in detail, most of the 12 performance issues flagged are **not from your app code** — they come from platform-level infrastructure and cannot be fixed through code changes.
+### Issues Found
 
-### Issues Outside Our Control (platform-level)
+**1. forwardRef warnings (2 console errors)**
+`SectionDivider` (line 100) and `AuroraOrb` (line 33) in `src/pages/Index.tsx` are plain function components that receive refs from parent `motion` components. React warns because they can't accept refs. Fix: wrap both (plus `GoldenCorners`) with `React.forwardRef`.
 
-| Issue | Cause | Fixable? |
-|---|---|---|
-| **Redirects** (780ms) | Lovable staging → custom domain redirect | No |
-| **Render blocking requests** (2,240ms) | DM Sans font injected by Lovable badge | No (remove badge in Settings) |
-| **Unused JavaScript** (119 KiB) | Google Tag Manager scripts from Lovable | No |
-| **Cache lifetimes** (16 KiB) | Google Analytics cache headers | No |
-| **Document latency** (100ms) | Redirect chain | No |
-| **Network dependency tree** | Font chain through Google Fonts → gstatic | No |
+**2. No runtime/network errors**
+The database tables (`guestbook`, `photos`) and storage bucket (`wedding-photos`) are now created. Network requests return 200. No fetch failures.
 
-### Suspicious Audit Data
+### Plan
 
-The audit's LCP element references `bold-moves.webp` with text "Start your online journey / Build your website today" and a `div.services` selector — **this is NOT your wedding app**. This appears to be a domain parking page at `corineruben.com`. The CLS layout shift is also attributed to this parking page content.
+**Edit `src/pages/Index.tsx`** — Convert three small decorative components to use `forwardRef`:
 
-This means the PageSpeed analysis may be hitting a cached or intermittent parking page at your custom domain rather than your actual app.
+- `AuroraOrb` (line ~33): Wrap with `forwardRef<HTMLDivElement, Props>`
+- `SectionDivider` (line ~100): Wrap with `forwardRef<HTMLDivElement, Props>`  
+- `GoldenCorners` (line ~123): Wrap with `forwardRef<HTMLDivElement, Props>`
 
-### What Can Be Improved In Code
+Each will accept a `ref` parameter and attach it to the outermost `<div>`. Import `forwardRef` at the top of the file.
 
-Only two items are partially addressable:
-
-1. **SEO score (58%)** — Likely caused by the parking page content being analyzed. Need to verify the custom domain is properly serving the app. If it is, we can add structured data and improve meta tags.
-
-2. **Font loading strategy** — The Google Fonts stylesheet in `index.html` is already using `media="print" onload="this.media='all'"` pattern (non-blocking). The render-blocking DM Sans flagged in the audit is from the Lovable badge, not our code.
-
-### Recommended Action
-
-The most impactful fix is **removing the Lovable badge** in your project Settings, which would eliminate the render-blocking DM Sans request (est. 2,240ms savings) and the unused JavaScript from Google Tag Manager (119 KiB). This alone could push the performance score significantly higher.
-
-No code changes are needed — the issues are infrastructure-level.
+No other code changes needed — the app is otherwise running cleanly on both mobile and desktop.
 
