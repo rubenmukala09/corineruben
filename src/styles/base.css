@@ -195,69 +195,66 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
 
   /* ===== SKEUOMORPHISM 2.0 - GLOBAL MATERIAL STYLES ===== */
   :root {
-    /* Skeuomorphic shadow layers - warm ombre tint */
+    /* Modern clean shadow layers */
     --skeuo-shadow-raised:
-      0 1px 2px hsl(288 25% 20% / 0.04),
-      0 2px 4px hsl(316 20% 30% / 0.03),
-      0 4px 8px hsl(18 30% 40% / 0.02);
-    --skeuo-shadow-pressed: inset 0 1px 2px hsl(288 20% 15% / 0.08);
+      0 1px 2px rgba(0, 0, 0, 0.04),
+      0 2px 4px rgba(0, 0, 0, 0.03);
+    --skeuo-shadow-pressed: inset 0 1px 2px rgba(0, 0, 0, 0.08);
     --skeuo-shadow-floating:
-      0 2px 8px hsl(288 25% 20% / 0.04),
-      0 8px 24px hsl(316 20% 30% / 0.06);
+      0 2px 8px rgba(0, 0, 0, 0.04),
+      0 8px 24px rgba(0, 0, 0, 0.06);
     --skeuo-highlight: linear-gradient(
       180deg,
       rgba(255, 255, 255, 0.25) 0%,
       transparent 50%
     );
     --skeuo-inset:
-      inset 0 1px 2px hsl(288 20% 15% / 0.06),
+      inset 0 1px 2px rgba(0, 0, 0, 0.06),
       inset 0 -1px 1px rgba(255, 255, 255, 0.5);
 
-    /* Warm ombre shadows - coral → lavender → violet */
+    /* Neutral modern shadows */
     --skeuo-shadow-coral:
-      0 2px 4px hsl(var(--coral-400) / 0.1),
-      0 4px 8px hsl(var(--coral-400) / 0.08),
-      0 8px 16px hsl(var(--coral-400) / 0.06);
+      0 2px 4px rgba(0, 0, 0, 0.04),
+      0 4px 8px rgba(0, 0, 0, 0.04),
+      0 8px 16px rgba(0, 0, 0, 0.03);
     --skeuo-shadow-lavender:
-      0 2px 4px hsl(var(--lavender-400) / 0.1),
-      0 4px 8px hsl(var(--lavender-400) / 0.08),
-      0 8px 16px hsl(var(--lavender-400) / 0.06);
+      0 2px 4px rgba(0, 0, 0, 0.04),
+      0 4px 8px rgba(0, 0, 0, 0.04),
+      0 8px 16px rgba(0, 0, 0, 0.03);
     --skeuo-shadow-mixed:
-      0 2px 4px hsl(var(--coral-400) / 0.08),
-      0 6px 12px hsl(var(--lavender-400) / 0.07),
-      0 12px 24px hsl(288 30% 30% / 0.05);
+      0 2px 4px rgba(0, 0, 0, 0.04),
+      0 6px 12px rgba(0, 0, 0, 0.05),
+      0 12px 24px rgba(0, 0, 0, 0.04);
 
-    /* Widget ombre shadow - the signature warm glow */
+    /* Clean card shadow */
     --skeuo-shadow-ombre:
-      0 2px 6px hsl(var(--coral-400) / 0.08),
-      0 6px 16px hsl(var(--lavender-400) / 0.06),
-      0 12px 28px hsl(288 30% 30% / 0.05),
+      0 1px 3px rgba(0, 0, 0, 0.04),
+      0 4px 12px rgba(0, 0, 0, 0.06),
       inset 0 1px 0 hsl(0 0% 100% / 0.9);
 
-    /* Glassmorphism + Skeuomorphism hybrid backgrounds */
+    /* Clean glass backgrounds */
     --skeuo-glass-bg: linear-gradient(
       135deg,
-      hsl(330 22% 99% / 0.92) 0%,
-      hsl(316 18% 96% / 0.68) 50%,
-      hsl(330 22% 99% / 0.85) 100%
+      hsl(0 0% 100% / 0.96) 0%,
+      hsl(0 0% 99% / 0.92) 100%
     );
-    --skeuo-glass-border: hsl(316 22% 90% / 0.65);
-    --skeuo-glass-blur: blur(28px) saturate(1.8) brightness(1.05);
+    --skeuo-glass-border: hsl(240 6% 90%);
+    --skeuo-glass-blur: none;
     --skeuo-glass-shadow:
-      0 12px 32px -16px hsl(288 25% 25% / 0.15),
-      0 4px 12px -6px hsl(316 20% 30% / 0.08),
+      0 4px 12px rgba(0, 0, 0, 0.06),
+      0 1px 3px rgba(0, 0, 0, 0.04),
       inset 0 1px 0 hsl(0 0% 100% / 0.92);
 
-    /* Premium coral-lavender gradient for accents */
+    /* Primary gradient for accents */
     --skeuo-gradient-accent: linear-gradient(
       135deg,
-      hsl(var(--coral-400)) 0%,
-      hsl(var(--lavender-500)) 100%
+      hsl(var(--primary)) 0%,
+      hsl(var(--accent)) 100%
     );
     --skeuo-gradient-accent-soft: linear-gradient(
       135deg,
-      hsl(var(--coral-100)) 0%,
-      hsl(var(--lavender-100)) 100%
+      hsl(var(--primary) / 0.08) 0%,
+      hsl(var(--accent) / 0.08) 100%
     );
   }
 
