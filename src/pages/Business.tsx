@@ -1079,7 +1079,7 @@ function Business() {
                       </div>
                       <div className="text-xs text-muted-foreground relative z-10">{addon.note}</div>
                     </Card>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
               <div className="mt-8 text-center">
