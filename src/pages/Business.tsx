@@ -1864,7 +1864,7 @@ function Business() {
                         {stat.value}
                       </p>
                       <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">{stat.label}</p>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
               </Card>
