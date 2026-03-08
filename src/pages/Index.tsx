@@ -662,7 +662,7 @@ const Index = () => {
         />
 
         <div className="absolute inset-0 mix-blend-soft-light z-[1]">
-          <img src={heroImg} alt="Wedding background" className="w-full h-full object-cover opacity-[0.1]" style={{ filter: 'saturate(0.4) brightness(1.2)' }} width={1920} height={1080} loading={isMobile ? "lazy" : "eager"} decoding="async" />
+          <img src={heroImg} alt="Wedding background" className="w-full h-full object-cover opacity-[0.1]" style={{ filter: 'saturate(0.4) brightness(1.2)' }} width={1920} height={1080} loading="eager" decoding="async" />
         </div>
 
         <motion.div
@@ -924,8 +924,8 @@ const Index = () => {
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
+              viewport={{ once: true, margin: '-100px' }}
+              transition={{ duration: 0.4 }}
             >
               <div className="relative">
                 <div className="glass-card-strong rounded-3xl p-2.5">
@@ -971,8 +971,8 @@ const Index = () => {
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
+              viewport={{ once: true, margin: '-100px' }}
+              transition={{ duration: 0.4 }}
             >
               <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-6">
                 <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('nav.story')}</p>
@@ -1024,7 +1024,7 @@ const Index = () => {
         <AuroraOrb position="left" color="rgba(180,140,210,0.2)" size={500} delay={1} />
         <AuroraOrb position="right" color="rgba(212,165,165,0.2)" size={380} delay={6} />
         <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 0.3 }} className="text-center mb-10">
             <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
               <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('badge.faith')}</p>
             </div>
@@ -1058,7 +1058,7 @@ const Index = () => {
               { icon: Gem, title: t('index.vows'), desc: t('index.vows.desc'), color: 'from-amber-500/20 to-orange-500/10', iconColor: 'text-amber-400', accent: 'amber', emoji: '💎' },
               { icon: Users, title: t('index.fellowship'), desc: t('index.fellowship.desc'), color: 'from-emerald-500/20 to-teal-500/10', iconColor: 'text-emerald-400', accent: 'emerald', emoji: '🤝' },
             ].map((item, i) =>
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 + i * 0.05 }}
+              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ delay: i * 0.04, duration: 0.3 }}
                 className="group glass-card-strong rounded-3xl p-6 card-hover relative overflow-hidden border border-border/20">
                 {/* Background glow */}
                 <div className={`absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br ${item.color} blur-2xl pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity duration-500`} />
@@ -1090,7 +1090,7 @@ const Index = () => {
       <section className="py-6 md:py-10 relative overflow-hidden section-below-fold">
         <AuroraOrb position="center" color="rgba(232,196,184,0.25)" size={450} delay={2} />
         <div className="container mx-auto px-6 md:px-12 max-w-6xl relative z-10">
-          <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-6">
+          <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 0.3 }} className="text-center mb-6">
             <div className="love-divider mb-3">
               <Heart className="w-5 h-5 text-rose-400 fill-rose-400 icon-glow" />
             </div>
@@ -1111,7 +1111,7 @@ const Index = () => {
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
+                transition={{ delay: i * 0.04, duration: 0.3 }}
                 className="glass-card-strong rounded-3xl p-1.5 overflow-hidden card-hover"
               >
                 <div className="relative rounded-[20px] overflow-hidden aspect-square group">
@@ -1137,7 +1137,8 @@ const Index = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.3 }}
             className="text-center mb-12"
           >
             <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
@@ -1161,7 +1162,7 @@ const Index = () => {
                   initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.12, duration: 0.6 }}
+                  transition={{ delay: i * 0.04, duration: 0.3 }}
                   whileHover={{ scale: 1.05, y: -6 }}
                   whileTap={{ scale: 0.96 }}
                   onClick={() => setActiveDetail(section.id)}
@@ -1225,7 +1226,7 @@ const Index = () => {
       <section className="py-8 md:py-12 relative overflow-hidden section-below-fold">
         <AuroraOrb position="center" color="rgba(180,140,210,0.2)" size={400} delay={4} />
         <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 0.3 }} className="text-center mb-10">
             <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
               <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('index.explore')}</p>
             </div>
@@ -1239,7 +1240,7 @@ const Index = () => {
 
           <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
             {features.map((feat, i) =>
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
+              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ delay: i * 0.04, duration: 0.3 }}>
                 <Link
                   to={feat.to}
                   className="glass-card-strong rounded-3xl p-7 flex flex-col items-center text-center card-hover group block h-full relative overflow-hidden"
@@ -1265,7 +1266,7 @@ const Index = () => {
         <AuroraOrb position="left" color="rgba(212,165,200,0.3)" size={400} delay={0} />
         <AuroraOrb position="right" color="rgba(139,107,138,0.2)" size={350} delay={6} />
         <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 0.3 }}>
             <div className="glass-card-strong rounded-full w-28 h-28 mx-auto mb-8 flex items-center justify-center overflow-hidden ring-4 ring-primary/15 relative">
               <img src={ringsImgSmall} alt="Wedding rings" className="w-full h-full object-cover" width={112} height={112} loading="lazy" decoding="async" />
               <div className="absolute inset-0 flex items-center justify-center bg-foreground/20" />

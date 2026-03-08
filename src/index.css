@@ -865,10 +865,6 @@
     filter: blur(40px) !important;
     will-change: transform;
   }
-  .section-below-fold {
-    content-visibility: auto;
-    contain-intrinsic-size: 0 800px;
-  }
 }
 
 /* Hide scrollbars in dialogs */
