@@ -104,6 +104,30 @@ export type Database = {
         }
         Relationships: []
       }
+      guestbook: {
+        Row: {
+          approved: boolean
+          created_at: string
+          id: string
+          message: string
+          name: string
+        }
+        Insert: {
+          approved?: boolean
+          created_at?: string
+          id?: string
+          message: string
+          name: string
+        }
+        Update: {
+          approved?: boolean
+          created_at?: string
+          id?: string
+          message?: string
+          name?: string
+        }
+        Relationships: []
+      }
       newsletter_subscribers: {
         Row: {
           created_at: string
@@ -119,6 +143,33 @@ export type Database = {
           created_at?: string
           email?: string
           id?: string
+        }
+        Relationships: []
+      }
+      photos: {
+        Row: {
+          approved: boolean
+          created_at: string
+          id: string
+          public_url: string
+          storage_path: string
+          uploader_name: string
+        }
+        Insert: {
+          approved?: boolean
+          created_at?: string
+          id?: string
+          public_url: string
+          storage_path: string
+          uploader_name: string
+        }
+        Update: {
+          approved?: boolean
+          created_at?: string
+          id?: string
+          public_url?: string
+          storage_path?: string
+          uploader_name?: string
         }
         Relationships: []
       }
