@@ -24,7 +24,7 @@ const COOKIE_PREFERENCES_KEY = "invision-cookie-preferences";
 const PAGE_VISIT_COUNT_KEY = "invision-page-visit-count";
 const VISIT_THRESHOLD = 1; // Show banner on first visit
 
-export function CookieConsent() {
+export const CookieConsent = forwardRef<HTMLDivElement>(function CookieConsent(_props, _ref) {
   const [showBanner, setShowBanner] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [preferences, setPreferences] = useState<CookiePreferences>({
