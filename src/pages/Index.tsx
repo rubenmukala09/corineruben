@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState, useRef, forwardRef } from "react";
+import { lazy, Suspense, useState, useRef, useEffect, forwardRef } from "react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -20,7 +20,6 @@ import { WorkshopsPromo } from "@/components/home/WorkshopsPromo";
 import { FamilyTrustSection } from "@/components/home/FamilyTrustSection";
 // NatureAccent removed for performance
 import { ArrowRight, CheckCircle, Phone, Shield } from "lucide-react";
-import { motion, useInView } from "framer-motion";
 
 const FAQPreview = lazy(() =>
   import("@/components/home/FAQPreview").then((m) => ({
@@ -46,8 +45,19 @@ const LazySection = ({ children }: { children: React.ReactNode }) => (
 
 const Index = forwardRef<HTMLDivElement>(function Index(_props, _ref) {
   const [scamShieldOpen, setScamShieldOpen] = useState(false);
-  const ctaRef = useRef(null);
-  const ctaInView = useInView(ctaRef, { once: true, margin: "-50px" });
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const [ctaVisible, setCtaVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ctaRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setCtaVisible(true); observer.disconnect(); } },
+      { rootMargin: "-50px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <PageTransition variant="fade">
@@ -138,11 +148,8 @@ const Index = forwardRef<HTMLDivElement>(function Index(_props, _ref) {
             </div>
 
             <div className="container mx-auto px-4 py-20 md:py-28 lg:py-32 text-center relative z-10">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={ctaInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                className="max-w-3xl mx-auto"
+              <div
+                className={`max-w-3xl mx-auto transition-all duration-500 ease-out ${ctaVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
               >
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-8">
                   <Shield className="w-4 h-4 text-accent" />
@@ -183,7 +190,7 @@ const Index = forwardRef<HTMLDivElement>(function Index(_props, _ref) {
                     </div>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             </div>
           </section>
 

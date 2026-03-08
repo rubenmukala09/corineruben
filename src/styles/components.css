@@ -210,15 +210,6 @@
   box-shadow: var(--shadow-card-hover);
 }
 
-/* Subtle lift for smaller elements */
-.soft-lift {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.soft-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-card-hover);
-}
 
 /* Premium presence shadow */
 .shadow-presence {
