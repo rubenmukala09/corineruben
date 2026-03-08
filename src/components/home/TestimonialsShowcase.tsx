@@ -35,7 +35,7 @@ export const TestimonialsShowcase = () => {
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full glass-widget mb-6">
               <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-              <span className="text-sm font-semibold text-foreground/80 tracking-wider uppercase">
+              <span className="text-sm font-semibold text-foreground tracking-wider uppercase">
                 What Our Families Say
               </span>
             </div>

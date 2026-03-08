@@ -217,7 +217,7 @@ export const MotivationalSection = () => {
                 <div className="w-12 h-12 mx-auto rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                   <step.icon className="w-6 h-6 text-primary" />
                 </div>
-                <span className="text-[10px] font-black text-primary/50 uppercase tracking-widest">
+                <span className="text-[10px] font-black text-primary uppercase tracking-widest">
                   Step {step.step}
                 </span>
                 <h3 className="text-lg font-bold text-foreground mt-1 mb-2">

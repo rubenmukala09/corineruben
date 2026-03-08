@@ -141,7 +141,7 @@ export const ScamAlertsSection = ({ onSubmitThreat }: ScamAlertsSectionProps) =>
                         <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center flex-shrink-0 shadow-[0_2px_8px_hsl(var(--primary)/0.3)]">
                           <CheckCircle className="w-3 h-3 md:w-3.5 md:h-3.5 text-white" />
                         </div>
-                        <span className="text-xs md:text-sm font-medium text-foreground/80">{tip}</span>
+                        <span className="text-xs md:text-sm font-medium text-foreground">{tip}</span>
                       </div>
                     ))}
                   </div>

@@ -54,7 +54,7 @@ export const ComparisonSection = () => {
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full glass-widget mb-6">
               <Zap className="w-4 h-4 text-primary" />
-              <span className="text-sm font-semibold text-foreground/80 tracking-wider uppercase">
+              <span className="text-sm font-semibold text-foreground tracking-wider uppercase">
                 The Difference is Clear
               </span>
             </div>
