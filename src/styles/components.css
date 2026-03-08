@@ -999,7 +999,7 @@ a[role="button"]:active {
     0 16px 40px -16px hsl(258 25% 25% / 0.07),
     inset 0 1px 0 hsl(0 0% 100% / 0.9),
     inset 0 -1px 0 hsl(258 20% 15% / 0.03);
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .widget-embossed:hover {
