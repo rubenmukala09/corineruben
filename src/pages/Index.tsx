@@ -480,7 +480,7 @@ const Index = () => {
 
   const coupleName1 = settings.couple_name_1 || 'Corine';
   const coupleName2 = settings.couple_name_2 || 'Ruben';
-  const weddingDate = new Date(settings.wedding_date || '2026-10-16T14:00:00');
+  const weddingDate = new Date(settings.wedding_date || '2026-10-16T15:00:00');
 
   // Gift dialog state
   const [giftOpen, setGiftOpen] = useState(false);
