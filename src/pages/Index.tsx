@@ -728,7 +728,7 @@ const Index = () => {
             </span>
           </motion.div>
           <p className="font-serif-display text-5xl md:text-7xl lg:text-8xl font-semibold text-foreground mb-6 leading-tight" aria-hidden="false">
-            Ruben
+            {coupleName2}
           </p>
 
           {/* Romantic subtitle */}
