@@ -314,7 +314,7 @@ export const PremiumGlassmorphismWidgets = () => {
                     >
                       {stat.value}
                     </div>
-                    <div className="text-xs text-foreground/60 font-semibold uppercase tracking-wide">
+                    <div className="text-xs text-muted-foreground font-semibold uppercase tracking-wide">
                       {stat.label}
                     </div>
                   </div>
