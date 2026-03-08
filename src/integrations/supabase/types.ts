@@ -2512,6 +2512,60 @@ export type Database = {
           },
         ]
       }
+      knowledge_base_articles: {
+        Row: {
+          author_id: string | null
+          category: string
+          content: string
+          created_at: string
+          display_order: number | null
+          excerpt: string | null
+          helpful_no: number | null
+          helpful_yes: number | null
+          id: string
+          is_published: boolean
+          slug: string
+          tags: string[] | null
+          title: string
+          updated_at: string
+          view_count: number | null
+        }
+        Insert: {
+          author_id?: string | null
+          category?: string
+          content: string
+          created_at?: string
+          display_order?: number | null
+          excerpt?: string | null
+          helpful_no?: number | null
+          helpful_yes?: number | null
+          id?: string
+          is_published?: boolean
+          slug: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+          view_count?: number | null
+        }
+        Update: {
+          author_id?: string | null
+          category?: string
+          content?: string
+          created_at?: string
+          display_order?: number | null
+          excerpt?: string | null
+          helpful_no?: number | null
+          helpful_yes?: number | null
+          id?: string
+          is_published?: boolean
+          slug?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+          view_count?: number | null
+        }
+        Relationships: []
+      }
       newsletter_subscribers: {
         Row: {
           created_at: string
@@ -3344,6 +3398,59 @@ export type Database = {
           },
         ]
       }
+      product_reviews: {
+        Row: {
+          course_id: string | null
+          created_at: string
+          helpful_count: number | null
+          id: string
+          is_verified_purchase: boolean | null
+          product_id: string | null
+          rating: number
+          review_text: string | null
+          status: string
+          title: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          course_id?: string | null
+          created_at?: string
+          helpful_count?: number | null
+          id?: string
+          is_verified_purchase?: boolean | null
+          product_id?: string | null
+          rating: number
+          review_text?: string | null
+          status?: string
+          title?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          course_id?: string | null
+          created_at?: string
+          helpful_count?: number | null
+          id?: string
+          is_verified_purchase?: boolean | null
+          product_id?: string | null
+          rating?: number
+          review_text?: string | null
+          status?: string
+          title?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_reviews_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       product_variants: {
         Row: {
           created_at: string
@@ -3687,6 +3794,83 @@ export type Database = {
           veteran_type?: string | null
         }
         Relationships: []
+      }
+      referral_codes: {
+        Row: {
+          code: string
+          created_at: string
+          id: string
+          is_active: boolean | null
+          successful_referrals: number | null
+          total_earnings: number | null
+          total_referrals: number | null
+          user_id: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          successful_referrals?: number | null
+          total_earnings?: number | null
+          total_referrals?: number | null
+          user_id: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          successful_referrals?: number | null
+          total_earnings?: number | null
+          total_referrals?: number | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      referral_tracking: {
+        Row: {
+          conversion_type: string | null
+          converted_at: string | null
+          created_at: string
+          id: string
+          referral_code_id: string
+          referred_email: string
+          referred_user_id: string | null
+          reward_amount: number | null
+          status: string
+        }
+        Insert: {
+          conversion_type?: string | null
+          converted_at?: string | null
+          created_at?: string
+          id?: string
+          referral_code_id: string
+          referred_email: string
+          referred_user_id?: string | null
+          reward_amount?: number | null
+          status?: string
+        }
+        Update: {
+          conversion_type?: string | null
+          converted_at?: string | null
+          created_at?: string
+          id?: string
+          referral_code_id?: string
+          referred_email?: string
+          referred_user_id?: string | null
+          reward_amount?: number | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "referral_tracking_referral_code_id_fkey"
+            columns: ["referral_code_id"]
+            isOneToOne: false
+            referencedRelation: "referral_codes"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       reports_snapshots: {
         Row: {
@@ -4186,6 +4370,48 @@ export type Database = {
         }
         Relationships: []
       }
+      support_tickets: {
+        Row: {
+          assigned_to: string | null
+          category: string
+          created_at: string
+          description: string
+          id: string
+          priority: Database["public"]["Enums"]["ticket_priority"]
+          status: Database["public"]["Enums"]["ticket_status"]
+          subject: string
+          ticket_number: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          category?: string
+          created_at?: string
+          description: string
+          id?: string
+          priority?: Database["public"]["Enums"]["ticket_priority"]
+          status?: Database["public"]["Enums"]["ticket_status"]
+          subject: string
+          ticket_number?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          assigned_to?: string | null
+          category?: string
+          created_at?: string
+          description?: string
+          id?: string
+          priority?: Database["public"]["Enums"]["ticket_priority"]
+          status?: Database["public"]["Enums"]["ticket_status"]
+          subject?: string
+          ticket_number?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       system_heartbeats: {
         Row: {
           created_at: string
@@ -4483,6 +4709,41 @@ export type Database = {
           },
         ]
       }
+      ticket_replies: {
+        Row: {
+          created_at: string
+          id: string
+          is_staff_reply: boolean
+          message: string
+          ticket_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_staff_reply?: boolean
+          message: string
+          ticket_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_staff_reply?: boolean
+          message?: string
+          ticket_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ticket_replies_ticket_id_fkey"
+            columns: ["ticket_id"]
+            isOneToOne: false
+            referencedRelation: "support_tickets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       tickets: {
         Row: {
           assigned_to: string | null
@@ -4709,6 +4970,42 @@ export type Database = {
           ip_address?: string | null
           metadata?: Json | null
           user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_alert_preferences: {
+        Row: {
+          alert_types: string[] | null
+          created_at: string
+          email_alerts: boolean | null
+          id: string
+          phone_number: string | null
+          push_alerts: boolean | null
+          sms_enabled: boolean | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          alert_types?: string[] | null
+          created_at?: string
+          email_alerts?: boolean | null
+          id?: string
+          phone_number?: string | null
+          push_alerts?: boolean | null
+          sms_enabled?: boolean | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          alert_types?: string[] | null
+          created_at?: string
+          email_alerts?: boolean | null
+          id?: string
+          phone_number?: string | null
+          push_alerts?: boolean | null
+          sms_enabled?: boolean | null
+          updated_at?: string
           user_id?: string
         }
         Relationships: []
