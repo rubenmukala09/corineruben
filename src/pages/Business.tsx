@@ -712,13 +712,7 @@ function Business() {
             />
 
             {/* Hero overview card — Premium glassmorphism */}
-            <motion.div
-              className="max-w-6xl mx-auto mb-20"
-              initial={{ opacity: 0, y: 60, rotateX: 8 }}
-              animate={platformInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              style={{ perspective: "1400px" }}
-            >
+            <AnimatedSection animation="scale-up" className="max-w-6xl mx-auto mb-20">
               <div className="relative rounded-3xl overflow-hidden glass-heavy shadow-3d-lg">
                 {/* Animated gradient border */}
                 <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/10 via-transparent to-accent/10 pointer-events-none" />
