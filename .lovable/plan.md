@@ -1,83 +1,92 @@
 
 
-# Website Audit Plan — InVision Network
+# Website Speed & Cleanup Plan
 
-## Issues Found
+## Problems Found
 
-### Critical Issues
+### 1. Massive CSS Bloat (~4,600 lines across 6 files)
+The project loads ALL CSS synchronously on every page. Most of it is dead code — hundreds of glass variants, premium 3D effects, material textures, loaders, and microinteractions that are either unused or overridden by `trending-ui.css` (which strips `backdrop-filter: none` on most glass classes anyway).
 
-1. **Training page renders blank/invisible content**
-   - The `/training` page shows only the footer — the main content area appears entirely white/invisible. This is a major usability failure; users cannot see any training plans or pricing.
-   - Root cause likely: CSS color/background conflict where text is rendering in white on a white background, or the hero section and content sections have no visible background contrast.
-   - **Fix**: Audit the Training.tsx page structure and ensure all sections have proper background colors and text contrast. Check for any CSS classes like `text-white` applied without a dark background.
+**Key offenders:**
+- `utilities.css` (1,403 lines): ~600 lines of glass/material/texture classes that are either dead or overridden
+- `trending-ui.css` (1,431 lines): ~400 lines of premium 3D/holographic/aurora effects unlikely to be used
+- `animations.css` (495 lines): ~200 lines of loader animations (glassy-loader-*) and glass-float/orbit keyframes
+- `components.css` (1,328 lines): Duplicate hover/card styles
 
-2. **Massive `forwardRef` warning spam (6+ warnings on every page load)**
-   - Components affected: `UnifiedCheckoutDialog`, `DonationModal`, `SEO`, `Navigation` (memo), `PrefetchLink`, `ShoppingCart`, `DialogContent`/`DialogPortal`
-   - These are React warnings about function components being given refs without `React.forwardRef()`. While they don't crash the app, they indicate broken ref forwarding that can cause subtle interaction bugs (e.g., Dialog focus management, Sheet animations).
-   - **Fix**: Wrap affected components in `React.forwardRef()` or remove unnecessary ref passing.
+### 2. framer-motion in Initial Bundle
+`Index.tsx` (the homepage) directly imports `motion` and `useInView` from framer-motion. Since Index is lazy-loaded, this pulls the 93KB library into the homepage chunk — the first thing users see. It's used only for the final CTA section's fade-in animation.
 
-### Performance Issues
+Additionally, 71 components import framer-motion, meaning it's effectively always loaded.
 
-3. **Hero image too large (1.3MB)**
-   - `hero-corporate-protection.webp` is 1,319KB — this is the single largest resource and takes 913ms to load. Should be compressed to under 200KB or served at appropriate dimensions.
-   - **Fix**: Compress the hero image or use responsive `srcset` with smaller variants.
+### 3. Duplicate/Conflicting CSS Definitions
+- `.glass-card` defined twice in `utilities.css` (lines 64-82 AND lines 340-367) with completely different styles
+- `.glass-dark` defined twice in `trending-ui.css` (lines 40-48 AND lines 58-83)
+- `.glass-colored` defined twice in `trending-ui.css` (lines 50-56 AND lines 85-105)
+- Multiple hover utilities doing the same thing: `hover-lift`, `soft-hover`, `soft-lift`, `micro-bounce`, `hover-depth` — all translateY(-2px)
 
-4. **framer-motion loaded on initial page (93KB)**
-   - Per the project's own memory/architecture rules, framer-motion should be excluded from the root level and only lazy-loaded. Currently loaded as part of the initial bundle.
-   - **Fix**: Ensure framer-motion imports in Index.tsx are isolated to lazy-loaded sub-components.
+### 4. Unused CSS Classes
+Many premium/3D classes appear to have no usage in components:
+- `premium-holographic`, `premium-orb`, `premium-float-spring`, `premium-3d-card`
+- `material-acrylic`, `material-acrylic-warm`, `material-metallic-*`
+- `glass-glow` (with continuous animation), `specular-highlight`
+- All `glassy-loader-*` classes (the loader system was disabled per memory notes)
 
-5. **DOM Content Loaded: 3.4s, Full Page Load: 3.6s**
-   - Acceptable but could improve. The 76 script files loaded on dev is expected (Vite HMR), but production builds should be verified.
+## Plan
 
-### Form Validation & Data Flow
+### Task 1: Trim Dead CSS (~1,500 lines removal)
 
-6. **Contact form uses `useState` instead of `react-hook-form`**
-   - The Contact page imports `useForm` and `zodResolver` but the `handleSubmit` function uses raw `useState` with manual form data. The Zod schema is imported (`contactFormSchema`) but may not be wired up for field-level validation feedback.
-   - **Fix**: Wire up `react-hook-form` with `contactFormSchema` for proper field-level error display.
+**`utilities.css`** — Remove:
+- Duplicate `.glass-card` definition (lines 340-367) — first definition at lines 64-82 is the one used
+- All `glass-*` variants that are overridden by `trending-ui.css`: `glass-ultra`, `glass-coral`, `glass-lavender`, `glass-navy`, `glass-frosted`, `glass-glow` (with its continuous animation), `glass-medium`, `glass-panel`, `glass-hero`, `glass-modal`, `glass-widget`, `glass-active`, `glass-focus`, `glass-minimal`, `glass-hover` (lines 206-478)
+- `glass-premium` with its 20px blur (line 196-204) — conflicts with performance standard
+- `material-frosted`, `material-frosted-warm`, `material-acrylic`, `material-acrylic-warm`, `material-metallic-*`, `specular-highlight`, `material-card-premium` (lines 1246-1403) — search first to confirm no usage
+- `shimmer-overlay` with infinite animation (lines 549-579)
+- `premium-gradient-bg` with infinite shimmer animation (lines 846-870)
 
-7. **Newsletter form validation is working correctly**
-   - Uses Zod schema, proper error handling, loading states, and success feedback. No issues found.
+**`trending-ui.css`** — Remove:
+- Duplicate `.glass-dark` and `.glass-colored` (keep second definition, remove first at lines 40-56)
+- `premium-holographic` with infinite 12s animation (lines 1000-1033)
+- `premium-aurora` with infinite 25s animation (lines 1035-1092)
+- `premium-orb` with infinite 20s morphing animation (lines 1137-1172)
+- `premium-float-spring` with infinite 8s animation (lines 1328-1347)
+- `premium-gradient-text` with infinite 6s animation (lines 1184-1208)
+- `text-gradient-animate` with infinite 5s animation (lines 844-869)
 
-### Navigation & Responsiveness
+**`animations.css`** — Remove:
+- All `glassy-loader-*` styles (lines 221-423) — the loader system is disabled per project memory
+- `glass-float`, `glass-orbit`, `glass-pulse` keyframes and utility classes if unused (lines 120-219)
 
-8. **Mobile navigation missing hamburger menu button on small screens**
-   - On 375px width, the nav shows logo + cart + phone + Login but no hamburger icon to open the mobile menu with all nav links. Users on mobile cannot access AI & Business, Learn & Train, Resources, etc.
-   - **Fix**: Ensure the hamburger menu button is visible on mobile breakpoints.
+**`components.css`** — Remove:
+- Duplicate hover utilities: keep `soft-card`/`soft-hover`, remove `soft-lift` (identical to `soft-hover`)
 
-9. **Navigation responsive layout looks functional on desktop** — all 7 nav links visible, cart, phone, donate, login all accessible.
+### Task 2: Remove framer-motion from Homepage
 
-### Minor Issues
+Replace the single `motion.div` + `useInView` usage in `Index.tsx` (final CTA section, lines 141-186) with a lightweight CSS-based `scroll-fade-up` + IntersectionObserver approach that's already available in the CSS system. This removes framer-motion from the homepage chunk entirely.
 
-10. **`body.style.overflow` manipulation in Navigation**
-    - Direct DOM mutation for scroll locking — works but could cause issues with other overlay components competing for the same property.
+### Task 3: Deduplicate Remaining CSS Conflicts
 
-11. **Edge function CORS headers missing newer Supabase client headers**
-    - The `process-payment` edge function uses basic CORS headers. Should include the extended headers per project standards.
+After the bulk removal, verify no remaining duplicates exist for:
+- `.glass-card` — ensure single definition
+- `.glass-dark` — ensure single definition  
+- `.glass-colored` — ensure single definition
 
----
+### Task 4: Verify No Broken Styles
 
-## Implementation Plan
+After trimming, search the codebase for any component referencing removed class names and replace with the closest surviving equivalent.
 
-### Task 1: Fix Training page visibility
-- Inspect `Training.tsx` full render output and all CSS classes
-- Ensure hero and content sections have proper background/text colors
-- Verify the page renders correctly on both desktop and mobile
+## Files to Modify
 
-### Task 2: Fix forwardRef warnings
-- Add `React.forwardRef()` to: `DonationModal`, `PrefetchLink`, `ShoppingCart`, `SEO`
-- These are the custom components triggering warnings; Dialog/Sheet warnings come from Radix internals and are lower priority
+| File | Change |
+|------|--------|
+| `src/styles/utilities.css` | Remove ~600 lines of dead glass/material/texture classes |
+| `src/styles/trending-ui.css` | Remove ~300 lines of unused premium 3D/animation effects, fix duplicates |
+| `src/styles/animations.css` | Remove ~200 lines of unused loader animations |
+| `src/styles/components.css` | Remove duplicate hover utilities |
+| `src/pages/Index.tsx` | Replace framer-motion with CSS scroll animation |
 
-### Task 3: Fix mobile navigation hamburger visibility
-- Ensure the hamburger menu toggle button renders on screens below `lg` breakpoint
-- Verify all nav links are accessible in the mobile drawer
-
-### Task 4: Optimize hero image size
-- Compress `hero-corporate-protection.webp` to under 200KB
-- Add `width`/`height` attributes to prevent layout shift
-
-### Task 5: Wire up Contact form validation properly
-- Connect `react-hook-form` + `zodResolver` with `contactFormSchema` for proper field-level error messages
-
-### Task 6: Update edge function CORS headers
-- Update `process-payment` and any other edge functions to include the full set of required CORS headers per project standards
+## Impact
+- CSS payload reduced by ~30-40%
+- framer-motion removed from homepage critical path
+- Fewer continuous CSS animations running in background (holographic, aurora, orb, shimmer)
+- Faster parse time, less layout/paint work
 
