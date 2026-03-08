@@ -14,15 +14,11 @@ import { toast } from 'sonner';
 import { useSiteImages } from '@/hooks/useSiteContent';
 
 
-import heroImg from '@/assets/hero-wedding-opt.webp';
-import flowersImg from '@/assets/flowers-lavender.jpg';
-import flowersImgSmall from '@/assets/flowers-lavender-opt.webp';
-import ringsImg from '@/assets/rings.jpg';
-import ringsImgSmall from '@/assets/rings-opt.webp';
-import cakeImg from '@/assets/cake.jpg';
-import cakeImgSmall from '@/assets/cake-small.jpg';
-import coupleImg from '@/assets/couple-lavender.jpg';
-import coupleImgSmall from '@/assets/couple-lavender-opt.webp';
+import heroImg from '@/assets/hero-wedding.jpg';
+import flowersImgSmall from '@/assets/flowers-lavender.jpg';
+import ringsImgSmall from '@/assets/rings.jpg';
+import cakeImgSmall from '@/assets/cake.jpg';
+import coupleImgSmall from '@/assets/couple-lavender.jpg';
 
 const WEDDING_DATE = new Date('2027-08-15T14:00:00');
 
@@ -332,7 +328,7 @@ const AnnouncementsSection = ({ t }: { t: (key: string) => string }) => {
             {announcements.length > 1 && (
               <div className="flex items-center justify-center gap-2 mt-6">
                 {announcements.map((_, i) => (
-                  <button key={i} onClick={() => setCurrentIndex(i)}
+                  <button key={i} onClick={() => setCurrentIndex(i)} type="button" aria-label={`Go to announcement ${i + 1}`}
                     className={`w-2 h-2 rounded-full transition-all duration-300 ${i === currentIndex ? 'bg-primary w-6' : 'bg-muted-foreground/25'}`} />
                 ))}
               </div>

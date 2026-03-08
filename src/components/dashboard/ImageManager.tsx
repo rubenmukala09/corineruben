@@ -68,7 +68,7 @@ const LayoutPreview = ({ layout, images }: { layout: string; images: SiteImage[]
       <div className="rounded-xl overflow-hidden border border-border/20 bg-muted/20">
         <div className="aspect-[16/5] relative flex items-center justify-center">
           {placeholders[0] ? (
-            <img src={placeholders[0].url} alt="" className="w-full h-full object-cover" />
+            <img src={placeholders[0].url} alt="" className="w-full h-full object-cover" loading="lazy" decoding="async" />
           ) : (
             <div className="flex flex-col items-center gap-1 text-muted-foreground/40">
               <Layout className="w-6 h-6" />
@@ -90,7 +90,7 @@ const LayoutPreview = ({ layout, images }: { layout: string; images: SiteImage[]
           {[0, 1, 2, 3].map(i => (
             <div key={i} className="aspect-square rounded-lg overflow-hidden bg-muted/30">
               {placeholders[i] ? (
-                <img src={placeholders[i].url} alt="" className="w-full h-full object-cover" />
+                <img src={placeholders[i].url} alt="" className="w-full h-full object-cover" loading="lazy" decoding="async" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-muted-foreground/30">
                   <Image className="w-3 h-3" />
@@ -111,7 +111,7 @@ const LayoutPreview = ({ layout, images }: { layout: string; images: SiteImage[]
           {[0, 1, 2, 3, 4, 5].map(i => (
             <div key={i} className={`rounded-lg overflow-hidden bg-muted/30 ${i % 3 === 1 ? 'aspect-square' : i % 3 === 2 ? 'aspect-[3/4]' : 'aspect-[4/3]'}`}>
               {placeholders[i] ? (
-                <img src={placeholders[i].url} alt="" className="w-full h-full object-cover" />
+                <img src={placeholders[i].url} alt="" className="w-full h-full object-cover" loading="lazy" decoding="async" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-muted-foreground/30">
                   <Image className="w-3 h-3" />

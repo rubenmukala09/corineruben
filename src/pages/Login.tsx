@@ -70,7 +70,7 @@ const Login = () => {
           {/* Rings image */}
           <div className="text-center mb-8 relative z-10">
             <div className="w-20 h-20 rounded-full mx-auto mb-5 overflow-hidden border-2 border-white/25 dark:border-white/10 shadow-[0_4px_30px_rgba(159,130,164,0.25)] relative">
-              <img src={ringsImg} alt="Wedding rings" className="w-full h-full object-cover" width={80} height={80} />
+              <img src={ringsImg} alt="Wedding rings" className="w-full h-full object-cover" width={80} height={80} loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
             </div>
             <h1 className="font-serif-display text-3xl font-semibold text-foreground mb-2">
