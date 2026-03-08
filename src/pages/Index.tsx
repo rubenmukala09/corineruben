@@ -44,7 +44,7 @@ const LazySection = ({ children }: { children: React.ReactNode }) => (
   <Suspense fallback={<div className="h-48" />}>{children}</Suspense>
 );
 
-const Index = () => {
+const Index = forwardRef<HTMLDivElement>(function Index(_props, _ref) {
   const [scamShieldOpen, setScamShieldOpen] = useState(false);
   const ctaRef = useRef(null);
   const ctaInView = useInView(ctaRef, { once: true, margin: "-50px" });
