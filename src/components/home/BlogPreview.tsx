@@ -85,7 +85,7 @@ export const BlogPreview = () => {
 
                   {/* Content */}
                   <div className="p-8 text-center">
-                    <div className="flex items-center justify-center gap-2 text-base text-foreground/70 mb-4">
+                    <div className="flex items-center justify-center gap-2 text-base text-muted-foreground mb-4">
                       <Calendar className="w-5 h-5" />
                       <span className="font-medium">{article.date}</span>
                     </div>

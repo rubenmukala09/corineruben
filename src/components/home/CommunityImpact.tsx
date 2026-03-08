@@ -138,7 +138,7 @@ export const CommunityImpact = () => {
               </span>
             </h3>
 
-            <p className="text-foreground/60 leading-relaxed text-sm">
+            <p className="text-muted-foreground leading-relaxed text-sm">
               We craft unique digital experiences with more than 4 years of
               expertise in design and digital transformation, providing our
               customers with exceptional service.
