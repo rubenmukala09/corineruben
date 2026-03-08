@@ -756,7 +756,7 @@ function Business() {
                                 <CheckCircle className="w-3.5 h-3.5 text-primary" />
                               </div>
                               <p className="text-foreground leading-relaxed">{item}</p>
-                            </motion.div>
+                            </div>
                           ))}
                         </div>
                       </motion.div>
