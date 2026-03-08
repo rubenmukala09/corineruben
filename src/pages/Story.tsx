@@ -188,6 +188,8 @@ const Story = () => {
                     src={img.src}
                     alt={img.alt}
                     className="w-full h-full object-cover rounded-[20px] group-hover:scale-110 transition-transform duration-700"
+                    width={600}
+                    height={600}
                     loading="lazy"
                     decoding="async"
                   />

@@ -1,34 +1,45 @@
 
 
-## Fix: Best Practices Issues (92% → higher)
+## Plan: Footer Visibility, Merge Details into Homepage, Merge Gallery into Story
 
-The screenshot shows two Best Practices issues:
+### 1. Fix Footer Text Visibility
 
-1. **Browser errors logged to the console** -- Likely caused by the Lovable staging environment's Tailwind CDN warning or network errors outside our control. Need to check for any application-level console errors we can fix.
+The footer uses `--footer-muted` which is too dim in both themes. Changes:
 
-2. **Displays images with incorrect aspect ratio** -- Several `<img>` tags are missing explicit `width`/`height` attributes, causing the browser to render them at dimensions that don't match their natural aspect ratio. Key offenders:
+- **`src/index.css`**: Increase `--footer-muted` lightness in light mode from `60%` to `75%` and in dark mode from `50%` to `70%`. Also increase `--footer-fg` opacity usage — remove `opacity-70`/`opacity-80` classes from footer text elements.
+- **`src/components/Footer.tsx`**: Remove `opacity-70`, `opacity-80`, `opacity-90` from text elements so all footer content is clearly readable. Update link columns to remove `/details` and `/gallery` routes since they'll be merged.
 
-### Images to fix
+### 2. Merge Details Content into Homepage
 
-| Location | Issue |
-|---|---|
-| `Index.tsx:660` hero background img | No `width`/`height` |
-| `Index.tsx:1035` flowers img | `width={297} height={428}` may not match natural ratio when CSS forces `w-full h-full` in a non-matching container |
-| `Story.tsx:187` gallery images | No `width`/`height` at all |
-| `Login.tsx:73` rings img | No `width`/`height` |
-| `Index.tsx:789, 867` small thumbnails | Already have width/height ✓ |
+Move all 5 detail sections (Ceremony, Reception, Dress Code, Accommodation, Transport) from `Details.tsx` into `Index.tsx` as a dedicated "Wedding Details" section with the same glassmorphic card grid, replacing the existing lightweight highlights cards (lines 498-545) with the full detail cards including times, locations, and descriptions.
 
-### Plan
+- **`src/pages/Index.tsx`**: Replace the existing 3-card highlights section with the full 5-card details grid (Ceremony, Reception, Dress Code, Accommodation, Transport) using the same icons and layout from `Details.tsx`.
+- **`src/pages/Details.tsx`**: Delete file.
+- **`src/App.tsx`**: Remove the `/details` route.
 
-1. **Add `width` and `height` attributes** to all `<img>` tags missing them, using values that match the CSS aspect ratio they're rendered at. This prevents the "incorrect aspect ratio" audit failure.
+### 3. Merge Gallery into Story Page
 
-2. **Review console errors** -- The Tailwind CDN warning is from the Lovable staging environment and cannot be fixed via code. Any application-level errors would need investigation, but current console logs show none.
+Add the masonry gallery grid from `Gallery.tsx` below the timeline in `Story.tsx`.
 
-### Changes
+- **`src/pages/Story.tsx`**: Import all gallery images and add a gallery section after the timeline, using the same masonry layout (`columns-2 md:columns-3`).
+- **`src/pages/Gallery.tsx`**: Delete file.
+- **`src/App.tsx`**: Remove the `/gallery` route.
 
-- **`src/pages/Index.tsx`**: Add `width`/`height` to the hero background image (line 660). Verify flowers image dimensions match container aspect ratio (line 1035).
-- **`src/pages/Story.tsx`**: Add `width`/`height` to gallery `<img>` tags (line 187-192).
-- **`src/pages/Login.tsx`**: Add `width`/`height` to the rings image (line 73).
+### 4. Update Navigation
 
-All changes are attribute-only additions -- no visual or functional impact.
+- **`src/components/Navigation.tsx`**: Remove "Details" and "Gallery" from the nav links array — reducing from 6 to 4 links (Home, Story, RSVP, Gifts).
+- **`src/components/Footer.tsx`**: Update footer link arrays to match.
+
+### 5. Update Explore Section
+
+- **`src/pages/Index.tsx`**: Remove the "Gallery" and "Details" cards from the `features` array in the explore/navigation section (lines 44-49), keeping only Story, Gifts, and RSVP.
+
+### Files Changed
+- `src/index.css` — footer color tokens
+- `src/components/Footer.tsx` — text visibility + updated links
+- `src/components/Navigation.tsx` — remove 2 nav items
+- `src/pages/Index.tsx` — add full details section, remove details/gallery from explore
+- `src/pages/Story.tsx` — add gallery section
+- `src/App.tsx` — remove 2 routes
+- Delete `src/pages/Details.tsx` and `src/pages/Gallery.tsx`
 
