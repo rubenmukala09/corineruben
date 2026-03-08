@@ -354,6 +354,21 @@ const Dashboard = () => {
             <TabsTrigger value="subscribers" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
               <AtSign className="w-3.5 h-3.5 mr-1.5" /> Subscribers
             </TabsTrigger>
+            <TabsTrigger value="guestbook" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
+              <MessageCircle className="w-3.5 h-3.5 mr-1.5" /> Guestbook
+            </TabsTrigger>
+            <TabsTrigger value="photos" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
+              <Camera className="w-3.5 h-3.5 mr-1.5" /> Photos
+            </TabsTrigger>
+            <TabsTrigger value="faq" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
+              <HelpCircle className="w-3.5 h-3.5 mr-1.5" /> FAQ
+            </TabsTrigger>
+            <TabsTrigger value="venue" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
+              <MapPin className="w-3.5 h-3.5 mr-1.5" /> Venue
+            </TabsTrigger>
+            <TabsTrigger value="settings" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
+              <Settings className="w-3.5 h-3.5 mr-1.5" /> Settings
+            </TabsTrigger>
             <TabsTrigger value="share" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
               <Share2 className="w-3.5 h-3.5 mr-1.5" /> Share
             </TabsTrigger>
