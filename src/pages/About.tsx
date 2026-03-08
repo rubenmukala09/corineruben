@@ -366,7 +366,7 @@ function About() {
               <div key={item.title} className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 text-center transition-all duration-300 hover:-translate-y-1">
                 <div className="text-4xl mb-4">{item.emoji}</div>
                 <div className="font-bold text-xl mb-2">{item.title}</div>
-                <div className="text-sm opacity-90">{item.desc}</div>
+                <div className="text-sm text-white/95">{item.desc}</div>
               </div>
             ))}
           </div>

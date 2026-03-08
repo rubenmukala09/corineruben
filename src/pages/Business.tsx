@@ -770,7 +770,7 @@ function Business() {
                               <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary/15 to-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-300 shadow-sm">
                                 <CheckCircle className="w-3.5 h-3.5 text-primary" />
                               </div>
-                              <p className="text-foreground/80 leading-relaxed">{item}</p>
+                              <p className="text-foreground leading-relaxed">{item}</p>
                             </motion.div>
                           ))}
                         </div>

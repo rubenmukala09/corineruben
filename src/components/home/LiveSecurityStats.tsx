@@ -119,7 +119,7 @@ export const LiveSecurityStats = () => {
                       <div className="text-3xl md:text-4xl font-black text-white mb-1">
                         <AnimatedCounter value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
                       </div>
-                      <div className="text-sm font-medium text-white/40">{stat.label}</div>
+                      <div className="text-sm font-medium text-white/70">{stat.label}</div>
                     </div>
                   </div>
                 </div>
