@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Calendar, ArrowLeft, ArrowRight, Eye, Share2 } from "lucide-react";
-import { motion } from "framer-motion";
+
 import { SEO } from "@/components/SEO";
 
 function ArticleDetail() {
