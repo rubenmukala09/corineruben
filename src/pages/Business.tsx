@@ -695,7 +695,7 @@ function Business() {
         </section>
 
         {/* ═══════════════════ COMPLETE PLATFORM ═══════════════════ */}
-        <section className="py-28 relative overflow-hidden" ref={platformRef}>
+        <section className="py-28 relative overflow-hidden">
           {/* Rich layered background */}
           <div className="absolute inset-0 bg-gradient-to-b from-muted/50 via-background to-muted/40" />
           
