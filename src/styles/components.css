@@ -530,41 +530,7 @@ a[role="button"]:active {
   transform: translateY(-2px);
 }
 
-/* Neumorphism inset - pressed state */
-.neumorphism-inset {
-  background: hsl(var(--background));
-  border-radius: 1rem;
-  box-shadow:
-    inset 4px 4px 8px rgba(0, 0, 0, 0.08),
-    inset -4px -4px 8px rgba(255, 255, 255, 0.9);
-}
-
-/* Neumorphism button primary */
-.neumorphism-btn {
-  background: hsl(var(--background));
-  border-radius: 1rem;
-  box-shadow:
-    6px 6px 12px rgba(0, 0, 0, 0.1),
-    -6px -6px 12px rgba(255, 255, 255, 0.95);
-  transition: all 0.2s ease-out;
-}
-
-.neumorphism-btn:hover {
-  box-shadow:
-    8px 8px 16px rgba(0, 0, 0, 0.12),
-    -8px -8px 16px rgba(255, 255, 255, 1);
-  transform: translateY(-1px);
-}
-
-.neumorphism-btn:active {
-  box-shadow:
-    inset 4px 4px 8px rgba(0, 0, 0, 0.1),
-    inset -4px -4px 8px rgba(255, 255, 255, 0.85);
-  transform: translateY(0);
-}
-
-/* Neumorphism widget - for floating elements */
-.neumorphism-widget {
+/* ===== PREMIUM MICRO-INTERACTIONS & 3D SURFACES ===== */
   background: hsl(var(--background));
   border-radius: 1.25rem;
   box-shadow:
