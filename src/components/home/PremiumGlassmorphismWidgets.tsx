@@ -464,7 +464,7 @@ export const PremiumGlassmorphismWidgets = () => {
                       <div className="font-bold text-[#18305A]">
                         {testimonial.name}
                       </div>
-                      <div className="text-xs text-foreground/50">
+                      <div className="text-xs text-muted-foreground">
                         {testimonial.role}
                       </div>
                     </div>
