@@ -770,7 +770,7 @@ function Business() {
                           className="group"
                         >
                         >
-                          <div className="relative rounded-2xl border border-border/50 bg-card/80 backdrop-blur-sm p-5 text-center hover:border-primary/30 hover:shadow-[0_12px_40px_-12px_hsl(var(--primary)/0.12)] transition-all duration-500 overflow-hidden">
+                          <div className="relative rounded-2xl border border-border/50 bg-card/80 backdrop-blur-sm p-5 text-center hover:border-primary/30 hover:shadow-[0_12px_40px_-12px_hsl(var(--primary)/0.12)] transition-all duration-500 overflow-hidden hover-lift">
                             {/* Hover glow */}
                             <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.04] to-accent/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                             
