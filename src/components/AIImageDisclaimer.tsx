@@ -12,6 +12,7 @@ export const AIImageDisclaimer = () => {
   }, []);
 
   return (
+    <div>
     <AnimatePresence>
       {visible && (
         <motion.div
