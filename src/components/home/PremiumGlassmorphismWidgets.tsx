@@ -339,7 +339,7 @@ export const PremiumGlassmorphismWidgets = () => {
                   />
                   {/* Stat Badge */}
                   <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-white/80 backdrop-blur-sm border border-white/50 shadow-sm">
-                    <span className="text-[10px] font-bold text-foreground/70">
+                    <span className="text-[10px] font-bold text-foreground/85">
                       {feature.stat}
                     </span>
                   </div>
