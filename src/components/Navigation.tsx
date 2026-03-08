@@ -127,7 +127,7 @@ const Navigation = () => {
                 setLanguage(langs[(idx + 1) % langs.length]);
               }}
               className="flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-bold rounded-full border border-white/20 text-white/80 hover:text-white hover:border-white/35 transition-all"
-              aria-label="Switch language"
+              aria-label={`Switch language, current: ${language.toUpperCase()}`}
             >
               <Globe className="w-3.5 h-3.5" />
               {language.toUpperCase()}
