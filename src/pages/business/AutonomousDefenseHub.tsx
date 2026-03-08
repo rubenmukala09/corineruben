@@ -230,7 +230,7 @@ const AutonomousDefenseHub = () => {
                       className="p-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm text-center"
                     >
                       <p className="text-2xl font-black text-white mb-1">{s.value}</p>
-                      <p className="text-xs text-white/50 uppercase tracking-wider">{s.label}</p>
+                      <p className="text-xs text-white/70 uppercase tracking-wider">{s.label}</p>
                     </div>
                   ))}
                 </div>
