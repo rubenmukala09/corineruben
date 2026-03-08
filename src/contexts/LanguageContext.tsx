@@ -218,7 +218,7 @@ const translations: Record<string, Record<Language, string>> = {
   'rsvp.step.table': { fr: 'Choisissez votre table', en: 'Choose Your Table', es: 'Elige Tu Mesa' },
   'rsvp.step.table.hint': { fr: 'Rejoignez vos amis ou créez une table famille', en: 'Join your friends or create a family table', es: 'Únete a tus amigos o crea una mesa familiar' },
   'rsvp.step.gift': { fr: 'Un cadeau ?', en: 'A Gift?', es: '¿Un Regalo?' },
-  'rsvp.step.gift.hint': { fr: 'Optionnel — votre présence est déjà un cadeau', en: 'Optional — your presence is already a gift', es: 'Opcional — tu presencia ya es un regalo' },
+  'rsvp.step.gift.hint': { fr: 'Optionnel, votre présence est déjà un cadeau', en: 'Optional, your presence is already a gift', es: 'Opcional, tu presencia ya es un regalo' },
   'rsvp.gift.message': { fr: 'Votre présence est notre plus beau cadeau. Si vous souhaitez contribuer, scannez le QR code ou copiez le lien de paiement.', en: 'Your presence is our greatest gift. If you wish to contribute, scan the QR code or copy the payment link.', es: 'Tu presencia es nuestro mayor regalo. Si deseas contribuir, escanea el código QR o copia el enlace de pago.' },
   'rsvp.gift.scanQR': { fr: 'Scannez ce code pour envoyer votre cadeau', en: 'Scan this code to send your gift', es: 'Escanea este código para enviar tu regalo' },
   'rsvp.gift.copyLink': { fr: 'Copier le lien', en: 'Copy payment link', es: 'Copiar enlace de pago' },
