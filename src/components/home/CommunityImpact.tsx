@@ -110,7 +110,7 @@ export const CommunityImpact = () => {
 
             {/* Glassmorphism Floating Badge */}
             <div className="absolute -bottom-3 -right-3 bg-white/70 backdrop-blur-xl rounded-xl shadow-lg px-5 py-3 border border-white/50">
-              <div className="text-xs font-medium text-foreground/60">
+              <div className="text-xs font-medium text-foreground/85">
                 Veteran-Owned
               </div>
               <div className="text-xl font-black text-[#18305A]">
