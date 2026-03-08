@@ -36,6 +36,7 @@ interface Ticket {
 function StaffDashboard() {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [loading, setLoading] = useState(true);
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [tasks, setTasks] = useState<DashboardTask[]>([]);
   const [tickets, setTickets] = useState<Ticket[]>([]);
