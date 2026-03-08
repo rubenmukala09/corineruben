@@ -1,45 +1,37 @@
 
 
-## Plan: Footer Visibility, Merge Details into Homepage, Merge Gallery into Story
+## Analysis: Mobile Performance Score Failing
 
-### 1. Fix Footer Text Visibility
+The PageSpeed Insights analysis **times out on mobile** ("Scores could not be computed due to an analysis error"). This happens when the page is too computationally expensive for Lighthouse's mobile CPU throttling (4x slowdown) to complete analysis within the timeout window.
 
-The footer uses `--footer-muted` which is too dim in both themes. Changes:
+### Root Causes
 
-- **`src/index.css`**: Increase `--footer-muted` lightness in light mode from `60%` to `75%` and in dark mode from `50%` to `70%`. Also increase `--footer-fg` opacity usage — remove `opacity-70`/`opacity-80` classes from footer text elements.
-- **`src/components/Footer.tsx`**: Remove `opacity-70`, `opacity-80`, `opacity-90` from text elements so all footer content is clearly readable. Update link columns to remove `/details` and `/gallery` routes since they'll be merged.
+The Index page is **1,403 lines** with these heavy mobile performance bottlenecks:
 
-### 2. Merge Details Content into Homepage
+1. **Multiple CSS `blur()` filters running simultaneously** — Three aurora orbs with `blur(80-100px)` + backdrop-blur on multiple elements. Blur is extremely expensive on mobile GPUs.
+2. **Many infinite framer-motion animations** — Floating badges, sparkle particles, aurora orbs, floating hearts, falling petals — all running concurrently on page load.
+3. **Large hero image loaded eagerly** — `hero-wedding-opt.webp` at 1920×1080 loaded with `loading="eager"` even on mobile where it's barely visible at 10% opacity.
+4. **`flowers-lavender-opt.webp` loaded with `fetchPriority="high"`** — This image in the Faith section shouldn't be high priority; it's below the fold.
 
-Move all 5 detail sections (Ceremony, Reception, Dress Code, Accommodation, Transport) from `Details.tsx` into `Index.tsx` as a dedicated "Wedding Details" section with the same glassmorphic card grid, replacing the existing lightweight highlights cards (lines 498-545) with the full detail cards including times, locations, and descriptions.
+### Plan
 
-- **`src/pages/Index.tsx`**: Replace the existing 3-card highlights section with the full 5-card details grid (Ceremony, Reception, Dress Code, Accommodation, Transport) using the same icons and layout from `Details.tsx`.
-- **`src/pages/Details.tsx`**: Delete file.
-- **`src/App.tsx`**: Remove the `/details` route.
+**1. Reduce blur effects on mobile**
+- Add a CSS media query that reduces or removes `blur()` on aurora orbs for screens < 768px (e.g., `blur(40px)` instead of `80-100px`)
+- Add `will-change: transform` to blurred elements for GPU compositing
 
-### 3. Merge Gallery into Story Page
+**2. Disable heavy decorative animations on mobile**
+- Use `useIsMobile()` hook in Index.tsx to conditionally skip `FallingPetals`, sparkle particles, and reduce floating badge animations on mobile
+- Reduce FloatingHearts count on mobile (14 → 6)
 
-Add the masonry gallery grid from `Gallery.tsx` below the timeline in `Story.tsx`.
+**3. Fix image loading priorities**
+- Change the flowers image `fetchPriority` from `"high"` to `"low"` (it's below the fold)
+- The hero image at 10% opacity could use `loading="lazy"` on mobile since it's barely perceptible
 
-- **`src/pages/Story.tsx`**: Import all gallery images and add a gallery section after the timeline, using the same masonry layout (`columns-2 md:columns-3`).
-- **`src/pages/Gallery.tsx`**: Delete file.
-- **`src/App.tsx`**: Remove the `/gallery` route.
-
-### 4. Update Navigation
-
-- **`src/components/Navigation.tsx`**: Remove "Details" and "Gallery" from the nav links array — reducing from 6 to 4 links (Home, Story, RSVP, Gifts).
-- **`src/components/Footer.tsx`**: Update footer link arrays to match.
-
-### 5. Update Explore Section
-
-- **`src/pages/Index.tsx`**: Remove the "Gallery" and "Details" cards from the `features` array in the explore/navigation section (lines 44-49), keeping only Story, Gifts, and RSVP.
+**4. Add `content-visibility: auto` to below-fold sections**
+- Apply CSS `content-visibility: auto` to sections below the hero to defer their rendering until scrolled into view
 
 ### Files Changed
-- `src/index.css` — footer color tokens
-- `src/components/Footer.tsx` — text visibility + updated links
-- `src/components/Navigation.tsx` — remove 2 nav items
-- `src/pages/Index.tsx` — add full details section, remove details/gallery from explore
-- `src/pages/Story.tsx` — add gallery section
-- `src/App.tsx` — remove 2 routes
-- Delete `src/pages/Details.tsx` and `src/pages/Gallery.tsx`
+- `src/pages/Index.tsx` — Conditional mobile optimizations for animations and image priorities
+- `src/index.css` — Mobile media queries for blur reduction and content-visibility
+- `src/components/FloatingHearts.tsx` — Reduce particle count on mobile
 
