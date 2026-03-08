@@ -118,7 +118,7 @@ const FamilyEmergencyNetwork = () => {
                       </div>
                       <div>
                         <p className="text-white font-bold text-sm">InVision Emergency Alert</p>
-                        <p className="text-white/40 text-xs">Just now · Kettering, OH</p>
+                        <p className="text-white/70 text-xs">Just now · Kettering, OH</p>
                       </div>
                       <div className="ml-auto w-2 h-2 rounded-full bg-red-500 animate-pulse" />
                     </div>
