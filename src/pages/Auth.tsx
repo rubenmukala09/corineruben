@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 import { z } from "zod";
 import invisionLogo from "@/assets/shield-logo.png";
-const authBackground = "/images/hero-corporate-protection.jpg";
+const authBackground = "/images/hero-corporate-protection.webp";
 import { Session, User as SupabaseUser } from "@supabase/supabase-js";
 import { ForgotPasswordModal } from "@/components/auth/ForgotPasswordModal";
 
