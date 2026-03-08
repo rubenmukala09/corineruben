@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface Heart {
   id: number;
@@ -13,6 +14,7 @@ interface Heart {
 }
 
 const FloatingHearts = () => {
+  const isMobile = useIsMobile();
   const { theme } = useTheme();
   const [hearts, setHearts] = useState<Heart[]>([]);
 
@@ -22,8 +24,9 @@ const FloatingHearts = () => {
       return;
     }
 
+    const count = isMobile ? 6 : 14;
     const symbols = ['✦', '✧', '♥', '·', '✦', '♥', '✧', '·', '✵', '♡'];
-    const generated: Heart[] = Array.from({ length: 14 }, (_, i) => ({
+    const generated: Heart[] = Array.from({ length: count }, (_, i) => ({
       id: i,
       x: 5 + Math.random() * 90,
       y: 5 + Math.random() * 90,
@@ -34,7 +37,7 @@ const FloatingHearts = () => {
       symbol: symbols[i % symbols.length],
     }));
     setHearts(generated);
-  }, [theme]);
+  }, [theme, isMobile]);
 
   if (theme !== 'dark' || hearts.length === 0) return null;
 

@@ -859,6 +859,18 @@
   }
 }
 
+/* ===== MOBILE PERFORMANCE OPTIMIZATIONS ===== */
+@media (max-width: 767px) {
+  .aurora-blob-css {
+    filter: blur(40px) !important;
+    will-change: transform;
+  }
+  .section-below-fold {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 800px;
+  }
+}
+
 /* Hide scrollbars in dialogs */
 [role="dialog"] {
   scrollbar-width: none;

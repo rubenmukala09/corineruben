@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useMusic } from '@/components/MusicPlayer';
@@ -59,9 +60,9 @@ const AuroraOrb = ({
 };
 
 /* Floating hearts component */
-const FloatingHearts = () =>
+const FloatingHearts = ({ isMobile = false }: { isMobile?: boolean }) =>
   <div className="fixed inset-0 pointer-events-none z-[5] overflow-hidden">
-    {Array.from({ length: 12 }).map((_, i) =>
+    {Array.from({ length: isMobile ? 5 : 12 }).map((_, i) =>
       <div
         key={i}
         className="absolute animate-float-heart text-primary/20"
@@ -77,23 +78,27 @@ const FloatingHearts = () =>
     )}
   </div>;
 
-/* Falling petals component */
-const FallingPetals = () =>
-  <div className="absolute inset-0 pointer-events-none overflow-hidden z-[2]">
-    {Array.from({ length: 8 }).map((_, i) =>
-      <div
-        key={i}
-        className="absolute animate-petal-fall"
-        style={{
-          left: `${10 + i * 12 % 80}%`,
-          top: '-30px',
-          '--duration': `${14 + i * 2.5}s`,
-          '--delay': `${i * 2}s`
-        } as React.CSSProperties}>
-        <span className="text-primary/15 text-lg">🌸</span>
-      </div>
-    )}
-  </div>;
+/* Falling petals component — hidden on mobile for performance */
+const FallingPetals = ({ isMobile = false }: { isMobile?: boolean }) => {
+  if (isMobile) return null;
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-[2]">
+      {Array.from({ length: 8 }).map((_, i) =>
+        <div
+          key={i}
+          className="absolute animate-petal-fall"
+          style={{
+            left: `${10 + i * 12 % 80}%`,
+            top: '-30px',
+            '--duration': `${14 + i * 2.5}s`,
+            '--delay': `${i * 2}s`
+          } as React.CSSProperties}>
+          <span className="text-primary/15 text-lg">🌸</span>
+        </div>
+      )}
+    </div>
+  );
+};
 
 /* Section divider with golden decorative line */
 const SectionDivider = ({ variant = 'heart' }: { variant?: 'heart' | 'sparkle' | 'line' }) => (
@@ -468,6 +473,7 @@ const ScriptureTransition = ({ t }: { t: (key: string) => string }) => {
 const Index = () => {
   const { t } = useLanguage();
   const { isPlaying, currentTrack, toggleTrack } = useMusic();
+  const isMobile = useIsMobile();
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [activeDetail, setActiveDetail] = useState<string | null>(null);
   const { images: homepageGalleryImages } = useSiteImages('homepage_gallery');
@@ -586,7 +592,7 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Ambient floating hearts */}
-      <FloatingHearts />
+      <FloatingHearts isMobile={isMobile} />
 
       {/* ===== FLOATING GIFT BUTTON ===== */}
       <motion.button
@@ -640,7 +646,7 @@ const Index = () => {
 
       {/* ===== HERO ===== */}
       <section className="w-full min-h-screen relative overflow-hidden flex flex-col items-center pt-8 pb-8">
-        <FallingPetals />
+        <FallingPetals isMobile={isMobile} />
 
         {/* Hero aurora orbs — pure CSS */}
         <div
@@ -657,7 +663,7 @@ const Index = () => {
         />
 
         <div className="absolute inset-0 mix-blend-soft-light z-[1]">
-          <img src={heroImg} alt="Wedding background" className="w-full h-full object-cover opacity-[0.1]" style={{ filter: 'saturate(0.4) brightness(1.2)' }} width={1920} height={1080} loading="eager" decoding="async" />
+          <img src={heroImg} alt="Wedding background" className="w-full h-full object-cover opacity-[0.1]" style={{ filter: 'saturate(0.4) brightness(1.2)' }} width={1920} height={1080} loading={isMobile ? "lazy" : "eager"} decoding="async" />
         </div>
 
         <motion.div
@@ -911,7 +917,7 @@ const Index = () => {
       <SectionDivider variant="sparkle" />
 
       {/* ===== ABOUT / LOVE STORY INTRO ===== */}
-      <section className="py-8 md:py-12 relative overflow-hidden">
+      <section className="py-8 md:py-12 relative overflow-hidden section-below-fold">
         <AuroraOrb position="left" color="rgba(212,165,200,0.3)" size={450} delay={0} />
         <AuroraOrb position="right" color="rgba(232,196,184,0.25)" size={350} delay={4} />
         <div className="container mx-auto px-6 md:px-12 max-w-6xl relative z-10">
@@ -1004,7 +1010,7 @@ const Index = () => {
       <SectionDivider variant="line" />
 
       {/* ===== SCRIPTURE — Transitioning Verses ===== */}
-      <section className="py-8 md:py-10 relative overflow-hidden">
+      <section className="py-8 md:py-10 relative overflow-hidden section-below-fold">
         <AuroraOrb position="center" color="rgba(139,107,138,0.2)" size={400} delay={3} />
         <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
           <TransitioningScripture t={t} />
@@ -1015,7 +1021,7 @@ const Index = () => {
       <SectionDivider variant="heart" />
 
       {/* ===== FAITH & GRACE WIDGETS ===== */}
-      <section className="py-8 md:py-10 relative overflow-hidden">
+      <section className="py-8 md:py-10 relative overflow-hidden section-below-fold">
         <AuroraOrb position="left" color="rgba(180,140,210,0.2)" size={500} delay={1} />
         <AuroraOrb position="right" color="rgba(212,165,165,0.2)" size={380} delay={6} />
         <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10">
@@ -1032,7 +1038,7 @@ const Index = () => {
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               className="glass-card-strong rounded-3xl overflow-hidden md:row-span-2 card-hover">
               <div className="relative h-full min-h-[300px]">
-                <img src={flowersImgSmall} alt="Wedding flowers arrangement" className="w-full h-full object-cover" width={297} height={428} loading="eager" decoding="async" fetchPriority="high" />
+                <img src={flowersImgSmall} alt="Wedding flowers arrangement" className="w-full h-full object-cover" width={297} height={428} loading="lazy" decoding="async" fetchPriority="low" />
                 <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/40 to-foreground/10" />
                 <div className="absolute bottom-0 left-0 right-0 p-5">
                   <div className="rounded-2xl bg-background/20 backdrop-blur-xl border border-white/20 p-5 shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
@@ -1082,7 +1088,7 @@ const Index = () => {
       <SectionDivider variant="sparkle" />
 
       {/* ===== LOVE GALLERY STRIP ===== */}
-      <section className="py-6 md:py-10 relative overflow-hidden">
+      <section className="py-6 md:py-10 relative overflow-hidden section-below-fold">
         <AuroraOrb position="center" color="rgba(232,196,184,0.25)" size={450} delay={2} />
         <div className="container mx-auto px-6 md:px-12 max-w-6xl relative z-10">
           <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-6">
@@ -1125,7 +1131,7 @@ const Index = () => {
       <SectionDivider variant="line" />
 
       {/* ===== WEDDING DETAILS — Interactive Cards ===== */}
-      <section className="py-8 md:py-12 relative overflow-hidden">
+      <section className="py-8 md:py-12 relative overflow-hidden section-below-fold">
         <AuroraOrb position="left" color="rgba(201,169,182,0.25)" size={400} delay={0} />
         <AuroraOrb position="right" color="rgba(180,140,210,0.2)" size={350} delay={5} />
         <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10">
@@ -1217,7 +1223,7 @@ const Index = () => {
       <SectionDivider variant="heart" />
 
       {/* ===== EXPLORE NAVIGATION ===== */}
-      <section className="py-8 md:py-12 relative overflow-hidden">
+      <section className="py-8 md:py-12 relative overflow-hidden section-below-fold">
         <AuroraOrb position="center" color="rgba(180,140,210,0.2)" size={400} delay={4} />
         <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
@@ -1256,7 +1262,7 @@ const Index = () => {
       <SectionDivider variant="sparkle" />
 
       {/* ===== CTA / RSVP ===== */}
-      <section className="py-8 md:py-12 relative overflow-hidden">
+      <section className="py-8 md:py-12 relative overflow-hidden section-below-fold">
         <AuroraOrb position="left" color="rgba(212,165,200,0.3)" size={400} delay={0} />
         <AuroraOrb position="right" color="rgba(139,107,138,0.2)" size={350} delay={6} />
         <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
