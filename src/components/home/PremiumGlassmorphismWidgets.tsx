@@ -444,7 +444,7 @@ export const PremiumGlassmorphismWidgets = () => {
                   </div>
 
                   {/* Quote */}
-                  <p className="text-foreground/70 mb-4 leading-relaxed font-medium">
+                  <p className="text-foreground/85 mb-4 leading-relaxed font-medium">
                     "{testimonial.quote}"
                   </p>
 
