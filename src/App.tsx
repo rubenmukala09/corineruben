@@ -210,6 +210,9 @@ function PublicRoutes() {
         <Route path="/portal/healthcare" element={<PageTransition><ProtectedRoute><HealthcareDashboard /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/my-courses" element={<PageTransition><ProtectedRoute><MyCourses /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/my-bookings" element={<PageTransition><ProtectedRoute><MyBookings /></ProtectedRoute></PageTransition>} />
+        <Route path="/portal/my-tickets" element={<PageTransition><ProtectedRoute><MyTickets /></ProtectedRoute></PageTransition>} />
+        <Route path="/portal/referrals" element={<PageTransition><ProtectedRoute><ReferralDashboard /></ProtectedRoute></PageTransition>} />
+        <Route path="/portal/analytics" element={<PageTransition><ProtectedRoute><UserAnalytics /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/courses/:id" element={<PageTransition><ProtectedRoute><CourseDetail /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/scam-check/:id" element={<PageTransition><ProtectedRoute><ScamCheckResult /></ProtectedRoute></PageTransition>} />
 
