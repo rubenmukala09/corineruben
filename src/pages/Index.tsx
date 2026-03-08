@@ -473,6 +473,7 @@ const ScriptureTransition = ({ t }: { t: (key: string) => string }) => {
 const Index = () => {
   const { t } = useLanguage();
   const { isPlaying, currentTrack, toggleTrack } = useMusic();
+  const isMobile = useIsMobile();
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [activeDetail, setActiveDetail] = useState<string | null>(null);
   const { images: homepageGalleryImages } = useSiteImages('homepage_gallery');
@@ -591,7 +592,7 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Ambient floating hearts */}
-      <FloatingHearts />
+      <FloatingHearts isMobile={isMobile} />
 
       {/* ===== FLOATING GIFT BUTTON ===== */}
       <motion.button
@@ -645,7 +646,7 @@ const Index = () => {
 
       {/* ===== HERO ===== */}
       <section className="w-full min-h-screen relative overflow-hidden flex flex-col items-center pt-8 pb-8">
-        <FallingPetals />
+        <FallingPetals isMobile={isMobile} />
 
         {/* Hero aurora orbs — pure CSS */}
         <div
@@ -662,7 +663,7 @@ const Index = () => {
         />
 
         <div className="absolute inset-0 mix-blend-soft-light z-[1]">
-          <img src={heroImg} alt="Wedding background" className="w-full h-full object-cover opacity-[0.1]" style={{ filter: 'saturate(0.4) brightness(1.2)' }} width={1920} height={1080} loading="eager" decoding="async" />
+          <img src={heroImg} alt="Wedding background" className="w-full h-full object-cover opacity-[0.1]" style={{ filter: 'saturate(0.4) brightness(1.2)' }} width={1920} height={1080} loading={isMobile ? "lazy" : "eager"} decoding="async" />
         </div>
 
         <motion.div
@@ -1037,7 +1038,7 @@ const Index = () => {
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               className="glass-card-strong rounded-3xl overflow-hidden md:row-span-2 card-hover">
               <div className="relative h-full min-h-[300px]">
-                <img src={flowersImgSmall} alt="Wedding flowers arrangement" className="w-full h-full object-cover" width={297} height={428} loading="eager" decoding="async" fetchPriority="high" />
+                <img src={flowersImgSmall} alt="Wedding flowers arrangement" className="w-full h-full object-cover" width={297} height={428} loading="lazy" decoding="async" fetchPriority="low" />
                 <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/40 to-foreground/10" />
                 <div className="absolute bottom-0 left-0 right-0 p-5">
                   <div className="rounded-2xl bg-background/20 backdrop-blur-xl border border-white/20 p-5 shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
