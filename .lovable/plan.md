@@ -1,39 +1,37 @@
 
 
-## Plan: Merge Pages and Fill Story Placeholders
+## Mobile Performance Analysis (66%) — What's Actually Happening
 
-### 1. Fill Story Event Placeholders
+After examining the audit data in detail, most of the 12 performance issues flagged are **not from your app code** — they come from platform-level infrastructure and cannot be fixed through code changes.
 
-Insert 5 placeholder story events into the `story_events` database table with romantic placeholder content (in EN/FR/ES) that you can later modify from the dashboard. Events like "First Meeting", "First Date", "The Trip That Changed Everything", "Moving In Together", "The Proposal".
+### Issues Outside Our Control (platform-level)
 
-Also update the `___________` placeholder translations in `LanguageContext.tsx` for the hero date and story events with temporary placeholder text (e.g., "August 15, 2027" for the date, and meaningful placeholder titles/descriptions for the story events).
+| Issue | Cause | Fixable? |
+|---|---|---|
+| **Redirects** (780ms) | Lovable staging → custom domain redirect | No |
+| **Render blocking requests** (2,240ms) | DM Sans font injected by Lovable badge | No (remove badge in Settings) |
+| **Unused JavaScript** (119 KiB) | Google Tag Manager scripts from Lovable | No |
+| **Cache lifetimes** (16 KiB) | Google Analytics cache headers | No |
+| **Document latency** (100ms) | Redirect chain | No |
+| **Network dependency tree** | Font chain through Google Fonts → gstatic | No |
 
-### 2. Merge Gallery into Story Page
+### Suspicious Audit Data
 
-- Move the Gallery page's **photo upload functionality** (upload panel, lightbox, uploaded photos from DB) into `Story.tsx`, placed below the existing gallery section
-- The Story page already has a masonry gallery section — extend it to also show user-uploaded photos and include the upload button + lightbox
-- Keep the existing admin-curated gallery grid, then add a "Guest Photos" section below with the upload form and community photos
+The audit's LCP element references `bold-moves.webp` with text "Start your online journey / Build your website today" and a `div.services` selector — **this is NOT your wedding app**. This appears to be a domain parking page at `corineruben.com`. The CLS layout shift is also attributed to this parking page content.
 
-### 3. Merge Venue into RSVP Page
+This means the PageSpeed analysis may be hitting a cached or intermittent parking page at your custom domain rather than your actual app.
 
-- Add the full Venue content (ceremony/reception cards, map embed, day schedule, transport, hotels) as a section **above** the RSVP form in `RSVP.tsx`
-- Import and use the same `useSiteSettings` and `useVenueData` hooks already used in `Venue.tsx`
-- Style it as a natural lead-in: "Here's where we're celebrating — now RSVP below"
+### What Can Be Improved In Code
 
-### 4. Remove Standalone Routes and Update Navigation
+Only two items are partially addressable:
 
-- **Remove** `/venue` and `/gallery` routes from `App.tsx`
-- **Remove** imports of `Venue` and `Gallery` pages
-- **Update Navigation.tsx**: Remove `/venue` and `/gallery` links; update nav to show Story (which now includes Gallery) and RSVP (which now includes Venue)
-- **Update Footer.tsx**: Update links to remove `/venue` and `/gallery`, point to `/story` and `/rsvp` instead
-- Keep `Venue.tsx` and `Gallery.tsx` files but they'll be unreachable (or delete them)
+1. **SEO score (58%)** — Likely caused by the parking page content being analyzed. Need to verify the custom domain is properly serving the app. If it is, we can add structured data and improve meta tags.
 
-### Files to Edit
-- **DB migration**: Insert 5 story events into `story_events` table
-- `src/contexts/LanguageContext.tsx` — Fill `___________` placeholders with temporary content
-- `src/pages/Story.tsx` — Add Gallery upload + lightbox + user photos section
-- `src/pages/RSVP.tsx` — Add Venue section above the RSVP form
-- `src/App.tsx` — Remove `/venue` and `/gallery` routes
-- `src/components/Navigation.tsx` — Remove venue/gallery nav links
-- `src/components/Footer.tsx` — Update links
+2. **Font loading strategy** — The Google Fonts stylesheet in `index.html` is already using `media="print" onload="this.media='all'"` pattern (non-blocking). The render-blocking DM Sans flagged in the audit is from the Lovable badge, not our code.
+
+### Recommended Action
+
+The most impactful fix is **removing the Lovable badge** in your project Settings, which would eliminate the render-blocking DM Sans request (est. 2,240ms savings) and the unused JavaScript from Google Tag Manager (119 KiB). This alone could push the performance score significantly higher.
+
+No code changes are needed — the issues are infrastructure-level.
 

@@ -36,9 +36,7 @@ const Navigation = () => {
   const navLinks = [
     { to: '/', label: t('nav.home') },
     { to: '/story', label: t('nav.story') },
-    { to: '/venue', label: t('nav.venue') },
     { to: '/rsvp', label: t('nav.rsvp') },
-    { to: '/gallery', label: t('nav.gallery2') },
     ...(user ? [{ to: '/dashboard', label: 'Dashboard' }] : []),
   ];
 

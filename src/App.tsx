@@ -46,10 +46,8 @@ import NotFound from "./pages/NotFound";
 import Staff from "./pages/Staff";
 import Enquiries from "./pages/Enquiries";
 import Registry from "./pages/Registry";
-import Venue from "./pages/Venue";
 import FAQ from "./pages/FAQ";
 import Guestbook from "./pages/Guestbook";
-import Gallery from "./pages/Gallery";
 import FloatingHearts from "@/components/FloatingHearts";
 import MusicFloatingButton, { MusicProvider } from "@/components/MusicPlayer";
 import { Toaster } from "@/components/ui/toaster";
@@ -92,10 +90,8 @@ const App = () => (
                     <Route path="/staff" element={<Staff />} />
                     <Route path="/enquiries" element={<Enquiries />} />
                     <Route path="/registry" element={<Registry />} />
-                    <Route path="/venue" element={<Venue />} />
                     <Route path="/faq" element={<FAQ />} />
                     <Route path="/guestbook" element={<Guestbook />} />
-                    <Route path="/gallery" element={<Gallery />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                   <Footer />

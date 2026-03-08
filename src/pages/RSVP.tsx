@@ -4,10 +4,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Users, Utensils, ChevronRight, Plus, X, UserPlus, Crown, Check, Gift, Heart, Sparkles, QrCode, Copy, ArrowRight, EyeOff, Wine, Globe, AlertTriangle, Gem, Pencil, Loader2 } from 'lucide-react';
+import { Users, Utensils, ChevronRight, Plus, X, UserPlus, Crown, Check, Gift, Heart, Sparkles, QrCode, Copy, ArrowRight, EyeOff, Wine, Globe, AlertTriangle, Gem, Pencil, Loader2, MapPin, Clock, Car, Train, ParkingCircle, Hotel, ExternalLink, Church, PartyPopper, Camera, Music, Cake, Waves } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { useSiteSettings, useVenueData } from '@/hooks/useSiteContent';
 import ringsImg from '@/assets/rings.jpg';
 
 // Table seating config — 30 tables with flower/nature names
@@ -97,8 +98,27 @@ const drinkOptions = [
 // Payment link placeholder — replace with actual payment link
 const PAYMENT_BASE_URL = 'https://pay.example.com/corine-ruben';
 
+const ICON_MAP: Record<string, React.ElementType> = {
+  Sparkles, Church, Camera, PartyPopper, Waves, Cake, Music,
+  Car, Train, ParkingCircle,
+};
+
+const TRANSPORT_ICON_MAP: Record<string, React.ElementType> = {
+  Car, Train, ParkingCircle,
+};
+
+const TRANSPORT_LABEL_MAP: Record<string, string> = {
+  car: 'venue.byCar',
+  transit: 'venue.byTransit',
+  parking: 'venue.parking',
+};
+
+const fadeUp = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } };
+
 const RSVP = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const { settings, loading: settingsLoading } = useSiteSettings();
+  const { schedule, hotels, transport, loading: venueLoading } = useVenueData();
   const [step, setStep] = useState<Step>('info');
 
   // Edit RSVP modal state
@@ -341,8 +361,216 @@ const RSVP = () => {
   const allSteps: Step[] = ['info', 'meal', 'table', 'gift'];
   const currentStepIndex = allSteps.indexOf(step);
 
+  const ceremonyAddress = settings.ceremony_address || '';
+  const ceremonyMapsUrl = settings.ceremony_maps_url || '';
+  const ceremonyTime = settings.ceremony_time || '14:00';
+  const receptionAddress = settings.reception_address || '';
+  const receptionMapsUrl = settings.reception_maps_url || '';
+  const receptionTime = settings.reception_time || '18:00';
+  const mapEmbedUrl = settings.map_embed_url || '';
+
+  const getTransportDesc = (item: typeof transport[number]) => {
+    if (language === 'fr' && item.description_fr) return item.description_fr;
+    if (language === 'es' && item.description_es) return item.description_es;
+    return item.description;
+  };
+
+  const getScheduleLabel = (item: typeof schedule[number]) => {
+    if (language === 'fr' && item.label_fr) return item.label_fr;
+    if (language === 'es' && item.label_es) return item.label_es;
+    return item.label;
+  };
+
   return (
     <div className="min-h-screen pt-28 pb-20 relative">
+
+      {/* ===== VENUE SECTION ===== */}
+      <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 mb-20">
+        <motion.div initial="hidden" animate="show" variants={fadeUp} className="text-center mb-14">
+          <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
+            <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('venue.badge')}</p>
+          </div>
+          <h2 className="font-serif-display text-4xl md:text-5xl text-foreground mb-4 font-semibold" style={{ letterSpacing: '-0.5px' }}>
+            {t('venue.title')}
+          </h2>
+          <p className="font-sans-elegant text-base text-muted-foreground max-w-md mx-auto" style={{ lineHeight: 1.6 }}>
+            {t('venue.subtitle')}
+          </p>
+        </motion.div>
+
+        {/* Ceremony & Reception cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
+          {[
+            { label: t('venue.ceremony'), address: ceremonyAddress, url: ceremonyMapsUrl, time: ceremonyTime, emoji: '⛪' },
+            { label: t('venue.reception'), address: receptionAddress, url: receptionMapsUrl, time: receptionTime, emoji: '🎉' },
+          ].map(({ label, address, url, time, emoji }, i) => (
+            <motion.div
+              key={label}
+              initial="hidden" animate="show" variants={fadeUp}
+              transition={{ delay: i * 0.1 }}
+              className="glass-card-strong rounded-3xl p-7"
+            >
+              <div className="flex items-start gap-4 mb-5">
+                <div className="w-14 h-14 rounded-2xl glass-card flex items-center justify-center text-2xl flex-shrink-0">
+                  {emoji}
+                </div>
+                <div>
+                  <p className="font-sans-elegant text-xs tracking-[0.2em] uppercase text-muted-foreground mb-1">{label}</p>
+                  <p className="font-serif-display text-xl font-semibold text-foreground">{time}</p>
+                </div>
+              </div>
+              {address && (
+                <div className="flex items-start gap-2 mb-4">
+                  <MapPin className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="font-sans-elegant text-sm text-muted-foreground">{address}</p>
+                </div>
+              )}
+              {url && (
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full btn-primary text-xs font-semibold"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  {t('venue.getDirections')}
+                </a>
+              )}
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Map embed */}
+        {mapEmbedUrl && (
+          <motion.div
+            initial="hidden" animate="show" variants={fadeUp} transition={{ delay: 0.2 }}
+            className="glass-card-strong rounded-3xl overflow-hidden mb-10"
+          >
+            <iframe
+              title="Venue location"
+              src={mapEmbedUrl}
+              width="100%"
+              height="280"
+              style={{ border: 0 }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </motion.div>
+        )}
+
+        {/* Day Schedule */}
+        {schedule.length > 0 && (
+          <motion.div
+            initial="hidden" animate="show" variants={fadeUp} transition={{ delay: 0.25 }}
+            className="glass-card-strong rounded-3xl p-8 mb-10"
+          >
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-10 h-10 rounded-2xl glass-card flex items-center justify-center">
+                <Clock className="w-5 h-5 text-primary" />
+              </div>
+              <h3 className="font-serif-display text-2xl font-semibold text-foreground">{t('venue.schedule')}</h3>
+            </div>
+            <div className="space-y-0">
+              {schedule.map((item, i) => {
+                const Icon = ICON_MAP[item.icon] || Sparkles;
+                return (
+                  <div key={item.id} className="flex gap-4 group">
+                    <div className="flex flex-col items-center">
+                      <div className={`w-8 h-8 rounded-full glass-card border border-border/50 flex items-center justify-center flex-shrink-0 ${item.color}`}>
+                        <Icon className="w-3.5 h-3.5" />
+                      </div>
+                      {i < schedule.length - 1 && (
+                        <div className="w-px flex-1 bg-border/40 my-1" style={{ minHeight: '28px' }} />
+                      )}
+                    </div>
+                    <div className="pb-5 pt-0.5">
+                      <span className="font-sans-elegant text-xs font-bold text-primary tracking-wide">{item.time}</span>
+                      <p className="font-sans-elegant text-sm text-foreground font-medium mt-0.5">{getScheduleLabel(item)}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Getting There */}
+        {transport.length > 0 && (
+          <motion.div
+            initial="hidden" animate="show" variants={fadeUp} transition={{ delay: 0.3 }}
+            className="glass-card-strong rounded-3xl p-8 mb-10"
+          >
+            <h3 className="font-serif-display text-2xl font-semibold text-foreground mb-6">{t('venue.gettingThere')}</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {transport.map((item) => {
+                const Icon = TRANSPORT_ICON_MAP[item.icon] || Car;
+                return (
+                  <div key={item.id} className="glass-card rounded-2xl p-5">
+                    <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center mb-3">
+                      <Icon className="w-5 h-5 text-primary-foreground" />
+                    </div>
+                    <p className="font-sans-elegant text-sm font-semibold text-foreground mb-2">{t(TRANSPORT_LABEL_MAP[item.type] || 'venue.byCar')}</p>
+                    <p className="font-sans-elegant text-xs text-muted-foreground leading-relaxed">{getTransportDesc(item)}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Accommodation */}
+        {hotels.length > 0 && (
+          <motion.div initial="hidden" animate="show" variants={fadeUp} transition={{ delay: 0.35 }}>
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-10 h-10 rounded-2xl glass-card flex items-center justify-center">
+                <Hotel className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-serif-display text-2xl font-semibold text-foreground">{t('venue.accommodation')}</h3>
+                <p className="font-sans-elegant text-xs text-muted-foreground">{t('venue.accommodation.subtitle')}</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {hotels.map((hotel, i) => (
+                <motion.div
+                  key={hotel.id}
+                  initial="hidden" animate="show" variants={fadeUp}
+                  transition={{ delay: 0.35 + i * 0.07 }}
+                  className="glass-card-strong rounded-2xl p-5 flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex items-start justify-between mb-1">
+                      <p className="font-sans-elegant text-sm font-semibold text-foreground">{hotel.name}</p>
+                      <span className="font-sans-elegant text-xs font-bold text-primary">{hotel.price}</span>
+                    </div>
+                    <div className="flex gap-0.5 mb-2">
+                      {Array.from({ length: hotel.stars }).map((_, j) => (
+                        <span key={j} className="text-amber-400 text-xs">★</span>
+                      ))}
+                    </div>
+                    <p className="font-sans-elegant text-xs text-muted-foreground mb-3">{hotel.description}</p>
+                    <div className="flex items-center gap-1.5 mb-4">
+                      <MapPin className="w-3.5 h-3.5 text-muted-foreground" />
+                      <span className="font-sans-elegant text-xs text-muted-foreground">{hotel.distance} from venue</span>
+                    </div>
+                  </div>
+                  <a
+                    href={hotel.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline font-sans-elegant"
+                  >
+                    <ExternalLink className="w-3 h-3" />
+                    {t('venue.bookNow')}
+                  </a>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </div>
+
+      {/* ===== RSVP SECTION ===== */}
       <div className="container mx-auto px-6 md:px-12 max-w-2xl relative z-10">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
