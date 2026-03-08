@@ -601,9 +601,10 @@ function Resources() {
             <Button
               size="xl"
               variant="heroOutline"
-              asChild
+              onClick={() => setReadBooksOpen(true)}
             >
-              <Link to="/training#pricing">Get Protection Plan</Link>
+              <BookOpen className="h-5 w-5 mr-2" />
+              📖 Read Your Books
             </Button>
           </div>
         </Hero>
