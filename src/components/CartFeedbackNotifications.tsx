@@ -223,7 +223,7 @@ export const CartEmptyHelpNotification = forwardRef<HTMLDivElement>(function Car
       </motion.div>
     </AnimatePresence>
   );
-};
+});
 
 // Combined Feedback Notifications Component
 export const CartFeedbackNotifications = () => {
