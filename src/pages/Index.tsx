@@ -249,7 +249,8 @@ const PersonalCourtSection = forwardRef<HTMLElement, { t: (key: string) => strin
       </div>
     </section>
   );
-};
+});
+PersonalCourtSection.displayName = 'PersonalCourtSection';
 
 
 const AnnouncementsSection = ({ t }: { t: (key: string) => string }) => {
