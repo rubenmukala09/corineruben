@@ -30,11 +30,11 @@ const giftTiers = [
 ];
 
 /* Decorative aurora orb — pure CSS, no framer-motion animation */
-const AuroraOrb = ({ 
+const AuroraOrb = forwardRef<HTMLDivElement, { position?: 'left' | 'right' | 'center'; color?: string; size?: number; delay?: number }>(({ 
   position = 'left', 
   color = 'rgba(201,169,182,0.3)', 
   size = 400, 
-}: { position?: 'left' | 'right' | 'center'; color?: string; size?: number; delay?: number }) => {
+}, ref) => {
   const posStyle = position === 'left' 
     ? { left: '-12%', top: '20%' } 
     : position === 'right' 
@@ -43,6 +43,7 @@ const AuroraOrb = ({
 
   return (
     <div
+      ref={ref}
       className="absolute rounded-full pointer-events-none z-0 aurora-blob-css"
       style={{
         width: size, height: size,
