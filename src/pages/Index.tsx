@@ -1220,7 +1220,7 @@ const Index = () => {
       <SectionDivider variant="sparkle" />
 
       {/* ===== PROMISE + PERSONAL QUOTES (merged) ===== */}
-      <PersonalCourtSection t={t} />
+      <PersonalCourtSection t={t} coupleNames={`${coupleName1} & ${coupleName2}`} />
 
       {/* ===== DIVIDER ===== */}
       <SectionDivider variant="heart" />
