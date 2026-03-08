@@ -839,6 +839,31 @@ const Dashboard = () => {
             <StoryManager />
           </TabsContent>
 
+          {/* ═══ GUESTBOOK TAB ═══ */}
+          <TabsContent value="guestbook" className="space-y-6">
+            <GuestbookManager />
+          </TabsContent>
+
+          {/* ═══ PHOTOS TAB ═══ */}
+          <TabsContent value="photos" className="space-y-6">
+            <PhotoManager />
+          </TabsContent>
+
+          {/* ═══ FAQ TAB ═══ */}
+          <TabsContent value="faq" className="space-y-6">
+            <FaqManager />
+          </TabsContent>
+
+          {/* ═══ VENUE TAB ═══ */}
+          <TabsContent value="venue" className="space-y-6">
+            <VenueManager />
+          </TabsContent>
+
+          {/* ═══ SETTINGS TAB ═══ */}
+          <TabsContent value="settings" className="space-y-6">
+            <SettingsManager />
+          </TabsContent>
+
           {/* ═══ EMAIL BLAST TAB ═══ */}
           <TabsContent value="email" className="space-y-6">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
