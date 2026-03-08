@@ -85,7 +85,7 @@ const Index = forwardRef<HTMLDivElement>(function Index(_props, _ref) {
           </div>
 
           {/* 7. How It Works — 3 Steps */}
-          <div id="get-protected" className="bg-muted/20">
+          <div id="get-protected">
             <PromoStrip />
           </div>
 
