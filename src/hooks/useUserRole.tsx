@@ -62,7 +62,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
       "create_proposals",
       "manage_ai_services",
     ],
-    redirectTo: "/admin/clients/businesses",
+    redirectTo: "/portal/staff",
   },
   support_specialist: {
     role: "support_specialist",
