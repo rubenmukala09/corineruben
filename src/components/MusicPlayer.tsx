@@ -104,7 +104,7 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   );
 };
 
-const MusicFloatingButton = forwardRef<HTMLDivElement>((_, ref) => {
+const MusicFloatingButton = forwardRef<HTMLButtonElement>((_, ref) => {
   const { isPlaying, currentTrack, stopMusic } = useMusic();
 
   return (
