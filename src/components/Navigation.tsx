@@ -7,6 +7,7 @@ import {
   Phone,
   LayoutDashboard,
   Heart,
+  ChevronDown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PrefetchLink } from "@/components/PrefetchLink";
@@ -16,13 +17,41 @@ import { SITE } from "@/config/site";
 import invisionLogo from "@/assets/shield-logo.png";
 import { DonationModal } from "@/components/DonationModal";
 
+const primaryLinks = [
+  { name: "AI & Business", href: "/business" },
+  { name: "Learn & Train", href: "/training" },
+  { name: "Resources", href: "/resources" },
+  { name: "About", href: "/about" },
+];
+
+const secondaryLinks = [
+  { name: "Careers", href: "/careers" },
+  { name: "FAQ", href: "/faq" },
+  { name: "Contact", href: "/contact" },
+];
+
+const allLinks = [...primaryLinks, ...secondaryLinks];
+
 const Navigation = React.memo(() => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [donateOpen, setDonateOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const location = useLocation();
   const { user, roleConfig } = useAuth();
+  const moreRef = React.useRef<HTMLDivElement>(null);
 
   const isAdminOrStaff = user && roleConfig;
+
+  // Close "More" dropdown on outside click
+  React.useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (moreRef.current && !moreRef.current.contains(e.target as Node)) {
+        setMoreOpen(false);
+      }
+    };
+    if (moreOpen) document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [moreOpen]);
 
   const hasOpenedMenu = React.useRef(false);
   React.useEffect(() => {
@@ -39,16 +68,6 @@ const Navigation = React.memo(() => {
     };
   }, [mobileMenuOpen]);
 
-  const navLinks = [
-    { name: "AI & Business", href: "/business" },
-    { name: "Learn & Train", href: "/training" },
-    { name: "Resources", href: "/resources" },
-    { name: "About", href: "/about" },
-    { name: "Careers", href: "/careers" },
-    { name: "FAQ", href: "/faq" },
-    { name: "Contact", href: "/contact" },
-  ];
-
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -64,9 +83,11 @@ const Navigation = React.memo(() => {
     );
   };
 
+  const isSecondaryActive = secondaryLinks.some((l) => isActiveLink(l.href));
+
   return (
     <>
-      {/* Mobile backdrop overlay */}
+      {/* Mobile backdrop */}
       {mobileMenuOpen && (
         <div
           className="fixed inset-0 bg-foreground/40 z-[9998] lg:hidden"
@@ -74,9 +95,9 @@ const Navigation = React.memo(() => {
         />
       )}
 
-      <nav className="sticky top-0 z-[9999] bg-card border-b border-border shadow-[0_1px_3px_hsl(var(--foreground)/0.04)]">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="flex items-center justify-between h-[60px]">
+      <nav className="sticky top-0 z-[9999] bg-card/95 backdrop-blur-md border-b border-border/40">
+        <div className="container mx-auto px-4 lg:px-6">
+          <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <a
               href="/"
@@ -86,79 +107,116 @@ const Navigation = React.memo(() => {
               <img
                 src={invisionLogo}
                 alt="InVision Network Shield Logo"
-                width={36}
-                height={36}
+                width={34}
+                height={34}
                 loading="eager"
                 decoding="sync"
-                className="w-9 h-9 object-contain flex-shrink-0"
+                className="w-[34px] h-[34px] object-contain flex-shrink-0"
               />
               <div className="flex flex-col leading-none min-w-0">
-                <span className="text-[15px] md:text-base font-bold text-foreground tracking-tight">
+                <span className="text-[15px] font-bold text-foreground tracking-tight">
                   InVision Network
                 </span>
-                <span className="text-[9px] md:text-[10px] font-medium text-muted-foreground hidden sm:block tracking-wide uppercase">
+                <span className="text-[9px] font-semibold text-muted-foreground hidden sm:block tracking-widest uppercase">
                   AI Scam Protection
                 </span>
               </div>
             </a>
 
-            {/* Desktop Navigation Links */}
-            <div className="hidden lg:flex items-center">
-              {navLinks.map((link) => {
+            {/* Desktop Navigation — centered */}
+            <div className="hidden lg:flex items-center gap-1">
+              {primaryLinks.map((link) => {
                 const isActive = isActiveLink(link.href);
                 return (
                   <PrefetchLink
                     key={link.name}
                     to={link.href}
-                    className={`relative text-[13px] font-medium px-3 xl:px-3.5 py-2 whitespace-nowrap transition-colors duration-150 ${
+                    className={`relative text-sm px-3 py-2 rounded-md transition-colors duration-150 ${
                       isActive
-                        ? "text-primary font-semibold"
-                        : "text-foreground/70 hover:text-foreground"
+                        ? "text-primary font-semibold bg-primary/5"
+                        : "text-muted-foreground font-medium hover:text-foreground hover:bg-muted/50"
                     }`}
                   >
                     {link.name}
-                    {isActive && (
-                      <span className="absolute bottom-0 left-3 right-3 h-[2px] rounded-full bg-primary" />
-                    )}
                   </PrefetchLink>
                 );
               })}
+
+              {/* More dropdown */}
+              <div className="relative" ref={moreRef}>
+                <button
+                  onClick={() => setMoreOpen(!moreOpen)}
+                  className={`flex items-center gap-1 text-sm px-3 py-2 rounded-md transition-colors duration-150 ${
+                    isSecondaryActive
+                      ? "text-primary font-semibold bg-primary/5"
+                      : "text-muted-foreground font-medium hover:text-foreground hover:bg-muted/50"
+                  }`}
+                >
+                  More
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 transition-transform duration-200 ${moreOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+
+                {moreOpen && (
+                  <div className="absolute top-full left-0 mt-1 w-44 bg-card rounded-lg border border-border shadow-lg py-1 z-50">
+                    {secondaryLinks.map((link) => {
+                      const isActive = isActiveLink(link.href);
+                      return (
+                        <PrefetchLink
+                          key={link.name}
+                          to={link.href}
+                          className={`block px-4 py-2.5 text-sm transition-colors ${
+                            isActive
+                              ? "text-primary font-semibold bg-primary/5"
+                              : "text-foreground hover:bg-muted/60"
+                          }`}
+                          onClick={() => setMoreOpen(false)}
+                        >
+                          {link.name}
+                        </PrefetchLink>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
 
-            {/* Right Side */}
-            <div className="flex items-center gap-1.5 md:gap-2">
+            {/* Right Side — streamlined */}
+            <div className="flex items-center gap-2">
               <ShoppingCart />
 
-              {/* Phone */}
+              {/* Phone — icon only on smaller desktops, with number on xl */}
               <a
                 href={SITE.phone.tel}
-                className="flex items-center gap-1.5 text-foreground hover:text-primary transition-colors duration-150 no-underline"
+                className="hidden lg:flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors duration-150 no-underline px-2 py-1.5 rounded-md hover:bg-muted/50"
                 aria-label={`Call us at ${SITE.phone.display}`}
               >
-                <div className="w-8 h-8 rounded-full bg-primary/8 flex items-center justify-center">
-                  <Phone className="w-3.5 h-3.5 text-primary" />
-                </div>
-                <span className="hidden md:inline text-[13px] font-semibold whitespace-nowrap text-foreground">
+                <Phone className="w-4 h-4" />
+                <span className="hidden xl:inline text-sm font-medium">
                   {SITE.phone.display}
                 </span>
               </a>
 
-              {/* Donate Button */}
+              {/* Donate — subtle icon button */}
               <button
                 type="button"
                 onClick={() => setDonateOpen(true)}
-                className="hidden lg:flex items-center gap-1.5 text-[13px] font-medium px-2.5 py-1.5 rounded-md text-primary hover:bg-primary/8 transition-colors"
+                className="hidden lg:flex items-center gap-1.5 text-sm font-medium px-2.5 py-1.5 rounded-md text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors"
                 aria-label="Donate"
               >
-                <Heart className="w-3.5 h-3.5" fill="currentColor" />
+                <Heart className="w-4 h-4" />
                 <span className="hidden xl:inline">Donate</span>
               </button>
 
-              {/* Login/Dashboard Button */}
+              {/* Divider */}
+              <div className="hidden lg:block w-px h-6 bg-border/60 mx-1" />
+
+              {/* Login / Dashboard */}
               <Button
                 asChild
                 size="sm"
-                className="h-8 px-4 text-[13px] text-primary-foreground font-semibold rounded-lg"
+                className="h-9 px-5 text-sm text-primary-foreground font-semibold rounded-lg shadow-sm"
               >
                 {isAdminOrStaff ? (
                   <Link
@@ -166,7 +224,7 @@ const Navigation = React.memo(() => {
                     aria-label="Go to Dashboard"
                     className="flex items-center gap-1.5"
                   >
-                    <LayoutDashboard className="h-3.5 w-3.5" />
+                    <LayoutDashboard className="h-4 w-4" />
                     Dashboard
                   </Link>
                 ) : (
@@ -194,9 +252,9 @@ const Navigation = React.memo(() => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden fixed top-[60px] left-0 right-0 bottom-0 bg-card border-t border-border z-[10001] overflow-y-auto overscroll-contain pb-[calc(env(safe-area-inset-bottom)+1.25rem)] [-webkit-overflow-scrolling:touch]">
+          <div className="lg:hidden fixed top-16 left-0 right-0 bottom-0 bg-card border-t border-border z-[10001] overflow-y-auto overscroll-contain pb-[calc(env(safe-area-inset-bottom)+1.25rem)] [-webkit-overflow-scrolling:touch]">
             <div className="container mx-auto px-4 py-4 space-y-1">
-              {navLinks.map((link) => {
+              {allLinks.map((link) => {
                 const isActive = isActiveLink(link.href);
                 return (
                   <Link
