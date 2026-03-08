@@ -54,6 +54,8 @@ const Footer = () => {
 
   return (
     <footer className="footer-dark relative overflow-hidden z-20">
+      {/* Frosted glass transition strip */}
+      <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white/10 to-transparent backdrop-blur-sm pointer-events-none z-10" />
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-[500px] h-[300px] rounded-full bg-[hsl(var(--footer-fg))] opacity-5 blur-[120px]" />
         <div className="absolute bottom-0 right-1/4 w-[400px] h-[250px] rounded-full bg-[hsl(var(--footer-fg))] opacity-[0.03] blur-[100px]" />

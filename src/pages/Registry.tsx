@@ -136,6 +136,8 @@ const Registry = () => {
         </motion.button>
       </div>
 
+        </div>
+
       {/* Embedded Payment */}
       <EmbeddedPaymentForm
         open={paymentOpen}

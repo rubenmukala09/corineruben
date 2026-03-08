@@ -839,7 +839,7 @@ const Index = () => {
                     { value: countdown.minutes, label: t('countdown.minutes') },
                     { value: countdown.seconds, label: t('countdown.seconds') },
                   ].map((item) =>
-                    <div key={item.label} className="text-center">
+                    <div key={item.label} className="text-center rounded-2xl bg-white/10 backdrop-blur-sm border border-white/15 py-2 px-1">
                       <span className="font-serif-display text-xl font-semibold block">
                         {String(item.value).padStart(2, '0')}
                       </span>

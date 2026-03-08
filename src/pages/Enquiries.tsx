@@ -123,6 +123,7 @@ const Enquiries = () => {
             </div>
           </motion.form>
         )}
+        </div>
       </div>
     </div>
   );
