@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useMusic } from '@/components/MusicPlayer';
@@ -59,9 +60,9 @@ const AuroraOrb = ({
 };
 
 /* Floating hearts component */
-const FloatingHearts = () =>
+const FloatingHearts = ({ isMobile = false }: { isMobile?: boolean }) =>
   <div className="fixed inset-0 pointer-events-none z-[5] overflow-hidden">
-    {Array.from({ length: 12 }).map((_, i) =>
+    {Array.from({ length: isMobile ? 5 : 12 }).map((_, i) =>
       <div
         key={i}
         className="absolute animate-float-heart text-primary/20"
@@ -77,23 +78,27 @@ const FloatingHearts = () =>
     )}
   </div>;
 
-/* Falling petals component */
-const FallingPetals = () =>
-  <div className="absolute inset-0 pointer-events-none overflow-hidden z-[2]">
-    {Array.from({ length: 8 }).map((_, i) =>
-      <div
-        key={i}
-        className="absolute animate-petal-fall"
-        style={{
-          left: `${10 + i * 12 % 80}%`,
-          top: '-30px',
-          '--duration': `${14 + i * 2.5}s`,
-          '--delay': `${i * 2}s`
-        } as React.CSSProperties}>
-        <span className="text-primary/15 text-lg">🌸</span>
-      </div>
-    )}
-  </div>;
+/* Falling petals component — hidden on mobile for performance */
+const FallingPetals = ({ isMobile = false }: { isMobile?: boolean }) => {
+  if (isMobile) return null;
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-[2]">
+      {Array.from({ length: 8 }).map((_, i) =>
+        <div
+          key={i}
+          className="absolute animate-petal-fall"
+          style={{
+            left: `${10 + i * 12 % 80}%`,
+            top: '-30px',
+            '--duration': `${14 + i * 2.5}s`,
+            '--delay': `${i * 2}s`
+          } as React.CSSProperties}>
+          <span className="text-primary/15 text-lg">🌸</span>
+        </div>
+      )}
+    </div>
+  );
+};
 
 /* Section divider with golden decorative line */
 const SectionDivider = ({ variant = 'heart' }: { variant?: 'heart' | 'sparkle' | 'line' }) => (
