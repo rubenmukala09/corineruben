@@ -1,83 +1,74 @@
 
 
-# Website Audit Plan — InVision Network
+# Website Speed & Lightening Plan — Round 3
 
-## Issues Found
+## Summary
 
-### Critical Issues
+After two rounds of cleanup, the CSS files still contain significant dead code. Additionally, `framer-motion` remains embedded in 93 components/files. This round focuses on stripping more dead CSS and cleaning up unused design system classes.
 
-1. **Training page renders blank/invisible content**
-   - The `/training` page shows only the footer — the main content area appears entirely white/invisible. This is a major usability failure; users cannot see any training plans or pricing.
-   - Root cause likely: CSS color/background conflict where text is rendering in white on a white background, or the hero section and content sections have no visible background contrast.
-   - **Fix**: Audit the Training.tsx page structure and ensure all sections have proper background colors and text contrast. Check for any CSS classes like `text-white` applied without a dark background.
+## Findings
 
-2. **Massive `forwardRef` warning spam (6+ warnings on every page load)**
-   - Components affected: `UnifiedCheckoutDialog`, `DonationModal`, `SEO`, `Navigation` (memo), `PrefetchLink`, `ShoppingCart`, `DialogContent`/`DialogPortal`
-   - These are React warnings about function components being given refs without `React.forwardRef()`. While they don't crash the app, they indicate broken ref forwarding that can cause subtle interaction bugs (e.g., Dialog focus management, Sheet animations).
-   - **Fix**: Wrap affected components in `React.forwardRef()` or remove unnecessary ref passing.
+### Still-Dead CSS (~800+ lines to remove)
 
-### Performance Issues
+**`base.css` (lines 651-910)**: The entire Skeuomorphism 2.0 utility section — `skeuo-raised`, `skeuo-inset`, `skeuo-floating`, `skeuo-coral`, `skeuo-lavender`, `skeuo-gradient`, `skeuo-glass`, `skeuo-button-primary`, `skeuo-button-secondary`, `skeuo-embossed`, `skeuo-debossed`, `skeuo-icon-container`, `skeuo-progress-track`, `skeuo-progress-fill`, `skeuo-pill`, `skeuo-pill-coral`, `skeuo-pill-lavender` — **zero usages** in any component. Also `skeuo-ambient-*` classes and `theme-layer-*` classes have zero component usage. `image-glow-*` classes are only in CSS. That's ~350 lines of dead code.
 
-3. **Hero image too large (1.3MB)**
-   - `hero-corporate-protection.webp` is 1,319KB — this is the single largest resource and takes 913ms to load. Should be compressed to under 200KB or served at appropriate dimensions.
-   - **Fix**: Compress the hero image or use responsive `srcset` with smaller variants.
+**`utilities.css`**:
+- `glass-effect` (lines 225-236): zero usage
+- `accent-dot`, `accent-line`, `accent-corner` (lines 231-272): zero usage  
+- `bg-pattern-dots`, `bg-pattern-grid` (lines 274-288): zero usage
+- `shimmer-overlay` + keyframe (lines 290-320): used only by `premium-gradient-bg` which itself is only used in 1 training chat component
+- `specular-highlight` (lines 986-1009): zero usage
+- `texture-grain`, `texture-film`, `texture-paper` (lines 923-984): zero component usage
 
-4. **framer-motion loaded on initial page (93KB)**
-   - Per the project's own memory/architecture rules, framer-motion should be excluded from the root level and only lazy-loaded. Currently loaded as part of the initial bundle.
-   - **Fix**: Ensure framer-motion imports in Index.tsx are isolated to lazy-loaded sub-components.
+**`trending-ui.css`**:
+- `premium-aurora` + `aurora-drift` keyframe (lines 958-1015): used only in `PremiumChatHistory.tsx` (a lazy-loaded sub-component)
+- `premium-3d-card` (lines 939-955): used only in 3 training chat components
+- `premium-gradient-text` + keyframe (lines 1072-1095): used only in `PremiumChatHistory.tsx`
+- `premium-glass-refraction` (lines 1098-1115): used only in 2 training chat components
+- `premium-frosted-dark` (lines 1284-1298): used only in `SmartScanConsole.tsx`
+- `micro-tilt` (lines 238-246): zero usage (different from `micro-tilt-3d`)
+- `micro-search-reveal` (lines 248-257): zero usage
+- `micro-toggle` (lines 259-268): zero usage
+- `micro-rotate` (lines 270-275): zero usage
 
-5. **DOM Content Loaded: 3.4s, Full Page Load: 3.6s**
-   - Acceptable but could improve. The 76 script files loaded on dev is expected (Vite HMR), but production builds should be verified.
+**`components.css`**:
+- `neumorphism-inset`, `neumorphism-btn`, `neumorphism-widget`, `neumorphism-circle`, `neumorphism-input` + dark mode variants (lines 633-860): zero usage except `neumorphism-card` (1 usage in ProtectionPathSection)
+- `widget-border-gradient`, `widget-border-shimmer`, `widget-glow-hover`, `widget-embossed`, `widget-inner-light`, `widget-frosted`, `widget-border-dotted`, `widget-border-double` (lines 863-1028): used only in `ProtectionPathSection.tsx` (partial)
+- `gradient-hero-teal`, `gradient-text-teal` (lines 239-270): zero usage
+- `gradient-card`, `gradient-mesh` (lines 272-289): zero usage
+- `animated-gradient` + `gradient-shift` (lines 554-564): zero usage
+- `glow-effect` (lines 567-585): zero usage
+- `card-3d-hover` (lines 527-538): zero usage
+- `value-card` + `flip-in` keyframe (lines 593-607): zero usage
 
-### Form Validation & Data Flow
+### Plan
 
-6. **Contact form uses `useState` instead of `react-hook-form`**
-   - The Contact page imports `useForm` and `zodResolver` but the `handleSubmit` function uses raw `useState` with manual form data. The Zod schema is imported (`contactFormSchema`) but may not be wired up for field-level validation feedback.
-   - **Fix**: Wire up `react-hook-form` with `contactFormSchema` for proper field-level error display.
+#### Task 1: Strip Dead CSS from `base.css` (~350 lines)
+Remove the entire unused skeuomorphism utility section (lines 651-910): `skeuo-raised`, `skeuo-inset`, `skeuo-floating`, `skeuo-coral`, `skeuo-lavender`, `skeuo-gradient`, `skeuo-glass`, `skeuo-button-primary/secondary`, `skeuo-embossed`, `skeuo-debossed`, `skeuo-icon-container`, `skeuo-progress-*`, `skeuo-divider` (duplicate from components.css), `skeuo-pill*`.
 
-7. **Newsletter form validation is working correctly**
-   - Uses Zod schema, proper error handling, loading states, and success feedback. No issues found.
+Also remove `theme-layer-coral`, `theme-layer-lavender`, `theme-layer-navy`, `theme-layer-mixed` (lines 911-990) and `glass-cursor-overlay`, `image-glow-*` (lines 992-1054) — the `glass-cursor-overlay` is used in WebsiteDesign.tsx so keep that one, remove the rest that are unused.
 
-### Navigation & Responsiveness
+#### Task 2: Strip Dead CSS from `utilities.css` (~200 lines)
+Remove: `glass-effect`, `accent-dot`, `accent-line`, `accent-corner`, `bg-pattern-dots`, `bg-pattern-grid`, `texture-grain*`, `texture-film`, `texture-paper`, `specular-highlight`.
 
-8. **Mobile navigation missing hamburger menu button on small screens**
-   - On 375px width, the nav shows logo + cart + phone + Login but no hamburger icon to open the mobile menu with all nav links. Users on mobile cannot access AI & Business, Learn & Train, Resources, etc.
-   - **Fix**: Ensure the hamburger menu button is visible on mobile breakpoints.
+#### Task 3: Strip Dead CSS from `trending-ui.css` (~200 lines)
+Remove: `micro-tilt` (not `micro-tilt-3d`), `micro-search-reveal`, `micro-toggle`, `micro-rotate`, unused hover utilities with zero usage. Keep classes used by training components since they're lazy-loaded anyway.
 
-9. **Navigation responsive layout looks functional on desktop** — all 7 nav links visible, cart, phone, donate, login all accessible.
+#### Task 4: Strip Dead CSS from `components.css` (~300 lines)
+Remove: all neumorphism classes except `neumorphism-card`, `gradient-hero-teal`, `gradient-text-teal`, `gradient-card`, `gradient-mesh`, `animated-gradient`, `glow-effect`, `card-3d-hover`, `value-card` + `flip-in` keyframe, unused widget border classes with zero usage.
 
-### Minor Issues
+## Files to Modify
 
-10. **`body.style.overflow` manipulation in Navigation**
-    - Direct DOM mutation for scroll locking — works but could cause issues with other overlay components competing for the same property.
+| File | Change |
+|------|--------|
+| `src/styles/base.css` | Remove ~350 lines of unused skeuo/theme-layer classes |
+| `src/styles/utilities.css` | Remove ~200 lines of unused accent/texture/pattern classes |
+| `src/styles/trending-ui.css` | Remove ~100 lines of unused micro-interaction classes |
+| `src/styles/components.css` | Remove ~300 lines of unused neumorphism/gradient/widget classes |
 
-11. **Edge function CORS headers missing newer Supabase client headers**
-    - The `process-payment` edge function uses basic CORS headers. Should include the extended headers per project standards.
-
----
-
-## Implementation Plan
-
-### Task 1: Fix Training page visibility
-- Inspect `Training.tsx` full render output and all CSS classes
-- Ensure hero and content sections have proper background/text colors
-- Verify the page renders correctly on both desktop and mobile
-
-### Task 2: Fix forwardRef warnings
-- Add `React.forwardRef()` to: `DonationModal`, `PrefetchLink`, `ShoppingCart`, `SEO`
-- These are the custom components triggering warnings; Dialog/Sheet warnings come from Radix internals and are lower priority
-
-### Task 3: Fix mobile navigation hamburger visibility
-- Ensure the hamburger menu toggle button renders on screens below `lg` breakpoint
-- Verify all nav links are accessible in the mobile drawer
-
-### Task 4: Optimize hero image size
-- Compress `hero-corporate-protection.webp` to under 200KB
-- Add `width`/`height` attributes to prevent layout shift
-
-### Task 5: Wire up Contact form validation properly
-- Connect `react-hook-form` + `zodResolver` with `contactFormSchema` for proper field-level error messages
-
-### Task 6: Update edge function CORS headers
-- Update `process-payment` and any other edge functions to include the full set of required CORS headers per project standards
+## Impact
+- ~950 additional lines of CSS removed (on top of previous ~1,000 lines)
+- Total CSS reduction across all rounds: ~2,000 lines (~40-50% of original)
+- Faster CSS parsing, smaller download, less memory usage
+- No visual impact — all removed classes have zero component references
 
