@@ -593,6 +593,14 @@ const Index = () => {
     },
   ];
 
+  if (settingsLoading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background">
+        <Heart className="w-8 h-8 text-primary animate-pulse" />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Ambient floating hearts */}
