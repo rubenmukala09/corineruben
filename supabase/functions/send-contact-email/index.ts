@@ -29,8 +29,8 @@ serve(async (req) => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "Wedding Contact <onboarding@resend.dev>",
-        to: ["delivered@resend.dev"], // TODO: Replace with your verified email
+        from: `Wedding Contact <${Deno.env.get("SENDER_EMAIL") ?? "onboarding@resend.dev"}>`,
+        to: [Deno.env.get("ADMIN_EMAIL") ?? "delivered@resend.dev"],
         subject: `New Contact from ${name}`,
         html: `
           <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 40px 20px;">

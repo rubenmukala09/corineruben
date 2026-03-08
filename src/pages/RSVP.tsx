@@ -7,7 +7,7 @@ import { Users, Utensils, ChevronRight, Plus, X, UserPlus, Crown, Check, Gift, H
 import { QRCodeSVG } from 'qrcode.react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import ringsImg from '@/assets/rings-opt.webp';
+import ringsImg from '@/assets/rings.jpg';
 
 // Table seating config — 30 tables with flower/nature names
 const TABLE_NAMES = [
@@ -232,6 +232,17 @@ const RSVP = () => {
 
   const handleSubmitRsvp = async () => {
     try {
+      // Duplicate check by name (case-insensitive)
+      const { data: existing } = await supabase
+        .from('rsvps')
+        .select('id')
+        .ilike('name', name.trim())
+        .maybeSingle();
+      if (existing) {
+        toast.error('An RSVP with this name already exists. Please contact us if you need to update it.');
+        return;
+      }
+
       // Save RSVP
       const tableName = selectedTable ? tables.find(t => t.id === selectedTable)?.name : null;
       const { error: rsvpError } = await supabase.from('rsvps').insert({

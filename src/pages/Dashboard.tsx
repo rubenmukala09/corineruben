@@ -7,7 +7,7 @@ import {
   Users, Utensils, Gift, Heart, CheckCircle, XCircle, Clock,
   TrendingUp, BarChart3, PieChart, MapPin, Sparkles, Loader2, LogOut,
   Megaphone, Trash2, Plus, Share2, Copy, Check, QrCode,
-  MessageCircleQuestion, Send, Bell, Image, BookOpen, Mail
+  MessageCircleQuestion, Send, Bell, Image, BookOpen, Mail, Download, AtSign
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { Input } from '@/components/ui/input';
@@ -107,6 +107,10 @@ interface EnquiryRow {
   answer: string | null; status: string; created_at: string; answered_at: string | null;
 }
 
+interface NewsletterRow {
+  id: string; email: string; created_at: string;
+}
+
 const Dashboard = () => {
   const { t } = useLanguage();
   const { signOut } = useAuth();
@@ -117,6 +121,7 @@ const Dashboard = () => {
   const [announcements, setAnnouncements] = useState<AnnouncementRow[]>([]);
   const [quotes, setQuotes] = useState<QuoteRow[]>([]);
   const [enquiries, setEnquiries] = useState<EnquiryRow[]>([]);
+  const [subscribers, setSubscribers] = useState<NewsletterRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [annTitle, setAnnTitle] = useState('');
   const [annTitleFr, setAnnTitleFr] = useState('');
@@ -142,18 +147,20 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const [rsvpRes, giftRes, annRes, quoteRes, enqRes] = await Promise.all([
+      const [rsvpRes, giftRes, annRes, quoteRes, enqRes, subRes] = await Promise.all([
         supabase.from('rsvps').select('*').order('created_at', { ascending: false }),
         supabase.from('gifts').select('*').order('created_at', { ascending: false }),
         supabase.from('announcements').select('*').order('created_at', { ascending: false }),
         supabase.from('quotes').select('*').order('created_at', { ascending: false }),
         supabase.from('enquiries').select('*').order('created_at', { ascending: false }),
+        supabase.from('newsletter_subscribers').select('*').order('created_at', { ascending: false }),
       ]);
       if (rsvpRes.data) setRsvps(rsvpRes.data);
       if (giftRes.data) setGifts(giftRes.data);
       if (annRes.data) setAnnouncements(annRes.data);
       if (quoteRes.data) setQuotes(quoteRes.data);
       if (enqRes.data) setEnquiries(enqRes.data as EnquiryRow[]);
+      if (subRes.data) setSubscribers(subRes.data as NewsletterRow[]);
       setLoading(false);
     };
     fetchData();
@@ -218,6 +225,24 @@ const Dashboard = () => {
   const handleDeleteEnquiry = async (id: string) => {
     await supabase.from('enquiries').delete().eq('id', id);
     setEnquiries(enquiries.filter(e => e.id !== id));
+  };
+
+  const exportCSV = (rows: Record<string, unknown>[], filename: string) => {
+    if (!rows.length) return;
+    const keys = Object.keys(rows[0]);
+    const csv = [
+      keys.join(','),
+      ...rows.map(r => keys.map(k => {
+        const v = r[k];
+        const str = v == null ? '' : Array.isArray(v) ? v.join(';') : String(v);
+        return `"${str.replace(/"/g, '""')}"`;
+      }).join(',')),
+    ].join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = filename; a.click();
+    URL.revokeObjectURL(url);
   };
 
   const handleSendBlast = async () => {
@@ -320,6 +345,9 @@ const Dashboard = () => {
             <TabsTrigger value="email" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
               <Mail className="w-3.5 h-3.5 mr-1.5" /> Email Blast
             </TabsTrigger>
+            <TabsTrigger value="subscribers" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
+              <AtSign className="w-3.5 h-3.5 mr-1.5" /> Subscribers
+            </TabsTrigger>
             <TabsTrigger value="share" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
               <Share2 className="w-3.5 h-3.5 mr-1.5" /> Share
             </TabsTrigger>
@@ -414,6 +442,14 @@ const Dashboard = () => {
                 <Input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={t('dashboard.searchGuests')} className="pl-4 rounded-full h-11 glass-card border-border/30 font-sans-elegant" />
               </div>
+              <button
+                type="button"
+                onClick={() => exportCSV(rsvps as unknown as Record<string, unknown>[], 'guests.csv')}
+                className="btn-primary flex items-center gap-2 !rounded-full !px-5"
+                disabled={rsvps.length === 0}
+              >
+                <Download className="w-4 h-4" /> Export CSV
+              </button>
             </div>
 
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
@@ -857,6 +893,42 @@ const Dashboard = () => {
                   {blastSending ? 'Sending to all recipients...' : 'Send to All Subscribers & Guests'}
                 </button>
               </div>
+            </motion.div>
+          </TabsContent>
+
+          {/* ═══ SUBSCRIBERS TAB ═══ */}
+          <TabsContent value="subscribers" className="space-y-6">
+            <div className="flex items-center justify-between">
+              <p className="font-sans-elegant text-sm text-muted-foreground">{subscribers.length} subscriber{subscribers.length !== 1 ? 's' : ''}</p>
+              <button
+                type="button"
+                onClick={() => exportCSV(subscribers as unknown as Record<string, unknown>[], 'newsletter-subscribers.csv')}
+                className="btn-primary flex items-center gap-2 !rounded-full !px-5"
+                disabled={subscribers.length === 0}
+              >
+                <Download className="w-4 h-4" /> Export CSV
+              </button>
+            </div>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+              className="glass-card-strong rounded-3xl overflow-hidden">
+              <Table>
+                <TableHeader>
+                  <TableRow className="border-border/20">
+                    <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">Email</TableHead>
+                    <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">Subscribed On</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {subscribers.length === 0 ? (
+                    <TableRow><TableCell colSpan={2} className="text-center py-8 text-muted-foreground font-sans-elegant">No subscribers yet</TableCell></TableRow>
+                  ) : subscribers.map(s => (
+                    <TableRow key={s.id} className="border-border/10 hover:bg-primary/5">
+                      <TableCell className="font-sans-elegant text-sm text-foreground">{s.email}</TableCell>
+                      <TableCell className="font-sans-elegant text-sm text-muted-foreground">{new Date(s.created_at).toLocaleDateString()}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </motion.div>
           </TabsContent>
 

@@ -74,6 +74,7 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
 
   const [step, setStep] = useState<'info' | 'pay' | 'success'>('info');
   const [giftName, setGiftName] = useState('');
+  const [giftEmail, setGiftEmail] = useState('');
   const [giftMessage, setGiftMessage] = useState('');
   const [stripePromise, setStripePromise] = useState<Promise<Stripe | null> | null>(null);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
@@ -113,12 +114,13 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
     }
   };
 
-  const handleSuccess = () => {
+  const handleSuccess = async () => {
     setStep('success');
     try {
-      supabase.functions.invoke('send-gift-confirmation', {
+      await supabase.functions.invoke('send-gift-confirmation', {
         body: {
           guestName: giftName.trim() || 'Anonymous',
+          guestEmail: giftEmail.trim() || null,
           amount: selectedAmount,
           message: giftMessage || null,
         },
@@ -129,12 +131,13 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
     setTimeout(() => {
       onOpenChange(false);
       resetForm();
-    }, 3000);
+    }, 4000);
   };
 
   const resetForm = () => {
     setStep('info');
     setGiftName('');
+    setGiftEmail('');
     setGiftMessage('');
     setStripePromise(null);
     setClientSecret(null);
@@ -157,7 +160,7 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
         </motion.div>
       ) : showTerms ? (
         <motion.div key="terms" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4 pt-2">
-          <button onClick={() => setShowTerms(false)} className="flex items-center gap-2 text-primary font-sans-elegant text-sm font-medium hover:underline">
+          <button type="button" onClick={() => setShowTerms(false)} className="flex items-center gap-2 text-primary font-sans-elegant text-sm font-medium hover:underline">
             <ArrowLeft className="w-4 h-4" /> {t('rsvp.back')}
           </button>
           <div className="glass-card rounded-2xl p-5 space-y-3">
@@ -175,7 +178,7 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
         </motion.div>
       ) : step === 'pay' && stripePromise && clientSecret ? (
         <motion.div key="pay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4 pt-2">
-          <button onClick={() => { setStep('info'); setClientSecret(null); }} className="flex items-center gap-2 text-primary font-sans-elegant text-sm font-medium hover:underline">
+          <button type="button" onClick={() => { setStep('info'); setClientSecret(null); }} className="flex items-center gap-2 text-primary font-sans-elegant text-sm font-medium hover:underline">
             <ArrowLeft className="w-4 h-4" /> {t('rsvp.back')}
           </button>
           <div className="glass-card rounded-2xl p-4 text-center">
@@ -186,7 +189,7 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
             <CheckoutForm amount={selectedAmount!} onSuccess={handleSuccess} t={t} />
           </Elements>
           <div className="text-center">
-            <button onClick={() => setShowTerms(true)} className="font-sans-elegant text-[11px] text-primary underline hover:no-underline">
+            <button type="button" onClick={() => setShowTerms(true)} className="font-sans-elegant text-[11px] text-primary underline hover:no-underline">
               <Shield className="w-3 h-3 inline mr-1" />
               {t('gift.terms.link')}
             </button>
@@ -207,6 +210,19 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
               value={giftName}
               onChange={(e) => setGiftName(e.target.value)}
               placeholder={t('registry.dialog.name.placeholder')}
+              className="font-sans-elegant rounded-full h-12 border-border/50 bg-background/50 backdrop-blur-sm"
+            />
+          </div>
+
+          <div>
+            <label className="font-sans-elegant text-sm text-foreground block mb-2 font-semibold">
+              Email <span className="text-muted-foreground font-normal text-xs">({t('gift.optional')} — for thank-you email)</span>
+            </label>
+            <Input
+              type="email"
+              value={giftEmail}
+              onChange={(e) => setGiftEmail(e.target.value)}
+              placeholder="your@email.com"
               className="font-sans-elegant rounded-full h-12 border-border/50 bg-background/50 backdrop-blur-sm"
             />
           </div>
@@ -241,6 +257,7 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
           </div>
 
           <button
+            type="button"
             onClick={handleProceedToPayment}
             disabled={loading}
             className="w-full btn-primary justify-center disabled:opacity-50"
@@ -254,7 +271,7 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
           </button>
 
           <div className="text-center">
-            <button onClick={() => setShowTerms(true)} className="font-sans-elegant text-[11px] text-primary underline hover:no-underline">
+            <button type="button" onClick={() => setShowTerms(true)} className="font-sans-elegant text-[11px] text-primary underline hover:no-underline">
               <Shield className="w-3 h-3 inline mr-1" />
               {t('gift.terms.link')}
             </button>

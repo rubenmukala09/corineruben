@@ -14,7 +14,12 @@ serve(async (req) => {
     const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
     if (!RESEND_API_KEY) throw new Error("RESEND_API_KEY is not configured");
 
-    const { guestName, amount, message } = await req.json();
+    const { guestName, guestEmail, amount, message } = await req.json();
+
+    const adminEmail = Deno.env.get("ADMIN_EMAIL") ?? "delivered@resend.dev";
+    const senderEmail = Deno.env.get("SENDER_EMAIL") ?? "onboarding@resend.dev";
+    // Send to guest if email provided, otherwise notify admin
+    const recipient = guestEmail || adminEmail;
 
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -23,8 +28,8 @@ serve(async (req) => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "Wedding Gifts <onboarding@resend.dev>",
-        to: [guestName ? "delivered@resend.dev" : "delivered@resend.dev"], // TODO: Replace with your verified email for admin notification
+        from: `Wedding Gifts <${senderEmail}>`,
+        to: [recipient],
         subject: `Thank you for your generous gift, ${guestName || "Friend"}! 💕`,
         html: `
           <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 40px 20px; background: #ffffff;">

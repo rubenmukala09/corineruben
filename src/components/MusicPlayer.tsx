@@ -1,6 +1,7 @@
 import { useState, useRef, createContext, useContext, useCallback } from 'react';
-import { Volume2, VolumeX, Pause } from 'lucide-react';
+import { VolumeX, Pause } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { toast } from 'sonner';
 
 interface Track {
   id: string;
@@ -71,9 +72,7 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     const src = TRACK_SOURCES[trackId];
     if (!src) {
-      // No audio file yet — set state for UI but no sound
-      setCurrentTrack(trackId);
-      setIsPlaying(true);
+      toast.info(`"${TRACK_INFO[trackId]?.title}" is not available yet. Upload an MP3 to enable it.`);
       return;
     }
 
