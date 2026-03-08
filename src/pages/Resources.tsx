@@ -933,6 +933,11 @@ function Resources() {
         isOpen={translationDialogOpen}
         onClose={() => setTranslationDialogOpen(false)} />
 
+      {/* Read Books Dialog */}
+      <ReadBooksDialog
+        open={readBooksOpen}
+        onOpenChange={setReadBooksOpen} />
+
       <Footer />
     </PageTransition>);
 
