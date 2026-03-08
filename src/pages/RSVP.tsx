@@ -98,8 +98,27 @@ const drinkOptions = [
 // Payment link placeholder — replace with actual payment link
 const PAYMENT_BASE_URL = 'https://pay.example.com/corine-ruben';
 
+const ICON_MAP: Record<string, React.ElementType> = {
+  Sparkles, Church, Camera, PartyPopper, Waves, Cake, Music,
+  Car, Train, ParkingCircle,
+};
+
+const TRANSPORT_ICON_MAP: Record<string, React.ElementType> = {
+  Car, Train, ParkingCircle,
+};
+
+const TRANSPORT_LABEL_MAP: Record<string, string> = {
+  car: 'venue.byCar',
+  transit: 'venue.byTransit',
+  parking: 'venue.parking',
+};
+
+const fadeUp = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } };
+
 const RSVP = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const { settings, loading: settingsLoading } = useSiteSettings();
+  const { schedule, hotels, transport, loading: venueLoading } = useVenueData();
   const [step, setStep] = useState<Step>('info');
 
   // Edit RSVP modal state
