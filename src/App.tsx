@@ -208,6 +208,7 @@ function PublicRoutes() {
         <Route path="/portal/caregiver" element={<Navigate to="/portal/staff" replace />} />
         <Route path="/portal/healthcare" element={<Navigate to="/portal/staff" replace />} />
         {/* Shared portal utilities */}
+        <Route path="/portal/messages" element={<PageTransition><ProtectedRoute><InternalMessages /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/my-courses" element={<PageTransition><ProtectedRoute><MyCourses /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/my-bookings" element={<PageTransition><ProtectedRoute><MyBookings /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/my-tickets" element={<PageTransition><ProtectedRoute><MyTickets /></ProtectedRoute></PageTransition>} />
