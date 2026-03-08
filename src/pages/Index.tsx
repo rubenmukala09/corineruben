@@ -147,7 +147,7 @@ const GoldenCorners = forwardRef<HTMLDivElement, { className?: string }>(({ clas
 GoldenCorners.displayName = 'GoldenCorners';
 
 /* ===== Personal Court — Promise + Dynamic quotes from DB ===== */
-const PersonalCourtSection = ({ t, coupleNames }: { t: (key: string) => string; coupleNames: string }) => {
+const PersonalCourtSection = forwardRef<HTMLElement, { t: (key: string) => string; coupleNames: string }>(({ t, coupleNames }, ref) => {
   const [quotes, setQuotes] = useState<{ id: string; content: string }[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -168,7 +168,7 @@ const PersonalCourtSection = ({ t, coupleNames }: { t: (key: string) => string; 
   }, [quotes.length]);
 
   return (
-    <section className="py-6 md:py-10 relative overflow-hidden">
+    <section ref={ref} className="py-6 md:py-10 relative overflow-hidden">
       <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-8">
@@ -249,10 +249,11 @@ const PersonalCourtSection = ({ t, coupleNames }: { t: (key: string) => string; 
       </div>
     </section>
   );
-};
+});
+PersonalCourtSection.displayName = 'PersonalCourtSection';
 
 
-const AnnouncementsSection = ({ t }: { t: (key: string) => string }) => {
+const AnnouncementsSection = forwardRef<HTMLElement, { t: (key: string) => string }>(({ t }, ref) => {
   const { language } = useLanguage();
   const [announcements, setAnnouncements] = useState<{ id: string; title: string; content: string; created_at: string; title_fr?: string | null; title_es?: string | null; content_fr?: string | null; content_es?: string | null }[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -288,7 +289,7 @@ const AnnouncementsSection = ({ t }: { t: (key: string) => string }) => {
   if (announcements.length === 0) return null;
 
   return (
-    <section className="py-8 md:py-12 relative overflow-hidden">
+    <section ref={ref} className="py-8 md:py-12 relative overflow-hidden">
       <AuroraOrb position="right" color="rgba(180,140,210,0.25)" size={350} delay={2} />
       <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
@@ -343,7 +344,8 @@ const AnnouncementsSection = ({ t }: { t: (key: string) => string }) => {
       </div>
     </section>
   );
-};
+});
+AnnouncementsSection.displayName = 'AnnouncementsSection';
 
 /* ===== Transitioning Scripture (Genesis 2:24 + Jeremiah 31:3) ===== */
 const FEATURED_VERSES = [
