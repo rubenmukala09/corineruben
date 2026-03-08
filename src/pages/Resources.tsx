@@ -816,10 +816,6 @@ function Resources() {
         </div>
       </section>
 
-      {/* Premier Protection - Insurance Section */}
-      
-
-
 
 
       {/* Emergency Scripts Section */}
@@ -894,9 +890,28 @@ function Resources() {
         </div>
       </section>
 
-      {/* Physical products section removed - focusing on digital resources */}
-
-      {/* Why Shop With Us - Final Section */}
+      {/* Why Shop With Us */}
+      <section className="py-12 sm:py-16 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold mb-3">Why Trust InVision Network</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">Your security education partner — backed by expertise, integrity, and a mission to protect.</p>
+          </div>
+          <div className="grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {[
+              { icon: "🛡️", title: "Expert-Authored", desc: "All resources created by certified cybersecurity professionals" },
+              { icon: "🔒", title: "Secure Delivery", desc: "Protected digital reader — no downloads, no unauthorized sharing" },
+              { icon: "💬", title: "Ongoing Support", desc: "Email support and regular content updates included" },
+            ].map((item) => (
+              <div key={item.title} className="text-center p-6 rounded-xl bg-background border border-border/50">
+                <span className="text-3xl mb-3 block">{item.icon}</span>
+                <h3 className="font-semibold mb-1">{item.title}</h3>
+                <p className="text-sm text-muted-foreground">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Cart Abandonment Notification */}
       <CartAbandonmentNotification />

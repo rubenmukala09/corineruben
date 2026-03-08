@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { BookOpen, ArrowLeft, ChevronLeft, ChevronRight, Lock, LogOut } from "lucide-react";
 import { SEO } from "@/components/SEO";
+import { toast } from "@/hooks/use-toast";
 
 // Import all book covers for display
 import bookAiFundamentals from "@/assets/book-ai-fundamentals.jpg";
@@ -123,12 +124,14 @@ export default function BookReader() {
   useEffect(() => {
     const raw = sessionStorage.getItem("bookReaderSession");
     if (!raw) {
+      toast({ title: "Session expired", description: "Please sign in with your Access ID to read your books.", variant: "destructive" });
       navigate("/resources");
       return;
     }
     try {
       setSession(JSON.parse(raw));
     } catch {
+      toast({ title: "Session error", description: "Please sign in again with your Access ID.", variant: "destructive" });
       navigate("/resources");
     }
   }, [navigate]);
