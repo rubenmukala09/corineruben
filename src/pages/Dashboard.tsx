@@ -19,6 +19,11 @@ import {
 } from '@/components/ui/table';
 import ImageManager from '@/components/dashboard/ImageManager';
 import StoryManager from '@/components/dashboard/StoryManager';
+import GuestbookManager from '@/components/dashboard/GuestbookManager';
+import PhotoManager from '@/components/dashboard/PhotoManager';
+import FaqManager from '@/components/dashboard/FaqManager';
+import VenueManager from '@/components/dashboard/VenueManager';
+import SettingsManager from '@/components/dashboard/SettingsManager';
 
 
 const TABLE_NAMES = [
