@@ -84,6 +84,7 @@ import HeroFloatingStats from "@/components/business/HeroFloatingStats";
 // NatureAccent removed for performance
 import { usePrerenderBlocker } from "@/contexts/PrerenderContext";
 import { TranslationRequestDialog } from "@/components/resources/TranslationRequestDialog";
+import { ReadBooksDialog } from "@/components/resources/ReadBooksDialog";
 
 // Static book products with covers (20 books)
 // Author constant for all books
