@@ -122,8 +122,8 @@ const Story = () => {
                 key={i}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
+                viewport={{ once: true, margin: '-100px' }}
+                transition={{ delay: i * 0.04, duration: 0.3 }}
                 className={`relative flex items-start mb-14 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
               >
                 <div className="absolute left-6 md:left-1/2 w-4 h-4 rounded-full gradient-primary -translate-x-2 mt-2 z-10 ring-4 ring-background shadow-glow" />
