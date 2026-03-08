@@ -16,7 +16,6 @@ import { SITE } from "@/config/site";
 import invisionLogo from "@/assets/shield-logo.png";
 import { DonationModal } from "@/components/DonationModal";
 
-// Memoized for performance - prevents re-renders when parent components update
 const Navigation = React.memo(() => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [donateOpen, setDonateOpen] = useState(false);
@@ -25,7 +24,6 @@ const Navigation = React.memo(() => {
 
   const isAdminOrStaff = user && roleConfig;
 
-  // Use ref to skip unnecessary overflow write on initial mount (prevents forced reflow)
   const hasOpenedMenu = React.useRef(false);
   React.useEffect(() => {
     if (mobileMenuOpen) {
@@ -71,83 +69,76 @@ const Navigation = React.memo(() => {
       {/* Mobile backdrop overlay */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-[9998] lg:hidden"
+          className="fixed inset-0 bg-foreground/40 z-[9998] lg:hidden"
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
 
-      <nav className="sticky top-0 z-[9999] bg-card/95 backdrop-blur-lg border-b border-border/50 shadow-sm">
+      <nav className="sticky top-0 z-[9999] bg-card border-b border-border shadow-[0_1px_3px_hsl(var(--foreground)/0.04)]">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="flex items-center justify-between h-16 md:h-16">
+          <div className="flex items-center justify-between h-[60px]">
             {/* Logo */}
             <a
               href="/"
-              className="flex items-center gap-3 hover:opacity-90 transition-opacity duration-150 flex-shrink-0 no-underline"
+              className="flex items-center gap-2.5 hover:opacity-90 transition-opacity duration-150 flex-shrink-0 no-underline"
               onClick={handleBrandClick}
             >
               <img
                 src={invisionLogo}
                 alt="InVision Network Shield Logo"
-                width={44}
-                height={44}
+                width={36}
+                height={36}
                 loading="eager"
-                decoding="async"
-                className="w-10 h-10 md:w-11 md:h-11 object-contain flex-shrink-0"
+                decoding="sync"
+                className="w-9 h-9 object-contain flex-shrink-0"
               />
-              <div className="flex flex-col leading-tight min-w-0">
-                <span
-                  className="text-lg md:text-xl font-bold tracking-tight"
-                  style={{
-                    background: "linear-gradient(120deg, hsl(240 20% 12%) 0%, hsl(288 30% 30%) 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                  }}
-                >
+              <div className="flex flex-col leading-none min-w-0">
+                <span className="text-[15px] md:text-base font-bold text-foreground tracking-tight">
                   InVision Network
                 </span>
-                <span className="text-[10px] md:text-xs text-muted-foreground hidden sm:block">
-                  AI Scam Protection & Business Solutions
+                <span className="text-[9px] md:text-[10px] font-medium text-muted-foreground hidden sm:block tracking-wide uppercase">
+                  AI Scam Protection
                 </span>
               </div>
             </a>
 
             {/* Desktop Navigation Links */}
-            <div className="hidden lg:flex items-center gap-0.5">
+            <div className="hidden lg:flex items-center">
               {navLinks.map((link) => {
                 const isActive = isActiveLink(link.href);
                 return (
                   <PrefetchLink
                     key={link.name}
                     to={link.href}
-                    className={`relative text-sm font-semibold px-3 py-2 whitespace-nowrap tracking-tight transition-colors duration-150 ${
+                    className={`relative text-[13px] font-medium px-3 xl:px-3.5 py-2 whitespace-nowrap transition-colors duration-150 ${
                       isActive
-                        ? "text-primary"
-                        : "text-foreground/85 hover:text-foreground"
+                        ? "text-primary font-semibold"
+                        : "text-foreground/70 hover:text-foreground"
                     }`}
                   >
                     {link.name}
                     {isActive && (
-                      <span className="absolute bottom-0 left-3 right-3 h-[2px] rounded-full bg-gradient-to-r from-primary to-accent" />
+                      <span className="absolute bottom-0 left-3 right-3 h-[2px] rounded-full bg-primary" />
                     )}
                   </PrefetchLink>
                 );
               })}
             </div>
 
-            {/* Right Side - Cart, Phone & Login */}
-            <div className="flex items-center gap-2 md:gap-3">
+            {/* Right Side */}
+            <div className="flex items-center gap-1.5 md:gap-2">
               <ShoppingCart />
 
               {/* Phone */}
               <a
                 href={SITE.phone.tel}
-                className="flex md:flex items-center gap-2 text-foreground hover:text-primary transition-colors duration-150 no-underline"
+                className="flex items-center gap-1.5 text-foreground hover:text-primary transition-colors duration-150 no-underline"
                 aria-label={`Call us at ${SITE.phone.display}`}
               >
-                <div className="w-8 h-8 md:w-8 md:h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Phone className="w-4 h-4 text-primary" fill="currentColor" />
+                <div className="w-8 h-8 rounded-full bg-primary/8 flex items-center justify-center">
+                  <Phone className="w-3.5 h-3.5 text-primary" />
                 </div>
-                <span className="hidden md:inline text-sm font-semibold whitespace-nowrap text-foreground">
+                <span className="hidden md:inline text-[13px] font-semibold whitespace-nowrap text-foreground">
                   {SITE.phone.display}
                 </span>
               </a>
@@ -156,25 +147,26 @@ const Navigation = React.memo(() => {
               <button
                 type="button"
                 onClick={() => setDonateOpen(true)}
-                className="hidden lg:flex items-center gap-1.5 text-sm font-semibold px-3 py-2 rounded-md text-primary hover:bg-primary/10 transition-colors"
+                className="hidden lg:flex items-center gap-1.5 text-[13px] font-medium px-2.5 py-1.5 rounded-md text-primary hover:bg-primary/8 transition-colors"
                 aria-label="Donate"
               >
-                <Heart className="w-4 h-4" fill="currentColor" />
+                <Heart className="w-3.5 h-3.5" fill="currentColor" />
                 <span className="hidden xl:inline">Donate</span>
               </button>
 
               {/* Login/Dashboard Button */}
               <Button
                 asChild
-                className="h-9 px-5 text-white font-semibold rounded-full shadow-sm bg-gradient-to-r from-primary to-accent hover:brightness-105"
+                size="sm"
+                className="h-8 px-4 text-[13px] text-primary-foreground font-semibold rounded-lg"
               >
                 {isAdminOrStaff ? (
                   <Link
                     to="/admin"
                     aria-label="Go to Dashboard"
-                    className="flex items-center gap-2"
+                    className="flex items-center gap-1.5"
                   >
-                    <LayoutDashboard className="h-4 w-4" />
+                    <LayoutDashboard className="h-3.5 w-3.5" />
                     Dashboard
                   </Link>
                 ) : (
@@ -187,13 +179,13 @@ const Navigation = React.memo(() => {
               {/* Mobile menu button */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden p-2 rounded-md hover:bg-muted/50 transition-colors duration-150 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                className="lg:hidden p-2 rounded-lg hover:bg-muted/60 transition-colors duration-150 min-w-[44px] min-h-[44px] flex items-center justify-center"
                 aria-label="Toggle menu"
               >
                 {mobileMenuOpen ? (
-                  <X className="h-6 w-6 text-foreground" />
+                  <X className="h-5 w-5 text-foreground" />
                 ) : (
-                  <Menu className="h-6 w-6 text-foreground" />
+                  <Menu className="h-5 w-5 text-foreground" />
                 )}
               </button>
             </div>
@@ -202,18 +194,18 @@ const Navigation = React.memo(() => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden fixed top-16 left-0 right-0 bottom-0 bg-white/95 backdrop-blur-sm border-t border-border shadow-lg z-[10001] overflow-y-auto overscroll-contain pb-[calc(env(safe-area-inset-bottom)+1.25rem)] [-webkit-overflow-scrolling:touch]">
-            <div className="container mx-auto px-4 py-6 space-y-2">
+          <div className="lg:hidden fixed top-[60px] left-0 right-0 bottom-0 bg-card border-t border-border z-[10001] overflow-y-auto overscroll-contain pb-[calc(env(safe-area-inset-bottom)+1.25rem)] [-webkit-overflow-scrolling:touch]">
+            <div className="container mx-auto px-4 py-4 space-y-1">
               {navLinks.map((link) => {
                 const isActive = isActiveLink(link.href);
                 return (
                   <Link
                     key={link.name}
                     to={link.href}
-                   className={`block text-base transition-colors duration-150 font-medium px-4 py-3 rounded-lg ${
+                    className={`block text-[15px] transition-colors duration-150 font-medium px-4 py-3 rounded-lg ${
                       isActive
                         ? "text-primary font-semibold bg-primary/5"
-                        : "text-muted-foreground hover:text-foreground"
+                        : "text-foreground/80 hover:text-foreground hover:bg-muted/40"
                     }`}
                     onClick={() => {
                       setMobileMenuOpen(false);
@@ -226,25 +218,23 @@ const Navigation = React.memo(() => {
               })}
 
               {/* Mobile Actions */}
-              <div className="pt-4 border-t border-border mt-4 space-y-3">
-                {/* Mobile Donate Button */}
+              <div className="pt-4 border-t border-border mt-3 space-y-3">
                 <Button
                   type="button"
                   variant="outline"
-                  className="w-full h-11 text-base font-semibold border-primary/30 text-primary hover:bg-primary/10"
+                  className="w-full h-11 text-[15px] font-semibold border-primary/20 text-primary hover:bg-primary/5"
                   onClick={() => {
                     setDonateOpen(true);
                     setMobileMenuOpen(false);
                   }}
                 >
-                  <Heart className="h-5 w-5 mr-2" />
+                  <Heart className="h-4 w-4 mr-2" />
                   Donate
                 </Button>
 
-                {/* Mobile Login/Dashboard Button */}
                 <Button
                   asChild
-                  className="w-full h-11 text-base font-semibold text-white rounded-full bg-gradient-to-r from-primary to-accent hover:brightness-105"
+                  className="w-full h-11 text-[15px] font-semibold text-primary-foreground rounded-lg"
                 >
                   {isAdminOrStaff ? (
                     <Link
@@ -252,7 +242,7 @@ const Navigation = React.memo(() => {
                       onClick={() => setMobileMenuOpen(false)}
                       className="flex items-center justify-center gap-2"
                     >
-                      <LayoutDashboard className="h-5 w-5" />
+                      <LayoutDashboard className="h-4 w-4" />
                       Dashboard
                     </Link>
                   ) : (
@@ -262,24 +252,20 @@ const Navigation = React.memo(() => {
                   )}
                 </Button>
 
-                {/* Mobile Phone Link */}
                 <a
                   href={SITE.phone.tel}
-                  className="flex items-center justify-center gap-2 text-base text-muted-foreground font-medium px-4 py-3 rounded-lg hover:bg-muted/50 transition-colors duration-150"
+                  className="flex items-center justify-center gap-2 text-[15px] text-muted-foreground font-medium px-4 py-3 rounded-lg hover:bg-muted/40 transition-colors duration-150"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <Phone className="h-5 w-5" />
+                  <Phone className="h-4 w-4" />
                   {SITE.phone.display}
                 </a>
               </div>
             </div>
           </div>
         )}
-
-        
       </nav>
 
-      {/* Donation Modal */}
       <DonationModal
         open={donateOpen}
         onOpenChange={setDonateOpen}
