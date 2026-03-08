@@ -57,7 +57,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
       "create_content",
       "view_training_analytics",
     ],
-    redirectTo: "/admin/content/articles",
+    redirectTo: "/portal/coordinator",
   },
   business_consultant: {
     role: "business_consultant",
