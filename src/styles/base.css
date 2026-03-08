@@ -731,8 +731,8 @@ section:not(:first-child) {
 /* Premium glass with skeuomorphic depth */
 .skeuo-glass {
   background: var(--skeuo-glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border: 1px solid var(--skeuo-glass-border);
   box-shadow:
     0 4px 8px rgba(0, 0, 0, 0.04),
@@ -995,8 +995,8 @@ section:not(:first-child) {
   height: 180px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border: 1px solid rgba(255, 255, 255, 0.3);
   pointer-events: none;
   opacity: 0;
