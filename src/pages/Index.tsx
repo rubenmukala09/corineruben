@@ -1024,7 +1024,7 @@ const Index = () => {
         <AuroraOrb position="left" color="rgba(180,140,210,0.2)" size={500} delay={1} />
         <AuroraOrb position="right" color="rgba(212,165,165,0.2)" size={380} delay={6} />
         <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 0.3 }} className="text-center mb-10">
             <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
               <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('badge.faith')}</p>
             </div>
