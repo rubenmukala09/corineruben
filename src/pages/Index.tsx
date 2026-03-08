@@ -168,7 +168,7 @@ const PersonalCourtSection = forwardRef<HTMLElement, { t: (key: string) => strin
   }, [quotes.length]);
 
   return (
-    <section className="py-6 md:py-10 relative overflow-hidden">
+    <section ref={ref} className="py-6 md:py-10 relative overflow-hidden">
       <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-8">
