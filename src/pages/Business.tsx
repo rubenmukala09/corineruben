@@ -826,14 +826,9 @@ function Business() {
                       style={{ perspective: "1000px" }}
                     >
                       {group.features.map((feature, fi) => (
-                        <motion.div
+                        <div
                           key={feature.title}
-                          initial={{ opacity: 0, y: 40, rotateX: 10 }}
-                          whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: fi * 0.08, duration: 0.5 }}
-                          whileHover={{ y: -10, rotateX: -2, rotateY: 3 }}
-                          style={{ transformStyle: "preserve-3d" }}
+                          className="hover-lift"
                         >
                           <Link
                             to={feature.href}
