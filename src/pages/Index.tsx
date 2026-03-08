@@ -1137,7 +1137,8 @@ const Index = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.3 }}
             className="text-center mb-12"
           >
             <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
