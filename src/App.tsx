@@ -291,7 +291,7 @@ function App() {
             <CartProvider>
               <CheckoutProvider>
                 <CartFeedbackProvider>
-                  <BrowserRouter>
+                  <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
                     <PrerenderProvider>
                       <NavigationProgress />
                       <SkipToContent />

@@ -1,11 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, forwardRef } from "react";
 import { useLocation } from "react-router-dom";
 
-export const ScrollToTop = () => {
+export const ScrollToTop = forwardRef<HTMLDivElement>((_props, _ref) => {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    // Defer scroll operations to avoid forced reflow during initial paint
     if (hash) {
       requestAnimationFrame(() => {
         const element = document.querySelector(hash);
@@ -22,7 +21,6 @@ export const ScrollToTop = () => {
         }
       });
     } else {
-      // Scroll to top on route change - defer to avoid reflow
       requestAnimationFrame(() => {
         window.scrollTo({
           top: 0,
@@ -33,4 +31,6 @@ export const ScrollToTop = () => {
   }, [pathname, hash]);
 
   return null;
-};
+});
+
+ScrollToTop.displayName = "ScrollToTop";
