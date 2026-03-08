@@ -382,8 +382,7 @@ function Business() {
     title: string;
   } | null>(null);
 
-  const platformRef = useRef(null);
-  const platformInView = useInView(platformRef, { once: true, margin: "-80px" });
+
 
   useEffect(() => {
     fetchBusinessTestimonials();
