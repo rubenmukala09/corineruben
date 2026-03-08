@@ -505,21 +505,6 @@ a[role="button"]:active {
   will-change: transform;
 }
 
-/* 3D Flip animation for value cards */
-@keyframes flip-in {
-  0% {
-    opacity: 0;
-    transform: rotateY(-90deg);
-  }
-  100% {
-    opacity: 1;
-    transform: rotateY(0);
-  }
-}
-
-.value-card {
-  transform-style: preserve-3d;
-}
 
 /* ===== NEUMORPHISM DESIGN SYSTEM ===== */
 
