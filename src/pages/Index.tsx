@@ -99,12 +99,11 @@ const FallingPetals = ({ isMobile = false }: { isMobile?: boolean }) => {
 AuroraOrb.displayName = 'AuroraOrb';
 
 /* Section divider with golden decorative line */
-const SectionDivider = ({ variant = 'heart' }: { variant?: 'heart' | 'sparkle' | 'line' }) => (
-  <div className="relative py-4 flex items-center justify-center overflow-hidden">
+const SectionDivider = forwardRef<HTMLDivElement, { variant?: 'heart' | 'sparkle' | 'line' }>(({ variant = 'heart' }, ref) => (
+  <div ref={ref} className="relative py-4 flex items-center justify-center overflow-hidden">
     <div className="absolute inset-0 flex items-center">
       <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
     </div>
-    {/* Thin double golden lines */}
     <div className="absolute inset-0 flex items-center translate-y-[3px]">
       <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-gold-light/15 to-transparent" />
     </div>
@@ -119,7 +118,8 @@ const SectionDivider = ({ variant = 'heart' }: { variant?: 'heart' | 'sparkle' |
       {variant === 'line' && <span className="text-gold/40 text-xs">✦ ✦ ✦</span>}
     </motion.div>
   </div>
-);
+));
+SectionDivider.displayName = 'SectionDivider';
 
 /* Golden corner frame decoration for sections */
 const GoldenCorners = ({ className = '' }: { className?: string }) => (
