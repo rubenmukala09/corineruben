@@ -717,7 +717,7 @@ const Index = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="inline-block px-6 py-2.5 rounded-full glass-card-strong glass-shimmer mb-6"
+            className="inline-block px-6 py-2.5 rounded-full glass-card-strong mb-6"
           >
             <p className="font-sans-elegant text-xs tracking-[0.3em] uppercase text-foreground/80 dark:text-foreground/90 font-semibold">
               {t('love.tagline')}

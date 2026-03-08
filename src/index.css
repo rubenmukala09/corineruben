@@ -425,23 +425,6 @@
     pointer-events: none;
   }
 
-  .btn-primary::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-    animation: btn-shimmer 3s ease-in-out infinite;
-    pointer-events: none;
-  }
-
-  @keyframes btn-shimmer {
-    0% { left: -100%; }
-    50% { left: 100%; }
-    100% { left: 100%; }
-  }
 
   .btn-primary:hover {
     background: linear-gradient(135deg, hsl(286 15% 50%), hsl(280 14% 38%));
