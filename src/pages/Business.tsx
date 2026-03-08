@@ -759,7 +759,7 @@ function Business() {
                             </div>
                           ))}
                         </div>
-                      </motion.div>
+                      </div>
                     </div>
 
                     {/* Stats grid with 3D depth */}
