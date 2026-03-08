@@ -363,10 +363,10 @@ const RSVP = () => {
 
   const ceremonyAddress = settings.ceremony_address || '';
   const ceremonyMapsUrl = settings.ceremony_maps_url || '';
-  const ceremonyTime = settings.ceremony_time || '14:00';
+  const ceremonyTime = settings.ceremony_time || '15:00';
   const receptionAddress = settings.reception_address || '';
   const receptionMapsUrl = settings.reception_maps_url || '';
-  const receptionTime = settings.reception_time || '18:00';
+  const receptionTime = settings.reception_time || '19:00';
   const mapEmbedUrl = settings.map_embed_url || '';
 
   const getTransportDesc = (item: typeof transport[number]) => {

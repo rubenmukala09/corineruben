@@ -67,7 +67,7 @@ const translations: Record<string, Record<Language, string>> = {
   'details.ceremony.location': { fr: 'Église du Sacré-Cœur', en: 'Church of the Sacred Heart', es: 'Iglesia del Sagrado Corazón' },
   'details.ceremony.address': { fr: '123 Rue de l\'Église, Paris', en: '123 Church Street, Paris', es: '123 Calle de la Iglesia, París' },
   'details.reception': { fr: 'Réception', en: 'Reception', es: 'Recepción' },
-  'details.reception.time': { fr: '18h00', en: '6:00 PM', es: '6:00 PM' },
+  'details.reception.time': { fr: '19h00', en: '7:00 PM', es: '7:00 PM' },
   'details.reception.location': { fr: 'Domaine des Roses', en: 'Domaine des Roses', es: 'Domaine des Roses' },
   'details.reception.address': { fr: '456 Avenue de la Réception, Paris', en: '456 Reception Avenue, Paris', es: '456 Avenida de la Recepción, París' },
   'details.accommodation': { fr: 'Hébergement', en: 'Accommodation', es: 'Alojamiento' },

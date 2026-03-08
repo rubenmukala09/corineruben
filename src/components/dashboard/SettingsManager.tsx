@@ -54,7 +54,7 @@ const SettingsManager = () => {
           <SettingRow label="Partner 1 Name" settingKey="couple_name_1" value={settings.couple_name_1 || ''} onSave={saveSetting} saving={saving} />
           <SettingRow label="Partner 2 Name" settingKey="couple_name_2" value={settings.couple_name_2 || ''} onSave={saveSetting} saving={saving} />
           <SettingRow label="Wedding Date & Time" settingKey="wedding_date" value={settings.wedding_date || ''} onSave={saveSetting} saving={saving}
-            hint="Format: 2026-10-16T14:00:00" />
+            hint="Format: 2026-10-16T15:00:00" /> />
         </div>
       </motion.div>
     </div>
