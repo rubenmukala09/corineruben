@@ -393,7 +393,7 @@ const translations: Record<string, Record<Language, string>> = {
   'qr.title': { fr: 'Notre Code Personnel', en: 'Our Personal Code', es: 'Nuestro Código Personal' },
   'qr.desc': { fr: 'Scannez ce code pour accéder rapidement à notre page de mariage ou partagez-le avec vos proches.', en: 'Scan this code for quick access to our wedding page or share it with your loved ones.', es: 'Escanea este código para acceder rápidamente a nuestra página de boda o compártelo con tus seres queridos.' },
   'qr.placeholder': { fr: 'QR Code', en: 'QR Code', es: 'Código QR' },
-  'qr.hint': { fr: 'Partagez l\'amour — envoyez ce lien à votre famille et vos amis', en: 'Share the love — send this link to your family and friends', es: 'Comparte el amor — envía este enlace a tu familia y amigos' },
+  'qr.hint': { fr: 'Partagez l\'amour, envoyez ce lien à votre famille et vos amis', en: 'Share the love, send this link to your family and friends', es: 'Comparte el amor, envía este enlace a tu familia y amigos' },
   'court.title': { fr: 'Nos Citations Personnelles', en: 'Our Personal Quotes', es: 'Nuestras Citas Personales' },
   'court.desc': { fr: 'Ce en quoi nous croyons, nos valeurs et les principes qui guident notre union.', en: 'What we believe in, our values, and the principles that guide our union.', es: 'En lo que creemos, nuestros valores y los principios que guían nuestra unión.' },
   'court.belief.love': { fr: 'L\'Amour Inconditionnel', en: 'Unconditional Love', es: 'Amor Incondicional' },
