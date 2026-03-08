@@ -21,9 +21,9 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
 @layer base {
 
   :root {
-    /* Base colors - warm blush-cream background */
-    --background: 330 28% 96%;
-    --foreground: 270 22% 14%;
+    /* Base colors - clean modern off-white */
+    --background: 240 10% 98%;
+    --foreground: 240 20% 12%;
 
     /* Rich Violet Primary (inspired by #5B3765 / #493C62) */
     --primary: 288 30% 30%;
@@ -41,23 +41,23 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --destructive: 8 70% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Card & Surface - soft lavender-white */
-    --card: 310 22% 98%;
-    --card-foreground: 288 22% 14%;
+    /* Card & Surface - pure white */
+    --card: 0 0% 100%;
+    --card-foreground: 240 20% 12%;
 
-    --popover: 310 22% 98%;
-    --popover-foreground: 288 22% 14%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 20% 12%;
 
-    /* Secondary - pastel blush-lavender */
-    --secondary: 320 24% 93%;
+    /* Secondary - neutral light gray */
+    --secondary: 240 6% 94%;
     --secondary-foreground: 288 30% 30%;
 
-    /* Muted - warm mauve */
-    --muted: 310 18% 92%;
-    --muted-foreground: 288 14% 40%;
+    /* Muted - neutral gray */
+    --muted: 240 6% 94%;
+    --muted-foreground: 240 8% 46%;
 
-    --border: 310 18% 87%;
-    --input: 320 20% 94%;
+    --border: 240 6% 90%;
+    --input: 240 6% 94%;
     --ring: 288 30% 30%;
 
     /* Standardized radius - 8px base */
@@ -96,12 +96,12 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --blush-400: 332 62% 91%;
     --blush-300: 335 68% 95%;
 
-    /* Neutral slate tones - warmer purple-tinted */
-    --slate-900: 288 22% 12%;
-    --slate-700: 288 16% 26%;
-    --slate-500: 288 10% 42%;
-    --slate-300: 300 8% 70%;
-    --slate-100: 330 14% 96%;
+    /* Neutral slate tones - cooler */
+    --slate-900: 240 16% 12%;
+    --slate-700: 240 10% 26%;
+    --slate-500: 240 6% 42%;
+    --slate-300: 240 4% 70%;
+    --slate-100: 240 8% 96%;
 
     /* Gold accent for premium touches */
     --gold-600: 35 90% 45%;
@@ -133,19 +133,24 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --cyan-500: 188 50% 45%;
     --cyan-400: 188 45% 55%;
 
-    /* Refined Shadows - warm ombre tint */
-    --shadow-xs: 0 1px 2px hsl(288 20% 20% / 0.04);
-    --shadow-sm: 0 1px 3px hsl(288 20% 20% / 0.05);
-    --shadow-md: 0 2px 8px -2px hsl(288 20% 20% / 0.06);
-    --shadow-lg: 0 4px 16px -4px hsl(288 20% 20% / 0.08);
+    /* Modern neutral shadows */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 2px 8px -2px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 4px 16px -4px rgba(0, 0, 0, 0.1);
 
-    --sidebar-background: 330 20% 99%;
-    --sidebar-foreground: 288 20% 14%;
+    /* Modern shadow system */
+    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.06);
+    --shadow-card-hover: 0 2px 6px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.08);
+    --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.08), 0 16px 40px rgba(0, 0, 0, 0.06);
+
+    --sidebar-background: 0 0% 99%;
+    --sidebar-foreground: 240 16% 14%;
     --sidebar-primary: 288 30% 30%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 320 20% 94%;
+    --sidebar-accent: 240 6% 94%;
     --sidebar-accent-foreground: 288 30% 30%;
-    --sidebar-border: 316 16% 89%;
+    --sidebar-border: 240 6% 90%;
     --sidebar-ring: 288 30% 30%;
 
     /* Global text scale (rem-based) */
