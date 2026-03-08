@@ -514,7 +514,7 @@ export const PremiumGlassmorphismWidgets = () => {
                 <div className="text-center p-3 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-100 border border-blue-200/50">
                   <Clock className="w-6 h-6 mx-auto text-blue-500 mb-2" />
                   <div className="text-xl font-black text-[#18305A]">24/7</div>
-                  <div className="text-[10px] text-foreground/50 uppercase font-medium">
+                  <div className="text-[10px] text-muted-foreground uppercase font-medium">
                     Uptime
                   </div>
                 </div>
