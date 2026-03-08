@@ -352,7 +352,7 @@ export const PremiumGlassmorphismWidgets = () => {
                   <h4 className="font-bold text-sm text-[#18305A] mb-0.5">
                     {feature.title}
                   </h4>
-                  <p className="text-xs text-foreground/50">{feature.desc}</p>
+                  <p className="text-xs text-muted-foreground">{feature.desc}</p>
                 </motion.div>
               ))}
             </div>
