@@ -87,14 +87,9 @@ const ReferralDashboard = lazy(() => import("./pages/portal/ReferralDashboard"))
 const UserAnalytics = lazy(() => import("./pages/portal/UserAnalytics"));
 const CourseDetail = lazy(() => import("./pages/portal/CourseDetail"));
 const ScamCheckResult = lazy(() => import("./pages/portal/ScamCheckResult"));
-const AnalystDashboard = lazy(() => import("./pages/portal/AnalystDashboard"));
-const TrainerDashboard = lazy(() => import("./pages/portal/TrainerDashboard"));
-const DeveloperDashboard = lazy(() => import("./pages/portal/DeveloperDashboard"));
+const SecretaryDashboard = lazy(() => import("./pages/portal/SecretaryDashboard"));
+const CoordinatorDashboard = lazy(() => import("./pages/portal/CoordinatorDashboard"));
 const StaffDashboard = lazy(() => import("./pages/portal/StaffDashboard"));
-const SeniorDashboard = lazy(() => import("./pages/portal/SeniorDashboard"));
-const BusinessDashboard = lazy(() => import("./pages/portal/BusinessDashboard"));
-const CaregiverDashboard = lazy(() => import("./pages/portal/CaregiverDashboard"));
-const HealthcareDashboard = lazy(() => import("./pages/portal/HealthcareDashboard"));
 
 // Admin pages - lazy loaded
 const AdminDashboardContent = lazy(() => import("./pages/admin/AdminDashboardContent"));
