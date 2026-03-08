@@ -47,6 +47,7 @@ const Enquiries = () => {
   return (
     <div className="min-h-screen pt-28 pb-20 relative">
       <div className="container mx-auto px-6 md:px-12 max-w-2xl relative z-10">
+        <div className="glass-section p-6 md:p-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
           <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
             <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">
@@ -122,6 +123,7 @@ const Enquiries = () => {
             </div>
           </motion.form>
         )}
+        </div>
       </div>
     </div>
   );

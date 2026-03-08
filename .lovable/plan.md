@@ -1,79 +1,37 @@
 
 
-## Enhance Glassmorphism Effects Across the Site
+## Mobile Performance Analysis (66%) — What's Actually Happening
 
-### Assessment
+After examining the audit data in detail, most of the 12 performance issues flagged are **not from your app code** — they come from platform-level infrastructure and cannot be fixed through code changes.
 
-The project already has a solid glassmorphism foundation (`glass-card`, `glass-card-strong`, `glass-card-dark`, `glass-button` classes). Most pages use these classes extensively. The enhancements below add **new visual effects** and apply glass styling to the remaining unstyled elements.
+### Issues Outside Our Control (platform-level)
 
-### Changes
+| Issue | Cause | Fixable? |
+|---|---|---|
+| **Redirects** (780ms) | Lovable staging → custom domain redirect | No |
+| **Render blocking requests** (2,240ms) | DM Sans font injected by Lovable badge | No (remove badge in Settings) |
+| **Unused JavaScript** (119 KiB) | Google Tag Manager scripts from Lovable | No |
+| **Cache lifetimes** (16 KiB) | Google Analytics cache headers | No |
+| **Document latency** (100ms) | Redirect chain | No |
+| **Network dependency tree** | Font chain through Google Fonts → gstatic | No |
 
-**1. `src/index.css` — New glassmorphism utility classes**
-- Add `.glass-input` class for form inputs (translucent bg, backdrop-blur, soft border glow on focus)
-- Add `.glass-section` class for full-width page sections (very subtle frosted panel behind content)
-- Add `.glass-shimmer` animated border effect that can be applied to any glass card for a slow-moving light refraction along edges
-- Add `.glass-glow-hover` — on hover, cards get a soft radial glow emanating from cursor direction
-- Add `.glass-badge` — smaller version of glass-card for inline badges/chips with tighter blur
+### Suspicious Audit Data
 
-**2. `src/components/ui/input.tsx` and `src/components/ui/textarea.tsx`**
-- Add glassmorphism default styling: translucent background, backdrop-blur, soft white/plum border, focus glow ring
+The audit's LCP element references `bold-moves.webp` with text "Start your online journey / Build your website today" and a `div.services` selector — **this is NOT your wedding app**. This appears to be a domain parking page at `corineruben.com`. The CLS layout shift is also attributed to this parking page content.
 
-**3. `src/pages/Index.tsx` — Enhance hero and sections**
-- Wrap countdown grid numbers in individual mini glass panels for depth
-- Add glass-shimmer effect to the main hero tagline badge
-- Apply glass-section to the CTA/RSVP bottom section
+This means the PageSpeed analysis may be hitting a cached or intermittent parking page at your custom domain rather than your actual app.
 
-**4. `src/pages/Story.tsx`, `src/pages/Guestbook.tsx`, `src/pages/Enquiries.tsx`, `src/pages/Registry.tsx`**
-- Apply `glass-section` wrapper around main content areas for cohesive frosted panel feel
-- Timeline cards on Story page: add glass-shimmer border animation on hover
+### What Can Be Improved In Code
 
-**5. `src/components/Navigation.tsx`**
-- Add a subtle inner glass reflection line (1px gradient across top of nav bar)
+Only two items are partially addressable:
 
-**6. `src/components/Footer.tsx`**
-- Add frosted glass overlay strip at the top edge of footer for blended transition
+1. **SEO score (58%)** — Likely caused by the parking page content being analyzed. Need to verify the custom domain is properly serving the app. If it is, we can add structured data and improve meta tags.
 
-### Technical Details
+2. **Font loading strategy** — The Google Fonts stylesheet in `index.html` is already using `media="print" onload="this.media='all'"` pattern (non-blocking). The render-blocking DM Sans flagged in the audit is from the Lovable badge, not our code.
 
-New CSS classes added to `src/index.css`:
+### Recommended Action
 
-```css
-.glass-input {
-  background: rgba(255,255,255,0.35);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.4);
-  transition: all 0.3s;
-}
-.glass-input:focus {
-  border-color: hsl(var(--primary) / 0.5);
-  box-shadow: 0 0 20px hsl(var(--primary) / 0.1);
-}
+The most impactful fix is **removing the Lovable badge** in your project Settings, which would eliminate the render-blocking DM Sans request (est. 2,240ms savings) and the unused JavaScript from Google Tag Manager (119 KiB). This alone could push the performance score significantly higher.
 
-.glass-section {
-  background: rgba(255,255,255,0.25);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.3);
-  border-radius: 32px;
-}
-
-.glass-shimmer {
-  position: relative;
-  overflow: hidden;
-}
-.glass-shimmer::after {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-  background-size: 200% 100%;
-  animation: glass-shimmer-move 4s ease-in-out infinite;
-  pointer-events: none;
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  padding: 1px;
-}
-```
-
-All dark mode variants included. This enhances the frosted glass aesthetic consistently across every page.
+No code changes are needed — the issues are infrastructure-level.
 

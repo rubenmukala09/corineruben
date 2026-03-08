@@ -239,7 +239,7 @@ const Story = () => {
               >
                 <div className="absolute left-6 md:left-1/2 w-4 h-4 rounded-full gradient-primary -translate-x-2 mt-2 z-10 ring-4 ring-background shadow-glow" />
                 <div className={`ml-14 md:ml-0 md:w-[calc(50%-2rem)] ${i % 2 === 0 ? 'md:pr-8 md:text-right' : 'md:pl-8'}`}>
-                  <div className="glass-card-strong rounded-3xl p-7 card-hover">
+                  <div className="glass-card-strong glass-shimmer glass-glow-hover rounded-3xl p-7 card-hover">
                     <span className="text-3xl mb-3 block">{event.icon}</span>
                     <span className="font-sans-elegant text-xs tracking-[0.2em] uppercase text-primary font-semibold">{getEventDate(event)}</span>
                     <h3 className="font-serif-display text-xl text-foreground mt-2 mb-3 font-semibold">{getEventTitle(event)}</h3>
@@ -260,7 +260,7 @@ const Story = () => {
               >
                 <div className="absolute left-6 md:left-1/2 w-4 h-4 rounded-full gradient-primary -translate-x-2 mt-2 z-10 ring-4 ring-background shadow-glow" />
                 <div className={`ml-14 md:ml-0 md:w-[calc(50%-2rem)] ${i % 2 === 0 ? 'md:pr-8 md:text-right' : 'md:pl-8'}`}>
-                  <div className="glass-card-strong rounded-3xl p-7 card-hover">
+                  <div className="glass-card-strong glass-shimmer glass-glow-hover rounded-3xl p-7 card-hover">
                     <span className="text-3xl mb-3 block">{event.icon}</span>
                     <span className="font-sans-elegant text-xs tracking-[0.2em] uppercase text-primary font-semibold">{t(event.dateKey)}</span>
                     <h3 className="font-serif-display text-xl text-foreground mt-2 mb-3 font-semibold">{t(event.titleKey)}</h3>

@@ -68,6 +68,7 @@ const Guestbook = () => {
   return (
     <div className="min-h-screen pt-28 pb-20 relative">
       <div className="container mx-auto px-6 md:px-12 max-w-2xl relative z-10">
+        <div className="glass-section p-6 md:p-10">
 
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
@@ -187,6 +188,7 @@ const Guestbook = () => {
               </AnimatePresence>
             </div>
           )}
+        </div>
         </div>
       </div>
     </div>
