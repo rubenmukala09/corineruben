@@ -62,8 +62,6 @@ const Navigation = () => {
         }`}
         style={{ height: '56px' }}
       >
-        {/* Inner glass reflection line */}
-        <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none z-10" />
         <div className="px-4 md:px-5 flex items-center h-full gap-3">
 
           {/* ── GROUP 1: Logo ── */}
