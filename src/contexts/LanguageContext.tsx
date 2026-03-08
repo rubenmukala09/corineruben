@@ -444,7 +444,7 @@ const translations: Record<string, Record<Language, string>> = {
   'dashboard.noMealData': { fr: 'Aucune donnée de repas', en: 'No meal data yet', es: 'Sin datos de comida aún' },
   'dashboard.guestsLabel': { fr: 'invités', en: 'guests', es: 'invitados' },
   'dashboard.recentActivity': { fr: 'Activité Récente', en: 'Recent Activity', es: 'Actividad Reciente' },
-  'dashboard.noRsvps': { fr: 'Aucun RSVP — partagez votre lien de mariage !', en: 'No RSVPs yet — share your wedding link!', es: '¡Sin RSVP aún — comparte tu enlace de boda!' },
+  'dashboard.noRsvps': { fr: 'Aucun RSVP, partagez votre lien de mariage !', en: 'No RSVPs yet, share your wedding link!', es: '¡Sin RSVP aún, comparte tu enlace de boda!' },
   'dashboard.searchGuests': { fr: 'Rechercher des invités...', en: 'Search guests...', es: 'Buscar invitados...' },
   'dashboard.guest': { fr: 'Invité', en: 'Guest', es: 'Invitado' },
   'dashboard.partySize': { fr: 'Taille du groupe', en: 'Party Size', es: 'Tamaño del Grupo' },
