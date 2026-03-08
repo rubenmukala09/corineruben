@@ -971,8 +971,8 @@ const Index = () => {
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
+              viewport={{ once: true, margin: '-100px' }}
+              transition={{ duration: 0.4 }}
             >
               <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-6">
                 <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('nav.story')}</p>
