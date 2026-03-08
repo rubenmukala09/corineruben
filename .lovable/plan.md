@@ -1,37 +1,86 @@
 
 
-## Mobile Performance Analysis (66%) — What's Actually Happening
+## Debug Analysis: Full System Health Check
 
-After examining the audit data in detail, most of the 12 performance issues flagged are **not from your app code** — they come from platform-level infrastructure and cannot be fixed through code changes.
+### Critical Issue: Missing Database Tables
 
-### Issues Outside Our Control (platform-level)
+The root cause of all build errors is that **two database tables referenced in code do not exist**: `guestbook` and `photos`. The auto-generated `types.ts` doesn't include them, causing TypeScript to reject all queries against these tables.
 
-| Issue | Cause | Fixable? |
-|---|---|---|
-| **Redirects** (780ms) | Lovable staging → custom domain redirect | No |
-| **Render blocking requests** (2,240ms) | DM Sans font injected by Lovable badge | No (remove badge in Settings) |
-| **Unused JavaScript** (119 KiB) | Google Tag Manager scripts from Lovable | No |
-| **Cache lifetimes** (16 KiB) | Google Analytics cache headers | No |
-| **Document latency** (100ms) | Redirect chain | No |
-| **Network dependency tree** | Font chain through Google Fonts → gstatic | No |
+Additionally, the `Gallery.tsx` page references a `wedding-photos` storage bucket that doesn't exist (only `site-images` exists).
 
-### Suspicious Audit Data
+### Plan
 
-The audit's LCP element references `bold-moves.webp` with text "Start your online journey / Build your website today" and a `div.services` selector — **this is NOT your wedding app**. This appears to be a domain parking page at `corineruben.com`. The CLS layout shift is also attributed to this parking page content.
+**1. Create the `guestbook` table with RLS policies**
 
-This means the PageSpeed analysis may be hitting a cached or intermittent parking page at your custom domain rather than your actual app.
+```sql
+CREATE TABLE public.guestbook (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  name text NOT NULL,
+  message text NOT NULL,
+  approved boolean NOT NULL DEFAULT false,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
 
-### What Can Be Improved In Code
+ALTER TABLE public.guestbook ENABLE ROW LEVEL SECURITY;
 
-Only two items are partially addressable:
+-- Anyone can view approved entries
+CREATE POLICY "Anyone can view approved guestbook entries"
+  ON public.guestbook FOR SELECT USING (approved = true);
 
-1. **SEO score (58%)** — Likely caused by the parking page content being analyzed. Need to verify the custom domain is properly serving the app. If it is, we can add structured data and improve meta tags.
+-- Anyone can insert (submit a message)
+CREATE POLICY "Anyone can insert guestbook entries"
+  ON public.guestbook FOR INSERT WITH CHECK (true);
 
-2. **Font loading strategy** — The Google Fonts stylesheet in `index.html` is already using `media="print" onload="this.media='all'"` pattern (non-blocking). The render-blocking DM Sans flagged in the audit is from the Lovable badge, not our code.
+-- Authenticated users can update (approve/manage)
+CREATE POLICY "Authenticated users can update guestbook"
+  ON public.guestbook FOR UPDATE USING (auth.role() = 'authenticated');
 
-### Recommended Action
+-- Authenticated users can delete
+CREATE POLICY "Authenticated users can delete guestbook"
+  ON public.guestbook FOR DELETE USING (auth.role() = 'authenticated');
+```
 
-The most impactful fix is **removing the Lovable badge** in your project Settings, which would eliminate the render-blocking DM Sans request (est. 2,240ms savings) and the unused JavaScript from Google Tag Manager (119 KiB). This alone could push the performance score significantly higher.
+**2. Create the `photos` table with RLS policies**
 
-No code changes are needed — the issues are infrastructure-level.
+```sql
+CREATE TABLE public.photos (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  uploader_name text NOT NULL,
+  storage_path text NOT NULL,
+  public_url text NOT NULL,
+  approved boolean NOT NULL DEFAULT false,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+
+ALTER TABLE public.photos ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Anyone can view approved photos"
+  ON public.photos FOR SELECT USING (approved = true);
+
+CREATE POLICY "Anyone can insert photos"
+  ON public.photos FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Authenticated users can update photos"
+  ON public.photos FOR UPDATE USING (auth.role() = 'authenticated');
+
+CREATE POLICY "Authenticated users can delete photos"
+  ON public.photos FOR DELETE USING (auth.role() = 'authenticated');
+```
+
+**3. Create the `wedding-photos` storage bucket**
+
+The Gallery page uploads to a `wedding-photos` bucket that doesn't exist. Need to create it as a public bucket so uploaded photos can be viewed.
+
+**4. No code changes needed**
+
+The existing `Guestbook.tsx` and `Gallery.tsx` code is correct — it just needs the backing tables and storage bucket to exist. Once the migration runs, `types.ts` will auto-regenerate with the new tables and all build errors will resolve.
+
+### Summary of Issues Found
+
+| Issue | Severity | Fix |
+|-------|----------|-----|
+| Missing `guestbook` table | Build-breaking | Create via migration |
+| Missing `photos` table | Build-breaking | Create via migration |
+| Missing `wedding-photos` storage bucket | Runtime error on upload | Create bucket |
+| Console warning: `GoldenCorners` missing `forwardRef` | Non-breaking (warning) | Low priority, not causing errors |
 
