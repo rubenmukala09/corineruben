@@ -1,102 +1,83 @@
 
 
-# Visual System Enhancement Plan — "Cleaner & More Modern"
+# Website Audit Plan — InVision Network
 
-## Current State Assessment
+## Issues Found
 
-The design system has accumulated significant visual complexity: 1,482 lines of trending-ui.css, 1,371 lines of components.css, and 1,047 lines of base.css. While individual elements are well-crafted, the overall feel is heavy due to:
-- Warm blush-cream background (`330 28% 96%`) that feels dated
-- Overly complex multi-layer shadow systems (5-6 layers per element)
-- Too many competing gradient tints (coral, lavender, navy, gold)
-- Dense nav and footer with visual clutter
-- Card hover effects that are too dramatic (8px lift + scale)
+### Critical Issues
 
-## Design Direction: Clean Modern
+1. **Training page renders blank/invisible content**
+   - The `/training` page shows only the footer — the main content area appears entirely white/invisible. This is a major usability failure; users cannot see any training plans or pricing.
+   - Root cause likely: CSS color/background conflict where text is rendering in white on a white background, or the hero section and content sections have no visible background contrast.
+   - **Fix**: Audit the Training.tsx page structure and ensure all sections have proper background colors and text contrast. Check for any CSS classes like `text-white` applied without a dark background.
 
-Inspired by Linear, Vercel, and Stripe — high contrast, generous whitespace, restrained color use, and crisp typography.
+2. **Massive `forwardRef` warning spam (6+ warnings on every page load)**
+   - Components affected: `UnifiedCheckoutDialog`, `DonationModal`, `SEO`, `Navigation` (memo), `PrefetchLink`, `ShoppingCart`, `DialogContent`/`DialogPortal`
+   - These are React warnings about function components being given refs without `React.forwardRef()`. While they don't crash the app, they indicate broken ref forwarding that can cause subtle interaction bugs (e.g., Dialog focus management, Sheet animations).
+   - **Fix**: Wrap affected components in `React.forwardRef()` or remove unnecessary ref passing.
+
+### Performance Issues
+
+3. **Hero image too large (1.3MB)**
+   - `hero-corporate-protection.webp` is 1,319KB — this is the single largest resource and takes 913ms to load. Should be compressed to under 200KB or served at appropriate dimensions.
+   - **Fix**: Compress the hero image or use responsive `srcset` with smaller variants.
+
+4. **framer-motion loaded on initial page (93KB)**
+   - Per the project's own memory/architecture rules, framer-motion should be excluded from the root level and only lazy-loaded. Currently loaded as part of the initial bundle.
+   - **Fix**: Ensure framer-motion imports in Index.tsx are isolated to lazy-loaded sub-components.
+
+5. **DOM Content Loaded: 3.4s, Full Page Load: 3.6s**
+   - Acceptable but could improve. The 76 script files loaded on dev is expected (Vite HMR), but production builds should be verified.
+
+### Form Validation & Data Flow
+
+6. **Contact form uses `useState` instead of `react-hook-form`**
+   - The Contact page imports `useForm` and `zodResolver` but the `handleSubmit` function uses raw `useState` with manual form data. The Zod schema is imported (`contactFormSchema`) but may not be wired up for field-level validation feedback.
+   - **Fix**: Wire up `react-hook-form` with `contactFormSchema` for proper field-level error display.
+
+7. **Newsletter form validation is working correctly**
+   - Uses Zod schema, proper error handling, loading states, and success feedback. No issues found.
+
+### Navigation & Responsiveness
+
+8. **Mobile navigation missing hamburger menu button on small screens**
+   - On 375px width, the nav shows logo + cart + phone + Login but no hamburger icon to open the mobile menu with all nav links. Users on mobile cannot access AI & Business, Learn & Train, Resources, etc.
+   - **Fix**: Ensure the hamburger menu button is visible on mobile breakpoints.
+
+9. **Navigation responsive layout looks functional on desktop** — all 7 nav links visible, cart, phone, donate, login all accessible.
+
+### Minor Issues
+
+10. **`body.style.overflow` manipulation in Navigation**
+    - Direct DOM mutation for scroll locking — works but could cause issues with other overlay components competing for the same property.
+
+11. **Edge function CORS headers missing newer Supabase client headers**
+    - The `process-payment` edge function uses basic CORS headers. Should include the extended headers per project standards.
 
 ---
 
-### 1. Color Palette Refresh
+## Implementation Plan
 
-**Background**: Shift from warm blush-cream to a cooler, cleaner near-white
-- `--background: 330 28% 96%` → `--background: 240 10% 98%` (cool off-white)
-- `--card: 310 22% 98%` → `--card: 0 0% 100%` (pure white cards)
-- `--muted: 310 18% 92%` → `--muted: 240 6% 94%` (neutral gray)
-- `--border: 310 18% 87%` → `--border: 240 6% 90%` (neutral border)
-- Body background: from `hsl(330 28% 96%)` to `hsl(240 10% 98%)`
+### Task 1: Fix Training page visibility
+- Inspect `Training.tsx` full render output and all CSS classes
+- Ensure hero and content sections have proper background/text colors
+- Verify the page renders correctly on both desktop and mobile
 
-**Accent simplification**: Keep mauve-purple primary but reduce coral/lavender noise
-- Reduce coral-tinted shadows throughout — use neutral gray shadows instead
-- Keep primary-to-accent gradient for key CTAs only
+### Task 2: Fix forwardRef warnings
+- Add `React.forwardRef()` to: `DonationModal`, `PrefetchLink`, `ShoppingCart`, `SEO`
+- These are the custom components triggering warnings; Dialog/Sheet warnings come from Radix internals and are lower priority
 
-### 2. Typography Upgrade
+### Task 3: Fix mobile navigation hamburger visibility
+- Ensure the hamburger menu toggle button renders on screens below `lg` breakpoint
+- Verify all nav links are accessible in the mobile drawer
 
-- Add `Inter` as the primary sans-serif, keep `Rubik` as fallback
-- Tighten letter-spacing on headings: `-0.035em` → `-0.04em` for h1
-- Increase font-weight contrast: body at 400, subheadings at 500, headings at 700-800
-- Paragraph max-width: `70ch` → `65ch` for tighter reading columns
-- Reduce line-height on headings: `1.15` → `1.08` for more compact headlines
+### Task 4: Optimize hero image size
+- Compress `hero-corporate-protection.webp` to under 200KB
+- Add `width`/`height` attributes to prevent layout shift
 
-### 3. Component Polish
+### Task 5: Wire up Contact form validation properly
+- Connect `react-hook-form` + `zodResolver` with `contactFormSchema` for proper field-level error messages
 
-**Cards**: Simplify from multi-layer ombre shadows to clean 2-layer shadows
-- `.skeuo-card` shadow: reduce from 4-layer warm-tinted to `0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.06)`
-- Hover: reduce lift from `-4px` to `-2px`, remove scale
-- Border: sharpen from `hsl(310 20% 92% / 0.6)` to `hsl(240 6% 90%)`
-
-**Buttons**: Already well-designed skeuomorphic system — minor refinements
-- Reduce shadow complexity from 4-layer to 3-layer
-- Tighten border-radius from `rounded-xl` (12px) to `rounded-lg` (8px) for a crisper feel
-- Login button in nav: keep gradient pill but reduce blur
-
-**Navigation**: Clean up for modern minimalism
-- Remove orange in logo gradient → use `from-foreground to-primary`
-- Increase nav height slightly: `h-16` → `h-[60px]` (unchanged, already good)
-- Reduce backdrop shadow opacity
-
-**Metric cards in hero**: Remove `backdrop-blur-xl` (already neutralized), clean up borders
-
-### 4. Layout & Spacing
-
-**Section spacing**: Increase vertical rhythm for breathing room
-- Standard section padding: `py-16 md:py-24` → `py-20 md:py-28`
-- Reduce gap between hero content elements for tighter visual hierarchy
-
-**Homepage section backgrounds**: Remove alternating `bg-muted/20` pattern
-- Use pure white for most sections
-- Use `bg-muted/30` only for key differentiating sections (testimonials, FAQ)
-- Remove decorative `::before` radial gradients on section surfaces (`.home-surface-*`)
-
-**Container**: Tighten max-width from `max-w-7xl` to `max-w-6xl` on content-heavy pages for better readability
-
-### 5. Shadow & Depth System Simplification
-
-Replace the warm-tinted shadow variables with neutral modern ones:
-```css
---shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.06);
---shadow-card-hover: 0 2px 6px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.08);
---shadow-elevated: 0 4px 12px rgba(0,0,0,0.08), 0 16px 40px rgba(0,0,0,0.06);
-```
-
-### 6. Specific Component Updates
-
-**Navigation logo gradient**: `#173B72 → #F47C52` → `foreground → primary` (brand-aligned)
-
-**Hero stat cards**: Remove individual icon containers, use inline icons for cleaner density
-
-**Footer**: Reduce visual weight — lighter background, cleaner column grid
-
-**`.glass-panel` and glass variants in trending-ui.css**: Simplify background gradients from 3-layer to single-layer with higher opacity for a cleaner, flatter look
-
-### Files to Edit
-
-1. `src/styles/base.css` — Color variables, typography, shadow system, body background
-2. `src/styles/components.css` — Card, button, widget shadow simplification
-3. `src/styles/trending-ui.css` — Glass variants simplification
-4. `src/components/ui/button.tsx` — Border radius and shadow reduction
-5. `src/components/Navigation.tsx` — Logo gradient, shadow cleanup
-6. `src/components/HeroHomepage.tsx` — Stat card simplification
-7. `src/pages/Index.tsx` — Section background cleanup
-8. `index.html` — Add Inter font import
+### Task 6: Update edge function CORS headers
+- Update `process-payment` and any other edge functions to include the full set of required CORS headers per project standards
 

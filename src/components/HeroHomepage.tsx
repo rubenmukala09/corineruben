@@ -103,15 +103,12 @@ export const HeroHomepage = () => {
               ].map((stat) => (
                 <div
                   key={stat.label}
-                  className="relative rounded-2xl bg-card/70 backdrop-blur-xl border border-border/40 p-4 shadow-sm hover:shadow-lg hover:border-primary/20 transition-all duration-300 group"
+                  className="rounded-xl bg-card/90 border border-border/60 p-4 shadow-sm hover:shadow-md transition-shadow duration-200"
                 >
-                  <div className="h-0.5 w-full bg-gradient-to-r from-primary to-accent absolute top-0 left-0 right-0 rounded-t-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <stat.icon className="w-5 h-5 text-primary" />
-                    </div>
+                    <stat.icon className="w-5 h-5 text-primary flex-shrink-0" />
                     <div>
-                      <div className="text-lg font-black text-foreground leading-none">{stat.value}</div>
+                      <div className="text-lg font-extrabold text-foreground leading-none">{stat.value}</div>
                       <div className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mt-1">{stat.label}</div>
                     </div>
                   </div>
@@ -122,7 +119,7 @@ export const HeroHomepage = () => {
         </div>
 
         {/* ── Bottom floating trust bar ── */}
-        <div className="border-t border-border/30 bg-card/60 backdrop-blur-2xl">
+        <div className="border-t border-border/40 bg-card/90">
           <div className="container mx-auto px-6 lg:px-12 py-4">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-3">

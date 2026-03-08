@@ -76,7 +76,7 @@ const Navigation = React.memo(() => {
         />
       )}
 
-      <nav className="sticky top-0 z-[9999] bg-card/70 backdrop-blur-2xl border-b border-border/30 shadow-[0_4px_30px_-10px_hsl(288_30%_30%/0.08)]">
+      <nav className="sticky top-0 z-[9999] bg-card/95 backdrop-blur-lg border-b border-border/50 shadow-sm">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-16">
             {/* Logo */}
@@ -98,7 +98,7 @@ const Navigation = React.memo(() => {
                 <span
                   className="text-lg md:text-xl font-bold tracking-tight"
                   style={{
-                    background: "linear-gradient(120deg, #173B72 0%, #F47C52 100%)",
+                    background: "linear-gradient(120deg, hsl(240 20% 12%) 0%, hsl(288 30% 30%) 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                   }}

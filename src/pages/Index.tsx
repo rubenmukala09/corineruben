@@ -75,7 +75,7 @@ const Index = forwardRef<HTMLDivElement>(function Index(_props, _ref) {
           </div>
 
           {/* 5. Services Grid */}
-          <div id="services" className="bg-muted/20">
+          <div id="services">
             <SiteOrientationGrid />
           </div>
 
@@ -85,7 +85,7 @@ const Index = forwardRef<HTMLDivElement>(function Index(_props, _ref) {
           </div>
 
           {/* 7. How It Works — 3 Steps */}
-          <div id="get-protected" className="bg-muted/20">
+          <div id="get-protected">
             <PromoStrip />
           </div>
 
@@ -95,7 +95,7 @@ const Index = forwardRef<HTMLDivElement>(function Index(_props, _ref) {
           </div>
 
           {/* 9. Testimonials */}
-          <div id="testimonials" className="bg-muted/20">
+          <div id="testimonials" className="bg-muted/30">
             <TestimonialCarousel />
           </div>
 
@@ -105,7 +105,7 @@ const Index = forwardRef<HTMLDivElement>(function Index(_props, _ref) {
           </div>
 
           {/* 11. Blog Preview */}
-          <section id="blog" className="bg-muted/20">
+          <section id="blog">
             <LazySection>
               <BlogPreview />
             </LazySection>

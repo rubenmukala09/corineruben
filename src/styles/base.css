@@ -21,9 +21,9 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
 @layer base {
 
   :root {
-    /* Base colors - warm blush-cream background */
-    --background: 330 28% 96%;
-    --foreground: 270 22% 14%;
+    /* Base colors - clean modern off-white */
+    --background: 240 10% 98%;
+    --foreground: 240 20% 12%;
 
     /* Rich Violet Primary (inspired by #5B3765 / #493C62) */
     --primary: 288 30% 30%;
@@ -41,23 +41,23 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --destructive: 8 70% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Card & Surface - soft lavender-white */
-    --card: 310 22% 98%;
-    --card-foreground: 288 22% 14%;
+    /* Card & Surface - pure white */
+    --card: 0 0% 100%;
+    --card-foreground: 240 20% 12%;
 
-    --popover: 310 22% 98%;
-    --popover-foreground: 288 22% 14%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 20% 12%;
 
-    /* Secondary - pastel blush-lavender */
-    --secondary: 320 24% 93%;
+    /* Secondary - neutral light gray */
+    --secondary: 240 6% 94%;
     --secondary-foreground: 288 30% 30%;
 
-    /* Muted - warm mauve */
-    --muted: 310 18% 92%;
-    --muted-foreground: 288 14% 40%;
+    /* Muted - neutral gray */
+    --muted: 240 6% 94%;
+    --muted-foreground: 240 8% 46%;
 
-    --border: 310 18% 87%;
-    --input: 320 20% 94%;
+    --border: 240 6% 90%;
+    --input: 240 6% 94%;
     --ring: 288 30% 30%;
 
     /* Standardized radius - 8px base */
@@ -96,12 +96,12 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --blush-400: 332 62% 91%;
     --blush-300: 335 68% 95%;
 
-    /* Neutral slate tones - warmer purple-tinted */
-    --slate-900: 288 22% 12%;
-    --slate-700: 288 16% 26%;
-    --slate-500: 288 10% 42%;
-    --slate-300: 300 8% 70%;
-    --slate-100: 330 14% 96%;
+    /* Neutral slate tones - cooler */
+    --slate-900: 240 16% 12%;
+    --slate-700: 240 10% 26%;
+    --slate-500: 240 6% 42%;
+    --slate-300: 240 4% 70%;
+    --slate-100: 240 8% 96%;
 
     /* Gold accent for premium touches */
     --gold-600: 35 90% 45%;
@@ -133,19 +133,24 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --cyan-500: 188 50% 45%;
     --cyan-400: 188 45% 55%;
 
-    /* Refined Shadows - warm ombre tint */
-    --shadow-xs: 0 1px 2px hsl(288 20% 20% / 0.04);
-    --shadow-sm: 0 1px 3px hsl(288 20% 20% / 0.05);
-    --shadow-md: 0 2px 8px -2px hsl(288 20% 20% / 0.06);
-    --shadow-lg: 0 4px 16px -4px hsl(288 20% 20% / 0.08);
+    /* Modern neutral shadows */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 2px 8px -2px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 4px 16px -4px rgba(0, 0, 0, 0.1);
 
-    --sidebar-background: 330 20% 99%;
-    --sidebar-foreground: 288 20% 14%;
+    /* Modern shadow system */
+    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.06);
+    --shadow-card-hover: 0 2px 6px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.08);
+    --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.08), 0 16px 40px rgba(0, 0, 0, 0.06);
+
+    --sidebar-background: 0 0% 99%;
+    --sidebar-foreground: 240 16% 14%;
     --sidebar-primary: 288 30% 30%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 320 20% 94%;
+    --sidebar-accent: 240 6% 94%;
     --sidebar-accent-foreground: 288 30% 30%;
-    --sidebar-border: 316 16% 89%;
+    --sidebar-border: 240 6% 90%;
     --sidebar-ring: 288 30% 30%;
 
     /* Global text scale (rem-based) */
@@ -190,69 +195,66 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
 
   /* ===== SKEUOMORPHISM 2.0 - GLOBAL MATERIAL STYLES ===== */
   :root {
-    /* Skeuomorphic shadow layers - warm ombre tint */
+    /* Modern clean shadow layers */
     --skeuo-shadow-raised:
-      0 1px 2px hsl(288 25% 20% / 0.04),
-      0 2px 4px hsl(316 20% 30% / 0.03),
-      0 4px 8px hsl(18 30% 40% / 0.02);
-    --skeuo-shadow-pressed: inset 0 1px 2px hsl(288 20% 15% / 0.08);
+      0 1px 2px rgba(0, 0, 0, 0.04),
+      0 2px 4px rgba(0, 0, 0, 0.03);
+    --skeuo-shadow-pressed: inset 0 1px 2px rgba(0, 0, 0, 0.08);
     --skeuo-shadow-floating:
-      0 2px 8px hsl(288 25% 20% / 0.04),
-      0 8px 24px hsl(316 20% 30% / 0.06);
+      0 2px 8px rgba(0, 0, 0, 0.04),
+      0 8px 24px rgba(0, 0, 0, 0.06);
     --skeuo-highlight: linear-gradient(
       180deg,
       rgba(255, 255, 255, 0.25) 0%,
       transparent 50%
     );
     --skeuo-inset:
-      inset 0 1px 2px hsl(288 20% 15% / 0.06),
+      inset 0 1px 2px rgba(0, 0, 0, 0.06),
       inset 0 -1px 1px rgba(255, 255, 255, 0.5);
 
-    /* Warm ombre shadows - coral → lavender → violet */
+    /* Neutral modern shadows */
     --skeuo-shadow-coral:
-      0 2px 4px hsl(var(--coral-400) / 0.1),
-      0 4px 8px hsl(var(--coral-400) / 0.08),
-      0 8px 16px hsl(var(--coral-400) / 0.06);
+      0 2px 4px rgba(0, 0, 0, 0.04),
+      0 4px 8px rgba(0, 0, 0, 0.04),
+      0 8px 16px rgba(0, 0, 0, 0.03);
     --skeuo-shadow-lavender:
-      0 2px 4px hsl(var(--lavender-400) / 0.1),
-      0 4px 8px hsl(var(--lavender-400) / 0.08),
-      0 8px 16px hsl(var(--lavender-400) / 0.06);
+      0 2px 4px rgba(0, 0, 0, 0.04),
+      0 4px 8px rgba(0, 0, 0, 0.04),
+      0 8px 16px rgba(0, 0, 0, 0.03);
     --skeuo-shadow-mixed:
-      0 2px 4px hsl(var(--coral-400) / 0.08),
-      0 6px 12px hsl(var(--lavender-400) / 0.07),
-      0 12px 24px hsl(288 30% 30% / 0.05);
+      0 2px 4px rgba(0, 0, 0, 0.04),
+      0 6px 12px rgba(0, 0, 0, 0.05),
+      0 12px 24px rgba(0, 0, 0, 0.04);
 
-    /* Widget ombre shadow - the signature warm glow */
+    /* Clean card shadow */
     --skeuo-shadow-ombre:
-      0 2px 6px hsl(var(--coral-400) / 0.08),
-      0 6px 16px hsl(var(--lavender-400) / 0.06),
-      0 12px 28px hsl(288 30% 30% / 0.05),
+      0 1px 3px rgba(0, 0, 0, 0.04),
+      0 4px 12px rgba(0, 0, 0, 0.06),
       inset 0 1px 0 hsl(0 0% 100% / 0.9);
 
-    /* Glassmorphism + Skeuomorphism hybrid backgrounds */
+    /* Clean glass backgrounds */
     --skeuo-glass-bg: linear-gradient(
       135deg,
-      hsl(330 22% 99% / 0.92) 0%,
-      hsl(316 18% 96% / 0.68) 50%,
-      hsl(330 22% 99% / 0.85) 100%
+      hsl(0 0% 100% / 0.96) 0%,
+      hsl(0 0% 99% / 0.92) 100%
     );
-    --skeuo-glass-border: hsl(316 22% 90% / 0.65);
-    --skeuo-glass-blur: blur(28px) saturate(1.8) brightness(1.05);
+    --skeuo-glass-border: hsl(240 6% 90%);
+    --skeuo-glass-blur: none;
     --skeuo-glass-shadow:
-      0 12px 32px -16px hsl(288 25% 25% / 0.15),
-      0 4px 12px -6px hsl(316 20% 30% / 0.08),
+      0 4px 12px rgba(0, 0, 0, 0.06),
+      0 1px 3px rgba(0, 0, 0, 0.04),
       inset 0 1px 0 hsl(0 0% 100% / 0.92);
 
-    /* Premium coral-lavender gradient for accents */
+    /* Primary gradient for accents */
     --skeuo-gradient-accent: linear-gradient(
       135deg,
-      hsl(var(--coral-400)) 0%,
-      hsl(var(--lavender-500)) 100%
+      hsl(var(--primary)) 0%,
+      hsl(var(--accent)) 100%
     );
     --skeuo-gradient-accent-soft: linear-gradient(
       135deg,
-      hsl(var(--coral-100)) 0%,
-      hsl(var(--lavender-100)) 100%
+      hsl(var(--primary) / 0.08) 0%,
+      hsl(var(--accent) / 0.08) 100%
     );
   }
 
@@ -269,7 +271,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: "Rubik", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: "Inter", "Rubik", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: 1rem;
     line-height: 1.65;
     letter-spacing: -0.011em;
@@ -280,7 +282,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
       "kern" 1,
       "liga" 1,
       "calt" 1,
-      "case" 1,
+      "cv11" 1,
       "tnum" 1;
     font-kerning: normal;
     font-optical-sizing: auto;
@@ -289,8 +291,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     overflow-x: hidden;
     width: 100%;
     position: relative;
-    /* Flat warm background - no gradient repaint cost */
-    background-color: hsl(330 28% 96%);
+    background-color: hsl(240 10% 98%);
   }
 
   @media (min-width: 768px) {
@@ -417,9 +418,9 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   h5,
   h6 {
     @apply font-bold;
-    font-family: "Rubik", ui-sans-serif, system-ui, -apple-system, sans-serif;
-    line-height: 1.15;
-    letter-spacing: -0.025em;
+    font-family: "Inter", "Rubik", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
     text-wrap: balance;
     font-weight: 700;
     color: hsl(var(--foreground));
@@ -428,53 +429,53 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
 
   h1 {
     font-size: clamp(2.25rem, 4vw + 1rem, 3.75rem);
-    letter-spacing: -0.035em;
-    line-height: 1.1;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
     font-weight: 800;
   }
 
   h2 {
     font-size: clamp(1.875rem, 3vw + 0.5rem, 3rem);
-    letter-spacing: -0.03em;
-    line-height: 1.12;
+    letter-spacing: -0.035em;
+    line-height: 1.08;
     font-weight: 700;
   }
 
   h3 {
     font-size: clamp(1.5rem, 2.5vw + 0.5rem, 2.25rem);
-    letter-spacing: -0.022em;
-    line-height: 1.2;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
     font-weight: 700;
   }
 
   h4 {
     font-size: clamp(1.25rem, 2vw + 0.25rem, 1.875rem);
-    letter-spacing: -0.015em;
-    line-height: 1.3;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
     font-weight: 600;
   }
 
   h5 {
     font-size: clamp(1.125rem, 1.5vw + 0.25rem, 1.5rem);
-    letter-spacing: -0.01em;
-    line-height: 1.4;
+    letter-spacing: -0.015em;
+    line-height: 1.3;
     font-weight: 600;
   }
 
   h6 {
     font-size: clamp(1rem, 1vw + 0.125rem, 1.25rem);
-    letter-spacing: -0.005em;
-    line-height: 1.5;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
     font-weight: 600;
   }
 
   p {
     font-size: 1rem;
-    line-height: 1.75;
+    line-height: 1.7;
     letter-spacing: -0.011em;
     margin: 0 0 1rem;
-    color: hsl(var(--foreground) / 0.9);
-    max-width: 70ch;
+    color: hsl(var(--foreground) / 0.85);
+    max-width: 65ch;
   }
 
   li {
