@@ -110,7 +110,7 @@ export const CommunityImpact = () => {
 
             {/* Glassmorphism Floating Badge */}
             <div className="absolute -bottom-3 -right-3 bg-white/70 backdrop-blur-xl rounded-xl shadow-lg px-5 py-3 border border-white/50">
-              <div className="text-xs font-medium text-foreground/60">
+              <div className="text-xs font-medium text-foreground/85">
                 Veteran-Owned
               </div>
               <div className="text-xl font-black text-[#18305A]">
@@ -138,7 +138,7 @@ export const CommunityImpact = () => {
               </span>
             </h3>
 
-            <p className="text-foreground/60 leading-relaxed text-sm">
+            <p className="text-muted-foreground leading-relaxed text-sm">
               We craft unique digital experiences with more than 4 years of
               expertise in design and digital transformation, providing our
               customers with exceptional service.

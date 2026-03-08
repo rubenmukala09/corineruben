@@ -195,7 +195,7 @@ export const PremiumGlassmorphismWidgets = () => {
               Results
             </span>
           </h2>
-          <p className="text-lg text-foreground/60 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Join Ohio families who trust us with their digital safety every day.
           </p>
         </motion.div>
@@ -314,7 +314,7 @@ export const PremiumGlassmorphismWidgets = () => {
                     >
                       {stat.value}
                     </div>
-                    <div className="text-xs text-foreground/60 font-semibold uppercase tracking-wide">
+                    <div className="text-xs text-muted-foreground font-semibold uppercase tracking-wide">
                       {stat.label}
                     </div>
                   </div>
@@ -339,7 +339,7 @@ export const PremiumGlassmorphismWidgets = () => {
                   />
                   {/* Stat Badge */}
                   <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-white/80 backdrop-blur-sm border border-white/50 shadow-sm">
-                    <span className="text-[10px] font-bold text-foreground/70">
+                    <span className="text-[10px] font-bold text-foreground/85">
                       {feature.stat}
                     </span>
                   </div>
@@ -352,7 +352,7 @@ export const PremiumGlassmorphismWidgets = () => {
                   <h4 className="font-bold text-sm text-[#18305A] mb-0.5">
                     {feature.title}
                   </h4>
-                  <p className="text-xs text-foreground/50">{feature.desc}</p>
+                  <p className="text-xs text-muted-foreground">{feature.desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -430,7 +430,7 @@ export const PremiumGlassmorphismWidgets = () => {
                   </div>
 
                   <div className="flex items-center justify-between mb-4">
-                    <span className="rounded-full bg-white/70 px-2 py-0.5 text-[10px] font-semibold text-foreground/70">
+                    <span className="rounded-full bg-white/70 px-2 py-0.5 text-[10px] font-semibold text-foreground/85">
                       Sample
                     </span>
                     <div className="flex gap-1">
@@ -444,7 +444,7 @@ export const PremiumGlassmorphismWidgets = () => {
                   </div>
 
                   {/* Quote */}
-                  <p className="text-foreground/70 mb-4 leading-relaxed font-medium">
+                  <p className="text-foreground/85 mb-4 leading-relaxed font-medium">
                     "{testimonial.quote}"
                   </p>
 
@@ -464,7 +464,7 @@ export const PremiumGlassmorphismWidgets = () => {
                       <div className="font-bold text-[#18305A]">
                         {testimonial.name}
                       </div>
-                      <div className="text-xs text-foreground/50">
+                      <div className="text-xs text-muted-foreground">
                         {testimonial.role}
                       </div>
                     </div>
@@ -498,7 +498,7 @@ export const PremiumGlassmorphismWidgets = () => {
                 <div className="text-center p-3 rounded-xl bg-gradient-to-br from-coral-50 to-coral-100 border border-coral-200/50">
                   <Target className="w-6 h-6 mx-auto text-coral-500 mb-2" />
                   <div className="text-xl font-black text-[#18305A]">98%</div>
-                  <div className="text-[10px] text-foreground/50 uppercase font-medium">
+                  <div className="text-[10px] text-muted-foreground uppercase font-medium">
                     Accuracy
                   </div>
                 </div>
@@ -507,14 +507,14 @@ export const PremiumGlassmorphismWidgets = () => {
                   <div className="text-xl font-black text-[#18305A]">
                     &lt;1s
                   </div>
-                  <div className="text-[10px] text-foreground/50 uppercase font-medium">
+                  <div className="text-[10px] text-muted-foreground uppercase font-medium">
                     Response
                   </div>
                 </div>
                 <div className="text-center p-3 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-100 border border-blue-200/50">
                   <Clock className="w-6 h-6 mx-auto text-blue-500 mb-2" />
                   <div className="text-xl font-black text-[#18305A]">24/7</div>
-                  <div className="text-[10px] text-foreground/50 uppercase font-medium">
+                  <div className="text-[10px] text-muted-foreground uppercase font-medium">
                     Uptime
                   </div>
                 </div>

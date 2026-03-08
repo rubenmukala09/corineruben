@@ -122,7 +122,7 @@ const Navigation = React.memo(() => {
                     className={`relative text-sm font-semibold px-3 py-2 whitespace-nowrap tracking-tight transition-colors duration-150 ${
                       isActive
                         ? "text-primary"
-                        : "text-foreground/70 hover:text-foreground"
+                        : "text-foreground/85 hover:text-foreground"
                     }`}
                   >
                     {link.name}

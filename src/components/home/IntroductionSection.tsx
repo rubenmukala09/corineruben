@@ -54,7 +54,7 @@ export const IntroductionSection = () => {
           <div className="max-w-4xl mx-auto text-center mb-20">
             <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full glass-widget mb-6">
               <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-sm font-semibold text-foreground/80 tracking-wider uppercase">
+              <span className="text-sm font-semibold text-foreground tracking-wider uppercase">
                 Welcome to {SITE.name}
               </span>
             </div>
@@ -273,7 +273,7 @@ export const IntroductionSection = () => {
             <div className="relative z-10 max-w-4xl mx-auto">
               <div className="inline-flex items-center gap-2 mb-6">
                 <Heart className="w-6 h-6 text-accent fill-accent" />
-                <span className="text-sm font-semibold text-foreground/80 uppercase tracking-wider">
+                <span className="text-sm font-semibold text-foreground uppercase tracking-wider">
                   Our Promise to You
                 </span>
               </div>

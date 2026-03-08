@@ -161,7 +161,7 @@ export const CompellingCTA = ({ variant = 'primary', className = '' }: Compellin
           <div className="glass-heavy rounded-2xl md:rounded-3xl p-6 md:card-padding-xl text-center specular-highlight">
             <div className="inline-flex items-center gap-2 px-4 md:px-5 py-1.5 md:py-2 rounded-full glass-widget mb-6 md:mb-8">
               <Sparkles className="w-3 h-3 md:w-4 md:h-4 text-primary" />
-              <span className="text-xs md:text-sm font-semibold text-foreground/80 tracking-wider uppercase">
+              <span className="text-xs md:text-sm font-semibold text-foreground tracking-wider uppercase">
                 Ready to Get Started?
               </span>
             </div>

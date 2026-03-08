@@ -119,7 +119,7 @@ export const LiveProtectionStatus = () => {
                   <span className="text-sm font-semibold text-foreground">
                     Sample Protection
                   </span>
-                  <span className="rounded-full bg-white/70 px-2 py-0.5 text-[10px] font-semibold text-foreground/70">
+                  <span className="rounded-full bg-white/70 px-2 py-0.5 text-[10px] font-semibold text-foreground/85">
                     Demo
                   </span>
                 </div>

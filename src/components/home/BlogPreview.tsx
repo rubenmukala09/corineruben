@@ -53,7 +53,7 @@ export const BlogPreview = () => {
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
             Learn From Our <span className="text-primary">Latest Blog</span>
           </h2>
-          <p className="text-foreground/80 text-xl md:text-2xl max-w-2xl mx-auto font-medium leading-relaxed">
+          <p className="text-muted-foreground text-xl md:text-2xl max-w-2xl mx-auto font-medium leading-relaxed">
             Stay informed with the latest cybersecurity tips and protection
             strategies.
           </p>
@@ -85,7 +85,7 @@ export const BlogPreview = () => {
 
                   {/* Content */}
                   <div className="p-8 text-center">
-                    <div className="flex items-center justify-center gap-2 text-base text-foreground/70 mb-4">
+                    <div className="flex items-center justify-center gap-2 text-base text-muted-foreground mb-4">
                       <Calendar className="w-5 h-5" />
                       <span className="font-medium">{article.date}</span>
                     </div>

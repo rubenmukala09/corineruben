@@ -105,7 +105,7 @@ export const AIBusinessPromo = () => {
                   {features.map((feature) => (
                     <div key={feature} role="listitem" className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                      <span className="text-sm font-medium text-foreground/80">{feature}</span>
+                      <span className="text-sm font-medium text-foreground">{feature}</span>
                     </div>
                   ))}
                 </div>
