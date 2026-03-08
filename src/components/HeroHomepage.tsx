@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Shield, Star, CheckCircle, Phone, Zap, Users, Eye, Lock, Award, TrendingUp } from "lucide-react";
+import { ArrowRight, Shield, Star, CheckCircle, Phone, Zap, Users, Lock, Award, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SITE } from "@/config/site";
 import heroImage from "@/assets/hero-homepage-cinematic.jpg";
@@ -17,7 +17,6 @@ export const HeroHomepage = () => {
           decoding="sync"
           fetchPriority="high"
         />
-        {/* Cinematic overlay — gradient from left for text readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-[hsl(var(--background))] via-[hsl(var(--background)/0.85)] to-transparent lg:via-[hsl(var(--background)/0.7)]" />
         <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--background))] via-transparent to-[hsl(var(--background)/0.3)]" />
       </div>
@@ -28,7 +27,7 @@ export const HeroHomepage = () => {
           <div className="min-h-[100vh] flex flex-col justify-center py-28 lg:py-32 max-w-3xl">
 
             {/* Live status badge */}
-            <motion.div {...fadeUp(0)} className="mb-8">
+            <div className="mb-8">
               <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-card/80 backdrop-blur-xl border border-border/50 shadow-lg shadow-primary/5">
                 <span className="relative flex h-2.5 w-2.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
@@ -40,32 +39,26 @@ export const HeroHomepage = () => {
                 <div className="w-px h-4 bg-border" />
                 <span className="text-xs font-bold text-primary uppercase tracking-wider">Live</span>
               </div>
-            </motion.div>
+            </div>
 
             {/* Headline */}
-            <motion.h1
-              {...fadeUp(0.1)}
-              className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-black text-foreground leading-[1.05] mb-6 tracking-tight"
-            >
+            <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-black text-foreground leading-[1.05] mb-6 tracking-tight">
               AI-Powered{" "}
               <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
                 Scam Protection
               </span>
               <br className="hidden sm:block" />
               for Your Family
-            </motion.h1>
+            </h1>
 
             {/* Subheadline */}
-            <motion.p
-              {...fadeUp(0.2)}
-              className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mb-10"
-            >
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mb-10">
               Real-time deepfake detection, voice clone analysis, and phishing prevention.
               Veteran-founded in Ohio — protecting 500+ families and counting.
-            </motion.p>
+            </p>
 
-            {/* CTAs — stacked prominently */}
-            <motion.div {...fadeUp(0.3)} className="flex flex-col sm:flex-row gap-4 mb-12">
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-4 mb-12">
               <Button asChild size="xl" className="shadow-lg shadow-primary/20">
                 <Link to="/training#pricing">
                   <Shield className="mr-2 w-5 h-5" />
@@ -78,10 +71,10 @@ export const HeroHomepage = () => {
                   <Phone className="mr-2 w-5 h-5" /> Call {SITE.phone.display}
                 </a>
               </Button>
-            </motion.div>
+            </div>
 
-            {/* Metric cards — horizontal glassmorphic strip */}
-            <motion.div {...fadeUp(0.4)} className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {/* Metric cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
                 { value: "500+", label: "Families Protected", icon: Users },
                 { value: "$1.2M", label: "Saved From Scams", icon: TrendingUp },
@@ -101,7 +94,7 @@ export const HeroHomepage = () => {
                   </div>
                 </div>
               ))}
-            </motion.div>
+            </div>
           </div>
         </div>
 
@@ -137,10 +130,7 @@ export const HeroHomepage = () => {
       </div>
 
       {/* ── Right-side floating elements (desktop only) ── */}
-      <motion.div
-        {...scaleIn(0.8)}
-        className="hidden xl:block absolute top-[20%] right-[5%] z-20"
-      >
+      <div className="hidden xl:block absolute top-[20%] right-[5%] z-20">
         <div className="px-5 py-4 rounded-2xl bg-card/80 backdrop-blur-2xl border border-border/40 shadow-2xl shadow-primary/10 max-w-[220px]">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-9 h-9 rounded-xl bg-emerald-500/10 flex items-center justify-center">
@@ -164,12 +154,9 @@ export const HeroHomepage = () => {
             ))}
           </div>
         </div>
-      </motion.div>
+      </div>
 
-      <motion.div
-        {...scaleIn(1.0)}
-        className="hidden xl:block absolute bottom-[22%] right-[8%] z-20"
-      >
+      <div className="hidden xl:block absolute bottom-[22%] right-[8%] z-20">
         <div className="px-5 py-4 rounded-2xl bg-card/80 backdrop-blur-2xl border border-border/40 shadow-2xl shadow-primary/10">
           <div className="flex items-center gap-3">
             <div className="flex gap-0.5">
@@ -183,7 +170,7 @@ export const HeroHomepage = () => {
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 };
