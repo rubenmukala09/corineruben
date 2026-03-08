@@ -1,34 +1,59 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
-import { MapPin, Clock, Car, Train, ParkingCircle, Hotel, ExternalLink, Church, PartyPopper, Camera, Music, Cake, Sparkles, Waves } from 'lucide-react';
+import { MapPin, Clock, Car, Train, ParkingCircle, Hotel, ExternalLink, Church, PartyPopper, Camera, Music, Cake, Sparkles, Waves, Loader2 } from 'lucide-react';
+import { useSiteSettings, useVenueData } from '@/hooks/useSiteContent';
 
-const CEREMONY_ADDRESS = '123 Rue des Roses, Brussels, Belgium';
-const CEREMONY_MAPS_URL = 'https://maps.google.com/?q=Brussels+Belgium';
-const RECEPTION_ADDRESS = '45 Avenue de la Fête, Brussels, Belgium';
-const RECEPTION_MAPS_URL = 'https://maps.google.com/?q=Brussels+Belgium';
+const ICON_MAP: Record<string, React.ElementType> = {
+  Sparkles, Church, Camera, PartyPopper, Waves, Cake, Music,
+  Car, Train, ParkingCircle,
+};
 
-const SCHEDULE = [
-  { time: '13:30', icon: Sparkles, key: 'schedule.guestArrival', color: 'text-dusty-rose' },
-  { time: '14:00', icon: Church, key: 'schedule.ceremony', color: 'text-primary' },
-  { time: '15:30', icon: Camera, key: 'schedule.cocktail', color: 'text-amber-400' },
-  { time: '18:00', icon: PartyPopper, key: 'schedule.dinner', color: 'text-emerald-400' },
-  { time: '20:00', icon: Waves, key: 'schedule.firstDance', color: 'text-primary' },
-  { time: '20:30', icon: Cake, key: 'schedule.cake', color: 'text-dusty-rose' },
-  { time: '21:00', icon: Music, key: 'schedule.dancing', color: 'text-violet-400' },
-  { time: '00:00', icon: Sparkles, key: 'schedule.sendoff', color: 'text-amber-400' },
-];
+const TRANSPORT_ICON_MAP: Record<string, React.ElementType> = {
+  Car, Train, ParkingCircle,
+};
 
-const HOTELS = [
-  { name: 'Hotel Amigo', stars: 5, distance: '0.8 km', price: '€€€', url: '#', desc: 'Luxurious 5-star in the heart of Brussels' },
-  { name: 'Marriott Grand Place', stars: 4, distance: '1.2 km', price: '€€€', url: '#', desc: 'Elegant hotel steps from the Grand Place' },
-  { name: 'NH Brussels Centre', stars: 4, distance: '1.5 km', price: '€€', url: '#', desc: 'Modern comfort, excellent value' },
-  { name: 'Ibis Brussels Centre', stars: 3, distance: '2.0 km', price: '€', url: '#', desc: 'Budget-friendly with great transport links' },
-];
+const TRANSPORT_LABEL_MAP: Record<string, string> = {
+  car: 'venue.byCar',
+  transit: 'venue.byTransit',
+  parking: 'venue.parking',
+};
 
 const fadeUp = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } };
 
 const Venue = () => {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
+  const { settings, loading: settingsLoading } = useSiteSettings();
+  const { schedule, hotels, transport, loading: venueLoading } = useVenueData();
+
+  const loading = settingsLoading || venueLoading;
+
+  const ceremonyAddress = settings.ceremony_address || '';
+  const ceremonyMapsUrl = settings.ceremony_maps_url || '';
+  const ceremonyTime = settings.ceremony_time || '14:00';
+  const receptionAddress = settings.reception_address || '';
+  const receptionMapsUrl = settings.reception_maps_url || '';
+  const receptionTime = settings.reception_time || '18:00';
+  const mapEmbedUrl = settings.map_embed_url || '';
+
+  const getTransportDesc = (item: typeof transport[number]) => {
+    if (language === 'fr' && item.description_fr) return item.description_fr;
+    if (language === 'es' && item.description_es) return item.description_es;
+    return item.description;
+  };
+
+  const getScheduleLabel = (item: typeof schedule[number]) => {
+    if (language === 'fr' && item.label_fr) return item.label_fr;
+    if (language === 'es' && item.label_es) return item.label_es;
+    return item.label;
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen pt-28 pb-20 flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen pt-28 pb-20 relative">
@@ -50,8 +75,8 @@ const Venue = () => {
         {/* Ceremony & Reception cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
           {[
-            { icon: Church, label: t('venue.ceremony'), address: CEREMONY_ADDRESS, url: CEREMONY_MAPS_URL, time: '14:00', emoji: '⛪' },
-            { icon: PartyPopper, label: t('venue.reception'), address: RECEPTION_ADDRESS, url: RECEPTION_MAPS_URL, time: '18:00', emoji: '🎉' },
+            { label: t('venue.ceremony'), address: ceremonyAddress, url: ceremonyMapsUrl, time: ceremonyTime, emoji: '⛪' },
+            { label: t('venue.reception'), address: receptionAddress, url: receptionMapsUrl, time: receptionTime, emoji: '🎉' },
           ].map(({ label, address, url, time, emoji }, i) => (
             <motion.div
               key={label}
@@ -86,142 +111,137 @@ const Venue = () => {
         </div>
 
         {/* Map embed */}
-        <motion.div
-          initial="hidden" animate="show" variants={fadeUp} transition={{ delay: 0.2 }}
-          className="glass-card-strong rounded-3xl overflow-hidden mb-10"
-        >
-          <iframe
-            title="Venue location"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d80677.50867478485!2d4.302697!3d50.846557!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3a4ed73c76867%3A0xb1e9dcd85ebb9c86!2sBrussels%2C%20Belgium!5e0!3m2!1sen!2sbe!4v1710000000000"
-            width="100%"
-            height="280"
-            style={{ border: 0 }}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        </motion.div>
+        {mapEmbedUrl && (
+          <motion.div
+            initial="hidden" animate="show" variants={fadeUp} transition={{ delay: 0.2 }}
+            className="glass-card-strong rounded-3xl overflow-hidden mb-10"
+          >
+            <iframe
+              title="Venue location"
+              src={mapEmbedUrl}
+              width="100%"
+              height="280"
+              style={{ border: 0 }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </motion.div>
+        )}
 
         {/* Day Schedule */}
-        <motion.div
-          initial="hidden" animate="show" variants={fadeUp} transition={{ delay: 0.25 }}
-          className="glass-card-strong rounded-3xl p-8 mb-10"
-        >
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-2xl glass-card flex items-center justify-center">
-              <Clock className="w-5 h-5 text-primary" />
-            </div>
-            <h2 className="font-serif-display text-2xl font-semibold text-foreground">{t('venue.schedule')}</h2>
-          </div>
-
-          <div className="space-y-0">
-            {SCHEDULE.map(({ time, icon: Icon, key, color }, i) => (
-              <div key={key} className="flex gap-4 group">
-                {/* Timeline */}
-                <div className="flex flex-col items-center">
-                  <div className={`w-8 h-8 rounded-full glass-card border border-border/50 flex items-center justify-center flex-shrink-0 ${color}`}>
-                    <Icon className="w-3.5 h-3.5" />
-                  </div>
-                  {i < SCHEDULE.length - 1 && (
-                    <div className="w-px flex-1 bg-border/40 my-1" style={{ minHeight: '28px' }} />
-                  )}
-                </div>
-
-                {/* Content */}
-                <div className="pb-5 pt-0.5">
-                  <span className="font-sans-elegant text-xs font-bold text-primary tracking-wide">{time}</span>
-                  <p className="font-sans-elegant text-sm text-foreground font-medium mt-0.5">{t(key)}</p>
-                </div>
+        {schedule.length > 0 && (
+          <motion.div
+            initial="hidden" animate="show" variants={fadeUp} transition={{ delay: 0.25 }}
+            className="glass-card-strong rounded-3xl p-8 mb-10"
+          >
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-10 h-10 rounded-2xl glass-card flex items-center justify-center">
+                <Clock className="w-5 h-5 text-primary" />
               </div>
-            ))}
-          </div>
-        </motion.div>
+              <h2 className="font-serif-display text-2xl font-semibold text-foreground">{t('venue.schedule')}</h2>
+            </div>
+
+            <div className="space-y-0">
+              {schedule.map((item, i) => {
+                const Icon = ICON_MAP[item.icon] || Sparkles;
+                return (
+                  <div key={item.id} className="flex gap-4 group">
+                    <div className="flex flex-col items-center">
+                      <div className={`w-8 h-8 rounded-full glass-card border border-border/50 flex items-center justify-center flex-shrink-0 ${item.color}`}>
+                        <Icon className="w-3.5 h-3.5" />
+                      </div>
+                      {i < schedule.length - 1 && (
+                        <div className="w-px flex-1 bg-border/40 my-1" style={{ minHeight: '28px' }} />
+                      )}
+                    </div>
+                    <div className="pb-5 pt-0.5">
+                      <span className="font-sans-elegant text-xs font-bold text-primary tracking-wide">{item.time}</span>
+                      <p className="font-sans-elegant text-sm text-foreground font-medium mt-0.5">{getScheduleLabel(item)}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
 
         {/* Getting There */}
-        <motion.div
-          initial="hidden" animate="show" variants={fadeUp} transition={{ delay: 0.3 }}
-          className="glass-card-strong rounded-3xl p-8 mb-10"
-        >
-          <h2 className="font-serif-display text-2xl font-semibold text-foreground mb-6">{t('venue.gettingThere')}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {[
-              {
-                icon: Car,
-                label: t('venue.byCar'),
-                desc: 'Take the E40 motorway toward Brussels Centre, exit at Rue de la Loi. Free street parking available nearby on weekends.',
-              },
-              {
-                icon: Train,
-                label: t('venue.byTransit'),
-                desc: 'Metro Line 1 or 5 to "Arts-Loi". Trams 92 & 94 also stop nearby. Journey ~15 min from Brussels-Midi station.',
-              },
-              {
-                icon: ParkingCircle,
-                label: t('venue.parking'),
-                desc: 'Parking Cinquantenaire (0.5 km) and Parking Louise (0.9 km) offer paid underground parking from €3/hour.',
-              },
-            ].map(({ icon: Icon, label, desc }) => (
-              <div key={label} className="glass-card rounded-2xl p-5">
-                <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center mb-3">
-                  <Icon className="w-5 h-5 text-primary-foreground" />
-                </div>
-                <p className="font-sans-elegant text-sm font-semibold text-foreground mb-2">{label}</p>
-                <p className="font-sans-elegant text-xs text-muted-foreground leading-relaxed">{desc}</p>
-              </div>
-            ))}
-          </div>
-        </motion.div>
+        {transport.length > 0 && (
+          <motion.div
+            initial="hidden" animate="show" variants={fadeUp} transition={{ delay: 0.3 }}
+            className="glass-card-strong rounded-3xl p-8 mb-10"
+          >
+            <h2 className="font-serif-display text-2xl font-semibold text-foreground mb-6">{t('venue.gettingThere')}</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {transport.map((item) => {
+                const Icon = TRANSPORT_ICON_MAP[item.icon] || Car;
+                return (
+                  <div key={item.id} className="glass-card rounded-2xl p-5">
+                    <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center mb-3">
+                      <Icon className="w-5 h-5 text-primary-foreground" />
+                    </div>
+                    <p className="font-sans-elegant text-sm font-semibold text-foreground mb-2">{t(TRANSPORT_LABEL_MAP[item.type] || 'venue.byCar')}</p>
+                    <p className="font-sans-elegant text-xs text-muted-foreground leading-relaxed">{getTransportDesc(item)}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
 
         {/* Accommodation */}
-        <motion.div
-          initial="hidden" animate="show" variants={fadeUp} transition={{ delay: 0.35 }}
-        >
-          <div className="flex items-center gap-3 mb-5">
-            <div className="w-10 h-10 rounded-2xl glass-card flex items-center justify-center">
-              <Hotel className="w-5 h-5 text-primary" />
+        {hotels.length > 0 && (
+          <motion.div
+            initial="hidden" animate="show" variants={fadeUp} transition={{ delay: 0.35 }}
+          >
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-10 h-10 rounded-2xl glass-card flex items-center justify-center">
+                <Hotel className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <h2 className="font-serif-display text-2xl font-semibold text-foreground">{t('venue.accommodation')}</h2>
+                <p className="font-sans-elegant text-xs text-muted-foreground">{t('venue.accommodation.subtitle')}</p>
+              </div>
             </div>
-            <div>
-              <h2 className="font-serif-display text-2xl font-semibold text-foreground">{t('venue.accommodation')}</h2>
-              <p className="font-sans-elegant text-xs text-muted-foreground">{t('venue.accommodation.subtitle')}</p>
-            </div>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {HOTELS.map((hotel, i) => (
-              <motion.div
-                key={hotel.name}
-                initial="hidden" animate="show" variants={fadeUp}
-                transition={{ delay: 0.35 + i * 0.07 }}
-                className="glass-card-strong rounded-2xl p-5 flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-start justify-between mb-1">
-                    <p className="font-sans-elegant text-sm font-semibold text-foreground">{hotel.name}</p>
-                    <span className="font-sans-elegant text-xs font-bold text-primary">{hotel.price}</span>
-                  </div>
-                  <div className="flex gap-0.5 mb-2">
-                    {Array.from({ length: hotel.stars }).map((_, j) => (
-                      <span key={j} className="text-amber-400 text-xs">★</span>
-                    ))}
-                  </div>
-                  <p className="font-sans-elegant text-xs text-muted-foreground mb-3">{hotel.desc}</p>
-                  <div className="flex items-center gap-1.5 mb-4">
-                    <MapPin className="w-3.5 h-3.5 text-muted-foreground" />
-                    <span className="font-sans-elegant text-xs text-muted-foreground">{hotel.distance} from venue</span>
-                  </div>
-                </div>
-                <a
-                  href={hotel.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline font-sans-elegant"
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {hotels.map((hotel, i) => (
+                <motion.div
+                  key={hotel.id}
+                  initial="hidden" animate="show" variants={fadeUp}
+                  transition={{ delay: 0.35 + i * 0.07 }}
+                  className="glass-card-strong rounded-2xl p-5 flex flex-col justify-between"
                 >
-                  <ExternalLink className="w-3 h-3" />
-                  {t('venue.bookNow')}
-                </a>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+                  <div>
+                    <div className="flex items-start justify-between mb-1">
+                      <p className="font-sans-elegant text-sm font-semibold text-foreground">{hotel.name}</p>
+                      <span className="font-sans-elegant text-xs font-bold text-primary">{hotel.price}</span>
+                    </div>
+                    <div className="flex gap-0.5 mb-2">
+                      {Array.from({ length: hotel.stars }).map((_, j) => (
+                        <span key={j} className="text-amber-400 text-xs">★</span>
+                      ))}
+                    </div>
+                    <p className="font-sans-elegant text-xs text-muted-foreground mb-3">{hotel.description}</p>
+                    <div className="flex items-center gap-1.5 mb-4">
+                      <MapPin className="w-3.5 h-3.5 text-muted-foreground" />
+                      <span className="font-sans-elegant text-xs text-muted-foreground">{hotel.distance} from venue</span>
+                    </div>
+                  </div>
+                  <a
+                    href={hotel.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline font-sans-elegant"
+                  >
+                    <ExternalLink className="w-3 h-3" />
+                    {t('venue.bookNow')}
+                  </a>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
 
       </div>
     </div>
