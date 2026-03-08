@@ -229,23 +229,7 @@
 }
 
 
-/* Accent line */
-.accent-line {
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    hsl(var(--primary) / 0.4) 20%,
-    hsl(var(--accent)) 50%,
-    hsl(var(--primary) / 0.4) 80%,
-    transparent 100%
-  );
-}
 
-/* Corner accent */
-.accent-corner {
-  position: relative;
-}
 
 .accent-corner::before {
   content: "";
