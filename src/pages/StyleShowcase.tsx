@@ -48,7 +48,7 @@ const StyleShowcase = () => {
         <div className="center-container-narrow">
           <div className="inline-flex items-center gap-2 mb-6 glass-widget px-6 py-3 rounded-full animate-fade-in">
             <Sparkles className="w-5 h-5 text-accent" />
-            <span className="text-sm font-semibold text-foreground/80 tracking-wider uppercase">
+            <span className="text-sm font-semibold text-foreground tracking-wider uppercase">
               Design System Showcase
             </span>
           </div>
