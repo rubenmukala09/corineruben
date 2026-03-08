@@ -1162,7 +1162,7 @@ const Index = () => {
                   initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.12, duration: 0.6 }}
+                  transition={{ delay: i * 0.04, duration: 0.3 }}
                   whileHover={{ scale: 1.05, y: -6 }}
                   whileTap={{ scale: 0.96 }}
                   onClick={() => setActiveDetail(section.id)}
