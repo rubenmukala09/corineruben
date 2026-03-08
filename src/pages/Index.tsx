@@ -148,11 +148,8 @@ const Index = forwardRef<HTMLDivElement>(function Index(_props, _ref) {
             </div>
 
             <div className="container mx-auto px-4 py-20 md:py-28 lg:py-32 text-center relative z-10">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={ctaInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                className="max-w-3xl mx-auto"
+              <div
+                className={`max-w-3xl mx-auto transition-all duration-500 ease-out ${ctaVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
               >
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-8">
                   <Shield className="w-4 h-4 text-accent" />
@@ -193,7 +190,7 @@ const Index = forwardRef<HTMLDivElement>(function Index(_props, _ref) {
                     </div>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             </div>
           </section>
 
