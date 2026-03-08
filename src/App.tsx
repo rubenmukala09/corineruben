@@ -87,14 +87,9 @@ const ReferralDashboard = lazy(() => import("./pages/portal/ReferralDashboard"))
 const UserAnalytics = lazy(() => import("./pages/portal/UserAnalytics"));
 const CourseDetail = lazy(() => import("./pages/portal/CourseDetail"));
 const ScamCheckResult = lazy(() => import("./pages/portal/ScamCheckResult"));
-const AnalystDashboard = lazy(() => import("./pages/portal/AnalystDashboard"));
-const TrainerDashboard = lazy(() => import("./pages/portal/TrainerDashboard"));
-const DeveloperDashboard = lazy(() => import("./pages/portal/DeveloperDashboard"));
+const SecretaryDashboard = lazy(() => import("./pages/portal/SecretaryDashboard"));
+const CoordinatorDashboard = lazy(() => import("./pages/portal/CoordinatorDashboard"));
 const StaffDashboard = lazy(() => import("./pages/portal/StaffDashboard"));
-const SeniorDashboard = lazy(() => import("./pages/portal/SeniorDashboard"));
-const BusinessDashboard = lazy(() => import("./pages/portal/BusinessDashboard"));
-const CaregiverDashboard = lazy(() => import("./pages/portal/CaregiverDashboard"));
-const HealthcareDashboard = lazy(() => import("./pages/portal/HealthcareDashboard"));
 
 // Admin pages - lazy loaded
 const AdminDashboardContent = lazy(() => import("./pages/admin/AdminDashboardContent"));
@@ -197,17 +192,21 @@ function PublicRoutes() {
         <Route path="/reset-password" element={<PageTransition><ResetPassword /></PageTransition>} />
         <Route path="/guest-scanner" element={<Navigate to="/training/ai-analysis" replace />} />
 
-        {/* Portal Routes */}
+        {/* Portal Routes — 4 internal dashboards */}
         <Route path="/portal" element={<PageTransition><ProtectedRoute><Portal /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/admin" element={<Navigate to="/admin" replace />} />
-        <Route path="/portal/analyst" element={<PageTransition><ProtectedRoute><AnalystDashboard /></ProtectedRoute></PageTransition>} />
-        <Route path="/portal/trainer" element={<PageTransition><ProtectedRoute><TrainerDashboard /></ProtectedRoute></PageTransition>} />
-        <Route path="/portal/developer" element={<PageTransition><ProtectedRoute><DeveloperDashboard /></ProtectedRoute></PageTransition>} />
+        <Route path="/portal/secretary" element={<PageTransition><ProtectedRoute><SecretaryDashboard /></ProtectedRoute></PageTransition>} />
+        <Route path="/portal/coordinator" element={<PageTransition><ProtectedRoute><CoordinatorDashboard /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/staff" element={<PageTransition><ProtectedRoute><StaffDashboard /></ProtectedRoute></PageTransition>} />
-        <Route path="/portal/senior" element={<PageTransition><ProtectedRoute><SeniorDashboard /></ProtectedRoute></PageTransition>} />
-        <Route path="/portal/business" element={<PageTransition><ProtectedRoute><BusinessDashboard /></ProtectedRoute></PageTransition>} />
-        <Route path="/portal/caregiver" element={<PageTransition><ProtectedRoute><CaregiverDashboard /></ProtectedRoute></PageTransition>} />
-        <Route path="/portal/healthcare" element={<PageTransition><ProtectedRoute><HealthcareDashboard /></ProtectedRoute></PageTransition>} />
+        {/* Redirects for removed dashboards */}
+        <Route path="/portal/analyst" element={<Navigate to="/portal/staff" replace />} />
+        <Route path="/portal/trainer" element={<Navigate to="/portal/coordinator" replace />} />
+        <Route path="/portal/developer" element={<Navigate to="/portal/staff" replace />} />
+        <Route path="/portal/senior" element={<Navigate to="/portal/staff" replace />} />
+        <Route path="/portal/business" element={<Navigate to="/portal/staff" replace />} />
+        <Route path="/portal/caregiver" element={<Navigate to="/portal/staff" replace />} />
+        <Route path="/portal/healthcare" element={<Navigate to="/portal/staff" replace />} />
+        {/* Shared portal utilities */}
         <Route path="/portal/my-courses" element={<PageTransition><ProtectedRoute><MyCourses /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/my-bookings" element={<PageTransition><ProtectedRoute><MyBookings /></ProtectedRoute></PageTransition>} />
         <Route path="/portal/my-tickets" element={<PageTransition><ProtectedRoute><MyTickets /></ProtectedRoute></PageTransition>} />

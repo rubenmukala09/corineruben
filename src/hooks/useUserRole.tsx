@@ -37,7 +37,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
       "view_calendar",
       "manage_appointments",
     ],
-    redirectTo: "/admin/clients/businesses",
+    redirectTo: "/portal/secretary",
   },
   training_coordinator: {
     role: "training_coordinator",
@@ -50,7 +50,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
       "create_content",
       "view_training_analytics",
     ],
-    redirectTo: "/admin/content/articles",
+    redirectTo: "/portal/coordinator",
   },
   business_consultant: {
     role: "business_consultant",
@@ -62,7 +62,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
       "create_proposals",
       "manage_ai_services",
     ],
-    redirectTo: "/admin/clients/businesses",
+    redirectTo: "/portal/staff",
   },
   support_specialist: {
     role: "support_specialist",
