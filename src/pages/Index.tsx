@@ -95,7 +95,8 @@ const FallingPetals = ({ isMobile = false }: { isMobile?: boolean }) => {
       )}
     </div>
   );
-};
+});
+AuroraOrb.displayName = 'AuroraOrb';
 
 /* Section divider with golden decorative line */
 const SectionDivider = ({ variant = 'heart' }: { variant?: 'heart' | 'sparkle' | 'line' }) => (
