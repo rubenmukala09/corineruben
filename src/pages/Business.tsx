@@ -1722,14 +1722,9 @@ function Business() {
                   gradient: "from-coral-500 to-lavender-400",
                 },
               ].map((service, i) => (
-                <motion.div
+                <div
                   key={i}
-                  initial={{ opacity: 0, y: 40, rotateX: 10 }}
-                  whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.08, duration: 0.5 }}
-                  whileHover={{ y: -10, rotateX: -2, rotateY: 3 }}
-                  style={{ transformStyle: "preserve-3d" }}
+                  className="hover-lift"
                 >
                   <Card className="group relative p-0 border-border/40 rounded-2xl overflow-hidden hover:shadow-[0_20px_50px_-15px_hsl(var(--primary)/0.12)] transition-all duration-500 h-full">
                     {/* Top accent bar */}
