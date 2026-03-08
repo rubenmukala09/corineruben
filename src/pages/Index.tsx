@@ -54,7 +54,8 @@ const AuroraOrb = forwardRef<HTMLDivElement, { position?: 'left' | 'right' | 'ce
       }}
     />
   );
-};
+});
+AuroraOrb.displayName = 'AuroraOrb';
 
 /* Floating hearts component */
 const FloatingHearts = ({ isMobile = false }: { isMobile?: boolean }) =>
@@ -95,8 +96,7 @@ const FallingPetals = ({ isMobile = false }: { isMobile?: boolean }) => {
       )}
     </div>
   );
-});
-AuroraOrb.displayName = 'AuroraOrb';
+};
 
 /* Section divider with golden decorative line */
 const SectionDivider = forwardRef<HTMLDivElement, { variant?: 'heart' | 'sparkle' | 'line' }>(({ variant = 'heart' }, ref) => (
