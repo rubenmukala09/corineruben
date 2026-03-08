@@ -168,7 +168,7 @@ export const LauraAIAssistant = () => {
             alt="Laura"
             width={56}
             height={56}
-            fetchPriority="high"
+            fetchpriority="high"
             className="w-full h-full object-cover object-top"
           />
           {/* Online pulse */}

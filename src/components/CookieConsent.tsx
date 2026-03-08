@@ -243,7 +243,7 @@ export const CookieConsent = forwardRef<HTMLDivElement>(function CookieConsent(_
       </Dialog>
     </>
   );
-}
+});
 
 // Type definitions for gtag
 declare global {

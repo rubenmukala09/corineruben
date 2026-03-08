@@ -1,7 +1,7 @@
-// Performance monitor disabled for production builds
-// Only shows in development when explicitly enabled
+import { forwardRef } from "react";
 
-export function DraggablePerformanceMonitor() {
-  // Completely disabled - remove FPS monitoring overhead
+export const DraggablePerformanceMonitor = forwardRef<HTMLDivElement>((_props, _ref) => {
   return null;
-}
+});
+
+DraggablePerformanceMonitor.displayName = "DraggablePerformanceMonitor";
