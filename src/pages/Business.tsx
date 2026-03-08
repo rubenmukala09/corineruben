@@ -65,8 +65,7 @@ import { VideoLightbox } from "@/components/VideoLightbox";
 import { SEO } from "@/components/SEO";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
 import HeroFloatingStats from "@/components/business/HeroFloatingStats";
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+
 
 const businessHeadlines = [
   "Your AI Front Desk, Running 24/7",
