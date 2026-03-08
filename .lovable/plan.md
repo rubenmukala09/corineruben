@@ -1,37 +1,38 @@
 
 
-## Mobile Performance Analysis (66%) — What's Actually Happening
+## Improve Loading Experience: Eliminate Perceived Lazy Loading
 
-After examining the audit data in detail, most of the 12 performance issues flagged are **not from your app code** — they come from platform-level infrastructure and cannot be fixed through code changes.
+### Problem
+The app feels like it has delayed/lazy loading because of three compounding issues:
 
-### Issues Outside Our Control (platform-level)
+1. **Framer Motion `whileInView` animations** — Every section starts at `opacity: 0` and only fades in when scrolled into view, creating a "blank then pop-in" effect
+2. **CSS `content-visibility: auto`** on `.section-below-fold` — Causes the browser to skip rendering off-screen sections entirely, leading to visible content "popping in" as you scroll
+3. **Excessive staggered animation delays** — Elements within sections have cascading delays (0.05s, 0.08s, 0.1s per item), making cards appear one by one slowly
+4. **`loading="lazy"` on above-the-fold images** — The hero background image uses conditional lazy loading on mobile
 
-| Issue | Cause | Fixable? |
-|---|---|---|
-| **Redirects** (780ms) | Lovable staging → custom domain redirect | No |
-| **Render blocking requests** (2,240ms) | DM Sans font injected by Lovable badge | No (remove badge in Settings) |
-| **Unused JavaScript** (119 KiB) | Google Tag Manager scripts from Lovable | No |
-| **Cache lifetimes** (16 KiB) | Google Analytics cache headers | No |
-| **Document latency** (100ms) | Redirect chain | No |
-| **Network dependency tree** | Font chain through Google Fonts → gstatic | No |
+### Plan
 
-### Suspicious Audit Data
+**1. Remove `content-visibility: auto` from CSS** (`src/index.css`)
+- Delete the `.section-below-fold` rule that hides off-screen sections. This is the biggest contributor to the "lazy loading" feel.
 
-The audit's LCP element references `bold-moves.webp` with text "Start your online journey / Build your website today" and a `div.services` selector — **this is NOT your wedding app**. This appears to be a domain parking page at `corineruben.com`. The CLS layout shift is also attributed to this parking page content.
+**2. Speed up `whileInView` animations across `Index.tsx`**
+- Reduce all `whileInView` transition durations from 0.6-0.7s to 0.3-0.4s
+- Reduce stagger delays: change `delay: i * 0.1` / `i * 0.12` patterns to `i * 0.04`
+- Set `viewport={{ once: true, margin: '-100px' }}` to trigger animations earlier (before elements are fully in view) instead of the current default or `-50px`
 
-This means the PageSpeed analysis may be hitting a cached or intermittent parking page at your custom domain rather than your actual app.
+**3. Make the hero image always eager** (`Index.tsx` line 665)
+- Change `loading={isMobile ? "lazy" : "eager"}` to just `loading="eager"` for the hero background
 
-### What Can Be Improved In Code
+**4. Preload key above-the-fold images** (`index.html`)
+- Add `<link rel="preload" as="image">` for the hero wedding image and couple image that appear first
 
-Only two items are partially addressable:
+**5. Speed up animations on `Story.tsx`** 
+- Same treatment: reduce stagger delays and transition durations on timeline events and gallery items
+- Increase viewport margin so animations trigger earlier
 
-1. **SEO score (58%)** — Likely caused by the parking page content being analyzed. Need to verify the custom domain is properly serving the app. If it is, we can add structured data and improve meta tags.
-
-2. **Font loading strategy** — The Google Fonts stylesheet in `index.html` is already using `media="print" onload="this.media='all'"` pattern (non-blocking). The render-blocking DM Sans flagged in the audit is from the Lovable badge, not our code.
-
-### Recommended Action
-
-The most impactful fix is **removing the Lovable badge** in your project Settings, which would eliminate the render-blocking DM Sans request (est. 2,240ms savings) and the unused JavaScript from Google Tag Manager (119 KiB). This alone could push the performance score significantly higher.
-
-No code changes are needed — the issues are infrastructure-level.
+### Files to Edit
+- `src/index.css` — Remove `content-visibility` rule
+- `src/pages/Index.tsx` — Speed up animations, fix hero image loading
+- `src/pages/Story.tsx` — Speed up animations
+- `index.html` — Add image preloads
 
