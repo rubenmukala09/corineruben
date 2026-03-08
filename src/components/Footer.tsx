@@ -42,15 +42,14 @@ const Footer = () => {
   const companyLinks = [
     { label: t('nav.home'), to: '/' },
     { label: t('nav.story'), to: '/story' },
-    { label: t('nav.venue'), to: '/venue' },
+    { label: t('nav.rsvp'), to: '/rsvp' },
     { label: t('nav.faq'), to: '/faq' },
   ];
 
   const inspirationLinks = [
-    { label: t('nav.rsvp'), to: '/rsvp' },
-    { label: t('nav.gallery2'), to: '/gallery' },
     { label: t('nav.guestbook'), to: '/guestbook' },
     { label: t('nav.enquiries'), to: '/enquiries' },
+    { label: t('nav.registry'), to: '/registry' },
   ];
 
   return (
