@@ -57,116 +57,408 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "organizer": [
-        {
-          "@type": "Person",
-          "name": "Corine"
-        },
-        {
-          "@type": "Person",
-          "name": "Ruben"
-        }
+        { "@type": "Person", "name": "Corine" },
+        { "@type": "Person", "name": "Ruben" }
       ]
     }
     </script>
 
-    <!-- Inline critical CSS for immediate FCP -->
     <style>
-      #app-loader{display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Playfair Display',Georgia,serif;color:#4A3B4E;text-align:center;flex-direction:column;gap:0;position:relative;overflow:hidden;
-        background:transparent;
-        -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+      /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         BASE LOADER WRAPPER
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+      #app-loader {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        font-family: 'Playfair Display', Georgia, serif;
+        background: linear-gradient(155deg, #0b0710 0%, #160c1f 45%, #0c0910 100%);
+        overflow: hidden;
+        color: #e8e0f0;
+        text-align: center;
+      }
 
-      /* ── Figures container ── */
-      .loader-figures{display:flex;align-items:flex-end;justify-content:center;gap:0;position:relative;z-index:2;min-height:180px}
+      /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         AMBIENT BACKGROUND ORBS
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+      .l-bg {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .l-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(90px);
+        opacity: 0;
+        animation: l-orb-in 2.5s ease-out forwards;
+      }
+      .l-orb--a {
+        width: 600px; height: 600px;
+        top: -200px; left: -200px;
+        background: radial-gradient(circle, rgba(110,65,150,0.22) 0%, transparent 65%);
+        animation-delay: 0.2s;
+      }
+      .l-orb--b {
+        width: 500px; height: 500px;
+        bottom: -150px; right: -150px;
+        background: radial-gradient(circle, rgba(190,130,40,0.15) 0%, transparent 65%);
+        animation-delay: 0.6s;
+      }
+      .l-orb--c {
+        width: 350px; height: 350px;
+        top: 30%; left: 50%;
+        transform: translateX(-50%);
+        background: radial-gradient(circle, rgba(160,90,200,0.08) 0%, transparent 70%);
+        animation-delay: 1.0s;
+      }
+      @keyframes l-orb-in {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+      }
 
-      /* ── Each figure ── */
-      .loader-figure{display:flex;flex-direction:column;align-items:center;gap:0;opacity:0;position:relative}
-      .loader-figure img{width:110px;height:auto;position:relative;z-index:3;
-        filter:brightness(0) saturate(100%) invert(12%) sepia(80%) saturate(4000%) hue-rotate(265deg) brightness(0.5) contrast(1.2);
-        }
-      .loader-figure-name{font-family:'Playfair Display',Georgia,serif;font-size:1.3rem;font-weight:700;
-        color:rgba(74,59,78,0.5);letter-spacing:0.08em;opacity:0;
-        position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);z-index:1;
-        pointer-events:none}
+      /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         STAGE — figures + meeting point
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+      .l-stage {
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 8px;
+        width: 260px;
+        height: 148px;
+        z-index: 2;
+      }
 
-      /* Groom slides in from left */
-      .loader-figure--groom{animation:slide-from-left 1.2s ease-out 0.2s forwards}
-      /* Bride slides in from right */
-      .loader-figure--bride{animation:slide-from-right 1.2s ease-out 0.2s forwards}
+      /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         SILHOUETTE FIGURES
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+      .l-figure {
+        flex-shrink: 0;
+        will-change: transform, opacity;
+      }
+      .l-figure img {
+        display: block;
+        width: 110px;
+        height: auto;
+      }
 
-      @keyframes slide-from-left{0%{opacity:0;transform:translateX(-80px)}100%{opacity:1;transform:translateX(0)}}
-      @keyframes slide-from-right{0%{opacity:0;transform:translateX(80px)}100%{opacity:1;transform:translateX(0)}}
+      /* Groom: jet-black silhouette, enters walking from far LEFT */
+      .l-groom img {
+        filter: brightness(0);
+      }
+      .l-groom {
+        opacity: 0;
+        animation: l-groom-walk 1.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.4s both;
+      }
+      @keyframes l-groom-walk {
+        0%   { opacity: 0;   transform: translateX(-340px) translateY(0);   }
+        6%   { opacity: 1;                                                   }
+        22%  {               transform: translateX(-256px) translateY(-7px); }
+        36%  {               transform: translateX(-165px) translateY(0);    }
+        50%  {               transform: translateX(-90px)  translateY(-6px); }
+        64%  {               transform: translateX(-38px)  translateY(0);    }
+        78%  {               transform: translateX(-11px)  translateY(-3px); }
+        90%  {               transform: translateX(-2px)   translateY(-1px); }
+        100% { opacity: 1;   transform: translateX(0)      translateY(0);    }
+      }
 
-      /* Names fade in behind figures */
-      .loader-figure--groom .loader-figure-name{animation:name-reveal 0.6s ease-out 1.5s forwards}
-      .loader-figure--bride .loader-figure-name{animation:name-reveal 0.6s ease-out 1.6s forwards}
-      @keyframes name-reveal{0%{opacity:0;transform:translate(-50%,-50%) scale(0.8)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+      /* Bride: pure-white silhouette, enters walking from far RIGHT */
+      .l-bride img {
+        filter: brightness(0) invert(1);
+      }
+      .l-bride {
+        opacity: 0;
+        animation: l-bride-walk 1.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.4s both;
+      }
+      @keyframes l-bride-walk {
+        0%   { opacity: 0;   transform: translateX(340px)  translateY(0);   }
+        6%   { opacity: 1;                                                   }
+        22%  {               transform: translateX(256px)  translateY(-7px); }
+        36%  {               transform: translateX(165px)  translateY(0);    }
+        50%  {               transform: translateX(90px)   translateY(-6px); }
+        64%  {               transform: translateX(38px)   translateY(0);    }
+        78%  {               transform: translateX(11px)   translateY(-3px); }
+        90%  {               transform: translateX(2px)    translateY(-1px); }
+        100% { opacity: 1;   transform: translateX(0)      translateY(0);    }
+      }
 
-      /* ── Walking line ── */
-      .loader-walk-line{width:280px;height:2px;margin-top:-2px;opacity:0;
-        background:linear-gradient(90deg,transparent 5%,#4A3B4E 30%,#4A3B4E 70%,transparent 95%);
-        animation:fade-up 0.8s ease-out 1.4s forwards;position:relative;z-index:2}
+      /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         MEETING POINT — heart + sparkles
+         (absolutely centered in the stage)
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+      .l-meeting {
+        position: absolute;
+        bottom: 18px;
+        left: 50%;
+        width: 0;
+        height: 0;
+        z-index: 10;
+      }
 
-      /* ── Heart between them ── */
-      .loader-heart{font-size:1.2rem;color:#4A3B4E;opacity:0;position:relative;z-index:3;margin-top:0.5rem;
-        animation:heart-pop 0.5s ease-out 1.8s forwards}
-      @keyframes heart-pop{0%{opacity:0;transform:scale(0)}60%{opacity:1;transform:scale(1.3)}100%{opacity:1;transform:scale(1)}}
+      /* Heart blooms exactly where they meet */
+      .l-heart {
+        position: absolute;
+        top: 0; left: 0;
+        transform: translate(-50%, -50%);
+        font-size: 1.5rem;
+        opacity: 0;
+        will-change: transform, opacity;
+        filter: drop-shadow(0 0 10px rgba(220,120,160,0.9))
+                drop-shadow(0 0 28px rgba(220,120,160,0.5))
+                drop-shadow(0 0 50px rgba(220,120,160,0.25));
+        animation: l-heart-bloom 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) 2.15s both;
+      }
+      @keyframes l-heart-bloom {
+        0%   { opacity: 0; transform: translate(-50%,-50%) scale(0)   rotate(-25deg); }
+        55%  { opacity: 1; transform: translate(-50%,-50%) scale(1.6) rotate(8deg);  }
+        100% { opacity: 1; transform: translate(-50%,-50%) scale(1.1) rotate(0deg);  }
+      }
 
-      /* ── Bottom text ── */
-      .loader-bottom{display:flex;flex-direction:column;align-items:center;gap:0.25rem;margin-top:0.5rem;position:relative;z-index:3}
-      #app-loader h1{font-size:2.2rem;font-weight:600;letter-spacing:-0.5px;margin:0;opacity:0;
-        background:linear-gradient(135deg,#4A3B4E 0%,#6B4E71 100%);
-        -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-        animation:fade-up 0.7s ease-out 2s forwards}
-      .loader-divider{width:60px;height:1px;opacity:0;
-        background:linear-gradient(90deg,transparent,rgba(74,59,78,0.4),transparent);
-        animation:fade-up 0.6s ease-out 2.1s forwards}
-      #app-loader .loader-date{font-family:'DM Sans','Inter',sans-serif;font-size:0.75rem;letter-spacing:0.35em;text-transform:uppercase;color:#6B4E71;margin:0;opacity:0;
-        animation:fade-up 0.6s ease-out 2.2s forwards}
+      /* Gold sparkles burst outward from center */
+      .l-spark {
+        position: absolute;
+        top: 0; left: 0;
+        color: #d4af6a;
+        opacity: 0;
+        will-change: transform, opacity;
+        animation: l-spark-fly var(--dur, 0.85s) ease-out var(--delay, 2.1s) both;
+      }
+      @keyframes l-spark-fly {
+        0%   { opacity: 0; transform: translate(-50%,-50%) translate(0,0)                   scale(0.4); }
+        20%  { opacity: 1;                                                                              }
+        100% { opacity: 0; transform: translate(-50%,-50%) translate(var(--tx),var(--ty)) scale(0);   }
+      }
+      .l-s1  { font-size:.80rem; --dur:.90s; --delay:2.10s; --tx:-52px; --ty:-64px; }
+      .l-s2  { font-size:.80rem; --dur:.85s; --delay:2.13s; --tx: 50px; --ty:-60px; }
+      .l-s3  { font-size:.50rem; --dur:.80s; --delay:2.16s; --tx:-72px; --ty:-18px; }
+      .l-s4  { font-size:.50rem; --dur:.80s; --delay:2.19s; --tx: 72px; --ty:-20px; }
+      .l-s5  { font-size:.70rem; --dur:.95s; --delay:2.08s; --tx:-24px; --ty:-80px; }
+      .l-s6  { font-size:.45rem; --dur:.90s; --delay:2.22s; --tx: 26px; --ty:-76px; }
+      .l-s7  { font-size:.65rem; --dur:.88s; --delay:2.05s; --tx:-58px; --ty:  8px; }
+      .l-s8  { font-size:.45rem; --dur:.92s; --delay:2.25s; --tx: 58px; --ty: 10px; }
 
-      @keyframes fade-up{0%{opacity:0;transform:translateY(12px)}100%{opacity:1;transform:translateY(0)}}
+      /* Extra tiny glint dots */
+      .l-s9  { font-size:.35rem; --dur:.70s; --delay:2.18s; --tx: -14px; --ty:-90px; }
+      .l-s10 { font-size:.35rem; --dur:.75s; --delay:2.28s; --tx:  16px; --ty:-88px; }
 
-      /* ── DARK MODE ── */
-      @media(prefers-color-scheme:dark){
-        .loader-figure img{filter:brightness(0.5) sepia(0.4) hue-rotate(260deg) saturate(2.5) contrast(1.3) invert(0.85)}
-        .loader-figure-name{color:#d4c8e0;text-shadow:0 0 20px rgba(0,0,0,0.5),0 0 40px rgba(0,0,0,0.3)}
-        .loader-walk-line{background:linear-gradient(90deg,transparent 5%,#b8a9c9 30%,#b8a9c9 70%,transparent 95%)}
-        .loader-heart{color:#b8a9c9}
-        #app-loader h1{background:linear-gradient(135deg,#e8e0ec 0%,#b8a9c9 100%);-webkit-background-clip:text;background-clip:text}
-        .loader-divider{background:linear-gradient(90deg,transparent,rgba(184,169,201,0.4),transparent)}
-        #app-loader .loader-date{color:#b8a9c9}
+      /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         GROUND LINE
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+      .l-line {
+        position: relative;
+        z-index: 2;
+        height: 1px;
+        width: 0;
+        opacity: 0;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(212,175,106,0.9) 25%,
+          rgba(240,210,100,1)   50%,
+          rgba(212,175,106,0.9) 75%,
+          transparent 100%
+        );
+        box-shadow: 0 0 8px rgba(212,175,106,0.5);
+        animation: l-line-draw 0.9s ease-out 2.3s both;
+      }
+      @keyframes l-line-draw {
+        0%   { width: 0;     opacity: 0; }
+        15%  {               opacity: 0.9; }
+        100% { width: 272px; opacity: 0.7; }
+      }
+
+      /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         TEXT SECTION
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+      .l-text {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.25rem;
+        margin-top: 1.4rem;
+        z-index: 2;
+      }
+
+      /* Names container */
+      #app-loader h1 {
+        display: flex;
+        align-items: baseline;
+        gap: 0.22em;
+        margin: 0;
+        font-size: 2.5rem;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        line-height: 1;
+      }
+
+      /* "Corine" slides in from left */
+      .l-n1 {
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        background-image: linear-gradient(135deg, #f2edf8 0%, #cdb8e0 100%);
+        opacity: 0;
+        will-change: transform, opacity;
+        animation: l-from-left 0.8s ease-out 2.55s both;
+      }
+      @keyframes l-from-left {
+        from { opacity: 0; transform: translateX(-22px); }
+        to   { opacity: 1; transform: translateX(0); }
+      }
+
+      /* "&" rises from below */
+      .l-amp {
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        background-image: linear-gradient(135deg, #c8a050 0%, #f0d070 50%, #c8a050 100%);
+        font-size: 2rem;
+        opacity: 0;
+        will-change: transform, opacity;
+        animation: l-rise 0.6s ease-out 2.85s both;
+      }
+
+      /* "Ruben" slides in from right */
+      .l-n2 {
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        background-image: linear-gradient(135deg, #cdb8e0 0%, #f2edf8 100%);
+        opacity: 0;
+        will-change: transform, opacity;
+        animation: l-from-right 0.8s ease-out 2.55s both;
+      }
+      @keyframes l-from-right {
+        from { opacity: 0; transform: translateX(22px); }
+        to   { opacity: 1; transform: translateX(0); }
+      }
+
+      /* Thin rule below names */
+      .l-rule {
+        width: 0;
+        height: 1px;
+        opacity: 0;
+        background: linear-gradient(90deg, transparent, rgba(212,175,106,0.45), transparent);
+        animation: l-line-draw 0.5s ease-out 3.15s both;
+      }
+
+      /* Date */
+      .l-date {
+        font-family: 'DM Sans', 'Inter', sans-serif;
+        font-size: 0.68rem;
+        letter-spacing: 0.45em;
+        text-transform: uppercase;
+        color: rgba(212,175,106,0.85);
+        margin: 0;
+        opacity: 0;
+        animation: l-rise 0.6s ease-out 3.35s both;
+      }
+
+      /* Italic tagline */
+      .l-tagline {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-style: italic;
+        font-size: 0.72rem;
+        letter-spacing: 0.18em;
+        color: rgba(196,160,210,0.55);
+        margin: 0;
+        opacity: 0;
+        animation: l-rise 0.6s ease-out 3.65s both;
+      }
+
+      @keyframes l-rise {
+        from { opacity: 0; transform: translateY(10px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         FULL LOADER FADE-OUT
+         Gracefully disappears after animation
+         (React will also clear it on mount)
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+      #app-loader {
+        animation: l-loader-exit 0.6s ease-in 4.5s both;
+        pointer-events: none;
+      }
+      @keyframes l-loader-exit {
+        from { opacity: 1; }
+        to   { opacity: 0; visibility: hidden; }
       }
     </style>
-</head>
+  </head>
 
   <body>
     <div id="root">
       <div id="app-loader" aria-hidden="true">
-        <!-- Silhouette figures sliding in -->
-        <div class="loader-figures">
-          <div class="loader-figure loader-figure--groom">
+
+        <!-- Ambient glowing background orbs -->
+        <div class="l-bg">
+          <div class="l-orb l-orb--a"></div>
+          <div class="l-orb l-orb--b"></div>
+          <div class="l-orb l-orb--c"></div>
+        </div>
+
+        <!-- Stage: two silhouettes walk toward each other -->
+        <div class="l-stage">
+
+          <!-- Groom — black silhouette, from the LEFT -->
+          <div class="l-figure l-groom">
             <picture>
               <source srcset="/images/groom-silhouette.webp" type="image/webp" />
-              <img src="/images/groom-silhouette.png" alt="Groom" width="110" height="110" />
+              <img src="/images/groom-silhouette.png" alt="Groom" width="110" height="130" />
             </picture>
           </div>
-          <div class="loader-figure loader-figure--bride">
+
+          <!-- Meeting point — heart + gold sparks burst from center -->
+          <div class="l-meeting">
+            <div class="l-heart">♥</div>
+            <div class="l-sparks">
+              <span class="l-spark l-s1">✦</span>
+              <span class="l-spark l-s2">✦</span>
+              <span class="l-spark l-s3">✦</span>
+              <span class="l-spark l-s4">✦</span>
+              <span class="l-spark l-s5">·</span>
+              <span class="l-spark l-s6">·</span>
+              <span class="l-spark l-s7">✦</span>
+              <span class="l-spark l-s8">✦</span>
+              <span class="l-spark l-s9">·</span>
+              <span class="l-spark l-s10">·</span>
+            </div>
+          </div>
+
+          <!-- Bride — white silhouette, from the RIGHT -->
+          <div class="l-figure l-bride">
             <picture>
               <source srcset="/images/bride-silhouette.webp" type="image/webp" />
-              <img src="/images/bride-silhouette.png" alt="Bride" width="110" height="110" />
+              <img src="/images/bride-silhouette.png" alt="Bride" width="110" height="130" />
             </picture>
           </div>
+
         </div>
-        <!-- Walking line -->
-        <div class="loader-walk-line"></div>
-        <!-- Heart -->
-        <div class="loader-heart">♥</div>
-        <!-- Bottom text -->
-        <div class="loader-bottom">
-          <h1>Corine &amp; Ruben</h1>
-          <div class="loader-divider"></div>
-          <p class="loader-date">15 . 08 . 2027</p>
+
+        <!-- Gold ground line draws under them -->
+        <div class="l-line"></div>
+
+        <!-- Text reveals -->
+        <div class="l-text">
+          <h1>
+            <span class="l-n1">Corine</span>
+            <span class="l-amp">&amp;</span>
+            <span class="l-n2">Ruben</span>
+          </h1>
+          <div class="l-rule"></div>
+          <p class="l-date">15 &nbsp;·&nbsp; 08 &nbsp;·&nbsp; 2027</p>
+          <p class="l-tagline">Together Forever</p>
         </div>
+
       </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
