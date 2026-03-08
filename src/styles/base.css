@@ -54,7 +54,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
 
     /* Muted - neutral gray */
     --muted: 240 6% 94%;
-    --muted-foreground: 240 8% 46%;
+    --muted-foreground: 240 10% 34%;
 
     --border: 240 6% 90%;
     --input: 240 6% 94%;
