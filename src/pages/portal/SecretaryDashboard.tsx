@@ -104,6 +104,7 @@ function SecretaryDashboard() {
       unreadMessages: unreadCount || 0,
       todayAppointments: apptCount || 0,
     });
+    setLoading(false);
   };
 
   const handleBookingAction = async (id: string, action: "confirmed" | "denied") => {

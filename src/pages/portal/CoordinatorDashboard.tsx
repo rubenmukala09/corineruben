@@ -78,6 +78,7 @@ function CoordinatorDashboard() {
       pendingTestimonials: pendingTestCount || 0,
       kbArticles: kbCount || 0,
     });
+    setLoading(false);
   };
 
   const handleTestimonialAction = async (id: string, action: "approved" | "rejected") => {

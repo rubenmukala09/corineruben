@@ -89,6 +89,7 @@ function StaffDashboard() {
       unreadMessages: messagesCount || 0,
       todaysMeetings: meetingsCount || 0,
     });
+    setLoading(false);
   };
 
   const handleSignOut = async () => {
