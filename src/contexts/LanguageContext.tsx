@@ -425,7 +425,7 @@ const translations: Record<string, Record<Language, string>> = {
   // Dashboard
   'dashboard.admin': { fr: 'Panneau Admin', en: 'Admin Panel', es: 'Panel Admin' },
   'dashboard.title': { fr: 'Tableau de Bord', en: 'Wedding Dashboard', es: 'Panel de Boda' },
-  'dashboard.subtitle': { fr: 'Suivez les RSVP, gérez les invités et surveillez les cadeaux.', en: 'Track RSVPs, manage guests, and monitor gifts — all in one place.', es: 'Rastrea RSVP, gestiona invitados y monitorea regalos — todo en un solo lugar.' },
+  'dashboard.subtitle': { fr: 'Suivez les RSVP, gérez les invités et surveillez les cadeaux.', en: 'Track RSVPs, manage guests, and monitor gifts, all in one place.', es: 'Rastrea RSVP, gestiona invitados y monitorea regalos, todo en un solo lugar.' },
   'dashboard.overview': { fr: 'Aperçu', en: 'Overview', es: 'Resumen' },
   'dashboard.guests': { fr: 'Invités', en: 'Guests', es: 'Invitados' },
   'dashboard.seating': { fr: 'Tables', en: 'Seating', es: 'Asientos' },

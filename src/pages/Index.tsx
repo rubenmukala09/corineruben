@@ -147,7 +147,7 @@ const GoldenCorners = forwardRef<HTMLDivElement, { className?: string }>(({ clas
 GoldenCorners.displayName = 'GoldenCorners';
 
 /* ===== Personal Court — Promise + Dynamic quotes from DB ===== */
-const PersonalCourtSection = ({ t, coupleNames }: { t: (key: string) => string; coupleNames: string }) => {
+const PersonalCourtSection = forwardRef<HTMLElement, { t: (key: string) => string; coupleNames: string }>(({ t, coupleNames }, ref) => {
   const [quotes, setQuotes] = useState<{ id: string; content: string }[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
