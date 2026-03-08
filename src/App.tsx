@@ -90,6 +90,7 @@ const ScamCheckResult = lazy(() => import("./pages/portal/ScamCheckResult"));
 const SecretaryDashboard = lazy(() => import("./pages/portal/SecretaryDashboard"));
 const CoordinatorDashboard = lazy(() => import("./pages/portal/CoordinatorDashboard"));
 const StaffDashboard = lazy(() => import("./pages/portal/StaffDashboard"));
+const InternalMessages = lazy(() => import("./pages/portal/InternalMessages"));
 
 // Admin pages - lazy loaded
 const AdminDashboardContent = lazy(() => import("./pages/admin/AdminDashboardContent"));
