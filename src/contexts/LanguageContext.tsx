@@ -303,7 +303,7 @@ const translations: Record<string, Record<Language, string>> = {
 
   // Love language
   'love.tagline': { fr: 'Deux cœurs, une seule âme', en: 'Two hearts, one soul', es: 'Dos corazones, una sola alma' },
-  'love.intro': { fr: '___________', en: '___________', es: '___________' },
+  'love.intro': { fr: 'Notre histoire d\'amour est un témoignage de la fidélité de Dieu. De notre première rencontre à ce jour béni, chaque moment nous a rapprochés.', en: 'Our love story is a testimony of God\'s faithfulness. From our first meeting to this blessed day, every moment has brought us closer together.', es: 'Nuestra historia de amor es un testimonio de la fidelidad de Dios. Desde nuestro primer encuentro hasta este día bendecido, cada momento nos ha acercado más.' },
   'love.quote1': { fr: '"Je t\'ai aimé d\'un amour éternel, c\'est pourquoi je te conserve ma bonté."', en: '"I have loved you with an everlasting love; therefore I have continued my faithfulness to you."', es: '"Con amor eterno te he amado; por eso te sigo con fidelidad."' },
   'love.quote1.ref': { fr: 'Jérémie 31:3', en: 'Jeremiah 31:3', es: 'Jeremías 31:3' },
   'love.quote1.text': { fr: 'Je t\'ai aimé d\'un amour éternel, c\'est pourquoi je te conserve ma bonté.', en: 'I have loved you with an everlasting love; therefore I have continued my faithfulness to you.', es: 'Con amor eterno te he amado; por eso te sigo con fidelidad.' },
