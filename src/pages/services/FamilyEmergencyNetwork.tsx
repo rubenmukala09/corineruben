@@ -133,7 +133,7 @@ const FamilyEmergencyNetwork = () => {
                     </div>
                     <div className="mt-5 grid grid-cols-2 gap-2">
                       <button className="py-2 rounded-lg bg-red-500/20 border border-red-500/30 text-red-400 text-xs font-bold">Join Call</button>
-                      <button className="py-2 rounded-lg bg-white/5 border border-white/10 text-white/60 text-xs font-bold">View Location</button>
+                      <button className="py-2 rounded-lg bg-white/5 border border-white/10 text-white/80 text-xs font-bold">View Location</button>
                     </div>
                   </div>
                 </AnimatedSection>
