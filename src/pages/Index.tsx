@@ -996,7 +996,7 @@ const Index = () => {
                 </p>
                 <div className="flex items-center gap-2 mt-3">
                   <Heart className="w-3 h-3 text-rose-400 fill-rose-400" />
-                  <span className="font-sans-elegant text-xs text-muted-foreground font-medium">Corine & Ruben</span>
+                  <span className="font-sans-elegant text-xs text-muted-foreground font-medium">{coupleName1} & {coupleName2}</span>
                 </div>
               </div>
               <Link to="/story" className="btn-primary">
