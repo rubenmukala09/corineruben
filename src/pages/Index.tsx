@@ -794,7 +794,7 @@ const Index = () => {
               {t('nav.story')}
             </Link>
           </motion.div>
-        </motion.div>
+        </div>
 
         {/* ===== FLOATING CARDS ===== */}
         <motion.div
