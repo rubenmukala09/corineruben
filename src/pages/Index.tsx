@@ -1242,8 +1242,8 @@ const Index = () => {
             <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
               <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('nav.details')}</p>
             </div>
-            <h2 className="font-serif-display text-3xl md:text-5xl text-foreground font-semibold mb-4">{t('details.title')}</h2>
-            <p className="font-sans-elegant text-lg text-muted-foreground max-w-lg mx-auto">{t('details.subtitle')}</p>
+            <h2 className="font-serif-display text-2xl md:text-5xl text-foreground font-semibold mb-4">{t('details.title')}</h2>
+            <p className="font-sans-elegant text-base md:text-lg text-muted-foreground max-w-lg mx-auto">{t('details.subtitle')}</p>
           </motion.div>
 
           <div className={`grid gap-5 ${isCourtMode ? 'grid-cols-2 max-w-lg mx-auto' : 'grid-cols-2 md:grid-cols-4'}`}>
