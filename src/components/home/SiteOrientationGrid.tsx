@@ -7,8 +7,8 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion, useInView } from "framer-motion";
-import { useRef, useCallback } from "react";
+import { useRef, useEffect, useState } from "react";
+import { AnimatedSection } from "@/components/AnimatedSection";
 
 import serviceTraining from "@/assets/service-training.jpg";
 import serviceAiBusiness from "@/assets/service-ai-business.jpg";
@@ -56,22 +56,27 @@ const pages = [
 ];
 
 export const SiteOrientationGrid = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const ref = useRef<HTMLElement>(null);
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setIsInView(true); observer.disconnect(); } },
+      { rootMargin: "-50px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section className="py-16 md:py-28 relative overflow-hidden" ref={ref}>
-      {/* Decorative background */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-accent/5 rounded-full blur-3xl pointer-events-none" />
       
       <div className="container mx-auto px-4 md:px-6 lg:px-12 relative">
-        <motion.div
-          className="text-center mb-14"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-        >
+        <div className={`text-center mb-14 transition-all duration-500 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary mb-4">
             What We Offer
           </p>
@@ -82,27 +87,14 @@ export const SiteOrientationGrid = () => {
             From personal protection to enterprise security, we have a solution
             for every need.
           </p>
-        </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto" style={{ perspective: 1200 }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto">
           {pages.map((page, i) => (
-            <motion.div
-              key={page.title}
-              initial={{ opacity: 0, y: 50, rotateX: 15 }}
-              animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
-              transition={{ duration: 0.6, delay: i * 0.12, ease: "easeOut" }}
-              whileHover={{
-                y: -12,
-                rotateX: -3,
-                rotateY: 4,
-                scale: 1.03,
-                boxShadow: "0 30px 60px -15px hsl(288 25% 20% / 0.2)",
-              }}
-              style={{ transformStyle: "preserve-3d" }}
-            >
+            <AnimatedSection key={page.title} animation="fade-up" delay={i * 120}>
               <Link
                 to={page.link}
-                className={`group block rounded-2xl border overflow-hidden transition-all h-full ${
+                className={`group block rounded-2xl border overflow-hidden transition-all h-full hover:-translate-y-3 hover:scale-[1.03] hover:shadow-[0_30px_60px_-15px_hsl(288_25%_20%/0.2)] ${
                   page.featured
                     ? "border-primary/40 bg-card ring-1 ring-primary/10"
                     : "border-border/50 bg-card hover:border-primary/20"
@@ -123,12 +115,9 @@ export const SiteOrientationGrid = () => {
                     </span>
                   )}
                   {/* Floating icon overlay */}
-                  <motion.div
-                    className="absolute bottom-3 right-3 w-10 h-10 rounded-xl glass flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    whileHover={{ rotate: 8 }}
-                  >
+                  <div className="absolute bottom-3 right-3 w-10 h-10 rounded-xl glass flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <page.icon className="w-5 h-5 text-primary" />
-                  </motion.div>
+                  </div>
                 </div>
 
                 <div className="p-5 relative">
@@ -149,16 +138,11 @@ export const SiteOrientationGrid = () => {
                   </div>
                 </div>
               </Link>
-            </motion.div>
+            </AnimatedSection>
           ))}
         </div>
 
-        <motion.div
-          className="mt-12 flex flex-col sm:flex-row gap-4 justify-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.6 }}
-        >
+        <div className={`mt-12 flex flex-col sm:flex-row gap-4 justify-center transition-all duration-500 delay-500 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
           <Button asChild size="lg">
             <Link to="/contact">
               Talk to an Expert <ArrowRight className="ml-2 w-4 h-4" />
@@ -169,7 +153,7 @@ export const SiteOrientationGrid = () => {
               About Our Team <ArrowRight className="ml-2 w-4 h-4" />
             </Link>
           </Button>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

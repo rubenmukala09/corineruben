@@ -188,6 +188,10 @@ export default {
           from: { transform: "scale(0.98)", opacity: "0" },
           to: { transform: "scale(1)", opacity: "1" },
         },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.15s cubic-bezier(0.2, 0, 0.2, 1)",
@@ -195,6 +199,7 @@ export default {
         "fade-in": "fade-in 0.15s cubic-bezier(0.2, 0, 0.2, 1)",
         "slide-up": "slide-up 0.15s cubic-bezier(0.2, 0, 0.2, 1)",
         "scale-in": "scale-in 0.15s cubic-bezier(0.2, 0, 0.2, 1)",
+        marquee: "marquee 30s linear infinite",
       },
       boxShadow: {
         xs: "0 1px 2px rgba(0, 0, 0, 0.04)",

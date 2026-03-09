@@ -1,106 +1,83 @@
 
 
-# Remove framer-motion from Shared & Homepage Components
+# Website Audit Plan — InVision Network
 
-## Scope
+## Issues Found
 
-**16 components** to clean up, split into two tiers: homepage critical path (eagerly loaded) and shared/global components.
+### Critical Issues
 
-### Tier 1: Homepage Critical Path (highest impact)
+1. **Training page renders blank/invisible content**
+   - The `/training` page shows only the footer — the main content area appears entirely white/invisible. This is a major usability failure; users cannot see any training plans or pricing.
+   - Root cause likely: CSS color/background conflict where text is rendering in white on a white background, or the hero section and content sections have no visible background contrast.
+   - **Fix**: Audit the Training.tsx page structure and ensure all sections have proper background colors and text contrast. Check for any CSS classes like `text-white` applied without a dark background.
 
-| Component | Lines | motion usages | Strategy |
-|-----------|-------|---------------|----------|
-| `HomeIntroSection.tsx` | 514 | ~20 `motion.*`, `useInView`, `useMotionValue`, `useTransform`, `TiltCard` subcomponent | Replace `useInView` with custom IntersectionObserver (already used in `useCountUp`). Replace all `motion.div` with `div` + `AnimatedSection` for entrances. Remove `TiltCard` (uses `useMotionValue`/`useTransform` for 3D tilt) — replace with static container. Floating widgets lose their `animate={{ y: [0,-6,0] }}` bobbing — make static. |
-| `SiteOrientationGrid.tsx` | 178 | 6 `motion.*`, `useInView` | Replace `useInView` with IntersectionObserver + state. Replace `motion.div` cards with `AnimatedSection` wrappers. Remove `whileHover` 3D transforms — use CSS `hover-lift`. |
-| `ThreatTicker.tsx` | 40 | 1 `motion.div` for infinite marquee | Replace with CSS `@keyframes marquee` animation (`translateX(0)` to `translateX(-50%)`). Pure CSS infinite scroll. |
-| `TestimonialCarousel.tsx` | 148 | `AnimatePresence` + `motion.div` for slide transitions | Replace with CSS transition: swap content via state, use `animate-fade-in` class on key change. Simpler than AnimatePresence but visually equivalent. |
-| `LiveSecurityStats.tsx` | 135 | `useInView` only (for counter animation) | Replace `useInView` with a local IntersectionObserver hook. No `motion.*` elements to replace — just the import. |
-| `FAQPreview.tsx` | 151 | 5 `motion.*`, `useInView` | Lazy-loaded, so lower priority but still worth cleaning. Replace with `AnimatedSection` + CSS hover. |
+2. **Massive `forwardRef` warning spam (6+ warnings on every page load)**
+   - Components affected: `UnifiedCheckoutDialog`, `DonationModal`, `SEO`, `Navigation` (memo), `PrefetchLink`, `ShoppingCart`, `DialogContent`/`DialogPortal`
+   - These are React warnings about function components being given refs without `React.forwardRef()`. While they don't crash the app, they indicate broken ref forwarding that can cause subtle interaction bugs (e.g., Dialog focus management, Sheet animations).
+   - **Fix**: Wrap affected components in `React.forwardRef()` or remove unnecessary ref passing.
 
-### Tier 2: Shared/Global Components
+### Performance Issues
 
-| Component | Strategy |
-|-----------|----------|
-| `PremiumChatMessage.tsx` | Replace `motion.div` with plain `div` + CSS `animate-fade-in`. Remove hover animations. |
-| `AnimatedButton.tsx` | Replace with plain `Button` + CSS `hover-scale` class + `active:scale-95` Tailwind. |
-| `ScrollProgressIndicator.tsx` | This uses `useScroll`/`useSpring` for the progress bar — needs a vanilla JS `scroll` event listener + CSS `scaleX` transform. Replace `motion.circle` with SVG `stroke-dashoffset`. |
-| `ImageZoom.tsx` | Replace with plain `div` + CSS `hover:scale-105 transition-transform`. |
-| `SocialProofTicker.tsx` | Replace `AnimatePresence`/`motion` with CSS transitions + conditional rendering via `className` toggling. |
-| `SuccessCelebration.tsx` | Replace `AnimatePresence`/`motion` with CSS `animate-scale-in`/`animate-fade-in` classes + conditional rendering. |
-| `GlassQuickMenu.tsx` | Activity feed uses `AnimatePresence` for expand/collapse — replace with CSS `transition-[height]` + `overflow-hidden`. List item stagger: remove (instant render is fine for 6 items). |
-| `InspirationalQuote.tsx` | Replace `motion.div` with `AnimatedSection` wrapper. |
-| `TestimonialBubble.tsx` | Replace `motion.div` with `AnimatedSection` + CSS `hover:-translate-y-1 transition-transform`. |
+3. **Hero image too large (1.3MB)**
+   - `hero-corporate-protection.webp` is 1,319KB — this is the single largest resource and takes 913ms to load. Should be compressed to under 200KB or served at appropriate dimensions.
+   - **Fix**: Compress the hero image or use responsive `srcset` with smaller variants.
 
-### Orphaned Components (bonus cleanup)
+4. **framer-motion loaded on initial page (93KB)**
+   - Per the project's own memory/architecture rules, framer-motion should be excluded from the root level and only lazy-loaded. Currently loaded as part of the initial bundle.
+   - **Fix**: Ensure framer-motion imports in Index.tsx are isolated to lazy-loaded sub-components.
 
-These 3 components have zero imports in any page file — they're dead code:
-- `CompanyIntroSection.tsx` (286 lines)
-- `TrustedExpertsBar.tsx` (222 lines)  
-- `PremiumGlassmorphismWidgets.tsx` (580 lines)
-- `FeatureBar.tsx` (284 lines)
+5. **DOM Content Loaded: 3.4s, Full Page Load: 3.6s**
+   - Acceptable but could improve. The 76 script files loaded on dev is expected (Vite HMR), but production builds should be verified.
 
-**Recommend deletion** to reduce codebase size by ~1,370 lines.
+### Form Validation & Data Flow
 
-## Technical Details
+6. **Contact form uses `useState` instead of `react-hook-form`**
+   - The Contact page imports `useForm` and `zodResolver` but the `handleSubmit` function uses raw `useState` with manual form data. The Zod schema is imported (`contactFormSchema`) but may not be wired up for field-level validation feedback.
+   - **Fix**: Wire up `react-hook-form` with `contactFormSchema` for proper field-level error display.
 
-### ThreatTicker CSS Marquee Replacement
-```css
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.marquee { animation: marquee 30s linear infinite; }
-```
+7. **Newsletter form validation is working correctly**
+   - Uses Zod schema, proper error handling, loading states, and success feedback. No issues found.
 
-### ScrollProgressIndicator Vanilla Replacement
-- Listen to `scroll` event, calculate `scrollY / (scrollHeight - clientHeight)`
-- Apply as `style={{ transform: scaleX(progress) }}` to a regular `div`
-- Scroll-to-top button visibility via scroll threshold state
+### Navigation & Responsiveness
 
-### LiveSecurityStats useInView Replacement
-```tsx
-const [isInView, setIsInView] = useState(false);
-const ref = useRef(null);
-useEffect(() => {
-  const observer = new IntersectionObserver(([e]) => {
-    if (e.isIntersecting) { setIsInView(true); observer.disconnect(); }
-  }, { once: true });
-  if (ref.current) observer.observe(ref.current);
-  return () => observer.disconnect();
-}, []);
-```
+8. **Mobile navigation missing hamburger menu button on small screens**
+   - On 375px width, the nav shows logo + cart + phone + Login but no hamburger icon to open the mobile menu with all nav links. Users on mobile cannot access AI & Business, Learn & Train, Resources, etc.
+   - **Fix**: Ensure the hamburger menu button is visible on mobile breakpoints.
 
-## Files to Modify
+9. **Navigation responsive layout looks functional on desktop** — all 7 nav links visible, cart, phone, donate, login all accessible.
 
-| File | Action |
-|------|--------|
-| `src/components/HomeIntroSection.tsx` | Remove framer-motion, replace ~20 motion elements |
-| `src/components/home/SiteOrientationGrid.tsx` | Remove framer-motion, replace 6 motion elements |
-| `src/components/home/ThreatTicker.tsx` | Replace motion marquee with CSS keyframes |
-| `src/components/home/TestimonialCarousel.tsx` | Replace AnimatePresence with CSS transitions |
-| `src/components/home/LiveSecurityStats.tsx` | Replace useInView with IntersectionObserver |
-| `src/components/home/FAQPreview.tsx` | Remove framer-motion, use AnimatedSection |
-| `src/components/training/PremiumChatMessage.tsx` | Replace motion with CSS classes |
-| `src/components/AnimatedButton.tsx` | Replace with CSS hover/active |
-| `src/components/ScrollProgressIndicator.tsx` | Rewrite with vanilla scroll listener |
-| `src/components/ImageZoom.tsx` | Replace with CSS hover scale |
-| `src/components/SocialProofTicker.tsx` | Replace with CSS transitions |
-| `src/components/SuccessCelebration.tsx` | Replace with CSS animations |
-| `src/components/GlassQuickMenu.tsx` | Replace AnimatePresence with CSS |
-| `src/components/home/InspirationalQuote.tsx` | Replace with AnimatedSection |
-| `src/components/home/TestimonialBubble.tsx` | Replace with CSS hover |
+### Minor Issues
 
-### Files to Delete (orphaned)
-| File | Lines |
-|------|-------|
-| `src/components/home/CompanyIntroSection.tsx` | 286 |
-| `src/components/home/TrustedExpertsBar.tsx` | 222 |
-| `src/components/home/PremiumGlassmorphismWidgets.tsx` | 580 |
-| `src/components/home/FeatureBar.tsx` | 284 |
+10. **`body.style.overflow` manipulation in Navigation**
+    - Direct DOM mutation for scroll locking — works but could cause issues with other overlay components competing for the same property.
 
-## Impact
-- Removes framer-motion from ~19 components (93 → ~74 remaining)
-- All homepage components become framer-motion-free — the library won't load on the critical path at all
-- ~1,370 lines of dead component code deleted
-- Significant reduction in JS bundle for initial page load
+11. **Edge function CORS headers missing newer Supabase client headers**
+    - The `process-payment` edge function uses basic CORS headers. Should include the extended headers per project standards.
+
+---
+
+## Implementation Plan
+
+### Task 1: Fix Training page visibility
+- Inspect `Training.tsx` full render output and all CSS classes
+- Ensure hero and content sections have proper background/text colors
+- Verify the page renders correctly on both desktop and mobile
+
+### Task 2: Fix forwardRef warnings
+- Add `React.forwardRef()` to: `DonationModal`, `PrefetchLink`, `ShoppingCart`, `SEO`
+- These are the custom components triggering warnings; Dialog/Sheet warnings come from Radix internals and are lower priority
+
+### Task 3: Fix mobile navigation hamburger visibility
+- Ensure the hamburger menu toggle button renders on screens below `lg` breakpoint
+- Verify all nav links are accessible in the mobile drawer
+
+### Task 4: Optimize hero image size
+- Compress `hero-corporate-protection.webp` to under 200KB
+- Add `width`/`height` attributes to prevent layout shift
+
+### Task 5: Wire up Contact form validation properly
+- Connect `react-hook-form` + `zodResolver` with `contactFormSchema` for proper field-level error messages
+
+### Task 6: Update edge function CORS headers
+- Update `process-payment` and any other edge functions to include the full set of required CORS headers per project standards
 

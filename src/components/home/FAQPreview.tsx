@@ -8,8 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { AnimatedSection } from "@/components/AnimatedSection";
 
 const faqs = [
   {
@@ -36,23 +35,14 @@ const faqs = [
 ];
 
 export const FAQPreview = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-
   return (
-    <section className="py-16 md:py-28 relative overflow-hidden" aria-labelledby="faq-heading" ref={ref}>
-      {/* Decorative */}
+    <section className="py-16 md:py-28 relative overflow-hidden" aria-labelledby="faq-heading">
       <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
       
       <div className="container mx-auto px-4 md:px-6 lg:px-12 max-w-5xl relative">
         <div className="grid lg:grid-cols-5 gap-10 items-start">
           {/* Left sidebar */}
-          <motion.div
-            className="lg:col-span-2 space-y-6"
-            initial={{ opacity: 0, x: -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6 }}
-          >
+          <AnimatedSection animation="fade-up" className="lg:col-span-2 space-y-6">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary mb-4">
                 FAQ
@@ -69,11 +59,8 @@ export const FAQPreview = () => {
               </p>
             </div>
 
-            {/* Support card — 3D glass lift */}
-            <motion.div
-              whileHover={{ y: -6, boxShadow: "0 20px 40px -10px hsl(288 25% 20% / 0.15)" }}
-              className="rounded-2xl border border-border/50 bg-card p-6 shadow-3d overflow-hidden relative"
-            >
+            {/* Support card */}
+            <div className="rounded-2xl border border-border/50 bg-card p-6 shadow-3d overflow-hidden relative hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-10px_hsl(288_25%_20%/0.15)] transition-all duration-300">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 pointer-events-none" />
               <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
               <div className="relative">
@@ -99,22 +86,16 @@ export const FAQPreview = () => {
                   </Button>
                 </div>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </AnimatedSection>
 
           {/* Accordion */}
-          <motion.div
-            className="lg:col-span-3 space-y-3"
-            initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.15 }}
-          >
+          <AnimatedSection animation="fade-up" delay={150} className="lg:col-span-3 space-y-3">
             <Accordion type="single" collapsible className="space-y-3">
               {faqs.map((faq, index) => (
-                <motion.div
+                <div
                   key={index}
-                  whileHover={{ y: -2, boxShadow: "0 12px 24px -8px hsl(288 25% 20% / 0.1)" }}
-                  transition={{ duration: 0.2 }}
+                  className="hover:-translate-y-0.5 hover:shadow-[0_12px_24px_-8px_hsl(288_25%_20%/0.1)] transition-all duration-200"
                 >
                   <AccordionItem
                     value={`faq-${index}`}
@@ -132,7 +113,7 @@ export const FAQPreview = () => {
                       {faq.answer}
                     </AccordionContent>
                   </AccordionItem>
-                </motion.div>
+                </div>
               ))}
             </Accordion>
             <div className="text-center pt-2">
@@ -143,7 +124,7 @@ export const FAQPreview = () => {
                 View All FAQs <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-          </motion.div>
+          </AnimatedSection>
         </div>
       </div>
     </section>
