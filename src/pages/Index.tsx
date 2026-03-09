@@ -702,7 +702,7 @@ const Index = () => {
 
 
         <div className="absolute inset-0 mix-blend-soft-light z-[1]">
-          <img src={heroImg} alt="Wedding background" className="w-full h-full object-cover opacity-[0.1]" style={{ filter: 'saturate(0.4) brightness(1.2)' }} width={1920} height={1080} loading="eager" decoding="async" />
+          <img src={heroImg} alt="Wedding background" className="w-full h-full object-cover opacity-[0.1]" style={{ filter: 'saturate(0.4) brightness(1.2)' }} width={1920} height={1080} loading="lazy" decoding="async" />
         </div>
 
         <motion.div
