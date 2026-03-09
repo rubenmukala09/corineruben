@@ -648,7 +648,7 @@ const RSVP = () => {
               animate={{ opacity: 0.4, scale: 1, rotate: 20 }}
               transition={{ delay: 0.5, duration: 0.8 }}
             />
-            <h1 className="font-serif-display text-4xl md:text-6xl text-foreground font-semibold relative z-10" style={{ letterSpacing: '-0.5px' }}>
+            <h1 className="font-serif-display text-3xl md:text-6xl text-foreground font-semibold relative z-10" style={{ letterSpacing: '-0.5px' }}>
               {t('rsvp.title')}
             </h1>
           </div>
