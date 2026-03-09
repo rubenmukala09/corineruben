@@ -1614,9 +1614,10 @@ const Index = () => {
                 </div>
               </div>
             </div>
-          </DialogContent>
-        </Dialog>
+          </LazyDialogContent>
+        </LazyDialog>
       }
+      </Suspense>
 
       {/* ===== EMBEDDED PAYMENT FORM ===== */}
       {paymentFormOpen && (
