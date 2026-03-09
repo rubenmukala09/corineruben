@@ -832,7 +832,7 @@ const Index = () => {
                 onClick={() => toggleTrack('amazing-grace')}>
                 
                 <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-rose-400/20">
-                  <img src={coupleImgSmall} alt="Corine & Ruben" className="w-full h-full object-cover" width={48} height={48} loading="eager" decoding="async" />
+                  <img src={coupleImgSmall} alt="Corine & Ruben" className="w-full h-full object-cover" width={48} height={48} loading="lazy" decoding="async" />
                 </div>
                 <div>
                   <p className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">{t('hymn.amazing')}</p>
@@ -912,7 +912,7 @@ const Index = () => {
                 onClick={() => toggleTrack('blessed-larson')}>
                 
                 <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-violet-400/20">
-                  <img src={ringsImgSmall} alt="Wedding rings" className="w-full h-full object-cover" width={48} height={48} loading="eager" decoding="async" />
+                  <img src={ringsImgSmall} alt="Wedding rings" className="w-full h-full object-cover" width={48} height={48} loading="lazy" decoding="async" />
                 </div>
                 <div>
                   <p className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">I Have Been Blessed</p>
@@ -1411,7 +1411,7 @@ const Index = () => {
         <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 0.3 }}>
             <div className="glass-card-strong rounded-full w-28 h-28 mx-auto mb-8 flex items-center justify-center overflow-hidden ring-4 ring-primary/15 relative">
-              <img src={ringsImgSmall} alt="Wedding rings" className="w-full h-full object-cover" width={112} height={112} loading="eager" decoding="async" />
+              <img src={ringsImgSmall} alt="Wedding rings" className="w-full h-full object-cover" width={112} height={112} loading="lazy" decoding="async" />
               <div className="absolute inset-0 flex items-center justify-center bg-foreground/20" />
             </div>
 
