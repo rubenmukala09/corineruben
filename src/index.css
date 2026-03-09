@@ -526,42 +526,47 @@
 
   /* ===== GLASS INPUT ===== */
   .glass-input {
-    background: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    border: 1.5px solid rgba(159, 130, 164, 0.25);
+    border-radius: 14px;
     transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(139, 107, 138, 0.06), inset 0 1px 1px rgba(255, 255, 255, 0.4);
   }
   .glass-input:focus {
-    border-color: hsl(var(--primary) / 0.5);
-    box-shadow: 0 0 20px hsl(var(--primary) / 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    border-color: hsl(var(--primary) / 0.6);
+    box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1), 0 4px 12px hsl(var(--primary) / 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.3);
   }
   .dark .glass-input {
-    background: rgba(28, 24, 40, 0.4);
-    border: 1px solid rgba(160, 130, 200, 0.15);
+    background: rgba(28, 24, 40, 0.5);
+    border: 1.5px solid rgba(160, 130, 200, 0.22);
+    box-shadow: 0 2px 8px rgba(10, 8, 18, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.04);
   }
   .dark .glass-input:focus {
-    border-color: hsl(var(--primary) / 0.4);
-    box-shadow: 0 0 20px hsl(var(--primary) / 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.04);
+    border-color: hsl(var(--primary) / 0.5);
+    box-shadow: 0 0 0 3px hsl(var(--primary) / 0.08), 0 4px 12px hsl(var(--primary) / 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.04);
   }
 
   /* ===== GLASS SECTION ===== */
   .glass-section {
-    background: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.42);
     backdrop-filter: blur(24px) saturate(140%);
     -webkit-backdrop-filter: blur(24px) saturate(140%);
-    border: 1.5px solid rgba(255, 255, 255, 0.45);
+    border: 2px solid rgba(159, 130, 164, 0.18);
     border-radius: 32px;
     box-shadow:
-      0 8px 32px rgba(139, 107, 138, 0.1),
+      0 2px 6px rgba(74, 59, 78, 0.06),
+      0 12px 36px rgba(139, 107, 138, 0.1),
       0 1px 4px rgba(0, 0, 0, 0.04);
   }
   .dark .glass-section {
-    background: rgba(28, 24, 40, 0.5);
-    border: 1.5px solid rgba(160, 130, 200, 0.18);
+    background: rgba(28, 24, 40, 0.55);
+    border: 2px solid rgba(160, 130, 200, 0.22);
     box-shadow:
-      0 8px 32px rgba(10, 8, 18, 0.4),
-      0 0 60px rgba(140, 110, 180, 0.06);
+      0 2px 6px rgba(0, 0, 0, 0.2),
+      0 12px 36px rgba(10, 8, 18, 0.4),
+      0 0 60px rgba(140, 110, 180, 0.08);
   }
 
 
