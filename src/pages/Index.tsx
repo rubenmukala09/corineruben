@@ -660,19 +660,6 @@ const Index = () => {
       <section className="w-full min-h-screen relative overflow-hidden flex flex-col items-center pt-8 pb-8">
         <FallingPetals isMobile={isMobile} />
 
-        {/* Hero aurora orbs — pure CSS */}
-        <div
-          className="absolute w-[500px] h-[500px] rounded-full pointer-events-none z-[1] aurora-blob-css"
-          style={{ top: '5%', left: '-8%', background: 'radial-gradient(circle, rgba(212,165,200,0.35) 0%, transparent 70%)', filter: 'blur(80px)', animation: 'aurora-css-1 14s ease-in-out infinite' }}
-        />
-        <div
-          className="absolute w-[400px] h-[400px] rounded-full pointer-events-none z-[1] aurora-blob-css"
-          style={{ top: '30%', right: '-10%', background: 'radial-gradient(circle, rgba(180,140,210,0.3) 0%, transparent 70%)', filter: 'blur(90px)', animation: 'aurora-css-2 18s ease-in-out infinite' }}
-        />
-        <div
-          className="absolute w-[350px] h-[350px] rounded-full pointer-events-none z-[1] aurora-blob-css"
-          style={{ bottom: '10%', left: '25%', background: 'radial-gradient(circle, rgba(232,196,184,0.4) 0%, transparent 70%)', filter: 'blur(100px)', animation: 'aurora-css-3 16s ease-in-out infinite' }}
-        />
 
         <div className="absolute inset-0 mix-blend-soft-light z-[1]">
           <img src={heroImg} alt="Wedding background" className="w-full h-full object-cover opacity-[0.1]" style={{ filter: 'saturate(0.4) brightness(1.2)' }} width={1920} height={1080} loading="eager" decoding="async" />
