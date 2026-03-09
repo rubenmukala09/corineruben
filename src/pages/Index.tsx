@@ -286,7 +286,7 @@ const AnnouncementsSection = forwardRef<HTMLElement, {t: (key: string) => string
               <Megaphone className="w-6 h-6 text-primary icon-glow" />
             </div>
 
-            <h3 className="font-serif-display text-2xl md:text-3xl text-foreground font-semibold mb-2">
+            <h2 className="font-serif-display text-2xl md:text-3xl text-foreground font-semibold mb-2">
               {t('announcements.title')}
             </h3>
             <p className="font-sans-elegant text-xs tracking-[0.2em] uppercase text-muted-foreground font-medium mb-4">
