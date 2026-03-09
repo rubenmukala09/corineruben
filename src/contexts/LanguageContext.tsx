@@ -59,7 +59,7 @@ const translations: Record<string, Record<Language, string>> = {
   'story.event5.date': { fr: 'Septembre 2022', en: 'September 2022', es: 'Septiembre 2022' },
   'story.event6.title': { fr: 'Vers Notre Grand Jour', en: 'Toward Our Big Day', es: 'Hacia Nuestro Gran Día' },
   'story.event6.description': { fr: 'Depuis, ils construisent leur vie ensemble, surmontant les défis de s\'installer à l\'étranger avec force et foi. Chaque obstacle les a rendus plus forts, chaque sacrifice a approfondi leur amour. Et les voici, prêts à célébrer le plus beau jour de leur vie en 2026.', en: 'Since then, they have been building their life together, overcoming the challenges of settling abroad with strength and faith. Every obstacle made them stronger, every sacrifice deepened their love. And here they are, ready to celebrate the most beautiful day of their lives in 2026.', es: 'Desde entonces, han construido su vida juntos, superando los desafíos de establecerse en el extranjero con fuerza y fe. Cada obstáculo los hizo más fuertes, cada sacrificio profundizó su amor. Y aquí están, listos para celebrar el día más hermoso de sus vidas en 2026.' },
-  'story.event6.date': { fr: '2022 — 2026', en: '2022 — 2026', es: '2022 — 2026' },
+  'story.event6.date': { fr: '2022 to 2026', en: '2022 to 2026', es: '2022 to 2026' },
   'story.continues': { fr: 'Notre aventure continue...', en: 'Our journey continues...', es: 'Nuestra aventura continúa...' },
 
   // Details
