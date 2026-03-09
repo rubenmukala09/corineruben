@@ -1,5 +1,5 @@
 import { Star } from "lucide-react";
-import AnimatedSection from "@/components/AnimatedSection";
+import { AnimatedSection } from "@/components/AnimatedSection";
 
 interface TestimonialBubbleProps {
   quote: string;

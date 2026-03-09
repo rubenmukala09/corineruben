@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRef, useEffect, useState } from "react";
-import AnimatedSection from "@/components/AnimatedSection";
+import { AnimatedSection } from "@/components/AnimatedSection";
 
 import serviceTraining from "@/assets/service-training.jpg";
 import serviceAiBusiness from "@/assets/service-ai-business.jpg";

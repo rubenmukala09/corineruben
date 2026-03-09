@@ -8,7 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import AnimatedSection from "@/components/AnimatedSection";
+import { AnimatedSection } from "@/components/AnimatedSection";
 
 const faqs = [
   {

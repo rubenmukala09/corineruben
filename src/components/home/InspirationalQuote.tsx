@@ -1,5 +1,5 @@
 import { Quote } from "lucide-react";
-import AnimatedSection from "@/components/AnimatedSection";
+import { AnimatedSection } from "@/components/AnimatedSection";
 
 interface InspirationalQuoteProps {
   quote: string;

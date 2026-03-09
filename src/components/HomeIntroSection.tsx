@@ -3,7 +3,7 @@ import { ArrowRight, Phone, Shield, Zap, Users, Award, CheckCircle, Lock, Eye, T
 import { Button } from "@/components/ui/button";
 import { SITE } from "@/config/site";
 import { useEffect, useRef, useState } from "react";
-import AnimatedSection from "@/components/AnimatedSection";
+import { AnimatedSection } from "@/components/AnimatedSection";
 
 const teamImage = "/images/team-cybersecurity-office.webp";
 
