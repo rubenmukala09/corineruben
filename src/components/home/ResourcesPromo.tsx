@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { FileText, Shield, BookOpen, ArrowRight, Download } from "lucide-react";
+import { FileText, Shield, BookOpen, ArrowRight } from "lucide-react";
 
 const resources = [
   { icon: Shield, title: "Cyber Insurance", description: "Coverage up to $1M for identity theft and cyber fraud.", tag: "Popular" },
