@@ -1337,7 +1337,7 @@ const Index = () => {
                 
                 <div className="flex items-center justify-center gap-2 mt-6">
                   <Heart className="w-4 h-4 text-rose-400 fill-rose-400 animate-pulse-love" />
-                  <span className="font-sans-elegant text-sm text-primary font-semibold">{t('hero.date')}</span>
+                  <span className="font-sans-elegant text-sm text-primary font-semibold">{t('church.wedding.coming.teaser')}</span>
                   <Heart className="w-4 h-4 text-rose-400 fill-rose-400 animate-pulse-love" />
                 </div>
               </motion.div>

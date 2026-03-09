@@ -66,7 +66,7 @@ const Footer = () => {
           <div className="md:col-span-1">
             <span className="font-serif-display text-2xl font-semibold text-[hsl(var(--footer-fg))] block mb-5">Corine & Ruben's Wedding</span>
             <p className="font-sans-elegant text-sm leading-relaxed mb-6 text-[hsl(var(--footer-muted))]">
-              {t('hero.tagline')}. {t('hero.date')}.
+              {t('hero.tagline')}.
             </p>
             <div className="flex gap-3">
               {[

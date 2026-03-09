@@ -577,6 +577,7 @@ const translations: Record<string, Record<Language, string>> = {
   'court.wedding.after.desc': { fr: 'Rejoignez-nous pour un moment convivial après la cérémonie', en: 'Join us for a small snack gathering after the ceremony', es: 'Únase a nosotros para un pequeño refrigerio después de la ceremonia' },
   'church.wedding.coming': { fr: '🎉 Le Grand Mariage Religieux & la Célébration arrivent bientôt — Restez connectés !', en: '🎉 The Big Church Wedding & Celebration is Coming Soon — Stay Tuned!', es: '🎉 ¡La Gran Boda Religiosa y Celebración llegará pronto — ¡Estén atentos!' },
   'church.wedding.coming.short': { fr: 'Grande Célébration à venir', en: 'Big Celebration Coming', es: 'Gran Celebración Próxima' },
+  'church.wedding.coming.teaser': { fr: 'Détails à venir bientôt !', en: 'Details Coming Soon!', es: '¡Detalles próximamente!' },
 
   // Court RSVP
   'rsvp.court.venue.title': { fr: 'Lieu de la Cérémonie', en: 'Ceremony Venue', es: 'Lugar de la Ceremonia' },
