@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useMusic } from '@/components/MusicPlayer';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Heart, MapPin, Calendar, Clock, Utensils, Gift, Sparkles, Play, Pause, Music, Users, Flower2, BookOpen, Cross, Church, Gem, PartyPopper, Hotel, Car, Check, X, Megaphone } from 'lucide-react';
+import { ChevronDown, Heart, MapPin, Calendar, Clock, Utensils, Gift, Sparkles, Play, Pause, Music, Users, Flower2, BookOpen, Cross, Church, Gem, PartyPopper, Hotel, Car, Check, X, Megaphone, Video, Share2, ExternalLink } from 'lucide-react';
 import EmbeddedPaymentForm from '@/components/EmbeddedPaymentForm';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from '@/components/ui/drawer';
@@ -56,24 +56,7 @@ const AuroraOrb = forwardRef<HTMLDivElement, { position?: 'left' | 'right' | 'ce
 });
 AuroraOrb.displayName = 'AuroraOrb';
 
-/* Floating hearts component */
-const FloatingHearts = ({ isMobile = false }: { isMobile?: boolean }) =>
-  <div className="fixed inset-0 pointer-events-none z-[5] overflow-hidden">
-    {Array.from({ length: isMobile ? 5 : 12 }).map((_, i) =>
-      <div
-        key={i}
-        className="absolute animate-float-heart text-primary/20"
-        style={{
-          left: `${8 + i * 7.5 % 85}%`,
-          bottom: '-20px',
-          '--duration': `${10 + i * 2}s`,
-          '--delay': `${i * 1.5}s`,
-          fontSize: `${12 + i % 4 * 6}px`
-        } as React.CSSProperties}>
-        ♥
-      </div>
-    )}
-  </div>;
+/* FloatingHearts removed — using global one from App.tsx */
 
 /* Falling petals component — hidden on mobile for performance */
 const FallingPetals = ({ isMobile = false }: { isMobile?: boolean }) => {
@@ -594,18 +577,34 @@ const Index = () => {
     },
   ];
 
-  if (settingsLoading) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-background">
-        <Heart className="w-8 h-8 text-primary animate-pulse" />
-      </div>
-    );
-  }
+  /* ─── Live Stream helpers ─── */
+  const livestreamUrl = settings.livestream_url || '';
+  const livestreamActive = settings.livestream_active === 'true';
+  const livestreamTitle = settings.livestream_title || '';
+
+  const getEmbedUrl = (rawUrl: string) => {
+    // YouTube
+    const ytMatch = rawUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/live\/)([\w-]+)/);
+    if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1&rel=0`;
+    // Facebook
+    if (rawUrl.includes('facebook.com')) return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(rawUrl)}&autoplay=true`;
+    return null;
+  };
+
+  const handleShareStream = async () => {
+    const shareUrl = window.location.origin;
+    if (navigator.share) {
+      try { await navigator.share({ title: livestreamTitle || "Corine & Ruben's Wedding Live", url: shareUrl }); } catch {}
+    } else {
+      navigator.clipboard.writeText(shareUrl);
+      toast.success('Link copied!');
+    }
+  };
+
+  const embedUrl = livestreamUrl ? getEmbedUrl(livestreamUrl) : null;
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Ambient floating hearts */}
-      <FloatingHearts isMobile={isMobile} />
 
       {/* ===== FLOATING GIFT BUTTON ===== */}
       <motion.button
@@ -912,6 +911,65 @@ const Index = () => {
 
       {/* ===== DIVIDER ===== */}
       <SectionDivider variant="heart" />
+
+      {/* ===== LIVE STREAM ===== */}
+      {livestreamActive && livestreamUrl && (
+        <section className="py-8 md:py-12 relative overflow-hidden">
+          <div className="container mx-auto px-6 md:px-12 max-w-4xl relative z-10">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card-strong mb-5">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
+                <p className="font-sans-elegant text-xs tracking-[0.2em] uppercase text-red-500 font-bold">LIVE</p>
+              </div>
+              <h2 className="font-serif-display text-3xl md:text-4xl text-foreground font-semibold mb-3">
+                {livestreamTitle || t('livestream.title') || 'Watch Live'}
+              </h2>
+            </motion.div>
+
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
+              className="glass-card-strong rounded-3xl overflow-hidden relative">
+              {embedUrl ? (
+                <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
+                  <iframe
+                    src={embedUrl}
+                    className="absolute inset-0 w-full h-full rounded-3xl"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    title="Live Stream"
+                  />
+                </div>
+              ) : (
+                <div className="p-12 text-center">
+                  <div className="w-20 h-20 rounded-full bg-red-500/15 flex items-center justify-center mx-auto mb-6">
+                    <Video className="w-10 h-10 text-red-500" />
+                  </div>
+                  <h3 className="font-serif-display text-xl text-foreground font-semibold mb-3">
+                    {livestreamTitle || 'Live Stream'}
+                  </h3>
+                  <a
+                    href={livestreamUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-primary inline-flex items-center gap-2 text-base"
+                  >
+                    <ExternalLink className="w-5 h-5" />
+                    Watch Live
+                  </a>
+                </div>
+              )}
+            </motion.div>
+
+            <div className="flex justify-center mt-4">
+              <button onClick={handleShareStream} className="btn-outline rounded-full px-5 py-2.5 text-sm flex items-center gap-2">
+                <Share2 className="w-4 h-4" />
+                Share Stream
+              </button>
+            </div>
+          </div>
+
+          <SectionDivider variant="sparkle" />
+        </section>
+      )}
 
       {/* ===== ANNOUNCEMENTS ===== */}
       <AnnouncementsSection t={t} />

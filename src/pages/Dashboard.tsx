@@ -8,7 +8,7 @@ import {
   TrendingUp, BarChart3, PieChart, MapPin, Sparkles, Loader2, LogOut,
   Megaphone, Trash2, Plus, Share2, Copy, Check, QrCode,
   MessageCircleQuestion, Send, Bell, Image, BookOpen, Mail, Download, AtSign,
-  MessageCircle, Camera, HelpCircle, Settings
+  MessageCircle, Camera, HelpCircle, Settings, Video
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { Input } from '@/components/ui/input';
@@ -24,6 +24,7 @@ import PhotoManager from '@/components/dashboard/PhotoManager';
 import FaqManager from '@/components/dashboard/FaqManager';
 import VenueManager from '@/components/dashboard/VenueManager';
 import SettingsManager from '@/components/dashboard/SettingsManager';
+import LivestreamManager from '@/components/dashboard/LivestreamManager';
 
 
 const TABLE_NAMES = [
@@ -365,6 +366,9 @@ const Dashboard = () => {
             </TabsTrigger>
             <TabsTrigger value="venue" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
               <MapPin className="w-3.5 h-3.5 mr-1.5" /> Venue
+            </TabsTrigger>
+            <TabsTrigger value="livestream" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
+              <Video className="w-3.5 h-3.5 mr-1.5" /> Live Stream
             </TabsTrigger>
             <TabsTrigger value="settings" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
               <Settings className="w-3.5 h-3.5 mr-1.5" /> Settings
@@ -857,6 +861,11 @@ const Dashboard = () => {
           {/* ═══ VENUE TAB ═══ */}
           <TabsContent value="venue" className="space-y-6">
             <VenueManager />
+          </TabsContent>
+
+          {/* ═══ LIVESTREAM TAB ═══ */}
+          <TabsContent value="livestream" className="space-y-6">
+            <LivestreamManager />
           </TabsContent>
 
           {/* ═══ SETTINGS TAB ═══ */}
