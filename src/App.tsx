@@ -53,9 +53,9 @@ const Guestbook = lazy(() => import("./pages/Guestbook"));
 const Gallery = lazy(() => import("./pages/Gallery"));
 const Venue = lazy(() => import("./pages/Venue"));
 import FloatingHearts from "@/components/FloatingHearts";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
+const Toaster = lazy(() => import("@/components/ui/toaster").then(m => ({ default: m.Toaster })));
+const Sonner = lazy(() => import("@/components/ui/sonner").then(m => ({ default: m.Toaster })));
+const TooltipProvider = lazy(() => import("@/components/ui/tooltip").then(m => ({ default: m.TooltipProvider })));
 import ProtectedRoute from "@/components/ProtectedRoute";
 
 const queryClient = new QueryClient();
