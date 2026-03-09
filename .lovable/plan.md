@@ -1,37 +1,55 @@
 
 
-## Mobile Performance Analysis (66%) — What's Actually Happening
+## Plan: Performance Optimization & Live Stream Feature
 
-After examining the audit data in detail, most of the 12 performance issues flagged are **not from your app code** — they come from platform-level infrastructure and cannot be fixed through code changes.
+### Part 1: Performance — Reduce Loading Delays
 
-### Issues Outside Our Control (platform-level)
+The Index page is ~1473 lines with heavy use of `framer-motion` animations on nearly every element, multiple `AuroraOrb` components with CSS blur, and several independent `useEffect` data fetches (announcements, quotes, site_settings, site_images). These compound to create perceived delays.
 
-| Issue | Cause | Fixable? |
-|---|---|---|
-| **Redirects** (780ms) | Lovable staging → custom domain redirect | No |
-| **Render blocking requests** (2,240ms) | DM Sans font injected by Lovable badge | No (remove badge in Settings) |
-| **Unused JavaScript** (119 KiB) | Google Tag Manager scripts from Lovable | No |
-| **Cache lifetimes** (16 KiB) | Google Analytics cache headers | No |
-| **Document latency** (100ms) | Redirect chain | No |
-| **Network dependency tree** | Font chain through Google Fonts → gstatic | No |
+**Changes to `src/pages/Index.tsx`:**
+- Replace the full-page loading gate (`settingsLoading` returns a spinner) with inline skeleton placeholders so the page renders immediately with content filling in
+- Add `loading="lazy"` and `decoding="async"` to all below-fold images (most already have this — verify consistency)
+- Reduce `whileInView` animation durations and remove staggered delays on mobile (`isMobile ? 0 : delay`)
+- Consolidate data fetches: combine the separate `useSiteSettings` and `useSiteImages` calls into a single parallel fetch to reduce waterfall
+- Remove duplicate `FloatingHearts` component (one defined locally in Index.tsx, another imported globally in App.tsx — the local one can be removed)
 
-### Suspicious Audit Data
+**Changes to `src/App.tsx`:**
+- The global `FloatingHearts` already renders — remove the duplicate from Index.tsx
 
-The audit's LCP element references `bold-moves.webp` with text "Start your online journey / Build your website today" and a `div.services` selector — **this is NOT your wedding app**. This appears to be a domain parking page at `corineruben.com`. The CLS layout shift is also attributed to this parking page content.
+### Part 2: Live Stream Feature
 
-This means the PageSpeed analysis may be hitting a cached or intermittent parking page at your custom domain rather than your actual app.
+**Database:** Create a `site_settings` entry for the livestream (using existing `site_settings` table — no schema change needed). Keys: `livestream_url`, `livestream_active` (`true`/`false`), `livestream_title`.
 
-### What Can Be Improved In Code
+**New file: `src/components/dashboard/LivestreamManager.tsx`**
+- Simple form to paste a YouTube/Facebook/Instagram Live URL
+- Toggle switch to activate/deactivate the stream
+- Optional title field
+- Saves to `site_settings` table using keys `livestream_url`, `livestream_active`, `livestream_title`
 
-Only two items are partially addressable:
+**Changes to `src/pages/Dashboard.tsx`:**
+- Add a "Live Stream" tab with a video icon (`Video` from lucide)
+- Import and render `LivestreamManager`
 
-1. **SEO score (58%)** — Likely caused by the parking page content being analyzed. Need to verify the custom domain is properly serving the app. If it is, we can add structured data and improve meta tags.
+**Changes to `src/pages/Index.tsx`:**
+- Add a `LiveStreamSection` component that:
+  - Reads `livestream_url`, `livestream_active`, `livestream_title` from the existing `useSiteSettings` hook
+  - Only renders when `livestream_active === 'true'` and URL is present
+  - Extracts YouTube/Facebook video ID and renders an embedded iframe player
+  - For non-embeddable links (Instagram Live, etc.), shows a prominent "Watch Live" button that opens the link
+  - Includes a share button (Web Share API on mobile, copy-to-clipboard fallback)
+  - Shows a pulsing red "LIVE" badge
+  - Positioned prominently near the top of the page (after hero, before announcements)
+- The embed supports YouTube (`youtube.com`, `youtu.be`), Facebook Live, and generic URLs with a fallback CTA button
 
-2. **Font loading strategy** — The Google Fonts stylesheet in `index.html` is already using `media="print" onload="this.media='all'"` pattern (non-blocking). The render-blocking DM Sans flagged in the audit is from the Lovable badge, not our code.
+**URL Parsing Logic:**
+- YouTube: extract video ID → `https://www.youtube.com/embed/{id}?autoplay=1`
+- Facebook: use Facebook embed player URL
+- Other URLs: show a styled "Watch Live" link/button instead of iframe
 
-### Recommended Action
+### Files to Create
+1. `src/components/dashboard/LivestreamManager.tsx`
 
-The most impactful fix is **removing the Lovable badge** in your project Settings, which would eliminate the render-blocking DM Sans request (est. 2,240ms savings) and the unused JavaScript from Google Tag Manager (119 KiB). This alone could push the performance score significantly higher.
-
-No code changes are needed — the issues are infrastructure-level.
+### Files to Edit
+1. `src/pages/Index.tsx` — Remove duplicate FloatingHearts, reduce animation delays on mobile, add LiveStreamSection
+2. `src/pages/Dashboard.tsx` — Add Live Stream tab + import
 
