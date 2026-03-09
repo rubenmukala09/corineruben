@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useInView } from "framer-motion";
 import { Shield, Users, Clock, Activity, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -23,7 +22,18 @@ const AnimatedCounter = ({ value, prefix = "", suffix = "", duration = 1.8 }: { 
   const [displayValue, setDisplayValue] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const frameRef = useRef<number | null>(null);
-  const isInView = useInView(ref, { once: true });
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setIsInView(true); observer.disconnect(); } },
+      { threshold: 0.1 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!isInView) return;
@@ -106,9 +116,7 @@ export const LiveSecurityStats = () => {
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {liveStats.map((stat) => (
                 <div key={stat.id} className="group relative rounded-2xl overflow-hidden">
-                  {/* Glass card */}
                   <div className="relative bg-white/[0.06] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-6 hover:bg-white/[0.1] hover:border-white/15 transition-all duration-500">
-                    {/* Inner glow on hover */}
                     <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{
                       background: 'radial-gradient(circle at 50% 0%, hsl(var(--primary) / 0.15) 0%, transparent 70%)'
                     }} />

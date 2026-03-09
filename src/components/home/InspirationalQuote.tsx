@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
+import AnimatedSection from "@/components/AnimatedSection";
 
 interface InspirationalQuoteProps {
   quote: string;
@@ -41,25 +41,22 @@ export const InspirationalQuote = ({
   const v = variants[variant];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className={`relative ${v.bg} rounded-2xl p-6 border ${v.border} shadow-sm`}
-    >
-      <Quote className={`absolute top-4 left-4 w-10 h-10 ${v.quote}`} />
-      <div className="relative z-10 pl-8">
-        <p className={`text-lg italic leading-relaxed ${v.text} mb-4`}>
-          "{quote}"
-        </p>
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-0.5 bg-primary/30 rounded-full" />
-          <div>
-            <p className={`font-semibold ${v.text}`}>{author}</p>
-            {role && <p className={`text-sm ${v.subtext}`}>{role}</p>}
+    <AnimatedSection animation="fade-in">
+      <div className={`relative ${v.bg} rounded-2xl p-6 border ${v.border} shadow-sm`}>
+        <Quote className={`absolute top-4 left-4 w-10 h-10 ${v.quote}`} />
+        <div className="relative z-10 pl-8">
+          <p className={`text-lg italic leading-relaxed ${v.text} mb-4`}>
+            "{quote}"
+          </p>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-0.5 bg-primary/30 rounded-full" />
+            <div>
+              <p className={`font-semibold ${v.text}`}>{author}</p>
+              {role && <p className={`text-sm ${v.subtext}`}>{role}</p>}
+            </div>
           </div>
         </div>
       </div>
-    </motion.div>
+    </AnimatedSection>
   );
 };

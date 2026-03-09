@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
 
 import instructorSarah from "@/assets/instructor-sarah.jpg";
 import instructorJames from "@/assets/instructor-james.jpg";
@@ -58,56 +57,47 @@ export const TestimonialCarousel = () => {
         </div>
 
         <div className="relative rounded-2xl border border-border/50 bg-card shadow-lg overflow-hidden">
-          {/* Top gradient bar */}
           <div className="h-1 bg-gradient-to-r from-primary via-accent to-primary" />
 
           <div className="p-8 md:p-12">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={current}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="grid md:grid-cols-[auto_1fr] gap-8 items-center">
-                  {/* Avatar */}
-                  <div className="flex flex-col items-center gap-3">
-                    <div className="relative">
-                      <div className="rounded-2xl overflow-hidden shadow-md">
-                        <img
-                          src={testimonials[current].avatar}
-                          alt={testimonials[current].name}
-                          className="w-20 h-20 md:w-28 md:h-28 object-cover"
-                        />
-                      </div>
-                      <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-md">
-                        <Quote className="w-3.5 h-3.5 text-primary-foreground" />
-                      </div>
+            <div key={current} className="animate-fade-in">
+              <div className="grid md:grid-cols-[auto_1fr] gap-8 items-center">
+                {/* Avatar */}
+                <div className="flex flex-col items-center gap-3">
+                  <div className="relative">
+                    <div className="rounded-2xl overflow-hidden shadow-md">
+                      <img
+                        src={testimonials[current].avatar}
+                        alt={testimonials[current].name}
+                        className="w-20 h-20 md:w-28 md:h-28 object-cover"
+                      />
                     </div>
-                    <span className="inline-flex items-center px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-primary/8 text-primary border border-primary/15">
-                      {testimonials[current].tag}
-                    </span>
+                    <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-md">
+                      <Quote className="w-3.5 h-3.5 text-primary-foreground" />
+                    </div>
                   </div>
+                  <span className="inline-flex items-center px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-primary/8 text-primary border border-primary/15">
+                    {testimonials[current].tag}
+                  </span>
+                </div>
 
-                  {/* Content */}
+                {/* Content */}
+                <div>
+                  <div className="flex gap-1 mb-4">
+                    {Array.from({ length: testimonials[current].rating }).map((_, i) => (
+                      <Star key={i} className="w-5 h-5 fill-accent text-accent" />
+                    ))}
+                  </div>
+                  <blockquote className="text-lg md:text-xl text-foreground leading-relaxed mb-6 italic">
+                    "{testimonials[current].quote}"
+                  </blockquote>
                   <div>
-                    <div className="flex gap-1 mb-4">
-                      {Array.from({ length: testimonials[current].rating }).map((_, i) => (
-                        <Star key={i} className="w-5 h-5 fill-accent text-accent" />
-                      ))}
-                    </div>
-                    <blockquote className="text-lg md:text-xl text-foreground leading-relaxed mb-6 italic">
-                      "{testimonials[current].quote}"
-                    </blockquote>
-                    <div>
-                      <p className="font-bold text-foreground text-lg">{testimonials[current].name}</p>
-                      <p className="text-sm text-muted-foreground">{testimonials[current].location}</p>
-                    </div>
+                    <p className="font-bold text-foreground text-lg">{testimonials[current].name}</p>
+                    <p className="text-sm text-muted-foreground">{testimonials[current].location}</p>
                   </div>
                 </div>
-              </motion.div>
-            </AnimatePresence>
+              </div>
+            </div>
           </div>
 
           {/* Navigation */}
