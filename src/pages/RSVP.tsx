@@ -621,9 +621,6 @@ const RSVP = () => {
           </>
         )}
       </div>
-          </motion.div>
-        )}
-      </div>
 
       {/* ===== RSVP SECTION ===== */}
       <div className="container mx-auto px-6 md:px-12 max-w-2xl relative z-10">
