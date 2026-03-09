@@ -25,7 +25,7 @@ interface PaymentVerification {
   status: string;
   mode?: string;
   customer_email?: string;
-  product_type?: "digital" | "physical" | "mixed" | "subscription";
+  product_type?: "digital" | "subscription";
   is_subscription?: boolean;
   products?: string[];
   amount_total?: number;
