@@ -1266,7 +1266,7 @@ const Index = () => {
                   whileHover={{ scale: 1.05, y: -6 }}
                   whileTap={{ scale: 0.96 }}
                   onClick={() => setActiveDetail(section.id)}
-                  className="group relative rounded-3xl p-6 md:p-7 text-center cursor-pointer overflow-hidden
+                  className="group relative rounded-3xl p-4 md:p-7 text-center cursor-pointer overflow-hidden
                     bg-white/60 dark:bg-white/[0.04] backdrop-blur-xl
                     border border-white/40 dark:border-white/10
                     shadow-[0_8px_32px_rgba(139,107,138,0.08),0_2px_8px_rgba(0,0,0,0.04)]
