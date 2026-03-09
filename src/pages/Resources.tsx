@@ -215,7 +215,7 @@ function Resources() {
     <PageTransition variant="fade">
       <SEO
         title="Resources & Marketplace - Digital Guides & Security Products"
-        description="Browse our curated collection of scam prevention guides and physical security products. Everything you need to protect yourself and your loved ones."
+        description="Browse our curated collection of scam prevention e-books and digital security guides. Everything you need to protect yourself and your loved ones."
         structuredData={resourceStructuredData} />
 
       <Navigation />
