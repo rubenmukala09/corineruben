@@ -122,6 +122,8 @@ interface NewsletterRow {
 const Dashboard = () => {
   const { t } = useLanguage();
   const { signOut } = useAuth();
+  const { settings: siteSettings } = useSiteSettings();
+  const isCourtMode = siteSettings.active_event === 'court';
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('overview');
   const [rsvps, setRsvps] = useState<RsvpRow[]>([]);
