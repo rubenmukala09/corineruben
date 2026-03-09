@@ -286,7 +286,7 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
               value={giftMessage}
               onChange={(e) => setGiftMessage(e.target.value)}
               placeholder={t('registry.dialog.message.placeholder')}
-              className="font-sans-elegant rounded-2xl border-border/50 bg-background/50 backdrop-blur-sm text-base"
+              className="font-sans-elegant rounded-2xl border-2 border-border bg-white/80 dark:bg-foreground/5 backdrop-blur-sm text-base shadow-[0_2px_8px_rgba(139,107,138,0.08)] focus-visible:border-primary focus-visible:shadow-[0_0_0_3px_hsl(var(--primary)/0.12)] transition-all duration-200 placeholder:text-muted-foreground/60"
               rows={2}
             />
           </div>
