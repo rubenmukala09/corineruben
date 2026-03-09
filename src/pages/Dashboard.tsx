@@ -318,7 +318,15 @@ const Dashboard = () => {
           </p>
         </motion.div>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
+        {/* Event Mode Banner */}
+        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
+          className={`rounded-2xl px-5 py-3 mb-8 text-center border ${isCourtMode ? 'glass-card-strong border-primary/30' : 'glass-card border-border/30'}`}
+        >
+          <p className="font-sans-elegant text-sm font-semibold text-foreground">
+            {isCourtMode ? t('dashboard.event.court') : t('dashboard.event.church')}
+          </p>
+        </motion.div>
+
           <TabsList className="glass-card-strong rounded-2xl p-1.5 mx-auto flex flex-wrap w-fit gap-1 max-w-full">
             <TabsTrigger value="overview" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
               <BarChart3 className="w-3.5 h-3.5 mr-1.5" /> {t('dashboard.overview')}
