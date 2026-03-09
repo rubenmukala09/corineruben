@@ -1,5 +1,4 @@
-import { motion } from "framer-motion";
-import { Check, Mail, Download, Clock } from "lucide-react";
+import { Check, Mail, BookOpen, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import confetti from "canvas-confetti";
 import { useEffect } from "react";
@@ -14,11 +13,9 @@ interface PaymentSuccessProps {
 export function PaymentSuccess({
   email,
   orderNumber,
-  isDigital,
   onClose,
 }: PaymentSuccessProps) {
   useEffect(() => {
-    // Trigger confetti celebration
     confetti({
       particleCount: 100,
       spread: 70,
@@ -28,54 +25,24 @@ export function PaymentSuccess({
   }, []);
 
   return (
-    <motion.div
-      className="text-center py-6 space-y-6"
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-    >
-      <motion.div
-        className="mx-auto w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center"
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ type: "spring", delay: 0.2 }}
-      >
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ type: "spring", delay: 0.4 }}
-        >
-          <Check className="h-10 w-10 text-green-600 dark:text-green-400" />
-        </motion.div>
-      </motion.div>
+    <div className="text-center py-6 space-y-6 animate-fade-in">
+      <div className="mx-auto w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center animate-scale-in">
+        <Check className="h-10 w-10 text-green-600 dark:text-green-400" />
+      </div>
 
       <div className="space-y-2">
-        <motion.h3
-          className="text-2xl font-bold text-foreground"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-        >
+        <h3 className="text-2xl font-bold text-foreground">
           Payment Successful!
-        </motion.h3>
+        </h3>
 
         {orderNumber && (
-          <motion.p
-            className="text-sm text-muted-foreground"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-          >
+          <p className="text-sm text-muted-foreground">
             Order #{orderNumber}
-          </motion.p>
+          </p>
         )}
       </div>
 
-      <motion.div
-        className="bg-muted/50 rounded-xl p-4 space-y-3"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-      >
+      <div className="bg-muted/50 rounded-xl p-4 space-y-3">
         <div className="flex items-center gap-3 text-left">
           <div className="p-2 bg-primary/10 rounded-lg">
             <Mail className="h-4 w-4 text-primary" />
@@ -86,19 +53,17 @@ export function PaymentSuccess({
           </div>
         </div>
 
-        {isDigital && (
-          <div className="flex items-center gap-3 text-left">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Download className="h-4 w-4 text-primary" />
-            </div>
-            <div>
-              <p className="text-sm font-medium">Download ready</p>
-              <p className="text-sm text-muted-foreground">
-                Check your email for download links
-              </p>
-            </div>
+        <div className="flex items-center gap-3 text-left">
+          <div className="p-2 bg-primary/10 rounded-lg">
+            <BookOpen className="h-4 w-4 text-primary" />
           </div>
-        )}
+          <div>
+            <p className="text-sm font-medium">Access ID sent</p>
+            <p className="text-sm text-muted-foreground">
+              Check your email for your Access ID to start reading
+            </p>
+          </div>
+        </div>
 
         <div className="flex items-center gap-3 text-left">
           <div className="p-2 bg-primary/10 rounded-lg">
@@ -106,23 +71,17 @@ export function PaymentSuccess({
           </div>
           <div>
             <p className="text-sm font-medium">
-              {isDigital
-                ? "Arriving in 2-5 minutes"
-                : "Shipping in 1-3 business days"}
+              Your Access ID will arrive in 2-5 minutes
             </p>
           </div>
         </div>
-      </motion.div>
+      </div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
-      >
+      <div>
         <Button onClick={onClose} className="w-full">
           Continue Shopping
         </Button>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }

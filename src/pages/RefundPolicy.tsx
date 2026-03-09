@@ -63,7 +63,7 @@ function RefundPolicy() {
                 <section>
                   <h2 className="text-2xl font-bold mb-4">Digital Products</h2>
                   <p className="text-muted-foreground mb-4">
-                    This includes e-books, downloadable guides, online courses,
+                    This includes e-books, digital guides, online courses,
                     and digital resources.
                   </p>
                   <div className="bg-muted/50 rounded-lg p-4 mb-4">
