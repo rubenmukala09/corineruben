@@ -4,9 +4,10 @@ import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-
 import { useLanguage } from '@/contexts/LanguageContext';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { Heart, Check, CreditCard, ArrowLeft, Shield } from 'lucide-react';
+import { Heart, Check, CreditCard, ArrowLeft, Shield, RefreshCw } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Skeleton } from '@/components/ui/skeleton';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useIsMobile } from '@/hooks/use-mobile';
 import {
@@ -21,6 +22,7 @@ const CheckoutForm = ({ amount, onSuccess, t }: { amount: number; onSuccess: () 
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
+  const [elementsReady, setElementsReady] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,19 +46,32 @@ const CheckoutForm = ({ amount, onSuccess, t }: { amount: number; onSuccess: () 
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <PaymentElement options={{ layout: 'tabs' }} />
-      <button
+      {!elementsReady && (
+        <div className="space-y-3">
+          <Skeleton className="h-12 w-full rounded-xl" />
+          <Skeleton className="h-12 w-full rounded-xl" />
+          <Skeleton className="h-10 w-2/3 rounded-xl" />
+        </div>
+      )}
+      <div className={elementsReady ? '' : 'opacity-0 h-0 overflow-hidden'}>
+        <PaymentElement 
+          options={{ layout: 'tabs' }} 
+          onReady={() => setElementsReady(true)}
+        />
+      </div>
+      <motion.button
         type="submit"
-        disabled={!stripe || loading}
-        className="w-full btn-primary justify-center disabled:opacity-50"
+        disabled={!stripe || loading || !elementsReady}
+        whileTap={{ scale: 0.97 }}
+        className="w-full btn-primary justify-center disabled:opacity-50 min-h-[52px] text-base"
       >
         {loading ? (
-          <span className="animate-spin w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full" />
+          <span className="animate-spin w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full" />
         ) : (
-          <Heart className="w-4 h-4" />
+          <Heart className="w-5 h-5" />
         )}
         {loading ? '...' : `${t('registry.dialog.send')} — $${amount}`}
-      </button>
+      </motion.button>
     </form>
   );
 };
@@ -80,6 +95,7 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
 
   const quickMessages = [
     t('gift.msg.congrats'),
@@ -90,6 +106,7 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
   const handleProceedToPayment = async () => {
     if (!selectedAmount) return;
     setLoading(true);
+    setPaymentError(null);
     try {
       const { data, error } = await supabase.functions.invoke('create-gift-intent', {
         body: {
@@ -108,10 +125,16 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
       }
     } catch (err) {
       console.error('Payment intent error:', err);
+      setPaymentError('Could not initialize payment. Please try again.');
       toast.error('Could not initialize payment. Please try again.');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleRetry = () => {
+    setPaymentError(null);
+    handleProceedToPayment();
   };
 
   const handleSuccess = async () => {
@@ -142,6 +165,7 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
     setStripePromise(null);
     setClientSecret(null);
     setShowTerms(false);
+    setPaymentError(null);
   };
 
   const handleClose = (isOpen: boolean) => {
@@ -160,9 +184,14 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
         </motion.div>
       ) : showTerms ? (
         <motion.div key="terms" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4 pt-2">
-          <button type="button" onClick={() => setShowTerms(false)} className="flex items-center gap-2 text-primary font-sans-elegant text-sm font-medium hover:underline">
+          <motion.button 
+            type="button" 
+            onClick={() => setShowTerms(false)} 
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center gap-2 text-primary font-sans-elegant text-sm font-medium hover:underline min-h-[44px]"
+          >
             <ArrowLeft className="w-4 h-4" /> {t('rsvp.back')}
-          </button>
+          </motion.button>
           <div className="glass-card rounded-2xl p-5 space-y-3">
             <div className="flex items-center gap-2 mb-2">
               <Shield className="w-5 h-5 text-primary" />
@@ -178,9 +207,14 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
         </motion.div>
       ) : step === 'pay' && stripePromise && clientSecret ? (
         <motion.div key="pay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4 pt-2">
-          <button type="button" onClick={() => { setStep('info'); setClientSecret(null); }} className="flex items-center gap-2 text-primary font-sans-elegant text-sm font-medium hover:underline">
+          <motion.button 
+            type="button" 
+            onClick={() => { setStep('info'); setClientSecret(null); }} 
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center gap-2 text-primary font-sans-elegant text-sm font-medium hover:underline min-h-[44px]"
+          >
             <ArrowLeft className="w-4 h-4" /> {t('rsvp.back')}
-          </button>
+          </motion.button>
           <div className="glass-card rounded-2xl p-4 text-center">
             <p className="font-sans-elegant text-xs text-muted-foreground mb-1">{t('registry.dialog.amount')}</p>
             <p className="font-serif-display text-2xl text-foreground font-bold">${selectedAmount}</p>
@@ -189,14 +223,14 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
             <CheckoutForm amount={selectedAmount!} onSuccess={handleSuccess} t={t} />
           </Elements>
           <div className="text-center">
-            <button type="button" onClick={() => setShowTerms(true)} className="font-sans-elegant text-[11px] text-primary underline hover:no-underline">
+            <button type="button" onClick={() => setShowTerms(true)} className="font-sans-elegant text-[11px] text-primary underline hover:no-underline min-h-[36px] inline-flex items-center">
               <Shield className="w-3 h-3 inline mr-1" />
               {t('gift.terms.link')}
             </button>
           </div>
         </motion.div>
       ) : (
-        <motion.div key="info" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4 pt-2">
+        <motion.div key="info" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5 pt-2">
           <div className="glass-card rounded-2xl p-5 text-center">
             <p className="font-sans-elegant text-xs text-muted-foreground mb-1">{t('registry.dialog.amount')}</p>
             <p className="font-serif-display text-3xl text-foreground font-bold">${selectedAmount}</p>
@@ -210,7 +244,7 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
               value={giftName}
               onChange={(e) => setGiftName(e.target.value)}
               placeholder={t('registry.dialog.name.placeholder')}
-              className="font-sans-elegant rounded-full h-12 border-border/50 bg-background/50 backdrop-blur-sm"
+              className="font-sans-elegant rounded-full h-14 border-border/50 bg-background/50 backdrop-blur-sm text-base"
             />
           </div>
 
@@ -223,7 +257,7 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
               value={giftEmail}
               onChange={(e) => setGiftEmail(e.target.value)}
               placeholder="your@email.com"
-              className="font-sans-elegant rounded-full h-12 border-border/50 bg-background/50 backdrop-blur-sm"
+              className="font-sans-elegant rounded-full h-14 border-border/50 bg-background/50 backdrop-blur-sm text-base"
             />
           </div>
 
@@ -231,47 +265,64 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
             <label className="font-sans-elegant text-sm text-foreground block mb-2 font-semibold">
               {t('registry.dialog.message')}
             </label>
-            <div className="flex flex-wrap gap-2 mb-2">
+            <div className="flex flex-wrap gap-2 mb-3">
               {quickMessages.map((msg) => (
-                <button
+                <motion.button
                   key={msg}
                   type="button"
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => setGiftMessage(msg)}
-                  className={`font-sans-elegant text-xs px-3 py-1.5 rounded-full border transition-all duration-200 ${
+                  className={`font-sans-elegant text-xs px-4 py-2.5 rounded-full border transition-all duration-200 min-h-[44px] ${
                     giftMessage === msg
                       ? 'border-primary bg-primary/10 text-primary font-semibold'
-                      : 'border-border/30 text-muted-foreground hover:border-primary/30 hover:bg-primary/5'
+                      : 'border-border/30 text-muted-foreground hover:border-primary/30 hover:bg-primary/5 active:bg-primary/10'
                   }`}
                 >
                   {msg}
-                </button>
+                </motion.button>
               ))}
             </div>
             <Textarea
               value={giftMessage}
               onChange={(e) => setGiftMessage(e.target.value)}
               placeholder={t('registry.dialog.message.placeholder')}
-              className="font-sans-elegant rounded-2xl border-border/50 bg-background/50 backdrop-blur-sm"
+              className="font-sans-elegant rounded-2xl border-border/50 bg-background/50 backdrop-blur-sm text-base"
               rows={2}
             />
           </div>
 
-          <button
+          {paymentError && (
+            <div className="glass-card rounded-2xl p-4 border border-destructive/30 bg-destructive/5 text-center">
+              <p className="font-sans-elegant text-sm text-destructive mb-3">{paymentError}</p>
+              <motion.button
+                type="button"
+                onClick={handleRetry}
+                whileTap={{ scale: 0.95 }}
+                className="btn-secondary inline-flex items-center gap-2 px-4 py-2 text-sm"
+              >
+                <RefreshCw className="w-4 h-4" />
+                Try Again
+              </motion.button>
+            </div>
+          )}
+
+          <motion.button
             type="button"
             onClick={handleProceedToPayment}
             disabled={loading}
-            className="w-full btn-primary justify-center disabled:opacity-50"
+            whileTap={{ scale: 0.97 }}
+            className="w-full btn-primary justify-center disabled:opacity-50 min-h-[56px] text-base"
           >
             {loading ? (
-              <span className="animate-spin w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full" />
+              <span className="animate-spin w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full" />
             ) : (
-              <CreditCard className="w-4 h-4" />
+              <CreditCard className="w-5 h-5" />
             )}
             {loading ? '...' : t('gift.payCard')}
-          </button>
+          </motion.button>
 
           <div className="text-center">
-            <button type="button" onClick={() => setShowTerms(true)} className="font-sans-elegant text-[11px] text-primary underline hover:no-underline">
+            <button type="button" onClick={() => setShowTerms(true)} className="font-sans-elegant text-[11px] text-primary underline hover:no-underline min-h-[36px] inline-flex items-center">
               <Shield className="w-3 h-3 inline mr-1" />
               {t('gift.terms.link')}
             </button>

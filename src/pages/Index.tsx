@@ -1335,67 +1335,130 @@ const Index = () => {
         </Dialog>
       )}
 
-      {/* ===== GIFT PICKER DIALOG ===== */}
-      <Dialog open={giftOpen} onOpenChange={setGiftOpen}>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <div className="w-16 h-16 rounded-full gradient-primary flex items-center justify-center mx-auto mb-3 shadow-glow">
-              <Gift className="w-7 h-7 text-primary-foreground" />
+      {/* ===== GIFT PICKER (DRAWER on mobile, DIALOG on desktop) ===== */}
+      {isMobile ? (
+        <Drawer open={giftOpen} onOpenChange={setGiftOpen}>
+          <DrawerContent className="px-4 pb-8 max-h-[85vh]">
+            <DrawerHeader className="text-center">
+              <div className="w-14 h-14 rounded-full gradient-primary flex items-center justify-center mx-auto mb-2 shadow-glow">
+                <Gift className="w-6 h-6 text-primary-foreground" />
+              </div>
+              <DrawerTitle className="font-serif-display text-xl">{t('registry.title')}</DrawerTitle>
+              <DrawerDescription className="font-sans-elegant text-muted-foreground text-sm">
+                {t('registry.message')}
+              </DrawerDescription>
+            </DrawerHeader>
+
+            {/* Quick amounts — mobile optimized */}
+            <div className="grid grid-cols-2 gap-3 pt-2 px-1">
+              {giftTiers.map((tier, i) =>
+                <motion.button
+                  key={tier.amount}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => handleSelectTier(tier.amount)}
+                  className="glass-card rounded-2xl p-4 text-center active:bg-primary/10 transition-colors min-h-[88px] flex flex-col items-center justify-center"
+                >
+                  <div className="text-2xl mb-1.5">{tier.emoji}</div>
+                  <div className="font-serif-display text-lg text-foreground font-bold">${tier.amount}</div>
+                  <div className="font-sans-elegant text-[10px] text-muted-foreground font-medium mt-0.5">{t(tier.labelKey)}</div>
+                </motion.button>
+              )}
             </div>
-            <DialogTitle className="font-serif-display text-2xl text-center">{t('registry.title')}</DialogTitle>
-            <DialogDescription className="font-sans-elegant text-center text-muted-foreground">
-              {t('registry.message')}
-            </DialogDescription>
-          </DialogHeader>
 
-          {/* Quick amounts */}
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            {giftTiers.map((tier, i) =>
-              <motion.button
-                key={tier.amount}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.06 }}
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => handleSelectTier(tier.amount)}
-                className="glass-card rounded-2xl p-5 text-center card-hover group"
-              >
-                <div className="text-2xl mb-2">{tier.emoji}</div>
-                <div className="font-serif-display text-xl text-foreground font-bold">${tier.amount}</div>
-                <div className="font-sans-elegant text-[10px] text-muted-foreground font-medium mt-1">{t(tier.labelKey)}</div>
-              </motion.button>
-            )}
-          </div>
-
-          {/* Custom amount — prominent */}
-          <div className="pt-3">
-            <div className="glass-card-strong rounded-2xl p-4">
-              <p className="font-sans-elegant text-xs font-bold text-foreground mb-2 flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-primary" />
-                {t('gift.customAmount')}
-              </p>
-              <div className="flex gap-3">
-                <div className="relative flex-1">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground font-serif-display text-lg font-bold">$</span>
-                  <Input
-                    type="number"
-                    min="1"
-                    value={customAmount}
-                    onChange={(e) => setCustomAmount(e.target.value)}
-                    placeholder=""
-                    className="font-serif-display text-lg font-bold rounded-full h-12 pl-9 border-primary/30 bg-primary/5 focus:ring-primary/30"
-                  />
+            {/* Custom amount — mobile optimized */}
+            <div className="pt-4 px-1">
+              <div className="glass-card-strong rounded-2xl p-4">
+                <p className="font-sans-elegant text-xs font-bold text-foreground mb-3 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-primary" />
+                  {t('gift.customAmount')}
+                </p>
+                <div className="flex gap-3">
+                  <div className="relative flex-1">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground font-serif-display text-lg font-bold">$</span>
+                    <Input
+                      type="number"
+                      min="1"
+                      inputMode="numeric"
+                      value={customAmount}
+                      onChange={(e) => setCustomAmount(e.target.value)}
+                      placeholder=""
+                      className="font-serif-display text-lg font-bold rounded-full h-14 pl-9 border-primary/30 bg-primary/5 focus:ring-primary/30"
+                    />
+                  </div>
+                  <button onClick={handleCustomGift} className="btn-primary px-5 rounded-full text-sm whitespace-nowrap h-14">
+                    <Gift className="w-4 h-4" />
+                    {t('registry.give')}
+                  </button>
                 </div>
-                <button onClick={handleCustomGift} className="btn-primary px-6 rounded-full text-sm whitespace-nowrap">
-                  <Gift className="w-4 h-4" />
-                  {t('registry.give')}
-                </button>
               </div>
             </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+          </DrawerContent>
+        </Drawer>
+      ) : (
+        <Dialog open={giftOpen} onOpenChange={setGiftOpen}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <div className="w-16 h-16 rounded-full gradient-primary flex items-center justify-center mx-auto mb-3 shadow-glow">
+                <Gift className="w-7 h-7 text-primary-foreground" />
+              </div>
+              <DialogTitle className="font-serif-display text-2xl text-center">{t('registry.title')}</DialogTitle>
+              <DialogDescription className="font-sans-elegant text-center text-muted-foreground">
+                {t('registry.message')}
+              </DialogDescription>
+            </DialogHeader>
+
+            {/* Quick amounts */}
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              {giftTiers.map((tier, i) =>
+                <motion.button
+                  key={tier.amount}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.06 }}
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => handleSelectTier(tier.amount)}
+                  className="glass-card rounded-2xl p-5 text-center card-hover group"
+                >
+                  <div className="text-2xl mb-2">{tier.emoji}</div>
+                  <div className="font-serif-display text-xl text-foreground font-bold">${tier.amount}</div>
+                  <div className="font-sans-elegant text-[10px] text-muted-foreground font-medium mt-1">{t(tier.labelKey)}</div>
+                </motion.button>
+              )}
+            </div>
+
+            {/* Custom amount — prominent */}
+            <div className="pt-3">
+              <div className="glass-card-strong rounded-2xl p-4">
+                <p className="font-sans-elegant text-xs font-bold text-foreground mb-2 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-primary" />
+                  {t('gift.customAmount')}
+                </p>
+                <div className="flex gap-3">
+                  <div className="relative flex-1">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground font-serif-display text-lg font-bold">$</span>
+                    <Input
+                      type="number"
+                      min="1"
+                      value={customAmount}
+                      onChange={(e) => setCustomAmount(e.target.value)}
+                      placeholder=""
+                      className="font-serif-display text-lg font-bold rounded-full h-12 pl-9 border-primary/30 bg-primary/5 focus:ring-primary/30"
+                    />
+                  </div>
+                  <button onClick={handleCustomGift} className="btn-primary px-6 rounded-full text-sm whitespace-nowrap">
+                    <Gift className="w-4 h-4" />
+                    {t('registry.give')}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
 
       {/* ===== EMBEDDED PAYMENT FORM ===== */}
       <EmbeddedPaymentForm
