@@ -187,7 +187,7 @@ function Resources() {
       "@context": "https://schema.org",
       "@type": "ItemList",
       name: "Scam Protection Resource Library",
-      itemListElement: staticBooks.slice(0, 8).map((book, index) => ({
+      itemListElement: BOOK_CATALOG.slice(0, 8).map((book, index) => ({
         "@type": "ListItem",
         position: index + 1,
         item: {
