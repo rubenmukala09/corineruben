@@ -1450,7 +1450,7 @@ const Index = () => {
       {/* ===== DETAIL DIALOGS ===== */}
       <Suspense fallback={null}>
       {detailSections.map((section) =>
-      <Dialog key={section.id} open={activeDetail === section.id} onOpenChange={(open) => !open && setActiveDetail(null)}>
+      <LazyDialog key={section.id} open={activeDetail === section.id} onOpenChange={(open) => !open && setActiveDetail(null)}>
           <DialogContent className="max-w-lg">
             <DialogHeader>
               <div className="relative mx-auto mb-4">
