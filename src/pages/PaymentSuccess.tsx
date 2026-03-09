@@ -92,7 +92,7 @@ export default function PaymentSuccess() {
           setVerification({
             verified: true,
             status: "paid",
-            product_type: "physical",
+            product_type: "digital",
           });
         } else {
           setVerification(data);
