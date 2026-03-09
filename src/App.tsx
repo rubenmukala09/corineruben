@@ -77,9 +77,11 @@ const App = () => (
               </Suspense>
 
               {/* Single unified aurora background behind everything */}
-              <div className="fixed inset-0 z-0">
-                <AuroraBackground variant="hero" />
-              </div>
+              <Suspense fallback={null}>
+                <div className="fixed inset-0 z-0">
+                  <AuroraBackground variant="hero" />
+                </div>
+              </Suspense>
               <Suspense fallback={null}>
                 <FloatingHearts />
               </Suspense>
