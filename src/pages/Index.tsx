@@ -1135,7 +1135,7 @@ const Index = () => {
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               className="glass-card-strong rounded-3xl overflow-hidden md:row-span-2 card-hover">
               <div className="relative h-full min-h-[300px]">
-                <img src={flowersImgSmall} alt="Wedding flowers arrangement" className="w-full h-full object-cover" width={297} height={428} loading="lazy" decoding="async" fetchPriority="low" />
+                <img src={flowersImgSmall} alt="Wedding flowers arrangement" className="w-full h-full object-cover" width={297} height={428} loading="eager" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/40 to-foreground/10" />
                 <div className="absolute bottom-0 left-0 right-0 p-5">
                   <div className="rounded-2xl bg-background/20 backdrop-blur-xl border border-white/20 p-5 shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
