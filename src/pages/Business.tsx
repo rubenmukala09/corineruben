@@ -50,8 +50,8 @@ import {
   Zap,
   ChevronRight,
   Globe,
-  Cpu,
-} from "lucide-react";
+  Cpu } from
+"lucide-react";
 import { ExpandableServiceCard } from "@/components/ExpandableServiceCard";
 import { Badge } from "@/components/ui/badge";
 import businessReceptionist from "@/assets/business-ai-receptionist.jpg";
@@ -68,144 +68,144 @@ import HeroFloatingStats from "@/components/business/HeroFloatingStats";
 
 
 const businessHeadlines = [
-  "Your AI Front Desk, Running 24/7",
-  "Websites That Turn Visitors Into Customers",
-  "AI Automation Built for Ohio Businesses",
-  "Stop Missing Calls. Start Closing Deals.",
-];
+"Your AI Front Desk, Running 24/7",
+"Websites That Turn Visitors Into Customers",
+"AI Automation Built for Ohio Businesses",
+"Stop Missing Calls. Start Closing Deals."];
+
 
 const platformSnapshotStats = [
-  { value: "9", label: "Integrated Services", icon: Cpu },
-  { value: "< 90s", label: "Avg. Threat Response", icon: Zap },
-  { value: "$500K", label: "Max Scam Coverage", icon: Shield },
-  { value: "24/7", label: "Autonomous Monitoring", icon: Globe },
-];
+{ value: "9", label: "Integrated Services", icon: Cpu },
+{ value: "< 90s", label: "Avg. Threat Response", icon: Zap },
+{ value: "$500K", label: "Max Scam Coverage", icon: Shield },
+{ value: "24/7", label: "Autonomous Monitoring", icon: Globe }];
+
 
 const platformGroups = [
+{
+  key: "enterprise",
+  title: "Enterprise Cybersecurity",
+  subtitle: "Autonomous prevention and response for organizations handling sensitive data.",
+  minPrice: "From $297/mo",
+  icon: Shield,
+  gradient: "from-primary via-primary/80 to-accent",
+  accentStrip: "bg-primary",
+  features: [
   {
-    key: "enterprise",
-    title: "Enterprise Cybersecurity",
-    subtitle: "Autonomous prevention and response for organizations handling sensitive data.",
-    minPrice: "From $297/mo",
-    icon: Shield,
-    gradient: "from-primary via-primary/80 to-accent",
-    accentStrip: "bg-primary",
-    features: [
-      {
-        badge: "Enterprise",
-        icon: Bot,
-        title: "Agentic SOC",
-        tagline: "AI analysts that triage and contain threats autonomously, 24/7.",
-        price: "From $297/mo",
-        href: "/business/autonomous-defense-hub",
-      },
-      {
-        badge: "Enterprise",
-        icon: Scan,
-        title: "InVision Validator",
-        tagline: "Cryptographic deepfake detection for video calls and voice transfer requests.",
-        price: "From $297/mo",
-        href: "/business/autonomous-defense-hub",
-      },
-      {
-        badge: "Enterprise",
-        icon: Radio,
-        title: "Honey-Identity Network",
-        tagline: "Deploy decoy identities to trap AI scrapers across 40+ platforms.",
-        price: "From $697/mo",
-        href: "/business/autonomous-defense-hub",
-      },
-      {
-        badge: "Enterprise",
-        icon: Key,
-        title: "Safe-Zone Hardware Key",
-        tagline: "Physical USB-C touch for high-risk actions. AI cannot press it remotely.",
-        price: "Included in plan",
-        href: "/business/autonomous-defense-hub",
-      },
-    ],
+    badge: "Enterprise",
+    icon: Bot,
+    title: "Agentic SOC",
+    tagline: "AI analysts that triage and contain threats autonomously, 24/7.",
+    price: "From $297/mo",
+    href: "/business/autonomous-defense-hub"
   },
   {
-    key: "family",
-    title: "Senior & Family Protection",
-    subtitle: "Real-time protection workflows designed for individuals, families, and caregivers.",
-    minPrice: "From $19/mo",
+    badge: "Enterprise",
+    icon: Scan,
+    title: "InVision Validator",
+    tagline: "Cryptographic deepfake detection for video calls and voice transfer requests.",
+    price: "From $297/mo",
+    href: "/business/autonomous-defense-hub"
+  },
+  {
+    badge: "Enterprise",
+    icon: Radio,
+    title: "Honey-Identity Network",
+    tagline: "Deploy decoy identities to trap AI scrapers across 40+ platforms.",
+    price: "From $697/mo",
+    href: "/business/autonomous-defense-hub"
+  },
+  {
+    badge: "Enterprise",
+    icon: Key,
+    title: "Safe-Zone Hardware Key",
+    tagline: "Physical USB-C touch for high-risk actions. AI cannot press it remotely.",
+    price: "Included in plan",
+    href: "/business/autonomous-defense-hub"
+  }]
+
+},
+{
+  key: "family",
+  title: "Senior & Family Protection",
+  subtitle: "Real-time protection workflows designed for individuals, families, and caregivers.",
+  minPrice: "From $19/mo",
+  icon: Brain,
+  gradient: "from-emerald-500 via-emerald-400 to-teal-400",
+  accentStrip: "bg-emerald-500",
+  features: [
+  {
+    badge: "Senior",
     icon: Brain,
-    gradient: "from-emerald-500 via-emerald-400 to-teal-400",
-    accentStrip: "bg-emerald-500",
-    features: [
-      {
-        badge: "Senior",
-        icon: Brain,
-        title: "Cognitive Sentinel",
-        tagline: "Detects behavioral stress signals and alerts caregivers during active scams.",
-        price: "$49/mo add-on",
-        href: "/services/cognitive-sentinel",
-      },
-      {
-        badge: "Senior",
-        icon: Bell,
-        title: "Family Emergency Network",
-        tagline: "One PANIC action calls family, alerts analysts, and notifies police in seconds.",
-        price: "$19/mo add-on",
-        href: "/services/family-emergency-network",
-      },
-      {
-        badge: "Senior",
-        icon: Archive,
-        title: "Digital Estate Executor",
-        tagline: "Locks down accounts and securely transfers credentials to heirs when needed.",
-        price: "$299 + $9/mo",
-        href: "/services/digital-estate",
-      },
-    ],
+    title: "Cognitive Sentinel",
+    tagline: "Detects behavioral stress signals and alerts caregivers during active scams.",
+    price: "$49/mo add-on",
+    href: "/services/cognitive-sentinel"
   },
   {
-    key: "risk",
-    title: "Business Risk & Insurance",
-    subtitle: "Coverage and trust signals that reduce legal and financial exposure.",
-    minPrice: "From $49/mo",
-    icon: Award,
-    gradient: "from-amber-500 via-amber-400 to-orange-400",
-    accentStrip: "bg-amber-500",
-    features: [
-      {
-        badge: "Business",
-        icon: DollarSign,
-        title: "Scam Insurance",
-        tagline: "If fraud succeeds despite our controls, coverage pays up to $500K.",
-        price: "From $49/mo",
-        href: "/services/scam-insurance",
-      },
-      {
-        badge: "Business",
-        icon: Award,
-        title: "AI-Safe Certification",
-        tagline: "Annual audit and verified trust seal for Ohio businesses handling AI risk.",
-        price: "$2,400/yr",
-        href: "/services/ai-safe-certification",
-      },
-    ],
+    badge: "Senior",
+    icon: Bell,
+    title: "Family Emergency Network",
+    tagline: "One PANIC action calls family, alerts analysts, and notifies police in seconds.",
+    price: "$19/mo add-on",
+    href: "/services/family-emergency-network"
   },
-];
+  {
+    badge: "Senior",
+    icon: Archive,
+    title: "Digital Estate Executor",
+    tagline: "Locks down accounts and securely transfers credentials to heirs when needed.",
+    price: "$299 + $9/mo",
+    href: "/services/digital-estate"
+  }]
+
+},
+{
+  key: "risk",
+  title: "Business Risk & Insurance",
+  subtitle: "Coverage and trust signals that reduce legal and financial exposure.",
+  minPrice: "From $49/mo",
+  icon: Award,
+  gradient: "from-amber-500 via-amber-400 to-orange-400",
+  accentStrip: "bg-amber-500",
+  features: [
+  {
+    badge: "Business",
+    icon: DollarSign,
+    title: "Scam Insurance",
+    tagline: "If fraud succeeds despite our controls, coverage pays up to $500K.",
+    price: "From $49/mo",
+    href: "/services/scam-insurance"
+  },
+  {
+    badge: "Business",
+    icon: Award,
+    title: "AI-Safe Certification",
+    tagline: "Annual audit and verified trust seal for Ohio businesses handling AI risk.",
+    price: "$2,400/yr",
+    href: "/services/ai-safe-certification"
+  }]
+
+}];
+
 
 const platformPillars = [
-  {
-    icon: Zap,
-    title: "Shared Threat Intelligence",
-    desc: "Signals captured in any service immediately harden detections across the full platform.",
-  },
-  {
-    icon: Lock,
-    title: "Single Client Profile",
-    desc: "One profile for alerts, coverage, vault status, and certifications across all active services.",
-  },
-  {
-    icon: Shield,
-    title: "Layered Defense Model",
-    desc: "If one layer misses an event, downstream controls and insurance coverage still protect outcomes.",
-  },
-];
+{
+  icon: Zap,
+  title: "Shared Threat Intelligence",
+  desc: "Signals captured in any service immediately harden detections across the full platform."
+},
+{
+  icon: Lock,
+  title: "Single Client Profile",
+  desc: "One profile for alerts, coverage, vault status, and certifications across all active services."
+},
+{
+  icon: Shield,
+  title: "Layered Defense Model",
+  desc: "If one layer misses an event, downstream controls and insurance coverage still protect outcomes."
+}];
+
 
 /* ─── Section Header ─── */
 const SectionHeader = ({
@@ -213,15 +213,15 @@ const SectionHeader = ({
   title,
   subtitle,
   children,
-  light = false,
-}: {
-  badge: string;
-  title: string;
-  subtitle?: string;
-  children?: React.ReactNode;
-  light?: boolean;
-}) => (
-  <AnimatedSection animation="fade-up" className="text-center mb-16">
+  light = false
+
+
+
+
+
+
+}: {badge: string;title: string;subtitle?: string;children?: React.ReactNode;light?: boolean;}) =>
+<AnimatedSection animation="fade-up" className="text-center mb-16">
     <span className="inline-flex items-center gap-2 px-5 py-2 glass-subtle rounded-full text-xs font-bold uppercase tracking-[0.2em] mb-6 shadow-sm border border-primary/15">
       <Sparkles className="w-3.5 h-3.5 text-primary" />
       <span className={light ? "text-white/90" : "text-primary"}>{badge}</span>
@@ -229,14 +229,14 @@ const SectionHeader = ({
     <h2 className={`text-3xl md:text-4xl lg:text-5xl font-black mb-5 tracking-tight leading-[1.1] ${light ? "text-white" : ""}`}>
       {title}
     </h2>
-    {subtitle && (
-      <p className={`text-base md:text-lg max-w-3xl mx-auto leading-relaxed ${light ? "text-white/90" : "text-muted-foreground"}`}>
+    {subtitle &&
+  <p className={`text-base md:text-lg max-w-3xl mx-auto leading-relaxed ${light ? "text-white/90" : "text-muted-foreground"}`}>
         {subtitle}
       </p>
-    )}
+  }
     {children}
-  </AnimatedSection>
-);
+  </AnimatedSection>;
+
 
 /* ─── Pricing Card ─── */
 const PricingCard = ({
@@ -251,93 +251,93 @@ const PricingCard = ({
   onButtonClick,
   featured = false,
   badges,
-  delay = 0,
-}: {
-  tag: string;
-  tagColor?: string;
-  title: string;
-  price: string;
-  priceSuffix?: string;
-  priceNote?: string;
-  features: string[];
-  buttonText: string;
-  onButtonClick: () => void;
-  featured?: boolean;
-  badges?: { text: string; color: string }[];
-  delay?: number;
-}) => (
-  <AnimatedSection animation="scale-up" delay={delay}>
+  delay = 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+}: {tag: string;tagColor?: string;title: string;price: string;priceSuffix?: string;priceNote?: string;features: string[];buttonText: string;onButtonClick: () => void;featured?: boolean;badges?: {text: string;color: string;}[];delay?: number;}) =>
+<AnimatedSection animation="scale-up" delay={delay}>
     <div className="relative h-full pt-5 group" style={{ perspective: "900px" }}>
       <div
-        className={`absolute -top-1 left-1/2 -translate-x-1/2 bg-gradient-to-r ${tagColor} text-white px-5 py-1.5 rounded-full text-[10px] font-black tracking-wider shadow-lg z-20 whitespace-nowrap border border-white/25`}
-      >
+      className={`absolute -top-1 left-1/2 -translate-x-1/2 bg-gradient-to-r ${tagColor} text-white px-5 py-1.5 rounded-full text-[10px] font-black tracking-wider shadow-lg z-20 whitespace-nowrap border border-white/25`}>
+      
         {tag}
       </div>
       <div
-        className={`relative rounded-2xl border backdrop-blur-xl overflow-hidden h-full flex flex-col transition-all duration-500 hover:-translate-y-3 ${
-          featured
-            ? "border-primary/40 shadow-[0_8px_40px_-12px_hsl(var(--primary)/0.25)] bg-card"
-            : "border-border/50 bg-card/90 hover:border-primary/25 hover:shadow-[0_12px_40px_-12px_hsl(var(--primary)/0.15)]"
-        }`}
-        style={{ transformStyle: "preserve-3d" }}
-      >
+      className={`relative rounded-2xl border backdrop-blur-xl overflow-hidden h-full flex flex-col transition-all duration-500 hover:-translate-y-3 ${
+      featured ?
+      "border-primary/40 shadow-[0_8px_40px_-12px_hsl(var(--primary)/0.25)] bg-card" :
+      "border-border/50 bg-card/90 hover:border-primary/25 hover:shadow-[0_12px_40px_-12px_hsl(var(--primary)/0.15)]"}`
+      }
+      style={{ transformStyle: "preserve-3d" }}>
+      
         {/* Top gradient line */}
         <div className={`h-1 w-full bg-gradient-to-r ${tagColor}`} />
         
         {/* Featured glow */}
-        {featured && (
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.04] via-transparent to-accent/[0.02] pointer-events-none" />
-        )}
+        {featured &&
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.04] via-transparent to-accent/[0.02] pointer-events-none" />
+      }
 
         <div className="p-6 pt-8 text-center flex-1 flex flex-col relative z-10">
           <h3 className="text-xl font-bold mb-3">{title}</h3>
           <div className="relative mb-2">
             <p className="text-4xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               {price}
-              {priceSuffix && (
-                <span className="text-sm text-muted-foreground font-normal bg-none text-muted-foreground" style={{ WebkitTextFillColor: 'initial' }}>
+              {priceSuffix &&
+            <span className="text-sm text-muted-foreground font-normal bg-none text-muted-foreground" style={{ WebkitTextFillColor: 'initial' }}>
                   {priceSuffix}
                 </span>
-              )}
+            }
             </p>
           </div>
-          {priceNote && (
-            <p className="text-sm text-muted-foreground mb-4">{priceNote}</p>
-          )}
-          {badges && (
-            <div className="flex flex-wrap gap-2 justify-center mb-4">
-              {badges.map((b, i) => (
-                <span
-                  key={i}
-                  className={`inline-flex items-center gap-1 px-2.5 py-0.5 ${b.color} text-xs font-medium rounded-full backdrop-blur-sm border border-primary/10`}
-                >
+          {priceNote &&
+        <p className="text-sm text-muted-foreground mb-4">{priceNote}</p>
+        }
+          {badges &&
+        <div className="flex flex-wrap gap-2 justify-center mb-4">
+              {badges.map((b, i) =>
+          <span
+            key={i}
+            className={`inline-flex items-center gap-1 px-2.5 py-0.5 ${b.color} text-xs font-medium rounded-full backdrop-blur-sm border border-primary/10`}>
+            
                   {b.text}
                 </span>
-              ))}
-            </div>
           )}
+            </div>
+        }
           <ul className="space-y-3 mb-6 text-sm text-left flex-1">
-            {features.map((f, i) => (
-              <li key={i} className="flex items-start gap-3">
+            {features.map((f, i) =>
+          <li key={i} className="flex items-start gap-3">
                 <div className="w-5 h-5 rounded-full bg-gradient-to-br from-primary/15 to-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <CheckCircle className="w-3 h-3 text-primary" />
                 </div>
                 <span className="text-foreground">{f}</span>
               </li>
-            ))}
+          )}
           </ul>
           <Button
-            variant={featured ? "default" : "outline"}
-            className="w-full mt-auto h-12 rounded-xl"
-            onClick={onButtonClick}
-          >
+          variant={featured ? "default" : "outline"}
+          className="w-full mt-auto h-12 rounded-xl"
+          onClick={onButtonClick}>
+          
             {buttonText}
           </Button>
         </div>
       </div>
     </div>
-  </AnimatedSection>
-);
+  </AnimatedSection>;
+
 
 function Business() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -367,8 +367,8 @@ function Business() {
     features?: string[];
   } | null>(null);
   const [activeConsultingTab, setActiveConsultingTab] = useState<
-    "thinking" | "buying" | "bought" | "leaving"
-  >("thinking");
+    "thinking" | "buying" | "bought" | "leaving">(
+    "thinking");
   const [selectedService, setSelectedService] = useState<{
     type: "business" | "website";
     name: string;
@@ -389,12 +389,12 @@ function Business() {
   }, []);
 
   const fetchBusinessTestimonials = async () => {
-    const { data } = await supabase
-      .from("testimonials_public")
-      .select(`*, testimonial_media (*)`)
-      .eq("has_video", true)
-      .order("created_at", { ascending: false })
-      .limit(4);
+    const { data } = await supabase.
+    from("testimonials_public").
+    select(`*, testimonial_media (*)`).
+    eq("has_video", true).
+    order("created_at", { ascending: false }).
+    limit(4);
     setBusinessTestimonials(data || []);
   };
 
@@ -409,12 +409,12 @@ function Business() {
         return {
           display: `$${Math.round(yearlyPrice).toLocaleString()}`,
           period: "/year",
-          savings: `Save 10% ($${Math.round(monthlyPrice * 12 - yearlyPrice).toLocaleString()}/year)`,
+          savings: `Save 10% ($${Math.round(monthlyPrice * 12 - yearlyPrice).toLocaleString()}/year)`
         };
       }
       return { display: `$${monthlyPrice}`, period: "/month", savings: "" };
     },
-    [isYearly],
+    [isYearly]
   );
 
   const openStrategyCall = useCallback(() => {
@@ -423,7 +423,7 @@ function Business() {
       price: 0,
       tier: "Consultation",
       description:
-        "Book a free strategy call. We map your goals, recommend the right AI setup, and outline a clear build plan.",
+      "Book a free strategy call. We map your goals, recommend the right AI setup, and outline a clear build plan."
     });
     setInquiryDialogOpen(true);
     trackButtonClick("Book Strategy Call", "Business Hero");
@@ -431,24 +431,24 @@ function Business() {
 
   const handleSubscribe = useCallback(
     (
-      priceId: string,
-      serviceName: string,
-      planTier: string,
-      amount: number,
-      _variant?: "default" | "buying" | "existing",
-      features?: string[],
-    ) => {
+    priceId: string,
+    serviceName: string,
+    planTier: string,
+    amount: number,
+    _variant?: "default" | "buying" | "existing",
+    features?: string[]) =>
+    {
       setEmbeddedPaymentConfig({
         mode: "subscription",
         priceId,
         productName: `${serviceName} - ${planTier}`,
         amount,
         description: `${serviceName} - Monthly subscription`,
-        features,
+        features
       });
       setEmbeddedPaymentOpen(true);
     },
-    [],
+    []
   );
 
   const businessHeroImages = PROFESSIONAL_HERO_IMAGES.business;
@@ -466,37 +466,37 @@ function Business() {
             name: "AI Business Services",
             description: "Professional AI automation services for businesses",
             itemListElement: [
-              {
-                "@type": "Service",
-                position: 1,
-                name: "AI Receptionist & Virtual Intake Agent",
-                description:
-                  "24/7 AI-powered phone answering that sounds human, filters spam, and books appointments automatically",
-                provider: { "@type": "Organization", name: "InVision Network" },
-                areaServed: { "@type": "State", name: "Ohio" },
-                offers: { "@type": "Offer", price: "9500", priceCurrency: "USD" },
-              },
-              {
-                "@type": "Service",
-                position: 2,
-                name: "AI Follow-Up Automation",
-                description:
-                  "Automated lead nurturing, appointment reminders, and customer follow-up systems",
-                provider: { "@type": "Organization", name: "InVision Network" },
-                offers: { "@type": "Offer", price: "12500", priceCurrency: "USD" },
-              },
-              {
-                "@type": "Service",
-                position: 3,
-                name: "Custom AI Automation",
-                description:
-                  "Enterprise-grade custom AI solutions tailored to your specific business needs",
-                provider: { "@type": "Organization", name: "InVision Network" },
-                offers: { "@type": "Offer", price: "25000", priceCurrency: "USD" },
-              },
-            ],
-          }}
-        />
+            {
+              "@type": "Service",
+              position: 1,
+              name: "AI Receptionist & Virtual Intake Agent",
+              description:
+              "24/7 AI-powered phone answering that sounds human, filters spam, and books appointments automatically",
+              provider: { "@type": "Organization", name: "InVision Network" },
+              areaServed: { "@type": "State", name: "Ohio" },
+              offers: { "@type": "Offer", price: "9500", priceCurrency: "USD" }
+            },
+            {
+              "@type": "Service",
+              position: 2,
+              name: "AI Follow-Up Automation",
+              description:
+              "Automated lead nurturing, appointment reminders, and customer follow-up systems",
+              provider: { "@type": "Organization", name: "InVision Network" },
+              offers: { "@type": "Offer", price: "12500", priceCurrency: "USD" }
+            },
+            {
+              "@type": "Service",
+              position: 3,
+              name: "Custom AI Automation",
+              description:
+              "Enterprise-grade custom AI solutions tailored to your specific business needs",
+              provider: { "@type": "Organization", name: "InVision Network" },
+              offers: { "@type": "Offer", price: "25000", priceCurrency: "USD" }
+            }]
+
+          }} />
+        
         <Navigation />
 
         {/* Hero */}
@@ -505,8 +505,8 @@ function Business() {
             backgroundImages={businessHeroImages}
             headline=""
             subheadline=""
-            showScrollIndicator={true}
-          >
+            showScrollIndicator={true}>
+            
             <div className="text-center mb-6">
               <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-white mb-4">
                 <RotatingHeadlines headlines={businessHeadlines} className="" />
@@ -525,8 +525,8 @@ function Business() {
                 onClick={() => {
                   scrollToSection("services");
                   trackButtonClick("Explore Services", "Business Hero");
-                }}
-              >
+                }}>
+                
                 Explore Services
               </Button>
             </div>
@@ -539,15 +539,15 @@ function Business() {
 
         {/* Live Stats Ticker — matches Training page */}
         <div className="bg-foreground text-background py-3 overflow-hidden">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center justify-center gap-4 sm:gap-8 flex-wrap text-xs sm:text-sm font-semibold">
-              <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" /> 200+ Ohio Businesses Served</span>
-              <span className="hidden sm:inline text-background/30">|</span>
-              <span className="flex items-center gap-2"><Shield className="w-4 h-4 text-green-400" /> $500K Max Scam Coverage</span>
-              <span className="hidden sm:inline text-background/30">|</span>
-              <span className="flex items-center gap-2"><Zap className="w-4 h-4" /> {'<'}90s Avg. Response Time</span>
-            </div>
-          </div>
+          
+
+
+
+
+
+
+
+          
         </div>
 
         {/* ═══════════════════ SERVICES ═══════════════════ */}
@@ -561,16 +561,16 @@ function Business() {
             <SectionHeader
               badge="Our Services"
               title="What We Build For You"
-              subtitle="Pick a service below to see how your business benefits."
-            />
+              subtitle="Pick a service below to see how your business benefits." />
+            
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-5xl mx-auto" style={{ perspective: "1200px" }}>
               <AnimatedSection animation="fade-left" delay={0}>
                 <ExpandableServiceCard
                   icon={<Phone className="w-7 h-7 text-primary" />}
                   title="AI Receptionist"
                   image={businessReceptionist}
-                  summary="Your phone gets answered 24/7. Calls are routed, appointments booked, FAQs handled. You never lose a lead."
-                >
+                  summary="Your phone gets answered 24/7. Calls are routed, appointments booked, FAQs handled. You never lose a lead.">
+                  
                   <div className="space-y-4">
                     <p className="text-muted-foreground">
                       <strong className="text-foreground">Every call answered, day or night.</strong>{" "}
@@ -578,19 +578,19 @@ function Business() {
                     </p>
                     <div className="grid sm:grid-cols-2 gap-3">
                       {[
-                        { icon: Phone, label: "24/7 Call Handling", desc: "Every call answered professionally around the clock." },
-                        { icon: Search, label: "Lead Qualification", desc: "AI asks targeted questions to filter and qualify leads." },
-                        { icon: MessageSquare, label: "FAQ Automation", desc: "Common questions answered accurately on the spot." },
-                        { icon: Shield, label: "Spam Filtering", desc: "Blocks telemarketers and robo-calls automatically." },
-                      ].map((item, i) => (
-                        <Card key={i} className="p-3 border-border/60 hover:border-primary/30 transition-colors duration-300">
+                      { icon: Phone, label: "24/7 Call Handling", desc: "Every call answered professionally around the clock." },
+                      { icon: Search, label: "Lead Qualification", desc: "AI asks targeted questions to filter and qualify leads." },
+                      { icon: MessageSquare, label: "FAQ Automation", desc: "Common questions answered accurately on the spot." },
+                      { icon: Shield, label: "Spam Filtering", desc: "Blocks telemarketers and robo-calls automatically." }].
+                      map((item, i) =>
+                      <Card key={i} className="p-3 border-border/60 hover:border-primary/30 transition-colors duration-300">
                           <h4 className="font-bold text-sm mb-1 flex items-center gap-2">
                             <item.icon className="w-4 h-4 text-primary" />
                             {item.label}
                           </h4>
                           <p className="text-muted-foreground text-xs">{item.desc}</p>
                         </Card>
-                      ))}
+                      )}
                     </div>
                   </div>
                 </ExpandableServiceCard>
@@ -601,8 +601,8 @@ function Business() {
                   icon={<Calendar className="w-7 h-7 text-primary" />}
                   title="Smart Scheduling"
                   image={businessScheduling}
-                  summary="Appointments book themselves. Reminders go out. Calendars stay in sync. No more back-and-forth emails."
-                >
+                  summary="Appointments book themselves. Reminders go out. Calendars stay in sync. No more back-and-forth emails.">
+                  
                   <div className="space-y-4">
                     <p className="text-muted-foreground">
                       <strong className="text-foreground">No more scheduling headaches.</strong>{" "}
@@ -610,18 +610,18 @@ function Business() {
                     </p>
                     <div className="grid sm:grid-cols-3 gap-3">
                       {[
-                        { icon: Calendar, label: "Auto-Booking", desc: "Books with real-time availability." },
-                        { icon: Mail, label: "Smart Reminders", desc: "Cuts no-shows by up to 80%." },
-                        { icon: CheckCircle, label: "Calendar Sync", desc: "Works with Google, Outlook, and more." },
-                      ].map((item, i) => (
-                        <Card key={i} className="p-3 text-center border-border/60 hover:border-primary/30 transition-colors duration-300">
+                      { icon: Calendar, label: "Auto-Booking", desc: "Books with real-time availability." },
+                      { icon: Mail, label: "Smart Reminders", desc: "Cuts no-shows by up to 80%." },
+                      { icon: CheckCircle, label: "Calendar Sync", desc: "Works with Google, Outlook, and more." }].
+                      map((item, i) =>
+                      <Card key={i} className="p-3 text-center border-border/60 hover:border-primary/30 transition-colors duration-300">
                           <div className="w-9 h-9 mx-auto mb-2 bg-gradient-to-br from-primary/15 to-accent/10 rounded-lg flex items-center justify-center">
                             <item.icon className="w-4.5 h-4.5 text-primary" />
                           </div>
                           <h4 className="font-bold text-sm mb-1">{item.label}</h4>
                           <p className="text-xs text-muted-foreground">{item.desc}</p>
                         </Card>
-                      ))}
+                      )}
                     </div>
                   </div>
                 </ExpandableServiceCard>
@@ -632,8 +632,8 @@ function Business() {
                   icon={<MessageSquare className="w-7 h-7 text-primary" />}
                   title="Customer Support Bot"
                   image={businessSupportBot}
-                  summary="Answers customer questions 24/7 on your website, SMS, or WhatsApp. Your team focuses on high-value work."
-                >
+                  summary="Answers customer questions 24/7 on your website, SMS, or WhatsApp. Your team focuses on high-value work.">
+                  
                   <div className="space-y-4">
                     <p className="text-muted-foreground">
                       <strong className="text-foreground">Your customers get instant answers.</strong>{" "}
@@ -641,19 +641,19 @@ function Business() {
                     </p>
                     <div className="grid sm:grid-cols-2 gap-3">
                       {[
-                        { icon: CheckCircle, label: "Post-Service Check-Ins", desc: "Personalized follow-ups within 24 to 48 hours." },
-                        { icon: Sparkles, label: "Review Requests", desc: "Happy customers get prompted to leave reviews." },
-                        { icon: Mail, label: "Re-Engagement", desc: "Personalized 'we miss you' messages sent automatically." },
-                        { icon: Phone, label: "Multi-Channel", desc: "SMS, email, WhatsApp, or website chat." },
-                      ].map((item, i) => (
-                        <div key={i} className="space-y-1">
+                      { icon: CheckCircle, label: "Post-Service Check-Ins", desc: "Personalized follow-ups within 24 to 48 hours." },
+                      { icon: Sparkles, label: "Review Requests", desc: "Happy customers get prompted to leave reviews." },
+                      { icon: Mail, label: "Re-Engagement", desc: "Personalized 'we miss you' messages sent automatically." },
+                      { icon: Phone, label: "Multi-Channel", desc: "SMS, email, WhatsApp, or website chat." }].
+                      map((item, i) =>
+                      <div key={i} className="space-y-1">
                           <h4 className="font-bold text-sm flex items-center gap-2">
                             <item.icon className="w-4 h-4 text-primary" />
                             {item.label}
                           </h4>
                           <p className="text-muted-foreground text-xs">{item.desc}</p>
                         </div>
-                      ))}
+                      )}
                     </div>
                   </div>
                 </ExpandableServiceCard>
@@ -664,8 +664,8 @@ function Business() {
                   icon={<Calendar className="w-7 h-7 text-primary" />}
                   title="Intake & Scheduling"
                   image={businessIntake}
-                  summary="Collect client details, score leads, and book meetings automatically. Save hours of admin work each week."
-                >
+                  summary="Collect client details, score leads, and book meetings automatically. Save hours of admin work each week.">
+                  
                   <div className="space-y-4">
                     <p className="text-muted-foreground">
                       <strong className="text-foreground">Onboard clients faster.</strong>{" "}
@@ -673,19 +673,19 @@ function Business() {
                     </p>
                     <div className="grid sm:grid-cols-2 gap-3">
                       {[
-                        { icon: FileText, label: "Smart Intake Forms", desc: "Custom forms with conditional logic." },
-                        { icon: Search, label: "Lead Scoring", desc: "Auto-score and prioritize your best leads." },
-                        { icon: Lock, label: "Privacy-Conscious", desc: "Secure handling for healthcare, legal, and finance." },
-                        { icon: CheckCircle, label: "CRM Integration", desc: "Syncs with Salesforce, HubSpot, and more." },
-                      ].map((item, i) => (
-                        <Card key={i} className="p-3 border-border/60 hover:border-primary/30 transition-colors duration-300">
+                      { icon: FileText, label: "Smart Intake Forms", desc: "Custom forms with conditional logic." },
+                      { icon: Search, label: "Lead Scoring", desc: "Auto-score and prioritize your best leads." },
+                      { icon: Lock, label: "Privacy-Conscious", desc: "Secure handling for healthcare, legal, and finance." },
+                      { icon: CheckCircle, label: "CRM Integration", desc: "Syncs with Salesforce, HubSpot, and more." }].
+                      map((item, i) =>
+                      <Card key={i} className="p-3 border-border/60 hover:border-primary/30 transition-colors duration-300">
                           <h4 className="font-bold text-sm mb-1 flex items-center gap-2">
                             <item.icon className="w-4 h-4 text-primary" />
                             {item.label}
                           </h4>
                           <p className="text-muted-foreground text-xs">{item.desc}</p>
                         </Card>
-                      ))}
+                      )}
                     </div>
                   </div>
                 </ExpandableServiceCard>
@@ -708,8 +708,8 @@ function Business() {
             <SectionHeader
               badge="Complete Platform"
               title="InVision Platform, Fully Integrated"
-              subtitle="All platform capabilities consolidated under one mission, one operating model, and one unified experience."
-            />
+              subtitle="All platform capabilities consolidated under one mission, one operating model, and one unified experience." />
+            
 
             {/* Hero overview card — Premium glassmorphism */}
             <AnimatedSection animation="scale-up" className="max-w-6xl mx-auto mb-20">
@@ -744,31 +744,31 @@ function Business() {
                         </p>
                         <div className="space-y-4">
                           {[
-                            "Current focus: business growth automation, enterprise defense, and family-level protection.",
-                            "Single operating model: shared threat intelligence across all 9 services.",
-                            "Single engagement path: strategy, deployment, hardening, and ongoing support.",
-                          ].map((item, idx) => (
-                            <div
-                              key={item}
-                              className="flex items-start gap-3 text-sm group"
-                            >
+                          "Current focus: business growth automation, enterprise defense, and family-level protection.",
+                          "Single operating model: shared threat intelligence across all 9 services.",
+                          "Single engagement path: strategy, deployment, hardening, and ongoing support."].
+                          map((item, idx) =>
+                          <div
+                            key={item}
+                            className="flex items-start gap-3 text-sm group">
+                            
                               <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary/15 to-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-300 shadow-sm">
                                 <CheckCircle className="w-3.5 h-3.5 text-primary" />
                               </div>
                               <p className="text-foreground leading-relaxed">{item}</p>
                             </div>
-                          ))}
+                          )}
                         </div>
                       </div>
                     </div>
 
                     {/* Stats grid with 3D depth */}
                     <div className="grid grid-cols-2 gap-4">
-                      {platformSnapshotStats.map((stat, i) => (
-                        <div
-                          key={stat.label}
-                          className="group"
-                        >
+                      {platformSnapshotStats.map((stat, i) =>
+                      <div
+                        key={stat.label}
+                        className="group">
+                        
                           <div className="relative rounded-2xl border border-border/50 bg-card/80 backdrop-blur-sm p-5 text-center hover:border-primary/30 hover:shadow-[0_12px_40px_-12px_hsl(var(--primary)/0.12)] transition-all duration-500 overflow-hidden hover-lift">
                             {/* Hover glow */}
                             <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.04] to-accent/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -786,7 +786,7 @@ function Business() {
                             </div>
                           </div>
                         </div>
-                      ))}
+                      )}
                     </div>
                   </div>
                 </div>
@@ -795,8 +795,8 @@ function Business() {
 
             {/* Service groups — Premium cards with 3D hover */}
             <div className="max-w-6xl mx-auto space-y-20">
-              {platformGroups.map((group, gi) => (
-                <AnimatedSection key={group.key} animation="fade-up" delay={gi * 120}>
+              {platformGroups.map((group, gi) =>
+              <AnimatedSection key={group.key} animation="fade-up" delay={gi * 120}>
                   <div>
                     {/* Group header with gradient accent */}
                     <div className="flex flex-wrap items-center gap-4 mb-8">
@@ -816,24 +816,24 @@ function Business() {
                     </div>
 
                     <div
-                      className={`grid grid-cols-1 sm:grid-cols-2 gap-5 ${
-                        group.features.length === 4
-                          ? "lg:grid-cols-4"
-                          : group.features.length === 3
-                          ? "lg:grid-cols-3"
-                          : "lg:grid-cols-2"
-                      }`}
-                      style={{ perspective: "1000px" }}
-                    >
-                      {group.features.map((feature, fi) => (
-                        <div
-                          key={feature.title}
-                          className="hover-lift"
-                        >
+                    className={`grid grid-cols-1 sm:grid-cols-2 gap-5 ${
+                    group.features.length === 4 ?
+                    "lg:grid-cols-4" :
+                    group.features.length === 3 ?
+                    "lg:grid-cols-3" :
+                    "lg:grid-cols-2"}`
+                    }
+                    style={{ perspective: "1000px" }}>
+                    
+                      {group.features.map((feature, fi) =>
+                    <div
+                      key={feature.title}
+                      className="hover-lift">
+                      
                           <Link
-                            to={feature.href}
-                            className="group/card relative flex flex-col p-6 rounded-2xl border border-border/50 bg-card/95 backdrop-blur-sm transition-all duration-500 h-full no-underline hover:border-primary/30 hover:shadow-[0_20px_50px_-15px_hsl(var(--primary)/0.15)] overflow-hidden"
-                          >
+                        to={feature.href}
+                        className="group/card relative flex flex-col p-6 rounded-2xl border border-border/50 bg-card/95 backdrop-blur-sm transition-all duration-500 h-full no-underline hover:border-primary/30 hover:shadow-[0_20px_50px_-15px_hsl(var(--primary)/0.15)] overflow-hidden">
+                        
                             {/* Top glow bar */}
                             <div className={`absolute top-0 left-0 right-0 h-1 rounded-t-2xl bg-gradient-to-r ${group.gradient} opacity-40 group-hover/card:opacity-100 transition-opacity duration-300`} />
 
@@ -842,8 +842,8 @@ function Business() {
 
                             <div className="flex items-start justify-between gap-3 mb-4 relative z-10">
                               <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${group.gradient} flex items-center justify-center transition-all duration-300 shadow-md group-hover/card:scale-110 group-hover/card:shadow-lg`}
-                                style={{ transform: "translateZ(20px)" }}
-                              >
+                          style={{ transform: "translateZ(20px)" }}>
+                            
                                 <feature.icon className="w-5 h-5 text-white" />
                               </div>
                               <Badge className="text-[10px] font-bold bg-muted/80 text-muted-foreground border-border/50 backdrop-blur-sm">
@@ -865,34 +865,34 @@ function Business() {
                             </div>
                           </Link>
                         </div>
-                      ))}
+                    )}
                     </div>
                   </div>
                 </AnimatedSection>
-              ))}
+              )}
             </div>
 
             {/* Platform integration pillars — 3D cards */}
             <div className="mt-24 grid md:grid-cols-3 gap-6 max-w-5xl mx-auto" style={{ perspective: "1200px" }}>
-              {platformPillars.map((pillar, i) => (
-                <AnimatedSection
-                  key={pillar.title}
-                  animation="fade-up"
-                  delay={i * 120}
-                >
+              {platformPillars.map((pillar, i) =>
+              <AnimatedSection
+                key={pillar.title}
+                animation="fade-up"
+                delay={i * 120}>
+                
                   <Card className="group p-8 rounded-2xl border-border/40 bg-card/95 backdrop-blur-sm text-center h-full hover:shadow-[0_20px_50px_-15px_hsl(var(--primary)/0.12)] hover:border-primary/25 transition-all duration-500 overflow-hidden relative">
                     <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/30 via-accent/20 to-primary/30 opacity-0 group-hover:opacity-100 transition-opacity" />
                     <div
-                      className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/15 to-accent/10 flex items-center justify-center mx-auto mb-5 shadow-inner group-hover:scale-110 transition-transform duration-300"
-                      style={{ transform: "translateZ(15px)" }}
-                    >
+                    className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/15 to-accent/10 flex items-center justify-center mx-auto mb-5 shadow-inner group-hover:scale-110 transition-transform duration-300"
+                    style={{ transform: "translateZ(15px)" }}>
+                    
                       <pillar.icon className="w-7 h-7 text-primary" />
                     </div>
                     <h3 className="font-bold text-base mb-3">{pillar.title}</h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">{pillar.desc}</p>
                   </Card>
                 </AnimatedSection>
-              ))}
+              )}
             </div>
 
             {/* Demo CTA */}
@@ -905,11 +905,11 @@ function Business() {
                       name: "InVision Platform Demo",
                       price: 0,
                       tier: "Full Platform",
-                      description: "Schedule a live demo of all 9 integrated services now consolidated under AI & Business.",
+                      description: "Schedule a live demo of all 9 integrated services now consolidated under AI & Business."
                     });
                     setInquiryDialogOpen(true);
-                  }}
-                >
+                  }}>
+                  
                   Request a Platform Demo <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
                 <Button asChild variant="outline" size="xl">
@@ -948,8 +948,8 @@ function Business() {
             <SectionHeader
               badge="Web Design"
               title="Websites That Sell For You"
-              subtitle="Your website works around the clock. We build fast, secure sites that turn visitors into paying customers."
-            />
+              subtitle="Your website works around the clock. We build fast, secure sites that turn visitors into paying customers." />
+            
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-5xl mx-auto mb-14" style={{ perspective: "1000px" }}>
               <PricingCard
@@ -960,15 +960,15 @@ function Business() {
                 priceNote="Delivered in 2 Weeks"
                 delay={0}
                 badges={[
-                  { text: "🎨 Custom Design", color: "bg-primary/10 text-primary" },
-                  { text: "📱 Mobile-First", color: "bg-primary/10 text-primary" },
-                ]}
+                { text: "🎨 Custom Design", color: "bg-primary/10 text-primary" },
+                { text: "📱 Mobile-First", color: "bg-primary/10 text-primary" }]
+                }
                 features={[
-                  "Custom responsive design",
-                  "Contact form integration",
-                  "Basic SEO setup",
-                  "1 month hosting included",
-                ]}
+                "Custom responsive design",
+                "Contact form integration",
+                "Basic SEO setup",
+                "1 month hosting included"]
+                }
                 buttonText="GET STARTED"
                 onButtonClick={() => {
                   trackButtonClick("Get Started - Landing Page", "Business Website");
@@ -976,11 +976,11 @@ function Business() {
                     name: "Landing Page",
                     price: 1500,
                     tier: "Quick Start",
-                    description: "Single-page website for campaigns or business presence. Delivered in 2 weeks.",
+                    description: "Single-page website for campaigns or business presence. Delivered in 2 weeks."
                   });
                   setInquiryDialogOpen(true);
-                }}
-              />
+                }} />
+              
 
               <PricingCard
                 tag="⭐ MOST POPULAR"
@@ -990,16 +990,16 @@ function Business() {
                 priceNote="Delivered in 3 to 4 Weeks"
                 delay={150}
                 badges={[
-                  { text: "🚀 Full SEO", color: "bg-primary/10 text-primary" },
-                  { text: "💬 AI Chat", color: "bg-primary/10 text-primary" },
-                ]}
+                { text: "🚀 Full SEO", color: "bg-primary/10 text-primary" },
+                { text: "💬 AI Chat", color: "bg-primary/10 text-primary" }]
+                }
                 features={[
-                  "Multi-page website (up to 8 pages)",
-                  "Advanced SEO optimization",
-                  "Blog or news section",
-                  "Analytics dashboard",
-                  "3 months hosting included",
-                ]}
+                "Multi-page website (up to 8 pages)",
+                "Advanced SEO optimization",
+                "Blog or news section",
+                "Analytics dashboard",
+                "3 months hosting included"]
+                }
                 buttonText="GET STARTED"
                 onButtonClick={() => {
                   trackButtonClick("Get Started - Business Website", "Business Website");
@@ -1007,11 +1007,11 @@ function Business() {
                     name: "Business Website",
                     price: 3500,
                     tier: "Most Popular",
-                    description: "Full business website with SEO, blog, and analytics. Delivered in 3 to 4 weeks.",
+                    description: "Full business website with SEO, blog, and analytics. Delivered in 3 to 4 weeks."
                   });
                   setInquiryDialogOpen(true);
-                }}
-              />
+                }} />
+              
 
               <PricingCard
                 tag="👑 PREMIUM"
@@ -1021,16 +1021,16 @@ function Business() {
                 priceNote="Delivered in 4 to 6 Weeks"
                 delay={300}
                 badges={[
-                  { text: "🛒 Full Store", color: "bg-primary/10 text-primary" },
-                  { text: "💳 Payments", color: "bg-primary/10 text-primary" },
-                ]}
+                { text: "🛒 Full Store", color: "bg-primary/10 text-primary" },
+                { text: "💳 Payments", color: "bg-primary/10 text-primary" }]
+                }
                 features={[
-                  "Full online store",
-                  "Payment processing",
-                  "Inventory management",
-                  "Customer accounts",
-                  "6 months hosting included",
-                ]}
+                "Full online store",
+                "Payment processing",
+                "Inventory management",
+                "Customer accounts",
+                "6 months hosting included"]
+                }
                 buttonText="GET STARTED"
                 onButtonClick={() => {
                   trackButtonClick("Get Started - E-Commerce", "Business Website");
@@ -1038,11 +1038,11 @@ function Business() {
                     name: "E-Commerce Website",
                     price: 7500,
                     tier: "Premium",
-                    description: "Full e-commerce website with payment processing. Delivered in 4 to 6 weeks.",
+                    description: "Full e-commerce website with payment processing. Delivered in 4 to 6 weeks."
                   });
                   setInquiryDialogOpen(true);
-                }}
-              />
+                }} />
+              
             </div>
 
             {/* Website Add-Ons */}
@@ -1056,23 +1056,23 @@ function Business() {
               </div>
               <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                 {[
-                  { name: "Logo Design", price: "$500", note: "Starting price", color: "text-primary" },
-                  { name: "Content Writing", price: "$150", note: "Per page", color: "text-accent" },
-                  { name: "Business Email", price: "$200", note: "One-time setup", color: "text-primary" },
-                  { name: "AI Chatbot", price: "$1,200", note: "Full integration", color: "text-primary", tag: "POPULAR" },
-                  { name: "Domain & Hosting", price: "FREE", note: "With any website", color: "text-primary", tag: "INCLUDED" },
-                ].map((addon, i) => (
-                  <div
-                    key={i}
-                    className="hover-lift"
-                  >
+                { name: "Logo Design", price: "$500", note: "Starting price", color: "text-primary" },
+                { name: "Content Writing", price: "$150", note: "Per page", color: "text-accent" },
+                { name: "Business Email", price: "$200", note: "One-time setup", color: "text-primary" },
+                { name: "AI Chatbot", price: "$1,200", note: "Full integration", color: "text-primary", tag: "POPULAR" },
+                { name: "Domain & Hosting", price: "FREE", note: "With any website", color: "text-primary", tag: "INCLUDED" }].
+                map((addon, i) =>
+                <div
+                  key={i}
+                  className="hover-lift">
+                  
                     <Card className="p-4 text-center border-border/50 hover:shadow-[0_12px_40px_-12px_hsl(var(--primary)/0.12)] transition-all duration-500 hover:border-primary/30 relative group overflow-hidden">
                       <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.02] to-accent/[0.01] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                      {addon.tag && (
-                        <span className="absolute top-2 right-2 px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-bold rounded-full">
+                      {addon.tag &&
+                    <span className="absolute top-2 right-2 px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-bold rounded-full">
                           {addon.tag}
                         </span>
-                      )}
+                    }
                       <h4 className="font-bold text-sm mb-1 relative z-10">{addon.name}</h4>
                       <div className={`text-xl font-black ${addon.color} mb-0.5 relative z-10`}>
                         {addon.price}
@@ -1080,7 +1080,7 @@ function Business() {
                       <div className="text-xs text-muted-foreground relative z-10">{addon.note}</div>
                     </Card>
                   </div>
-                ))}
+                )}
               </div>
               <div className="mt-8 text-center">
                 <Button
@@ -1091,11 +1091,11 @@ function Business() {
                       name: "Custom Website Package",
                       price: 0,
                       tier: "Custom Bundle",
-                      description: "We build a custom package with your chosen add-ons and services.",
+                      description: "We build a custom package with your chosen add-ons and services."
                     });
                     setInquiryDialogOpen(true);
-                  }}
-                >
+                  }}>
+                  
                   Get Custom Quote <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </div>
@@ -1112,76 +1112,76 @@ function Business() {
             <SectionHeader
               badge="Protect Your Investment"
               title="Website Insurance"
-              subtitle="Security monitoring, backups, support, and performance optimization. Your site stays fast, safe, and online."
-            />
+              subtitle="Security monitoring, backups, support, and performance optimization. Your site stays fast, safe, and online." />
+            
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto">
               {[
-                {
-                  tag: "ESSENTIAL",
-                  tagColor: "from-emerald-500 to-teal-500",
-                  title: "Essential",
-                  price: "$29",
-                  note: "Basic protection",
-                  features: ["SSL Management", "Weekly Backups", "Email Support", "Basic Monitoring"],
-                },
-                {
-                  tag: "⭐ MOST POPULAR",
-                  featured: true,
-                  title: "Professional",
-                  price: "$49",
-                  note: "Full protection",
-                  features: ["All Essential features", "24/7 Monitoring", "Daily Backups", "Priority Support", "Malware Scanning"],
-                },
-                {
-                  tag: "👑 ENTERPRISE",
-                  tagColor: "from-amber-500 to-orange-500",
-                  title: "Enterprise",
-                  price: "$99",
-                  note: "Maximum protection",
-                  features: ["All Professional features", "Real-Time Backups", "DDoS Protection", "24/7 Dedicated Support", "Global CDN"],
-                },
-                {
-                  tag: "✨ CUSTOM",
-                  tagColor: "from-primary via-accent to-primary",
-                  title: "Customizable",
-                  price: "$29-500",
-                  note: "Build your own",
-                  features: ["Choose your features", "Flexible pricing", "Custom support level", "Upgrade anytime"],
-                },
-              ].map((plan, i) => (
-                <PricingCard
-                  key={i}
-                  tag={plan.tag}
-                  tagColor={plan.tagColor}
-                  featured={plan.featured}
-                  title={plan.title}
-                  price={plan.price}
-                  priceSuffix="/mo"
-                  priceNote={plan.note}
-                  features={plan.features}
-                  delay={i * 100}
-                  buttonText={i === 3 ? "Build Your Plan" : "Subscribe Now"}
-                  onButtonClick={() => {
-                    trackButtonClick(`Subscribe Now - Website Insurance ${plan.title}`, "Website Insurance");
-                    setWebsiteInsuranceOpen(true);
-                  }}
-                />
-              ))}
+              {
+                tag: "ESSENTIAL",
+                tagColor: "from-emerald-500 to-teal-500",
+                title: "Essential",
+                price: "$29",
+                note: "Basic protection",
+                features: ["SSL Management", "Weekly Backups", "Email Support", "Basic Monitoring"]
+              },
+              {
+                tag: "⭐ MOST POPULAR",
+                featured: true,
+                title: "Professional",
+                price: "$49",
+                note: "Full protection",
+                features: ["All Essential features", "24/7 Monitoring", "Daily Backups", "Priority Support", "Malware Scanning"]
+              },
+              {
+                tag: "👑 ENTERPRISE",
+                tagColor: "from-amber-500 to-orange-500",
+                title: "Enterprise",
+                price: "$99",
+                note: "Maximum protection",
+                features: ["All Professional features", "Real-Time Backups", "DDoS Protection", "24/7 Dedicated Support", "Global CDN"]
+              },
+              {
+                tag: "✨ CUSTOM",
+                tagColor: "from-primary via-accent to-primary",
+                title: "Customizable",
+                price: "$29-500",
+                note: "Build your own",
+                features: ["Choose your features", "Flexible pricing", "Custom support level", "Upgrade anytime"]
+              }].
+              map((plan, i) =>
+              <PricingCard
+                key={i}
+                tag={plan.tag}
+                tagColor={plan.tagColor}
+                featured={plan.featured}
+                title={plan.title}
+                price={plan.price}
+                priceSuffix="/mo"
+                priceNote={plan.note}
+                features={plan.features}
+                delay={i * 100}
+                buttonText={i === 3 ? "Build Your Plan" : "Subscribe Now"}
+                onButtonClick={() => {
+                  trackButtonClick(`Subscribe Now - Website Insurance ${plan.title}`, "Website Insurance");
+                  setWebsiteInsuranceOpen(true);
+                }} />
+
+              )}
             </div>
 
             {/* Trust badges */}
             <AnimatedSection animation="fade-up" delay={200} className="mt-10 flex flex-wrap items-center justify-center gap-4">
               {[
-                { icon: Lock, text: "Secure Payment" },
-                { icon: Shield, text: "30-Day Guarantee" },
-                { icon: CheckCircle, text: "Cancel Anytime" },
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-2 px-4 py-2 glass-subtle rounded-full text-xs hover:border-primary/30 transition-colors duration-300">
+              { icon: Lock, text: "Secure Payment" },
+              { icon: Shield, text: "30-Day Guarantee" },
+              { icon: CheckCircle, text: "Cancel Anytime" }].
+              map((item, i) =>
+              <div key={i} className="flex items-center gap-2 px-4 py-2 glass-subtle rounded-full text-xs hover:border-primary/30 transition-colors duration-300">
                   <item.icon className="w-3.5 h-3.5 text-primary" />
                   <span className="font-semibold">{item.text}</span>
                 </div>
-              ))}
+              )}
             </AnimatedSection>
           </div>
         </section>
@@ -1195,18 +1195,18 @@ function Business() {
             <SectionHeader
               badge="AI Automation"
               title="AI Agents Pricing"
-              subtitle="Missed calls and slow follow-ups cost you real money. Your AI agents work 24/7 so you do not have to."
-            >
+              subtitle="Missed calls and slow follow-ups cost you real money. Your AI agents work 24/7 so you do not have to.">
+              
               <div className="flex flex-wrap items-center justify-center gap-5 text-sm text-muted-foreground mt-5">
                 {[
-                  { icon: CheckCircle, text: "30-Day Guarantee" },
-                  { icon: Lock, text: "Secure Setup" },
-                  { icon: Phone, text: "24/7 Support" },
-                ].map((item, i) => (
-                  <span key={i} className="inline-flex items-center gap-2">
+                { icon: CheckCircle, text: "30-Day Guarantee" },
+                { icon: Lock, text: "Secure Setup" },
+                { icon: Phone, text: "24/7 Support" }].
+                map((item, i) =>
+                <span key={i} className="inline-flex items-center gap-2">
                     <item.icon className="w-4 h-4 text-primary" /> {item.text}
                   </span>
-                ))}
+                )}
               </div>
             </SectionHeader>
 
@@ -1219,9 +1219,9 @@ function Business() {
                 priceNote="2-Week Setup"
                 delay={0}
                 badges={[
-                  { text: "⚡ 24/7 Active", color: "bg-primary/10 text-primary" },
-                  { text: "✓ Includes Training", color: "bg-primary/10 text-primary" },
-                ]}
+                { text: "⚡ 24/7 Active", color: "bg-primary/10 text-primary" },
+                { text: "✓ Includes Training", color: "bg-primary/10 text-primary" }]
+                }
                 features={["24/7 call and chat handling", "Appointment booking", "Lead qualification"]}
                 buttonText="GET STARTED →"
                 onButtonClick={() => {
@@ -1230,11 +1230,11 @@ function Business() {
                     name: "AI Receptionist & Intake Agent",
                     price: 9500,
                     tier: "START HERE",
-                    description: "Answers calls and chats 24/7, books appointments, routes to the right person.",
+                    description: "Answers calls and chats 24/7, books appointments, routes to the right person."
                   });
                   setInquiryDialogOpen(true);
-                }}
-              />
+                }} />
+              
 
               <PricingCard
                 tag="⭐ MOST POPULAR"
@@ -1244,15 +1244,15 @@ function Business() {
                 priceNote="3-Week Setup"
                 delay={150}
                 badges={[
-                  { text: "🚀 Full Automation", color: "bg-primary/10 text-primary" },
-                  { text: "✓ CRM Integration", color: "bg-primary/10 text-primary" },
-                ]}
+                { text: "🚀 Full Automation", color: "bg-primary/10 text-primary" },
+                { text: "✓ CRM Integration", color: "bg-primary/10 text-primary" }]
+                }
                 features={[
-                  "Automated follow-ups (SMS, email)",
-                  "Review collection system",
-                  "Re-engagement campaigns",
-                  "Performance dashboard",
-                ]}
+                "Automated follow-ups (SMS, email)",
+                "Review collection system",
+                "Re-engagement campaigns",
+                "Performance dashboard"]
+                }
                 buttonText="GET STARTED →"
                 onButtonClick={() => {
                   trackButtonClick("Get Started - AI Follow-Up", "Business Pricing");
@@ -1260,11 +1260,11 @@ function Business() {
                     name: "AI Follow-Up Engine",
                     price: 12500,
                     tier: "MOST POPULAR",
-                    description: "Automated follow-ups, review collection, and re-engagement campaigns.",
+                    description: "Automated follow-ups, review collection, and re-engagement campaigns."
                   });
                   setInquiryDialogOpen(true);
-                }}
-              />
+                }} />
+              
 
               <PricingCard
                 tag="🏗️ FULL SUITE"
@@ -1274,12 +1274,12 @@ function Business() {
                 priceNote="Custom Timeline"
                 delay={300}
                 features={[
-                  "Everything in Follow-Up Engine",
-                  "Custom AI workflows",
-                  "Advanced analytics",
-                  "Dedicated account manager",
-                  "Priority support",
-                ]}
+                "Everything in Follow-Up Engine",
+                "Custom AI workflows",
+                "Advanced analytics",
+                "Dedicated account manager",
+                "Priority support"]
+                }
                 buttonText="GET CUSTOM QUOTE"
                 onButtonClick={() => {
                   trackButtonClick("Get Custom Quote - Full Suite", "Business Pricing");
@@ -1287,11 +1287,11 @@ function Business() {
                     name: "Custom AI Automation",
                     price: 0,
                     tier: "Full Suite",
-                    description: "Full AI automation suite with custom workflows, analytics, and dedicated support.",
+                    description: "Full AI automation suite with custom workflows, analytics, and dedicated support."
                   });
                   setInquiryDialogOpen(true);
-                }}
-              />
+                }} />
+              
             </div>
           </div>
         </section>
@@ -1305,24 +1305,24 @@ function Business() {
             <SectionHeader
               badge="AI Insurance"
               title="Protect Your AI Investment"
-              subtitle="Your AI tools break, get hacked, or underperform. Our insurance plans keep your business running and your AI optimized."
-            >
+              subtitle="Your AI tools break, get hacked, or underperform. Our insurance plans keep your business running and your AI optimized.">
+              
               <div className="flex items-center justify-center gap-4 mt-5 bg-card/80 backdrop-blur-sm border border-border/50 rounded-full px-6 py-3 shadow-sm mx-auto w-fit">
                 <Label
                   htmlFor="billing-toggle"
-                  className={`text-sm font-bold transition-colors cursor-pointer ${!isYearly ? "text-primary" : "text-muted-foreground"}`}
-                >
+                  className={`text-sm font-bold transition-colors cursor-pointer ${!isYearly ? "text-primary" : "text-muted-foreground"}`}>
+                  
                   Monthly
                 </Label>
                 <Switch
                   id="billing-toggle"
                   checked={isYearly}
-                  onCheckedChange={setIsYearly}
-                />
+                  onCheckedChange={setIsYearly} />
+                
                 <Label
                   htmlFor="billing-toggle"
-                  className={`text-sm font-bold transition-colors cursor-pointer ${isYearly ? "text-primary" : "text-muted-foreground"}`}
-                >
+                  className={`text-sm font-bold transition-colors cursor-pointer ${isYearly ? "text-primary" : "text-muted-foreground"}`}>
+                  
                   Yearly{" "}
                   <span className="text-xs text-primary font-black bg-primary/10 px-2 py-0.5 rounded-full">(Save 10%)</span>
                 </Label>
@@ -1340,11 +1340,11 @@ function Business() {
                 priceNote="Essential Coverage"
                 delay={0}
                 features={[
-                  "AI health monitoring",
-                  "Email support (48hr)",
-                  "Monthly diagnostics",
-                  "Basic data backup",
-                ]}
+                "AI health monitoring",
+                "Email support (48hr)",
+                "Monthly diagnostics",
+                "Basic data backup"]
+                }
                 buttonText="Subscribe Now"
                 onButtonClick={() => {
                   trackButtonClick("Subscribe - AI Insurance Basic", "AI Insurance");
@@ -1353,10 +1353,10 @@ function Business() {
                     "AI Service Insurance",
                     "Basic Care",
                     19900,
-                    "default",
+                    "default"
                   );
-                }}
-              />
+                }} />
+              
 
               {/* Standard */}
               <PricingCard
@@ -1368,12 +1368,12 @@ function Business() {
                 priceNote="Full Coverage"
                 delay={100}
                 features={[
-                  "Everything in Basic",
-                  "Priority support (24hr)",
-                  "Weekly optimization",
-                  "Security scanning",
-                  "Performance reports",
-                ]}
+                "Everything in Basic",
+                "Priority support (24hr)",
+                "Weekly optimization",
+                "Security scanning",
+                "Performance reports"]
+                }
                 buttonText="Subscribe Now"
                 onButtonClick={() => {
                   trackButtonClick("Subscribe - AI Insurance Standard", "AI Insurance");
@@ -1382,10 +1382,10 @@ function Business() {
                     "AI Service Insurance",
                     "Standard Care",
                     39900,
-                    "default",
+                    "default"
                   );
-                }}
-              />
+                }} />
+              
 
               {/* Premium */}
               <PricingCard
@@ -1397,12 +1397,12 @@ function Business() {
                 priceNote="Maximum Coverage"
                 delay={200}
                 features={[
-                  "Everything in Standard",
-                  "24/7 emergency support",
-                  "Proactive optimization",
-                  "Custom integrations",
-                  "Dedicated account manager",
-                ]}
+                "Everything in Standard",
+                "24/7 emergency support",
+                "Proactive optimization",
+                "Custom integrations",
+                "Dedicated account manager"]
+                }
                 buttonText="Subscribe Now"
                 onButtonClick={() => {
                   trackButtonClick("Subscribe - AI Insurance Premium", "AI Insurance");
@@ -1411,10 +1411,10 @@ function Business() {
                     "AI Service Insurance",
                     "Premium Care",
                     79900,
-                    "default",
+                    "default"
                   );
-                }}
-              />
+                }} />
+              
 
               {/* Enterprise */}
               <PricingCard
@@ -1426,23 +1426,23 @@ function Business() {
                 priceNote="Tailored for your needs"
                 delay={300}
                 features={[
-                  "Custom SLA agreements",
-                  "Multi-location support",
-                  "Unlimited repair hours",
-                  "Dedicated manager",
-                  "Custom integrations",
-                ]}
+                "Custom SLA agreements",
+                "Multi-location support",
+                "Unlimited repair hours",
+                "Dedicated manager",
+                "Custom integrations"]
+                }
                 buttonText="Request Quote"
                 onButtonClick={() => {
                   setSelectedInquiry({
                     name: "AI Insurance - Enterprise",
                     price: 0,
                     tier: "Enterprise",
-                    description: "Custom SLA and enterprise-grade AI maintenance.",
+                    description: "Custom SLA and enterprise-grade AI maintenance."
                   });
                   setInquiryDialogOpen(true);
-                }}
-              />
+                }} />
+              
             </div>
 
             {/* Universal Support */}
@@ -1465,17 +1465,17 @@ function Business() {
                     </p>
                   </div>
                   <div className="flex flex-wrap justify-center gap-6 mb-8 relative z-10">
-                    {["🔧 Resuscitate", "⚡ Optimize", "🛡️ Secure", "🚀 Develop"].map((item, i) => (
-                      <div
-                        key={i}
-                        className="flex items-center gap-2 text-sm group hover-scale"
-                      >
+                    {["🔧 Resuscitate", "⚡ Optimize", "🛡️ Secure", "🚀 Develop"].map((item, i) =>
+                    <div
+                      key={i}
+                      className="flex items-center gap-2 text-sm group hover-scale">
+                      
                         <div className="w-10 h-10 bg-gradient-to-br from-primary/12 to-accent/8 rounded-xl flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300">
                           <span className="text-lg">{item.split(" ")[0]}</span>
                         </div>
                         <span className="font-semibold">{item.split(" ")[1]}</span>
                       </div>
-                    ))}
+                    )}
                   </div>
                   <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground relative z-10">
                     <span><strong className="text-foreground">No Contracts</strong> · Cancel anytime</span>
@@ -1496,38 +1496,38 @@ function Business() {
             <SectionHeader
               badge="Expert AI Guidance"
               title="AI Consulting Services"
-              subtitle="Choose your situation below. We show you the next step."
-            />
+              subtitle="Choose your situation below. We show you the next step." />
+            
 
             <AnimatedSection animation="fade-up" className="max-w-4xl mx-auto">
               {/* Tab Group — Premium pill design */}
               <div className="flex flex-wrap justify-center gap-2 p-2 glass-subtle rounded-2xl border border-border/40 mb-10 shadow-sm">
                 {[
-                  { key: "thinking" as const, label: "💭 Thinking About AI" },
-                  { key: "buying" as const, label: "🔍 Buying AI" },
-                  { key: "bought" as const, label: "🛡️ Already Bought AI" },
-                  { key: "leaving" as const, label: "🚪 Want to Leave AI" },
-                ].map((tab) => (
-                  <button
-                    key={tab.key}
-                    onClick={() => setActiveConsultingTab(tab.key)}
-                    className={`px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 flex-1 min-w-[130px] ${
-                      activeConsultingTab === tab.key
-                        ? "bg-gradient-to-r from-primary to-accent text-white shadow-lg shadow-primary/20 scale-[1.02]"
-                        : "hover:bg-card text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
+                { key: "thinking" as const, label: "💭 Thinking About AI" },
+                { key: "buying" as const, label: "🔍 Buying AI" },
+                { key: "bought" as const, label: "🛡️ Already Bought AI" },
+                { key: "leaving" as const, label: "🚪 Want to Leave AI" }].
+                map((tab) =>
+                <button
+                  key={tab.key}
+                  onClick={() => setActiveConsultingTab(tab.key)}
+                  className={`px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 flex-1 min-w-[130px] ${
+                  activeConsultingTab === tab.key ?
+                  "bg-gradient-to-r from-primary to-accent text-white shadow-lg shadow-primary/20 scale-[1.02]" :
+                  "hover:bg-card text-muted-foreground hover:text-foreground"}`
+                  }>
+                  
                     {tab.label}
                   </button>
-                ))}
+                )}
               </div>
 
               {/* Content — 3D card */}
               <Card className="relative p-10 border-border/40 rounded-3xl overflow-hidden shadow-3d">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.02] via-transparent to-accent/[0.01] pointer-events-none" />
                 
-                {activeConsultingTab === "thinking" && (
-                  <div className="text-center animate-fade-in relative z-10">
+                {activeConsultingTab === "thinking" &&
+                <div className="text-center animate-fade-in relative z-10">
                     <div className="w-18 h-18 bg-gradient-to-br from-primary/15 to-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-inner">
                       <span className="text-3xl">💭</span>
                     </div>
@@ -1537,31 +1537,31 @@ function Business() {
                       Not sure if AI fits your business? We help you explore your options, understand costs, and figure out if AI will drive real growth for you.
                     </p>
                     <ul className="text-left max-w-md mx-auto space-y-3 mb-8">
-                      {["30-minute discovery call", "Business needs assessment", "AI opportunity identification", "No obligation recommendation"].map((item, i) => (
-                        <li key={i} className="flex items-center gap-3 text-sm">
+                      {["30-minute discovery call", "Business needs assessment", "AI opportunity identification", "No obligation recommendation"].map((item, i) =>
+                    <li key={i} className="flex items-center gap-3 text-sm">
                           <div className="w-5 h-5 rounded-full bg-gradient-to-br from-primary/15 to-accent/10 flex items-center justify-center flex-shrink-0">
                             <CheckCircle className="w-3 h-3 text-primary" />
                           </div>
                           <span>{item}</span>
                         </li>
-                      ))}
+                    )}
                     </ul>
                     <Button
-                      onClick={() => {
-                        trackButtonClick("Book Free AI Discovery", "Business Consulting");
-                        setSelectedService({ type: "business", name: "AI Discovery Consultation (Free)", tier: "Free" });
-                        setModalOpen(true);
-                      }}
-                      size="lg"
-                      className="h-13 px-10 rounded-full bg-gradient-to-r from-primary to-accent text-white font-bold shadow-lg shadow-primary/20 hover:shadow-xl hover:scale-[1.03] transition-all duration-300"
-                    >
+                    onClick={() => {
+                      trackButtonClick("Book Free AI Discovery", "Business Consulting");
+                      setSelectedService({ type: "business", name: "AI Discovery Consultation (Free)", tier: "Free" });
+                      setModalOpen(true);
+                    }}
+                    size="lg"
+                    className="h-13 px-10 rounded-full bg-gradient-to-r from-primary to-accent text-white font-bold shadow-lg shadow-primary/20 hover:shadow-xl hover:scale-[1.03] transition-all duration-300">
+                    
                       Book Free Consultation
                     </Button>
                   </div>
-                )}
+                }
 
-                {activeConsultingTab === "buying" && (
-                  <div className="text-center animate-fade-in relative z-10">
+                {activeConsultingTab === "buying" &&
+                <div className="text-center animate-fade-in relative z-10">
                     <div className="w-18 h-18 bg-gradient-to-br from-primary/15 to-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-inner">
                       <span className="text-3xl">🔍</span>
                     </div>
@@ -1571,32 +1571,32 @@ function Business() {
                       Before you spend, let us check the tool first. We look for hidden costs, security gaps, data privacy risks, and whether the ROI claims hold up.
                     </p>
                     <ul className="text-left max-w-md mx-auto space-y-3 mb-8">
-                      {["Full vendor security assessment", "Hidden cost analysis", "ROI projection review", "Data privacy compliance check", "Written report with recommendations"].map((item, i) => (
-                        <li key={i} className="flex items-center gap-3 text-sm">
+                      {["Full vendor security assessment", "Hidden cost analysis", "ROI projection review", "Data privacy compliance check", "Written report with recommendations"].map((item, i) =>
+                    <li key={i} className="flex items-center gap-3 text-sm">
                           <div className="w-5 h-5 rounded-full bg-gradient-to-br from-primary/15 to-accent/10 flex items-center justify-center flex-shrink-0">
                             <CheckCircle className="w-3 h-3 text-primary" />
                           </div>
                           <span>{item}</span>
                         </li>
-                      ))}
+                    )}
                     </ul>
                     <Button
-                      onClick={() => {
-                        trackButtonClick("Get AI Vetting", "Business Consulting");
-                        trackConversion("consulting_vetting", 1799);
-                        setSelectedService({ type: "business", name: "Pre-Purchase AI Tool Vetting", price: 1799 });
-                        setModalOpen(true);
-                      }}
-                      size="lg"
-                      className="h-13 px-10 rounded-full bg-gradient-to-r from-primary to-accent text-white font-bold shadow-lg shadow-primary/20 hover:shadow-xl hover:scale-[1.03] transition-all duration-300"
-                    >
+                    onClick={() => {
+                      trackButtonClick("Get AI Vetting", "Business Consulting");
+                      trackConversion("consulting_vetting", 1799);
+                      setSelectedService({ type: "business", name: "Pre-Purchase AI Tool Vetting", price: 1799 });
+                      setModalOpen(true);
+                    }}
+                    size="lg"
+                    className="h-13 px-10 rounded-full bg-gradient-to-r from-primary to-accent text-white font-bold shadow-lg shadow-primary/20 hover:shadow-xl hover:scale-[1.03] transition-all duration-300">
+                    
                       Get Pre-Purchase Vetting
                     </Button>
                   </div>
-                )}
+                }
 
-                {activeConsultingTab === "bought" && (
-                  <div className="text-center animate-fade-in relative z-10">
+                {activeConsultingTab === "bought" &&
+                <div className="text-center animate-fade-in relative z-10">
                     <div className="w-18 h-18 bg-gradient-to-br from-primary/15 to-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-inner">
                       <span className="text-3xl">🛡️</span>
                     </div>
@@ -1606,32 +1606,32 @@ function Business() {
                       Already running AI but unsure if your system is secure or performing well? We audit your setup to find vulnerabilities and speed up performance.
                     </p>
                     <ul className="text-left max-w-md mx-auto space-y-3 mb-8">
-                      {["Full security vulnerability scan", "Performance optimization review", "Data handling audit", "Compliance verification", "Detailed remediation plan"].map((item, i) => (
-                        <li key={i} className="flex items-center gap-3 text-sm">
+                      {["Full security vulnerability scan", "Performance optimization review", "Data handling audit", "Compliance verification", "Detailed remediation plan"].map((item, i) =>
+                    <li key={i} className="flex items-center gap-3 text-sm">
                           <div className="w-5 h-5 rounded-full bg-gradient-to-br from-primary/15 to-accent/10 flex items-center justify-center flex-shrink-0">
                             <CheckCircle className="w-3 h-3 text-primary" />
                           </div>
                           <span>{item}</span>
                         </li>
-                      ))}
+                    )}
                     </ul>
                     <Button
-                      onClick={() => {
-                        trackButtonClick("Get AI Audit", "Business Consulting");
-                        trackConversion("consulting_audit", 3499);
-                        setSelectedService({ type: "business", name: "AI Security & Performance Audit", price: 3499 });
-                        setModalOpen(true);
-                      }}
-                      size="lg"
-                      className="h-13 px-10 rounded-full bg-gradient-to-r from-primary to-accent text-white font-bold shadow-lg shadow-primary/20 hover:shadow-xl hover:scale-[1.03] transition-all duration-300"
-                    >
+                    onClick={() => {
+                      trackButtonClick("Get AI Audit", "Business Consulting");
+                      trackConversion("consulting_audit", 3499);
+                      setSelectedService({ type: "business", name: "AI Security & Performance Audit", price: 3499 });
+                      setModalOpen(true);
+                    }}
+                    size="lg"
+                    className="h-13 px-10 rounded-full bg-gradient-to-r from-primary to-accent text-white font-bold shadow-lg shadow-primary/20 hover:shadow-xl hover:scale-[1.03] transition-all duration-300">
+                    
                       Get Security Audit
                     </Button>
                   </div>
-                )}
+                }
 
-                {activeConsultingTab === "leaving" && (
-                  <div className="text-center animate-fade-in relative z-10">
+                {activeConsultingTab === "leaving" &&
+                <div className="text-center animate-fade-in relative z-10">
                     <div className="w-18 h-18 bg-gradient-to-br from-primary/15 to-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-inner">
                       <span className="text-3xl">🚪</span>
                     </div>
@@ -1641,29 +1641,29 @@ function Business() {
                       Stuck with an AI tool that is not delivering? We help you exit safely, move your data, and find a better fit.
                     </p>
                     <ul className="text-left max-w-md mx-auto space-y-3 mb-8">
-                      {["Contract review and exit strategy", "Data migration planning", "Alternative solution research", "Transition support", "30 days post-exit monitoring"].map((item, i) => (
-                        <li key={i} className="flex items-center gap-3 text-sm">
+                      {["Contract review and exit strategy", "Data migration planning", "Alternative solution research", "Transition support", "30 days post-exit monitoring"].map((item, i) =>
+                    <li key={i} className="flex items-center gap-3 text-sm">
                           <div className="w-5 h-5 rounded-full bg-gradient-to-br from-primary/15 to-accent/10 flex items-center justify-center flex-shrink-0">
                             <CheckCircle className="w-3 h-3 text-primary" />
                           </div>
                           <span>{item}</span>
                         </li>
-                      ))}
+                    )}
                     </ul>
                     <Button
-                      onClick={() => {
-                        trackButtonClick("Get Exit Strategy", "Business Consulting");
-                        trackConversion("consulting_exit", 2499);
-                        setSelectedService({ type: "business", name: "AI Safe Exit Strategy", price: 2499 });
-                        setModalOpen(true);
-                      }}
-                      size="lg"
-                      className="h-13 px-10 rounded-full bg-gradient-to-r from-primary to-accent text-white font-bold shadow-lg shadow-primary/20 hover:shadow-xl hover:scale-[1.03] transition-all duration-300"
-                    >
+                    onClick={() => {
+                      trackButtonClick("Get Exit Strategy", "Business Consulting");
+                      trackConversion("consulting_exit", 2499);
+                      setSelectedService({ type: "business", name: "AI Safe Exit Strategy", price: 2499 });
+                      setModalOpen(true);
+                    }}
+                    size="lg"
+                    className="h-13 px-10 rounded-full bg-gradient-to-r from-primary to-accent text-white font-bold shadow-lg shadow-primary/20 hover:shadow-xl hover:scale-[1.03] transition-all duration-300">
+                    
                       Get Safe Exit Strategy
                     </Button>
                   </div>
-                )}
+                }
               </Card>
             </AnimatedSection>
           </div>
@@ -1680,52 +1680,52 @@ function Business() {
             <SectionHeader
               badge="Creative Services"
               title="Illustration & Visual Art"
-              subtitle="Professional illustration and visual design services that give your brand a distinctive, memorable identity."
-            />
+              subtitle="Professional illustration and visual design services that give your brand a distinctive, memorable identity." />
+            
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto" style={{ perspective: "1200px" }}>
               {[
-                {
-                  icon: Palette,
-                  title: "Illustration Design",
-                  desc: "Custom hand-crafted illustrations tailored to your brand story and audience. From editorial to product illustration.",
-                  gradient: "from-coral-400 to-coral-600",
-                },
-                {
-                  icon: Shapes,
-                  title: "Vector Illustration",
-                  desc: "Clean, scalable vector artwork for digital and print. Perfect for logos, web assets, and marketing collateral.",
-                  gradient: "from-primary to-lavender-500",
-                },
-                {
-                  icon: Pen,
-                  title: "Character Design",
-                  desc: "Original character concepts for your brand mascot, game, or animated content. Full turnarounds and style sheets included.",
-                  gradient: "from-lavender-500 to-violet-500",
-                },
-                {
-                  icon: Image,
-                  title: "Icon Design",
-                  desc: "Pixel-perfect custom icon sets that match your brand language. Available in SVG, PNG, and icon-font formats.",
-                  gradient: "from-teal-500 to-cyan-500",
-                },
-                {
-                  icon: BarChart3,
-                  title: "Infographic Design",
-                  desc: "Data-driven visual storytelling that turns complex information into clear, shareable graphics your audience remembers.",
-                  gradient: "from-gold-500 to-coral-400",
-                },
-                {
-                  icon: Grid3X3,
-                  title: "Pattern Design",
-                  desc: "Seamless, repeatable patterns for packaging, textiles, wallpapers, and digital backgrounds. Unique to your brand.",
-                  gradient: "from-coral-500 to-lavender-400",
-                },
-              ].map((service, i) => (
-                <div
-                  key={i}
-                  className="hover-lift"
-                >
+              {
+                icon: Palette,
+                title: "Illustration Design",
+                desc: "Custom hand-crafted illustrations tailored to your brand story and audience. From editorial to product illustration.",
+                gradient: "from-coral-400 to-coral-600"
+              },
+              {
+                icon: Shapes,
+                title: "Vector Illustration",
+                desc: "Clean, scalable vector artwork for digital and print. Perfect for logos, web assets, and marketing collateral.",
+                gradient: "from-primary to-lavender-500"
+              },
+              {
+                icon: Pen,
+                title: "Character Design",
+                desc: "Original character concepts for your brand mascot, game, or animated content. Full turnarounds and style sheets included.",
+                gradient: "from-lavender-500 to-violet-500"
+              },
+              {
+                icon: Image,
+                title: "Icon Design",
+                desc: "Pixel-perfect custom icon sets that match your brand language. Available in SVG, PNG, and icon-font formats.",
+                gradient: "from-teal-500 to-cyan-500"
+              },
+              {
+                icon: BarChart3,
+                title: "Infographic Design",
+                desc: "Data-driven visual storytelling that turns complex information into clear, shareable graphics your audience remembers.",
+                gradient: "from-gold-500 to-coral-400"
+              },
+              {
+                icon: Grid3X3,
+                title: "Pattern Design",
+                desc: "Seamless, repeatable patterns for packaging, textiles, wallpapers, and digital backgrounds. Unique to your brand.",
+                gradient: "from-coral-500 to-lavender-400"
+              }].
+              map((service, i) =>
+              <div
+                key={i}
+                className="hover-lift">
+                
                   <Card className="group relative p-0 border-border/40 rounded-2xl overflow-hidden hover:shadow-[0_20px_50px_-15px_hsl(var(--primary)/0.12)] transition-all duration-500 h-full">
                     {/* Top accent bar */}
                     <div className={`h-1.5 w-full bg-gradient-to-r ${service.gradient}`} />
@@ -1735,9 +1735,9 @@ function Business() {
 
                     <div className="relative z-10 p-6">
                       <div
-                        className={`w-14 h-14 rounded-xl bg-gradient-to-br ${service.gradient} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}
-                        style={{ transform: "translateZ(15px)" }}
-                      >
+                      className={`w-14 h-14 rounded-xl bg-gradient-to-br ${service.gradient} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}
+                      style={{ transform: "translateZ(15px)" }}>
+                      
                         <service.icon className="w-7 h-7 text-white" />
                       </div>
 
@@ -1747,23 +1747,23 @@ function Business() {
                       <p className="text-muted-foreground text-sm leading-relaxed mb-5">{service.desc}</p>
 
                       <button
-                        onClick={() => {
-                          setSelectedInquiry({
-                            name: service.title,
-                            price: 0,
-                            tier: "Illustration",
-                            description: service.desc,
-                          });
-                          setInquiryDialogOpen(true);
-                        }}
-                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:gap-3 transition-all duration-300"
-                      >
+                      onClick={() => {
+                        setSelectedInquiry({
+                          name: service.title,
+                          price: 0,
+                          tier: "Illustration",
+                          description: service.desc
+                        });
+                        setInquiryDialogOpen(true);
+                      }}
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:gap-3 transition-all duration-300">
+                      
                         Get a Quote <ArrowRight className="w-4 h-4" />
                       </button>
                     </div>
                   </Card>
                 </div>
-              ))}
+              )}
             </div>
 
             {/* Bottom CTA */}
@@ -1781,13 +1781,13 @@ function Business() {
                         name: "Custom Visual Package",
                         price: 0,
                         tier: "Custom",
-                        description: "Complete visual identity system with illustrations, icons, patterns, and brand assets.",
+                        description: "Complete visual identity system with illustrations, icons, patterns, and brand assets."
                       });
                       setInquiryDialogOpen(true);
                     }}
                     size="lg"
-                    className="rounded-full bg-gradient-to-r from-primary to-accent text-white font-bold shadow-lg hover:shadow-xl hover:scale-[1.03] transition-all"
-                  >
+                    className="rounded-full bg-gradient-to-r from-primary to-accent text-white font-bold shadow-lg hover:shadow-xl hover:scale-[1.03] transition-all">
+                    
                     Request Custom Quote
                   </Button>
                   <Button asChild variant="outline" size="lg" className="rounded-full font-semibold hover:scale-[1.03] transition-all">
@@ -1810,22 +1810,22 @@ function Business() {
             <SectionHeader
               badge="Why Choose Us"
               title="The InVision Difference"
-              subtitle="What makes us different from other AI vendors."
-            />
+              subtitle="What makes us different from other AI vendors." />
+            
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto mb-14" style={{ perspective: "1200px" }}>
               {[
-                { icon: Shield, title: "Security-First", desc: "Every solution ships with enterprise-grade encryption, monitoring, and data protection built in." },
-                { icon: Lock, title: "No Vendor Lock-In", desc: "We build on open standards. You own your AI and your data. Move in-house whenever you want." },
-                { icon: FileText, title: "Plain-English Docs", desc: "Your team gets documentation written in clear language. No jargon, no confusion." },
-                { icon: Sparkles, title: "Fast Deployment", desc: "Most AI solutions go live in 2 to 4 weeks. We move fast without cutting corners on security." },
-                { icon: CheckCircle, title: "Ongoing Partnership", desc: "We stay with you after launch. Continuous support, updates, and optimization as your business grows." },
-                { icon: Phone, title: "24/7 Support", desc: "Get help when you need it. Our team is available around the clock for critical issues." },
-              ].map((item, i) => (
-                <div
-                  key={i}
-                  className="hover-lift"
-                >
+              { icon: Shield, title: "Security-First", desc: "Every solution ships with enterprise-grade encryption, monitoring, and data protection built in." },
+              { icon: Lock, title: "No Vendor Lock-In", desc: "We build on open standards. You own your AI and your data. Move in-house whenever you want." },
+              { icon: FileText, title: "Plain-English Docs", desc: "Your team gets documentation written in clear language. No jargon, no confusion." },
+              { icon: Sparkles, title: "Fast Deployment", desc: "Most AI solutions go live in 2 to 4 weeks. We move fast without cutting corners on security." },
+              { icon: CheckCircle, title: "Ongoing Partnership", desc: "We stay with you after launch. Continuous support, updates, and optimization as your business grows." },
+              { icon: Phone, title: "24/7 Support", desc: "Get help when you need it. Our team is available around the clock for critical issues." }].
+              map((item, i) =>
+              <div
+                key={i}
+                className="hover-lift">
+                
                   <Card className="group relative p-7 border-border/40 rounded-2xl bg-card/95 backdrop-blur-sm overflow-hidden h-full hover:shadow-[0_20px_50px_-15px_hsl(var(--primary)/0.12)] hover:border-primary/25 transition-all duration-500">
                     {/* Top accent */}
                     <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -1833,16 +1833,16 @@ function Business() {
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] to-accent/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                     
                     <div
-                      className="w-13 h-13 bg-gradient-to-br from-primary/15 to-accent/10 rounded-xl flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-primary/10 relative z-10"
-                      style={{ transform: "translateZ(15px)" }}
-                    >
+                    className="w-13 h-13 bg-gradient-to-br from-primary/15 to-accent/10 rounded-xl flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-primary/10 relative z-10"
+                    style={{ transform: "translateZ(15px)" }}>
+                    
                       <item.icon className="w-6 h-6 text-primary" />
                     </div>
                     <h3 className="text-base font-bold mb-2 relative z-10">{item.title}</h3>
                     <p className="text-muted-foreground text-sm leading-relaxed relative z-10">{item.desc}</p>
                   </Card>
                 </div>
-              ))}
+              )}
             </div>
 
             {/* Stats Bar */}
@@ -1851,21 +1851,21 @@ function Business() {
                 <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/30 via-accent/20 to-primary/30" />
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center relative z-10">
                   {[
-                    { value: "15+", label: "Businesses Served" },
-                    { value: "99%+", label: "Uptime Guarantee" },
-                    { value: "24/7", label: "Support Available" },
-                    { value: "50+", label: "Integrations" },
-                  ].map((stat, i) => (
-                    <div
-                      key={i}
-                      className="group hover-scale"
-                    >
+                  { value: "15+", label: "Businesses Served" },
+                  { value: "99%+", label: "Uptime Guarantee" },
+                  { value: "24/7", label: "Support Available" },
+                  { value: "50+", label: "Integrations" }].
+                  map((stat, i) =>
+                  <div
+                    key={i}
+                    className="group hover-scale">
+                    
                       <p className="text-3xl md:text-4xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-1">
                         {stat.value}
                       </p>
                       <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">{stat.label}</p>
                     </div>
-                  ))}
+                  )}
                 </div>
               </Card>
             </AnimatedSection>
@@ -1873,18 +1873,18 @@ function Business() {
         </section>
 
         {/* ═══════════════════ TESTIMONIALS ═══════════════════ */}
-        {(isAdmin || businessTestimonials.length > 0) && (
-          <section className="py-24 relative overflow-hidden">
+        {(isAdmin || businessTestimonials.length > 0) &&
+        <section className="py-24 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/20 to-background" />
             
             <div className="container mx-auto px-4 relative z-10">
               <SectionHeader
-                badge="Client Stories"
-                title="What Our Clients Say"
-              />
+              badge="Client Stories"
+              title="What Our Clients Say" />
+            
 
-              {isAdmin && !isLoading && businessTestimonials.length === 0 && (
-                <div className="max-w-2xl mx-auto">
+              {isAdmin && !isLoading && businessTestimonials.length === 0 &&
+            <div className="max-w-2xl mx-auto">
                   <Card className="p-10 border-2 border-dashed border-primary/30 text-center rounded-3xl">
                     <span className="text-4xl mb-4 block">💼</span>
                     <h3 className="text-xl font-bold mb-2">Business Testimonials</h3>
@@ -1893,53 +1893,53 @@ function Business() {
                     </p>
                   </Card>
                 </div>
-              )}
+            }
 
-              {businessTestimonials.length > 0 && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+              {businessTestimonials.length > 0 &&
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                   {businessTestimonials.map((testimonial, i) => {
-                    const videoMedia = testimonial.testimonial_media?.find(
-                      (m: any) => m.media_type === "video",
-                    );
-                    return (
-                      <AnimatedSection key={testimonial.id} animation="fade-up" delay={i * 100}>
+                const videoMedia = testimonial.testimonial_media?.find(
+                  (m: any) => m.media_type === "video"
+                );
+                return (
+                  <AnimatedSection key={testimonial.id} animation="fade-up" delay={i * 100}>
                         <TestimonialCard
-                          name={testimonial.name}
-                          location={testimonial.location}
-                          quote={testimonial.story.substring(0, 120) + "..."}
-                          image={videoMedia?.thumbnail_url || "/placeholder.svg"}
-                          rating={testimonial.rating}
-                          videoUrl={videoMedia?.file_url}
-                          onVideoClick={() =>
-                            videoMedia &&
-                            setSelectedVideo({
-                              src: videoMedia.file_url,
-                              title: `${testimonial.name}'s Story`,
-                            })
-                          }
-                        />
-                      </AnimatedSection>
-                    );
-                  })}
+                      name={testimonial.name}
+                      location={testimonial.location}
+                      quote={testimonial.story.substring(0, 120) + "..."}
+                      image={videoMedia?.thumbnail_url || "/placeholder.svg"}
+                      rating={testimonial.rating}
+                      videoUrl={videoMedia?.file_url}
+                      onVideoClick={() =>
+                      videoMedia &&
+                      setSelectedVideo({
+                        src: videoMedia.file_url,
+                        title: `${testimonial.name}'s Story`
+                      })
+                      } />
+                    
+                      </AnimatedSection>);
+
+              })}
                 </div>
-              )}
+            }
             </div>
           </section>
-        )}
+        }
 
         {/* Final CTA */}
         <CTASection
           headline="Ready to Put AI to Work?"
           variant="image"
           backgroundImage={natureSummer2}
-          description="Take 15 minutes to discuss your needs. No sales pressure. We listen, ask questions, and give you a clear plan."
-        >
+          description="Take 15 minutes to discuss your needs. No sales pressure. We listen, ask questions, and give you a clear plan.">
+          
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               onClick={() => setModalOpen(true)}
               size="xl"
-              className="bg-white text-primary font-black shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_6px_30px_rgba(0,0,0,0.4)] transition-all duration-300 hover:scale-105 active:scale-95 border-2 border-white text-lg tracking-wide"
-            >
+              className="bg-white text-primary font-black shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_6px_30px_rgba(0,0,0,0.4)] transition-all duration-300 hover:scale-105 active:scale-95 border-2 border-white text-lg tracking-wide">
+              
               SCHEDULE DISCOVERY CALL
             </Button>
             <Button asChild size="xl" className="bg-transparent text-white font-black border-[3px] border-white shadow-[0_4px_20px_rgba(255,255,255,0.2)] hover:bg-white hover:text-primary transition-all duration-300 hover:scale-105 active:scale-95 text-lg tracking-wide">
@@ -1954,58 +1954,58 @@ function Business() {
         <Footer />
 
         {/* Modals */}
-        {selectedVideo && (
-          <VideoLightbox
-            isOpen={!!selectedVideo}
-            onClose={() => setSelectedVideo(null)}
-            videoSrc={selectedVideo.src}
-            title={selectedVideo.title}
-          />
-        )}
+        {selectedVideo &&
+        <VideoLightbox
+          isOpen={!!selectedVideo}
+          onClose={() => setSelectedVideo(null)}
+          videoSrc={selectedVideo.src}
+          title={selectedVideo.title} />
 
-        {selectedService && (
-          <BookingModal
-            open={modalOpen}
-            onOpenChange={setModalOpen}
-            serviceType={selectedService.type}
-            serviceName={selectedService.name}
-            serviceTier={selectedService.tier}
-            basePrice={selectedService.price}
-            veteranDiscountPercent={10}
-          />
-        )}
+        }
 
-        {selectedInquiry && (
-          <ServiceInquiryDialog
-            open={inquiryDialogOpen}
-            onOpenChange={setInquiryDialogOpen}
-            serviceName={selectedInquiry.name}
-            servicePrice={selectedInquiry.price}
-            serviceTier={selectedInquiry.tier}
-            serviceDescription={selectedInquiry.description}
-          />
-        )}
+        {selectedService &&
+        <BookingModal
+          open={modalOpen}
+          onOpenChange={setModalOpen}
+          serviceType={selectedService.type}
+          serviceName={selectedService.name}
+          serviceTier={selectedService.tier}
+          basePrice={selectedService.price}
+          veteranDiscountPercent={10} />
+
+        }
+
+        {selectedInquiry &&
+        <ServiceInquiryDialog
+          open={inquiryDialogOpen}
+          onOpenChange={setInquiryDialogOpen}
+          serviceName={selectedInquiry.name}
+          servicePrice={selectedInquiry.price}
+          serviceTier={selectedInquiry.tier}
+          serviceDescription={selectedInquiry.description} />
+
+        }
 
         <WebsiteInsuranceDialog
           open={websiteInsuranceOpen}
-          onOpenChange={setWebsiteInsuranceOpen}
-        />
+          onOpenChange={setWebsiteInsuranceOpen} />
+        
 
-        {embeddedPaymentConfig && (
-          <EmbeddedPaymentModal
-            open={embeddedPaymentOpen}
-            onOpenChange={setEmbeddedPaymentOpen}
-            mode={embeddedPaymentConfig.mode}
-            priceId={embeddedPaymentConfig.priceId}
-            productName={embeddedPaymentConfig.productName}
-            amount={embeddedPaymentConfig.amount}
-            description={embeddedPaymentConfig.description}
-            features={embeddedPaymentConfig.features}
-          />
-        )}
+        {embeddedPaymentConfig &&
+        <EmbeddedPaymentModal
+          open={embeddedPaymentOpen}
+          onOpenChange={setEmbeddedPaymentOpen}
+          mode={embeddedPaymentConfig.mode}
+          priceId={embeddedPaymentConfig.priceId}
+          productName={embeddedPaymentConfig.productName}
+          amount={embeddedPaymentConfig.amount}
+          description={embeddedPaymentConfig.description}
+          features={embeddedPaymentConfig.features} />
+
+        }
       </div>
-    </PageTransition>
-  );
+    </PageTransition>);
+
 }
 
 export default Business;
