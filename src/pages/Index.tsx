@@ -1459,11 +1459,11 @@ const Index = () => {
                   <section.icon className={`w-7 h-7 ${section.iconColor}`} />
                 </div>
               </div>
-              <DialogTitle className="font-serif-display text-2xl text-center">{section.title}</DialogTitle>
-              <DialogDescription className="font-sans-elegant text-center text-muted-foreground">
+              <LazyDialogTitle className="font-serif-display text-2xl text-center">{section.title}</LazyDialogTitle>
+              <LazyDialogDescription className="font-sans-elegant text-center text-muted-foreground">
                 {t('details.subtitle')}
-              </DialogDescription>
-            </DialogHeader>
+              </LazyDialogDescription>
+            </LazyDialogHeader>
             <div className="space-y-3 pt-2 max-h-[60vh] overflow-y-auto pr-1">
               {section.dialogContent.map((item, j) =>
             <motion.div
