@@ -230,10 +230,10 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
           </div>
         </motion.div>
       ) : (
-        <motion.div key="info" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5 pt-2">
-          <div className="glass-card rounded-2xl p-5 text-center">
-            <p className="font-sans-elegant text-xs text-muted-foreground mb-1">{t('registry.dialog.amount')}</p>
-            <p className="font-serif-display text-3xl text-foreground font-bold">${selectedAmount}</p>
+        <motion.div key="info" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4 pt-1">
+          <div className="glass-card rounded-2xl p-3 text-center">
+            <p className="font-sans-elegant text-xs text-muted-foreground mb-0.5">{t('registry.dialog.amount')}</p>
+            <p className="font-serif-display text-2xl text-foreground font-bold">${selectedAmount}</p>
           </div>
 
           <div>
