@@ -16,10 +16,10 @@ import { useSiteImages, useSiteSettings } from '@/hooks/useSiteContent';
 
 
 import heroImg from '@/assets/hero-wedding-thumb.webp';
-import flowersImgSmall from '@/assets/flowers-lavender-thumb.webp';
-import ringsImgSmall from '@/assets/rings-thumb.webp';
+import flowersImgSmall from '@/assets/flowers-lavender-tiny.webp';
+import ringsImgSmall from '@/assets/rings-tiny.webp';
 import cakeImgSmall from '@/assets/cake-small.webp';
-import coupleImgSmall from '@/assets/couple-lavender-tiny.webp';
+import coupleImgSmall from '@/assets/couple-lavender-micro.webp';
 
 const giftTiers = [
 { amount: 60, emoji: '💐', labelKey: 'registry.tier.bouquet' },
