@@ -6,7 +6,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Input } from '@/components/ui/input';
 import { Lock, Mail, Loader2, Sparkles, Star, Diamond } from 'lucide-react';
 import { toast } from 'sonner';
-import ringsImg from '@/assets/rings.jpg';
+import ringsImg from '@/assets/rings-small.webp';
 
 const Login = () => {
   const navigate = useNavigate();
