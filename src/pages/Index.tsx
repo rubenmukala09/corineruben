@@ -136,11 +136,15 @@ const PersonalCourtSection = forwardRef<HTMLElement, {t: (key: string) => string
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const fetchQuotes = async () => {
-      const { data } = await supabase.from('quotes').select('*').order('created_at', { ascending: false });
-      if (data) setQuotes(data);
-    };
-    fetchQuotes();
+    // Defer non-critical data fetch to reduce main-thread work during initial load
+    const id = setTimeout(() => {
+      const fetchQuotes = async () => {
+        const { data } = await supabase.from('quotes').select('*').order('created_at', { ascending: false });
+        if (data) setQuotes(data);
+      };
+      fetchQuotes();
+    }, 2000);
+    return () => clearTimeout(id);
   }, []);
 
   useEffect(() => {
