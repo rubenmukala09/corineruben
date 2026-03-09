@@ -750,20 +750,20 @@ const Index = () => {
             </p>
           </motion.div>
 
-          <h1 className="font-serif-display text-5xl md:text-7xl lg:text-8xl font-semibold text-foreground mb-2 leading-tight">
+          <h1 className="font-serif-display text-4xl md:text-7xl lg:text-8xl font-semibold text-foreground mb-2 leading-tight">
             {coupleName1}
           </h1>
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.5, type: "spring" }}
-            className="my-4"
+            className="my-3 md:my-4"
           >
-            <span className="inline-flex items-center justify-center w-16 h-16 rounded-full gradient-primary shadow-glow animate-pulse-love" role="img" aria-label="Heart">
-              <Heart className="w-7 h-7 text-primary-foreground fill-primary-foreground" />
+            <span className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full gradient-primary shadow-glow animate-pulse-love" role="img" aria-label="Heart">
+              <Heart className="w-5 h-5 md:w-7 md:h-7 text-primary-foreground fill-primary-foreground" />
             </span>
           </motion.div>
-          <p className="font-serif-display text-5xl md:text-7xl lg:text-8xl font-semibold text-foreground mb-6 leading-tight" aria-hidden="false">
+          <p className="font-serif-display text-4xl md:text-7xl lg:text-8xl font-semibold text-foreground mb-4 md:mb-6 leading-tight" aria-hidden="false">
             {coupleName2}
           </p>
 
