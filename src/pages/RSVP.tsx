@@ -635,7 +635,7 @@ const RSVP = () => {
             <motion.img
               src={ringsImg}
               alt="Wedding rings"
-              className="absolute -top-8 -left-16 w-20 h-20 object-contain opacity-60 rotate-[-15deg] pointer-events-none"
+              className="absolute -top-6 -left-10 w-14 h-14 md:w-20 md:h-20 object-contain opacity-60 rotate-[-15deg] pointer-events-none"
               initial={{ opacity: 0, scale: 0.5, rotate: -30 }}
               animate={{ opacity: 0.6, scale: 1, rotate: -15 }}
               transition={{ delay: 0.3, duration: 0.8 }}
