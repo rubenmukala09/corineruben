@@ -467,9 +467,10 @@ const Index = () => {
   
   // Event mode: court or church
   const isCourtMode = settings.active_event === 'court';
-  const courtWeddingDate = new Date(settings.court_wedding_date || '2026-03-16T14:00:00');
-  const churchWeddingDate = new Date(settings.wedding_date || '2026-10-16T15:00:00');
-  const weddingDate = isCourtMode ? courtWeddingDate : churchWeddingDate;
+  const weddingDateStr = isCourtMode 
+    ? (settings.court_wedding_date || '2026-03-16T14:00:00') 
+    : (settings.wedding_date || '2026-10-16T15:00:00');
+  const weddingDate = new Date(weddingDateStr);
   const courtVenue = settings.court_wedding_venue || '301 Sycamore St, Brookville — Mayor Letner';
   const courtAfterVenue = settings.court_wedding_after_venue || '10209 Gully Pass Dr, Dayton, OH 45458';
 
@@ -480,9 +481,10 @@ const Index = () => {
   const [paymentFormOpen, setPaymentFormOpen] = useState(false);
 
   useEffect(() => {
+    const targetDate = new Date(weddingDateStr);
     const update = () => {
       const now = new Date();
-      const diff = weddingDate.getTime() - now.getTime();
+      const diff = targetDate.getTime() - now.getTime();
       if (diff <= 0) return;
       setCountdown({
         days: Math.floor(diff / (1000 * 60 * 60 * 24)),
@@ -494,7 +496,7 @@ const Index = () => {
     update();
     const interval = setInterval(update, 1000);
     return () => clearInterval(interval);
-  }, [weddingDate]);
+  }, [weddingDateStr]);
 
   // Handle payment return from Stripe Checkout
   useEffect(() => {

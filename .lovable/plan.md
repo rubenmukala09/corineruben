@@ -1,49 +1,37 @@
 
 
-## Plan: Full Event Toggle System — Court Wedding Mode Across All Pages
+## Mobile Performance Analysis (66%) — What's Actually Happening
 
-### Overview
-Extend the existing `active_event` toggle (already in the dashboard Settings tab) so that **all pages** — not just the landing page — adapt to the current event mode. The RSVP page, Venue page, and dashboard overview will all reflect the court wedding details when in court mode. All data (RSVPs, gifts, subscribers) continues to be stored in the same tables regardless of mode.
+After examining the audit data in detail, most of the 12 performance issues flagged are **not from your app code** — they come from platform-level infrastructure and cannot be fixed through code changes.
 
-### What Changes
+### Issues Outside Our Control (platform-level)
 
-**1. RSVP Page (`src/pages/RSVP.tsx`)**
-- Read `active_event` from `useSiteSettings()`
-- When `isCourtMode`:
-  - Replace the venue section (ceremony/reception cards) with court wedding venue card (301 Sycamore St, 2:00 PM) and after-event snack card (10209 Gully Pass Dr, Dayton)
-  - Hide the church-specific schedule, transport, hotels, and map sections
-  - Skip the meal selection step and table selection step (these are church wedding features) — the RSVP flow goes: Info → Gift → Done (just name, email, attending, companions, gift)
-  - Add a "Church Wedding Coming Soon" note at the bottom of the RSVP confirmation
-- All RSVP data saves to the same `rsvps` table — no separate tables needed
+| Issue | Cause | Fixable? |
+|---|---|---|
+| **Redirects** (780ms) | Lovable staging → custom domain redirect | No |
+| **Render blocking requests** (2,240ms) | DM Sans font injected by Lovable badge | No (remove badge in Settings) |
+| **Unused JavaScript** (119 KiB) | Google Tag Manager scripts from Lovable | No |
+| **Cache lifetimes** (16 KiB) | Google Analytics cache headers | No |
+| **Document latency** (100ms) | Redirect chain | No |
+| **Network dependency tree** | Font chain through Google Fonts → gstatic | No |
 
-**2. Venue Page (`src/pages/Venue.tsx`)**
-- Read `active_event` from `useSiteSettings()`
-- When `isCourtMode`:
-  - Show court ceremony venue and after-event venue instead of ceremony/reception cards
-  - Hide schedule, transport, hotels, and map embed (these are for the church wedding)
-  - Add a "Big Church Wedding Coming Soon" teaser at the bottom
+### Suspicious Audit Data
 
-**3. Dashboard Overview (`src/pages/Dashboard.tsx`)**
-- Add a visible event mode indicator at the top of the dashboard (e.g., a banner showing "Currently showing: Court Wedding — March 16, 2026" or "Church Wedding — October 16, 2026")
-- This is just a visual indicator — the actual toggle remains in the Settings tab
+The audit's LCP element references `bold-moves.webp` with text "Start your online journey / Build your website today" and a `div.services` selector — **this is NOT your wedding app**. This appears to be a domain parking page at `corineruben.com`. The CLS layout shift is also attributed to this parking page content.
 
-**4. Translations (`src/contexts/LanguageContext.tsx`)**
-- Add court-specific RSVP keys (e.g., `rsvp.court.venue.title`, `rsvp.court.after.title`)
-- Add court venue page keys
+This means the PageSpeed analysis may be hitting a cached or intermittent parking page at your custom domain rather than your actual app.
 
-### What Stays the Same
-- Gift/Registry — unchanged, same flow for both events
-- Guestbook, Gallery, FAQ, Story, Enquiries — unchanged
-- All data stored in the same tables (RSVPs, gifts, subscribers, newsletter) regardless of event mode
-- Email notifications continue to work the same way
-- Dashboard data views (guests, gifts, tables, etc.) show all data from both events
+### What Can Be Improved In Code
 
-### Files to Edit
-1. `src/pages/RSVP.tsx` — Conditionally simplify flow for court mode, swap venue details
-2. `src/pages/Venue.tsx` — Conditionally show court venue details
-3. `src/pages/Dashboard.tsx` — Add event mode indicator banner
-4. `src/contexts/LanguageContext.tsx` — Add court-specific translation keys
+Only two items are partially addressable:
 
-### No Database Changes Needed
-All data uses existing tables. The `site_settings` key `active_event` already exists.
+1. **SEO score (58%)** — Likely caused by the parking page content being analyzed. Need to verify the custom domain is properly serving the app. If it is, we can add structured data and improve meta tags.
+
+2. **Font loading strategy** — The Google Fonts stylesheet in `index.html` is already using `media="print" onload="this.media='all'"` pattern (non-blocking). The render-blocking DM Sans flagged in the audit is from the Lovable badge, not our code.
+
+### Recommended Action
+
+The most impactful fix is **removing the Lovable badge** in your project Settings, which would eliminate the render-blocking DM Sans request (est. 2,240ms savings) and the unused JavaScript from Google Tag Manager (119 KiB). This alone could push the performance score significantly higher.
+
+No code changes are needed — the issues are infrastructure-level.
 

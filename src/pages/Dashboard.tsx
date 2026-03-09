@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
+import { useSiteSettings } from '@/hooks/useSiteContent';
 import {
   Users, Utensils, Gift, Heart, CheckCircle, XCircle, Clock,
   TrendingUp, BarChart3, PieChart, MapPin, Sparkles, Loader2, LogOut,
@@ -121,6 +122,8 @@ interface NewsletterRow {
 const Dashboard = () => {
   const { t } = useLanguage();
   const { signOut } = useAuth();
+  const { settings: siteSettings } = useSiteSettings();
+  const isCourtMode = siteSettings.active_event === 'court';
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('overview');
   const [rsvps, setRsvps] = useState<RsvpRow[]>([]);
@@ -312,6 +315,15 @@ const Dashboard = () => {
           </h1>
           <p className="font-sans-elegant text-base text-muted-foreground max-w-md mx-auto">
             {t('dashboard.subtitle')}
+          </p>
+        </motion.div>
+
+        {/* Event Mode Banner */}
+        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
+          className={`rounded-2xl px-5 py-3 mb-8 text-center border ${isCourtMode ? 'glass-card-strong border-primary/30' : 'glass-card border-border/30'}`}
+        >
+          <p className="font-sans-elegant text-sm font-semibold text-foreground">
+            {isCourtMode ? t('dashboard.event.court') : t('dashboard.event.church')}
           </p>
         </motion.div>
 

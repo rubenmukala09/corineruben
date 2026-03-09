@@ -577,6 +577,21 @@ const translations: Record<string, Record<Language, string>> = {
   'court.wedding.after.desc': { fr: 'Rejoignez-nous pour un moment convivial après la cérémonie', en: 'Join us for a small snack gathering after the ceremony', es: 'Únase a nosotros para un pequeño refrigerio después de la ceremonia' },
   'church.wedding.coming': { fr: '🎉 Le Grand Mariage Religieux & la Célébration arrivent bientôt — Restez connectés !', en: '🎉 The Big Church Wedding & Celebration is Coming Soon — Stay Tuned!', es: '🎉 ¡La Gran Boda Religiosa y Celebración llegará pronto — ¡Estén atentos!' },
   'church.wedding.coming.short': { fr: 'Grande Célébration à venir', en: 'Big Celebration Coming', es: 'Gran Celebración Próxima' },
+
+  // Court RSVP
+  'rsvp.court.venue.title': { fr: 'Lieu de la Cérémonie', en: 'Ceremony Venue', es: 'Lugar de la Ceremonia' },
+  'rsvp.court.after.title': { fr: 'Après la Cérémonie', en: 'After the Ceremony', es: 'Después de la Ceremonia' },
+  'rsvp.court.coming.note': { fr: '✨ Le grand mariage religieux avec dîner, tables et célébration sera annoncé prochainement !', en: '✨ The big church wedding with dinner, tables & celebration will be announced soon!', es: '✨ ¡La gran boda religiosa con cena, mesas y celebración se anunciará pronto!' },
+
+  // Court Venue page
+  'venue.court.title': { fr: 'Cérémonie Civile', en: 'Court Ceremony', es: 'Ceremonia Civil' },
+  'venue.court.subtitle': { fr: 'Les détails de notre mariage civil', en: 'Details for our civil wedding', es: 'Detalles de nuestra boda civil' },
+  'venue.court.after': { fr: 'Après la Cérémonie', en: 'After the Ceremony', es: 'Después de la Ceremonia' },
+  'venue.court.after.desc': { fr: 'Rejoignez-nous pour un moment convivial', en: 'Join us for a small gathering', es: 'Únase a nosotros para un pequeño encuentro' },
+
+  // Dashboard event banner
+  'dashboard.event.court': { fr: '⚖️ Mode actif : Mariage Civil — 16 Mars 2026', en: '⚖️ Active Mode: Court Wedding — March 16, 2026', es: '⚖️ Modo activo: Boda Civil — 16 de Marzo de 2026' },
+  'dashboard.event.church': { fr: '⛪ Mode actif : Mariage Religieux — 16 Octobre 2026', en: '⛪ Active Mode: Church Wedding — October 16, 2026', es: '⛪ Modo activo: Boda Religiosa — 16 de Octubre de 2026' },
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
