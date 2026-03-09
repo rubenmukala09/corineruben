@@ -28,6 +28,7 @@ const TABLES_DATA = TABLE_NAMES.map((name, i) => ({
 }));
 
 type Step = 'info' | 'meal' | 'table' | 'gift' | 'done';
+type CourtStep = 'info' | 'gift' | 'done';
 
 const giftTiers = [
   { amount: 60, emoji: '💐', labelKey: 'registry.tier.bouquet' },
