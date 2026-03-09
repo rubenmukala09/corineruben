@@ -18,6 +18,7 @@ import { TestimonialCarousel } from "@/components/home/TestimonialCarousel";
 import { LiveSecurityStats } from "@/components/home/LiveSecurityStats";
 import { WorkshopsPromo } from "@/components/home/WorkshopsPromo";
 import { FamilyTrustSection } from "@/components/home/FamilyTrustSection";
+// NatureAccent removed for performance
 import { ArrowRight, CheckCircle, Phone, Shield } from "lucide-react";
 
 const FAQPreview = lazy(() =>
@@ -70,20 +71,20 @@ const Index = forwardRef<HTMLDivElement>(function Index(_props, _ref) {
             <HeroHomepage />
           </section>
 
-          {/* 2. Exhibition Marquee Ticker */}
+          {/* 2. Live Threat Ticker */}
           <ThreatTicker />
 
-          {/* 3. Why InVision Works + Content + Stats */}
+          {/* 3. Stats + Who We Are + Real Results */}
           <div id="stats">
             <HomeIntroSection />
           </div>
 
-          {/* 4. Live Security Command Center */}
+          {/* 4. Live Security Command Center — dark premium dashboard */}
           <div id="live-security">
             <LiveSecurityStats />
           </div>
 
-          {/* 5. Services Grid - "Find Your Perfect Protection" */}
+          {/* 5. Services Grid */}
           <div id="services">
             <SiteOrientationGrid />
           </div>
@@ -93,7 +94,7 @@ const Index = forwardRef<HTMLDivElement>(function Index(_props, _ref) {
             <WorkshopsPromo />
           </div>
 
-          {/* 7. How It Works — Event List Style */}
+          {/* 7. How It Works — 3 Steps */}
           <div id="get-protected">
             <PromoStrip />
           </div>
@@ -104,7 +105,7 @@ const Index = forwardRef<HTMLDivElement>(function Index(_props, _ref) {
           </div>
 
           {/* 9. Testimonials */}
-          <div id="testimonials">
+          <div id="testimonials" className="bg-muted/30">
             <TestimonialCarousel />
           </div>
 
@@ -143,28 +144,35 @@ const Index = forwardRef<HTMLDivElement>(function Index(_props, _ref) {
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/85 via-foreground/60 to-foreground/40" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[hsl(288_35%_8%/0.85)] via-[hsl(288_35%_12%/0.7)] to-[hsl(288_35%_15%/0.5)]" />
             </div>
 
             <div className="container mx-auto px-4 py-20 md:py-28 lg:py-32 text-center relative z-10">
               <div
                 className={`max-w-3xl mx-auto transition-all duration-500 ease-out ${ctaVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
               >
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-background mb-6 leading-tight">
-                  Start Protecting Your Family <span className="font-display italic">Today</span>
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-8">
+                  <Shield className="w-4 h-4 text-accent" />
+                  <span className="text-xs font-bold uppercase tracking-wider text-white/90">
+                    Protected Community
+                  </span>
+                </div>
+
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+                  Start Protecting Your Family Today
                 </h2>
-                <p className="text-base text-background/70 mb-10 max-w-xl mx-auto leading-relaxed">
+                <p className="text-lg text-white/80 mb-10 max-w-xl mx-auto leading-relaxed">
                   Join families across Ohio who live confidently, knowing they are
                   protected from AI scams. Get started in minutes.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
-                  <Button asChild size="lg" className="rounded-full h-12 px-8 bg-background text-foreground hover:bg-background/90 font-bold text-sm uppercase tracking-wider">
+                  <Button asChild size="lg">
                     <Link to="/training#pricing">
                       Get Protected Today <ArrowRight className="ml-2 w-5 h-5" />
                     </Link>
                   </Button>
-                  <Button asChild variant="outline" size="lg" className="rounded-full h-12 px-8 border-background/30 text-background hover:bg-background/10 font-semibold">
+                  <Button asChild variant="heroOutline" size="lg">
                     <Link to="/business">Business Solutions</Link>
                   </Button>
                 </div>
@@ -176,9 +184,9 @@ const Index = forwardRef<HTMLDivElement>(function Index(_props, _ref) {
                     `${SITE.moneyBackGuaranteeDays}-Day Guarantee`,
                     "24/7 Support",
                   ].map((item) => (
-                    <div key={item} className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-background/10 border border-background/15">
-                      <CheckCircle className="w-3.5 h-3.5 text-background/70" />
-                      <span className="text-xs font-medium text-background/70">{item}</span>
+                    <div key={item} className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/15">
+                      <CheckCircle className="w-3.5 h-3.5 text-accent" />
+                      <span className="text-xs font-medium text-white/85">{item}</span>
                     </div>
                   ))}
                 </div>

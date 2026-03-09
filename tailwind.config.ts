@@ -20,9 +20,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["DM Sans", "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ["DM Serif Display", "Georgia", "serif"],
-        outfit: ["DM Sans", "Inter", "sans-serif"],
+        outfit: ["Rubik", "sans-serif"],
+        sans: ["Rubik", "sans-serif"],
+        display: ["Lora", "Rubik", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",

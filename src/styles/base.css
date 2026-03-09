@@ -27,19 +27,19 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
 @layer base {
 
   :root {
-    /* Base colors - warm cream/beige inspired by fitup */
-    --background: 30 20% 96%;
-    --foreground: 220 30% 12%;
+    /* Base colors - clean modern off-white */
+    --background: 240 10% 98%;
+    --foreground: 240 20% 12%;
 
-    /* Blue Primary (inspired by fitup blue accent) */
-    --primary: 220 72% 50%;
+    /* Rich Violet Primary (inspired by #5B3765 / #493C62) */
+    --primary: 288 30% 30%;
     --primary-foreground: 0 0% 100%;
 
-    /* Lighter Blue Accent */
-    --accent: 220 65% 58%;
+    /* Mauve-Purple Accent (from #BB81B5) - darkened for contrast */
+    --accent: 308 30% 48%;
     --accent-foreground: 0 0% 100%;
 
-    /* Success - soft green */
+    /* Success - warm sage */
     --success: 152 48% 45%;
     --success-foreground: 0 0% 100%;
 
@@ -49,65 +49,65 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
 
     /* Card & Surface - pure white */
     --card: 0 0% 100%;
-    --card-foreground: 220 30% 12%;
+    --card-foreground: 240 20% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 30% 12%;
+    --popover-foreground: 240 20% 12%;
 
-    /* Secondary - warm light */
-    --secondary: 30 15% 93%;
-    --secondary-foreground: 220 72% 50%;
+    /* Secondary - neutral light gray */
+    --secondary: 240 6% 94%;
+    --secondary-foreground: 288 30% 30%;
 
-    /* Muted - warm gray */
-    --muted: 30 12% 93%;
-    --muted-foreground: 220 10% 40%;
+    /* Muted - neutral gray */
+    --muted: 240 6% 94%;
+    --muted-foreground: 240 10% 34%;
 
-    --border: 30 10% 88%;
-    --input: 30 12% 93%;
-    --ring: 220 72% 50%;
+    --border: 240 6% 90%;
+    --input: 240 6% 94%;
+    --ring: 288 30% 30%;
 
-    /* Standardized radius */
-    --radius: 0.75rem;
+    /* Standardized radius - 8px base */
+    --radius: 0.5rem;
 
-    /* Extended Color Palette - Navy */
-    --navy-900: 220 55% 10%;
-    --navy-800: 220 50% 14%;
-    --navy-700: 220 48% 20%;
-    --navy-600: 220 45% 26%;
-    --navy-500: 220 40% 34%;
-    --navy-400: 220 35% 46%;
-    --navy-300: 220 28% 60%;
-    --navy-200: 220 22% 78%;
-    --navy-100: 220 18% 93%;
+    /* Extended Color Palette - Deep Navy Spectrum (from #081433 to #18305A) */
+    --navy-900: 225 65% 8%;
+    --navy-800: 225 58% 12%;
+    --navy-700: 222 55% 18%;
+    --navy-600: 220 52% 22%;
+    --navy-500: 218 45% 30%;
+    --navy-400: 215 38% 42%;
+    --navy-300: 212 30% 58%;
+    --navy-200: 210 24% 78%;
+    --navy-100: 210 20% 93%;
 
-    /* Lavender/Blue spectrum */
-    --lavender-700: 220 50% 35%;
-    --lavender-600: 220 45% 42%;
-    --lavender-500: 220 40% 55%;
-    --lavender-400: 220 50% 68%;
-    --lavender-300: 220 55% 80%;
-    --lavender-200: 220 50% 89%;
-    --lavender-100: 220 40% 95%;
+    /* Lavender/Purple spectrum (richer, from palette #9E6899 → #5B3765) */
+    --lavender-700: 288 30% 30%;
+    --lavender-600: 295 28% 38%;
+    --lavender-500: 308 30% 55%;
+    --lavender-400: 316 40% 68%;
+    --lavender-300: 325 48% 80%;
+    --lavender-200: 330 52% 89%;
+    --lavender-100: 335 45% 95%;
 
-    /* Coral/warm accent spectrum */
-    --coral-600: 15 55% 52%;
-    --coral-500: 15 50% 58%;
-    --coral-400: 15 45% 64%;
-    --coral-300: 15 40% 75%;
-    --coral-200: 15 50% 87%;
-    --coral-100: 15 40% 94%;
+    /* Mauve-Purple spectrum (from palette) */
+    --coral-600: 308 23% 51%;
+    --coral-500: 308 28% 56%;
+    --coral-400: 308 30% 61%;
+    --coral-300: 324 30% 75%;
+    --coral-200: 330 52% 87%;
+    --coral-100: 335 45% 94%;
 
-    /* Blush Pink - warm tones */
-    --blush-500: 20 45% 87%;
-    --blush-400: 22 50% 91%;
-    --blush-300: 25 55% 95%;
+    /* Blush Pink (from #F3CCDE / #F6D7DD) */
+    --blush-500: 330 58% 87%;
+    --blush-400: 332 62% 91%;
+    --blush-300: 335 68% 95%;
 
-    /* Neutral warm slate tones */
-    --slate-900: 220 16% 12%;
-    --slate-700: 220 10% 26%;
-    --slate-500: 220 6% 42%;
-    --slate-300: 220 4% 70%;
-    --slate-100: 30 8% 96%;
+    /* Neutral slate tones - cooler */
+    --slate-900: 240 16% 12%;
+    --slate-700: 240 10% 26%;
+    --slate-500: 240 6% 42%;
+    --slate-300: 240 4% 70%;
+    --slate-100: 240 8% 96%;
 
     /* Gold accent for premium touches */
     --gold-600: 35 90% 45%;
@@ -115,19 +115,19 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --gold-400: 42 88% 60%;
     --gold-300: 45 85% 72%;
 
-    /* Purple/violet - kept for compatibility */
-    --purple-900: 220 40% 18%;
-    --purple-700: 220 35% 26%;
-    --purple-500: 220 30% 36%;
-    --purple-400: 220 28% 45%;
-    --purple-300: 220 28% 58%;
-    --purple-200: 220 30% 74%;
-    --purple-100: 220 35% 92%;
+    /* Purple/violet - richer spectrum (#F3CCDE → #BA88AE → #5B3765) */
+    --purple-900: 288 40% 18%;
+    --purple-700: 288 35% 26%;
+    --purple-500: 290 30% 36%;
+    --purple-400: 295 28% 45%;
+    --purple-300: 308 28% 58%;
+    --purple-200: 316 30% 74%;
+    --purple-100: 330 35% 92%;
 
-    --violet-600: 220 35% 38%;
-    --violet-500: 220 30% 48%;
-    --violet-400: 220 32% 58%;
-    --violet-300: 220 38% 70%;
+    --violet-600: 295 35% 38%;
+    --violet-500: 300 30% 48%;
+    --violet-400: 308 32% 58%;
+    --violet-300: 316 38% 70%;
 
     --teal-600: 168 55% 35%;
     --teal-500: 168 50% 42%;
@@ -139,58 +139,58 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     --cyan-500: 188 50% 45%;
     --cyan-400: 188 45% 55%;
 
-    /* Warm neutral shadows */
-    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.03);
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 2px 8px -2px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 4px 16px -4px rgba(0, 0, 0, 0.08);
+    /* Modern neutral shadows */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 2px 8px -2px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 4px 16px -4px rgba(0, 0, 0, 0.1);
 
     /* Modern shadow system */
-    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.03), 0 4px 12px rgba(0, 0, 0, 0.04);
-    --shadow-card-hover: 0 2px 6px rgba(0, 0, 0, 0.05), 0 8px 24px rgba(0, 0, 0, 0.07);
-    --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.06), 0 16px 40px rgba(0, 0, 0, 0.05);
+    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.06);
+    --shadow-card-hover: 0 2px 6px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.08);
+    --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.08), 0 16px 40px rgba(0, 0, 0, 0.06);
 
-    --sidebar-background: 30 15% 98%;
-    --sidebar-foreground: 220 16% 14%;
-    --sidebar-primary: 220 72% 50%;
+    --sidebar-background: 0 0% 99%;
+    --sidebar-foreground: 240 16% 14%;
+    --sidebar-primary: 288 30% 30%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 30 12% 94%;
-    --sidebar-accent-foreground: 220 72% 50%;
-    --sidebar-border: 30 10% 90%;
-    --sidebar-ring: 220 72% 50%;
+    --sidebar-accent: 240 6% 94%;
+    --sidebar-accent-foreground: 288 30% 30%;
+    --sidebar-border: 240 6% 90%;
+    --sidebar-ring: 288 30% 30%;
 
     /* Global text scale (rem-based) */
     --text-scale: 1;
   }
 
   .dark {
-    --background: 220 25% 8%;
-    --foreground: 30 18% 95%;
-    --card: 220 22% 12%;
-    --card-foreground: 30 18% 95%;
-    --popover: 220 22% 12%;
-    --popover-foreground: 30 18% 95%;
-    --primary: 220 72% 58%;
-    --primary-foreground: 220 25% 8%;
-    --secondary: 220 18% 18%;
-    --secondary-foreground: 30 18% 95%;
-    --muted: 220 15% 16%;
-    --muted-foreground: 220 10% 65%;
-    --accent: 220 65% 62%;
+    --background: 288 35% 7%;
+    --foreground: 330 18% 95%;
+    --card: 288 30% 11%;
+    --card-foreground: 330 18% 95%;
+    --popover: 288 30% 11%;
+    --popover-foreground: 330 18% 95%;
+    --primary: 316 45% 68%;
+    --primary-foreground: 288 35% 7%;
+    --secondary: 295 22% 18%;
+    --secondary-foreground: 330 18% 95%;
+    --muted: 288 18% 16%;
+    --muted-foreground: 316 12% 65%;
+    --accent: 18 88% 65%;
     --accent-foreground: 0 0% 100%;
     --destructive: 8 70% 55%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 18% 20%;
-    --input: 220 18% 20%;
-    --ring: 220 72% 58%;
-    --sidebar-background: 220 25% 7%;
-    --sidebar-foreground: 30 14% 95%;
-    --sidebar-primary: 220 72% 58%;
-    --sidebar-primary-foreground: 220 25% 8%;
-    --sidebar-accent: 220 18% 16%;
-    --sidebar-accent-foreground: 30 14% 95%;
-    --sidebar-border: 220 18% 16%;
-    --sidebar-ring: 220 72% 58%;
+    --border: 288 22% 20%;
+    --input: 288 22% 20%;
+    --ring: 316 45% 68%;
+    --sidebar-background: 288 35% 6%;
+    --sidebar-foreground: 330 14% 95%;
+    --sidebar-primary: 316 45% 68%;
+    --sidebar-primary-foreground: 288 35% 7%;
+    --sidebar-accent: 295 22% 16%;
+    --sidebar-accent-foreground: 330 14% 95%;
+    --sidebar-border: 288 22% 16%;
+    --sidebar-ring: 316 45% 68%;
   }
 }
 
@@ -277,7 +277,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: "DM Sans", "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: "Inter", "Rubik", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: 1rem;
     line-height: 1.65;
     letter-spacing: -0.011em;
@@ -297,7 +297,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
     overflow-x: hidden;
     width: 100%;
     position: relative;
-    background-color: hsl(30 20% 96%);
+    background-color: hsl(240 10% 98%);
   }
 
   @media (min-width: 768px) {
@@ -424,7 +424,7 @@ All colors MUST be HSL. Gradient-first approach with glassmorphism and fluid ani
   h5,
   h6 {
     @apply font-bold;
-    font-family: "DM Sans", "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-family: "Inter", "Rubik", ui-sans-serif, system-ui, -apple-system, sans-serif;
     line-height: 1.08;
     letter-spacing: -0.03em;
     text-wrap: balance;

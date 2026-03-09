@@ -1,146 +1,172 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Shield, Phone, Users, TrendingUp, Zap, Facebook, Instagram, Youtube, Linkedin } from "lucide-react";
+import { ArrowRight, Shield, Star, CheckCircle, Phone, Zap, Users, Lock, Award, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SITE } from "@/config/site";
 import heroImage from "@/assets/hero-homepage-cinematic.jpg";
 
 export const HeroHomepage = () => {
   return (
-    <section className="relative min-h-[92vh] overflow-hidden bg-background">
-      {/* Subtle warm gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/50" />
+    <section className="relative min-h-[100vh] overflow-hidden">
+      {/* ── Full-bleed background image ── */}
+      <div className="absolute inset-0">
+        <img
+          src={heroImage}
+          alt="Multi-generational family safely using technology together"
+          className="w-full h-full object-cover"
+          loading="eager"
+          decoding="sync"
+          fetchPriority="high"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[hsl(var(--background))] via-[hsl(var(--background)/0.85)] to-transparent lg:via-[hsl(var(--background)/0.7)]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--background))] via-transparent to-[hsl(var(--background)/0.3)]" />
+      </div>
 
+      {/* ── Content ── */}
       <div className="relative z-10">
-        <div className="container mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-4 min-h-[92vh] items-center py-20 lg:py-24">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="min-h-[100vh] flex flex-col justify-center py-28 lg:py-32 max-w-3xl">
 
-            {/* Left Content */}
-            <div className="max-w-xl">
-              {/* Headline with serif italic accent */}
-              <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-[4.25rem] font-black text-foreground leading-[1.05] mb-6 tracking-tight">
-                Perfect{" "}
-                <br className="hidden sm:block" />
-                Scam Protection{" "}
-                <br className="hidden sm:block" />
-                With <span className="font-display italic text-primary">InVision</span>
-              </h1>
-
-              {/* Subheadline */}
-              <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-md mb-8">
-                Unlock your full potential with tailored protection programs,
-                all crafted to help you achieve your family's digital safety goals.
-              </p>
-
-              {/* CTAs - fitup style */}
-              <div className="flex flex-wrap items-center gap-4 mb-10">
-                <Button asChild size="lg" className="rounded-full h-12 px-7 bg-foreground text-background hover:bg-foreground/90 font-bold text-sm uppercase tracking-wider">
-                  <Link to="/training#pricing">
-                    Get Started
-                  </Link>
-                </Button>
-                <Link
-                  to="/about"
-                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 underline underline-offset-4 decoration-border"
-                >
-                  Join Our Community
-                </Link>
-              </div>
-
-              {/* Social icons row */}
-              <div className="flex items-center gap-5 mb-10">
-                {[
-                  { icon: Facebook, href: "#" },
-                  { icon: Instagram, href: "#" },
-                  { icon: Youtube, href: "#" },
-                  { icon: Linkedin, href: "#" },
-                ].map((s, i) => (
-                  <a key={i} href={s.href} className="text-muted-foreground hover:text-foreground transition-colors">
-                    <s.icon className="w-5 h-5" />
-                  </a>
-                ))}
-              </div>
-
-              {/* Members trust badge - like fitup avatar row */}
-              <div className="flex items-center gap-4 mb-10">
-                <div className="flex -space-x-2">
-                  {["bg-primary/80", "bg-accent/80", "bg-foreground/60", "bg-primary/60", "bg-accent/60"].map((bg, i) => (
-                    <div key={i} className={`w-9 h-9 rounded-full ${bg} border-2 border-background flex items-center justify-center`}>
-                      <span className="text-[10px] font-bold text-primary-foreground">
-                        {["JM", "RS", "DW", "LT", "MK"][i]}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-foreground">500+ Members</p>
-                  <p className="text-xs text-muted-foreground">Protected families</p>
-                </div>
-              </div>
-
-              {/* Stats row - like fitup 500k+ / 10k+ */}
-              <div className="flex items-start gap-12">
-                <div>
-                  <div className="text-3xl md:text-4xl font-black text-foreground">500+</div>
-                  <p className="text-xs text-muted-foreground mt-1 max-w-[120px] leading-snug">
-                    Personalized protection programs delivered
-                  </p>
-                </div>
-                <div>
-                  <div className="text-3xl md:text-4xl font-black text-foreground">$1.2M+</div>
-                  <p className="text-xs text-muted-foreground mt-1 max-w-[120px] leading-snug">
-                    Saved for families from AI scams
-                  </p>
-                </div>
+            {/* Live status badge */}
+            <div className="mb-8">
+              <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-card/80 backdrop-blur-xl border border-border/50 shadow-lg shadow-primary/5">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
+                </span>
+                <span className="text-sm font-semibold text-foreground tracking-wide">
+                  2,847 threats blocked this month
+                </span>
+                <div className="w-px h-4 bg-border" />
+                <span className="text-xs font-bold text-primary uppercase tracking-wider">Live</span>
               </div>
             </div>
 
-            {/* Right - Hero Image with floating widgets */}
-            <div className="relative">
-              <div className="relative rounded-[2rem] overflow-hidden shadow-2xl">
-                <img
-                  src={heroImage}
-                  alt="Multi-generational family safely using technology together"
-                  className="w-full h-[500px] lg:h-[600px] object-cover"
-                  loading="eager"
-                  decoding="sync"
-                  fetchPriority="high"
-                />
-                {/* Subtle blue overlay on image */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-primary/5" />
-              </div>
+            {/* Headline */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-black text-foreground leading-[1.05] mb-6 tracking-tight">
+              AI-Powered{" "}
+              <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+                Scam Protection
+              </span>
+              <br className="hidden sm:block" />
+              for Your Family
+            </h1>
 
-              {/* Floating widget - top right */}
-              <div className="absolute -top-4 -right-4 lg:right-4 z-20">
-                <div className="bg-card/90 backdrop-blur-xl rounded-2xl border border-border/40 p-4 shadow-lg max-w-[200px]">
-                  <p className="text-xs font-semibold text-muted-foreground mb-2">Weekly Overview</p>
-                  <div className="flex items-end gap-1 h-10">
-                    {[40, 65, 45, 80, 55, 70, 90].map((h, i) => (
-                      <div key={i} className="flex-1 rounded-sm bg-primary/20 relative" style={{ height: `${h}%` }}>
-                        <div className="absolute bottom-0 left-0 right-0 rounded-sm bg-primary" style={{ height: `${h * 0.7}%` }} />
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex items-center justify-between mt-2">
-                    <span className="text-xs text-muted-foreground">Threats Blocked</span>
-                    <span className="text-xs font-bold text-primary">+23%</span>
-                  </div>
-                </div>
-              </div>
+            {/* Subheadline */}
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mb-10">
+              Real-time deepfake detection, voice clone analysis, and phishing prevention.
+              Veteran-founded in Ohio — protecting 500+ families and counting.
+            </p>
 
-              {/* Floating widget - bottom left - like fitup "yoga performance" */}
-              <div className="absolute -bottom-6 -left-4 lg:left-4 z-20">
-                <div className="bg-card/90 backdrop-blur-xl rounded-2xl border border-border/40 p-4 shadow-lg">
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-4 mb-12">
+              <Button asChild size="xl" className="shadow-lg shadow-primary/20">
+                <Link to="/training#pricing">
+                  <Shield className="mr-2 w-5 h-5" />
+                  Start Protection — From $79
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="xl" className="bg-card/60 backdrop-blur-sm border-border/60 shadow-lg">
+                <a href={SITE.phone.tel}>
+                  <Phone className="mr-2 w-5 h-5" /> Call {SITE.phone.display}
+                </a>
+              </Button>
+            </div>
+
+            {/* Metric cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {[
+                { value: "500+", label: "Families Protected", icon: Users },
+                { value: "$1.2M", label: "Saved From Scams", icon: TrendingUp },
+                { value: "99.8%", label: "Detection Rate", icon: Shield },
+                { value: "< 2min", label: "Response Time", icon: Zap },
+              ].map((stat) => (
+                <div
+                  key={stat.label}
+                  className="rounded-xl bg-card/90 border border-border/60 p-4 shadow-sm hover:shadow-md transition-shadow duration-200"
+                >
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                      <Shield className="w-6 h-6 text-primary" />
-                    </div>
+                    <stat.icon className="w-5 h-5 text-primary flex-shrink-0" />
                     <div>
-                      <p className="text-sm font-bold text-foreground">99.8% Detection</p>
-                      <p className="text-xs text-muted-foreground">AI-powered scanning</p>
+                      <div className="text-lg font-extrabold text-foreground leading-none">{stat.value}</div>
+                      <div className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mt-1">{stat.label}</div>
                     </div>
                   </div>
                 </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ── Bottom floating trust bar ── */}
+        <div className="border-t border-border/40 bg-card/90">
+          <div className="container mx-auto px-6 lg:px-12 py-4">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="flex gap-0.5">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <span className="text-sm font-bold text-foreground">
+                  5.0 — Rated by Ohio Families
+                </span>
               </div>
+              <div className="hidden md:flex items-center gap-3">
+                {[
+                  { icon: Award, text: `${SITE.veteranDiscountPercent}% Veteran Discount` },
+                  { icon: Lock, text: `${SITE.moneyBackGuaranteeDays}-Day Money Back` },
+                  { icon: Shield, text: "Privacy-First Approach" },
+                ].map((item) => (
+                  <div key={item.text} className="flex items-center gap-2 px-4 py-2 rounded-full bg-muted/60 border border-border/40">
+                    <item.icon className="w-3.5 h-3.5 text-primary" />
+                    <span className="text-[11px] font-semibold text-muted-foreground">{item.text}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Right-side floating elements (desktop only) ── */}
+      <div className="hidden xl:block absolute top-[20%] right-[5%] z-20">
+        <div className="px-5 py-4 rounded-2xl bg-card/80 backdrop-blur-2xl border border-border/40 shadow-2xl shadow-primary/10 max-w-[220px]">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-9 h-9 rounded-xl bg-emerald-500/10 flex items-center justify-center">
+              <Shield className="w-5 h-5 text-emerald-600" />
+            </div>
+            <div>
+              <div className="text-sm font-bold text-foreground">Protected</div>
+              <div className="text-[10px] text-emerald-600 font-semibold">Shield Active</div>
+            </div>
+          </div>
+          <div className="h-px bg-border/60 mb-3" />
+          <div className="space-y-2">
+            {["Voice Cloning", "Deepfake AI", "Phishing"].map((threat) => (
+              <div key={threat} className="flex items-center justify-between">
+                <span className="text-xs text-muted-foreground">{threat}</span>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  <span className="text-[10px] font-bold text-emerald-600">Blocked</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="hidden xl:block absolute bottom-[22%] right-[8%] z-20">
+        <div className="px-5 py-4 rounded-2xl bg-card/80 backdrop-blur-2xl border border-border/40 shadow-2xl shadow-primary/10">
+          <div className="flex items-center gap-3">
+            <div className="flex gap-0.5">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+              ))}
+            </div>
+            <div>
+              <div className="text-sm font-bold text-foreground">5.0 Rating</div>
+              <div className="text-[10px] text-muted-foreground font-medium">100+ verified reviews</div>
             </div>
           </div>
         </div>
