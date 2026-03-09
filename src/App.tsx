@@ -35,8 +35,8 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 const Navigation = lazy(() => import("@/components/Navigation"));
 import ScrollToTop from "@/components/ScrollToTop";
-import Footer from "@/components/Footer";
-import AuroraBackground from "@/components/AuroraBackground";
+const Footer = lazy(() => import("@/components/Footer"));
+const AuroraBackground = lazy(() => import("@/components/AuroraBackground"));
 import { MusicProvider } from "@/components/MusicContext";
 const MusicFloatingButton = lazy(() => import("@/components/MusicPlayer"));
 const Index = lazy(() => import("./pages/Index"));
@@ -77,9 +77,11 @@ const App = () => (
               </Suspense>
 
               {/* Single unified aurora background behind everything */}
-              <div className="fixed inset-0 z-0">
-                <AuroraBackground variant="hero" />
-              </div>
+              <Suspense fallback={null}>
+                <div className="fixed inset-0 z-0">
+                  <AuroraBackground variant="hero" />
+                </div>
+              </Suspense>
               <Suspense fallback={null}>
                 <FloatingHearts />
               </Suspense>
@@ -110,7 +112,7 @@ const App = () => (
                   <Route path="*" element={<NotFound />} />
                 </Routes>
                 </Suspense>
-                <Footer />
+                <Suspense fallback={null}><Footer /></Suspense>
               </div>
 
               <Suspense fallback={null}>
