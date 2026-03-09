@@ -18,38 +18,6 @@ import { ReadingProgressBar } from "@/components/ReadingProgressBar";
 import { BOOK_CATALOG, type BookItem } from "@/config/bookCatalog";
 import { cn } from "@/lib/utils";
 
-// Import all book covers for display
-import bookAiFundamentals from "@/assets/book-ai-fundamentals.jpg";
-import bookBeingRealAi from "@/assets/book-being-real-ai.jpg";
-import bookAuthPersonalities from "@/assets/book-auth-personalities.jpg";
-import bookAuthFriendshipV2 from "@/assets/book-auth-friendship-v2.jpg";
-import bookScamPrevention from "@/assets/book-scam-prevention.jpg";
-import bookFamilySafety from "@/assets/book-family-safety.jpg";
-import bookBusinessCyber from "@/assets/book-business-cyber.jpg";
-import bookAiManagement from "@/assets/book-ai-management.jpg";
-import bookDigitalPrivacy from "@/assets/book-digital-privacy.jpg";
-import bookSeniorTechSafety from "@/assets/book-senior-tech-safety.jpg";
-import bookDeepfakeDetection from "@/assets/book-deepfake-detection.jpg";
-import bookPasswordSecurity from "@/assets/book-password-security.jpg";
-import bookSocialMediaSafety from "@/assets/book-social-media-safety.jpg";
-import bookOnlineShopping from "@/assets/book-online-shopping.jpg";
-import bookIdentityTheft from "@/assets/book-identity-theft.jpg";
-import bookCyberKids from "@/assets/book-cyber-kids.jpg";
-import bookSmartHome from "@/assets/book-smart-home.jpg";
-import bookPhishingDefense from "@/assets/book-phishing-defense.jpg";
-import bookBankingSafety from "@/assets/book-banking-safety.jpg";
-import bookMobileSecurity from "@/assets/book-mobile-security.jpg";
-import bookCryptoDefense from "@/assets/book-crypto-defense.jpg";
-import bookRomanceScam from "@/assets/book-romance-scam.jpg";
-import bookVoiceClone from "@/assets/book-voice-clone.jpg";
-import bookMedicareFraud from "@/assets/book-medicare-fraud.jpg";
-import bookEmailSafety from "@/assets/book-email-safety.jpg";
-import bookTaxScam from "@/assets/book-tax-scam.jpg";
-import bookTechSupport from "@/assets/book-tech-support.jpg";
-import bookGrandparentScam from "@/assets/book-grandparent-scam.jpg";
-import bookInvestmentFraud from "@/assets/book-investment-fraud.jpg";
-import bookCharityScam from "@/assets/book-charity-scam.jpg";
-
 interface BookData {
   id: string;
   name: string;
