@@ -79,6 +79,7 @@ const App = () => (
                 <div className="relative z-10">
                   <ScrollToTop />
                   <Navigation />
+                  <Suspense fallback={null}>
                   <Routes>
                     <Route path="/" element={<Index />} />
                     <Route path="/story" element={<Story />} />
@@ -98,6 +99,7 @@ const App = () => (
                     <Route path="/venue" element={<Venue />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
+                  </Suspense>
                   <Footer />
                 </div>
 
