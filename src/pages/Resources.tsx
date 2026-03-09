@@ -872,7 +872,7 @@ function Resources() {
                   {script.description}
                 </p>
                 <Button variant="outline" className="w-full gap-2" size="sm">
-                  <Download className="w-4 h-4" />
+                  <FileText className="w-4 h-4" />
                   Download PDF
                 </Button>
               </Card>
