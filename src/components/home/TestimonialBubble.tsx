@@ -17,7 +17,7 @@ export const TestimonialBubble = ({
   className = "",
 }: TestimonialBubbleProps) => {
   return (
-    <AnimatedSection animation="fade-in">
+    <AnimatedSection animation="fade-up">
       <div
         className={`bg-white rounded-2xl p-4 shadow-lg border border-border/50 hover:-translate-y-1 transition-transform duration-200 ${className}`}
       >

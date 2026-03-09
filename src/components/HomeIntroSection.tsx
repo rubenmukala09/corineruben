@@ -384,7 +384,7 @@ function StatCard({
 }) {
   const { value, ref } = useCountUp(target);
   return (
-    <AnimatedSection animation="fade-in" delay={index * 120}>
+    <AnimatedSection animation="fade-up" delay={index * 120}>
       <div
         ref={ref}
         className="relative text-center p-6 md:p-8 rounded-2xl border border-border/40 bg-card shadow-3d hover:shadow-3d-lg hover:-translate-y-2.5 hover:scale-[1.03] transition-all duration-300 cursor-default overflow-hidden"

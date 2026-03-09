@@ -41,7 +41,7 @@ export const InspirationalQuote = ({
   const v = variants[variant];
 
   return (
-    <AnimatedSection animation="fade-in">
+    <AnimatedSection animation="fade-up">
       <div className={`relative ${v.bg} rounded-2xl p-6 border ${v.border} shadow-sm`}>
         <Quote className={`absolute top-4 left-4 w-10 h-10 ${v.quote}`} />
         <div className="relative z-10 pl-8">

@@ -91,7 +91,7 @@ export const SiteOrientationGrid = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto">
           {pages.map((page, i) => (
-            <AnimatedSection key={page.title} animation="fade-in" delay={i * 120}>
+            <AnimatedSection key={page.title} animation="fade-up" delay={i * 120}>
               <Link
                 to={page.link}
                 className={`group block rounded-2xl border overflow-hidden transition-all h-full hover:-translate-y-3 hover:scale-[1.03] hover:shadow-[0_30px_60px_-15px_hsl(288_25%_20%/0.2)] ${

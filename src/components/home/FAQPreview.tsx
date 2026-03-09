@@ -90,7 +90,7 @@ export const FAQPreview = () => {
           </AnimatedSection>
 
           {/* Accordion */}
-          <AnimatedSection animation="fade-in" delay={150} className="lg:col-span-3 space-y-3">
+          <AnimatedSection animation="fade-up" delay={150} className="lg:col-span-3 space-y-3">
             <Accordion type="single" collapsible className="space-y-3">
               {faqs.map((faq, index) => (
                 <div
