@@ -1,83 +1,105 @@
 
 
-# Website Audit Plan — InVision Network
+# Enhanced Book Reader System
 
-## Issues Found
+## Overview
 
-### Critical Issues
+The current BookReader page is a basic chapter viewer with minimal features. This plan upgrades it into a polished, feature-rich reading experience with day/night/dimmed modes, an internal library with 5% discount purchasing, book recommendations, a "Request a Book" feature, and shareable external reading links.
 
-1. **Training page renders blank/invisible content**
-   - The `/training` page shows only the footer — the main content area appears entirely white/invisible. This is a major usability failure; users cannot see any training plans or pricing.
-   - Root cause likely: CSS color/background conflict where text is rendering in white on a white background, or the hero section and content sections have no visible background contrast.
-   - **Fix**: Audit the Training.tsx page structure and ensure all sections have proper background colors and text contrast. Check for any CSS classes like `text-white` applied without a dark background.
+## Changes
 
-2. **Massive `forwardRef` warning spam (6+ warnings on every page load)**
-   - Components affected: `UnifiedCheckoutDialog`, `DonationModal`, `SEO`, `Navigation` (memo), `PrefetchLink`, `ShoppingCart`, `DialogContent`/`DialogPortal`
-   - These are React warnings about function components being given refs without `React.forwardRef()`. While they don't crash the app, they indicate broken ref forwarding that can cause subtle interaction bugs (e.g., Dialog focus management, Sheet animations).
-   - **Fix**: Wrap affected components in `React.forwardRef()` or remove unnecessary ref passing.
+### 1. Reading Mode Toggle (Day / Night / Dimmed)
 
-### Performance Issues
+Add a reading mode switcher to the reader toolbar with three modes:
+- **Day**: White/cream background, dark text (default)
+- **Night**: Dark navy/black background, light text
+- **Dimmed**: Warm sepia/amber tone, reduced contrast
 
-3. **Hero image too large (1.3MB)**
-   - `hero-corporate-protection.webp` is 1,319KB — this is the single largest resource and takes 913ms to load. Should be compressed to under 200KB or served at appropriate dimensions.
-   - **Fix**: Compress the hero image or use responsive `srcset` with smaller variants.
+Implemented as local state with CSS classes applied to the reader container. Persisted in `localStorage` so users keep their preference.
 
-4. **framer-motion loaded on initial page (93KB)**
-   - Per the project's own memory/architecture rules, framer-motion should be excluded from the root level and only lazy-loaded. Currently loaded as part of the initial bundle.
-   - **Fix**: Ensure framer-motion imports in Index.tsx are isolated to lazy-loaded sub-components.
+### 2. Enhanced Reader UI
 
-5. **DOM Content Loaded: 3.4s, Full Page Load: 3.6s**
-   - Acceptable but could improve. The 76 script files loaded on dev is expected (Vite HMR), but production builds should be verified.
+Upgrade the reader content area:
+- Adjustable font size (small / medium / large)
+- Reading progress bar at the top
+- Estimated reading time per chapter
+- Smooth scroll-to-top on chapter change
+- Bookmark current position (stored in sessionStorage)
 
-### Form Validation & Data Flow
+### 3. Internal Library (Browse & Buy with 5% Discount)
 
-6. **Contact form uses `useState` instead of `react-hook-form`**
-   - The Contact page imports `useForm` and `zodResolver` but the `handleSubmit` function uses raw `useState` with manual form data. The Zod schema is imported (`contactFormSchema`) but may not be wired up for field-level validation feedback.
-   - **Fix**: Wire up `react-hook-form` with `contactFormSchema` for proper field-level error display.
+Add a "Library" tab/section within the reader dashboard (the book selection view) that shows ALL 30 books from the catalog — not just purchased ones. Unpurchased books show a "Buy" button with a **5% discount** badge (vs. external Resources page pricing). Clicking "Buy" opens a payment flow within the reader context.
 
-7. **Newsletter form validation is working correctly**
-   - Uses Zod schema, proper error handling, loading states, and success feedback. No issues found.
+This requires:
+- Displaying the full `staticBooks` catalog inside the reader
+- Marking owned vs. unowned books
+- Showing discounted price: `price * 0.95`
+- A purchase button that invokes the existing checkout flow
 
-### Navigation & Responsiveness
+### 4. Book Recommendations
 
-8. **Mobile navigation missing hamburger menu button on small screens**
-   - On 375px width, the nav shows logo + cart + phone + Login but no hamburger icon to open the mobile menu with all nav links. Users on mobile cannot access AI & Business, Learn & Train, Resources, etc.
-   - **Fix**: Ensure the hamburger menu button is visible on mobile breakpoints.
+On the library/dashboard view, add a "Recommended for You" section that suggests books based on what the user already owns (e.g., if they own "AI Fundamentals," recommend "Deepfake Detection" and "AI Management Guide"). Simple tag-based matching using a static recommendation map.
 
-9. **Navigation responsive layout looks functional on desktop** — all 7 nav links visible, cart, phone, donate, login all accessible.
+### 5. "Request a Book" Feature
 
-### Minor Issues
+Add a form/dialog accessible from the internal library where users can suggest a book topic they'd like added to the catalog. Fields: topic, brief description. Submitted to a new `book_requests` database table.
 
-10. **`body.style.overflow` manipulation in Navigation**
-    - Direct DOM mutation for scroll locking — works but could cause issues with other overlay components competing for the same property.
+### 6. Shareable External Reading Link
 
-11. **Edge function CORS headers missing newer Supabase client headers**
-    - The `process-payment` edge function uses basic CORS headers. Should include the extended headers per project standards.
+Add a "Share Link" button in the reader that generates a URL like `/reader?email=encoded&access=encoded` — the user can bookmark or share this link to access their books from any device. The ReadBooksDialog will auto-fill from URL params.
 
----
+## Files to Create
 
-## Implementation Plan
+| File | Purpose |
+|------|---------|
+| `src/components/reader/ReadingModeToggle.tsx` | Day/Night/Dimmed mode switcher component |
+| `src/components/reader/InternalLibrary.tsx` | Full catalog browser with 5% discount purchasing |
+| `src/components/reader/BookRecommendations.tsx` | Personalized book suggestions |
+| `src/components/reader/RequestBookDialog.tsx` | "Suggest a Book" form dialog |
 
-### Task 1: Fix Training page visibility
-- Inspect `Training.tsx` full render output and all CSS classes
-- Ensure hero and content sections have proper background/text colors
-- Verify the page renders correctly on both desktop and mobile
+## Files to Modify
 
-### Task 2: Fix forwardRef warnings
-- Add `React.forwardRef()` to: `DonationModal`, `PrefetchLink`, `ShoppingCart`, `SEO`
-- These are the custom components triggering warnings; Dialog/Sheet warnings come from Radix internals and are lower priority
+| File | Change |
+|------|--------|
+| `src/pages/BookReader.tsx` | Major refactor: add reading modes, enhanced toolbar, internal library tab, recommendations, request feature, shareable link generation, font size controls, progress bar |
+| `src/components/resources/ReadBooksDialog.tsx` | Auto-fill from URL query params for shareable links |
 
-### Task 3: Fix mobile navigation hamburger visibility
-- Ensure the hamburger menu toggle button renders on screens below `lg` breakpoint
-- Verify all nav links are accessible in the mobile drawer
+## Database Changes
 
-### Task 4: Optimize hero image size
-- Compress `hero-corporate-protection.webp` to under 200KB
-- Add `width`/`height` attributes to prevent layout shift
+New table `book_requests`:
+```sql
+CREATE TABLE public.book_requests (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  email TEXT NOT NULL,
+  customer_name TEXT,
+  topic TEXT NOT NULL,
+  description TEXT,
+  status TEXT DEFAULT 'pending',
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+ALTER TABLE public.book_requests ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Anyone can insert book requests"
+  ON public.book_requests FOR INSERT TO anon, authenticated
+  WITH CHECK (true);
+```
 
-### Task 5: Wire up Contact form validation properly
-- Connect `react-hook-form` + `zodResolver` with `contactFormSchema` for proper field-level error messages
+## Technical Details
 
-### Task 6: Update edge function CORS headers
-- Update `process-payment` and any other edge functions to include the full set of required CORS headers per project standards
+### Reading Modes CSS
+```tsx
+const modeClasses = {
+  day: "bg-white text-gray-900",
+  night: "bg-[#1a1a2e] text-gray-200",
+  dimmed: "bg-[#f4ecd8] text-[#5c4b37]"
+};
+```
+
+### 5% Internal Discount Logic
+```tsx
+const internalPrice = (book.price * 0.95).toFixed(2);
+// Display: "Was $29.99 → $28.49 (5% Reader Discount)"
+```
+
+### Recommendation Map
+Static mapping by book category tags — books in similar domains recommended together. No AI needed, just a curated adjacency list.
 
