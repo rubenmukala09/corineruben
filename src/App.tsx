@@ -94,6 +94,8 @@ const App = () => (
                     <Route path="/registry" element={<Registry />} />
                     <Route path="/faq" element={<FAQ />} />
                     <Route path="/guestbook" element={<Guestbook />} />
+                    <Route path="/gallery" element={<Gallery />} />
+                    <Route path="/venue" element={<Venue />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                   <Footer />
