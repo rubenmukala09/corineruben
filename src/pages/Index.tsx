@@ -528,7 +528,32 @@ const Index = () => {
     { icon: Clock, label: t('nav.rsvp'), desc: t('rsvp.subtitle'), to: '/rsvp', color: 'text-emerald-400', bg: 'from-emerald-500/20 to-teal-500/10' },
   ];
 
-  const detailSections = [
+  const courtDetailSections = [
+    {
+      id: 'court-ceremony',
+      icon: Calendar,
+      title: t('court.wedding.ceremony'),
+      color: 'from-rose-500/20 to-pink-500/10',
+      iconColor: 'text-rose-400',
+      dialogContent: [
+        { icon: Clock, label: t('court.wedding.time'), desc: t('court.wedding.officiant'), highlight: true },
+        { icon: MapPin, label: t('court.wedding.ceremony'), desc: courtVenue, highlight: true },
+      ]
+    },
+    {
+      id: 'court-after',
+      icon: Utensils,
+      title: t('court.wedding.after'),
+      color: 'from-amber-500/20 to-orange-500/10',
+      iconColor: 'text-amber-400',
+      dialogContent: [
+        { icon: MapPin, label: t('court.wedding.after'), desc: courtAfterVenue, highlight: true },
+        { icon: Utensils, label: t('court.wedding.after'), desc: t('court.wedding.after.desc') },
+      ]
+    },
+  ];
+
+  const churchDetailSections = [
     {
       id: 'ceremony',
       icon: Church,
@@ -583,6 +608,8 @@ const Index = () => {
       ]
     },
   ];
+
+  const detailSections = isCourtMode ? courtDetailSections : churchDetailSections;
 
   /* ─── Live Stream helpers ─── */
   const livestreamUrl = settings.livestream_url || '';
