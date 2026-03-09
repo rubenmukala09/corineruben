@@ -487,6 +487,37 @@
     box-shadow: 0 0 24px rgba(120, 100, 150, 0.1);
   }
 
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 text-sm font-medium tracking-wider transition-all duration-500;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    background: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground));
+    padding: 12px 24px;
+    border-radius: 9999px;
+    border: 1.5px solid hsl(var(--border));
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-secondary:hover {
+    background: hsl(var(--secondary) / 0.8);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(74, 59, 78, 0.1);
+  }
+
+  .dark .btn-secondary {
+    background: hsl(var(--secondary) / 0.15);
+    color: hsl(var(--secondary-foreground));
+    border-color: hsl(var(--border) / 0.3);
+  }
+
+  .dark .btn-secondary:hover {
+    background: hsl(var(--secondary) / 0.25);
+  }
+
   /* ===== GLASS INPUT ===== */
   .glass-input {
     background: rgba(255, 255, 255, 0.35);
