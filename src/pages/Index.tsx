@@ -1281,7 +1281,7 @@ const Index = () => {
                     ring-4 ring-white/50 dark:ring-white/10
                     group-hover:ring-primary/20 group-hover:shadow-glow
                     transition-all duration-500`}>
-                    <section.icon className={`w-7 h-7 ${section.iconColor} group-hover:scale-110 transition-transform duration-300`} />
+                    <section.icon className={`w-5 h-5 md:w-7 md:h-7 ${section.iconColor} group-hover:scale-110 transition-transform duration-300`} />
                   </div>
 
                   <h3 className="font-serif-display text-base md:text-lg text-foreground font-semibold mb-1.5">{section.title}</h3>
