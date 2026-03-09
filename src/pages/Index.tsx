@@ -1451,8 +1451,8 @@ const Index = () => {
       <Suspense fallback={null}>
       {detailSections.map((section) =>
       <LazyDialog key={section.id} open={activeDetail === section.id} onOpenChange={(open) => !open && setActiveDetail(null)}>
-          <DialogContent className="max-w-lg">
-            <DialogHeader>
+          <LazyDialogContent className="max-w-lg">
+            <LazyDialogHeader>
               <div className="relative mx-auto mb-4">
                 <div className={`absolute inset-0 w-20 h-20 rounded-full bg-gradient-to-br ${section.color} blur-xl opacity-60 mx-auto`} />
                 <div className={`relative w-16 h-16 rounded-full bg-gradient-to-br ${section.color} flex items-center justify-center mx-auto ring-4 ring-white/30 dark:ring-white/10`}>
