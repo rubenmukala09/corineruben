@@ -771,7 +771,7 @@ const RSVP = () => {
         {/* Progress Steps */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }} className="flex items-center justify-center gap-2 mb-10">
           {allSteps.map((s, i) => {
-            const icons = [Users, Utensils, Users, Gift];
+            const icons = isCourtMode ? [Users, Gift] : [Users, Utensils, Users, Gift];
             const Icon = icons[i];
             const isPast = currentStepIndex > i || step === 'done';
             const isCurrent = step === s;
