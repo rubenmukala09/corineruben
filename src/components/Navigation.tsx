@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { Sun, Moon, Menu, X, Globe, Heart, LogOut, LogIn, MessageCircleQuestion, Camera, Gift } from 'lucide-react';
+import { Sun, Moon, Menu, X, Globe, Heart, LogOut, LogIn, MessageCircleQuestion, Camera } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
@@ -107,7 +107,6 @@ const Navigation = () => {
             {/* Icon-only links for secondary pages */}
             {[
               { to: '/gallery', icon: Camera, label: t('nav.gallery') },
-              { to: '/registry', icon: Gift, label: t('nav.registry') },
               { to: '/enquiries', icon: MessageCircleQuestion, label: t('nav.enquiries') },
             ].map(({ to, icon: Icon, label }) => (
               <Link
