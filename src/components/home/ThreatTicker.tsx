@@ -19,8 +19,7 @@ export const ThreatTicker = () => {
       <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10" />
       <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10" />
 
-      <div
-        className="flex gap-10 whitespace-nowrap relative animate-[marquee_30s_linear_infinite]"
+      <div className="flex gap-10 whitespace-nowrap relative animate-marquee">
       >
         {items.map((item, i) => (
           <div key={i} className="flex items-center gap-2.5 text-sm font-semibold">
