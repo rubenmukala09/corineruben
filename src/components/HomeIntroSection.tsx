@@ -93,7 +93,7 @@ export const HomeIntroSection = () => {
         <div className="container mx-auto px-4 md:px-6 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             {/* Left — Copy */}
-            <AnimatedSection animation="fade-in" className={isInView ? "opacity-100" : "opacity-0"}>
+            <AnimatedSection animation="fade-up" className={isInView ? "opacity-100" : "opacity-0"}>
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary mb-4">
                 Who We Are
               </p>
