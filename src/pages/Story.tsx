@@ -7,25 +7,13 @@ import { useSiteImages, useStoryEvents } from '@/hooks/useSiteContent';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
-// Static fallback images (used when no DB images exist)
+// Static fallback images
 import heroImg from '@/assets/hero-wedding.jpg';
 import flowersImg from '@/assets/flowers-lavender.jpg';
 import ringsImg from '@/assets/rings.jpg';
 import venueImg from '@/assets/venue.jpg';
 import coupleImg from '@/assets/couple-lavender.jpg';
 import cakeImg from '@/assets/cake.jpg';
-
-const FALLBACK_GALLERY = [
-  { src: heroImg, aspect: 'aspect-[4/3]', alt: 'Wedding celebration' },
-  { src: flowersImg, aspect: 'aspect-square', alt: 'Lavender flowers' },
-  { src: ringsImg, aspect: 'aspect-[3/4]', alt: 'Wedding rings' },
-  { src: venueImg, aspect: 'aspect-square', alt: 'Wedding venue' },
-  { src: coupleImg, aspect: 'aspect-[3/4]', alt: 'The couple' },
-  { src: cakeImg, aspect: 'aspect-square', alt: 'Wedding cake' },
-  { src: heroImg, aspect: 'aspect-[3/4]', alt: 'Celebration moment' },
-  { src: flowersImg, aspect: 'aspect-[4/3]', alt: 'Floral arrangement' },
-  { src: ringsImg, aspect: 'aspect-square', alt: 'Ring detail' },
-];
 
 const FALLBACK_EVENTS = [
   { titleKey: 'story.event1.title', descKey: 'story.event1.description', dateKey: 'story.event1.date', icon: '💫' },
@@ -36,7 +24,8 @@ const FALLBACK_EVENTS = [
   { titleKey: 'story.event6.title', descKey: 'story.event6.description', dateKey: 'story.event6.date', icon: '🏡' },
 ];
 
-const ASPECT_CYCLE = ['aspect-[4/3]', 'aspect-square', 'aspect-[3/4]'];
+// Images paired with timeline events
+const EVENT_IMAGES = [coupleImg, heroImg, flowersImg, ringsImg, cakeImg, venueImg];
 
 interface Photo {
   id: string;
@@ -146,7 +135,6 @@ const Story = () => {
     if (fileRef.current) fileRef.current.value = '';
   };
 
-  // Use DB events if available, otherwise use static fallback
   const useDbEvents = dbEvents.length > 0;
 
   const getEventTitle = (event: typeof dbEvents[number]) => {
@@ -167,15 +155,68 @@ const Story = () => {
     return event.date_label;
   };
 
-  // Build gallery: DB images if available, otherwise fallback
+  // Build gallery from DB or fallback
   const useDbGallery = galleryImages.length > 0;
   const gallery = useDbGallery
-    ? galleryImages.map((img, i) => ({
-        src: img.url,
-        aspect: ASPECT_CYCLE[i % ASPECT_CYCLE.length],
-        alt: img.alt_text || 'Wedding photo',
-      }))
-    : FALLBACK_GALLERY;
+    ? galleryImages.map((img) => ({ src: img.url, alt: img.alt_text || 'Wedding photo' }))
+    : EVENT_IMAGES.map((src, i) => ({ src, alt: `Wedding moment ${i + 1}` }));
+
+  // Timeline event card with integrated image
+  const renderTimelineEvent = (
+    content: { icon: string; date: string; title: string; desc: string },
+    index: number,
+    key: string | number,
+    image?: string,
+  ) => {
+    const isEven = index % 2 === 0;
+    return (
+      <motion.div
+        key={key}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ delay: index * 0.04, duration: 0.3 }}
+        className="relative mb-16"
+      >
+        {/* Timeline dot */}
+        <div className="absolute left-6 md:left-1/2 w-4 h-4 rounded-full gradient-primary -translate-x-2 mt-2 z-10 ring-4 ring-background shadow-glow" />
+
+        {/* Content row: text + image side by side on desktop */}
+        <div className={`ml-14 md:ml-0 md:grid md:grid-cols-2 md:gap-8 items-start ${isEven ? '' : 'md:direction-rtl'}`}>
+          {/* Text side */}
+          <div className={`${isEven ? 'md:pr-4 md:text-right md:col-start-1' : 'md:pl-4 md:col-start-2'}`} style={{ direction: 'ltr' }}>
+            <div className="glass-card-strong glass-glow-hover rounded-3xl p-7 card-hover">
+              <span className="text-3xl mb-3 block">{content.icon}</span>
+              <span className="font-sans-elegant text-xs tracking-[0.2em] uppercase text-primary font-semibold">{content.date}</span>
+              <h3 className="font-serif-display text-xl text-foreground mt-2 mb-3 font-semibold">{content.title}</h3>
+              <p className="font-sans-elegant text-sm text-muted-foreground" style={{ lineHeight: 1.6 }}>{content.desc}</p>
+            </div>
+          </div>
+
+          {/* Image side */}
+          {image && (
+            <div className={`mt-4 md:mt-0 ${isEven ? 'md:col-start-2' : 'md:col-start-1 md:row-start-1'}`} style={{ direction: 'ltr' }}>
+              <button
+                type="button"
+                onClick={() => setLightbox(image)}
+                className="w-full glass-card-strong rounded-3xl p-1.5 cursor-zoom-in group card-hover overflow-hidden"
+              >
+                <img
+                  src={image}
+                  alt={content.title}
+                  className="w-full aspect-[4/3] object-cover rounded-[20px] group-hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
+                  decoding="async"
+                  width={600}
+                  height={450}
+                />
+              </button>
+            </div>
+          )}
+        </div>
+      </motion.div>
+    );
+  };
 
   return (
     <div className="min-h-screen pt-28 pb-20 relative">
@@ -206,8 +247,8 @@ const Story = () => {
         )}
       </AnimatePresence>
 
-      {/* ===== STORY TIMELINE ===== */}
-      <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10">
+      {/* ===== STORY TIMELINE WITH INTEGRATED GALLERY ===== */}
+      <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-16">
           <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
             <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('nav.story')}</p>
@@ -229,47 +270,23 @@ const Story = () => {
               <Loader2 className="w-6 h-6 animate-spin text-primary" />
             </div>
           ) : useDbEvents ? (
-            dbEvents.map((event, i) => (
-              <motion.div
-                key={event.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-100px' }}
-                transition={{ delay: i * 0.04, duration: 0.3 }}
-                className={`relative flex items-start mb-14 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
-              >
-                <div className="absolute left-6 md:left-1/2 w-4 h-4 rounded-full gradient-primary -translate-x-2 mt-2 z-10 ring-4 ring-background shadow-glow" />
-                <div className={`ml-14 md:ml-0 md:w-[calc(50%-2rem)] ${i % 2 === 0 ? 'md:pr-8 md:text-right' : 'md:pl-8'}`}>
-                  <div className="glass-card-strong glass-glow-hover rounded-3xl p-7 card-hover">
-                    <span className="text-3xl mb-3 block">{event.icon}</span>
-                    <span className="font-sans-elegant text-xs tracking-[0.2em] uppercase text-primary font-semibold">{getEventDate(event)}</span>
-                    <h3 className="font-serif-display text-xl text-foreground mt-2 mb-3 font-semibold">{getEventTitle(event)}</h3>
-                    <p className="font-sans-elegant text-sm text-muted-foreground" style={{ lineHeight: 1.6 }}>{getEventDesc(event)}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))
+            dbEvents.map((event, i) =>
+              renderTimelineEvent(
+                { icon: event.icon, date: getEventDate(event), title: getEventTitle(event), desc: getEventDesc(event) },
+                i,
+                event.id,
+                gallery[i % gallery.length]?.src,
+              )
+            )
           ) : (
-            FALLBACK_EVENTS.map((event, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-100px' }}
-                transition={{ delay: i * 0.04, duration: 0.3 }}
-                className={`relative flex items-start mb-14 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
-              >
-                <div className="absolute left-6 md:left-1/2 w-4 h-4 rounded-full gradient-primary -translate-x-2 mt-2 z-10 ring-4 ring-background shadow-glow" />
-                <div className={`ml-14 md:ml-0 md:w-[calc(50%-2rem)] ${i % 2 === 0 ? 'md:pr-8 md:text-right' : 'md:pl-8'}`}>
-                  <div className="glass-card-strong glass-glow-hover rounded-3xl p-7 card-hover">
-                    <span className="text-3xl mb-3 block">{event.icon}</span>
-                    <span className="font-sans-elegant text-xs tracking-[0.2em] uppercase text-primary font-semibold">{t(event.dateKey)}</span>
-                    <h3 className="font-serif-display text-xl text-foreground mt-2 mb-3 font-semibold">{t(event.titleKey)}</h3>
-                    <p className="font-sans-elegant text-sm text-muted-foreground" style={{ lineHeight: 1.6 }}>{t(event.descKey)}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))
+            FALLBACK_EVENTS.map((event, i) =>
+              renderTimelineEvent(
+                { icon: event.icon, date: t(event.dateKey), title: t(event.titleKey), desc: t(event.descKey) },
+                i,
+                i,
+                EVENT_IMAGES[i % EVENT_IMAGES.length],
+              )
+            )
           )}
         </div>
 
@@ -287,65 +304,18 @@ const Story = () => {
         </motion.div>
       </div>
 
-      {/* ===== CURATED GALLERY ===== */}
-      <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10 mt-20">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+      {/* ===== GUEST PHOTOS — Upload & Gallery ===== */}
+      <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10 mt-20 pb-20">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
           <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
             <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('nav.gallery2')}</p>
           </div>
-          <h2 className="font-serif-display text-4xl md:text-6xl text-foreground mb-4 font-semibold" style={{ letterSpacing: '-0.5px' }}>
+          <h2 className="font-serif-display text-3xl md:text-5xl text-foreground mb-4 font-semibold">
             {t('gallery.title')}
           </h2>
-          <p className="font-sans-elegant text-base text-muted-foreground max-w-md mx-auto" style={{ lineHeight: 1.6 }}>
+          <p className="font-sans-elegant text-base text-muted-foreground max-w-md mx-auto mb-6" style={{ lineHeight: 1.6 }}>
             {t('gallery.subtitle')}
           </p>
-        </motion.div>
-
-        {galleryLoading ? (
-          <div className="flex items-center justify-center py-12">
-            <Loader2 className="w-6 h-6 animate-spin text-primary" />
-          </div>
-        ) : (
-          <div className="columns-2 md:columns-3 gap-5 space-y-5">
-            {gallery.map((img, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.03, duration: 0.3 }}
-                className="break-inside-avoid"
-              >
-                <button
-                  type="button"
-                  onClick={() => setLightbox(img.src)}
-                  className={`${img.aspect} rounded-3xl overflow-hidden cursor-zoom-in group card-hover glass-card-strong p-1.5 w-full`}
-                >
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    className="w-full h-full object-cover rounded-[20px] group-hover:scale-110 transition-transform duration-700"
-                    width={600}
-                    height={600}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </button>
-              </motion.div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* ===== GUEST PHOTOS ===== */}
-      <div className="container mx-auto px-6 md:px-12 max-w-4xl relative z-10 mt-20 pb-20">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
-          <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
-            <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('gallery.badge')}</p>
-          </div>
-          <h2 className="font-serif-display text-3xl md:text-4xl text-foreground mb-4 font-semibold">
-            {t('gallery.badge')}
-          </h2>
           <button
             type="button"
             onClick={() => setShowUploadPanel(!showUploadPanel)}
@@ -426,11 +396,11 @@ const Story = () => {
           )}
         </AnimatePresence>
 
-        {/* Guest photo grid */}
+        {/* Photo grid — masonry style */}
         {photos.length > 0 && (
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }}
-            className="columns-2 md:columns-3 gap-3 space-y-3"
+            className="columns-2 md:columns-3 gap-4 space-y-4"
           >
             {photos.map((photo, i) => (
               <motion.button

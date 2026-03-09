@@ -1050,8 +1050,8 @@ const Index = () => {
                       <Heart className="w-5 h-5 text-primary-foreground fill-primary-foreground" />
                     </div>
                     <div>
-                      <p className="font-sans-elegant text-sm font-bold text-foreground">___+ {t('index.years')}</p>
-                      <p className="font-sans-elegant text-[10px] text-muted-foreground">{t('love.together')}</p>
+                      <p className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]">11+ {t('index.years')}</p>
+                      <p className="font-sans-elegant text-[10px] font-semibold text-foreground/90 drop-shadow-[0_1px_1px_rgba(0,0,0,0.2)]">{t('love.together')}</p>
                     </div>
                   </div>
                 </motion.div>
