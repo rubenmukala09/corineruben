@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { Sun, Moon, Menu, X, Globe, Heart, LogOut, LogIn, MessageCircleQuestion, Camera, Gift } from 'lucide-react';
+import { Sun, Moon, Menu, X, Globe, Heart, LogOut, LogIn, MessageCircleQuestion, Camera } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
