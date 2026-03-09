@@ -43,7 +43,6 @@ const Navigation = () => {
   const mobileLinks = [
     ...navLinks,
     { to: '/gallery', label: t('nav.gallery') },
-    { to: '/registry', label: t('nav.registry') },
     { to: '/guestbook', label: t('nav.guestbook') },
     { to: '/faq', label: t('nav.faq') },
     { to: '/enquiries', label: t('nav.enquiries') },
