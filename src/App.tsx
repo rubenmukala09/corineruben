@@ -66,52 +66,58 @@ const App = () => (
     <ThemeProvider>
       <LanguageProvider>
         <MusicProvider>
-          <Suspense fallback={null}>
-            <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <AuthProvider>
-                {/* Single unified aurora background behind everything */}
-                <div className="fixed inset-0 z-0">
-                  <AuroraBackground variant="hero" />
-                </div>
+          <BrowserRouter>
+            <AuthProvider>
+              {/* Non-critical UI overlays load independently */}
+              <Suspense fallback={null}>
+                <TooltipProvider>
+                  <Toaster />
+                  <Sonner />
+                </TooltipProvider>
+              </Suspense>
+
+              {/* Single unified aurora background behind everything */}
+              <div className="fixed inset-0 z-0">
+                <AuroraBackground variant="hero" />
+              </div>
+              <Suspense fallback={null}>
                 <FloatingHearts />
+              </Suspense>
 
-                <div className="relative z-10">
-                  <ScrollToTop />
-                  <Navigation />
-                  <Suspense fallback={null}>
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/story" element={<Story />} />
-                    <Route path="/rsvp" element={<RSVP />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/dashboard" element={
-                      <ProtectedRoute>
-                        <Dashboard />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/staff" element={<Staff />} />
-                    <Route path="/enquiries" element={<Enquiries />} />
-                    <Route path="/registry" element={<Registry />} />
-                    <Route path="/faq" element={<FAQ />} />
-                    <Route path="/guestbook" element={<Guestbook />} />
-                    <Route path="/gallery" element={<Gallery />} />
-                    <Route path="/venue" element={<Venue />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                  </Suspense>
-                  <Footer />
-                </div>
-
+              <div className="relative z-10">
+                <ScrollToTop />
                 <Suspense fallback={null}>
-                  <MusicFloatingButton />
+                  <Navigation />
                 </Suspense>
-              </AuthProvider>
-            </BrowserRouter>
-          </TooltipProvider>
-          </Suspense>
+                <Suspense fallback={null}>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/story" element={<Story />} />
+                  <Route path="/rsvp" element={<RSVP />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/dashboard" element={
+                    <ProtectedRoute>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/staff" element={<Staff />} />
+                  <Route path="/enquiries" element={<Enquiries />} />
+                  <Route path="/registry" element={<Registry />} />
+                  <Route path="/faq" element={<FAQ />} />
+                  <Route path="/guestbook" element={<Guestbook />} />
+                  <Route path="/gallery" element={<Gallery />} />
+                  <Route path="/venue" element={<Venue />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+                </Suspense>
+                <Footer />
+              </div>
+
+              <Suspense fallback={null}>
+                <MusicFloatingButton />
+              </Suspense>
+            </AuthProvider>
+          </BrowserRouter>
         </MusicProvider>
       </LanguageProvider>
     </ThemeProvider>
