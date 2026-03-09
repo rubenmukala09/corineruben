@@ -1039,7 +1039,7 @@ const Index = () => {
                     width={474}
                     height={593}
                     loading="lazy"
-                    decoding="async" src="/lovable-uploads/813e601a-a098-4c8b-9879-005a622d470f.jpg" />
+                    decoding="async" src={coupleImgSmall} />
                   
                 </div>
                 <motion.div
