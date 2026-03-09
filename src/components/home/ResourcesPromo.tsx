@@ -89,7 +89,7 @@ export const ResourcesPromo = () => {
                 }} />
                 <div className="flex items-center gap-4 relative z-10">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center flex-shrink-0 shadow-[0_4px_15px_hsl(var(--primary)/0.4)]">
-                    <Download className="w-6 h-6 text-white" />
+                    <BookOpen className="w-6 h-6 text-white" />
                   </div>
                   <div>
                     <div className="text-base font-bold text-foreground">Free Emergency Anti-Scam Scripts</div>
