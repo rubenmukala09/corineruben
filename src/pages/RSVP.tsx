@@ -361,7 +361,10 @@ const RSVP = () => {
     }
   };
 
-  const allSteps: Step[] = ['info', 'meal', 'table', 'gift'];
+  const courtVenue = settings.court_wedding_venue || '301 Sycamore St, Brookville — Mayor Letner';
+  const courtAfterVenue = settings.court_wedding_after_venue || '10209 Gully Pass Dr, Dayton, OH 45458';
+
+  const allSteps: Step[] = isCourtMode ? ['info', 'gift'] : ['info', 'meal', 'table', 'gift'];
   const currentStepIndex = allSteps.indexOf(step);
 
   const ceremonyAddress = settings.ceremony_address || '';
