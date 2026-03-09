@@ -244,7 +244,7 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
               value={giftName}
               onChange={(e) => setGiftName(e.target.value)}
               placeholder={t('registry.dialog.name.placeholder')}
-              className="font-sans-elegant rounded-full h-14 border-border/50 bg-background/50 backdrop-blur-sm text-base"
+              className="font-sans-elegant rounded-full h-12 border-border/50 bg-background/50 backdrop-blur-sm text-base"
             />
           </div>
 
