@@ -79,15 +79,14 @@ const Footer = forwardRef<HTMLElement>(function Footer(_props, ref) {
       {/* Tech Partners Marquee */}
       <TrustedTechLogos />
 
-      {/* Main Footer */}
+      {/* Main Footer - dark navy glassmorphism */}
       <div
         className="text-white relative overflow-hidden"
-        style={{ background: "linear-gradient(180deg, hsl(260 30% 20%) 0%, hsl(265 28% 16%) 40%, hsl(268 32% 12%) 100%)" }}
+        style={{ background: "linear-gradient(180deg, hsl(220 35% 14%) 0%, hsl(220 30% 10%) 40%, hsl(220 35% 8%) 100%)" }}
       >
         {/* Glassmorphic frost overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] via-transparent to-white/[0.02] pointer-events-none" />
-        {/* Subtle top border glow */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/30 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
 
         <div className="container mx-auto px-6 lg:px-12 pt-14 pb-10 relative z-10">
           {/* Top Section - Brand & Newsletter */}
@@ -141,13 +140,13 @@ const Footer = forwardRef<HTMLElement>(function Footer(_props, ref) {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={isSubmitting}
-                  className="flex-1 h-12 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:bg-white/8 focus:border-purple-500/40 rounded-xl disabled:opacity-50"
+                  className="flex-1 h-12 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:bg-white/8 focus:border-primary/40 rounded-xl disabled:opacity-50"
                   aria-label="Email address for newsletter"
                 />
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="h-12 w-12 rounded-xl bg-purple-600 hover:bg-purple-500 border-0 p-0 flex-shrink-0 disabled:opacity-50"
+                  className="h-12 w-12 rounded-xl bg-primary hover:bg-primary/90 border-0 p-0 flex-shrink-0 disabled:opacity-50"
                   aria-label="Subscribe to newsletter"
                 >
                   {isSubmitting ? (
@@ -166,9 +165,7 @@ const Footer = forwardRef<HTMLElement>(function Footer(_props, ref) {
           {/* Navigation Links */}
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-14">
             <div>
-              <h4 className="font-bold text-sm mb-5 text-white">
-                Navigation
-              </h4>
+              <h4 className="font-bold text-sm mb-5 text-white">Navigation</h4>
               <ul className="space-y-3">
                 {[
                   { to: "/", label: "Home" },
@@ -191,9 +188,7 @@ const Footer = forwardRef<HTMLElement>(function Footer(_props, ref) {
             </div>
 
             <div>
-              <h4 className="font-bold text-sm mb-5 text-white">
-                Services
-              </h4>
+              <h4 className="font-bold text-sm mb-5 text-white">Services</h4>
               <ul className="space-y-3">
                 {[
                   "ScamShield Protection",
@@ -214,9 +209,7 @@ const Footer = forwardRef<HTMLElement>(function Footer(_props, ref) {
             </div>
 
             <div>
-              <h4 className="font-bold text-sm mb-5 text-white">
-                Training
-              </h4>
+              <h4 className="font-bold text-sm mb-5 text-white">Training</h4>
               <ul className="space-y-3">
                 {[
                   "Zoom Classes",
@@ -237,33 +230,16 @@ const Footer = forwardRef<HTMLElement>(function Footer(_props, ref) {
             </div>
 
             <div>
-              <h4 className="font-bold text-sm mb-5 text-white">
-                Support
-              </h4>
+              <h4 className="font-bold text-sm mb-5 text-white">Support</h4>
               <ul className="space-y-3">
                 <li>
-                  <Link
-                    to="/faq"
-                    className="text-sm text-white/40 hover:text-white transition-colors"
-                  >
-                    FAQ
-                  </Link>
+                  <Link to="/faq" className="text-sm text-white/40 hover:text-white transition-colors">FAQ</Link>
                 </li>
                 <li>
-                  <Link
-                    to="/contact"
-                    className="text-sm text-white/40 hover:text-white transition-colors"
-                  >
-                    Contact Us
-                  </Link>
+                  <Link to="/contact" className="text-sm text-white/40 hover:text-white transition-colors">Contact Us</Link>
                 </li>
                 <li>
-                  <Link
-                    to="/contact"
-                    className="text-sm text-white/40 hover:text-white transition-colors"
-                  >
-                    Emergency Help
-                  </Link>
+                  <Link to="/contact" className="text-sm text-white/40 hover:text-white transition-colors">Emergency Help</Link>
                 </li>
               </ul>
             </div>
@@ -272,28 +248,13 @@ const Footer = forwardRef<HTMLElement>(function Footer(_props, ref) {
               <h4 className="font-bold text-sm mb-5 text-white">Legal</h4>
               <ul className="space-y-3">
                 <li>
-                  <Link
-                    to="/privacy-policy"
-                    className="text-sm text-white/40 hover:text-white transition-colors"
-                  >
-                    Privacy Policy
-                  </Link>
+                  <Link to="/privacy-policy" className="text-sm text-white/40 hover:text-white transition-colors">Privacy Policy</Link>
                 </li>
                 <li>
-                  <Link
-                    to="/terms-of-service"
-                    className="text-sm text-white/40 hover:text-white transition-colors"
-                  >
-                    Terms of Service
-                  </Link>
+                  <Link to="/terms-of-service" className="text-sm text-white/40 hover:text-white transition-colors">Terms of Service</Link>
                 </li>
                 <li>
-                  <Link
-                    to="/refund-policy"
-                    className="text-sm text-white/40 hover:text-white transition-colors"
-                  >
-                    Refund Policy
-                  </Link>
+                  <Link to="/refund-policy" className="text-sm text-white/40 hover:text-white transition-colors">Refund Policy</Link>
                 </li>
               </ul>
             </div>
@@ -304,8 +265,7 @@ const Footer = forwardRef<HTMLElement>(function Footer(_props, ref) {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
             <div className="flex flex-wrap items-center justify-center gap-4">
               <p className="text-sm text-white/35">
-                © {new Date().getFullYear()} InVision Network. All rights
-                reserved.
+                © {new Date().getFullYear()} InVision Network. All rights reserved.
               </p>
               <div className="flex items-center gap-4">
                 <span className="flex items-center gap-1.5 text-xs text-white/45">
@@ -322,26 +282,10 @@ const Footer = forwardRef<HTMLElement>(function Footer(_props, ref) {
             {/* Social Icons */}
             <div className="flex items-center gap-2">
               {[
-                {
-                  href: "https://facebook.com/invisionnetwork",
-                  icon: Facebook,
-                  label: "Facebook",
-                },
-                {
-                  href: "https://linkedin.com/company/invision-network",
-                  icon: Linkedin,
-                  label: "LinkedIn",
-                },
-                {
-                  href: "https://youtube.com/invisionnetwork",
-                  icon: Youtube,
-                  label: "YouTube",
-                },
-                {
-                  href: "https://instagram.com/invisionnetwork",
-                  icon: Instagram,
-                  label: "Instagram",
-                },
+                { href: "https://facebook.com/invisionnetwork", icon: Facebook, label: "Facebook" },
+                { href: "https://linkedin.com/company/invision-network", icon: Linkedin, label: "LinkedIn" },
+                { href: "https://youtube.com/invisionnetwork", icon: Youtube, label: "YouTube" },
+                { href: "https://instagram.com/invisionnetwork", icon: Instagram, label: "Instagram" },
               ].map((social) => (
                 <a
                   key={social.label}

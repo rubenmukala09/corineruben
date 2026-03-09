@@ -13,17 +13,17 @@
     <!-- DNS prefetch for backend (not preconnect - avoids unused preconnect warning) -->
     <link rel="dns-prefetch" href="https://avoafweoebstkgjnbadv.supabase.co" />
 
-    <!-- Load primary fonts (Rubik + Lora) with optimized font-display -->
+    <!-- Load primary fonts (DM Sans + DM Serif Display) with optimized font-display -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rubik:wght@400;500;600;700;800&family=Lora:wght@400;500;600;700&display=optional"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400;1,9..40,500&family=DM+Serif+Display:ital@0;1&display=optional"
       media="print"
       onload="this.media='all'"
     />
     <noscript>
       <link
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rubik:wght@400;500;600;700;800&family=Lora:wght@400;500;600;700&display=optional"
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400;1,9..40,500&family=DM+Serif+Display:ital@0;1&display=optional"
       />
     </noscript>
 
@@ -31,19 +31,19 @@
     <style>
       /* System font stack for instant text paint - prevents layout shift */
       @font-face {
-        font-family: "Rubik";
+        font-family: "DM Sans";
         font-style: normal;
         font-weight: 400 800;
         font-display: optional;
-        src: local("Rubik"), local("Rubik-Regular");
+        src: local("DM Sans"), local("DMSans-Regular");
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
       }
       @font-face {
-        font-family: "Lora";
+        font-family: "DM Serif Display";
         font-style: normal;
-        font-weight: 400 700;
+        font-weight: 400;
         font-display: optional;
-        src: local("Lora"), local("Lora-Regular");
+        src: local("DM Serif Display"), local("DMSerifDisplay-Regular");
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
       }
       *,
@@ -58,8 +58,7 @@
         -webkit-text-size-adjust: 100%;
         text-size-adjust: 100%;
         font-family:
-          "Inter",
-          "Rubik",
+          "DM Sans",
           ui-sans-serif,
           system-ui,
           -apple-system,
@@ -73,8 +72,8 @@
       body {
         margin: 0;
         line-height: 1.65;
-        background-color: #f8f8fc;
-        color: #0f172a;
+        background-color: #f5f0eb;
+        color: #1a2340;
         font-synthesis: none;
         overflow-x: hidden;
         width: 100%;
@@ -132,7 +131,7 @@
         z-index: 50;
       }
       .bg-primary {
-        background-color: #7c3aed;
+        background-color: #2563eb;
       }
       .text-white {
         color: #fff;
@@ -303,7 +302,7 @@
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#6D28D9" />
+    <meta name="theme-color" content="#2563EB" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta
       name="apple-mobile-web-app-status-bar-style"

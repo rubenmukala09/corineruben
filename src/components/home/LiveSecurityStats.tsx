@@ -73,7 +73,7 @@ export const LiveSecurityStats = () => {
   return (
     <section className="py-12 lg:py-16" ref={containerRef}>
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="relative rounded-3xl overflow-hidden" style={{ background: 'linear-gradient(135deg, hsl(258 35% 12%) 0%, hsl(258 30% 16%) 40%, hsl(310 25% 14%) 70%, hsl(258 35% 10%) 100%)' }}>
+        <div className="relative rounded-3xl overflow-hidden" style={{ background: 'linear-gradient(135deg, hsl(220 35% 12%) 0%, hsl(220 30% 16%) 40%, hsl(220 25% 18%) 70%, hsl(220 35% 10%) 100%)' }}>
           {/* Glassmorphism orbs */}
           <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-gradient-to-br from-primary/30 to-accent/20 blur-[100px] pointer-events-none" />
           <div className="absolute -bottom-24 -right-16 w-96 h-96 rounded-full bg-gradient-to-br from-accent/25 to-primary/15 blur-[120px] pointer-events-none" />

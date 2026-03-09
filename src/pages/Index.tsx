@@ -144,7 +144,7 @@ const Index = forwardRef<HTMLDivElement>(function Index(_props, _ref) {
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[hsl(288_35%_8%/0.85)] via-[hsl(288_35%_12%/0.7)] to-[hsl(288_35%_15%/0.5)]" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[hsl(220_35%_8%/0.85)] via-[hsl(220_35%_12%/0.7)] to-[hsl(220_35%_15%/0.5)]" />
             </div>
 
             <div className="container mx-auto px-4 py-20 md:py-28 lg:py-32 text-center relative z-10">
