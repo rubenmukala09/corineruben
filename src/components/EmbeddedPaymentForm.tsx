@@ -257,7 +257,7 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
               value={giftEmail}
               onChange={(e) => setGiftEmail(e.target.value)}
               placeholder="your@email.com"
-              className="font-sans-elegant rounded-full h-14 border-border/50 bg-background/50 backdrop-blur-sm text-base"
+              className="font-sans-elegant rounded-full h-12 border-border/50 bg-background/50 backdrop-blur-sm text-base"
             />
           </div>
 
