@@ -15,11 +15,11 @@ import { toast } from 'sonner';
 import { useSiteImages, useSiteSettings } from '@/hooks/useSiteContent';
 
 
-import heroImg from '@/assets/hero-wedding.jpg';
-import flowersImgSmall from '@/assets/flowers-lavender.jpg';
-import ringsImgSmall from '@/assets/rings.jpg';
+import heroImg from '@/assets/hero-wedding-opt.webp';
+import flowersImgSmall from '@/assets/flowers-lavender-opt.webp';
+import ringsImgSmall from '@/assets/rings-opt.webp';
 import cakeImgSmall from '@/assets/cake.jpg';
-import coupleImgSmall from '@/assets/couple-lavender.jpg';
+import coupleImgSmall from '@/assets/couple-lavender-opt.webp';
 
 const giftTiers = [
 { amount: 60, emoji: '💐', labelKey: 'registry.tier.bouquet' },
@@ -702,7 +702,7 @@ const Index = () => {
 
 
         <div className="absolute inset-0 mix-blend-soft-light z-[1]">
-          <img src={heroImg} alt="Wedding background" className="w-full h-full object-cover opacity-[0.1]" style={{ filter: 'saturate(0.4) brightness(1.2)' }} width={1920} height={1080} loading="eager" decoding="async" />
+          <img src={heroImg} alt="Wedding background" className="w-full h-full object-cover opacity-[0.1]" style={{ filter: 'saturate(0.4) brightness(1.2)' }} width={1920} height={1080} loading="lazy" decoding="async" />
         </div>
 
         <motion.div
@@ -1139,7 +1139,7 @@ const Index = () => {
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             className="glass-card-strong rounded-3xl overflow-hidden md:row-span-2 card-hover">
               <div className="relative h-full min-h-[300px]">
-                <img src={flowersImgSmall} alt="Wedding flowers arrangement" className="w-full h-full object-cover" width={297} height={428} loading="eager" decoding="async" />
+                <img src={flowersImgSmall} alt="Wedding flowers arrangement" className="w-full h-full object-cover" width={297} height={428} loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/40 to-foreground/10" />
                 <div className="absolute bottom-0 left-0 right-0 p-5">
                   <div className="rounded-2xl bg-background/20 backdrop-blur-xl border border-white/20 p-5 shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
