@@ -16,7 +16,6 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  Download,
   Shield,
   ShoppingCart,
   Star,
@@ -634,14 +633,14 @@ function Resources() {
             </h2>
             <p className="text-base md:text-lg max-w-3xl mx-auto leading-relaxed text-muted-foreground mb-6">
               Welcome to InVision Network's resource center. Here you'll find carefully curated
-              <strong className="text-foreground"> e-books, digital guides, softcover books, and security gadgets</strong>.
+              <strong className="text-foreground"> e-books and digital guides</strong>.
               All designed to help you and your family stay safe in the digital age.
             </p>
             <div className="flex flex-wrap gap-3 justify-center">
               {[
-                { icon: BookOpen, label: "Digital & Print Books" },
-                { icon: Package, label: "Security Gadgets" },
-                { icon: Download, label: "Instant Downloads" },
+                { icon: BookOpen, label: "Digital eBooks" },
+                { icon: Lock, label: "Secure Online Reading" },
+                { icon: Globe, label: "Read on Any Device" },
                 { icon: Users, label: "Family-Friendly" },
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-2 text-sm text-muted-foreground bg-card border border-border/40 px-3 py-1.5 rounded-full">
@@ -680,14 +679,14 @@ function Resources() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-10">
             <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em] mb-6 shadow-sm border border-primary/15 bg-primary/5">
-              <Download className="w-3.5 h-3.5 text-primary" />
-              <span className="text-primary">Instant Download</span>
+              <BookOpen className="w-3.5 h-3.5 text-primary" />
+              <span className="text-primary">Digital Library</span>
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-5 tracking-tight leading-[1.1]">
               Digital Security <span className="text-primary">Guides</span>
             </h2>
             <p className="text-base md:text-lg max-w-3xl mx-auto leading-relaxed text-muted-foreground">
-              Expert knowledge delivered instantly. Download and print, or read on any device.
+              Read securely online from any device. No downloads needed.
             </p>
           </div>
 
@@ -873,7 +872,7 @@ function Resources() {
                   {script.description}
                 </p>
                 <Button variant="outline" className="w-full gap-2" size="sm">
-                  <Download className="w-4 h-4" />
+                  <FileText className="w-4 h-4" />
                   Download PDF
                 </Button>
               </Card>
@@ -929,7 +928,7 @@ function Resources() {
         onSuccess={() => {
           toast({
             title: "Purchase Complete!",
-            description: "Check your email for your download link."
+            description: "Check your email for your Access ID to start reading."
           });
         }} />
 

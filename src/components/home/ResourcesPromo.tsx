@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { FileText, Shield, BookOpen, ArrowRight, Download } from "lucide-react";
+import { FileText, Shield, BookOpen, ArrowRight } from "lucide-react";
 
 const resources = [
   { icon: Shield, title: "Cyber Insurance", description: "Coverage up to $1M for identity theft and cyber fraud.", tag: "Popular" },
@@ -80,7 +80,7 @@ export const ResourcesPromo = () => {
             </Link>
           ))}
 
-          {/* Glass download banner */}
+          {/* Glass reading banner */}
           <div className="lg:col-span-2">
             <div className="relative rounded-2xl overflow-hidden">
               <div className="backdrop-blur-xl bg-card/60 border border-border/30 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4" style={{ boxShadow: 'var(--skeuo-shadow-ombre)' }}>
@@ -89,7 +89,7 @@ export const ResourcesPromo = () => {
                 }} />
                 <div className="flex items-center gap-4 relative z-10">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center flex-shrink-0 shadow-[0_4px_15px_hsl(var(--primary)/0.4)]">
-                    <Download className="w-6 h-6 text-white" />
+                    <BookOpen className="w-6 h-6 text-white" />
                   </div>
                   <div>
                     <div className="text-base font-bold text-foreground">Free Emergency Anti-Scam Scripts</div>
@@ -97,7 +97,7 @@ export const ResourcesPromo = () => {
                   </div>
                 </div>
                 <Button asChild className="relative z-10 rounded-full bg-gradient-to-r from-primary to-accent text-white hover:opacity-90 hover:scale-105 active:scale-95 transition-all flex-shrink-0 shadow-[0_8px_30px_hsl(var(--primary)/0.3)]">
-                  <Link to="/resources">Download Free <ArrowRight className="ml-2 w-4 h-4" /></Link>
+                  <Link to="/resources">Get Free Scripts <ArrowRight className="ml-2 w-4 h-4" /></Link>
                 </Button>
               </div>
             </div>
