@@ -1603,10 +1603,14 @@ const Index = () => {
       }
 
       {/* ===== EMBEDDED PAYMENT FORM ===== */}
-      <EmbeddedPaymentForm
-        open={paymentFormOpen}
-        onOpenChange={setPaymentFormOpen}
-        selectedAmount={selectedAmount} />
+      {paymentFormOpen && (
+        <Suspense fallback={null}>
+          <EmbeddedPaymentForm
+            open={paymentFormOpen}
+            onOpenChange={setPaymentFormOpen}
+            selectedAmount={selectedAmount} />
+        </Suspense>
+      )}
       
     </div>);
 

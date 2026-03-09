@@ -204,11 +204,15 @@ const Registry = () => {
         </div>
 
       {/* Embedded Payment */}
-      <EmbeddedPaymentForm
-        open={paymentOpen}
-        onOpenChange={setPaymentOpen}
-        selectedAmount={selectedAmount}
-      />
+      {paymentOpen && (
+        <Suspense fallback={null}>
+          <EmbeddedPaymentForm
+            open={paymentOpen}
+            onOpenChange={setPaymentOpen}
+            selectedAmount={selectedAmount}
+          />
+        </Suspense>
+      )}
     </div>
   );
 };
