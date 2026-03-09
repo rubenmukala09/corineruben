@@ -3693,6 +3693,36 @@ export type Database = {
           },
         ]
       }
+      profile_security_audit: {
+        Row: {
+          created_at: string
+          failed_login_attempts: number | null
+          last_login_at: string | null
+          last_login_ip: string | null
+          locked_until: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          failed_login_attempts?: number | null
+          last_login_at?: string | null
+          last_login_ip?: string | null
+          locked_until?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          failed_login_attempts?: number | null
+          last_login_at?: string | null
+          last_login_ip?: string | null
+          locked_until?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           account_status: string | null
@@ -3705,14 +3735,10 @@ export type Database = {
           date_of_birth: string | null
           department: string | null
           email: string | null
-          failed_login_attempts: number | null
           first_name: string | null
           hire_date: string | null
           id: string
-          last_login_at: string | null
-          last_login_ip: string | null
           last_name: string | null
-          locked_until: string | null
           phone: string | null
           position: string | null
           profile_photo_url: string | null
@@ -3730,14 +3756,10 @@ export type Database = {
           date_of_birth?: string | null
           department?: string | null
           email?: string | null
-          failed_login_attempts?: number | null
           first_name?: string | null
           hire_date?: string | null
           id: string
-          last_login_at?: string | null
-          last_login_ip?: string | null
           last_name?: string | null
-          locked_until?: string | null
           phone?: string | null
           position?: string | null
           profile_photo_url?: string | null
@@ -3755,14 +3777,10 @@ export type Database = {
           date_of_birth?: string | null
           department?: string | null
           email?: string | null
-          failed_login_attempts?: number | null
           first_name?: string | null
           hire_date?: string | null
           id?: string
-          last_login_at?: string | null
-          last_login_ip?: string | null
           last_name?: string | null
-          locked_until?: string | null
           phone?: string | null
           position?: string | null
           profile_photo_url?: string | null
@@ -5933,6 +5951,10 @@ export type Database = {
       generate_request_number: { Args: never; Returns: string }
       generate_worker_id: { Args: never; Returns: string }
       get_healthcare_sensitive_data: {
+        Args: { target_user_id: string }
+        Returns: Json
+      }
+      get_profile_security_audit: {
         Args: { target_user_id: string }
         Returns: Json
       }
