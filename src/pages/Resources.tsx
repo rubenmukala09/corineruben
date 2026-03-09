@@ -679,8 +679,8 @@ function Resources() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-10">
             <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em] mb-6 shadow-sm border border-primary/15 bg-primary/5">
-              <Download className="w-3.5 h-3.5 text-primary" />
-              <span className="text-primary">Instant Download</span>
+              <BookOpen className="w-3.5 h-3.5 text-primary" />
+              <span className="text-primary">Digital Library</span>
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-5 tracking-tight leading-[1.1]">
               Digital Security <span className="text-primary">Guides</span>
