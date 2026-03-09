@@ -1415,7 +1415,7 @@ const Index = () => {
               <Heart className="w-5 h-5 text-rose-400 fill-rose-400 icon-glow" />
             </div>
 
-            <h2 className="font-serif-display text-4xl md:text-6xl text-foreground font-semibold mb-4">
+            <h2 className="font-serif-display text-3xl md:text-6xl text-foreground font-semibold mb-4">
               {t('rsvp.title')}
             </h2>
             <p className="font-serif-display text-lg text-primary italic mb-2">{t('love.tagline')}</p>
