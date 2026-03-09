@@ -6,8 +6,16 @@ import { useMusic } from '@/components/MusicContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Heart, MapPin, Calendar, Clock, Utensils, Gift, Sparkles, Play, Pause, Music, Users, Flower2, BookOpen, Cross, Church, Gem, PartyPopper, Hotel, Car, Check, X, Megaphone, Video, Share2, ExternalLink } from 'lucide-react';
 const EmbeddedPaymentForm = lazy(() => import('@/components/EmbeddedPaymentForm'));
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from '@/components/ui/drawer';
+const DialogLazy = lazy(() => import('@/components/ui/dialog').then(m => ({ default: m.Dialog })));
+const DialogContentLazy = lazy(() => import('@/components/ui/dialog').then(m => ({ default: m.DialogContent })));
+const DialogHeaderLazy = lazy(() => import('@/components/ui/dialog').then(m => ({ default: m.DialogHeader })));
+const DialogTitleLazy = lazy(() => import('@/components/ui/dialog').then(m => ({ default: m.DialogTitle })));
+const DialogDescriptionLazy = lazy(() => import('@/components/ui/dialog').then(m => ({ default: m.DialogDescription })));
+const DrawerLazy = lazy(() => import('@/components/ui/drawer').then(m => ({ default: m.Drawer })));
+const DrawerContentLazy = lazy(() => import('@/components/ui/drawer').then(m => ({ default: m.DrawerContent })));
+const DrawerHeaderLazy = lazy(() => import('@/components/ui/drawer').then(m => ({ default: m.DrawerHeader })));
+const DrawerTitleLazy = lazy(() => import('@/components/ui/drawer').then(m => ({ default: m.DrawerTitle })));
+const DrawerDescriptionLazy = lazy(() => import('@/components/ui/drawer').then(m => ({ default: m.DrawerDescription })));
 import { Input } from '@/components/ui/input';
 
 import { supabase } from '@/integrations/supabase/client';
