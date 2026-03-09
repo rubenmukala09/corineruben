@@ -922,7 +922,7 @@ const Index = () => {
               <motion.div
                 animate={{ y: [-4, 8, -4] }}
                 transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
-                className="glass-card-strong rounded-3xl p-4 w-48"
+                className="glass-card-strong rounded-3xl p-3 md:p-4 w-40 md:w-48"
               >
                 <div className="flex items-center gap-1.5 mb-1.5">
                   <Sparkles className="w-3 h-3 text-amber-400 icon-glow" />
