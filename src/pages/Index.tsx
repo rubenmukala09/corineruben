@@ -830,7 +830,7 @@ const Index = () => {
                 onClick={() => toggleTrack('amazing-grace')}
               >
                 <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-rose-400/20">
-                  <img src={flowersImgSmall} alt="Lavender flowers" className="w-full h-full object-cover" width={48} height={48} loading="lazy" decoding="async" />
+                  <img src={flowersImgSmall} alt="Lavender flowers" className="w-full h-full object-cover" width={48} height={48} loading="eager" decoding="async" />
                 </div>
                 <div>
                   <p className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">{t('hymn.amazing')}</p>
@@ -876,15 +876,17 @@ const Index = () => {
                   )}
                 </div>
 
-                <div className="flex gap-2">
-                  <button aria-label="Play Wedding Day" onClick={() => toggleTrack('wedding-day')} className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${currentTrack === 'wedding-day' && isPlaying ? 'bg-white/30 shadow-glow' : 'bg-background/20 backdrop-blur-sm border border-background/30 hover:bg-background/30'}`}>
-                    {currentTrack === 'wedding-day' && isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current" />}
-                  </button>
-                  <div className="w-10 h-10 rounded-full bg-background/20 backdrop-blur-sm border border-background/30 flex items-center justify-center">
-                    <Music className="w-4 h-4" />
-                  </div>
-                  <div className="w-10 h-10 rounded-full bg-background/20 backdrop-blur-sm border border-background/30 flex items-center justify-center animate-pulse-love">
-                    <Heart className="w-4 h-4 fill-current" />
+                <div className="flex flex-col gap-3">
+                  <div className="flex gap-2">
+                    <button aria-label="Play Our Melody" onClick={() => toggleTrack('wedding-day')} className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${currentTrack === 'wedding-day' && isPlaying ? 'bg-white/30 shadow-glow' : 'bg-background/20 backdrop-blur-sm border border-background/30 hover:bg-background/30'}`}>
+                      {currentTrack === 'wedding-day' && isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current" />}
+                    </button>
+                    <div className="flex-1 rounded-full bg-background/20 backdrop-blur-sm border border-background/30 flex items-center px-3">
+                      <div>
+                        <p className="font-sans-elegant text-xs font-bold text-foreground">Our Melody</p>
+                        <p className="font-sans-elegant text-[10px] text-foreground/60 italic">Made by us ♡</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -908,7 +910,7 @@ const Index = () => {
                 onClick={() => toggleTrack('blessed-larson')}
               >
                 <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-violet-400/20">
-                  <img src={ringsImgSmall} alt="Wedding rings" className="w-full h-full object-cover" width={48} height={48} loading="lazy" decoding="async" />
+                  <img src={ringsImgSmall} alt="Wedding rings" className="w-full h-full object-cover" width={48} height={48} loading="eager" decoding="async" />
                 </div>
                 <div>
                   <p className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">I Have Been Blessed</p>
@@ -1135,7 +1137,7 @@ const Index = () => {
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               className="glass-card-strong rounded-3xl overflow-hidden md:row-span-2 card-hover">
               <div className="relative h-full min-h-[300px]">
-                <img src={flowersImgSmall} alt="Wedding flowers arrangement" className="w-full h-full object-cover" width={297} height={428} loading="lazy" decoding="async" fetchPriority="low" />
+                <img src={flowersImgSmall} alt="Wedding flowers arrangement" className="w-full h-full object-cover" width={297} height={428} loading="eager" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/40 to-foreground/10" />
                 <div className="absolute bottom-0 left-0 right-0 p-5">
                   <div className="rounded-2xl bg-background/20 backdrop-blur-xl border border-white/20 p-5 shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
@@ -1407,7 +1409,7 @@ const Index = () => {
         <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 0.3 }}>
             <div className="glass-card-strong rounded-full w-28 h-28 mx-auto mb-8 flex items-center justify-center overflow-hidden ring-4 ring-primary/15 relative">
-              <img src={ringsImgSmall} alt="Wedding rings" className="w-full h-full object-cover" width={112} height={112} loading="lazy" decoding="async" />
+              <img src={ringsImgSmall} alt="Wedding rings" className="w-full h-full object-cover" width={112} height={112} loading="eager" decoding="async" />
               <div className="absolute inset-0 flex items-center justify-center bg-foreground/20" />
             </div>
 

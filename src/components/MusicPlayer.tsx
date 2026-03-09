@@ -31,7 +31,7 @@ export const useMusic = () => useContext(MusicContext);
 // Once you upload your songs, replace the `src` values with the file paths
 const TRACK_SOURCES: Record<string, string> = {
   'amazing-grace': 'https://play.hymnswithoutwords.com/wp-content/uploads/2023/06/Amazing-Grace-Organ-5-Verses-2023.mp3',
-  'wedding-day': '/audio/wedding-day.mp3',
+  'wedding-day': '/audio/ruben-and-corine.mp3',
   'oceans-hillsong': '',     // Copyrighted — upload your own MP3
   'blessed-larson': 'https://play.hymnswithoutwords.com/wp-content/uploads/2019/06/I-Have-Been-Blessed-Blessed-Organ-3-Verses-2019.mp3',
   'how-great': 'https://play.hymnswithoutwords.com/wp-content/uploads/2021/06/O-Lord-My-God-How-Great-Thou-Art-Organ-4-Verses-2021.mp3',
@@ -41,7 +41,7 @@ const TRACK_SOURCES: Record<string, string> = {
 
 export const TRACK_INFO: Record<string, Track> = {
   'amazing-grace': { id: 'amazing-grace', title: 'Amazing Grace', artist: 'Instrumental' },
-  'wedding-day': { id: 'wedding-day', title: 'Wedding Day', artist: 'Corine & Ruben' },
+  'wedding-day': { id: 'wedding-day', title: 'Our Melody', artist: 'Made by us ♡' },
   'oceans-hillsong': { id: 'oceans-hillsong', title: 'Oceans', artist: 'Hillsong' },
   'blessed-larson': { id: 'blessed-larson', title: 'I Have Been Blessed', artist: 'Joseph Larson' },
   'how-great': { id: 'how-great', title: 'How Great Thou Art', artist: 'Traditional Hymn' },
