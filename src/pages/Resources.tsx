@@ -686,7 +686,7 @@ function Resources() {
               Digital Security <span className="text-primary">Guides</span>
             </h2>
             <p className="text-base md:text-lg max-w-3xl mx-auto leading-relaxed text-muted-foreground">
-              Expert knowledge delivered instantly. Download and print, or read on any device.
+              Read securely online from any device. No downloads needed.
             </p>
           </div>
 
