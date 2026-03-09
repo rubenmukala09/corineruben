@@ -80,7 +80,7 @@ export const ResourcesPromo = () => {
             </Link>
           ))}
 
-          {/* Glass download banner */}
+          {/* Glass reading banner */}
           <div className="lg:col-span-2">
             <div className="relative rounded-2xl overflow-hidden">
               <div className="backdrop-blur-xl bg-card/60 border border-border/30 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4" style={{ boxShadow: 'var(--skeuo-shadow-ombre)' }}>
