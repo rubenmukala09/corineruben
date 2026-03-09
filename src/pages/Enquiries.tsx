@@ -54,7 +54,7 @@ const Enquiries = () => {
               {t('enquiries.badge')}
             </p>
           </div>
-          <h1 className="font-serif-display text-4xl md:text-5xl text-foreground mb-4 font-semibold">
+          <h1 className="font-serif-display text-3xl md:text-5xl text-foreground mb-4 font-semibold">
             {t('enquiries.title')}
           </h1>
           <p className="font-sans-elegant text-base text-muted-foreground max-w-md mx-auto">
