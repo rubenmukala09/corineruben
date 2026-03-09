@@ -31,8 +31,9 @@ const FALLBACK_EVENTS = [
   { titleKey: 'story.event1.title', descKey: 'story.event1.description', dateKey: 'story.event1.date', icon: '💫' },
   { titleKey: 'story.event2.title', descKey: 'story.event2.description', dateKey: 'story.event2.date', icon: '🌹' },
   { titleKey: 'story.event3.title', descKey: 'story.event3.description', dateKey: 'story.event3.date', icon: '✈️' },
-  { titleKey: 'story.event4.title', descKey: 'story.event4.description', dateKey: 'story.event4.date', icon: '🏡' },
-  { titleKey: 'story.event5.title', descKey: 'story.event5.description', dateKey: 'story.event5.date', icon: '💍' },
+  { titleKey: 'story.event4.title', descKey: 'story.event4.description', dateKey: 'story.event4.date', icon: '🤝' },
+  { titleKey: 'story.event5.title', descKey: 'story.event5.description', dateKey: 'story.event5.date', icon: '⛪' },
+  { titleKey: 'story.event6.title', descKey: 'story.event6.description', dateKey: 'story.event6.date', icon: '🏡' },
 ];
 
 const ASPECT_CYCLE = ['aspect-[4/3]', 'aspect-square', 'aspect-[3/4]'];
