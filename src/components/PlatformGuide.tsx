@@ -16,7 +16,6 @@ import {
   Mail,
   MessageCircle,
   FileText,
-  Download,
   Lock,
   User,
   Settings,

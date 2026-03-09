@@ -20,8 +20,7 @@ import {
   Minus,
   Plus,
   Sparkles,
-  Truck,
-  Download,
+  BookOpen,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { QuickVeteranToggle } from "@/components/payment/QuickVeteranToggle";
@@ -132,9 +131,8 @@ export const PurchaseModal = ({
 
       toast({
         title: "🎉 Order Submitted!",
-        description: isDigital
-          ? "Check your email for download links within minutes!"
-          : `Order #${requestNumber} confirmed. We'll send tracking info soon.`,
+        description:
+          "Check your email for your Access ID to start reading!",
       });
 
       onOpenChange(false);
@@ -158,17 +156,10 @@ export const PurchaseModal = ({
         <div className="bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 p-6 border-b">
           <DialogHeader>
             <div className="flex items-center gap-2 mb-2">
-              {isDigital ? (
-                <Badge variant="secondary" className="gap-1">
-                  <Download className="w-3 h-3" />
-                  Digital Download
-                </Badge>
-              ) : (
-                <Badge variant="secondary" className="gap-1">
-                  <Truck className="w-3 h-3" />
-                  Physical Product
-                </Badge>
-              )}
+              <Badge variant="secondary" className="gap-1">
+                <BookOpen className="w-3 h-3" />
+                Digital eBook
+              </Badge>
             </div>
             <DialogTitle className="text-xl font-bold">{itemName}</DialogTitle>
             {itemDescription && (
@@ -256,9 +247,7 @@ export const PurchaseModal = ({
             <div className="flex items-center gap-2 mb-2">
               <Mail className="w-4 h-4 text-primary" />
               <span className="font-medium text-sm">
-                {isDigital
-                  ? "Where to send your download"
-                  : "Contact Information"}
+                Where to send your Access ID
               </span>
             </div>
             <Input
@@ -270,7 +259,7 @@ export const PurchaseModal = ({
             />
             <Input
               type="email"
-              placeholder="Email * (for receipt & downloads)"
+              placeholder="Email * (for receipt & Access ID)"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="h-11"
@@ -307,37 +296,20 @@ export const PurchaseModal = ({
               <Sparkles className="w-4 h-4 text-amber-500" />
               What happens next
             </h4>
-            {isDigital ? (
-              <ul className="text-xs space-y-1 text-muted-foreground">
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-3 h-3 text-green-500" />
-                  Instant email with download links
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-3 h-3 text-green-500" />
-                  Links valid for 24 hours
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-3 h-3 text-green-500" />
-                  Access your files immediately
-                </li>
-              </ul>
-            ) : (
-              <ul className="text-xs space-y-1 text-muted-foreground">
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-3 h-3 text-green-500" />
-                  Order confirmation email
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-3 h-3 text-green-500" />
-                  Shipping within 2-3 business days
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-3 h-3 text-green-500" />
-                  Tracking number provided
-                </li>
-              </ul>
-            )}
+            <ul className="text-xs space-y-1 text-muted-foreground">
+              <li className="flex items-center gap-2">
+                <CheckCircle className="w-3 h-3 text-green-500" />
+                Instant email with your Access ID
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckCircle className="w-3 h-3 text-green-500" />
+                Read online anytime at /reader
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckCircle className="w-3 h-3 text-green-500" />
+                Your Access ID never expires
+              </li>
+            </ul>
           </div>
 
           {/* Submit */}
@@ -354,14 +326,8 @@ export const PurchaseModal = ({
               </>
             ) : (
               <>
-                {isDigital ? (
-                  <Download className="mr-2 h-5 w-5" />
-                ) : (
-                  <Package className="mr-2 h-5 w-5" />
-                )}
-                {isDigital
-                  ? `Get Instant Access - $${total.toFixed(2)}`
-                  : `Order Now - $${total.toFixed(2)}`}
+                <BookOpen className="mr-2 h-5 w-5" />
+                {`Get Instant Access - $${total.toFixed(2)}`}
               </>
             )}
           </Button>

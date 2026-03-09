@@ -15,9 +15,8 @@ export const AIFooter = () => {
             Privacy Notice
           </p>
           <p className="text-xs text-white/80 leading-relaxed">
-            We do not save your data after chat sessions. Please download your
-            conversation in PDF format before closing. Audio messages will be
-            converted to text format for download.
+            We do not save your data after chat sessions. Your conversation
+            will not be saved once you close this window.
           </p>
         </div>
 

@@ -459,9 +459,9 @@ function SmartPaymentForm({ items, onSuccess, onClose }: PaymentFormProps) {
               <div className="bg-green-500/10 text-green-600 p-4 rounded-xl text-sm mb-4">
                 <Sparkles className="w-5 h-5 mx-auto mb-2" />
                 <p className="font-medium">
-                  Check your email for download links
+                  Check your email for your Access ID
                 </p>
-                <p className="text-xs mt-1">Expected delivery: 2-5 minutes</p>
+                <p className="text-xs mt-1">Use it to read your books online at /reader</p>
               </div>
             )}
 
