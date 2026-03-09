@@ -62,7 +62,7 @@ interface UserProfile {
   full_name: string | null;
   avatar_url: string | null;
   created_at: string;
-  last_login_at: string | null;
+  last_login_at?: string | null;
 }
 
 interface UserWithRole extends UserProfile {
